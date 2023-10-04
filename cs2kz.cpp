@@ -17,6 +17,8 @@ SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlay
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
+CPlayerManager g_PlayerManager;
+
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
 	PLUGIN_SAVEVARS();
@@ -91,6 +93,27 @@ const char *KZPlugin::GetURL()
 	return "https://cs2.kz/";
 }
 
+MovementPlayer *CPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
+{
+	return players[ms->pawn->m_hController.GetEntryIndex()];
+}
+
+MovementPlayer *CPlayerManager::ToPlayer(CCSPlayerController *controller)
+{
+	return nullptr;
+}
+MovementPlayer *CPlayerManager::ToPlayer(CCSPlayerPawn *pawn)
+{
+	return nullptr;
+}
+MovementPlayer *CPlayerManager::ToPlayer(CPlayerSlot slot)
+{
+	return nullptr;
+}
+MovementPlayer *CPlayerManager::ToPlayer(CEntityIndex entIndex)
+{
+	return nullptr;
+}
 void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 {
 	RETURN_META(MRES_IGNORED);

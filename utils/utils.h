@@ -18,6 +18,7 @@ namespace interfaces
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
 
 	inline CGameResourceService *pGameResourceServiceServer = nullptr;
+	inline IVEngineServer2 *pEngine = nullptr;
 }
 
 namespace utils
@@ -25,6 +26,7 @@ namespace utils
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
 	void Cleanup();
 
+	CGlobalVars *GetServerGlobals();
 	void UnlockConVars();
 	void UnlockConCommands();
 }

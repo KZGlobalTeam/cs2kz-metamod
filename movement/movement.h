@@ -5,6 +5,8 @@
 
 #define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
+class MovementPlayer;
+
 namespace movement
 {
 	void InitDetours();
@@ -31,29 +33,37 @@ namespace movement
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PlayerMovePost(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
+
+	MovementPlayer *ToMovementPlayer(CCSPlayer_MovementServices *);
 }
 
-class MovementPlayer : public CCSPlayerController
+class MovementPlayer
 {
 public:
 	CCSPlayerPawn *GetPawn()
 	{
-		return reinterpret_cast<CCSPlayerPawn *>(this->m_hPawn.Get());
-	}
-	CPlayerSlot GetPlayerSlot()
-	{
-		return CPlayerSlot(-1);
-	}
-	/*CEntityIndex* GetEntityIndex()
-	{
-		return NULL;
-	}*/
-	CInButtonState &GetButtonState()
-	{
-		return this->m_hPawn.Get()->m_pMovementServices->m_nButtons;
+		return nullptr;
 	}
 	Vector &GetOrigin();
 	void SetOrigin(const Vector &origin);
 	Vector &GetVelocity();
 	void GetVelocity(const Vector &velocity);
+
+public:
+	// General
+	float lastProcessedCurtime;
+	uint64_t lastProcessedTickcount;
+
+	QAngle oldAngles;
+
+	Vector takeoffOrigin;
+	Vector takeoffVelocity;
+	float takeoffTime;
+	Vector takeoffGroundOrigin;
+
+	Vector landingOrigin;
+	Vector landingVelocity;
+	float landingTime; 
+	Vector landingOriginActual;
+	float landingTimeActual;
 };
