@@ -9,10 +9,11 @@
 #include "module.h"
 #include "detours.h"
 #include "tier0/memdbgon.h"
+#include "recipientfilters.h"
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
-ClientPrint_t *ClientPrint = NULL;
+ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
 
 void modules::Initialize()
 {
@@ -43,7 +44,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 	
-	ClientPrint = (ClientPrint_t *)modules::server->FindSignature((const byte *)sigs::ClientPrint.data, sigs::ClientPrint.length);
+	UTIL_ClientPrintFilter = (ClientPrintFilter_t *)modules::server->FindSignature((const byte *)sigs::UTIL_ClientPrintFilter.data, sigs::UTIL_ClientPrintFilter.length);
 
 	InitDetours();
 	return true;
@@ -106,32 +107,51 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-void utils::PrintConsole(CBaseEntity *player, char *format, ...)
+CBasePlayerController *utils::GetController(CPlayerSlot slot)
+{
+	return dynamic_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+}
+
+void utils::PrintConsole(CBasePlayerController *controller, char *format, ...)
 {
 	va_list args;
     va_start(args, format);
 	char buffer[1024];
 	vsnprintf(buffer, sizeof(buffer), format, args);
-	ClientPrint(player, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 	va_end(args);
 }
 
-void utils::PrintChat(CBaseEntity *player, char *format, ...)
+void utils::PrintChat(CBasePlayerController *controller, char *format, ...)
 {
 	va_list args;
     va_start(args, format);
 	char buffer[1024];
 	vsnprintf(buffer, sizeof(buffer), format, args);
-	ClientPrint(player, HUD_PRINTTALK, buffer, "", "", "", "");
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
 	va_end(args);
 }
 
-void utils::PrintCentre(CBaseEntity *player, char *format, ...)
+void utils::PrintCentre(CBasePlayerController *controller, char *format, ...)
 {
 	va_list args;
     va_start(args, format);
 	char buffer[1024];
 	vsnprintf(buffer, sizeof(buffer), format, args);
-	ClientPrint(player, HUD_PRINTCENTER, buffer, "", "", "", "");
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+	va_end(args);
+}
+
+void utils::PrintAlert(CBasePlayerController *controller, char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	char buffer[1024];
+	vsnprintf(buffer, sizeof(buffer), format, args);
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 	va_end(args);
 }
