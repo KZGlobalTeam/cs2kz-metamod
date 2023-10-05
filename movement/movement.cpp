@@ -142,14 +142,21 @@ void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 	PostThink(pawn);
 }
 
-MovementPlayer *movement::ToMovementPlayer(CCSPlayer_MovementServices *ms)
+CCSPlayerController *MovementPlayer::GetController()
 {
-	return dynamic_cast<MovementPlayer *>(ms->pawn->m_hController.Get());
+	return dynamic_cast<CCSPlayerController *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
+}
+
+CCSPlayerPawn *MovementPlayer::GetPawn()
+{
+	CCSPlayerController *controller = this->GetController();
+	if (!controller) return nullptr;
+	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn.Get());
 }
 
 Vector& MovementPlayer::GetOrigin()
 {
-	return this->GetPawn()->m_pSceneNode->m_vecAbsOrigin;
+	return this->GetController()->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin; // not actually correct
 }
 
 void MovementPlayer::SetOrigin(const Vector& origin)
@@ -159,7 +166,12 @@ void MovementPlayer::SetOrigin(const Vector& origin)
 
 Vector& MovementPlayer::GetVelocity()
 {
-	return this->GetPawn()->m_vecAbsVelocity;
+	CCSPlayerController *controller = this->GetController();
+	if (!controller) return Vector();
+	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
+	if (!pawn) return Vector();
+
+	return this->GetController()->m_hPawn.Get()->m_vecAbsVelocity; // not actually correct
 }
 
 void MovementPlayer::GetVelocity(const Vector& velocity)

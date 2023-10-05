@@ -118,7 +118,7 @@ void utils::PrintConsole(CBasePlayerController *controller, char *format, ...)
     va_start(args, format);
 	char buffer[1024];
 	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex() - 1);
 	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 	va_end(args);
 }
@@ -129,7 +129,7 @@ void utils::PrintChat(CBasePlayerController *controller, char *format, ...)
     va_start(args, format);
 	char buffer[1024];
 	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex() - 1);
 	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
 	va_end(args);
 }
@@ -140,7 +140,7 @@ void utils::PrintCentre(CBasePlayerController *controller, char *format, ...)
     va_start(args, format);
 	char buffer[1024];
 	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex() - 1);
 	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 	va_end(args);
 }
@@ -151,7 +151,7 @@ void utils::PrintAlert(CBasePlayerController *controller, char *format, ...)
 	va_start(args, format);
 	char buffer[1024];
 	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
+	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex() - 1);
 	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 	va_end(args);
 }

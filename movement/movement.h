@@ -34,16 +34,16 @@ namespace movement
 	void FASTCALL Detour_PlayerMovePost(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
 
-	MovementPlayer *ToMovementPlayer(CCSPlayer_MovementServices *);
 }
 
 class MovementPlayer
 {
 public:
-	CCSPlayerPawn *GetPawn()
-	{
-		return nullptr;
-	}
+	MovementPlayer(int i) : index(i) {}
+
+	CCSPlayerController *GetController();
+	CCSPlayerPawn *GetPawn();
+
 	Vector &GetOrigin();
 	void SetOrigin(const Vector &origin);
 	Vector &GetVelocity();
@@ -51,19 +51,21 @@ public:
 
 public:
 	// General
-	float lastProcessedCurtime;
-	uint64_t lastProcessedTickcount;
+	const uint32_t index;
+
+	float lastProcessedCurtime{};
+	uint64_t lastProcessedTickcount{};
 
 	QAngle oldAngles;
 
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
-	float takeoffTime;
+	float takeoffTime{};
 	Vector takeoffGroundOrigin;
 
 	Vector landingOrigin;
 	Vector landingVelocity;
-	float landingTime; 
+	float landingTime{};
 	Vector landingOriginActual;
-	float landingTimeActual;
+	float landingTimeActual{};
 };

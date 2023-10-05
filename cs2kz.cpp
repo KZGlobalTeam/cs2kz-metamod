@@ -12,6 +12,9 @@
 #include "movement/movement.h"
 #include "movement/playermanager.h"
 
+#include "kz/hud.h"
+#include "kz/misc.h"
+
 KZPlugin g_KZPlugin;
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand&);
@@ -36,7 +39,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
-	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds), false);
+	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Pre), false);
+	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Post), true);
 	g_pPlayerManager = new CPlayerManager();
 	return true;
 }
@@ -45,7 +49,8 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	SH_REMOVE_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_REMOVE_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
-	SH_REMOVE_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds), false);
+	SH_REMOVE_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Pre), false);
+	SH_REMOVE_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Post), true);
 
 	utils::Cleanup();
 	delete g_pPlayerManager;
@@ -106,8 +111,15 @@ const char *KZPlugin::GetURL()
 	return "https://cs2.kz/";
 }
 
-static float Hook_ProcessUsercmds(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
+static float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
 {
+	KZ::misc::EnableGodMode(slot);
+	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
+}
+
+static float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
+{
+	KZ::hud::OnProcessUsercmds_Post(slot, buf, numcmds, ignore, paused);
 	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
 }
 
