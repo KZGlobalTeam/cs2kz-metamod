@@ -551,7 +551,7 @@ class CEntityIOOutput
 public:
 	uint8_t __pad0000[0x18]; // 0x0
 	// TODO: CVariantBase< CVariantDefaultAllocator >
-	uint8_t m_Value[0x10]; // 0x18 CVariantBase<CVariantDefaultAllocator>
+	CVariantBase<CVariantDefaultAllocator> m_Value; // 0x18
 };
 static_assert(sizeof(CEntityIOOutput) == 0x28, "Class didn't match expected size");
 
@@ -1165,6 +1165,38 @@ public:
 	CUtlSymbolLarge m_sMaster; // 0x778
 };
 static_assert(sizeof(CBaseToggle) == 0x780, "Class didn't match expected size");
+
+// Alignment: 11
+// Size: 0x8a8
+class CBaseTrigger : public CBaseToggle
+{
+public:
+	// MNetworkEnable
+	bool m_bDisabled; // 0x780	
+	uint8_t __pad0781[0x7]; // 0x781
+	CUtlSymbolLarge m_iFilterName; // 0x788	
+	CHandle< CBaseFilter > m_hFilter; // 0x790	
+	uint8_t __pad0794[0x4]; // 0x794
+	CEntityIOOutput m_OnStartTouch; // 0x798	
+	CEntityIOOutput m_OnStartTouchAll; // 0x7c0	
+	CEntityIOOutput m_OnEndTouch; // 0x7e8	
+	CEntityIOOutput m_OnEndTouchAll; // 0x810	
+	CEntityIOOutput m_OnTouching; // 0x838	
+	CEntityIOOutput m_OnNotTouching; // 0x860	
+	CUtlVector< CHandle< CBaseEntity > > m_hTouchingEntities; // 0x888	
+	// MNetworkEnable
+	bool m_bClientSidePredicted; // 0x8a0	
+};
+static_assert(sizeof(CBaseTrigger) == 0x8a8, "Class didn't match expected size");
+
+// Alignment: 1
+// Size: 0x8d0
+class CTriggerMultiple : public CBaseTrigger
+{
+public:
+	CEntityIOOutput m_OnTrigger; // 0x8a8	
+};
+static_assert(sizeof(CTriggerMultiple) == 0x8d0, "Class didn't match expected size");
 
 // Size: 0xb0
 class CPlayer_WeaponServices : public CPlayerPawnComponent

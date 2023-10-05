@@ -155,3 +155,17 @@ void utils::PrintAlert(CBasePlayerController *controller, char *format, ...)
 	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 	va_end(args);
 }
+
+bool utils::IsEntPlayerPawn(CBaseEntity *ent)
+{
+	bool result = false;
+	if (ent && ent->m_pEntity)
+	{
+		const char *classname = ent->m_pEntity->m_designerName.String();
+		if (stricmp(classname, "player") == 0)
+		{
+			result = true;
+		}
+	}
+	return result;
+}

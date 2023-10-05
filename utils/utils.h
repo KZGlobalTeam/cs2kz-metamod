@@ -28,7 +28,9 @@ namespace utils
 	void UnlockConCommands();
 	
 	CBasePlayerController *GetController(CPlayerSlot slot);
-
+	
+	bool IsEntPlayerPawn(CBaseEntity *ent);
+	
 	// Print functions do not work inside movement hooks, for some reasons...
 	void PrintConsole(CBasePlayerController *player, char *format, ...);
 	void PrintChat(CBasePlayerController *player, char *format, ...);
