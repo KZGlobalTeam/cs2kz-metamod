@@ -18,6 +18,7 @@ KZ-specific:
 	- [ ] Add MovementAPI stuff with callback registering for KZ modules
 	- [ ] Disable player collisions
 	- [ ] Player transparency
+	- [ ] Make players invincible
 - [ ] Gameplay
 	- [ ] Add MOD (requires finished CVar RE)
 		- [ ] Buff jump height to 128t values
