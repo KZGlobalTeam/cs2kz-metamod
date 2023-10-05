@@ -16,6 +16,16 @@ class CBaseFilter;
 class CBasePlayerPawn;
 class CCSPlayerPawn;
 
+enum MsgDest : int32_t
+{
+	HUD_PRINTNOTIFY  = 1,
+	HUD_PRINTCONSOLE = 2,
+	HUD_PRINTTALK    = 3,
+	HUD_PRINTCENTER  = 4,
+	HUD_PRINTTALK2   = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
+	HUD_PRINTALERT   = 6
+};
+
 enum class EKillTypes_t : uint8_t
 {
 	KILL_NONE = 0x0,
@@ -27,6 +37,7 @@ enum class EKillTypes_t : uint8_t
 	KILL_SHOCK = 0x6,
 	KILLTYPE_COUNT = 0x7,
 };
+
 enum TakeDamageFlags_t : uint32_t
 {
 	DFLAG_NONE = 0x0,
@@ -172,7 +183,7 @@ enum ChatIgnoreType_t : uint32_t
 
 enum PlayerConnectedState : uint32_t
 {
-	PlayerNeverConnected = 0xffffffffffffffff,
+	PlayerNeverConnected = 0xffffffff,
 	PlayerConnected = 0x0,
 	PlayerConnecting = 0x1,
 	PlayerReconnecting = 0x2,

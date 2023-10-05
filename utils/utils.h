@@ -4,7 +4,10 @@
 #include "cschemasystem.h"
 #include "module.h"
 #include <ISmmPlugin.h>
+#include "utils/datatypes.h"
 
+typedef void ClientPrintFilter_t(IRecipientFilter &filter, MsgDest msgDest, char *msgName, char *param1, char *param2, char *param3, char *param4);
+extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
 namespace interfaces
 {
@@ -23,4 +26,12 @@ namespace utils
 	CGlobalVars *GetServerGlobals();
 	void UnlockConVars();
 	void UnlockConCommands();
+	
+	CBasePlayerController *GetController(CPlayerSlot slot);
+
+	// Print functions do not work inside movement hooks, for some reasons...
+	void PrintConsole(CBasePlayerController *player, char *format, ...);
+	void PrintChat(CBasePlayerController *player, char *format, ...);
+	void PrintCentre(CBasePlayerController *player, char *format, ...);
+	void PrintAlert(CBasePlayerController *player, char *format, ...);
 }
