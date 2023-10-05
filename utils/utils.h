@@ -26,4 +26,8 @@ namespace utils
 	CGlobalVars *GetServerGlobals();
 	void UnlockConVars();
 	void UnlockConCommands();
+	
+	void PrintConsole(CBaseEntity *player, char *format, ...);
+	void PrintChat(CBaseEntity *player, char *format, ...);
+	void PrintCentre(CBaseEntity *player, char *format, ...);
 }

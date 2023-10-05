@@ -105,3 +105,33 @@ void utils::UnlockConCommands()
 		pConCommand->RemoveFlags(FCVAR_FLAGS_TO_REMOVE);
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
+
+void PrintConsole(CBaseEntity *player, char *format, ...)
+{
+	va_list args;
+    va_start(args, format);
+	char buffer[1024];
+	vsnprintf(buffer, sizeof(buffer), format, args);
+	ClientPrint(player, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+	va_end(args);
+}
+
+void PrintChat(CBaseEntity *player, char *format, ...)
+{
+	va_list args;
+    va_start(args, format);
+	char buffer[1024];
+	vsnprintf(buffer, sizeof(buffer), format, args);
+	ClientPrint(player, HUD_PRINTTALK, buffer, "", "", "", "");
+	va_end(args);
+}
+
+void PrintCentre(CBaseEntity *player, char *format, ...)
+{
+	va_list args;
+    va_start(args, format);
+	char buffer[1024];
+	vsnprintf(buffer, sizeof(buffer), format, args);
+	ClientPrint(player, HUD_PRINTCENTER, buffer, "", "", "", "");
+	va_end(args);
+}
