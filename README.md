@@ -5,11 +5,11 @@ Most utils stuff is based on [CS2Fixes](https://github.com/Source2ZE/CS2Fixes/)
 Doesn't work on linux (no sigs)
 
 
-TODO list:
+TODO list: (italic means I'm working on it)
 
 Utilities:
-- [ ] Print functions (chat, alert, center)
-- [ ] Add functionalities to MovementPlayer class
+- [ ] *Print functions (chat, alert, center)*
+- [ ] *Add functionalities to MovementPlayer class*
 - [ ] Add chat listener
 
 KZ-specific:
@@ -18,7 +18,7 @@ KZ-specific:
 	- [ ] Add MovementAPI stuff with callback registering for KZ modules
 	- [ ] Disable player collisions
 	- [ ] Player transparency
-	- [ ] Make players invincible
+	- [ ] *Make players invincible*
 - [ ] Gameplay
 	- [ ] Add MOD (requires finished CVar RE)
 		- [ ] Buff jump height to 128t values
@@ -29,10 +29,10 @@ KZ-specific:
 - [ ] Timers
 	- [ ] Trigger touching logic
 - [ ] Jumpstats
-	- [ ] Distbug
+	- [ ] *Distbug*
 	- [ ] Split jump types
 - [ ] HUD
-	- [ ] Speed panel
+	- [ ] *Speed panel*
 	- [ ] TP Menu (impossible...?)
 - [ ] Quiet
 	- [ ] !hide
@@ -45,6 +45,8 @@ KZ-specific:
 - [ ] Saveloc
 - [ ] Local DB/Ranks
 - [ ] Global integration (if API exists)
+- [ ] Add linux sigs
+
 
 VS: 
 ```
