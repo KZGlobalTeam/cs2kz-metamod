@@ -4,7 +4,10 @@
 #include "cschemasystem.h"
 #include "module.h"
 #include <ISmmPlugin.h>
+#include "utils/datatypes.h"
 
+typedef void ClientPrint_t(CBaseEntity *client, MsgDest msgDest, char *msgName, char *param1, char *param2, char *param3, char *param4);
+ClientPrint_t *ClientPrint = NULL;
 
 namespace interfaces
 {

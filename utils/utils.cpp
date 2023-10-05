@@ -40,6 +40,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
+	
+	ClientPrint = (ClientPrint_t *)modules::server->FindSignature((const byte *)sigs::ClientPrint.data, sigs::ClientPrint.length);
 
 	InitDetours();
 	return true;

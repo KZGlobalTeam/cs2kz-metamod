@@ -122,5 +122,7 @@ static void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 static void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 {
+	CBaseEntity *player = g_pEntitySystem->GetBaseEntity(CEntityIndex)slot + 1);
+	ClientPrint(player, HUD_PRINTTALK, "cunt", NULL, NULL, NULL, NULL);
 	RETURN_META(MRES_IGNORED);
 }
