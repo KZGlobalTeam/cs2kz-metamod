@@ -9,8 +9,9 @@ void InitDetours();
 void FlushAllDetours();
 
 void FASTCALL Detour_UTIL_ClientPrintFilter(IRecipientFilter&, int, const char*, const char*, const char*, const char*, const char*);
-
 extern CDetour<decltype(Detour_UTIL_ClientPrintFilter)> UTIL_ClientPrintFilter;
+void FASTCALL Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend);
+extern CDetour<decltype(Detour_Host_Say)> Host_Say;
 
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);

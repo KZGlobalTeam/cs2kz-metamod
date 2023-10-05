@@ -9,6 +9,7 @@ extern CEntitySystem* g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
 DECLARE_DETOUR(UTIL_ClientPrintFilter, Detour_UTIL_ClientPrintFilter, &modules::server);
+DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
 
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_DETOUR(ProcessMovement);
@@ -36,6 +37,7 @@ void InitDetours()
 {
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(UTIL_ClientPrintFilter);
+	INIT_DETOUR(Host_Say);
 }
 
 void FlushAllDetours()
@@ -52,4 +54,9 @@ void FASTCALL Detour_UTIL_ClientPrintFilter(IRecipientFilter &filter, int msg_de
 {
 	int entindex = filter.GetRecipientIndex(0).Get();
 	UTIL_ClientPrintFilter(filter, msg_dest, msg_name, param1, param2, param3, param4);
+}
+
+void FASTCALL Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend)
+{
+	Host_Say(pEntity, args, teamonly, nCustomModRules, pszCustomModPrepend);
 }

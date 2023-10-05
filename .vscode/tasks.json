@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "AMBuild",
+			"command": "ambuild",
+			"args": [],
+			"options": {
+				"cwd": "./build/"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "AMBuild build task"
+		}
+	]
+}
