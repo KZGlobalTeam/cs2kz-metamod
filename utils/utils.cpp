@@ -106,7 +106,7 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-void PrintConsole(CBaseEntity *player, char *format, ...)
+void utils::PrintConsole(CBaseEntity *player, char *format, ...)
 {
 	va_list args;
     va_start(args, format);
@@ -116,7 +116,7 @@ void PrintConsole(CBaseEntity *player, char *format, ...)
 	va_end(args);
 }
 
-void PrintChat(CBaseEntity *player, char *format, ...)
+void utils::PrintChat(CBaseEntity *player, char *format, ...)
 {
 	va_list args;
     va_start(args, format);
@@ -126,7 +126,7 @@ void PrintChat(CBaseEntity *player, char *format, ...)
 	va_end(args);
 }
 
-void PrintCentre(CBaseEntity *player, char *format, ...)
+void utils::PrintCentre(CBaseEntity *player, char *format, ...)
 {
 	va_list args;
     va_start(args, format);
