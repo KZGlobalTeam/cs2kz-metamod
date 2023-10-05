@@ -12,6 +12,8 @@
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
+ClientPrint_t *ClientPrint = NULL;
+
 void modules::Initialize()
 {
 	modules::engine = new CModule(ROOTBIN, "engine2");
