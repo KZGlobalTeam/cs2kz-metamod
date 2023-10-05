@@ -5,6 +5,8 @@
 #include "utils.h"
 #include "movement/movement.h"
 
+void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend);
+extern CDetour<decltype(Detour_Host_Say)> Host_Say;
 
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);

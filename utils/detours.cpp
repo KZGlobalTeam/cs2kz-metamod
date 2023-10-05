@@ -8,6 +8,8 @@
 extern CEntitySystem* g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
+DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
+
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_DETOUR(ProcessMovement);
 DECLARE_MOVEMENT_DETOUR(PlayerMoveNew);
@@ -34,6 +36,7 @@ DECLARE_MOVEMENT_DETOUR(PostThink);
 void InitDetours()
 {
 	g_vecDetours.RemoveAll();
+	INIT_DETOUR(Host_Say);
 }
 
 void FlushAllDetours()
@@ -44,4 +47,9 @@ void FlushAllDetours()
 	}
 
 	g_vecDetours.RemoveAll();
+}
+
+void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend)
+{
+	Host_Say(pEntity, args, teamonly, nCustomModRules, pszCustomModPrepend);
 }

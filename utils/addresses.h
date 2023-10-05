@@ -39,9 +39,12 @@ namespace sigs
 {
 #ifdef _WIN32
 	/* Miscellaneous */
-	
+
 	// TODO
 	DECLARE_SIG(UTIL_ClientPrintFilter, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x18\x56\x57\x41\x56\x48\x81\xEC\x90\x00\x00\x00\x49\x8B\xF0");
+	
+	// search for the string "\"Console<0>\" say_team \"%s\"\n"
+	DECLARE_SIG(Host_Say, "\x44\x89\x4C\x24\x20\x44\x88");
 
 	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
 	DECLARE_SIG(CBaseAnimGraph__Teleport, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x60\x49\x8B\xD9");
