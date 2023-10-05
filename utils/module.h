@@ -35,14 +35,12 @@ public:
 #endif
 	}
 
-	void *FindSignature(const byte *pData)
+	void *FindSignature(const byte *pData, size_t length)
 	{
 		unsigned char *pMemory;
 		void *return_addr = nullptr;
 
-		size_t iSigLength = V_strlen((const char *)pData);
-
-		pMemory = (byte*)m_base;
+		pMemory = (byte *)m_base;
 
 		for (size_t i = 0; i < m_size; i++)
 		{
@@ -50,13 +48,22 @@ public:
 			while (*(pMemory + i + Matches) == pData[Matches] || pData[Matches] == '\x2A')
 			{
 				Matches++;
-				if (Matches == iSigLength)
+				if (Matches == length)
 					return_addr = (void *)(pMemory + i);
 			}
 		}
 
 		return return_addr;
 	}
+
+	// Will break with string containing \0 !!!
+	void *FindSignature(const byte *pData)
+	{
+		size_t iSigLength = V_strlen((const char *)pData);
+
+		return FindSignature(pData, iSigLength);
+	}
+
 
 	const char *m_pszModule;
 	const char* m_pszPath;

@@ -5,13 +5,6 @@
 #include "module.h"
 #include <ISmmPlugin.h>
 
-#ifdef _WIN32
-#define ROOTBIN "/bin/win64/"
-#define GAMEBIN "/csgo/bin/win64/"
-#else
-#define ROOTBIN "/bin/linuxsteamrt64/"
-#define GAMEBIN "/csgo/bin/linuxsteamrt64/"
-#endif
 
 namespace interfaces
 {
@@ -19,6 +12,7 @@ namespace interfaces
 
 	inline CGameResourceService *pGameResourceServiceServer = nullptr;
 	inline IVEngineServer2 *pEngine = nullptr;
+	inline ISource2Server *pServer = nullptr;
 }
 
 namespace utils

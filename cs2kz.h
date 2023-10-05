@@ -4,9 +4,7 @@
 #include <igameevents.h>
 #include <iplayerinfo.h>
 #include <sh_vector.h>
-#include "movement/movement.h"
 
-#define MAXPLAYERS 64
 
 class KZPlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -27,18 +25,10 @@ public:
 	const char *GetLogTag();
 };
 
-class CPlayerManager
-{
-public:
-	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
-	MovementPlayer *ToPlayer(CCSPlayerController *controller);
-	MovementPlayer *ToPlayer(CCSPlayerPawn *pawn);
-	MovementPlayer *ToPlayer(CPlayerSlot slot);
-	MovementPlayer *ToPlayer(CEntityIndex entIndex);
-
-	MovementPlayer* players[MAXPLAYERS + 1];
-};
-
 extern KZPlugin g_KZPlugin;
+
 void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args);
+void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+float Hook_ProcessUsercmds(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused);
+
 PLUGIN_GLOBALVARS();

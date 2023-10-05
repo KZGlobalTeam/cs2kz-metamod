@@ -19,8 +19,8 @@ template <typename T>
 class CDetour : public CDetourBase
 {
 public:
-	CDetour(CModule** pModule, T* pfnDetour, const char* pszName, byte* pSignature = nullptr) :
-		m_pModule(pModule), m_pfnDetour(pfnDetour), m_pszName(pszName), m_pSignature(pSignature)
+	CDetour(CModule **pModule, T *pfnDetour, const char *pszName, size_t sigLength, byte *pSignature = nullptr) :
+		m_pModule(pModule), m_pfnDetour(pfnDetour), m_pszName(pszName), m_sigLength(sigLength), m_pSignature(pSignature)
 	{
 	}
 
@@ -43,6 +43,7 @@ private:
 	T* m_pfnDetour;
 	const char* m_pszName;
 	byte* m_pSignature;
+	const size_t m_sigLength;
 	T* m_pfnFunc;
 	funchook_t* m_hook;
 };
@@ -60,7 +61,7 @@ void CDetour<T>::CreateDetour()
 	if (!m_pSignature)
 		m_pfnFunc = (T*)dlsym((*m_pModule)->m_hModule, m_pszName);
 	else
-		m_pfnFunc = (T*)(*m_pModule)->FindSignature(m_pSignature);
+		m_pfnFunc = (T*)(*m_pModule)->FindSignature(m_pSignature, m_sigLength);
 
 	if (!m_pfnFunc)
 	{
@@ -93,7 +94,7 @@ void CDetour<T>::FreeDetour()
 }
 
 #define DECLARE_DETOUR(name, detour, modulepath) \
-	CDetour<decltype(detour)> name(modulepath, detour, #name, (byte*)sigs::name)
+	CDetour<decltype(detour)> name(modulepath, detour, #name, sigs::name.length, (byte*)sigs::name.data)
 
 #define INIT_DETOUR(name) \
 	name.CreateDetour(); \

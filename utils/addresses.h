@@ -4,8 +4,18 @@
 #include "utils/module.h"
 #include "utlstring.h"
 
-#define DECLARE_SIG(name, sig) inline const byte *name = (byte *)sig
-#define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((uint8*)sig)
+
+struct Signature {
+	const char *data = nullptr;
+	size_t length = 0;
+
+	template<size_t N>
+	Signature(const char(&str)[N]) {
+		data = str;
+		length = N - 1;
+	}
+};
+#define DECLARE_SIG(name, sig) inline const Signature name = Signature(sig);
 
 namespace modules
 {

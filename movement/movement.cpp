@@ -1,5 +1,5 @@
 #include "movement.h"
-
+#include "playermanager.h"
 #include "utils/detours.h"
 #include "tier0/memdbgon.h"
 
@@ -37,7 +37,7 @@ float FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	ProcessMovement(ms, mv);
-	MovementPlayer *player = movement::ToMovementPlayer(ms);
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
 	player->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
 }
