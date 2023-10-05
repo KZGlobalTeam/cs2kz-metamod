@@ -16,6 +16,16 @@ class CBaseFilter;
 class CBasePlayerPawn;
 class CCSPlayerPawn;
 
+enum MsgDest : int32_t
+{
+	HUD_PRINTNOTIFY  = 1,
+	HUD_PRINTCONSOLE = 2,
+	HUD_PRINTTALK    = 3,
+	HUD_PRINTCENTER  = 4,
+	HUD_PRINTTALK2   = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
+	HUD_PRINTALERT   = 6
+};
+
 enum class EKillTypes_t : uint8_t
 {
 	KILL_NONE = 0x0,
