@@ -46,6 +46,7 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(sdk.path, 'entity2', 'entitysystem.cpp'),
       os.path.join(builder.sourcePath, 'utils', 'utils.cpp'),
       os.path.join(builder.sourcePath, 'utils', 'detours.cpp'),
+      os.path.join(builder.sourcePath, 'movement', 'playermanager.cpp'),
     ]
 
     if sdk_name in ['cs2']:

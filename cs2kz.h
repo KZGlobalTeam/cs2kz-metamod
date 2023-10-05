@@ -5,6 +5,7 @@
 #include <iplayerinfo.h>
 #include <sh_vector.h>
 
+
 class KZPlugin : public ISmmPlugin, public IMetamodListener
 {
 public:
@@ -24,7 +25,10 @@ public:
 	const char *GetLogTag();
 };
 
-
 extern KZPlugin g_KZPlugin;
+
 void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args);
+void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+float Hook_ProcessUsercmds(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused);
+
 PLUGIN_GLOBALVARS();

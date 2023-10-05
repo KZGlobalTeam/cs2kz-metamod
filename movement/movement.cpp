@@ -1,5 +1,5 @@
 #include "movement.h"
-
+#include "playermanager.h"
 #include "utils/detours.h"
 #include "tier0/memdbgon.h"
 
@@ -37,6 +37,9 @@ float FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	ProcessMovement(ms, mv);
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
+	player->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
 }
 
 bool FASTCALL movement::Detour_PlayerMoveNew(CCSPlayer_MovementServices *ms, CMoveData *mv)
@@ -139,9 +142,14 @@ void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 	PostThink(pawn);
 }
 
+MovementPlayer *movement::ToMovementPlayer(CCSPlayer_MovementServices *ms)
+{
+	return dynamic_cast<MovementPlayer *>(ms->pawn->m_hController.Get());
+}
+
 Vector& MovementPlayer::GetOrigin()
 {
-	return this->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin;
+	return this->GetPawn()->m_pSceneNode->m_vecAbsOrigin;
 }
 
 void MovementPlayer::SetOrigin(const Vector& origin)
@@ -151,7 +159,7 @@ void MovementPlayer::SetOrigin(const Vector& origin)
 
 Vector& MovementPlayer::GetVelocity()
 {
-	return this->m_hPawn.Get()->m_vecAbsVelocity;
+	return this->GetPawn()->m_vecAbsVelocity;
 }
 
 void MovementPlayer::GetVelocity(const Vector& velocity)

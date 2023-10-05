@@ -1,11 +1,12 @@
+
+#include "utils.h"
 #include "convar.h"
 #include "strtools.h"
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
 
+#include "common.h"
 #include "module.h"
-#include "utils.h"
-#include "cs2kz.h"
 #include "detours.h"
 #include "tier0/memdbgon.h"
 
@@ -24,7 +25,8 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameResourceServiceServer, CGameResourceService, GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameClients, ISource2GameClients, INTERFACEVERSION_SERVERGAMECLIENTS);
 	GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
-	
+	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
+	GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
 	return true;
 }
 
@@ -38,6 +40,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
+
 	InitDetours();
 	return true;
 }
@@ -45,6 +48,11 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 void utils::Cleanup()
 {
 	FlushAllDetours();
+}
+
+CGlobalVars *utils::GetServerGlobals()
+{
+	return interfaces::pEngine->GetServerGlobals();
 }
 
 void utils::UnlockConVars()
