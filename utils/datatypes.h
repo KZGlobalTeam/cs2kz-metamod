@@ -172,7 +172,7 @@ enum ChatIgnoreType_t : uint32_t
 
 enum PlayerConnectedState : uint32_t
 {
-	PlayerNeverConnected = 0xffffffffffffffff,
+	PlayerNeverConnected = 0xffffffff,
 	PlayerConnected = 0x0,
 	PlayerConnecting = 0x1,
 	PlayerReconnecting = 0x2,
