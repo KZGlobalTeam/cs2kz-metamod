@@ -4,6 +4,7 @@
 #include <igameevents.h>
 #include <iplayerinfo.h>
 #include <sh_vector.h>
+#include <stdint.h>
 
 #include "entity2/entitysystem.h"
 #define MAXPLAYERS 64
