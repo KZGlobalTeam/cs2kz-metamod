@@ -22,8 +22,8 @@ extern CEntitySystem *g_pEntitySystem;
 PLUGIN_GLOBALVARS();
 
 // these are for searchability, because static behaves differently in different scopes.
-#define internal static // static functions
-#define local_persist static // static variables
+#define internal static // static functions & static global variables
+#define local_persist static // static local variables
 
 typedef int8_t i8;
 typedef int16_t i16;
