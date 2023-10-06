@@ -119,7 +119,7 @@ static float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmd
 
 static float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
 {
-	KZ::hud::OnProcessUsercmds_Post(slot, buf, numcmds, ignore, paused);
+	KZ::HUD::OnProcessUsercmds_Post(slot, buf, numcmds, ignore, paused);
 	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
 }
 

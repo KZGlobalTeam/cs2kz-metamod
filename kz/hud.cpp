@@ -7,6 +7,5 @@ void KZ::hud::OnProcessUsercmds_Post(CPlayerSlot &slot, bf_read *buf, int numcmd
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(slot);
 	if (!player->GetController()) return;
 	float speed = player->GetVelocity().Length2D();
-	utils::PrintAlert(player->GetController(), "%.2f\n", speed);
-	utils::PrintCentre(player->GetController(), "%.2f\n%.2f", speed);
+	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)), "%.2f", speed);
 }
