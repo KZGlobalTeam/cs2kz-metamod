@@ -49,6 +49,7 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'movement', 'playermanager.cpp'),
       os.path.join(builder.sourcePath, 'kz', 'hud.cpp'),
       os.path.join(builder.sourcePath, 'kz', 'misc.cpp'),
+      os.path.join(builder.sourcePath, 'kz', 'kzplayer.cpp'),
     ]
 
     if sdk_name in ['cs2']:
