@@ -1,5 +1,40 @@
 #pragma once
 #include "irecipientfilter.h"
+#include "utils.h"
+#include "interfaces/interfaces.h"
+
+class CBroadcastRecipientFilter : public IRecipientFilter
+{
+public:
+	CBroadcastRecipientFilter(bool bReliable = true, bool bInitMessage = false) :
+		m_bReliable(bReliable), m_bInitMessage(bInitMessage) 
+	{
+		m_Recipients.RemoveAll();
+		for (int i = 0; i <= utils::GetServerGlobals()->maxClients; i++)
+		{
+			CBaseEntity *ent = g_pEntitySystem->GetBaseEntity(CEntityIndex(i));
+			if (ent)
+			{
+				m_Recipients.AddToTail(i);
+			}
+		}
+	}
+
+	~CBroadcastRecipientFilter() override {}
+
+	bool IsReliable(void) const override { return m_bReliable; }
+
+	bool IsInitMessage(void) const override { return m_bInitMessage; }
+
+	int GetRecipientCount(void) const override { return m_Recipients.Count(); }
+
+	CEntityIndex GetRecipientIndex(int slot) const override { return CEntityIndex(m_Recipients[slot]); }
+
+private:
+	bool m_bReliable;
+	bool m_bInitMessage;
+	CUtlVector<int> m_Recipients;
+};
 
 class CSingleRecipientFilter : public IRecipientFilter
 {

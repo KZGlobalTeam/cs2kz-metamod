@@ -8,9 +8,10 @@ Doesn't work on linux (no sigs)
 TODO list: (italic means I'm working on it)
 
 Utilities:
-- [ ] *Print functions (chat, alert, center)*
+- [x] Print functions (chat, alert, center)
 - [ ] *Add functionalities to MovementPlayer class*
-- [ ] Add chat listener
+- [x] Add chat listener
+	- [ ] Add commands to chat listener
 
 KZ-specific:
 - [ ] General
@@ -18,7 +19,7 @@ KZ-specific:
 	- [ ] Add MovementAPI stuff with callback registering for KZ modules
 	- [ ] Disable player collisions
 	- [ ] Player transparency
-	- [ ] *Make players invincible*
+	- [x] Make players invincible
 - [ ] Gameplay
 	- [ ] Add MOD (requires finished CVar RE)
 		- [ ] Buff jump height to 128t values

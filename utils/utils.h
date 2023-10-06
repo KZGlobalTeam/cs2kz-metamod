@@ -26,12 +26,23 @@ namespace utils
 	CGlobalVars *GetServerGlobals();
 	void UnlockConVars();
 	void UnlockConCommands();
+
+	bool IsEntityPawn(CBaseEntity *entity);
+	bool IsEntityController(CBaseEntity *entity);
 	
+	CBasePlayerController *GetController(CBaseEntity *entity);
 	CBasePlayerController *GetController(CPlayerSlot slot);
 
+	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 	// Print functions do not work inside movement hooks, for some reasons...
-	void PrintConsole(CBasePlayerController *player, char *format, ...);
-	void PrintChat(CBasePlayerController *player, char *format, ...);
-	void PrintCentre(CBasePlayerController *player, char *format, ...);
-	void PrintAlert(CBasePlayerController *player, char *format, ...);
+	void PrintConsole(CBaseEntity *entity, char *format, ...);
+	void PrintChat(CBaseEntity *entity, char *format, ...);
+	void PrintCentre(CBaseEntity *entity, char *format, ...);
+	void PrintAlert(CBaseEntity *entity, char *format, ...);
+
+	void PrintConsoleAll(char *format, ...);
+	void PrintChatAll(char *format, ...);
+	void PrintCentreAll(char *format, ...);
+	void PrintAlertAll(char *format, ...);
+
 }
