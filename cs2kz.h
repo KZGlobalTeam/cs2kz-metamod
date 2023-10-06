@@ -27,3 +27,4 @@ static void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args);
 static void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
 static float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused);
 static float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused);
+static void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t* pInfo);

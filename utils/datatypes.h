@@ -248,6 +248,12 @@ enum CSPlayerBlockingUseAction_t : uint32_t
 	k_CSPlayerBlockingUseAction_MaxCount = 0x11,
 };
 
+// TODO: PR size change to hl2sdk
+struct EntitySpawnInfo_t2 : EntitySpawnInfo_t
+{
+	uint64_t unknown;
+};
+
 class IntervalTimer
 {
 public:

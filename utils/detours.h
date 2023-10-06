@@ -4,11 +4,9 @@
 #include "datatypes.h"
 #include "utils.h"
 #include "movement/movement.h"
+
 void FASTCALL Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend);
 extern CDetour<decltype(Detour_Host_Say)> Host_Say;
-
-void * FASTCALL Detour_CEntitySystem_CreateEntity(CGameEntitySystem *this_, SpawnGroupHandle_t spawnGroup, void *pClass, const char *scriptClassName, int32_t networkMode, CEntityIndex forcedIndex, uint32_t forcedSerial, bool createInIsolatedPrecacheList);
-extern CDetour<decltype(Detour_CEntitySystem_CreateEntity)> CEntitySystem_CreateEntity;
 
 void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *pOther);
 extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;
