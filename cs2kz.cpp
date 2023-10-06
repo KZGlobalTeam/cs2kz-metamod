@@ -27,7 +27,6 @@ CPlayerManager *g_pPlayerManager;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
-
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
 	PLUGIN_SAVEVARS();
@@ -134,12 +133,7 @@ static void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *p
 	{
 		if (pInfo && pInfo[i].m_pEntity)
 		{
-			const char *classname = pInfo[i].m_pEntity->m_designerName.String();
-			const char *targetname = pInfo[i].m_pEntity->m_name.String();
-			if (stricmp(classname, "trigger_multiple") == 0 && targetname)
-			{
-				
-			}
+			// do stuff with spawning entities!
 		}
 	}
 }

@@ -58,28 +58,75 @@ void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool te
 	Host_Say(pEntity, args, teamonly, nCustomModRules, pszCustomModPrepend);
 }
 
+bool IsEntTriggerMultiple(CBaseEntity *ent)
+{
+	bool result = false;
+	if (ent && ent->m_pEntity)
+	{
+		const char *classname = ent->m_pEntity->m_designerName.String();
+		result = classname && stricmp(classname, "trigger_multiple") == 0;
+	}
+	return result;
+}
+
+bool IsTriggerStartZone(CBaseTrigger *trigger)
+{
+	bool result = false;
+	if (trigger && trigger->m_pEntity)
+	{
+		const char *targetname = trigger->m_pEntity->m_name.String();
+		result = targetname && stricmp(targetname, "timer_startzone") == 0;
+	}
+	return result;
+}
+
+bool IsTriggerEndZone(CBaseTrigger *trigger)
+{
+	bool result = false;
+	if (trigger && trigger->m_pEntity)
+	{
+		const char *targetname = trigger->m_pEntity->m_name.String();
+		result = targetname && stricmp(targetname, "timer_endzone") == 0;
+	}
+	return result;
+}
+
 void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *pOther)
 {
 	CBaseTrigger_StartTouch(this_, pOther);
-#if 1
+	
 	if (utils::IsEntityPawn(pOther))
 	{
-		CGlobalVars *gpGlobals = interfaces::pEngine->GetServerGlobals();
-		const char *triggerName = this_->m_pEntity->m_name.String();
-		utils::PrintChat(pOther, "[%i] %s started touching %i (%s)", gpGlobals->framecount, this_->m_pEntity->m_designerName.String(), this_->m_pEntity->m_EHandle.GetEntryIndex(), triggerName ? triggerName : "");
+		if (IsEntTriggerMultiple((CBaseEntity *)this_))
+		{
+			if (IsTriggerStartZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: start zone trigger");
+			}
+			else if (IsTriggerEndZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: end zone trigger");
+			}
+		}
 	}
-#endif
 }
 
 void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOther)
 {
 	CBaseTrigger_EndTouch(this_, pOther);
-#if 1
+	
 	if (utils::IsEntityPawn(pOther))
 	{
-		CGlobalVars *gpGlobals = interfaces::pEngine->GetServerGlobals();
-		const char *triggerName = this_->m_pEntity->m_name.String();
-		utils::PrintChat(pOther, "[%i] %s stopped touching %i (%s)", gpGlobals->framecount, this_->m_pEntity->m_designerName.String(), this_->m_pEntity->m_EHandle.GetEntryIndex(), triggerName ? triggerName : "");
+		if (IsEntTriggerMultiple((CBaseEntity *)this_))
+		{
+			if (IsTriggerStartZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: start zone trigger");
+			}
+			else if (IsTriggerEndZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: end zone trigger");
+			}
+		}
 	}
-#endif
 }
