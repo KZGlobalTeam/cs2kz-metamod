@@ -1,10 +1,6 @@
 #pragma once
 
-#include <ISmmPlugin.h>
-#include <igameevents.h>
-#include <iplayerinfo.h>
-#include <sh_vector.h>
-
+#include "common.h"
 
 class KZPlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -27,8 +23,7 @@ public:
 
 extern KZPlugin g_KZPlugin;
 
-void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args);
-void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
-float Hook_ProcessUsercmds(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused);
-
-PLUGIN_GLOBALVARS();
+static void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args);
+static void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+static float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused);
+static float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused);

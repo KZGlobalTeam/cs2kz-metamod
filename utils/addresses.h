@@ -30,6 +30,8 @@ namespace offsets
 {
 #ifdef _WIN32
 	inline constexpr int GameEntitySystem = 0x58;
+	inline constexpr int IsEntityPawn = 152;
+	inline constexpr int IsEntityController = 153;
 #else
 	inline constexpr int GameEntitySystem = 0x50;
 #endif

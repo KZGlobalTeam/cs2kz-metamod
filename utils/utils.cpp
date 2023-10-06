@@ -8,6 +8,7 @@
 #include "common.h"
 #include "module.h"
 #include "detours.h"
+#include "virtual.h"
 #include "tier0/memdbgon.h"
 #include "recipientfilters.h"
 
@@ -107,65 +108,109 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
+bool utils::IsEntityPawn(CBaseEntity *entity)
+{
+	return CALL_VIRTUAL(bool, offsets::IsEntityPawn, entity);
+}
+
+bool utils::IsEntityController(CBaseEntity *entity)
+{
+	return CALL_VIRTUAL(bool, offsets::IsEntityController, entity);
+}
+
+CBasePlayerController *utils::GetController(CBaseEntity *entity)
+{
+	CBasePlayerController *controller = nullptr;
+
+	// CBasePlayerPawn doesn't actually inherits from CBaseEntity but our own CBaseEntity2.
+	if (utils::IsEntityPawn(entity))
+	{
+		return reinterpret_cast<CBasePlayerPawn *>(entity)->m_hController.Get();
+	}
+	else if (utils::IsEntityController(entity))
+	{
+		return reinterpret_cast<CBasePlayerController*>(entity);
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
 	return dynamic_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
 }
 
-void utils::PrintConsole(CBasePlayerController *controller, char *format, ...)
+CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
 {
-	va_list args;
-    va_start(args, format);
-	char buffer[1024];
-	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
-	va_end(args);
-}
-
-void utils::PrintChat(CBasePlayerController *controller, char *format, ...)
-{
-	va_list args;
-    va_start(args, format);
-	char buffer[1024];
-	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
-	va_end(args);
-}
-
-void utils::PrintCentre(CBasePlayerController *controller, char *format, ...)
-{
-	va_list args;
-    va_start(args, format);
-	char buffer[1024];
-	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
-	va_end(args);
-}
-
-void utils::PrintAlert(CBasePlayerController *controller, char *format, ...)
-{
-	va_list args;
-	va_start(args, format);
-	char buffer[1024];
-	vsnprintf(buffer, sizeof(buffer), format, args);
-	CSingleRecipientFilter filter(controller->m_pEntity->m_EHandle.GetEntryIndex());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
-	va_end(args);
-}
-
-bool utils::IsEntPlayerPawn(CBaseEntity *ent)
-{
-	bool result = false;
-	if (ent && ent->m_pEntity)
+	CBasePlayerController *controller = utils::GetController(entity);
+	if (!controller)
 	{
-		const char *classname = ent->m_pEntity->m_designerName.String();
-		if (stricmp(classname, "player") == 0)
-		{
-			result = true;
-		}
+		return -1;
 	}
-	return result;
+	else return controller->m_pEntity->m_EHandle.GetEntryIndex() - 1;
+}
+
+#define FORMAT_STRING(buffer) \
+	va_list args; \
+	va_start(args, format); \
+	char buffer[1024]; \
+	vsnprintf(buffer, sizeof(buffer), format, args); \
+	va_end(args);
+
+void utils::PrintConsole(CBaseEntity *entity, char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+}
+
+void utils::PrintChat(CBaseEntity *entity, char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
+}
+
+void utils::PrintCentre(CBaseEntity *entity, char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+}
+
+void utils::PrintAlert(CBaseEntity *entity, char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
+}
+
+void utils::PrintConsoleAll(char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CBroadcastRecipientFilter filter;
+	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+}
+
+void utils::PrintChatAll(char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CBroadcastRecipientFilter filter;
+	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
+}
+
+void utils::PrintCentreAll(char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CBroadcastRecipientFilter filter;
+	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+}
+
+void utils::PrintAlertAll(char *format, ...)
+{
+	FORMAT_STRING(buffer);
+	CBroadcastRecipientFilter filter;
+	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
