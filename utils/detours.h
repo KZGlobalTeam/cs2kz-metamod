@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "movement/movement.h"
 
-void FASTCALL Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend);
+void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend);
 extern CDetour<decltype(Detour_Host_Say)> Host_Say;
 
 void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *pOther);
