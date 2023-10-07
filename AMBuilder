@@ -21,9 +21,9 @@ for sdk_name in MMSPlugin.sdks:
       binary.compiler.cxxflags += ['/std:c++17']
 
     binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'src'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
-      os.path.join(builder.sourcePath, 'movement'),
       os.path.join(builder.sourcePath, 'vendor', 'subhook'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
     ]
@@ -33,23 +33,26 @@ for sdk_name in MMSPlugin.sdks:
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
       ] 
+      binary.sources += ['src/utils/plat_linux.cpp']
     elif binary.compiler.target.platform == 'windows':
       binary.compiler.postlink += [
         os.path.join('psapi.lib'),
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
       ]
+      binary.sources += ['src/utils/plat_win.cpp']
 
     binary.sources += [
-      'cs2kz.cpp',
-      os.path.join(builder.sourcePath, 'movement', 'movement.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
       os.path.join(sdk.path, 'entity2', 'entitysystem.cpp'),
-      os.path.join(builder.sourcePath, 'utils', 'utils.cpp'),
-      os.path.join(builder.sourcePath, 'utils', 'detours.cpp'),
-      os.path.join(builder.sourcePath, 'movement', 'playermanager.cpp'),
-      os.path.join(builder.sourcePath, 'kz', 'hud.cpp'),
-      os.path.join(builder.sourcePath, 'kz', 'misc.cpp'),
-      os.path.join(builder.sourcePath, 'kz', 'kzplayer.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'utils', 'utils.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_hud.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
     ]
 
     if sdk_name in ['cs2']:
