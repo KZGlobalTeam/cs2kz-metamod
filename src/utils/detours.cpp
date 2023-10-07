@@ -10,6 +10,8 @@ extern CEntitySystem* g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
 DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
+DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
+DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
 DECLARE_DETOUR(CCSGameRules_ctor, Detour_CCSGameRules_ctor, &modules::server);
 
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
@@ -39,6 +41,8 @@ void InitDetours()
 {
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(Host_Say);
+	INIT_DETOUR(CBaseTrigger_StartTouch);
+	INIT_DETOUR(CBaseTrigger_EndTouch);
 	INIT_DETOUR(CCSGameRules_ctor);
 }
 
@@ -48,13 +52,86 @@ void FlushAllDetours()
 	{
 		g_vecDetours[i]->FreeDetour();
 	}
-
+	
 	g_vecDetours.RemoveAll();
 }
 
 void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend)
 {
 	Host_Say(pEntity, args, teamonly, nCustomModRules, pszCustomModPrepend);
+}
+
+bool IsEntTriggerMultiple(CBaseEntity *ent)
+{
+	bool result = false;
+	if (ent && ent->m_pEntity)
+	{
+		const char *classname = ent->m_pEntity->m_designerName.String();
+		result = classname && stricmp(classname, "trigger_multiple") == 0;
+	}
+	return result;
+}
+
+bool IsTriggerStartZone(CBaseTrigger *trigger)
+{
+	bool result = false;
+	if (trigger && trigger->m_pEntity)
+	{
+		const char *targetname = trigger->m_pEntity->m_name.String();
+		result = targetname && stricmp(targetname, "timer_startzone") == 0;
+	}
+	return result;
+}
+
+bool IsTriggerEndZone(CBaseTrigger *trigger)
+{
+	bool result = false;
+	if (trigger && trigger->m_pEntity)
+	{
+		const char *targetname = trigger->m_pEntity->m_name.String();
+		result = targetname && stricmp(targetname, "timer_endzone") == 0;
+	}
+	return result;
+}
+
+void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *pOther)
+{
+	CBaseTrigger_StartTouch(this_, pOther);
+	
+	if (utils::IsEntityPawn(pOther))
+	{
+		if (IsEntTriggerMultiple((CBaseEntity *)this_))
+		{
+			if (IsTriggerStartZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: start zone trigger");
+			}
+			else if (IsTriggerEndZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: end zone trigger");
+			}
+		}
+	}
+}
+
+void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOther)
+{
+	CBaseTrigger_EndTouch(this_, pOther);
+	
+	if (utils::IsEntityPawn(pOther))
+	{
+		if (IsEntTriggerMultiple((CBaseEntity *)this_))
+		{
+			if (IsTriggerStartZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: start zone trigger");
+			}
+			else if (IsTriggerEndZone(this_))
+			{
+				utils::PrintChat(pOther, "StartTouch: end zone trigger");
+			}
+		}
+	}
 }
 
 void *FASTCALL Detour_CCSGameRules_ctor(void *this_)
