@@ -89,7 +89,13 @@ public:
 			players[i] = new MovementPlayer(i);
 		}
 	}
-
+	~CMovementPlayerManager()
+	{
+		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			delete players[i];
+		}
+	}
 public:
 	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
 	MovementPlayer *ToPlayer(CCSPlayerController *controller);
