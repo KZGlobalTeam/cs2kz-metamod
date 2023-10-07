@@ -43,11 +43,20 @@ public:
 
 	CCSPlayerController *GetController();
 	CCSPlayerPawn *GetPawn();
+	CPlayerSlot GetPlayerSlot() { return index - 1; };
 
 	Vector &GetOrigin();
 	void SetOrigin(const Vector &origin);
 	Vector &GetVelocity();
 	void GetVelocity(const Vector &velocity);
+
+	virtual void OnStartDucking();
+	virtual void OnStopDucking();
+	virtual void OnStartTouchGround();
+	virtual void OnStopTouchGround();
+	virtual void OnChangeMoveType();
+	virtual void OnPlayerJump();
+	virtual void OnAirAccelerate();
 
 public:
 	// General

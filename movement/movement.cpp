@@ -142,6 +142,34 @@ void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 	PostThink(pawn);
 }
 
+void MovementPlayer::OnStartDucking()
+{
+}
+
+void MovementPlayer::OnStopDucking()
+{
+}
+
+void MovementPlayer::OnStartTouchGround()
+{
+}
+
+void MovementPlayer::OnStopTouchGround()
+{
+}
+
+void MovementPlayer::OnChangeMoveType()
+{
+}
+
+void MovementPlayer::OnPlayerJump()
+{
+}
+
+void MovementPlayer::OnAirAccelerate()
+{
+}
+
 CCSPlayerController *MovementPlayer::GetController()
 {
 	return dynamic_cast<CCSPlayerController *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
