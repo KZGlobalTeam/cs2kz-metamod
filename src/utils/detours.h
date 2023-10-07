@@ -8,6 +8,12 @@
 void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend);
 extern CDetour<decltype(Detour_Host_Say)> Host_Say;
 
+void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *pOther);
+extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;
+
+void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOther);
+extern CDetour<decltype(Detour_CBaseTrigger_EndTouch)> CBaseTrigger_EndTouch;
+
 void *FASTCALL Detour_CCSGameRules_ctor(void *this_);
 extern CDetour<decltype(Detour_CCSGameRules_ctor)> CCSGameRules_ctor;
 
