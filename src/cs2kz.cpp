@@ -9,11 +9,9 @@
 #include "utils/recipientfilters.h"
 #include "utils/detours.h"
 #include "utils/addresses.h"
-#include "movement/movement.h"
-#include "movement/playermanager.h"
 
-#include "kz/hud.h"
-#include "kz/misc.h"
+#include "movement/movement.h"
+#include "kz/kz.h"
 
 KZPlugin g_KZPlugin;
 
@@ -22,7 +20,6 @@ SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bo
 SH_DECL_HOOK5(ISource2GameClients, ProcessUsercmds, SH_NOATTRIB, false, float, CPlayerSlot, bf_read *, int, bool, bool);
 
 CEntitySystem *g_pEntitySystem = NULL;
-CPlayerManager *g_pPlayerManager;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
@@ -36,12 +33,12 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 	movement::InitDetours();
-
+	KZ::misc::InitPlayerManager();
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
 	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Pre), false);
 	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Post), true);
-	g_pPlayerManager = new CPlayerManager();
+
 	return true;
 }
 
@@ -111,19 +108,19 @@ const char *KZPlugin::GetURL()
 	return "https://cs2.kz/";
 }
 
-static float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
+internal float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
 {
 	KZ::misc::EnableGodMode(slot);
 	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
 }
 
-static float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
+internal float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
 {
 	KZ::HUD::OnProcessUsercmds_Post(slot, buf, numcmds, ignore, paused);
 	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
 }
 
-static void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
+internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
 	if (!g_pEntitySystem)
 	{
@@ -132,7 +129,7 @@ static void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 	RETURN_META(MRES_IGNORED);
 }
 
-static void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
+internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 {
 	RETURN_META(MRES_IGNORED);
 }

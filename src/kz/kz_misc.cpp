@@ -1,6 +1,8 @@
-#include "misc.h"
 #include "common.h"
-#include <playermanager.h>
+#include "kz.h"
+
+CKZPlayerManager g_KZPlayerManager;
+CMovementPlayerManager *g_pPlayerManager = dynamic_cast<CMovementPlayerManager *>(&g_KZPlayerManager);
 
 void KZ::misc::EnableGodMode(CPlayerSlot slot)
 {
@@ -8,4 +10,8 @@ void KZ::misc::EnableGodMode(CPlayerSlot slot)
 	CCSPlayerPawn *pawn = player->GetPawn();
 	if (!pawn) return;
 	pawn->m_bTakesDamage = false;
+}
+
+void KZ::misc::InitPlayerManager()
+{
 }

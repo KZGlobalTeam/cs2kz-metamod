@@ -1,5 +1,4 @@
 #include "movement.h"
-#include "playermanager.h"
 #include "utils/detours.h"
 #include "tier0/memdbgon.h"
 
@@ -29,7 +28,7 @@ void movement::InitDetours()
 	INIT_DETOUR(PostThink);
 }
 
-float FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
+f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 {
 	return GetMaxSpeed(pawn);
 }
@@ -182,27 +181,34 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn.Get());
 }
 
-Vector& MovementPlayer::GetOrigin()
+void MovementPlayer::GetOrigin(Vector *origin)
 {
-	return this->GetController()->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin; // not actually correct
+	CCSPlayerController *controller = this->GetController();
+	if (!controller) return;
+	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
+	if (!pawn) return;
+
+	*origin = this->GetController()->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin;
 }
 
 void MovementPlayer::SetOrigin(const Vector& origin)
 {
-
+	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
+	// TODO
 }
 
-Vector& MovementPlayer::GetVelocity()
+void MovementPlayer::GetVelocity(Vector *velocity)
 {
 	CCSPlayerController *controller = this->GetController();
-	if (!controller) return Vector();
+	if (!controller) return;
 	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
-	if (!pawn) return Vector();
+	if (!pawn) return;
 
-	return this->GetController()->m_hPawn.Get()->m_vecAbsVelocity; // not actually correct
+	*velocity = this->GetController()->m_hPawn.Get()->m_vecAbsVelocity;
 }
 
-void MovementPlayer::GetVelocity(const Vector& velocity)
+void MovementPlayer::SetVelocity(const Vector& velocity)
 {
-
+	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
+	// TODO
 }

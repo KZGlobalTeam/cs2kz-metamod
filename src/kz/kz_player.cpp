@@ -1,4 +1,4 @@
-#include "kzplayer.h"
+#include "kz.h"
 
 
 KZPlayer *KZ::ToKZPlayer(MovementPlayer *player) 

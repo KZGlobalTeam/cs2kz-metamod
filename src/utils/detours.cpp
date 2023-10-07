@@ -1,10 +1,11 @@
+#include "common.h"
 #include "utils.h"
 #include "cdetour.h"
 #include "module.h"
 #include "detours.h"
-#include "movement.h"
 #include "tier0/memdbgon.h"
 
+#include "movement/movement.h"
 extern CEntitySystem* g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
