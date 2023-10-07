@@ -663,7 +663,7 @@ public:
 static_assert(sizeof(CCollisionProperty) == 0xb0, "Class didn't match expected size");
 
 // Size: 0x4b0
-class CBaseEntity2 : public CEntityInstance
+class CBaseEntity2 : public CBaseEntity
 {
 public:
 	// MNetworkEnable

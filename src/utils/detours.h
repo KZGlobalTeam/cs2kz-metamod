@@ -14,6 +14,9 @@ extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch
 void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOther);
 extern CDetour<decltype(Detour_CBaseTrigger_EndTouch)> CBaseTrigger_EndTouch;
 
+void *FASTCALL Detour_CCSGameRules_ctor(void *this_);
+extern CDetour<decltype(Detour_CCSGameRules_ctor)> CCSGameRules_ctor;
+
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);
 DECLARE_MOVEMENT_EXTERN_DETOUR(PlayerMoveNew);

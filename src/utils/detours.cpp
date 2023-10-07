@@ -1,16 +1,18 @@
+#include "common.h"
 #include "utils.h"
 #include "cdetour.h"
 #include "module.h"
 #include "detours.h"
-#include "movement.h"
 #include "tier0/memdbgon.h"
 
+#include "movement/movement.h"
 extern CEntitySystem* g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
 DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
+DECLARE_DETOUR(CCSGameRules_ctor, Detour_CCSGameRules_ctor, &modules::server);
 
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_DETOUR(ProcessMovement);
@@ -41,6 +43,7 @@ void InitDetours()
 	INIT_DETOUR(Host_Say);
 	INIT_DETOUR(CBaseTrigger_StartTouch);
 	INIT_DETOUR(CBaseTrigger_EndTouch);
+	INIT_DETOUR(CCSGameRules_ctor);
 }
 
 void FlushAllDetours()
@@ -129,4 +132,12 @@ void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOt
 			}
 		}
 	}
+}
+
+void *FASTCALL Detour_CCSGameRules_ctor(void *this_)
+{
+	// this is basically where all the configs get executed
+	void *result = CCSGameRules_ctor(this_);
+	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	return result;
 }

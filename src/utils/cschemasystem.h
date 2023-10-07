@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../utils/virtual.h"
+#include "utils/virtual.h"
 #include <platform.h>
 
 struct CSchemaNetworkValue {

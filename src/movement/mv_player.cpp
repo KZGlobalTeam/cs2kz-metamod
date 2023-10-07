@@ -1,5 +1,4 @@
 #include "movement.h"
-#include "playermanager.h"
 #include "utils/detours.h"
 #include "tier0/memdbgon.h"
 
@@ -29,15 +28,16 @@ void movement::InitDetours()
 	INIT_DETOUR(PostThink);
 }
 
-float FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
+f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 {
 	return GetMaxSpeed(pawn);
 }
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	ProcessMovement(ms, mv);
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnProcessMovement();
+	ProcessMovement(ms, mv);
 	player->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
 	player->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
 }
@@ -97,7 +97,7 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 	OnJump(ms, mv);
 }
 
-void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, float wishspeed, float accel)
+void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)
 {
 	AirAccelerate(ms, mv, wishdir, wishspeed, accel);
 }
@@ -142,6 +142,38 @@ void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 	PostThink(pawn);
 }
 
+void MovementPlayer::OnProcessMovement()
+{
+}
+
+void MovementPlayer::OnStartDucking()
+{
+}
+
+void MovementPlayer::OnStopDucking()
+{
+}
+
+void MovementPlayer::OnStartTouchGround()
+{
+}
+
+void MovementPlayer::OnStopTouchGround()
+{
+}
+
+void MovementPlayer::OnChangeMoveType()
+{
+}
+
+void MovementPlayer::OnPlayerJump()
+{
+}
+
+void MovementPlayer::OnAirAccelerate()
+{
+}
+
 CCSPlayerController *MovementPlayer::GetController()
 {
 	return dynamic_cast<CCSPlayerController *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
@@ -154,27 +186,34 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn.Get());
 }
 
-Vector& MovementPlayer::GetOrigin()
+void MovementPlayer::GetOrigin(Vector *origin)
 {
-	return this->GetController()->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin; // not actually correct
+	CCSPlayerController *controller = this->GetController();
+	if (!controller) return;
+	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
+	if (!pawn) return;
+
+	*origin = this->GetController()->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin;
 }
 
 void MovementPlayer::SetOrigin(const Vector& origin)
 {
-
+	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
+	// TODO
 }
 
-Vector& MovementPlayer::GetVelocity()
+void MovementPlayer::GetVelocity(Vector *velocity)
 {
 	CCSPlayerController *controller = this->GetController();
-	if (!controller) return Vector();
+	if (!controller) return;
 	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
-	if (!pawn) return Vector();
+	if (!pawn) return;
 
-	return this->GetController()->m_hPawn.Get()->m_vecAbsVelocity; // not actually correct
+	*velocity = this->GetController()->m_hPawn.Get()->m_vecAbsVelocity;
 }
 
-void MovementPlayer::GetVelocity(const Vector& velocity)
+void MovementPlayer::SetVelocity(const Vector& velocity)
 {
-
+	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
+	// TODO
 }
