@@ -51,7 +51,6 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	SH_REMOVE_HOOK(CEntitySystem, Spawn, g_pEntitySystem, SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	
 	utils::Cleanup();
-	delete g_pPlayerManager;
 	return true;
 }
 
