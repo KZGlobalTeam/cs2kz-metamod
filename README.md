@@ -53,13 +53,13 @@ VS:
 ```
 mkdir build
 cd build
-py ../configure.py --gen=vs --vs-version 17
+py ../configure.py --hl2sdk-root "../" --gen=vs --vs-version 17
 ``` 
 
 ambuild:
 ```
 mkdir build
 cd build
-py ../configure.py
+py ../configure.py --hl2sdk-root "../"
 ambuild
 ``` 

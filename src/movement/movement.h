@@ -50,6 +50,7 @@ public:
 	void GetVelocity(Vector *velocity);
 	void SetVelocity(const Vector &velocity);
 
+	virtual void OnProcessMovement();
 	virtual void OnStartDucking();
 	virtual void OnStopDucking();
 	virtual void OnStartTouchGround();
@@ -89,7 +90,13 @@ public:
 			players[i] = new MovementPlayer(i);
 		}
 	}
-
+	~CMovementPlayerManager()
+	{
+		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			delete players[i];
+		}
+	}
 public:
 	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
 	MovementPlayer *ToPlayer(CCSPlayerController *controller);

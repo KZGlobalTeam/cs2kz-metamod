@@ -1,7 +1,6 @@
 #include "kz.h"
 
-
-KZPlayer *KZ::ToKZPlayer(MovementPlayer *player) 
-{ 
-	return static_cast<KZPlayer *>(player); 
-};
+void KZPlayer::OnProcessMovement()
+{
+	KZ::misc::EnableGodMode(this->index - 1);
+}
