@@ -35,8 +35,9 @@ f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	ProcessMovement(ms, mv);
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnProcessMovement();
+	ProcessMovement(ms, mv);
 	player->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
 	player->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
 }
@@ -96,7 +97,7 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 	OnJump(ms, mv);
 }
 
-void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, float wishspeed, float accel)
+void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)
 {
 	AirAccelerate(ms, mv, wishdir, wishspeed, accel);
 }
@@ -139,6 +140,10 @@ void FASTCALL movement::Detour_PlayerMovePost(CCSPlayer_MovementServices *ms, CM
 void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 {
 	PostThink(pawn);
+}
+
+void MovementPlayer::OnProcessMovement()
+{
 }
 
 void MovementPlayer::OnStartDucking()

@@ -5,7 +5,6 @@
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
 
-#include "common.h"
 #include "module.h"
 #include "detours.h"
 #include "virtual.h"
@@ -122,14 +121,13 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 {
 	CBasePlayerController *controller = nullptr;
 
-	// CBasePlayerPawn doesn't actually inherits from CBaseEntity but our own CBaseEntity2.
 	if (utils::IsEntityPawn(entity))
 	{
-		return reinterpret_cast<CBasePlayerPawn *>(entity)->m_hController.Get();
+		return static_cast<CBasePlayerPawn *>(entity)->m_hController.Get();
 	}
 	else if (utils::IsEntityController(entity))
 	{
-		return reinterpret_cast<CBasePlayerController*>(entity);
+		return static_cast<CBasePlayerController*>(entity);
 	}
 	else
 	{
@@ -139,7 +137,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	return dynamic_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	return static_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
 }
 
 CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
