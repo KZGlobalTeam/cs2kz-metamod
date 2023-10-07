@@ -5,7 +5,6 @@
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
 
-#include "common.h"
 #include "module.h"
 #include "detours.h"
 #include "virtual.h"

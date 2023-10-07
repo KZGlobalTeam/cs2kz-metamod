@@ -1,4 +1,5 @@
 #pragma once
+#include "common.h"
 #include "addresses.h"
 #include "cgameresourceserviceserver.h"
 #include "cschemasystem.h"

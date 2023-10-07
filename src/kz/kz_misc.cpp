@@ -7,6 +7,6 @@ void KZ::misc::EnableGodMode(CPlayerSlot slot)
 	CCSPlayerPawn *pawn = player->GetPawn();
 	if (!pawn) return;
 	pawn->m_bTakesDamage = false;
-	pawn->m_nMyCollisionGroup = 5;
-	pawn->m_pCollision->m_CollisionGroup = 5;
+	pawn->m_nMyCollisionGroup = COLLISION_GROUP_DEBRIS_TRIGGER;
+	pawn->m_pCollision->m_CollisionGroup = COLLISION_GROUP_DEBRIS_TRIGGER;
 }
