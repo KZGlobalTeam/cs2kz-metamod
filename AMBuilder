@@ -52,6 +52,7 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'kz_hud.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
     ]
 

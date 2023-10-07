@@ -33,7 +33,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 	movement::InitDetours();
-	KZ::misc::InitPlayerManager();
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
 	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Pre), false);
@@ -110,7 +109,6 @@ const char *KZPlugin::GetURL()
 
 internal float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
 {
-	KZ::misc::EnableGodMode(slot);
 	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
 }
 

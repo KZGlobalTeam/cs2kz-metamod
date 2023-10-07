@@ -50,6 +50,7 @@ public:
 	void GetVelocity(Vector *velocity);
 	void SetVelocity(const Vector &velocity);
 
+	virtual void OnProcessMovement();
 	virtual void OnStartDucking();
 	virtual void OnStopDucking();
 	virtual void OnStartTouchGround();
