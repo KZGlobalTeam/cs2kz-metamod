@@ -159,56 +159,56 @@ CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
 	vsnprintf(buffer, sizeof(buffer), format, args); \
 	va_end(args);
 
-void utils::PrintConsole(CBaseEntity *entity, char *format, ...)
+void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
-void utils::PrintChat(CBaseEntity *entity, char *format, ...)
+void utils::PrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
-void utils::PrintCentre(CBaseEntity *entity, char *format, ...)
+void utils::PrintCentre(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
-void utils::PrintAlert(CBaseEntity *entity, char *format, ...)
+void utils::PrintAlert(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
-void utils::PrintConsoleAll(char *format, ...)
+void utils::PrintConsoleAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
 	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
-void utils::PrintChatAll(char *format, ...)
+void utils::PrintChatAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
 	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
-void utils::PrintCentreAll(char *format, ...)
+void utils::PrintCentreAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
 	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
-void utils::PrintAlertAll(char *format, ...)
+void utils::PrintAlertAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;

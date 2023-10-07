@@ -6,7 +6,7 @@
 #include <ISmmPlugin.h>
 #include "utils/datatypes.h"
 
-typedef void ClientPrintFilter_t(IRecipientFilter &filter, MsgDest msgDest, char *msgName, char *param1, char *param2, char *param3, char *param4);
+typedef void ClientPrintFilter_t(IRecipientFilter &filter, MsgDest msgDest, const char *msgName, const char *param1, const char *param2, const char *param3, const char *param4);
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
 namespace interfaces
@@ -35,14 +35,14 @@ namespace utils
 
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 	// Print functions do not work inside movement hooks, for some reasons...
-	void PrintConsole(CBaseEntity *entity, char *format, ...);
-	void PrintChat(CBaseEntity *entity, char *format, ...);
-	void PrintCentre(CBaseEntity *entity, char *format, ...);
-	void PrintAlert(CBaseEntity *entity, char *format, ...);
+	void PrintConsole(CBaseEntity *entity, const char *format, ...);
+	void PrintChat(CBaseEntity *entity, const char *format, ...);
+	void PrintCentre(CBaseEntity *entity, const char *format, ...);
+	void PrintAlert(CBaseEntity *entity, const char *format, ...);
 
-	void PrintConsoleAll(char *format, ...);
-	void PrintChatAll(char *format, ...);
-	void PrintCentreAll(char *format, ...);
-	void PrintAlertAll(char *format, ...);
+	void PrintConsoleAll(const char *format, ...);
+	void PrintChatAll(const char *format, ...);
+	void PrintCentreAll(const char *format, ...);
+	void PrintAlertAll(const char *format, ...);
 
 }
