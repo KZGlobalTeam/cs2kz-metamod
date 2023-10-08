@@ -17,7 +17,7 @@ KZ-specific:
 - [ ] General
 	- [ ] Extends MovementPlayer to KZPlayer
 	- [ ] Add MovementAPI stuff with callback registering for KZ modules
-	- [ ] Disable player collisions
+	- [x] Disable player collisions
 	- [ ] Player transparency
 	- [x] Make players invincible
 - [ ] Gameplay
@@ -28,7 +28,7 @@ KZ-specific:
 	- [ ] Add mode toggling
 - [ ] Checkpoints
 - [ ] Timers
-	- [ ] Trigger touching logic
+	- [x] Trigger touching logic
 - [ ] Jumpstats
 	- [ ] *Distbug*
 	- [ ] Split jump types

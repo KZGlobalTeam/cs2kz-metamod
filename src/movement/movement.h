@@ -45,6 +45,7 @@ public:
 	CCSPlayerPawn *GetPawn();
 	CPlayerSlot GetPlayerSlot() { return index - 1; };
 
+	// TODO: this doesn't work during movement processing!
 	void GetOrigin(Vector *origin);
 	void SetOrigin(const Vector &origin);
 	void GetVelocity(Vector *velocity);

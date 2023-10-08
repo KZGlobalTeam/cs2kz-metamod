@@ -146,5 +146,9 @@ internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 {
+	if (META_RES result = KZ::misc::OnClientCommand(slot, args))
+	{
+		RETURN_META(result);
+	}
 	RETURN_META(MRES_IGNORED);
 }

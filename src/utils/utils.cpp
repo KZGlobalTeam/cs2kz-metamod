@@ -107,6 +107,16 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
+void utils::SetEntityMoveType(CBaseEntity *entity, MoveType_t movetype)
+{
+	CALL_VIRTUAL(void, offsets::SetMoveType, entity, movetype);
+}
+
+void utils::EntityCollisionRulesChanged(CBaseEntity *entity)
+{
+	CALL_VIRTUAL(void, offsets::CollisionRulesChanged, entity);
+}
+
 bool utils::IsEntityPawn(CBaseEntity *entity)
 {
 	return CALL_VIRTUAL(bool, offsets::IsEntityPawn, entity);

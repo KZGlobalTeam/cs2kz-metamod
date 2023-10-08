@@ -1,12 +1,14 @@
 #include "common.h"
+#include "utils/utils.h"
 #include "kz.h"
 
-void KZ::misc::EnableGodMode(CPlayerSlot slot)
+META_RES KZ::misc::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 {
-	KZPlayer *player = GetKZPlayerManager()->ToPlayer(slot);
-	CCSPlayerPawn *pawn = player->GetPawn();
-	if (!pawn) return;
-	pawn->m_bTakesDamage = false;
-	pawn->m_nMyCollisionGroup = COLLISION_GROUP_DEBRIS_TRIGGER;
-	pawn->m_pCollision->m_CollisionGroup = COLLISION_GROUP_DEBRIS_TRIGGER;
+	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(slot);
+	if (!V_stricmp("kz_noclip", args[0]))
+	{
+		player->ToggleNoclip();
+		return MRES_HANDLED;
+	}
+	return MRES_IGNORED;
 }

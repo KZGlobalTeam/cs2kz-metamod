@@ -28,6 +28,9 @@ namespace utils
 	void UnlockConVars();
 	void UnlockConCommands();
 
+	void SetEntityMoveType(CBaseEntity *entity, MoveType_t movetype);
+	void EntityCollisionRulesChanged(CBaseEntity *entity);
+
 	bool IsEntityPawn(CBaseEntity *entity);
 	bool IsEntityController(CBaseEntity *entity);
 	
