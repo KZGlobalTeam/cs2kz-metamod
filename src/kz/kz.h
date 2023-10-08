@@ -4,12 +4,27 @@
 #include "movement/movement.h"
 #include "utils/datatypes.h"
 
+#define KZ_COLLISION_GROUP_STANDARD LAST_SHARED_COLLISION_GROUP
+#define KZ_COLLISION_GROUP_NOTRIGGER COLLISION_GROUP_DEBRIS
+
 extern CMovementPlayerManager *g_pPlayerManager;
 
 class KZPlayer : public MovementPlayer
 {
-	using MovementPlayer::MovementPlayer;
+public:
+	KZPlayer(int i) : MovementPlayer(i)
+	{
+		inNoclip = false;
+	}
 	virtual void OnProcessMovement() override;
+		
+private:
+	bool inNoclip;
+public:
+	void DisableNoclip();
+	void ToggleNoclip();
+	void EnableGodMode();
+	void HandleMoveCollision();
 };
 
 class CKZPlayerManager : public CMovementPlayerManager
@@ -42,6 +57,6 @@ namespace KZ
 	}
 	namespace misc
 	{
-		void EnableGodMode(CPlayerSlot slot);
+		META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
 	}
 };

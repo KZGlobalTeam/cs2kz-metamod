@@ -32,8 +32,15 @@ namespace offsets
 	inline constexpr int GameEntitySystem = 0x58;
 	inline constexpr int IsEntityPawn = 152;
 	inline constexpr int IsEntityController = 153;
+	inline constexpr int SetMoveType = 77;
+	inline constexpr int CollisionRulesChanged = 173;
+
 #else
 	inline constexpr int GameEntitySystem = 0x50;
+	inline constexpr int IsEntityPawn = 151;
+	inline constexpr int IsEntityController = 152;
+	inline constexpr int SetMoveType = 76;
+	inline constexpr int CollisionRulesChanged = 172;
 #endif
 }
 
