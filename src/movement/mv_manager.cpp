@@ -4,7 +4,7 @@ extern CEntitySystem *g_pEntitySystem;
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
 {
-	return this->players[ms->pawn->m_hController.GetEntryIndex()];
+	return this->players[ms->pawn->m_hController().GetEntryIndex()];
 }
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerController *controller)
@@ -14,7 +14,7 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerController *controller
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerPawn *pawn)
 {
-	return this->players[pawn->m_hController.GetEntryIndex()];
+	return this->players[pawn->m_hController().GetEntryIndex()];
 }
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerSlot slot)

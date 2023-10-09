@@ -107,20 +107,12 @@ void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMo
 
 void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	//MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
-	//Vector velocity = mv->m_vecVelocity;
-	//float oldSpeed = velocity.Length2D();
 	Friction(ms, mv);
-	//if (processingMovement) META_CONPRINTF("Friction %f -> %f\n", oldSpeed, mv->m_vecVelocity.Length2D());
 }
 
 void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	//MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
-	//Vector velocity = mv->m_vecVelocity;
-	//float oldSpeed = velocity.Length2D();
 	WalkMove(ms, mv);
-	//META_CONPRINTF("WalkMove %f -> %f\n", oldSpeed, mv->m_vecVelocity.Length2D());
 }
 
 void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t_s2 *pFirstTrace)

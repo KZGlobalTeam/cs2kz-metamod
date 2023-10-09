@@ -42,17 +42,17 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 {
 	CCSPlayerController *controller = this->GetController();
 	if (!controller) return nullptr;
-	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn.Get());
+	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn().Get());
 }
 
 void MovementPlayer::GetOrigin(Vector *origin)
 {
 	CCSPlayerController *controller = this->GetController();
 	if (!controller) return;
-	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
+	CBasePlayerPawn *pawn = controller->m_hPawn().Get();
 	if (!pawn) return;
 
-	*origin = this->GetController()->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin;
+	*origin = this->GetController()->m_hPawn().Get()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
 }
 
 void MovementPlayer::SetOrigin(const Vector& origin)
@@ -65,10 +65,10 @@ void MovementPlayer::GetVelocity(Vector *velocity)
 {
 	CCSPlayerController *controller = this->GetController();
 	if (!controller) return;
-	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
-	if (!pawn) return;
+	CHandle<CCSPlayerPawn> pawnHandle = controller->m_hPawn();
+	if (!pawnHandle || !pawnHandle.Get()) return;
 
-	*velocity = this->GetController()->m_hPawn.Get()->m_vecAbsVelocity;
+	*velocity = this->GetController()->m_hPawn().Get()->m_vecAbsVelocity();
 }
 
 void MovementPlayer::SetVelocity(const Vector& velocity)

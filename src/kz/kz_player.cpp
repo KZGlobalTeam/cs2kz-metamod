@@ -4,41 +4,41 @@
 void KZPlayer::EnableGodMode()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
-	if (pawn->m_bTakesDamage)
+	if (pawn->m_bTakesDamage())
 	{
-		pawn->m_bTakesDamage = false;
+		pawn->m_bTakesDamage(false);
 	}
 }
 
 void KZPlayer::HandleMoveCollision()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
-	if (pawn->m_lifeState != LIFE_ALIVE)
+	if (pawn->m_lifeState() != LIFE_ALIVE)
 	{
 		DisableNoclip();
 		return;
 	}
 	if (this->inNoclip)
 	{
-		if (pawn->m_MoveType != MOVETYPE_NOCLIP)
+		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
 		{
 			utils::SetEntityMoveType(pawn, MOVETYPE_NOCLIP);
 		}
-		if (pawn->m_Collision.m_CollisionGroup != KZ_COLLISION_GROUP_STANDARD)
+		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 		{
-			pawn->m_Collision.m_CollisionGroup = KZ_COLLISION_GROUP_STANDARD;
+			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
 			utils::EntityCollisionRulesChanged(pawn);
 		}
 	}
 	else
 	{
-		if (pawn->m_MoveType == MOVETYPE_NOCLIP)
+		if (pawn->m_MoveType() == MOVETYPE_NOCLIP)
 		{
 			utils::SetEntityMoveType(pawn, MOVETYPE_WALK);
 		}
-		if (pawn->m_Collision.m_CollisionGroup != KZ_COLLISION_GROUP_NOTRIGGER)
+		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
 		{
-			pawn->m_Collision.m_CollisionGroup = KZ_COLLISION_GROUP_NOTRIGGER;
+			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_NOTRIGGER;
 			utils::EntityCollisionRulesChanged(pawn);
 		}
 	}
