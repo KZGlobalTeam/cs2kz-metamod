@@ -104,3 +104,17 @@ class CTraceFilterPlayerMovementCS
 public:
 	uint8_t tfunk[64];
 };
+
+struct vis_info_t
+{
+	const uint32 *m_pVisBits;
+	uint32 m_uVisBitsBufSize;
+	float m_flVisibleRadius;
+	SpawnGroupHandle_t m_SpawnGroupHandle;
+};
+
+struct CCheckTransmitInfoS2
+{
+	CBitVec<16384> *m_pTransmitEdict;
+	uint8_t unk[1000];
+};

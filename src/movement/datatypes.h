@@ -1,6 +1,14 @@
 #pragma once
 #include <stdint.h>
 #include "utils/datatypes.h"
+
+enum TurnState
+{
+	TURN_LEFT = -1,
+	TURN_NONE = 0,
+	TURN_RIGHT = 1
+};
+
 // Size: 0x20
 class CInButtonState
 {
@@ -14,6 +22,40 @@ static_assert(sizeof(CInButtonState) == 0x20, "Class didn't match expected size"
 // Size: 0xE8
 class CMoveData
 {
+public:
+	CMoveData::CMoveData() {}
+	CMoveData::CMoveData( const CMoveData &source ) : 
+		moveDataFlags{source.moveDataFlags},
+		m_nPlayerHandle{source.m_nPlayerHandle},
+		m_vecAbsViewAngles{ source.m_vecAbsViewAngles},
+		m_vecViewAngles{source.m_vecViewAngles},
+		m_vecLastMovementImpulses{source.m_vecLastMovementImpulses},
+		m_flForwardMove{source.m_flForwardMove},
+		m_flSideMove{source.m_flSideMove},
+		m_flUpMove{source.m_flUpMove},
+		m_flSubtickFraction{source.m_flSubtickFraction},
+		m_vecVelocity{source.m_vecVelocity},
+		m_vecAngles{source.m_vecAngles},
+		m_nMovementCmdsThisTick{source.m_nMovementCmdsThisTick},
+		m_bGameCodeMovedPlayer{source.m_bGameCodeMovedPlayer},
+		m_collisionNormal{source.m_collisionNormal},
+		m_groundNormal{source.m_groundNormal},
+		m_vecAbsOrigin{source.m_vecAbsOrigin},
+		m_nGameModeMovedPlayer{source.m_nGameModeMovedPlayer},
+		m_vecOldAngles{source.m_vecOldAngles},
+		m_flMaxSpeed{source.m_flMaxSpeed},
+		m_flClientMaxSpeed{source.m_flClientMaxSpeed},
+		m_flSubtickAccelSpeed{source.m_flSubtickAccelSpeed},
+		m_bJumpedThisTick{source.m_bJumpedThisTick},
+		m_bShouldApplyGravity{source.m_bShouldApplyGravity},
+		m_outWishVel{source.m_outWishVel}
+	{
+		for (int i = 0; i < source.m_TouchList.Count(); i++)
+		{
+			this->m_TouchList.AddToTail(source.m_TouchList[i]);
+		}
+
+	}
 public:
 	uint8_t moveDataFlags; // 0x0
 	CHandle<CCSPlayerPawn> m_nPlayerHandle; // 0x4 don't know if this is actually a CHandle. <CBaseEntity> is a placeholder

@@ -47,9 +47,7 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 
 void MovementPlayer::GetOrigin(Vector *origin)
 {
-	CCSPlayerController *controller = this->GetController();
-	if (!controller) return;
-	CBasePlayerPawn *pawn = controller->m_hPawn().Get();
+	CBasePlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
 
 	*origin = this->GetController()->m_hPawn().Get()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
@@ -57,8 +55,9 @@ void MovementPlayer::GetOrigin(Vector *origin)
 
 void MovementPlayer::SetOrigin(const Vector& origin)
 {
-	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
-	// TODO
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, NULL, NULL);
 }
 
 void MovementPlayer::GetVelocity(Vector *velocity)
@@ -73,6 +72,32 @@ void MovementPlayer::GetVelocity(Vector *velocity)
 
 void MovementPlayer::SetVelocity(const Vector& velocity)
 {
-	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
-	// TODO
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, velocity);
+}
+
+void MovementPlayer::GetAngles(QAngle *angles)
+{
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+
+	*angles = this->GetController()->m_hPawn().Get()->v_angle();
+}
+
+void MovementPlayer::SetAngles(const QAngle &angles)
+{
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, angles, NULL);
+}
+
+TurnState MovementPlayer::GetTurning()
+{
+	QAngle currentAngle = this->moveData_Pre.m_vecViewAngles;
+	bool turning = this->oldAngles.y != currentAngle.y;
+	if (!turning) return TURN_NONE;
+	if (currentAngle.y < this->oldAngles.y - 180
+		|| currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180) return TURN_LEFT;
+	return TURN_RIGHT;
 }

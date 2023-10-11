@@ -50,6 +50,9 @@ public:
 	void SetOrigin(const Vector &origin);
 	void GetVelocity(Vector *velocity);
 	void SetVelocity(const Vector &velocity);
+	void GetAngles(QAngle *angles);
+	void SetAngles(const QAngle &angles);
+	TurnState GetTurning();
 
 	virtual void OnProcessMovement();
 	virtual void OnStartDucking();
@@ -63,6 +66,11 @@ public:
 public:
 	// General
 	const i32 index;
+
+	b32 processingMovement;
+	CMoveData moveData_Pre;
+	CMoveData *moveData_Current;
+	CMoveData moveData_Post;
 
 	f32 lastProcessedCurtime{};
 	u64 lastProcessedTickcount{};

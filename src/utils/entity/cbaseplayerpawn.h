@@ -14,4 +14,5 @@ public:
 	SCHEMA_FIELD(CHandle< CBasePlayerController >, m_hController)
 	SCHEMA_FIELD(uint8*, m_pWeaponServices)
 	SCHEMA_FIELD(CCSPlayer_ItemServices*, m_pItemServices)
+	SCHEMA_FIELD(QAngle, v_angle)
 };

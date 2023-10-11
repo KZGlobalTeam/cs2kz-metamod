@@ -45,7 +45,6 @@ public:
 	SCHEMA_FIELD(float, m_flScale)
 	SCHEMA_FIELD(float, m_flAbsScale)
 	SCHEMA_FIELD(Vector, m_vecAbsOrigin)
-	SCHEMA_FIELD(QAngle, m_vecAbsRotation)
 	SCHEMA_FIELD(Vector, m_vRenderOrigin)
 };
 

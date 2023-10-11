@@ -34,6 +34,8 @@ namespace offsets
 	inline constexpr int IsEntityController = 153;
 	inline constexpr int SetMoveType = 77;
 	inline constexpr int CollisionRulesChanged = 173;
+	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
+	inline constexpr int Teleport = 148;
 
 #else
 	inline constexpr int GameEntitySystem = 0x50;
@@ -41,6 +43,7 @@ namespace offsets
 	inline constexpr int IsEntityController = 152;
 	inline constexpr int SetMoveType = 76;
 	inline constexpr int CollisionRulesChanged = 172;
+	inline constexpr int Teleport = 147;
 #endif
 }
 
@@ -64,8 +67,6 @@ namespace sigs
 	// search for the string "\"Console<0>\" say_team \"%s\"\n"
 	DECLARE_SIG(Host_Say, "\x44\x89\x4C\x24\x20\x44\x88");
 
-	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
-	DECLARE_SIG(CBaseAnimGraph__Teleport, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x60\x49\x8B\xD9");
 
 	// "Cannot create an entity because entity class is NULL %d\n"
 	DECLARE_SIG(CreateEntity, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x56\x57\x41\x56\x48\x83\xEC\x40\x4D");

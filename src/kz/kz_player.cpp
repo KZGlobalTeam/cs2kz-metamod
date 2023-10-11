@@ -44,6 +44,20 @@ void KZPlayer::HandleMoveCollision()
 	}
 }
 
+void KZPlayer::UpdatePlayerModelAlpha()
+{
+	CCSPlayerPawn *pawn = this->GetPawn();
+	Color ogColor = pawn->m_clrRender();
+	if (pawn->m_clrRender().a() != 254)
+	{
+		pawn->m_clrRender(Color(255, 255, 255, 254));
+	}
+	else
+	{
+		pawn->m_clrRender(Color(255, 255, 255, 255));
+	}
+}
+
 void KZPlayer::ToggleNoclip()
 {
 	this->inNoclip = !this->inNoclip;

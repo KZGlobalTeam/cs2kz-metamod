@@ -121,7 +121,6 @@ internal float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int num
 
 static void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo_DontUse)
 {
-	// incredibly hacky lmao. EntitySpawnInfo_t should be 24 bytes, but it's 16 bytes in the sdk.
 	EntitySpawnInfo_t *pInfo = (EntitySpawnInfo_t *)pInfo_DontUse;
 	
 	for (int32_t i = 0; i < nCount; i++)
