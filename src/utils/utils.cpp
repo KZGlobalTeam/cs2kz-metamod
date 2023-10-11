@@ -13,6 +13,8 @@
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
+#define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length)
+
 ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
 
 void modules::Initialize()
@@ -20,6 +22,7 @@ void modules::Initialize()
 	modules::engine = new CModule(ROOTBIN, "engine2");
 	modules::tier0 = new CModule(ROOTBIN, "tier0");
 	modules::server = new CModule(GAMEBIN, "server");
+	modules::schemasystem = new CModule(ROOTBIN, "schemasystem");
 }
 
 bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
@@ -30,6 +33,7 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
 	GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
+	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pSchemaSystem, CSchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
 	return true;
 }
 
@@ -44,7 +48,10 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 	
-	UTIL_ClientPrintFilter = (ClientPrintFilter_t *)modules::server->FindSignature((const byte *)sigs::UTIL_ClientPrintFilter.data, sigs::UTIL_ClientPrintFilter.length);
+	RESOLVE_SIG(modules::server, sigs::UTIL_ClientPrintFilter, UTIL_ClientPrintFilter);
+
+	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
+	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
 
 	InitDetours();
 	return true;
@@ -133,7 +140,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 
 	if (utils::IsEntityPawn(entity))
 	{
-		return static_cast<CBasePlayerPawn *>(entity)->m_hController.Get();
+		return static_cast<CBasePlayerPawn *>(entity)->m_hController().Get();
 	}
 	else if (utils::IsEntityController(entity))
 	{

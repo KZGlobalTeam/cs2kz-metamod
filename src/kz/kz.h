@@ -25,6 +25,7 @@ public:
 	void ToggleNoclip();
 	void EnableGodMode();
 	void HandleMoveCollision();
+	void UpdatePlayerModelAlpha();
 };
 
 class CKZPlayerManager : public CMovementPlayerManager

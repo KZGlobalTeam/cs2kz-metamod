@@ -10,5 +10,10 @@ META_RES KZ::misc::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 		player->ToggleNoclip();
 		return MRES_HANDLED;
 	}
+	if (!V_stricmp("kz_hidelegs", args[0]))
+	{
+		player->UpdatePlayerModelAlpha();
+		return MRES_HANDLED;
+	}
 	return MRES_IGNORED;
 }
