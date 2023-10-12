@@ -83,10 +83,9 @@ void KZPlayer::SetCheckpoint()
 		return;
 	}
 	
-	Checkpoint cp = {
-		pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin(),
-		pawn->v_angle(),
-	};
+	Checkpoint cp = {};
+	this->GetOrigin(&cp.origin),
+	this->GetAngles(&cp.angles),
 	m_checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	m_currentCpIndex = m_checkpoints.Count() - 1;
