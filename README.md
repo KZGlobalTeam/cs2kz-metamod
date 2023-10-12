@@ -15,8 +15,8 @@ Utilities:
 
 KZ-specific:
 - [ ] General
-	- [ ] Extends MovementPlayer to KZPlayer
-	- [ ] Add MovementAPI stuff with callback registering for KZ modules
+	- [x] Extends MovementPlayer to KZPlayer
+	- [x] Add MovementAPI stuff with callback registering for KZ modules
 	- [x] Disable player collisions
 	- [ ] Player transparency
 	- [x] Make players invincible
