@@ -13,9 +13,7 @@ typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end,
 typedef void InitGameTrace_t(trace_t_s2 &trace);
 
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
-extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
-extern TracePlayerBBoxForGround_t *TracePlayerBBoxForGround;
-extern InitGameTrace_t *InitGameTrace;
+
 namespace utils
 {
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
@@ -33,6 +31,10 @@ namespace utils
 	
 	CBasePlayerController *GetController(CBaseEntity *entity);
 	CBasePlayerController *GetController(CPlayerSlot slot);
+
+	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
+	extern TracePlayerBBoxForGround_t *TracePlayerBBoxForGround;
+	extern InitGameTrace_t *InitGameTrace;
 
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 	// Print functions do not work inside movement hooks, for some reasons...

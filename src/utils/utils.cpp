@@ -17,9 +17,9 @@
 #define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length)
 
 ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
-InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter = NULL;
-TracePlayerBBoxForGround_t *TracePlayerBBoxForGround = NULL;
-InitGameTrace_t *InitGameTrace = NULL;
+InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
+TracePlayerBBoxForGround_t *utils::TracePlayerBBoxForGround = NULL;
+InitGameTrace_t *utils::InitGameTrace = NULL;
 
 void modules::Initialize()
 {
@@ -57,9 +57,9 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
 	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
 	
-	RESOLVE_SIG(modules::server, sigs::TracePlayerBBoxForGround, TracePlayerBBoxForGround);
-	RESOLVE_SIG(modules::server, sigs::InitGameTrace, InitGameTrace);
-	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, InitPlayerMovementTraceFilter);
+	RESOLVE_SIG(modules::server, sigs::TracePlayerBBoxForGround, utils::TracePlayerBBoxForGround);
+	RESOLVE_SIG(modules::server, sigs::InitGameTrace, utils::InitGameTrace);
+	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, utils::InitPlayerMovementTraceFilter);
 
 	InitDetours();
 	return true;

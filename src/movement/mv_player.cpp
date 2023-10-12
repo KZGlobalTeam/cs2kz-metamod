@@ -168,16 +168,16 @@ f32 MovementPlayer::GetDistanceFromGround()
 	if (!this->processingMovement) mv = &this->moveData_Post;
 	i32 traceCounter = 0;
 	CTraceFilterPlayerMovementCS filter;
-	InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsAs(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsAs(), COLLISION_GROUP_PLAYER_MOVEMENT);
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
 	trace_t_s2 trace;
-	InitGameTrace(trace);
+	utils::InitGameTrace(trace);
 	f32 standableZ = 0.7;
 	Vector hullMin = { -16.0, -16.0, 0.0 };
 	Vector hullMax = { 16.0, 16.0, 72.0 };
 	if (this->GetPawn()->m_pMovementServices()->m_bDucked()) hullMax.z = 54.0;
-	TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter);
+	utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter);
 
 	f32 highestPoint = trace.endpos.z;
 
@@ -186,7 +186,7 @@ f32 MovementPlayer::GetDistanceFromGround()
 	while (trace.fraction != 1.0 && !trace.startsolid && traceCounter < 32 && trace.planeNormal.z >= standableZ)
 	{
 		ground.z = highestPoint;
-		TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter); // Ghetto trace function
+		utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter); // Ghetto trace function
 		if (trace.endpos.z <= highestPoint) return highestPoint;
 		highestPoint = trace.endpos.z;
 	}
