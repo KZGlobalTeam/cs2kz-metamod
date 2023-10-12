@@ -76,6 +76,7 @@ void KZPlayer::DisableNoclip()
 
 void KZPlayer::OnStartProcessMovement()
 {
+	MovementPlayer::OnStartProcessMovement();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
 }

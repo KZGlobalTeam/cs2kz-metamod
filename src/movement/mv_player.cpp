@@ -53,7 +53,7 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 
 void MovementPlayer::GetOrigin(Vector *origin)
 {
-	if (!this->processingMovement)
+	if (!this->processingMovement && this->moveData_Current)
 	{
 		*origin = this->moveData_Current->m_vecAbsOrigin;
 	}
@@ -75,7 +75,7 @@ void MovementPlayer::SetOrigin(const Vector &origin)
 
 void MovementPlayer::GetVelocity(Vector *velocity)
 {
-	if (!this->processingMovement)
+	if (!this->processingMovement && this->moveData_Current)
 	{
 		*velocity = this->moveData_Current->m_vecVelocity;
 	}
@@ -168,7 +168,7 @@ f32 MovementPlayer::GetDistanceFromGround()
 	if (!this->processingMovement) mv = &this->moveData_Post;
 	i32 traceCounter = 0;
 	CTraceFilterPlayerMovementCS filter;
-	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsAs(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
 	trace_t_s2 trace;
