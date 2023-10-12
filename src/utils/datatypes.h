@@ -90,7 +90,7 @@ struct trace_t_s2
 	Vector traceunknown3;
 	uint8_t traceunknown4[4];
 	float fraction;
-	uint8_t traceunknown5[10];
+	uint8_t traceunknown5[7];
 	bool startsolid;
 };
 

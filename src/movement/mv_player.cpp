@@ -162,7 +162,7 @@ bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
 	}
 }
 
-f32 MovementPlayer::GetDistanceFromGround()
+f32 MovementPlayer::GetGroundPosition()
 {
 	CMoveData *mv = this->moveData_Current;
 	if (!this->processingMovement) mv = &this->moveData_Post;
@@ -224,7 +224,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	}
 	else // reverse bugged
 	{
-		f32 diffZ = mv->m_vecAbsOrigin.z - this->GetDistanceFromGround();
+		f32 diffZ = mv->m_vecAbsOrigin.z - this->GetGroundPosition();
 		if (diffZ <= 0) // Ledgegrabbed, just use the current origin.
 		{
 			this->landingOriginActual = mv->m_vecAbsOrigin;
@@ -235,10 +235,9 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 			// Predicts the landing origin if reverse bug happens
 			// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
 			Vector gravity = { 0, 0, -800 }; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
-			// basic x + vt + 0.5at^2 = 0;
-			const double delta = landingVelocity.z * landingVelocity.z - 4 * gravity.z * diffZ;
-			const double time = (-landingVelocity.z - sqrt(delta)) / (2 * gravity.z);
-			// close enough
+			// basic x + vt + (0.5a)t^2 = 0;
+			const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
+			const double time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
 			this->landingOriginActual = mv->m_vecAbsOrigin + landingVelocity * time + 0.5 * gravity * time * time;
 			this->landingTimeActual = this->landingTime + time;
 		}

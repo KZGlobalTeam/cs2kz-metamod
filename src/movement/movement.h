@@ -57,7 +57,7 @@ public:
 	bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
 	void RegisterTakeoff(bool jumped);
 	void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
-	f32 GetDistanceFromGround();
+	f32 GetGroundPosition();
 
 	virtual void OnStartProcessMovement();
 	virtual void OnStopProcessMovement();
