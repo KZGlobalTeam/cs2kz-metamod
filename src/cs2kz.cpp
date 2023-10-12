@@ -9,6 +9,7 @@
 #include "utils/recipientfilters.h"
 #include "utils/detours.h"
 #include "utils/addresses.h"
+#include "utils/simplecmds.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
@@ -39,6 +40,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
 	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Pre), false);
 	SH_ADD_HOOK(ISource2GameClients, ProcessUsercmds, g_pSource2GameClients, SH_STATIC(Hook_ProcessUsercmds_Post), true);
+	
+	KZ::misc::RegisterCommands();
 
 	return true;
 }
@@ -146,7 +149,7 @@ internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 {
-	if (META_RES result = KZ::misc::OnClientCommand(slot, args))
+	if (META_RES result = Scmd_OnClientCommand(slot, args))
 	{
 		RETURN_META(result);
 	}

@@ -59,6 +59,6 @@ namespace KZ
 	}
 	namespace misc
 	{
-		META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
+		void RegisterCommands();
 	}
 };
