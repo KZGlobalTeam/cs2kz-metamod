@@ -13,6 +13,7 @@
 #include "movement/movement.h"
 #include "kz/kz.h"
 
+#include "tier0/memdbgon.h"
 KZPlugin g_KZPlugin;
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand&);

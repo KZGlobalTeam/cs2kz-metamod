@@ -74,6 +74,8 @@ public:
 	SCHEMA_FIELD(Vector, m_vecAbsVelocity)
 	SCHEMA_FIELD(CNetworkVelocityVector, m_vecVelocity)
 	SCHEMA_FIELD(CCollisionProperty*, m_pCollision)
+	SCHEMA_FIELD(CHandle< CBaseEntity >, m_hGroundEntity)
+	SCHEMA_FIELD(uint32_t, m_fFlags)
 
 	int entindex() { return m_pEntity->m_EHandle.GetEntryIndex(); }
 };

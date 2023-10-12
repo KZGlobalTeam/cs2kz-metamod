@@ -2,6 +2,8 @@
 #include "utils/utils.h"
 #include "kz.h"
 
+#include "tier0/memdbgon.h"
+
 META_RES KZ::misc::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(slot);

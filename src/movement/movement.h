@@ -52,22 +52,28 @@ public:
 	void SetVelocity(const Vector &velocity);
 	void GetAngles(QAngle *angles);
 	void SetAngles(const QAngle &angles);
+	
 	TurnState GetTurning();
+	bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
+	void RegisterTakeoff(bool jumped);
+	void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
+	f32 GetDistanceFromGround();
 
-	virtual void OnProcessMovement();
-	virtual void OnStartDucking();
-	virtual void OnStopDucking();
+	virtual void OnStartProcessMovement();
+	virtual void OnStopProcessMovement();
+
 	virtual void OnStartTouchGround();
 	virtual void OnStopTouchGround();
-	virtual void OnChangeMoveType();
-	virtual void OnPlayerJump();
-	virtual void OnAirAccelerate();
+
+	virtual void OnChangeMoveType(MoveType_t oldMoveType);
+	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel);
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 
 public:
 	// General
 	const i32 index;
 
-	b32 processingMovement;
+	bool processingMovement;
 	CMoveData moveData_Pre;
 	CMoveData *moveData_Current;
 	CMoveData moveData_Post;
@@ -77,11 +83,18 @@ public:
 
 	QAngle oldAngles;
 
+	bool processingDuck{};
+	bool duckBugged{};
+	bool walkMoved{};
+	bool oldWalkMoved{};
+	bool hitPerf{};
+	bool jumped{};
+	bool takeoffFromLadder{};
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
 	f32 takeoffTime{};
 	Vector takeoffGroundOrigin;
-
+	
 	Vector landingOrigin;
 	Vector landingVelocity;
 	f32 landingTime{};
@@ -109,7 +122,7 @@ public:
 public:
 	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
 	MovementPlayer *ToPlayer(CCSPlayerController *controller);
-	MovementPlayer *ToPlayer(CCSPlayerPawn *pawn);
+	MovementPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	MovementPlayer *ToPlayer(CPlayerSlot slot);
 	MovementPlayer *ToPlayer(CEntityIndex entIndex);
 public:

@@ -3,9 +3,10 @@
 
 #include "utils/schema.h"
 #include "cbaseplayerpawn.h"
-
+#include "cinbuttonstate.h"
 class CBaseEntity;
 class CBasePlayerPawn;
+
 class CPlayerPawnComponent
 {
 public:
@@ -21,12 +22,15 @@ class CPlayer_MovementServices : public CPlayerPawnComponent
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
+	SCHEMA_FIELD(CInButtonState, m_nButtons)
 };
 
 class CCSPlayer_MovementServices : public CPlayer_MovementServices
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
+	SCHEMA_FIELD(bool, m_bDucked)
+	SCHEMA_FIELD(float, m_flJumpUntil)
 };
 
 class CCSPlayer_ItemServices

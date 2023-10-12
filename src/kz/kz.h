@@ -16,7 +16,8 @@ public:
 	{
 		inNoclip = false;
 	}
-	virtual void OnProcessMovement() override;
+	virtual void OnStartProcessMovement() override;
+	virtual void OnStartTouchGround() override;
 		
 private:
 	bool inNoclip;
@@ -42,7 +43,7 @@ public:
 public:
 	KZPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
 	KZPlayer *ToPlayer(CCSPlayerController *controller);
-	KZPlayer *ToPlayer(CCSPlayerPawn *pawn);
+	KZPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	KZPlayer *ToPlayer(CPlayerSlot slot);
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
 

@@ -1,6 +1,8 @@
 #include "kz.h"
 #include "utils/utils.h"
 
+#include "tier0/memdbgon.h"
+
 void KZPlayer::EnableGodMode()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
@@ -10,6 +12,10 @@ void KZPlayer::EnableGodMode()
 	}
 }
 
+void KZPlayer::OnStartTouchGround()
+{
+
+}
 void KZPlayer::HandleMoveCollision()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
@@ -68,7 +74,7 @@ void KZPlayer::DisableNoclip()
 	this->inNoclip = false;
 }
 
-void KZPlayer::OnProcessMovement()
+void KZPlayer::OnStartProcessMovement()
 {
 	this->EnableGodMode();
 	this->HandleMoveCollision();

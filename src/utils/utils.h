@@ -7,8 +7,12 @@
 #include "utils/datatypes.h"
 
 typedef void ClientPrintFilter_t(IRecipientFilter &filter, MsgDest msgDest, char *msgName, char *param1, char *param2, char *param3, char *param4);
-extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
+typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactAs /*should be with?*/, int collisionGroup);
+typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end, const Vector &minsSrc,
+	const Vector &maxsSrc, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm, float minGroundNormalZ, bool overwriteEndpos, int *pCounter);
+typedef void InitGameTrace_t(trace_t_s2 &trace);
 
+extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
 namespace utils
 {
@@ -27,6 +31,10 @@ namespace utils
 	
 	CBasePlayerController *GetController(CBaseEntity *entity);
 	CBasePlayerController *GetController(CPlayerSlot slot);
+
+	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
+	extern TracePlayerBBoxForGround_t *TracePlayerBBoxForGround;
+	extern InitGameTrace_t *InitGameTrace;
 
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 	// Print functions do not work inside movement hooks, for some reasons...
