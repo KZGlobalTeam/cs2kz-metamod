@@ -1,21 +1,26 @@
 #include "common.h"
 #include "utils/utils.h"
 #include "kz.h"
+#include "utils/simplecmds.h"
 
 #include "tier0/memdbgon.h"
 
-META_RES KZ::misc::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
+internal SCMD_CALLBACK(Command_KzNoclip)
 {
-	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(slot);
-	if (!V_stricmp("kz_noclip", args[0]))
-	{
-		player->ToggleNoclip();
-		return MRES_HANDLED;
-	}
-	if (!V_stricmp("kz_hidelegs", args[0]))
-	{
-		player->UpdatePlayerModelAlpha();
-		return MRES_HANDLED;
-	}
-	return MRES_IGNORED;
+	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
+	player->ToggleNoclip();
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzHidelegs)
+{
+	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
+	player->UpdatePlayerModelAlpha();
+	return MRES_SUPERCEDE;
+}
+
+void KZ::misc::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_noclip", Command_KzNoclip);
+	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs);
 }

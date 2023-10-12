@@ -3,6 +3,7 @@
 #include "cdetour.h"
 #include "module.h"
 #include "detours.h"
+#include "utils/simplecmds.h"
 
 #include "movement/movement.h"
 
@@ -59,7 +60,11 @@ void FlushAllDetours()
 
 void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend)
 {
-	Host_Say(pEntity, args, teamonly, nCustomModRules, pszCustomModPrepend);
+	META_RES mres = scmd::OnHost_Say(pEntity, *args);
+	if (mres != MRES_SUPERCEDE)
+	{
+		Host_Say(pEntity, args, teamonly, nCustomModRules, pszCustomModPrepend);
+	}
 }
 
 bool IsEntTriggerMultiple(CBaseEntity *ent)
