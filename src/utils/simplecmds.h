@@ -14,9 +14,10 @@ namespace scmd
 {
 	typedef SCMD_CALLBACK(Callback_t);
 	bool RegisterCmd(const char *name, Callback_t *callback);
+	
+	META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
+	META_RES OnHost_Say(CCSPlayerController *controller, const CCommand &args);
 }
 
-META_RES Scmd_OnClientCommand(CPlayerSlot &slot, const CCommand &args);
-META_RES Scmd_OnHost_Say(CCSPlayerController *controller, const CCommand &args);
 
 #endif //SIMPLECMDS_H

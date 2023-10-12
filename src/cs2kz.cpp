@@ -149,7 +149,7 @@ internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 {
-	if (META_RES result = Scmd_OnClientCommand(slot, args))
+	if (META_RES result = scmd::OnClientCommand(slot, args))
 	{
 		RETURN_META(result);
 	}
