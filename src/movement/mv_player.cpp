@@ -1,16 +1,22 @@
 #include "movement.h"
+#include "utils/utils.h"
+
 #include "tier0/memdbgon.h"
 
-void MovementPlayer::OnProcessMovement()
+void MovementPlayer::OnStartProcessMovement()
 {
+	this->duckBugged = false;
+	this->hitPerf = false;
+	this->processingMovement = true;
 }
 
-void MovementPlayer::OnStartDucking()
+void MovementPlayer::OnStopProcessMovement()
 {
-}
-
-void MovementPlayer::OnStopDucking()
-{
+	this->processingMovement = false;
+	this->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
+	this->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
+	this->oldAngles = this->moveData_Post.m_vecViewAngles;
+	this->oldWalkMoved = this->walkMoved;
 }
 
 void MovementPlayer::OnStartTouchGround()
@@ -21,15 +27,15 @@ void MovementPlayer::OnStopTouchGround()
 {
 }
 
-void MovementPlayer::OnChangeMoveType()
+void MovementPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 }
 
-void MovementPlayer::OnPlayerJump()
+void MovementPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
 }
 
-void MovementPlayer::OnAirAccelerate()
+void MovementPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
 {
 }
 
@@ -47,13 +53,20 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 
 void MovementPlayer::GetOrigin(Vector *origin)
 {
-	CBasePlayerPawn *pawn = this->GetPawn();
-	if (!pawn) return;
+	if (!this->processingMovement)
+	{
+		*origin = this->moveData_Current->m_vecAbsOrigin;
+	}
+	else
+	{
+		CBasePlayerPawn *pawn = this->GetPawn();
+		if (!pawn) return;
 
-	*origin = this->GetController()->m_hPawn().Get()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+		*origin = pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+	}
 }
 
-void MovementPlayer::SetOrigin(const Vector& origin)
+void MovementPlayer::SetOrigin(const Vector &origin)
 {
 	CBasePlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
@@ -62,15 +75,19 @@ void MovementPlayer::SetOrigin(const Vector& origin)
 
 void MovementPlayer::GetVelocity(Vector *velocity)
 {
-	CCSPlayerController *controller = this->GetController();
-	if (!controller) return;
-	CHandle<CCSPlayerPawn> pawnHandle = controller->m_hPawn();
-	if (!pawnHandle || !pawnHandle.Get()) return;
-
-	*velocity = this->GetController()->m_hPawn().Get()->m_vecAbsVelocity();
+	if (!this->processingMovement)
+	{
+		*velocity = this->moveData_Current->m_vecVelocity;
+	}
+	else
+	{
+		CBasePlayerPawn *pawn = this->GetPawn();
+		if (!pawn) return;
+		*velocity = pawn->m_vecAbsVelocity();
+	}
 }
 
-void MovementPlayer::SetVelocity(const Vector& velocity)
+void MovementPlayer::SetVelocity(const Vector &velocity)
 {
 	CBasePlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
@@ -79,10 +96,14 @@ void MovementPlayer::SetVelocity(const Vector& velocity)
 
 void MovementPlayer::GetAngles(QAngle *angles)
 {
-	CBasePlayerPawn *pawn = this->GetPawn();
-	if (!pawn) return;
-
-	*angles = this->GetController()->m_hPawn().Get()->v_angle();
+	if (this->processingMovement)
+	{
+		*angles = this->moveData_Current->m_vecViewAngles;
+	}
+	else
+	{
+		*angles = this->moveData_Post.m_vecViewAngles;
+	}
 }
 
 void MovementPlayer::SetAngles(const QAngle &angles)
@@ -100,4 +121,126 @@ TurnState MovementPlayer::GetTurning()
 	if (currentAngle.y < this->oldAngles.y - 180
 		|| currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180) return TURN_LEFT;
 	return TURN_RIGHT;
+}
+
+bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
+{
+	CInButtonState buttons = this->GetPawn()->m_pMovementServices()->m_nButtons();
+	if (onlyDown)
+	{
+		return buttons.m_pButtonStates[0] & button;
+	}
+	else
+	{
+		bool multipleKeys = (button & (button - 1));
+		if (multipleKeys)
+		{
+			u64 key = 0;
+			while (button)
+			{
+				u64 keyMask = 1ull << key;
+				EInButtonState keyState = (EInButtonState)(keyMask && buttons.m_pButtonStates[0] + (keyMask && buttons.m_pButtonStates[1]) * 2 + (keyMask && buttons.m_pButtonStates[2]) * 4);
+				if (keyState > IN_BUTTON_DOWN_UP)
+				{
+					return true;
+				}
+				key++;
+				button = (InputBitMask_t)(button >> 1);
+			}
+			return buttons.m_pButtonStates[0] & button;
+		}
+		else
+		{
+			u64 keyMask = 1ull << button;
+			EInButtonState keyState = (EInButtonState)(keyMask & buttons.m_pButtonStates[0] + (keyMask & buttons.m_pButtonStates[1]) * 2 + (keyMask & buttons.m_pButtonStates[2]) * 4);
+			if (keyState > IN_BUTTON_DOWN_UP)
+			{
+				return true;
+			}
+			return buttons.m_pButtonStates[0] & button;
+		}
+	}
+}
+
+f32 MovementPlayer::GetDistanceFromGround()
+{
+	CMoveData *mv = this->moveData_Current;
+	if (!this->processingMovement) mv = &this->moveData_Post;
+	i32 traceCounter = 0;
+	CTraceFilterPlayerMovementCS filter;
+	InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsAs(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	Vector ground = mv->m_vecAbsOrigin;
+	ground.z -= 2;
+	trace_t_s2 trace;
+	InitGameTrace(trace);
+	f32 standableZ = 0.7;
+	Vector hullMin = { -16.0, -16.0, 0.0 };
+	Vector hullMax = { 16.0, 16.0, 72.0 };
+	if (this->GetPawn()->m_pMovementServices()->m_bDucked()) hullMax.z = 54.0;
+	TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter);
+
+	f32 highestPoint = trace.endpos.z;
+
+	if (trace.startsolid) return mv->m_vecAbsOrigin.z;
+
+	while (trace.fraction != 1.0 && !trace.startsolid && traceCounter < 32 && trace.planeNormal.z >= standableZ)
+	{
+		ground.z = highestPoint;
+		TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter); // Ghetto trace function
+		if (trace.endpos.z <= highestPoint) return highestPoint;
+		highestPoint = trace.endpos.z;
+	}
+	return highestPoint;
+}
+
+void MovementPlayer::RegisterTakeoff(bool jumped)
+{
+	CMoveData *mv = this->moveData_Current;
+	if (!this->processingMovement) mv = &this->moveData_Post;
+	this->takeoffOrigin = mv->m_vecAbsOrigin;
+	this->takeoffTime = utils::GetServerGlobals()->curtime - utils::GetServerGlobals()->frametime;
+	this->takeoffVelocity = mv->m_vecVelocity;
+	this->jumped = jumped;
+}
+
+void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbugFix)
+{
+	CMoveData *mv = this->moveData_Current;
+	if (!this->processingMovement) mv = &this->moveData_Post;
+	this->landingOrigin = mv->m_vecAbsOrigin;
+	this->landingTime = utils::GetServerGlobals()->curtime;
+	this->landingVelocity = landingVelocity;
+	if (!distbugFix)
+	{
+		this->landingOriginActual = this->landingOrigin;
+		this->landingTimeActual = this->landingTime;
+	}
+	// Distbug shenanigans
+	if (mv->m_TouchList.Count() > 0) // bugged
+	{
+		// The true landing origin from TryPlayerMove, use this whenever you can
+		this->landingOriginActual = mv->m_TouchList[0].trace.endpos;
+		this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[0].trace.fraction) * utils::GetServerGlobals()->frametime; // TODO: make sure this is right
+	}
+	else // reverse bugged
+	{
+		f32 diffZ = mv->m_vecAbsOrigin.z - this->GetDistanceFromGround();
+		if (diffZ <= 0) // Ledgegrabbed, just use the current origin.
+		{
+			this->landingOriginActual = mv->m_vecAbsOrigin;
+			this->landingTimeActual = this->landingTime;
+		}
+		else
+		{
+			// Predicts the landing origin if reverse bug happens
+			// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
+			Vector gravity = { 0, 0, -800 }; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
+			// basic x + vt + 0.5at^2 = 0;
+			const double delta = landingVelocity.z * landingVelocity.z - 4 * gravity.z * diffZ;
+			const double time = (-landingVelocity.z - sqrt(delta)) / (2 * gravity.z);
+			// close enough
+			this->landingOriginActual = mv->m_vecAbsOrigin + landingVelocity * time + 0.5 * gravity * time * time;
+			this->landingTimeActual = this->landingTime + time;
+		}
+	}
 }

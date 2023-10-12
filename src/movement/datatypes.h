@@ -9,16 +9,6 @@ enum TurnState
 	TURN_RIGHT = 1
 };
 
-// Size: 0x20
-class CInButtonState
-{
-public:
-	uint8_t __pad0000[0x8]; // 0x0
-	uint64_t m_pButtonStates[3]; // 0x8
-};
-static_assert(sizeof(CInButtonState) == 0x20, "Class didn't match expected size");
-
-
 // Size: 0xE8
 class CMoveData
 {

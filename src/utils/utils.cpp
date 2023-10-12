@@ -8,14 +8,18 @@
 #include "module.h"
 #include "detours.h"
 #include "virtual.h"
-#include "tier0/memdbgon.h"
 #include "recipientfilters.h"
+
+#include "tier0/memdbgon.h"
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
 #define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length)
 
 ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
+InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter = NULL;
+TracePlayerBBoxForGround_t *TracePlayerBBoxForGround = NULL;
+InitGameTrace_t *InitGameTrace = NULL;
 
 void modules::Initialize()
 {
@@ -52,6 +56,10 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
 	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
+	
+	RESOLVE_SIG(modules::server, sigs::TracePlayerBBoxForGround, TracePlayerBBoxForGround);
+	RESOLVE_SIG(modules::server, sigs::InitGameTrace, InitGameTrace);
+	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, InitPlayerMovementTraceFilter);
 
 	InitDetours();
 	return true;

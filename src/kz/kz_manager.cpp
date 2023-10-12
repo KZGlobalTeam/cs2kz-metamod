@@ -1,5 +1,6 @@
 #include "kz.h"
 
+#include "tier0/memdbgon.h"
 CKZPlayerManager g_KZPlayerManager;
 CMovementPlayerManager *g_pPlayerManager = dynamic_cast<CMovementPlayerManager *>(&g_KZPlayerManager);
 
@@ -18,7 +19,7 @@ KZPlayer *CKZPlayerManager::ToPlayer(CCSPlayerController *controller)
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(controller));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(CCSPlayerPawn *pawn)
+KZPlayer *CKZPlayerManager::ToPlayer(CBasePlayerPawn *pawn)
 {
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(pawn));
 }
