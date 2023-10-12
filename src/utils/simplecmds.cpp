@@ -5,23 +5,24 @@
 
 #include "tier0/memdbgon.h"
 
+// private structs
 struct Scmd
 {
 	b32 hasConsolePrefix;
 	i32 nameLength;
 	const char *name;
-	ScmdCallback_t *callback;
+	scmd::Callback_t *callback;
 };
 
-struct ScmdCmdManager
+struct ScmdManager
 {
 	i32 cmdCount;
 	Scmd cmds[SCMD_MAX_CMDS];
 };
 
-ScmdCmdManager g_cmdManager = {};
+internal ScmdManager g_cmdManager = {};
 
-bool ScmdRegisterCmd(const char *name, ScmdCallback_t *callback)
+bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback)
 {
 	Assert(name);
 	Assert(callback);

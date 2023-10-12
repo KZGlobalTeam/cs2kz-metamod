@@ -21,6 +21,6 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 
 void KZ::misc::RegisterCommands()
 {
-	ScmdRegisterCmd("kz_noclip", Command_KzNoclip);
-	ScmdRegisterCmd("kz_hidelegs", Command_KzHidelegs);
+	scmd::RegisterCmd("kz_noclip", Command_KzNoclip);
+	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs);
 }
