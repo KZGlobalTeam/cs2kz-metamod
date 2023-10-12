@@ -66,6 +66,13 @@ void MovementPlayer::GetOrigin(Vector *origin)
 	}
 }
 
+void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, angles, velocity);
+}
+
 void MovementPlayer::SetOrigin(const Vector &origin)
 {
 	CBasePlayerPawn *pawn = this->GetPawn();
