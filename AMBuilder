@@ -23,6 +23,7 @@ for sdk_name in MMSPlugin.sdks:
     binary.compiler.cxxincludes += [
       os.path.join(builder.sourcePath, 'src'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
       os.path.join(builder.sourcePath, 'vendor', 'subhook'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
