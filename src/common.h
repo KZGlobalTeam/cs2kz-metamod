@@ -1,8 +1,10 @@
 #pragma once
 // Suppress HL2SDK related warnings, comment these out if something goes wrong
+#ifdef _WIN32
 #pragma warning (disable: 4099)
 #pragma warning (disable: 4005)
 #pragma warning (disable: 4267)
+#endif
 
 #include <ISmmPlugin.h>
 #include <igameevents.h>

@@ -199,7 +199,7 @@ class MMSPluginConfig(object):
         cxx.cxxflags += ['-fvisibility-inlines-hidden']
       cxx.cxxflags += [
         '-fno-exceptions',
-        '-fno-rtti',
+        # '-fno-rtti', # hl2sdk-cs2/public/tier1/functors.h:308:556: error: cannot use ‘typeid’ with ‘-fno-rtti’
         '-fno-threadsafe-statics',
         '-Wno-non-virtual-dtor',
         '-Wno-overloaded-virtual',
