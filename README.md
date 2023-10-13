@@ -46,7 +46,7 @@ KZ-specific:
 - [ ] Saveloc
 - [ ] Local DB/Ranks
 - [ ] Global integration (if API exists)
-- [ ] Add linux sigs
+- [x] Add linux sigs
 
 
 VS: 
