@@ -15,9 +15,9 @@ Utilities:
 
 KZ-specific:
 - [ ] General
-	- [ ] Extends MovementPlayer to KZPlayer
-	- [ ] Add MovementAPI stuff with callback registering for KZ modules
-	- [ ] Disable player collisions
+	- [x] Extends MovementPlayer to KZPlayer
+	- [x] Add MovementAPI stuff with callback registering for KZ modules
+	- [x] Disable player collisions
 	- [ ] Player transparency
 	- [x] Make players invincible
 - [ ] Gameplay
@@ -28,7 +28,7 @@ KZ-specific:
 	- [ ] Add mode toggling
 - [ ] Checkpoints
 - [ ] Timers
-	- [ ] Trigger touching logic
+	- [x] Trigger touching logic
 - [ ] Jumpstats
 	- [ ] *Distbug*
 	- [ ] Split jump types
@@ -53,13 +53,13 @@ VS:
 ```
 mkdir build
 cd build
-py ../configure.py --gen=vs --vs-version 17
+py ../configure.py --hl2sdk-root "../" --gen=vs --vs-version 17
 ``` 
 
 ambuild:
 ```
 mkdir build
 cd build
-py ../configure.py
+py ../configure.py --hl2sdk-root "../"
 ambuild
 ``` 

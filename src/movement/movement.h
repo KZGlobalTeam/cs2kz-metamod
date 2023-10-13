@@ -44,34 +44,59 @@ public:
 	CCSPlayerController *GetController();
 	CCSPlayerPawn *GetPawn();
 	CPlayerSlot GetPlayerSlot() { return index - 1; };
+	CCSPlayer_MovementServices *GetMoveServices() { return static_cast<CCSPlayer_MovementServices *>(this->GetPawn()->m_pMovementServices()); };
 
+	// TODO: this doesn't work during movement processing!
+	void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
 	void GetOrigin(Vector *origin);
 	void SetOrigin(const Vector &origin);
 	void GetVelocity(Vector *velocity);
 	void SetVelocity(const Vector &velocity);
+	void GetAngles(QAngle *angles);
+	void SetAngles(const QAngle &angles);
+	
+	TurnState GetTurning();
+	bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
+	void RegisterTakeoff(bool jumped);
+	void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
+	f32 GetGroundPosition();
 
-	virtual void OnStartDucking();
-	virtual void OnStopDucking();
+	virtual void OnStartProcessMovement();
+	virtual void OnStopProcessMovement();
+
 	virtual void OnStartTouchGround();
 	virtual void OnStopTouchGround();
-	virtual void OnChangeMoveType();
-	virtual void OnPlayerJump();
-	virtual void OnAirAccelerate();
+
+	virtual void OnChangeMoveType(MoveType_t oldMoveType);
+	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel);
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 
 public:
 	// General
 	const i32 index;
+
+	bool processingMovement;
+	CMoveData moveData_Pre;
+	CMoveData *moveData_Current;
+	CMoveData moveData_Post;
 
 	f32 lastProcessedCurtime{};
 	u64 lastProcessedTickcount{};
 
 	QAngle oldAngles;
 
+	bool processingDuck{};
+	bool duckBugged{};
+	bool walkMoved{};
+	bool oldWalkMoved{};
+	bool hitPerf{};
+	bool jumped{};
+	bool takeoffFromLadder{};
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
 	f32 takeoffTime{};
 	Vector takeoffGroundOrigin;
-
+	
 	Vector landingOrigin;
 	Vector landingVelocity;
 	f32 landingTime{};
@@ -89,11 +114,17 @@ public:
 			players[i] = new MovementPlayer(i);
 		}
 	}
-
+	~CMovementPlayerManager()
+	{
+		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			delete players[i];
+		}
+	}
 public:
 	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
 	MovementPlayer *ToPlayer(CCSPlayerController *controller);
-	MovementPlayer *ToPlayer(CCSPlayerPawn *pawn);
+	MovementPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	MovementPlayer *ToPlayer(CPlayerSlot slot);
 	MovementPlayer *ToPlayer(CEntityIndex entIndex);
 public:

@@ -1,152 +1,22 @@
 #include "movement.h"
-#include "utils/detours.h"
+#include "utils/utils.h"
+
 #include "tier0/memdbgon.h"
 
-void movement::InitDetours()
+void MovementPlayer::OnStartProcessMovement()
 {
-	INIT_DETOUR(GetMaxSpeed);
-	INIT_DETOUR(ProcessMovement);
-	INIT_DETOUR(PlayerMoveNew);
-	INIT_DETOUR(CheckParameters);
-	INIT_DETOUR(CanMove);
-	INIT_DETOUR(FullWalkMove);
-	INIT_DETOUR(MoveInit);
-	INIT_DETOUR(CheckWater);
-	INIT_DETOUR(CheckVelocity);
-	INIT_DETOUR(Duck);
-	INIT_DETOUR(LadderMove);
-	INIT_DETOUR(CheckJumpButton);
-	INIT_DETOUR(OnJump);
-	INIT_DETOUR(AirAccelerate);
-	INIT_DETOUR(Friction);
-	INIT_DETOUR(WalkMove);
-	INIT_DETOUR(TryPlayerMove);
-	INIT_DETOUR(CategorizePosition);
-	INIT_DETOUR(FinishGravity);
-	INIT_DETOUR(CheckFalling);
-	INIT_DETOUR(PlayerMovePost);
-	INIT_DETOUR(PostThink);
+	this->duckBugged = false;
+	this->hitPerf = false;
+	this->processingMovement = true;
 }
 
-f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
+void MovementPlayer::OnStopProcessMovement()
 {
-	return GetMaxSpeed(pawn);
-}
-
-void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	ProcessMovement(ms, mv);
-	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
-	player->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
-	player->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
-}
-
-bool FASTCALL movement::Detour_PlayerMoveNew(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	return PlayerMoveNew(ms, mv);
-}
-
-void FASTCALL movement::Detour_CheckParameters(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	CheckParameters(ms, mv);
-}
-
-bool FASTCALL movement::Detour_CanMove(CCSPlayerPawnBase *pawn)
-{
-	return CanMove(pawn);
-}
-
-void FASTCALL movement::Detour_FullWalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv, bool ground)
-{
-	FullWalkMove(ms, mv, ground);
-}
-
-bool FASTCALL movement::Detour_MoveInit(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	return MoveInit(ms, mv);
-}
-
-bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	return CheckWater(ms, mv);
-}
-
-void FASTCALL movement::Detour_CheckVelocity(CCSPlayer_MovementServices *ms, CMoveData *mv, const char *a3)
-{
-	CheckVelocity(ms, mv, a3);
-}
-
-void FASTCALL movement::Detour_Duck(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	Duck(ms, mv);
-}
-
-bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	return LadderMove(ms, mv);
-}
-
-void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	CheckJumpButton(ms, mv);
-}
-
-void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	OnJump(ms, mv);
-}
-
-void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, float wishspeed, float accel)
-{
-	AirAccelerate(ms, mv, wishdir, wishspeed, accel);
-}
-
-void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	Friction(ms, mv);
-}
-
-void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	WalkMove(ms, mv);
-}
-
-void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t_s2 *pFirstTrace)
-{
-	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace);
-}
-
-void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms, CMoveData *mv, bool bStayOnGround)
-{
-	CategorizePosition(ms, mv, bStayOnGround);
-}
-
-void FASTCALL movement::Detour_FinishGravity(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	FinishGravity(ms, mv);
-}
-
-void FASTCALL movement::Detour_CheckFalling(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	CheckFalling(ms, mv);
-}
-
-void FASTCALL movement::Detour_PlayerMovePost(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	PlayerMovePost(ms, mv);
-}
-
-void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
-{
-	PostThink(pawn);
-}
-
-void MovementPlayer::OnStartDucking()
-{
-}
-
-void MovementPlayer::OnStopDucking()
-{
+	this->processingMovement = false;
+	this->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
+	this->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
+	this->oldAngles = this->moveData_Post.m_vecViewAngles;
+	this->oldWalkMoved = this->walkMoved;
 }
 
 void MovementPlayer::OnStartTouchGround()
@@ -157,15 +27,15 @@ void MovementPlayer::OnStopTouchGround()
 {
 }
 
-void MovementPlayer::OnChangeMoveType()
+void MovementPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 }
 
-void MovementPlayer::OnPlayerJump()
+void MovementPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
 }
 
-void MovementPlayer::OnAirAccelerate()
+void MovementPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
 {
 }
 
@@ -178,37 +48,205 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 {
 	CCSPlayerController *controller = this->GetController();
 	if (!controller) return nullptr;
-	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn.Get());
+	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn().Get());
 }
 
 void MovementPlayer::GetOrigin(Vector *origin)
 {
-	CCSPlayerController *controller = this->GetController();
-	if (!controller) return;
-	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
-	if (!pawn) return;
+	if (!this->processingMovement && this->moveData_Current)
+	{
+		*origin = this->moveData_Current->m_vecAbsOrigin;
+	}
+	else
+	{
+		CBasePlayerPawn *pawn = this->GetPawn();
+		if (!pawn) return;
 
-	*origin = this->GetController()->m_hPawn.Get()->m_pSceneNode->m_vecAbsOrigin;
+		*origin = pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+	}
 }
 
-void MovementPlayer::SetOrigin(const Vector& origin)
+void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
-	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
-	// TODO
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, angles, velocity);
+}
+
+void MovementPlayer::SetOrigin(const Vector &origin)
+{
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, NULL, NULL);
 }
 
 void MovementPlayer::GetVelocity(Vector *velocity)
 {
-	CCSPlayerController *controller = this->GetController();
-	if (!controller) return;
-	CBasePlayerPawn *pawn = controller->m_hPawn.Get();
-	if (!pawn) return;
-
-	*velocity = this->GetController()->m_hPawn.Get()->m_vecAbsVelocity;
+	if (!this->processingMovement && this->moveData_Current)
+	{
+		*velocity = this->moveData_Current->m_vecVelocity;
+	}
+	else
+	{
+		CBasePlayerPawn *pawn = this->GetPawn();
+		if (!pawn) return;
+		*velocity = pawn->m_vecAbsVelocity();
+	}
 }
 
-void MovementPlayer::SetVelocity(const Vector& velocity)
+void MovementPlayer::SetVelocity(const Vector &velocity)
 {
-	// We need to call NetworkStateChanged here because it's a networked field, but the technology isn't there yet...
-	// TODO
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, velocity);
+}
+
+void MovementPlayer::GetAngles(QAngle *angles)
+{
+	if (this->processingMovement)
+	{
+		*angles = this->moveData_Current->m_vecViewAngles;
+	}
+	else
+	{
+		*angles = this->moveData_Post.m_vecViewAngles;
+	}
+}
+
+void MovementPlayer::SetAngles(const QAngle &angles)
+{
+	CBasePlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, angles, NULL);
+}
+
+TurnState MovementPlayer::GetTurning()
+{
+	QAngle currentAngle = this->moveData_Pre.m_vecViewAngles;
+	bool turning = this->oldAngles.y != currentAngle.y;
+	if (!turning) return TURN_NONE;
+	if (currentAngle.y < this->oldAngles.y - 180
+		|| currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180) return TURN_LEFT;
+	return TURN_RIGHT;
+}
+
+bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
+{
+	CInButtonState buttons = this->GetPawn()->m_pMovementServices()->m_nButtons();
+	if (onlyDown)
+	{
+		return buttons.m_pButtonStates[0] & button;
+	}
+	else
+	{
+		bool multipleKeys = (button & (button - 1));
+		if (multipleKeys)
+		{
+			u64 key = 0;
+			while (button)
+			{
+				u64 keyMask = 1ull << key;
+				EInButtonState keyState = (EInButtonState)(keyMask && buttons.m_pButtonStates[0] + (keyMask && buttons.m_pButtonStates[1]) * 2 + (keyMask && buttons.m_pButtonStates[2]) * 4);
+				if (keyState > IN_BUTTON_DOWN_UP)
+				{
+					return true;
+				}
+				key++;
+				button = (InputBitMask_t)(button >> 1);
+			}
+			return buttons.m_pButtonStates[0] & button;
+		}
+		else
+		{
+			u64 keyMask = 1ull << button;
+			EInButtonState keyState = (EInButtonState)(keyMask & buttons.m_pButtonStates[0] + (keyMask & buttons.m_pButtonStates[1]) * 2 + (keyMask & buttons.m_pButtonStates[2]) * 4);
+			if (keyState > IN_BUTTON_DOWN_UP)
+			{
+				return true;
+			}
+			return buttons.m_pButtonStates[0] & button;
+		}
+	}
+}
+
+f32 MovementPlayer::GetGroundPosition()
+{
+	CMoveData *mv = this->moveData_Current;
+	if (!this->processingMovement) mv = &this->moveData_Post;
+	i32 traceCounter = 0;
+	CTraceFilterPlayerMovementCS filter;
+	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	Vector ground = mv->m_vecAbsOrigin;
+	ground.z -= 2;
+	trace_t_s2 trace;
+	utils::InitGameTrace(trace);
+	f32 standableZ = 0.7;
+	Vector hullMin = { -16.0, -16.0, 0.0 };
+	Vector hullMax = { 16.0, 16.0, 72.0 };
+	if (this->GetMoveServices()->m_bDucked()) hullMax.z = 54.0;
+	utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter);
+
+	f32 highestPoint = trace.endpos.z;
+
+	if (trace.startsolid) return mv->m_vecAbsOrigin.z;
+
+	while (trace.fraction != 1.0 && !trace.startsolid && traceCounter < 32 && trace.planeNormal.z >= standableZ)
+	{
+		ground.z = highestPoint;
+		utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter); // Ghetto trace function
+		if (trace.endpos.z <= highestPoint) return highestPoint;
+		highestPoint = trace.endpos.z;
+	}
+	return highestPoint;
+}
+
+void MovementPlayer::RegisterTakeoff(bool jumped)
+{
+	CMoveData *mv = this->moveData_Current;
+	if (!this->processingMovement) mv = &this->moveData_Post;
+	this->takeoffOrigin = mv->m_vecAbsOrigin;
+	this->takeoffTime = utils::GetServerGlobals()->curtime - utils::GetServerGlobals()->frametime;
+	this->takeoffVelocity = mv->m_vecVelocity;
+	this->jumped = jumped;
+}
+
+void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbugFix)
+{
+	CMoveData *mv = this->moveData_Current;
+	if (!this->processingMovement) mv = &this->moveData_Post;
+	this->landingOrigin = mv->m_vecAbsOrigin;
+	this->landingTime = utils::GetServerGlobals()->curtime;
+	this->landingVelocity = landingVelocity;
+	if (!distbugFix)
+	{
+		this->landingOriginActual = this->landingOrigin;
+		this->landingTimeActual = this->landingTime;
+	}
+	// Distbug shenanigans
+	if (mv->m_TouchList.Count() > 0) // bugged
+	{
+		// The true landing origin from TryPlayerMove, use this whenever you can
+		this->landingOriginActual = mv->m_TouchList[0].trace.endpos;
+		this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[0].trace.fraction) * utils::GetServerGlobals()->frametime; // TODO: make sure this is right
+	}
+	else // reverse bugged
+	{
+		f32 diffZ = mv->m_vecAbsOrigin.z - this->GetGroundPosition();
+		if (diffZ <= 0) // Ledgegrabbed, just use the current origin.
+		{
+			this->landingOriginActual = mv->m_vecAbsOrigin;
+			this->landingTimeActual = this->landingTime;
+		}
+		else
+		{
+			// Predicts the landing origin if reverse bug happens
+			// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
+			Vector gravity = { 0, 0, -800 }; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
+			// basic x + vt + (0.5a)t^2 = 0;
+			const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
+			const double time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
+			this->landingOriginActual = mv->m_vecAbsOrigin + landingVelocity * time + 0.5 * gravity * time * time;
+			this->landingTimeActual = this->landingTime + time;
+		}
+	}
 }

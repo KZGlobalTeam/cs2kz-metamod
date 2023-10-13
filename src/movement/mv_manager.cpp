@@ -1,10 +1,11 @@
 #include "movement.h"
 
+#include "tier0/memdbgon.h"
 extern CEntitySystem *g_pEntitySystem;
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
 {
-	return this->players[ms->pawn->m_hController.GetEntryIndex()];
+	return this->players[ms->pawn->m_hController().GetEntryIndex()];
 }
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerController *controller)
@@ -12,9 +13,9 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerController *controller
 	return this->players[controller->m_pEntity->m_EHandle.GetEntryIndex()];
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerPawn *pawn)
+MovementPlayer *CMovementPlayerManager::ToPlayer(CBasePlayerPawn *pawn)
 {
-	return this->players[pawn->m_hController.GetEntryIndex()];
+	return this->players[pawn->m_hController().GetEntryIndex()];
 }
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerSlot slot)

@@ -32,10 +32,18 @@ namespace offsets
 	inline constexpr int GameEntitySystem = 0x58;
 	inline constexpr int IsEntityPawn = 152;
 	inline constexpr int IsEntityController = 153;
+	inline constexpr int SetMoveType = 77;
+	inline constexpr int CollisionRulesChanged = 173;
+	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
+	inline constexpr int Teleport = 148;
+
 #else
-	inline constexpr int GameEntitySystem = 0x500000;
-	inline constexpr int IsEntityPawn = 1520000;
-	inline constexpr int IsEntityController = 1530000;
+	inline constexpr int GameEntitySystem = 0x50;
+	inline constexpr int IsEntityPawn = 151;
+	inline constexpr int IsEntityController = 152;
+	inline constexpr int SetMoveType = 76;
+	inline constexpr int CollisionRulesChanged = 172;
+	inline constexpr int Teleport = 147;
 #endif
 }
 
@@ -43,6 +51,15 @@ namespace sigs
 {
 #ifdef _WIN32
 	/* Miscellaneous */
+	
+	DECLARE_SIG(CEntitySystem_ctor, "\x48\x89\x5C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x20\x48\x8B\xD9\xE8\x2A\x2A\x2A\x2A\x33\xFF\xC7");
+	DECLARE_SIG(CEntitySystem_CreateEntity, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x56\x57\x41\x56\x48\x83\xEC\x40\x4D");
+	DECLARE_SIG(CBaseTrigger_StartTouch, "\x41\x56\x41\x57\x48\x83\xEC\x58\x48\x8B\x01");
+	DECLARE_SIG(CBaseTrigger_EndTouch, "\x40\x53\x57\x41\x55\x48\x83\xEC\x40");
+
+	DECLARE_SIG(NetworkStateChanged, "\x4C\x8B\xC9\x48\x8B\x09\x48\x85\xC9\x74\x2A\x48\x8B\x41\x10");
+
+	DECLARE_SIG(StateChanged, "\x48\x89\x54\x24\x10\x55\x53\x57\x41\x55");
 
 	// TODO
 	DECLARE_SIG(UTIL_ClientPrintFilter, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x18\x56\x57\x41\x56\x48\x81\xEC\x90\x00\x00\x00\x49\x8B\xF0");
@@ -50,8 +67,6 @@ namespace sigs
 	// search for the string "\"Console<0>\" say_team \"%s\"\n"
 	DECLARE_SIG(Host_Say, "\x44\x89\x4C\x24\x20\x44\x88");
 
-	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
-	DECLARE_SIG(CBaseAnimGraph__Teleport, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x60\x49\x8B\xD9");
 
 	// "Cannot create an entity because entity class is NULL %d\n"
 	DECLARE_SIG(CreateEntity, "\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x56\x57\x41\x56\x48\x83\xEC\x40\x4D");
@@ -60,21 +75,21 @@ namespace sigs
 	DECLARE_SIG(FindUseEntity, "\x48\x89\x5C\x24\x10\x55\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xAC\x24\x00\xEB\xFF\xFF");
 	
 	// search for "CCSGameRules", it's the one with like 7 lines of code in the decompiler window.
-	DECLARE_SIG(CCSGameRules_ctor, "\x48\x8B\xC4\x48\x89\x48\x08\x55\x53\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xA8\x68");
+	DECLARE_SIG(CCSGameRules_ctor, "\x48\x8B\xC4\x48\x89\x58\x20\x48\x89\x48\x08\x55\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xA8\x78\xFD\xFF\xFF");
 
 
 
 	/* Trace related stuff */
 
 	// TODO
-	DECLARE_SIG(CTraceFilterPlayerMovementCS__Init, "\x48\x89\x5C\x24\x08\x48\x89\x74\x24\x10\x57\x48\x83\xEC\x20\x0F\xB6\x41\x37\x48\x8B\xD9");
+	DECLARE_SIG(InitPlayerMovementTraceFilter, "\x48\x89\x5C\x24\x08\x48\x89\x74\x24\x10\x57\x48\x83\xEC\x20\x0F\xB6\x41\x37\x48\x8B\xD9");
 
 	// TODO
 	DECLARE_SIG(TracePlayerBBoxForGround, "\x48\x8B\xC4\x48\x89\x58\x10\x48\x89\x70\x18\x48\x89\x78\x20\x48\x89\x48\x08\x55\x41\x54");
 
 	// dq offset sub_1800DFA60 ; STR 1# "npc_vphysics"
 	// dq offset sub_1800DEA00 <- open this then search the jump function that this function calls
-	DECLARE_SIG(CGameTrace__Init, "\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x48\x8B\xD9\x33\xFF\x48\x8B\x0D\x2A\x2A\x2A\x2A\x48\x85\xC9");
+	DECLARE_SIG(InitGameTrace, "\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x48\x8B\xD9\x33\xFF\x48\x8B\x0D\x2A\x2A\x2A\x2A\x48\x85\xC9");
 
 
 

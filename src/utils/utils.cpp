@@ -5,22 +5,28 @@
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
 
-#include "common.h"
 #include "module.h"
 #include "detours.h"
 #include "virtual.h"
-#include "tier0/memdbgon.h"
 #include "recipientfilters.h"
+
+#include "tier0/memdbgon.h"
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
+#define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length)
+
 ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
+InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
+TracePlayerBBoxForGround_t *utils::TracePlayerBBoxForGround = NULL;
+InitGameTrace_t *utils::InitGameTrace = NULL;
 
 void modules::Initialize()
 {
 	modules::engine = new CModule(ROOTBIN, "engine2");
 	modules::tier0 = new CModule(ROOTBIN, "tier0");
 	modules::server = new CModule(GAMEBIN, "server");
+	modules::schemasystem = new CModule(ROOTBIN, "schemasystem");
 }
 
 bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
@@ -31,6 +37,7 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
 	GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
+	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pSchemaSystem, CSchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
 	return true;
 }
 
@@ -45,7 +52,14 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 	
-	UTIL_ClientPrintFilter = (ClientPrintFilter_t *)modules::server->FindSignature((const byte *)sigs::UTIL_ClientPrintFilter.data, sigs::UTIL_ClientPrintFilter.length);
+	RESOLVE_SIG(modules::server, sigs::UTIL_ClientPrintFilter, UTIL_ClientPrintFilter);
+
+	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
+	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
+	
+	RESOLVE_SIG(modules::server, sigs::TracePlayerBBoxForGround, utils::TracePlayerBBoxForGround);
+	RESOLVE_SIG(modules::server, sigs::InitGameTrace, utils::InitGameTrace);
+	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, utils::InitPlayerMovementTraceFilter);
 
 	InitDetours();
 	return true;
@@ -108,6 +122,16 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
+void utils::SetEntityMoveType(CBaseEntity *entity, MoveType_t movetype)
+{
+	CALL_VIRTUAL(void, offsets::SetMoveType, entity, movetype);
+}
+
+void utils::EntityCollisionRulesChanged(CBaseEntity *entity)
+{
+	CALL_VIRTUAL(void, offsets::CollisionRulesChanged, entity);
+}
+
 bool utils::IsEntityPawn(CBaseEntity *entity)
 {
 	return CALL_VIRTUAL(bool, offsets::IsEntityPawn, entity);
@@ -122,14 +146,13 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 {
 	CBasePlayerController *controller = nullptr;
 
-	// CBasePlayerPawn doesn't actually inherits from CBaseEntity but our own CBaseEntity2.
 	if (utils::IsEntityPawn(entity))
 	{
-		return reinterpret_cast<CBasePlayerPawn *>(entity)->m_hController.Get();
+		return static_cast<CBasePlayerPawn *>(entity)->m_hController().Get();
 	}
 	else if (utils::IsEntityController(entity))
 	{
-		return reinterpret_cast<CBasePlayerController*>(entity);
+		return static_cast<CBasePlayerController*>(entity);
 	}
 	else
 	{
@@ -139,7 +162,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	return dynamic_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	return static_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
 }
 
 CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
