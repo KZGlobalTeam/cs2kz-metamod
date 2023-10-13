@@ -25,11 +25,17 @@ public:
 	SCHEMA_FIELD(CInButtonState, m_nButtons)
 };
 
-class CCSPlayer_MovementServices : public CPlayer_MovementServices
+class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 {
 public:
-	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
+	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices_Humanoid);
 	SCHEMA_FIELD(bool, m_bDucked)
+};
+
+class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid
+{
+public:
+	DECLARE_SCHEMA_CLASS(CCSPlayer_MovementServices);
 	SCHEMA_FIELD(float, m_flJumpUntil)
 };
 

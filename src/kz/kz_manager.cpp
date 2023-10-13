@@ -10,7 +10,7 @@ CKZPlayerManager *KZ::GetKZPlayerManager()
 }
 
 KZPlayer *CKZPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
-{ 
+{
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(ms));
 }
 
@@ -30,6 +30,6 @@ KZPlayer *CKZPlayerManager::ToPlayer(CPlayerSlot slot)
 }
 
 KZPlayer *CKZPlayerManager::ToPlayer(CEntityIndex entIndex)
-{ 
+{
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(entIndex));
 }

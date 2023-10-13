@@ -44,6 +44,7 @@ public:
 	CCSPlayerController *GetController();
 	CCSPlayerPawn *GetPawn();
 	CPlayerSlot GetPlayerSlot() { return index - 1; };
+	CCSPlayer_MovementServices *GetMoveServices() { return static_cast<CCSPlayer_MovementServices *>(this->GetPawn()->m_pMovementServices()); };
 
 	// TODO: this doesn't work during movement processing!
 	void GetOrigin(Vector *origin);

@@ -59,12 +59,14 @@ public:
 class CBaseEntity2 : public CBaseEntity
 {
 public:
-	DECLARE_SCHEMA_CLASS(CBaseEntity)
+	typedef CBaseEntity2 ThisClass;
+	static constexpr const char *ThisClassName = "CBaseEntity";
+	static constexpr bool IsStruct = false;
 
 	SCHEMA_FIELD(CBodyComponent *, m_CBodyComponent)
 	SCHEMA_FIELD(CBitVec<64>, m_isSteadyState)
 	SCHEMA_FIELD(float, m_lastNetworkChange)
-	PSCHEMA_FIELD(void*, m_NetworkTransmitComponent)
+	SCHEMA_FIELD_POINTER(void, m_NetworkTransmitComponent)
 	SCHEMA_FIELD(int, m_iHealth)
 	SCHEMA_FIELD(uint8, m_lifeState)
 	SCHEMA_FIELD(int, m_iTeamNum)

@@ -5,13 +5,11 @@
 class CCSPlayerPawnBase : public CBasePlayerPawn
 {
 public:
-	DECLARE_SCHEMA_CLASS(CCSPlayerPawn);
-	SCHEMA_FIELD(float, m_ignoreLadderJumpTime)
+	DECLARE_SCHEMA_CLASS(CCSPlayerPawnBase);
 };
 
 class CCSPlayerPawn : public CCSPlayerPawnBase
 {
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerPawn);
-	SCHEMA_FIELD(CCSPlayer_MovementServices*, m_pMovementServices)
 };

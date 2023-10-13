@@ -118,7 +118,7 @@ void SetStateChanged(CBaseEntity2 *pEntity, int offset)
     auto vars = utils::GetServerGlobals();
 
     if (vars)
-        pEntity->m_lastNetworkChange(vars->curtime);
+        pEntity->m_lastNetworkChange = vars->curtime;
 
-    pEntity->m_isSteadyState(0);
+    pEntity->m_isSteadyState().ClearAll();
 };

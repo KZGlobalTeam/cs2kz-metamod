@@ -176,7 +176,7 @@ f32 MovementPlayer::GetGroundPosition()
 	f32 standableZ = 0.7;
 	Vector hullMin = { -16.0, -16.0, 0.0 };
 	Vector hullMax = { 16.0, 16.0, 72.0 };
-	if (this->GetPawn()->m_pMovementServices()->m_bDucked()) hullMax.z = 54.0;
+	if (this->GetMoveServices()->m_bDucked()) hullMax.z = 54.0;
 	utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter);
 
 	f32 highestPoint = trace.endpos.z;
