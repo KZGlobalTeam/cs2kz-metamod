@@ -74,6 +74,43 @@ void KZPlayer::DisableNoclip()
 	this->inNoclip = false;
 }
 
+void KZPlayer::SetCheckpoint()
+{
+	CCSPlayerPawn *pawn = this->GetPawn();
+	u32 flags = pawn->m_fFlags();
+	if (!(flags & FL_ONGROUND))
+	{
+		return;
+	}
+	
+	Checkpoint cp = {};
+	this->GetOrigin(&cp.origin),
+	this->GetAngles(&cp.angles),
+	m_checkpoints.AddToTail(cp);
+	// newest checkpoints aren't deleted after using prev cp.
+	m_currentCpIndex = m_checkpoints.Count() - 1;
+}
+
+void KZPlayer::TpToCheckpoint()
+{
+	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
+	this->Teleport(&cp.origin, &cp.angles, &vec3_origin);
+}
+
+void KZPlayer::TpToPrevCp()
+{
+	m_currentCpIndex = MAX(0, m_currentCpIndex - 1);
+	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
+	this->Teleport(&cp.origin, &cp.angles, &vec3_origin);
+}
+
+void KZPlayer::TpToNextCp()
+{
+	m_currentCpIndex = MIN(m_currentCpIndex + 1, m_checkpoints.Count() - 1);
+	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
+	this->Teleport(&cp.origin, &cp.angles, &vec3_origin);
+}
+
 void KZPlayer::OnStartProcessMovement()
 {
 	MovementPlayer::OnStartProcessMovement();
