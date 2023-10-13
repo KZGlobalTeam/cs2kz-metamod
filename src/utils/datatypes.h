@@ -8,7 +8,10 @@ typedef uint64_t CNetworkedQuantizedFloat;
 
 #include "utlsymbollarge.h"
 #include "ihandleentity.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wparentheses"
 #include "vscript/ivscript.h"
+#pragma clang diagnostic pop
 #include "ehandle.h"
 #include "utils/entity/cbaseentity.h"
 #include "utils/entity/cbasemodelentity.h"

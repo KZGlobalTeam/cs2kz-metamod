@@ -13,8 +13,8 @@ enum TurnState
 class CMoveData
 {
 public:
-	CMoveData::CMoveData() {}
-	CMoveData::CMoveData( const CMoveData &source ) : 
+	CMoveData() = default;
+	CMoveData( const CMoveData &source ) : 
 		moveDataFlags{source.moveDataFlags},
 		m_nPlayerHandle{source.m_nPlayerHandle},
 		m_vecAbsViewAngles{ source.m_vecAbsViewAngles},
