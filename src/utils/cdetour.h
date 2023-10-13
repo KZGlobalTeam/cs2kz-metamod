@@ -65,6 +65,7 @@ void CDetour<T>::CreateDetour()
 
 	if (!m_pfnFunc)
 	{
+		Warning("Could not find address for function for %s\n", m_pszName);
 		return;
 	}
 

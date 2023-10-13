@@ -3,6 +3,8 @@
 
 #include "tier0/memdbgon.h"
 
+static const Vector NULL_VECTOR = Vector(0, 0, 0);
+
 void KZPlayer::EnableGodMode()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
@@ -94,21 +96,21 @@ void KZPlayer::SetCheckpoint()
 void KZPlayer::TpToCheckpoint()
 {
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
-	this->Teleport(&cp.origin, &cp.angles, &vec3_origin);
+	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
 }
 
 void KZPlayer::TpToPrevCp()
 {
 	m_currentCpIndex = MAX(0, m_currentCpIndex - 1);
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
-	this->Teleport(&cp.origin, &cp.angles, &vec3_origin);
+	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
 }
 
 void KZPlayer::TpToNextCp()
 {
 	m_currentCpIndex = MIN(m_currentCpIndex + 1, m_checkpoints.Count() - 1);
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
-	this->Teleport(&cp.origin, &cp.angles, &vec3_origin);
+	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
 }
 
 void KZPlayer::OnStartProcessMovement()
