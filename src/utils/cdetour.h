@@ -20,7 +20,7 @@ class CDetour : public CDetourBase
 {
 public:
 	CDetour(CModule **pModule, T *pfnDetour, const char *pszName, size_t sigLength, byte *pSignature = nullptr) :
-		m_pModule(pModule), m_pfnDetour(pfnDetour), m_pszName(pszName), m_sigLength(sigLength), m_pSignature(pSignature)
+		m_pModule(pModule), m_pfnDetour(pfnDetour), m_pszName(pszName), m_pSignature(pSignature), m_sigLength(sigLength)
 	{
 	}
 

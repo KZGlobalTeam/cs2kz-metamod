@@ -40,7 +40,7 @@ class CSingleRecipientFilter : public IRecipientFilter
 {
 public:
 	CSingleRecipientFilter(int iRecipient, bool bReliable = true, bool bInitMessage = false) :
-		m_iRecipient(iRecipient), m_bReliable(bReliable), m_bInitMessage(bInitMessage) {}
+		m_bReliable(bReliable), m_bInitMessage(bInitMessage), m_iRecipient(iRecipient) {}
 
 	~CSingleRecipientFilter() override {}
 

@@ -38,14 +38,14 @@ namespace utils
 
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 	// Print functions do not work inside movement hooks, for some reasons...
-	void PrintConsole(CBaseEntity *entity, char *format, ...);
-	void PrintChat(CBaseEntity *entity, char *format, ...);
-	void PrintCentre(CBaseEntity *entity, char *format, ...);
-	void PrintAlert(CBaseEntity *entity, char *format, ...);
+	void PrintConsole(CBaseEntity *entity, const char *format, ...);
+	void PrintChat(CBaseEntity *entity, const char *format, ...);
+	void PrintCentre(CBaseEntity *entity, const char *format, ...);
+	void PrintAlert(CBaseEntity *entity, const char *format, ...);
 
-	void PrintConsoleAll(char *format, ...);
-	void PrintChatAll(char *format, ...);
-	void PrintCentreAll(char *format, ...);
-	void PrintAlertAll(char *format, ...);
+	void PrintConsoleAll(const char *format, ...);
+	void PrintChatAll(const char *format, ...);
+	void PrintCentreAll(const char *format, ...);
+	void PrintAlertAll(const char *format, ...);
 
 }
