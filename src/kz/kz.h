@@ -23,6 +23,7 @@ public:
 		
 private:
 	bool inNoclip;
+	bool hasTransmitHook;
 public:
 	void DisableNoclip();
 	void ToggleNoclip();
@@ -34,6 +35,8 @@ public:
 	void TpToPrevCp();
 	void TpToNextCp();
 	
+	void HookTransmit();
+	void OnSetTransmit(void* pInfo, bool);
 	struct Checkpoint
 	{
 		Vector origin;
