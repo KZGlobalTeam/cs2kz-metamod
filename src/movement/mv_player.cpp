@@ -53,7 +53,7 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 
 void MovementPlayer::GetOrigin(Vector *origin)
 {
-	if (!this->processingMovement && this->moveData_Current)
+	if (this->processingMovement && this->moveData_Current)
 	{
 		*origin = this->moveData_Current->m_vecAbsOrigin;
 	}
@@ -82,7 +82,7 @@ void MovementPlayer::SetOrigin(const Vector &origin)
 
 void MovementPlayer::GetVelocity(Vector *velocity)
 {
-	if (!this->processingMovement && this->moveData_Current)
+	if (this->processingMovement && this->moveData_Current)
 	{
 		*velocity = this->moveData_Current->m_vecVelocity;
 	}
@@ -103,7 +103,7 @@ void MovementPlayer::SetVelocity(const Vector &velocity)
 
 void MovementPlayer::GetAngles(QAngle *angles)
 {
-	if (this->processingMovement)
+	if (this->processingMovement && this->moveData_Current)
 	{
 		*angles = this->moveData_Current->m_vecViewAngles;
 	}
