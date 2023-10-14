@@ -14,7 +14,8 @@
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
-#define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length)
+#define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length); \
+	if (!variable) { Warning("Failed to find address for %s!\n", #sig); return false; }
 
 ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
 InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
