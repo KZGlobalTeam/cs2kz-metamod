@@ -97,10 +97,10 @@ struct trace_t_s2
 	Vector startpos;
 	Vector endpos;
 	Vector planeNormal;
-	Vector traceunknown3;
-	uint8_t traceunknown6[4];
+	Vector traceunknown6;
+	uint8_t traceunknown7[4];
 	float fraction;
-	uint8_t traceunknown7[7];
+	uint8_t traceunknown8[7];
 	bool startsolid;
 };
 
