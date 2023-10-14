@@ -36,7 +36,7 @@ namespace offsets
 	inline constexpr int CollisionRulesChanged = 173;
 	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
 	inline constexpr int Teleport = 148;
-
+	inline constexpr int SetTransmit = 86;
 #else
 	inline constexpr int GameEntitySystem = 0x50;
 	inline constexpr int IsEntityPawn = 151;
@@ -44,6 +44,7 @@ namespace offsets
 	inline constexpr int SetMoveType = 76;
 	inline constexpr int CollisionRulesChanged = 172;
 	inline constexpr int Teleport = 147;
+	inline constexpr int SetTransmit = 85;
 #endif
 }
 
