@@ -19,6 +19,7 @@ public:
 		m_checkpoints = CUtlVector<Checkpoint>(1, 0);
 	}
 	virtual void OnStartProcessMovement() override;
+	virtual void OnStopProcessMovement() override;
 	virtual void OnStartTouchGround() override;
 		
 private:

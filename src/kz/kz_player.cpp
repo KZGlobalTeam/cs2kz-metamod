@@ -95,12 +95,22 @@ void KZPlayer::SetCheckpoint()
 
 void KZPlayer::TpToCheckpoint()
 {
+	if (m_checkpoints.Count() <= 0)
+	{
+		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
+		return;
+	}
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
 	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
 }
 
 void KZPlayer::TpToPrevCp()
 {
+	if (m_checkpoints.Count() <= 0)
+	{
+		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
+		return;
+	}
 	m_currentCpIndex = MAX(0, m_currentCpIndex - 1);
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
 	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
@@ -108,6 +118,11 @@ void KZPlayer::TpToPrevCp()
 
 void KZPlayer::TpToNextCp()
 {
+	if (m_checkpoints.Count() <= 0)
+	{
+		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
+		return;
+	}
 	m_currentCpIndex = MIN(m_currentCpIndex + 1, m_checkpoints.Count() - 1);
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
 	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
@@ -118,4 +133,13 @@ void KZPlayer::OnStartProcessMovement()
 	MovementPlayer::OnStartProcessMovement();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
+}
+
+void KZPlayer::OnStopProcessMovement()
+{
+	MovementPlayer::OnStopProcessMovement();
+	Vector velocity;
+	this->GetVelocity(&velocity);
+	float speed = velocity.Length2D();
+	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)), "%.2f", speed);
 }
