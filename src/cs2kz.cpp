@@ -123,7 +123,7 @@ internal float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int num
 	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
 }
 
-static void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo_DontUse)
+internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo_DontUse)
 {
 	EntitySpawnInfo_t *pInfo = (EntitySpawnInfo_t *)pInfo_DontUse;
 	
