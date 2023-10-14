@@ -86,18 +86,21 @@ class CBaseTrigger : public CBaseEntity2
 
 struct trace_t_s2
 {
-	uint8_t traceunknown0[8];
-	CBaseEntity* m_pEnt;
-	uint8_t traceunknown1[24];
-	int contents;
-	uint8_t traceunknown2[76];
+	uint8_t traceunknown0[8];   // 0
+	CBaseEntity *m_pEnt;        // 8
+	uint8_t traceunknown1[24];  // 16
+	int contents;               // 40
+	uint8_t traceunknown2[4];   // 44 (this is probably just alignment padding)
+	__m128i traceunknown3;      // 48
+	__m128i traceunknown4;      // 64
+	uint8_t traceunknown5[44];
 	Vector startpos;
 	Vector endpos;
 	Vector planeNormal;
 	Vector traceunknown3;
-	uint8_t traceunknown4[4];
+	uint8_t traceunknown6[4];
 	float fraction;
-	uint8_t traceunknown5[7];
+	uint8_t traceunknown7[7];
 	bool startsolid;
 };
 

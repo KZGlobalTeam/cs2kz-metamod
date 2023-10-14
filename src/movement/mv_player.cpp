@@ -179,7 +179,7 @@ f32 MovementPlayer::GetGroundPosition()
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
 	trace_t_s2 trace;
-	utils::InitGameTrace(trace);
+	utils::InitGameTrace(&trace);
 	f32 standableZ = 0.7;
 	Vector hullMin = { -16.0, -16.0, 0.0 };
 	Vector hullMax = { 16.0, 16.0, 72.0 };
