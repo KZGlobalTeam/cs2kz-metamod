@@ -5,8 +5,6 @@
 
 static const Vector NULL_VECTOR = Vector(0, 0, 0);
 
-SH_DECL_MANUALHOOK2_void(SetTransmit, offsets::SetTransmit, 0, 0, void *, bool);
-
 void KZPlayer::EnableGodMode()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
@@ -132,24 +130,16 @@ void KZPlayer::TpToNextCp()
 
 void KZPlayer::OnStartProcessMovement()
 {
-	this->HookTransmit();
 	MovementPlayer::OnStartProcessMovement();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
 }
 
-void KZPlayer::HookTransmit()
+void KZPlayer::OnStopProcessMovement()
 {
-	if (!this->hasTransmitHook)
-	{
-		SH_ADD_MANUALVPHOOK(SetTransmit, this->GetController(), SH_MEMBER(this, &KZPlayer::OnSetTransmit), false);
-		SH_ADD_MANUALVPHOOK(SetTransmit, this->GetPawn(), SH_MEMBER(this, &KZPlayer::OnSetTransmit), false);
-		this->hasTransmitHook = true;
-	}
-}
-void KZPlayer::OnSetTransmit(void *pInfo, bool bAlways)
-{
-	int test = (int)*((uint8 *)pInfo + 560);
-	META_CONPRINTF("%i transmitting to userid %i\n", this->index, test);
-	RETURN_META(MRES_IGNORED);
+	MovementPlayer::OnStopProcessMovement();
+	Vector velocity;
+	this->GetVelocity(&velocity);
+	float speed = velocity.Length2D();
+	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)), "%.2f", speed);
 }

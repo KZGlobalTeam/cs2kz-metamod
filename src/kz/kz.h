@@ -19,11 +19,11 @@ public:
 		m_checkpoints = CUtlVector<Checkpoint>(1, 0);
 	}
 	virtual void OnStartProcessMovement() override;
+	virtual void OnStopProcessMovement() override;
 	virtual void OnStartTouchGround() override;
 		
 private:
 	bool inNoclip;
-	bool hasTransmitHook;
 public:
 	void DisableNoclip();
 	void ToggleNoclip();
@@ -35,8 +35,6 @@ public:
 	void TpToPrevCp();
 	void TpToNextCp();
 	
-	void HookTransmit();
-	void OnSetTransmit(void* pInfo, bool);
 	struct Checkpoint
 	{
 		Vector origin;
