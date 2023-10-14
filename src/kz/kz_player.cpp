@@ -97,12 +97,22 @@ void KZPlayer::SetCheckpoint()
 
 void KZPlayer::TpToCheckpoint()
 {
+	if (m_checkpoints.Count() <= 0)
+	{
+		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
+		return;
+	}
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
 	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
 }
 
 void KZPlayer::TpToPrevCp()
 {
+	if (m_checkpoints.Count() <= 0)
+	{
+		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
+		return;
+	}
 	m_currentCpIndex = MAX(0, m_currentCpIndex - 1);
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
 	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
@@ -110,6 +120,11 @@ void KZPlayer::TpToPrevCp()
 
 void KZPlayer::TpToNextCp()
 {
+	if (m_checkpoints.Count() <= 0)
+	{
+		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
+		return;
+	}
 	m_currentCpIndex = MIN(m_currentCpIndex + 1, m_checkpoints.Count() - 1);
 	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
 	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
@@ -128,13 +143,13 @@ void KZPlayer::HookTransmit()
 	if (!this->hasTransmitHook)
 	{
 		SH_ADD_MANUALVPHOOK(SetTransmit, this->GetController(), SH_MEMBER(this, &KZPlayer::OnSetTransmit), false);
+		SH_ADD_MANUALVPHOOK(SetTransmit, this->GetPawn(), SH_MEMBER(this, &KZPlayer::OnSetTransmit), false);
 		this->hasTransmitHook = true;
 	}
 }
 void KZPlayer::OnSetTransmit(void *pInfo, bool bAlways)
 {
 	int test = (int)*((uint8 *)pInfo + 560);
-	if (test)
-	META_CONPRINTF("%i transmitting to %i\n", this->index, test);
+	META_CONPRINTF("%i transmitting to userid %i\n", this->index, test);
 	RETURN_META(MRES_IGNORED);
 }
