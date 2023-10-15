@@ -1,6 +1,6 @@
 #include "kz.h"
 #include "utils/utils.h"
-
+#include "igameevents.h"
 #include "tier0/memdbgon.h"
 
 static const Vector NULL_VECTOR = Vector(0, 0, 0);
