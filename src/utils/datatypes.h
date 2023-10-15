@@ -31,6 +31,13 @@ class CBaseFilter;
 class CBasePlayerPawn;
 class CCSPlayerPawn;
 
+struct TransmitInfo
+{
+	CBitVec<16384> *m_pTransmitEdict;
+	uint8_t unknown[552];
+	int m_nClientEntityIndex; // actually UserID?
+};
+
 enum MsgDest : int32_t
 {
 	HUD_PRINTNOTIFY  = 1,

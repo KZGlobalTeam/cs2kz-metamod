@@ -143,3 +143,8 @@ void KZPlayer::OnStopProcessMovement()
 	float speed = velocity.Length2D();
 	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)), "%.2f", speed);
 }
+
+void KZPlayer::ToggleHide()
+{
+	this->hideOtherPlayers = !this->hideOtherPlayers;
+}

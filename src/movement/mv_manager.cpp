@@ -1,4 +1,5 @@
 #include "movement.h"
+#include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
 extern CEntitySystem *g_pEntitySystem;
@@ -27,4 +28,17 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CEntityIndex entIndex)
 {
 	if (!g_pEntitySystem) return nullptr;
 	return this->players[g_pEntitySystem->GetBaseEntity(entIndex)->m_pEntity->m_EHandle.GetEntryIndex()];
+}
+
+MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerUserId userID)
+{
+	if (!g_pEntitySystem) return nullptr;
+	for (int i = 0; i < MAXPLAYERS; i++)
+	{
+		if (interfaces::pEngine->GetPlayerUserId(i) == userID.Get())
+		{
+			return this->players[i+1];
+		}
+	}
+	return nullptr;
 }

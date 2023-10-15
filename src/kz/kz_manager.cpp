@@ -33,3 +33,8 @@ KZPlayer *CKZPlayerManager::ToPlayer(CEntityIndex entIndex)
 {
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(entIndex));
 }
+
+KZPlayer *CKZPlayerManager::ToPlayer(CPlayerUserId userID)
+{
+	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(userID));
+}

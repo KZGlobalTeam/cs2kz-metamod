@@ -8,6 +8,7 @@ void MovementPlayer::OnStartProcessMovement()
 	this->duckBugged = false;
 	this->hitPerf = false;
 	this->processingMovement = true;
+	this->walkMoved = false;
 }
 
 void MovementPlayer::OnStopProcessMovement()

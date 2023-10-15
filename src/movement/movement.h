@@ -127,6 +127,7 @@ public:
 	MovementPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	MovementPlayer *ToPlayer(CPlayerSlot slot);
 	MovementPlayer *ToPlayer(CEntityIndex entIndex);
+	MovementPlayer *ToPlayer(CPlayerUserId userID);
 public:
 	MovementPlayer *players[MAXPLAYERS + 1];
 };

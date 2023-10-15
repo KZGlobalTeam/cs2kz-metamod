@@ -25,6 +25,7 @@ public:
 private:
 	bool inNoclip;
 public:
+	void ToggleHide();
 	void DisableNoclip();
 	void ToggleNoclip();
 	void EnableGodMode();
@@ -42,6 +43,7 @@ public:
 	};
 	
 	i32 m_currentCpIndex;
+	bool hideOtherPlayers;
 	CUtlVector<Checkpoint> m_checkpoints;
 };
 
@@ -62,6 +64,7 @@ public:
 	KZPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	KZPlayer *ToPlayer(CPlayerSlot slot);
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
+	KZPlayer *ToPlayer(CPlayerUserId userID);
 
 	KZPlayer *ToKZPlayer(MovementPlayer *player) { return static_cast<KZPlayer *>(player); }
 };
@@ -76,5 +79,6 @@ namespace KZ
 	namespace misc
 	{
 		void RegisterCommands();
+		void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 	}
 };
