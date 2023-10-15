@@ -36,6 +36,8 @@ KZ-specific:
 	- [ ] Split jump types
 - [ ] HUD
 	- [ ] *Speed panel*
+ 		- [ ] Add prespeed and keys
+ 		- [ ] Add print to the top center bar (with game events)
 	- [ ] TP Menu (impossible...?)
 - [ ] Quiet
 	- [ ] !hide
