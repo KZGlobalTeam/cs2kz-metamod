@@ -138,7 +138,9 @@ TurnState MovementPlayer::GetTurning()
 
 bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
 {
-	CInButtonState buttons = this->GetMoveServices()->m_nButtons();
+	CCSPlayer_MovementServices *ms = this->GetMoveServices();
+	if (!ms) return false;
+	CInButtonState buttons = ms->m_nButtons();
 	if (onlyDown)
 	{
 		return buttons.m_pButtonStates[0] & button;
