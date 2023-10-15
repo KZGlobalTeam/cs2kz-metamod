@@ -35,7 +35,7 @@ struct TransmitInfo
 {
 	CBitVec<16384> *m_pTransmitEdict;
 	uint8_t unknown[552];
-	int m_nClientEntityIndex; // actually UserID?
+	CPlayerSlot m_nClientEntityIndex;
 };
 
 enum MsgDest : int32_t
