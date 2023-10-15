@@ -37,6 +37,7 @@ namespace offsets
 	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
 	inline constexpr int Teleport = 148;
 	inline constexpr int SetTransmit = 86;
+	inline constexpr int GetEventManager = 91;
 #else
 	inline constexpr int GameEntitySystem = 0x50;
 	inline constexpr int IsEntityPawn = 151;
@@ -45,6 +46,7 @@ namespace offsets
 	inline constexpr int CollisionRulesChanged = 172;
 	inline constexpr int Teleport = 147;
 	inline constexpr int SetTransmit = 85;
+	inline constexpr int GetEventManager = 91;
 #endif
 }
 
@@ -84,6 +86,9 @@ namespace sigs
 	
 	// search for "exec maps/%s.cfg\n"
 	DECLARE_SIG(CCSGameRules_ctor, "\x48\x8B\xC4\x48\x89\x58\x20\x48\x89\x48\x08\x55\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xA8\x78\xFD\xFF\xFF");
+
+	// CSource2GameClients::StartHLTVServer: game event %s not found.
+	DECLARE_SIG(GetLegacyGameEventListener, "\x48\x8B\x15\x2A\x2A\x2A\x2A\x48\x85\xD2\x74\x2A\x85\xC9\x74");
 	
 	/* Trace related stuff */
 	

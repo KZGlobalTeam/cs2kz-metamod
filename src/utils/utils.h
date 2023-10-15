@@ -11,7 +11,7 @@ typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilt
 typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end, const Vector &minsSrc,
 	const Vector &maxsSrc, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm, float minGroundNormalZ, bool overwriteEndpos, int *pCounter);
 typedef void InitGameTrace_t(trace_t_s2 *trace);
-
+typedef IGameEventListener2 *GetLegacyGameEventListener_t(CEntityIndex index);
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
 namespace utils
@@ -35,8 +35,10 @@ namespace utils
 	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
 	extern TracePlayerBBoxForGround_t *TracePlayerBBoxForGround;
 	extern InitGameTrace_t *InitGameTrace;
+	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
 
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
+	
 	// Print functions do not work inside movement hooks, for some reasons...
 	void PrintConsole(CBaseEntity *entity, const char *format, ...);
 	void PrintChat(CBaseEntity *entity, const char *format, ...);
