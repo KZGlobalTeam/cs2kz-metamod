@@ -37,11 +37,11 @@ f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
-	player->moveData_Current = mv;
-	player->moveData_Pre = CMoveData(*mv);
+	player->currentMoveData = mv;
+	player->moveDataPre = CMoveData(*mv);
 	player->OnStartProcessMovement();
 	ProcessMovement(ms, mv);
-	player->moveData_Post = CMoveData(*mv);
+	player->moveDataPost = CMoveData(*mv);
 	player->OnStopProcessMovement();
 }
 

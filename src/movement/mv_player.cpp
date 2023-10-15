@@ -16,7 +16,7 @@ void MovementPlayer::OnStopProcessMovement()
 	this->processingMovement = false;
 	this->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
 	this->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
-	this->oldAngles = this->moveData_Post.m_vecViewAngles;
+	this->oldAngles = this->moveDataPost.m_vecViewAngles;
 	this->oldWalkMoved = this->walkMoved;
 }
 
@@ -52,11 +52,16 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn().Get());
 }
 
+CCSPlayer_MovementServices *MovementPlayer::GetMoveServices()
+{
+	return this->processingMovement ? this->currentMoveServices : static_cast<CCSPlayer_MovementServices *>(this->GetPawn()->m_pMovementServices());
+};
+
 void MovementPlayer::GetOrigin(Vector *origin)
 {
-	if (this->processingMovement && this->moveData_Current)
+	if (this->processingMovement && this->currentMoveData)
 	{
-		*origin = this->moveData_Current->m_vecAbsOrigin;
+		*origin = this->currentMoveData->m_vecAbsOrigin;
 	}
 	else
 	{
@@ -83,9 +88,9 @@ void MovementPlayer::SetOrigin(const Vector &origin)
 
 void MovementPlayer::GetVelocity(Vector *velocity)
 {
-	if (this->processingMovement && this->moveData_Current)
+	if (this->processingMovement && this->currentMoveData)
 	{
-		*velocity = this->moveData_Current->m_vecVelocity;
+		*velocity = this->currentMoveData->m_vecVelocity;
 	}
 	else
 	{
@@ -104,13 +109,13 @@ void MovementPlayer::SetVelocity(const Vector &velocity)
 
 void MovementPlayer::GetAngles(QAngle *angles)
 {
-	if (this->processingMovement && this->moveData_Current)
+	if (this->processingMovement && this->currentMoveData)
 	{
-		*angles = this->moveData_Current->m_vecViewAngles;
+		*angles = this->currentMoveData->m_vecViewAngles;
 	}
 	else
 	{
-		*angles = this->moveData_Post.m_vecViewAngles;
+		*angles = this->moveDataPost.m_vecViewAngles;
 	}
 }
 
@@ -123,7 +128,7 @@ void MovementPlayer::SetAngles(const QAngle &angles)
 
 TurnState MovementPlayer::GetTurning()
 {
-	QAngle currentAngle = this->moveData_Pre.m_vecViewAngles;
+	QAngle currentAngle = this->moveDataPre.m_vecViewAngles;
 	bool turning = this->oldAngles.y != currentAngle.y;
 	if (!turning) return TURN_NONE;
 	if (currentAngle.y < this->oldAngles.y - 180
@@ -133,7 +138,7 @@ TurnState MovementPlayer::GetTurning()
 
 bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
 {
-	CInButtonState buttons = this->GetPawn()->m_pMovementServices()->m_nButtons();
+	CInButtonState buttons = this->GetMoveServices()->m_nButtons();
 	if (onlyDown)
 	{
 		return buttons.m_pButtonStates[0] & button;
@@ -159,8 +164,7 @@ bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
 		}
 		else
 		{
-			u64 keyMask = 1ull << button;
-			EInButtonState keyState = (EInButtonState)(keyMask & buttons.m_pButtonStates[0] + (keyMask & buttons.m_pButtonStates[1]) * 2 + (keyMask & buttons.m_pButtonStates[2]) * 4);
+			EInButtonState keyState = (EInButtonState)(button & buttons.m_pButtonStates[0] + (button & buttons.m_pButtonStates[1]) * 2 + (button & buttons.m_pButtonStates[2]) * 4);
 			if (keyState > IN_BUTTON_DOWN_UP)
 			{
 				return true;
@@ -172,8 +176,8 @@ bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
 
 f32 MovementPlayer::GetGroundPosition()
 {
-	CMoveData *mv = this->moveData_Current;
-	if (!this->processingMovement) mv = &this->moveData_Post;
+	CMoveData *mv = this->currentMoveData;
+	if (!this->processingMovement) mv = &this->moveDataPost;
 	i32 traceCounter = 0;
 	CTraceFilterPlayerMovementCS filter;
 	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
@@ -203,8 +207,8 @@ f32 MovementPlayer::GetGroundPosition()
 
 void MovementPlayer::RegisterTakeoff(bool jumped)
 {
-	CMoveData *mv = this->moveData_Current;
-	if (!this->processingMovement) mv = &this->moveData_Post;
+	CMoveData *mv = this->currentMoveData;
+	if (!this->processingMovement) mv = &this->moveDataPost;
 	this->takeoffOrigin = mv->m_vecAbsOrigin;
 	this->takeoffTime = utils::GetServerGlobals()->curtime - utils::GetServerGlobals()->frametime;
 	this->takeoffVelocity = mv->m_vecVelocity;
@@ -213,8 +217,8 @@ void MovementPlayer::RegisterTakeoff(bool jumped)
 
 void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbugFix)
 {
-	CMoveData *mv = this->moveData_Current;
-	if (!this->processingMovement) mv = &this->moveData_Post;
+	CMoveData *mv = this->currentMoveData;
+	if (!this->processingMovement) mv = &this->moveDataPost;
 	this->landingOrigin = mv->m_vecAbsOrigin;
 	this->landingTime = utils::GetServerGlobals()->curtime;
 	this->landingVelocity = landingVelocity;

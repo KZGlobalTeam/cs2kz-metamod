@@ -137,8 +137,8 @@ void KZPlayer::OnStartProcessMovement()
 
 void KZPlayer::OnStopProcessMovement()
 {
-	MovementPlayer::OnStopProcessMovement();
 	KZ::HUD::DrawSpeedPanel(this);
+	MovementPlayer::OnStopProcessMovement();
 }
 
 void KZPlayer::ToggleHide()
