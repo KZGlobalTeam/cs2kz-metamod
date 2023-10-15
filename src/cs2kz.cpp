@@ -130,7 +130,7 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 {
 	EntitySpawnInfo_t *pInfo = (EntitySpawnInfo_t *)pInfo_DontUse;
 	
-	for (int32_t i = 0; i < nCount; i++)
+	for (i32 i = 0; i < nCount; i++)
 	{
 		if (pInfo && pInfo[i].m_pEntity)
 		{

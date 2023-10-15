@@ -138,10 +138,7 @@ void KZPlayer::OnStartProcessMovement()
 void KZPlayer::OnStopProcessMovement()
 {
 	MovementPlayer::OnStopProcessMovement();
-	Vector velocity;
-	this->GetVelocity(&velocity);
-	float speed = velocity.Length2D();
-	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)), "%.2f", speed);
+	KZ::HUD::DrawSpeedPanel(this);
 }
 
 void KZPlayer::ToggleHide()

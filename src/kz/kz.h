@@ -12,7 +12,7 @@ extern CMovementPlayerManager *g_pPlayerManager;
 class KZPlayer : public MovementPlayer
 {
 public:
-	KZPlayer(int i) : MovementPlayer(i)
+	KZPlayer(i32 i) : MovementPlayer(i)
 	{
 		inNoclip = false;
 		m_currentCpIndex = 0;
@@ -75,6 +75,7 @@ namespace KZ
 	namespace HUD
 	{
 		void OnProcessUsercmds_Post(CPlayerSlot &slot, bf_read *buf, int numcmds, bool ignore, bool paused);
+		void DrawSpeedPanel(KZPlayer *player);
 	}
 	namespace misc
 	{
