@@ -138,7 +138,9 @@ TurnState MovementPlayer::GetTurning()
 
 bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
 {
-	CInButtonState buttons = this->GetMoveServices()->m_nButtons();
+	CCSPlayer_MovementServices *ms = this->GetMoveServices();
+	if (!ms) return false;
+	CInButtonState buttons = ms->m_nButtons();
 	if (onlyDown)
 	{
 		return buttons.m_pButtonStates[0] & button;
@@ -254,4 +256,24 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 			this->landingTimeActual = this->landingTime + time;
 		}
 	}
+}
+
+void MovementPlayer::Reset()
+{
+	this->processingDuck = false;
+	this->duckBugged = false;
+	this->walkMoved = false;
+	this->oldWalkMoved = false;
+	this->hitPerf = false;
+	this->jumped = false;
+	this->takeoffFromLadder = false;
+	this->takeoffOrigin.Init();
+	this->takeoffVelocity.Init();
+	this->takeoffTime = 0.0f;
+	this->takeoffGroundOrigin.Init();
+	this->landingOrigin.Init();
+	this->landingVelocity.Init();
+	this->landingTime = 0.0f;
+	this->landingOriginActual.Init();
+	this->landingTimeActual = 0.0f;
 }

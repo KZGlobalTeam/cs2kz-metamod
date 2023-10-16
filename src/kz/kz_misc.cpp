@@ -95,3 +95,9 @@ void KZ::misc::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		}
 	}
 }
+
+void KZ::misc::OnClientPutInServer(CPlayerSlot slot)
+{
+	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(slot);
+	player->Reset();
+}
