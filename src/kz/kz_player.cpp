@@ -8,6 +8,7 @@ static const Vector NULL_VECTOR = Vector(0, 0, 0);
 void KZPlayer::EnableGodMode()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
 	if (pawn->m_bTakesDamage())
 	{
 		pawn->m_bTakesDamage(false);
@@ -21,6 +22,7 @@ void KZPlayer::OnStartTouchGround()
 void KZPlayer::HandleMoveCollision()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
 	if (pawn->m_lifeState() != LIFE_ALIVE)
 	{
 		DisableNoclip();
@@ -55,6 +57,7 @@ void KZPlayer::HandleMoveCollision()
 void KZPlayer::UpdatePlayerModelAlpha()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
 	Color ogColor = pawn->m_clrRender();
 	if (pawn->m_clrRender().a() != 254)
 	{
@@ -79,6 +82,7 @@ void KZPlayer::DisableNoclip()
 void KZPlayer::SetCheckpoint()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
 	u32 flags = pawn->m_fFlags();
 	if (!(flags & FL_ONGROUND))
 	{
@@ -144,4 +148,13 @@ void KZPlayer::OnStopProcessMovement()
 void KZPlayer::ToggleHide()
 {
 	this->hideOtherPlayers = !this->hideOtherPlayers;
+}
+
+void KZPlayer::Reset()
+{
+	MovementPlayer::Reset();
+
+	this->m_currentCpIndex = 0;
+	this->hideOtherPlayers = false;
+	this->m_checkpoints.Purge();
 }

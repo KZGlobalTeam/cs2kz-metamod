@@ -18,6 +18,7 @@ public:
 		m_currentCpIndex = 0;
 		m_checkpoints = CUtlVector<Checkpoint>(1, 0);
 	}
+	virtual void Reset() override;
 	virtual void OnStartProcessMovement() override;
 	virtual void OnStopProcessMovement() override;
 	virtual void OnStartTouchGround() override;
@@ -81,5 +82,6 @@ namespace KZ
 	{
 		void RegisterCommands();
 		void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
+		void OnClientPutInServer(CPlayerSlot slot);
 	}
 };

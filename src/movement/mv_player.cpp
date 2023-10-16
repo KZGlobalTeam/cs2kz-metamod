@@ -257,3 +257,23 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 		}
 	}
 }
+
+void MovementPlayer::Reset()
+{
+	this->processingDuck = false;
+	this->duckBugged = false;
+	this->walkMoved = false;
+	this->oldWalkMoved = false;
+	this->hitPerf = false;
+	this->jumped = false;
+	this->takeoffFromLadder = false;
+	this->takeoffOrigin.Init();
+	this->takeoffVelocity.Init();
+	this->takeoffTime = 0.0f;
+	this->takeoffGroundOrigin.Init();
+	this->landingOrigin.Init();
+	this->landingVelocity.Init();
+	this->landingTime = 0.0f;
+	this->landingOriginActual.Init();
+	this->landingTimeActual = 0.0f;
+}
