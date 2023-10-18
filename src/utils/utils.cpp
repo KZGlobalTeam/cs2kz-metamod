@@ -28,6 +28,7 @@ void modules::Initialize()
 	modules::tier0 = new CModule(ROOTBIN, "tier0");
 	modules::server = new CModule(GAMEBIN, "server");
 	modules::schemasystem = new CModule(ROOTBIN, "schemasystem");
+	modules::steamnetworkingsockets = new CModule(ROOTBIN, "steamnetworkingsockets");
 }
 
 bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
