@@ -7,9 +7,10 @@ void KZ::HUD::OnProcessUsercmds_Post(CPlayerSlot &slot, bf_read *buf, int numcmd
 {
 }
 
-internal void AddSpeedText(KZPlayer *player, char* buffer)
+internal void AddSpeedText(KZPlayer *player, char* buffer, int size)
 {
 	char speed[128];
+	speed[0] = 0;
 	Vector velocity;
 	player->GetVelocity(&velocity);
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
@@ -22,12 +23,13 @@ internal void AddSpeedText(KZPlayer *player, char* buffer)
 	{
 		snprintf(speed, sizeof(speed), "Speed: %.0f (%.0f)", velocity.Length2D(), player->takeoffVelocity.Length2D());
 	}
-	strcat(buffer, speed);
+	strncat(buffer, speed, size);
 }
 
-internal void AddKeyText(KZPlayer *player, char *buffer)
+internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 {
 	char keys[128];
+	keys[0] = 0;
 	snprintf(keys, sizeof(keys), "Keys: %s %s %s %s %s %s",
 		player->IsButtonDown(IN_MOVELEFT) ? "A" : "_",
 		player->IsButtonDown(IN_FORWARD) ? "W" : "_",
@@ -35,15 +37,16 @@ internal void AddKeyText(KZPlayer *player, char *buffer)
 		player->IsButtonDown(IN_MOVERIGHT) ? "D" : "_",
 		player->IsButtonDown(IN_DUCK) ? "C" : "_",
 		player->IsButtonDown(IN_JUMP) ? "J" : "_");
-	strcat(buffer, keys);
+	strncat(buffer, keys, size);
 }
 
 void KZ::HUD::DrawSpeedPanel(KZPlayer *player)
 {
-	char buffer[1024] = "";
-	AddSpeedText(player, buffer);
+	char buffer[1024];
+	buffer[0] = 0;
+	AddSpeedText(player, buffer, sizeof(buffer));
 	strcat(buffer, "\n"); 
-	AddKeyText(player, buffer);
+	AddKeyText(player, buffer, sizeof(buffer));
 
 	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(player->index)), "%s", buffer);
 }
