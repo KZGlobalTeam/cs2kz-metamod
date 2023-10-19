@@ -3,6 +3,7 @@
 #include "common.h"
 #include "cgameresourceserviceserver.h"
 #include "cschemasystem.h"
+#include "igameevents.h"
 
 namespace interfaces
 {
@@ -12,4 +13,5 @@ namespace interfaces
 	inline CSchemaSystem *pSchemaSystem = nullptr;
 	inline IVEngineServer2 *pEngine = nullptr;
 	inline ISource2Server *pServer = nullptr;
+	inline IGameEventManager2 *pGameEventManager = nullptr;
 }

@@ -20,6 +20,9 @@ for sdk_name in MMSPlugin.sdks:
     elif binary.compiler.family == 'msvc':
       binary.compiler.cxxflags += ['/std:c++17']
 
+    if binary.compiler.family == 'clang':
+      binary.compiler.cxxflags += ['-Wno-register']
+
     binary.compiler.cxxincludes += [
       os.path.join(builder.sourcePath, 'src'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
@@ -46,6 +49,7 @@ for sdk_name in MMSPlugin.sdks:
     binary.sources += [
       os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
       os.path.join(sdk.path, 'entity2', 'entitysystem.cpp'),
+      os.path.join(sdk.path, 'tier1', 'generichash.cpp'),
       os.path.join(builder.sourcePath, 'src', 'utils', 'utils.cpp'),
       os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
       os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
