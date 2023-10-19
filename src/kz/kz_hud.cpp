@@ -49,13 +49,4 @@ void KZ::HUD::DrawSpeedPanel(KZPlayer *player)
 	AddKeyText(player, buffer, sizeof(buffer));
 
 	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(player->index)), "%s", buffer);
-	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
-	if (!event) return;
-	event->SetString("loc_token", buffer);
-	event->SetInt("duration", 12345);
-	event->SetInt("userid", -1);
-	
-	IGameEventListener2 *listener = utils::GetLegacyGameEventListener(player->GetController()->entindex() - 1);
-	listener->FireGameEvent(event);
-	interfaces::pGameEventManager->FreeEvent(event);
 }

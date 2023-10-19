@@ -216,6 +216,25 @@ void utils::PrintAlert(CBaseEntity *entity, const char *format, ...)
 	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
+void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
+{
+	CBasePlayerController *controller = utils::GetController(entity);
+	if (!controller) return;
+
+	FORMAT_STRING(buffer);
+
+	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
+	if (!event) return;
+	event->SetString("loc_token", buffer);
+	event->SetInt("duration", 5);
+	event->SetInt("userid", -1);
+
+	CPlayerSlot slot = controller->entindex() - 1;
+	IGameEventListener2 *listener = utils::GetLegacyGameEventListener(slot);
+	listener->FireGameEvent(event);
+	interfaces::pGameEventManager->FreeEvent(event);
+}
+
 void utils::PrintConsoleAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
@@ -242,4 +261,17 @@ void utils::PrintAlertAll(const char *format, ...)
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
 	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
+}
+
+void utils::PrintHTMLCentreAll(const char *format, ...)
+{
+	FORMAT_STRING(buffer);
+
+	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
+	if (!event) return;
+	event->SetString("loc_token", buffer);
+	event->SetInt("duration", 5);
+	event->SetInt("userid", -1);
+
+	interfaces::pGameEventManager->FireEvent(event);
 }
