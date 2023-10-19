@@ -154,8 +154,8 @@ void *FASTCALL Detour_CCSGameRules_ctor(void *this_)
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock)
 {
 	int retValue = RecvServerBrowserPacket(info, pSock);
-	META_CONPRINTF("Detour_RecvServerBrowserPacket: Message received from %i.%i.%i.%i:%i, returning %i\nPayload: %s\n", 
-		info.m_adrFrom.m_IPv4Bytes.b1, info.m_adrFrom.m_IPv4Bytes.b2, info.m_adrFrom.m_IPv4Bytes.b3, info.m_adrFrom.m_IPv4Bytes.b4, 
-		info.m_adrFrom.m_usPort, retValue, (char*)info.m_pPkt);
+	// META_CONPRINTF("Detour_RecvServerBrowserPacket: Message received from %i.%i.%i.%i:%i, returning %i\nPayload: %s\n", 
+	// 	info.m_adrFrom.m_IPv4Bytes.b1, info.m_adrFrom.m_IPv4Bytes.b2, info.m_adrFrom.m_IPv4Bytes.b3, info.m_adrFrom.m_IPv4Bytes.b4, 
+	// 	info.m_adrFrom.m_usPort, retValue, (char*)info.m_pPkt);
 	return retValue;
 }
