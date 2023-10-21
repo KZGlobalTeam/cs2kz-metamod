@@ -171,7 +171,7 @@ void KZPlayer::TpHoldPlayerStill()
 	this->GetOrigin(&currentOrigin);
 
 	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
-	if (currentOrigin != checkpoints[currentCpIndex].origin);
+	if (currentOrigin != checkpoints[currentCpIndex].origin)
 	{
 		this->SetOrigin(checkpoints[currentCpIndex].origin);
 	}
