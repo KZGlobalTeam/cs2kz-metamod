@@ -12,6 +12,9 @@ typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end,
 	const Vector &maxsSrc, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm, float minGroundNormalZ, bool overwriteEndpos, int *pCounter);
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
+typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, QAngle angle);
+
+
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
 namespace utils
@@ -36,6 +39,7 @@ namespace utils
 	extern TracePlayerBBoxForGround_t *TracePlayerBBoxForGround;
 	extern InitGameTrace_t *InitGameTrace;
 	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
+	extern SnapViewAngles_t *SnapViewAngles;
 
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 	

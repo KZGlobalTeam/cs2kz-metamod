@@ -15,8 +15,8 @@ public:
 	KZPlayer(i32 i) : MovementPlayer(i)
 	{
 		inNoclip = false;
-		m_currentCpIndex = 0;
-		m_checkpoints = CUtlVector<Checkpoint>(1, 0);
+		currentCpIndex = 0;
+		checkpoints = CUtlVector<Checkpoint>(1, 0);
 	}
 	virtual void Reset() override;
 	virtual void OnStartProcessMovement() override;
@@ -32,20 +32,31 @@ public:
 	void EnableGodMode();
 	void HandleMoveCollision();
 	void UpdatePlayerModelAlpha();
-	void SetCheckpoint();
-	void TpToCheckpoint();
-	void TpToPrevCp();
-	void TpToNextCp();
 	
 	struct Checkpoint
 	{
 		Vector origin;
 		QAngle angles;
+		Vector ladderNormal;
+		bool onLadder;
+		CHandle< CBaseEntity > groundEnt;
+		f32 slopeDropOffset;
+		f32 slopeDropHeight;
 	};
 	
-	i32 m_currentCpIndex;
+	i32 currentCpIndex;
+	bool holdingStill;
+	f32 teleportTime;
+	void SetCheckpoint();
+	void DoTeleport(i32 index);
+	void TpHoldPlayerStill();
+	void TpToCheckpoint();
+	void TpToPrevCp();
+	void TpToNextCp();
+	
+	
 	bool hideOtherPlayers;
-	CUtlVector<Checkpoint> m_checkpoints;
+	CUtlVector<Checkpoint> checkpoints;
 };
 
 class CKZPlayerManager : public CMovementPlayerManager

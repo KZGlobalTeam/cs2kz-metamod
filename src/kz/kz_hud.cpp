@@ -48,5 +48,5 @@ void KZ::HUD::DrawSpeedPanel(KZPlayer *player)
 	strcat(buffer, "\n"); 
 	AddKeyText(player, buffer, sizeof(buffer));
 
-	utils::PrintAlert(g_pEntitySystem->GetBaseEntity(CEntityIndex(player->index)), "%s", buffer);
+	utils::PrintAlert(player->GetController(), "%s", buffer);
 }

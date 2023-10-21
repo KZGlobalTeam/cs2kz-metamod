@@ -54,7 +54,7 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 
 CCSPlayer_MovementServices *MovementPlayer::GetMoveServices()
 {
-	return this->processingMovement ? this->currentMoveServices : static_cast<CCSPlayer_MovementServices *>(this->GetPawn()->m_pMovementServices());
+	return static_cast<CCSPlayer_MovementServices *>(this->GetPawn()->m_pMovementServices());
 };
 
 void MovementPlayer::GetOrigin(Vector *origin)
@@ -76,14 +76,16 @@ void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const 
 {
 	CBasePlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, angles, velocity);
+	// We handle angles differently.
+	this->SetAngles(*angles);
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, NULL, velocity);
 }
 
 void MovementPlayer::SetOrigin(const Vector &origin)
 {
 	CBasePlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, NULL, NULL);
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, &origin, NULL, NULL);
 }
 
 void MovementPlayer::GetVelocity(Vector *velocity)
@@ -104,7 +106,7 @@ void MovementPlayer::SetVelocity(const Vector &velocity)
 {
 	CBasePlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, velocity);
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, &velocity);
 }
 
 void MovementPlayer::GetAngles(QAngle *angles)
@@ -123,7 +125,13 @@ void MovementPlayer::SetAngles(const QAngle &angles)
 {
 	CBasePlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, angles, NULL);
+
+	// Don't change the pitch of the absolute angles because it messes with the player model.
+	QAngle absAngles = angles;
+	absAngles.x = 0;
+
+	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, &absAngles, NULL);
+	utils::SnapViewAngles(pawn, angles);
 }
 
 TurnState MovementPlayer::GetTurning()

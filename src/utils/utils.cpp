@@ -22,6 +22,7 @@ InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
 TracePlayerBBoxForGround_t *utils::TracePlayerBBoxForGround = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
+SnapViewAngles_t *utils::SnapViewAngles = NULL;
 
 void modules::Initialize()
 {
@@ -66,6 +67,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::InitGameTrace, utils::InitGameTrace);
 	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, utils::InitPlayerMovementTraceFilter);
 	RESOLVE_SIG(modules::server, sigs::GetLegacyGameEventListener, utils::GetLegacyGameEventListener);
+	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
 
 	InitDetours();
 	return true;
