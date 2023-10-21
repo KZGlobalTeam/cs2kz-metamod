@@ -26,18 +26,18 @@ KZ-specific:
 		- [ ] Interpolate 64t AA to 128
 		- [ ] Disable subticks (maybe)
 	- [ ] Add mode toggling
-- [ ] Checkpoints
+- [x] Checkpoints
 	- [x] Add basic checkpoints
-	- [ ] Add ladder checkpoints
+	- [x] Add ladder checkpoints
 - [ ] Timers
 	- [x] Trigger touching logic
 - [ ] Jumpstats
 	- [x] Distbug
 	- [ ] Split jump types
 - [ ] HUD
-	- [ ] *Speed panel*
- 		- [ ] Add prespeed and keys
- 		- [ ] Add print to the top center bar (with game events)
+	- [x] *Speed panel*
+ 		- [x] Add prespeed and keys
+ 		- [x] Add print to the top center bar (with game events)
 	- [ ] TP Menu (impossible...?)
 - [ ] Quiet
 	- [ ] !hide
