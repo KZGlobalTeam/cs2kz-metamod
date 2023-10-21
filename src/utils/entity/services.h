@@ -37,6 +37,7 @@ class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayer_MovementServices);
 	SCHEMA_FIELD(float, m_flJumpUntil)
+	SCHEMA_FIELD(Vector, m_vecLadderNormal)
 };
 
 class CCSPlayer_ItemServices

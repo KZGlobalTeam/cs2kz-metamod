@@ -78,7 +78,6 @@ public:
 	const i32 index;
 
 	bool processingMovement;
-	CCSPlayer_MovementServices *currentMoveServices{};
 	CMoveData *currentMoveData{};
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;

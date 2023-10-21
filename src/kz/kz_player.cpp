@@ -84,57 +84,113 @@ void KZPlayer::SetCheckpoint()
 	CCSPlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
 	u32 flags = pawn->m_fFlags();
-	if (!(flags & FL_ONGROUND))
+	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
 	{
+		utils::PrintChat(this->GetPawn(), "Checkpoint unavailable in the air.");
 		return;
 	}
 	
 	Checkpoint cp = {};
-	this->GetOrigin(&cp.origin),
-	this->GetAngles(&cp.angles),
-	m_checkpoints.AddToTail(cp);
+	this->GetOrigin(&cp.origin);
+	this->GetAngles(&cp.angles);
+	cp.slopeDropHeight = pawn->m_flSlopeDropHeight();
+	cp.slopeDropOffset = pawn->m_flSlopeDropOffset();
+	if (this->GetMoveServices())
+	{
+		cp.ladderNormal = this->GetMoveServices()->m_vecLadderNormal();
+		cp.onLadder = pawn->m_MoveType() == MOVETYPE_LADDER;
+	}
+	cp.groundEnt = pawn->m_hGroundEntity();
+	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
-	m_currentCpIndex = m_checkpoints.Count() - 1;
+	this->currentCpIndex = this->checkpoints.Count() - 1;
+	utils::PrintChat(this->GetPawn(), "Checkpoint (#%i)", this->currentCpIndex);
+}
+
+void KZPlayer::DoTeleport(i32 index)
+{
+	CCSPlayerPawn *pawn = this->GetPawn();
+	if (!pawn) return;
+	if (checkpoints.Count() <= 0)
+	{
+		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
+		return;
+	}
+	const Checkpoint cp = this->checkpoints[this->currentCpIndex];
+
+	// If we teleport the player to the same origin, the player ends just a slightly bit off from where they are supposed to be...
+	Vector currentOrigin;
+	this->GetOrigin(&currentOrigin);
+
+	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
+	// So we only set the player origin if it doesn't match.
+	if (currentOrigin != checkpoints[currentCpIndex].origin)
+	{
+		this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
+	}
+	else
+	{
+		this->Teleport(NULL, &cp.angles, &NULL_VECTOR);
+	}
+	pawn->m_flSlopeDropHeight(cp.slopeDropHeight);
+	pawn->m_flSlopeDropOffset(cp.slopeDropOffset);
+
+	pawn->m_hGroundEntity(cp.groundEnt);
+	if (cp.onLadder)
+	{
+		CCSPlayer_MovementServices *ms = this->GetMoveServices();
+		ms->m_vecLadderNormal(cp.ladderNormal);
+		this->GetPawn()->m_MoveType(MOVETYPE_LADDER);
+	}
+	this->teleportTime = utils::GetServerGlobals()->curtime;
 }
 
 void KZPlayer::TpToCheckpoint()
 {
-	if (m_checkpoints.Count() <= 0)
-	{
-		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
-		return;
-	}
-	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
-	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
+	DoTeleport(this->currentCpIndex);
 }
 
 void KZPlayer::TpToPrevCp()
 {
-	if (m_checkpoints.Count() <= 0)
-	{
-		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
-		return;
-	}
-	m_currentCpIndex = MAX(0, m_currentCpIndex - 1);
-	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
-	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
+	this->currentCpIndex = MAX(0, this->currentCpIndex - 1);
+	DoTeleport(this->currentCpIndex);
 }
 
 void KZPlayer::TpToNextCp()
 {
-	if (m_checkpoints.Count() <= 0)
+	this->currentCpIndex = MIN(this->currentCpIndex + 1, this->checkpoints.Count() - 1);
+	DoTeleport(this->currentCpIndex);
+}
+
+void KZPlayer::TpHoldPlayerStill()
+{
+	if (!checkpoints.IsValidIndex(currentCpIndex)) return;
+	if (this->GetPawn()->m_lifeState() != LIFE_ALIVE) return;
+	if (utils::GetServerGlobals()->curtime - this->teleportTime > 0.04) return;
+	Vector currentOrigin;
+	this->GetOrigin(&currentOrigin);
+
+	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
+	if (currentOrigin != checkpoints[currentCpIndex].origin);
 	{
-		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
-		return;
+		this->SetOrigin(checkpoints[currentCpIndex].origin);
 	}
-	m_currentCpIndex = MIN(m_currentCpIndex + 1, m_checkpoints.Count() - 1);
-	const Checkpoint cp = m_checkpoints[m_currentCpIndex];
-	this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
+	this->SetVelocity(Vector(0,0,0));
+	if (checkpoints[currentCpIndex].onLadder && this->GetPawn()->m_MoveType() != MOVETYPE_NONE)
+	{
+		this->GetPawn()->m_MoveType(MOVETYPE_LADDER);
+	}
+	if (checkpoints[currentCpIndex].groundEnt)
+	{
+		this->GetPawn()->m_fFlags |= FL_ONGROUND;
+	}
+	this->GetPawn()->m_hGroundEntity(checkpoints[currentCpIndex].groundEnt);
 }
 
 void KZPlayer::OnStartProcessMovement()
 {
 	MovementPlayer::OnStartProcessMovement();
+	this->TpHoldPlayerStill();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
 }
@@ -154,7 +210,7 @@ void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
 
-	this->m_currentCpIndex = 0;
+	this->currentCpIndex = 0;
 	this->hideOtherPlayers = false;
-	this->m_checkpoints.Purge();
+	this->checkpoints.Purge();
 }
