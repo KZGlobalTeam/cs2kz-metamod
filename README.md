@@ -26,9 +26,9 @@ KZ-specific:
 		- [ ] Interpolate 64t AA to 128
 		- [ ] Disable subticks (maybe)
 	- [ ] Add mode toggling
-- [ ] Checkpoints
+- [x] Checkpoints
 	- [x] Add basic checkpoints
-	- [ ] Add ladder checkpoints
+	- [x] Add ladder checkpoints
 - [ ] Timers
 	- [x] Trigger touching logic
 - [ ] Jumpstats
