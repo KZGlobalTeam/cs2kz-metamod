@@ -222,6 +222,8 @@ void MovementPlayer::RegisterTakeoff(bool jumped)
 	this->takeoffOrigin = mv->m_vecAbsOrigin;
 	this->takeoffTime = utils::GetServerGlobals()->curtime - utils::GetServerGlobals()->frametime;
 	this->takeoffVelocity = mv->m_vecVelocity;
+	this->takeoffGroundOrigin = mv->m_vecAbsOrigin;
+	this->takeoffGroundOrigin.z = this->GetGroundPosition();
 	this->jumped = jumped;
 }
 

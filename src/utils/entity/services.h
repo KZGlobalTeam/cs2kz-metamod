@@ -30,6 +30,7 @@ class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices_Humanoid);
 	SCHEMA_FIELD(bool, m_bDucked)
+	SCHEMA_FIELD(float, m_flSurfaceFriction)
 };
 
 class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid

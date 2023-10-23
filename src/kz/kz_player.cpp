@@ -17,8 +17,53 @@ void KZPlayer::EnableGodMode()
 
 void KZPlayer::OnStartTouchGround()
 {
-
+	if (this->jumps.Count() > 0)
+	{
+		Jump *jump = &this->jumps.Tail();
+		jump->End();
+		if (jump->GetOffset() > -0.03125)
+		{
+			utils::PrintChat(this->GetPawn(), "Dist %f Strafe %i Offset %f", 
+				this->jumps.Tail().GetDistance(), 
+				this->jumps.Tail().strafes.Count(),
+				this->jumps.Tail().GetOffset());
+		}
+	}
 }
+
+void KZPlayer::OnStopTouchGround()
+{
+	this->jumps.AddToTail(Jump(this));
+}
+
+void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
+{
+	AACall call;
+	call.prevYaw = this->oldAngles.y;
+	QAngle currentAngle;
+	this->GetAngles(&currentAngle);
+	call.currentYaw = currentAngle.y;
+	call.wishdir = wishdir;
+	call.wishspeed = wishspeed;
+	call.accel = accel;
+	call.surfaceFriction = this->GetMoveServices()->m_flSurfaceFriction();
+	call.subtickFraction = this->currentMoveData->m_flSubtickFraction;
+	for (int i = 0; i < 3; i++)
+	{
+		call.buttons.m_pButtonStates[i] = this->GetMoveServices()->m_nButtons().m_pButtonStates[i];
+	}
+	this->GetVelocity(&call.velocityPre);
+	call.curtime = utils::GetServerGlobals()->curtime;
+	call.tickcount = utils::GetServerGlobals()->tickcount;
+	call.ducking = this->GetMoveServices()->m_bDucked;
+	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
+	strafe->aaCalls.AddToTail(call);
+}
+
+void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
+{
+}
+
 void KZPlayer::HandleMoveCollision()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
@@ -190,6 +235,13 @@ void KZPlayer::TpHoldPlayerStill()
 void KZPlayer::OnStartProcessMovement()
 {
 	MovementPlayer::OnStartProcessMovement();
+	// Always ensure that the player has at least an ongoing jump.
+	// This is mostly to prevent crash, it's not a valid jump.
+	if (this->jumps.Count() == 0)
+	{
+		this->jumps.AddToTail(Jump(this));
+		this->jumps.Tail().Invalidate();
+	}
 	this->TpHoldPlayerStill();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
