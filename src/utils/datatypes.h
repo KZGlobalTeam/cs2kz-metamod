@@ -7,7 +7,7 @@ typedef uint64_t CNetworkedQuantizedFloat;
 
 
 #include "utlsymbollarge.h"
-#include "ihandleentity.h"
+#include "entityhandle.h"
 #ifndef _WIN32
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wparentheses"
