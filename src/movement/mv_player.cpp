@@ -243,28 +243,33 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	if (mv->m_TouchList.Count() > 0) // bugged
 	{
 		// The true landing origin from TryPlayerMove, use this whenever you can
-		this->landingOriginActual = mv->m_TouchList[0].trace.endpos;
-		this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[0].trace.fraction) * utils::GetServerGlobals()->frametime; // TODO: make sure this is right
+		FOR_EACH_VEC(mv->m_TouchList, i)
+		{
+			if (mv->m_TouchList[i].trace.planeNormal.z > 0.7)
+			{
+				this->landingOriginActual = mv->m_TouchList[i].trace.endpos;
+				this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[i].trace.fraction) * utils::GetServerGlobals()->frametime; // TODO: make sure this is right
+				return;
+			}
+		}
 	}
-	else // reverse bugged
+	// reverse bugged
+	f32 diffZ = mv->m_vecAbsOrigin.z - this->GetGroundPosition();
+	if (diffZ <= 0) // Ledgegrabbed, just use the current origin.
 	{
-		f32 diffZ = mv->m_vecAbsOrigin.z - this->GetGroundPosition();
-		if (diffZ <= 0) // Ledgegrabbed, just use the current origin.
-		{
-			this->landingOriginActual = mv->m_vecAbsOrigin;
-			this->landingTimeActual = this->landingTime;
-		}
-		else
-		{
-			// Predicts the landing origin if reverse bug happens
-			// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
-			Vector gravity = { 0, 0, -800 }; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
-			// basic x + vt + (0.5a)t^2 = 0;
-			const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
-			const double time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
-			this->landingOriginActual = mv->m_vecAbsOrigin + landingVelocity * time + 0.5 * gravity * time * time;
-			this->landingTimeActual = this->landingTime + time;
-		}
+		this->landingOriginActual = mv->m_vecAbsOrigin;
+		this->landingTimeActual = this->landingTime;
+	}
+	else
+	{
+		// Predicts the landing origin if reverse bug happens
+		// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
+		Vector gravity = { 0, 0, -800 }; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
+		// basic x + vt + (0.5a)t^2 = 0;
+		const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
+		const double time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
+		this->landingOriginActual = mv->m_vecAbsOrigin + landingVelocity * time + 0.5 * gravity * time * time;
+		this->landingTimeActual = this->landingTime + time;
 	}
 }
 
