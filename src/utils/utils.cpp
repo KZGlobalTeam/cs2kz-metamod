@@ -277,3 +277,18 @@ void utils::PrintHTMLCentreAll(const char *format, ...)
 
 	interfaces::pGameEventManager->FireEvent(event);
 }
+
+f32 utils::NormalizeDeg(f32 a)
+{
+	a = fmod(a, 360.0);
+	if (a >= 180.0)
+		a -= 360.0;
+	else if (a < -180.0)
+		a += 360.0;
+	return a;
+}
+
+f32 utils::GetAngleDifference(const f32 x, const f32 y, const f32 c)
+{
+	return fmod(fabs(x - y) + c, 2 * c) - c;
+}

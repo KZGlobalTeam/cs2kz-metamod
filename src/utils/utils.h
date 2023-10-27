@@ -55,4 +55,7 @@ namespace utils
 	void PrintCentreAll(const char *format, ...);
 	void PrintAlertAll(const char *format, ...);
 	void PrintHTMLCentreAll(const char *format, ...); // This one uses HTML formatting.
+
+	f32 NormalizeDeg(f32 a);
+	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c);
 }

@@ -75,9 +75,10 @@ public:
 class AACall
 {
 public:
-	f32 prevYaw{};
+	f32 externalGain{};
 	f32 currentYaw{};
 	Vector wishdir;
+	f32 maxspeed{};
 	f32 wishspeed{};
 	f32 accel{};
 
@@ -91,9 +92,11 @@ public:
 	bool ducking{};
 
 public:
-	void GetGainEfficiency();
 	f32 CalcIdealYaw(bool useRadians = false);
-	f32 GetAngleEfficiency();
+	f32 CalcMinYaw(bool useRadians = false);
+	f32 CalcMaxYaw(bool useRadians = false);
+	f32 CalcAccelSpeed(bool tryMaxSpeed = false);
+	f32 CalcIdealGain();
 };
 
 class Strafe
@@ -101,24 +104,34 @@ class Strafe
 public:
 	CCopyableUtlVector<AACall> aaCalls;
 	TurnState turnstate;
-	float starttime;
-	float endtime;
 
-	float gain;
-	float loss;
-	float width;
+private:
+	float starttime;
+public:
+	Strafe();
+
+	f32 GetStrafeStartTime();
+	f32 GetStrafeDuration();
+
+	f32 CalcSync();
+	f32 CalcGain();
+	f32 CalcLoss();
+	f32 CalcWidth();
 
 	// BA/OL/DA
-	float badairtime;
-	float overlaptime;
-	float deadairtime;
+	f32 CalcBadAngleDuration();
+	f32 CalcOverlapDuration();
+	f32 CalcDeadAirDuration();
 
-	float gaintime;
-	float maxspeed;
-
-	// Efficiency calc
-	float efficiency;
-	float maxGain;
+	// Calculate the ratio for each strafe.
+	// The ratio is 0 if the angle is perfect, closer to -1 if it's too slow
+	// Closer to 1 if it passes the optimal value.
+	
+	// If the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
+	f32 CalcAngleRatioMin();
+	f32 CalcAngleRatioMax();
+	f32 CalcAngleRatioAverage();
+	f32 CalcGainEfficiency();
 };
 
 class Jump

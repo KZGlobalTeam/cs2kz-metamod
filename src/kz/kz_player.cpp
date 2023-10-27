@@ -39,29 +39,33 @@ void KZPlayer::OnStopTouchGround()
 void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
 	AACall call;
-	call.prevYaw = this->oldAngles.y;
-	QAngle currentAngle;
-	this->GetAngles(&currentAngle);
-	call.currentYaw = currentAngle.y;
-	call.wishdir = wishdir;
-	call.wishspeed = wishspeed;
-	call.accel = accel;
-	call.surfaceFriction = this->GetMoveServices()->m_flSurfaceFriction();
-	call.subtickFraction = this->currentMoveData->m_flSubtickFraction;
-	for (int i = 0; i < 3; i++)
-	{
-		call.buttons.m_pButtonStates[i] = this->GetMoveServices()->m_nButtons().m_pButtonStates[i];
-	}
 	this->GetVelocity(&call.velocityPre);
 	call.curtime = utils::GetServerGlobals()->curtime;
 	call.tickcount = utils::GetServerGlobals()->tickcount;
-	call.ducking = this->GetMoveServices()->m_bDucked;
 	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
 	strafe->aaCalls.AddToTail(call);
 }
 
 void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
 {
+	// Use the latest parameters, just in case they changed.
+	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
+	AACall *call = &strafe->aaCalls.Tail();
+	QAngle currentAngle;
+	this->GetAngles(&currentAngle);
+	call->maxspeed = this->currentMoveData->m_flMaxSpeed;
+	call->currentYaw = currentAngle.y;
+	for (int i = 0; i < 3; i++)
+	{
+		call->buttons.m_pButtonStates[i] = this->GetMoveServices()->m_nButtons().m_pButtonStates[i];
+	}
+	call->wishdir = wishdir;
+	call->wishspeed = wishspeed;
+	call->accel = accel;
+	call->surfaceFriction = this->GetMoveServices()->m_flSurfaceFriction();
+	call->subtickFraction = this->currentMoveData->m_flSubtickFraction;
+	call->ducking = this->GetMoveServices()->m_bDucked;
+	this->GetVelocity(&call->velocityPost);
 }
 
 void KZPlayer::HandleMoveCollision()
