@@ -7,7 +7,7 @@ typedef uint64_t CNetworkedQuantizedFloat;
 
 
 #include "utlsymbollarge.h"
-#include "ihandleentity.h"
+#include "entityhandle.h"
 #ifndef _WIN32
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wparentheses"
@@ -100,7 +100,7 @@ struct trace_t_s2
 	uint8_t traceunknown2[4];   // 44 (this is probably just alignment padding)
 	__m128i traceunknown3;      // 48
 	__m128i traceunknown4;      // 64
-	uint8_t traceunknown5[44];
+	uint8_t traceunknown5[40];
 	Vector startpos;
 	Vector endpos;
 	Vector planeNormal;

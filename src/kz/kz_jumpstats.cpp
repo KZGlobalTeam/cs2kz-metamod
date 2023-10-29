@@ -365,11 +365,6 @@ Strafe *Jump::GetCurrentStrafe()
 		Strafe *strafe = this->strafes.AddToTailGetPtr();
 		strafe->turnstate = this->player->GetTurning();
 	}
-	// Turn state didn't change, it's the same strafe. No need to do anything.
-
-	return &this->strafes.Tail();
-}
-
 f32 Jump::GetDistance() 
 {
 	// TODO: don't add 32 to lajs

@@ -61,6 +61,7 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_jumpstats.cpp'),
     ]
 
     if sdk_name in ['cs2']:

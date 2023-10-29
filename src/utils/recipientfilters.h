@@ -28,7 +28,7 @@ public:
 
 	int GetRecipientCount(void) const override { return m_Recipients.Count(); }
 
-	CEntityIndex GetRecipientIndex(int slot) const override { return CEntityIndex(m_Recipients[slot]); }
+	CPlayerSlot GetRecipientIndex(int slot) const override { return CPlayerSlot(m_Recipients[slot]); }
 
 private:
 	bool m_bReliable;
@@ -50,7 +50,7 @@ public:
 
 	int GetRecipientCount(void) const override { return 1; }
 
-	CEntityIndex GetRecipientIndex(int slot) const override { return CEntityIndex(m_iRecipient); }
+	CPlayerSlot GetRecipientIndex(int slot) const override { return CPlayerSlot(m_iRecipient); }
 
 private:
 	bool m_bReliable;
@@ -82,10 +82,10 @@ public:
 
 	int GetRecipientCount(void) const override { return m_Recipients.Count(); }
 
-	CEntityIndex GetRecipientIndex(int slot) const override
+	CPlayerSlot GetRecipientIndex(int slot) const override
 	{
 		if (slot < 0 || slot >= GetRecipientCount())
-			return CEntityIndex(-1);
+			return CPlayerSlot(-1);
 
 		return m_Recipients[slot];
 	}
@@ -93,5 +93,5 @@ public:
 private:
 	bool m_bReliable;
 	bool m_bInitMessage;
-	CUtlVectorFixed<CEntityIndex, 64> m_Recipients;
+	CUtlVectorFixed<CPlayerSlot, 64> m_Recipients;
 };

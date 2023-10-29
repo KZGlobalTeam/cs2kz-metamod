@@ -9,6 +9,9 @@
 
 extern CMovementPlayerManager *g_pPlayerManager;
 
+class KZPlayer;
+class Jump;
+
 class KZPlayer : public MovementPlayer
 {
 public:
@@ -21,10 +24,13 @@ public:
 	virtual void Reset() override;
 	virtual void OnStartProcessMovement() override;
 	virtual void OnStopProcessMovement() override;
+	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
 	virtual void OnStartTouchGround() override;
-		
+	virtual void OnStopTouchGround() override;
 private:
 	bool inNoclip;
+	TurnState previousTurnState;
 public:
 	void ToggleHide();
 	void DisableNoclip();
@@ -33,6 +39,7 @@ public:
 	void HandleMoveCollision();
 	void UpdatePlayerModelAlpha();
 	
+	// Checkpoint stuff
 	struct Checkpoint
 	{
 		Vector origin;
@@ -47,14 +54,15 @@ public:
 	i32 currentCpIndex;
 	bool holdingStill;
 	f32 teleportTime;
+
+	CUtlVector<Checkpoint> checkpoints;
+
 	void SetCheckpoint();
 	void DoTeleport(i32 index);
 	void TpHoldPlayerStill();
 	void TpToCheckpoint();
 	void TpToPrevCp();
 	void TpToNextCp();
-	
-	CUtlVector<Checkpoint> checkpoints;
 
 
 	// Jumpstats

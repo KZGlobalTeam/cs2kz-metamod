@@ -2,9 +2,6 @@ WIP
 
 Most utils stuff is based on [CS2Fixes](https://github.com/Source2ZE/CS2Fixes/)
 
-Doesn't work on linux (no sigs)
-
-
 TODO list: (italic means I'm working on it)
 
 Utilities:

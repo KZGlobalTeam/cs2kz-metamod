@@ -54,6 +54,14 @@ internal SCMD_CALLBACK(Command_KzHide)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzJSAlways)
+{
+	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
+	player->jsAlways = !player->jsAlways;
+	utils::PrintChat(player->GetPawn(), "[KZ] JSAlways %s.", player->jsAlways ? "enabled" : "disabled");
+	return MRES_SUPERCEDE;
+}
+
 void KZ::misc::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_noclip",     Command_KzNoclip);
@@ -65,6 +73,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_prevcp",     Command_KzPrevcp);
 	scmd::RegisterCmd("kz_nextcp",     Command_KzNextcp);
 	scmd::RegisterCmd("kz_hide",	   Command_KzHide);
+	scmd::RegisterCmd("kz_jsalways",   Command_KzJSAlways);
 }
 
 void KZ::misc::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
