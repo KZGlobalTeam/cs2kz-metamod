@@ -41,6 +41,7 @@ namespace utils
 	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
 	extern SnapViewAngles_t *SnapViewAngles;
 
+	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 	
 	// Print functions do not work inside movement hooks, for some reasons...

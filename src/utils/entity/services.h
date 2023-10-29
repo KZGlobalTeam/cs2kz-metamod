@@ -22,7 +22,7 @@ class CPlayer_MovementServices : public CPlayerPawnComponent
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
-	SCHEMA_FIELD(CInButtonState, m_nButtons)
+	SCHEMA_FIELD_POINTER(CInButtonState, m_nButtons)
 };
 
 class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices

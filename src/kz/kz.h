@@ -67,6 +67,7 @@ public:
 
 	// Jumpstats
 	CUtlVector<Jump> jumps;
+	bool jsAlways;
 
 	// misc
 	bool hideOtherPlayers;
@@ -75,7 +76,7 @@ public:
 class AACall
 {
 public:
-	f32 externalGain{};
+	f32 externalSpeedDiff{};
 	f32 currentYaw{};
 	Vector wishdir;
 	f32 maxspeed{};
@@ -106,32 +107,52 @@ public:
 	TurnState turnstate;
 
 private:
-	float starttime;
+	f32 duration;
+
+	f32 badAngles;
+	f32 overlap;
+	f32 deadAir;
+
+	f32 syncDuration;
+	f32 width;
+
+	f32 gain;
+	f32 maxGain;
+	f32 loss;
+	f32 externalGain;
+	f32 externalLoss;
 public:
-	Strafe();
+	void End();
+	f32 GetStrafeDuration() { return this->duration; };
 
-	f32 GetStrafeStartTime();
-	f32 GetStrafeDuration();
-
-	f32 CalcSync();
-	f32 CalcGain();
-	f32 CalcLoss();
-	f32 CalcWidth();
+	f32 GetMaxGain() { return this->maxGain; };
+	f32 GetGain(bool external = false) { return external ? this->externalGain : this->gain; };
+	f32 GetLoss(bool external = false) { return external ? this->externalLoss : this->loss; };
+	f32 GetWidth() { return this->width; };
 
 	// BA/OL/DA
-	f32 CalcBadAngleDuration();
-	f32 CalcOverlapDuration();
-	f32 CalcDeadAirDuration();
+	f32 GetBadAngleDuration() { return this->badAngles; };
+	f32 GetOverlapDuration() { return this->overlap; };
+	f32 GetDeadAirDuration() { return this->deadAir; };
 
+	f32 GetSync() { return this->syncDuration / this->duration; };
+	f32 GetSyncDuration() { return this->syncDuration; };
 	// Calculate the ratio for each strafe.
-	// The ratio is 0 if the angle is perfect, closer to -1 if it's too slow
-	// Closer to 1 if it passes the optimal value.
+	// The ratio is 0 if the angle is perfect, closer to -100 if it's too slow
+	// Closer to 100 if it passes the optimal value.
+	// Note: if the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
+	// Returns false if there is no available stats.
+	internal int SortFloat(const f32 *a, const f32 *b) { return &a > &b; };
+	struct AngleRatioStats
+	{
+		bool available;
+		f32 max;
+		f32 median;
+		f32 average;
+	};
+	AngleRatioStats arStats;
 	
-	// If the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
-	f32 CalcAngleRatioMin();
-	f32 CalcAngleRatioMax();
-	f32 CalcAngleRatioAverage();
-	f32 CalcGainEfficiency();
+	bool CalcAngleRatioStats();
 };
 
 class Jump
@@ -145,9 +166,24 @@ private:
 	Vector landingOrigin;
 	Vector adjustedLandingOrigin;
 
+	// Required for airpath stat.
+	f32 totalDistance{};
+	f32 currentMaxSpeed{};
+	f32 currentMaxHeight = -16384.0f;
+	f32 airtime{};
+
+	f32 deadAir{};
+	f32 overlap{};
+	f32 badAngles{};
+	f32 sync{};
+	f32 duckDuration{};
+	f32 duckEndDuration{};
+	f32 width{};
+	f32 gainEff{};
 	bool validJump;
 public:
 	CCopyableUtlVector<Strafe> strafes;
+
 public:
 	Jump() {}
 	Jump(KZPlayer *player) : player(player)
@@ -155,6 +191,7 @@ public:
 		this->takeoffOrigin = player->takeoffOrigin;
 		this->adjustedTakeoffOrigin = player->takeoffGroundOrigin;
 	}
+	void UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel);
 	void Update();
 	void End();
 	void Invalidate();
@@ -164,19 +201,18 @@ public:
 
 	f32 GetOffset() { return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z; };
 	f32 GetDistance();
-	f32 GetMaxSpeed();
-	f32 GetSync();
-	f32 GetBadAngles();
-	f32 GetOverlap();
-	f32 GetDeadAir();
-	f32 GetMaxHeight();
-	f32 GetWidth();
+	f32 GetMaxSpeed() { return this->currentMaxSpeed; };
+	f32 GetSync() { return this->sync; };
+	f32 GetBadAngles() { return this->badAngles; };
+	f32 GetOverlap() { return this->overlap; };
+	f32 GetDeadAir() { return this->deadAir; };
+	f32 GetMaxHeight() { return this->currentMaxHeight; };
+	f32 GetWidth() { return this->width; };
 	f32 GetEdge(bool landing);
-	f32 GetGain();
-	f32 GetLoss();
-	f32 GetStrafeEfficiency();
+	f32 GetGainEfficiency() { return this->gainEff; };
 	f32 GetAirPath();
-	f32 GetDuckTime(bool endOnly);
+	f32 GetDuckTime(bool endOnly = true) { return endOnly ? this->duckEndDuration : this->duckDuration; };
+	f32 GetDeviation();
 };
 
 class CKZPlayerManager : public CMovementPlayerManager

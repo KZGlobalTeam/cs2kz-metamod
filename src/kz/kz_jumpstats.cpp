@@ -1,6 +1,10 @@
 #include "kz.h"
 #include "utils/utils.h"
 
+/*
+* AACall stuff
+*/
+
 f32 AACall::CalcIdealYaw(bool useRadians)
 {
 	f64 accelspeed;
@@ -80,15 +84,71 @@ f32 AACall::CalcIdealGain()
 	return idealSpeed - this->velocityPre.Length2D();
 }
 
-Strafe::Strafe()
+/*
+* Strafe stuff
+*/
+
+void Strafe::End()
 {
-	this->starttime = utils::GetServerGlobals()->curtime - utils::GetServerGlobals()->frametime;
+	FOR_EACH_VEC(this->aaCalls, i)
+	{
+		this->duration += this->aaCalls[i].subtickFraction / 64;
+		// Calculate BA/DA/OL
+		if (this->aaCalls[i].wishspeed == 0)
+		{
+			u64 buttonBits = IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT;
+			if (utils::IsButtonDown(&this->aaCalls[i].buttons, buttonBits))
+			{
+				this->overlap += this->aaCalls[i].subtickFraction / 64;
+			}
+			else
+			{
+				this->deadAir += this->aaCalls[i].subtickFraction / 64;
+			}
+		}
+		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= 0.03125f)
+		{
+			// This gain could just be from quantized float stuff.
+			this->badAngles += this->aaCalls[i].subtickFraction / 64;
+		}
+		// Calculate sync.
+		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > 0.03125f)
+		{
+			this->syncDuration += this->aaCalls[i].subtickFraction / 64;
+		}
+
+		// Gain/loss.
+		this->maxGain += this->aaCalls[i].CalcIdealGain();
+		f32 speedDiff = this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D();
+		if (speedDiff > 0)
+		{
+			this->gain += speedDiff;
+		}
+		else
+		{
+			this->loss += speedDiff;
+		}
+		f32 externalSpeedDiff = this->aaCalls[i].externalSpeedDiff;
+		if (externalSpeedDiff > 0)
+		{
+			this->externalGain += speedDiff;
+		}
+		else
+		{
+			this->externalLoss += speedDiff;
+		}
+
+	}
+	this->CalcAngleRatioStats();
 }
 
-f32 Strafe::CalcAngleRatioAverage()
+bool Strafe::CalcAngleRatioStats()
 {
-	f32 duration = 0.0f;
-	f32 ratio = 0.0f;
+	this->arStats.available = false;
+	f32 totalDuration = 0.0f;
+	f32 totalRatios = 0.0f;
+	CUtlVector<f32> ratios;
+
 	f32 prevYaw;
 	QAngle angles, velAngles;
 	FOR_EACH_VEC(this->aaCalls, i)
@@ -164,52 +224,119 @@ f32 Strafe::CalcAngleRatioAverage()
 		f32 gainRatio = (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D()) / this->aaCalls[i].CalcIdealGain();
 		if (angles.y < minYaw)
 		{
-			ratio += -1 * this->aaCalls[i].subtickFraction;
-			duration += this->aaCalls[i].subtickFraction;
+			totalRatios += -1 * this->aaCalls[i].subtickFraction;
+			totalDuration += this->aaCalls[i].subtickFraction;
+			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
 			//utils::PrintConsoleAll("No Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
 			continue;
 		}
 		else if (angles.y < idealYaw)
 		{
-			ratio += (gainRatio - 1) * this->aaCalls[i].subtickFraction;
-			duration += this->aaCalls[i].subtickFraction;
+			totalRatios += (gainRatio - 1) * this->aaCalls[i].subtickFraction;
+			totalDuration += this->aaCalls[i].subtickFraction;
+			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
 			//utils::PrintConsoleAll("Slow Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
 		}
 		else if (angles.y < maxYaw)
 		{
-			ratio = (1 - gainRatio) * this->aaCalls[i].subtickFraction;
-			duration += this->aaCalls[i].subtickFraction;
+			totalRatios = (1 - gainRatio) * this->aaCalls[i].subtickFraction;
+			totalDuration += this->aaCalls[i].subtickFraction;
+			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
 			//utils::PrintConsoleAll("Fast Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
 		}
 		else
 		{
-			ratio = 1.0f;
-			duration += this->aaCalls[i].subtickFraction;
+			totalRatios = 1.0f;
+			totalDuration += this->aaCalls[i].subtickFraction;
+			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
 			//utils::PrintConsoleAll("TooFast Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
 		}
 	}
-	utils::PrintConsoleAll("%f", ratio / duration);
-	return ratio / duration;
+
+	// This can return nan if the duration is 0, this is intended...
+	if (totalDuration == 0.0f) return false;
+	ratios.Sort(this->SortFloat);
+	this->arStats.available = true;
+	this->arStats.average = totalRatios / totalDuration;
+	this->arStats.median = ratios[ratios.Count() / 2];
+	this->arStats.max = ratios[ratios.Count() - 1];
+	return true;
 }
+
+/*
+* Jump stuff
+*/
 
 void Jump::Invalidate()
 {
 	this->validJump = false;
 }
 
+void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
+{
+	// Use the latest parameters, just in case they changed.
+	Strafe *strafe = this->GetCurrentStrafe();
+	AACall *call = &strafe->aaCalls.Tail();
+	QAngle currentAngle;
+	this->player->GetAngles(&currentAngle);
+	call->maxspeed = this->player->currentMoveData->m_flMaxSpeed;
+	call->currentYaw = currentAngle.y;
+	for (int i = 0; i < 3; i++)
+	{
+		call->buttons.m_pButtonStates[i] = this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[i];
+	}
+	call->wishdir = wishdir;
+	call->wishspeed = wishspeed;
+	call->accel = accel;
+	call->surfaceFriction = this->player->GetMoveServices()->m_flSurfaceFriction();
+	call->subtickFraction = this->player->currentMoveData->m_flSubtickFraction;
+	call->ducking = this->player->GetMoveServices()->m_bDucked;
+	this->player->GetVelocity(&call->velocityPost);
+}
+
 void Jump::Update()
 {
-
+	this->totalDistance += (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
+	this->currentMaxSpeed = MAX(this->player->currentMoveData->m_vecVelocity.Length2D(), this->currentMaxSpeed);
+	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z, this->currentMaxHeight);
 }
 
 void Jump::End()
 {
+	this->Update();
+	this->strafes.Tail().End();
 	this->landingOrigin = this->player->landingOrigin;
 	this->adjustedLandingOrigin = this->player->landingOriginActual;
+	this->currentMaxHeight -= this->adjustedTakeoffOrigin.z;
+	// This is not the real jump duration, it's just here to calculate sync.
+	f32 jumpDuration = 0.0f;
 	FOR_EACH_VEC(this->strafes, i)
 	{
-		this->strafes[i].CalcAngleRatioAverage();
+		FOR_EACH_VEC(this->strafes[i].aaCalls, j)
+		{
+			if (this->strafes[i].aaCalls[j].ducking)
+			{
+				this->duckDuration += this->strafes[i].aaCalls[j].subtickFraction / 64;
+				this->duckEndDuration += this->strafes[i].aaCalls[j].subtickFraction / 64;
+			}
+			else
+			{
+				this->duckEndDuration = 0.0f;
+			}
+		}
+		this->width += this->strafes[i].GetWidth();
+		this->overlap += this->strafes[i].GetOverlapDuration();
+		this->deadAir += this->strafes[i].GetDeadAirDuration();
+		this->badAngles += this->strafes[i].GetBadAngleDuration();
+		this->sync += this->strafes[i].GetSyncDuration();
+		jumpDuration += this->strafes[i].GetStrafeDuration();
+
 	}
+	this->width /= this->strafes.Count();
+	this->overlap /= jumpDuration;
+	this->deadAir /= jumpDuration;
+	this->badAngles /= jumpDuration;
+	this->sync /= jumpDuration;
 }
 
 u8 Jump::DetermineJumpType()
@@ -234,7 +361,7 @@ Strafe *Jump::GetCurrentStrafe()
 	// Otherwise, if the strafe is in opposite direction, we add a new strafe.
 	else if (this->strafes.Tail().turnstate == -this->player->GetTurning())
 	{
-		float time = utils::GetServerGlobals()->curtime - utils::GetServerGlobals()->frametime;
+		this->strafes.Tail().End();
 		// Finish the previous strafe before adding a new strafe.
 		Strafe strafe = Strafe();
 		strafe.turnstate = this->player->GetTurning();
@@ -246,20 +373,23 @@ Strafe *Jump::GetCurrentStrafe()
 }
 
 f32 Jump::GetDistance() 
-{ 
+{
+	// TODO: don't add 32 to lajs
 	return (this->adjustedLandingOrigin - this->adjustedTakeoffOrigin).Length2D() + 32.0f;
 }
 
-f32 Jump::GetMaxSpeed() { return 0.0f; } // TODO
-f32 Jump::GetSync() { return 0.0f; } // TODO
-f32 Jump::GetBadAngles() { return 0.0f; } // TODO
-f32 Jump::GetOverlap() { return 0.0f; } // TODO
-f32 Jump::GetDeadAir() { return 0.0f; } // TODO
-f32 Jump::GetMaxHeight() { return 0.0f; } // TODO
-f32 Jump::GetWidth() { return 0.0f; } // TODO
 f32 Jump::GetEdge(bool landing) { return 0.0f; } // TODO
-f32 Jump::GetGain() { return 0.0f; } // TODO
-f32 Jump::GetLoss() { return 0.0f; } // TODO
-f32 Jump::GetStrafeEfficiency() { return 0.0f; } // TODO
-f32 Jump::GetAirPath() { return 0.0f; } // TODO
-f32 Jump::GetDuckTime(bool endOnly) { return 0.0f; } // TODO
+
+f32 Jump::GetAirPath()
+{
+	if (this->totalDistance <= 0.0f) return 0.0;
+	return this->totalDistance / (this->GetDistance() - 32.0f);
+}
+
+f32 Jump::GetDeviation()
+{
+	f32 distanceX = fabs(adjustedLandingOrigin.x - adjustedTakeoffOrigin.x);
+	f32 distanceY = fabs(adjustedLandingOrigin.y - adjustedTakeoffOrigin.y);
+	if (distanceX > distanceY) return distanceY;
+	return distanceX;
+}

@@ -173,6 +173,49 @@ CBasePlayerController *utils::GetController(CPlayerSlot slot)
 	return static_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
 }
 
+bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
+{
+	if (onlyDown)
+	{
+		return buttons->m_pButtonStates[0] & button;
+	}
+	else
+	{
+		bool multipleKeys = (button & (button - 1));
+		if (multipleKeys)
+		{
+			u64 currentButton = button;
+			u64 key = 0;
+			if (button)
+			{
+				while (true)
+				{
+					if (currentButton & 1)
+					{
+						u64 keyMask = 1ull << key;
+						EInButtonState keyState = (EInButtonState)(keyMask && buttons->m_pButtonStates[0] + (keyMask && buttons->m_pButtonStates[1]) * 2 + (keyMask && buttons->m_pButtonStates[2]) * 4);
+						if (keyState > IN_BUTTON_DOWN_UP)
+						{
+							return true;
+						}
+					}
+					key++;
+					currentButton >>= 1;
+					if (!currentButton) return !!(buttons->m_pButtonStates[0] & button);
+				}
+			}
+		}
+		else
+		{
+			EInButtonState keyState = (EInButtonState)(button & buttons->m_pButtonStates[0] + (button & buttons->m_pButtonStates[1]) * 2 + (button & buttons->m_pButtonStates[2]) * 4);
+			if (keyState > IN_BUTTON_DOWN_UP)
+			{
+				return true;
+			}
+			return !!(buttons->m_pButtonStates[0] & button);
+		}
+	}
+}
 CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
 {
 	CBasePlayerController *controller = utils::GetController(entity);

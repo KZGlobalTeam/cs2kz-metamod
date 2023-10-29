@@ -21,12 +21,21 @@ void KZPlayer::OnStartTouchGround()
 	{
 		Jump *jump = &this->jumps.Tail();
 		jump->End();
-		if (jump->GetOffset() > -0.03125)
+		if (jump->GetOffset() > -0.03125 || this->jsAlways)
 		{
-			utils::PrintChat(this->GetPawn(), "Dist %f Strafe %i Offset %f", 
-				this->jumps.Tail().GetDistance(), 
-				this->jumps.Tail().strafes.Count(),
-				this->jumps.Tail().GetOffset());
+			utils::PrintChat(this->GetPawn(), " \x06 KZ\x08 | \x0A%.1f\x08 |\x05 %i\x08 Strafes |\x08 Sync\x05 %2.f%%\x08 |\x05 %.2f\x08 Pre |\x05 %.2f\x08 Max\n",
+				jump->GetDistance(),
+				jump->strafes.Count(),
+				jump->GetSync() * 100.0f,
+				this->takeoffVelocity.Length2D(),
+				jump->GetMaxSpeed());
+			utils::PrintChat(this->GetPawn(), " \x08 BA\x05 %2.0f%% \x08| OL\x05 %2.0f%% \x08| DA\x05 %2.0f%% \x08|\x05 %.1f\x08 Deviation |\x05 %.1f\x08 Width |\x05 %.2f\x08 Height",
+					jump->GetBadAngles() * 100,
+					jump->GetOverlap() * 100,
+					jump->GetDeadAir() * 100,
+					jump->GetDeviation(),
+					jump->GetWidth(),
+					jump->GetMaxHeight());
 		}
 	}
 }
@@ -40,6 +49,10 @@ void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
 	AACall call;
 	this->GetVelocity(&call.velocityPre);
+
+	// moveDataPost is still the movedata from last tick.
+	call.externalSpeedDiff = call.velocityPre.Length2D() - this->moveDataPost.m_vecVelocity.Length2D();
+
 	call.curtime = utils::GetServerGlobals()->curtime;
 	call.tickcount = utils::GetServerGlobals()->tickcount;
 	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
@@ -48,24 +61,7 @@ void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
 
 void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
 {
-	// Use the latest parameters, just in case they changed.
-	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
-	AACall *call = &strafe->aaCalls.Tail();
-	QAngle currentAngle;
-	this->GetAngles(&currentAngle);
-	call->maxspeed = this->currentMoveData->m_flMaxSpeed;
-	call->currentYaw = currentAngle.y;
-	for (int i = 0; i < 3; i++)
-	{
-		call->buttons.m_pButtonStates[i] = this->GetMoveServices()->m_nButtons().m_pButtonStates[i];
-	}
-	call->wishdir = wishdir;
-	call->wishspeed = wishspeed;
-	call->accel = accel;
-	call->surfaceFriction = this->GetMoveServices()->m_flSurfaceFriction();
-	call->subtickFraction = this->currentMoveData->m_flSubtickFraction;
-	call->ducking = this->GetMoveServices()->m_bDucked;
-	this->GetVelocity(&call->velocityPost);
+	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }
 
 void KZPlayer::HandleMoveCollision()
@@ -254,6 +250,7 @@ void KZPlayer::OnStartProcessMovement()
 void KZPlayer::OnStopProcessMovement()
 {
 	KZ::HUD::DrawSpeedPanel(this);
+	this->jumps.Tail().Update();
 	MovementPlayer::OnStopProcessMovement();
 }
 

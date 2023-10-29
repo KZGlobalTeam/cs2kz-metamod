@@ -148,40 +148,8 @@ bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
 {
 	CCSPlayer_MovementServices *ms = this->GetMoveServices();
 	if (!ms) return false;
-	CInButtonState buttons = ms->m_nButtons();
-	if (onlyDown)
-	{
-		return buttons.m_pButtonStates[0] & button;
-	}
-	else
-	{
-		bool multipleKeys = (button & (button - 1));
-		if (multipleKeys)
-		{
-			u64 key = 0;
-			while (button)
-			{
-				u64 keyMask = 1ull << key;
-				EInButtonState keyState = (EInButtonState)(keyMask && buttons.m_pButtonStates[0] + (keyMask && buttons.m_pButtonStates[1]) * 2 + (keyMask && buttons.m_pButtonStates[2]) * 4);
-				if (keyState > IN_BUTTON_DOWN_UP)
-				{
-					return true;
-				}
-				key++;
-				button = (InputBitMask_t)(button >> 1);
-			}
-			return buttons.m_pButtonStates[0] & button;
-		}
-		else
-		{
-			EInButtonState keyState = (EInButtonState)(button & buttons.m_pButtonStates[0] + (button & buttons.m_pButtonStates[1]) * 2 + (button & buttons.m_pButtonStates[2]) * 4);
-			if (keyState > IN_BUTTON_DOWN_UP)
-			{
-				return true;
-			}
-			return buttons.m_pButtonStates[0] & button;
-		}
-	}
+	CInButtonState *buttons = ms->m_nButtons();
+	return utils::IsButtonDown(buttons, button, onlyDown);
 }
 
 f32 MovementPlayer::GetGroundPosition()
