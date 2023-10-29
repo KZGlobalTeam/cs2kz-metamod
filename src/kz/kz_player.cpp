@@ -19,6 +19,30 @@ void KZPlayer::OnStartTouchGround()
 {
 
 }
+
+void KZPlayer::OnStopTouchGround()
+{
+	this->jumps.AddToTailGetPtr();
+}
+
+void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
+{
+	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
+	AACall *call = strafe->aaCalls.AddToTailGetPtr();
+	this->GetVelocity(&call->velocityPre);
+
+	// moveDataPost is still the movedata from last tick.
+	call->externalSpeedDiff = call->velocityPre.Length2D() - this->moveDataPost.m_vecVelocity.Length2D();
+
+	call->curtime = utils::GetServerGlobals()->curtime;
+	call->tickcount = utils::GetServerGlobals()->tickcount;
+}
+
+void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
+{
+	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
+}
+
 void KZPlayer::HandleMoveCollision()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
@@ -190,6 +214,13 @@ void KZPlayer::TpHoldPlayerStill()
 void KZPlayer::OnStartProcessMovement()
 {
 	MovementPlayer::OnStartProcessMovement();
+	// Always ensure that the player has at least an ongoing jump.
+	// This is mostly to prevent crash, it's not a valid jump.
+	if (this->jumps.Count() == 0)
+	{
+		this->jumps.AddToTail();
+		this->jumps.Tail().Invalidate();
+	}
 	this->TpHoldPlayerStill();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
