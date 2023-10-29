@@ -17,8 +17,53 @@ void KZPlayer::EnableGodMode()
 
 void KZPlayer::OnStartTouchGround()
 {
-
+	if (this->jumps.Count() > 0)
+	{
+		Jump *jump = &this->jumps.Tail();
+		jump->End();
+		if (jump->GetOffset() > -0.03125 || this->jsAlways)
+		{
+			utils::PrintChat(this->GetPawn(), " \x06 KZ\x08 | \x0A%.1f\x08 |\x05 %i\x08 Strafes |\x08 Sync\x05 %2.f%%\x08 |\x05 %.2f\x08 Pre |\x05 %.2f\x08 Max\n",
+				jump->GetDistance(),
+				jump->strafes.Count(),
+				jump->GetSync() * 100.0f,
+				this->takeoffVelocity.Length2D(),
+				jump->GetMaxSpeed());
+			utils::PrintChat(this->GetPawn(), " \x08 BA\x05 %2.0f%% \x08| OL\x05 %2.0f%% \x08| DA\x05 %2.0f%% \x08|\x05 %.1f\x08 Deviation |\x05 %.1f\x08 Width |\x05 %.2f\x08 Height",
+					jump->GetBadAngles() * 100,
+					jump->GetOverlap() * 100,
+					jump->GetDeadAir() * 100,
+					jump->GetDeviation(),
+					jump->GetWidth(),
+					jump->GetMaxHeight());
+		}
+	}
 }
+
+void KZPlayer::OnStopTouchGround()
+{
+	this->jumps.AddToTail(Jump(this));
+}
+
+void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
+{
+	AACall call;
+	this->GetVelocity(&call.velocityPre);
+
+	// moveDataPost is still the movedata from last tick.
+	call.externalSpeedDiff = call.velocityPre.Length2D() - this->moveDataPost.m_vecVelocity.Length2D();
+
+	call.curtime = utils::GetServerGlobals()->curtime;
+	call.tickcount = utils::GetServerGlobals()->tickcount;
+	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
+	strafe->aaCalls.AddToTail(call);
+}
+
+void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
+{
+	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
+}
+
 void KZPlayer::HandleMoveCollision()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
@@ -190,6 +235,13 @@ void KZPlayer::TpHoldPlayerStill()
 void KZPlayer::OnStartProcessMovement()
 {
 	MovementPlayer::OnStartProcessMovement();
+	// Always ensure that the player has at least an ongoing jump.
+	// This is mostly to prevent crash, it's not a valid jump.
+	if (this->jumps.Count() == 0)
+	{
+		this->jumps.AddToTail(Jump(this));
+		this->jumps.Tail().Invalidate();
+	}
 	this->TpHoldPlayerStill();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
@@ -198,6 +250,7 @@ void KZPlayer::OnStartProcessMovement()
 void KZPlayer::OnStopProcessMovement()
 {
 	KZ::HUD::DrawSpeedPanel(this);
+	this->jumps.Tail().Update();
 	MovementPlayer::OnStopProcessMovement();
 }
 

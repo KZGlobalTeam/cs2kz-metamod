@@ -173,6 +173,49 @@ CBasePlayerController *utils::GetController(CPlayerSlot slot)
 	return static_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
 }
 
+bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
+{
+	if (onlyDown)
+	{
+		return buttons->m_pButtonStates[0] & button;
+	}
+	else
+	{
+		bool multipleKeys = (button & (button - 1));
+		if (multipleKeys)
+		{
+			u64 currentButton = button;
+			u64 key = 0;
+			if (button)
+			{
+				while (true)
+				{
+					if (currentButton & 1)
+					{
+						u64 keyMask = 1ull << key;
+						EInButtonState keyState = (EInButtonState)(keyMask && buttons->m_pButtonStates[0] + (keyMask && buttons->m_pButtonStates[1]) * 2 + (keyMask && buttons->m_pButtonStates[2]) * 4);
+						if (keyState > IN_BUTTON_DOWN_UP)
+						{
+							return true;
+						}
+					}
+					key++;
+					currentButton >>= 1;
+					if (!currentButton) return !!(buttons->m_pButtonStates[0] & button);
+				}
+			}
+		}
+		else
+		{
+			EInButtonState keyState = (EInButtonState)(button & buttons->m_pButtonStates[0] + (button & buttons->m_pButtonStates[1]) * 2 + (button & buttons->m_pButtonStates[2]) * 4);
+			if (keyState > IN_BUTTON_DOWN_UP)
+			{
+				return true;
+			}
+			return !!(buttons->m_pButtonStates[0] & button);
+		}
+	}
+}
 CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
 {
 	CBasePlayerController *controller = utils::GetController(entity);
@@ -276,4 +319,19 @@ void utils::PrintHTMLCentreAll(const char *format, ...)
 	event->SetInt("userid", -1);
 
 	interfaces::pGameEventManager->FireEvent(event);
+}
+
+f32 utils::NormalizeDeg(f32 a)
+{
+	a = fmod(a, 360.0);
+	if (a >= 180.0)
+		a -= 360.0;
+	else if (a < -180.0)
+		a += 360.0;
+	return a;
+}
+
+f32 utils::GetAngleDifference(const f32 x, const f32 y, const f32 c)
+{
+	return fmod(fabs(x - y) + c, 2 * c) - c;
 }
