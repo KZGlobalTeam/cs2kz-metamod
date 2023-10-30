@@ -103,7 +103,7 @@ public:
 class Strafe
 {
 public:
-	CUtlVector<AACall> aaCalls;
+	CCopyableUtlVector<AACall> aaCalls;
 	TurnState turnstate;
 
 private:
@@ -182,7 +182,7 @@ private:
 	f32 gainEff{};
 	bool validJump;
 public:
-	CUtlVector<Strafe> strafes;
+	CCopyableUtlVector<Strafe> strafes;
 
 public:
 	Jump() {}

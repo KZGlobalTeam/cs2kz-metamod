@@ -42,20 +42,21 @@ void KZPlayer::OnStartTouchGround()
 
 void KZPlayer::OnStopTouchGround()
 {
-	this->jumps.AddToTailGetPtr();
+	this->jumps.AddToTail(Jump(this));
 }
 
 void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
-	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
-	AACall *call = strafe->aaCalls.AddToTailGetPtr();
-	this->GetVelocity(&call->velocityPre);
+	AACall call;
+	this->GetVelocity(&call.velocityPre);
 
 	// moveDataPost is still the movedata from last tick.
-	call->externalSpeedDiff = call->velocityPre.Length2D() - this->moveDataPost.m_vecVelocity.Length2D();
+	call.externalSpeedDiff = call.velocityPre.Length2D() - this->moveDataPost.m_vecVelocity.Length2D();
 
-	call->curtime = utils::GetServerGlobals()->curtime;
-	call->tickcount = utils::GetServerGlobals()->tickcount;
+	call.curtime = utils::GetServerGlobals()->curtime;
+	call.tickcount = utils::GetServerGlobals()->tickcount;
+	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
+	strafe->aaCalls.AddToTail(call);
 }
 
 void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
@@ -238,7 +239,7 @@ void KZPlayer::OnStartProcessMovement()
 	// This is mostly to prevent crash, it's not a valid jump.
 	if (this->jumps.Count() == 0)
 	{
-		this->jumps.AddToTail();
+		this->jumps.AddToTail(Jump(this));
 		this->jumps.Tail().Invalidate();
 	}
 	this->TpHoldPlayerStill();

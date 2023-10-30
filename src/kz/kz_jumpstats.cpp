@@ -350,8 +350,9 @@ Strafe *Jump::GetCurrentStrafe()
 	// Always start with 1 strafe. 
 	if (this->strafes.Count() == 0)
 	{
-		Strafe *strafe = this->strafes.AddToTailGetPtr();
-		strafe->turnstate = this->player->GetTurning();
+		Strafe strafe = Strafe();
+		strafe.turnstate = this->player->GetTurning();
+		this->strafes.AddToTail(strafe);
 	}
 	// If the player isn't turning, update the turn state until it changes.
 	else if (!this->strafes.Tail().turnstate)
@@ -363,9 +364,12 @@ Strafe *Jump::GetCurrentStrafe()
 	{
 		this->strafes.Tail().End();
 		// Finish the previous strafe before adding a new strafe.
-		Strafe *strafe = this->strafes.AddToTailGetPtr();
-		strafe->turnstate = this->player->GetTurning();
+		Strafe strafe = Strafe();
+		strafe.turnstate = this->player->GetTurning();
+		this->strafes.AddToTail(strafe);
 	}
+	// Turn state didn't change, it's the same strafe. No need to do anything.
+
 	return &this->strafes.Tail();
 }
 
