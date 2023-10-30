@@ -363,9 +363,6 @@ class MMSPluginConfig(object):
     if compiler.target.arch == 'x86_64':
       compiler.defines += ['X64BITS', 'PLATFORM_64BITS']
 
-    if compiler.target.platform in ['linux', 'mac']:
-      compiler.defines += ['NO_HOOK_MALLOC', 'NO_MALLOC_OVERRIDE']
-
     compiler.defines += ['META_IS_SOURCE2']
 
     for path in paths:
