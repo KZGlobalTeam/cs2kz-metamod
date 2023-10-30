@@ -53,18 +53,25 @@ KZ-specific:
 - [ ] Global integration (if API exists)
 - [x] Add linux sigs
 
+Requirements: Metamod plugin
 
-VS: 
+Compilation:
+- Remember to *recursively* clone the plugin!
+- For each platform:
+  
+Windows (VS): 
 ```
 mkdir build
 cd build
 py ../configure.py --hl2sdk-root "../" --gen=vs --vs-version 17
 ``` 
 
-ambuild:
+Linux (ambuild/clang):
 ```
 mkdir build
 cd build
 py ../configure.py --hl2sdk-root "../"
 ambuild
 ``` 
+
+Note: does not work with gcc!
