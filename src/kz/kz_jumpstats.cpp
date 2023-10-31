@@ -305,7 +305,10 @@ void Jump::Update()
 void Jump::End()
 {
 	this->Update();
-	this->strafes.Tail().End();
+	if (this->strafes.Count() > 0)
+	{
+		this->strafes.Tail().End();
+	}
 	this->landingOrigin = this->player->landingOrigin;
 	this->adjustedLandingOrigin = this->player->landingOriginActual;
 	this->currentMaxHeight -= this->adjustedTakeoffOrigin.z;

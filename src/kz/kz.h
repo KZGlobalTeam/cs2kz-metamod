@@ -17,9 +17,8 @@ class KZPlayer : public MovementPlayer
 public:
 	KZPlayer(i32 i) : MovementPlayer(i)
 	{
-		inNoclip = false;
-		currentCpIndex = 0;
-		checkpoints = CUtlVector<Checkpoint>(1, 0);
+		this->checkpoints = CUtlVector<Checkpoint>(1, 0);
+		this->jumps = CUtlVector<Jump>(1, 0);
 	}
 	virtual void Reset() override;
 	virtual void OnStartProcessMovement() override;
@@ -51,9 +50,9 @@ public:
 		f32 slopeDropHeight;
 	};
 	
-	i32 currentCpIndex;
-	bool holdingStill;
-	f32 teleportTime;
+	i32 currentCpIndex{};
+	bool holdingStill{};
+	f32 teleportTime{};
 
 	CUtlVector<Checkpoint> checkpoints;
 
@@ -67,10 +66,10 @@ public:
 
 	// Jumpstats
 	CUtlVector<Jump> jumps;
-	bool jsAlways;
+	bool jsAlways{};
 
 	// misc
-	bool hideOtherPlayers;
+	bool hideOtherPlayers{};
 };
 
 class AACall
@@ -180,7 +179,7 @@ private:
 	f32 duckEndDuration{};
 	f32 width{};
 	f32 gainEff{};
-	bool validJump;
+	bool validJump = true;
 public:
 	CCopyableUtlVector<Strafe> strafes;
 
@@ -199,6 +198,7 @@ public:
 
 	Strafe *GetCurrentStrafe();
 
+	bool IsValid() { return this->validJump; };
 	f32 GetOffset() { return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z; };
 	f32 GetDistance();
 	f32 GetMaxSpeed() { return this->currentMaxSpeed; };
