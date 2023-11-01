@@ -32,6 +32,7 @@ KZ-specific:
 - [ ] Jumpstats
 	- [x] Distbug
 	- [ ] Split jump types
+ 	- [ ] Console print
 - [ ] HUD
 	- [x] *Speed panel*
  		- [x] Add prespeed and keys
