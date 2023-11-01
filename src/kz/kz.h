@@ -76,6 +76,7 @@ class AACall
 {
 public:
 	f32 externalSpeedDiff{};
+	f32 prevYaw{};
 	f32 currentYaw{};
 	Vector wishdir;
 	f32 maxspeed{};

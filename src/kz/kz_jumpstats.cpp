@@ -138,7 +138,7 @@ void Strafe::End()
 		{
 			this->externalLoss += speedDiff;
 		}
-
+		this->width += fabs(utils::GetAngleDifference(this->aaCalls[i].currentYaw, this->aaCalls[i].prevYaw, 180.0f));
 	}
 	this->CalcAngleRatioStats();
 }
@@ -163,19 +163,14 @@ bool Strafe::CalcAngleRatioStats()
 		VectorAngles(this->aaCalls[i].velocityPre, velAngles);
 
 		// If no attempt to gain speed was made, use the angle of the last call as a reference, and add yaw relative to last tick's yaw.
-		// If this is the first tick of the strafe then we can try using the velocity's yaw.
 		// If the velocity is 0 as well, then every angle is a perfect angle.
 		if (this->aaCalls[i].wishspeed != 0)
 		{
 			VectorAngles(this->aaCalls[i].wishdir, angles);
 		}
-		else if (i > 0)
-		{
-			angles.y = prevYaw + utils::GetAngleDifference(this->aaCalls[i].currentYaw, this->aaCalls[i - 1].currentYaw, 180.0f);
-		}
 		else
 		{
-			angles = velAngles;
+			angles.y = this->aaCalls[i].prevYaw + utils::GetAngleDifference(this->aaCalls[i].currentYaw, this->aaCalls[i].prevYaw, 180.0f);
 		}
 
 		angles -= velAngles;
@@ -185,7 +180,6 @@ bool Strafe::CalcAngleRatioStats()
 		f32 maxYaw = utils::NormalizeDeg(this->aaCalls[i].CalcMaxYaw());
 		
 		angles.y = utils::NormalizeDeg(angles.y);
-		prevYaw = angles.y + velAngles.y;
 
 		if (this->turnstate == TURN_RIGHT || /* The ideal angle is calculated for left turns, we need to flip it for right turns. */
 			(this->turnstate == TURN_NONE && fabs(utils::GetAngleDifference(angles.y, idealYaw, 180.0f)) > fabs(utils::GetAngleDifference(-angles.y, idealYaw, 180.0f))))

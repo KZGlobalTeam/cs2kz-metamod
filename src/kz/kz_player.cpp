@@ -53,7 +53,7 @@ void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
 
 	// moveDataPost is still the movedata from last tick.
 	call.externalSpeedDiff = call.velocityPre.Length2D() - this->moveDataPost.m_vecVelocity.Length2D();
-
+	call.prevYaw = this->oldAngles.y;
 	call.curtime = utils::GetServerGlobals()->curtime;
 	call.tickcount = utils::GetServerGlobals()->tickcount;
 	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
