@@ -55,7 +55,8 @@ KZ-specific:
 	- [ ] HTTP Requests
  	- [ ] UDP listener (partially done)
 - [x] Add linux sigs
-
+- [ ] Docs
+	- [ ] Code style (different naming schemes for RE structs, sdk, third party libs, project code)
 Requirements: Metamod plugin
 
 Compilation:
