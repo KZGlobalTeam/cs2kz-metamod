@@ -23,7 +23,9 @@ void KZPlayer::OnStartTouchGround()
 		jump->End();
 		if ((jump->GetOffset() > -0.03125 && jump->IsValid()) || this->jsAlways)
 		{
-			utils::PrintChat(this->GetPawn(), " \x06 KZ\x08 | \x0A%.1f\x08 |\x05 %i\x08 Strafes |\x08 Sync\x05 %2.f%%\x08 |\x05 %.2f\x08 Pre |\x05 %.2f\x08 Max\xe2\x80\xa9\x08 BA\x05 %2.0f%% \x08| OL\x05 %2.0f%% \x08| DA\x05 %2.0f%% \x08|\x05 %.1f\x08 Deviation |\x05 %.1f\x08 Width |\x05 %.2f\x08 Height",
+			// TODO: darkblue>green>darkred>gold>orchid
+			utils::CPrintChat(this->GetPawn(), "{lime}KZ {grey}| {olive}%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 				jump->GetDistance(),
 				jump->strafes.Count(),
 				jump->GetSync() * 100.0f,

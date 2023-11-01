@@ -43,8 +43,14 @@ namespace utils
 
 	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
+
+	// Normalize the angle between -180 and 180.
+	f32 NormalizeDeg(f32 a);
+	// Gets the difference in angle between 2 angles. 
+    // c can be PI (for radians) or 180.0 (for degrees);
+	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c);
 	
-	// Print functions do not work inside movement hooks, for some reasons...
+	// Print functions
 	void PrintConsole(CBaseEntity *entity, const char *format, ...);
 	void PrintChat(CBaseEntity *entity, const char *format, ...);
 	void PrintCentre(CBaseEntity *entity, const char *format, ...);
@@ -57,6 +63,8 @@ namespace utils
 	void PrintAlertAll(const char *format, ...);
 	void PrintHTMLCentreAll(const char *format, ...); // This one uses HTML formatting.
 
-	f32 NormalizeDeg(f32 a);
-	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c);
+	// Color print
+	void CPrintChat(CBaseEntity *entity, const char *format, ...);
+	void CPrintChatAll(const char *format, ...);
+
 }

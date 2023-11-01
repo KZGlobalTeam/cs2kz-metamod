@@ -8,7 +8,6 @@
 #include "module.h"
 #include "detours.h"
 #include "virtual.h"
-#include "recipientfilters.h"
 
 #include "tier0/memdbgon.h"
 
@@ -226,101 +225,6 @@ CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
 		return -1;
 	}
 	else return controller->m_pEntity->m_EHandle.GetEntryIndex() - 1;
-}
-
-#define FORMAT_STRING(buffer) \
-	va_list args; \
-	va_start(args, format); \
-	char buffer[1024]; \
-	vsnprintf(buffer, sizeof(buffer), format, args); \
-	va_end(args);
-
-void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
-}
-
-void utils::PrintChat(CBaseEntity *entity, const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
-}
-
-void utils::PrintCentre(CBaseEntity *entity, const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
-}
-
-void utils::PrintAlert(CBaseEntity *entity, const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
-}
-
-void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
-{
-	CBasePlayerController *controller = utils::GetController(entity);
-	if (!controller) return;
-
-	FORMAT_STRING(buffer);
-
-	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
-	if (!event) return;
-	event->SetString("loc_token", buffer);
-	event->SetInt("duration", 5);
-	event->SetInt("userid", -1);
-
-	CPlayerSlot slot = controller->entindex() - 1;
-	IGameEventListener2 *listener = utils::GetLegacyGameEventListener(slot);
-	listener->FireGameEvent(event);
-	interfaces::pGameEventManager->FreeEvent(event);
-}
-
-void utils::PrintConsoleAll(const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
-}
-
-void utils::PrintChatAll(const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
-}
-
-void utils::PrintCentreAll(const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
-}
-
-void utils::PrintAlertAll(const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
-}
-
-void utils::PrintHTMLCentreAll(const char *format, ...)
-{
-	FORMAT_STRING(buffer);
-
-	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
-	if (!event) return;
-	event->SetString("loc_token", buffer);
-	event->SetInt("duration", 5);
-	event->SetInt("userid", -1);
-
-	interfaces::pGameEventManager->FireEvent(event);
 }
 
 f32 utils::NormalizeDeg(f32 a)
