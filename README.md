@@ -52,6 +52,8 @@ KZ-specific:
 - [ ] Saveloc
 - [ ] Local DB/Ranks
 - [ ] Global integration (if API exists)
+	- [ ] HTTP Requests
+ 	- [ ] UDP listener (partially done)
 - [x] Add linux sigs
 
 Requirements: Metamod plugin
