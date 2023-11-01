@@ -241,6 +241,11 @@ void KZPlayer::OnStartProcessMovement()
 		this->jumps.AddToTail(Jump(this));
 		this->jumps.Tail().Invalidate();
 	}
+	// Invalidate jumpstats if movetype is invalid.
+	if (this->GetPawn()->m_MoveType() != MOVETYPE_WALK && this->GetPawn()->m_MoveType() != MOVETYPE_LADDER )
+	{
+		this->jumps.Tail().Invalidate();
+	}
 	this->TpHoldPlayerStill();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
