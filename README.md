@@ -29,12 +29,12 @@ KZ-specific:
 	- [x] Add ladder checkpoints
 - [ ] Timers
 	- [x] Trigger touching logic
-- [ ] Jumpstats
+- [ ] *Jumpstats*
 	- [x] Distbug
-	- [ ] Split jump types
- 	- [ ] Console print
+	- [x] Split jump types
+ 	- [ ] *Console print*
 - [ ] HUD
-	- [x] *Speed panel*
+	- [x] Speed panel
  		- [x] Add prespeed and keys
  		- [x] Add print to the top center bar (with game events)
 	- [ ] TP Menu (impossible...?)
