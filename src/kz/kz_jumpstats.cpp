@@ -1,7 +1,23 @@
 #include "kz.h"
+#include "kz_jumpstats.h"
 #include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
+
+const char *KZ::jumpstats::jumpTypeShortStr[JUMPTYPE_COUNT] =
+{
+	"LJ",
+	"BH",
+	"MBH",
+	"WJ",
+	"LAJ",
+	"LAH",
+	"JB",
+	"FL",
+	"UNK",
+	"INV"
+};
+
 /*
 * AACall stuff
 */
@@ -150,7 +166,6 @@ bool Strafe::CalcAngleRatioStats()
 	f32 totalRatios = 0.0f;
 	CUtlVector<f32> ratios;
 
-	f32 prevYaw;
 	QAngle angles, velAngles;
 	FOR_EACH_VEC(this->aaCalls, i)
 	{
@@ -262,6 +277,13 @@ bool Strafe::CalcAngleRatioStats()
 * Jump stuff
 */
 
+void Jump::Init()
+{
+	this->takeoffOrigin = this->player->takeoffOrigin;
+	this->adjustedTakeoffOrigin = this->player->takeoffGroundOrigin;
+	this->jumpType = KZ::jumpstats::DetermineJumpType(this->player);
+}
+
 void Jump::Invalidate()
 {
 	this->validJump = false;
@@ -337,10 +359,6 @@ void Jump::End()
 	this->sync /= jumpDuration;
 }
 
-u8 Jump::DetermineJumpType()
-{
-	return 0; // TODO
-}
 
 Strafe *Jump::GetCurrentStrafe()
 {
@@ -390,4 +408,88 @@ f32 Jump::GetDeviation()
 	f32 distanceY = fabs(adjustedLandingOrigin.y - adjustedTakeoffOrigin.y);
 	if (distanceX > distanceY) return distanceY;
 	return distanceX;
+}
+
+KZ::jumpstats::JumpType KZ::jumpstats::DetermineJumpType(KZPlayer *player)
+{
+	if (player->takeoffFromLadder)
+	{
+		if (player->GetPawn()->m_ignoreLadderJumpTime() > utils::GetServerGlobals()->curtime
+			&& player->lastJumpButtonTime > player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
+			&& player->lastJumpButtonTime < player->GetPawn()->m_ignoreLadderJumpTime() + 1/64)
+		{
+			return JumpType_Invalid;
+		}
+		if (player->jumped)
+		{
+			return JumpType_Ladderhop;
+		}
+		else
+		{
+			return JumpType_LadderJump;
+		}
+	}
+	else if (!player->jumped)
+	{
+		return JumpType_Fall;
+	}
+	else if (player->duckBugged)
+	{
+		if (player->jumps.Tail().GetOffset() < 0.03125 && player->jumps.Tail().GetJumpType() == JumpType_LongJump)
+		{
+			return JumpType_Jumpbug;
+		}
+		else
+		{
+			return JumpType_Invalid;
+		}
+	}
+	else if (KZ::jumpstats::HitBhop(player) && !KZ::jumpstats::HitDuckbugRecently(player))
+	{
+		// Check for no offset
+		if (fabs(player->jumps.Tail().GetOffset()) < 0.03125)
+		{
+			switch (player->jumps.Tail().GetJumpType())
+			{
+			case JumpType_LongJump:return JumpType_Bhop;
+			case JumpType_Bhop:return JumpType_MultiBhop;
+			case JumpType_MultiBhop:return JumpType_MultiBhop;
+			default:return JumpType_Other;
+			}
+		}
+		// Check for weird jump
+		else if (player->jumps.Tail().GetJumpType() == JumpType_Fall &&
+			KZ::jumpstats::ValidWeirdJumpDropDistance(player))
+		{
+			return JumpType_WeirdJump;
+		}
+		else
+		{
+			return JumpType_Other;
+		}
+	}
+	if (KZ::jumpstats::HitDuckbugRecently(player) || !KZ::jumpstats::GroundSpeedCappedRecently(player))
+	{
+		return JumpType_Invalid;
+	}
+	return JumpType_LongJump;
+}
+
+bool KZ::jumpstats::HitBhop(KZPlayer *player)
+{
+	return player->takeoffTime - player->landingTime < JS_MAX_BHOP_GROUND_TIME;
+}
+
+bool KZ::jumpstats::HitDuckbugRecently(KZPlayer *player)
+{
+	return utils::GetServerGlobals()->curtime - player->lastDuckbugTime <= JS_MAX_DUCKBUG_RESET_TIME;
+}
+bool KZ::jumpstats::ValidWeirdJumpDropDistance(KZPlayer *player)
+{
+	return player->jumps.Tail().GetOffset() > -1 * JS_MAX_WEIRDJUMP_FALL_OFFSET;
+}
+
+bool KZ::jumpstats::GroundSpeedCappedRecently(KZPlayer *player)
+{
+	return player->lastGroundSpeedCappedTime == player->lastMovementProcessedTime;
 }

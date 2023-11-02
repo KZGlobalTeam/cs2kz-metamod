@@ -24,8 +24,9 @@ void KZPlayer::OnStartTouchGround()
 		if ((jump->GetOffset() > -0.03125 && jump->IsValid()) || this->jsAlways)
 		{
 			// TODO: darkblue>green>darkred>gold>orchid
-			utils::CPrintChat(this->GetPawn(), "{lime}KZ {grey}| {olive}%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+			utils::CPrintChat(this->GetPawn(), "{lime}KZ {grey}| {olive}%s: %.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
+				KZ::jumpstats::jumpTypeShortStr[jump->GetJumpType()],
 				jump->GetDistance(),
 				jump->strafes.Count(),
 				jump->GetSync() * 100.0f,
@@ -44,6 +45,14 @@ void KZPlayer::OnStartTouchGround()
 void KZPlayer::OnStopTouchGround()
 {
 	this->jumps.AddToTail(Jump(this));
+}
+
+void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
+{
+	if (oldMoveType == MOVETYPE_LADDER && this->GetPawn()->m_MoveType() == MOVETYPE_WALK)
+	{
+		this->jumps.AddToTail(Jump(this));
+	}
 }
 
 void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
@@ -258,6 +267,7 @@ void KZPlayer::OnStopProcessMovement()
 	KZ::HUD::DrawSpeedPanel(this);
 	this->jumps.Tail().Update();
 	MovementPlayer::OnStopProcessMovement();
+	this->TrackJumpstatsVariables();
 }
 
 void KZPlayer::ToggleHide()
@@ -274,4 +284,22 @@ void KZPlayer::Reset()
 	this->holdingStill = false;
 	this->teleportTime = 0.0f;
 	this->checkpoints.Purge();
+}
+
+void KZPlayer::TrackJumpstatsVariables()
+{
+	this->lastJumpButtonTime = this->GetPawn()->m_ignoreLadderJumpTime();
+	if (this->GetPawn()->m_MoveType == MOVETYPE_NOCLIP)
+	{
+		this->lastNoclipTime = utils::GetServerGlobals()->curtime;	
+	}
+	if (this->duckBugged)
+	{
+		this->lastDuckbugTime = utils::GetServerGlobals()->curtime;	
+	}
+	if (this->walkMoved)
+	{
+		this->lastGroundSpeedCappedTime = utils::GetServerGlobals()->curtime;
+	}
+	this->lastMovementProcessedTime = utils::GetServerGlobals()->curtime;
 }
