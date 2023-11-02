@@ -126,7 +126,6 @@ internal float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numc
 
 internal float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
 {
-	KZ::HUD::OnProcessUsercmds_Post(slot, buf, numcmds, ignore, paused);
 	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
 }
 

@@ -243,7 +243,6 @@ namespace KZ
 	CKZPlayerManager *GetKZPlayerManager();
 	namespace HUD
 	{
-		void OnProcessUsercmds_Post(CPlayerSlot &slot, bf_read *buf, int numcmds, bool ignore, bool paused);
 		void DrawSpeedPanel(KZPlayer *player);
 	}
 	namespace misc

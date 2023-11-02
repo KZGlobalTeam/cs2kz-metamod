@@ -3,10 +3,6 @@
 
 #include "tier0/memdbgon.h"
 
-void KZ::HUD::OnProcessUsercmds_Post(CPlayerSlot &slot, bf_read *buf, int numcmds, bool ignore, bool paused)
-{
-}
-
 internal void AddSpeedText(KZPlayer *player, char* buffer, int size)
 {
 	char speed[128];
