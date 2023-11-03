@@ -11,11 +11,6 @@ class KZPlayer;
 
 namespace KZ::jumpstats
 {
-	#define IGNORE_JUMP_TIME 0.2f
-	#define JS_MAX_LADDERJUMP_OFFSET 2.0f
-	#define JS_MAX_BHOP_GROUND_TIME 0.05f
-	#define JS_MAX_DUCKBUG_RESET_TIME 0.05f
-	#define JS_MAX_WEIRDJUMP_FALL_OFFSET 64.0f
 
 	enum JumpType
 	{
@@ -33,12 +28,26 @@ namespace KZ::jumpstats
 		JUMPTYPE_COUNT
 	};
 
+	enum DistanceTier
+	{
+		DistanceTier_None = 0,
+		DistanceTier_Meh,
+		DistanceTier_Impressive,
+		DistanceTier_Perfect,
+		DistanceTier_Godlike,
+		DistanceTier_Ownage,
+		DistanceTier_Wrecker,
+		DISTANCETIER_COUNT
+	};
+
 	extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
+
 	JumpType DetermineJumpType(KZPlayer *player);
 	bool HitBhop(KZPlayer *player);
 	bool HitDuckbugRecently(KZPlayer *player);
 	bool ValidWeirdJumpDropDistance(KZPlayer *player);
 	bool GroundSpeedCappedRecently(KZPlayer *player);
+	
 }
 
 class AACall

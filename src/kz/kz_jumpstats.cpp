@@ -4,6 +4,12 @@
 
 #include "tier0/memdbgon.h"
 
+#define IGNORE_JUMP_TIME 0.2f
+#define JS_MAX_LADDERJUMP_OFFSET 2.0f
+#define JS_MAX_BHOP_GROUND_TIME 0.05f
+#define JS_MAX_DUCKBUG_RESET_TIME 0.05f
+#define JS_MAX_WEIRDJUMP_FALL_OFFSET 64.0f
+
 const char *KZ::jumpstats::jumpTypeShortStr[JUMPTYPE_COUNT] =
 {
 	"LJ",
