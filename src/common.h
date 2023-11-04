@@ -15,6 +15,24 @@
 #include "entity2/entitysystem.h"
 #define MAXPLAYERS 64
 
+#define C_WHITE            "\x1"
+#define C_RED              "\x2"
+#define C_LIGHT_PURPLE     "\x3"
+#define C_GREEN            "\x4"
+#define C_LIGHTER_GREEN    "\x5"
+#define C_LIGHT_GREEN      "\x6"
+#define C_LIGHT_RED        "\x7"
+#define C_GREY             "\x8"
+#define C_YELLOW           "\x9"
+
+#define C_LIGHTER_BLUE     "\xa"
+#define C_LIGHT_BLUE       "\xb"
+#define C_BLUE             "\xc"
+#define C_LIGHTER_BLUE2    "\xd"
+#define C_PURPLE           "\xe"
+#define C_LIGHTER_RED      "\xf"
+#define C_GOLD             "\x10"
+
 extern CEntitySystem *g_pEntitySystem;
 
 #ifdef _WIN32
