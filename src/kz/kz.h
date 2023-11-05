@@ -4,7 +4,6 @@
 #include "movement/movement.h"
 #include "utils/datatypes.h"
 
-#include "kz_jumpstats.h"
 
 #define KZ_COLLISION_GROUP_STANDARD LAST_SHARED_COLLISION_GROUP
 #define KZ_COLLISION_GROUP_NOTRIGGER COLLISION_GROUP_DEBRIS
@@ -12,16 +11,30 @@
 extern CMovementPlayerManager *g_pPlayerManager;
 
 class KZPlayer;
-class Jump;
+//class Jump;
+class KZAnticheatService;
+class KZCheckpointService;
+class KZGlobalService;
+class KZHUDService;
+class KZJumpstatsService;
+class KZMeasureService;
+class KZModeService;
+class KZOptionService;
+class KZQuietService;
+class KZRacingService;
+class KZSavelocService;
+class KZStyleService;
+class KZTimerService;
+class KZTipService;
 
 class KZPlayer : public MovementPlayer
 {
 public:
 	KZPlayer(i32 i) : MovementPlayer(i)
 	{
-		this->checkpoints = CUtlVector<Checkpoint>(1, 0);
-		this->jumps = CUtlVector<Jump>(1, 0);
+		this->Init();
 	}
+	void Init();
 	virtual void Reset() override;
 	virtual void OnStartProcessMovement() override;
 	virtual void OnStopProcessMovement() override;
@@ -36,50 +49,40 @@ private:
 	bool inNoclip;
 	TurnState previousTurnState;
 public:
-	void ToggleHide();
+	KZAnticheatService *anticheatService;
+	KZCheckpointService *checkpointService;
+	KZGlobalService *globalService;
+	KZHUDService *hudService;
+	KZJumpstatsService *jumpstatsService;
+	KZMeasureService *measureService;
+	KZModeService *modesService;
+	KZOptionService *optionsService;
+	KZQuietService *quietService;
+	KZRacingService *racingService;
+	KZSavelocService *savelocService;
+	KZStyleService *styleService;
+	KZTimerService *timerService;
+	KZTipService *tipService;
+	
+	// Misc stuff that doesn't belong into any service.
 	void DisableNoclip();
 	void ToggleNoclip();
 	void EnableGodMode();
 	void HandleMoveCollision();
 	void UpdatePlayerModelAlpha();
-	
-	// Checkpoint stuff
-	struct Checkpoint
+};
+
+class KZBaseService
+{
+public:
+	KZPlayer *player;
+
+	KZBaseService(KZPlayer *player)
 	{
-		Vector origin;
-		QAngle angles;
-		Vector ladderNormal;
-		bool onLadder;
-		CHandle< CBaseEntity > groundEnt;
-		f32 slopeDropOffset;
-		f32 slopeDropHeight;
-	};
-	
-	i32 currentCpIndex{};
-	bool holdingStill{};
-	f32 teleportTime{};
-
-	CUtlVector<Checkpoint> checkpoints;
-
-	void SetCheckpoint();
-	void DoTeleport(i32 index);
-	void TpHoldPlayerStill();
-	void TpToCheckpoint();
-	void TpToPrevCp();
-	void TpToNextCp();
-
-	// Jumpstats
-	CUtlVector<Jump> jumps;
-	bool jsAlways{};
-	f32 lastJumpButtonTime{};
-	f32 lastNoclipTime{};
-	f32 lastDuckbugTime{};
-	f32 lastGroundSpeedCappedTime{};
-	f32 lastMovementProcessedTime{};
-	
-	void TrackJumpstatsVariables();
-	// misc
-	bool hideOtherPlayers{};
+		this->player = player;
+	}
+	// To be implemented by each service class
+	virtual void Reset() {};
 };
 
 class CKZPlayerManager : public CMovementPlayerManager
@@ -114,7 +117,6 @@ namespace KZ
 	namespace misc
 	{
 		void RegisterCommands();
-		void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 		void OnClientPutInServer(CPlayerSlot slot);
 	}
 };

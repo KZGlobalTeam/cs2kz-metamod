@@ -4,52 +4,39 @@
 #include "movement/movement.h"
 #include "utils/datatypes.h"
 
-#include "kz.h"
+#include "../kz.h"
 
 class KZPlayer;
 
-
-namespace KZ::jumpstats
+enum JumpType
 {
+	JumpType_FullInvalid = -1,
+	JumpType_LongJump,
+	JumpType_Bhop,
+	JumpType_MultiBhop,
+	JumpType_WeirdJump,
+	JumpType_LadderJump,
+	JumpType_Ladderhop,
+	JumpType_Jumpbug,
+	JumpType_Fall,
+	JumpType_Other,
+	JumpType_Invalid,
+	JUMPTYPE_COUNT
+};
 
-	enum JumpType
-	{
-		JumpType_FullInvalid = -1,
-		JumpType_LongJump,
-		JumpType_Bhop,
-		JumpType_MultiBhop,
-		JumpType_WeirdJump,
-		JumpType_LadderJump,
-		JumpType_Ladderhop,
-		JumpType_Jumpbug,
-		JumpType_Fall,
-		JumpType_Other,
-		JumpType_Invalid,
-		JUMPTYPE_COUNT
-	};
+enum DistanceTier
+{
+	DistanceTier_None = 0,
+	DistanceTier_Meh,
+	DistanceTier_Impressive,
+	DistanceTier_Perfect,
+	DistanceTier_Godlike,
+	DistanceTier_Ownage,
+	DistanceTier_Wrecker,
+	DISTANCETIER_COUNT
+};
 
-	enum DistanceTier
-	{
-		DistanceTier_None = 0,
-		DistanceTier_Meh,
-		DistanceTier_Impressive,
-		DistanceTier_Perfect,
-		DistanceTier_Godlike,
-		DistanceTier_Ownage,
-		DistanceTier_Wrecker,
-		DISTANCETIER_COUNT
-	};
-
-	extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
-
-	JumpType DetermineJumpType(KZPlayer *player);
-	bool HitBhop(KZPlayer *player);
-	bool HitDuckbugRecently(KZPlayer *player);
-	bool ValidWeirdJumpDropDistance(KZPlayer *player);
-	bool GroundSpeedCappedRecently(KZPlayer *player);
-	
-}
-
+extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
 class AACall
 {
 public:
@@ -144,7 +131,7 @@ private:
 	Vector landingOrigin;
 	Vector adjustedLandingOrigin;
 
-	KZ::jumpstats::JumpType jumpType;
+	JumpType jumpType;
 
 	// Required for airpath stat.
 	f32 totalDistance{};
@@ -177,7 +164,7 @@ public:
 	void Invalidate();
 
 	Strafe *GetCurrentStrafe();
-	KZ::jumpstats::JumpType GetJumpType() { return this->jumpType; };
+	JumpType GetJumpType() { return this->jumpType; };
 
 	bool IsValid() { return this->validJump; };
 	f32 GetOffset() { return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z; };
@@ -195,4 +182,40 @@ public:
 	f32 GetDuckTime(bool endOnly = true) { return endOnly ? this->duckEndDuration : this->duckDuration; };
 	f32 GetDeviation();
 	
+};
+
+class KZJumpstatsService : public KZBaseService
+{
+public:
+	KZJumpstatsService(KZPlayer *player) : KZBaseService(player)
+	{
+		this->jumps = CUtlVector<Jump>(1, 0);
+	}
+	// Jumpstats
+	CUtlVector<Jump> jumps;
+	bool jsAlways{};
+	f32 lastJumpButtonTime{};
+	f32 lastNoclipTime{};
+	f32 lastDuckbugTime{};
+	f32 lastGroundSpeedCappedTime{};
+	f32 lastMovementProcessedTime{};
+
+	void OnStartProcessMovement();
+	void OnChangeMoveType(MoveType_t oldMoveType);
+	JumpType DetermineJumpType();
+	bool HitBhop();
+	bool HitDuckbugRecently();
+	bool ValidWeirdJumpDropDistance();
+	bool GroundSpeedCappedRecently();
+
+	void TrackJumpstatsVariables();
+
+	void AddJump();
+	void UpdateJump();
+	void EndJump();
+	void InvalidateJumpstats();
+	void OnAirAcceleratePre();
+	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
+	void UpdateAACallPost();
+	void ToggleJSAlways();
 };

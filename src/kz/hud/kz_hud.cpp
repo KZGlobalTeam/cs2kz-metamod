@@ -1,4 +1,4 @@
-#include "kz.h"
+#include "kz_hud.h"
 #include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
@@ -19,7 +19,7 @@ internal void AddSpeedText(KZPlayer *player, char* buffer, int size)
 	{
 		snprintf(speed, sizeof(speed), "Speed: %.0f (%.0f)", velocity.Length2D(), player->takeoffVelocity.Length2D());
 	}
-	strncat(buffer, speed, size);
+	V_strncat(buffer, speed, size);
 }
 
 internal void AddKeyText(KZPlayer *player, char *buffer, int size)
@@ -33,10 +33,10 @@ internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 		player->IsButtonDown(IN_MOVERIGHT) ? "D" : "_",
 		player->IsButtonDown(IN_DUCK) ? "C" : "_",
 		player->IsButtonDown(IN_JUMP) ? "J" : "_");
-	strncat(buffer, keys, size);
+	V_strncat(buffer, keys, size);
 }
 
-void KZ::HUD::DrawSpeedPanel(KZPlayer *player)
+void KZHUDService::DrawSpeedPanel()
 {
 	char buffer[1024];
 	buffer[0] = 0;
@@ -44,5 +44,5 @@ void KZ::HUD::DrawSpeedPanel(KZPlayer *player)
 	strcat(buffer, "\n"); 
 	AddKeyText(player, buffer, sizeof(buffer));
 
-	utils::PrintAlert(player->GetController(), "%s", buffer);
+	utils::PrintAlert(this->player->GetController(), "%s", buffer);
 }

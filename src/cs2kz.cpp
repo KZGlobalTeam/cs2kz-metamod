@@ -13,6 +13,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/quiet/kz_quiet.h"
 
 #include "tier0/memdbgon.h"
 KZPlugin g_KZPlugin;
@@ -164,7 +165,7 @@ internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 
 internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCount, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities)
 {
-	KZ::misc::OnCheckTransmit(pInfo, infoCount);
+	KZ::quiet::OnCheckTransmit(pInfo, infoCount);
 	RETURN_META(MRES_IGNORED);
 }
 

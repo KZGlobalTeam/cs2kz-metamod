@@ -5,6 +5,10 @@
 
 #include "tier0/memdbgon.h"
 
+#include "checkpoint/kz_checkpoint.h"
+#include "jumpstats/kz_jumpstats.h"
+#include "quiet/kz_quiet.h"
+
 internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
@@ -22,46 +26,46 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 internal SCMD_CALLBACK(Command_KzCheckpoint)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	player->SetCheckpoint();
+	player->checkpointService->SetCheckpoint();
 	return MRES_SUPERCEDE;
 }
 
 internal SCMD_CALLBACK(Command_KzTeleport)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	player->TpToCheckpoint();
+	player->checkpointService->TpToCheckpoint();
 	return MRES_SUPERCEDE;
 }
 
 internal SCMD_CALLBACK(Command_KzPrevcp)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	player->TpToPrevCp();
+	player->checkpointService->TpToPrevCp();
 	return MRES_SUPERCEDE;
 }
 
 internal SCMD_CALLBACK(Command_KzNextcp)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	player->TpToNextCp();
+	player->checkpointService->TpToNextCp();
 	return MRES_SUPERCEDE;
 }
 
 internal SCMD_CALLBACK(Command_KzHide)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	player->ToggleHide();
+	player->quietService->ToggleHide();
 	return MRES_SUPERCEDE;
 }
 
 internal SCMD_CALLBACK(Command_KzJSAlways)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	player->jsAlways = !player->jsAlways;
-	utils::PrintChat(player->GetPawn(), "[KZ] JSAlways %s.", player->jsAlways ? "enabled" : "disabled");
+	player->jumpstatsService->ToggleJSAlways();
 	return MRES_SUPERCEDE;
 }
 
+// TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_noclip",     Command_KzNoclip);
@@ -74,35 +78,6 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_nextcp",     Command_KzNextcp);
 	scmd::RegisterCmd("kz_hide",	   Command_KzHide);
 	scmd::RegisterCmd("kz_jsalways",   Command_KzJSAlways);
-}
-
-void KZ::misc::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
-{
-	for (int i = 0; i < infoCount; i++)
-	{
-		// Cast it to our own TransmitInfo struct because CCheckTransmitInfo isn't correct.
-		TransmitInfo *pTransmitInfo = reinterpret_cast<TransmitInfo*>(pInfo[i]);
-		
-		// Find out who this info will be sent to.
-		CPlayerSlot targetSlot = pTransmitInfo->m_nClientEntityIndex;
-		KZPlayer *targetPlayer = KZ::GetKZPlayerManager()->ToPlayer(targetSlot);
-
-		// Don't hide if player is dead/spectating or if they aren't hiding other players.
-		if (!targetPlayer->hideOtherPlayers) continue;
-		if (targetPlayer->GetPawn()->m_lifeState() != LIFE_ALIVE) continue;
-
-		// Loop through the list of players and see if they need to be hidden away from our target player.
-		for (int j = 0; j < MAXPLAYERS; j++)
-		{
-			if (j == targetPlayer->GetController()->entindex()) continue;
-			CBasePlayerPawn *pawn = KZ::GetKZPlayerManager()->players[j]->GetPawn();
-			if (!pawn) continue;
-			if (pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
-			{
-				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
-			}
-		}
-	}
 }
 
 void KZ::misc::OnClientPutInServer(CPlayerSlot slot)

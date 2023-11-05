@@ -3,7 +3,71 @@
 #include "igameevents.h"
 #include "tier0/memdbgon.h"
 
-static const Vector NULL_VECTOR = Vector(0, 0, 0);
+#include "checkpoint/kz_checkpoint.h"
+#include "quiet/kz_quiet.h"
+#include "jumpstats/kz_jumpstats.h"
+#include "hud/kz_hud.h"
+
+
+void KZPlayer::Init()
+{
+	// TODO: initialize every service.
+	this->checkpointService = new KZCheckpointService(this);
+	this->jumpstatsService = new KZJumpstatsService(this);
+	this->quietService = new KZQuietService(this);
+	this->hudService = new KZHUDService(this);
+}
+
+void KZPlayer::Reset()
+{
+	MovementPlayer::Reset();
+
+	// TODO: reset every service.
+	this->checkpointService->Reset();
+	this->quietService->Reset();
+}
+
+void KZPlayer::OnStartProcessMovement()
+{
+	MovementPlayer::OnStartProcessMovement();
+	this->jumpstatsService->OnStartProcessMovement();
+	this->checkpointService->TpHoldPlayerStill();
+	this->EnableGodMode();
+	this->HandleMoveCollision();
+}
+
+void KZPlayer::OnStopProcessMovement()
+{
+	this->hudService->DrawSpeedPanel();
+	this->jumpstatsService->UpdateJump();
+	MovementPlayer::OnStopProcessMovement();
+	this->jumpstatsService->TrackJumpstatsVariables();
+}
+
+void KZPlayer::OnStartTouchGround()
+{
+	this->jumpstatsService->EndJump();
+}
+
+void KZPlayer::OnStopTouchGround()
+{
+	this->jumpstatsService->AddJump();
+}
+
+void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
+{
+	this->jumpstatsService->OnChangeMoveType(oldMoveType);
+}
+
+void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
+{
+	this->jumpstatsService->OnAirAcceleratePre();
+}
+
+void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
+{
+	this->jumpstatsService->OnAirAcceleratePost(wishdir, wishspeed, accel);
+}
 
 void KZPlayer::EnableGodMode()
 {
@@ -13,65 +77,6 @@ void KZPlayer::EnableGodMode()
 	{
 		pawn->m_bTakesDamage(false);
 	}
-}
-
-void KZPlayer::OnStartTouchGround()
-{
-	if (this->jumps.Count() > 0)
-	{
-		Jump *jump = &this->jumps.Tail();
-		jump->End();
-		if ((jump->GetOffset() > -0.03125 && jump->IsValid()) || this->jsAlways)
-		{
-			// TODO: darkblue>green>darkred>gold>orchid
-			utils::CPrintChat(this->GetPawn(), "{lime}KZ {grey}| {olive}%s: %.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
-				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
-				KZ::jumpstats::jumpTypeShortStr[jump->GetJumpType()],
-				jump->GetDistance(),
-				jump->strafes.Count(),
-				jump->GetSync() * 100.0f,
-				this->takeoffVelocity.Length2D(),
-				jump->GetMaxSpeed(),
-				jump->GetBadAngles() * 100,
-				jump->GetOverlap() * 100,
-				jump->GetDeadAir() * 100,
-				jump->GetDeviation(),
-				jump->GetWidth(),
-				jump->GetMaxHeight());
-		}
-	}
-}
-
-void KZPlayer::OnStopTouchGround()
-{
-	this->jumps.AddToTail(Jump(this));
-}
-
-void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
-{
-	if (oldMoveType == MOVETYPE_LADDER && this->GetPawn()->m_MoveType() == MOVETYPE_WALK)
-	{
-		this->jumps.AddToTail(Jump(this));
-	}
-}
-
-void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
-{
-	AACall call;
-	this->GetVelocity(&call.velocityPre);
-
-	// moveDataPost is still the movedata from last tick.
-	call.externalSpeedDiff = call.velocityPre.Length2D() - this->moveDataPost.m_vecVelocity.Length2D();
-	call.prevYaw = this->oldAngles.y;
-	call.curtime = utils::GetServerGlobals()->curtime;
-	call.tickcount = utils::GetServerGlobals()->tickcount;
-	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
-	strafe->aaCalls.AddToTail(call);
-}
-
-void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
-{
-	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }
 
 void KZPlayer::HandleMoveCollision()
@@ -132,174 +137,4 @@ void KZPlayer::ToggleNoclip()
 void KZPlayer::DisableNoclip()
 {
 	this->inNoclip = false;
-}
-
-void KZPlayer::SetCheckpoint()
-{
-	CCSPlayerPawn *pawn = this->GetPawn();
-	if (!pawn) return;
-	u32 flags = pawn->m_fFlags();
-	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
-	{
-		utils::PrintChat(this->GetPawn(), "Checkpoint unavailable in the air.");
-		return;
-	}
-	
-	Checkpoint cp = {};
-	this->GetOrigin(&cp.origin);
-	this->GetAngles(&cp.angles);
-	cp.slopeDropHeight = pawn->m_flSlopeDropHeight();
-	cp.slopeDropOffset = pawn->m_flSlopeDropOffset();
-	if (this->GetMoveServices())
-	{
-		cp.ladderNormal = this->GetMoveServices()->m_vecLadderNormal();
-		cp.onLadder = pawn->m_MoveType() == MOVETYPE_LADDER;
-	}
-	cp.groundEnt = pawn->m_hGroundEntity();
-	this->checkpoints.AddToTail(cp);
-	// newest checkpoints aren't deleted after using prev cp.
-	this->currentCpIndex = this->checkpoints.Count() - 1;
-	utils::PrintChat(this->GetPawn(), "Checkpoint (#%i)", this->currentCpIndex);
-}
-
-void KZPlayer::DoTeleport(i32 index)
-{
-	CCSPlayerPawn *pawn = this->GetPawn();
-	if (!pawn) return;
-	if (checkpoints.Count() <= 0)
-	{
-		utils::PrintChat(this->GetPawn(), "No checkpoints available.");
-		return;
-	}
-	const Checkpoint cp = this->checkpoints[this->currentCpIndex];
-
-	// If we teleport the player to the same origin, the player ends just a slightly bit off from where they are supposed to be...
-	Vector currentOrigin;
-	this->GetOrigin(&currentOrigin);
-
-	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
-	// So we only set the player origin if it doesn't match.
-	if (currentOrigin != checkpoints[currentCpIndex].origin)
-	{
-		this->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
-	}
-	else
-	{
-		this->Teleport(NULL, &cp.angles, &NULL_VECTOR);
-	}
-	pawn->m_flSlopeDropHeight(cp.slopeDropHeight);
-	pawn->m_flSlopeDropOffset(cp.slopeDropOffset);
-
-	pawn->m_hGroundEntity(cp.groundEnt);
-	if (cp.onLadder)
-	{
-		CCSPlayer_MovementServices *ms = this->GetMoveServices();
-		ms->m_vecLadderNormal(cp.ladderNormal);
-		this->GetPawn()->m_MoveType(MOVETYPE_LADDER);
-	}
-	this->teleportTime = utils::GetServerGlobals()->curtime;
-}
-
-void KZPlayer::TpToCheckpoint()
-{
-	DoTeleport(this->currentCpIndex);
-}
-
-void KZPlayer::TpToPrevCp()
-{
-	this->currentCpIndex = MAX(0, this->currentCpIndex - 1);
-	DoTeleport(this->currentCpIndex);
-}
-
-void KZPlayer::TpToNextCp()
-{
-	this->currentCpIndex = MIN(this->currentCpIndex + 1, this->checkpoints.Count() - 1);
-	DoTeleport(this->currentCpIndex);
-}
-
-void KZPlayer::TpHoldPlayerStill()
-{
-	if (!checkpoints.IsValidIndex(currentCpIndex)) return;
-	if (this->GetPawn()->m_lifeState() != LIFE_ALIVE) return;
-	if (utils::GetServerGlobals()->curtime - this->teleportTime > 0.04) return;
-	Vector currentOrigin;
-	this->GetOrigin(&currentOrigin);
-
-	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
-	if (currentOrigin != checkpoints[currentCpIndex].origin)
-	{
-		this->SetOrigin(checkpoints[currentCpIndex].origin);
-	}
-	this->SetVelocity(Vector(0,0,0));
-	if (checkpoints[currentCpIndex].onLadder && this->GetPawn()->m_MoveType() != MOVETYPE_NONE)
-	{
-		this->GetPawn()->m_MoveType(MOVETYPE_LADDER);
-	}
-	if (checkpoints[currentCpIndex].groundEnt)
-	{
-		this->GetPawn()->m_fFlags |= FL_ONGROUND;
-	}
-	this->GetPawn()->m_hGroundEntity(checkpoints[currentCpIndex].groundEnt);
-}
-
-void KZPlayer::OnStartProcessMovement()
-{
-	MovementPlayer::OnStartProcessMovement();
-	// Always ensure that the player has at least an ongoing jump.
-	// This is mostly to prevent crash, it's not a valid jump.
-	if (this->jumps.Count() == 0)
-	{
-		this->jumps.AddToTail(Jump(this));
-		this->jumps.Tail().Invalidate();
-	}
-	// Invalidate jumpstats if movetype is invalid.
-	if (this->GetPawn()->m_MoveType() != MOVETYPE_WALK && this->GetPawn()->m_MoveType() != MOVETYPE_LADDER )
-	{
-		this->jumps.Tail().Invalidate();
-	}
-	this->TpHoldPlayerStill();
-	this->EnableGodMode();
-	this->HandleMoveCollision();
-}
-
-void KZPlayer::OnStopProcessMovement()
-{
-	KZ::HUD::DrawSpeedPanel(this);
-	this->jumps.Tail().Update();
-	MovementPlayer::OnStopProcessMovement();
-	this->TrackJumpstatsVariables();
-}
-
-void KZPlayer::ToggleHide()
-{
-	this->hideOtherPlayers = !this->hideOtherPlayers;
-}
-
-void KZPlayer::Reset()
-{
-	MovementPlayer::Reset();
-
-	this->currentCpIndex = 0;
-	this->hideOtherPlayers = false;
-	this->holdingStill = false;
-	this->teleportTime = 0.0f;
-	this->checkpoints.Purge();
-}
-
-void KZPlayer::TrackJumpstatsVariables()
-{
-	this->lastJumpButtonTime = this->GetPawn()->m_ignoreLadderJumpTime();
-	if (this->GetPawn()->m_MoveType == MOVETYPE_NOCLIP)
-	{
-		this->lastNoclipTime = utils::GetServerGlobals()->curtime;	
-	}
-	if (this->duckBugged)
-	{
-		this->lastDuckbugTime = utils::GetServerGlobals()->curtime;	
-	}
-	if (this->walkMoved)
-	{
-		this->lastGroundSpeedCappedTime = utils::GetServerGlobals()->curtime;
-	}
-	this->lastMovementProcessedTime = utils::GetServerGlobals()->curtime;
 }
