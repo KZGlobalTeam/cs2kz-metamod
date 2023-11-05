@@ -292,7 +292,7 @@ void Jump::Init()
 
 void Jump::Invalidate()
 {
-	this->validJump = false;
+	this->valid = false;
 }
 
 void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
@@ -363,6 +363,7 @@ void Jump::End()
 	this->deadAir /= jumpDuration;
 	this->badAngles /= jumpDuration;
 	this->sync /= jumpDuration;
+	this->ended = true;
 }
 
 
@@ -559,6 +560,9 @@ void KZJumpstatsService::EndJump()
 	if (this->jumps.Count() > 0)
 	{
 		Jump *jump = &this->jumps.Tail();
+
+		// Prevent stats being calculated twice.
+		if (jump->AlreadyEnded()) return;
 		jump->End();
 		if ((jump->GetOffset() > -0.03125 && jump->IsValid()) || this->jsAlways)
 		{

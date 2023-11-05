@@ -102,6 +102,7 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	if (!result && oldMoveType == MOVETYPE_LADDER)
 	{
 		player->RegisterTakeoff(false);
+		player->takeoffFromLadder = true;
 		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
 	else if (result && oldMoveType != MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_LADDER)
@@ -109,16 +110,12 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 		player->RegisterLanding(oldVelocity, false);
 		player->OnChangeMoveType(MOVETYPE_WALK);
 	}
-	else if (result && oldMoveType == MOVETYPE_LADDER)
+	else if (result && oldMoveType == MOVETYPE_WALK && player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
-		// Player is on the ladder and in the air, pressing jump pushes them away from the ladder.
+		// Player is on the ladder, pressing jump pushes them away from the ladder.
 		float curtime = utils::GetServerGlobals()->curtime;
-		if (player->IsButtonDown(IN_JUMP) && player->GetPawn()->m_ignoreLadderJumpTime() <= curtime)
-		{
-			player->RegisterTakeoff(false);
-			player->takeoffFromLadder = true;
-			player->OnChangeMoveType(MOVETYPE_LADDER);
-		}
+		player->RegisterTakeoff(true);
+		player->takeoffFromLadder = true;
 	}
 	return result;
 }

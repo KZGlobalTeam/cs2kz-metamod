@@ -207,7 +207,7 @@ bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
 		}
 		else
 		{
-			EInButtonState keyState = (EInButtonState)(button & buttons->m_pButtonStates[0] + (button & buttons->m_pButtonStates[1]) * 2 + (button & buttons->m_pButtonStates[2]) * 4);
+			EInButtonState keyState = (EInButtonState)(!!(button & buttons->m_pButtonStates[0]) + !!(button & buttons->m_pButtonStates[1]) * 2 + !!(button & buttons->m_pButtonStates[2]) * 4);
 			if (keyState > IN_BUTTON_DOWN_UP)
 			{
 				return true;

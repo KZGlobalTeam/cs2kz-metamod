@@ -147,7 +147,8 @@ private:
 	f32 duckEndDuration{};
 	f32 width{};
 	f32 gainEff{};
-	bool validJump = true;
+	bool valid = true;
+	bool ended{};
 public:
 	CCopyableUtlVector<Strafe> strafes;
 
@@ -166,7 +167,8 @@ public:
 	Strafe *GetCurrentStrafe();
 	JumpType GetJumpType() { return this->jumpType; };
 
-	bool IsValid() { return this->validJump; };
+	bool IsValid() { return this->valid; };
+	bool AlreadyEnded() { return this->ended; };
 	f32 GetOffset() { return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z; };
 	f32 GetDistance();
 	f32 GetMaxSpeed() { return this->currentMaxSpeed; };
@@ -181,7 +183,6 @@ public:
 	f32 GetAirPath();
 	f32 GetDuckTime(bool endOnly = true) { return endOnly ? this->duckEndDuration : this->duckDuration; };
 	f32 GetDeviation();
-	
 };
 
 class KZJumpstatsService : public KZBaseService

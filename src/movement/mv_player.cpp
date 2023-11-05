@@ -9,6 +9,7 @@ void MovementPlayer::OnStartProcessMovement()
 	this->hitPerf = false;
 	this->processingMovement = true;
 	this->walkMoved = false;
+	this->takeoffFromLadder = false;
 }
 
 void MovementPlayer::OnStopProcessMovement()
