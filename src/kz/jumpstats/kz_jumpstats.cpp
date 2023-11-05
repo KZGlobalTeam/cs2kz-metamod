@@ -9,6 +9,7 @@
 #define JS_MAX_BHOP_GROUND_TIME 0.05f
 #define JS_MAX_DUCKBUG_RESET_TIME 0.05f
 #define JS_MAX_WEIRDJUMP_FALL_OFFSET 64.0f
+#define JS_OFFSET_EPSILON 0.03125f
 
 const char *jumpTypeShortStr[JUMPTYPE_COUNT] =
 {
@@ -129,13 +130,13 @@ void Strafe::End()
 				this->deadAir += this->aaCalls[i].subtickFraction / 64;
 			}
 		}
-		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= 0.03125f)
+		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= JS_OFFSET_EPSILON)
 		{
 			// This gain could just be from quantized float stuff.
 			this->badAngles += this->aaCalls[i].subtickFraction / 64;
 		}
 		// Calculate sync.
-		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > 0.03125f)
+		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > JS_OFFSET_EPSILON)
 		{
 			this->syncDuration += this->aaCalls[i].subtickFraction / 64;
 		}
@@ -442,7 +443,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	}
 	else if (this->player->duckBugged)
 	{
-		if (this->player->jumpstatsService->jumps.Tail().GetOffset() < 0.03125 && this->player->jumpstatsService->jumps.Tail().GetJumpType() == JumpType_LongJump)
+		if (this->player->jumpstatsService->jumps.Tail().GetOffset() < JS_OFFSET_EPSILON && this->player->jumpstatsService->jumps.Tail().GetJumpType() == JumpType_LongJump)
 		{
 			return JumpType_Jumpbug;
 		}
@@ -454,7 +455,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	else if (this->HitBhop() && !this->HitDuckbugRecently())
 	{
 		// Check for no offset
-		if (fabs(this->player->jumpstatsService->jumps.Tail().GetOffset()) < 0.03125)
+		if (fabs(this->player->jumpstatsService->jumps.Tail().GetOffset()) < JS_OFFSET_EPSILON)
 		{
 			switch (this->player->jumpstatsService->jumps.Tail().GetJumpType())
 			{
@@ -503,6 +504,12 @@ void KZJumpstatsService::OnChangeMoveType(MoveType_t oldMoveType)
 	if (oldMoveType == MOVETYPE_LADDER && this->player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		this->AddJump();
+	}
+	else if (oldMoveType == MOVETYPE_WALK && this->player->GetPawn()->m_MoveType() == MOVETYPE_LADDER)
+	{
+		// Not really a valid jump for jumpstats purposes.
+		this->InvalidateJumpstats();
+		this->EndJump();
 	}
 }
 bool KZJumpstatsService::HitBhop()
@@ -564,7 +571,7 @@ void KZJumpstatsService::EndJump()
 		// Prevent stats being calculated twice.
 		if (jump->AlreadyEnded()) return;
 		jump->End();
-		if ((jump->GetOffset() > -0.03125 && jump->IsValid()) || this->jsAlways)
+		if ((jump->GetOffset() > -JS_OFFSET_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
 			// TODO: darkblue>green>darkred>gold>orchid
 			utils::CPrintChat(this->player->GetPawn(), "{lime}KZ {grey}| {olive}%s: %.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\

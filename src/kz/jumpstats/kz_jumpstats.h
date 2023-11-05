@@ -167,7 +167,7 @@ public:
 	Strafe *GetCurrentStrafe();
 	JumpType GetJumpType() { return this->jumpType; };
 
-	bool IsValid() { return this->valid; };
+	bool IsValid() { return this->valid && this->jumpType >= JumpType_LongJump && this->jumpType <= JumpType_Jumpbug; };
 	bool AlreadyEnded() { return this->ended; };
 	f32 GetOffset() { return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z; };
 	f32 GetDistance();

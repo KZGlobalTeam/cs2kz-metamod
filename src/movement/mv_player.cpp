@@ -172,7 +172,7 @@ f32 MovementPlayer::GetGroundPosition()
 
 	f32 highestPoint = trace.endpos.z;
 
-	if (trace.startsolid) return mv->m_vecAbsOrigin.z;
+	if (trace.startsolid || trace.fraction == 1.0f) return mv->m_vecAbsOrigin.z;
 
 	while (trace.fraction != 1.0 && !trace.startsolid && traceCounter < 32 && trace.planeNormal.z >= standableZ)
 	{

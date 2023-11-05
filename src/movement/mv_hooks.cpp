@@ -91,9 +91,9 @@ void FASTCALL movement::Detour_Duck(CCSPlayer_MovementServices *ms, CMoveData *m
 bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	Vector oldVelocity = mv->m_vecVelocity;
-	bool result = LadderMove(ms, mv);
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	MoveType_t oldMoveType = player->GetPawn()->m_MoveType();
+	bool result = LadderMove(ms, mv);
 	if (player->GetPawn()->m_lifeState() != LIFE_DEAD && !result && oldMoveType == MOVETYPE_LADDER)
 	{
 		// Do the setting part ourselves as well.
@@ -110,12 +110,13 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 		player->RegisterLanding(oldVelocity, false);
 		player->OnChangeMoveType(MOVETYPE_WALK);
 	}
-	else if (result && oldMoveType == MOVETYPE_WALK && player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
+	else if (result && oldMoveType == MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		// Player is on the ladder, pressing jump pushes them away from the ladder.
 		float curtime = utils::GetServerGlobals()->curtime;
-		player->RegisterTakeoff(true);
+		player->RegisterTakeoff(player->IsButtonDown(IN_JUMP));
 		player->takeoffFromLadder = true;
+		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
 	return result;
 }
