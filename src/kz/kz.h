@@ -8,6 +8,11 @@
 #define KZ_COLLISION_GROUP_STANDARD LAST_SHARED_COLLISION_GROUP
 #define KZ_COLLISION_GROUP_NOTRIGGER COLLISION_GROUP_DEBRIS
 
+#define KZ_SND_SET_CP "sounds/ui/panorama/round_report_odds_none_01.vsnd"
+#define KZ_SND_DO_TP "sounds/ui/panorama/round_report_odds_none_01.vsnd"
+
+#define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
+
 extern CMovementPlayerManager *g_pPlayerManager;
 
 class KZPlayer;
@@ -44,6 +49,10 @@ public:
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
 	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
+	
+	virtual void StartZoneStartTouch();
+	virtual void StartZoneEndTouch();
+	virtual void EndZoneStartTouch();
 
 private:
 	bool inNoclip{};
@@ -77,6 +86,8 @@ public:
 	// Leg stuff
 	void ToggleHideLegs();
 	void UpdatePlayerModelAlpha();
+	void PlayCheckpointSound();
+	void PlayTeleportSound();
 };
 
 class KZBaseService

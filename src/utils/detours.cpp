@@ -111,13 +111,14 @@ void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *p
 	{
 		if (IsEntTriggerMultiple((CBaseEntity *)this_))
 		{
+			MovementPlayer *player = g_pPlayerManager->ToPlayer((CBasePlayerPawn *)pOther);
 			if (IsTriggerStartZone(this_))
 			{
-				utils::PrintChat(pOther, "StartTouch: start zone trigger");
+				player->StartZoneStartTouch();
 			}
 			else if (IsTriggerEndZone(this_))
 			{
-				utils::PrintChat(pOther, "StartTouch: end zone trigger");
+				player->EndZoneStartTouch();
 			}
 		}
 	}
@@ -131,13 +132,10 @@ void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOt
 	{
 		if (IsEntTriggerMultiple((CBaseEntity *)this_))
 		{
+			MovementPlayer *player = g_pPlayerManager->ToPlayer((CBasePlayerPawn *)pOther);
 			if (IsTriggerStartZone(this_))
 			{
-				utils::PrintChat(pOther, "StartTouch: start zone trigger");
-			}
-			else if (IsTriggerEndZone(this_))
-			{
-				utils::PrintChat(pOther, "StartTouch: end zone trigger");
+				player->StartZoneEndTouch();
 			}
 		}
 	}
