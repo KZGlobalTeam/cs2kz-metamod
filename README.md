@@ -27,7 +27,7 @@ KZ-specific:
 - [x] Checkpoints
 	- [x] Add basic checkpoints
 	- [x] Add ladder checkpoints
-- [ ] Timers
+- [x] Timers
 	- [x] Trigger touching logic
 - [ ] *Jumpstats*
 	- [x] Distbug
