@@ -19,7 +19,7 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	player->UpdatePlayerModelAlpha();
+	player->ToggleHideLegs();
 	return MRES_SUPERCEDE;
 }
 

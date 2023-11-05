@@ -11,6 +11,10 @@
 
 void KZPlayer::Init()
 {
+	this->inNoclip = false;
+	this->hideLegs = false;
+	this->previousTurnState = TURN_NONE;
+
 	// TODO: initialize every service.
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -34,6 +38,7 @@ void KZPlayer::OnStartProcessMovement()
 	this->checkpointService->TpHoldPlayerStill();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
+	this->UpdatePlayerModelAlpha();
 }
 
 void KZPlayer::OnStopProcessMovement()
@@ -118,15 +123,21 @@ void KZPlayer::UpdatePlayerModelAlpha()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
 	if (!pawn) return;
+	
 	Color ogColor = pawn->m_clrRender();
-	if (pawn->m_clrRender().a() != 254)
+	if (this->hideLegs && pawn->m_clrRender().a() == 255)
 	{
 		pawn->m_clrRender(Color(255, 255, 255, 254));
 	}
-	else
+	else if (!this->hideLegs && pawn->m_clrRender().a() != 255)
 	{
 		pawn->m_clrRender(Color(255, 255, 255, 255));
 	}
+}
+
+void KZPlayer::ToggleHideLegs()
+{
+	this->hideLegs = !this->hideLegs;
 }
 
 void KZPlayer::ToggleNoclip()

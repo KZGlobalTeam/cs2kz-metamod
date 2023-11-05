@@ -46,8 +46,9 @@ public:
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
 
 private:
-	bool inNoclip;
-	TurnState previousTurnState;
+	bool inNoclip{};
+	bool hideLegs{};
+	TurnState previousTurnState{};
 public:
 	KZAnticheatService *anticheatService;
 	KZCheckpointService *checkpointService;
@@ -65,10 +66,16 @@ public:
 	KZTipService *tipService;
 	
 	// Misc stuff that doesn't belong into any service.
+	
+	// Noclip
 	void DisableNoclip();
 	void ToggleNoclip();
+	
 	void EnableGodMode();
 	void HandleMoveCollision();
+	
+	// Leg stuff
+	void ToggleHideLegs();
 	void UpdatePlayerModelAlpha();
 };
 
