@@ -1,0 +1,13 @@
+name: Docker Build
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag cs2kz:$(date +%s)
+      - name: Run the Docker image
+        run: docker run cs2kz
