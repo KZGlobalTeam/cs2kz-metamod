@@ -4,6 +4,7 @@ import os
 builder.SetBuildFolder('package')
 
 metamod_folder = builder.AddFolder(os.path.join('addons', 'metamod'))
+cfg_folder = builder.AddFolder('cfg')
 bin_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'bin')
 bin_folder = builder.AddFolder(bin_folder_path)
 
@@ -42,6 +43,7 @@ for task in MMSPlugin.binaries:
     pdb_list.append(task.debug)
 
 builder.AddCopy(os.path.join(builder.buildPath, MMSPlugin.plugin_name + '.vdf'), metamod_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../cfg', 'cs2kz.cfg'), cfg_folder)
 
 # Generate PDB info.
 with open(os.path.join(builder.buildPath, 'pdblog.txt'), 'wt') as fp:
