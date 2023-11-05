@@ -365,6 +365,10 @@ void Jump::End()
 	this->badAngles /= jumpDuration;
 	this->sync /= jumpDuration;
 	this->ended = true;
+
+	// If there's no air time at all then that was definitely not a jump.
+	// Happens when player touch the ground from a ladder.
+	if (jumpDuration == 0.0f) this->jumpType = JumpType_FullInvalid;
 }
 
 
@@ -571,6 +575,7 @@ void KZJumpstatsService::EndJump()
 		// Prevent stats being calculated twice.
 		if (jump->AlreadyEnded()) return;
 		jump->End();
+		if (jump->GetJumpType() == JumpType_FullInvalid) return;
 		if ((jump->GetOffset() > -JS_OFFSET_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
 			// TODO: darkblue>green>darkred>gold>orchid
