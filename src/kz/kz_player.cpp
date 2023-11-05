@@ -151,7 +151,7 @@ void KZPlayer::EndZoneStartTouch()
 		{
 			snprintf(tpCount, sizeof(tpCount), " (%i teleports)", this->checkpointService->tpCount);
 		}
-		utils::PrintChatAll("%s %s finished the map with a %s run of %s!%s",
+		utils::CPrintChatAll("%s %s finished the map with a %s run of %s!%s",
 							KZ_CHAT_PREFIX,
 							controller->m_pEntity->m_name,
 							this->checkpointService->tpCount ? "TP" : "PRO",

@@ -268,7 +268,6 @@ void MovementPlayer::StartZoneEndTouch()
 {
 	this->timerStartTick = this->tickCount;
 	this->timerIsRunning = true;
-	u64 unknown = 0;
 	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_TIMER_START);
 }
 
