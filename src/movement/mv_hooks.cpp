@@ -208,5 +208,7 @@ void FASTCALL movement::Detour_PlayerMovePost(CCSPlayer_MovementServices *ms, CM
 
 void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
+	player->OnPostThink();
 	PostThink(pawn);
 }

@@ -99,18 +99,21 @@ void KZPlayer::HandleMoveCollision()
 		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
 		{
 			utils::SetEntityMoveType(pawn, MOVETYPE_NOCLIP);
+			this->InvalidateTimer();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 		{
 			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
 			utils::EntityCollisionRulesChanged(pawn);
 		}
+		this->InvalidateTimer();
 	}
 	else
 	{
 		if (pawn->m_MoveType() == MOVETYPE_NOCLIP)
 		{
 			utils::SetEntityMoveType(pawn, MOVETYPE_WALK);
+			this->InvalidateTimer();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
 		{
@@ -187,4 +190,14 @@ void KZPlayer::ToggleNoclip()
 void KZPlayer::DisableNoclip()
 {
 	this->inNoclip = false;
+}
+
+void KZPlayer::PlayCheckpointSound()
+{
+	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_SET_CP);
+}
+
+void KZPlayer::PlayTeleportSound()
+{
+	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_DO_TP);
 }

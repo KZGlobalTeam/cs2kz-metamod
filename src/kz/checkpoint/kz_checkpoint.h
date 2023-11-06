@@ -22,6 +22,7 @@ public:
 	};
 
 	i32 currentCpIndex{};
+	i32 tpCount;
 	bool holdingStill{};
 	f32 teleportTime{};
 

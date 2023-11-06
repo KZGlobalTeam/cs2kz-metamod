@@ -9,6 +9,7 @@ internal const Vector NULL_VECTOR = Vector(0, 0, 0);
 void KZCheckpointService::Reset()
 {
 	this->currentCpIndex = 0;
+	this->tpCount = 0;
 	this->holdingStill = false;
 	this->teleportTime = 0.0f;
 	this->checkpoints.Purge();
@@ -40,6 +41,7 @@ void KZCheckpointService::SetCheckpoint()
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
 	utils::PrintChat(this->player->GetPawn(), "Checkpoint (#%i)", this->currentCpIndex);
+	this->player->PlayCheckpointSound();
 }
 
 void KZCheckpointService::DoTeleport(i32 index)
@@ -77,7 +79,9 @@ void KZCheckpointService::DoTeleport(i32 index)
 		ms->m_vecLadderNormal(cp.ladderNormal);
 		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);
 	}
+	this->tpCount++;
 	this->teleportTime = utils::GetServerGlobals()->curtime;
+	this->player->PlayTeleportSound();
 }
 
 void KZCheckpointService::TpToCheckpoint()
