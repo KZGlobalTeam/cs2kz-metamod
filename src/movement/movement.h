@@ -7,9 +7,9 @@
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
 
 // TODO: better error sound
-#define MV_SND_ERROR "sounds/buttons/button8.vsnd"
-#define MV_SND_TIMER_START "sounds/buttons/button9.vsnd"
-#define MV_SND_TIMER_END "sounds/buttons/bell1.vsnd"
+#define MV_SND_ERROR "Buttons.snd8"
+#define MV_SND_TIMER_START "Buttons.snd9"
+#define MV_SND_TIMER_END "UI.DeathMatch.LevelUp"
 
 class MovementPlayer;
 

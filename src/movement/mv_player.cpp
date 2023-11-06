@@ -283,7 +283,7 @@ void MovementPlayer::EndZoneStartTouch()
 
 void MovementPlayer::PlayErrorSound()
 {
-	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_ERROR);
+	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_ERROR, 0.5f);
 }
 
 void MovementPlayer::Reset()

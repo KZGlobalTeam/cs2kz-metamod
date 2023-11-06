@@ -8,8 +8,8 @@
 #define KZ_COLLISION_GROUP_STANDARD LAST_SHARED_COLLISION_GROUP
 #define KZ_COLLISION_GROUP_NOTRIGGER COLLISION_GROUP_DEBRIS
 
-#define KZ_SND_SET_CP "sounds/ui/panorama/round_report_odds_none_01.vsnd"
-#define KZ_SND_DO_TP "sounds/ui/panorama/round_report_odds_none_01.vsnd"
+#define KZ_SND_SET_CP "UIPanorama.round_report_odds_none"
+#define KZ_SND_DO_TP "UIPanorama.round_report_odds_none"
 
 #define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 
