@@ -1,5 +1,6 @@
 #include "../kz.h"
 #include "kz_jumpstats.h"
+#include "../mode/kz_mode.h"
 #include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
@@ -23,6 +24,17 @@ const char *jumpTypeShortStr[JUMPTYPE_COUNT] =
 	"FL",
 	"UNK",
 	"INV"
+};
+
+const char *distanceTierColors[DISTANCETIER_COUNT] =
+{
+	"{grey}",
+	"{grey}",
+	"{blue}",
+	"{green}",
+	"{darkred}",
+	"{gold}",
+	"{orchid}"
 };
 
 /*
@@ -578,21 +590,23 @@ void KZJumpstatsService::EndJump()
 		if (jump->GetJumpType() == JumpType_FullInvalid) return;
 		if ((jump->GetOffset() > -JS_OFFSET_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
-			// TODO: darkblue>green>darkred>gold>orchid
-			utils::CPrintChat(this->player->GetPawn(), "{lime}KZ {grey}| {olive}%s: %.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
-					{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
-					jumpTypeShortStr[jump->GetJumpType()],
-					jump->GetDistance(),
-					jump->strafes.Count(),
-					jump->GetSync() * 100.0f,
-					this->player->takeoffVelocity.Length2D(),
-					jump->GetMaxSpeed(),
-					jump->GetBadAngles() * 100,
-					jump->GetOverlap() * 100,
-					jump->GetDeadAir() * 100,
-					jump->GetDeviation(),
-					jump->GetWidth(),
-					jump->GetMaxHeight());
+			const char *jumpColor = distanceTierColors[this->player->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
+			utils::CPrintChat(this->player->GetPawn(), "{lime}KZ {grey}| %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
+				jumpColor,
+				jumpTypeShortStr[jump->GetJumpType()],
+				jumpColor,
+				jump->GetDistance(),
+				jump->strafes.Count(),
+				jump->GetSync() * 100.0f,
+				this->player->takeoffVelocity.Length2D(),
+				jump->GetMaxSpeed(),
+				jump->GetBadAngles() * 100,
+				jump->GetOverlap() * 100,
+				jump->GetDeadAir() * 100,
+				jump->GetDeviation(),
+				jump->GetWidth(),
+				jump->GetMaxHeight());
 		}
 	}
 }

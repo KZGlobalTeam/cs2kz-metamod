@@ -56,7 +56,7 @@ public:
 	KZHUDService *hudService;
 	KZJumpstatsService *jumpstatsService;
 	KZMeasureService *measureService;
-	KZModeService *modesService;
+	KZModeService *modeService;
 	KZOptionService *optionsService;
 	KZQuietService *quietService;
 	KZRacingService *racingService;

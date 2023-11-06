@@ -7,7 +7,7 @@
 #include "quiet/kz_quiet.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "hud/kz_hud.h"
-
+#include "mode/kz_mode.h"
 
 void KZPlayer::Init()
 {
@@ -20,6 +20,7 @@ void KZPlayer::Init()
 	this->jumpstatsService = new KZJumpstatsService(this);
 	this->quietService = new KZQuietService(this);
 	this->hudService = new KZHUDService(this);
+	KZ::mode::InitModeService(this);
 }
 
 void KZPlayer::Reset()

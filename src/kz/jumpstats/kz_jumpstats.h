@@ -24,7 +24,7 @@ enum JumpType
 	JUMPTYPE_COUNT
 };
 
-enum DistanceTier
+enum DistanceTier: u8
 {
 	DistanceTier_None = 0,
 	DistanceTier_Meh,
