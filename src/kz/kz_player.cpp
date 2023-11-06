@@ -152,11 +152,11 @@ void KZPlayer::EndZoneStartTouch()
 			snprintf(tpCount, sizeof(tpCount), " (%i teleports)", this->checkpointService->tpCount);
 		}
 		utils::CPrintChatAll("%s %s finished the map with a %s run of %s!%s",
-							KZ_CHAT_PREFIX,
-							controller->m_pEntity->m_name.String(),
-							this->checkpointService->tpCount ? "TP" : "PRO",
-							time,
-							tpCount);
+							 KZ_CHAT_PREFIX,
+							 controller->m_iszPlayerName(),
+							 this->checkpointService->tpCount ? "TP" : "PRO",
+							 time,
+							 tpCount);
 	}
 	MovementPlayer::EndZoneStartTouch();
 }
