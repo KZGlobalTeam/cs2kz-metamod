@@ -13,6 +13,7 @@ typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end,
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
+typedef void EmitSoundFunc_t(u64 *unknown, IRecipientFilter *filter, CEntityIndex ent, EmitSound_t *params);
 
 
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
@@ -40,6 +41,7 @@ namespace utils
 	extern InitGameTrace_t *InitGameTrace;
 	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
 	extern SnapViewAngles_t *SnapViewAngles;
+	extern EmitSoundFunc_t *EmitSound;
 
 	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
@@ -65,7 +67,7 @@ namespace utils
 	
 	i32 FormatTimerText(i32 ticks, char *buffer, i32 bufferSize);
 	
-	void PlaySoundToClient(CPlayerSlot player, const char *sound);
+	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
 
 	// Color print
 	void CPrintChat(CBaseEntity *entity, const char *format, ...);

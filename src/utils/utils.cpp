@@ -4,6 +4,7 @@
 #include "strtools.h"
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
+#include "recipientfilters.h"
 
 #include "module.h"
 #include "detours.h"
@@ -22,6 +23,7 @@ TracePlayerBBoxForGround_t *utils::TracePlayerBBoxForGround = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
+EmitSoundFunc_t *utils::EmitSound = NULL;
 
 void modules::Initialize()
 {
@@ -67,6 +69,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, utils::InitPlayerMovementTraceFilter);
 	RESOLVE_SIG(modules::server, sigs::GetLegacyGameEventListener, utils::GetLegacyGameEventListener);
 	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
+	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 
 	InitDetours();
 	return true;
@@ -245,9 +248,14 @@ i32 utils::FormatTimerText(i32 ticks, char *buffer, i32 bufferSize)
 	}
 }
 
-void utils::PlaySoundToClient(CPlayerSlot player, const char *sound)
+void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 {
-	interfaces::pEngine->ClientCommand(player, "play %s", sound);
+	u64 unknown = 0;
+	CSingleRecipientFilter filter(player.Get());
+	EmitSound_t soundParams;
+	soundParams.m_pSoundName = sound;
+	soundParams.m_flVolume = volume;
+	utils::EmitSound(&unknown, &filter, player.Get() + 1, &soundParams);
 }
 
 f32 utils::NormalizeDeg(f32 a)
