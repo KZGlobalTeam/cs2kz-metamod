@@ -242,6 +242,50 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	}
 }
 
+void MovementPlayer::OnPostThink()
+{
+	this->tickCount++;
+}
+
+void MovementPlayer::InvalidateTimer(bool playErrorSound)
+{
+	if (this->timerIsRunning)
+	{
+		this->timerIsRunning = false;
+		if (playErrorSound)
+		{
+			this->PlayErrorSound();
+		}
+	}
+}
+
+void MovementPlayer::StartZoneStartTouch()
+{
+	InvalidateTimer(false);
+}
+
+void MovementPlayer::StartZoneEndTouch()
+{
+	this->timerStartTick = this->tickCount;
+	this->timerIsRunning = true;
+	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_TIMER_START);
+}
+
+// TODO: make a function like OnTimerEnd?
+void MovementPlayer::EndZoneStartTouch()
+{
+	if (this->timerIsRunning)
+	{
+		this->timerIsRunning = false;
+		utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_TIMER_END);
+	}
+}
+
+void MovementPlayer::PlayErrorSound()
+{
+	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_ERROR);
+}
+
 void MovementPlayer::Reset()
 {
 	this->processingDuck = false;
@@ -251,6 +295,7 @@ void MovementPlayer::Reset()
 	this->hitPerf = false;
 	this->jumped = false;
 	this->takeoffFromLadder = false;
+	this->timerIsRunning = false;
 	this->takeoffOrigin.Init();
 	this->takeoffVelocity.Init();
 	this->takeoffTime = 0.0f;
@@ -260,4 +305,6 @@ void MovementPlayer::Reset()
 	this->landingTime = 0.0f;
 	this->landingOriginActual.Init();
 	this->landingTimeActual = 0.0f;
+	this->tickCount = 0;
+	this->timerStartTick = 0;
 }

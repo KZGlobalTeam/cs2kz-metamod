@@ -40,6 +40,13 @@ void KZHUDService::DrawSpeedPanel()
 {
 	char buffer[1024];
 	buffer[0] = 0;
+	if (player->timerIsRunning)
+	{
+		i32 ticks = player->tickCount - player->timerStartTick;
+		utils::FormatTimerText(ticks, buffer, sizeof(buffer));
+		utils::PrintCentre(this->player->GetController(), "%s", buffer);
+		buffer[0] = 0;
+	}
 	AddSpeedText(player, buffer, sizeof(buffer));
 	strcat(buffer, "\n"); 
 	AddKeyText(player, buffer, sizeof(buffer));

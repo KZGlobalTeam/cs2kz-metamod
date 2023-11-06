@@ -5,6 +5,12 @@
 
 #define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
+
+// TODO: better error sound
+#define MV_SND_ERROR "sounds/buttons/button8.vsnd"
+#define MV_SND_TIMER_START "sounds/buttons/button9.vsnd"
+#define MV_SND_TIMER_END "sounds/buttons/bell1.vsnd"
+
 class MovementPlayer;
 
 namespace movement
@@ -61,6 +67,7 @@ public:
 	void RegisterTakeoff(bool jumped);
 	void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	f32 GetGroundPosition();
+	void InvalidateTimer(bool playErrorSound = true);
 
 	virtual void Reset();
 	virtual void OnStartProcessMovement();
@@ -72,6 +79,14 @@ public:
 	virtual void OnChangeMoveType(MoveType_t oldMoveType);
 	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel);
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
+	
+	virtual void OnPostThink();
+	
+	virtual void StartZoneStartTouch();
+	virtual void StartZoneEndTouch();
+	virtual void EndZoneStartTouch();
+	
+	void PlayErrorSound();
 
 public:
 	// General
@@ -94,6 +109,7 @@ public:
 	bool hitPerf{};
 	bool jumped{};
 	bool takeoffFromLadder{};
+	bool timerIsRunning{};
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
 	f32 takeoffTime{};
@@ -104,6 +120,9 @@ public:
 	f32 landingTime{};
 	Vector landingOriginActual;
 	f32 landingTimeActual{};
+	
+	i32 tickCount;
+	i32 timerStartTick;
 };
 
 class CMovementPlayerManager

@@ -99,18 +99,21 @@ void KZPlayer::HandleMoveCollision()
 		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
 		{
 			utils::SetEntityMoveType(pawn, MOVETYPE_NOCLIP);
+			this->InvalidateTimer();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 		{
 			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
 			utils::EntityCollisionRulesChanged(pawn);
 		}
+		this->InvalidateTimer();
 	}
 	else
 	{
 		if (pawn->m_MoveType() == MOVETYPE_NOCLIP)
 		{
 			utils::SetEntityMoveType(pawn, MOVETYPE_WALK);
+			this->InvalidateTimer();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
 		{
@@ -118,6 +121,44 @@ void KZPlayer::HandleMoveCollision()
 			utils::EntityCollisionRulesChanged(pawn);
 		}
 	}
+}
+
+void KZPlayer::StartZoneStartTouch()
+{
+	MovementPlayer::StartZoneStartTouch();
+	this->checkpointService->Reset();
+}
+
+void KZPlayer::StartZoneEndTouch()
+{
+	if (!this->inNoclip)
+	{
+		this->checkpointService->Reset();
+		MovementPlayer::StartZoneEndTouch();
+	}
+}
+
+void KZPlayer::EndZoneStartTouch()
+{
+	if (this->timerIsRunning)
+	{
+		CCSPlayerController *controller = this->GetController();
+		char time[32];
+		i32 ticks = this->tickCount - this->timerStartTick;
+		i32 chars = utils::FormatTimerText(ticks, time, sizeof(time));
+		char tpCount[32] = "";
+		if (this->checkpointService->tpCount)
+		{
+			snprintf(tpCount, sizeof(tpCount), " (%i teleports)", this->checkpointService->tpCount);
+		}
+		utils::CPrintChatAll("%s %s finished the map with a %s run of %s!%s",
+							KZ_CHAT_PREFIX,
+							controller->m_pEntity->m_name,
+							this->checkpointService->tpCount ? "TP" : "PRO",
+							time,
+							tpCount);
+	}
+	MovementPlayer::EndZoneStartTouch();
 }
 
 void KZPlayer::UpdatePlayerModelAlpha()
@@ -149,4 +190,14 @@ void KZPlayer::ToggleNoclip()
 void KZPlayer::DisableNoclip()
 {
 	this->inNoclip = false;
+}
+
+void KZPlayer::PlayCheckpointSound()
+{
+	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_SET_CP);
+}
+
+void KZPlayer::PlayTeleportSound()
+{
+	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_DO_TP);
 }

@@ -591,8 +591,9 @@ void KZJumpstatsService::EndJump()
 		if ((jump->GetOffset() > -JS_OFFSET_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
 			const char *jumpColor = distanceTierColors[this->player->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
-			utils::CPrintChat(this->player->GetPawn(), "{lime}KZ {grey}| %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+			utils::CPrintChat(this->player->GetPawn(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
+				KZ_CHAT_PREFIX,
 				jumpColor,
 				jumpTypeShortStr[jump->GetJumpType()],
 				jumpColor,
