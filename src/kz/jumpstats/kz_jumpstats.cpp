@@ -640,5 +640,5 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 void KZJumpstatsService::ToggleJSAlways()
 {
 	this->jsAlways = !this->jsAlways;
-	utils::PrintChat(player->GetController(), "[KZ] JSAlways %s.", this->jsAlways ? "enabled" : "disabled");
+	utils::PrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
 }

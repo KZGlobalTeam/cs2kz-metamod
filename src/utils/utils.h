@@ -62,6 +62,10 @@ namespace utils
 	void PrintCentreAll(const char *format, ...);
 	void PrintAlertAll(const char *format, ...);
 	void PrintHTMLCentreAll(const char *format, ...); // This one uses HTML formatting.
+	
+	i32 FormatTimerText(i32 ticks, char *buffer, i32 bufferSize);
+	
+	void PlaySoundToClient(CPlayerSlot player, const char *sound);
 
 	// Color print
 	void CPrintChat(CBaseEntity *entity, const char *format, ...);
