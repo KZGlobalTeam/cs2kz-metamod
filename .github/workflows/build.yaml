@@ -1,0 +1,186 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  pull_request:
+  push:
+
+jobs:
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Clone submodules
+        run: git submodule update --init --recursive
+
+      - name: Make image-cache directory
+        run: mkdir /home/runner/image-cache
+
+      - id: image-cache
+        uses: actions/cache@v3
+        with:
+          path: /home/runner/image-cache
+          key: image-cache
+
+      - name: Build and save Docker image
+        if: steps.image-cache.outputs.cache-hit != 'true'
+        run: |
+          docker build . --file Dockerfile --tag cs2kz-linux-builder
+          docker save cs2kz-linux-builder -o /home/runner/image-cache/cs2kz-linux-builder.tar
+
+      - name: Load Docker image
+        if: steps.image-cache.outputs.cache-hit == 'true'
+        run: docker load -i /home/runner/image-cache/cs2kz-linux-builder.tar
+
+      - name: Run the Docker image
+        run: docker run -v ./build:/app/build cs2kz-linux-builder
+
+      - name: Archive build
+        uses: actions/upload-artifact@v3
+        with:
+          name: cs2kz-linux
+          path: ./build/package
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Clone submodules
+        run: git submodule update --init --recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install pip
+        shell: cmd
+        run: curl https://bootstrap.pypa.io/pip/3.6/get-pip.py | python
+
+      - name: Clone AMBuild
+        uses: actions/checkout@v3
+        with:
+          repository: alliedmodders/ambuild
+          path: ./ambuild
+
+      - name: Install AMBuild
+        run: python -m pip install ./ambuild
+
+      - name: Make build directory
+        run: mkdir ./build
+
+      - name: Configure AMBuild
+        working-directory: build
+        run: python ../configure.py --hl2sdk-root "../"
+
+      - name: Run AMBuild
+        working-directory: build
+        run: ambuild
+
+      - name: Archive build
+        uses: actions/upload-artifact@v3
+        with:
+          name: cs2kz-windows
+          path: ./build/package
+
+  release:
+    name: Release
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    needs:
+      - build-linux
+      - build-windows
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          path: /home/runner/artifacts
+
+      - name: Create folders
+        run: |
+          mkdir /home/runner/releases
+
+      - name: Archive Linux build
+        run: |
+          cd /home/runner/artifacts/cs2kz-linux
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz  .
+
+      - name: Archive Windows build
+        run: |
+          cd /home/runner/artifacts/cs2kz-windows
+          zip -r /home/runner/releases/cs2kz-windows-${{ github.ref_name }}.zip *
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz
+            /home/runner/releases/cs2kz-windows-${{ github.ref_name }}.zip
+          generate_release_notes: true
+          prerelease: false
+
+  dev-release:
+    name: Dev Release
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    needs:
+      - build-linux
+      - build-windows
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: latest-release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: ${{ github.repository}}
+          excludes: prerelease, draft
+
+      - name: Set vars
+        id: vars
+        run: |
+          major=$(echo ${{ steps.latest-release.outputs.release }} | cut -sd 'v' -f 2 | cut -sd '.' -f 1)
+          minor=$(echo ${{ steps.latest-release.outputs.release }} | cut -sd 'v' -f 2 | cut -sd '.' -f 2)
+          patch=$(echo ${{ steps.latest-release.outputs.release }} | cut -sd 'v' -f 2 | cut -sd '.' -f 3)
+          new_patch=$(expr $number + 1)
+          short_sha=$(git rev-parse --short HEAD)
+          echo "version_string=v$major.$minor.$new_patch-dev+$short_sha" >> $GITHUB_OUTPUT
+
+      - name: Create folders
+        run: |
+          mkdir /home/runner/releases
+
+      - uses: actions/download-artifact@v3
+        with:
+          path: /home/runner/artifacts
+
+      - name: Archive Linux build
+        run: |
+          cd /home/runner/artifacts/cs2kz-linux
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ steps.vars.outputs.version_string }}.tar.gz  .
+
+      - name: Archive Windows build
+        run: |
+          cd /home/runner/artifacts/cs2kz-windows
+          zip -r /home/runner/releases/cs2kz-windows-${{ steps.vars.outputs.version_string }}.zip *
+
+      - name: Tag the repository
+        id: tag
+        run: |
+          git config --global user.email "${{ github.repository_owner_id }}+${{ github.repository_owner }}@users.noreply.github.com"
+          git config --global user.name "${{ github.repository_owner }}"
+          git tag -a ${{ steps.vars.outputs.version_string }} -m "Published version ${{ steps.vars.outputs.version_string }}" ${GITHUB_SHA}
+          git push origin ${{ steps.vars.outputs.version_string }}
+
+      - name: Dev Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.vars.outputs.version_string }}
+          files: |
+            /home/runner/releases/cs2kz-linux-${{ steps.vars.outputs.version_string }}.tar.gz
+            /home/runner/releases/cs2kz-windows-${{ steps.vars.outputs.version_string }}.zip
+          generate_release_notes: false
+          prerelease: true
