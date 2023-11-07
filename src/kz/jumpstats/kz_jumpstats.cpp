@@ -12,6 +12,20 @@
 #define JS_MAX_WEIRDJUMP_FALL_OFFSET 64.0f
 #define JS_OFFSET_EPSILON 0.03125f
 
+const char *jumpTypeStr[JUMPTYPE_COUNT] =
+{
+	"Long Jump",
+	"Bunnyhop",
+	"Multi Bunnyhop",
+	"Weird Jump",
+	"Ladder Jump",
+	"Ladderhop",
+	"Jumpbug",
+	"Fall",
+	"Unknown Jump",
+	"Invalid Jump"
+};
+
 const char *jumpTypeShortStr[JUMPTYPE_COUNT] =
 {
 	"LJ",
@@ -167,11 +181,11 @@ void Strafe::End()
 		f32 externalSpeedDiff = this->aaCalls[i].externalSpeedDiff;
 		if (externalSpeedDiff > 0)
 		{
-			this->externalGain += speedDiff;
+			this->externalGain += externalSpeedDiff;
 		}
 		else
 		{
-			this->externalLoss += speedDiff;
+			this->externalLoss += externalSpeedDiff;
 		}
 		this->width += fabs(utils::GetAngleDifference(this->aaCalls[i].currentYaw, this->aaCalls[i].prevYaw, 180.0f));
 	}
@@ -256,29 +270,29 @@ bool Strafe::CalcAngleRatioStats()
 			totalRatios += -1 * this->aaCalls[i].subtickFraction;
 			totalDuration += this->aaCalls[i].subtickFraction;
 			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
-			//utils::PrintConsoleAll("No Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
+			//utils::PrintConsoleAll("No Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 			continue;
 		}
 		else if (angles.y < idealYaw)
 		{
 			totalRatios += (gainRatio - 1) * this->aaCalls[i].subtickFraction;
 			totalDuration += this->aaCalls[i].subtickFraction;
-			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
-			//utils::PrintConsoleAll("Slow Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
+			ratios.AddToTail((gainRatio - 1) * this->aaCalls[i].subtickFraction);
+			//utils::PrintConsoleAll("Slow Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 		}
 		else if (angles.y < maxYaw)
 		{
-			totalRatios = (1 - gainRatio) * this->aaCalls[i].subtickFraction;
+			totalRatios += (1 - gainRatio) * this->aaCalls[i].subtickFraction;
 			totalDuration += this->aaCalls[i].subtickFraction;
-			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
-			//utils::PrintConsoleAll("Fast Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
+			ratios.AddToTail((1 - gainRatio) * this->aaCalls[i].subtickFraction);
+			//utils::PrintConsoleAll("Fast Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 		}
 		else
 		{
-			totalRatios = 1.0f;
+			totalRatios += 1.0f;
 			totalDuration += this->aaCalls[i].subtickFraction;
-			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
-			//utils::PrintConsoleAll("TooFast Gain: GR = %f (%f / %f), Add %f", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain(), addRatio);
+			ratios.AddToTail(1.0f);
+			//utils::PrintConsoleAll("TooFast Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 		}
 	}
 
@@ -300,6 +314,7 @@ void Jump::Init()
 {
 	this->takeoffOrigin = this->player->takeoffOrigin;
 	this->adjustedTakeoffOrigin = this->player->takeoffGroundOrigin;
+	this->takeoffVelocity = this->player->takeoffVelocity;
 	this->jumpType = this->player->jumpstatsService->DetermineJumpType();
 }
 
@@ -328,6 +343,7 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	call->subtickFraction = this->player->currentMoveData->m_flSubtickFraction;
 	call->ducking = this->player->GetMoveServices()->m_bDucked;
 	this->player->GetVelocity(&call->velocityPost);
+	strafe->UpdateStrafeMaxSpeed(call->velocityPost.Length2D());
 }
 
 void Jump::Update()
@@ -349,6 +365,9 @@ void Jump::End()
 	this->currentMaxHeight -= this->adjustedTakeoffOrigin.z;
 	// This is not the real jump duration, it's just here to calculate sync.
 	f32 jumpDuration = 0.0f;
+
+	f32 gain = 0.0f;
+	f32 maxGain = 0.0f;
 	FOR_EACH_VEC(this->strafes, i)
 	{
 		FOR_EACH_VEC(this->strafes[i].aaCalls, j)
@@ -369,7 +388,8 @@ void Jump::End()
 		this->badAngles += this->strafes[i].GetBadAngleDuration();
 		this->sync += this->strafes[i].GetSyncDuration();
 		jumpDuration += this->strafes[i].GetStrafeDuration();
-
+		gain += this->strafes[i].GetGain();
+		maxGain += this->strafes[i].GetMaxGain();
 	}
 	this->width /= this->strafes.Count();
 	this->overlap /= jumpDuration;
@@ -377,7 +397,7 @@ void Jump::End()
 	this->badAngles /= jumpDuration;
 	this->sync /= jumpDuration;
 	this->ended = true;
-
+	this->gainEff = gain / maxGain;
 	// If there's no air time at all then that was definitely not a jump.
 	// Happens when player touch the ground from a ladder.
 	if (jumpDuration == 0.0f) this->jumpType = JumpType_FullInvalid;
@@ -412,10 +432,12 @@ Strafe *Jump::GetCurrentStrafe()
 	return &this->strafes.Tail();
 }
 
-f32 Jump::GetDistance() 
+f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist)
 {
-	// TODO: don't add 32 to lajs
-	return (this->adjustedLandingOrigin - this->adjustedTakeoffOrigin).Length2D() + 32.0f;
+	f32 addDist = 32.0f;
+	if (this->jumpType == JumpType_LadderJump || disableAddDist) addDist = 0.0f;
+	if (useDistbugFix) return (this->adjustedLandingOrigin - this->adjustedTakeoffOrigin).Length2D() + addDist;
+	return (this->landingOrigin - this->takeoffOrigin).Length2D() + addDist;
 }
 
 f32 Jump::GetEdge(bool landing) { return 0.0f; } // TODO
@@ -423,7 +445,7 @@ f32 Jump::GetEdge(bool landing) { return 0.0f; } // TODO
 f32 Jump::GetAirPath()
 {
 	if (this->totalDistance <= 0.0f) return 0.0;
-	return this->totalDistance / (this->GetDistance() - 32.0f);
+	return this->totalDistance / this->GetDistance(false, true);
 }
 
 f32 Jump::GetDeviation()
@@ -590,28 +612,102 @@ void KZJumpstatsService::EndJump()
 		if (jump->GetJumpType() == JumpType_FullInvalid) return;
 		if ((jump->GetOffset() > -JS_OFFSET_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
-			const char *jumpColor = distanceTierColors[this->player->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
-			utils::CPrintChat(this->player->GetPawn(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
-				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
-				KZ_CHAT_PREFIX,
-				jumpColor,
-				jumpTypeShortStr[jump->GetJumpType()],
-				jumpColor,
-				jump->GetDistance(),
-				jump->strafes.Count(),
-				jump->GetSync() * 100.0f,
-				this->player->takeoffVelocity.Length2D(),
-				jump->GetMaxSpeed(),
-				jump->GetBadAngles() * 100,
-				jump->GetOverlap() * 100,
-				jump->GetDeadAir() * 100,
-				jump->GetDeviation(),
-				jump->GetWidth(),
-				jump->GetMaxHeight());
+			KZJumpstatsService::PrintJumpToChat(this->player, jump);
+			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
 		}
 	}
 }
 
+void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
+{
+	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
+	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
+		KZ_CHAT_PREFIX,
+		jumpColor,
+		jumpTypeShortStr[jump->GetJumpType()],
+		jumpColor,
+		jump->GetDistance(),
+		jump->strafes.Count(),
+		jump->GetSync() * 100.0f,
+		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
+		jump->GetMaxSpeed(),
+		jump->GetBadAngles() * 100,
+		jump->GetOverlap() * 100,
+		jump->GetDeadAir() * 100,
+		jump->GetDeviation(),
+		jump->GetWidth(),
+		jump->GetMaxHeight());
+}
+
+void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
+{
+	utils::PrintConsole(target->GetController(), "%s jumped %.4f units with a %s",
+		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
+		jump->GetDistance(),
+		jumpTypeStr[jump->GetJumpType()]);
+	utils::PrintConsole(target->GetController(), "%s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f° Width | %.2f Height | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
+		jump->GetJumpPlayer()->modeService->GetModeShortName(),
+		jump->strafes.Count(),
+		jump->GetSync() * 100.0f,
+		jump->GetTakeoffSpeed(),
+		jump->GetMaxSpeed(),
+		jump->GetBadAngles() * 100.0f,
+		jump->GetOverlap() * 100.0f,
+		jump->GetDeadAir() * 100.0f,
+		jump->GetGainEfficiency() * 100.0f,
+		jump->GetAirPath(),
+		jump->GetDeviation(),
+		jump->GetWidth(),
+		jump->GetMaxHeight(),
+		jump->GetJumpPlayer()->landingTimeActual - jump->GetJumpPlayer()->takeoffTime,
+		jump->GetOffset(),
+		jump->GetDuckTime(true),
+		jump->GetDuckTime(false));
+	utils::PrintConsole(target->GetController(), "#. %-12s %-12s     %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
+		"Sync","Gain","Loss","Max","Air","BA","OL","DA","AvgGain","GainEff","AngRatio(Avg/Med/Max)");
+	FOR_EACH_VEC(jump->strafes, i)
+	{
+		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
+		char badAngleString[16], overlapString[16], deadAirString[16], avgGainString[16], gainEffString[16];
+		char angRatioString[32];
+		V_snprintf(syncString, sizeof(syncString), "%.0f%%", jump->strafes[i].GetSync() * 100.0f);
+		V_snprintf(gainString, sizeof(gainString), "%.2f", jump->strafes[i].GetGain());
+		V_snprintf(externalGainString, sizeof(externalGainString), "(+%.2f)", fabs(jump->strafes[i].GetGain(true)));
+		V_snprintf(lossString, sizeof(lossString), "%.2f", fabs(jump->strafes[i].GetLoss()));
+		V_snprintf(externalLossString, sizeof(externalLossString), "(-%.2f)", fabs(jump->strafes[i].GetLoss(true)));
+		V_snprintf(maxString, sizeof(maxString), "%.2f", jump->strafes[i].GetStrafeMaxSpeed());
+		V_snprintf(durationString, sizeof(durationString), "%.3f", jump->strafes[i].GetStrafeDuration());
+		V_snprintf(badAngleString, sizeof(badAngleString), "%.0f%%", jump->strafes[i].GetBadAngleDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
+		V_snprintf(overlapString, sizeof(overlapString), "%.0f%%", jump->strafes[i].GetOverlapDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
+		V_snprintf(deadAirString, sizeof(deadAirString), "%.0f%%", jump->strafes[i].GetDeadAirDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
+		V_snprintf(avgGainString, sizeof(avgGainString), "%.2f", jump->strafes[i].GetGain() / jump->strafes[i].GetStrafeDuration() / 64);
+		V_snprintf(gainEffString, sizeof(gainEffString), "%.0f%%", jump->strafes[i].GetGain() / jump->strafes[i].GetMaxGain() * 100.0f);
+		if (jump->strafes[i].arStats.available)
+		{
+			V_snprintf(angRatioString, sizeof(angRatioString), "%.2f/%.2f/%.2f", jump->strafes[i].arStats.average, jump->strafes[i].arStats.median, jump->strafes[i].arStats.max);
+		}
+		else
+		{
+			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
+		}
+		utils::PrintConsole(target->GetController(), "%i. %-7s%7s %-7s%7s %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
+			i,
+			syncString,
+			gainString,
+			externalGainString,
+			lossString,
+			externalLossString,
+			maxString,
+			durationString,
+			badAngleString,
+			overlapString,
+			deadAirString,
+			avgGainString,
+			gainEffString,
+			angRatioString);
+	}
+}
 void KZJumpstatsService::InvalidateJumpstats()
 {
 	if (this->jumps.Count() > 0)

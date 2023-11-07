@@ -72,20 +72,21 @@ public:
 	TurnState turnstate;
 
 private:
-	f32 duration;
+	f32 duration{};
 
-	f32 badAngles;
-	f32 overlap;
-	f32 deadAir;
+	f32 badAngles{};
+	f32 overlap{};
+	f32 deadAir{};
 
-	f32 syncDuration;
-	f32 width;
+	f32 syncDuration{};
+	f32 width{};
 
-	f32 gain;
-	f32 maxGain;
-	f32 loss;
-	f32 externalGain;
-	f32 externalLoss;
+	f32 gain{};
+	f32 maxGain{};
+	f32 loss{};
+	f32 externalGain{};
+	f32 externalLoss{};
+	f32 strafeMaxSpeed{};
 public:
 	void End();
 	f32 GetStrafeDuration() { return this->duration; };
@@ -102,12 +103,14 @@ public:
 
 	f32 GetSync() { return this->syncDuration / this->duration; };
 	f32 GetSyncDuration() { return this->syncDuration; };
+
+	f32 GetStrafeMaxSpeed() { return this->strafeMaxSpeed; };
 	// Calculate the ratio for each strafe.
 	// The ratio is 0 if the angle is perfect, closer to -100 if it's too slow
 	// Closer to 100 if it passes the optimal value.
 	// Note: if the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
 	// Returns false if there is no available stats.
-	internal int SortFloat(const f32 *a, const f32 *b) { return &a > &b; };
+	internal int SortFloat(const f32 *a, const f32 *b) { return *a > *b; };
 	struct AngleRatioStats
 	{
 		bool available;
@@ -118,6 +121,7 @@ public:
 	AngleRatioStats arStats;
 	
 	bool CalcAngleRatioStats();
+	void UpdateStrafeMaxSpeed(f32 speed) { this->strafeMaxSpeed = MAX(this->strafeMaxSpeed, speed); };
 };
 
 class Jump
@@ -127,7 +131,7 @@ private:
 
 	Vector takeoffOrigin;
 	Vector adjustedTakeoffOrigin;
-
+	Vector takeoffVelocity;
 	Vector landingOrigin;
 	Vector adjustedLandingOrigin;
 
@@ -166,11 +170,13 @@ public:
 
 	Strafe *GetCurrentStrafe();
 	JumpType GetJumpType() { return this->jumpType; };
-
+	KZPlayer *GetJumpPlayer() { return this->player; };
 	bool IsValid() { return this->valid && this->jumpType >= JumpType_LongJump && this->jumpType <= JumpType_Jumpbug; };
 	bool AlreadyEnded() { return this->ended; };
+
+	f32 GetTakeoffSpeed() { return this->takeoffVelocity.Length2D(); };
 	f32 GetOffset() { return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z; };
-	f32 GetDistance();
+	f32 GetDistance(bool useDistbugFix = true, bool disableAddDist = false);
 	f32 GetMaxSpeed() { return this->currentMaxSpeed; };
 	f32 GetSync() { return this->sync; };
 	f32 GetBadAngles() { return this->badAngles; };
@@ -219,4 +225,7 @@ public:
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
 	void ToggleJSAlways();
+
+	static_global void PrintJumpToChat(KZPlayer *target, Jump *jump);
+	static_global void PrintJumpToConsole(KZPlayer *target, Jump *jump);
 };
