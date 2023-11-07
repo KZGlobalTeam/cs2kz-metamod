@@ -1,4 +1,4 @@
-WIP
+WIP, project is **not ready** for release
 
 Most utils stuff is based on [CS2Fixes](https://github.com/Source2ZE/CS2Fixes/)
 
@@ -15,7 +15,7 @@ KZ-specific:
 	- [x] Extends MovementPlayer to KZPlayer
 	- [x] Add MovementAPI stuff with callback registering for KZ modules
 	- [x] Disable player collisions
-	- [ ] Player transparency
+	- [ ] Player transparency (not implemented, looks ugly)
 	- [x] Make players invincible
 - [ ] Gameplay
 	- [ ] Add MOD (requires finished CVar RE)
