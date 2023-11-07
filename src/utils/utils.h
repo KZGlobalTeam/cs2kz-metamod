@@ -13,7 +13,12 @@ typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end,
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
-typedef void EmitSoundFunc_t(u64 *unknown, IRecipientFilter *filter, CEntityIndex ent, EmitSound_t *params);
+// TODO: why?
+#ifdef _WIN32
+typedef void EmitSoundFunc_t(u64 &unknown, IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
+#else
+typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
+#endif
 
 
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
