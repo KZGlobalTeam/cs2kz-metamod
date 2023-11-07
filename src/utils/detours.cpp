@@ -14,7 +14,6 @@ CUtlVector<CDetourBase *> g_vecDetours;
 DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
-DECLARE_DETOUR(CCSGameRules_ctor, Detour_CCSGameRules_ctor, &modules::server);
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
 
 
@@ -47,7 +46,6 @@ void InitDetours()
 	INIT_DETOUR(Host_Say);
 	INIT_DETOUR(CBaseTrigger_StartTouch);
 	INIT_DETOUR(CBaseTrigger_EndTouch);
-	INIT_DETOUR(CCSGameRules_ctor);
 	INIT_DETOUR(RecvServerBrowserPacket);
 }
 
@@ -139,14 +137,6 @@ void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOt
 			}
 		}
 	}
-}
-
-void *FASTCALL Detour_CCSGameRules_ctor(void *this_)
-{
-	// this is basically where all the configs get executed
-	void *result = CCSGameRules_ctor(this_);
-	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
-	return result;
 }
 
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock)
