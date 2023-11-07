@@ -646,7 +646,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
 		jump->GetDistance(),
 		jumpTypeStr[jump->GetJumpType()]);
-	utils::PrintConsole(target->GetController(), "%s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f° Width | %.2f Height | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
+	utils::PrintConsole(target->GetController(), "%s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.2f Height | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
 		jump->GetJumpPlayer()->modeService->GetModeShortName(),
 		jump->strafes.Count(),
 		jump->GetSync() * 100.0f,
@@ -664,7 +664,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetOffset(),
 		jump->GetDuckTime(true),
 		jump->GetDuckTime(false));
-	utils::PrintConsole(target->GetController(), "#. %-12s %-12s     %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
+	utils::PrintConsole(target->GetController(), "#. %-12s %-13s      %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
 		"Sync","Gain","Loss","Max","Air","BA","OL","DA","AvgGain","GainEff","AngRatio(Avg/Med/Max)");
 	FOR_EACH_VEC(jump->strafes, i)
 	{
@@ -674,7 +674,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		V_snprintf(syncString, sizeof(syncString), "%.0f%%", jump->strafes[i].GetSync() * 100.0f);
 		V_snprintf(gainString, sizeof(gainString), "%.2f", jump->strafes[i].GetGain());
 		V_snprintf(externalGainString, sizeof(externalGainString), "(+%.2f)", fabs(jump->strafes[i].GetGain(true)));
-		V_snprintf(lossString, sizeof(lossString), "%.2f", fabs(jump->strafes[i].GetLoss()));
+		V_snprintf(lossString, sizeof(lossString), "-%.2f", fabs(jump->strafes[i].GetLoss()));
 		V_snprintf(externalLossString, sizeof(externalLossString), "(-%.2f)", fabs(jump->strafes[i].GetLoss(true)));
 		V_snprintf(maxString, sizeof(maxString), "%.2f", jump->strafes[i].GetStrafeMaxSpeed());
 		V_snprintf(durationString, sizeof(durationString), "%.3f", jump->strafes[i].GetStrafeDuration());
@@ -691,7 +691,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		{
 			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
 		}
-		utils::PrintConsole(target->GetController(), "%i. %-7s%7s %-7s%7s %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
+		utils::PrintConsole(target->GetController(), "%i. %-7s%7s %-8s%8s %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
 			i,
 			syncString,
 			gainString,
