@@ -79,3 +79,12 @@ ambuild
 ``` 
 
 Note: does not work with gcc!
+
+Linux (Docker w/ Valve SDK Image):
+```
+mkdir build
+docker build -t cs2kz_metamod_build .
+docker run --rm -v ./build:/app/build cs2kz_metamod_build
+```
+
+Copy the contents of `build/package/` to your server's `csgo/` directory.
