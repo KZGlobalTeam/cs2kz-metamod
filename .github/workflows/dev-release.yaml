@@ -17,14 +17,14 @@ jobs:
         run: |
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
     outputs:
-      short_sha: ${{ steps.vars.outputs.short_sha }}
+      version_string: ${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
 
   build:
     name: Build
     uses: ./.github/workflows/build.yaml
     needs: get-version-string
     with:
-      version: ${{ github.ref_name }}-${{ needs.get-version-string.outputs.short_sha }}
+      version: ${{ needs.get-version-string.outputs.version_string }}
 
   dev-release:
     name: Dev Release
