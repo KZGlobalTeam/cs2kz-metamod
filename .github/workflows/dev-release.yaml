@@ -15,23 +15,16 @@ jobs:
       - name: Set vars
         id: vars
         run: |
-          major=$(echo ${{ github.ref_name }} | cut -sd 'v' -f 2 | cut -sd '.' -f 1)
-          minor=$(echo ${{ github.ref_name }} | cut -sd 'v' -f 2 | cut -sd '.' -f 2)
-          patch=$(echo ${{ github.ref_name }} | cut -sd 'v' -f 2 | cut -sd '.' -f 3)
-          new_patch=$(expr $number + 1)
-          short_sha=$(git rev-parse --short HEAD)
-          version=$(v$major.$minor.$new_patch-dev+$short_sha)
-          echo $version
-          echo "version_string=$version" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
     outputs:
-      version_string: ${{ steps.vars.outputs.version_string }}
+      short_sha: ${{ steps.vars.outputs.short_sha }}
 
   build:
     name: Build
-    needs: get-version-string
     uses: ./.github/workflows/build.yaml
+    needs: get-version-string
     with:
-      version: ${{ needs.get-version-string.outputs.version_string }}
+      version: ${{ github.ref_name }}-${{ needs.get-version-string.outputs.short_sha }}
 
   dev-release:
     name: Dev Release
