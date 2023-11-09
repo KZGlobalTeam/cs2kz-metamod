@@ -28,7 +28,7 @@ jobs:
     needs: get-version-string
     uses: ./.github/workflows/build.yaml
     with:
-      version: "${{ needs.get-version-string.outputs.version_string }}"
+      version: ${{ needs.get-version-string.outputs.version_string }}
 
   dev-release:
     name: Dev Release
