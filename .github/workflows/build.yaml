@@ -7,9 +7,6 @@ on:
         required: false
         type: string
 
-env:
-  VERSION_STRING: ${{ inputs.version }}
-
 jobs:
   build-linux:
     name: Build Linux
@@ -25,10 +22,10 @@ jobs:
       - name: Make build directory
         run: mkdir ./build
 
-      - name: Build and save Docker image
+      - name: Build and run Docker image
         run: |
           docker build . --file Dockerfile --tag cs2kz-linux-builder
-          docker run -v ./build:/app/build -v ./.git:/app/.git -e VERSION_STRING="$VERSION_STRING" cs2kz-linux-builder
+          docker run -v ./build:/app/build -v ./.git:/app/.git -e VERSION_STRING="${{ inputs.version }}" cs2kz-linux-builder
 
       - name: Archive build
         uses: actions/upload-artifact@v3
@@ -75,7 +72,7 @@ jobs:
       - name: Run AMBuild
         working-directory: build
         run: |
-          set VERSION_STRING="$VERSION_STRING"
+          set VERSION_STRING="${{ inputs.version }}"
           ambuild
 
       - name: Archive build
