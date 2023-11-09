@@ -1,0 +1,13 @@
+name: Push check
+
+on:
+  push:
+    branches-ignore:
+      - dev
+    tags-ignore:
+      - v*
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
