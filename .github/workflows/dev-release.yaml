@@ -1,0 +1,72 @@
+name: Dev release
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  get-version-string:
+    name: Get version string
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set vars
+        id: vars
+        run: |
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+    outputs:
+      version_string: ${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
+
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
+    needs: get-version-string
+    with:
+      version: ${{ needs.get-version-string.outputs.version_string }}
+
+  dev-release:
+    name: Dev Release
+    runs-on: ubuntu-latest
+    needs:
+      - get-version-string
+      - build
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create folders
+        run: |
+          mkdir /home/runner/releases
+
+      - uses: actions/download-artifact@v3
+        with:
+          path: /home/runner/artifacts
+
+      - name: Archive Linux build
+        run: |
+          cd /home/runner/artifacts/cs2kz-linux
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}.tar.gz  .
+
+      - name: Archive Windows build
+        run: |
+          cd /home/runner/artifacts/cs2kz-windows
+          zip -r /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}.zip *
+
+      - name: Tag the repository
+        id: tag
+        run: |
+          git config --global user.email "${{ github.repository_owner_id }}+${{ github.repository_owner }}@users.noreply.github.com"
+          git config --global user.name "${{ github.repository_owner }}"
+          git tag -a ${{ needs.get-version-string.outputs.version_string }} -m "Published version ${{ needs.get-version-string.outputs.version_string }}" ${GITHUB_SHA}
+          git push origin ${{ needs.get-version-string.outputs.version_string }}
+
+      - name: Dev Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.get-version-string.outputs.version_string }}
+          files: |
+            /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}.tar.gz
+            /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}.zip
+          generate_release_notes: false
+          prerelease: true

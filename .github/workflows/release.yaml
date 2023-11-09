@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  main-branch-check:
+    name: Check if main branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Exit if not on main branch
+        if: endsWith(github.ref, 'master') == false
+        run: exit -1
+
+      - run: echo Release build triggered by ${{ github.ref_name }}
+
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
+    with:
+      version: ${{ github.ref_name }}
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          path: /home/runner/artifacts
+
+      - name: Create folders
+        run: |
+          mkdir /home/runner/releases
+
+      - name: Archive Linux build
+        run: |
+          cd /home/runner/artifacts/cs2kz-linux
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz  .
+
+      - name: Archive Windows build
+        run: |
+          cd /home/runner/artifacts/cs2kz-windows
+          zip -r /home/runner/releases/cs2kz-windows-${{ github.ref_name }}.zip *
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz
+            /home/runner/releases/cs2kz-windows-${{ github.ref_name }}.zip
+          generate_release_notes: true
+          prerelease: false

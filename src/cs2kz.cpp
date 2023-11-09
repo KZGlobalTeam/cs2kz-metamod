@@ -17,6 +17,11 @@
 #include "kz/quiet/kz_quiet.h"
 
 #include "tier0/memdbgon.h"
+
+#ifndef VERSION_STRING
+#define VERSION_STRING "v0.0.0"
+#endif
+
 KZPlugin g_KZPlugin;
 
 class GameSessionConfiguration_t { };
@@ -93,7 +98,7 @@ const char *KZPlugin::GetLicense()
 
 const char *KZPlugin::GetVersion()
 {
-	return "0.0.0.1";
+	return VERSION_STRING;
 }
 
 const char *KZPlugin::GetDate()
@@ -123,7 +128,7 @@ const char *KZPlugin::GetName()
 
 const char *KZPlugin::GetURL()
 {
-	return "https://cs2.kz/";
+	return "https://github.com/zer0k-z/cs2kz_metamod";
 }
 
 internal float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)

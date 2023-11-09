@@ -1,0 +1,29 @@
+name: Push check
+
+on:
+  push:
+    branches-ignore:
+      - dev
+    tags-ignore:
+      - v*
+
+jobs:
+  get-version-string:
+    name: Get version string
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set vars
+        id: vars
+        run: |
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+    outputs:
+      short_sha: ${{ steps.vars.outputs.short_sha }}
+
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
+    needs: get-version-string
+    with:
+      version: ${{ github.ref_name }}-${{ needs.get-version-string.outputs.short_sha }}
