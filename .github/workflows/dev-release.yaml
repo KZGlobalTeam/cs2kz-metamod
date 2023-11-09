@@ -21,14 +21,14 @@ jobs:
           echo $version
           echo "version_string=$version" >> $GITHUB_OUTPUT
     outputs:
-      version_string: "test"
+      version_string: "${{ steps.vars.outputs.version_string }}"
 
   build:
     name: Build
     needs: get-version-string
     uses: ./.github/workflows/build.yaml
     with:
-      version: ${{ needs.get-version-string.outputs.version_string }}
+      version: "test3233"
 
   dev-release:
     name: Dev Release
