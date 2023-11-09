@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
+      - v*
 
 jobs:
   main-branch-check:
@@ -16,7 +16,7 @@ jobs:
         if: endsWith(github.ref, 'master') == false
         run: exit -1
 
-      - run: "echo Release build triggered by ${{ github.ref_name }}"
+      - run: echo Release build triggered by ${{ github.ref_name }}
 
   build:
     name: Build

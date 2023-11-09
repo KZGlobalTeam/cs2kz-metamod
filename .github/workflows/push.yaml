@@ -19,7 +19,7 @@ jobs:
         run: |
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
     outputs:
-      short_sha: "${{ steps.vars.outputs.short_sha }}"
+      short_sha: ${{ steps.vars.outputs.short_sha }}
 
   build:
     name: Build
