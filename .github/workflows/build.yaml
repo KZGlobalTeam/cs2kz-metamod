@@ -4,10 +4,16 @@ on:
   workflow_call:
     inputs:
       version:
-        required: false
         type: string
 
 jobs:
+  test-input:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo ${{ inputs.version }}
+
   build-linux:
     name: Build Linux
     runs-on: ubuntu-latest

@@ -28,7 +28,7 @@ jobs:
     needs: get-version-string
     uses: ./.github/workflows/build.yaml
     with:
-      version: "test3233"
+      version: "${{ needs.get-version-string.outputs.version_string }}"
 
   dev-release:
     name: Dev Release
@@ -38,12 +38,6 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v3
-
-      - id: latest-release
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          repository: ${{ github.repository}}
-          excludes: prerelease, draft
 
       - name: Create folders
         run: |
