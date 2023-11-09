@@ -17,7 +17,9 @@ jobs:
           patch=$(echo ${{ github.ref_name }} | cut -sd 'v' -f 2 | cut -sd '.' -f 3)
           new_patch=$(expr $number + 1)
           short_sha=$(git rev-parse --short HEAD)
-          echo "version_string=v$major.$minor.$new_patch-dev+$short_sha" >> $GITHUB_OUTPUT
+          version=$(v$major.$minor.$new_patch-dev+$short_sha)
+          echo $version
+          echo "version_string=$version" >> $GITHUB_OUTPUT
     outputs:
       version_string: ${{ steps.vars.outputs.version_string }}
 
@@ -30,7 +32,6 @@ jobs:
 
   dev-release:
     name: Dev Release
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     needs:
       - get-version-string
