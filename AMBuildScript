@@ -1,13 +1,34 @@
 # vim: set sts=2 ts=8 sw=2 tw=99 et ft=python:
-import os, sys
+import os, subprocess
+
+def get_git_tag() -> str:
+  try:
+    git_cmd = ["git", "describe", "--tags", "--abbrev=0"]
+    result = subprocess.run(git_cmd, cwd="../", stdout=subprocess.PIPE)
+    git_tag_output = result.stdout.decode("utf-8").strip()
+    return git_tag_output
+  except:
+    print("Error while getting git tag.")
+    return "unknown"
 
 additional_libs = [
   # Path should be relative either to hl2sdk folder or to build folder
   #'path/to/lib/example.lib',
 ]
 
+version_string_var = os.environ.get('VERSION_STRING')
+
+if version_string_var is None or version_string_var == '':
+  version_string='VERSION_STRING="' + get_git_tag() + '"'
+  print("Got version from git tag: " + version_string)
+else:
+  version_string='VERSION_STRING="' + version_string_var + '"'
+  print("Got version from env var: " + version_string_var)
+
+print("Version string: " + version_string)
+
 additional_defines = [
-  #'EXAMPLE_DEFINE=2'
+  version_string
 ]
 
 additional_includes = [

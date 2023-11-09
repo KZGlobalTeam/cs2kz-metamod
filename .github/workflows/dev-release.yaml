@@ -1,0 +1,79 @@
+name: Dev release
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  get-version-string:
+    name: Get version string
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set vars
+        id: vars
+        run: |
+          major=$(echo ${{ github.ref_name }} | cut -sd 'v' -f 2 | cut -sd '.' -f 1)
+          minor=$(echo ${{ github.ref_name }} | cut -sd 'v' -f 2 | cut -sd '.' -f 2)
+          patch=$(echo ${{ github.ref_name }} | cut -sd 'v' -f 2 | cut -sd '.' -f 3)
+          new_patch=$(expr $number + 1)
+          short_sha=$(git rev-parse --short HEAD)
+          version=$(v$major.$minor.$new_patch-dev+$short_sha)
+          echo $version
+          echo "version_string=$version" >> $GITHUB_OUTPUT
+    outputs:
+      version_string: ${{ steps.vars.outputs.version_string }}
+
+  build:
+    name: Build
+    needs: get-version-string
+    uses: ./.github/workflows/build.yaml
+    with:
+      version: ${{ needs.get-version-string.outputs.version_string }}
+
+  dev-release:
+    name: Dev Release
+    runs-on: ubuntu-latest
+    needs:
+      - get-version-string
+      - build
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create folders
+        run: |
+          mkdir /home/runner/releases
+
+      - uses: actions/download-artifact@v3
+        with:
+          path: /home/runner/artifacts
+
+      - name: Archive Linux build
+        run: |
+          cd /home/runner/artifacts/cs2kz-linux
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}.tar.gz  .
+
+      - name: Archive Windows build
+        run: |
+          cd /home/runner/artifacts/cs2kz-windows
+          zip -r /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}.zip *
+
+      - name: Tag the repository
+        id: tag
+        run: |
+          git config --global user.email "${{ github.repository_owner_id }}+${{ github.repository_owner }}@users.noreply.github.com"
+          git config --global user.name "${{ github.repository_owner }}"
+          git tag -a ${{ needs.get-version-string.outputs.version_string }} -m "Published version ${{ needs.get-version-string.outputs.version_string }}" ${GITHUB_SHA}
+          git push origin ${{ needs.get-version-string.outputs.version_string }}
+
+      - name: Dev Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.get-version-string.outputs.version_string }}
+          files: |
+            /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}.tar.gz
+            /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}.zip
+          generate_release_notes: false
+          prerelease: true
