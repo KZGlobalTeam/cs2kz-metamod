@@ -8,15 +8,8 @@ on:
         required: true
 
 jobs:
-  test-input:
-    name: Test input
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test
-        run: echo ${{ inputs.version }}
-
   build-linux:
-    name: Build Linux
+    name: Linux
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -41,7 +34,7 @@ jobs:
           path: ./build/package
 
   build-windows:
-    name: Build Windows
+    name: Windows
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
