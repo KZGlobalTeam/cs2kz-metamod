@@ -16,27 +16,10 @@ jobs:
       - name: Clone submodules
         run: git submodule update --init --recursive
 
-      - name: Make image-cache directory
-        run: mkdir /home/runner/image-cache
-
-      - id: image-cache
-        uses: actions/cache@v3
-        with:
-          path: /home/runner/image-cache
-          key: image-cache
-
-      - name: Build and save Docker image
-        if: steps.image-cache.outputs.cache-hit != 'true'
+      - name: Build and run Docker image
         run: |
           docker build . --file Dockerfile --tag cs2kz-linux-builder
-          docker save cs2kz-linux-builder -o /home/runner/image-cache/cs2kz-linux-builder.tar
-
-      - name: Load Docker image
-        if: steps.image-cache.outputs.cache-hit == 'true'
-        run: docker load -i /home/runner/image-cache/cs2kz-linux-builder.tar
-
-      - name: Run the Docker image
-        run: docker run -v ./build:/app/build cs2kz-linux-builder
+          docker run -v ./build:/app/build cs2kz-linux-builder
 
       - name: Archive build
         uses: actions/upload-artifact@v3
