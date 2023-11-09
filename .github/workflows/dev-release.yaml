@@ -21,7 +21,7 @@ jobs:
           echo $version
           echo "version_string=$version" >> $GITHUB_OUTPUT
     outputs:
-      version_string: ${{ steps.vars.outputs.version_string }}
+      version_string: "test"
 
   build:
     name: Build
