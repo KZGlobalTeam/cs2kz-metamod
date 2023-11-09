@@ -65,6 +65,13 @@ internal SCMD_CALLBACK(Command_KzJSAlways)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzRestart)
+{
+	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
+	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
+	return MRES_SUPERCEDE;
+}
+
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
@@ -78,6 +85,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_nextcp",     Command_KzNextcp);
 	scmd::RegisterCmd("kz_hide",	   Command_KzHide);
 	scmd::RegisterCmd("kz_jsalways",   Command_KzJSAlways);
+	scmd::RegisterCmd("kz_respawn",    Command_KzRestart);
 }
 
 void KZ::misc::OnClientPutInServer(CPlayerSlot slot)

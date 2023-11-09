@@ -39,6 +39,8 @@ namespace offsets
 	inline constexpr int Teleport = 148;
 	inline constexpr int SetTransmit = 86;
 	inline constexpr int GetEventManager = 91;
+	// "Player.Respawn"
+	inline constexpr int Respawn = 325;
 #else
 	inline constexpr int GameEntitySystem = 0x50;
 	inline constexpr int IsEntityPawn = 151;
@@ -48,6 +50,7 @@ namespace offsets
 	inline constexpr int Teleport = 147;
 	inline constexpr int SetTransmit = 85;
 	inline constexpr int GetEventManager = 91;
+	inline constexpr int Respawn = 327;
 #endif
 }
 
