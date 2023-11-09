@@ -7,6 +7,7 @@ on:
 
 jobs:
   main-branch-check:
+    name: Check if main branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
