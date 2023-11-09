@@ -188,6 +188,9 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 {
-	META_CONPRINTF("%s fired!\n", event->GetName());
+	if (event)
+	{
+		META_CONPRINTF("%s fired!\n", event->GetName());
+	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
 }
