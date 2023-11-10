@@ -9,6 +9,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
 
+#include "protobuf/generated/usermessages.pb.h"
 internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
@@ -69,6 +70,12 @@ internal SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
 	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
+	//INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
+
+	//CUserMessageTextMsg *msg = new CUserMessageTextMsg;
+	//msg->set_dest(target);
+	//msg->add_param("Test message");
+
 	return MRES_SUPERCEDE;
 }
 

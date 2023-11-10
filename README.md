@@ -1,6 +1,6 @@
 WIP
 
-Most utils stuff is based on [CS2Fixes](https://github.com/Source2ZE/CS2Fixes/)
+Protobuf compiler and most utils stuff is based on [CS2Fixes](https://github.com/Source2ZE/CS2Fixes/)
 
 TODO list: (italic means I'm working on it)
 

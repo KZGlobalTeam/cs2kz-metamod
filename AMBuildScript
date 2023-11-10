@@ -19,7 +19,7 @@ additional_libs = [
 version_string_var = os.environ.get('VERSION_STRING')
 
 if version_string_var is None or version_string_var == '':
-  version_string='VERSION_STRING="' + get_git_tag() + '"'
+  version_string='VERSION_STRING=' + get_git_tag()
   print("Got version from git tag: " + version_string)
 else:
   version_string='VERSION_STRING="' + version_string_var + '"'
