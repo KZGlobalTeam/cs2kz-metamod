@@ -1,0 +1,20 @@
+name: protect-master
+
+on:
+  pull_request_target:
+    branches:
+      - master
+
+jobs:
+  protect-master-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        if: ${{ github.repository != 'zer0k-z/cs2kz_metamod' }}
+        with:
+          script: core.setFailed('Can not merge into master from outside of zer0k-z/cs2kz_metamod!')
+
+      - uses: actions/github-script@v6
+        if: ${{ github.head_ref != 'dev' }}
+        with:
+          script: core.setFailed('Can not merge into master from branch other than dev!')
