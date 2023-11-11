@@ -13,7 +13,7 @@ typedef enum : unsigned short
 	k_EIPTypeV6,
 } ipadrtype_t;
 
-struct netadr_t
+struct netadr_t_s2
 {
 	union {
 
@@ -50,6 +50,6 @@ struct RecvPktInfo_t
 	// FIXME - coming soon!
 	//SteamNetworkingMicroseconds m_usecRecvMin; // Earliest possible time when the packet might have actually arrived
 	//SteamNetworkingMicroseconds m_usecRecvMax; // Latest possible time when the packet might have actually arrived
-	netadr_t m_adrFrom;
+	netadr_t_s2 m_adrFrom;
 	void *m_pSock; //IRawUDPSocket
 };

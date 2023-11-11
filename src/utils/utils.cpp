@@ -4,6 +4,7 @@
 #include "strtools.h"
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
+#include "igameeventsystem.h"
 #include "recipientfilters.h"
 
 #include "module.h"
@@ -44,6 +45,8 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pSchemaSystem, CSchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
+	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
+	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
 	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, offsets::GetEventManager, interfaces::pServer) - 8);
 	
 	return true;

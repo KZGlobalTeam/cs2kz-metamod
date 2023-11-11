@@ -1,15 +1,18 @@
+#include "protobuf/generated/usermessages.pb.h"
+
 #include "common.h"
 #include "utils/utils.h"
 #include "kz.h"
 #include "utils/simplecmds.h"
-
-#include "tier0/memdbgon.h"
+#include "public/networksystem/inetworkmessages.h"
 
 #include "checkpoint/kz_checkpoint.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
 
-#include "protobuf/generated/usermessages.pb.h"
+#include "tier0/memdbgon.h"
+#include <utils/recipientfilters.h>
+
 internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
@@ -70,12 +73,14 @@ internal SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
 	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
-	//INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
+	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
 
-	//CUserMessageTextMsg *msg = new CUserMessageTextMsg;
-	//msg->set_dest(target);
-	//msg->add_param("Test message");
-
+	CUserMessageTextMsg *msg = new CUserMessageTextMsg;
+	msg->set_dest(controller->entindex());
+	msg->add_param("Test message");
+	int slot = utils::GetEntityPlayerSlot(controller).Get();
+	CSingleRecipientFilter filter(slot);
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	return MRES_SUPERCEDE;
 }
 

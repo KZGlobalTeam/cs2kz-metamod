@@ -17,6 +17,8 @@ for sdk_name in MMSPlugin.sdks:
 
     if binary.compiler.family == 'gcc' or binary.compiler.family == 'clang':
       binary.compiler.cxxflags += ['--std=c++17']
+      binary.compiler.linkflags += ['-lstdc++']
+      binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
     elif binary.compiler.family == 'msvc':
       binary.compiler.cxxflags += ['/std:c++17']
 
@@ -28,7 +30,7 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
-      os.path.join(builder.sourcePath, 'vendor', 'subhook'),
+      os.path.join(builder.sourcePath, 'vendor', 'protobuf-3.21.8', 'src'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
     ]
 
@@ -36,6 +38,7 @@ for sdk_name in MMSPlugin.sdks:
       binary.compiler.postlink += [
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
+        os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.a'),
         os.path.join(sdk.path, 'lib', 'linux64', 'mathlib.a'),
       ] 
       binary.sources += ['src/utils/plat_linux.cpp']
@@ -44,6 +47,7 @@ for sdk_name in MMSPlugin.sdks:
         os.path.join('psapi.lib'),
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
         os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
+        os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.lib'),
       ]
       binary.sources += ['src/utils/plat_win.cpp']
 
@@ -79,7 +83,7 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_manager.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_normal.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp')
+      os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
     ]
 
     if sdk_name in ['cs2']:
