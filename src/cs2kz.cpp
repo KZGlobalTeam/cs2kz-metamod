@@ -1,6 +1,3 @@
-
-#include "protobuf/generated/usermessages.pb.h"
-
 #include "cs2kz.h"
 
 #include "interface.h"

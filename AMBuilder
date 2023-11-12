@@ -41,7 +41,10 @@ for sdk_name in MMSPlugin.sdks:
         os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.a'),
         os.path.join(sdk.path, 'lib', 'linux64', 'mathlib.a'),
       ] 
-      binary.sources += ['src/utils/plat_linux.cpp']
+      binary.sources += [
+        'src/utils/plat_linux.cpp',
+        os.path.join(sdk.path, 'public', 'tier0', 'memoverride.cpp')
+        ]
     elif binary.compiler.target.platform == 'windows':
       binary.compiler.postlink += [
         os.path.join('psapi.lib'),
@@ -92,7 +95,6 @@ for sdk_name in MMSPlugin.sdks:
     if sdk_name in ['cs2']:
       binary.sources += [
       os.path.join(sdk.path, 'tier1', 'convar.cpp'),
-      os.path.join(sdk.path, 'public', 'tier0', 'memoverride.cpp'),
     ]
 
     nodes = builder.Add(binary)

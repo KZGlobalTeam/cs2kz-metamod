@@ -28,9 +28,7 @@ public:
 
 	int GetRecipientCount(void) const override { return m_Recipients.Count(); }
 
-	CPlayerSlot GetRecipientIndex(int slot) const override {
-		return CPlayerSlot(m_Recipients[slot]);
-	}
+	CPlayerSlot GetRecipientIndex(int slot) const override { return CPlayerSlot(m_Recipients[slot]); }
 
 private:
 	bool m_bReliable;
