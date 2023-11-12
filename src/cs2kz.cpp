@@ -18,9 +18,7 @@
 
 #include "tier0/memdbgon.h"
 
-#ifndef VERSION_STRING
-#define VERSION_STRING "v0.0.0"
-#endif
+#include "version.h"
 
 KZPlugin g_KZPlugin;
 

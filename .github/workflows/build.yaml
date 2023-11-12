@@ -22,10 +22,14 @@ jobs:
       - name: Make build directory
         run: mkdir ./build
 
+      - name: Update version header
+        run: |
+          echo "#define VERSION_STRING \"${{ inputs.version }}\"" > ./src/version.h
+
       - name: Build and run Docker image
         run: |
           docker build . --file Dockerfile --tag cs2kz-linux-builder
-          docker run -v ./build:/app/build -v ./.git:/app/.git -e VERSION_STRING="${{ inputs.version }}" cs2kz-linux-builder
+          docker run -v ./build:/app/build -v ./.git:/app/.git cs2kz-linux-builder
 
       - name: Archive build
         uses: actions/upload-artifact@v3
@@ -69,11 +73,13 @@ jobs:
         working-directory: build
         run: python ../configure.py --hl2sdk-root "../"
 
+      - name: Update version header
+        run: |
+          echo "#define VERSION_STRING \"${{ inputs.version }}\"" > ./src/version.h
+
       - name: Run AMBuild
         working-directory: build
-        run: |
-          set VERSION_STRING="${{ inputs.version }}"
-          ambuild
+        run: ambuild
 
       - name: Archive build
         uses: actions/upload-artifact@v3
