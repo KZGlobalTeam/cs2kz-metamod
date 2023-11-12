@@ -18,7 +18,7 @@ KZ-specific:
 	- [ ] Player transparency (not implemented, looks ugly)
 	- [x] Make players invincible
 - [ ] Gameplay
-	- [ ] Add MOD (requires finished CVar RE)
+	- [ ] Add MOD (requires protobuf stuff)
 		- [ ] Buff jump height to 128t values
 		- [ ] Interpolate 64t AA to 128
 		- [ ] Disable subticks (maybe)
