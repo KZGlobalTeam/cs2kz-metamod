@@ -84,6 +84,9 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_normal.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'usermessages.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'networkbasetypes.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'network_connection.pb.cc'),
     ]
 
     if sdk_name in ['cs2']:
