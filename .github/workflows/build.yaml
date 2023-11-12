@@ -74,6 +74,7 @@ jobs:
         run: python ../configure.py --hl2sdk-root "../"
 
       - name: Update version header
+        shell: bash
         run: |
           echo "#define VERSION_STRING \"${{ inputs.version }}\"" > ./src/version.h
 
