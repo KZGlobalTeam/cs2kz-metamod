@@ -73,14 +73,7 @@ internal SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
 	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
-	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
-
-	CUserMessageTextMsg *msg = new CUserMessageTextMsg;
-	msg->set_dest(controller->entindex());
-	msg->add_param("Test message");
-	int slot = utils::GetEntityPlayerSlot(controller).Get();
-	CSingleRecipientFilter filter(slot);
-	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	utils::SendConVarValue(utils::GetEntityPlayerSlot(controller), nullptr, "true");
 	return MRES_SUPERCEDE;
 }
 

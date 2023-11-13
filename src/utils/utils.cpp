@@ -1,3 +1,4 @@
+#include "protobuf/generated/networkbasetypes.pb.h"
 
 #include "utils.h"
 #include "convar.h"
@@ -6,6 +7,7 @@
 #include "interfaces/interfaces.h"
 #include "igameeventsystem.h"
 #include "recipientfilters.h"
+#include "public/networksystem/inetworkmessages.h"
 
 #include "module.h"
 #include "detours.h"
@@ -279,4 +281,20 @@ f32 utils::NormalizeDeg(f32 a)
 f32 utils::GetAngleDifference(const f32 x, const f32 y, const f32 c)
 {
 	return fmod(fabs(x - y) + c, 2 * c) - c;
+}
+
+void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
+{
+	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	CNETMsg_SetConVar *msg = new CNETMsg_SetConVar;
+	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+	cvar->set_name(conVar->m_pszName);
+	cvar->set_value(value);
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+}
+
+void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, int size)
+{
+	// TODO
 }

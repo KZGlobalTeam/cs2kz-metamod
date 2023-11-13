@@ -78,4 +78,6 @@ namespace utils
 	void CPrintChat(CBaseEntity *entity, const char *format, ...);
 	void CPrintChatAll(const char *format, ...);
 
+	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
+	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, int size);
 }
