@@ -159,7 +159,7 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock)
 
 void FASTCALL Detour_Cbpp_ProcessUsercmds(CBasePlayerPawn *this_, CUserCmdBaseHost *cmds, int numcmds, bool paused)
 {
-#if 1
+#if 0
 	// 1st desubtick method
 	for (i32 x = 0; x < numcmds; x++)
     {
