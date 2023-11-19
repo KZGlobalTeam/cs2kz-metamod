@@ -10,6 +10,10 @@ public:
 		m_bReliable(bReliable), m_bInitMessage(bInitMessage) 
 	{
 		m_Recipients.RemoveAll();
+		if (!g_pEntitySystem)
+		{
+			return;
+		}
 		for (int i = 0; i <= utils::GetServerGlobals()->maxClients; i++)
 		{
 			CBaseEntity *ent = g_pEntitySystem->GetBaseEntity(CEntityIndex(i));
