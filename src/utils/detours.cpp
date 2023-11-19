@@ -1,3 +1,6 @@
+
+#include "usercmd.h"
+
 #include "common.h"
 #include "utils.h"
 #include "cdetour.h"
@@ -15,6 +18,7 @@ DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
+DECLARE_DETOUR(Cbpp_ProcessUsercmds, Detour_Cbpp_ProcessUsercmds, &modules::server);
 
 
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
@@ -47,6 +51,7 @@ void InitDetours()
 	INIT_DETOUR(CBaseTrigger_StartTouch);
 	INIT_DETOUR(CBaseTrigger_EndTouch);
 	INIT_DETOUR(RecvServerBrowserPacket);
+	INIT_DETOUR(Cbpp_ProcessUsercmds);
 }
 
 void FlushAllDetours()
@@ -150,4 +155,27 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock)
 	// 	info.m_adrFrom.m_IPv4Bytes.b1, info.m_adrFrom.m_IPv4Bytes.b2, info.m_adrFrom.m_IPv4Bytes.b3, info.m_adrFrom.m_IPv4Bytes.b4, 
 	// 	info.m_adrFrom.m_usPort, retValue, (char*)info.m_pPkt);
 	return retValue;
+}
+
+void FASTCALL Detour_Cbpp_ProcessUsercmds(CBasePlayerPawn *this_, CUserCmdBaseHost *cmds, int numcmds, bool paused)
+{
+#if 1
+	// 1st desubtick method
+	for (i32 x = 0; x < numcmds; x++)
+    {
+        int subtick_moves_count = cmds[x].cmd.base().subtick_moves().size();
+        
+        for (i32 i = 0; i < subtick_moves_count; i++)
+        {
+            cmds[x].cmd.mutable_base()->mutable_subtick_moves(i)->set_when(0);
+        }
+    }
+#else
+	// 2nd desubtick method
+	for (i32 i = 0; i < numcmds; i++)
+	{
+		cmds[i].cmd.mutable_base()->mutable_subtick_moves()->Clear();
+	}
+#endif
+	Cbpp_ProcessUsercmds(this_, cmds, numcmds, paused);
 }

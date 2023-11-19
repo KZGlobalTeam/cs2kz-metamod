@@ -90,6 +90,14 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'protobuf', 'generated', 'usermessages.pb.cc'),
       os.path.join(builder.sourcePath, 'protobuf', 'generated', 'networkbasetypes.pb.cc'),
       os.path.join(builder.sourcePath, 'protobuf', 'generated', 'network_connection.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'cstrike15_usermessages.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'cstrike15_gcmessages.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'econ_gcmessages.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'engine_gcmessages.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'gcsdk_gcmessages.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'steammessages.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'usercmd.pb.cc'),
+      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'cs_usercmd.pb.cc'),
     ]
 
     if sdk_name in ['cs2']:

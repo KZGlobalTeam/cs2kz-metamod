@@ -18,6 +18,10 @@ extern CDetour<decltype(Detour_CBaseTrigger_EndTouch)> CBaseTrigger_EndTouch;
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock);
 extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket;
 
+class CUserCmdBaseHost;
+void FASTCALL Detour_Cbpp_ProcessUsercmds(CBasePlayerPawn *this_, CUserCmdBaseHost *cmds, int numcmds, bool paused);
+extern CDetour<decltype(Detour_Cbpp_ProcessUsercmds)> Cbpp_ProcessUsercmds;
+
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);
 DECLARE_MOVEMENT_EXTERN_DETOUR(PlayerMoveNew);
