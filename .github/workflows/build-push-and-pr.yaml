@@ -24,7 +24,7 @@ jobs:
 
   build-push:
     if: ${{ github.event_name == 'push' }}
-    name: Build
+    name: Build Push
     uses: ./.github/workflows/build.yaml
     needs: get-version-string
     with:
