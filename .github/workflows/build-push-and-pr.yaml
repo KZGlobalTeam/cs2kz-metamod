@@ -1,4 +1,4 @@
-name: Push check
+name: Build pushes and pull requests
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - dev
     tags-ignore:
       - v*
+  pull_request:
 
 jobs:
   get-version-string:
@@ -21,9 +22,18 @@ jobs:
     outputs:
       short_sha: ${{ steps.vars.outputs.short_sha }}
 
-  build:
+  build-push:
+    if: ${{ github.event_name == 'push' }}
     name: Build
     uses: ./.github/workflows/build.yaml
     needs: get-version-string
     with:
       version: ${{ github.ref_name }}-${{ needs.get-version-string.outputs.short_sha }}
+
+  build-pr:
+    if: ${{ github.event_name == 'pull_request' }}
+    name: Build PR
+    uses: ./.github/workflows/build.yaml
+    needs: get-version-string
+    with:
+      version: pr-${{ github.ref_name }}-${{ needs.get-version-string.outputs.short_sha }}
