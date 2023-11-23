@@ -80,17 +80,17 @@ internal SCMD_CALLBACK(Command_KzRestart)
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_noclip",     Command_KzNoclip);
-	scmd::RegisterCmd("kz_hidelegs",   Command_KzHidelegs);
-	scmd::RegisterCmd("kz_checkpoint", Command_KzCheckpoint);
-	scmd::RegisterCmd("kz_cp",         Command_KzCheckpoint);
-	scmd::RegisterCmd("kz_teleport",   Command_KzTeleport);
-	scmd::RegisterCmd("kz_tp",         Command_KzTeleport);
-	scmd::RegisterCmd("kz_prevcp",     Command_KzPrevcp);
-	scmd::RegisterCmd("kz_nextcp",     Command_KzNextcp);
-	scmd::RegisterCmd("kz_hide",	   Command_KzHide);
-	scmd::RegisterCmd("kz_jsalways",   Command_KzJSAlways);
-	scmd::RegisterCmd("kz_respawn",    Command_KzRestart);
+	scmd::RegisterCmd("kz_noclip",     Command_KzNoclip,     "Toggle noclip.");
+	scmd::RegisterCmd("kz_hidelegs",   Command_KzHidelegs,   "Hide your legs in first person.");
+	scmd::RegisterCmd("kz_checkpoint", Command_KzCheckpoint, "Make a checkpoint on ground or on a ladder.");
+	scmd::RegisterCmd("kz_cp",         Command_KzCheckpoint, "Make a checkpoint on ground or on a ladder.");
+	scmd::RegisterCmd("kz_teleport",   Command_KzTeleport,   "Teleport to the current checkpoint.");
+	scmd::RegisterCmd("kz_tp",         Command_KzTeleport,   "Teleport to the current checkpoint.");
+	scmd::RegisterCmd("kz_prevcp",     Command_KzPrevcp,     "Teleport to the last checkpoint.");
+	scmd::RegisterCmd("kz_nextcp",     Command_KzNextcp,     "Teleport to the next checkpoint.");
+	scmd::RegisterCmd("kz_hide",	   Command_KzHide,       "Hide other players.");
+	scmd::RegisterCmd("kz_jsalways",   Command_KzJSAlways,   "Print jumpstats for invalid jumps.");
+	scmd::RegisterCmd("kz_respawn",    Command_KzRestart,    "Respawn.");
 }
 
 void KZ::misc::OnClientPutInServer(CPlayerSlot slot)

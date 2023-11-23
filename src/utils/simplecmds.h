@@ -13,7 +13,7 @@
 namespace scmd
 {
 	typedef SCMD_CALLBACK(Callback_t);
-	bool RegisterCmd(const char *name, Callback_t *callback);
+	bool RegisterCmd(const char *name, Callback_t *callback, const char *description = nullptr);
 	
 	META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
 	META_RES OnHost_Say(CCSPlayerController *controller, const CCommand &args);
