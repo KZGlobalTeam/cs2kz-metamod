@@ -299,6 +299,7 @@ void MovementPlayer::Reset()
 	this->hitPerf = false;
 	this->jumped = false;
 	this->takeoffFromLadder = false;
+	this->lastValidLadderOrigin.Init();
 	this->timerIsRunning = false;
 	this->takeoffOrigin.Init();
 	this->takeoffVelocity.Init();

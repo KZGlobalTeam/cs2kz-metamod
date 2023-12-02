@@ -400,7 +400,38 @@ void Jump::End()
 	this->gainEff = gain / maxGain;
 	// If there's no air time at all then that was definitely not a jump.
 	// Happens when player touch the ground from a ladder.
-	if (jumpDuration == 0.0f) this->jumpType = JumpType_FullInvalid;
+	if (jumpDuration == 0.0f)
+	{
+		this->jumpType = JumpType_FullInvalid;
+	}
+	else
+	{
+		// Make sure the airtime is valid.
+		switch (this->jumpType)
+		{
+			case JumpType_LadderJump:
+			{
+				if (jumpDuration > 1.04)
+				{
+					this->jumpType = JumpType_Invalid;
+				}
+				break;
+			}
+			case JumpType_LongJump:
+			case JumpType_Bhop:
+			case JumpType_MultiBhop:
+			case JumpType_WeirdJump:
+			case JumpType_Ladderhop:
+			case JumpType_Jumpbug:
+			{
+				if (jumpDuration > 0.8)
+				{
+					this->jumpType = JumpType_Invalid;
+				}
+				break;
+			}
+		}
+	}
 }
 
 
@@ -610,6 +641,10 @@ void KZJumpstatsService::EndJump()
 		if (jump->AlreadyEnded()) return;
 		jump->End();
 		if (jump->GetJumpType() == JumpType_FullInvalid) return;
+		if (jump->GetJumpType() == JumpType_LadderJump)
+		{
+			utils::PrintConsole(this->player->GetController(), "%f -> %f (adjusted %f -> %f)", this->player->takeoffOrigin.z, this->player->landingOrigin.z, this->player->takeoffGroundOrigin.z, this->player->landingOriginActual.z);
+		}
 		if ((jump->GetOffset() > -JS_OFFSET_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
 			KZJumpstatsService::PrintJumpToChat(this->player, jump);
@@ -737,5 +772,5 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 void KZJumpstatsService::ToggleJSAlways()
 {
 	this->jsAlways = !this->jsAlways;
-	utils::PrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
+	utils::CPrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
 }

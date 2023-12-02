@@ -109,7 +109,9 @@ public:
 	bool hitPerf{};
 	bool jumped{};
 	bool takeoffFromLadder{};
+	Vector lastValidLadderOrigin;
 	bool timerIsRunning{};
+
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
 	f32 takeoffTime{};
