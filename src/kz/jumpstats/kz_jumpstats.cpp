@@ -658,10 +658,6 @@ void KZJumpstatsService::EndJump()
 		if (jump->AlreadyEnded()) return;
 		jump->End();
 		if (jump->GetJumpType() == JumpType_FullInvalid) return;
-		if (jump->GetJumpType() == JumpType_LadderJump)
-		{
-			utils::PrintConsole(this->player->GetController(), "%f -> %f (adjusted %f -> %f)", this->player->takeoffOrigin.z, this->player->landingOrigin.z, this->player->takeoffGroundOrigin.z, this->player->landingOriginActual.z);
-		}
 		if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
 			KZJumpstatsService::PrintJumpToChat(this->player, jump);
