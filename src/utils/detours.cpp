@@ -15,7 +15,7 @@ DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
-
+DECLARE_DETOUR(CCSPP_Teleport, Detour_CCSPP_Teleport, &modules::server);
 
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_DETOUR(ProcessMovement);
@@ -150,4 +150,15 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock)
 	// 	info.m_adrFrom.m_IPv4Bytes.b1, info.m_adrFrom.m_IPv4Bytes.b2, info.m_adrFrom.m_IPv4Bytes.b3, info.m_adrFrom.m_IPv4Bytes.b4, 
 	// 	info.m_adrFrom.m_usPort, retValue, (char*)info.m_pPkt);
 	return retValue;
+}
+
+void Detour_CCSPP_Teleport(CCSPlayerPawn *this_, const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
+{
+	// Just to be sure.
+	if (utils::IsEntityPawn(this_))
+	{
+		MovementPlayer *player = g_pPlayerManager->ToPlayer(this_);
+		player->OnTeleport(newPosition, newAngles, newVelocity);
+	}
+	CCSPP_Teleport(this_, newPosition, newAngles, newVelocity);
 }

@@ -170,7 +170,10 @@ void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveDat
 
 void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnTryPlayerMovePre(pFirstDest, pFirstTrace);
 	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace);
+	player->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
 }
 
 void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms, CMoveData *mv, bool bStayOnGround)
