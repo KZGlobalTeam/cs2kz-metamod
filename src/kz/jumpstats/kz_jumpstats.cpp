@@ -645,7 +645,6 @@ void KZJumpstatsService::UpdateJump()
 	this->DetectEdgebug();
 	this->DetectInvalidCollisions();
 	this->DetectInvalidGains();
-	// TODO: Teleport detection
 }
 
 void KZJumpstatsService::EndJump()
