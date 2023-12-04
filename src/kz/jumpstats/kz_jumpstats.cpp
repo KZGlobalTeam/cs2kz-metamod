@@ -524,7 +524,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	}
 	if (this->player->duckBugged)
 	{
-		if (this->player->jumpstatsService->jumps.Tail().GetOffset() < JS_EPSILON && this->player->jumpstatsService->jumps.Tail().GetJumpType() == JumpType_LongJump)
+		if (this->jumps.Tail().GetOffset() < JS_EPSILON && this->jumps.Tail().GetJumpType() == JumpType_LongJump)
 		{
 			return JumpType_Jumpbug;
 		}
@@ -551,7 +551,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 			}
 		}
 		// Check for weird jump
-		if (this->player->jumpstatsService->jumps.Tail().GetJumpType() == JumpType_Fall &&
+		if (this->jumps.Tail().GetJumpType() == JumpType_Fall &&
 			this->ValidWeirdJumpDropDistance())
 		{
 			return JumpType_WeirdJump;

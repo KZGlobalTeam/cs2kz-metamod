@@ -212,6 +212,7 @@ public:
 		this->jumps = CUtlVector<Jump>(1, 0);
 	}
 	// Jumpstats
+private:
 	CUtlVector<Jump> jumps;
 	bool jsAlways{};
 	f32 lastJumpButtonTime{};
@@ -221,6 +222,7 @@ public:
 	f32 lastMovementProcessedTime{};
 	f32 tpmPreSpeed{};
 
+public:
 	void OnStartProcessMovement();
 	void OnChangeMoveType(MoveType_t oldMoveType);
 	void OnTryPlayerMovePre();
