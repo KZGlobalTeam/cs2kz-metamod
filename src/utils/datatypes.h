@@ -35,7 +35,7 @@ class CCSPlayerPawn;
 struct TransmitInfo
 {
 	CBitVec<16384> *m_pTransmitEdict;
-	uint8_t unknown[552];
+	uint8 unknown[552];
 	CPlayerSlot m_nClientEntityIndex;
 };
 
@@ -88,7 +88,7 @@ enum InputBitMask_t : uint64_t
 };
 
 // used with EmitSound_t
-enum gender_t : uint8_t
+enum gender_t : uint8
 {
 	GENDER_NONE = 0x0,
 	GENDER_MALE = 0x1,
@@ -159,22 +159,23 @@ class CBaseTrigger : public CBaseEntity2
 
 struct trace_t_s2
 {
-	uint8_t traceunknown0[8];   // 0
+	uint8 traceunknown0[8];   // 0
 	CBaseEntity *m_pEnt;        // 8
-	uint8_t traceunknown1[24];  // 16
+	uint8 traceunknown1[24];  // 16
 	int contents;               // 40
-	uint8_t traceunknown2[4];   // 44 (this is probably just alignment padding)
+	uint8 traceunknown2[4];   // 44 (this is probably just alignment padding)
 	__m128i traceunknown3;      // 48
 	__m128i traceunknown4;      // 64
-	uint8_t traceunknown5[40];
+	uint8 traceunknown5[40];
 	Vector startpos;
 	Vector endpos;
 	Vector planeNormal;
 	Vector traceunknown6;
-	uint8_t traceunknown7[4];
+	uint8 traceunknown7[4];
 	float fraction;
-	uint8_t traceunknown8[7];
+	uint8 traceunknown8[7];
 	bool startsolid;
+	uint8 traceunknown9[9];
 };
 
 struct touchlist_t {
@@ -185,7 +186,7 @@ struct touchlist_t {
 class CTraceFilterPlayerMovementCS
 {
 public:
-	uint8_t tfunk[64];
+	uint8 tfunk[64];
 };
 
 struct vis_info_t
@@ -199,5 +200,14 @@ struct vis_info_t
 struct CCheckTransmitInfoS2
 {
 	CBitVec<16384> *m_pTransmitEdict;
-	uint8_t unk[1000];
+	uint8 unk[1000];
+};
+
+struct Ray_t_s2
+{
+	Vector start;
+};
+
+class CTraceFilterKZ
+{
 };

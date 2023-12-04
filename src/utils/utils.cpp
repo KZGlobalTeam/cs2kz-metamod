@@ -50,7 +50,7 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
 	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, offsets::GetEventManager, interfaces::pServer) - 8);
-	
+	interfaces::pPhysicsQuery = (void *)
 	return true;
 }
 
@@ -296,5 +296,14 @@ void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 
 void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, int size)
 {
-	// TODO
+	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	CNETMsg_SetConVar *msg = new CNETMsg_SetConVar;
+	for (u32 i = 0; i < size; i++)
+	{
+		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+		cvar->set_name(conVar[i]->m_pszName);
+		cvar->set_value(value[i]);
+	}
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 }

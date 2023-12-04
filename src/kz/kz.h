@@ -41,6 +41,8 @@ public:
 	}
 	void Init();
 	virtual void Reset() override;
+	
+	virtual f32 GetPlayerMaxSpeed() override;
 	virtual void OnStartProcessMovement() override;
 	virtual void OnStopProcessMovement() override;
 

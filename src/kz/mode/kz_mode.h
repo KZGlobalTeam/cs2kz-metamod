@@ -1,6 +1,7 @@
 #pragma once
 #include "../kz.h"
 #include "../jumpstats/kz_jumpstats.h"
+
 class KZPlayer;
 
 class KZModeService : public KZBaseService
@@ -15,6 +16,7 @@ public:
 
 namespace KZ::mode
 {
+	void InitModeCvars();
 	void InitModeService(KZPlayer *player);
 
 	inline const char *modeCvarNames[] =
@@ -39,6 +41,12 @@ namespace KZ::mode
 		"sv_wateraccelerate",
 		"sv_water_slow_amount"
 	};
+
+	constexpr u32 numCvar = sizeof(KZ::mode::modeCvarNames) / sizeof(KZ::mode::modeCvarNames[0]);
+
+	inline ConVar *modeCvars[numCvar];
+
+	void ApplyModeCvarValues(char **values);
 	void DisableReplicatedModeCvars();
 	void EnableReplicatedModeCvars();
 };

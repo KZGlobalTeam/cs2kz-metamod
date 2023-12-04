@@ -70,6 +70,8 @@ public:
 	void InvalidateTimer(bool playErrorSound = true);
 
 	virtual void Reset();
+	virtual f32 GetPlayerMaxSpeed();
+
 	virtual void OnStartProcessMovement();
 	virtual void OnStopProcessMovement();
 

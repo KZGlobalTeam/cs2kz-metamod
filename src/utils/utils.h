@@ -13,13 +13,14 @@ typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end,
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
-// TODO: why?
+// Seems to be caused by different call convention?
 #ifdef _WIN32
 typedef void EmitSoundFunc_t(u64 &unknown, IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 #else
 typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 #endif
 
+typedef bool TraceShape_t(void *physicsQuery, Ray_t_s2 ray, Vector start, Vector end, CTraceFilterKZ tf, trace_t_s2 trace);
 
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 

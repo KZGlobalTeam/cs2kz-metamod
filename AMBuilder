@@ -76,7 +76,7 @@ for sdk_name in MMSPlugin.sdks:
       os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'measure', 'kz_measure.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_manager.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_mod.cpp'),
+      os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_vnl.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'kz_option.cpp'),
       os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
