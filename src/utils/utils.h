@@ -20,7 +20,7 @@ typedef void EmitSoundFunc_t(u64 &unknown, IRecipientFilter &filter, CEntityInde
 typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 #endif
 
-typedef bool TraceShape_t(void *physicsQuery, Ray_t_s2 ray, Vector start, Vector end, CTraceFilterKZ tf, trace_t_s2 trace);
+typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const BBoxBounds &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm);
 
 extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
@@ -48,6 +48,7 @@ namespace utils
 	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
 	extern SnapViewAngles_t *SnapViewAngles;
 	extern EmitSoundFunc_t *EmitSound;
+	extern TracePlayerBBox_t *TracePlayerBBox;
 
 	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);

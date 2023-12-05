@@ -16,5 +16,4 @@ namespace interfaces
 	inline ISource2Server *pServer = nullptr;
 	inline IGameEventManager2 *pGameEventManager = nullptr;
 	inline IGameEventSystem *pGameEventSystem = nullptr;
-	inline void *pPhysicsQuery = nullptr;
 }

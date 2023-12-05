@@ -201,3 +201,8 @@ void KZPlayer::PlayTeleportSound()
 {
 	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_DO_TP);
 }
+
+float KZPlayer::GetPlayerMaxSpeed()
+{
+	return 250.0;
+}

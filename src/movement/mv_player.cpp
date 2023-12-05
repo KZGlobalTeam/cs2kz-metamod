@@ -157,31 +157,30 @@ f32 MovementPlayer::GetGroundPosition()
 {
 	CMoveData *mv = this->currentMoveData;
 	if (!this->processingMovement) mv = &this->moveDataPost;
-	i32 traceCounter = 0;
+
 	CTraceFilterPlayerMovementCS filter;
 	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
+
+	f32 standableZ = 0.7; // TODO: actually use the cvar, preferably the mode cvar
+
+	BBoxBounds bounds;
+	bounds.mins = { -16.0, -16.0, 0.0 };
+	bounds.maxs = { 16.0, 16.0, 72.0 };
+
+	if (this->GetMoveServices()->m_bDucked()) bounds.maxs.z = 54.0;
+
 	trace_t_s2 trace;
 	utils::InitGameTrace(&trace);
-	f32 standableZ = 0.7;
-	Vector hullMin = { -16.0, -16.0, 0.0 };
-	Vector hullMax = { 16.0, 16.0, 72.0 };
-	if (this->GetMoveServices()->m_bDucked()) hullMax.z = 54.0;
-	utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter);
 
-	f32 highestPoint = trace.endpos.z;
-
+	utils::TracePlayerBBox(mv->m_vecAbsOrigin, ground, bounds, &filter, trace);
+	
+	// Doesn't hit anything, fall back to the original ground
 	if (trace.startsolid || trace.fraction == 1.0f) return mv->m_vecAbsOrigin.z;
 
-	while (trace.fraction != 1.0 && !trace.startsolid && traceCounter < 32 && trace.planeNormal.z >= standableZ)
-	{
-		ground.z = highestPoint;
-		utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter); // Ghetto trace function
-		if (trace.endpos.z <= highestPoint) return highestPoint;
-		highestPoint = trace.endpos.z;
-	}
-	return highestPoint;
+	return trace.endpos.z;
 }
 
 void MovementPlayer::RegisterTakeoff(bool jumped)
@@ -307,4 +306,9 @@ void MovementPlayer::Reset()
 	this->landingTimeActual = 0.0f;
 	this->tickCount = 0;
 	this->timerStartTick = 0;
+}
+
+float MovementPlayer::GetPlayerMaxSpeed()
+{
+	return 250.0;
 }

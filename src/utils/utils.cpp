@@ -27,6 +27,7 @@ InitGameTrace_t *utils::InitGameTrace = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
+TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 
 void modules::Initialize()
 {
@@ -50,7 +51,7 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
 	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, offsets::GetEventManager, interfaces::pServer) - 8);
-	interfaces::pPhysicsQuery = (void *)
+
 	return true;
 }
 
@@ -69,7 +70,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
 	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
-	
+
+	RESOLVE_SIG(modules::server, sigs::TracePlayerBBox, utils::TracePlayerBBox);
 	RESOLVE_SIG(modules::server, sigs::TracePlayerBBoxForGround, utils::TracePlayerBBoxForGround);
 	RESOLVE_SIG(modules::server, sigs::InitGameTrace, utils::InitGameTrace);
 	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, utils::InitPlayerMovementTraceFilter);

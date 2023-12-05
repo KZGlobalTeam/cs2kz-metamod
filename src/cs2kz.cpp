@@ -58,7 +58,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	KZ::misc::RegisterCommands();
-	
+
+	KZ::mode::InitModeCvars();
 	KZ::mode::DisableReplicatedModeCvars();
 
 	return true;

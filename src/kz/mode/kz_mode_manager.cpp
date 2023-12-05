@@ -19,6 +19,7 @@ void KZ::mode::InitModeService(KZPlayer *player)
 
 void KZ::mode::DisableReplicatedModeCvars()
 {
+	return;
 	for (u32 i = 0; i < numCvar; ++i)
 	{
 		assert(modeCvars[i]);
@@ -28,6 +29,7 @@ void KZ::mode::DisableReplicatedModeCvars()
 
 void KZ::mode::EnableReplicatedModeCvars()
 {
+	return;
 	for (u32 i = 0; i < numCvar; ++i)
 	{
 		assert(modeCvars[i]);
