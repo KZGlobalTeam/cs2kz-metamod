@@ -43,6 +43,10 @@ void MovementPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 acce
 
 CCSPlayerController *MovementPlayer::GetController()
 {
+	if (!g_pEntitySystem)
+	{
+		return nullptr;
+	}
 	return dynamic_cast<CCSPlayerController *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
 }
 
