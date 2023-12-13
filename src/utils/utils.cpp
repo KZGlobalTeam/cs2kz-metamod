@@ -1,4 +1,4 @@
-#include "protobuf/generated/networkbasetypes.pb.h"
+#include "networkbasetypes.pb.h"
 
 #include "utils.h"
 #include "convar.h"
@@ -20,7 +20,6 @@
 #define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length); \
 	if (!variable) { Warning("Failed to find address for %s!\n", #sig); return false; }
 
-ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
 InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
 TracePlayerBBoxForGround_t *utils::TracePlayerBBoxForGround = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
@@ -65,7 +64,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 	
-	RESOLVE_SIG(modules::server, sigs::UTIL_ClientPrintFilter, UTIL_ClientPrintFilter);
 
 	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
 	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);

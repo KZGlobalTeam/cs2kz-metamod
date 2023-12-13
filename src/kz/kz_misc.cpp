@@ -1,4 +1,4 @@
-#include "protobuf/generated/usermessages.pb.h"
+#include "usermessages.pb.h"
 
 #include "common.h"
 #include "utils/utils.h"

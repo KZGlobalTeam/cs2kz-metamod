@@ -6,98 +6,92 @@ import os
 # which in the end would ruin the multi-platform (unix, win etc) loading by metamod as it won't be able to append platform specific extension
 # so just fall back to the single binary.
 # Multi-sdk solutions should be manually loaded with a custom plugin loader (examples being sourcemod, stripper:source)
-for sdk_name in MMSPlugin.sdks:
-  for cxx in MMSPlugin.all_targets:
-    sdk = MMSPlugin.sdks[sdk_name]
+for sdk_target in MMSPlugin.sdk_targets:
+  sdk = sdk_target.sdk
+  cxx = sdk_target.cxx
 
-    if not cxx.target.arch in sdk.platformSpec[cxx.target.platform]:
-      continue
+  binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.plugin_name, sdk)
 
-    binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.plugin_name, sdk)
+  if binary.compiler.family == 'gcc' or binary.compiler.family == 'clang':
+    binary.compiler.linkflags += ['-lstdc++']
+    binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
 
-    if binary.compiler.family == 'gcc' or binary.compiler.family == 'clang':
-      binary.compiler.cxxflags += ['--std=c++17']
-      binary.compiler.linkflags += ['-lstdc++']
-      binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
-    elif binary.compiler.family == 'msvc':
-      binary.compiler.cxxflags += ['/std:c++17']
+  if binary.compiler.family == 'clang':
+    binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof']
 
-    if binary.compiler.family == 'clang':
-      binary.compiler.cxxflags += ['-Wno-register']
+  binary.compiler.cxxincludes += [
+    os.path.join(builder.sourcePath, 'src'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+    os.path.join(builder.sourcePath, 'vendor', 'protobuf-3.21.8', 'src'),
+    os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
+    os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')
+  ]
 
-    binary.compiler.cxxincludes += [
-      os.path.join(builder.sourcePath, 'src'),
-      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
-      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
-      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
-      os.path.join(builder.sourcePath, 'vendor', 'protobuf-3.21.8', 'src'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
-    ]
-
-    if binary.compiler.target.platform == 'linux':
-      binary.compiler.postlink += [
-        os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
-        os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
-        os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.a'),
-        os.path.join(sdk.path, 'lib', 'linux64', 'mathlib.a'),
-      ] 
-      binary.sources += [
-        'src/utils/plat_linux.cpp',
-        os.path.join(sdk.path, 'public', 'tier0', 'memoverride.cpp')
-        ]
-    elif binary.compiler.target.platform == 'windows':
-      binary.compiler.postlink += [
-        os.path.join('psapi.lib'),
-        os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
-        os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
-        os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.lib'),
-      ]
-      binary.sources += ['src/utils/plat_win.cpp']
-
+  if binary.compiler.target.platform == 'linux':
+    binary.compiler.postlink += [
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
+      os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.a'),
+      os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
+    ] 
     binary.sources += [
-      os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
-      os.path.join(sdk.path, 'entity2', 'entitysystem.cpp'),
-      os.path.join(sdk.path, 'tier1', 'generichash.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'utils', 'utils.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'utils', 'utils_print.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'measure', 'kz_measure.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_manager.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_mod.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_vnl.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'kz_option.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replays.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'saveloc', 'kz_saveloc.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_manager.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_normal.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
-      os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
-      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'usermessages.pb.cc'),
-      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'networkbasetypes.pb.cc'),
-      os.path.join(builder.sourcePath, 'protobuf', 'generated', 'network_connection.pb.cc'),
+      'src/utils/plat_linux.cpp',
+      os.path.join(sdk['path'], 'public', 'tier0', 'memoverride.cpp')
+      ]
+  elif binary.compiler.target.platform == 'windows':
+    binary.compiler.postlink += [
+      os.path.join('psapi.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.lib'),
+      os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
     ]
+    binary.sources += [
+      'src/utils/plat_win.cpp'
+      ]
 
-    if sdk_name in ['cs2']:
-      binary.sources += [
-      os.path.join(sdk.path, 'tier1', 'convar.cpp'),
-    ]
+  binary.sources += [
+    os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
+    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+    os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'utils.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'utils_print.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'measure', 'kz_measure.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_manager.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_mod.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_vnl.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'kz_option.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replays.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'saveloc', 'kz_saveloc.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_manager.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_normal.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
+  ] 
 
-    nodes = builder.Add(binary)
-    MMSPlugin.binaries += [nodes]
-    
-  break
+  binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = [
+    os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
+    os.path.join(sdk['path'], 'common', 'network_connection.proto'),
+    os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
+  ])]
+
+  nodes = builder.Add(binary)
+  MMSPlugin.binaries += [nodes]
