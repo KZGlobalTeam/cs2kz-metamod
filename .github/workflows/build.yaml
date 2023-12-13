@@ -46,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
@@ -71,10 +71,6 @@ jobs:
 
       - name: Make build directory
         run: mkdir ./build
-
-      - name: Debug
-        run: dir D:\a\cs2kz-metamod\cs2kz-metamod\metamod-source\hl2sdk-manifests
-        shell: cmd
 
       - name: Configure AMBuild
         working-directory: build
