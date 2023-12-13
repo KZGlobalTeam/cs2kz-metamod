@@ -99,7 +99,7 @@ const char *KZPlugin::GetLicense()
 
 const char *KZPlugin::GetVersion()
 {
-	return "VERSION_STRING";
+	return VERSION_STRING;
 }
 
 const char *KZPlugin::GetDate()
