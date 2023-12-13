@@ -19,9 +19,6 @@ jobs:
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
 
-      - name: Update submodules
-        run: git submodule update --recursive
-
       - name: Make build directory
         run: mkdir ./build
 
