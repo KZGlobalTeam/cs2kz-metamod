@@ -69,20 +69,20 @@ Windows (ambuild/msvc):
 ```
 mkdir build
 cd build
-python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifests "../metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64
+python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "../metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64
 ambuild
 ``` 
 
 For windows debugging with VS, build the project then add the following command at the end:
 ```
-python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifests "../metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64 --gen=vs --vs-version 17
+python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "../metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64 --gen=vs --vs-version 17
 ``` 
 
 Linux (ambuild/clang):
 ```
 mkdir build
 cd build
-python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifests "/../metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64
+python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "/../metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64
 ambuild
 ``` 
 
