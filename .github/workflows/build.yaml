@@ -71,7 +71,7 @@ jobs:
 
       - name: Configure AMBuild
         working-directory: build
-        run: python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "/metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64
+        run: python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "/hl2sdk-manifests" -s cs2 --targets x86_64
 
       - name: Update version header
         shell: bash
