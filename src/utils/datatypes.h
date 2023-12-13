@@ -13,7 +13,6 @@ typedef uint32_t SoundEventGuid_t;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wparentheses"
 #endif
-#include "vscript/ivscript.h"
 #ifndef _WIN32
 #pragma clang diagnostic pop
 #endif

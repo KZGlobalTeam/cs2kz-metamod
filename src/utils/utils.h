@@ -6,7 +6,6 @@
 #include "utils/interfaces.h"
 #include "utils/datatypes.h"
 
-typedef void ClientPrintFilter_t(IRecipientFilter &filter, MsgDest msgDest, const char *msgName, const char *param1, const char *param2, const char *param3, const char *param4);
 typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
 typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end, const Vector &minsSrc,
 	const Vector &maxsSrc, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm, float minGroundNormalZ, bool overwriteEndpos, int *pCounter);
@@ -19,9 +18,6 @@ typedef void EmitSoundFunc_t(u64 &unknown, IRecipientFilter &filter, CEntityInde
 #else
 typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 #endif
-
-
-extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
 namespace utils
 {
@@ -78,4 +74,6 @@ namespace utils
 	void CPrintChat(CBaseEntity *entity, const char *format, ...);
 	void CPrintChatAll(const char *format, ...);
 
+	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
+	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, int size);
 }

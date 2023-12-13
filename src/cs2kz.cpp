@@ -15,6 +15,7 @@
 #include "movement/movement.h"
 #include "kz/kz.h"
 #include "kz/quiet/kz_quiet.h"
+#include "kz/mode/kz_mode.h"
 
 #include "tier0/memdbgon.h"
 
@@ -55,6 +56,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	KZ::misc::RegisterCommands();
+	
+	KZ::mode::DisableReplicatedModeCvars();
 
 	return true;
 }
@@ -70,7 +73,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	SH_REMOVE_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 
-	
+	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
 	return true;
 }
@@ -96,7 +99,7 @@ const char *KZPlugin::GetLicense()
 
 const char *KZPlugin::GetVersion()
 {
-	return VERSION_STRING;
+	return "VERSION_STRING";
 }
 
 const char *KZPlugin::GetDate()

@@ -14,10 +14,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
+
+      - name: Update submodules
+        run: git submodule update --recursive
 
       - name: Make build directory
         run: mkdir ./build
@@ -43,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
@@ -71,7 +74,7 @@ jobs:
 
       - name: Configure AMBuild
         working-directory: build
-        run: python ../configure.py --hl2sdk-root "../"
+        run: python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "../metamod-source/hl2sdk-manifests" -s cs2 --targets x86_64
 
       - name: Update version header
         shell: bash

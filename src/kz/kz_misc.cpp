@@ -1,13 +1,17 @@
+#include "usermessages.pb.h"
+
 #include "common.h"
 #include "utils/utils.h"
 #include "kz.h"
 #include "utils/simplecmds.h"
-
-#include "tier0/memdbgon.h"
+#include "public/networksystem/inetworkmessages.h"
 
 #include "checkpoint/kz_checkpoint.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
+
+#include "tier0/memdbgon.h"
+#include <utils/recipientfilters.h>
 
 internal SCMD_CALLBACK(Command_KzNoclip)
 {
@@ -69,6 +73,7 @@ internal SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
 	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
+	utils::SendConVarValue(utils::GetEntityPlayerSlot(controller), nullptr, "true");
 	return MRES_SUPERCEDE;
 }
 

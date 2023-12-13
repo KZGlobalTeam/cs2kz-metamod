@@ -1,10 +1,13 @@
+#include "networkbasetypes.pb.h"
 
 #include "utils.h"
 #include "convar.h"
 #include "strtools.h"
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
+#include "igameeventsystem.h"
 #include "recipientfilters.h"
+#include "public/networksystem/inetworkmessages.h"
 
 #include "module.h"
 #include "detours.h"
@@ -17,7 +20,6 @@
 #define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length); \
 	if (!variable) { Warning("Failed to find address for %s!\n", #sig); return false; }
 
-ClientPrintFilter_t *UTIL_ClientPrintFilter = NULL;
 InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
 TracePlayerBBoxForGround_t *utils::TracePlayerBBoxForGround = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
@@ -44,6 +46,8 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pSchemaSystem, CSchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
+	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
+	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
 	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, offsets::GetEventManager, interfaces::pServer) - 8);
 	
 	return true;
@@ -60,7 +64,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 	
-	RESOLVE_SIG(modules::server, sigs::UTIL_ClientPrintFilter, UTIL_ClientPrintFilter);
 
 	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
 	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
@@ -276,4 +279,20 @@ f32 utils::NormalizeDeg(f32 a)
 f32 utils::GetAngleDifference(const f32 x, const f32 y, const f32 c)
 {
 	return fmod(fabs(x - y) + c, 2 * c) - c;
+}
+
+void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
+{
+	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	CNETMsg_SetConVar *msg = new CNETMsg_SetConVar;
+	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+	cvar->set_name(conVar->m_pszName);
+	cvar->set_value(value);
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+}
+
+void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, int size)
+{
+	// TODO
 }
