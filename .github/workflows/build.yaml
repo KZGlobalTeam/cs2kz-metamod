@@ -51,9 +51,6 @@ jobs:
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
 
-      - name: Update submodules
-        run: git submodule update --recursive
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -74,6 +71,10 @@ jobs:
 
       - name: Make build directory
         run: mkdir ./build
+
+      - name: Debug
+        run: dir D:\a\cs2kz-metamod\cs2kz-metamod\metamod-source\hl2sdk-manifests
+        shell: cmd
 
       - name: Configure AMBuild
         working-directory: build
