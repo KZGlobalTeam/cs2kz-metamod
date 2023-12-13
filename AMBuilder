@@ -33,7 +33,6 @@ for sdk_target in MMSPlugin.sdk_targets:
     binary.compiler.postlink += [
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
-      os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.a'),
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
     ] 
     binary.sources += [
@@ -45,7 +44,6 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join('psapi.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'protobuf-lib', 'libprotobuf.lib'),
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
     ]
     binary.sources += [
