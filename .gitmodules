@@ -5,6 +5,3 @@
 	path = hl2sdk-cs2
 	url = https://github.com/zer0k-z/hl2sdk.git
 	branch = cs2
-[submodule "vendor/protobuf-3.21.8"]
-	path = vendor/protobuf-3.21.8
-	url = https://github.com/protocolbuffers/protobuf
