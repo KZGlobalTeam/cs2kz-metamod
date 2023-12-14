@@ -16,7 +16,7 @@ public:
 
 namespace KZ::mode
 {
-	void InitModeCvars();
+	bool InitModeCvars();
 	void InitModeService(KZPlayer *player);
 
 	inline const char *modeCvarNames[] =

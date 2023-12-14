@@ -2,14 +2,20 @@
 #include "kz_mode_vnl.h"
 #include "interfaces/interfaces.h"
 
-void KZ::mode::InitModeCvars()
+bool KZ::mode::InitModeCvars()
 {
+	bool success = true;
 	for (u32 i = 0; i < numCvar; i++)
 	{
 		ConVarHandle cvarHandle = g_pCVar->FindConVar(KZ::mode::modeCvarNames[i]);
-		if (!cvarHandle.IsValid()) continue;
+		if (!cvarHandle.IsValid())
+		{
+			META_CONPRINTF("Failed to find %s!\n", KZ::mode::modeCvarNames[i]);
+			success = false;
+		}
 		modeCvars[i] = g_pCVar->GetConVar(cvarHandle);
 	}
+	return success;
 }
 
 void KZ::mode::InitModeService(KZPlayer *player)
