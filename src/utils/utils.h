@@ -6,10 +6,7 @@
 #include "utils/interfaces.h"
 #include "utils/datatypes.h"
 
-typedef void ClientPrintFilter_t(IRecipientFilter &filter, MsgDest msgDest, const char *msgName, const char *param1, const char *param2, const char *param3, const char *param4);
 typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
-typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end, const Vector &minsSrc,
-	const Vector &maxsSrc, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm, float minGroundNormalZ, bool overwriteEndpos, int *pCounter);
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
@@ -21,8 +18,6 @@ typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const E
 #endif
 
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const BBoxBounds &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm);
-
-extern ClientPrintFilter_t *UTIL_ClientPrintFilter;
 
 namespace utils
 {
@@ -43,7 +38,6 @@ namespace utils
 	CBasePlayerController *GetController(CPlayerSlot slot);
 
 	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
-	extern TracePlayerBBoxForGround_t *TracePlayerBBoxForGround;
 	extern InitGameTrace_t *InitGameTrace;
 	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
 	extern SnapViewAngles_t *SnapViewAngles;
@@ -81,5 +75,5 @@ namespace utils
 	void CPrintChatAll(const char *format, ...);
 
 	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
-	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, int size);
+	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
 }

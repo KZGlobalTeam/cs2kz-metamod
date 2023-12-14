@@ -61,24 +61,30 @@ Requirements: Metamod plugin
 
 Compilation:
 - Remember to *recursively* clone the plugin!
+- [AMBuild](https://github.com/alliedmodders/ambuild/) needs to be installed for compilation.
+
 - For each platform:
   
-Windows (VS): 
+Windows (ambuild/msvc): 
 ```
 mkdir build
 cd build
-py ../configure.py --hl2sdk-root "../" --gen=vs --vs-version 17
+python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "/hl2sdk-manifests" -s cs2 --targets x86_64
+ambuild
+``` 
+
+For windows debugging with VS, build the project then add the following command at the end:
+```
+python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "/hl2sdk-manifests" -s cs2 --targets x86_64--gen=vs --vs-version 17
 ``` 
 
 Linux (ambuild/clang):
 ```
 mkdir build
 cd build
-py ../configure.py --hl2sdk-root "../"
+python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "/hl2sdk-manifests" -s cs2 --targets x86_64
 ambuild
 ``` 
-
-Note: does not work with gcc!
 
 Linux (Docker w/ Valve SDK Image):
 ```
@@ -86,5 +92,7 @@ mkdir build
 docker build -t cs2kz-linux-builder .
 docker run --rm -v ./build:/app/build cs2kz-linux-builder
 ```
+
+Note: does not work with gcc!
 
 Copy the contents of `build/package/` to your server's `csgo/` directory.

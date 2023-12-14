@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
@@ -22,10 +22,14 @@ jobs:
       - name: Make build directory
         run: mkdir ./build
 
+      - name: Update version header
+        run: |
+          echo "#define VERSION_STRING \"${{ inputs.version }}\"" > ./src/version.h
+
       - name: Build and run Docker image
         run: |
           docker build . --file Dockerfile --tag cs2kz-linux-builder
-          docker run -v ./build:/app/build -v ./.git:/app/.git -e VERSION_STRING="${{ inputs.version }}" cs2kz-linux-builder
+          docker run -v ./build:/app/build -v ./.git:/app/.git cs2kz-linux-builder
 
       - name: Archive build
         uses: actions/upload-artifact@v3
@@ -39,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
@@ -67,13 +71,16 @@ jobs:
 
       - name: Configure AMBuild
         working-directory: build
-        run: python ../configure.py --hl2sdk-root "../"
+        run: python3 ../configure.py --hl2sdk-root "../" --mms_path "../metamod-source" --hl2sdk-manifest "/hl2sdk-manifests" -s cs2 --targets x86_64
+
+      - name: Update version header
+        shell: bash
+        run: |
+          echo "#define VERSION_STRING \"${{ inputs.version }}\"" > ./src/version.h
 
       - name: Run AMBuild
         working-directory: build
-        run: |
-          set VERSION_STRING="${{ inputs.version }}"
-          ambuild
+        run: ambuild
 
       - name: Archive build
         uses: actions/upload-artifact@v3

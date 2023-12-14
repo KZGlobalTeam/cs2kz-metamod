@@ -1,5 +1,8 @@
-#include "utils.h"
+#include "usermessages.pb.h"
+#include "public/networksystem/inetworkmessages.h"
 #include "recipientfilters.h"
+
+#include "utils.h"
 
 #include "tier0/memdbgon.h"
 
@@ -150,6 +153,20 @@ internal bool CFormat(char* buffer, u64 buffer_size, const char* text) {
     return true;
 }
 
+internal void ClientPrintFilter(IRecipientFilter& filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4)
+{
+	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
+	CUserMessageTextMsg *msg = new CUserMessageTextMsg;
+	msg->set_dest(msg_dest);
+	msg->add_param(msg_name);
+	msg->add_param(param1);
+	msg->add_param(param2);
+	msg->add_param(param3);
+	msg->add_param(param4);
+
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+}
+
 #define FORMAT_STRING(buffer) \
 	va_list args; \
 	va_start(args, format); \
@@ -161,28 +178,28 @@ void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
 void utils::PrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
 void utils::PrintCentre(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
 void utils::PrintAlert(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
-	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
 void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
@@ -208,28 +225,28 @@ void utils::PrintConsoleAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
 void utils::PrintChatAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
 void utils::PrintCentreAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
 void utils::PrintAlertAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter filter;
-	UTIL_ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
+	ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
 void utils::PrintHTMLCentreAll(const char *format, ...)
@@ -252,7 +269,7 @@ void utils::CPrintChat(CBaseEntity *entity, const char *format, ...)
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{
-		UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");	
+		ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");	
 	}
 	else
 	{
@@ -267,7 +284,7 @@ void utils::CPrintChatAll(const char *format, ...)
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{
-		UTIL_ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");	
+		ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");	
 	}
 	else
 	{

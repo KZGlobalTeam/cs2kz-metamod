@@ -88,6 +88,11 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback)
 META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 {
 	META_RES result = MRES_IGNORED;
+	if (!g_pEntitySystem)
+	{
+		return result;
+	}
+	
 	CCSPlayerController *controller = (CCSPlayerController *)g_pEntitySystem->GetBaseEntity(CEntityIndex((i32)slot.Get() + 1));
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{

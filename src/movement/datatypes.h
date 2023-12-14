@@ -9,6 +9,11 @@ enum TurnState
 	TURN_RIGHT = 1
 };
 
+struct MoveDataUnkSubtickStruct
+{
+	u8 unknown[24];
+};
+
 // Size: 0xE8
 class CMoveData
 {
@@ -26,7 +31,6 @@ public:
 		m_flSubtickFraction{source.m_flSubtickFraction},
 		m_vecVelocity{source.m_vecVelocity},
 		m_vecAngles{source.m_vecAngles},
-		m_nMovementCmdsThisTick{source.m_nMovementCmdsThisTick},
 		m_bGameCodeMovedPlayer{source.m_bGameCodeMovedPlayer},
 		m_collisionNormal{source.m_collisionNormal},
 		m_groundNormal{source.m_groundNormal},
@@ -40,6 +44,10 @@ public:
 		m_bShouldApplyGravity{source.m_bShouldApplyGravity},
 		m_outWishVel{source.m_outWishVel}
 	{
+		for (int i = 0; i < source.unknown.Count(); i++)
+		{
+			this->unknown.AddToTail(source.unknown[i]);
+		}
 		for (int i = 0; i < source.m_TouchList.Count(); i++)
 		{
 			this->m_TouchList.AddToTail(source.m_TouchList[i]);
@@ -58,18 +66,13 @@ public:
 	float m_flSubtickFraction; // 0x38
 	Vector m_vecVelocity; // 0x3c
 	Vector m_vecAngles; // 0x48
-	uint8_t padding1[4]; //0x54 unsure
-	int m_nMovementCmdsThisTick; // 0x58 unsure, but it goes up if you spam lots of key in a tick
-	uint8_t padding2[4]; // 0x5c
-	uint8_t unknown3[8]; // 0x60 unsure, address of some sort, doesn't seem to change during gameplay
-	uint8_t unknown4[8]; // 0x68 always 0, could be padding
+	CUtlVector<MoveDataUnkSubtickStruct> unknown;
 	bool m_bGameCodeMovedPlayer; // 0x70
-	uint8_t padding3[4]; // 0x74
 	CUtlVector<touchlist_t> m_TouchList; // 0x78
 	Vector m_collisionNormal; // 0x90
 	Vector m_groundNormal; // 0x9c unsure
 	Vector m_vecAbsOrigin; // 0xa8
-	uint8_t padding4[4]; // 0xb4 unsure
+	uint8_t padding[4]; // 0xb4 unsure
 	bool m_nGameModeMovedPlayer; // 0xb8
 	Vector m_vecOldAngles; // 0xbc
 	float m_flMaxSpeed; // 0xc8
