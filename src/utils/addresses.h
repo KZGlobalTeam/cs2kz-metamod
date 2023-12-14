@@ -31,24 +31,26 @@ namespace offsets
 {
 #ifdef _WIN32
 	inline constexpr int GameEntitySystem = 0x58;
-	inline constexpr int IsEntityPawn = 152;
-	inline constexpr int IsEntityController = 153;
+	// 9 functions after one with "Physics_SimulateEntity" "Server Game"
+	inline constexpr int IsEntityPawn = 153;
+	// Right after IsEntityPawn
+	inline constexpr int IsEntityController = 154;
+	// LadderMove pseudocode for the backwards laddergrab, search for something like this that is near 24.0 and -50.0: (*(**(a1 + 48) + 608LL))(*(a1 + 48), 10LL, 0LL);
 	inline constexpr int SetMoveType = 77;
-	inline constexpr int CollisionRulesChanged = 173;
+	// 5 functions after one with "targethealthfrac"
+	inline constexpr int CollisionRulesChanged = 174;
 	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
-	inline constexpr int Teleport = 148;
-	inline constexpr int SetTransmit = 86;
+	inline constexpr int Teleport = 149;
 	inline constexpr int GetEventManager = 91;
 	// "Player.Respawn"
 	inline constexpr int Respawn = 325;
 #else
 	inline constexpr int GameEntitySystem = 0x50;
-	inline constexpr int IsEntityPawn = 151;
-	inline constexpr int IsEntityController = 152;
+	inline constexpr int IsEntityPawn = 152;
+	inline constexpr int IsEntityController = 153;
 	inline constexpr int SetMoveType = 76;
 	inline constexpr int CollisionRulesChanged = 172;
-	inline constexpr int Teleport = 147;
-	inline constexpr int SetTransmit = 85;
+	inline constexpr int Teleport = 148;
 	inline constexpr int GetEventManager = 91;
 	inline constexpr int Respawn = 327;
 #endif
