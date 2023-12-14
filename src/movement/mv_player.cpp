@@ -3,7 +3,7 @@
 
 #include "tier0/memdbgon.h"
 
-void MovementPlayer::OnStartProcessMovement()
+void MovementPlayer::OnProcessMovement()
 {
 	this->duckBugged = false;
 	this->hitPerf = false;
@@ -12,7 +12,7 @@ void MovementPlayer::OnStartProcessMovement()
 	this->takeoffFromLadder = false;
 }
 
-void MovementPlayer::OnStopProcessMovement()
+void MovementPlayer::OnProcessMovementPost()
 {
 	this->processingMovement = false;
 	this->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
@@ -33,7 +33,7 @@ void MovementPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 }
 
-void MovementPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
+void MovementPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
 }
 

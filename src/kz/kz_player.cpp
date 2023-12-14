@@ -32,21 +32,21 @@ void KZPlayer::Reset()
 	this->quietService->Reset();
 }
 
-void KZPlayer::OnStartProcessMovement()
+void KZPlayer::OnProcessMovement()
 {
-	MovementPlayer::OnStartProcessMovement();
-	this->jumpstatsService->OnStartProcessMovement();
+	MovementPlayer::OnProcessMovement();
+	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
 	this->UpdatePlayerModelAlpha();
 }
 
-void KZPlayer::OnStopProcessMovement()
+void KZPlayer::OnProcessMovementPost()
 {
 	this->hudService->DrawSpeedPanel();
 	this->jumpstatsService->UpdateJump();
-	MovementPlayer::OnStopProcessMovement();
+	MovementPlayer::OnProcessMovementPost();
 	this->jumpstatsService->TrackJumpstatsVariables();
 }
 
@@ -65,9 +65,9 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 }
 
-void KZPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
+void KZPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
-	this->jumpstatsService->OnAirAcceleratePre();
+	this->jumpstatsService->OnAirAccelerate();
 }
 
 void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)

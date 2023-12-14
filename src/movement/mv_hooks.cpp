@@ -25,12 +25,13 @@ void movement::InitDetours()
 	INIT_DETOUR(CategorizePosition);
 	INIT_DETOUR(FinishGravity);
 	INIT_DETOUR(CheckFalling);
-	INIT_DETOUR(PlayerMovePost);
+	INIT_DETOUR(PostPlayerMove);
 	INIT_DETOUR(PostThink);
 }
 
 f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	f32 newMaxSpeed;
 	
 	if (newMaxSpeed <= 0.0f) return GetMaxSpeed(pawn);
@@ -42,59 +43,83 @@ void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, C
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->currentMoveData = mv;
 	player->moveDataPre = CMoveData(*mv);
-	player->OnStartProcessMovement();
+	player->OnProcessMovement();
 	ProcessMovement(ms, mv);
 	player->moveDataPost = CMoveData(*mv);
-	player->OnStopProcessMovement();
+	player->OnProcessMovementPost();
 }
 
 bool FASTCALL movement::Detour_PlayerMoveNew(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnPlayerMoveNew();
 	return PlayerMoveNew(ms, mv);
+	player->OnPostPlayerMove();
 }
 
 void FASTCALL movement::Detour_CheckParameters(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnCheckParameters();
 	CheckParameters(ms, mv);
+	player->OnCheckParametersPost();
 }
 
 bool FASTCALL movement::Detour_CanMove(CCSPlayerPawnBase *pawn)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
+	player->OnCanMove();
 	return CanMove(pawn);
+	player->OnCanMovePost();
 }
 
 void FASTCALL movement::Detour_FullWalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv, bool ground)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnFullWalkMove(ground);
 	FullWalkMove(ms, mv, ground);
+	player->OnFullWalkMovePost(ground);
 }
 
 bool FASTCALL movement::Detour_MoveInit(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnMoveInit();
 	return MoveInit(ms, mv);
+	player->OnMoveInitPost();
 }
 
 bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnCheckWater();
 	return CheckWater(ms, mv);
+	player->OnCheckWaterPost();
 }
 
 void FASTCALL movement::Detour_CheckVelocity(CCSPlayer_MovementServices *ms, CMoveData *mv, const char *a3)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnCheckVelocity(a3);
 	CheckVelocity(ms, mv, a3);
+	player->OnCheckVelocityPost(a3);
 }
 
 void FASTCALL movement::Detour_Duck(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnDuck();
 	player->processingDuck = true;
 	Duck(ms, mv);
 	player->processingDuck = false;
+	player->OnDuckPost();
 }
 
 bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	Vector oldVelocity = mv->m_vecVelocity;
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnLadderMove();
+	Vector oldVelocity = mv->m_vecVelocity;
 	MoveType_t oldMoveType = player->GetPawn()->m_MoveType();
 	bool result = LadderMove(ms, mv);
 	if (player->GetPawn()->m_lifeState() != LIFE_DEAD && !result && oldMoveType == MOVETYPE_LADDER)
@@ -122,16 +147,21 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
 	return result;
+	player->OnLadderMovePost();
 }
 
 void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnCheckJumpButton();
 	CheckJumpButton(ms, mv);
+	player->OnCheckJumpButtonPost();
 }
 
 void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnJump();
 	f32 oldJumpUntil = ms->m_flJumpUntil();
 	MoveType_t oldMoveType = player->GetPawn()->m_MoveType();
 	OnJump(ms, mv);
@@ -141,36 +171,46 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 		player->RegisterTakeoff(true);
 		player->OnStopTouchGround();
 	}
+	player->OnJumpPost();
 }
 
 void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
-	player->OnAirAcceleratePre(wishdir, wishspeed, accel);
+	player->OnAirAccelerate(wishdir, wishspeed, accel);
 	AirAccelerate(ms, mv, wishdir, wishspeed, accel);
 	player->OnAirAcceleratePost(wishdir, wishspeed, accel);
 }
 
 void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnFriction();
 	Friction(ms, mv);
+	player->OnFrictionPost();
 }
 
 void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	WalkMove(ms, mv);
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnWalkMove();
+	WalkMove(ms, mv);
 	player->walkMoved = true;
+	player->OnWalkMovePost();
 }
 
 void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnTryPlayerMove(pFirstDest, pFirstTrace);
 	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace);
+	player->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
 }
 
 void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms, CMoveData *mv, bool bStayOnGround)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnCategorizePosition(bStayOnGround);
 	Vector oldVelocity = mv->m_vecVelocity;
 	bool oldOnGround = !!(player->GetPawn()->m_fFlags() & FL_ONGROUND);
 	
@@ -192,21 +232,31 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 			player->OnStopTouchGround();
 		}
 	}
+	player->OnCategorizePositionPost(bStayOnGround);
 }
 
 void FASTCALL movement::Detour_FinishGravity(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnFinishGravity();
 	FinishGravity(ms, mv);
+	player->OnFinishGravityPost();
 }
 
 void FASTCALL movement::Detour_CheckFalling(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnCheckFalling();
 	CheckFalling(ms, mv);
+	player->OnCheckFallingPost();
 }
 
-void FASTCALL movement::Detour_PlayerMovePost(CCSPlayer_MovementServices *ms, CMoveData *mv)
+void FASTCALL movement::Detour_PostPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	PlayerMovePost(ms, mv);
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnPostPlayerMove();
+	PostPlayerMove(ms, mv);
+	player->OnPostPlayerMovePost();
 }
 
 void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
@@ -214,4 +264,5 @@ void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	player->OnPostThink();
 	PostThink(pawn);
+	player->OnPostThinkPost();
 }

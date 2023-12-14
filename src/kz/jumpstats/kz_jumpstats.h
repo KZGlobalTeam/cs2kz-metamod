@@ -207,7 +207,7 @@ public:
 	f32 lastGroundSpeedCappedTime{};
 	f32 lastMovementProcessedTime{};
 
-	void OnStartProcessMovement();
+	void OnProcessMovement();
 	void OnChangeMoveType(MoveType_t oldMoveType);
 	JumpType DetermineJumpType();
 	bool HitBhop();
@@ -221,7 +221,7 @@ public:
 	void UpdateJump();
 	void EndJump();
 	void InvalidateJumpstats();
-	void OnAirAcceleratePre();
+	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
 	void ToggleJSAlways();

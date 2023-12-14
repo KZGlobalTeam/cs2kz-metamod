@@ -37,7 +37,7 @@ namespace movement
 	void FASTCALL Detour_CategorizePosition(CCSPlayer_MovementServices *, CMoveData *, bool);
 	void FASTCALL Detour_FinishGravity(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_PlayerMovePost(CCSPlayer_MovementServices *, CMoveData *);
+	void FASTCALL Detour_PostPlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
 
 }
@@ -72,17 +72,55 @@ public:
 	virtual void Reset();
 	virtual f32 GetPlayerMaxSpeed();
 
-	virtual void OnStartProcessMovement();
-	virtual void OnStopProcessMovement();
+	virtual void OnProcessMovement();
+	virtual void OnProcessMovementPost();
+	virtual void OnPlayerMoveNew() {};
+	virtual void OnPlayerMoveNewPost() {};
+	virtual void OnCheckParameters() {};
+	virtual void OnCheckParametersPost() {};
+	virtual void OnCanMove() {};
+	virtual void OnCanMovePost() {};
+	virtual void OnFullWalkMove(bool) {};
+	virtual void OnFullWalkMovePost(bool) {};
+	virtual void OnMoveInit() {};
+	virtual void OnMoveInitPost() {};
+	virtual void OnCheckWater() {};
+	virtual void OnCheckWaterPost() {};
+	virtual void OnCheckVelocity(const char *) {};
+	virtual void OnCheckVelocityPost(const char *) {};
+	virtual void OnDuck() {};
+	virtual void OnDuckPost() {};
+	virtual void OnCanUnduck() {};
+	virtual void OnCanUnduckPost() {};
+	virtual void OnLadderMove() {};
+	virtual void OnLadderMovePost() {};
+	virtual void OnCheckJumpButton() {};
+	virtual void OnCheckJumpButtonPost() {};
+	virtual void OnJump() {};
+	virtual void OnJumpPost() {};
+	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel);
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
+	virtual void OnFriction() {};
+	virtual void OnFrictionPost() {};
+	virtual void OnWalkMove() {};
+	virtual void OnWalkMovePost() {};
+	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) {};
+	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) {};
+	virtual void OnCategorizePosition(bool) {};
+	virtual void OnCategorizePositionPost(bool) {};
+	virtual void OnFinishGravity() {};
+	virtual void OnFinishGravityPost() {};
+	virtual void OnCheckFalling() {};
+	virtual void OnCheckFallingPost() {};
+	virtual void OnPostPlayerMove() {};
+	virtual void OnPostPlayerMovePost() {};
+	virtual void OnPostThink();
+	virtual void OnPostThinkPost() {};
 
 	virtual void OnStartTouchGround();
 	virtual void OnStopTouchGround();
 
 	virtual void OnChangeMoveType(MoveType_t oldMoveType);
-	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel);
-	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
-	
-	virtual void OnPostThink();
 	
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();

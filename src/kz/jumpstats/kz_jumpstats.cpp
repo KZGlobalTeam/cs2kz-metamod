@@ -521,7 +521,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	return JumpType_LongJump;
 }
 
-void KZJumpstatsService::OnStartProcessMovement()
+void KZJumpstatsService::OnProcessMovement()
 {
 	// Always ensure that the player has at least an ongoing jump.
 	// This is mostly to prevent crash, it's not a valid jump.
@@ -569,7 +569,7 @@ bool KZJumpstatsService::GroundSpeedCappedRecently()
 	return this->lastGroundSpeedCappedTime == this->lastMovementProcessedTime;
 }
 
-void KZJumpstatsService::OnAirAcceleratePre()
+void KZJumpstatsService::OnAirAccelerate()
 {
 	AACall call;
 	this->player->GetVelocity(&call.velocityPre);

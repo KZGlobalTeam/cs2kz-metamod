@@ -43,13 +43,13 @@ public:
 	virtual void Reset() override;
 	
 	virtual f32 GetPlayerMaxSpeed() override;
-	virtual void OnStartProcessMovement() override;
-	virtual void OnStopProcessMovement() override;
+	virtual void OnProcessMovement() override;
+	virtual void OnProcessMovementPost() override;
 
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
-	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
+	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
 	
 	virtual void StartZoneStartTouch();
