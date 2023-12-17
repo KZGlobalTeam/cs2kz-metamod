@@ -21,26 +21,6 @@ void MovementPlayer::OnProcessMovementPost()
 	this->oldWalkMoved = this->walkMoved;
 }
 
-void MovementPlayer::OnStartTouchGround()
-{
-}
-
-void MovementPlayer::OnStopTouchGround()
-{
-}
-
-void MovementPlayer::OnChangeMoveType(MoveType_t oldMoveType)
-{
-}
-
-void MovementPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
-{
-}
-
-void MovementPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
-{
-}
-
 CCSPlayerController *MovementPlayer::GetController()
 {
 	if (!g_pEntitySystem)
@@ -314,5 +294,6 @@ void MovementPlayer::Reset()
 
 float MovementPlayer::GetPlayerMaxSpeed()
 {
-	return 250.0;
+	// No effect.
+	return 0.0f;
 }

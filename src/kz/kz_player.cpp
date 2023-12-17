@@ -32,9 +32,15 @@ void KZPlayer::Reset()
 	this->quietService->Reset();
 }
 
+float KZPlayer::GetPlayerMaxSpeed()
+{
+	return this->modeService->GetPlayerMaxSpeed();
+}
+
 void KZPlayer::OnProcessMovement()
 {
 	MovementPlayer::OnProcessMovement();
+	this->modeService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 	this->EnableGodMode();
@@ -47,7 +53,180 @@ void KZPlayer::OnProcessMovementPost()
 	this->hudService->DrawSpeedPanel();
 	this->jumpstatsService->UpdateJump();
 	MovementPlayer::OnProcessMovementPost();
+	this->modeService->OnProcessMovementPost();
 	this->jumpstatsService->TrackJumpstatsVariables();
+}
+
+void KZPlayer::OnPlayerMoveNew()
+{
+	this->modeService->OnPlayerMoveNew();
+}
+void KZPlayer::OnPlayerMoveNewPost()
+{
+	this->modeService->OnPlayerMoveNewPost();
+}
+void KZPlayer::OnCheckParameters()
+{
+	this->modeService->OnCheckParameters();
+}
+void KZPlayer::OnCheckParametersPost()
+{
+	this->modeService->OnCheckParametersPost();
+}
+void KZPlayer::OnCanMove()
+{
+	this->modeService->OnCanMove();
+}
+void KZPlayer::OnCanMovePost()
+{
+	this->modeService->OnCanMovePost();
+}
+void KZPlayer::OnFullWalkMove(bool &ground)
+{
+	this->modeService->OnFullWalkMove(ground);
+}
+void KZPlayer::OnFullWalkMovePost(bool ground)
+{
+	this->modeService->OnFullWalkMovePost(ground);
+}
+void KZPlayer::OnMoveInit()
+{
+	this->modeService->OnMoveInit();
+}
+void KZPlayer::OnMoveInitPost()
+{
+	this->modeService->OnMoveInitPost();
+}
+void KZPlayer::OnCheckWater()
+{
+	this->modeService->OnCheckWater();
+}
+void KZPlayer::OnCheckWaterPost()
+{
+	this->modeService->OnCheckWaterPost();
+}
+void KZPlayer::OnCheckVelocity(const char *a3)
+{
+	this->modeService->OnCheckVelocity(a3);
+}
+void KZPlayer::OnCheckVelocityPost(const char *a3)
+{
+	this->modeService->OnCheckVelocityPost(a3);
+}
+void KZPlayer::OnDuck()
+{
+	this->modeService->OnDuck();
+}
+void KZPlayer::OnDuckPost()
+{
+	this->modeService->OnDuckPost();
+}
+void KZPlayer::OnCanUnduck()
+{
+	this->modeService->OnCanUnduck();
+}
+void KZPlayer::OnCanUnduckPost()
+{
+	this->modeService->OnCanUnduckPost();
+}
+void KZPlayer::OnLadderMove()
+{
+	this->modeService->OnLadderMove();
+}
+void KZPlayer::OnLadderMovePost()
+{
+	this->modeService->OnLadderMovePost();
+}
+void KZPlayer::OnCheckJumpButton()
+{
+	this->modeService->OnCheckJumpButton();
+}
+void KZPlayer::OnCheckJumpButtonPost()
+{
+	this->modeService->OnCheckJumpButtonPost();
+}
+void KZPlayer::OnJump()
+{
+	this->modeService->OnJump();
+}
+void KZPlayer::OnJumpPost()
+{
+	this->modeService->OnJumpPost();
+}
+void KZPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
+{
+	this->modeService->OnAirAccelerate(wishdir, wishspeed, accel);
+	this->jumpstatsService->OnAirAccelerate();
+}
+void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
+{
+	this->modeService->OnAirAcceleratePost(wishdir, wishspeed, accel);
+	this->jumpstatsService->OnAirAcceleratePost(wishdir, wishspeed, accel);
+}
+void KZPlayer::OnFriction()
+{
+	this->modeService->OnFriction();
+}
+void KZPlayer::OnFrictionPost()
+{
+	this->modeService->OnFrictionPost();
+}
+void KZPlayer::OnWalkMove()
+{
+	this->modeService->OnWalkMove();
+}
+void KZPlayer::OnWalkMovePost()
+{
+	this->modeService->OnWalkMovePost();
+}
+void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace);
+}
+void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
+}
+void KZPlayer::OnCategorizePosition(bool bStayOnGround)
+{
+	this->modeService->OnCategorizePosition(bStayOnGround);
+}
+void KZPlayer::OnCategorizePositionPost(bool bStayOnGround)
+{
+	this->modeService->OnCategorizePositionPost(bStayOnGround);
+}
+void KZPlayer::OnFinishGravity()
+{
+	this->modeService->OnFinishGravity();
+}
+void KZPlayer::OnFinishGravityPost()
+{
+	this->modeService->OnFinishGravityPost();
+}
+void KZPlayer::OnCheckFalling()
+{
+	this->modeService->OnCheckFalling();
+}
+void KZPlayer::OnCheckFallingPost()
+{
+	this->modeService->OnCheckFallingPost();
+}
+void KZPlayer::OnPostPlayerMove()
+{
+	this->modeService->OnPostPlayerMove();
+}
+void KZPlayer::OnPostPlayerMovePost()
+{
+	this->modeService->OnPostPlayerMovePost();
+}
+void KZPlayer::OnPostThink()
+{
+	this->modeService->OnPostThink();
+	MovementPlayer::OnPostThink();
+}
+void KZPlayer::OnPostThinkPost()
+{
+	this->modeService->OnPostThinkPost();
 }
 
 void KZPlayer::OnStartTouchGround()
@@ -65,15 +244,6 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 }
 
-void KZPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
-{
-	this->jumpstatsService->OnAirAccelerate();
-}
-
-void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
-{
-	this->jumpstatsService->OnAirAcceleratePost(wishdir, wishspeed, accel);
-}
 
 void KZPlayer::EnableGodMode()
 {
@@ -200,9 +370,4 @@ void KZPlayer::PlayCheckpointSound()
 void KZPlayer::PlayTeleportSound()
 {
 	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_DO_TP);
-}
-
-float KZPlayer::GetPlayerMaxSpeed()
-{
-	return 250.0;
 }

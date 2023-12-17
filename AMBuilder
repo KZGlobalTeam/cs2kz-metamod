@@ -6,10 +6,19 @@ import os
 # which in the end would ruin the multi-platform (unix, win etc) loading by metamod as it won't be able to append platform specific extension
 # so just fall back to the single binary.
 # Multi-sdk solutions should be manually loaded with a custom plugin loader (examples being sourcemod, stripper:source)
+CXXINCLUDES = [
+    os.path.join(builder.sourcePath, 'src'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+    os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
+]
+
 for sdk_target in MMSPlugin.sdk_targets:
   sdk = sdk_target.sdk
   cxx = sdk_target.cxx
 
+  # Main binary
   binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.plugin_name, sdk)
 
   if binary.compiler.family == 'gcc' or binary.compiler.family == 'clang':
@@ -19,13 +28,7 @@ for sdk_target in MMSPlugin.sdk_targets:
   if binary.compiler.family == 'clang':
     binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof']
 
-  binary.compiler.cxxincludes += [
-    os.path.join(builder.sourcePath, 'src'),
-    os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
-    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
-    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
-    os.path.join(builder.sourcePath, 'vendor', 'protobuf-3.21.8', 'src'),
-    os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
+  binary.compiler.cxxincludes += CXXINCLUDES + [
     os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')
   ]
 
@@ -51,20 +54,25 @@ for sdk_target in MMSPlugin.sdk_targets:
       ]
 
   binary.sources += [
-    os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
     os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
+    
+    os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
+    
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils_print.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
+
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
+
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
+
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
@@ -72,7 +80,6 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'measure', 'kz_measure.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_manager.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_vnl.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'kz_option.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
@@ -83,7 +90,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_normal.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
-  ] 
+  ]
 
   binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = [
     os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
@@ -91,5 +98,33 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
   ])]
 
+  # Mode binaries
+  mode_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-mode-ckz", sdk)
+
+  mode_binary.compiler.cxxincludes += [
+    os.path.join(builder.sourcePath, 'src'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+    os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
+    os.path.join(builder.buildPath, f"{MMSPlugin.plugin_name}-mode-ckz", f'{binary.compiler.target.platform}-{cxx.target.arch}')
+  ]
+  mode_binary.sources += [
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
+  ]
+  mode_binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = [
+    os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
+    os.path.join(sdk['path'], 'common', 'network_connection.proto'),
+    os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
+  ])]
+
   nodes = builder.Add(binary)
+  mode_nodes = builder.Add(mode_binary)
+
+  if builder.options.generator == 'vs':
+    binary.sources += [
+      os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
+    ]
+
   MMSPlugin.binaries += [nodes]
+  MMSPlugin.mode_binaries += [mode_nodes]

@@ -1,5 +1,27 @@
 #pragma once
+
 #include "kz_mode.h"
+#define MODE_NAME_SHORT "CKZ"
+#define MODE_NAME "Classic"
+
+class KZClassicModePlugin : public ISmmPlugin, public IMetamodListener
+{
+public:
+	bool Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late);
+	bool Unload(char *error, size_t maxlen);
+	bool Pause(char *error, size_t maxlen);
+	bool Unpause(char *error, size_t maxlen);
+	void AllPluginsLoaded();
+public:
+	const char *GetAuthor();
+	const char *GetName();
+	const char *GetDescription();
+	const char *GetURL();
+	const char *GetLicense();
+	const char *GetVersion();
+	const char *GetDate();
+	const char *GetLogTag();
+};
 
 class KZClassicModeService : public KZModeService
 {
@@ -19,4 +41,5 @@ public:
 		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // JB
 	};
 
+	virtual f32 GetPlayerMaxSpeed() override;
 };

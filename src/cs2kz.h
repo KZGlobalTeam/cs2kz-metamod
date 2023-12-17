@@ -19,6 +19,8 @@ public:
 	const char *GetVersion();
 	const char *GetDate();
 	const char *GetLogTag();
+
+	virtual void *OnMetamodQuery(const char *iface, int *ret) override;
 };
 
 extern KZPlugin g_KZPlugin;

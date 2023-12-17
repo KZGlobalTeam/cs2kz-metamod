@@ -43,15 +43,58 @@ public:
 	virtual void Reset() override;
 	
 	virtual f32 GetPlayerMaxSpeed() override;
+
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
+	virtual void OnPlayerMoveNew() override;
+	virtual void OnPlayerMoveNewPost() override;
+	virtual void OnCheckParameters() override;
+	virtual void OnCheckParametersPost() override;
+	virtual void OnCanMove() override;
+	virtual void OnCanMovePost() override;
+	virtual void OnFullWalkMove(bool &) override;
+	virtual void OnFullWalkMovePost(bool) override;
+	virtual void OnMoveInit() override;
+	virtual void OnMoveInitPost() override;
+	virtual void OnCheckWater() override;
+	virtual void OnCheckWaterPost() override;
+	virtual void OnCheckVelocity(const char *) override;
+	virtual void OnCheckVelocityPost(const char *) override;
+	virtual void OnDuck() override;
+	virtual void OnDuckPost() override;
+	virtual void OnCanUnduck() override;
+	virtual void OnCanUnduckPost() override;
+	virtual void OnLadderMove() override;
+	virtual void OnLadderMovePost() override;
+	virtual void OnCheckJumpButton() override;
+	virtual void OnCheckJumpButtonPost() override;
+	virtual void OnJump() override;
+	virtual void OnJumpPost() override;
+	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
+	virtual void OnFriction() override;
+	virtual void OnFrictionPost() override;
+	virtual void OnWalkMove() override;
+	virtual void OnWalkMovePost() override;
+	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) override;
+	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) override;
+	virtual void OnCategorizePosition(bool) override;
+	virtual void OnCategorizePositionPost(bool) override;
+	virtual void OnFinishGravity() override;
+	virtual void OnFinishGravityPost() override;
+	virtual void OnCheckFalling() override;
+	virtual void OnCheckFallingPost() override;
+	virtual void OnPostPlayerMove() override;
+	virtual void OnPostPlayerMovePost() override;
+	virtual void OnPostThink() override;
+	virtual void OnPostThinkPost() override;
 
+	// Movement events
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
-	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
-	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
-	
+
+	// Timer events
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();

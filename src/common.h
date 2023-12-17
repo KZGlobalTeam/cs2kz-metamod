@@ -6,7 +6,6 @@
 
 #include <ISmmPlugin.h>
 #include <igameevents.h>
-#include <iplayerinfo.h>
 #include <sh_vector.h>
 #include <stdint.h>
 

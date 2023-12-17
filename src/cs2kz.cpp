@@ -4,6 +4,7 @@
 #include "icvar.h"
 #include "iserver.h"
 #include "entity2/entitysystem.h"
+#include "filesystem.h"
 
 #include "common.h"
 #include "utils/utils.h"
@@ -46,6 +47,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 	movement::InitDetours();
+		
+	KZ::mode::InitModeManager();
 	
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
@@ -56,11 +59,13 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	KZ::misc::RegisterCommands();
-
+	
 	if (!KZ::mode::InitModeCvars())
 	{
 		return false;
 	}
+
+	ismm->AddListener(this, this);
 
 	KZ::mode::DisableReplicatedModeCvars();
 
@@ -85,6 +90,27 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 
 void KZPlugin::AllPluginsLoaded()
 {
+	char buffer[1024];
+	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*.*");
+	FileFindHandle_t findHandle = {};
+	const char *output = g_pFullFileSystem->FindFirstEx(buffer, "GAME", &findHandle);
+	if (output)
+	{
+		int ret;
+		ISmmPluginManager *pluginManager = (ISmmPluginManager*)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
+		if (ret == META_IFACE_FAILED) return;
+		char error[256];
+		char fullPath[1024];
+		do
+		{
+			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/modes/%s", g_SMAPI->GetBaseDir(), output);
+			bool already = false;
+			pluginManager->Load(fullPath, g_PLID, already, error, sizeof(error));
+		} while (g_pFullFileSystem->FindNext(findHandle));
+		
+		g_pFullFileSystem->FindClose(findHandle);
+	}
+	// TODO: load plugins
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)
@@ -135,6 +161,18 @@ const char *KZPlugin::GetName()
 const char *KZPlugin::GetURL()
 {
 	return "https://github.com/zer0k-z/cs2kz_metamod";
+}
+
+void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
+{
+	if (strcmp(iface, KZ_MODE_MANAGER_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return KZ::mode::GetKZModeManager();
+	}
+	*ret = META_IFACE_FAILED;
+
+	return NULL; 
 }
 
 internal int Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
@@ -201,7 +239,7 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 {
 	if (event)
 	{
-		META_CONPRINTF("%s fired!\n", event->GetName());
+		//META_CONPRINTF("%s fired!\n", event->GetName());
 	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
 }

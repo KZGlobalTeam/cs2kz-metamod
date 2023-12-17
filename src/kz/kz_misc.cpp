@@ -9,6 +9,7 @@
 #include "checkpoint/kz_checkpoint.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
+#include "mode/kz_mode.h"
 
 #include "tier0/memdbgon.h"
 #include <utils/recipientfilters.h>
@@ -73,7 +74,7 @@ internal SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
 	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
-	utils::SendConVarValue(utils::GetEntityPlayerSlot(controller), nullptr, "true");
+	KZ::mode::GetKZModeManager()->SwitchToMode(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 

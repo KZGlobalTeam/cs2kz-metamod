@@ -1,7 +1,6 @@
 #pragma once
 #include "common.h"
 #include "movement/datatypes.h"
-#include "utils/cdetour.h"
 
 #define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
@@ -72,6 +71,7 @@ public:
 	virtual void Reset();
 	virtual f32 GetPlayerMaxSpeed();
 
+	// Movement hooks
 	virtual void OnProcessMovement();
 	virtual void OnProcessMovementPost();
 	virtual void OnPlayerMoveNew() {};
@@ -80,7 +80,7 @@ public:
 	virtual void OnCheckParametersPost() {};
 	virtual void OnCanMove() {};
 	virtual void OnCanMovePost() {};
-	virtual void OnFullWalkMove(bool) {};
+	virtual void OnFullWalkMove(bool &) {};
 	virtual void OnFullWalkMovePost(bool) {};
 	virtual void OnMoveInit() {};
 	virtual void OnMoveInitPost() {};
@@ -98,8 +98,8 @@ public:
 	virtual void OnCheckJumpButtonPost() {};
 	virtual void OnJump() {};
 	virtual void OnJumpPost() {};
-	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel);
-	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
+	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) {};
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) {};
 	virtual void OnFriction() {};
 	virtual void OnFrictionPost() {};
 	virtual void OnWalkMove() {};
@@ -117,10 +117,10 @@ public:
 	virtual void OnPostThink();
 	virtual void OnPostThinkPost() {};
 
-	virtual void OnStartTouchGround();
-	virtual void OnStopTouchGround();
-
-	virtual void OnChangeMoveType(MoveType_t oldMoveType);
+	// Movement events
+	virtual void OnStartTouchGround() {};
+	virtual void OnStopTouchGround() {};
+	virtual void OnChangeMoveType(MoveType_t oldMoveType) {};
 	
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();

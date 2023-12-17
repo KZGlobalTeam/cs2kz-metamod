@@ -32,10 +32,10 @@ void movement::InitDetours()
 f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
-	f32 newMaxSpeed;
+	f32 newMaxSpeed = player->GetPlayerMaxSpeed();
 	
 	if (newMaxSpeed <= 0.0f) return GetMaxSpeed(pawn);
-	return GetMaxSpeed(pawn); // TODO
+	return newMaxSpeed;
 }
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
