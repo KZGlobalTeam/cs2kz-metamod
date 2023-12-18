@@ -35,8 +35,7 @@ for sdk_target in MMSPlugin.sdk_targets:
   if binary.compiler.family == 'clang':
     binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof']
 
-  binary.compiler.cxxincludes += CXXINCLUDES + [
-  ]
+  binary.compiler.cxxincludes += CXXINCLUDES
 
   if binary.compiler.target.platform == 'linux':
     binary.compiler.postlink += [
@@ -102,6 +101,9 @@ for sdk_target in MMSPlugin.sdk_targets:
 
   # Mode binaries
   mode_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-mode-ckz", sdk)
+
+  if mode_binary.compiler.family == 'clang':
+    mode_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof']
 
   mode_binary.compiler.cxxincludes += CXXINCLUDES
 
