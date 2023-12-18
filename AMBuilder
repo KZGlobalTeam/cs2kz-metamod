@@ -102,6 +102,10 @@ for sdk_target in MMSPlugin.sdk_targets:
   # Mode binaries
   mode_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-mode-ckz", sdk)
 
+  if mode_binary.compiler.family == 'gcc' or mode_binary.compiler.family == 'clang':
+    mode_binary.compiler.linkflags += ['-lstdc++']
+    mode_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
   if mode_binary.compiler.family == 'clang':
     mode_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof']
 
