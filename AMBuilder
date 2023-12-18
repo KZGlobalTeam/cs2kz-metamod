@@ -14,6 +14,12 @@ CXXINCLUDES = [
     os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
 ]
 
+PROTOS = [
+    os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
+    os.path.join(sdk['path'], 'common', 'network_connection.proto'),
+    os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
+  ]
+
 for sdk_target in MMSPlugin.sdk_targets:
   sdk = sdk_target.sdk
   cxx = sdk_target.cxx
@@ -29,7 +35,6 @@ for sdk_target in MMSPlugin.sdk_targets:
     binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof']
 
   binary.compiler.cxxincludes += CXXINCLUDES + [
-    os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')
   ]
 
   if binary.compiler.target.platform == 'linux':
@@ -92,39 +97,27 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
   ]
 
-  binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = [
-    os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
-    os.path.join(sdk['path'], 'common', 'network_connection.proto'),
-    os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
-  ])]
+  binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = PROTOS)]
 
   # Mode binaries
   mode_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-mode-ckz", sdk)
 
-  mode_binary.compiler.cxxincludes += [
-    os.path.join(builder.sourcePath, 'src'),
-    os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
-    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
-    os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
-    os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
-    os.path.join(builder.buildPath, f"{MMSPlugin.plugin_name}-mode-ckz", f'{binary.compiler.target.platform}-{cxx.target.arch}')
-  ]
+  mode_binary.compiler.cxxincludes += CXXINCLUDES
+
   mode_binary.sources += [
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
   ]
-  mode_binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = [
-    os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
-    os.path.join(sdk['path'], 'common', 'network_connection.proto'),
-    os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
-  ])]
+  mode_binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = PROTOS)]
 
   nodes = builder.Add(binary)
   mode_nodes = builder.Add(mode_binary)
 
+  # If we are generating a VS project, make sure to add the modes in, and the build folder for linter.
   if builder.options.generator == 'vs':
-    binary.sources += [
-      os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
-    ]
+    binary.sources += mode_binary.sources
+    binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')]
+
+    mode_binary += [os.path.join(builder.buildPath, f"{MMSPlugin.plugin_name}-mode-ckz", f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
   MMSPlugin.binaries += [nodes]
   MMSPlugin.mode_binaries += [mode_nodes]

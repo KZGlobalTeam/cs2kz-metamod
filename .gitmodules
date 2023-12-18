@@ -3,5 +3,5 @@
 	url = https://github.com/alliedmodders/metamod-source.git
 [submodule "hl2sdk-cs2"]
 	path = hl2sdk-cs2
-	url = https://github.com/zer0k-z/hl2sdk.git
+	url = https://github.com/alliedmodders/hl2sdk.git
 	branch = cs2
