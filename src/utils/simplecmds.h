@@ -16,7 +16,7 @@ namespace scmd
 	bool RegisterCmd(const char *name, Callback_t *callback);
 	
 	META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
-	META_RES OnHost_Say(CCSPlayerController *controller, const CCommand &args);
+	META_RES OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 }
 
 

@@ -26,10 +26,7 @@ public:
 class KZClassicModeService : public KZModeService
 {
 	using KZModeService::KZModeService;
-public:
-	virtual const char *GetModeName() override;
-	virtual const char *GetModeShortName() override;
-	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
+
 	f32 distanceTiers[JUMPTYPE_COUNT - 3][DISTANCETIER_COUNT] =
 	{
 		{217.0f, 265.0f, 270.0f, 275.0f, 280.0f, 285.0f}, // LJ
@@ -41,5 +38,39 @@ public:
 		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // JB
 	};
 
+	const char *modeCvarValues[KZ::mode::numCvar] =
+	{
+		"true",				// slope_drop_enable
+		"6.5",				// sv_accelerate
+		"false",			// sv_accelerate_use_weapon_speed
+		"100",				// sv_airaccelerate
+		"30",				// sv_air_max_wishspeed
+		"false",			// sv_autobunnyhopping
+		"true",				// sv_enablebunnyhopping
+		"5.2",				// sv_friction
+		"800",				// sv_gravity
+		"302.0",			// sv_jump_impulse
+		"-0.707",			// sv_ladder_angle
+		"1",				// sv_ladder_dampen
+		"1",				// sv_ladder_scale_speed
+		"320",				// sv_maxspeed
+		"3500",				// sv_maxvelocity
+		"0",				// sv_staminajumpcost
+		"0",				// sv_staminalandcost
+		"0",				// sv_staminamax
+		"9999",				// sv_staminarecoveryrate
+		"0.7",				// sv_standable_normal
+		"0",				// sv_timebetweenducks
+		"0.7",				// sv_walkable_normal
+		"10",				// sv_wateraccelerate
+		"1",				// sv_waterfriction 
+		"0.9"				// sv_water_slow_amount
+	};
+
+public:
+	virtual const char *GetModeName() override;
+	virtual const char *GetModeShortName() override;
+	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
+	virtual const char **GetModeConVarValues() override;
 	virtual f32 GetPlayerMaxSpeed() override;
 };

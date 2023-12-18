@@ -34,3 +34,4 @@ internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384>
 internal void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
+internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);

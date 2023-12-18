@@ -4,7 +4,6 @@
 #include "icvar.h"
 #include "iserver.h"
 #include "entity2/entitysystem.h"
-#include "filesystem.h"
 
 #include "common.h"
 #include "utils/utils.h"
@@ -34,6 +33,8 @@ SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySp
 SH_DECL_HOOK4_void(ISource2GameClients, ClientPutInServer, SH_NOATTRIB, false, CPlayerSlot, char const *, int, uint64);
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t &, ISource2WorldSession *, const char *);
 SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEvent *, bool);
+SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
+
 CEntitySystem *g_pEntitySystem = NULL;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
@@ -58,6 +59,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	SH_ADD_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
+	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
+
 	KZ::misc::RegisterCommands();
 	
 	if (!KZ::mode::InitModeCvars())
@@ -82,6 +85,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	SH_REMOVE_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
+	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
@@ -90,27 +94,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 
 void KZPlugin::AllPluginsLoaded()
 {
-	char buffer[1024];
-	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*.*");
-	FileFindHandle_t findHandle = {};
-	const char *output = g_pFullFileSystem->FindFirstEx(buffer, "GAME", &findHandle);
-	if (output)
-	{
-		int ret;
-		ISmmPluginManager *pluginManager = (ISmmPluginManager*)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
-		if (ret == META_IFACE_FAILED) return;
-		char error[256];
-		char fullPath[1024];
-		do
-		{
-			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/modes/%s", g_SMAPI->GetBaseDir(), output);
-			bool already = false;
-			pluginManager->Load(fullPath, g_PLID, already, error, sizeof(error));
-		} while (g_pFullFileSystem->FindNext(findHandle));
-		
-		g_pFullFileSystem->FindClose(findHandle);
-	}
-	// TODO: load plugins
+	KZ::mode::LoadModePlugins();
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)
@@ -242,4 +226,11 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		//META_CONPRINTF("%s fired!\n", event->GetName());
 	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
+}
+
+internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+{
+	META_RES mres = scmd::OnDispatchConCommand(cmd, ctx, args);
+
+	RETURN_META(mres);
 }

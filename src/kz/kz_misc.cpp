@@ -74,7 +74,6 @@ internal SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
 	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
-	KZ::mode::GetKZModeManager()->SwitchToMode(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
@@ -92,6 +91,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hide",	   Command_KzHide);
 	scmd::RegisterCmd("kz_jsalways",   Command_KzJSAlways);
 	scmd::RegisterCmd("kz_respawn",    Command_KzRestart);
+	KZ::mode::RegisterCommands();
 }
 
 void KZ::misc::OnClientPutInServer(CPlayerSlot slot)

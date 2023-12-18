@@ -30,6 +30,8 @@ void KZPlayer::Reset()
 	// TODO: reset every service.
 	this->checkpointService->Reset();
 	this->quietService->Reset();
+	// TODO: Make a cvar for default mode
+	KZ::mode::GetKZModeManager()->SwitchToMode(this, "CKZ");
 }
 
 float KZPlayer::GetPlayerMaxSpeed()
@@ -40,6 +42,7 @@ float KZPlayer::GetPlayerMaxSpeed()
 void KZPlayer::OnProcessMovement()
 {
 	MovementPlayer::OnProcessMovement();
+	KZ::mode::ApplyModeCvarValues(this);
 	this->modeService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();

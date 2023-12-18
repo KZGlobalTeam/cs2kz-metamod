@@ -16,7 +16,7 @@ public:
 
 	// Jumpstats
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
-
+	virtual const char **GetModeConVarValues() = 0;
 	virtual f32 GetPlayerMaxSpeed() { return 0.0f; };
 
 	// Movement hooks
@@ -99,17 +99,22 @@ namespace KZ::mode
 	bool InitModeCvars();
 	void InitModeService(KZPlayer *player);
 	void InitModeManager();
+	void LoadModePlugins();
 
 	inline const char *modeCvarNames[] =
 	{
+		"slope_drop_enable",
 		"sv_accelerate",
 		"sv_accelerate_use_weapon_speed",
 		"sv_airaccelerate",
 		"sv_air_max_wishspeed",
+		"sv_autobunnyhopping",
 		"sv_enablebunnyhopping",
 		"sv_friction",
 		"sv_gravity",
 		"sv_jump_impulse",
+		"sv_ladder_angle",
+		"sv_ladder_dampen",
 		"sv_ladder_scale_speed",
 		"sv_maxspeed",
 		"sv_maxvelocity",
@@ -121,16 +126,20 @@ namespace KZ::mode
 		"sv_timebetweenducks",
 		"sv_walkable_normal",
 		"sv_wateraccelerate",
+		"sv_waterfriction",
 		"sv_water_slow_amount"
 	};
 
 	constexpr u32 numCvar = sizeof(KZ::mode::modeCvarNames) / sizeof(KZ::mode::modeCvarNames[0]);
 
+	inline ConVarHandle modeCvarHandles[numCvar];
 	inline ConVar *modeCvars[numCvar];
 
-	void ApplyModeCvarValues(char **values);
+	void ApplyModeCvarValues(KZPlayer *player);
 	void DisableReplicatedModeCvars();
 	void EnableReplicatedModeCvars();
 
 	KZModeManager *GetKZModeManager();
+	
+	void RegisterCommands();
 };

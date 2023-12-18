@@ -111,8 +111,17 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	return result;
 }
 
-META_RES scmd::OnHost_Say(CCSPlayerController *controller, const CCommand &args)
+META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
+	META_RES result = MRES_IGNORED;
+	if (!g_pEntitySystem)
+	{
+		return result;
+	}
+	CPlayerSlot slot = ctx.GetPlayerSlot();
+
+	CCSPlayerController *controller = (CCSPlayerController *)g_pEntitySystem->GetBaseEntity(CEntityIndex((i32)slot.Get() + 1));
+
 	if (args.ArgC() < 2)
 	{
 		// no argument somehow
@@ -133,6 +142,10 @@ META_RES scmd::OnHost_Say(CCSPlayerController *controller, const CCommand &args)
 	}
 	
 	Scmd *cmds = g_cmdManager.cmds;
+
+	CCommand cmdArgs;
+	cmdArgs.Tokenize(args[1]);
+
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
 		if (!cmds[i].callback)
@@ -142,11 +155,11 @@ META_RES scmd::OnHost_Say(CCSPlayerController *controller, const CCommand &args)
 			continue;
 		}
 		
-		const char *arg = args[1] + 1; // skip chat trigger
+		const char *arg = cmdArgs[0] + 1; // skip chat trigger
 		const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
 		if (stricmp(arg, cmdName) == 0)
 		{
-			cmds[i].callback(controller, &args);
+			cmds[i].callback(controller, &cmdArgs);
 			if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
 			{
 				// don't send chat message

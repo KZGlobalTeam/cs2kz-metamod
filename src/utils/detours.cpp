@@ -11,7 +11,6 @@
 extern CEntitySystem* g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
-DECLARE_DETOUR(Host_Say, Detour_Host_Say, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
 DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
@@ -43,7 +42,6 @@ DECLARE_MOVEMENT_DETOUR(PostThink);
 void InitDetours()
 {
 	g_vecDetours.RemoveAll();
-	INIT_DETOUR(Host_Say);
 	INIT_DETOUR(CBaseTrigger_StartTouch);
 	INIT_DETOUR(CBaseTrigger_EndTouch);
 	INIT_DETOUR(RecvServerBrowserPacket);
@@ -57,15 +55,6 @@ void FlushAllDetours()
 	}
 	
 	g_vecDetours.RemoveAll();
-}
-
-void Detour_Host_Say(CCSPlayerController *pEntity, const CCommand *args, bool teamonly, uint32_t nCustomModRules, const char *pszCustomModPrepend)
-{
-	META_RES mres = scmd::OnHost_Say(pEntity, *args);
-	if (mres != MRES_SUPERCEDE)
-	{
-		Host_Say(pEntity, args, teamonly, nCustomModRules, pszCustomModPrepend);
-	}
 }
 
 bool IsEntTriggerMultiple(CBaseEntity *ent)

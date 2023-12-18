@@ -81,6 +81,10 @@ const char *KZClassicModePlugin::GetURL()
 	return "https://github.com/KZGlobalTeam/cs2kz-metamod";
 }
 
+/*
+	Actual mode stuff.
+*/
+
 const char *KZClassicModeService::GetModeName()
 {
 	return MODE_NAME;
@@ -114,4 +118,9 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 f32 KZClassicModeService::GetPlayerMaxSpeed()
 {
 	return 250.0f;
+}
+
+const char **KZClassicModeService::GetModeConVarValues()
+{
+	return modeCvarValues;
 }

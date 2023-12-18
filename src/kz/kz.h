@@ -166,6 +166,7 @@ public:
 	KZPlayer *ToPlayer(CPlayerSlot slot);
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
 	KZPlayer *ToPlayer(CPlayerUserId userID);
+	KZPlayer *ToPlayer(u32 index);
 
 	KZPlayer *ToKZPlayer(MovementPlayer *player) { return static_cast<KZPlayer *>(player); }
 };
