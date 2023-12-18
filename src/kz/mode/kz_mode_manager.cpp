@@ -41,8 +41,6 @@ void KZ::mode::LoadModePlugins()
 	char buffer[1024];
 	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*.*");
 	FileFindHandle_t findHandle = {};
-	// TODO: Fix this
-#ifdef _WIN32
 	const char *output = g_pFullFileSystem->FindFirstEx(buffer, "GAME", &findHandle);
 	if (output)
 	{
@@ -61,26 +59,6 @@ void KZ::mode::LoadModePlugins()
 
 		g_pFullFileSystem->FindClose(findHandle);
 	}
-#else
-	const char *output = CALL_VIRTUAL(const char *, 63, g_pFullFileSystem, buffer, "GAME", &findHandle);
-	if (output)
-	{
-		int ret;
-		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
-		if (ret == META_IFACE_FAILED) return;
-		char error[256];
-		char fullPath[1024];
-		do
-		{
-			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/modes/%s", g_SMAPI->GetBaseDir(), output);
-			bool already = false;
-			pluginManager->Load(fullPath, g_PLID, already, error, sizeof(error));
-			output = CALL_VIRTUAL(const char *, 60, g_pFullFileSystem, findHandle);
-		} while (output);
-
-		CALL_VIRTUAL(void, 62, g_pFullFileSystem, &findHandle);
-	}
-#endif
 }
 
 void KZ::mode::InitModeService(KZPlayer *player)
