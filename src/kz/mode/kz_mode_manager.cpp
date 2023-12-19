@@ -88,6 +88,30 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 {
 	for (u32 i = 0; i < numCvar; i++)
 	{
+		u8 byteArray[16] = {};
+		if (modeCvars[i]->m_eVarType == EConVarType_Float32)
+		{
+			f32 newValue = atof(player->modeService->GetModeConVarValues()[i]);
+			V_memcpy(byteArray, &newValue, sizeof(f32));
+		}
+		else 
+		{
+			u32 newValue;
+			if (V_stricmp(player->modeService->GetModeConVarValues()[i], "true") == 0)
+			{
+				newValue = 1;
+			}
+			else if (V_stricmp(player->modeService->GetModeConVarValues()[i], "false") == 0)
+			{
+				newValue = 0;
+			}
+			else
+			{
+				newValue = atoi(player->modeService->GetModeConVarValues()[i]);
+			} 
+			V_memcpy(byteArray, &newValue, sizeof(u32));
+		}
+		V_memcpy(&(modeCvars[i]->values), byteArray, 16);
 		//g_pCVar->SetConVarValue(modeCvarHandles[i], 0, (CVValue_t *)player->modeService->GetModeConVarValues()[i], (CVValue_t *)modeCvars[i]->values);
 	}
 }
@@ -125,7 +149,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	{
 		return; // Special case for VNL (0)
 	}
-	for (u32 i = 0; i < this->nameIDMap.GetNumStrings(); i++)
+	for (int i = 0; i < this->nameIDMap.GetNumStrings(); i++)
 	{
 		if (this->nameIDMap[i] == modeID)
 		{
@@ -144,7 +168,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	}
 }
 
-bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName)
+bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)
 {
 	// Don't change mode if it doesn't exist.
 	if (!modeName || !this->nameIDMap.Defined(modeName)) return false;
@@ -157,7 +181,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName)
 	delete player->modeService;
 	player->modeService = factory(player);
 
-	if (player->GetController())
+	if (player->GetController() && !silent)
 	{
 		utils::CPrintChat(player->GetController(), "%s {grey}You have switched to the {purple}%s {grey}mode.", KZ_CHAT_PREFIX, player->modeService->GetModeName());
 	}

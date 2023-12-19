@@ -50,6 +50,7 @@ class KZClassicModeService : public KZModeService
 		"5.2",				// sv_friction
 		"800",				// sv_gravity
 		"302.0",			// sv_jump_impulse
+		"0.0078125",		// sv_jump_spam_penalty_time
 		"-0.707",			// sv_ladder_angle
 		"1",				// sv_ladder_dampen
 		"1",				// sv_ladder_scale_speed
@@ -73,4 +74,6 @@ public:
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
 	virtual f32 GetPlayerMaxSpeed() override;
+
+	virtual void OnStopTouchGround() override;
 };

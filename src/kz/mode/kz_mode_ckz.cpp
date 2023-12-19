@@ -117,10 +117,37 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 
 f32 KZClassicModeService::GetPlayerMaxSpeed()
 {
-	return 250.0f;
+	// TODO: prestrafe
+	return 276.0f;
 }
 
 const char **KZClassicModeService::GetModeConVarValues()
 {
 	return modeCvarValues;
+}
+
+void KZClassicModeService::OnStopTouchGround()
+{
+	Vector velocity;
+	this->player->GetVelocity(&velocity);
+	f32 speed = velocity.Length2D();
+
+	f32 timeOnGround = this->player->takeoffTime - this->player->landingTime;
+	// Perf
+	if (timeOnGround <= 0.02)
+	{
+		Vector2D landingVelocity2D(this->player->landingVelocity.x, this->player->landingVelocity.y);
+		landingVelocity2D.NormalizeInPlace();
+		float newSpeed = this->player->landingVelocity.Length2D();
+		if (newSpeed > 276.0f)
+		{
+			newSpeed = (52 - timeOnGround * 128) * log(newSpeed) - 5.020043;
+		}
+		//META_CONPRINTF("currentSpeed = %.3f, timeOnGround = %.3f, landingspeed = %.3f, newSpeed = %.3f\n", speed, timeOnGround, this->player->landingVelocity.Length2D(), newSpeed);
+		velocity.x = newSpeed * landingVelocity2D.x;
+		velocity.y = newSpeed * landingVelocity2D.y;
+		this->player->SetVelocity(velocity);
+		this->player->takeoffVelocity = velocity;
+	}
+	// TODO: perf heights
 }

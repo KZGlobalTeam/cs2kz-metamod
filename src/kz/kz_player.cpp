@@ -31,7 +31,7 @@ void KZPlayer::Reset()
 	this->checkpointService->Reset();
 	this->quietService->Reset();
 	// TODO: Make a cvar for default mode
-	KZ::mode::GetKZModeManager()->SwitchToMode(this, "CKZ");
+	KZ::mode::GetKZModeManager()->SwitchToMode(this, "CKZ", true);
 }
 
 float KZPlayer::GetPlayerMaxSpeed()
@@ -235,16 +235,19 @@ void KZPlayer::OnPostThinkPost()
 void KZPlayer::OnStartTouchGround()
 {
 	this->jumpstatsService->EndJump();
+	this->modeService->OnStartTouchGround();
 }
 
 void KZPlayer::OnStopTouchGround()
 {
 	this->jumpstatsService->AddJump();
+	this->modeService->OnStopTouchGround();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
+	this->modeService->OnChangeMoveType(oldMoveType);
 }
 
 

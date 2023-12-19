@@ -87,7 +87,7 @@ public:
 	}
 	virtual bool RegisterMode(const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
 	virtual void UnregisterMode(const char *modeName);
-	bool SwitchToMode(KZPlayer *player, const char *modeName);
+	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);
 private:
 	u32 currentID = 0;
 	CUtlStringMap<int> nameIDMap;
@@ -113,6 +113,7 @@ namespace KZ::mode
 		"sv_friction",
 		"sv_gravity",
 		"sv_jump_impulse",
+		"sv_jump_spam_penalty_time",
 		"sv_ladder_angle",
 		"sv_ladder_dampen",
 		"sv_ladder_scale_speed",
