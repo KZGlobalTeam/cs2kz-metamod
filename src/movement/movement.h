@@ -53,20 +53,21 @@ public:
 
 	// TODO: this doesn't work during movement processing!
 	
-	void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
-	void GetOrigin(Vector *origin);
-	void SetOrigin(const Vector &origin);
-	void GetVelocity(Vector *velocity);
-	void SetVelocity(const Vector &velocity);
-	void GetAngles(QAngle *angles);
-	void SetAngles(const QAngle &angles);
+	virtual void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	virtual void GetOrigin(Vector *origin);
+	virtual void SetOrigin(const Vector &origin);
+	virtual void GetVelocity(Vector *velocity);
+	virtual void SetVelocity(const Vector &velocity);
+	virtual void GetAngles(QAngle *angles);
+	// It is not recommended use this to change the angle inside movement processing, it might not work!
+	virtual void SetAngles(const QAngle &angles);
 	
-	TurnState GetTurning();
-	bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
-	void RegisterTakeoff(bool jumped);
-	void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
-	f32 GetGroundPosition();
-	void InvalidateTimer(bool playErrorSound = true);
+	virtual TurnState GetTurning();
+	virtual bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
+	virtual void RegisterTakeoff(bool jumped);
+	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
+	virtual f32 GetGroundPosition();
+	virtual void InvalidateTimer(bool playErrorSound = true);
 
 	virtual void Reset();
 	virtual f32 GetPlayerMaxSpeed();

@@ -89,9 +89,16 @@ void MovementPlayer::GetVelocity(Vector *velocity)
 
 void MovementPlayer::SetVelocity(const Vector &velocity)
 {
-	CBasePlayerPawn *pawn = this->GetPawn();
-	if (!pawn) return;
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, &velocity);
+	if (this->processingMovement && this->currentMoveData)
+	{
+		this->currentMoveData->m_vecVelocity = velocity;
+	}
+	else
+	{
+		CBasePlayerPawn *pawn = this->GetPawn();
+		if (!pawn) return;
+		CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, &velocity);
+	}
 }
 
 void MovementPlayer::GetAngles(QAngle *angles)
