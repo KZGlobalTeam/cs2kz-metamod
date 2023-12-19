@@ -1,7 +1,7 @@
-#include "protobuf/generated/cstrike15_usermessages.pb.h"
-#include "protobuf/generated/usermessages.pb.h"
-#include "protobuf/generated/gameevents.pb.h"
-#include "protobuf/generated/cs_gameevents.pb.h"
+#include "cstrike15_usermessages.pb.h"
+#include "usermessages.pb.h"
+#include "gameevents.pb.h"
+#include "cs_gameevents.pb.h"
 
 #include "kz_quiet.h"
 
@@ -17,28 +17,29 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		CPlayerSlot targetSlot = pTransmitInfo->m_nClientEntityIndex;
 		KZPlayer *targetPlayer = KZ::GetKZPlayerManager()->ToPlayer(targetSlot);
 
-		// Never send dead players to prevent crashes.
-		for (int j = 0; j < MAXPLAYERS + 1; j++)
+		CCSPlayerPawn *pawn = nullptr;
+		while (nullptr != (pawn = (CCSPlayerPawn *)utils::FindEntityByClassname(pawn, "player")))
 		{
-			if (j == targetPlayer->GetController()->entindex()) continue;
-			CBasePlayerPawn *pawn = KZ::GetKZPlayerManager()->players[j]->GetPawn();
-			if (!pawn) continue;
-			if (pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()) && pawn->m_lifeState() != LIFE_ALIVE)
+			// Bit is not even set, don't bother.
+			if (!pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
+			{
+				continue;
+			}
+			// Do not transmit a pawn without any controller to prevent crashes.
+			if (!pawn->m_hController().IsValid())
+			{
+				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
+				continue;
+			}
+			// Never send dead players to prevent crashes.
+			if (pawn->m_lifeState() != LIFE_ALIVE)
 			{
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 			}
-		}
-		if (!targetPlayer->quietService->ShouldHide()) continue;
-
-		// Loop through the list of players and see if they need to be hidden away from our target player.
-		for (int j = 0; j < MAXPLAYERS + 1; j++)
-		{
-			if (j == targetPlayer->GetController()->entindex()) continue;
-			CBasePlayerPawn *pawn = KZ::GetKZPlayerManager()->players[j]->GetPawn();
-
-			if (!pawn || !targetPlayer->quietService->ShouldHideIndex(j)) continue;
-
-			if (pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
+			// Finally check if player is using !hide.
+			if (!targetPlayer->quietService->ShouldHide()) continue;
+			u32 index = GetKZPlayerManager()->ToPlayer(pawn)->index;
+			if (targetPlayer->quietService->ShouldHideIndex(index))
 			{
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 			}

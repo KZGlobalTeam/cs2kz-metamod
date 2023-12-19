@@ -12,12 +12,14 @@ typedef void TracePlayerBBoxForGround_t (const Vector &start, const Vector &end,
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
+typedef CBaseEntity2 *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
 // TODO: why?
 #ifdef _WIN32
 typedef void EmitSoundFunc_t(u64 &unknown, IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 #else
 typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 #endif
+
 
 namespace utils
 {
@@ -30,7 +32,7 @@ namespace utils
 
 	void SetEntityMoveType(CBaseEntity *entity, MoveType_t movetype);
 	void EntityCollisionRulesChanged(CBaseEntity *entity);
-
+	CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
 	bool IsEntityPawn(CBaseEntity *entity);
 	bool IsEntityController(CBaseEntity *entity);
 	
@@ -43,6 +45,7 @@ namespace utils
 	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
 	extern SnapViewAngles_t *SnapViewAngles;
 	extern EmitSoundFunc_t *EmitSound;
+	
 
 	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
