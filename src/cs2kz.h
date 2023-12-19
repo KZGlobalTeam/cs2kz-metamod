@@ -1,6 +1,8 @@
 #pragma once
 
 #include "common.h"
+#include "networksystem/inetworkserializer.h"
+#include "inetchannel.h"
 
 class KZPlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -32,3 +34,5 @@ internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384>
 internal void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
+internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64* clients,
+	INetworkSerializable* pEvent, const void* pData, unsigned long nSize, NetChannelBufType_t bufType);

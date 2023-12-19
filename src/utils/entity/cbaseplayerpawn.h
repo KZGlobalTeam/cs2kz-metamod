@@ -13,4 +13,5 @@ public:
 	SCHEMA_FIELD(CPlayer_MovementServices*, m_pMovementServices)
 	SCHEMA_FIELD(CHandle< CBasePlayerController >, m_hController)
 	SCHEMA_FIELD(CCSPlayer_ItemServices*, m_pItemServices)
+	SCHEMA_FIELD(CPlayer_ObserverServices*, m_pObserverServices)
 };
