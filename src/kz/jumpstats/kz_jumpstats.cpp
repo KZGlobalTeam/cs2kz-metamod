@@ -10,7 +10,10 @@
 #define JS_MAX_BHOP_GROUND_TIME 0.05f
 #define JS_MAX_DUCKBUG_RESET_TIME 0.05f
 #define JS_MAX_WEIRDJUMP_FALL_OFFSET 64.0f
-#define JS_OFFSET_EPSILON 0.03125f
+#define JS_TOUCH_GRACE_PERIOD 0.04f
+#define JS_EPSILON 0.03125f
+#define JS_SPEED_MODIFICATION_TOLERANCE 0.1f
+#define JS_TELEPORT_DISTANCE_SQUARED 4096.0f * 4096.0f / 64.0f
 
 const char *jumpTypeStr[JUMPTYPE_COUNT] =
 {
@@ -138,6 +141,18 @@ f32 AACall::CalcIdealGain()
 * Strafe stuff
 */
 
+void Strafe::UpdateCollisionVelocityChange(f32 delta)
+{
+	if (delta < 0.0f)
+	{
+		this->externalLoss -= delta;
+	}
+	else
+	{
+		this->externalGain += delta;
+	}
+}
+
 void Strafe::End()
 {
 	FOR_EACH_VEC(this->aaCalls, i)
@@ -156,13 +171,13 @@ void Strafe::End()
 				this->deadAir += this->aaCalls[i].subtickFraction / 64;
 			}
 		}
-		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= JS_OFFSET_EPSILON)
+		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= JS_EPSILON)
 		{
 			// This gain could just be from quantized float stuff.
 			this->badAngles += this->aaCalls[i].subtickFraction / 64;
 		}
 		// Calculate sync.
-		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > JS_OFFSET_EPSILON)
+		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > JS_EPSILON)
 		{
 			this->syncDuration += this->aaCalls[i].subtickFraction / 64;
 		}
@@ -172,11 +187,11 @@ void Strafe::End()
 		f32 speedDiff = this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D();
 		if (speedDiff > 0)
 		{
-			this->gain += speedDiff;
+			this->airGain += speedDiff;
 		}
 		else
 		{
-			this->loss += speedDiff;
+			this->airLoss += speedDiff;
 		}
 		f32 externalSpeedDiff = this->aaCalls[i].externalSpeedDiff;
 		if (externalSpeedDiff > 0)
@@ -318,10 +333,6 @@ void Jump::Init()
 	this->jumpType = this->player->jumpstatsService->DetermineJumpType();
 }
 
-void Jump::Invalidate()
-{
-	this->valid = false;
-}
 
 void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 {
@@ -348,6 +359,7 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 
 void Jump::Update()
 {
+	if (this->AlreadyEnded()) return;
 	this->totalDistance += (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
 	this->currentMaxSpeed = MAX(this->player->currentMoveData->m_vecVelocity.Length2D(), this->currentMaxSpeed);
 	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z, this->currentMaxHeight);
@@ -400,7 +412,38 @@ void Jump::End()
 	this->gainEff = gain / maxGain;
 	// If there's no air time at all then that was definitely not a jump.
 	// Happens when player touch the ground from a ladder.
-	if (jumpDuration == 0.0f) this->jumpType = JumpType_FullInvalid;
+	if (jumpDuration == 0.0f)
+	{
+		this->jumpType = JumpType_FullInvalid;
+	}
+	else
+	{
+		// Make sure the airtime is valid.
+		switch (this->jumpType)
+		{
+			case JumpType_LadderJump:
+			{
+				if (jumpDuration > 1.04)
+				{
+					this->jumpType = JumpType_Invalid;
+				}
+				break;
+			}
+			case JumpType_LongJump:
+			case JumpType_Bhop:
+			case JumpType_MultiBhop:
+			case JumpType_WeirdJump:
+			case JumpType_Ladderhop:
+			case JumpType_Jumpbug:
+			{
+				if (jumpDuration > 0.8)
+				{
+					this->jumpType = JumpType_Invalid;
+				}
+				break;
+			}
+		}
+	}
 }
 
 
@@ -475,13 +518,13 @@ JumpType KZJumpstatsService::DetermineJumpType()
 			return JumpType_LadderJump;
 		}
 	}
-	else if (!this->player->jumped)
+	if (!this->player->jumped)
 	{
 		return JumpType_Fall;
 	}
-	else if (this->player->duckBugged)
+	if (this->player->duckBugged)
 	{
-		if (this->player->jumpstatsService->jumps.Tail().GetOffset() < JS_OFFSET_EPSILON && this->player->jumpstatsService->jumps.Tail().GetJumpType() == JumpType_LongJump)
+		if (this->jumps.Tail().GetOffset() < JS_EPSILON && this->jumps.Tail().GetJumpType() == JumpType_LongJump)
 		{
 			return JumpType_Jumpbug;
 		}
@@ -490,12 +533,16 @@ JumpType KZJumpstatsService::DetermineJumpType()
 			return JumpType_Invalid;
 		}
 	}
-	else if (this->HitBhop() && !this->HitDuckbugRecently())
+	if (this->HitBhop() && !this->HitDuckbugRecently())
 	{
 		// Check for no offset
-		if (fabs(this->player->jumpstatsService->jumps.Tail().GetOffset()) < JS_OFFSET_EPSILON)
+		if (this->jumps.Tail().DidHitHead())
 		{
-			switch (this->player->jumpstatsService->jumps.Tail().GetJumpType())
+			return JumpType_Invalid;
+		}
+		if (fabs(this->jumps.Tail().GetOffset()) < JS_EPSILON)
+		{
+			switch (this->jumps.Tail().GetJumpType())
 			{
 			case JumpType_LongJump:return JumpType_Bhop;
 			case JumpType_Bhop:return JumpType_MultiBhop;
@@ -504,15 +551,13 @@ JumpType KZJumpstatsService::DetermineJumpType()
 			}
 		}
 		// Check for weird jump
-		else if (this->player->jumpstatsService->jumps.Tail().GetJumpType() == JumpType_Fall &&
+		if (this->jumps.Tail().GetJumpType() == JumpType_Fall &&
 			this->ValidWeirdJumpDropDistance())
 		{
 			return JumpType_WeirdJump;
 		}
-		else
-		{
-			return JumpType_Other;
-		}
+
+		return JumpType_Other;
 	}
 	if (this->HitDuckbugRecently() || !this->GroundSpeedCappedRecently())
 	{
@@ -529,12 +574,10 @@ void KZJumpstatsService::OnStartProcessMovement()
 	{
 		this->AddJump();
 		this->InvalidateJumpstats();
+		return;
 	}
-	// Invalidate jumpstats if movetype is invalid.
-	if (this->player->GetPawn()->m_MoveType() != MOVETYPE_WALK && this->player->GetPawn()->m_MoveType() != MOVETYPE_LADDER )
-	{
-		this->InvalidateJumpstats();
-	}
+	this->CheckValidMoveType();
+	this->DetectExternalModifications();
 }
 
 void KZJumpstatsService::OnChangeMoveType(MoveType_t oldMoveType)
@@ -599,7 +642,11 @@ void KZJumpstatsService::UpdateJump()
 	{
 		this->jumps.Tail().Update();
 	}
+	this->DetectEdgebug();
+	this->DetectInvalidCollisions();
+	this->DetectInvalidGains();
 }
+
 void KZJumpstatsService::EndJump()
 {
 	if (this->jumps.Count() > 0)
@@ -610,7 +657,7 @@ void KZJumpstatsService::EndJump()
 		if (jump->AlreadyEnded()) return;
 		jump->End();
 		if (jump->GetJumpType() == JumpType_FullInvalid) return;
-		if ((jump->GetOffset() > -JS_OFFSET_EPSILON && jump->IsValid()) || this->jsAlways)
+		if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
 			KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
@@ -646,7 +693,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
 		jump->GetDistance(),
 		jumpTypeStr[jump->GetJumpType()]);
-	utils::PrintConsole(target->GetController(), "%s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.2f Height | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
+	utils::PrintConsole(target->GetController(), "%s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height\n%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
 		jump->GetJumpPlayer()->modeService->GetModeShortName(),
 		jump->strafes.Count(),
 		jump->GetSync() * 100.0f,
@@ -655,17 +702,17 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetBadAngles() * 100.0f,
 		jump->GetOverlap() * 100.0f,
 		jump->GetDeadAir() * 100.0f,
+		jump->GetMaxHeight(),
 		jump->GetGainEfficiency() * 100.0f,
 		jump->GetAirPath(),
 		jump->GetDeviation(),
 		jump->GetWidth(),
-		jump->GetMaxHeight(),
 		jump->GetJumpPlayer()->landingTimeActual - jump->GetJumpPlayer()->takeoffTime,
 		jump->GetOffset(),
 		jump->GetDuckTime(true),
 		jump->GetDuckTime(false));
-	utils::PrintConsole(target->GetController(), "#. %-12s %-13s      %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
-		"Sync","Gain","Loss","Max","Air","BA","OL","DA","AvgGain","GainEff","AngRatio(Avg/Med/Max)");
+	utils::PrintConsole(target->GetController(), "#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s",
+		"Sync", "Gain", "Loss", "Max", "Air", "BA", "OL", "DA", "AvgGain", "GainEff", "AngRatio(Avg/Med/Max)");
 	FOR_EACH_VEC(jump->strafes, i)
 	{
 		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
@@ -691,7 +738,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		{
 			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
 		}
-		utils::PrintConsole(target->GetController(), "%i. %-7s%7s %-8s%8s %-7s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
+		utils::PrintConsole(target->GetController(), "%i.%5s %7s%-10s %7s%-10s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
 			i,
 			syncString,
 			gainString,
@@ -710,7 +757,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 }
 void KZJumpstatsService::InvalidateJumpstats()
 {
-	if (this->jumps.Count() > 0)
+	if (this->jumps.Count() > 0 && !this->jumps.Tail().AlreadyEnded())
 	{
 		this->jumps.Tail().Invalidate();
 	}
@@ -737,5 +784,78 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 void KZJumpstatsService::ToggleJSAlways()
 {
 	this->jsAlways = !this->jsAlways;
-	utils::PrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
+	utils::CPrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
+}
+
+void KZJumpstatsService::CheckValidMoveType()
+{
+	// Invalidate jumpstats if movetype is invalid.
+	if (this->player->GetPawn()->m_MoveType() != MOVETYPE_WALK && this->player->GetPawn()->m_MoveType() != MOVETYPE_LADDER)
+	{
+		this->InvalidateJumpstats();
+	}
+}
+
+void KZJumpstatsService::DetectEdgebug()
+{
+	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid()) return;
+	// If the player suddenly gain speed from negative speed, they probably edgebugged.
+	if (this->player->moveDataPre.m_vecVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->player->moveDataPre.m_vecVelocity.z)
+	{
+		this->InvalidateJumpstats();
+	}
+}
+
+void KZJumpstatsService::DetectInvalidCollisions()
+{
+	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid()) return;
+	if (this->player->currentMoveData->m_TouchList.Count() > 0)
+	{
+		this->jumps.Tail().touchDuration += utils::GetServerGlobals()->frametime;
+		// Headhit invadidates following bhops but not the current jump,
+		// while other collisions do after a certain duration.
+		if (this->jumps.Tail().touchDuration > JS_TOUCH_GRACE_PERIOD)
+		{
+			this->InvalidateJumpstats();
+		}
+		if (this->player->moveDataPre.m_vecVelocity.z > 0.0f)
+		{
+			this->jumps.Tail().MarkHitHead();
+		}
+	}
+}
+
+void KZJumpstatsService::DetectInvalidGains()
+{
+	/*
+	*	Ported from GOKZ: Fix certain props that don't give you base velocity
+	*	We check for speed reduction for abuse; while prop abuses increase speed,
+	*	wall collision will very likely (if not always) result in a speed reduction.
+	*/
+	f32 speed = this->player->currentMoveData->m_vecVelocity.Length2D();
+	f32 actualSpeed = (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
+
+	if (actualSpeed - speed > JS_SPEED_MODIFICATION_TOLERANCE && actualSpeed > JS_EPSILON)
+	{
+		this->InvalidateJumpstats();
+	}
+}
+
+void KZJumpstatsService::DetectExternalModifications()
+{
+	if ((this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPost.m_vecAbsOrigin).LengthSqr() > JS_TELEPORT_DISTANCE_SQUARED)
+	{
+		this->InvalidateJumpstats();
+	}
+}
+
+void KZJumpstatsService::OnTryPlayerMovePre()
+{
+	this->tpmPreSpeed = this->player->currentMoveData->m_vecVelocity.Length2D();
+}
+
+void KZJumpstatsService::OnTryPlayerMovePost()
+{
+	if (this->jumps.Count() == 0 || this->jumps.Tail().strafes.Count() == 0) return;
+	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmPreSpeed);
 }

@@ -49,7 +49,11 @@ public:
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
 	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
+	virtual void OnTryPlayerMovePre(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
+	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
 	
+	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
+
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();

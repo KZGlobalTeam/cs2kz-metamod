@@ -81,19 +81,27 @@ private:
 	f32 syncDuration{};
 	f32 width{};
 
-	f32 gain{};
+	// Gain/loss from airstrafing
+	f32 airGain{};
 	f32 maxGain{};
-	f32 loss{};
+	f32 airLoss{};
+
+	// Gain/loss from collisions
+	f32 collisionGain{};
+	f32 collisionLoss{};
+
+	// Gain/loss from triggers/networking/etc..
 	f32 externalGain{};
 	f32 externalLoss{};
 	f32 strafeMaxSpeed{};
 public:
 	void End();
 	f32 GetStrafeDuration() { return this->duration; };
-
+	
+	void UpdateCollisionVelocityChange(f32 delta);
 	f32 GetMaxGain() { return this->maxGain; };
-	f32 GetGain(bool external = false) { return external ? this->externalGain : this->gain; };
-	f32 GetLoss(bool external = false) { return external ? this->externalLoss : this->loss; };
+	f32 GetGain(bool external = false) { return external ? this->externalGain : this->airGain + this->collisionGain; };
+	f32 GetLoss(bool external = false) { return external ? this->externalLoss : this->airLoss + this->collisionLoss; };
 	f32 GetWidth() { return this->width; };
 
 	// BA/OL/DA
@@ -136,7 +144,7 @@ private:
 	Vector adjustedLandingOrigin;
 
 	JumpType jumpType;
-
+	
 	// Required for airpath stat.
 	f32 totalDistance{};
 	f32 currentMaxSpeed{};
@@ -151,10 +159,13 @@ private:
 	f32 duckEndDuration{};
 	f32 width{};
 	f32 gainEff{};
+
+	bool hitHead{};
 	bool valid = true;
 	bool ended{};
 public:
 	CCopyableUtlVector<Strafe> strafes;
+	f32 touchDuration{};
 
 public:
 	Jump() {}
@@ -166,13 +177,15 @@ public:
 	void UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel);
 	void Update();
 	void End();
-	void Invalidate();
+	void Invalidate() {	this->valid = false; };
+	void MarkHitHead() { this->hitHead = true; };
 
 	Strafe *GetCurrentStrafe();
 	JumpType GetJumpType() { return this->jumpType; };
 	KZPlayer *GetJumpPlayer() { return this->player; };
 	bool IsValid() { return this->valid && this->jumpType >= JumpType_LongJump && this->jumpType <= JumpType_Jumpbug; };
 	bool AlreadyEnded() { return this->ended; };
+	bool DidHitHead() { return this->hitHead; };
 
 	f32 GetTakeoffSpeed() { return this->takeoffVelocity.Length2D(); };
 	f32 GetOffset() { return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z; };
@@ -199,6 +212,7 @@ public:
 		this->jumps = CUtlVector<Jump>(1, 0);
 	}
 	// Jumpstats
+private:
 	CUtlVector<Jump> jumps;
 	bool jsAlways{};
 	f32 lastJumpButtonTime{};
@@ -206,9 +220,14 @@ public:
 	f32 lastDuckbugTime{};
 	f32 lastGroundSpeedCappedTime{};
 	f32 lastMovementProcessedTime{};
+	f32 tpmPreSpeed{};
 
+public:
 	void OnStartProcessMovement();
 	void OnChangeMoveType(MoveType_t oldMoveType);
+	void OnTryPlayerMovePre();
+	void OnTryPlayerMovePost();
+
 	JumpType DetermineJumpType();
 	bool HitBhop();
 	bool HitDuckbugRecently();
@@ -225,6 +244,12 @@ public:
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
 	void ToggleJSAlways();
+
+	void CheckValidMoveType();
+	void DetectEdgebug();
+	void DetectInvalidCollisions();
+	void DetectInvalidGains();
+	void DetectExternalModifications();
 
 	static_global void PrintJumpToChat(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToConsole(KZPlayer *target, Jump *jump);

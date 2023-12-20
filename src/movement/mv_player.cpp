@@ -41,6 +41,19 @@ void MovementPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 acce
 {
 }
 
+void MovementPlayer::OnTryPlayerMovePre(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+
+}
+void MovementPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+
+}
+
+void MovementPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+}
+
 CCSPlayerController *MovementPlayer::GetController()
 {
 	if (!g_pEntitySystem)
@@ -299,6 +312,7 @@ void MovementPlayer::Reset()
 	this->hitPerf = false;
 	this->jumped = false;
 	this->takeoffFromLadder = false;
+	this->lastValidLadderOrigin.Init();
 	this->timerIsRunning = false;
 	this->takeoffOrigin.Init();
 	this->takeoffVelocity.Init();

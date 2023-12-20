@@ -53,7 +53,7 @@ public:
 	CCSPlayer_MovementServices *GetMoveServices();
 
 	// TODO: this doesn't work during movement processing!
-	
+
 	void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
 	void GetOrigin(Vector *origin);
 	void SetOrigin(const Vector &origin);
@@ -80,8 +80,12 @@ public:
 	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel);
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	
+	virtual void OnTryPlayerMovePre(Vector *pFirstDest, trace_t_s2 *pFirstTrace);
+	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace);
 	virtual void OnPostThink();
-	
+
+	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
+
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();
@@ -109,7 +113,9 @@ public:
 	bool hitPerf{};
 	bool jumped{};
 	bool takeoffFromLadder{};
+	Vector lastValidLadderOrigin;
 	bool timerIsRunning{};
+
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
 	f32 takeoffTime{};

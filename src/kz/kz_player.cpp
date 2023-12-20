@@ -75,6 +75,20 @@ void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
 	this->jumpstatsService->OnAirAcceleratePost(wishdir, wishspeed, accel);
 }
 
+void KZPlayer::OnTryPlayerMovePre(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+	this->jumpstatsService->OnTryPlayerMovePre();
+}
+void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+	this->jumpstatsService->OnTryPlayerMovePost();
+}
+
+void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	this->jumpstatsService->InvalidateJumpstats();
+}
+
 void KZPlayer::EnableGodMode()
 {
 	CCSPlayerPawn *pawn = this->GetPawn();
