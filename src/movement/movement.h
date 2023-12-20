@@ -122,6 +122,8 @@ public:
 	virtual void OnStartTouchGround() {};
 	virtual void OnStopTouchGround() {};
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) {};
+
+	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) {};
 	
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();
@@ -150,7 +152,9 @@ public:
 	bool hitPerf{};
 	bool jumped{};
 	bool takeoffFromLadder{};
+	Vector lastValidLadderOrigin;
 	bool timerIsRunning{};
+
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
 	f32 takeoffTime{};

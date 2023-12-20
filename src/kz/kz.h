@@ -93,6 +93,8 @@ public:
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
+	
+	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
 	// Timer events
 	virtual void StartZoneStartTouch();

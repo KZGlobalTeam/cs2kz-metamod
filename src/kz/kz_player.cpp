@@ -185,10 +185,12 @@ void KZPlayer::OnWalkMovePost()
 void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
 	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace);
+	this->jumpstatsService->OnTryPlayerMove();
 }
 void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
 	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
+	this->jumpstatsService->OnTryPlayerMovePost();
 }
 void KZPlayer::OnCategorizePosition(bool bStayOnGround)
 {
@@ -250,6 +252,10 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 	this->modeService->OnChangeMoveType(oldMoveType);
 }
 
+void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	this->jumpstatsService->InvalidateJumpstats();
+}
 
 void KZPlayer::EnableGodMode()
 {

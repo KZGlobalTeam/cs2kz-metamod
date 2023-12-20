@@ -38,6 +38,17 @@ struct TransmitInfo
 	CPlayerSlot m_nClientEntityIndex;
 };
 
+enum ObserverMode_t : uint8_t
+{
+	OBS_MODE_NONE = 0x0,
+	OBS_MODE_FIXED = 0x1,
+	OBS_MODE_IN_EYE = 0x2,
+	OBS_MODE_CHASE = 0x3,
+	OBS_MODE_ROAMING = 0x4,
+	OBS_MODE_DIRECTED = 0x5,
+	NUM_OBSERVER_MODES = 0x6,
+};
+
 enum MsgDest : int32_t
 {
 	HUD_PRINTNOTIFY  = 1,
@@ -230,10 +241,4 @@ struct CCheckTransmitInfoS2
 {
 	CBitVec<16384> *m_pTransmitEdict;
 	uint8 unk[1000];
-};
-
-struct BBoxBounds
-{
-	Vector mins;
-	Vector maxs;
 };

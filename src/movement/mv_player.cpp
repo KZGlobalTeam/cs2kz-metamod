@@ -157,7 +157,7 @@ f32 MovementPlayer::GetGroundPosition()
 
 	f32 standableZ = 0.7; // TODO: actually use the cvar, preferably the mode cvar
 
-	BBoxBounds bounds;
+	bbox_t bounds;
 	bounds.mins = { -16.0, -16.0, 0.0 };
 	bounds.maxs = { 16.0, 16.0, 72.0 };
 
@@ -285,6 +285,7 @@ void MovementPlayer::Reset()
 	this->hitPerf = false;
 	this->jumped = false;
 	this->takeoffFromLadder = false;
+	this->lastValidLadderOrigin.Init();
 	this->timerIsRunning = false;
 	this->takeoffOrigin.Init();
 	this->takeoffVelocity.Init();

@@ -131,6 +131,9 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	{
 		player->RegisterTakeoff(false);
 		player->takeoffFromLadder = true;
+		// Ladderjump takeoff detection is delayed by one process movement call, we have to use the previous origin.
+		player->takeoffOrigin = player->lastValidLadderOrigin;
+		player->takeoffGroundOrigin = player->lastValidLadderOrigin;
 		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
 	else if (result && oldMoveType != MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_LADDER)
@@ -145,6 +148,11 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 		player->RegisterTakeoff(player->IsButtonDown(IN_JUMP));
 		player->takeoffFromLadder = true;
 		player->OnChangeMoveType(MOVETYPE_LADDER);
+	}
+
+	if (result && player->GetPawn()->m_MoveType() == MOVETYPE_LADDER)
+	{
+		player->GetOrigin(&player->lastValidLadderOrigin);
 	}
 	return result;
 	player->OnLadderMovePost();
