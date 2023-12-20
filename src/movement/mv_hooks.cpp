@@ -144,7 +144,7 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	else if (result && oldMoveType == MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		// Player is on the ladder, pressing jump pushes them away from the ladder.
-		float curtime = utils::GetServerGlobals()->curtime;
+		float curtime = gpGlobals->curtime;
 		player->RegisterTakeoff(player->IsButtonDown(IN_JUMP));
 		player->takeoffFromLadder = true;
 		player->OnChangeMoveType(MOVETYPE_LADDER);

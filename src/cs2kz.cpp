@@ -38,7 +38,7 @@ SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitSc
 	INetworkSerializable*, const void*, unsigned long, NetChannelBufType_t)
 
 CEntitySystem *g_pEntitySystem = NULL;
-
+CGlobalVars *gpGlobals = NULL;
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)

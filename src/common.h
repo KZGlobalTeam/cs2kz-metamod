@@ -12,6 +12,7 @@
 #include "entity2/entitysystem.h"
 #define MAXPLAYERS 64
 
+extern CGlobalVars *gpGlobals;
 extern CEntitySystem *g_pEntitySystem;
 
 #ifdef _WIN32

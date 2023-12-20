@@ -20,7 +20,7 @@ void *KZUtils::GetSchemaNetworkStateChangedPointer()
 
 CGlobalVars *KZUtils::GetServerGlobals()
 {
-	return utils::GetServerGlobals();
+	return gpGlobals;
 }
 
 void KZUtils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)

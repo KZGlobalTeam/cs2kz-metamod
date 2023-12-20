@@ -14,7 +14,7 @@ public:
 		{
 			return;
 		}
-		for (int i = 0; i <= utils::GetServerGlobals()->maxClients; i++)
+		for (int i = 0; i <= gpGlobals->maxClients; i++)
 		{
 			CBaseEntity *ent = g_pEntitySystem->GetBaseEntity(CEntityIndex(i));
 			if (ent)

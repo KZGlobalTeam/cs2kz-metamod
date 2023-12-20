@@ -79,7 +79,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
 
-
+	gpGlobals = interfaces::pEngine->GetServerGlobals();
 	InitDetours();
 	return true;
 }
@@ -87,11 +87,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 void utils::Cleanup()
 {
 	FlushAllDetours();
-}
-
-CGlobalVars *utils::GetServerGlobals()
-{
-	return interfaces::pEngine->GetServerGlobals();
 }
 
 CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
