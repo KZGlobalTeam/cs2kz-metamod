@@ -11,7 +11,7 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
 	return this->players[index];
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerController *controller)
+MovementPlayer *CMovementPlayerManager::ToPlayer(CBasePlayerController *controller)
 {
 	int index = controller->m_pEntity->m_EHandle.GetEntryIndex();
 	assert(index >= 0 && index < MAXPLAYERS + 1);

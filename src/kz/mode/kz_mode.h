@@ -94,6 +94,7 @@ private:
 	CUtlMap<int, ModeServiceFactory> IDFactoryMap;
 };
 
+extern KZModeManager *g_pKZModeManager;
 namespace KZ::mode
 {
 	bool InitModeCvars();

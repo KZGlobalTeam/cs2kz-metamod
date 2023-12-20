@@ -6,6 +6,8 @@
 #include "utils/interfaces.h"
 #include "utils/datatypes.h"
 
+class KZUtils;
+
 typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
@@ -29,13 +31,11 @@ namespace utils
 	void UnlockConVars();
 	void UnlockConCommands();
 
-	void SetEntityMoveType(CBaseEntity *entity, MoveType_t movetype);
-	void EntityCollisionRulesChanged(CBaseEntity *entity);
+	void SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype);
+	void EntityCollisionRulesChanged(CBaseEntity2 *entity);
 	CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
-	bool IsEntityPawn(CBaseEntity *entity);
-	bool IsEntityController(CBaseEntity *entity);
 	
-	CBasePlayerController *GetController(CBaseEntity *entity);
+	CBasePlayerController *GetController(CBaseEntity2 *entity);
 	CBasePlayerController *GetController(CPlayerSlot slot);
 
 	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
@@ -46,7 +46,7 @@ namespace utils
 	extern TracePlayerBBox_t *TracePlayerBBox;
 
 	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
-	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
+	CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
 
 	// Normalize the angle between -180 and 180.
 	f32 NormalizeDeg(f32 a);
@@ -55,11 +55,11 @@ namespace utils
 	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c);
 	
 	// Print functions
-	void PrintConsole(CBaseEntity *entity, const char *format, ...);
-	void PrintChat(CBaseEntity *entity, const char *format, ...);
-	void PrintCentre(CBaseEntity *entity, const char *format, ...);
-	void PrintAlert(CBaseEntity *entity, const char *format, ...);
-	void PrintHTMLCentre(CBaseEntity *entity, const char *format, ...); // This one uses HTML formatting.
+	void PrintConsole(CBaseEntity2 *entity, const char *format, ...);
+	void PrintChat(CBaseEntity2 *entity, const char *format, ...);
+	void PrintCentre(CBaseEntity2 *entity, const char *format, ...);
+	void PrintAlert(CBaseEntity2 *entity, const char *format, ...);
+	void PrintHTMLCentre(CBaseEntity2 *entity, const char *format, ...); // This one uses HTML formatting.
 
 	void PrintConsoleAll(const char *format, ...);
 	void PrintChatAll(const char *format, ...);
@@ -72,7 +72,7 @@ namespace utils
 	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
 
 	// Color print
-	void CPrintChat(CBaseEntity *entity, const char *format, ...);
+	void CPrintChat(CBaseEntity2 *entity, const char *format, ...);
 	void CPrintChatAll(const char *format, ...);
 
 	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);

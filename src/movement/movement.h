@@ -46,10 +46,10 @@ class MovementPlayer
 public:
 	MovementPlayer(int i) : index(i) {}
 
-	CCSPlayerController *GetController();
-	CCSPlayerPawn *GetPawn();
-	CPlayerSlot GetPlayerSlot() { return index - 1; };
-	CCSPlayer_MovementServices *GetMoveServices();
+	virtual CCSPlayerController *GetController();
+	virtual CCSPlayerPawn *GetPawn();
+	virtual CPlayerSlot GetPlayerSlot() { return index - 1; };
+	virtual CCSPlayer_MovementServices *GetMoveServices();
 
 	// TODO: this doesn't work during movement processing!
 	
@@ -189,7 +189,7 @@ public:
 	}
 public:
 	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
-	MovementPlayer *ToPlayer(CCSPlayerController *controller);
+	MovementPlayer *ToPlayer(CBasePlayerController *controller);
 	MovementPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	MovementPlayer *ToPlayer(CPlayerSlot slot);
 	MovementPlayer *ToPlayer(CEntityIndex entIndex);

@@ -68,6 +68,9 @@ class KZClassicModeService : public KZModeService
 		"0.9"				// sv_water_slow_amount
 	};
 
+	bool revertJumpTweak;
+	f32 preJumpZSpeed;
+	f32 tweakedJumpZSpeed;
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
@@ -75,5 +78,7 @@ public:
 	virtual const char **GetModeConVarValues() override;
 	virtual f32 GetPlayerMaxSpeed() override;
 
+	virtual void OnJump() override;
+	virtual void OnJumpPost() override;
 	virtual void OnStopTouchGround() override;
 };

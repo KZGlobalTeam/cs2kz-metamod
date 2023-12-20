@@ -1,7 +1,9 @@
 #include "kz_mode_ckz.h"
+#include "utils/interfaces.h"
 #include "version.h"
 
 KZClassicModePlugin g_KZClassicModePlugin;
+KZUtils *g_pKZUtils = NULL;
 KZModeManager *g_ModeManager = NULL;
 ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService *{ return new KZClassicModeService(player); };
 PLUGIN_EXPOSE(KZClassicModePlugin, g_KZClassicModePlugin);
@@ -11,9 +13,23 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 	PLUGIN_SAVEVARS();
 	// Load mode
 	int success;
-	KZModeManager *g_ModeManager = (KZModeManager*)g_SMAPI->MetaFactory(KZ_MODE_MANAGER_INTERFACE, &success, 0);
-	if (success == META_IFACE_FAILED) return false;
-	
+	g_ModeManager = (KZModeManager*)g_SMAPI->MetaFactory(KZ_MODE_MANAGER_INTERFACE, &success, 0);
+	if (success == META_IFACE_FAILED)
+	{
+		vsnprintf(error, maxlen, "Failed to find %s interface", KZ_MODE_MANAGER_INTERFACE);
+		return false;
+	}
+	g_pKZUtils = (KZUtils *)g_SMAPI->MetaFactory(KZ_UTILS_INTERFACE, &success, 0);
+	if (success == META_IFACE_FAILED)
+	{
+		vsnprintf(error, maxlen, "Failed to find %s interface", KZ_UTILS_INTERFACE);
+		return false;
+	}
+
+	if (nullptr == (interfaces::pSchemaSystem = (CSchemaSystem *)g_pKZUtils->GetSchemaSystemPointer())) return false;
+	if (nullptr == (schema::StateChanged = (StateChanged_t *)g_pKZUtils->GetSchemaStateChangedPointer())) return false;
+	if (nullptr == (schema::NetworkStateChanged = (NetworkStateChanged_t *)g_pKZUtils->GetSchemaNetworkStateChangedPointer())) return false;
+
 	if (!g_ModeManager->RegisterMode(MODE_NAME_SHORT, MODE_NAME, g_ModeFactory)) return false;
 
 	return true;
@@ -126,11 +142,44 @@ const char **KZClassicModeService::GetModeConVarValues()
 	return modeCvarValues;
 }
 
+// Attempt to replicate 128t jump height.
+void KZClassicModeService::OnJump()
+{
+	Vector velocity;
+	this->player->GetVelocity(&velocity);
+	this->preJumpZSpeed = velocity.z;
+	// Emulate the 128t vertical velocity before jumping
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND)
+	{
+		// TODO: update util functions to be accessible across plugins
+		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 / 64;
+		this->player->SetVelocity(velocity);
+		this->tweakedJumpZSpeed = velocity.z;
+		this->revertJumpTweak = true;
+	}
+}
+
+void KZClassicModeService::OnJumpPost()
+{
+	// If we didn't jump, we revert the jump height tweak.
+	if (this->revertJumpTweak)
+	{
+		Vector velocity;
+		this->player->GetVelocity(&velocity);
+		velocity.z = this->preJumpZSpeed;
+		this->player->SetVelocity(velocity);
+	}
+	this->revertJumpTweak = false;
+}
+
 void KZClassicModeService::OnStopTouchGround()
 {
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	f32 speed = velocity.Length2D();
+
+	// If we are actually taking off, we don't need to revert the change anymore.
+	this->revertJumpTweak = false;
 
 	f32 timeOnGround = this->player->takeoffTime - this->player->landingTime;
 	// Perf

@@ -72,6 +72,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'utils_interface.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils_print.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
@@ -119,6 +120,7 @@ for sdk_target in MMSPlugin.sdk_targets:
   mode_binary.compiler.cxxincludes += CXXINCLUDES
 
   mode_binary.sources += [
+    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
   ]
   
@@ -139,7 +141,6 @@ for sdk_target in MMSPlugin.sdk_targets:
     binary.sources += mode_binary.sources
     binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
-    mode_binary += [os.path.join(builder.buildPath, f"{MMSPlugin.plugin_name}-mode-ckz", f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
   MMSPlugin.binaries += [nodes]
   MMSPlugin.mode_binaries += [mode_nodes]

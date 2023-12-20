@@ -75,9 +75,12 @@ public:
 	SCHEMA_FIELD(Vector, m_vecBaseVelocity)
 	SCHEMA_FIELD(Vector, m_vecAbsVelocity)
 	SCHEMA_FIELD(CNetworkVelocityVector, m_vecVelocity)
-	SCHEMA_FIELD(CCollisionProperty*, m_pCollision)
-	SCHEMA_FIELD(CHandle< CBaseEntity >, m_hGroundEntity)
+	SCHEMA_FIELD(CCollisionProperty *, m_pCollision)
+	SCHEMA_FIELD(CHandle< CBaseEntity2 >, m_hGroundEntity)
 	SCHEMA_FIELD(uint32_t, m_fFlags)
+	SCHEMA_FIELD(float, m_flGravityScale)
 
 	int entindex() { return m_pEntity->m_EHandle.GetEntryIndex(); }
+	bool IsPawn() { return CALL_VIRTUAL(bool, offsets::IsEntityPawn, this); }
+	bool IsController() { return CALL_VIRTUAL(bool, offsets::IsEntityController, this); }
 };

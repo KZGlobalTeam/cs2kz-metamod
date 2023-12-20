@@ -57,7 +57,7 @@ void FlushAllDetours()
 	g_vecDetours.RemoveAll();
 }
 
-bool IsEntTriggerMultiple(CBaseEntity *ent)
+bool IsEntTriggerMultiple(CBaseEntity2 *ent)
 {
 	bool result = false;
 	if (ent && ent->m_pEntity)
@@ -90,13 +90,13 @@ bool IsTriggerEndZone(CBaseTrigger *trigger)
 	return result;
 }
 
-void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *pOther)
+void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther)
 {
 	CBaseTrigger_StartTouch(this_, pOther);
 	
-	if (utils::IsEntityPawn(pOther))
+	if (pOther->IsPawn())
 	{
-		if (IsEntTriggerMultiple((CBaseEntity *)this_))
+		if (IsEntTriggerMultiple(this_))
 		{
 			CCSPlayerController *controller = dynamic_cast<CCSPlayerController*>(dynamic_cast<CCSPlayerPawn*>(pOther)->m_hController().Get());
 			if (!controller) return;
@@ -113,13 +113,13 @@ void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity *p
 	}
 }
 
-void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity *pOther)
+void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pOther)
 {
 	CBaseTrigger_EndTouch(this_, pOther);
 
-	if (utils::IsEntityPawn(pOther))
+	if (pOther->IsPawn())
 	{
-		if (IsEntTriggerMultiple((CBaseEntity *)this_))
+		if (IsEntTriggerMultiple(this_))
 		{
 			CCSPlayerController *controller = dynamic_cast<CCSPlayerController*>(dynamic_cast<CCSPlayerPawn*>(pOther)->m_hController().Get());
 			if (!controller) return;
@@ -144,7 +144,7 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock)
 void Detour_CCSPP_Teleport(CCSPlayerPawn *this_, const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
 	// Just to be sure.
-	if (utils::IsEntityPawn(this_))
+	if (this_->IsPawn())
 	{
 		MovementPlayer *player = g_pPlayerManager->ToPlayer(this_);
 		player->OnTeleport(newPosition, newAngles, newVelocity);

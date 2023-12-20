@@ -27,13 +27,16 @@ struct SchemaKey {
 	bool networked;
 };
 
+typedef void FASTCALL NetworkStateChanged_t(int64 chainEntity, int64 offset, int64 a3);
+typedef void FASTCALL StateChanged_t(void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5);
+
 namespace schema
 {
 	int16_t FindChainOffset(const char *className);
 	SchemaKey GetOffset(const char *className, uint32_t classKey, const char *memberName, uint32_t memberKey);
 
-	inline void(FASTCALL *NetworkStateChanged)(int64 chainEntity, int64 offset, int64 a3);
-	inline void(FASTCALL *StateChanged)(void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5);
+	inline NetworkStateChanged_t *NetworkStateChanged;
+	inline StateChanged_t *StateChanged;
 }
 
 class CBaseEntity2;

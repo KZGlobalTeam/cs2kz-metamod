@@ -157,7 +157,12 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	if (strcmp(iface, KZ_MODE_MANAGER_INTERFACE) == 0)
 	{
 		*ret = META_IFACE_OK;
-		return KZ::mode::GetKZModeManager();
+		return g_pKZModeManager;
+	}
+	else if (strcmp(iface, KZ_UTILS_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return g_pKZUtils;
 	}
 	*ret = META_IFACE_FAILED;
 

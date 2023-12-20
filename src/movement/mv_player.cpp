@@ -27,14 +27,14 @@ CCSPlayerController *MovementPlayer::GetController()
 	{
 		return nullptr;
 	}
-	return dynamic_cast<CCSPlayerController *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
+	return static_cast<CCSPlayerController *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
 }
 
 CCSPlayerPawn *MovementPlayer::GetPawn()
 {
 	CCSPlayerController *controller = this->GetController();
 	if (!controller) return nullptr;
-	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn().Get());
+	return controller->m_hPlayerPawn().Get();
 }
 
 CCSPlayer_MovementServices *MovementPlayer::GetMoveServices()

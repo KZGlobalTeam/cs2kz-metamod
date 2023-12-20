@@ -28,6 +28,7 @@ EmitSoundFunc_t *utils::EmitSound = NULL;
 TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
 
+
 void modules::Initialize()
 {
 	modules::engine = new CModule(ROOTBIN, "engine2");
@@ -146,35 +147,25 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-void utils::SetEntityMoveType(CBaseEntity *entity, MoveType_t movetype)
+void utils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)
 {
 	CALL_VIRTUAL(void, offsets::SetMoveType, entity, movetype);
 }
 
-void utils::EntityCollisionRulesChanged(CBaseEntity *entity)
+void utils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
 {
 	CALL_VIRTUAL(void, offsets::CollisionRulesChanged, entity);
 }
 
-bool utils::IsEntityPawn(CBaseEntity *entity)
-{
-	return CALL_VIRTUAL(bool, offsets::IsEntityPawn, entity);
-}
-
-bool utils::IsEntityController(CBaseEntity *entity)
-{
-	return CALL_VIRTUAL(bool, offsets::IsEntityController, entity);
-}
-
-CBasePlayerController *utils::GetController(CBaseEntity *entity)
+CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 {
 	CBasePlayerController *controller = nullptr;
 
-	if (utils::IsEntityPawn(entity))
+	if (entity->IsPawn())
 	{
 		return static_cast<CBasePlayerPawn *>(entity)->m_hController().Get();
 	}
-	else if (utils::IsEntityController(entity))
+	else if (entity->IsController())
 	{
 		return static_cast<CBasePlayerController*>(entity);
 	}
@@ -234,7 +225,7 @@ bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
 	}
 }
 
-CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
+CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 {
 	CBasePlayerController *controller = utils::GetController(entity);
 	if (!controller)

@@ -31,7 +31,7 @@ void KZPlayer::Reset()
 	this->checkpointService->Reset();
 	this->quietService->Reset();
 	// TODO: Make a cvar for default mode
-	KZ::mode::GetKZModeManager()->SwitchToMode(this, "CKZ", true);
+	g_pKZModeManager->SwitchToMode(this, "VNL", true);
 }
 
 float KZPlayer::GetPlayerMaxSpeed()

@@ -9,6 +9,7 @@
 #include "utils/simplecmds.h"
 
 internal KZModeManager modeManager;
+KZModeManager *g_pKZModeManager = &modeManager;
 
 bool KZ::mode::InitModeCvars()
 {
@@ -115,10 +116,6 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 		//g_pCVar->SetConVarValue(modeCvarHandles[i], 0, (CVValue_t *)player->modeService->GetModeConVarValues()[i], (CVValue_t *)modeCvars[i]->values);
 	}
 }
-KZModeManager *KZ::mode::GetKZModeManager()
-{
-	return &modeManager;
-}
 
 bool KZModeManager::RegisterMode(const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
 {
@@ -160,7 +157,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	
 	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
-		KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(i);
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
 		if (strcmp(player->modeService->GetModeName(), modeName) == 0 || strcmp(player->modeService->GetModeShortName(), modeName) == 0)
 		{
 			this->SwitchToMode(player, "VNL");
@@ -192,8 +189,8 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 internal SCMD_CALLBACK(Command_KzMode)
 {
-	KZPlayer *player = KZ::GetKZPlayerManager()->ToPlayer(controller);
-	KZ::mode::GetKZModeManager()->SwitchToMode(player, args->Arg(1));
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	modeManager.SwitchToMode(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 

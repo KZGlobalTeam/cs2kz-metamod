@@ -13,7 +13,6 @@
 
 #define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 
-extern CMovementPlayerManager *g_pPlayerManager;
 
 class KZPlayer;
 //class Jump;
@@ -163,7 +162,7 @@ public:
 	}
 public:
 	KZPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
-	KZPlayer *ToPlayer(CCSPlayerController *controller);
+	KZPlayer *ToPlayer(CBasePlayerController *controller);
 	KZPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	KZPlayer *ToPlayer(CPlayerSlot slot);
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
@@ -173,9 +172,9 @@ public:
 	KZPlayer *ToKZPlayer(MovementPlayer *player) { return static_cast<KZPlayer *>(player); }
 };
 
+extern CKZPlayerManager *g_pKZPlayerManager;
 namespace KZ
 {
-	CKZPlayerManager *GetKZPlayerManager();
 	namespace HUD
 	{
 		void DrawSpeedPanel(KZPlayer *player);
