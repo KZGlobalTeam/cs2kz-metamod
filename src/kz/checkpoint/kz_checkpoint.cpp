@@ -121,7 +121,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	}
 	if (checkpoints[currentCpIndex].groundEnt)
 	{
-		this->player->GetPawn()->m_fFlags |= FL_ONGROUND;
+		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
 	}
 	this->player->GetPawn()->m_hGroundEntity(checkpoints[currentCpIndex].groundEnt);
 }
