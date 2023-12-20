@@ -5,17 +5,17 @@ KZUtils *g_pKZUtils = &kzUtils;
 
 void *KZUtils::GetSchemaSystemPointer()
 {
-	return interfaces::pSchemaSystem;
+	return (void*)interfaces::pSchemaSystem;
 }
 
 void *KZUtils::GetSchemaStateChangedPointer()
 {
-	return schema::StateChanged;
+	return (void*)schema::StateChanged;
 }
 
 void *KZUtils::GetSchemaNetworkStateChangedPointer()
 {
-	return schema::NetworkStateChanged;
+	return (void*)schema::NetworkStateChanged;
 }
 
 CGlobalVars *KZUtils::GetServerGlobals()
