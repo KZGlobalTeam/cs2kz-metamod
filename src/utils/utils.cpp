@@ -26,6 +26,7 @@ InitGameTrace_t *utils::InitGameTrace = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
+FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
 
 void modules::Initialize()
 {
@@ -74,6 +75,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::GetLegacyGameEventListener, utils::GetLegacyGameEventListener);
 	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
+	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
+
 
 	InitDetours();
 	return true;
@@ -87,6 +90,12 @@ void utils::Cleanup()
 CGlobalVars *utils::GetServerGlobals()
 {
 	return interfaces::pEngine->GetServerGlobals();
+}
+
+CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
+{
+	if (!g_pEntitySystem) return NULL;
+	return FindEntityByClassnameFunc(g_pEntitySystem, start, name);
 }
 
 void utils::UnlockConVars()

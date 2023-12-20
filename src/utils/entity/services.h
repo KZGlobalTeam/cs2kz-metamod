@@ -18,6 +18,14 @@ public:
 	uint8_t __pad0030[0x6]; // 0x0
 };
 
+class CPlayer_ObserverServices : public CPlayerPawnComponent
+{
+public:
+	DECLARE_SCHEMA_CLASS(CPlayer_ObserverServices)
+	SCHEMA_FIELD(uint8_t, m_iObserverMode)
+	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hObserverTarget)
+};
+
 class CPlayer_MovementServices : public CPlayerPawnComponent
 {
 public:
