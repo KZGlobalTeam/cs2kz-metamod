@@ -27,7 +27,6 @@ namespace utils
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
 	void Cleanup();
 
-	CGlobalVars *GetServerGlobals();
 	void UnlockConVars();
 	void UnlockConCommands();
 
