@@ -278,7 +278,7 @@ void KZClassicModeService::OnPlayerMove()
 	
 	for (u32 i = 0; i < 3; i++)
 	{
-		newAngles[i] = oldAngles[i];
+		newAngles[i] += oldAngles[i];
 		newAngles[i] *= 0.5f;
 	}
 
