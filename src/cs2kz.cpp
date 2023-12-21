@@ -94,6 +94,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
+	g_pKZModeManager->Cleanup();
 	return true;
 }
 
@@ -227,6 +228,10 @@ internal void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int 
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	if (!gpGlobals)
+	{
+		gpGlobals = interfaces::pEngine->GetServerGlobals();
+	}
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)

@@ -80,15 +80,20 @@ typedef KZModeService* (*ModeServiceFactory)(KZPlayer *player);
 
 class KZModeManager
 {
+	struct ModePluginInfo
+	{
+		PluginId id;
+		const char *shortModeName;
+		const char *longModeName;
+		ModeServiceFactory factory;
+	};
 public:
-	void Init();
-	virtual bool RegisterMode(const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
+	virtual bool RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
 	virtual void UnregisterMode(const char *modeName);
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);
+	void Cleanup();
 private:
-	u32 currentID = 0;
-	CUtlStringMap<int> nameIDMap;
-	CUtlMap<int, ModeServiceFactory> IDFactoryMap;
+	CUtlVector< ModePluginInfo > modeInfos;
 };
 
 extern KZModeManager *g_pKZModeManager;

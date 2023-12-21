@@ -32,14 +32,14 @@ void KZ::mode::InitModeManager()
 {
 	static bool initialized = false;
 	if (initialized) return;
-	modeManager.Init();
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService *{ return new KZVanillaModeService(player); };
-	modeManager.RegisterMode("VNL", "Vanilla", vnlFactory);
+	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
 	initialized = true;
 }
 
 void KZ::mode::LoadModePlugins()
 {
+	return;
 	char buffer[1024];
 	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*.*");
 	FileFindHandle_t findHandle = {};
@@ -118,49 +118,34 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 	}
 }
 
-void KZModeManager::Init()
-{
-	this->IDFactoryMap.SetLessFunc(DefLessFunc(int));
-}
 
-bool KZModeManager::RegisterMode(const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
+bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
 {
-	if ((shortModeName && this->nameIDMap.Defined(shortModeName)) || (longModeName && this->nameIDMap.Defined(longModeName)))
+	FOR_EACH_VEC(this->modeInfos, i)
 	{
-		return false;
+		if (shortModeName && V_stricmp(this->modeInfos[i].shortModeName, shortModeName) == 0) return false;
+		if (longModeName && V_stricmp(this->modeInfos[i].longModeName, longModeName) == 0) return false;
 	}
-
-	this->IDFactoryMap.Insert(this->currentID, factory);
-	if (shortModeName)
-	{
-		this->nameIDMap[shortModeName] = this->currentID;
-	}
-	if (longModeName)
-	{
-		this->nameIDMap[longModeName] = this->currentID;
-	}
-	this->currentID++;
+	this->modeInfos.AddToTail({ id, shortModeName, longModeName, factory });
 	return true;
 }
 
 void KZModeManager::UnregisterMode(const char *modeName)
 {
-	if (!modeName || !this->nameIDMap.Defined(modeName)) return;
+	if (!modeName) return;
 
-	int modeID = this->nameIDMap[modeName];
-	if (modeID == 0)
+	// Cannot unregister VNL.
+	if (V_stricmp("VNL", modeName) == 0 || V_stricmp("Vanilla", modeName) == 0) return;
+
+	FOR_EACH_VEC(this->modeInfos, i)
 	{
-		return; // Special case for VNL (0)
-	}
-	for (int i = 0; i < this->nameIDMap.GetNumStrings(); i++)
-	{
-		if (this->nameIDMap[i] == modeID)
+		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
 		{
-			this->nameIDMap[i] = UTL_INVAL_SYMBOL;
+			this->modeInfos.Remove(i);
+			break;
 		}
 	}
-	this->IDFactoryMap.Remove(modeID);
-	
+
 	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
@@ -174,13 +159,26 @@ void KZModeManager::UnregisterMode(const char *modeName)
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)
 {
 	// Don't change mode if it doesn't exist.
-	if (!modeName || !this->nameIDMap.Defined(modeName)) return false;
+	if (!modeName) return false;
 
 	// If it's the same mode, do nothing.
 	if (strcmp(player->modeService->GetModeName(), modeName) == 0 || strcmp(player->modeService->GetModeShortName(), modeName) == 0) return false;
 
-	int modeID = this->nameIDMap[modeName];
-	ModeServiceFactory factory = this->IDFactoryMap[modeID];
+	ModeServiceFactory factory = nullptr;
+
+	FOR_EACH_VEC(this->modeInfos, i)
+	{
+		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
+		{
+			factory = this->modeInfos[i].factory;
+			break;
+		}
+		if (player->GetController() && !silent)
+		{
+			utils::CPrintChat(player->GetController(), "%s {grey}The {purple}%s {grey}mode is not available.", KZ_CHAT_PREFIX, modeName);
+		}
+	}
+
 	delete player->modeService;
 	player->modeService = factory(player);
 
@@ -191,6 +189,19 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), KZ::mode::numCvar);
 	return true;
+}
+
+void KZModeManager::Cleanup()
+{
+	int ret;
+	ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
+	if (ret == META_IFACE_FAILED) return;
+	char error[256];
+	FOR_EACH_VEC(this->modeInfos, i)
+	{
+		if (this->modeInfos[i].id == 0) continue;
+		pluginManager->Unload(this->modeInfos[i].id, true, error, sizeof(error));
+	}
 }
 
 internal SCMD_CALLBACK(Command_KzMode)

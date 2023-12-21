@@ -4,7 +4,7 @@
 
 KZClassicModePlugin g_KZClassicModePlugin;
 KZUtils *g_pKZUtils = NULL;
-KZModeManager *g_ModeManager = NULL;
+KZModeManager *g_pModeManager = NULL;
 ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService *{ return new KZClassicModeService(player); };
 PLUGIN_EXPOSE(KZClassicModePlugin, g_KZClassicModePlugin);
 
@@ -13,7 +13,7 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 	PLUGIN_SAVEVARS();
 	// Load mode
 	int success;
-	g_ModeManager = (KZModeManager*)g_SMAPI->MetaFactory(KZ_MODE_MANAGER_INTERFACE, &success, 0);
+	g_pModeManager = (KZModeManager*)g_SMAPI->MetaFactory(KZ_MODE_MANAGER_INTERFACE, &success, 0);
 	if (success == META_IFACE_FAILED)
 	{
 		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_MODE_MANAGER_INTERFACE);
@@ -30,14 +30,14 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 	if (nullptr == (schema::StateChanged = (StateChanged_t *)g_pKZUtils->GetSchemaStateChangedPointer())) return false;
 	if (nullptr == (schema::NetworkStateChanged = (NetworkStateChanged_t *)g_pKZUtils->GetSchemaNetworkStateChangedPointer())) return false;
 
-	if (!g_ModeManager->RegisterMode(MODE_NAME_SHORT, MODE_NAME, g_ModeFactory)) return false;
+	if (!g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory)) return false;
 
 	return true;
 }
 
 bool KZClassicModePlugin::Unload(char *error, size_t maxlen)
 {
-	g_ModeManager->UnregisterMode(MODE_NAME);
+	g_pModeManager->UnregisterMode(MODE_NAME);
 	return true;
 }
 
@@ -47,13 +47,13 @@ void KZClassicModePlugin::AllPluginsLoaded()
 
 bool KZClassicModePlugin::Pause(char *error, size_t maxlen)
 {
-	g_ModeManager->UnregisterMode(MODE_NAME);
+	g_pModeManager->UnregisterMode(MODE_NAME);
 	return true;
 }
 
 bool KZClassicModePlugin::Unpause(char *error, size_t maxlen)
 {
-	if (!g_ModeManager->RegisterMode(MODE_NAME_SHORT, MODE_NAME, g_ModeFactory)) return false;
+	if (!g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory)) return false;
 	return true;
 }
 
