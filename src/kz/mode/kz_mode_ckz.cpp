@@ -258,7 +258,11 @@ void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, boo
 void KZClassicModeService::OnPlayerMove()
 {
 	// Second half of the movement, no change.
-	if (fabs(roundf(g_pKZUtils->GetServerGlobals()->curtime * 64) - g_pKZUtils->GetServerGlobals()->curtime * 64) < 0.001) return;
+	CGlobalVars *globals = g_pKZUtils->GetServerGlobals();
+	// NOTE: tickcount is half a tick ahead of curtime while in the middle of a tick.
+	if ((f64)globals->tickcount / 64.0 - globals->curtime < 0.001)
+		return;
+	
 	if (this->lastDesiredViewAngleTime < g_pKZUtils->GetServerGlobals()->curtime + 0.015625)
 	{
 		this->lastDesiredViewAngle = this->player->moveDataPost.m_vecViewAngles;
