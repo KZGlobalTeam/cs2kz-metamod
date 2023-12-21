@@ -44,7 +44,7 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CEntityIndex entIndex)
 MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerUserId userID)
 {
 	// Untested, careful!
-	for (int i = 0; i < gpGlobals->maxClients; i++)
+	for (int i = 0; i < g_pKZUtils->GetServerGlobals()->maxClients; i++)
 	{
 		if (interfaces::pEngine->GetPlayerUserId(i) == userID.Get())
 		{

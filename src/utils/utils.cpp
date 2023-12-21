@@ -79,10 +79,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
 
-	if (!gpGlobals)
-	{
-		gpGlobals = interfaces::pEngine->GetServerGlobals();
-	}
 	InitDetours();
 	return true;
 }
@@ -164,7 +160,7 @@ CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
 		if (!pawn->m_hController() || !pawn->m_hController().IsValid())
 		{
-			for (i32 i = 0; i <= gpGlobals->maxClients; i++)
+			for (i32 i = 0; i <= g_pKZUtils->GetServerGlobals()->maxClients; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
 				if (controller && controller->m_hPlayerPawn() && controller->m_hPlayerPawn().Get() == entity)

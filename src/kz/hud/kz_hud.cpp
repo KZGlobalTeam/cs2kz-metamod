@@ -10,7 +10,7 @@ internal void AddSpeedText(KZPlayer *player, char* buffer, int size)
 	Vector velocity;
 	player->GetVelocity(&velocity);
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
-	if ((player->GetPawn()->m_fFlags & FL_ONGROUND && gpGlobals->curtime - player->landingTime > 0.07)
+	if ((player->GetPawn()->m_fFlags & FL_ONGROUND && g_pKZUtils->GetServerGlobals()->curtime - player->landingTime > 0.07)
 		|| (player->GetPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonDown(IN_JUMP)))
 	{
 		snprintf(speed, sizeof(speed), "Speed: %.0f", velocity.Length2D());
