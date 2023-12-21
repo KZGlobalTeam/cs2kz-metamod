@@ -53,8 +53,9 @@ bool FASTCALL movement::Detour_PlayerMoveNew(CCSPlayer_MovementServices *ms, CMo
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->OnPlayerMoveNew();
-	return PlayerMoveNew(ms, mv);
+	auto retValue = PlayerMoveNew(ms, mv);
 	player->OnPostPlayerMove();
+	return retValue;
 }
 
 void FASTCALL movement::Detour_CheckParameters(CCSPlayer_MovementServices *ms, CMoveData *mv)
@@ -69,8 +70,9 @@ bool FASTCALL movement::Detour_CanMove(CCSPlayerPawnBase *pawn)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	player->OnCanMove();
-	return CanMove(pawn);
+	auto retValue = CanMove(pawn);
 	player->OnCanMovePost();
+	return retValue;
 }
 
 void FASTCALL movement::Detour_FullWalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv, bool ground)
@@ -85,16 +87,18 @@ bool FASTCALL movement::Detour_MoveInit(CCSPlayer_MovementServices *ms, CMoveDat
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->OnMoveInit();
-	return MoveInit(ms, mv);
+	auto retValue = MoveInit(ms, mv);
 	player->OnMoveInitPost();
+	return retValue;
 }
 
 bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->OnCheckWater();
-	return CheckWater(ms, mv);
+	auto retValue = CheckWater(ms, mv);
 	player->OnCheckWaterPost();
+	return retValue;
 }
 
 void FASTCALL movement::Detour_CheckVelocity(CCSPlayer_MovementServices *ms, CMoveData *mv, const char *a3)
@@ -154,8 +158,8 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	{
 		player->GetOrigin(&player->lastValidLadderOrigin);
 	}
-	return result;
 	player->OnLadderMovePost();
+	return result;
 }
 
 void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, CMoveData *mv)

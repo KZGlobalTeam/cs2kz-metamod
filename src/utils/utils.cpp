@@ -79,7 +79,10 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
 
-	gpGlobals = interfaces::pEngine->GetServerGlobals();
+	if (!gpGlobals)
+	{
+		gpGlobals = interfaces::pEngine->GetServerGlobals();
+	}
 	InitDetours();
 	return true;
 }
@@ -154,11 +157,24 @@ void utils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
 
 CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 {
-	CBasePlayerController *controller = nullptr;
+	CCSPlayerController *controller = nullptr;
 
 	if (entity->IsPawn())
 	{
-		return static_cast<CBasePlayerPawn *>(entity)->m_hController().Get();
+		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
+		if (!pawn->m_hController() || !pawn->m_hController().IsValid())
+		{
+			for (i32 i = 0; i <= gpGlobals->maxClients; i++)
+			{
+				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
+				if (controller && controller->m_hPlayerPawn() && controller->m_hPlayerPawn().Get() == entity)
+				{
+					return controller;
+				}
+			}
+			return nullptr;
+		}
+		return pawn->m_hController.Get();
 	}
 	else if (entity->IsController())
 	{
@@ -172,7 +188,16 @@ CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	return static_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	if (!g_pEntitySystem)
+	{
+		return nullptr;
+	}
+	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	if (!ent)
+	{
+		return nullptr;
+	}
+	return ent->IsController() ? static_cast<CBasePlayerController *>(ent) : nullptr;
 }
 
 bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)

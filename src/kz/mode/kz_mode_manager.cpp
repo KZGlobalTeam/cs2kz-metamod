@@ -39,7 +39,6 @@ void KZ::mode::InitModeManager()
 
 void KZ::mode::LoadModePlugins()
 {
-	return;
 	char buffer[1024];
 	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*.*");
 	FileFindHandle_t findHandle = {};
@@ -162,7 +161,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	if (!modeName) return false;
 
 	// If it's the same mode, do nothing.
-	if (strcmp(player->modeService->GetModeName(), modeName) == 0 || strcmp(player->modeService->GetModeShortName(), modeName) == 0) return false;
+	if (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0) return false;
 
 	ModeServiceFactory factory = nullptr;
 
@@ -173,12 +172,16 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 			factory = this->modeInfos[i].factory;
 			break;
 		}
+	}
+	if (!factory)
+	{
+
 		if (player->GetController() && !silent)
 		{
 			utils::CPrintChat(player->GetController(), "%s {grey}The {purple}%s {grey}mode is not available.", KZ_CHAT_PREFIX, modeName);
 		}
+		return false;
 	}
-
 	delete player->modeService;
 	player->modeService = factory(player);
 
