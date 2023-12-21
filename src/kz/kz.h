@@ -47,8 +47,8 @@ public:
 	virtual void OnProcessUsercmdsPost(void *, int) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
-	virtual void OnPlayerMoveNew() override;
-	virtual void OnPlayerMoveNewPost() override;
+	virtual void OnPlayerMove() override;
+	virtual void OnPlayerMovePost() override;
 	virtual void OnCheckParameters() override;
 	virtual void OnCheckParametersPost() override;
 	virtual void OnCanMove() override;

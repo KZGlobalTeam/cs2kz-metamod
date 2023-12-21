@@ -68,9 +68,12 @@ class KZClassicModeService : public KZModeService
 		"0.9"				// sv_water_slow_amount
 	};
 
-	bool revertJumpTweak;
-	f32 preJumpZSpeed;
-	f32 tweakedJumpZSpeed;
+	bool revertJumpTweak{};
+	f32 preJumpZSpeed{};
+	f32 tweakedJumpZSpeed{};
+	f32 lastDesiredViewAngleTime{};
+	QAngle lastDesiredViewAngle;
+
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
@@ -79,8 +82,15 @@ public:
 	virtual f32 GetPlayerMaxSpeed() override;
 
 	virtual void OnProcessUsercmds(void *, int) override;
-	virtual void OnProcessUsercmdsPost(void *, int) override;
+	virtual void OnPlayerMove() override;
 	virtual void OnJump() override;
 	virtual void OnJumpPost() override;
+	virtual void OnPostPlayerMovePost() override;
 	virtual void OnStopTouchGround() override;
+
+	// Insert subtick timing to be called later.
+	// This is called either at the end of movement processing, or at the start of ProcessUsercmds.
+	// If it is called at the end of movement processing, it must set subtick timing into the future.
+	// If it is called at the start of ProcessUsercmds, it must set subtick timing in the past.
+	void InsertSubtickTiming(KZPlayer *player, float time, bool future);
 };

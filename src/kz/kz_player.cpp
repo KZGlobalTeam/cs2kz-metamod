@@ -70,14 +70,16 @@ void KZPlayer::OnProcessMovementPost()
 	this->jumpstatsService->TrackJumpstatsVariables();
 }
 
-void KZPlayer::OnPlayerMoveNew()
+void KZPlayer::OnPlayerMove()
 {
-	this->modeService->OnPlayerMoveNew();
+	this->modeService->OnPlayerMove();
 }
-void KZPlayer::OnPlayerMoveNewPost()
+
+void KZPlayer::OnPlayerMovePost()
 {
-	this->modeService->OnPlayerMoveNewPost();
+	this->modeService->OnPlayerMovePost();
 }
+
 void KZPlayer::OnCheckParameters()
 {
 	this->modeService->OnCheckParameters();

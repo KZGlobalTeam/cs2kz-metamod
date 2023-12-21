@@ -62,9 +62,9 @@ void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, C
 bool FASTCALL movement::Detour_PlayerMoveNew(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
-	player->OnPlayerMoveNew();
+	player->OnPlayerMove();
 	auto retValue = PlayerMoveNew(ms, mv);
-	player->OnPostPlayerMove();
+	player->OnPlayerMovePost();
 	return retValue;
 }
 

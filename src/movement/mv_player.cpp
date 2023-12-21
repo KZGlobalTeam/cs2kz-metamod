@@ -44,6 +44,7 @@ CCSPlayerPawn *MovementPlayer::GetPawn()
 
 CCSPlayer_MovementServices *MovementPlayer::GetMoveServices()
 {
+	if (!this->GetPawn()) return nullptr;
 	return static_cast<CCSPlayer_MovementServices *>(this->GetPawn()->m_pMovementServices());
 };
 

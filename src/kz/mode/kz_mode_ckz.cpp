@@ -210,16 +210,76 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 #else
 	constexpr u32 offset = 0x88;
 #endif
+	this->lastDesiredViewAngleTime = g_pKZUtils->GetServerGlobals()->curtime;
 	for (i32 i = 0; i < numcmds; i++)
 	{
 		auto address = reinterpret_cast<char *>(cmds) + i * offset;
 		CSGOUserCmdPB *usercmdsPtr = reinterpret_cast<CSGOUserCmdPB *>(address);
-
+		this->lastDesiredViewAngle = { usercmdsPtr->base().viewangles().x(), usercmdsPtr->base().viewangles().y(), usercmdsPtr->base().viewangles().z() };
 		for (i32 j = 0; j < usercmdsPtr->mutable_base()->subtick_moves_size(); j++)
 		{
 			CSubtickMoveStep *subtickMove = usercmdsPtr->mutable_base()->mutable_subtick_moves(j);
 			float when = subtickMove->when();
 			subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
-		}	
+		}
+	}
+	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 - 0.0078125, false);
+}
+
+void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, bool future)
+{
+	CCSPlayer_MovementServices *moveServices = player->GetMoveServices();
+	if (!moveServices) return;
+	// Don't create subtick too close to real time, there will be movement processing there anyway.
+	if (fabs(roundf(time) - time) < 0.001) return;
+	// Don't create subtick timing too far into the future.
+	if (time * 64.0 - g_pKZUtils->GetServerGlobals()->tickcount > 1.0f) return;
+	// Don't create subtick timing too far back.
+	if (time * 64.0 - g_pKZUtils->GetServerGlobals()->tickcount < -1.0f) return;
+
+	for (i32 i = 0; i < 4; i++)
+	{
+		// Already exists.
+		if (fabs(time - moveServices->m_arrForceSubtickMoveWhen[i]) < 0.001f) return;
+		if (!future)
+		{
+			// Do not override other valid subtick moves that might happen.
+			if (moveServices->m_arrForceSubtickMoveWhen[i] - g_pKZUtils->GetServerGlobals()->curtime < 0.015625) continue;
+			moveServices->m_arrForceSubtickMoveWhen[i] = time;
+			return;
+		}
+		if (moveServices->m_arrForceSubtickMoveWhen[i] <= g_pKZUtils->GetServerGlobals()->curtime)
+		{
+			moveServices->m_arrForceSubtickMoveWhen[i] = time;
+		}
 	}
 }
+
+void KZClassicModeService::OnPlayerMove()
+{
+	// Second half of the movement, no change.
+	if (fabs(roundf(g_pKZUtils->GetServerGlobals()->curtime * 64) - g_pKZUtils->GetServerGlobals()->curtime * 64) < 0.001) return;
+	if (this->lastDesiredViewAngleTime < g_pKZUtils->GetServerGlobals()->curtime + 0.015625)
+	{
+		this->lastDesiredViewAngle = this->player->moveDataPost.m_vecViewAngles;
+	}
+
+	// First half of the movement, tweak the angle to be the middle of the desired angle and the last angle
+	QAngle newAngles = player->currentMoveData->m_vecViewAngles;
+	for (u32 i = 0; i < 2; i++)
+	{
+		f32 diff = fmod((this->lastDesiredViewAngle[i] - newAngles[i] + 180.0f), 360.0f) - 180.0f;
+		if (diff < -180.0f) diff += 360.0f;
+		newAngles[i] += (0.5 * diff);
+		newAngles[i] = g_pKZUtils->NormalizeDeg(newAngles[i]);
+	}
+
+	player->currentMoveData->m_vecViewAngles = newAngles;
+}
+
+void KZClassicModeService::OnPostPlayerMovePost()
+{
+	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
+	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
+}
+

@@ -24,8 +24,8 @@ public:
 	virtual void OnProcessUsercmdsPost(void *, int) {};
 	virtual void OnProcessMovement() {};
 	virtual void OnProcessMovementPost() {};
-	virtual void OnPlayerMoveNew() {};
-	virtual void OnPlayerMoveNewPost() {};
+	virtual void OnPlayerMove() {};
+	virtual void OnPlayerMovePost() {};
 	virtual void OnCheckParameters() {};
 	virtual void OnCheckParametersPost() {};
 	virtual void OnCanMove() {};
