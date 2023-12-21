@@ -81,10 +81,7 @@ typedef KZModeService* (*ModeServiceFactory)(KZPlayer *player);
 class KZModeManager
 {
 public:
-	KZModeManager()
-	{
-		IDFactoryMap.SetLessFunc(DefLessFunc(int));
-	}
+	void Init();
 	virtual bool RegisterMode(const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
 	virtual void UnregisterMode(const char *modeName);
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);

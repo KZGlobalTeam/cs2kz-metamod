@@ -32,6 +32,7 @@ void KZ::mode::InitModeManager()
 {
 	static bool initialized = false;
 	if (initialized) return;
+	modeManager.Init();
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService *{ return new KZVanillaModeService(player); };
 	modeManager.RegisterMode("VNL", "Vanilla", vnlFactory);
 	initialized = true;
@@ -115,6 +116,11 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 		V_memcpy(&(modeCvars[i]->values), byteArray, 16);
 		//g_pCVar->SetConVarValue(modeCvarHandles[i], 0, (CVValue_t *)player->modeService->GetModeConVarValues()[i], (CVValue_t *)modeCvars[i]->values);
 	}
+}
+
+void KZModeManager::Init()
+{
+	this->IDFactoryMap.SetLessFunc(DefLessFunc(int));
 }
 
 bool KZModeManager::RegisterMode(const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
