@@ -266,12 +266,20 @@ void KZClassicModeService::OnPlayerMove()
 
 	// First half of the movement, tweak the angle to be the middle of the desired angle and the last angle
 	QAngle newAngles = player->currentMoveData->m_vecViewAngles;
-	for (u32 i = 0; i < 2; i++)
+	QAngle oldAngles = this->lastDesiredViewAngle;
+	if (newAngles[YAW] - oldAngles[YAW] > 180)
 	{
-		f32 diff = fmod((this->lastDesiredViewAngle[i] - newAngles[i] + 180.0f), 360.0f) - 180.0f;
-		if (diff < -180.0f) diff += 360.0f;
-		newAngles[i] += (0.5 * diff);
-		newAngles[i] = g_pKZUtils->NormalizeDeg(newAngles[i]);
+		newAngles[YAW] -= 360.0f;
+	}
+	else if (newAngles[YAW] - oldAngles[YAW] < -180)
+	{
+		newAngles[YAW] += 360.0f;
+	}
+	
+	for (u32 i = 0; i < 3; i++)
+	{
+		newAngles[i] = oldAngles[i];
+		newAngles[i] *= 0.5f;
 	}
 
 	player->currentMoveData->m_vecViewAngles = newAngles;
