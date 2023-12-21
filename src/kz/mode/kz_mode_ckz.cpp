@@ -16,13 +16,13 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 	g_ModeManager = (KZModeManager*)g_SMAPI->MetaFactory(KZ_MODE_MANAGER_INTERFACE, &success, 0);
 	if (success == META_IFACE_FAILED)
 	{
-		vsnprintf(error, maxlen, "Failed to find %s interface", KZ_MODE_MANAGER_INTERFACE);
+		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_MODE_MANAGER_INTERFACE);
 		return false;
 	}
 	g_pKZUtils = (KZUtils *)g_SMAPI->MetaFactory(KZ_UTILS_INTERFACE, &success, 0);
 	if (success == META_IFACE_FAILED)
 	{
-		vsnprintf(error, maxlen, "Failed to find %s interface", KZ_UTILS_INTERFACE);
+		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_UTILS_INTERFACE);
 		return false;
 	}
 
