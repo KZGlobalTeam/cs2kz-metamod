@@ -17,6 +17,7 @@ namespace movement
 	void InitDetours();
 
 	f32 FASTCALL Detour_GetMaxSpeed(CCSPlayerPawn *);
+	i32 FASTCALL Detour_ProcessUsercmds(CBasePlayerPawn *, void *, int, bool);
 	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_PlayerMoveNew(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckParameters(CCSPlayer_MovementServices *, CMoveData *);
@@ -73,6 +74,8 @@ public:
 	virtual f32 GetPlayerMaxSpeed();
 
 	// Movement hooks
+	virtual void OnProcessUsercmds(void *, int) {};
+	virtual void OnProcessUsercmdsPost(void *, int) {};
 	virtual void OnProcessMovement();
 	virtual void OnProcessMovementPost();
 	virtual void OnPlayerMoveNew() {};

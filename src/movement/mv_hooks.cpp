@@ -6,6 +6,7 @@
 void movement::InitDetours()
 {
 	INIT_DETOUR(GetMaxSpeed);
+	INIT_DETOUR(ProcessUsercmds);
 	INIT_DETOUR(ProcessMovement);
 	INIT_DETOUR(PlayerMoveNew);
 	INIT_DETOUR(CheckParameters);
@@ -36,6 +37,15 @@ f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 	
 	if (newMaxSpeed <= 0.0f) return GetMaxSpeed(pawn);
 	return newMaxSpeed;
+}
+
+i32 FASTCALL movement::Detour_ProcessUsercmds(CBasePlayerPawn *pawn, void *cmds, int numcmds, bool paused)
+{
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
+	player->OnProcessUsercmds(cmds, numcmds);
+	auto retValue = ProcessUsercmds(pawn, cmds, numcmds, paused);
+	player->OnProcessUsercmdsPost(cmds, numcmds);
+	return retValue;
 }
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)

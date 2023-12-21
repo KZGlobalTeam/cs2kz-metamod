@@ -39,6 +39,16 @@ float KZPlayer::GetPlayerMaxSpeed()
 	return this->modeService->GetPlayerMaxSpeed();
 }
 
+void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
+{
+	this->modeService->OnProcessUsercmds(cmds, numcmds);
+}
+
+void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
+{
+	this->modeService->OnProcessUsercmdsPost(cmds, numcmds);
+}
+
 void KZPlayer::OnProcessMovement()
 {
 	MovementPlayer::OnProcessMovement();

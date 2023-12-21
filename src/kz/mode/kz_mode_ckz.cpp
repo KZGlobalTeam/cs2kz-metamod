@@ -1,8 +1,10 @@
+#include "cs_usercmd.pb.h"
 #include "kz_mode_ckz.h"
 #include "utils/interfaces.h"
 #include "version.h"
 
 KZClassicModePlugin g_KZClassicModePlugin;
+
 KZUtils *g_pKZUtils = NULL;
 KZModeManager *g_pModeManager = NULL;
 ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService *{ return new KZClassicModeService(player); };
@@ -199,4 +201,25 @@ void KZClassicModeService::OnStopTouchGround()
 		this->player->takeoffVelocity = velocity;
 	}
 	// TODO: perf heights
+}
+
+void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
+{
+#ifdef _WIN32
+	constexpr u32 offset = 0x90;
+#else
+	constexpr u32 offset = 0x88;
+#endif
+	for (i32 i = 0; i < numcmds; i++)
+	{
+		auto address = reinterpret_cast<char *>(cmds) + i * offset;
+		CSGOUserCmdPB *usercmdsPtr = reinterpret_cast<CSGOUserCmdPB *>(address);
+
+		for (i32 j = 0; j < usercmdsPtr->mutable_base()->subtick_moves_size(); j++)
+		{
+			CSubtickMoveStep *subtickMove = usercmdsPtr->mutable_base()->mutable_subtick_moves(j);
+			float when = subtickMove->when();
+			subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
+		}	
+	}
 }

@@ -16,6 +16,7 @@ DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::se
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
 DECLARE_DETOUR(CCSPP_Teleport, Detour_CCSPP_Teleport, &modules::server);
 
+DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_DETOUR(ProcessMovement);
 DECLARE_MOVEMENT_DETOUR(PlayerMoveNew);

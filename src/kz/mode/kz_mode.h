@@ -20,6 +20,8 @@ public:
 	virtual f32 GetPlayerMaxSpeed() { return 0.0f; };
 
 	// Movement hooks
+	virtual void OnProcessUsercmds(void *, int) {};
+	virtual void OnProcessUsercmdsPost(void *, int) {};
 	virtual void OnProcessMovement() {};
 	virtual void OnProcessMovementPost() {};
 	virtual void OnPlayerMoveNew() {};

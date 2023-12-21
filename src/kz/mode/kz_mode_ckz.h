@@ -78,6 +78,8 @@ public:
 	virtual const char **GetModeConVarValues() override;
 	virtual f32 GetPlayerMaxSpeed() override;
 
+	virtual void OnProcessUsercmds(void *, int) override;
+	virtual void OnProcessUsercmdsPost(void *, int) override;
 	virtual void OnJump() override;
 	virtual void OnJumpPost() override;
 	virtual void OnStopTouchGround() override;

@@ -28,8 +28,10 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(sdk['path'], 'gcsdk', 'gcsdk_gcmessages.proto'),
     os.path.join(builder.sourcePath, 'protobuf', 'cstrike15_gcmessages.proto'),
     os.path.join(builder.sourcePath, 'protobuf', 'cstrike15_usermessages.proto'),
+    os.path.join(sdk['path'], 'game', 'shared', 'usercmd.proto'),
     os.path.join(sdk['path'], 'game', 'shared', 'gameevents.proto'),
     os.path.join(builder.sourcePath, 'protobuf', 'cs_gameevents.proto'),
+    os.path.join(builder.sourcePath, 'protobuf', 'cs_usercmd.proto'),
   ]
 
   # Main binary
