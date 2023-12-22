@@ -99,7 +99,7 @@ void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *
 	{
 		if (IsEntTriggerMultiple(this_))
 		{
-			CCSPlayerController *controller = dynamic_cast<CCSPlayerController*>(dynamic_cast<CCSPlayerPawn*>(pOther)->m_hController().Get());
+			CBasePlayerController *controller = utils::GetController(pOther);
 			if (!controller) return;
 			MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
 			if (IsTriggerStartZone(this_))
@@ -122,7 +122,7 @@ void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pO
 	{
 		if (IsEntTriggerMultiple(this_))
 		{
-			CCSPlayerController *controller = dynamic_cast<CCSPlayerController*>(dynamic_cast<CCSPlayerPawn*>(pOther)->m_hController().Get());
+			CBasePlayerController *controller = utils::GetController(pOther);
 			if (!controller) return;
 			MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
 			if (IsTriggerStartZone(this_))
