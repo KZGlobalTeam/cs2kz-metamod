@@ -118,7 +118,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     mode_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
 
   if mode_binary.compiler.family == 'clang':
-    mode_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof']
+    mode_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
 
   mode_binary.compiler.cxxincludes += CXXINCLUDES
 
