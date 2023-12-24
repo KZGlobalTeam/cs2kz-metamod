@@ -193,11 +193,16 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 	}
 }
 
+CGameEntitySystem *GameEntitySystem()
+{
+	return interfaces::pGameResourceServiceServer->GetGameEntitySystem();
+}
+
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
 	if (!g_pEntitySystem)
 	{
-		g_pEntitySystem = interfaces::pGameResourceServiceServer->GetGameEntitySystem();
+		g_pEntitySystem = GameEntitySystem();
 		assert(g_pEntitySystem);
 		SH_ADD_HOOK(CEntitySystem, Spawn, g_pEntitySystem, SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	}

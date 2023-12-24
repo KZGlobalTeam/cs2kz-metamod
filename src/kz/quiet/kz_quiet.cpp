@@ -17,9 +17,16 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		CPlayerSlot targetSlot = pTransmitInfo->m_nClientEntityIndex;
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 
+		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 		CCSPlayerPawn *pawn = nullptr;
+
 		while (nullptr != (pawn = (CCSPlayerPawn *)utils::FindEntityByClassname(pawn, "player")))
 		{
+			// If it's our pawn, don't hide them.
+			if (targetPlayerPawn == pawn)
+			{
+				continue;
+			}
 			// Bit is not even set, don't bother.
 			if (!pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
 			{
@@ -37,7 +44,10 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 			}
 			// Finally check if player is using !hide.
-			if (!targetPlayer->quietService->ShouldHide()) continue;
+			if (!targetPlayer->quietService->ShouldHide()) 
+			{
+				continue;
+			}
 			u32 index = g_pKZPlayerManager->ToPlayer(pawn)->index;
 			if (targetPlayer->quietService->ShouldHideIndex(index))
 			{
