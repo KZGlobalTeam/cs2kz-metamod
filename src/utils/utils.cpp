@@ -185,7 +185,7 @@ CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	if (!g_pEntitySystem)
+	if (!g_pEntitySystem || slot.Get() < 0 || slot.Get() > MAXPLAYERS)
 	{
 		return nullptr;
 	}

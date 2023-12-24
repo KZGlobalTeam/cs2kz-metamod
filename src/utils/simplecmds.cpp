@@ -120,7 +120,7 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 	}
 	CPlayerSlot slot = ctx.GetPlayerSlot();
 
-	CCSPlayerController *controller = (CCSPlayerController *)g_pEntitySystem->GetBaseEntity(CEntityIndex((i32)slot.Get() + 1));
+	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
 
 	if (args.ArgC() < 2)
 	{
