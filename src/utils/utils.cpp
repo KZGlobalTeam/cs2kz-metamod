@@ -158,8 +158,9 @@ CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 	if (entity->IsPawn())
 	{
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
-		if (!pawn->m_hController() || !pawn->m_hController().IsValid())
+		if (!pawn->m_hController().IsValid())
 		{
+			// Seems like the pawn lost its controller, we can try looping through the controllers to find this pawn instead.
 			for (i32 i = 0; i <= g_pKZUtils->GetServerGlobals()->maxClients; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));

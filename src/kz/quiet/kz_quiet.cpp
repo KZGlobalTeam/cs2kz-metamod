@@ -97,7 +97,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 	if (ent->IsPawn())
 	{
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(ent);
-		playerIndex = g_pKZPlayerManager->ToPlayer(pawn->m_hController().Get())->index;
+		playerIndex = g_pKZPlayerManager->ToPlayer(utils::GetController(pawn))->index;
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
 			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide()
