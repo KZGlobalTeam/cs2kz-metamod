@@ -73,6 +73,7 @@ class KZClassicModeService : public KZModeService
 	f32 tweakedJumpZSpeed{};
 	f32 lastDesiredViewAngleTime{};
 	QAngle lastDesiredViewAngle;
+	f32 lastJumpReleaseTime{};
 
 public:
 	virtual const char *GetModeName() override;

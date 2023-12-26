@@ -48,6 +48,8 @@ public:
 	DECLARE_SCHEMA_CLASS(CCSPlayer_MovementServices);
 	SCHEMA_FIELD(float, m_flJumpUntil)
 	SCHEMA_FIELD(Vector, m_vecLadderNormal)
+	SCHEMA_FIELD(bool, m_bOldJumpPressed)
+	SCHEMA_FIELD(float, m_flJumpPressedTime)
 };
 
 class CCSPlayer_ItemServices
