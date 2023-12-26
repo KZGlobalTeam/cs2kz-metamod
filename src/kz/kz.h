@@ -107,20 +107,20 @@ private:
 	bool hideLegs{};
 	TurnState previousTurnState{};
 public:
-	KZAnticheatService *anticheatService;
-	KZCheckpointService *checkpointService;
-	KZGlobalService *globalService;
-	KZHUDService *hudService;
-	KZJumpstatsService *jumpstatsService;
-	KZMeasureService *measureService;
-	KZModeService *modeService;
-	KZOptionService *optionsService;
-	KZQuietService *quietService;
-	KZRacingService *racingService;
-	KZSavelocService *savelocService;
-	KZStyleService *styleService;
-	KZTimerService *timerService;
-	KZTipService *tipService;
+	KZAnticheatService *anticheatService{};
+	KZCheckpointService *checkpointService{};
+	KZGlobalService *globalService{};
+	KZHUDService *hudService{};
+	KZJumpstatsService *jumpstatsService{};
+	KZMeasureService *measureService{};
+	KZModeService *modeService{};
+	KZOptionService *optionsService{};
+	KZQuietService *quietService{};
+	KZRacingService *racingService{};
+	KZSavelocService *savelocService{};
+	KZStyleService *styleService{};
+	KZTimerService *timerService{};
+	KZTipService *tipService{};
 	
 	// Misc stuff that doesn't belong into any service.
 	

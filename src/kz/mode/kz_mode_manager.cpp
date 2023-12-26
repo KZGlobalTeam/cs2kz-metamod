@@ -64,6 +64,7 @@ void KZ::mode::LoadModePlugins()
 
 void KZ::mode::InitModeService(KZPlayer *player)
 {
+	delete player->modeService;
 	player->modeService = new KZVanillaModeService(player);
 }
 

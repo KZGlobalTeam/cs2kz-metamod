@@ -180,6 +180,7 @@ public:
 	{
 		for (int i = 0; i < MAXPLAYERS + 1; i++)
 		{
+			delete players[i];
 			players[i] = new MovementPlayer(i);
 		}
 	}

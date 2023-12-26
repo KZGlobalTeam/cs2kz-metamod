@@ -16,6 +16,10 @@ void KZPlayer::Init()
 	this->previousTurnState = TURN_NONE;
 
 	// TODO: initialize every service.
+	delete this->checkpointService;
+	delete this->jumpstatsService;
+	delete this->quietService;
+	delete this->hudService;
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
 	this->quietService = new KZQuietService(this);
