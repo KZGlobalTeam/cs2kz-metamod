@@ -167,7 +167,6 @@ void KZClassicModeService::OnJump()
 
 void KZClassicModeService::OnJumpPost()
 {
-	float time = this->player->GetMoveServices()->m_flJumpPressedTime;
 	// If we didn't jump, we revert the jump height tweak.
 	if (this->revertJumpTweak)
 	{
