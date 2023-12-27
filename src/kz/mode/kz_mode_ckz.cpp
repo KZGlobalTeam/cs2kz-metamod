@@ -151,7 +151,6 @@ const char **KZClassicModeService::GetModeConVarValues()
 void KZClassicModeService::OnJump()
 {
 	float time = this->player->GetMoveServices()->m_flJumpPressedTime;
-	META_CONPRINTF("OnJump Curtime = %f, JumpPressedTime = %f\n", g_pKZUtils->GetServerGlobals()->curtime, time);
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	this->preJumpZSpeed = velocity.z;
@@ -169,7 +168,6 @@ void KZClassicModeService::OnJump()
 void KZClassicModeService::OnJumpPost()
 {
 	float time = this->player->GetMoveServices()->m_flJumpPressedTime;
-	META_CONPRINTF("OnJumpPost Curtime = %f, JumpPressedTime = %f\n", g_pKZUtils->GetServerGlobals()->curtime, time);
 	// If we didn't jump, we revert the jump height tweak.
 	if (this->revertJumpTweak)
 	{
@@ -231,7 +229,6 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 			if (subtickMove->button() == IN_JUMP)
 			{
 				f32 inputTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * 0.015625;
-				META_CONPRINTF("%sjump @ %f (input time %f)\n", subtickMove->pressed() ? "+" : "-", when, inputTime);
 				if (when != 0)
 				{
 					if (subtickMove->pressed() && inputTime - this->lastJumpReleaseTime > 0.0078125)
