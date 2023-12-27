@@ -95,6 +95,9 @@ public:
 	// If it is called at the start of ProcessUsercmds, it must set subtick timing in the past.
 	void InsertSubtickTiming(KZPlayer *player, float time, bool future);
 
+	void InterpolateViewAngles();
+	void RestoreInterpolatedViewAngles();
+
 	/*
 		Ported from DanZay's SimpleKZ:
 		Duck speed is reduced by the game upon ducking or unducking.

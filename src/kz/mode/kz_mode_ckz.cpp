@@ -282,12 +282,23 @@ void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, boo
 void KZClassicModeService::OnPlayerMove()
 {
 	this->ReduceDuckSlowdown();
+	this->InterpolateViewAngles();
+}
+
+void KZClassicModeService::OnPostPlayerMovePost()
+{
+	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
+	this->RestoreInterpolatedViewAngles();
+}
+
+void KZClassicModeService::InterpolateViewAngles()
+{
 	// Second half of the movement, no change.
-	CGlobalVars *globals = g_pKZUtils->GetServerGlobals();
+	CGlobalVars* globals = g_pKZUtils->GetServerGlobals();
 	// NOTE: tickcount is half a tick ahead of curtime while in the middle of a tick.
 	if ((f64)globals->tickcount / 64.0 - globals->curtime < 0.001)
 		return;
-	
+
 	if (this->lastDesiredViewAngleTime < g_pKZUtils->GetServerGlobals()->curtime + 0.015625)
 	{
 		this->lastDesiredViewAngle = this->player->moveDataPost.m_vecViewAngles;
@@ -304,7 +315,7 @@ void KZClassicModeService::OnPlayerMove()
 	{
 		newAngles[YAW] += 360.0f;
 	}
-	
+
 	for (u32 i = 0; i < 3; i++)
 	{
 		newAngles[i] += oldAngles[i];
@@ -314,9 +325,8 @@ void KZClassicModeService::OnPlayerMove()
 	player->currentMoveData->m_vecViewAngles = newAngles;
 }
 
-void KZClassicModeService::OnPostPlayerMovePost()
+void KZClassicModeService::RestoreInterpolatedViewAngles()
 {
-	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
 	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
 }
 
