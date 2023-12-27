@@ -34,7 +34,7 @@ class CCSPlayerPawn;
 struct TransmitInfo
 {
 	CBitVec<16384> *m_pTransmitEdict;
-	uint8_t unknown[552];
+	uint8 unknown[552];
 	CPlayerSlot m_nClientEntityIndex;
 };
 
@@ -98,7 +98,7 @@ enum InputBitMask_t : uint64_t
 };
 
 // used with EmitSound_t
-enum gender_t : uint8_t
+enum gender_t : uint8
 {
 	GENDER_NONE = 0x0,
 	GENDER_MALE = 0x1,
@@ -167,25 +167,45 @@ class CBaseTrigger : public CBaseEntity2
 
 };
 
-struct trace_t_s2
+struct RnCollisionAttr_t
+{ // Unsure, doesn't seem right either for the first few members.
+	uint64_t m_nInteractsAs;
+	uint64_t m_nInteractsWith;
+	uint64_t m_nInteractsExclude;
+	uint32_t m_nEntityId;
+	uint32_t m_nOwnerId;
+	uint16_t m_nHierarchyId;
+	uint8_t m_nCollisionGroup;
+	uint8_t m_nCollisionFunctionMask;
+};
+
+struct alignas(16) trace_t_s2
 {
-	uint8_t traceunknown0[8];   // 0
-	CBaseEntity *m_pEnt;        // 8
-	uint8_t traceunknown1[24];  // 16
-	int contents;               // 40
-	uint8_t traceunknown2[4];   // 44 (this is probably just alignment padding)
-	__m128i traceunknown3;      // 48
-	__m128i traceunknown4;      // 64
-	uint8_t traceunknown5[40];
+	void *m_pSurfaceProperties;
+	void *m_pEnt;
+	void *m_pHitbox;
+	void *m_hBody;
+	void *m_hShape;
+	uint64_t contents;
+	Vector traceunknown[2];
+	uint8_t padding[2];
+	RnCollisionAttr_t m_ShapeAttributes;
 	Vector startpos;
 	Vector endpos;
 	Vector planeNormal;
-	Vector traceunknown6;
-	uint8_t traceunknown7[4];
+	Vector traceunknown1;
+	float traceunknown2;
 	float fraction;
-	uint8_t traceunknown8[7];
+	uint8_t traceunknown3[4];
+	uint16_t traceunknown4;
+	uint8_t traceType;
 	bool startsolid;
 };
+
+static_assert(offsetof(trace_t_s2, startpos) == 120);
+static_assert(offsetof(trace_t_s2, endpos) == 132);
+static_assert(offsetof(trace_t_s2, startsolid) == 183);
+static_assert(offsetof(trace_t_s2, fraction) == 172);
 
 struct touchlist_t {
 	Vector deltavelocity;
@@ -195,7 +215,18 @@ struct touchlist_t {
 class CTraceFilterPlayerMovementCS
 {
 public:
-	uint8_t tfunk[64];
+	void *vtable;
+	uint64_t m_nInteractsWith;
+	uint64_t m_nInteractsExclude;
+	uint64_t m_nInteractsAs;
+	uint32_t m_nEntityId[2];
+	uint32_t m_nOwnerId[2];
+	uint16_t m_nHierarchyId[2];
+	uint8_t m_nCollisionFunctionMask;
+	uint8_t unk2;
+	uint8_t m_nCollisionGroup;
+	uint8_t unk3;
+	bool unk4;
 };
 
 struct vis_info_t
@@ -209,5 +240,5 @@ struct vis_info_t
 struct CCheckTransmitInfoS2
 {
 	CBitVec<16384> *m_pTransmitEdict;
-	uint8_t unk[1000];
+	uint8 unk[1000];
 };

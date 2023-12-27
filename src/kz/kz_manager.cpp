@@ -2,19 +2,16 @@
 
 #include "tier0/memdbgon.h"
 CKZPlayerManager g_KZPlayerManager;
-CMovementPlayerManager *g_pPlayerManager = dynamic_cast<CMovementPlayerManager *>(&g_KZPlayerManager);
 
-CKZPlayerManager *KZ::GetKZPlayerManager()
-{
-	return static_cast<CKZPlayerManager *>(g_pPlayerManager);
-}
+CKZPlayerManager *g_pKZPlayerManager = &g_KZPlayerManager;
+CMovementPlayerManager *g_pPlayerManager = dynamic_cast<CMovementPlayerManager *>(&g_KZPlayerManager);
 
 KZPlayer *CKZPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
 {
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(ms));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(CCSPlayerController *controller)
+KZPlayer *CKZPlayerManager::ToPlayer(CBasePlayerController *controller)
 {
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(controller));
 }

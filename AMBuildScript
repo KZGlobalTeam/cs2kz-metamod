@@ -73,6 +73,9 @@ class MMSPluginConfig(object):
     self.all_targets = []
     self.target_archs = set()
 
+    self.mode_binaries = []
+    self.style_binaries = []
+
     if builder.options.plugin_name is not None:
       self.plugin_name = builder.options.plugin_name
     else:
@@ -81,7 +84,7 @@ class MMSPluginConfig(object):
     if builder.options.plugin_alias is not None:
       self.plugin_alias = builder.options.plugin_alias
     else:
-      self.plugin_alias = 'Counter-Strike 2 KreedZ'
+      self.plugin_alias = 'CS2KZ'
 
     if builder.options.targets:
       target_archs = builder.options.targets.split(',')

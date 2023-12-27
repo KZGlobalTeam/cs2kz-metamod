@@ -1,7 +1,6 @@
 #pragma once
 #include "common.h"
 #include "movement/datatypes.h"
-#include "utils/cdetour.h"
 
 #define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
@@ -18,6 +17,7 @@ namespace movement
 	void InitDetours();
 
 	f32 FASTCALL Detour_GetMaxSpeed(CCSPlayerPawn *);
+	i32 FASTCALL Detour_ProcessUsercmds(CBasePlayerPawn *, void *, int, bool);
 	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_PlayerMoveNew(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckParameters(CCSPlayer_MovementServices *, CMoveData *);
@@ -37,7 +37,7 @@ namespace movement
 	void FASTCALL Detour_CategorizePosition(CCSPlayer_MovementServices *, CMoveData *, bool);
 	void FASTCALL Detour_FinishGravity(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_PlayerMovePost(CCSPlayer_MovementServices *, CMoveData *);
+	void FASTCALL Detour_PostPlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
 
 }
@@ -47,45 +47,87 @@ class MovementPlayer
 public:
 	MovementPlayer(int i) : index(i) {}
 
-	CCSPlayerController *GetController();
-	CCSPlayerPawn *GetPawn();
-	CPlayerSlot GetPlayerSlot() { return index - 1; };
-	CCSPlayer_MovementServices *GetMoveServices();
+	virtual CCSPlayerController *GetController();
+	virtual CCSPlayerPawn *GetPawn();
+	virtual CPlayerSlot GetPlayerSlot() { return index - 1; };
+	virtual CCSPlayer_MovementServices *GetMoveServices();
 
 	// TODO: this doesn't work during movement processing!
-
-	void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
-	void GetOrigin(Vector *origin);
-	void SetOrigin(const Vector &origin);
-	void GetVelocity(Vector *velocity);
-	void SetVelocity(const Vector &velocity);
-	void GetAngles(QAngle *angles);
-	void SetAngles(const QAngle &angles);
 	
-	TurnState GetTurning();
-	bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
-	void RegisterTakeoff(bool jumped);
-	void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
-	f32 GetGroundPosition();
-	void InvalidateTimer(bool playErrorSound = true);
+	virtual void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	virtual void GetOrigin(Vector *origin);
+	virtual void SetOrigin(const Vector &origin);
+	virtual void GetVelocity(Vector *velocity);
+	virtual void SetVelocity(const Vector &velocity);
+	virtual void GetAngles(QAngle *angles);
+	// It is not recommended use this to change the angle inside movement processing, it might not work!
+	virtual void SetAngles(const QAngle &angles);
+	
+	virtual TurnState GetTurning();
+	virtual bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
+	virtual void RegisterTakeoff(bool jumped);
+	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
+	virtual f32 GetGroundPosition();
+	virtual void InvalidateTimer(bool playErrorSound = true);
 
 	virtual void Reset();
-	virtual void OnStartProcessMovement();
-	virtual void OnStopProcessMovement();
+	virtual f32 GetPlayerMaxSpeed();
 
-	virtual void OnStartTouchGround();
-	virtual void OnStopTouchGround();
-
-	virtual void OnChangeMoveType(MoveType_t oldMoveType);
-	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel);
-	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
-	
-	virtual void OnTryPlayerMovePre(Vector *pFirstDest, trace_t_s2 *pFirstTrace);
-	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace);
+	// Movement hooks
+	virtual void OnProcessUsercmds(void *, int) {};
+	virtual void OnProcessUsercmdsPost(void *, int) {};
+	virtual void OnProcessMovement();
+	virtual void OnProcessMovementPost();
+	virtual void OnPlayerMove() {};
+	virtual void OnPlayerMovePost() {};
+	virtual void OnCheckParameters() {};
+	virtual void OnCheckParametersPost() {};
+	virtual void OnCanMove() {};
+	virtual void OnCanMovePost() {};
+	virtual void OnFullWalkMove(bool &) {};
+	virtual void OnFullWalkMovePost(bool) {};
+	virtual void OnMoveInit() {};
+	virtual void OnMoveInitPost() {};
+	virtual void OnCheckWater() {};
+	virtual void OnCheckWaterPost() {};
+	virtual void OnCheckVelocity(const char *) {};
+	virtual void OnCheckVelocityPost(const char *) {};
+	virtual void OnDuck() {};
+	virtual void OnDuckPost() {};
+	virtual void OnCanUnduck() {};
+	virtual void OnCanUnduckPost() {};
+	virtual void OnLadderMove() {};
+	virtual void OnLadderMovePost() {};
+	virtual void OnCheckJumpButton() {};
+	virtual void OnCheckJumpButtonPost() {};
+	virtual void OnJump() {};
+	virtual void OnJumpPost() {};
+	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) {};
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) {};
+	virtual void OnFriction() {};
+	virtual void OnFrictionPost() {};
+	virtual void OnWalkMove() {};
+	virtual void OnWalkMovePost() {};
+	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) {};
+	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) {};
+	virtual void OnCategorizePosition(bool) {};
+	virtual void OnCategorizePositionPost(bool) {};
+	virtual void OnFinishGravity() {};
+	virtual void OnFinishGravityPost() {};
+	virtual void OnCheckFalling() {};
+	virtual void OnCheckFallingPost() {};
+	virtual void OnPostPlayerMove() {};
+	virtual void OnPostPlayerMovePost() {};
 	virtual void OnPostThink();
+	virtual void OnPostThinkPost() {};
 
-	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	// Movement events
+	virtual void OnStartTouchGround() {};
+	virtual void OnStopTouchGround() {};
+	virtual void OnChangeMoveType(MoveType_t oldMoveType) {};
 
+	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) {};
+	
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();
@@ -138,6 +180,7 @@ public:
 	{
 		for (int i = 0; i < MAXPLAYERS + 1; i++)
 		{
+			delete players[i];
 			players[i] = new MovementPlayer(i);
 		}
 	}
@@ -150,7 +193,7 @@ public:
 	}
 public:
 	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
-	MovementPlayer *ToPlayer(CCSPlayerController *controller);
+	MovementPlayer *ToPlayer(CBasePlayerController *controller);
 	MovementPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	MovementPlayer *ToPlayer(CPlayerSlot slot);
 	MovementPlayer *ToPlayer(CEntityIndex entIndex);

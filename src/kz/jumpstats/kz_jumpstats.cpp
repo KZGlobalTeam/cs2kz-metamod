@@ -503,7 +503,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 {
 	if (this->player->takeoffFromLadder)
 	{
-		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > utils::GetServerGlobals()->curtime
+		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetServerGlobals()->curtime
 			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
 			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + 1/64)
 		{
@@ -566,7 +566,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	return JumpType_LongJump;
 }
 
-void KZJumpstatsService::OnStartProcessMovement()
+void KZJumpstatsService::OnProcessMovement()
 {
 	// Always ensure that the player has at least an ongoing jump.
 	// This is mostly to prevent crash, it's not a valid jump.
@@ -600,7 +600,7 @@ bool KZJumpstatsService::HitBhop()
 
 bool KZJumpstatsService::HitDuckbugRecently()
 {
-	return utils::GetServerGlobals()->curtime - this->lastDuckbugTime <= JS_MAX_DUCKBUG_RESET_TIME;
+	return g_pKZUtils->GetServerGlobals()->curtime - this->lastDuckbugTime <= JS_MAX_DUCKBUG_RESET_TIME;
 }
 bool KZJumpstatsService::ValidWeirdJumpDropDistance()
 {
@@ -612,7 +612,7 @@ bool KZJumpstatsService::GroundSpeedCappedRecently()
 	return this->lastGroundSpeedCappedTime == this->lastMovementProcessedTime;
 }
 
-void KZJumpstatsService::OnAirAcceleratePre()
+void KZJumpstatsService::OnAirAccelerate()
 {
 	AACall call;
 	this->player->GetVelocity(&call.velocityPre);
@@ -620,8 +620,8 @@ void KZJumpstatsService::OnAirAcceleratePre()
 	// moveDataPost is still the movedata from last tick.
 	call.externalSpeedDiff = call.velocityPre.Length2D() - this->player->moveDataPost.m_vecVelocity.Length2D();
 	call.prevYaw = this->player->oldAngles.y;
-	call.curtime = utils::GetServerGlobals()->curtime;
-	call.tickcount = utils::GetServerGlobals()->tickcount;
+	call.curtime = g_pKZUtils->GetServerGlobals()->curtime;
+	call.tickcount = g_pKZUtils->GetServerGlobals()->tickcount;
 	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
 	strafe->aaCalls.AddToTail(call);
 }
@@ -768,17 +768,17 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 	this->lastJumpButtonTime = this->player->GetPawn()->m_ignoreLadderJumpTime();
 	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP)
 	{
-		this->lastNoclipTime = utils::GetServerGlobals()->curtime;	
+		this->lastNoclipTime = g_pKZUtils->GetServerGlobals()->curtime;	
 	}
 	if (this->player->duckBugged)
 	{
-		this->lastDuckbugTime = utils::GetServerGlobals()->curtime;	
+		this->lastDuckbugTime = g_pKZUtils->GetServerGlobals()->curtime;	
 	}
 	if (this->player->walkMoved)
 	{
-		this->lastGroundSpeedCappedTime = utils::GetServerGlobals()->curtime;
+		this->lastGroundSpeedCappedTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
-	this->lastMovementProcessedTime = utils::GetServerGlobals()->curtime;
+	this->lastMovementProcessedTime = g_pKZUtils->GetServerGlobals()->curtime;
 }
 
 void KZJumpstatsService::ToggleJSAlways()
@@ -811,7 +811,7 @@ void KZJumpstatsService::DetectInvalidCollisions()
 	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid()) return;
 	if (this->player->currentMoveData->m_TouchList.Count() > 0)
 	{
-		this->jumps.Tail().touchDuration += utils::GetServerGlobals()->frametime;
+		this->jumps.Tail().touchDuration += g_pKZUtils->GetServerGlobals()->frametime;
 		// Headhit invadidates following bhops but not the current jump,
 		// while other collisions do after a certain duration.
 		if (this->jumps.Tail().touchDuration > JS_TOUCH_GRACE_PERIOD)
@@ -849,7 +849,7 @@ void KZJumpstatsService::DetectExternalModifications()
 	}
 }
 
-void KZJumpstatsService::OnTryPlayerMovePre()
+void KZJumpstatsService::OnTryPlayerMove()
 {
 	this->tpmPreSpeed = this->player->currentMoveData->m_vecVelocity.Length2D();
 }

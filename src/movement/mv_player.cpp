@@ -3,7 +3,7 @@
 
 #include "tier0/memdbgon.h"
 
-void MovementPlayer::OnStartProcessMovement()
+void MovementPlayer::OnProcessMovement()
 {
 	this->duckBugged = false;
 	this->hitPerf = false;
@@ -12,46 +12,13 @@ void MovementPlayer::OnStartProcessMovement()
 	this->takeoffFromLadder = false;
 }
 
-void MovementPlayer::OnStopProcessMovement()
+void MovementPlayer::OnProcessMovementPost()
 {
 	this->processingMovement = false;
-	this->lastProcessedCurtime = utils::GetServerGlobals()->curtime;
-	this->lastProcessedTickcount = utils::GetServerGlobals()->tickcount;
+	this->lastProcessedCurtime = g_pKZUtils->GetServerGlobals()->curtime;
+	this->lastProcessedTickcount = g_pKZUtils->GetServerGlobals()->tickcount;
 	this->oldAngles = this->moveDataPost.m_vecViewAngles;
 	this->oldWalkMoved = this->walkMoved;
-}
-
-void MovementPlayer::OnStartTouchGround()
-{
-}
-
-void MovementPlayer::OnStopTouchGround()
-{
-}
-
-void MovementPlayer::OnChangeMoveType(MoveType_t oldMoveType)
-{
-}
-
-void MovementPlayer::OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel)
-{
-}
-
-void MovementPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
-{
-}
-
-void MovementPlayer::OnTryPlayerMovePre(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
-{
-
-}
-void MovementPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
-{
-
-}
-
-void MovementPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
-{
 }
 
 CCSPlayerController *MovementPlayer::GetController()
@@ -60,18 +27,24 @@ CCSPlayerController *MovementPlayer::GetController()
 	{
 		return nullptr;
 	}
-	return dynamic_cast<CCSPlayerController *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
+	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
+	if (!ent)
+	{
+		return nullptr;
+	}
+	return ent->IsController() ? static_cast<CCSPlayerController *>(ent) : nullptr;
 }
 
 CCSPlayerPawn *MovementPlayer::GetPawn()
 {
 	CCSPlayerController *controller = this->GetController();
 	if (!controller) return nullptr;
-	return dynamic_cast<CCSPlayerPawn *>(controller->m_hPawn().Get());
+	return controller->m_hPlayerPawn().Get();
 }
 
 CCSPlayer_MovementServices *MovementPlayer::GetMoveServices()
 {
+	if (!this->GetPawn()) return nullptr;
 	return static_cast<CCSPlayer_MovementServices *>(this->GetPawn()->m_pMovementServices());
 };
 
@@ -122,9 +95,16 @@ void MovementPlayer::GetVelocity(Vector *velocity)
 
 void MovementPlayer::SetVelocity(const Vector &velocity)
 {
-	CBasePlayerPawn *pawn = this->GetPawn();
-	if (!pawn) return;
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, &velocity);
+	if (this->processingMovement && this->currentMoveData)
+	{
+		this->currentMoveData->m_vecVelocity = velocity;
+	}
+	else
+	{
+		CBasePlayerPawn *pawn = this->GetPawn();
+		if (!pawn) return;
+		CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, &velocity);
+	}
 }
 
 void MovementPlayer::GetAngles(QAngle *angles)
@@ -174,31 +154,30 @@ f32 MovementPlayer::GetGroundPosition()
 {
 	CMoveData *mv = this->currentMoveData;
 	if (!this->processingMovement) mv = &this->moveDataPost;
-	i32 traceCounter = 0;
+
 	CTraceFilterPlayerMovementCS filter;
 	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
+
+	f32 standableZ = 0.7; // TODO: actually use the cvar, preferably the mode cvar
+
+	bbox_t bounds;
+	bounds.mins = { -16.0, -16.0, 0.0 };
+	bounds.maxs = { 16.0, 16.0, 72.0 };
+
+	if (this->GetMoveServices()->m_bDucked()) bounds.maxs.z = 54.0;
+
 	trace_t_s2 trace;
 	utils::InitGameTrace(&trace);
-	f32 standableZ = 0.7;
-	Vector hullMin = { -16.0, -16.0, 0.0 };
-	Vector hullMax = { 16.0, 16.0, 72.0 };
-	if (this->GetMoveServices()->m_bDucked()) hullMax.z = 54.0;
-	utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter);
 
-	f32 highestPoint = trace.endpos.z;
-
+	utils::TracePlayerBBox(mv->m_vecAbsOrigin, ground, bounds, &filter, trace);
+	
+	// Doesn't hit anything, fall back to the original ground
 	if (trace.startsolid || trace.fraction == 1.0f) return mv->m_vecAbsOrigin.z;
 
-	while (trace.fraction != 1.0 && !trace.startsolid && traceCounter < 32 && trace.planeNormal.z >= standableZ)
-	{
-		ground.z = highestPoint;
-		utils::TracePlayerBBoxForGround(mv->m_vecAbsOrigin, ground, hullMin, hullMax, &filter, trace, standableZ, false, &traceCounter); // Ghetto trace function
-		if (trace.endpos.z <= highestPoint) return highestPoint;
-		highestPoint = trace.endpos.z;
-	}
-	return highestPoint;
+	return trace.endpos.z;
 }
 
 void MovementPlayer::RegisterTakeoff(bool jumped)
@@ -206,7 +185,7 @@ void MovementPlayer::RegisterTakeoff(bool jumped)
 	CMoveData *mv = this->currentMoveData;
 	if (!this->processingMovement) mv = &this->moveDataPost;
 	this->takeoffOrigin = mv->m_vecAbsOrigin;
-	this->takeoffTime = utils::GetServerGlobals()->curtime - utils::GetServerGlobals()->frametime;
+	this->takeoffTime = g_pKZUtils->GetServerGlobals()->curtime - g_pKZUtils->GetServerGlobals()->frametime;
 	this->takeoffVelocity = mv->m_vecVelocity;
 	this->takeoffGroundOrigin = mv->m_vecAbsOrigin;
 	this->takeoffGroundOrigin.z = this->GetGroundPosition();
@@ -218,7 +197,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	CMoveData *mv = this->currentMoveData;
 	if (!this->processingMovement) mv = &this->moveDataPost;
 	this->landingOrigin = mv->m_vecAbsOrigin;
-	this->landingTime = utils::GetServerGlobals()->curtime;
+	this->landingTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->landingVelocity = landingVelocity;
 	if (!distbugFix)
 	{
@@ -234,7 +213,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 			if (mv->m_TouchList[i].trace.planeNormal.z > 0.7)
 			{
 				this->landingOriginActual = mv->m_TouchList[i].trace.endpos;
-				this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[i].trace.fraction) * utils::GetServerGlobals()->frametime; // TODO: make sure this is right
+				this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[i].trace.fraction) * g_pKZUtils->GetServerGlobals()->frametime; // TODO: make sure this is right
 				return;
 			}
 		}
@@ -325,4 +304,10 @@ void MovementPlayer::Reset()
 	this->landingTimeActual = 0.0f;
 	this->tickCount = 0;
 	this->timerStartTick = 0;
+}
+
+float MovementPlayer::GetPlayerMaxSpeed()
+{
+	// No effect.
+	return 0.0f;
 }

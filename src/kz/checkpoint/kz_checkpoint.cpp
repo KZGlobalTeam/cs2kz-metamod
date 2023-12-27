@@ -80,7 +80,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);
 	}
 	this->tpCount++;
-	this->teleportTime = utils::GetServerGlobals()->curtime;
+	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->player->PlayTeleportSound();
 }
 
@@ -105,7 +105,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 {
 	if (!checkpoints.IsValidIndex(currentCpIndex)) return;
 	if (this->player->GetPawn()->m_lifeState() != LIFE_ALIVE) return;
-	if (utils::GetServerGlobals()->curtime - this->teleportTime > 0.04) return;
+	if (g_pKZUtils->GetServerGlobals()->curtime - this->teleportTime > 0.04) return;
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
 
@@ -121,7 +121,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	}
 	if (checkpoints[currentCpIndex].groundEnt)
 	{
-		this->player->GetPawn()->m_fFlags |= FL_ONGROUND;
+		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
 	}
 	this->player->GetPawn()->m_hGroundEntity(checkpoints[currentCpIndex].groundEnt);
 }

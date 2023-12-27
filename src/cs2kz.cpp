@@ -28,15 +28,17 @@ class GameSessionConfiguration_t { };
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand&);
 SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo**, int, CBitVec<16384>&, const Entity2Networkable_t **, const uint16 *, int);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
-SH_DECL_HOOK5(ISource2GameClients, ProcessUsercmds, SH_NOATTRIB, false, float, CPlayerSlot, bf_read *, int, bool, bool);
+SH_DECL_HOOK5(ISource2GameClients, ProcessUsercmds, SH_NOATTRIB, false, int, CPlayerSlot, bf_read *, int, bool, bool);
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
 SH_DECL_HOOK4_void(ISource2GameClients, ClientPutInServer, SH_NOATTRIB, false, CPlayerSlot, char const *, int, uint64);
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t &, ISource2WorldSession *, const char *);
 SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEvent *, bool);
+SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
 SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64*,
 	INetworkSerializable*, const void*, unsigned long, NetChannelBufType_t)
-CEntitySystem *g_pEntitySystem = NULL;
 
+CEntitySystem *g_pEntitySystem = NULL;
+CGlobalVars *gpGlobals = NULL;
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
@@ -48,6 +50,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 	movement::InitDetours();
+		
+	KZ::mode::InitModeManager();
 	
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
@@ -57,9 +61,18 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	SH_ADD_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
+	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+
 	KZ::misc::RegisterCommands();
 	
+	if (!KZ::mode::InitModeCvars())
+	{
+		return false;
+	}
+
+	ismm->AddListener(this, this);
+
 	KZ::mode::DisableReplicatedModeCvars();
 
 	return true;
@@ -75,15 +88,19 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	SH_REMOVE_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
+	SH_REMOVE_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
+	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
+	g_pKZModeManager->Cleanup();
 	return true;
 }
 
 void KZPlugin::AllPluginsLoaded()
 {
+	KZ::mode::LoadModePlugins();
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)
@@ -103,7 +120,7 @@ const char *KZPlugin::GetLicense()
 
 const char *KZPlugin::GetVersion()
 {
-	return "VERSION_STRING";
+	return VERSION_STRING;
 }
 
 const char *KZPlugin::GetDate()
@@ -136,14 +153,31 @@ const char *KZPlugin::GetURL()
 	return "https://github.com/zer0k-z/cs2kz_metamod";
 }
 
-internal float Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
+void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 {
-	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
+	if (strcmp(iface, KZ_MODE_MANAGER_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return g_pKZModeManager;
+	}
+	else if (strcmp(iface, KZ_UTILS_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return g_pKZUtils;
+	}
+	*ret = META_IFACE_FAILED;
+
+	return NULL; 
 }
 
-internal float Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
+internal int Hook_ProcessUsercmds_Pre(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
 {
-	RETURN_META_VALUE(MRES_IGNORED, 0.0f);
+	RETURN_META_VALUE(MRES_IGNORED, 0);
+}
+
+internal int Hook_ProcessUsercmds_Post(CPlayerSlot slot, bf_read *buf, int numcmds, bool ignore, bool paused)
+{
+	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
 internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo_DontUse)
@@ -159,11 +193,16 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 	}
 }
 
+CGameEntitySystem *GameEntitySystem()
+{
+	return interfaces::pGameResourceServiceServer->GetGameEntitySystem();
+}
+
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
 	if (!g_pEntitySystem)
 	{
-		g_pEntitySystem = interfaces::pGameResourceServiceServer->GetGameEntitySystem();
+		g_pEntitySystem = GameEntitySystem();
 		assert(g_pEntitySystem);
 		SH_ADD_HOOK(CEntitySystem, Spawn, g_pEntitySystem, SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	}
@@ -194,15 +233,26 @@ internal void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int 
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	if (!gpGlobals)
+	{
+		gpGlobals = interfaces::pEngine->GetServerGlobals();
+	}
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 {
-	if (!event)
+	if (event)
 	{
-		RETURN_META_VALUE(MRES_IGNORED, false);
+		//META_CONPRINTF("%s fired!\n", event->GetName());
 	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
+}
+
+internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+{
+	META_RES mres = scmd::OnDispatchConCommand(cmd, ctx, args);
+
+	RETURN_META(mres);
 }
 
 internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients,

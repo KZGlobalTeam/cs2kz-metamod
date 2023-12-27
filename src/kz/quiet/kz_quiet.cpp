@@ -15,11 +15,18 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		
 		// Find out who this info will be sent to.
 		CPlayerSlot targetSlot = pTransmitInfo->m_nClientEntityIndex;
-		KZPlayer *targetPlayer = KZ::GetKZPlayerManager()->ToPlayer(targetSlot);
+		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 
+		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 		CCSPlayerPawn *pawn = nullptr;
+
 		while (nullptr != (pawn = (CCSPlayerPawn *)utils::FindEntityByClassname(pawn, "player")))
 		{
+			// If it's our pawn, don't hide them.
+			if (targetPlayerPawn == pawn)
+			{
+				continue;
+			}
 			// Bit is not even set, don't bother.
 			if (!pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
 			{
@@ -37,8 +44,11 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 			}
 			// Finally check if player is using !hide.
-			if (!targetPlayer->quietService->ShouldHide()) continue;
-			u32 index = GetKZPlayerManager()->ToPlayer(pawn)->index;
+			if (!targetPlayer->quietService->ShouldHide()) 
+			{
+				continue;
+			}
+			u32 index = g_pKZPlayerManager->ToPlayer(pawn)->index;
 			if (targetPlayer->quietService->ShouldHideIndex(index))
 			{
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
@@ -80,19 +90,18 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 			return;
 		}
 	}
-	CBaseEntity *ent = g_pEntitySystem->GetBaseEntity(CEntityIndex(entIndex));
+	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(entIndex)));
 	if (!ent) return;
 
 	// Convert this entindex into the index in the player controller.
-	if (utils::IsEntityPawn(ent))
+	if (ent->IsPawn())
 	{
-		CBasePlayerPawn *pawn = dynamic_cast<CBasePlayerPawn *>(ent);
-		CCSPlayerController *controller = dynamic_cast<CCSPlayerController *>(pawn->m_hController().Get());
-		playerIndex = GetKZPlayerManager()->ToPlayer(controller)->index;
+		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(ent);
+		playerIndex = g_pKZPlayerManager->ToPlayer(utils::GetController(pawn))->index;
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
-			if (GetKZPlayerManager()->ToPlayer(i)->quietService->ShouldHide()
-				&& GetKZPlayerManager()->ToPlayer(i)->quietService->ShouldHideIndex(playerIndex))
+			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide()
+				&& g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHideIndex(playerIndex))
 			{
 				*(uint64 *)clients &= ~i;
 			}
@@ -103,7 +112,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 	{
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
-			if (GetKZPlayerManager()->ToPlayer(i)->quietService->ShouldHide())
+			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide())
 			{
 				*(uint64 *)clients &= ~i;
 			}

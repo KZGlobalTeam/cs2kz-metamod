@@ -223,9 +223,9 @@ private:
 	f32 tpmPreSpeed{};
 
 public:
-	void OnStartProcessMovement();
+	void OnProcessMovement();
 	void OnChangeMoveType(MoveType_t oldMoveType);
-	void OnTryPlayerMovePre();
+	void OnTryPlayerMove();
 	void OnTryPlayerMovePost();
 
 	JumpType DetermineJumpType();
@@ -240,7 +240,7 @@ public:
 	void UpdateJump();
 	void EndJump();
 	void InvalidateJumpstats();
-	void OnAirAcceleratePre();
+	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
 	void ToggleJSAlways();
