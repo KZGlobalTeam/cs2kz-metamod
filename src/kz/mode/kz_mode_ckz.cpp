@@ -197,7 +197,7 @@ void KZClassicModeService::OnStopTouchGround()
 		float newSpeed = this->player->landingVelocity.Length2D();
 		if (newSpeed > 276.0f)
 		{
-			newSpeed = (52 - timeOnGround * 128) * log(newSpeed) - 5.020043;
+			newSpeed = MIN(newSpeed, (52 - timeOnGround * 128) * log(newSpeed) - 5.020043);
 		}
 		velocity.x = newSpeed * landingVelocity2D.x;
 		velocity.y = newSpeed * landingVelocity2D.y;
