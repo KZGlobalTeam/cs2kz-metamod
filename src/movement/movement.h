@@ -52,14 +52,15 @@ public:
 	virtual CPlayerSlot GetPlayerSlot() { return index - 1; };
 	virtual CCSPlayer_MovementServices *GetMoveServices();
 
-	// TODO: this doesn't work during movement processing!
-	
+	// This doesn't work during movement processing!
 	virtual void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	
 	virtual void GetOrigin(Vector *origin);
 	virtual void SetOrigin(const Vector &origin);
 	virtual void GetVelocity(Vector *velocity);
 	virtual void SetVelocity(const Vector &velocity);
 	virtual void GetAngles(QAngle *angles);
+	
 	// It is not recommended use this to change the angle inside movement processing, it might not work!
 	virtual void SetAngles(const QAngle &angles);
 	

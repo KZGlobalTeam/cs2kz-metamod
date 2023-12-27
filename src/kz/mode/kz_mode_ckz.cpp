@@ -191,6 +191,7 @@ void KZClassicModeService::OnStopTouchGround()
 	// Perf
 	if (timeOnGround <= 0.02)
 	{
+		// Perf speed
 		Vector2D landingVelocity2D(this->player->landingVelocity.x, this->player->landingVelocity.y);
 		landingVelocity2D.NormalizeInPlace();
 		float newSpeed = this->player->landingVelocity.Length2D();
@@ -198,13 +199,18 @@ void KZClassicModeService::OnStopTouchGround()
 		{
 			newSpeed = (52 - timeOnGround * 128) * log(newSpeed) - 5.020043;
 		}
-		//META_CONPRINTF("currentSpeed = %.3f, timeOnGround = %.3f, landingspeed = %.3f, newSpeed = %.3f\n", speed, timeOnGround, this->player->landingVelocity.Length2D(), newSpeed);
 		velocity.x = newSpeed * landingVelocity2D.x;
 		velocity.y = newSpeed * landingVelocity2D.y;
 		this->player->SetVelocity(velocity);
 		this->player->takeoffVelocity = velocity;
+
+		// Perf height
+		Vector origin;
+		this->player->GetOrigin(&origin);
+		origin.z = this->player->GetGroundPosition();
+		this->player->SetOrigin(origin);
+		this->player->takeoffOrigin = origin;
 	}
-	// TODO: perf heights
 }
 
 void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
