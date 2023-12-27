@@ -31,7 +31,6 @@ class CPlayer_MovementServices : public CPlayerPawnComponent
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
 	SCHEMA_FIELD_POINTER(CInButtonState, m_nButtons)
-	SCHEMA_FIELD(float, m_flDuckSpeed)
 	SCHEMA_FIELD_POINTER(float, m_arrForceSubtickMoveWhen)
 };
 
@@ -52,6 +51,7 @@ public:
 	SCHEMA_FIELD(Vector, m_vecLadderNormal)
 	SCHEMA_FIELD(bool, m_bOldJumpPressed)
 	SCHEMA_FIELD(float, m_flJumpPressedTime)
+	SCHEMA_FIELD(float, m_flDuckSpeed)
 };
 
 class CCSPlayer_ItemServices
