@@ -74,6 +74,7 @@ class KZClassicModeService : public KZModeService
 	f32 lastDesiredViewAngleTime{};
 	QAngle lastDesiredViewAngle;
 	f32 lastJumpReleaseTime{};
+	bool oldDuckPressed{};
 
 public:
 	virtual const char *GetModeName() override;
@@ -98,6 +99,7 @@ public:
 	void InterpolateViewAngles();
 	void RestoreInterpolatedViewAngles();
 
+	void RemoveCrouchJumpBind();
 	/*
 		Ported from DanZay's SimpleKZ:
 		Duck speed is reduced by the game upon ducking or unducking.

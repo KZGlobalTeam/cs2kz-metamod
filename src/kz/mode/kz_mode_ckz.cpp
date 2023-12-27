@@ -248,6 +248,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 
 void KZClassicModeService::OnPlayerMove()
 {
+	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
 	this->InterpolateViewAngles();
 }
@@ -256,6 +257,7 @@ void KZClassicModeService::OnPostPlayerMovePost()
 {
 	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
 	this->RestoreInterpolatedViewAngles();
+	this->oldDuckPressed = this->player->IsButtonDown(IN_DUCK, true);
 }
 
 void KZClassicModeService::InsertSubtickTiming(float time, bool future)
@@ -324,6 +326,14 @@ void KZClassicModeService::InterpolateViewAngles()
 void KZClassicModeService::RestoreInterpolatedViewAngles()
 {
 	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
+}
+
+void KZClassicModeService::RemoveCrouchJumpBind()
+{
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && !this->oldDuckPressed && !this->player->GetMoveServices()->m_bOldJumpPressed)
+	{
+		this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[0] &= ~IN_DUCK;
+	}
 }
 
 void KZClassicModeService::ReduceDuckSlowdown()
