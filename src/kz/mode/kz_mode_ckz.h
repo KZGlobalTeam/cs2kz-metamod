@@ -93,7 +93,7 @@ public:
 	// This is called either at the end of movement processing, or at the start of ProcessUsercmds.
 	// If it is called at the end of movement processing, it must set subtick timing into the future.
 	// If it is called at the start of ProcessUsercmds, it must set subtick timing in the past.
-	void InsertSubtickTiming(KZPlayer *player, float time, bool future);
+	void InsertSubtickTiming(float time, bool future);
 
 	void InterpolateViewAngles();
 	void RestoreInterpolatedViewAngles();

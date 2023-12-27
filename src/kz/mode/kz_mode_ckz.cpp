@@ -244,12 +244,24 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 			subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
 		}
 	}
-	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 - 0.0078125, false);
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 - 0.0078125, false);
 }
 
-void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, bool future)
+void KZClassicModeService::OnPlayerMove()
 {
-	CCSPlayer_MovementServices *moveServices = player->GetMoveServices();
+	this->ReduceDuckSlowdown();
+	this->InterpolateViewAngles();
+}
+
+void KZClassicModeService::OnPostPlayerMovePost()
+{
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
+	this->RestoreInterpolatedViewAngles();
+}
+
+void KZClassicModeService::InsertSubtickTiming(float time, bool future)
+{
+	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
 	if (!moveServices) return;
 	// Don't create subtick too close to real time, there will be movement processing there anyway.
 	if (fabs(roundf(time) - time) < 0.001) return;
@@ -274,18 +286,6 @@ void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, boo
 			moveServices->m_arrForceSubtickMoveWhen[i] = time;
 		}
 	}
-}
-
-void KZClassicModeService::OnPlayerMove()
-{
-	this->ReduceDuckSlowdown();
-	this->InterpolateViewAngles();
-}
-
-void KZClassicModeService::OnPostPlayerMovePost()
-{
-	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
-	this->RestoreInterpolatedViewAngles();
 }
 
 void KZClassicModeService::InterpolateViewAngles()
