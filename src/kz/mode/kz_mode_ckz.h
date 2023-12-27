@@ -40,7 +40,7 @@ class KZClassicModeService : public KZModeService
 
 	const char *modeCvarValues[KZ::mode::numCvar] =
 	{
-		"true",				// slope_drop_enable
+		"false",			// slope_drop_enable
 		"6.5",				// sv_accelerate
 		"false",			// sv_accelerate_use_weapon_speed
 		"100",				// sv_airaccelerate
