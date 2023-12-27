@@ -103,6 +103,9 @@ const char *KZClassicModePlugin::GetURL()
 	Actual mode stuff.
 */
 
+#define DUCK_SPEED_NORMAL 8.0
+#define DUCK_SPEED_MINIMUM 6.0234375 // Equal to if you just ducked/unducked for the first time in a while
+
 const char *KZClassicModeService::GetModeName()
 {
 	return MODE_NAME;
@@ -278,6 +281,7 @@ void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, boo
 
 void KZClassicModeService::OnPlayerMove()
 {
+	this->ReduceDuckSlowdown();
 	// Second half of the movement, no change.
 	CGlobalVars *globals = g_pKZUtils->GetServerGlobals();
 	// NOTE: tickcount is half a tick ahead of curtime while in the middle of a tick.
@@ -316,3 +320,14 @@ void KZClassicModeService::OnPostPlayerMovePost()
 	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
 }
 
+void KZClassicModeService::ReduceDuckSlowdown()
+{
+	if (!this->player->GetMoveServices()->m_bDucking && this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_NORMAL - 0.000001f)
+	{
+		this->player->GetMoveServices()->m_flDuckSpeed = DUCK_SPEED_NORMAL;
+	}
+	else if (this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_MINIMUM - 0.000001f)
+	{
+		this->player->GetMoveServices()->m_flDuckSpeed = DUCK_SPEED_MINIMUM;
+	}
+}

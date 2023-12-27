@@ -31,6 +31,7 @@ class CPlayer_MovementServices : public CPlayerPawnComponent
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
 	SCHEMA_FIELD_POINTER(CInButtonState, m_nButtons)
+	SCHEMA_FIELD(float, m_flDuckSpeed)
 	SCHEMA_FIELD_POINTER(float, m_arrForceSubtickMoveWhen)
 };
 
@@ -38,6 +39,7 @@ class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices_Humanoid);
+	SCHEMA_FIELD(bool, m_bDucking)
 	SCHEMA_FIELD(bool, m_bDucked)
 	SCHEMA_FIELD(float, m_flSurfaceFriction)
 };

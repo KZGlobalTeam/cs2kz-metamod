@@ -94,4 +94,18 @@ public:
 	// If it is called at the end of movement processing, it must set subtick timing into the future.
 	// If it is called at the start of ProcessUsercmds, it must set subtick timing in the past.
 	void InsertSubtickTiming(KZPlayer *player, float time, bool future);
+
+	/*
+		Ported from DanZay's SimpleKZ:
+		Duck speed is reduced by the game upon ducking or unducking.
+		The goal here is to accept that duck speed is reduced, but
+		stop it from being reduced further when spamming duck.
+
+		This is done by enforcing a minimum duck speed equivalent to
+		the value as if the player only ducked once. When not in not
+		in the middle of ducking, duck speed is reset to its normal
+		value in effort to reduce the number of times the minimum
+		duck speed is enforced. This should reduce noticeable lag.
+	*/
+	void ReduceDuckSlowdown();
 };
