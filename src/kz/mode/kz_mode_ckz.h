@@ -75,6 +75,7 @@ class KZClassicModeService : public KZModeService
 	QAngle lastDesiredViewAngle;
 	f32 lastJumpReleaseTime{};
 	bool oldDuckPressed{};
+	bool forcedUnduck{};
 
 public:
 	virtual const char *GetModeName() override;
