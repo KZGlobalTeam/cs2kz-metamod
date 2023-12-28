@@ -505,7 +505,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	{
 		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetServerGlobals()->curtime
 			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
-			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + 1/64)
+			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + 0.015625f)
 		{
 			return JumpType_Invalid;
 		}
