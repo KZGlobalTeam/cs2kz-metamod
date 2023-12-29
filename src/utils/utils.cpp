@@ -12,6 +12,7 @@
 #include "module.h"
 #include "detours.h"
 #include "virtual.h"
+#include "mempatch.h"
 
 #include "tier0/memdbgon.h"
 
@@ -27,7 +28,7 @@ SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
 TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
-
+MemPatch *botAddPatch = NULL;
 
 void modules::Initialize()
 {
@@ -79,12 +80,15 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
 
+	botAddPatch = new MemPatch(sigs::CreateBotPatch, modules::server, 19);
+	botAddPatch->Patch(); 
 	InitDetours();
 	return true;
 }
 
 void utils::Cleanup()
 {
+	botAddPatch->Unpatch();
 	FlushAllDetours();
 }
 
