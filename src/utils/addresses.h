@@ -44,6 +44,9 @@ namespace offsets
 	inline constexpr int GetEventManager = 91;
 	// "Player.Respawn"
 	inline constexpr int Respawn = 326;
+	// Check sv_fullupdate
+	inline constexpr int ClientOffset = 0x260;
+	inline constexpr int ACKOffset = 0x134;
 #else
 	inline constexpr int GameEntitySystem = 0x50;
 	inline constexpr int IsEntityPawn = 152;
@@ -53,6 +56,8 @@ namespace offsets
 	inline constexpr int Teleport = 148;
 	inline constexpr int GetEventManager = 91;
 	inline constexpr int Respawn = 327;
+	inline constexpr int ClientOffset = 0x270;
+	inline constexpr int ACKOffset = 0x144;
 #endif
 }
 

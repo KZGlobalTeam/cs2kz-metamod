@@ -244,6 +244,11 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 	if (event)
 	{
 		//META_CONPRINTF("%s fired!\n", event->GetName());
+		if (V_stricmp(event->GetName(), "player_death") == 0)
+		{
+			CEntityInstance *instance = event->GetPlayerPawn("userid");
+			g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex())->quietService->SendFullUpdate();
+		}
 	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
 }
