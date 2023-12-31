@@ -40,7 +40,7 @@ class KZClassicModeService : public KZModeService
 
 	const char *modeCvarValues[KZ::mode::numCvar] =
 	{
-		"true",				// slope_drop_enable
+		"false",			// slope_drop_enable
 		"6.5",				// sv_accelerate
 		"false",			// sv_accelerate_use_weapon_speed
 		"100",				// sv_airaccelerate
@@ -74,6 +74,8 @@ class KZClassicModeService : public KZModeService
 	f32 lastDesiredViewAngleTime{};
 	QAngle lastDesiredViewAngle;
 	f32 lastJumpReleaseTime{};
+	bool oldDuckPressed{};
+	bool forcedUnduck{};
 
 public:
 	virtual const char *GetModeName() override;
@@ -93,5 +95,23 @@ public:
 	// This is called either at the end of movement processing, or at the start of ProcessUsercmds.
 	// If it is called at the end of movement processing, it must set subtick timing into the future.
 	// If it is called at the start of ProcessUsercmds, it must set subtick timing in the past.
-	void InsertSubtickTiming(KZPlayer *player, float time, bool future);
+	void InsertSubtickTiming(float time, bool future);
+
+	void InterpolateViewAngles();
+	void RestoreInterpolatedViewAngles();
+
+	void RemoveCrouchJumpBind();
+	/*
+		Ported from DanZay's SimpleKZ:
+		Duck speed is reduced by the game upon ducking or unducking.
+		The goal here is to accept that duck speed is reduced, but
+		stop it from being reduced further when spamming duck.
+
+		This is done by enforcing a minimum duck speed equivalent to
+		the value as if the player only ducked once. When not in not
+		in the middle of ducking, duck speed is reset to its normal
+		value in effort to reduce the number of times the minimum
+		duck speed is enforced. This should reduce noticeable lag.
+	*/
+	void ReduceDuckSlowdown();
 };

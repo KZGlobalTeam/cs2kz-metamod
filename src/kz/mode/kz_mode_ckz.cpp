@@ -103,6 +103,9 @@ const char *KZClassicModePlugin::GetURL()
 	Actual mode stuff.
 */
 
+#define DUCK_SPEED_NORMAL 8.0
+#define DUCK_SPEED_MINIMUM 6.0234375 // Equal to if you just ducked/unducked for the first time in a while
+
 const char *KZClassicModeService::GetModeName()
 {
 	return MODE_NAME;
@@ -148,7 +151,6 @@ const char **KZClassicModeService::GetModeConVarValues()
 void KZClassicModeService::OnJump()
 {
 	float time = this->player->GetMoveServices()->m_flJumpPressedTime;
-	META_CONPRINTF("OnJump Curtime = %f, JumpPressedTime = %f\n", g_pKZUtils->GetServerGlobals()->curtime, time);
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	this->preJumpZSpeed = velocity.z;
@@ -165,8 +167,6 @@ void KZClassicModeService::OnJump()
 
 void KZClassicModeService::OnJumpPost()
 {
-	float time = this->player->GetMoveServices()->m_flJumpPressedTime;
-	META_CONPRINTF("OnJumpPost Curtime = %f, JumpPressedTime = %f\n", g_pKZUtils->GetServerGlobals()->curtime, time);
 	// If we didn't jump, we revert the jump height tweak.
 	if (this->revertJumpTweak)
 	{
@@ -191,20 +191,26 @@ void KZClassicModeService::OnStopTouchGround()
 	// Perf
 	if (timeOnGround <= 0.02)
 	{
+		// Perf speed
 		Vector2D landingVelocity2D(this->player->landingVelocity.x, this->player->landingVelocity.y);
 		landingVelocity2D.NormalizeInPlace();
 		float newSpeed = this->player->landingVelocity.Length2D();
 		if (newSpeed > 276.0f)
 		{
-			newSpeed = (52 - timeOnGround * 128) * log(newSpeed) - 5.020043;
+			newSpeed = MIN(newSpeed, (52 - timeOnGround * 128) * log(newSpeed) - 5.020043);
 		}
-		//META_CONPRINTF("currentSpeed = %.3f, timeOnGround = %.3f, landingspeed = %.3f, newSpeed = %.3f\n", speed, timeOnGround, this->player->landingVelocity.Length2D(), newSpeed);
 		velocity.x = newSpeed * landingVelocity2D.x;
 		velocity.y = newSpeed * landingVelocity2D.y;
 		this->player->SetVelocity(velocity);
 		this->player->takeoffVelocity = velocity;
+
+		// Perf height
+		Vector origin;
+		this->player->GetOrigin(&origin);
+		origin.z = this->player->GetGroundPosition();
+		this->player->SetOrigin(origin);
+		this->player->takeoffOrigin = origin;
 	}
-	// TODO: perf heights
 }
 
 void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
@@ -228,7 +234,6 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 			if (subtickMove->button() == IN_JUMP)
 			{
 				f32 inputTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * 0.015625;
-				META_CONPRINTF("%sjump @ %f (input time %f)\n", subtickMove->pressed() ? "+" : "-", when, inputTime);
 				if (when != 0)
 				{
 					if (subtickMove->pressed() && inputTime - this->lastJumpReleaseTime > 0.0078125)
@@ -244,12 +249,26 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 			subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
 		}
 	}
-	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 - 0.0078125, false);
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 - 0.0078125, false);
 }
 
-void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, bool future)
+void KZClassicModeService::OnPlayerMove()
 {
-	CCSPlayer_MovementServices *moveServices = player->GetMoveServices();
+	this->RemoveCrouchJumpBind();
+	this->ReduceDuckSlowdown();
+	this->InterpolateViewAngles();
+}
+
+void KZClassicModeService::OnPostPlayerMovePost()
+{
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
+	this->RestoreInterpolatedViewAngles();
+	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonDown(IN_DUCK, true);
+}
+
+void KZClassicModeService::InsertSubtickTiming(float time, bool future)
+{
+	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
 	if (!moveServices) return;
 	// Don't create subtick too close to real time, there will be movement processing there anyway.
 	if (fabs(roundf(time) - time) < 0.001) return;
@@ -276,14 +295,14 @@ void KZClassicModeService::InsertSubtickTiming(KZPlayer *player, float time, boo
 	}
 }
 
-void KZClassicModeService::OnPlayerMove()
+void KZClassicModeService::InterpolateViewAngles()
 {
 	// Second half of the movement, no change.
-	CGlobalVars *globals = g_pKZUtils->GetServerGlobals();
+	CGlobalVars* globals = g_pKZUtils->GetServerGlobals();
 	// NOTE: tickcount is half a tick ahead of curtime while in the middle of a tick.
 	if ((f64)globals->tickcount / 64.0 - globals->curtime < 0.001)
 		return;
-	
+
 	if (this->lastDesiredViewAngleTime < g_pKZUtils->GetServerGlobals()->curtime + 0.015625)
 	{
 		this->lastDesiredViewAngle = this->player->moveDataPost.m_vecViewAngles;
@@ -300,7 +319,7 @@ void KZClassicModeService::OnPlayerMove()
 	{
 		newAngles[YAW] += 360.0f;
 	}
-	
+
 	for (u32 i = 0; i < 3; i++)
 	{
 		newAngles[i] += oldAngles[i];
@@ -310,9 +329,29 @@ void KZClassicModeService::OnPlayerMove()
 	player->currentMoveData->m_vecViewAngles = newAngles;
 }
 
-void KZClassicModeService::OnPostPlayerMovePost()
+void KZClassicModeService::RestoreInterpolatedViewAngles()
 {
-	this->InsertSubtickTiming(this->player, g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
 	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
 }
 
+void KZClassicModeService::RemoveCrouchJumpBind()
+{
+	this->forcedUnduck = false;
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && !this->oldDuckPressed && !this->player->GetMoveServices()->m_bOldJumpPressed)
+	{
+		this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[0] &= ~IN_DUCK;
+		this->forcedUnduck = true;
+	}
+}
+
+void KZClassicModeService::ReduceDuckSlowdown()
+{
+	if (!this->player->GetMoveServices()->m_bDucking && this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_NORMAL - 0.000001f)
+	{
+		this->player->GetMoveServices()->m_flDuckSpeed = DUCK_SPEED_NORMAL;
+	}
+	else if (this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_MINIMUM - 0.000001f)
+	{
+		this->player->GetMoveServices()->m_flDuckSpeed = DUCK_SPEED_MINIMUM;
+	}
+}

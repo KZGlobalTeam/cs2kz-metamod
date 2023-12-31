@@ -38,6 +38,7 @@ class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices_Humanoid);
+	SCHEMA_FIELD(bool, m_bDucking)
 	SCHEMA_FIELD(bool, m_bDucked)
 	SCHEMA_FIELD(float, m_flSurfaceFriction)
 };
@@ -50,6 +51,7 @@ public:
 	SCHEMA_FIELD(Vector, m_vecLadderNormal)
 	SCHEMA_FIELD(bool, m_bOldJumpPressed)
 	SCHEMA_FIELD(float, m_flJumpPressedTime)
+	SCHEMA_FIELD(float, m_flDuckSpeed)
 };
 
 class CCSPlayer_ItemServices

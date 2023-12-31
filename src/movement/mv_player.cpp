@@ -74,9 +74,16 @@ void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const 
 
 void MovementPlayer::SetOrigin(const Vector &origin)
 {
-	CBasePlayerPawn *pawn = this->GetPawn();
-	if (!pawn) return;
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, &origin, NULL, NULL);
+	if (this->processingMovement && this->currentMoveData)
+	{
+		this->currentMoveData->m_vecAbsOrigin = origin;
+	}
+	else
+	{
+		CBasePlayerPawn *pawn = this->GetPawn();
+		if (!pawn) return;
+		CALL_VIRTUAL(void, offsets::Teleport, pawn, &origin, NULL, NULL);	
+	}
 }
 
 void MovementPlayer::GetVelocity(Vector *velocity)
