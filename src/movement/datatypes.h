@@ -61,7 +61,7 @@ public:
 	QAngle m_vecViewAngles; // 0x14
 	Vector m_vecLastMovementImpulses;
 	float m_flForwardMove; // 0x20
-	float m_flSideMove; // 0x24
+	float m_flSideMove; // 0x24 Warning! Flipped compared to CS:GO, moving right gives negative value
 	float m_flUpMove; // 0x28
 	float m_flSubtickFraction; // 0x38
 	Vector m_vecVelocity; // 0x3c
