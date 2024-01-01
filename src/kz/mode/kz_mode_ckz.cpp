@@ -102,15 +102,24 @@ const char *KZClassicModePlugin::GetURL()
 /*
 	Actual mode stuff.
 */
+#define SPEED_NORMAL 250.0f
 
 #define PS_SPEED_MAX 26.0f
 #define PS_MIN_REWARD_RATE 7.0f // Minimum computed turn rate for any prestrafe reward
-#define PS_MAX_REWARD_RATE 20.0f // Ideal computed turn rate for maximum prestrafe reward
-#define PS_MAX_PS_TIME 0.6f // Time to reach maximum prestrafe speed with optimal turning
+#define PS_MAX_REWARD_RATE 16.0f // Ideal computed turn rate for maximum prestrafe reward
+#define PS_MAX_PS_TIME 0.55f // Time to reach maximum prestrafe speed with optimal turning
 #define PS_TURN_RATE_WINDOW 0.02f // Turn rate will be computed over this amount of time
-#define PS_LANDING_GRACE_PERIOD 0.05f // Prestrafe ratio will be not go down after landing for this amount of time - helps with small movements after landing
 #define PS_DECREMENT_RATIO 3.0f // Prestrafe will lose this fast compared to gaining
-#define PS_RATIO_TO_SPEED 0.4f
+#define PS_RATIO_TO_SPEED 0.5f
+// Prestrafe ratio will be not go down after landing for this amount of time - helps with small movements after landing
+// Ideally should be much higher than the perf window!
+#define PS_LANDING_GRACE_PERIOD 0.25f 
+
+#define BH_PERF_WINDOW 0.2f // Any jump performed after landing will be a perf for this much time
+#define BH_BASE_MULTIPLIER 51.5f // Multiplier for how much speed would a perf gain in ideal scenario
+#define BH_LANDING_DECREMENT_MULTIPLIER 75.0f // How much would a non real perf impact the takeoff speed
+// Magic number so that landing speed at max ground prestrafe speed would result in the same takeoff velocity
+#define BH_NORMALIZE_FACTOR (BH_BASE_MULTIPLIER * log(SPEED_NORMAL + PS_SPEED_MAX) - (SPEED_NORMAL + PS_SPEED_MAX)) 
 
 #define DUCK_SPEED_NORMAL 8.0f
 #define DUCK_SPEED_MINIMUM 6.0234375f // Equal to if you just ducked/unducked for the first time in a while
@@ -147,7 +156,7 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 
 f32 KZClassicModeService::GetPlayerMaxSpeed()
 {
-	return 250.0f + this->GetPrestrafeGain();
+	return SPEED_NORMAL + this->GetPrestrafeGain();
 }
 
 const char **KZClassicModeService::GetModeConVarValues()
@@ -197,15 +206,15 @@ void KZClassicModeService::OnStopTouchGround()
 
 	f32 timeOnGround = this->player->takeoffTime - this->player->landingTime;
 	// Perf
-	if (timeOnGround <= 0.02)
+	if (timeOnGround <= BH_PERF_WINDOW)
 	{
 		// Perf speed
 		Vector2D landingVelocity2D(this->player->landingVelocity.x, this->player->landingVelocity.y);
 		landingVelocity2D.NormalizeInPlace();
 		float newSpeed = this->player->landingVelocity.Length2D();
-		if (newSpeed > 276.0f)
+		if (newSpeed > SPEED_NORMAL + PS_SPEED_MAX)
 		{
-			newSpeed = MIN(newSpeed, (52 - timeOnGround * 128) * log(newSpeed) - 5.020043);
+			newSpeed = MIN(newSpeed, (BH_BASE_MULTIPLIER - timeOnGround * BH_LANDING_DECREMENT_MULTIPLIER) * log(newSpeed) - BH_NORMALIZE_FACTOR);
 		}
 		velocity.x = newSpeed * landingVelocity2D.x;
 		velocity.y = newSpeed * landingVelocity2D.y;
@@ -223,15 +232,10 @@ void KZClassicModeService::OnStopTouchGround()
 
 void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 {
-#ifdef _WIN32
-	constexpr u32 offset = 0x90;
-#else
-	constexpr u32 offset = 0x88;
-#endif
 	this->lastDesiredViewAngleTime = g_pKZUtils->GetServerGlobals()->curtime;
 	for (i32 i = 0; i < numcmds; i++)
 	{
-		auto address = reinterpret_cast<char *>(cmds) + i * offset;
+		auto address = reinterpret_cast<char *>(cmds) + i * offsets::UsercmdOffset;
 		CSGOUserCmdPB *usercmdsPtr = reinterpret_cast<CSGOUserCmdPB *>(address);
 		this->lastDesiredViewAngle = { usercmdsPtr->base().viewangles().x(), usercmdsPtr->base().viewangles().y(), usercmdsPtr->base().viewangles().z() };
 		for (i32 j = 0; j < usercmdsPtr->mutable_base()->subtick_moves_size(); j++)
@@ -454,7 +458,7 @@ void KZClassicModeService::CalcPrestrafe()
 	f32 rewardRate = Clamp(fabs(averageRate) / PS_MAX_REWARD_RATE, 0.0f, 1.0f) * g_pKZUtils->GetServerGlobals()->frametime;
 	f32 punishRate = g_pKZUtils->GetServerGlobals()->frametime * PS_DECREMENT_RATIO;
 
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND || this->player->landingTime + PS_LANDING_GRACE_PERIOD > g_pKZUtils->GetServerGlobals()->curtime)
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->landingTime + PS_LANDING_GRACE_PERIOD < g_pKZUtils->GetServerGlobals()->curtime)
 	{
 		// Prevent instant full pre from crouched prestrafe.
 		Vector velocity;
@@ -462,7 +466,7 @@ void KZClassicModeService::CalcPrestrafe()
 
 		f32 currentPreRatio;
 		if (velocity.Length2D() <= 0.0f) currentPreRatio = 0.0f;
-		else currentPreRatio = pow(this->bonusSpeed / velocity.Length2D() / PS_SPEED_MAX * 250.0f, 1 / PS_RATIO_TO_SPEED) * PS_MAX_PS_TIME;
+		else currentPreRatio = pow(this->bonusSpeed / PS_SPEED_MAX * SPEED_NORMAL / velocity.Length2D(), 1 / PS_RATIO_TO_SPEED) * PS_MAX_PS_TIME;
 
 
 		this->leftPreRatio = MIN(this->leftPreRatio, currentPreRatio);
@@ -472,13 +476,15 @@ void KZClassicModeService::CalcPrestrafe()
 		this->rightPreRatio += averageRate < -PS_MIN_REWARD_RATE ? rewardRate : -punishRate;
 		this->leftPreRatio = Clamp(leftPreRatio, 0.0f, PS_MAX_PS_TIME);
 		this->rightPreRatio = Clamp(rightPreRatio, 0.0f, PS_MAX_PS_TIME);
-		this->bonusSpeed = PS_SPEED_MAX * pow(MAX(this->leftPreRatio, this->rightPreRatio) / PS_MAX_PS_TIME, PS_RATIO_TO_SPEED) / 250.0f * velocity.Length2D();
+		this->bonusSpeed = this->GetPrestrafeGain() / SPEED_NORMAL * velocity.Length2D();
 	}
 	else 
 	{
+		rewardRate = g_pKZUtils->GetServerGlobals()->frametime;
 		// Raise both left and right pre to the same value as the player is in the air.
-		this->leftPreRatio = Clamp(leftPreRatio + rewardRate, 0.0f, rightPreRatio);
-		this->rightPreRatio = Clamp(rightPreRatio + rewardRate, 0.0f, leftPreRatio);
+		if (this->leftPreRatio < this->rightPreRatio)
+			this->leftPreRatio = Clamp(this->leftPreRatio + rewardRate, 0.0f, rightPreRatio);
+		else this->rightPreRatio = Clamp(this->rightPreRatio + rewardRate, 0.0f, leftPreRatio);
 	}
 }
 
