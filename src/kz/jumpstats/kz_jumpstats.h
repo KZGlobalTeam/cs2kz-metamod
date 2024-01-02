@@ -178,7 +178,7 @@ public:
 	void UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel);
 	void Update();
 	void End();
-	void Invalidate(char* reason) {	this->valid = false; V_strncpy(this->invalidateReason, reason, sizeof(this->invalidateReason)); }
+	void Invalidate(const char* reason) {	this->valid = false; V_strncpy(this->invalidateReason, reason, sizeof(this->invalidateReason)); }
 	void MarkHitHead() { this->hitHead = true; };
 
 	Strafe *GetCurrentStrafe();
@@ -239,7 +239,7 @@ public:
 	void AddJump();
 	void UpdateJump();
 	void EndJump();
-	void InvalidateJumpstats(char *reason = NULL);
+	void InvalidateJumpstats(const char *reason = NULL);
 	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
