@@ -16,7 +16,7 @@ public:
 		QAngle angles;
 		Vector ladderNormal;
 		bool onLadder;
-		CHandle< CBaseEntity > groundEnt;
+		CHandle< CBaseEntity2 > groundEnt;
 		f32 slopeDropOffset;
 		f32 slopeDropHeight;
 	};

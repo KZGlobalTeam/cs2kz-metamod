@@ -13,7 +13,6 @@
 
 #define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 
-extern CMovementPlayerManager *g_pPlayerManager;
 
 class KZPlayer;
 //class Jump;
@@ -41,19 +40,64 @@ public:
 	}
 	void Init();
 	virtual void Reset() override;
-	virtual void OnStartProcessMovement() override;
-	virtual void OnStopProcessMovement() override;
+	
+	virtual f32 GetPlayerMaxSpeed() override;
 
+	virtual void OnProcessUsercmds(void *, int) override;
+	virtual void OnProcessUsercmdsPost(void *, int) override;
+	virtual void OnProcessMovement() override;
+	virtual void OnProcessMovementPost() override;
+	virtual void OnPlayerMove() override;
+	virtual void OnPlayerMovePost() override;
+	virtual void OnCheckParameters() override;
+	virtual void OnCheckParametersPost() override;
+	virtual void OnCanMove() override;
+	virtual void OnCanMovePost() override;
+	virtual void OnFullWalkMove(bool &) override;
+	virtual void OnFullWalkMovePost(bool) override;
+	virtual void OnMoveInit() override;
+	virtual void OnMoveInitPost() override;
+	virtual void OnCheckWater() override;
+	virtual void OnCheckWaterPost() override;
+	virtual void OnCheckVelocity(const char *) override;
+	virtual void OnCheckVelocityPost(const char *) override;
+	virtual void OnDuck() override;
+	virtual void OnDuckPost() override;
+	virtual void OnCanUnduck() override;
+	virtual void OnCanUnduckPost() override;
+	virtual void OnLadderMove() override;
+	virtual void OnLadderMovePost() override;
+	virtual void OnCheckJumpButton() override;
+	virtual void OnCheckJumpButtonPost() override;
+	virtual void OnJump() override;
+	virtual void OnJumpPost() override;
+	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
+	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
+	virtual void OnFriction() override;
+	virtual void OnFrictionPost() override;
+	virtual void OnWalkMove() override;
+	virtual void OnWalkMovePost() override;
+	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) override;
+	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) override;
+	virtual void OnCategorizePosition(bool) override;
+	virtual void OnCategorizePositionPost(bool) override;
+	virtual void OnFinishGravity() override;
+	virtual void OnFinishGravityPost() override;
+	virtual void OnCheckFalling() override;
+	virtual void OnCheckFallingPost() override;
+	virtual void OnPostPlayerMove() override;
+	virtual void OnPostPlayerMovePost() override;
+	virtual void OnPostThink() override;
+	virtual void OnPostThinkPost() override;
+
+	// Movement events
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
-	virtual void OnAirAcceleratePre(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
-	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
-	virtual void OnTryPlayerMovePre(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
-	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
 	
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
+	// Timer events
 	virtual void StartZoneStartTouch();
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();
@@ -63,20 +107,20 @@ private:
 	bool hideLegs{};
 	TurnState previousTurnState{};
 public:
-	KZAnticheatService *anticheatService;
-	KZCheckpointService *checkpointService;
-	KZGlobalService *globalService;
-	KZHUDService *hudService;
-	KZJumpstatsService *jumpstatsService;
-	KZMeasureService *measureService;
-	KZModeService *modeService;
-	KZOptionService *optionsService;
-	KZQuietService *quietService;
-	KZRacingService *racingService;
-	KZSavelocService *savelocService;
-	KZStyleService *styleService;
-	KZTimerService *timerService;
-	KZTipService *tipService;
+	KZAnticheatService *anticheatService{};
+	KZCheckpointService *checkpointService{};
+	KZGlobalService *globalService{};
+	KZHUDService *hudService{};
+	KZJumpstatsService *jumpstatsService{};
+	KZMeasureService *measureService{};
+	KZModeService *modeService{};
+	KZOptionService *optionsService{};
+	KZQuietService *quietService{};
+	KZRacingService *racingService{};
+	KZSavelocService *savelocService{};
+	KZStyleService *styleService{};
+	KZTimerService *timerService{};
+	KZTipService *tipService{};
 	
 	// Misc stuff that doesn't belong into any service.
 	
@@ -120,7 +164,7 @@ public:
 	}
 public:
 	KZPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
-	KZPlayer *ToPlayer(CCSPlayerController *controller);
+	KZPlayer *ToPlayer(CBasePlayerController *controller);
 	KZPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	KZPlayer *ToPlayer(CPlayerSlot slot);
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
@@ -130,9 +174,9 @@ public:
 	KZPlayer *ToKZPlayer(MovementPlayer *player) { return static_cast<KZPlayer *>(player); }
 };
 
+extern CKZPlayerManager *g_pKZPlayerManager;
 namespace KZ
 {
-	CKZPlayerManager *GetKZPlayerManager();
 	namespace HUD
 	{
 		void DrawSpeedPanel(KZPlayer *player);

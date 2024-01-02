@@ -7,6 +7,8 @@ metamod_folder = builder.AddFolder(os.path.join('addons', 'metamod'))
 cfg_folder = builder.AddFolder('cfg')
 bin_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'bin')
 bin_folder = builder.AddFolder(bin_folder_path)
+mode_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'modes')
+mode_folder = builder.AddFolder(mode_folder_path)
 
 for cxx in MMSPlugin.all_targets:
   if cxx.target.arch == 'x86_64':
@@ -38,6 +40,12 @@ for task in MMSPlugin.binaries:
     builder.AddCopy(task.binary, bin64_folder)
   else:
     builder.AddCopy(task.binary, bin_folder)
+
+  if task.debug:
+    pdb_list.append(task.debug)
+
+for task in MMSPlugin.mode_binaries:
+  builder.AddCopy(task.binary, mode_folder)
 
   if task.debug:
     pdb_list.append(task.debug)

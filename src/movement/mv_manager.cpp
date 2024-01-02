@@ -2,17 +2,15 @@
 #include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
-extern CEntitySystem *g_pEntitySystem;
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
 {
-	int index = ms->pawn->m_hController().GetEntryIndex();
-	assert(index >= 0 && index < MAXPLAYERS + 1);
-	return this->players[index];
+	return this->ToPlayer(ms->pawn);
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerController *controller)
+MovementPlayer *CMovementPlayerManager::ToPlayer(CBasePlayerController *controller)
 {
+	if (!controller) return nullptr;
 	int index = controller->m_pEntity->m_EHandle.GetEntryIndex();
 	assert(index >= 0 && index < MAXPLAYERS + 1);
 	return this->players[index];
@@ -20,9 +18,10 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CCSPlayerController *controller
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CBasePlayerPawn *pawn)
 {
-	int index = pawn->m_hController().GetEntryIndex();
-	assert(index >= 0 && index < MAXPLAYERS + 1);
-	return this->players[index];
+	if (!pawn) return nullptr;
+	CBasePlayerController *controller = utils::GetController(pawn);
+	if (!controller) return nullptr;
+	return this->ToPlayer(controller);
 }
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerSlot slot)
@@ -35,15 +34,17 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerSlot slot)
 MovementPlayer *CMovementPlayerManager::ToPlayer(CEntityIndex entIndex)
 {
 	if (!g_pEntitySystem) return nullptr;
-	int index = g_pEntitySystem->GetBaseEntity(entIndex)->m_pEntity->m_EHandle.GetEntryIndex();
-	assert(index >= 0 && index < MAXPLAYERS + 1);
-	return this->players[index];
+	CBaseEntity2 *ent = (CBaseEntity2 *)g_pEntitySystem->GetBaseEntity(entIndex);
+	if (!ent) return nullptr;
+	if (ent->IsPawn()) return this->ToPlayer(static_cast<CBasePlayerPawn *>(ent));
+	if (ent->IsController()) return this->ToPlayer(static_cast<CBasePlayerController *>(ent));
+	return nullptr;
 }
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerUserId userID)
 {
-	if (!g_pEntitySystem) return nullptr;
-	for (int i = 0; i < MAXPLAYERS; i++)
+	// Untested, careful!
+	for (int i = 0; i < g_pKZUtils->GetServerGlobals()->maxClients; i++)
 	{
 		if (interfaces::pEngine->GetPlayerUserId(i) == userID.Get())
 		{

@@ -115,7 +115,7 @@ SchemaKey schema::GetOffset(const char *className, uint32_t classKey, const char
 void SetStateChanged(CBaseEntity2 *pEntity, int offset)
 {
     schema::StateChanged(pEntity->m_NetworkTransmitComponent(), pEntity, offset, -1, -1);
-    auto vars = utils::GetServerGlobals();
+    auto vars = g_pKZUtils->GetServerGlobals();
 
     if (vars)
         pEntity->m_lastNetworkChange = vars->curtime;

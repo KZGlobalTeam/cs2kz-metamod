@@ -28,3 +28,8 @@ DistanceTier KZVanillaModeService::GetDistanceTier(JumpType jumpType, f32 distan
 
 	return tier;
 }
+
+const char **KZVanillaModeService::GetModeConVarValues()
+{
+	return modeCvarValues;
+}

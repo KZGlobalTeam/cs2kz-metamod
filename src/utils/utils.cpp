@@ -21,12 +21,13 @@
 	if (!variable) { Warning("Failed to find address for %s!\n", #sig); return false; }
 
 InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
-TracePlayerBBoxForGround_t *utils::TracePlayerBBoxForGround = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
+TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
+
 
 void modules::Initialize()
 {
@@ -49,8 +50,9 @@ bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
 	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
+	GET_V_IFACE_CURRENT(GetFileSystemFactory, g_pFullFileSystem, IFileSystem, FILESYSTEM_INTERFACE_VERSION);
 	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, offsets::GetEventManager, interfaces::pServer) - 8);
-	
+
 	return true;
 }
 
@@ -68,15 +70,14 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
 	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
-	
-	RESOLVE_SIG(modules::server, sigs::TracePlayerBBoxForGround, utils::TracePlayerBBoxForGround);
+
+	RESOLVE_SIG(modules::server, sigs::TracePlayerBBox, utils::TracePlayerBBox);
 	RESOLVE_SIG(modules::server, sigs::InitGameTrace, utils::InitGameTrace);
 	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, utils::InitPlayerMovementTraceFilter);
 	RESOLVE_SIG(modules::server, sigs::GetLegacyGameEventListener, utils::GetLegacyGameEventListener);
 	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
-
 
 	InitDetours();
 	return true;
@@ -85,11 +86,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 void utils::Cleanup()
 {
 	FlushAllDetours();
-}
-
-CGlobalVars *utils::GetServerGlobals()
-{
-	return interfaces::pEngine->GetServerGlobals();
 }
 
 CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
@@ -145,35 +141,39 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-void utils::SetEntityMoveType(CBaseEntity *entity, MoveType_t movetype)
+void utils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)
 {
 	CALL_VIRTUAL(void, offsets::SetMoveType, entity, movetype);
 }
 
-void utils::EntityCollisionRulesChanged(CBaseEntity *entity)
+void utils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
 {
 	CALL_VIRTUAL(void, offsets::CollisionRulesChanged, entity);
 }
 
-bool utils::IsEntityPawn(CBaseEntity *entity)
+CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 {
-	return CALL_VIRTUAL(bool, offsets::IsEntityPawn, entity);
-}
+	CCSPlayerController *controller = nullptr;
 
-bool utils::IsEntityController(CBaseEntity *entity)
-{
-	return CALL_VIRTUAL(bool, offsets::IsEntityController, entity);
-}
-
-CBasePlayerController *utils::GetController(CBaseEntity *entity)
-{
-	CBasePlayerController *controller = nullptr;
-
-	if (utils::IsEntityPawn(entity))
+	if (entity->IsPawn())
 	{
-		return static_cast<CBasePlayerPawn *>(entity)->m_hController().Get();
+		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
+		if (!pawn->m_hController().IsValid())
+		{
+			// Seems like the pawn lost its controller, we can try looping through the controllers to find this pawn instead.
+			for (i32 i = 0; i <= g_pKZUtils->GetServerGlobals()->maxClients; i++)
+			{
+				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
+				if (controller && controller->m_hPlayerPawn() && controller->m_hPlayerPawn().Get() == entity)
+				{
+					return controller;
+				}
+			}
+			return nullptr;
+		}
+		return pawn->m_hController.Get();
 	}
-	else if (utils::IsEntityController(entity))
+	else if (entity->IsController())
 	{
 		return static_cast<CBasePlayerController*>(entity);
 	}
@@ -185,7 +185,16 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	return static_cast<CBasePlayerController*>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	if (!g_pEntitySystem || slot.Get() < 0 || slot.Get() > MAXPLAYERS)
+	{
+		return nullptr;
+	}
+	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	if (!ent)
+	{
+		return nullptr;
+	}
+	return ent->IsController() ? static_cast<CBasePlayerController *>(ent) : nullptr;
 }
 
 bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
@@ -233,7 +242,7 @@ bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
 	}
 }
 
-CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
+CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 {
 	CBasePlayerController *controller = utils::GetController(entity);
 	if (!controller)
@@ -301,7 +310,16 @@ void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 }
 
-void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, int size)
+void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, u32 size)
 {
-	// TODO
+	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	CNETMsg_SetConVar *msg = new CNETMsg_SetConVar;
+	for (u32 i = 0; i < size; i++)
+	{
+		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+		cvar->set_name(conVar[i]->m_pszName);
+		cvar->set_value(value[i]);
+	}
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 }
