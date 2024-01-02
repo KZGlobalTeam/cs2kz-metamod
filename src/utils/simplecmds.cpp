@@ -11,6 +11,7 @@ struct Scmd
 	b32 hasConsolePrefix;
 	i32 nameLength;
 	const char *name;
+	const char *description;
 	scmd::Callback_t *callback;
 };
 
@@ -21,8 +22,30 @@ struct ScmdManager
 };
 
 internal ScmdManager g_cmdManager = {};
+internal bool g_coreCmdsRegistered = false;
 
-bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback)
+internal SCMD_CALLBACK(Command_KzHelp)
+{
+	utils::PrintChat(controller, "Look in your console for a list of commands!");
+	utils::PrintConsole(controller, "To use these commands, you can type \"bind <key> %s<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\"", SCMD_CONSOLE_PREFIX);
+	Scmd *cmds = g_cmdManager.cmds;
+	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+	{
+		utils::PrintConsole(controller, "%s: %s",
+							cmds[i].name,
+							cmds[i].description ? cmds[i].description : "");
+	}
+	return MRES_SUPERCEDE;
+}
+
+internal void RegisterCoreCmds()
+{
+	g_coreCmdsRegistered = true;
+	
+	scmd::RegisterCmd("kz_help", Command_KzHelp);
+}
+
+bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *description/* = nullptr*/)
 {
 	Assert(name);
 	Assert(callback);
@@ -79,6 +102,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback)
 		hasConPrefix,
 		nameLength,
 		name,
+		description,
 		callback
 	};
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
@@ -87,6 +111,11 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback)
 
 META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 {
+	if (!g_coreCmdsRegistered)
+	{
+		RegisterCoreCmds();
+	}
+	
 	META_RES result = MRES_IGNORED;
 	if (!g_pEntitySystem)
 	{
@@ -113,6 +142,11 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 
 META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
+	if (!g_coreCmdsRegistered)
+	{
+		RegisterCoreCmds();
+	}
+	
 	META_RES result = MRES_IGNORED;
 	if (!g_pEntitySystem)
 	{
