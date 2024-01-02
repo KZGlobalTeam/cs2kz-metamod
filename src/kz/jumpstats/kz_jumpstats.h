@@ -178,7 +178,7 @@ public:
 	void UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel);
 	void Update();
 	void End();
-	void Invalidate(const char* reason) {	this->valid = false; V_strncpy(this->invalidateReason, reason, sizeof(this->invalidateReason)); }
+	void Invalidate(const char *reason) {	this->valid = false; V_strncpy(this->invalidateReason, reason, sizeof(this->invalidateReason)); }
 	void MarkHitHead() { this->hitHead = true; };
 
 	Strafe *GetCurrentStrafe();

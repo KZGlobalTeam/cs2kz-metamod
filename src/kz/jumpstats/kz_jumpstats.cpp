@@ -763,7 +763,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 			angRatioString);
 	}
 }
-void KZJumpstatsService::InvalidateJumpstats(char* reason)
+void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 {
 	if (this->jumps.Count() > 0 && !this->jumps.Tail().AlreadyEnded())
 	{
