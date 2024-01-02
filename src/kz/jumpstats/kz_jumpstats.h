@@ -166,6 +166,7 @@ private:
 public:
 	CCopyableUtlVector<Strafe> strafes;
 	f32 touchDuration{};
+	char invalidateReason[256]{};
 
 public:
 	Jump() {}
@@ -177,7 +178,7 @@ public:
 	void UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel);
 	void Update();
 	void End();
-	void Invalidate() {	this->valid = false; };
+	void Invalidate(char* reason) {	this->valid = false; V_strncpy(this->invalidateReason, reason, sizeof(this->invalidateReason)); }
 	void MarkHitHead() { this->hitHead = true; };
 
 	Strafe *GetCurrentStrafe();
@@ -221,7 +222,6 @@ private:
 	f32 lastGroundSpeedCappedTime{};
 	f32 lastMovementProcessedTime{};
 	f32 tpmPreSpeed{};
-
 public:
 	void OnProcessMovement();
 	void OnChangeMoveType(MoveType_t oldMoveType);
@@ -239,13 +239,14 @@ public:
 	void AddJump();
 	void UpdateJump();
 	void EndJump();
-	void InvalidateJumpstats();
+	void InvalidateJumpstats(char *reason = NULL);
 	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
 	void ToggleJSAlways();
 
 	void CheckValidMoveType();
+	void DetectNoclip();
 	void DetectEdgebug();
 	void DetectInvalidCollisions();
 	void DetectInvalidGains();

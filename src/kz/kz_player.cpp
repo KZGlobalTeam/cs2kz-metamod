@@ -270,7 +270,7 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
-	this->jumpstatsService->InvalidateJumpstats();
+	this->jumpstatsService->InvalidateJumpstats("Teleported");
 }
 
 void KZPlayer::EnableGodMode()
