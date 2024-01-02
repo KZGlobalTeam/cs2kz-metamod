@@ -692,7 +692,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 {
 	char invalidateReason[256]{};
-	if (jump->invalidateReason)
+	if (jump->invalidateReason[0] != '\0')
 	{
 		V_snprintf(invalidateReason, sizeof(invalidateReason), "(%s)", jump->invalidateReason);
 	}
