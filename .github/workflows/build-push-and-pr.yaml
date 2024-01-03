@@ -22,6 +22,13 @@ jobs:
     outputs:
       short_sha: ${{ steps.vars.outputs.short_sha }}
 
+  check-newlines:
+    name: Check for CRLF and final newlines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        run: ./scripts/check-newlines.sh
+
   build-push:
     if: ${{ github.event_name == 'push' }}
     name: Build Push
