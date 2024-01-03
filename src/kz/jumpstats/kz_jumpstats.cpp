@@ -104,12 +104,12 @@ f32 AACall::CalcMaxYaw(bool useRadians)
 	f32 gamma1, numer, denom;
 	gamma1 = AACall::CalcAccelSpeed(true);
 	f32 speed = this->velocityPre.Length2D();
-	if (gamma1 <= 60) 
+	if (gamma1 <= 60)
 	{
 		numer = -gamma1;
 		denom = 2 * speed;
 	}
-	else 
+	else
 	{
 		numer = -30;
 		denom = speed;
@@ -242,7 +242,7 @@ bool Strafe::CalcAngleRatioStats()
 		f32 minYaw = utils::NormalizeDeg(this->aaCalls[i].CalcMinYaw());
 		f32 idealYaw = utils::NormalizeDeg(this->aaCalls[i].CalcIdealYaw());
 		f32 maxYaw = utils::NormalizeDeg(this->aaCalls[i].CalcMaxYaw());
-		
+
 		angles.y = utils::NormalizeDeg(angles.y);
 
 		if (this->turnstate == TURN_RIGHT || /* The ideal angle is calculated for left turns, we need to flip it for right turns. */
@@ -251,7 +251,7 @@ bool Strafe::CalcAngleRatioStats()
 		{
 			angles.y = -angles.y;
 		}
-		
+
 		// It is possible for the player to gain speed here, by pressing the opposite keys 
 		// while still turning in the same direction, which results in actual gain...
 		// Usually this happens at the end of a strafe.
@@ -262,7 +262,7 @@ bool Strafe::CalcAngleRatioStats()
 
 		// If the player yaw is way too off, they are probably pressing the wrong key and probably not turning too fast.
 		// So we shouldn't count them into the average calc.
-		
+
 		//utils::PrintConsoleAll("%f %f %f %f | %f / %f / %f | %f -> %f | %f %f | ws %f wd %f %f %f accel %f fraction %f",
 		//	minYaw, angles.y, idealYaw, maxYaw,
 		//	utils::GetAngleDifference(angles.y, minYaw, 180.0),
@@ -313,7 +313,10 @@ bool Strafe::CalcAngleRatioStats()
 	}
 
 	// This can return nan if the duration is 0, this is intended...
-	if (totalDuration == 0.0f) return false;
+	if (totalDuration == 0.0f)
+	{
+		return false;
+	}
 	ratios.Sort(this->SortFloat);
 	this->arStats.available = true;
 	this->arStats.average = totalRatios / totalDuration;
@@ -360,7 +363,10 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 
 void Jump::Update()
 {
-	if (this->AlreadyEnded()) return;
+	if (this->AlreadyEnded())
+	{
+		return;
+	}
 	this->totalDistance += (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
 	this->currentMaxSpeed = MAX(this->player->currentMoveData->m_vecVelocity.Length2D(), this->currentMaxSpeed);
 	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z, this->currentMaxHeight);
@@ -480,7 +486,10 @@ f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist)
 {
 	f32 addDist = 32.0f;
 	if (this->jumpType == JumpType_LadderJump || disableAddDist) addDist = 0.0f;
-	if (useDistbugFix) return (this->adjustedLandingOrigin - this->adjustedTakeoffOrigin).Length2D() + addDist;
+	if (useDistbugFix)
+	{
+		return (this->adjustedLandingOrigin - this->adjustedTakeoffOrigin).Length2D() + addDist;
+	}
 	return (this->landingOrigin - this->takeoffOrigin).Length2D() + addDist;
 }
 
@@ -488,7 +497,10 @@ f32 Jump::GetEdge(bool landing) { return 0.0f; } // TODO
 
 f32 Jump::GetAirPath()
 {
-	if (this->totalDistance <= 0.0f) return 0.0;
+	if (this->totalDistance <= 0.0f)
+	{
+		return 0.0;
+	}
 	return this->totalDistance / this->GetDistance(false, true);
 }
 
@@ -496,7 +508,10 @@ f32 Jump::GetDeviation()
 {
 	f32 distanceX = fabs(adjustedLandingOrigin.x - adjustedTakeoffOrigin.x);
 	f32 distanceY = fabs(adjustedLandingOrigin.y - adjustedTakeoffOrigin.y);
-	if (distanceX > distanceY) return distanceY;
+	if (distanceX > distanceY)
+	{
+		return distanceY;
+	}
 	return distanceX;
 }
 
@@ -545,10 +560,10 @@ JumpType KZJumpstatsService::DetermineJumpType()
 		{
 			switch (this->jumps.Tail().GetJumpType())
 			{
-			case JumpType_LongJump:return JumpType_Bhop;
-			case JumpType_Bhop:return JumpType_MultiBhop;
-			case JumpType_MultiBhop:return JumpType_MultiBhop;
-			default:return JumpType_Other;
+				case JumpType_LongJump:return JumpType_Bhop;
+				case JumpType_Bhop:return JumpType_MultiBhop;
+				case JumpType_MultiBhop:return JumpType_MultiBhop;
+				default:return JumpType_Other;
 			}
 		}
 		// Check for weird jump
@@ -656,9 +671,15 @@ void KZJumpstatsService::EndJump()
 		Jump *jump = &this->jumps.Tail();
 
 		// Prevent stats being calculated twice.
-		if (jump->AlreadyEnded()) return;
+		if (jump->AlreadyEnded())
+		{
+			return;
+		}
 		jump->End();
-		if (jump->GetJumpType() == JumpType_FullInvalid) return;
+		if (jump->GetJumpType() == JumpType_FullInvalid)
+		{
+			return;
+		}
 		if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
 			KZJumpstatsService::PrintJumpToChat(this->player, jump);
@@ -776,11 +797,11 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 	this->lastJumpButtonTime = this->player->GetPawn()->m_ignoreLadderJumpTime();
 	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP)
 	{
-		this->lastNoclipTime = g_pKZUtils->GetServerGlobals()->curtime;	
+		this->lastNoclipTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 	if (this->player->duckBugged)
 	{
-		this->lastDuckbugTime = g_pKZUtils->GetServerGlobals()->curtime;	
+		this->lastDuckbugTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 	if (this->player->walkMoved)
 	{
@@ -814,7 +835,10 @@ void KZJumpstatsService::DetectNoclip()
 
 void KZJumpstatsService::DetectEdgebug()
 {
-	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid()) return;
+	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid())
+	{
+		return;
+	}
 	// If the player suddenly gain speed from negative speed, they probably edgebugged.
 	if (this->player->moveDataPre.m_vecVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->player->moveDataPre.m_vecVelocity.z)
 	{
@@ -824,7 +848,10 @@ void KZJumpstatsService::DetectEdgebug()
 
 void KZJumpstatsService::DetectInvalidCollisions()
 {
-	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid()) return;
+	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid())
+	{
+		return;
+	}
 	if (this->player->currentMoveData->m_TouchList.Count() > 0)
 	{
 		this->jumps.Tail().touchDuration += g_pKZUtils->GetServerGlobals()->frametime;
@@ -872,6 +899,9 @@ void KZJumpstatsService::OnTryPlayerMove()
 
 void KZJumpstatsService::OnTryPlayerMovePost()
 {
-	if (this->jumps.Count() == 0 || this->jumps.Tail().strafes.Count() == 0) return;
+	if (this->jumps.Count() == 0 || this->jumps.Tail().strafes.Count() == 0)
+	{
+		return;
+	}
 	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmPreSpeed);
 }

@@ -34,8 +34,11 @@ f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	f32 newMaxSpeed = player->GetPlayerMaxSpeed();
-	
-	if (newMaxSpeed <= 0.0f) return GetMaxSpeed(pawn);
+
+	if (newMaxSpeed <= 0.0f)
+	{
+		return GetMaxSpeed(pawn);
+	}
 	return newMaxSpeed;
 }
 
@@ -235,7 +238,7 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 	player->OnCategorizePosition(bStayOnGround);
 	Vector oldVelocity = mv->m_vecVelocity;
 	bool oldOnGround = !!(player->GetPawn()->m_fFlags() & FL_ONGROUND);
-	
+
 	CategorizePosition(ms, mv, bStayOnGround);
 
 	bool ground = !!(player->GetPawn()->m_fFlags() & FL_ONGROUND);

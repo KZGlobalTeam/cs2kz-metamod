@@ -8,7 +8,7 @@
 #include "movement/movement.h"
 
 #include "tier0/memdbgon.h"
-extern CEntitySystem* g_pEntitySystem;
+extern CEntitySystem *g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
 DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
@@ -54,7 +54,7 @@ void FlushAllDetours()
 	{
 		g_vecDetours[i]->FreeDetour();
 	}
-	
+
 	g_vecDetours.RemoveAll();
 }
 
@@ -94,13 +94,16 @@ bool IsTriggerEndZone(CBaseTrigger *trigger)
 void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther)
 {
 	CBaseTrigger_StartTouch(this_, pOther);
-	
+
 	if (pOther->IsPawn())
 	{
 		if (IsEntTriggerMultiple(this_))
 		{
 			CBasePlayerController *controller = utils::GetController(pOther);
-			if (!controller) return;
+			if (!controller)
+			{
+				return;
+			}
 			MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
 			if (IsTriggerStartZone(this_))
 			{
@@ -123,7 +126,10 @@ void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pO
 		if (IsEntTriggerMultiple(this_))
 		{
 			CBasePlayerController *controller = utils::GetController(pOther);
-			if (!controller) return;
+			if (!controller)
+			{
+				return;
+			}
 			MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
 			if (IsTriggerStartZone(this_))
 			{
@@ -133,7 +139,7 @@ void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pO
 	}
 }
 
-int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock)
+int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)
 {
 	int retValue = RecvServerBrowserPacket(info, pSock);
 	// META_CONPRINTF("Detour_RecvServerBrowserPacket: Message received from %i.%i.%i.%i:%i, returning %i\nPayload: %s\n", 

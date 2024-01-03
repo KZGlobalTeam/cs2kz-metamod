@@ -49,7 +49,7 @@ public:
 
 	virtual CCSPlayerController *GetController();
 	virtual CCSPlayerPawn *GetPawn();
-	virtual CPlayerSlot GetPlayerSlot() { return index - 1; };
+	virtual CPlayerSlot GetPlayerSlot() { return index - 1; }
 	virtual CCSPlayer_MovementServices *GetMoveServices();
 
 	// This doesn't work during movement processing!

@@ -66,7 +66,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
-	
+
 
 	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
 	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
@@ -90,7 +90,10 @@ void utils::Cleanup()
 
 CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
 {
-	if (!g_pEntitySystem) return NULL;
+	if (!g_pEntitySystem)
+	{
+		return NULL;
+	}
 	return FindEntityByClassnameFunc(g_pEntitySystem, start, name);
 }
 
@@ -175,7 +178,7 @@ CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 	}
 	else if (entity->IsController())
 	{
-		return static_cast<CBasePlayerController*>(entity);
+		return static_cast<CBasePlayerController *>(entity);
 	}
 	else
 	{
@@ -225,7 +228,10 @@ bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
 					}
 					key++;
 					currentButton >>= 1;
-					if (!currentButton) return !!(buttons->m_pButtonStates[0] & button);
+					if (!currentButton)
+					{
+						return !!(buttons->m_pButtonStates[0] & button);
+					}
 				}
 			}
 			return false;

@@ -33,7 +33,7 @@ namespace utils
 	void SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype);
 	void EntityCollisionRulesChanged(CBaseEntity2 *entity);
 	CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
-	
+
 	CBasePlayerController *GetController(CBaseEntity2 *entity);
 	CBasePlayerController *GetController(CPlayerSlot slot);
 
@@ -50,9 +50,9 @@ namespace utils
 	// Normalize the angle between -180 and 180.
 	f32 NormalizeDeg(f32 a);
 	// Gets the difference in angle between 2 angles. 
-    // c can be PI (for radians) or 180.0 (for degrees);
+	// c can be PI (for radians) or 180.0 (for degrees);
 	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c, bool relative = false);
-	
+
 	// Print functions
 	void PrintConsole(CBaseEntity2 *entity, const char *format, ...);
 	void PrintChat(CBaseEntity2 *entity, const char *format, ...);
@@ -65,9 +65,9 @@ namespace utils
 	void PrintCentreAll(const char *format, ...);
 	void PrintAlertAll(const char *format, ...);
 	void PrintHTMLCentreAll(const char *format, ...); // This one uses HTML formatting.
-	
+
 	i32 FormatTimerText(i32 ticks, char *buffer, i32 bufferSize);
-	
+
 	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
 
 	// Color print

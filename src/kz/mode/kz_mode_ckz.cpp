@@ -15,7 +15,7 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 	PLUGIN_SAVEVARS();
 	// Load mode
 	int success;
-	g_pModeManager = (KZModeManager*)g_SMAPI->MetaFactory(KZ_MODE_MANAGER_INTERFACE, &success, 0);
+	g_pModeManager = (KZModeManager *)g_SMAPI->MetaFactory(KZ_MODE_MANAGER_INTERFACE, &success, 0);
 	if (success == META_IFACE_FAILED)
 	{
 		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_MODE_MANAGER_INTERFACE);
@@ -28,12 +28,14 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 		return false;
 	}
 
-	if (nullptr == (interfaces::pSchemaSystem = (CSchemaSystem *)g_pKZUtils->GetSchemaSystemPointer())) return false;
-	if (nullptr == (schema::StateChanged = (StateChanged_t *)g_pKZUtils->GetSchemaStateChangedPointer())) return false;
-	if (nullptr == (schema::NetworkStateChanged = (NetworkStateChanged_t *)g_pKZUtils->GetSchemaNetworkStateChangedPointer())) return false;
-
-	if (!g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory)) return false;
-
+	if (nullptr == (interfaces::pSchemaSystem = (CSchemaSystem *)g_pKZUtils->GetSchemaSystemPointer())
+		|| nullptr == (schema::StateChanged = (StateChanged_t *)g_pKZUtils->GetSchemaStateChangedPointer())
+		|| nullptr == (schema::NetworkStateChanged = (NetworkStateChanged_t *)g_pKZUtils->GetSchemaNetworkStateChangedPointer())
+		|| !g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory))
+	{
+		return false;
+	}
+	
 	return true;
 }
 
@@ -55,7 +57,10 @@ bool KZClassicModePlugin::Pause(char *error, size_t maxlen)
 
 bool KZClassicModePlugin::Unpause(char *error, size_t maxlen)
 {
-	if (!g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory)) return false;
+	if (!g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory))
+	{
+		return false;
+	}
 	return true;
 }
 
@@ -285,18 +290,21 @@ void KZClassicModeService::OnProcessMovementPost()
 void KZClassicModeService::InsertSubtickTiming(float time, bool future)
 {
 	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
-	if (!moveServices) return;
-	// Don't create subtick too close to real time, there will be movement processing there anyway.
-	if (fabs(roundf(time) - time) < 0.001) return;
-	// Don't create subtick timing too far into the future.
-	if (time * 64.0 - g_pKZUtils->GetServerGlobals()->tickcount > 1.0f) return;
-	// Don't create subtick timing too far back.
-	if (time * 64.0 - g_pKZUtils->GetServerGlobals()->tickcount < -1.0f) return;
+	if (!moveServices
+		|| fabs(roundf(time) - time) < 0.001 // Don't create subtick too close to real time, there will be movement processing there anyway.
+		|| time * ENGINE_FIXED_TICK_RATE - g_pKZUtils->GetServerGlobals()->tickcount > 1.0f // Don't create subtick timing too far into the future.
+		|| time * ENGINE_FIXED_TICK_RATE - g_pKZUtils->GetServerGlobals()->tickcount < -1.0f) // Don't create subtick timing too far back.
+	{
+		return;
+	}
 
 	for (i32 i = 0; i < 4; i++)
 	{
 		// Already exists.
-		if (fabs(time - moveServices->m_arrForceSubtickMoveWhen[i]) < 0.001f) return;
+		if (fabs(time - moveServices->m_arrForceSubtickMoveWhen[i]) < EPSILON)
+		{
+			return;
+		}
 		if (!future)
 		{
 			// Do not override other valid subtick moves that might happen.
@@ -314,7 +322,7 @@ void KZClassicModeService::InsertSubtickTiming(float time, bool future)
 void KZClassicModeService::InterpolateViewAngles()
 {
 	// Second half of the movement, no change.
-	CGlobalVars* globals = g_pKZUtils->GetServerGlobals();
+	CGlobalVars *globals = g_pKZUtils->GetServerGlobals();
 	// NOTE: tickcount is half a tick ahead of curtime while in the middle of a tick.
 	if ((f64)globals->tickcount * ENGINE_FIXED_TICK_INTERVAL - globals->curtime < 0.001)
 		return;
@@ -374,7 +382,7 @@ void KZClassicModeService::ReduceDuckSlowdown()
 
 void KZClassicModeService::UpdateAngleHistory()
 {
-	CMoveData* mv = this->player->currentMoveData;
+	CMoveData *mv = this->player->currentMoveData;
 	u32 oldEntries = 0;
 	FOR_EACH_VEC(this->angleHistory, i)
 	{
@@ -399,7 +407,7 @@ void KZClassicModeService::UpdateAngleHistory()
 		angHist->rate = 0;
 		return;
 	}
-	
+
 	// Copying from WalkMove
 	Vector forward, right, up;
 	AngleVectors(mv->m_vecViewAngles, &forward, &right, &up);
@@ -456,7 +464,7 @@ void KZClassicModeService::CalcPrestrafe()
 	f32 averageRate;
 	if (totalDuration == 0) averageRate = 0;
 	else averageRate = sumWeightedAngles / totalDuration;
-	
+
 	f32 rewardRate = Clamp(fabs(averageRate) / PS_MAX_REWARD_RATE, 0.0f, 1.0f) * g_pKZUtils->GetServerGlobals()->frametime;
 	f32 punishRate = g_pKZUtils->GetServerGlobals()->frametime * PS_DECREMENT_RATIO;
 
@@ -480,7 +488,7 @@ void KZClassicModeService::CalcPrestrafe()
 		this->rightPreRatio = Clamp(rightPreRatio, 0.0f, PS_MAX_PS_TIME);
 		this->bonusSpeed = this->GetPrestrafeGain() / SPEED_NORMAL * velocity.Length2D();
 	}
-	else 
+	else
 	{
 		rewardRate = g_pKZUtils->GetServerGlobals()->frametime;
 		// Raise both left and right pre to the same value as the player is in the air.

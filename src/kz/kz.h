@@ -40,7 +40,7 @@ public:
 	}
 	void Init();
 	virtual void Reset() override;
-	
+
 	virtual f32 GetPlayerMaxSpeed() override;
 
 	virtual void OnProcessUsercmds(void *, int) override;
@@ -94,7 +94,7 @@ public:
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
-	
+
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
 	// Timer events
@@ -121,16 +121,16 @@ public:
 	KZStyleService *styleService{};
 	KZTimerService *timerService{};
 	KZTipService *tipService{};
-	
+
 	// Misc stuff that doesn't belong into any service.
-	
+
 	// Noclip
 	void DisableNoclip();
 	void ToggleNoclip();
-	
+
 	void EnableGodMode();
 	void HandleMoveCollision();
-	
+
 	// Leg stuff
 	void ToggleHideLegs();
 	void UpdatePlayerModelAlpha();
