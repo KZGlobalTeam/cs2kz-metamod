@@ -6,15 +6,15 @@
 #include "tier0/memdbgon.h"
 
 #define IGNORE_JUMP_TIME 0.2f
+#define JS_EPSILON 0.03125f
 #define JS_MAX_LADDERJUMP_OFFSET 2.0f
 #define JS_MAX_BHOP_GROUND_TIME 0.05f
 #define JS_MAX_DUCKBUG_RESET_TIME 0.05f
 #define JS_MAX_NOCLIP_RESET_TIME 0.4f
-#define JS_MAX_WEIRDJUMP_FALL_OFFSET 64.0f
+#define JS_MAX_WEIRDJUMP_FALL_OFFSET (64.0f + JS_EPSILON)
 #define JS_TOUCH_GRACE_PERIOD 0.04f
-#define JS_EPSILON 0.03125f
 #define JS_SPEED_MODIFICATION_TOLERANCE 0.1f
-#define JS_TELEPORT_DISTANCE_SQUARED 4096.0f * 4096.0f / 64.0f
+#define JS_TELEPORT_DISTANCE_SQUARED 4096.0f * 4096.0f * ENGINE_FIXED_TICK_INTERVAL
 
 const char *jumpTypeStr[JUMPTYPE_COUNT] =
 {
@@ -64,11 +64,11 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 	f64 accelspeed;
 	if (this->wishspeed != 0)
 	{
-		accelspeed = this->accel * this->wishspeed * this->surfaceFriction * this->subtickFraction / 64; // Hardcoding tickrate
+		accelspeed = this->accel * this->wishspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL; // Hardcoding tickrate
 	}
 	else
 	{
-		accelspeed = this->accel * this->maxspeed * this->surfaceFriction * this->subtickFraction / 64; // Hardcoding tickrate
+		accelspeed = this->accel * this->maxspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL; // Hardcoding tickrate
 	}
 	if (accelspeed <= 0.0)
 		return useRadians ? M_PI : RAD2DEG(M_PI);
@@ -124,9 +124,9 @@ f32 AACall::CalcAccelSpeed(bool tryMaxSpeed)
 {
 	if (tryMaxSpeed && this->wishspeed == 0)
 	{
-		return this->accel * this->maxspeed * this->surfaceFriction * this->subtickFraction / 64;
+		return this->accel * this->maxspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 	}
-	return this->accel * this->wishspeed * this->surfaceFriction * this->subtickFraction / 64;
+	return this->accel * this->wishspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 }
 
 f32 AACall::CalcIdealGain()
@@ -158,29 +158,29 @@ void Strafe::End()
 {
 	FOR_EACH_VEC(this->aaCalls, i)
 	{
-		this->duration += this->aaCalls[i].subtickFraction / 64;
+		this->duration += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 		// Calculate BA/DA/OL
 		if (this->aaCalls[i].wishspeed == 0)
 		{
 			u64 buttonBits = IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT;
 			if (utils::IsButtonDown(&this->aaCalls[i].buttons, buttonBits))
 			{
-				this->overlap += this->aaCalls[i].subtickFraction / 64;
+				this->overlap += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 			}
 			else
 			{
-				this->deadAir += this->aaCalls[i].subtickFraction / 64;
+				this->deadAir += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 			}
 		}
 		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= JS_EPSILON)
 		{
 			// This gain could just be from quantized float stuff.
-			this->badAngles += this->aaCalls[i].subtickFraction / 64;
+			this->badAngles += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 		}
 		// Calculate sync.
 		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > JS_EPSILON)
 		{
-			this->syncDuration += this->aaCalls[i].subtickFraction / 64;
+			this->syncDuration += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 		}
 
 		// Gain/loss.
@@ -387,8 +387,8 @@ void Jump::End()
 		{
 			if (this->strafes[i].aaCalls[j].ducking)
 			{
-				this->duckDuration += this->strafes[i].aaCalls[j].subtickFraction / 64;
-				this->duckEndDuration += this->strafes[i].aaCalls[j].subtickFraction / 64;
+				this->duckDuration += this->strafes[i].aaCalls[j].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+				this->duckEndDuration += this->strafes[i].aaCalls[j].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 			}
 			else
 			{
@@ -506,7 +506,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	{
 		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetServerGlobals()->curtime
 			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
-			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + 0.015625f)
+			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
 		{
 			return JumpType_Invalid;
 		}
@@ -736,7 +736,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		V_snprintf(badAngleString, sizeof(badAngleString), "%.0f%%", jump->strafes[i].GetBadAngleDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
 		V_snprintf(overlapString, sizeof(overlapString), "%.0f%%", jump->strafes[i].GetOverlapDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
 		V_snprintf(deadAirString, sizeof(deadAirString), "%.0f%%", jump->strafes[i].GetDeadAirDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
-		V_snprintf(avgGainString, sizeof(avgGainString), "%.2f", jump->strafes[i].GetGain() / jump->strafes[i].GetStrafeDuration() / 64);
+		V_snprintf(avgGainString, sizeof(avgGainString), "%.2f", jump->strafes[i].GetGain() / jump->strafes[i].GetStrafeDuration() * ENGINE_FIXED_TICK_INTERVAL);
 		V_snprintf(gainEffString, sizeof(gainEffString), "%.0f%%", jump->strafes[i].GetGain() / jump->strafes[i].GetMaxGain() * 100.0f);
 		if (jump->strafes[i].arStats.available)
 		{

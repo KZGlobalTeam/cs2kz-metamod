@@ -175,7 +175,7 @@ void KZClassicModeService::OnJump()
 	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND)
 	{
 		// TODO: update util functions to be accessible across plugins
-		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 / 64;
+		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
 		this->player->SetVelocity(velocity);
 		this->tweakedJumpZSpeed = velocity.z;
 		this->revertJumpTweak = true;
@@ -247,7 +247,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 			// Iffy logic that doesn't care about commands with multiple cmds...
 			if (subtickMove->button() == IN_JUMP)
 			{
-				f32 inputTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * 0.015625;
+				f32 inputTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
 				if (when != 0)
 				{
 					if (subtickMove->pressed() && inputTime - this->lastJumpReleaseTime > 0.0078125)
@@ -256,14 +256,14 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 					}
 					if (!subtickMove->pressed())
 					{
-						this->lastJumpReleaseTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * 0.015625;
+						this->lastJumpReleaseTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
 					}
 				}
 			}
 			subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
 		}
 	}
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 - 0.0078125, false);
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - 0.5 * ENGINE_FIXED_TICK_INTERVAL, false);
 }
 
 void KZClassicModeService::OnProcessMovement()
@@ -277,7 +277,7 @@ void KZClassicModeService::OnProcessMovement()
 
 void KZClassicModeService::OnProcessMovementPost()
 {
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * 0.015625 + 0.0078125, true);
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL, true);
 	this->RestoreInterpolatedViewAngles();
 	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonDown(IN_DUCK, true);
 }
@@ -300,7 +300,7 @@ void KZClassicModeService::InsertSubtickTiming(float time, bool future)
 		if (!future)
 		{
 			// Do not override other valid subtick moves that might happen.
-			if (moveServices->m_arrForceSubtickMoveWhen[i] - g_pKZUtils->GetServerGlobals()->curtime < 0.015625) continue;
+			if (moveServices->m_arrForceSubtickMoveWhen[i] - g_pKZUtils->GetServerGlobals()->curtime < ENGINE_FIXED_TICK_INTERVAL) continue;
 			moveServices->m_arrForceSubtickMoveWhen[i] = time;
 			return;
 		}
@@ -316,10 +316,10 @@ void KZClassicModeService::InterpolateViewAngles()
 	// Second half of the movement, no change.
 	CGlobalVars* globals = g_pKZUtils->GetServerGlobals();
 	// NOTE: tickcount is half a tick ahead of curtime while in the middle of a tick.
-	if ((f64)globals->tickcount / 64.0 - globals->curtime < 0.001)
+	if ((f64)globals->tickcount * ENGINE_FIXED_TICK_INTERVAL - globals->curtime < 0.001)
 		return;
 
-	if (this->lastDesiredViewAngleTime < g_pKZUtils->GetServerGlobals()->curtime + 0.015625)
+	if (this->lastDesiredViewAngleTime < g_pKZUtils->GetServerGlobals()->curtime + ENGINE_FIXED_TICK_INTERVAL)
 	{
 		this->lastDesiredViewAngle = this->player->moveDataPost.m_vecViewAngles;
 	}
@@ -362,11 +362,11 @@ void KZClassicModeService::RemoveCrouchJumpBind()
 
 void KZClassicModeService::ReduceDuckSlowdown()
 {
-	if (!this->player->GetMoveServices()->m_bDucking && this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_NORMAL - 0.000001f)
+	if (!this->player->GetMoveServices()->m_bDucking && this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_NORMAL - EPSILON)
 	{
 		this->player->GetMoveServices()->m_flDuckSpeed = DUCK_SPEED_NORMAL;
 	}
-	else if (this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_MINIMUM - 0.000001f)
+	else if (this->player->GetMoveServices()->m_flDuckSpeed < DUCK_SPEED_MINIMUM - EPSILON)
 	{
 		this->player->GetMoveServices()->m_flDuckSpeed = DUCK_SPEED_MINIMUM;
 	}
