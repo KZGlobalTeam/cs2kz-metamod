@@ -18,14 +18,17 @@ void KZCheckpointService::Reset()
 void KZCheckpointService::SetCheckpoint()
 {
 	CCSPlayerPawn *pawn = this->player->GetPawn();
-	if (!pawn) return;
+	if (!pawn)
+	{
+		return;
+	}
 	u32 flags = pawn->m_fFlags();
 	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
 	{
 		utils::PrintChat(this->player->GetController(), "Checkpoint unavailable in the air.");
 		return;
 	}
-	
+
 	Checkpoint cp = {};
 	this->player->GetOrigin(&cp.origin);
 	this->player->GetAngles(&cp.angles);
@@ -47,7 +50,10 @@ void KZCheckpointService::SetCheckpoint()
 void KZCheckpointService::DoTeleport(i32 index)
 {
 	CCSPlayerPawn *pawn = this->player->GetPawn();
-	if (!pawn) return;
+	if (!pawn)
+	{
+		return;
+	}
 	if (checkpoints.Count() <= 0)
 	{
 		utils::PrintChat(this->player->GetController(), "No checkpoints available.");
@@ -103,9 +109,12 @@ void KZCheckpointService::TpToNextCp()
 
 void KZCheckpointService::TpHoldPlayerStill()
 {
-	if (!checkpoints.IsValidIndex(currentCpIndex)) return;
-	if (this->player->GetPawn()->m_lifeState() != LIFE_ALIVE) return;
-	if (g_pKZUtils->GetServerGlobals()->curtime - this->teleportTime > 0.04) return;
+	if (!checkpoints.IsValidIndex(currentCpIndex)
+		|| this->player->GetPawn()->m_lifeState() != LIFE_ALIVE
+		|| g_pKZUtils->GetServerGlobals()->curtime - this->teleportTime > 0.04) 
+	{
+		return;
+	}
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
 
@@ -114,7 +123,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	{
 		this->player->SetOrigin(checkpoints[currentCpIndex].origin);
 	}
-	this->player->SetVelocity(Vector(0,0,0));
+	this->player->SetVelocity(Vector(0, 0, 0));
 	if (checkpoints[currentCpIndex].onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
 	{
 		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);

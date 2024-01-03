@@ -31,7 +31,10 @@ bool KZ::mode::InitModeCvars()
 void KZ::mode::InitModeManager()
 {
 	static bool initialized = false;
-	if (initialized) return;
+	if (initialized)
+	{
+		return;
+	}
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService *{ return new KZVanillaModeService(player); };
 	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
 	initialized = true;
@@ -47,7 +50,10 @@ void KZ::mode::LoadModePlugins()
 	{
 		int ret;
 		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
-		if (ret == META_IFACE_FAILED) return;
+		if (ret == META_IFACE_FAILED)
+		{
+			return;
+		}
 		char error[256];
 		char fullPath[1024];
 		do
@@ -96,7 +102,7 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 			f32 newValue = atof(player->modeService->GetModeConVarValues()[i]);
 			V_memcpy(byteArray, &newValue, sizeof(f32));
 		}
-		else 
+		else
 		{
 			u32 newValue;
 			if (V_stricmp(player->modeService->GetModeConVarValues()[i], "true") == 0)
@@ -110,7 +116,7 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 			else
 			{
 				newValue = atoi(player->modeService->GetModeConVarValues()[i]);
-			} 
+			}
 			V_memcpy(byteArray, &newValue, sizeof(u32));
 		}
 		V_memcpy(&(modeCvars[i]->values), byteArray, 16);
@@ -123,8 +129,14 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 {
 	FOR_EACH_VEC(this->modeInfos, i)
 	{
-		if (shortModeName && V_stricmp(this->modeInfos[i].shortModeName, shortModeName) == 0) return false;
-		if (longModeName && V_stricmp(this->modeInfos[i].longModeName, longModeName) == 0) return false;
+		if (shortModeName && V_stricmp(this->modeInfos[i].shortModeName, shortModeName) == 0)
+		{
+			return false;
+		}
+		if (longModeName && V_stricmp(this->modeInfos[i].longModeName, longModeName) == 0)
+		{
+			return false;
+		}
 	}
 	this->modeInfos.AddToTail({ id, shortModeName, longModeName, factory });
 	return true;
@@ -132,10 +144,16 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 
 void KZModeManager::UnregisterMode(const char *modeName)
 {
-	if (!modeName) return;
+	if (!modeName)
+	{
+		return;
+	}
 
 	// Cannot unregister VNL.
-	if (V_stricmp("VNL", modeName) == 0 || V_stricmp("Vanilla", modeName) == 0) return;
+	if (V_stricmp("VNL", modeName) == 0 || V_stricmp("Vanilla", modeName) == 0)
+	{
+		return;
+	}
 
 	FOR_EACH_VEC(this->modeInfos, i)
 	{
@@ -159,10 +177,16 @@ void KZModeManager::UnregisterMode(const char *modeName)
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)
 {
 	// Don't change mode if it doesn't exist.
-	if (!modeName) return false;
+	if (!modeName)
+	{
+		return false;
+	}
 
 	// If it's the same mode, do nothing.
-	if (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0) return false;
+	if (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0)
+	{
+		return false;
+	}
 
 	ModeServiceFactory factory = nullptr;
 
@@ -199,7 +223,10 @@ void KZModeManager::Cleanup()
 {
 	int ret;
 	ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
-	if (ret == META_IFACE_FAILED) return;
+	if (ret == META_IFACE_FAILED)
+	{
+		return;
+	}
 	char error[256];
 	FOR_EACH_VEC(this->modeInfos, i)
 	{

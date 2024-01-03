@@ -3,7 +3,7 @@
 
 #include "tier0/memdbgon.h"
 
-internal void AddSpeedText(KZPlayer *player, char* buffer, int size)
+internal void AddSpeedText(KZPlayer *player, char *buffer, int size)
 {
 	char speed[128];
 	speed[0] = 0;
@@ -48,7 +48,7 @@ void KZHUDService::DrawSpeedPanel()
 		buffer[0] = 0;
 	}
 	AddSpeedText(player, buffer, sizeof(buffer));
-	strcat(buffer, "\n"); 
+	strcat(buffer, "\n");
 	AddKeyText(player, buffer, sizeof(buffer));
 
 	utils::PrintAlert(this->player->GetController(), "%s", buffer);

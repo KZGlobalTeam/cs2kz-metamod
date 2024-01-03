@@ -9,15 +9,15 @@ class KZPlayer;
 class KZModeService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
-	
+
 public:
-	virtual const char* GetModeName() = 0;
-	virtual const char* GetModeShortName() = 0;
+	virtual const char *GetModeName() = 0;
+	virtual const char *GetModeShortName() = 0;
 
 	// Jumpstats
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 	virtual const char **GetModeConVarValues() = 0;
-	virtual f32 GetPlayerMaxSpeed() { return 0.0f; };
+	virtual f32 GetPlayerMaxSpeed() { return 0.0f; }
 
 	// Movement hooks
 	virtual void OnProcessUsercmds(void *, int) {};
@@ -78,7 +78,7 @@ public:
 	virtual void EndZoneStartTouch() {};
 };
 
-typedef KZModeService* (*ModeServiceFactory)(KZPlayer *player);
+typedef KZModeService *(*ModeServiceFactory)(KZPlayer *player);
 
 class KZModeManager
 {
@@ -146,6 +146,6 @@ namespace KZ::mode
 	void EnableReplicatedModeCvars();
 
 	KZModeManager *GetKZModeManager();
-	
+
 	void RegisterCommands();
 };

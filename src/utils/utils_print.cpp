@@ -10,7 +10,7 @@
 * Credit to Szwagi
 */
 
-internal char ConvertColorStringToByte(const char* str, size_t length) {
+internal char ConvertColorStringToByte(const char *str, size_t length) {
 	switch (length) {
 		case 3:
 			if (!V_memcmp(str, "red", length)) return 7;
@@ -44,27 +44,29 @@ internal char ConvertColorStringToByte(const char* str, size_t length) {
 	return 0;
 }
 
-enum CFormatResult {
+enum CFormatResult
+{
 	CFORMAT_NOT_US,
 	CFORMAT_OK,
 	CFORMAT_OUT_OF_SPACE,
 };
 
-struct CFormatContext {
-	const char* current;
-	char* result;
-	char* result_end;
+struct CFormatContext
+{
+	const char *current;
+	char *result;
+	char *result_end;
 };
 
-internal bool HasEnoughSpace(const CFormatContext* ctx, uintptr_t space) {
+internal bool HasEnoughSpace(const CFormatContext *ctx, uintptr_t space) {
 	return (uintptr_t)(ctx->result_end - ctx->result) > space;
 }
 
-internal CFormatResult EscapeChars(CFormatContext* ctx) {
-	if (*ctx->current == '{' && *(ctx->current+1) == '{') {
+internal CFormatResult EscapeChars(CFormatContext *ctx) {
+	if (*ctx->current == '{' && *(ctx->current + 1) == '{') {
 		if (!HasEnoughSpace(ctx, 1))
 			return CFORMAT_OUT_OF_SPACE;
-		
+
 		ctx->current += 2;
 		*ctx->result++ = '{';
 		return CFORMAT_OK;
@@ -72,11 +74,11 @@ internal CFormatResult EscapeChars(CFormatContext* ctx) {
 	return CFORMAT_NOT_US;
 }
 
-internal CFormatResult ParseColors(CFormatContext* ctx) {
-	const char* current = ctx->current;
+internal CFormatResult ParseColors(CFormatContext *ctx) {
+	const char *current = ctx->current;
 	if (*current == '{') {
 		current++;
-		const char* start = current;
+		const char *start = current;
 		while (*current && *current != '}')
 			current++;
 		if (*current == '}') {
@@ -85,7 +87,7 @@ internal CFormatResult ParseColors(CFormatContext* ctx) {
 			if (char byte = ConvertColorStringToByte(start, length); byte) {
 				if (!HasEnoughSpace(ctx, 1))
 					return CFORMAT_OUT_OF_SPACE;
-				
+
 				*ctx->result++ = byte;
 				ctx->current = current;
 				return CFORMAT_OK;
@@ -95,11 +97,11 @@ internal CFormatResult ParseColors(CFormatContext* ctx) {
 	return CFORMAT_NOT_US;
 }
 
-internal CFormatResult ReplaceNewlines(CFormatContext* ctx) {
+internal CFormatResult ReplaceNewlines(CFormatContext *ctx) {
 	if (*ctx->current == '\n') {
 		if (!HasEnoughSpace(ctx, 3))
 			return CFORMAT_OUT_OF_SPACE;
-		
+
 		ctx->current++;
 		*ctx->result++ = '\xe2';
 		*ctx->result++ = '\x80';
@@ -109,48 +111,63 @@ internal CFormatResult ReplaceNewlines(CFormatContext* ctx) {
 	return CFORMAT_NOT_US;
 }
 
-internal CFormatResult AddSpace(CFormatContext* ctx)
+internal CFormatResult AddSpace(CFormatContext *ctx)
 {
-    if (!HasEnoughSpace(ctx, 1))
-        return CFORMAT_OUT_OF_SPACE;
-    *ctx->result++ = ' ';
-    return CFORMAT_OK;
+	if (!HasEnoughSpace(ctx, 1))
+		return CFORMAT_OUT_OF_SPACE;
+	*ctx->result++ = ' ';
+	return CFORMAT_OK;
 }
 
-internal bool CFormat(char* buffer, u64 buffer_size, const char* text) {
-    assert(buffer_size != 0);
+internal bool CFormat(char *buffer, u64 buffer_size, const char *text) {
+	assert(buffer_size != 0);
 
-    CFormatContext ctx;
-    ctx.current = text;
-    ctx.result = buffer;
-    ctx.result_end = buffer + buffer_size;
+	CFormatContext ctx;
+	ctx.current = text;
+	ctx.result = buffer;
+	ctx.result_end = buffer + buffer_size;
 
-    if (AddSpace(&ctx) != CFORMAT_OK)
-        return false;
-    
-    while (*ctx.current) {
-        auto escape_chars = EscapeChars(&ctx);
-        if (escape_chars == CFORMAT_OK) continue;
-        if (escape_chars == CFORMAT_OUT_OF_SPACE) return false;
-        
-        auto parse_colors = ParseColors(&ctx);
-        if (parse_colors == CFORMAT_OK) continue;
-        if (parse_colors == CFORMAT_OUT_OF_SPACE) return false;
-        
-        auto replace_newlines = ReplaceNewlines(&ctx);
-        if (replace_newlines == CFORMAT_OK) continue;
-        if (replace_newlines == CFORMAT_OUT_OF_SPACE) return false;
+	if (AddSpace(&ctx) != CFORMAT_OK)
+		return false;
 
-        // Everything else
-        if (!HasEnoughSpace(&ctx, 1)) return false;
-        *ctx.result++ = *ctx.current++;
-    }
+	while (*ctx.current) {
+		auto escape_chars = EscapeChars(&ctx);
+		if (escape_chars == CFORMAT_OK) continue;
+		if (escape_chars == CFORMAT_OUT_OF_SPACE)
+		{
+			return false;
+		}
 
-    // Null terminate
-    if (!HasEnoughSpace(&ctx, 1)) return false;
-    *ctx.result++ = 0;
+		auto parse_colors = ParseColors(&ctx);
+		if (parse_colors == CFORMAT_OK) continue;
+		if (parse_colors == CFORMAT_OUT_OF_SPACE)
+		{
+			return false;
+		}
 
-    return true;
+		auto replace_newlines = ReplaceNewlines(&ctx);
+		if (replace_newlines == CFORMAT_OK) continue;
+		if (replace_newlines == CFORMAT_OUT_OF_SPACE)
+		{
+			return false;
+		}
+
+		// Everything else
+		if (!HasEnoughSpace(&ctx, 1))
+		{
+			return false;
+		}
+		*ctx.result++ = *ctx.current++;
+	}
+
+	// Null terminate
+	if (!HasEnoughSpace(&ctx, 1))
+		{
+			return false;
+		}
+	*ctx.result++ = 0;
+
+	return true;
 }
 
 internal void ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4)
@@ -205,12 +222,18 @@ void utils::PrintAlert(CBaseEntity2 *entity, const char *format, ...)
 void utils::PrintHTMLCentre(CBaseEntity2 *entity, const char *format, ...)
 {
 	CBasePlayerController *controller = utils::GetController(entity);
-	if (!controller) return;
+	if (!controller)
+	{
+		return;
+	}
 
 	FORMAT_STRING(buffer);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
-	if (!event) return;
+	if (!event)
+	{
+		return;
+	}
 	event->SetString("loc_token", buffer);
 	event->SetInt("duration", 5);
 	event->SetInt("userid", -1);
@@ -254,7 +277,10 @@ void utils::PrintHTMLCentreAll(const char *format, ...)
 	FORMAT_STRING(buffer);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
-	if (!event) return;
+	if (!event)
+	{
+		return;
+	}
 	event->SetString("loc_token", buffer);
 	event->SetInt("duration", 5);
 	event->SetInt("userid", -1);
@@ -269,7 +295,7 @@ void utils::CPrintChat(CBaseEntity2 *entity, const char *format, ...)
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{
-		ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");	
+		ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");
 	}
 	else
 	{
@@ -278,13 +304,13 @@ void utils::CPrintChat(CBaseEntity2 *entity, const char *format, ...)
 }
 
 void utils::CPrintChatAll(const char *format, ...)
-{	
+{
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter *filter = new CBroadcastRecipientFilter;
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{
-		ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");	
+		ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");
 	}
 	else
 	{

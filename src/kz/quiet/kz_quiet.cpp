@@ -12,15 +12,15 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 	for (int i = 0; i < infoCount; i++)
 	{
 		// Cast it to our own TransmitInfo struct because CCheckTransmitInfo isn't correct.
-		TransmitInfo *pTransmitInfo = reinterpret_cast<TransmitInfo*>(pInfo[i]);
-		
+		TransmitInfo *pTransmitInfo = reinterpret_cast<TransmitInfo *>(pInfo[i]);
+
 		// Find out who this info will be sent to.
 		CPlayerSlot targetSlot = pTransmitInfo->m_nClientEntityIndex;
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 		CCSPlayerPawn *pawn = nullptr;
-		
+
 		while (nullptr != (pawn = (CCSPlayerPawn *)utils::FindEntityByClassname(pawn, "player")))
 		{
 			// If it's our pawn, don't hide them.
@@ -46,7 +46,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				continue;
 			}
 			// Finally check if player is using !hide.
-			if (!targetPlayer->quietService->ShouldHide()) 
+			if (!targetPlayer->quietService->ShouldHide())
 			{
 				continue;
 			}
@@ -93,7 +93,10 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 		}
 	}
 	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(entIndex)));
-	if (!ent) return;
+	if (!ent)
+	{
+		return;
+	}
 
 	// Convert this entindex into the index in the player controller.
 	if (ent->IsPawn())
@@ -129,16 +132,22 @@ void KZQuietService::Reset()
 
 void KZQuietService::SendFullUpdate()
 {
-	auto slots = *(void***)((char*)g_pNetworkServerService->GetIGameServer() + offsets::ClientOffset);
-	*(uint32_t*)((char*)slots[this->player->GetPlayerSlot().Get()] + offsets::ACKOffset) = -1;
+	auto slots = *(void ***)((char *)g_pNetworkServerService->GetIGameServer() + offsets::ClientOffset);
+	*(uint32_t *)((char *)slots[this->player->GetPlayerSlot().Get()] + offsets::ACKOffset) = -1;
 }
 
 bool KZQuietService::ShouldHide()
 {
-	if (!this->hideOtherPlayers) return false;
+	if (!this->hideOtherPlayers)
+	{
+		return false;
+	}
 
 	// If the player is not alive, don't hide other players.
-	if (this->player->GetController()->m_hPawn()->m_lifeState() != LIFE_ALIVE) return false;
+	if (this->player->GetController()->m_hPawn()->m_lifeState() != LIFE_ALIVE)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -146,7 +155,10 @@ bool KZQuietService::ShouldHide()
 bool KZQuietService::ShouldHideIndex(u32 targetIndex)
 {
 	// Don't self-hide.
-	if (this->player->index == targetIndex) return false;
+	if (this->player->index == targetIndex)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -158,7 +170,7 @@ void KZQuietService::ToggleHide()
 
 void KZQuietService::UpdateHideState()
 {
-	CPlayer_ObserverServices* obsServices = this->player->GetController()->m_hPawn()->m_pObserverServices;
+	CPlayer_ObserverServices *obsServices = this->player->GetController()->m_hPawn()->m_pObserverServices;
 	if (!obsServices)
 	{
 		this->lastObserverMode = OBS_MODE_NONE;

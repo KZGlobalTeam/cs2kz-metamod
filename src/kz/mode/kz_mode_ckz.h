@@ -76,7 +76,7 @@ class KZClassicModeService : public KZModeService
 	f32 lastJumpReleaseTime{};
 	bool oldDuckPressed{};
 	bool forcedUnduck{};
-	
+
 	struct AngleHistory
 	{
 		f32 rate;

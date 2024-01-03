@@ -36,7 +36,7 @@ KZPlayer *CKZPlayerManager::ToPlayer(CPlayerUserId userID)
 	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(userID));
 }
 
-KZPlayer* CKZPlayerManager::ToPlayer(u32 index)
+KZPlayer *CKZPlayerManager::ToPlayer(u32 index)
 {
-	return static_cast<KZPlayer*>(CMovementPlayerManager::players[index]);
+	return static_cast<KZPlayer *>(CMovementPlayerManager::players[index]);
 }
