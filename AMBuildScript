@@ -1,4 +1,3 @@
-# vim: set sts=2 ts=8 sw=2 tw=99 et ft=python:
 import os
 
 additional_libs = [
@@ -307,3 +306,5 @@ BuildScripts = [
 ]
 
 builder.Build(BuildScripts, { 'MMSPlugin': MMSPlugin })
+
+# vim: filetype=python expandtab shiftwidth=2 tabstop=8 textwidth=99

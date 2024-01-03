@@ -1,4 +1,3 @@
-# vim: set sts=2 ts=8 sw=2 tw=99 et ft=python: 
 import os
 
 # Here only one sdk should be available to generate only one executable in the end,
@@ -159,3 +158,5 @@ for sdk_target in MMSPlugin.sdk_targets:
 
   MMSPlugin.binaries += [nodes]
   MMSPlugin.mode_binaries += [mode_nodes]
+
+# vim: filetype=python expandtab shiftwidth=2 tabstop=8 textwidth=99

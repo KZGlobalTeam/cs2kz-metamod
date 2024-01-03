@@ -19,6 +19,15 @@ jobs:
     outputs:
       version_string: ${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
 
+  check-newlines:
+    name: Check for CRLF and final newlines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check for CRLF and final newlines
+        run: |
+          ./scripts/check-newlines.sh
+
   build:
     name: Build
     uses: ./.github/workflows/build.yaml
