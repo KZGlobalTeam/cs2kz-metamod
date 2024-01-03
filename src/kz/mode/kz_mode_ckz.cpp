@@ -115,7 +115,7 @@ const char *KZClassicModePlugin::GetURL()
 // Ideally should be much higher than the perf window!
 #define PS_LANDING_GRACE_PERIOD 0.25f 
 
-#define BH_PERF_WINDOW 0.2f // Any jump performed after landing will be a perf for this much time
+#define BH_PERF_WINDOW 0.02f // Any jump performed after landing will be a perf for this much time
 #define BH_BASE_MULTIPLIER 51.5f // Multiplier for how much speed would a perf gain in ideal scenario
 #define BH_LANDING_DECREMENT_MULTIPLIER 75.0f // How much would a non real perf impact the takeoff speed
 // Magic number so that landing speed at max ground prestrafe speed would result in the same takeoff velocity
@@ -212,7 +212,7 @@ void KZClassicModeService::OnStopTouchGround()
 		Vector2D landingVelocity2D(this->player->landingVelocity.x, this->player->landingVelocity.y);
 		landingVelocity2D.NormalizeInPlace();
 		float newSpeed = this->player->landingVelocity.Length2D();
-		if (newSpeed > SPEED_NORMAL + PS_SPEED_MAX)
+		if (newSpeed > SPEED_NORMAL + PS_SPEED_MAX && this->player->takeoffVelocity.Length2D() > SPEED_NORMAL + PS_SPEED_MAX)
 		{
 			newSpeed = MIN(newSpeed, (BH_BASE_MULTIPLIER - timeOnGround * BH_LANDING_DECREMENT_MULTIPLIER) * log(newSpeed) - BH_NORMALIZE_FACTOR);
 		}
