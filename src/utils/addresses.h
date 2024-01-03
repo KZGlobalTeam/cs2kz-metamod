@@ -47,6 +47,8 @@ namespace offsets
 	// Check sv_fullupdate
 	inline constexpr int ClientOffset = 0x260;
 	inline constexpr int ACKOffset = 0x134;
+	// Check ProcessUsercmds
+	inline constexpr int UsercmdOffset = 0x90;
 #else
 	inline constexpr int GameEntitySystem = 0x50;
 	inline constexpr int IsEntityPawn = 152;
@@ -58,6 +60,7 @@ namespace offsets
 	inline constexpr int Respawn = 327;
 	inline constexpr int ClientOffset = 0x270;
 	inline constexpr int ACKOffset = 0x144;
+	inline constexpr int UsercmdOffset = 0x88;
 #endif
 }
 

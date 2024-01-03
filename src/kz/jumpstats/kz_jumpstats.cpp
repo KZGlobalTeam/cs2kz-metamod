@@ -9,6 +9,7 @@
 #define JS_MAX_LADDERJUMP_OFFSET 2.0f
 #define JS_MAX_BHOP_GROUND_TIME 0.05f
 #define JS_MAX_DUCKBUG_RESET_TIME 0.05f
+#define JS_MAX_NOCLIP_RESET_TIME 0.4f
 #define JS_MAX_WEIRDJUMP_FALL_OFFSET 64.0f
 #define JS_TOUCH_GRACE_PERIOD 0.04f
 #define JS_EPSILON 0.03125f
@@ -573,7 +574,7 @@ void KZJumpstatsService::OnProcessMovement()
 	if (this->jumps.Count() == 0)
 	{
 		this->AddJump();
-		this->InvalidateJumpstats();
+		this->InvalidateJumpstats("First jump");
 		return;
 	}
 	this->CheckValidMoveType();
@@ -589,7 +590,7 @@ void KZJumpstatsService::OnChangeMoveType(MoveType_t oldMoveType)
 	else if (oldMoveType == MOVETYPE_WALK && this->player->GetPawn()->m_MoveType() == MOVETYPE_LADDER)
 	{
 		// Not really a valid jump for jumpstats purposes.
-		this->InvalidateJumpstats();
+		this->InvalidateJumpstats("Invalid movetype change");
 		this->EndJump();
 	}
 }
@@ -645,6 +646,7 @@ void KZJumpstatsService::UpdateJump()
 	this->DetectEdgebug();
 	this->DetectInvalidCollisions();
 	this->DetectInvalidGains();
+	this->DetectNoclip();
 }
 
 void KZJumpstatsService::EndJump()
@@ -668,7 +670,7 @@ void KZJumpstatsService::EndJump()
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
 	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
-	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%2.f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		KZ_CHAT_PREFIX,
 		jumpColor,
@@ -689,10 +691,16 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 
 void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 {
-	utils::PrintConsole(target->GetController(), "%s jumped %.4f units with a %s",
+	char invalidateReason[256]{};
+	if (jump->invalidateReason[0] != '\0')
+	{
+		V_snprintf(invalidateReason, sizeof(invalidateReason), "(%s)", jump->invalidateReason);
+	}
+	utils::PrintConsole(target->GetController(), "%s jumped %.4f units with a %s %s",
 		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
 		jump->GetDistance(),
-		jumpTypeStr[jump->GetJumpType()]);
+		jumpTypeStr[jump->GetJumpType()],
+		invalidateReason);
 	utils::PrintConsole(target->GetController(), "%s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height\n%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
 		jump->GetJumpPlayer()->modeService->GetModeShortName(),
 		jump->strafes.Count(),
@@ -755,11 +763,11 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 			angRatioString);
 	}
 }
-void KZJumpstatsService::InvalidateJumpstats()
+void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 {
 	if (this->jumps.Count() > 0 && !this->jumps.Tail().AlreadyEnded())
 	{
-		this->jumps.Tail().Invalidate();
+		this->jumps.Tail().Invalidate(reason);
 	}
 }
 
@@ -792,7 +800,15 @@ void KZJumpstatsService::CheckValidMoveType()
 	// Invalidate jumpstats if movetype is invalid.
 	if (this->player->GetPawn()->m_MoveType() != MOVETYPE_WALK && this->player->GetPawn()->m_MoveType() != MOVETYPE_LADDER)
 	{
-		this->InvalidateJumpstats();
+		this->InvalidateJumpstats("Invalid movetype");
+	}
+}
+
+void KZJumpstatsService::DetectNoclip()
+{
+	if (this->lastNoclipTime + JS_MAX_NOCLIP_RESET_TIME > g_pKZUtils->GetServerGlobals()->curtime)
+	{
+		this->InvalidateJumpstats("Just noclipped");
 	}
 }
 
@@ -802,7 +818,7 @@ void KZJumpstatsService::DetectEdgebug()
 	// If the player suddenly gain speed from negative speed, they probably edgebugged.
 	if (this->player->moveDataPre.m_vecVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->player->moveDataPre.m_vecVelocity.z)
 	{
-		this->InvalidateJumpstats();
+		this->InvalidateJumpstats("Potential edgebug");
 	}
 }
 
@@ -816,7 +832,7 @@ void KZJumpstatsService::DetectInvalidCollisions()
 		// while other collisions do after a certain duration.
 		if (this->jumps.Tail().touchDuration > JS_TOUCH_GRACE_PERIOD)
 		{
-			this->InvalidateJumpstats();
+			this->InvalidateJumpstats("Invalid collisions");
 		}
 		if (this->player->moveDataPre.m_vecVelocity.z > 0.0f)
 		{
@@ -837,7 +853,7 @@ void KZJumpstatsService::DetectInvalidGains()
 
 	if (actualSpeed - speed > JS_SPEED_MODIFICATION_TOLERANCE && actualSpeed > JS_EPSILON)
 	{
-		this->InvalidateJumpstats();
+		this->InvalidateJumpstats("Invalid gains");
 	}
 }
 
@@ -845,7 +861,7 @@ void KZJumpstatsService::DetectExternalModifications()
 {
 	if ((this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPost.m_vecAbsOrigin).LengthSqr() > JS_TELEPORT_DISTANCE_SQUARED)
 	{
-		this->InvalidateJumpstats();
+		this->InvalidateJumpstats("Externally modified");
 	}
 }
 

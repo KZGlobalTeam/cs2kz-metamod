@@ -76,7 +76,18 @@ class KZClassicModeService : public KZModeService
 	f32 lastJumpReleaseTime{};
 	bool oldDuckPressed{};
 	bool forcedUnduck{};
-
+	
+	struct AngleHistory
+	{
+		f32 rate;
+		f32 when;
+		f32 duration;
+	};
+	CUtlVector<AngleHistory> angleHistory;
+	f32 leftPreRatio{};
+	f32 rightPreRatio{};
+	f32 bonusSpeed{};
+	f32 maxPre{};
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
@@ -85,10 +96,10 @@ public:
 	virtual f32 GetPlayerMaxSpeed() override;
 
 	virtual void OnProcessUsercmds(void *, int) override;
-	virtual void OnPlayerMove() override;
+	virtual void OnProcessMovement() override;
+	virtual void OnProcessMovementPost() override;
 	virtual void OnJump() override;
 	virtual void OnJumpPost() override;
-	virtual void OnPostPlayerMovePost() override;
 	virtual void OnStopTouchGround() override;
 
 	// Insert subtick timing to be called later.
@@ -99,6 +110,10 @@ public:
 
 	void InterpolateViewAngles();
 	void RestoreInterpolatedViewAngles();
+
+	void UpdateAngleHistory();
+	void CalcPrestrafe();
+	f32 GetPrestrafeGain();
 
 	void RemoveCrouchJumpBind();
 	/*

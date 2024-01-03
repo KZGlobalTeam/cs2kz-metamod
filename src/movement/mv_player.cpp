@@ -141,7 +141,15 @@ void MovementPlayer::SetAngles(const QAngle &angles)
 
 TurnState MovementPlayer::GetTurning()
 {
-	QAngle currentAngle = this->moveDataPre.m_vecViewAngles;
+	QAngle currentAngle;
+	if (this->processingMovement && this->currentMoveData)
+	{
+		currentAngle = this->currentMoveData->m_vecViewAngles;
+	}
+	else
+	{
+		currentAngle = this->moveDataPre.m_vecViewAngles;
+	}
 	bool turning = this->oldAngles.y != currentAngle.y;
 	if (!turning) return TURN_NONE;
 	if (currentAngle.y < this->oldAngles.y - 180

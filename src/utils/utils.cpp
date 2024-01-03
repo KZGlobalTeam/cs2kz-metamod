@@ -294,9 +294,11 @@ f32 utils::NormalizeDeg(f32 a)
 	return a;
 }
 
-f32 utils::GetAngleDifference(const f32 x, const f32 y, const f32 c)
+f32 utils::GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative)
 {
-	return fmod(fabs(x - y) + c, 2 * c) - c;
+	if (relative)
+		return fmod((fmod(target - source, 2 * c) + 3 * c), 2 * c) - c;
+	return fmod(fabs(target - source) + c, 2 * c) - c;
 }
 
 void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)

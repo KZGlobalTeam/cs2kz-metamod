@@ -78,7 +78,7 @@ f32 KZUtils::NormalizeDeg(f32 a)
 	return utils::NormalizeDeg(a);
 }
 
-f32 KZUtils::GetAngleDifference(const f32 x, const f32 y, const f32 c)
+f32 KZUtils::GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative)
 {
-	return utils::GetAngleDifference(x, y, c);
+	return utils::GetAngleDifference(source, target, c, relative);
 }
