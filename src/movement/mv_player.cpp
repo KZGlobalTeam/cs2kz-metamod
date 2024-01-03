@@ -179,7 +179,10 @@ TurnState MovementPlayer::GetTurning()
 		return TURN_NONE;
 	}
 	if (currentAngle.y < this->oldAngles.y - 180
-		|| (currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180)) return TURN_LEFT;
+		|| (currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180))
+	{
+		return TURN_LEFT;
+	}
 	return TURN_RIGHT;
 }
 
