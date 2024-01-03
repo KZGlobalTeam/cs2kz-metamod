@@ -211,10 +211,12 @@ void KZClassicModeService::OnStopTouchGround()
 		// Perf speed
 		Vector2D landingVelocity2D(this->player->landingVelocity.x, this->player->landingVelocity.y);
 		landingVelocity2D.NormalizeInPlace();
-		float newSpeed = this->player->landingVelocity.Length2D();
-		if (newSpeed > SPEED_NORMAL + PS_SPEED_MAX && this->player->takeoffVelocity.Length2D() > SPEED_NORMAL + PS_SPEED_MAX)
+		float newSpeed = MAX(this->player->landingVelocity.Length2D(), this->player->takeoffVelocity.Length2D());
+		if (newSpeed > SPEED_NORMAL + this->GetPrestrafeGain())
 		{
-			newSpeed = MIN(newSpeed, (BH_BASE_MULTIPLIER - timeOnGround * BH_LANDING_DECREMENT_MULTIPLIER) * log(newSpeed) - BH_NORMALIZE_FACTOR);
+			newSpeed = min(newSpeed, (BH_BASE_MULTIPLIER - timeOnGround * BH_LANDING_DECREMENT_MULTIPLIER) * log(newSpeed) - BH_NORMALIZE_FACTOR);
+			// Make sure it doesn't go lower than the ground speed.
+			newSpeed = max(newSpeed, SPEED_NORMAL + this->GetPrestrafeGain());
 		}
 		velocity.x = newSpeed * landingVelocity2D.x;
 		velocity.y = newSpeed * landingVelocity2D.y;
