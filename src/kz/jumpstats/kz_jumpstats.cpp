@@ -747,7 +747,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
 		}
 		utils::PrintConsole(target->GetController(), "%i.%5s %7s%-10s %7s%-10s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
-			i,
+			i + 1,
 			syncString,
 			gainString,
 			externalGainString,
