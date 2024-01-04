@@ -249,6 +249,10 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			CEntityInstance *instance = event->GetPlayerPawn("userid");
 			g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex())->quietService->SendFullUpdate();
 		}
+		else if (V_stricmp(event->GetName(), "round_start") == 0)
+		{
+			interfaces::pEngine->ServerCommand("sv_full_alltalk 1");
+		}
 	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
 }
