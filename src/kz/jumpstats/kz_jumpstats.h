@@ -211,6 +211,7 @@ public:
 	KZJumpstatsService(KZPlayer *player) : KZBaseService(player)
 	{
 		this->jumps = CUtlVector<Jump>(1, 0);
+		this->tpmVelocity = Vector(0, 0, 0);
 	}
 	// Jumpstats
 private:
@@ -221,8 +222,9 @@ private:
 	f32 lastDuckbugTime{};
 	f32 lastGroundSpeedCappedTime{};
 	f32 lastMovementProcessedTime{};
-	f32 tpmPreSpeed{};
+	Vector tpmVelocity;
 public:
+	virtual void Reset() override;
 	void OnProcessMovement();
 	void OnChangeMoveType(MoveType_t oldMoveType);
 	void OnTryPlayerMove();

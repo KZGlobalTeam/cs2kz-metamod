@@ -582,6 +582,18 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	return JumpType_LongJump;
 }
 
+void KZJumpstatsService::Reset()
+{
+	this->jumps.Purge();
+	this->jsAlways = {};
+	this->lastJumpButtonTime = {};
+	this->lastNoclipTime = {};
+	this->lastDuckbugTime = {};
+	this->lastGroundSpeedCappedTime = {};
+	this->lastMovementProcessedTime = {};
+	this->tpmVelocity = Vector(0, 0, 0);
+}
+
 void KZJumpstatsService::OnProcessMovement()
 {
 	// Always ensure that the player has at least an ongoing jump.
@@ -840,7 +852,7 @@ void KZJumpstatsService::DetectEdgebug()
 		return;
 	}
 	// If the player suddenly gain speed from negative speed, they probably edgebugged.
-	if (this->player->moveDataPre.m_vecVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->player->moveDataPre.m_vecVelocity.z)
+	if (this->tpmVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->tpmVelocity.z)
 	{
 		this->InvalidateJumpstats("Potential edgebug");
 	}
@@ -894,7 +906,7 @@ void KZJumpstatsService::DetectExternalModifications()
 
 void KZJumpstatsService::OnTryPlayerMove()
 {
-	this->tpmPreSpeed = this->player->currentMoveData->m_vecVelocity.Length2D();
+	this->tpmVelocity = this->player->currentMoveData->m_vecVelocity;
 }
 
 void KZJumpstatsService::OnTryPlayerMovePost()
@@ -903,5 +915,6 @@ void KZJumpstatsService::OnTryPlayerMovePost()
 	{
 		return;
 	}
-	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmPreSpeed);
+	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmVelocity.Length2D());
+	this->DetectEdgebug();
 }

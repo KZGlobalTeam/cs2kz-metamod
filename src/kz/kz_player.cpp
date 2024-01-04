@@ -34,6 +34,7 @@ void KZPlayer::Reset()
 	// TODO: reset every service.
 	this->checkpointService->Reset();
 	this->quietService->Reset();
+	this->jumpstatsService->Reset();
 	// TODO: Make a cvar for default mode
 	g_pKZModeManager->SwitchToMode(this, "VNL", true);
 }
