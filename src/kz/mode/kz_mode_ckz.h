@@ -76,7 +76,7 @@ class KZClassicModeService : public KZModeService
 	f32 lastJumpReleaseTime{};
 	bool oldDuckPressed{};
 	bool forcedUnduck{};
-
+	f32 postProcessMovementZSpeed{};
 	struct AngleHistory
 	{
 		f32 rate;
@@ -115,6 +115,7 @@ public:
 	void CalcPrestrafe();
 	f32 GetPrestrafeGain();
 
+	void CheckVelocityQuantization();
 	void RemoveCrouchJumpBind();
 	/*
 		Ported from DanZay's SimpleKZ:

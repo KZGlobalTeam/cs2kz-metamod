@@ -273,6 +273,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 
 void KZClassicModeService::OnProcessMovement()
 {
+	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
 	this->InterpolateViewAngles();
@@ -285,6 +286,9 @@ void KZClassicModeService::OnProcessMovementPost()
 	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL, true);
 	this->RestoreInterpolatedViewAngles();
 	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonDown(IN_DUCK, true);
+	Vector velocity;
+	this->player->GetVelocity(&velocity);
+	this->postProcessMovementZSpeed = velocity.z;
 }
 
 void KZClassicModeService::InsertSubtickTiming(float time, bool future)
@@ -501,4 +505,12 @@ void KZClassicModeService::CalcPrestrafe()
 f32 KZClassicModeService::GetPrestrafeGain()
 {
 	return PS_SPEED_MAX * pow(MAX(this->leftPreRatio, this->rightPreRatio) / PS_MAX_PS_TIME, PS_RATIO_TO_SPEED);
+}
+
+void KZClassicModeService::CheckVelocityQuantization()
+{
+	if (this->postProcessMovementZSpeed > this->player->currentMoveData->m_vecVelocity.z && this->postProcessMovementZSpeed - this->player->currentMoveData->m_vecVelocity.z < 0.03125f)
+	{
+		this->player->currentMoveData->m_vecVelocity.z = this->postProcessMovementZSpeed;
+	}
 }
