@@ -79,6 +79,7 @@ public:
 	SCHEMA_FIELD(CHandle< CBaseEntity2 >, m_hGroundEntity)
 	SCHEMA_FIELD(uint32_t, m_fFlags)
 	SCHEMA_FIELD(float, m_flGravityScale)
+	SCHEMA_FIELD(float, m_flWaterLevel)
 
 	int entindex() { return m_pEntity->m_EHandle.GetEntryIndex(); }
 	bool IsPawn() { return CALL_VIRTUAL(bool, offsets::IsEntityPawn, this); }
