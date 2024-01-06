@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        run: ./scripts/check-newlines.sh
+      - run: ./scripts/check-newlines.sh
 
   build-push:
     if: ${{ github.event_name == 'push' }}
