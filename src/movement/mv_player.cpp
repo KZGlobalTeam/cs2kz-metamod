@@ -19,6 +19,7 @@ void MovementPlayer::OnProcessMovementPost()
 	this->lastProcessedTickcount = g_pKZUtils->GetServerGlobals()->tickcount;
 	this->oldAngles = this->moveDataPost.m_vecViewAngles;
 	this->oldWalkMoved = this->walkMoved;
+	this->enableWaterFixThisTick = false;
 }
 
 CCSPlayerController *MovementPlayer::GetController()

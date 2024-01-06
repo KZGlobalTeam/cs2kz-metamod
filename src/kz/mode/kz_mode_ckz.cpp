@@ -190,10 +190,10 @@ void KZClassicModeService::OnJump()
 void KZClassicModeService::OnJumpPost()
 {
 	// If we didn't jump, we revert the jump height tweak.
-	if (this->revertJumpTweak)
+	Vector velocity;
+	this->player->GetVelocity(&velocity);
+	if (this->revertJumpTweak && velocity.z == this->tweakedJumpZSpeed)
 	{
-		Vector velocity;
-		this->player->GetVelocity(&velocity);
 		velocity.z = this->preJumpZSpeed;
 		this->player->SetVelocity(velocity);
 	}
@@ -273,6 +273,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 
 void KZClassicModeService::OnProcessMovement()
 {
+	this->player->enableWaterFixThisTick = true;
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
