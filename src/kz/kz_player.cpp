@@ -141,9 +141,9 @@ void KZPlayer::OnDuckPost()
 {
 	this->modeService->OnDuckPost();
 }
-void KZPlayer::OnCanUnduck()
+int KZPlayer::OnCanUnduck()
 {
-	this->modeService->OnCanUnduck();
+	return this->modeService->OnCanUnduck();
 }
 void KZPlayer::OnCanUnduckPost()
 {

@@ -40,7 +40,8 @@ public:
 	virtual void OnCheckVelocityPost(const char *) {};
 	virtual void OnDuck() {};
 	virtual void OnDuckPost() {};
-	virtual void OnCanUnduck() {};
+	// Make an exception for this as it is the only time where we need to change the return value.
+	virtual int OnCanUnduck() {return -1; };
 	virtual void OnCanUnduckPost() {};
 	virtual void OnLadderMove() {};
 	virtual void OnLadderMovePost() {};

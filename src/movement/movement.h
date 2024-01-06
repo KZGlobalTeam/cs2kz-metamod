@@ -27,6 +27,7 @@ namespace movement
 	bool FASTCALL Detour_CheckWater(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckVelocity(CCSPlayer_MovementServices *, CMoveData *, const char *);
 	void FASTCALL Detour_Duck(CCSPlayer_MovementServices *, CMoveData *);
+	bool FASTCALL Detour_CanUnduck(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_LadderMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckJumpButton(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_OnJump(CCSPlayer_MovementServices *, CMoveData *);
@@ -95,7 +96,8 @@ public:
 	virtual void OnCheckVelocityPost(const char *) {};
 	virtual void OnDuck() {};
 	virtual void OnDuckPost() {};
-	virtual void OnCanUnduck() {};
+	// Make an exception for this as it is the only time where we need to change the return value.
+	virtual int OnCanUnduck() { return -1; };
 	virtual void OnCanUnduckPost() {};
 	virtual void OnLadderMove() {};
 	virtual void OnLadderMovePost() {};

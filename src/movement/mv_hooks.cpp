@@ -16,6 +16,7 @@ void movement::InitDetours()
 	INIT_DETOUR(CheckWater);
 	INIT_DETOUR(CheckVelocity);
 	INIT_DETOUR(Duck);
+	INIT_DETOUR(CanUnduck);
 	INIT_DETOUR(LadderMove);
 	INIT_DETOUR(CheckJumpButton);
 	INIT_DETOUR(OnJump);
@@ -130,6 +131,19 @@ void FASTCALL movement::Detour_Duck(CCSPlayer_MovementServices *ms, CMoveData *m
 	Duck(ms, mv);
 	player->processingDuck = false;
 	player->OnDuckPost();
+}
+
+bool FASTCALL movement::Detour_CanUnduck(CCSPlayer_MovementServices *ms, CMoveData *mv)
+{
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	int overrideValue = player->OnCanUnduck();
+	bool canUnduck = CanUnduck(ms, mv);
+	if (overrideValue != -1)
+	{
+		canUnduck = !!overrideValue;
+	}
+	player->OnCanUnduckPost();
+	return canUnduck;
 }
 
 bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
