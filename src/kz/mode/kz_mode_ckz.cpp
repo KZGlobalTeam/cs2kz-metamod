@@ -470,9 +470,13 @@ void KZClassicModeService::CalcPrestrafe()
 	else averageRate = sumWeightedAngles / totalDuration;
 
 	f32 rewardRate = Clamp(fabs(averageRate) / PS_MAX_REWARD_RATE, 0.0f, 1.0f) * g_pKZUtils->GetServerGlobals()->frametime;
-	f32 punishRate = g_pKZUtils->GetServerGlobals()->frametime * PS_DECREMENT_RATIO;
+	f32 punishRate = 0.0f;
+	if (this->player->landingTime + PS_LANDING_GRACE_PERIOD < g_pKZUtils->GetServerGlobals()->curtime)
+	{
+		punishRate = g_pKZUtils->GetServerGlobals()->frametime * PS_DECREMENT_RATIO;
+	}
 
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->landingTime + PS_LANDING_GRACE_PERIOD < g_pKZUtils->GetServerGlobals()->curtime)
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND)
 	{
 		// Prevent instant full pre from crouched prestrafe.
 		Vector velocity;
