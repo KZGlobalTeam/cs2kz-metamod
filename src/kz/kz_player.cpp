@@ -121,6 +121,14 @@ void KZPlayer::OnCheckWater()
 {
 	this->modeService->OnCheckWater();
 }
+void KZPlayer::OnWaterMove()
+{
+	this->modeService->OnWaterMove();
+}
+void KZPlayer::OnWaterMovePost()
+{
+	this->modeService->OnWaterMovePost();
+}
 void KZPlayer::OnCheckWaterPost()
 {
 	this->modeService->OnCheckWaterPost();

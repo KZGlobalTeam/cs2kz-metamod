@@ -190,10 +190,10 @@ void KZClassicModeService::OnJump()
 void KZClassicModeService::OnJumpPost()
 {
 	// If we didn't jump, we revert the jump height tweak.
-	if (this->revertJumpTweak)
+	Vector velocity;
+	this->player->GetVelocity(&velocity);
+	if (this->revertJumpTweak && velocity.z == this->tweakedJumpZSpeed)
 	{
-		Vector velocity;
-		this->player->GetVelocity(&velocity);
 		velocity.z = this->preJumpZSpeed;
 		this->player->SetVelocity(velocity);
 	}
@@ -278,6 +278,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 
 void KZClassicModeService::OnProcessMovement()
 {
+	this->player->enableWaterFixThisTick = true;
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
@@ -518,7 +519,11 @@ f32 KZClassicModeService::GetPrestrafeGain()
 
 void KZClassicModeService::CheckVelocityQuantization()
 {
-	if (this->postProcessMovementZSpeed > this->player->currentMoveData->m_vecVelocity.z && this->postProcessMovementZSpeed - this->player->currentMoveData->m_vecVelocity.z < 0.03125f)
+	if (this->postProcessMovementZSpeed > this->player->currentMoveData->m_vecVelocity.z
+		&& this->postProcessMovementZSpeed - this->player->currentMoveData->m_vecVelocity.z < 0.03125f
+		// Colliding with a flat floor can result in a velocity of +0.0078125u/s, and this breaks ladders.
+		// The quantization accidentally fixed this bug...
+		&& fabs(this->player->currentMoveData->m_vecVelocity.z) > 0.03125f)
 	{
 		this->player->currentMoveData->m_vecVelocity.z = this->postProcessMovementZSpeed;
 	}

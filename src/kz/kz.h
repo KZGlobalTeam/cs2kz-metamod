@@ -59,6 +59,8 @@ public:
 	virtual void OnMoveInitPost() override;
 	virtual void OnCheckWater() override;
 	virtual void OnCheckWaterPost() override;
+	virtual void OnWaterMove() override;
+	virtual void OnWaterMovePost() override;
 	virtual void OnCheckVelocity(const char *) override;
 	virtual void OnCheckVelocityPost(const char *) override;
 	virtual void OnDuck() override;
