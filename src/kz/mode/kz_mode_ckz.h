@@ -100,6 +100,7 @@ public:
 	virtual void OnProcessMovementPost() override;
 	virtual void OnJump() override;
 	virtual void OnJumpPost() override;
+	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 
 	// Insert subtick timing to be called later.
@@ -130,4 +131,6 @@ public:
 		duck speed is enforced. This should reduce noticeable lag.
 	*/
 	void ReduceDuckSlowdown();
+	
+	void SlopeFix();
 };
