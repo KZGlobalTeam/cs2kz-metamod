@@ -237,6 +237,11 @@ void KZClassicModeService::OnStopTouchGround()
 	}
 }
 
+void KZClassicModeService::OnStartTouchGround()
+{
+	this->SlopeFix();
+}
+
 void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 {
 	this->lastDesiredViewAngleTime = g_pKZUtils->GetServerGlobals()->curtime;
@@ -512,5 +517,66 @@ void KZClassicModeService::CheckVelocityQuantization()
 	if (this->postProcessMovementZSpeed > this->player->currentMoveData->m_vecVelocity.z && this->postProcessMovementZSpeed - this->player->currentMoveData->m_vecVelocity.z < 0.03125f)
 	{
 		this->player->currentMoveData->m_vecVelocity.z = this->postProcessMovementZSpeed;
+	}
+}
+
+// ORIGINAL AUTHORS : Mev & Blacky
+// URL: https://forums.alliedmods.net/showthread.php?p=2322788
+void KZClassicModeService::SlopeFix()
+{
+	CTraceFilterPlayerMovementCS filter;
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPawn(), 
+		this->player->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+
+	Vector ground = this->player->currentMoveData->m_vecAbsOrigin;
+	ground.z -= 2;
+
+	f32 standableZ = 0.7f; // Equal to the mode's cvar.
+
+	bbox_t bounds;
+	bounds.mins = { -16.0, -16.0, 0.0 };
+	bounds.maxs = { 16.0, 16.0, 72.0 };
+
+	if (this->player->GetMoveServices()->m_bDucked()) bounds.maxs.z = 54.0;
+
+	trace_t_s2 trace;
+	g_pKZUtils->InitGameTrace(&trace);
+
+	g_pKZUtils->TracePlayerBBox(this->player->currentMoveData->m_vecAbsOrigin, ground, bounds, &filter, trace);
+
+	// Doesn't hit anything, fall back to the original ground
+	if (trace.startsolid || trace.fraction == 1.0f)
+	{
+		return;
+	}
+	// TODO: Unhardcode sv_standable_normal
+	if (standableZ <= trace.planeNormal.z && trace.planeNormal.z < 1.0f)
+	{
+		// Copy the ClipVelocity function from sdk2013
+		float backoff;
+		float change;
+		Vector newVelocity;
+
+		backoff = DotProduct(this->player->landingVelocity, trace.planeNormal) * 1;
+
+		for (u32 i = 0; i < 3; i++)
+		{
+			change = trace.planeNormal[i] * backoff;
+			newVelocity[i] = this->player->landingVelocity[i] - change;
+		}
+
+		f32 adjust = DotProduct(newVelocity, trace.planeNormal);
+		if (adjust < 0.0f)
+		{
+			newVelocity -= (trace.planeNormal * adjust);
+		}
+		// Make sure the player is going down a ramp by checking if they actually will gain speed from the boost.
+		if (newVelocity.Length2D() >= this->player->landingVelocity.Length2D())
+		{
+			this->player->currentMoveData->m_vecVelocity.x = newVelocity.x;
+			this->player->currentMoveData->m_vecVelocity.y = newVelocity.y;
+			this->player->landingVelocity.x = newVelocity.x;
+			this->player->landingVelocity.y = newVelocity.y;
+		}
 	}
 }
