@@ -223,9 +223,11 @@ private:
 	f32 lastGroundSpeedCappedTime{};
 	f32 lastMovementProcessedTime{};
 	Vector tpmVelocity;
+	bool possibleEdgebug{};
 public:
 	virtual void Reset() override;
 	void OnProcessMovement();
+	void OnProcessMovementPost();
 	void OnChangeMoveType(MoveType_t oldMoveType);
 	void OnTryPlayerMove();
 	void OnTryPlayerMovePost();
