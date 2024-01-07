@@ -72,7 +72,7 @@ void KZPlayer::OnProcessMovementPost()
 	this->jumpstatsService->UpdateJump();
 	MovementPlayer::OnProcessMovementPost();
 	this->modeService->OnProcessMovementPost();
-	this->jumpstatsService->TrackJumpstatsVariables();
+	this->jumpstatsService->OnProcessMovementPost();
 }
 
 void KZPlayer::OnPlayerMove()

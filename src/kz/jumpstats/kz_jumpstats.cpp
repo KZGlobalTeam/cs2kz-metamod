@@ -592,6 +592,7 @@ void KZJumpstatsService::Reset()
 	this->lastGroundSpeedCappedTime = {};
 	this->lastMovementProcessedTime = {};
 	this->tpmVelocity = Vector(0, 0, 0);
+	this->possibleEdgebug = {};
 }
 
 void KZJumpstatsService::OnProcessMovement()
@@ -852,9 +853,10 @@ void KZJumpstatsService::DetectEdgebug()
 		return;
 	}
 	// If the player suddenly gain speed from negative speed, they probably edgebugged.
+	this->possibleEdgebug = false;
 	if (this->tpmVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->tpmVelocity.z)
 	{
-		this->InvalidateJumpstats("Potential edgebug");
+		this->possibleEdgebug = true;
 	}
 }
 
@@ -917,4 +919,14 @@ void KZJumpstatsService::OnTryPlayerMovePost()
 	}
 	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmVelocity.Length2D());
 	this->DetectEdgebug();
+}
+
+void KZJumpstatsService::OnProcessMovementPost()
+{
+	if (this->possibleEdgebug && !(this->player->GetPawn()->m_fFlags() & FL_ONGROUND))
+	{
+		this->InvalidateJumpstats("Edgebugged");
+		this->possibleEdgebug = false;
+	}
+	this->TrackJumpstatsVariables();
 }
