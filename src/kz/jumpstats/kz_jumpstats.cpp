@@ -926,6 +926,7 @@ void KZJumpstatsService::OnProcessMovementPost()
 	if (this->possibleEdgebug && !(this->player->GetPawn()->m_fFlags() & FL_ONGROUND))
 	{
 		this->InvalidateJumpstats("Edgebugged");
+		this->possibleEdgebug = false;
 	}
 	this->TrackJumpstatsVariables();
 }
