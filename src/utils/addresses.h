@@ -54,7 +54,7 @@ namespace offsets
 	inline constexpr int IsEntityPawn = 152;
 	inline constexpr int IsEntityController = 153;
 	inline constexpr int SetMoveType = 76;
-	inline constexpr int CollisionRulesChanged = 172;
+	inline constexpr int CollisionRulesChanged = 173;
 	inline constexpr int Teleport = 148;
 	inline constexpr int GetEventManager = 91;
 	inline constexpr int Respawn = 327;
