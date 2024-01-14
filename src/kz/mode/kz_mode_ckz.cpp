@@ -659,7 +659,6 @@ internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPl
 }
 
 #define MAX_BUMPS 4
-#define MAX_PLANES 5
 #define RAMP_PIERCE_DISTANCE 1.0f
 #define RAMP_BUG_THRESHOLD 0.98f
 #define NEW_RAMP_THRESHOLD 0.75f
