@@ -50,6 +50,7 @@ public:
 	// Gets the difference in angle between 2 angles. 
 	// c can be PI (for radians) or 180.0 (for degrees);
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
+	virtual CGameEntitySystem *GetGameEntitySystem();
 };
 
 extern KZUtils *g_pKZUtils;
