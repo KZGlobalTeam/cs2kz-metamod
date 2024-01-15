@@ -720,36 +720,64 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 			this->overrideTPM = true;
 			// We hit a plane that will significantly change our velocity. Make sure that this plane is significant enough.
 			Vector direction = velocity.Normalized();
-			trace_t_s2 pierce;
-			bool goodTrace{};
-			f32 ratio{};
-			bool hitNewPlane{};
-			for (ratio = 0.05f; ratio <= 1.0f; ratio += 0.05f)
+			Vector offsetDirection;
+			f32 offsets[] = {0.0f, -1.0f, 1.0f};
+			bool success{};
+			for (u32 i = 0; i < 3 && !success; i++)
 			{
-				g_pKZUtils->TracePlayerBBox(start + this->lastValidPlane * RAMP_PIERCE_DISTANCE * ratio, end + this->lastValidPlane * RAMP_PIERCE_DISTANCE * ratio, bounds, &filter, pierce);
-				if (!IsValidMovementTrace(pierce, bounds, &filter))
+				for (u32 j = 0; j < 3 && !success; j++)
 				{
-					continue;
+					for (u32 k = 0; k < 3 && !success; k++)
+					{
+						if (i == 0 && j == 0 && k == 0)
+						{
+							offsetDirection = this->lastValidPlane;
+						}
+						else
+						{
+							offsetDirection = { offsets[i], offsets[j], offsets[k] };
+							// Check if this random offset is even valid.
+							trace_t_s2 test;
+							g_pKZUtils->TracePlayerBBox(start + offsetDirection * RAMP_PIERCE_DISTANCE, start, bounds, &filter, test);
+							if (!IsValidMovementTrace(test, bounds, &filter))
+							{
+								continue;
+							}
+						}
+						trace_t_s2 pierce;
+						bool goodTrace{};
+						f32 ratio{};
+						bool hitNewPlane{};
+						for (ratio = 0.05f; ratio <= 1.0f; ratio += 0.05f)
+						{
+							g_pKZUtils->TracePlayerBBox(start + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, end + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, bounds, &filter, pierce);
+							if (!IsValidMovementTrace(pierce, bounds, &filter))
+							{
+								continue;
+							}
+							// Try until we hit a similar plane.
+							validPlane = pierce.fraction < 1.0f && pierce.fraction > 0.1f && pierce.planeNormal.Dot(this->lastValidPlane) >= RAMP_BUG_THRESHOLD;
+							hitNewPlane = pm.planeNormal.Dot(pierce.planeNormal) < NEW_RAMP_THRESHOLD && this->lastValidPlane.Dot(pierce.planeNormal) > NEW_RAMP_THRESHOLD;
+							goodTrace = CloseEnough(pierce.fraction, 1.0f, FLT_EPSILON) || validPlane;
+							if (goodTrace)
+							{
+								break;
+							}
+						}
+						if (goodTrace || hitNewPlane)
+						{
+							// Trace back to the original end point to find its normal.
+							trace_t_s2 test;
+							g_pKZUtils->TracePlayerBBox(pierce.endpos, end, bounds, &filter, test);
+							pm = pierce;
+							pm.startpos = start;
+							pm.fraction = Clamp((pierce.endpos - pierce.startpos).Length() / (end - start).Length(), 0.0f, 1.0f);
+							pm.endpos = test.endpos;
+							this->lastValidPlane = test.planeNormal;
+							success = true;
+						}
+					}
 				}
-				// Try until we hit a similar plane.
-				validPlane = pierce.fraction < 1.0f && pierce.fraction > 0.1f && pierce.planeNormal.Dot(this->lastValidPlane) >= RAMP_BUG_THRESHOLD;
-				hitNewPlane = pm.planeNormal.Dot(pierce.planeNormal) < NEW_RAMP_THRESHOLD && this->lastValidPlane.Dot(pierce.planeNormal) > NEW_RAMP_THRESHOLD;
-				goodTrace = CloseEnough(pierce.fraction, 1.0f, FLT_EPSILON) || validPlane;
-				if (goodTrace)
-				{
-					break;
-				}
-			}
-			if (goodTrace || hitNewPlane)
-			{
-				// Trace back to the original end point to find its normal.
-				trace_t_s2 test;
-				g_pKZUtils->TracePlayerBBox(pierce.endpos, end, bounds, &filter, test);
-				pm = pierce;
-				pm.startpos = start;
-				pm.fraction = Clamp((pierce.endpos - pierce.startpos).Length() / (end - start).Length(), 0.0f, 1.0f);
-				pm.endpos = test.endpos;
-				this->lastValidPlane = test.planeNormal;
 			}
 		}
 		if (pm.planeNormal.Length() > 0.99f)
