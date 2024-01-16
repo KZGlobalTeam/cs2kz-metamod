@@ -283,7 +283,6 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 void KZClassicModeService::OnProcessMovement()
 {
 	this->player->enableWaterFixThisTick = true;
-	this->overrideTPM = false;
 	this->didTPM = false;
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
@@ -664,6 +663,7 @@ internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPl
 #define NEW_RAMP_THRESHOLD 0.75f
 void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
+	this->overrideTPM = false;
 	this->didTPM = true;
 	CCSPlayerPawn *pawn = this->player->GetPawn();
 
@@ -717,7 +717,6 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		}
 		if (this->lastValidPlane.Length() > FLT_EPSILON && (!IsValidMovementTrace(pm, bounds, &filter) || pm.planeNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD))
 		{
-			this->overrideTPM = true;
 			// We hit a plane that will significantly change our velocity. Make sure that this plane is significant enough.
 			Vector direction = velocity.Normalized();
 			Vector offsetDirection;
@@ -773,6 +772,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 							pm.startpos = start;
 							pm.fraction = Clamp((pierce.endpos - pierce.startpos).Length() / (end - start).Length(), 0.0f, 1.0f);
 							pm.endpos = test.endpos;
+							pm.planeNormal = test.planeNormal;
 							this->lastValidPlane = test.planeNormal;
 							success = true;
 						}
