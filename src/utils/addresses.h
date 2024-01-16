@@ -68,7 +68,26 @@ namespace sigs
 {
 #ifdef _WIN32
 	/* Miscellaneous */
-	
+
+	// sub_1807224A0(off_18126DF90, v27, v13, v12, &off_18126E0F0, v29); <- this function
+	// v14 = v29[0];
+	// v15 = v30;
+	// if (v29[0] > 0)
+	// {
+	//	v16 = v30;
+	//	while (1)
+	//	{
+	//		if (*v16)
+	//		{
+	//			v17 = byte_180D8BF58;
+	//			if (**v16)
+	//				v17 = **v16;
+	//			if (!sub_180D22350(v17, "TOOLS/TOOLSBLOCKBOMB"))
+	DECLARE_SIG(RaycastMultiple, "\x4C\x89\x44\x24\x18\x48\x89\x54\x24\x10\x55\x53\x57\x41\x54\x41\x55");
+
+	// Inside TracePlayerBBox, only used for hooks!
+	DECLARE_SIG(TraceRay, "\x48\x89\x5C\x24\x10\x48\x89\x74\x24\x18\x48\x89\x7C\x24\x20\x48\x89\x4C\x24\x08\x55\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xAC\x24\x20\xE0\xFF\xFF");
+
 	// search for "WARNING: Ignoring invalid gameinfo MaxNetworkableEntities %d\n", go to the only xref.
 	DECLARE_SIG(CEntitySystem_ctor, "\x48\x89\x5C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x20\x48\x8B\xD9\xE8\x2A\x2A\x2A\x2A\x33\xFF\xC7");
 	

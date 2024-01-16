@@ -179,10 +179,11 @@ struct RnCollisionAttr_t
 	uint8_t m_nCollisionFunctionMask;
 };
 
+// Internally called PhysicsTrace_t?
 struct alignas(16) trace_t_s2
 {
 	void *m_pSurfaceProperties;
-	void *m_pEnt;
+	CBaseEntity2 *m_pEnt;
 	void *m_pHitbox;
 	void *m_hBody;
 	void *m_hShape;
@@ -241,4 +242,14 @@ struct CCheckTransmitInfoS2
 {
 	CBitVec<16384> *m_pTransmitEdict;
 	uint8 unk[1000];
+};
+
+struct CGamePhysicsQueryInterface
+{
+	void *m_pWorld;
+};
+
+struct CGameTraceList
+{
+	CUtlVectorFixedGrowable<trace_t_s2, 64ul> m_list;
 };

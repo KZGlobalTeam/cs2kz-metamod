@@ -20,14 +20,17 @@
 #define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length); \
 	if (!variable) { Warning("Failed to find address for %s!\n", #sig); return false; }
 
+
 InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
+TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
+CGamePhysicsQueryInterface *utils::physicsQuery = NULL;
+RaycastMultiple_t *RaycastMultipleFunc = NULL;
+
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
-TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
-
 
 void modules::Initialize()
 {
@@ -78,6 +81,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
+	RESOLVE_SIG(modules::server, sigs::RaycastMultiple, RaycastMultipleFunc);
 
 	InitDetours();
 	return true;
@@ -329,4 +333,21 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+}
+
+bool utils::RaycastMultiple(const Vector &start, const Vector &end, void *filter, CGameTraceList *hitBuffer)
+{
+	u64 unk = 0;
+	if (!utils::physicsQuery)
+	{
+		trace_t_s2 pm;
+		bbox_t bounds = { {0,0,0}, {0,0,0} };
+		utils::TracePlayerBBox(vec3_origin, vec3_origin, bounds, (CTraceFilterPlayerMovementCS *)filter, pm);
+		if (!utils::physicsQuery)
+		{
+			return false;
+		}
+	}
+	RaycastMultipleFunc(utils::physicsQuery, unk, start, end, filter, hitBuffer);
+	return true;
 }

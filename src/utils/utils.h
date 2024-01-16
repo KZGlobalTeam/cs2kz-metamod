@@ -21,6 +21,7 @@ typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const E
 #endif
 
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm);
+typedef void RaycastMultiple_t(void *queryInterface, u64 &unknown, const Vector &vStart, const Vector &vEnd, void *pTraceFilter, CGameTraceList *hitBuffer);
 
 namespace utils
 {
@@ -43,6 +44,7 @@ namespace utils
 	extern SnapViewAngles_t *SnapViewAngles;
 	extern EmitSoundFunc_t *EmitSound;
 	extern TracePlayerBBox_t *TracePlayerBBox;
+	extern CGamePhysicsQueryInterface *physicsQuery;
 
 	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
@@ -76,4 +78,6 @@ namespace utils
 
 	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
 	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
+
+	bool RaycastMultiple(const Vector &start, const Vector &end, void *filter, CGameTraceList *hitBuffer);
 }

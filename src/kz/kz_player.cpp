@@ -73,6 +73,16 @@ void KZPlayer::OnProcessMovementPost()
 	MovementPlayer::OnProcessMovementPost();
 	this->modeService->OnProcessMovementPost();
 	this->jumpstatsService->OnProcessMovementPost();
+	Vector origin;
+	this->GetOrigin(&origin);
+	CTraceFilterPlayerMovementCS filter;
+	CGameTraceList list;
+	FOR_EACH_VEC(list.m_list, i)
+	{
+		g_pKZUtils->InitGameTrace(&list.m_list[i]);
+	}
+	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), 4, COLLISION_GROUP_ALWAYS);
+	utils::RaycastMultiple(origin, origin, &filter, &list);
 }
 
 void KZPlayer::OnPlayerMove()
@@ -338,6 +348,7 @@ void KZPlayer::HandleMoveCollision()
 
 void KZPlayer::StartZoneStartTouch()
 {
+	utils::PrintChatAll("%f", g_pKZUtils->GetServerGlobals()->curtime * 64.0f);
 	MovementPlayer::StartZoneStartTouch();
 	this->checkpointService->Reset();
 }

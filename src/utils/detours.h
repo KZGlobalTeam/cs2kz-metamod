@@ -18,6 +18,9 @@ extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket
 void FASTCALL Detour_CCSPP_Teleport(CCSPlayerPawn *this_, const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 extern CDetour<decltype(Detour_CCSPP_Teleport)> CCSPP_Teleport;
 
+void FASTCALL Detour_TraceRay(CGamePhysicsQueryInterface *physicsQuery, void *ray, Vector *start, Vector *end, void *filter, void *pm);
+extern CDetour<decltype(Detour_TraceRay)> TraceRay;
+
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);

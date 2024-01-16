@@ -15,6 +15,7 @@ DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules
 DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
 DECLARE_DETOUR(CCSPP_Teleport, Detour_CCSPP_Teleport, &modules::server);
+DECLARE_DETOUR(TraceRay, Detour_TraceRay, &modules::server);
 
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
@@ -48,6 +49,8 @@ void InitDetours()
 	INIT_DETOUR(CBaseTrigger_StartTouch);
 	INIT_DETOUR(CBaseTrigger_EndTouch);
 	INIT_DETOUR(RecvServerBrowserPacket);
+	INIT_DETOUR(CCSPP_Teleport);
+	INIT_DETOUR(TraceRay);
 }
 
 void FlushAllDetours()
@@ -159,4 +162,10 @@ void Detour_CCSPP_Teleport(CCSPlayerPawn *this_, const Vector *newPosition, cons
 		player->OnTeleport(newPosition, newAngles, newVelocity);
 	}
 	CCSPP_Teleport(this_, newPosition, newAngles, newVelocity);
+}
+
+void Detour_TraceRay(CGamePhysicsQueryInterface *physicsQuery, void *ray, Vector *start, Vector *end, void *filter, void *pm)
+{
+	utils::physicsQuery = physicsQuery;
+	TraceRay(physicsQuery, ray, start, end, filter, pm);
 }
