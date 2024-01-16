@@ -775,6 +775,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 							pm.planeNormal = test.planeNormal;
 							this->lastValidPlane = test.planeNormal;
 							success = true;
+							this->overrideTPM = true;
 						}
 					}
 				}
