@@ -340,3 +340,16 @@ bool utils::RaycastMultiple(const Vector &start, const Vector &end, void *filter
 {
 	return true;
 }
+
+bool CTraceFilterTriggerTracking::ShouldHitEntity(CBaseEntity2 *other)
+{
+	if (!this->player->touchingEntities.HasElement(other->GetRefEHandle()))
+	{
+		this->player->touchingEntities.AddToHead(other->GetRefEHandle());
+		if (V_strstr(other->GetClassname(), "trigger_"))
+		{
+			Detour_CBaseTrigger_StartTouch((CBaseTrigger *)other, this->player->GetPawn());
+		}
+		return false;
+	}
+}

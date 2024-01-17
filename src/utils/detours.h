@@ -26,6 +26,9 @@ extern CDetour<decltype(Detour_RaycastMultiple)> RaycastMultiple;
 void FASTCALL Detour_EntitiesInSphere(void *queryInterface, Vector const &, Vector const &, CTraceFilterS2 &, i32, COverlapList &);
 extern CDetour<decltype(Detour_EntitiesInSphere)> EntitiesInSphere;
 
+#define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
+#define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
+
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);

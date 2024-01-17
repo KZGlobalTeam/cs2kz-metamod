@@ -2,9 +2,6 @@
 #include "common.h"
 #include "movement/datatypes.h"
 
-#define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
-#define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
-
 // TODO: better error sound
 #define MV_SND_ERROR "Buttons.snd8"
 #define MV_SND_TIMER_START "Buttons.snd9"
@@ -180,6 +177,8 @@ public:
 
 	bool enableWaterFixThisTick{};
 	bool ignoreNextCategorizePosition{};
+
+	CUtlVector<CEntityHandle> touchingEntities;
 };
 
 class CMovementPlayerManager
@@ -209,6 +208,27 @@ public:
 	MovementPlayer *ToPlayer(CPlayerUserId userID);
 public:
 	MovementPlayer *players[MAXPLAYERS + 1];
+};
+
+class CTraceFilterTriggerTracking : public CTraceFilterS2
+{
+public:
+	CTraceFilterTriggerTracking(MovementPlayer *player) : player(player)
+	{
+		attr.m_nEntityIdToIgnore = player->GetPawn()->GetRefEHandle().ToInt();
+		attr.m_nEntityControllerIdToIgnore = -1;
+		attr.m_nOwnerEntityIdToIgnore = -1;
+		attr.m_nControllerOwnerEntityIdToIgnore = -1;
+		attr.m_nObjectSetMask = 7;
+		attr.m_nControllerHierarchyId = 0;
+		attr.m_nHierarchyId = 0;
+		attr.m_bIterateEntities = true;
+		attr.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
+		attr.m_nInteractsWith = 4;
+		attr.m_bHitTrigger = true;
+	}
+	MovementPlayer *player;
+	virtual bool ShouldHitEntity(CBaseEntity2 *other);
 };
 
 extern CMovementPlayerManager *g_pPlayerManager;

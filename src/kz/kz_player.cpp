@@ -73,44 +73,6 @@ void KZPlayer::OnProcessMovementPost()
 	MovementPlayer::OnProcessMovementPost();
 	this->modeService->OnProcessMovementPost();
 	this->jumpstatsService->OnProcessMovementPost();
-	Vector origin;
-	this->GetOrigin(&origin);
-	CTraceFilterS2 filter;
-	CGameTraceList list;
-	FOR_EACH_VEC(list.m_list, i)
-	{
-		g_pKZUtils->InitGameTrace(&list.m_list[i]);
-	}
-	filter.m_nEntityIdToIgnore = -1;
-	filter.m_nEntityControllerIdToIgnore = -1;
-	filter.m_nOwnerEntityIdToIgnore = -1;
-	filter.m_nControllerOwnerEntityIdToIgnore = -1;
-	filter.m_nObjectSetMask = 7;
-	filter.m_nControllerHierarchyId = 0;
-	filter.m_nHierarchyId = 0;
-	filter.m_bIterateEntities = true;
-	filter.m_nCollisionGroup = COLLISION_GROUP_ALWAYS;
-	filter.m_nInteractsWith = 4;
-	filter.m_Flags = 0x4c;
-	trace_t_s2 xd;
-	CTraceFilterPlayerMovementCS csfilter;
-	utils::InitPlayerMovementTraceFilter(csfilter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
-	utils::TracePlayerBBox(origin + Vector(0, 0, 72.0), origin, {Vector(-16.0, -16.0, 0.0), Vector(16.0, 16.0, 0)}, (CTraceFilterPlayerMovementCS*)&filter, xd);
-	utils::RaycastMultiple(origin, origin, &filter, &list);
-	u64 unk = 0;
-	if (!utils::physicsQuery)
-	{
-		trace_t_s2 pm;
-		bbox_t bounds = { {0,0,0}, {0,0,0} };
-		utils::TracePlayerBBox(vec3_origin, vec3_origin, bounds, &csfilter, pm);
-		if (!utils::physicsQuery)
-		{
-			return;
-		}
-	}
-	//utils::RaycastMultipleFunc(utils::physicsQuery, unk, origin, origin, &filter, &list);
-	COverlapList overlapList;
-	//utils::EntitiesInSphere(utils::physicsQuery, origin + Vector(-16.0, -16.0, 0.0), origin + Vector(16.0, 16.0, 72.0), filter, 1, overlapList);
 }
 
 void KZPlayer::OnPlayerMove()

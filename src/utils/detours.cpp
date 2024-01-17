@@ -106,14 +106,18 @@ void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *
 
 	if (pOther->IsPawn())
 	{
+		CBasePlayerController *controller = utils::GetController(pOther);
+		if (!controller)
+		{
+			return;
+		}
+		MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
+		if (!player->touchingEntities.HasElement(this_->GetRefEHandle()))
+		{
+			player->touchingEntities.AddToHead(this_->GetRefEHandle());
+		}
 		if (IsEntTriggerMultiple(this_))
 		{
-			CBasePlayerController *controller = utils::GetController(pOther);
-			if (!controller)
-			{
-				return;
-			}
-			MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
 			if (IsTriggerStartZone(this_))
 			{
 				player->StartZoneStartTouch();
@@ -132,14 +136,15 @@ void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pO
 
 	if (pOther->IsPawn())
 	{
+		CBasePlayerController *controller = utils::GetController(pOther);
+		if (!controller)
+		{
+			return;
+		}
+		MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
+		player->touchingEntities.FindAndRemove(this_->GetRefEHandle());
 		if (IsEntTriggerMultiple(this_))
 		{
-			CBasePlayerController *controller = utils::GetController(pOther);
-			if (!controller)
-			{
-				return;
-			}
-			MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
 			if (IsTriggerStartZone(this_))
 			{
 				player->StartZoneEndTouch();
