@@ -16,6 +16,8 @@ DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::se
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
 DECLARE_DETOUR(CCSPP_Teleport, Detour_CCSPP_Teleport, &modules::server);
 DECLARE_DETOUR(TraceRay, Detour_TraceRay, &modules::server);
+DECLARE_DETOUR(RaycastMultiple, Detour_RaycastMultiple, &modules::server);
+DECLARE_DETOUR(EntitiesInSphere, Detour_EntitiesInSphere, &modules::server);
 
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
@@ -51,6 +53,8 @@ void InitDetours()
 	INIT_DETOUR(RecvServerBrowserPacket);
 	INIT_DETOUR(CCSPP_Teleport);
 	INIT_DETOUR(TraceRay);
+	INIT_DETOUR(RaycastMultiple);
+	INIT_DETOUR(EntitiesInSphere);
 }
 
 void FlushAllDetours()
@@ -169,3 +173,14 @@ void Detour_TraceRay(CGamePhysicsQueryInterface *physicsQuery, void *ray, Vector
 	utils::physicsQuery = physicsQuery;
 	TraceRay(physicsQuery, ray, start, end, filter, pm);
 }
+
+void Detour_RaycastMultiple(void *queryInterface, u64 &unknown, const Vector &vStart, const Vector &vEnd, CTraceFilterPlayerMovementCS *pTraceFilter, CGameTraceList *hitBuffer)
+{
+	RaycastMultiple(queryInterface, unknown, vStart, vEnd, pTraceFilter, hitBuffer);
+}
+
+void Detour_EntitiesInSphere(void *queryInterface, Vector const &vStart, Vector const &vEnd, CTraceFilterS2 &filter, i32 i, COverlapList &list)
+{
+	EntitiesInSphere(queryInterface, vStart, vEnd, filter, i, list);
+}
+

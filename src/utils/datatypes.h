@@ -230,6 +230,27 @@ public:
 	bool unk4;
 };
 
+class CTraceFilterS2
+{
+public:
+	uint64_t m_nInteractsWith;
+	uint64_t m_nInteractsExclude;
+	uint64_t m_nInteractsAs;
+	uint32_t m_nEntityId[2];
+	uint32_t m_nOwnerId[2];
+	uint16_t m_nHierarchyId[2];
+	uint8_t m_nCollisionFunctionMask;
+	uint8_t unk2;
+	uint8_t m_nCollisionGroup;
+	uint8_t unk3;
+	bool unk4;
+	virtual ~CTraceFilterS2() {}
+	virtual bool ShouldHitEntity(CBaseEntity2 *other)
+	{
+		return true;
+	}
+};
+
 struct vis_info_t
 {
 	const uint32 *m_pVisBits;
@@ -252,4 +273,18 @@ struct CGamePhysicsQueryInterface
 struct CGameTraceList
 {
 	CUtlVectorFixedGrowable<trace_t_s2, 64ul> m_list;
+};
+
+struct COverlapHit
+{
+	RnCollisionAttr_t m_ShapeAttributes;
+	void *m_pSurfaceProperties;
+	void* m_hBody;
+	void* m_hShape;
+	bool m_bHitboxHit;
+};
+
+struct COverlapList
+{
+	CUtlVectorFixedGrowable<COverlapHit, 64ul> m_list;
 };

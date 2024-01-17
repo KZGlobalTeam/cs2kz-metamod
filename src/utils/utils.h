@@ -22,7 +22,7 @@ typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const E
 
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm);
 typedef void RaycastMultiple_t(void *queryInterface, u64 &unknown, const Vector &vStart, const Vector &vEnd, void *pTraceFilter, CGameTraceList *hitBuffer);
-
+typedef void EntitiesInSphere_t(void *queryInterface, Vector const &, Vector const &, CTraceFilterS2 &, i32, COverlapList &);
 namespace utils
 {
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
@@ -45,7 +45,8 @@ namespace utils
 	extern EmitSoundFunc_t *EmitSound;
 	extern TracePlayerBBox_t *TracePlayerBBox;
 	extern CGamePhysicsQueryInterface *physicsQuery;
-
+	extern RaycastMultiple_t *RaycastMultipleFunc;
+	extern EntitiesInSphere_t *EntitiesInSphere;
 	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
 

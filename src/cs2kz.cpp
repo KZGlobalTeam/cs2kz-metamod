@@ -37,7 +37,7 @@ SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, 
 SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *,
 	INetworkSerializable *, const void *, unsigned long, NetChannelBufType_t)
 
-	CEntitySystem *g_pEntitySystem = NULL;
+CEntitySystem *g_pEntitySystem = NULL;
 CGlobalVars *gpGlobals = NULL;
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 

@@ -21,6 +21,11 @@ extern CDetour<decltype(Detour_CCSPP_Teleport)> CCSPP_Teleport;
 void FASTCALL Detour_TraceRay(CGamePhysicsQueryInterface *physicsQuery, void *ray, Vector *start, Vector *end, void *filter, void *pm);
 extern CDetour<decltype(Detour_TraceRay)> TraceRay;
 
+void FASTCALL Detour_RaycastMultiple(void *queryInterface, u64 &unknown, const Vector &vStart, const Vector &vEnd, CTraceFilterPlayerMovementCS *pTraceFilter, CGameTraceList *hitBuffer);
+extern CDetour<decltype(Detour_RaycastMultiple)> RaycastMultiple;
+void FASTCALL Detour_EntitiesInSphere(void *queryInterface, Vector const &, Vector const &, CTraceFilterS2 &, i32, COverlapList &);
+extern CDetour<decltype(Detour_EntitiesInSphere)> EntitiesInSphere;
+
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);

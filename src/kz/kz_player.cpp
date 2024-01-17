@@ -75,14 +75,40 @@ void KZPlayer::OnProcessMovementPost()
 	this->jumpstatsService->OnProcessMovementPost();
 	Vector origin;
 	this->GetOrigin(&origin);
-	CTraceFilterPlayerMovementCS filter;
+	CTraceFilterS2 filter;
 	CGameTraceList list;
 	FOR_EACH_VEC(list.m_list, i)
 	{
 		g_pKZUtils->InitGameTrace(&list.m_list[i]);
-	}
-	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), 4, COLLISION_GROUP_ALWAYS);
+	}  
+	filter.unk3 |= 0x49;
+	filter.m_nEntityId[0] = -1i64;
+	filter.m_nOwnerId[0] = -1i64;
+	filter.m_nHierarchyId[0] = 0;
+	filter.m_nHierarchyId[1] = 0;
+	filter.unk4 = 0;
+	filter.m_nCollisionGroup = COLLISION_GROUP_ALWAYS;
+	filter.m_nInteractsWith = 4;
+	filter.m_nCollisionFunctionMask = 7;
+	trace_t_s2 xd;
+	CTraceFilterPlayerMovementCS csfilter;
+	utils::InitPlayerMovementTraceFilter(csfilter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	utils::TracePlayerBBox(origin, origin, { {0,0,0},{0,0,0} }, &csfilter, xd);
 	utils::RaycastMultiple(origin, origin, &filter, &list);
+	u64 unk = 0;
+	if (!utils::physicsQuery)
+	{
+		trace_t_s2 pm;
+		bbox_t bounds = { {0,0,0}, {0,0,0} };
+		utils::TracePlayerBBox(vec3_origin, vec3_origin, bounds, &csfilter, pm);
+		if (!utils::physicsQuery)
+		{
+			return;
+		}
+	}
+	//utils::RaycastMultipleFunc(utils::physicsQuery, unk, origin, origin, &filter, &list);
+	COverlapList overlapList;
+	//utils::EntitiesInSphere(utils::physicsQuery, origin + Vector(-16.0, -16.0, 0.0), origin + Vector(16.0, 16.0, 72.0), filter, 1, overlapList);
 }
 
 void KZPlayer::OnPlayerMove()
