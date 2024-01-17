@@ -213,41 +213,58 @@ struct touchlist_t {
 	trace_t_s2 trace;
 };
 
+struct RnQueryAttr_t
+{
+	uint64 m_nInteractsWith;
+	uint64 m_nInteractsExclude;
+	uint64 m_nInteractsAs;
+
+	uint32 m_nEntityIdToIgnore;
+	uint32 m_nEntityControllerIdToIgnore;
+
+	uint32 m_nOwnerEntityIdToIgnore;
+	uint32 m_nControllerOwnerEntityIdToIgnore;
+
+	uint16 m_nHierarchyId;
+	uint16 m_nControllerHierarchyId;
+
+	uint16 m_nObjectSetMask;
+	uint8_t m_nCollisionGroup;
+	union
+	{
+		uint8 m_Flags;
+		struct
+		{
+			uint8 m_bHitSolid : 1;
+			uint8 m_bHitSolidRequiresGenerateContacts : 1;
+			uint8 m_bHitTrigger : 1;
+			uint8 m_bShouldIgnoreDisabledPairs : 1;
+
+			uint8 m_bUnkFlag1 : 1;
+			uint8 m_bUnkFlag2 : 1;
+			uint8 m_bUnkFlag3 : 1;
+			uint8 m_bUnkFlag4 : 1;
+		};
+	};
+
+	bool m_bIterateEntities;
+};
+
 class CTraceFilterPlayerMovementCS
 {
 public:
 	void *vtable;
-	uint64_t m_nInteractsWith;
-	uint64_t m_nInteractsExclude;
-	uint64_t m_nInteractsAs;
-	uint32_t m_nEntityId[2];
-	uint32_t m_nOwnerId[2];
-	uint16_t m_nHierarchyId[2];
-	uint8_t m_nCollisionFunctionMask;
-	uint8_t unk2;
-	uint8_t m_nCollisionGroup;
-	uint8_t unk3;
-	bool unk4;
+	RnQueryAttr_t attr;
 };
 
 class CTraceFilterS2
 {
 public:
-	uint64_t m_nInteractsWith;
-	uint64_t m_nInteractsExclude;
-	uint64_t m_nInteractsAs;
-	uint32_t m_nEntityId[2];
-	uint32_t m_nOwnerId[2];
-	uint16_t m_nHierarchyId[2];
-	uint8_t m_nCollisionFunctionMask;
-	uint8_t unk2;
-	uint8_t m_nCollisionGroup;
-	uint8_t unk3;
-	bool unk4;
+	RnQueryAttr_t attr;
 	virtual ~CTraceFilterS2() {}
 	virtual bool ShouldHitEntity(CBaseEntity2 *other)
 	{
-		return true;
+		return false;
 	}
 };
 
