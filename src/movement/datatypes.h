@@ -9,9 +9,11 @@ enum TurnState
 	TURN_RIGHT = 1
 };
 
-struct MoveDataUnkSubtickStruct
+struct SubtickMove
 {
-	u8 unknown[24];
+	float when;
+	uint64 button;
+	bool pressed;
 };
 
 // Size: 0xE8
@@ -44,9 +46,9 @@ public:
 		m_bShouldApplyGravity{source.m_bShouldApplyGravity},
 		m_outWishVel{source.m_outWishVel}
 	{
-		for (int i = 0; i < source.unknown.Count(); i++)
+		for (int i = 0; i < source.m_SubtickMoves.Count(); i++)
 		{
-			this->unknown.AddToTail(source.unknown[i]);
+			this->m_SubtickMoves.AddToTail(source.m_SubtickMoves[i]);
 		}
 		for (int i = 0; i < source.m_TouchList.Count(); i++)
 		{
@@ -66,7 +68,7 @@ public:
 	float m_flSubtickFraction; // 0x38
 	Vector m_vecVelocity; // 0x3c
 	Vector m_vecAngles; // 0x48
-	CUtlVector<MoveDataUnkSubtickStruct> unknown;
+	CUtlVector<SubtickMove> m_SubtickMoves; // 0x58
 	bool m_bGameCodeMovedPlayer; // 0x70
 	CUtlVector<touchlist_t> m_TouchList; // 0x78
 	Vector m_collisionNormal; // 0x90
