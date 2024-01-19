@@ -33,15 +33,15 @@ PLUGIN_GLOBALVARS();
 #define local_persist static // static local variables
 #define static_global static // static class functions
 
-typedef int8_t i8;
-typedef int16_t i16;
-typedef int32_t i32;
-typedef int64_t i64;
+typedef int8 i8;
+typedef int16 i16;
+typedef int32 i32;
+typedef int64 i64;
 
-typedef uint8_t u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
+typedef uint8 u8;
+typedef uint16 u16;
+typedef uint32 u32;
+typedef uint64 u64;
 
 typedef float f32;
 typedef double f64;
