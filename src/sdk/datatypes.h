@@ -1,11 +1,21 @@
 #pragma once
 
 #include <stdint.h>
-typedef int32_t GameTick_t;
+typedef int32 GameTick_t;
 typedef float GameTime_t;
-typedef uint64_t CNetworkedQuantizedFloat;
-typedef uint32_t SoundEventGuid_t;
-
+class CNetworkedQuantizedFloat
+{
+public:
+	float32 m_Value;
+	uint16 m_nEncoder;
+	bool m_bUnflattened;
+};
+typedef uint32 SoundEventGuid_t;
+struct SndOpEventGuid_t
+{
+	SoundEventGuid_t m_nGuid;
+	uint64 m_hStackHash;
+};
 
 #include "utlsymbollarge.h"
 #include "entityhandle.h"

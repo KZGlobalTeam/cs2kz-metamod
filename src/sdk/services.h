@@ -2,7 +2,7 @@
 #include <platform.h>
 
 #include "utils/schema.h"
-#include "cbaseplayerpawn.h"
+#include "entity/cbaseplayerpawn.h"
 #include "cinbuttonstate.h"
 class CBaseEntity;
 class CBasePlayerPawn;

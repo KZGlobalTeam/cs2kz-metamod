@@ -5,14 +5,6 @@
 #include "baseentity.h"
 #include "../ccollisionproperty.h"
 
-class CNetworkedQuantizedFloat
-{
-public:
-	float32 m_Value;
-	uint16 m_nEncoder;
-	bool m_bUnflattened;
-};
-
 class CNetworkOriginCellCoordQuantizedVector
 {
 public:

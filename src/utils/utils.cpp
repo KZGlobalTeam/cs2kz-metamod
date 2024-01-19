@@ -225,11 +225,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 	EmitSound_t soundParams;
 	soundParams.m_pSoundName = sound;
 	soundParams.m_flVolume = volume;
-#ifdef _WIN32
-	utils::EmitSound(unknown, filter, player.Get() + 1, soundParams);
-#else
 	utils::EmitSound(filter, player.Get() + 1, soundParams);
-#endif
 }
 
 f32 utils::NormalizeDeg(f32 a)
