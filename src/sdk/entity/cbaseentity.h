@@ -5,6 +5,14 @@
 #include "baseentity.h"
 #include "../ccollisionproperty.h"
 
+class CNetworkedQuantizedFloat
+{
+public:
+	float32 m_Value;
+	uint16 m_nEncoder;
+	bool m_bUnflattened;
+};
+
 class CNetworkOriginCellCoordQuantizedVector
 {
 public:
@@ -15,10 +23,9 @@ public:
 	SCHEMA_FIELD(uint16, m_cellZ)
 	SCHEMA_FIELD(uint16, m_nOutsideWorld)
 
-	// These are actually CNetworkedQuantizedFloat but we don't have the definition for it...
-	SCHEMA_FIELD(float, m_vecX)
-	SCHEMA_FIELD(float, m_vecY)
-	SCHEMA_FIELD(float, m_vecZ)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecX)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecY)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecZ)
 };
 
 class CNetworkVelocityVector
@@ -26,10 +33,9 @@ class CNetworkVelocityVector
 public:
 	DECLARE_SCHEMA_CLASS_INLINE(CNetworkVelocityVector)
 
-	// These are actually CNetworkedQuantizedFloat but we don't have the definition for it...
-	SCHEMA_FIELD(float, m_vecX)
-	SCHEMA_FIELD(float, m_vecY)
-	SCHEMA_FIELD(float, m_vecZ)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecX)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecY)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecZ)
 };
 
 class CGameSceneNode
