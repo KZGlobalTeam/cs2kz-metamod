@@ -30,8 +30,6 @@ public:
 	virtual void *GetSchemaNetworkStateChangedPointer();
 	virtual CGlobalVars *GetServerGlobals();
 
-	virtual void SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype);
-	virtual void EntityCollisionRulesChanged(CBaseEntity2 *entity);
 	virtual CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
 
 	virtual CBasePlayerController *GetController(CBaseEntity2 *entity);

@@ -144,16 +144,6 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-void utils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)
-{
-	CALL_VIRTUAL(void, offsets::SetMoveType, entity, movetype);
-}
-
-void utils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
-{
-	CALL_VIRTUAL(void, offsets::CollisionRulesChanged, entity);
-}
-
 CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 {
 	CCSPlayerController *controller = nullptr;

@@ -84,4 +84,7 @@ public:
 	int entindex() { return m_pEntity->m_EHandle.GetEntryIndex(); }
 	bool IsPawn() { return CALL_VIRTUAL(bool, offsets::IsEntityPawn, this); }
 	bool IsController() { return CALL_VIRTUAL(bool, offsets::IsEntityController, this); }
+
+	void SetMoveType(MoveType_t movetype) { CALL_VIRTUAL(void, offsets::SetMoveType, this, movetype); }
+	void CollisionRulesChanged() { CALL_VIRTUAL(void, offsets::CollisionRulesChanged, this); }
 };

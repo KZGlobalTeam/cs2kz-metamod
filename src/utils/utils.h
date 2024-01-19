@@ -30,8 +30,6 @@ namespace utils
 	void UnlockConVars();
 	void UnlockConCommands();
 
-	void SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype);
-	void EntityCollisionRulesChanged(CBaseEntity2 *entity);
 	CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
 
 	CBasePlayerController *GetController(CBaseEntity2 *entity);

@@ -177,7 +177,7 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	if (player->GetPawn()->m_lifeState() != LIFE_DEAD && !result && oldMoveType == MOVETYPE_LADDER)
 	{
 		// Do the setting part ourselves as well.
-		utils::SetEntityMoveType(player->GetPawn(), MOVETYPE_WALK);
+		player->GetPawn()->SetMoveType(MOVETYPE_WALK);
 	}
 	if (!result && oldMoveType == MOVETYPE_LADDER)
 	{

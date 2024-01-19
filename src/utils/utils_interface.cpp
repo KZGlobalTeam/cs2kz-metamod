@@ -23,16 +23,6 @@ CGlobalVars *KZUtils::GetServerGlobals()
 	return interfaces::pEngine->GetServerGlobals();
 }
 
-void KZUtils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)
-{
-	utils::SetEntityMoveType(entity, movetype);
-}
-
-void KZUtils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
-{
-	utils::EntityCollisionRulesChanged(entity);
-}
-
 CBaseEntity2 *KZUtils::FindEntityByClassname(CEntityInstance *start, const char *name)
 {
 	return utils::FindEntityByClassname(start, name);
