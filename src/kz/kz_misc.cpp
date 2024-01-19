@@ -12,7 +12,7 @@
 #include "mode/kz_mode.h"
 
 #include "tier0/memdbgon.h"
-#include <utils/recipientfilters.h>
+#include "sdk/recipientfilters.h"
 
 internal SCMD_CALLBACK(Command_KzNoclip)
 {

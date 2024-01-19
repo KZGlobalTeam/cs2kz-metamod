@@ -3,7 +3,7 @@
 #include "utils/schema.h"
 #include "mathlib/vector.h"
 #include "baseentity.h"
-#include "ccollisionproperty.h"
+#include "../ccollisionproperty.h"
 
 class CNetworkOriginCellCoordQuantizedVector
 {

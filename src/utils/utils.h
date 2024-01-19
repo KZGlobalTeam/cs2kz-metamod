@@ -4,7 +4,7 @@
 #include "module.h"
 #include "utils/schema.h"
 #include "utils/interfaces.h"
-#include "utils/datatypes.h"
+#include "sdk/datatypes.h"
 
 class KZUtils;
 
@@ -44,7 +44,6 @@ namespace utils
 	extern EmitSoundFunc_t *EmitSound;
 	extern TracePlayerBBox_t *TracePlayerBBox;
 
-	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
 	CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
 
 	// Normalize the angle between -180 and 180.

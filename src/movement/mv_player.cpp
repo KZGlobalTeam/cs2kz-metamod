@@ -187,15 +187,14 @@ TurnState MovementPlayer::GetTurning()
 	return TURN_RIGHT;
 }
 
-bool MovementPlayer::IsButtonDown(InputBitMask_t button, bool onlyDown)
+bool MovementPlayer::IsButtonPressed(InputBitMask_t button, bool onlyDown)
 {
 	CCSPlayer_MovementServices *ms = this->GetMoveServices();
 	if (!ms)
 	{
 		return false;
 	}
-	CInButtonState *buttons = ms->m_nButtons();
-	return utils::IsButtonDown(buttons, button, onlyDown);
+	return ms->m_nButtons()->IsButtonPressed(button, onlyDown);
 }
 
 f32 MovementPlayer::GetGroundPosition()

@@ -2,7 +2,7 @@
 
 #include "cbaseentity.h"
 #include "cbaseplayercontroller.h"
-#include "services.h"
+#include "../services.h"
 
 
 class CBasePlayerPawn : public CBaseModelEntity

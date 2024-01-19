@@ -68,11 +68,6 @@ void KZUtils::TracePlayerBBox(const Vector &start, const Vector &end, const bbox
 	utils::TracePlayerBBox(start, end, bounds, filter, pm);
 }
 
-bool KZUtils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
-{
-	return utils::IsButtonDown(buttons, button, onlyDown);
-}
-
 f32 KZUtils::NormalizeDeg(f32 a)
 {
 	return utils::NormalizeDeg(a);

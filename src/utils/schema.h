@@ -22,8 +22,9 @@
 class CEntityInstance;
 class CBasePlayerController;
 
-struct SchemaKey {
-	int16_t offset;
+struct SchemaKey
+{
+	int32 offset;
 	bool networked;
 };
 

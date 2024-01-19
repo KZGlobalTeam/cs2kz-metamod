@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cbaseplayercontroller.h"
-#include "services.h"
+#include "../services.h"
 
 class CCSPlayerController : public CBasePlayerController
 {

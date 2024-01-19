@@ -17,14 +17,14 @@ typedef uint32_t SoundEventGuid_t;
 #pragma clang diagnostic pop
 #endif
 #include "ehandle.h"
-#include "utils/entity/cbaseentity.h"
-#include "utils/entity/cbasemodelentity.h"
-#include "utils/entity/cbaseplayercontroller.h"
-#include "utils/entity/cbaseplayerpawn.h"
-#include "utils/entity/ccollisionproperty.h"
-#include "utils/entity/ccsplayercontroller.h"
-#include "utils/entity/ccsplayerpawn.h"
-#include "utils/entity/services.h"
+#include "sdk/entity/cbaseentity.h"
+#include "sdk/entity/cbasemodelentity.h"
+#include "sdk/entity/cbaseplayercontroller.h"
+#include "sdk/entity/cbaseplayerpawn.h"
+#include "sdk/ccollisionproperty.h"
+#include "sdk/entity/ccsplayercontroller.h"
+#include "sdk/entity/ccsplayerpawn.h"
+#include "sdk/services.h"
 
 class CPlayer_MovementServices;
 class CBaseFilter;
@@ -57,19 +57,6 @@ enum MsgDest : int32_t
 	HUD_PRINTCENTER  = 4,
 	HUD_PRINTTALK2   = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
 	HUD_PRINTALERT   = 6
-};
-
-enum EInButtonState : uint64_t
-{
-	IN_BUTTON_UP = 0x0,
-	IN_BUTTON_DOWN = 0x1,
-	IN_BUTTON_DOWN_UP = 0x2,
-	IN_BUTTON_UP_DOWN = 0x3,
-	IN_BUTTON_UP_DOWN_UP = 0x4,
-	IN_BUTTON_DOWN_UP_DOWN = 0x5,
-	IN_BUTTON_DOWN_UP_DOWN_UP = 0x6,
-	IN_BUTTON_UP_DOWN_UP_DOWN = 0x7,
-	IN_BUTTON_STATE_COUNT = 0x8,
 };
 
 enum InputBitMask_t : uint64_t
@@ -242,3 +229,87 @@ struct CCheckTransmitInfoS2
 	CBitVec<16384> *m_pTransmitEdict;
 	uint8 unk[1000];
 };
+
+enum TurnState
+{
+	TURN_LEFT = -1,
+	TURN_NONE = 0,
+	TURN_RIGHT = 1
+};
+
+struct SubtickMove
+{
+	float when;
+	uint64 button;
+	bool pressed;
+};
+
+// Size: 0xE8
+class CMoveData
+{
+public:
+	CMoveData() = default;
+	CMoveData( const CMoveData &source ) : 
+		moveDataFlags{source.moveDataFlags},
+		m_nPlayerHandle{source.m_nPlayerHandle},
+		m_vecAbsViewAngles{ source.m_vecAbsViewAngles},
+		m_vecViewAngles{source.m_vecViewAngles},
+		m_vecLastMovementImpulses{source.m_vecLastMovementImpulses},
+		m_flForwardMove{source.m_flForwardMove},
+		m_flSideMove{source.m_flSideMove},
+		m_flUpMove{source.m_flUpMove},
+		m_flSubtickFraction{source.m_flSubtickFraction},
+		m_vecVelocity{source.m_vecVelocity},
+		m_vecAngles{source.m_vecAngles},
+		m_bGameCodeMovedPlayer{source.m_bGameCodeMovedPlayer},
+		m_collisionNormal{source.m_collisionNormal},
+		m_groundNormal{source.m_groundNormal},
+		m_vecAbsOrigin{source.m_vecAbsOrigin},
+		m_nGameModeMovedPlayer{source.m_nGameModeMovedPlayer},
+		m_vecOldAngles{source.m_vecOldAngles},
+		m_flMaxSpeed{source.m_flMaxSpeed},
+		m_flClientMaxSpeed{source.m_flClientMaxSpeed},
+		m_flSubtickAccelSpeed{source.m_flSubtickAccelSpeed},
+		m_bJumpedThisTick{source.m_bJumpedThisTick},
+		m_bShouldApplyGravity{source.m_bShouldApplyGravity},
+		m_outWishVel{source.m_outWishVel}
+	{
+		for (int i = 0; i < source.m_SubtickMoves.Count(); i++)
+		{
+			this->m_SubtickMoves.AddToTail(source.m_SubtickMoves[i]);
+		}
+		for (int i = 0; i < source.m_TouchList.Count(); i++)
+		{
+			this->m_TouchList.AddToTail(source.m_TouchList[i]);
+		}
+
+	}
+public:
+	uint8_t moveDataFlags; // 0x0
+	CHandle<CCSPlayerPawn> m_nPlayerHandle; // 0x4 don't know if this is actually a CHandle. <CBaseEntity> is a placeholder
+	QAngle m_vecAbsViewAngles; // 0x8 unsure
+	QAngle m_vecViewAngles; // 0x14
+	Vector m_vecLastMovementImpulses;
+	float m_flForwardMove; // 0x20
+	float m_flSideMove; // 0x24 Warning! Flipped compared to CS:GO, moving right gives negative value
+	float m_flUpMove; // 0x28
+	float m_flSubtickFraction; // 0x38
+	Vector m_vecVelocity; // 0x3c
+	Vector m_vecAngles; // 0x48
+	CUtlVector<SubtickMove> m_SubtickMoves; // 0x58
+	bool m_bGameCodeMovedPlayer; // 0x70
+	CUtlVector<touchlist_t> m_TouchList; // 0x78
+	Vector m_collisionNormal; // 0x90
+	Vector m_groundNormal; // 0x9c unsure
+	Vector m_vecAbsOrigin; // 0xa8
+	uint8_t padding[4]; // 0xb4 unsure
+	bool m_nGameModeMovedPlayer; // 0xb8
+	Vector m_vecOldAngles; // 0xbc
+	float m_flMaxSpeed; // 0xc8
+	float m_flClientMaxSpeed; // 0xcc
+	float m_flSubtickAccelSpeed; // 0xd0 Related to ground acceleration subtick stuff with sv_stopspeed and friction
+	bool m_bJumpedThisTick; // 0xd4 something to do with basevelocity and the tick the player jumps
+	bool m_bShouldApplyGravity; // 0xd5
+	Vector m_outWishVel; //0xd8
+};
+static_assert(sizeof(CMoveData) == 0xE8, "Class didn't match expected size");

@@ -7,7 +7,7 @@
 
 #include "common.h"
 #include "utils/utils.h"
-#include "utils/recipientfilters.h"
+#include "sdk/recipientfilters.h"
 #include "utils/detours.h"
 #include "utils/addresses.h"
 #include "utils/simplecmds.h"

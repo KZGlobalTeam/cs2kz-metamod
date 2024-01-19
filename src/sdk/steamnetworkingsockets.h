@@ -51,5 +51,6 @@ struct RecvPktInfo_t
 	//SteamNetworkingMicroseconds m_usecRecvMin; // Earliest possible time when the packet might have actually arrived
 	//SteamNetworkingMicroseconds m_usecRecvMax; // Latest possible time when the packet might have actually arrived
 	netadr_t_s2 m_adrFrom;
+	void *unknown;
 	void *m_pSock; //IRawUDPSocket
 };

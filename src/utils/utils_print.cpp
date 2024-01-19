@@ -1,6 +1,6 @@
 #include "usermessages.pb.h"
 #include "public/networksystem/inetworkmessages.h"
-#include "recipientfilters.h"
+#include "sdk/recipientfilters.h"
 
 #include "utils.h"
 
