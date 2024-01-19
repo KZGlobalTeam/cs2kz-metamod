@@ -67,3 +67,8 @@ f32 KZUtils::GetAngleDifference(const f32 source, const f32 target, const f32 c,
 {
 	return utils::GetAngleDifference(source, target, c, relative);
 }
+
+CGameEntitySystem *KZUtils::GetGameEntitySystem()
+{
+	return GameEntitySystem();
+}
