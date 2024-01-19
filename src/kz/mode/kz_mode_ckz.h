@@ -88,6 +88,12 @@ class KZClassicModeService : public KZModeService
 	f32 rightPreRatio{};
 	f32 bonusSpeed{};
 	f32 maxPre{};
+	
+	bool didTPM{};
+	bool overrideTPM{};
+	Vector tpmVelocity;
+	Vector tpmOrigin;
+	Vector lastValidPlane;
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
@@ -102,7 +108,8 @@ public:
 	virtual void OnJumpPost() override;
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
-
+	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
+	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
 	// Insert subtick timing to be called later.
 	// This is called either at the end of movement processing, or at the start of ProcessUsercmds.
 	// If it is called at the end of movement processing, it must set subtick timing into the future.

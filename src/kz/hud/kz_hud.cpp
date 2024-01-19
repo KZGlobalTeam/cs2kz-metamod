@@ -1,4 +1,5 @@
 #include "kz_hud.h"
+#include "sdk/datatypes.h"
 #include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
@@ -11,7 +12,7 @@ internal void AddSpeedText(KZPlayer *player, char *buffer, int size)
 	player->GetVelocity(&velocity);
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
 	if ((player->GetPawn()->m_fFlags & FL_ONGROUND && g_pKZUtils->GetServerGlobals()->curtime - player->landingTime > 0.07)
-		|| (player->GetPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonDown(IN_JUMP)))
+		|| (player->GetPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{
 		snprintf(speed, sizeof(speed), "Speed: %.0f", velocity.Length2D());
 	}
@@ -27,12 +28,12 @@ internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 	char keys[128];
 	keys[0] = 0;
 	snprintf(keys, sizeof(keys), "Keys: %s %s %s %s %s %s",
-		player->IsButtonDown(IN_MOVELEFT) ? "A" : "_",
-		player->IsButtonDown(IN_FORWARD) ? "W" : "_",
-		player->IsButtonDown(IN_BACK) ? "S" : "_",
-		player->IsButtonDown(IN_MOVERIGHT) ? "D" : "_",
-		player->IsButtonDown(IN_DUCK) ? "C" : "_",
-		player->IsButtonDown(IN_JUMP) ? "J" : "_");
+		player->IsButtonPressed(IN_MOVELEFT) ? "A" : "_",
+		player->IsButtonPressed(IN_FORWARD) ? "W" : "_",
+		player->IsButtonPressed(IN_BACK) ? "S" : "_",
+		player->IsButtonPressed(IN_MOVERIGHT) ? "D" : "_",
+		player->IsButtonPressed(IN_DUCK) ? "C" : "_",
+		player->IsButtonPressed(IN_JUMP) ? "J" : "_");
 	V_strncat(buffer, keys, size);
 }
 

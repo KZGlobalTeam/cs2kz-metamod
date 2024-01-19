@@ -1,7 +1,8 @@
 #pragma once
 
 #include "cbaseentity.h"
-#include "utils/entity/ccollisionproperty.h"
+#include "sdk/ccollisionproperty.h"
+
 class CBaseEntity2;
 
 class CBaseModelEntity : public CBaseEntity2

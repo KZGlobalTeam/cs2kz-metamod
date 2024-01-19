@@ -2,7 +2,7 @@
 
 #include "common.h"
 #include "movement/movement.h"
-#include "utils/datatypes.h"
+#include "sdk/datatypes.h"
 
 #include "../kz.h"
 
@@ -50,7 +50,7 @@ public:
 
 	f32 surfaceFriction{};
 	f32 subtickFraction{};
-	CInButtonState buttons;
+	u64 buttons[3]{};
 	Vector velocityPre;
 	Vector velocityPost;
 	f32 curtime{};

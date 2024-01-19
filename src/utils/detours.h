@@ -1,10 +1,10 @@
 #pragma once
 #include "cdetour.h"
 #include "irecipientfilter.h"
-#include "datatypes.h"
+#include "sdk/datatypes.h"
 #include "utils.h"
 #include "movement/movement.h"
-#include "sns.h"
+#include "sdk/steamnetworkingsockets.h"
 
 void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
 extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;
@@ -20,11 +20,6 @@ extern CDetour<decltype(Detour_CCSPP_Teleport)> CCSPP_Teleport;
 
 void FASTCALL Detour_TraceRay(CGamePhysicsQueryInterface *physicsQuery, void *ray, Vector *start, Vector *end, void *filter, void *pm);
 extern CDetour<decltype(Detour_TraceRay)> TraceRay;
-
-void FASTCALL Detour_RaycastMultiple(void *queryInterface, u64 &unknown, const Vector &vStart, const Vector &vEnd, CTraceFilterPlayerMovementCS *pTraceFilter, CGameTraceList *hitBuffer);
-extern CDetour<decltype(Detour_RaycastMultiple)> RaycastMultiple;
-void FASTCALL Detour_EntitiesInSphere(void *queryInterface, Vector const &, Vector const &, CTraceFilterS2 &, i32, COverlapList &);
-extern CDetour<decltype(Detour_EntitiesInSphere)> EntitiesInSphere;
 
 #define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;

@@ -104,6 +104,10 @@ const char *KZClassicModePlugin::GetURL()
 	return "https://github.com/KZGlobalTeam/cs2kz-metamod";
 }
 
+CGameEntitySystem *GameEntitySystem()
+{
+	return g_pKZUtils->GetGameEntitySystem();
+}
 /*
 	Actual mode stuff.
 */
@@ -279,6 +283,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 void KZClassicModeService::OnProcessMovement()
 {
 	this->player->enableWaterFixThisTick = true;
+	this->didTPM = false;
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
@@ -291,10 +296,14 @@ void KZClassicModeService::OnProcessMovementPost()
 {
 	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL, true);
 	this->RestoreInterpolatedViewAngles();
-	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonDown(IN_DUCK, true);
+	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonPressed(IN_DUCK, true);
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	this->postProcessMovementZSpeed = velocity.z;
+	if (!this->didTPM)
+	{
+		this->lastValidPlane = vec3_origin;
+	}
 }
 
 void KZClassicModeService::InsertSubtickTiming(float time, bool future)
@@ -371,7 +380,7 @@ void KZClassicModeService::RestoreInterpolatedViewAngles()
 void KZClassicModeService::RemoveCrouchJumpBind()
 {
 	this->forcedUnduck = false;
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && !this->oldDuckPressed && !this->player->GetMoveServices()->m_bOldJumpPressed && this->player->IsButtonDown(IN_JUMP))
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && !this->oldDuckPressed && !this->player->GetMoveServices()->m_bOldJumpPressed && this->player->IsButtonPressed(IN_JUMP))
 	{
 		this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[0] &= ~IN_DUCK;
 		this->forcedUnduck = true;
@@ -587,5 +596,270 @@ void KZClassicModeService::SlopeFix()
 			this->player->landingVelocity.x = newVelocity.x;
 			this->player->landingVelocity.y = newVelocity.y;
 		}
+	}
+}
+
+internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
+{
+	// Determine how far along plane to slide based on incoming direction.
+	f32 backoff = DotProduct(in, normal);
+
+	for (i32 i = 0; i < 3; i++)
+	{
+		f32 change = normal[i] * backoff;
+		out[i] = in[i] - change;
+	}
+
+	// Rampbug/wallbug fix: always move a little bit away from the plane
+	float adjust = -0.0078125f;
+	out -= (normal * adjust);
+}
+
+internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPlayerMovementCS *filter)
+{
+	trace_t_s2 stuck;
+	// Maybe we don't need this one
+	if (tr.fraction < FLT_EPSILON)
+	{
+		return false;
+	}
+
+	if (tr.startsolid)
+	{
+		return false;
+	}
+
+	// We hit something but no valid plane data?
+	if (tr.fraction < 1.0f && fabs(tr.planeNormal.x) < FLT_EPSILON && fabs(tr.planeNormal.y) < FLT_EPSILON && fabs(tr.planeNormal.z) < FLT_EPSILON)
+	{
+		return false;
+	}
+
+	// Is the plane deformed?
+	if (fabs(tr.planeNormal.x) > 1.0f || fabs(tr.planeNormal.y) > 1.0f || fabs(tr.planeNormal.z) > 1.0f)
+	{
+		return false;
+	}
+
+	// Do a swept trace and a backward trace just to be sure.
+	g_pKZUtils->TracePlayerBBox(tr.endpos, tr.endpos, bounds, filter, stuck);
+	if (stuck.startsolid || stuck.fraction < 1.0f - FLT_EPSILON)
+	{
+		return false;
+	}
+
+	g_pKZUtils->TracePlayerBBox(tr.endpos, tr.startpos, bounds, filter, stuck);
+	if (stuck.startsolid || stuck.fraction < 1.0f - FLT_EPSILON)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+#define MAX_BUMPS 4
+#define RAMP_PIERCE_DISTANCE 1.0f
+#define RAMP_BUG_THRESHOLD 0.98f
+#define NEW_RAMP_THRESHOLD 0.75f
+void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+	this->overrideTPM = false;
+	this->didTPM = true;
+	CCSPlayerPawn *pawn = this->player->GetPawn();
+
+	f32 timeLeft = g_pKZUtils->GetServerGlobals()->frametime;
+
+	Vector start, velocity, end;
+	this->player->GetOrigin(&start);
+	this->player->GetVelocity(&velocity);
+	if (velocity.Length() == 0.0f)
+	{
+		// No move required.
+		return;
+	}
+	Vector primalVelocity = velocity;
+	bool validPlane{};
+
+	f32 allFraction{};
+	trace_t_s2 pm;
+	u32 bumpCount{};
+	Vector planes[5];
+	u32 numPlanes{};
+	bbox_t bounds;
+	bounds.mins = { -16, -16, 0 };
+	bounds.maxs = { 16, 16, 72 };
+
+	CTraceFilterPlayerMovementCS filter;
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, pawn, pawn->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+
+	if (this->player->GetMoveServices()->m_bDucked())
+	{
+		bounds.maxs.z = 54;
+	}
+	for (bumpCount = 0; bumpCount < MAX_BUMPS; bumpCount++)
+	{
+		// Assume we can move all the way from the current origin to the end point.
+		VectorMA(start, timeLeft, velocity, end);
+		// See if we can make it from origin to end point.
+		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
+		if (pFirstDest && end == *pFirstDest)
+		{
+			pm = *pFirstTrace;
+		}
+		else
+		{
+			g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, pm);
+		}
+		if (IsValidMovementTrace(pm, bounds, &filter) && pm.fraction == 1.0f)
+		{
+			// Player won't hit anything, nothing to do.
+			break;
+		}
+		if (this->lastValidPlane.Length() > FLT_EPSILON && (!IsValidMovementTrace(pm, bounds, &filter) || pm.planeNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD))
+		{
+			// We hit a plane that will significantly change our velocity. Make sure that this plane is significant enough.
+			Vector direction = velocity.Normalized();
+			Vector offsetDirection;
+			f32 offsets[] = {0.0f, -1.0f, 1.0f};
+			bool success{};
+			for (u32 i = 0; i < 3 && !success; i++)
+			{
+				for (u32 j = 0; j < 3 && !success; j++)
+				{
+					for (u32 k = 0; k < 3 && !success; k++)
+					{
+						if (i == 0 && j == 0 && k == 0)
+						{
+							offsetDirection = this->lastValidPlane;
+						}
+						else
+						{
+							offsetDirection = { offsets[i], offsets[j], offsets[k] };
+							// Check if this random offset is even valid.
+							trace_t_s2 test;
+							g_pKZUtils->TracePlayerBBox(start + offsetDirection * RAMP_PIERCE_DISTANCE, start, bounds, &filter, test);
+							if (!IsValidMovementTrace(test, bounds, &filter))
+							{
+								continue;
+							}
+						}
+						trace_t_s2 pierce;
+						bool goodTrace{};
+						f32 ratio{};
+						bool hitNewPlane{};
+						for (ratio = 0.05f; ratio <= 1.0f; ratio += 0.05f)
+						{
+							g_pKZUtils->TracePlayerBBox(start + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, end + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, bounds, &filter, pierce);
+							if (!IsValidMovementTrace(pierce, bounds, &filter))
+							{
+								continue;
+							}
+							// Try until we hit a similar plane.
+							validPlane = pierce.fraction < 1.0f && pierce.fraction > 0.1f && pierce.planeNormal.Dot(this->lastValidPlane) >= RAMP_BUG_THRESHOLD;
+							hitNewPlane = pm.planeNormal.Dot(pierce.planeNormal) < NEW_RAMP_THRESHOLD && this->lastValidPlane.Dot(pierce.planeNormal) > NEW_RAMP_THRESHOLD;
+							goodTrace = CloseEnough(pierce.fraction, 1.0f, FLT_EPSILON) || validPlane;
+							if (goodTrace)
+							{
+								break;
+							}
+						}
+						if (goodTrace || hitNewPlane)
+						{
+							// Trace back to the original end point to find its normal.
+							trace_t_s2 test;
+							g_pKZUtils->TracePlayerBBox(pierce.endpos, end, bounds, &filter, test);
+							pm = pierce;
+							pm.startpos = start;
+							pm.fraction = Clamp((pierce.endpos - pierce.startpos).Length() / (end - start).Length(), 0.0f, 1.0f);
+							pm.endpos = test.endpos;
+							pm.planeNormal = test.planeNormal;
+							this->lastValidPlane = test.planeNormal;
+							success = true;
+							this->overrideTPM = true;
+						}
+					}
+				}
+			}
+		}
+		if (pm.planeNormal.Length() > 0.99f)
+		{
+			this->lastValidPlane = pm.planeNormal;
+		}
+
+		if (pm.fraction > 0.03125f)
+		{
+			allFraction += pm.fraction;
+			start = pm.endpos;
+			numPlanes = 0;
+		}
+		if (allFraction == 1.0f)
+		{
+			break;
+		}
+		timeLeft -= g_pKZUtils->GetServerGlobals()->frametime * pm.fraction;
+		planes[numPlanes] = pm.planeNormal;
+		numPlanes++;
+		if (numPlanes == 1 && pawn->m_MoveType() == MOVETYPE_WALK && pawn->m_hGroundEntity().Get() == nullptr)
+		{
+			ClipVelocity(velocity, planes[0], velocity);
+		}
+		else
+		{
+			u32 i, j;
+			for (i = 0; i < numPlanes; i++)
+			{
+				ClipVelocity(velocity, planes[i], velocity);
+				for (j = 0; j < numPlanes; j++)
+				{
+					if (j != i)
+					{
+						// Are we now moving against this plane?
+						if (velocity.Dot(planes[j]) < 0)
+							break; // not ok
+					}
+				}
+
+				if (j == numPlanes) // Didn't have to clip, so we're ok
+					break;
+			}
+			// Did we go all the way through plane set
+			if (i != numPlanes)
+			{	// go along this plane
+				// pmove.velocity is set in clipping call, no need to set again.
+				;
+			}
+			else
+			{	// go along the crease
+				if (numPlanes != 2)
+				{
+					VectorCopy(vec3_origin, velocity);
+					break;
+				}
+				Vector dir;
+				f32 d;
+				CrossProduct(planes[0], planes[1], dir);
+				dir.NormalizeInPlace();
+				d = dir.Dot(velocity);
+				VectorScale(dir, d, velocity);
+
+				if (velocity.Dot(primalVelocity) <= 0)
+				{
+					velocity = vec3_origin;
+					break;
+				}
+			}
+
+		}
+	}
+	this->tpmOrigin = pm.endpos;
+	this->tpmVelocity = velocity;
+}
+
+void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+	if (this->overrideTPM)
+	{
+		this->player->SetOrigin(this->tpmOrigin);
+		this->player->SetVelocity(this->tpmVelocity);
 	}
 }

@@ -1,10 +1,8 @@
 #pragma once
 #include "common.h"
-#include "addresses.h"
-#include "module.h"
-#include "utils/schema.h"
 #include "utils/interfaces.h"
-#include "utils/datatypes.h"
+#include "sdk/datatypes.h"
+#include "igameevents.h"
 
 class KZUtils;
 
@@ -13,42 +11,36 @@ typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
 typedef CBaseEntity2 *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
-// Seems to be caused by different call convention?
-#ifdef _WIN32
-typedef void EmitSoundFunc_t(u64 &unknown, IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
-#else
-typedef void EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
-#endif
+typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm);
-typedef void RaycastMultiple_t(void *queryInterface, u64 &unknown, const Vector &vStart, const Vector &vEnd, void *pTraceFilter, CGameTraceList *hitBuffer);
-typedef void EntitiesInSphere_t(void *queryInterface, Vector const &, Vector const &, CTraceFilterS2 &, i32, COverlapList &);
 namespace utils
 {
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
 	void Cleanup();
 
+	// ConVars
 	void UnlockConVars();
 	void UnlockConCommands();
+	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
+	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
 
-	void SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype);
-	void EntityCollisionRulesChanged(CBaseEntity2 *entity);
 	CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
 
 	CBasePlayerController *GetController(CBaseEntity2 *entity);
 	CBasePlayerController *GetController(CPlayerSlot slot);
 
+	CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
+
+	extern SnapViewAngles_t *SnapViewAngles;
+
+	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
+
+	// Tracing stuff
 	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
 	extern InitGameTrace_t *InitGameTrace;
-	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
-	extern SnapViewAngles_t *SnapViewAngles;
-	extern EmitSoundFunc_t *EmitSound;
 	extern TracePlayerBBox_t *TracePlayerBBox;
 	extern CGamePhysicsQueryInterface *physicsQuery;
-	extern RaycastMultiple_t *RaycastMultipleFunc;
-	extern EntitiesInSphere_t *EntitiesInSphere;
-	bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
-	CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
 
 	// Normalize the angle between -180 and 180.
 	f32 NormalizeDeg(f32 a);
@@ -69,16 +61,14 @@ namespace utils
 	void PrintAlertAll(const char *format, ...);
 	void PrintHTMLCentreAll(const char *format, ...); // This one uses HTML formatting.
 
-	i32 FormatTimerText(i32 ticks, char *buffer, i32 bufferSize);
-
-	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
-
 	// Color print
 	void CPrintChat(CBaseEntity2 *entity, const char *format, ...);
 	void CPrintChatAll(const char *format, ...);
 
-	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
-	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
+	i32 FormatTimerText(i32 ticks, char *buffer, i32 bufferSize);
 
-	bool RaycastMultiple(const Vector &start, const Vector &end, void *filter, CGameTraceList *hitBuffer);
+	// Sounds
+	extern EmitSoundFunc_t *EmitSound;
+	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
+
 }

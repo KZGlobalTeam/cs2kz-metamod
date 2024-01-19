@@ -2,11 +2,10 @@
 
 #include "utils.h"
 #include "convar.h"
-#include "strtools.h"
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
 #include "igameeventsystem.h"
-#include "recipientfilters.h"
+#include "sdk/recipientfilters.h"
 #include "public/networksystem/inetworkmessages.h"
 
 #include "module.h"
@@ -25,8 +24,6 @@ InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
 TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 CGamePhysicsQueryInterface *utils::physicsQuery = NULL;
-RaycastMultiple_t *utils::RaycastMultipleFunc = NULL;
-EntitiesInSphere_t *utils::EntitiesInSphere = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
@@ -81,8 +78,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
-	RESOLVE_SIG(modules::server, sigs::RaycastMultiple, RaycastMultipleFunc);
-	RESOLVE_SIG(modules::server, sigs::EntitiesInSphere, utils::EntitiesInSphere);
 
 	InitDetours();
 	return true;
@@ -149,16 +144,6 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-void utils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)
-{
-	CALL_VIRTUAL(void, offsets::SetMoveType, entity, movetype);
-}
-
-void utils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
-{
-	CALL_VIRTUAL(void, offsets::CollisionRulesChanged, entity);
-}
-
 CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 {
 	CCSPlayerController *controller = nullptr;
@@ -205,53 +190,6 @@ CBasePlayerController *utils::GetController(CPlayerSlot slot)
 	return ent->IsController() ? static_cast<CBasePlayerController *>(ent) : nullptr;
 }
 
-bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
-{
-	if (onlyDown)
-	{
-		return buttons->m_pButtonStates[0] & button;
-	}
-	else
-	{
-		bool multipleKeys = (button & (button - 1));
-		if (multipleKeys)
-		{
-			u64 currentButton = button;
-			u64 key = 0;
-			if (button)
-			{
-				while (true)
-				{
-					if (currentButton & 1)
-					{
-						u64 keyMask = 1ull << key;
-						EInButtonState keyState = (EInButtonState)(keyMask && buttons->m_pButtonStates[0] + (keyMask && buttons->m_pButtonStates[1]) * 2 + (keyMask && buttons->m_pButtonStates[2]) * 4);
-						if (keyState > IN_BUTTON_DOWN_UP)
-						{
-							return true;
-						}
-					}
-					key++;
-					currentButton >>= 1;
-					if (!currentButton)
-					{
-						return !!(buttons->m_pButtonStates[0] & button);
-					}
-				}
-			}
-			return false;
-		}
-		else
-		{
-			EInButtonState keyState = (EInButtonState)(!!(button & buttons->m_pButtonStates[0]) + !!(button & buttons->m_pButtonStates[1]) * 2 + !!(button & buttons->m_pButtonStates[2]) * 4);
-			if (keyState > IN_BUTTON_DOWN_UP)
-			{
-				return true;
-			}
-			return !!(buttons->m_pButtonStates[0] & button);
-		}
-	}
-}
 
 CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 {
@@ -287,11 +225,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 	EmitSound_t soundParams;
 	soundParams.m_pSoundName = sound;
 	soundParams.m_flVolume = volume;
-#ifdef _WIN32
-	utils::EmitSound(unknown, filter, player.Get() + 1, soundParams);
-#else
 	utils::EmitSound(filter, player.Get() + 1, soundParams);
-#endif
 }
 
 f32 utils::NormalizeDeg(f32 a)
@@ -334,11 +268,6 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
-}
-
-bool utils::RaycastMultiple(const Vector &start, const Vector &end, void *filter, CGameTraceList *hitBuffer)
-{
-	return true;
 }
 
 bool CTraceFilterTriggerTracking::ShouldHitEntity(CBaseEntity2 *other)

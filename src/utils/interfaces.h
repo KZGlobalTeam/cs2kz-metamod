@@ -1,12 +1,11 @@
 #pragma once
 
 #include "common.h"
-#include "cgameresourceserviceserver.h"
-#include "cschemasystem.h"
+#include "sdk/cgameresourceserviceserver.h"
+#include "sdk/cschemasystem.h"
 #include "igameevents.h"
 #include "igameeventsystem.h"
-#include "utils/datatypes.h"
-#include <iserver.h>
+#include "sdk/datatypes.h"
 
 namespace interfaces
 {
@@ -30,8 +29,6 @@ public:
 	virtual void *GetSchemaNetworkStateChangedPointer();
 	virtual CGlobalVars *GetServerGlobals();
 
-	virtual void SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype);
-	virtual void EntityCollisionRulesChanged(CBaseEntity2 *entity);
 	virtual CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
 
 	virtual CBasePlayerController *GetController(CBaseEntity2 *entity);
@@ -43,13 +40,12 @@ public:
 	virtual void InitGameTrace(trace_t_s2 *trace);
 	virtual void TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm);
 
-	virtual bool IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown = false);
-
 	// Normalize the angle between -180 and 180.
 	virtual f32 NormalizeDeg(f32 a);
 	// Gets the difference in angle between 2 angles. 
 	// c can be PI (for radians) or 180.0 (for degrees);
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
+	virtual CGameEntitySystem *GetGameEntitySystem();
 };
 
 extern KZUtils *g_pKZUtils;

@@ -1,12 +1,13 @@
 #pragma once
 #include "common.h"
-#include "movement/datatypes.h"
+#include "sdk/datatypes.h"
 
 // TODO: better error sound
 #define MV_SND_ERROR "Buttons.snd8"
 #define MV_SND_TIMER_START "Buttons.snd9"
 #define MV_SND_TIMER_END "UI.DeathMatch.LevelUp"
 
+class CCSPlayerController;
 class MovementPlayer;
 
 namespace movement
@@ -64,7 +65,7 @@ public:
 	virtual void SetAngles(const QAngle &angles);
 
 	virtual TurnState GetTurning();
-	virtual bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
+	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
 	virtual void RegisterTakeoff(bool jumped);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	virtual f32 GetGroundPosition();

@@ -1,13 +1,13 @@
 #include "kz.h"
 #include "utils/utils.h"
-#include "igameevents.h"
-#include "tier0/memdbgon.h"
 
 #include "checkpoint/kz_checkpoint.h"
 #include "quiet/kz_quiet.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "hud/kz_hud.h"
 #include "mode/kz_mode.h"
+
+#include "tier0/memdbgon.h"
 
 void KZPlayer::Init()
 {
@@ -311,13 +311,13 @@ void KZPlayer::HandleMoveCollision()
 	{
 		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
 		{
-			utils::SetEntityMoveType(pawn, MOVETYPE_NOCLIP);
+			pawn->SetMoveType(MOVETYPE_NOCLIP);
 			this->InvalidateTimer();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 		{
-			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
-			utils::EntityCollisionRulesChanged(pawn);
+			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD; 
+			pawn->CollisionRulesChanged();
 		}
 		this->InvalidateTimer();
 	}
@@ -325,13 +325,13 @@ void KZPlayer::HandleMoveCollision()
 	{
 		if (pawn->m_MoveType() == MOVETYPE_NOCLIP)
 		{
-			utils::SetEntityMoveType(pawn, MOVETYPE_WALK);
+			pawn->SetMoveType(MOVETYPE_WALK);
 			this->InvalidateTimer();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
 		{
 			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_NOTRIGGER;
-			utils::EntityCollisionRulesChanged(pawn);
+			pawn->CollisionRulesChanged();
 		}
 	}
 }
