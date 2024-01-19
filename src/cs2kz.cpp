@@ -1,15 +1,12 @@
 #include "cs2kz.h"
 
-#include "interface.h"
 #include "icvar.h"
 #include "iserver.h"
 #include "entity2/entitysystem.h"
 
 #include "common.h"
 #include "utils/utils.h"
-#include "sdk/recipientfilters.h"
 #include "utils/detours.h"
-#include "utils/addresses.h"
 #include "utils/simplecmds.h"
 
 #include "movement/movement.h"

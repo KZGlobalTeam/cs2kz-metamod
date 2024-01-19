@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils/addresses.h"
 #include "utils/schema.h"
 #include "mathlib/vector.h"
 #include "baseentity.h"

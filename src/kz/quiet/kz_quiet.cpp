@@ -1,5 +1,4 @@
 #include "cstrike15_usermessages.pb.h"
-#include "usermessages.pb.h"
 #include "gameevents.pb.h"
 #include "cs_gameevents.pb.h"
 

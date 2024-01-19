@@ -1,6 +1,4 @@
 #pragma once
-
-#include <stdint.h>
 typedef int32 GameTick_t;
 typedef float GameTime_t;
 class CNetworkedQuantizedFloat
@@ -17,8 +15,6 @@ struct SndOpEventGuid_t
 	uint64 m_hStackHash;
 };
 
-#include "utlsymbollarge.h"
-#include "entityhandle.h"
 #ifndef _WIN32
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wparentheses"
@@ -27,19 +23,7 @@ struct SndOpEventGuid_t
 #pragma clang diagnostic pop
 #endif
 #include "ehandle.h"
-#include "sdk/entity/cbaseentity.h"
-#include "sdk/entity/cbasemodelentity.h"
-#include "sdk/entity/cbaseplayercontroller.h"
-#include "sdk/entity/cbaseplayerpawn.h"
-#include "sdk/ccollisionproperty.h"
 #include "sdk/entity/ccsplayercontroller.h"
-#include "sdk/entity/ccsplayerpawn.h"
-#include "sdk/services.h"
-
-class CPlayer_MovementServices;
-class CBaseFilter;
-class CBasePlayerPawn;
-class CCSPlayerPawn;
 
 struct TransmitInfo
 {
@@ -224,14 +208,6 @@ public:
 	uint8_t m_nCollisionGroup;
 	uint8_t unk3;
 	bool unk4;
-};
-
-struct vis_info_t
-{
-	const uint32 *m_pVisBits;
-	uint32 m_uVisBitsBufSize;
-	float m_flVisibleRadius;
-	SpawnGroupHandle_t m_SpawnGroupHandle;
 };
 
 struct CCheckTransmitInfoS2

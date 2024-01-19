@@ -2,7 +2,6 @@
 
 #include "utils.h"
 #include "convar.h"
-#include "strtools.h"
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
 #include "igameeventsystem.h"

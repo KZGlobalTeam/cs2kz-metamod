@@ -1,13 +1,13 @@
 #include "kz.h"
 #include "utils/utils.h"
-#include "igameevents.h"
-#include "tier0/memdbgon.h"
 
 #include "checkpoint/kz_checkpoint.h"
 #include "quiet/kz_quiet.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "hud/kz_hud.h"
 #include "mode/kz_mode.h"
+
+#include "tier0/memdbgon.h"
 
 void KZPlayer::Init()
 {

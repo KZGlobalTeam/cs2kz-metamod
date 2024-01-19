@@ -1,13 +1,13 @@
 #include "schema.h"
 
-#include "../common.h"
+#include "common.h"
 #include "utils/interfaces.h"
 //#include <unordered_map>
 #include "tier1/utlmap.h"
-#include "tier0/memdbgon.h"
 #include "plat.h"
 #include "sdk/entity/cbaseentity.h"
 
+#include "tier0/memdbgon.h"
 using SchemaKeyValueMap_t = CUtlMap<uint32_t, SchemaKey>;
 using SchemaTableMap_t = CUtlMap<uint32_t, SchemaKeyValueMap_t *>;
 

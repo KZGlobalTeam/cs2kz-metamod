@@ -1,7 +1,7 @@
 #pragma once
 #include "../kz.h"
+#include "iserver.h"
 #include "networksystem/inetworkserializer.h"
-#include "inetchannel.h"
 
 namespace KZ::quiet
 {

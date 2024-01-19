@@ -6,7 +6,6 @@
 #include "igameevents.h"
 #include "igameeventsystem.h"
 #include "sdk/datatypes.h"
-#include <iserver.h>
 
 namespace interfaces
 {

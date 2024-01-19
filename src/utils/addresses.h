@@ -1,9 +1,5 @@
 #pragma once
-#include "platform.h"
-#include "stdint.h"
 #include "utils/module.h"
-#include "utlstring.h"
-
 
 struct Signature {
 	const char *data = nullptr;

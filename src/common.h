@@ -5,8 +5,6 @@
 #endif
 
 #include <ISmmPlugin.h>
-#include <igameevents.h>
-#include <sh_vector.h>
 #include <stdint.h>
 
 #include "entity2/entitysystem.h"

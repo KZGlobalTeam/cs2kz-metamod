@@ -4,6 +4,8 @@
 #include "cbaseentity.h"
 #include "ccsplayerpawn.h"
 
+class CCSPlayerPawn;
+
 class CBasePlayerController : public CBaseEntity2
 {
 public:

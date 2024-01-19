@@ -1,4 +1,5 @@
 #include "kz_hud.h"
+#include "sdk/datatypes.h"
 #include "utils/utils.h"
 
 #include "tier0/memdbgon.h"

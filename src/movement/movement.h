@@ -10,6 +10,7 @@
 #define MV_SND_TIMER_START "Buttons.snd9"
 #define MV_SND_TIMER_END "UI.DeathMatch.LevelUp"
 
+class CCSPlayerController;
 class MovementPlayer;
 
 namespace movement

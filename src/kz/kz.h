@@ -4,7 +4,6 @@
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
 
-
 #define KZ_COLLISION_GROUP_STANDARD LAST_SHARED_COLLISION_GROUP
 #define KZ_COLLISION_GROUP_NOTRIGGER COLLISION_GROUP_DEBRIS
 
