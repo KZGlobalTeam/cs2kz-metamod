@@ -8,7 +8,7 @@
 // private structs
 struct Scmd
 {
-	b32 hasConsolePrefix;
+	bool hasConsolePrefix;
 	i32 nameLength;
 	const char *name;
 	const char *description;

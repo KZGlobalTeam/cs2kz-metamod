@@ -2,11 +2,10 @@
 
 #include "utils.h"
 #include "convar.h"
-#include "strtools.h"
 #include "tier0/dbg.h"
 #include "interfaces/interfaces.h"
 #include "igameeventsystem.h"
-#include "recipientfilters.h"
+#include "sdk/recipientfilters.h"
 #include "public/networksystem/inetworkmessages.h"
 
 #include "module.h"
@@ -144,16 +143,6 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-void utils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)
-{
-	CALL_VIRTUAL(void, offsets::SetMoveType, entity, movetype);
-}
-
-void utils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
-{
-	CALL_VIRTUAL(void, offsets::CollisionRulesChanged, entity);
-}
-
 CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 {
 	CCSPlayerController *controller = nullptr;
@@ -200,53 +189,6 @@ CBasePlayerController *utils::GetController(CPlayerSlot slot)
 	return ent->IsController() ? static_cast<CBasePlayerController *>(ent) : nullptr;
 }
 
-bool utils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
-{
-	if (onlyDown)
-	{
-		return buttons->m_pButtonStates[0] & button;
-	}
-	else
-	{
-		bool multipleKeys = (button & (button - 1));
-		if (multipleKeys)
-		{
-			u64 currentButton = button;
-			u64 key = 0;
-			if (button)
-			{
-				while (true)
-				{
-					if (currentButton & 1)
-					{
-						u64 keyMask = 1ull << key;
-						EInButtonState keyState = (EInButtonState)(keyMask && buttons->m_pButtonStates[0] + (keyMask && buttons->m_pButtonStates[1]) * 2 + (keyMask && buttons->m_pButtonStates[2]) * 4);
-						if (keyState > IN_BUTTON_DOWN_UP)
-						{
-							return true;
-						}
-					}
-					key++;
-					currentButton >>= 1;
-					if (!currentButton)
-					{
-						return !!(buttons->m_pButtonStates[0] & button);
-					}
-				}
-			}
-			return false;
-		}
-		else
-		{
-			EInButtonState keyState = (EInButtonState)(!!(button & buttons->m_pButtonStates[0]) + !!(button & buttons->m_pButtonStates[1]) * 2 + !!(button & buttons->m_pButtonStates[2]) * 4);
-			if (keyState > IN_BUTTON_DOWN_UP)
-			{
-				return true;
-			}
-			return !!(buttons->m_pButtonStates[0] & button);
-		}
-	}
-}
 
 CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 {
@@ -282,11 +224,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 	EmitSound_t soundParams;
 	soundParams.m_pSoundName = sound;
 	soundParams.m_flVolume = volume;
-#ifdef _WIN32
-	utils::EmitSound(unknown, filter, player.Get() + 1, soundParams);
-#else
 	utils::EmitSound(filter, player.Get() + 1, soundParams);
-#endif
 }
 
 f32 utils::NormalizeDeg(f32 a)

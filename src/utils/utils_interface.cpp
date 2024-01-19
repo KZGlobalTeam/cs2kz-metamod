@@ -23,16 +23,6 @@ CGlobalVars *KZUtils::GetServerGlobals()
 	return interfaces::pEngine->GetServerGlobals();
 }
 
-void KZUtils::SetEntityMoveType(CBaseEntity2 *entity, MoveType_t movetype)
-{
-	utils::SetEntityMoveType(entity, movetype);
-}
-
-void KZUtils::EntityCollisionRulesChanged(CBaseEntity2 *entity)
-{
-	utils::EntityCollisionRulesChanged(entity);
-}
-
 CBaseEntity2 *KZUtils::FindEntityByClassname(CEntityInstance *start, const char *name)
 {
 	return utils::FindEntityByClassname(start, name);
@@ -66,11 +56,6 @@ void KZUtils::InitGameTrace(trace_t_s2 *trace)
 void KZUtils::TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm)
 {
 	utils::TracePlayerBBox(start, end, bounds, filter, pm);
-}
-
-bool KZUtils::IsButtonDown(CInButtonState *buttons, u64 button, bool onlyDown)
-{
-	return utils::IsButtonDown(buttons, button, onlyDown);
 }
 
 f32 KZUtils::NormalizeDeg(f32 a)

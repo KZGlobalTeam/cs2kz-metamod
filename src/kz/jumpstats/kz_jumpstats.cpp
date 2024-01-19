@@ -163,7 +163,7 @@ void Strafe::End()
 		if (this->aaCalls[i].wishspeed == 0)
 		{
 			u64 buttonBits = IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT;
-			if (utils::IsButtonDown(&this->aaCalls[i].buttons, buttonBits))
+			if (CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, buttonBits))
 			{
 				this->overlap += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
 			}
@@ -347,10 +347,7 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	this->player->GetAngles(&currentAngle);
 	call->maxspeed = this->player->currentMoveData->m_flMaxSpeed;
 	call->currentYaw = currentAngle.y;
-	for (int i = 0; i < 3; i++)
-	{
-		call->buttons.m_pButtonStates[i] = this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[i];
-	}
+	this->player->GetMoveServices()->m_nButtons()->GetButtons(call->buttons);
 	call->wishdir = wishdir;
 	call->wishspeed = wishspeed;
 	call->accel = accel;

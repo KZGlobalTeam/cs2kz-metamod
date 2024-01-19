@@ -1,6 +1,6 @@
 #pragma once
 #include "irecipientfilter.h"
-#include "utils.h"
+#include "utils/utils.h"
 #include "interfaces/interfaces.h"
 
 class CBroadcastRecipientFilter : public IRecipientFilter

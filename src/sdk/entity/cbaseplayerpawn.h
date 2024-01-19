@@ -1,8 +1,8 @@
 #pragma once
 
-#include "cbaseentity.h"
+#include "cbasemodelentity.h"
 #include "cbaseplayercontroller.h"
-#include "services.h"
+#include "../services.h"
 
 
 class CBasePlayerPawn : public CBaseModelEntity

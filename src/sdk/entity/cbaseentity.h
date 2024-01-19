@@ -1,9 +1,10 @@
 #pragma once
 
+#include "utils/addresses.h"
 #include "utils/schema.h"
 #include "mathlib/vector.h"
 #include "baseentity.h"
-#include "ccollisionproperty.h"
+#include "../ccollisionproperty.h"
 
 class CNetworkOriginCellCoordQuantizedVector
 {
@@ -15,10 +16,9 @@ public:
 	SCHEMA_FIELD(uint16, m_cellZ)
 	SCHEMA_FIELD(uint16, m_nOutsideWorld)
 
-	// These are actually CNetworkedQuantizedFloat but we don't have the definition for it...
-	SCHEMA_FIELD(float, m_vecX)
-	SCHEMA_FIELD(float, m_vecY)
-	SCHEMA_FIELD(float, m_vecZ)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecX)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecY)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecZ)
 };
 
 class CNetworkVelocityVector
@@ -26,10 +26,9 @@ class CNetworkVelocityVector
 public:
 	DECLARE_SCHEMA_CLASS_INLINE(CNetworkVelocityVector)
 
-	// These are actually CNetworkedQuantizedFloat but we don't have the definition for it...
-	SCHEMA_FIELD(float, m_vecX)
-	SCHEMA_FIELD(float, m_vecY)
-	SCHEMA_FIELD(float, m_vecZ)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecX)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecY)
+	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecZ)
 };
 
 class CGameSceneNode
@@ -84,4 +83,7 @@ public:
 	int entindex() { return m_pEntity->m_EHandle.GetEntryIndex(); }
 	bool IsPawn() { return CALL_VIRTUAL(bool, offsets::IsEntityPawn, this); }
 	bool IsController() { return CALL_VIRTUAL(bool, offsets::IsEntityController, this); }
+
+	void SetMoveType(MoveType_t movetype) { CALL_VIRTUAL(void, offsets::SetMoveType, this, movetype); }
+	void CollisionRulesChanged() { CALL_VIRTUAL(void, offsets::CollisionRulesChanged, this); }
 };

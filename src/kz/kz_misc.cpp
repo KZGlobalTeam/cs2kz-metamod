@@ -1,18 +1,12 @@
-#include "usermessages.pb.h"
-
 #include "common.h"
 #include "utils/utils.h"
 #include "kz.h"
 #include "utils/simplecmds.h"
-#include "public/networksystem/inetworkmessages.h"
 
 #include "checkpoint/kz_checkpoint.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
 #include "mode/kz_mode.h"
-
-#include "tier0/memdbgon.h"
-#include <utils/recipientfilters.h>
 
 internal SCMD_CALLBACK(Command_KzNoclip)
 {

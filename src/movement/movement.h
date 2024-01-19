@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-#include "movement/datatypes.h"
+#include "sdk/datatypes.h"
 
 #define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
@@ -10,6 +10,7 @@
 #define MV_SND_TIMER_START "Buttons.snd9"
 #define MV_SND_TIMER_END "UI.DeathMatch.LevelUp"
 
+class CCSPlayerController;
 class MovementPlayer;
 
 namespace movement
@@ -67,7 +68,7 @@ public:
 	virtual void SetAngles(const QAngle &angles);
 
 	virtual TurnState GetTurning();
-	virtual bool IsButtonDown(InputBitMask_t button, bool onlyDown = false);
+	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
 	virtual void RegisterTakeoff(bool jumped);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	virtual f32 GetGroundPosition();

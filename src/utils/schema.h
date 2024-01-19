@@ -1,29 +1,15 @@
 #pragma once
 
 #include "stdint.h"
-
-#ifdef _WIN32
-#pragma warning(push)
-#endif
-
-#include <type_traits>
-
-#ifdef _WIN32
-#pragma warning(pop)
-#endif
-
-#include "addresses.h"
-#include "tier0/dbg.h"
-#include "const.h"
 #include "virtual.h"
-#include "stdint.h"
 
 #undef schema
 class CEntityInstance;
 class CBasePlayerController;
 
-struct SchemaKey {
-	int16_t offset;
+struct SchemaKey
+{
+	int32 offset;
 	bool networked;
 };
 

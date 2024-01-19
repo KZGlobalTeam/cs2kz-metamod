@@ -1,10 +1,10 @@
 #pragma once
 #include "cdetour.h"
 #include "irecipientfilter.h"
-#include "datatypes.h"
+#include "sdk/datatypes.h"
 #include "utils.h"
 #include "movement/movement.h"
-#include "sns.h"
+#include "sdk/steamnetworkingsockets.h"
 
 void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
 extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;

@@ -1,9 +1,7 @@
 #include "common.h"
 #include "utils.h"
 #include "cdetour.h"
-#include "module.h"
 #include "detours.h"
-#include "utils/simplecmds.h"
 
 #include "movement/movement.h"
 

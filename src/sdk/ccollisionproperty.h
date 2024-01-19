@@ -1,7 +1,5 @@
 #pragma once
-
 #include "utils/schema.h"
-#include "utils/datatypes.h"
 
 struct VPhysicsCollisionAttribute_t
 {

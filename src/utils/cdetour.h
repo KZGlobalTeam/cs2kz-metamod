@@ -1,9 +1,8 @@
 #pragma once 
-#include <functional>
+
 #include "funchook.h"
 #include "module.h"
 #include "utlvector.h"
-#include "plat.h"
 
 class CDetourBase
 {

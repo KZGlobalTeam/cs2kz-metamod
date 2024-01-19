@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "igameevents.h"
 #include "networksystem/inetworkserializer.h"
 #include "inetchannel.h"
 

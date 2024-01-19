@@ -291,7 +291,7 @@ void KZClassicModeService::OnProcessMovementPost()
 {
 	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL, true);
 	this->RestoreInterpolatedViewAngles();
-	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonDown(IN_DUCK, true);
+	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonPressed(IN_DUCK, true);
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	this->postProcessMovementZSpeed = velocity.z;
@@ -371,7 +371,7 @@ void KZClassicModeService::RestoreInterpolatedViewAngles()
 void KZClassicModeService::RemoveCrouchJumpBind()
 {
 	this->forcedUnduck = false;
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && !this->oldDuckPressed && !this->player->GetMoveServices()->m_bOldJumpPressed && this->player->IsButtonDown(IN_JUMP))
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && !this->oldDuckPressed && !this->player->GetMoveServices()->m_bOldJumpPressed && this->player->IsButtonPressed(IN_JUMP))
 	{
 		this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[0] &= ~IN_DUCK;
 		this->forcedUnduck = true;
