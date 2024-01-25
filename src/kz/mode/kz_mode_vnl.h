@@ -51,4 +51,5 @@ public:
 	virtual const char *GetModeShortName() override;
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
+	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
 };

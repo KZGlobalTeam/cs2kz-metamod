@@ -1,16 +1,20 @@
 #pragma once
 #include "cdetour.h"
-#include "irecipientfilter.h"
 #include "sdk/datatypes.h"
-#include "utils.h"
-#include "movement/movement.h"
+#include "sdk/entity/cbasetrigger.h"
 #include "sdk/steamnetworkingsockets.h"
 
-void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
-extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;
-
-void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
-extern CDetour<decltype(Detour_CBaseTrigger_EndTouch)> CBaseTrigger_EndTouch;
+#include "movement/movement.h"
+#include "utils/utils.h"
+//
+//void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
+//extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;
+//
+//void FASTCALL Detour_CBaseEntity_Touch(CBaseEntity2 *this_, CBaseEntity2 *pOther);
+//extern CDetour<decltype(Detour_CBaseEntity_Touch)> CBaseEntity_Touch;
+//
+//void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
+//extern CDetour<decltype(Detour_CBaseTrigger_EndTouch)> CBaseTrigger_EndTouch;
 
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock);
 extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket;
@@ -40,6 +44,7 @@ DECLARE_MOVEMENT_EXTERN_DETOUR(CanUnduck);
 DECLARE_MOVEMENT_EXTERN_DETOUR(LadderMove);
 DECLARE_MOVEMENT_EXTERN_DETOUR(CheckJumpButton);
 DECLARE_MOVEMENT_EXTERN_DETOUR(OnJump);
+DECLARE_MOVEMENT_EXTERN_DETOUR(AirMove);
 DECLARE_MOVEMENT_EXTERN_DETOUR(AirAccelerate);
 DECLARE_MOVEMENT_EXTERN_DETOUR(Friction);
 DECLARE_MOVEMENT_EXTERN_DETOUR(WalkMove);

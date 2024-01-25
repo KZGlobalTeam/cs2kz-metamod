@@ -1,20 +1,4 @@
 #pragma once
-typedef int32 GameTick_t;
-typedef float GameTime_t;
-class CNetworkedQuantizedFloat
-{
-public:
-	float32 m_Value;
-	uint16 m_nEncoder;
-	bool m_bUnflattened;
-};
-typedef uint32 SoundEventGuid_t;
-struct SndOpEventGuid_t
-{
-	SoundEventGuid_t m_nGuid;
-	uint64 m_hStackHash;
-};
-
 #ifndef _WIN32
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wparentheses"
@@ -24,7 +8,7 @@ struct SndOpEventGuid_t
 #endif
 #include "ehandle.h"
 #include "sdk/entity/ccsplayercontroller.h"
-
+#include "sdk/entity/cbasetrigger.h"
 struct TransmitInfo
 {
 	CBitVec<16384> *m_pTransmitEdict;
@@ -78,6 +62,14 @@ enum InputBitMask_t : uint64_t
 	IN_LOOK_AT_WEAPON = 0x800000000,
 };
 
+// Sound stuff.
+
+typedef uint32 SoundEventGuid_t;
+struct SndOpEventGuid_t
+{
+	SoundEventGuid_t m_nGuid;
+	uint64 m_hStackHash;
+};
 // used with EmitSound_t
 enum gender_t : uint8
 {
@@ -143,9 +135,11 @@ struct EmitSound_t
 	gender_t m_SpeakerGender;
 };
 
-class CBaseTrigger : public CBaseEntity2
-{
+// Tracing stuff.
 
+struct CGamePhysicsQueryInterface
+{
+	void *m_pWorld;
 };
 
 struct RnCollisionAttr_t
@@ -160,7 +154,26 @@ struct RnCollisionAttr_t
 	uint8_t m_nCollisionFunctionMask;
 };
 
-// Internally called PhysicsTrace_t?
+enum RnQueryObjectSet : uint32
+{
+	RNQUERY_OBJECTS_STATIC = 0x1,
+	RNQUERY_OBJECTS_DYNAMIC = 0x2,
+	RNQUERY_OBJECTS_NON_COLLIDEABLE = 0x4,
+	RNQUERY_OBJECTS_KEYFRAMED_ONLY = 0x108,
+	RNQUERY_OBJECTS_DYNAMIC_ONLY = 0x110,
+	RNQUERY_OBJECTS_ALL = 0x7
+};
+
+enum CollisionFunctionMask_t : uint32
+{
+	FCOLLISION_FUNC_ENABLE_SOLID_CONTACT = 0x1,
+	FCOLLISION_FUNC_ENABLE_TRACE_QUERY = 0x2,
+	FCOLLISION_FUNC_ENABLE_TOUCH_EVENT = 0x4,
+	FCOLLISION_FUNC_ENABLE_SELF_COLLISIONS = 0x8,
+	FCOLLISION_FUNC_IGNORE_FOR_HITBOX_TEST = 0x10,
+	FCOLLISION_FUNC_ENABLE_TOUCH_PERSISTS = 0x20,
+};
+
 struct alignas(16) trace_t_s2
 {
 	void *m_pSurfaceProperties;
@@ -231,13 +244,6 @@ struct RnQueryAttr_t
 	bool m_bIterateEntities;
 };
 
-class CTraceFilterPlayerMovementCS
-{
-public:
-	void *vtable;
-	RnQueryAttr_t attr;
-};
-
 class CTraceFilterS2
 {
 public:
@@ -249,17 +255,15 @@ public:
 	}
 };
 
+class CTraceFilterPlayerMovementCS : public CTraceFilterS2
+{
+};
+
+// TODO: Remove this!
 struct CCheckTransmitInfoS2
 {
 	CBitVec<16384> *m_pTransmitEdict;
 	uint8 unk[1000];
-};
-
-enum TurnState
-{
-	TURN_LEFT = -1,
-	TURN_NONE = 0,
-	TURN_RIGHT = 1
 };
 
 struct SubtickMove
@@ -339,7 +343,36 @@ public:
 };
 static_assert(sizeof(CMoveData) == 0xE8, "Class didn't match expected size");
 
-struct CGamePhysicsQueryInterface
+// Custom data types goes here.
+
+enum TurnState
 {
-	void *m_pWorld;
+	TURN_LEFT = -1,
+	TURN_NONE = 0,
+	TURN_RIGHT = 1
+};
+
+class CTraceFilterHitAllTriggers: public CTraceFilterS2
+{
+public:
+	CTraceFilterHitAllTriggers()
+	{
+		attr.m_nEntityIdToIgnore = -1;
+		attr.m_nEntityControllerIdToIgnore = -1;
+		attr.m_nOwnerEntityIdToIgnore = -1;
+		attr.m_nControllerOwnerEntityIdToIgnore = -1;
+		attr.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
+		attr.m_nControllerHierarchyId = 0;
+		attr.m_nHierarchyId = 0;
+		attr.m_bIterateEntities = true;
+		attr.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
+		attr.m_nInteractsWith = 4;
+		attr.m_bHitTrigger = true;
+	}
+	CUtlVector<CEntityHandle> hitTriggerHandles;
+	virtual bool ShouldHitEntity(CBaseEntity2 *other)
+	{
+		hitTriggerHandles.AddToTail(other->GetRefEHandle());
+		return false;
+	}
 };

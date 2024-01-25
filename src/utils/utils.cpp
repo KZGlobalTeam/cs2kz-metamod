@@ -269,16 +269,3 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 }
-
-bool CTraceFilterTriggerTracking::ShouldHitEntity(CBaseEntity2 *other)
-{
-	if (!this->player->touchingEntities.HasElement(other->GetRefEHandle()))
-	{
-		this->player->touchingEntities.AddToHead(other->GetRefEHandle());
-		if (V_strstr(other->GetClassname(), "trigger_"))
-		{
-			Detour_CBaseTrigger_StartTouch((CBaseTrigger *)other, this->player->GetPawn());
-		}
-		return false;
-	}
-}

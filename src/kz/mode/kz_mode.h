@@ -50,6 +50,8 @@ public:
 	virtual void OnCheckJumpButtonPost() {};
 	virtual void OnJump() {};
 	virtual void OnJumpPost() {};
+	virtual void OnAirMove() {};
+	virtual void OnAirMovePost() {};
 	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) {};
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) {};
 	virtual void OnFriction() {};
@@ -78,6 +80,9 @@ public:
 	virtual void StartZoneStartTouch() {};
 	virtual void StartZoneEndTouch() {};
 	virtual void EndZoneStartTouch() {};
+
+	// Other events
+	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) {}
 };
 
 typedef KZModeService *(*ModeServiceFactory)(KZPlayer *player);

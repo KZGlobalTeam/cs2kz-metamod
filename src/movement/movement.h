@@ -30,6 +30,7 @@ namespace movement
 	bool FASTCALL Detour_LadderMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckJumpButton(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_OnJump(CCSPlayer_MovementServices *, CMoveData *);
+	void FASTCALL Detour_AirMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_AirAccelerate(CCSPlayer_MovementServices *, CMoveData *, Vector &, f32, f32);
 	void FASTCALL Detour_Friction(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_WalkMove(CCSPlayer_MovementServices *, CMoveData *);
@@ -39,7 +40,6 @@ namespace movement
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostPlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
-
 }
 
 class MovementPlayer
@@ -60,12 +60,15 @@ public:
 	virtual void GetVelocity(Vector *velocity);
 	virtual void SetVelocity(const Vector &velocity);
 	virtual void GetAngles(QAngle *angles);
-
 	// It is not recommended use this to change the angle inside movement processing, it might not work!
 	virtual void SetAngles(const QAngle &angles);
 
+	virtual void GetBBoxBounds(bbox_t *bounds);
+
 	virtual TurnState GetTurning();
+
 	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
+
 	virtual void RegisterTakeoff(bool jumped);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	virtual f32 GetGroundPosition();
@@ -106,6 +109,8 @@ public:
 	virtual void OnCheckJumpButtonPost() {};
 	virtual void OnJump() {};
 	virtual void OnJumpPost() {};
+	virtual void OnAirMove() {};
+	virtual void OnAirMovePost() {};
 	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) {};
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) {};
 	virtual void OnFriction() {};
@@ -137,6 +142,10 @@ public:
 	virtual void EndZoneStartTouch();
 
 	void PlayErrorSound();
+
+	bool IsAlive() { return this->GetPawn() ? this->GetPawn()->m_lifeState() == LIFE_ALIVE : false; }
+	MoveType_t GetMoveType() { return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE; }
+	Collision_Group_t GetCollisionGroup() { return this->GetPawn() ? (Collision_Group_t)this->GetPawn()->m_Collision().m_CollisionGroup() : LAST_SHARED_COLLISION_GROUP; }
 
 public:
 	// General
@@ -179,7 +188,9 @@ public:
 	bool enableWaterFixThisTick{};
 	bool ignoreNextCategorizePosition{};
 
-	CUtlVector<CEntityHandle> touchingEntities;
+	CUtlVector<CEntityHandle> pendingStartTouchTriggers;
+	CUtlVector<CEntityHandle> pendingEndTouchTriggers;
+	CUtlVector<CEntityHandle> touchedTriggers;
 };
 
 class CMovementPlayerManager
@@ -211,25 +222,5 @@ public:
 	MovementPlayer *players[MAXPLAYERS + 1];
 };
 
-class CTraceFilterTriggerTracking : public CTraceFilterS2
-{
-public:
-	CTraceFilterTriggerTracking(MovementPlayer *player) : player(player)
-	{
-		attr.m_nEntityIdToIgnore = player->GetPawn()->GetRefEHandle().ToInt();
-		attr.m_nEntityControllerIdToIgnore = -1;
-		attr.m_nOwnerEntityIdToIgnore = -1;
-		attr.m_nControllerOwnerEntityIdToIgnore = -1;
-		attr.m_nObjectSetMask = 7;
-		attr.m_nControllerHierarchyId = 0;
-		attr.m_nHierarchyId = 0;
-		attr.m_bIterateEntities = true;
-		attr.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
-		attr.m_nInteractsWith = 4;
-		attr.m_bHitTrigger = true;
-	}
-	MovementPlayer *player;
-	virtual bool ShouldHitEntity(CBaseEntity2 *other);
-};
 
 extern CMovementPlayerManager *g_pPlayerManager;

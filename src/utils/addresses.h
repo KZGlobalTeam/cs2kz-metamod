@@ -93,6 +93,9 @@ namespace sigs
 	// search for "In level transition: %s %s\n", go to only xref, the first function called in that is this.
 	DECLARE_SIG(CBaseTrigger_StartTouch, "\x41\x56\x41\x57\x48\x83\xEC\x58\x48\x8B\x01");
 	
+	// right between starttouch and endtouch
+	DECLARE_SIG(CBaseEntity_Touch, "\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x48\x8B\x81\x88\x02\x00\x00");
+
 	// search for "kevlar(%d) ", go to only xref, the first function called in that is this.
 	DECLARE_SIG(CBaseTrigger_EndTouch, "\x40\x53\x57\x41\x55\x48\x83\xEC\x40");
 	

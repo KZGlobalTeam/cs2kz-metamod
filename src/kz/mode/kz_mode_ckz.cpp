@@ -244,6 +244,11 @@ void KZClassicModeService::OnStopTouchGround()
 void KZClassicModeService::OnStartTouchGround()
 {
 	this->SlopeFix();
+	bbox_t bounds;
+	this->player->GetBBoxBounds(&bounds);
+	Vector ground = this->player->landingOrigin;
+	ground.z = this->player->GetGroundPosition() - 0.03125f;
+	this->player->TouchTriggersAlongPath(this->player->landingOrigin, ground, bounds);
 }
 
 void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
@@ -294,6 +299,7 @@ void KZClassicModeService::OnProcessMovement()
 
 void KZClassicModeService::OnProcessMovementPost()
 {
+	this->player->UpdateTriggerTouchList();
 	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL, true);
 	this->RestoreInterpolatedViewAngles();
 	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonPressed(IN_DUCK, true);
@@ -657,12 +663,9 @@ internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPl
 	return true;
 }
 
-#define MAX_BUMPS 4
-#define RAMP_PIERCE_DISTANCE 1.0f
-#define RAMP_BUG_THRESHOLD 0.98f
-#define NEW_RAMP_THRESHOLD 0.75f
 void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
+	this->tpmTriggerFixOrigins.RemoveAll();
 	this->overrideTPM = false;
 	this->didTPM = true;
 	CCSPlayerPawn *pawn = this->player->GetPawn();
@@ -672,6 +675,8 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	Vector start, velocity, end;
 	this->player->GetOrigin(&start);
 	this->player->GetVelocity(&velocity);
+
+	this->tpmTriggerFixOrigins.AddToTail(start);
 	if (velocity.Length() == 0.0f)
 	{
 		// No move required.
@@ -685,17 +690,19 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	u32 bumpCount{};
 	Vector planes[5];
 	u32 numPlanes{};
+
 	bbox_t bounds;
 	bounds.mins = { -16, -16, 0 };
 	bounds.maxs = { 16, 16, 72 };
-
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, pawn, pawn->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
 
 	if (this->player->GetMoveServices()->m_bDucked())
 	{
 		bounds.maxs.z = 54;
 	}
+
+	CTraceFilterPlayerMovementCS filter;
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, pawn, pawn->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+
 	for (bumpCount = 0; bumpCount < MAX_BUMPS; bumpCount++)
 	{
 		// Assume we can move all the way from the current origin to the end point.
@@ -792,6 +799,9 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 			start = pm.endpos;
 			numPlanes = 0;
 		}
+
+		this->tpmTriggerFixOrigins.AddToTail(pm.endpos);
+
 		if (allFraction == 1.0f)
 		{
 			break;
@@ -861,5 +871,48 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *p
 	{
 		this->player->SetOrigin(this->tpmOrigin);
 		this->player->SetVelocity(this->tpmVelocity);
+	}
+	if (this->airMoving && this->tpmTriggerFixOrigins.Count() > 1)
+	{
+		bbox_t bounds;
+		this->player->GetBBoxBounds(&bounds);
+		for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
+		{
+			this->player->TouchTriggersAlongPath(this->tpmTriggerFixOrigins[i], this->tpmTriggerFixOrigins[i + 1], bounds);
+		}
+		this->player->UpdateTriggerTouchList();
+	}
+}
+
+void KZClassicModeService::OnDuckPost()
+{
+	this->player->UpdateTriggerTouchList();
+}
+
+void KZClassicModeService::OnAirMove()
+{
+	this->airMoving = true;
+}
+
+void KZClassicModeService::OnAirMovePost()
+{
+	this->airMoving = false;
+}
+
+void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
+{
+	if (!this->player->processingMovement)
+	{
+		return;
+	}
+	// Only happens when triggerfix happens.
+	META_CONPRINTF("Teleported!\n");
+	if (newPosition)
+	{
+		this->player->currentMoveData->m_vecAbsOrigin = *newPosition;
+	}
+	if (newVelocity)
+	{
+		this->player->currentMoveData->m_vecVelocity = *newVelocity;
 	}
 }
