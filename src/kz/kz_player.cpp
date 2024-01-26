@@ -458,7 +458,12 @@ void KZPlayer::UpdateTriggerTouchList()
 {
 	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 	{
-		this->touchedTriggers.RemoveAll();
+		FOR_EACH_VEC(this->touchedTriggers, i)
+		{
+			CBaseTrigger *trigger = static_cast<CBaseTrigger *>(g_pEntitySystem->GetBaseEntity(this->touchedTriggers[i]));
+			trigger->EndTouch(this->GetPawn());
+			this->GetPawn()->EndTouch(trigger);
+		}
 		return;
 	}
 	Vector origin;
