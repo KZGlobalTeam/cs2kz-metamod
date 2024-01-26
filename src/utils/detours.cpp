@@ -11,7 +11,6 @@ CUtlVector<CDetourBase *> g_vecDetours;
 
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
 DECLARE_DETOUR(CCSPP_Teleport, Detour_CCSPP_Teleport, &modules::server);
-DECLARE_DETOUR(TraceRay, Detour_TraceRay, &modules::server);
 
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
@@ -45,7 +44,6 @@ void InitDetours()
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(RecvServerBrowserPacket);
 	INIT_DETOUR(CCSPP_Teleport);
-	INIT_DETOUR(TraceRay);
 }
 
 void FlushAllDetours()
@@ -76,10 +74,4 @@ void Detour_CCSPP_Teleport(CCSPlayerPawn *this_, const Vector *newPosition, cons
 		player->OnTeleport(newPosition, newAngles, newVelocity);
 	}
 	CCSPP_Teleport(this_, newPosition, newAngles, newVelocity);
-}
-
-void Detour_TraceRay(CGamePhysicsQueryInterface *physicsQuery, void *ray, Vector *start, Vector *end, void *filter, void *pm)
-{
-	utils::physicsQuery = physicsQuery;
-	TraceRay(physicsQuery, ray, start, end, filter, pm);
 }

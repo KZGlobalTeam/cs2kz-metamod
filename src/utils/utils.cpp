@@ -23,7 +23,6 @@
 InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
 TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
-CGamePhysicsQueryInterface *utils::physicsQuery = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;

@@ -136,12 +136,6 @@ struct EmitSound_t
 };
 
 // Tracing stuff.
-
-struct CGamePhysicsQueryInterface
-{
-	void *m_pWorld;
-};
-
 struct RnCollisionAttr_t
 { // Unsure, doesn't seem right either for the first few members.
 	uint64_t m_nInteractsAs;

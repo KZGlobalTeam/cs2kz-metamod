@@ -40,7 +40,6 @@ namespace utils
 	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
 	extern InitGameTrace_t *InitGameTrace;
 	extern TracePlayerBBox_t *TracePlayerBBox;
-	extern CGamePhysicsQueryInterface *physicsQuery;
 
 	// Normalize the angle between -180 and 180.
 	f32 NormalizeDeg(f32 a);
