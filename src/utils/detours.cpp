@@ -9,9 +9,6 @@
 extern CEntitySystem *g_pEntitySystem;
 CUtlVector<CDetourBase *> g_vecDetours;
 
-//DECLARE_DETOUR(CBaseTrigger_StartTouch, Detour_CBaseTrigger_StartTouch, &modules::server);
-//DECLARE_DETOUR(CBaseEntity_Touch, Detour_CBaseEntity_Touch, &modules::server);
-//DECLARE_DETOUR(CBaseTrigger_EndTouch, Detour_CBaseTrigger_EndTouch, &modules::server);
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
 DECLARE_DETOUR(CCSPP_Teleport, Detour_CCSPP_Teleport, &modules::server);
 DECLARE_DETOUR(TraceRay, Detour_TraceRay, &modules::server);
@@ -32,6 +29,7 @@ DECLARE_MOVEMENT_DETOUR(CanUnduck);
 DECLARE_MOVEMENT_DETOUR(LadderMove);
 DECLARE_MOVEMENT_DETOUR(CheckJumpButton);
 DECLARE_MOVEMENT_DETOUR(OnJump);
+DECLARE_MOVEMENT_DETOUR(AirMove);
 DECLARE_MOVEMENT_DETOUR(AirAccelerate);
 DECLARE_MOVEMENT_DETOUR(Friction);
 DECLARE_MOVEMENT_DETOUR(WalkMove);
@@ -45,9 +43,6 @@ DECLARE_MOVEMENT_DETOUR(PostThink);
 void InitDetours()
 {
 	g_vecDetours.RemoveAll();
-	//INIT_DETOUR(CBaseTrigger_StartTouch);
-	//INIT_DETOUR(CBaseEntity_Touch);
-	//INIT_DETOUR(CBaseTrigger_EndTouch);
 	INIT_DETOUR(RecvServerBrowserPacket);
 	INIT_DETOUR(CCSPP_Teleport);
 	INIT_DETOUR(TraceRay);
@@ -62,99 +57,6 @@ void FlushAllDetours()
 
 	g_vecDetours.RemoveAll();
 }
-
-bool IsEntTriggerMultiple(CBaseEntity2 *ent)
-{
-	bool result = false;
-	if (ent && ent->m_pEntity)
-	{
-		const char *classname = ent->m_pEntity->m_designerName.String();
-		result = classname && stricmp(classname, "trigger_multiple") == 0;
-	}
-	return result;
-}
-
-bool IsTriggerStartZone(CBaseTrigger *trigger)
-{
-	bool result = false;
-	if (trigger && trigger->m_pEntity)
-	{
-		const char *targetname = trigger->m_pEntity->m_name.String();
-		result = targetname && stricmp(targetname, "timer_startzone") == 0;
-	}
-	return result;
-}
-
-bool IsTriggerEndZone(CBaseTrigger *trigger)
-{
-	bool result = false;
-	if (trigger && trigger->m_pEntity)
-	{
-		const char *targetname = trigger->m_pEntity->m_name.String();
-		result = targetname && stricmp(targetname, "timer_endzone") == 0;
-	}
-	return result;
-}
-
-//void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther)
-//{
-//	CBaseTrigger_StartTouch(this_, pOther);
-//
-//	if (pOther->IsPawn())
-//	{
-//		META_CONPRINTF("StartTouch %f\n", g_pKZUtils->GetServerGlobals()->curtime);
-//		CBasePlayerController *controller = utils::GetController(pOther);
-//		if (!controller)
-//		{
-//			return;
-//		}
-//		MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
-//		if (IsEntTriggerMultiple(this_))
-//		{
-//			if (IsTriggerStartZone(this_))
-//			{
-//				player->StartZoneStartTouch();
-//			}
-//			else if (IsTriggerEndZone(this_))
-//			{
-//				player->EndZoneStartTouch();
-//			}
-//		}
-//	}
-//}
-//
-//void FASTCALL Detour_CBaseEntity_Touch(CBaseEntity2 *this_, CBaseEntity2 *pOther)
-//{
-//	CBaseEntity_Touch(this_, pOther);
-//
-//	if (pOther->IsPawn())
-//	{
-//		META_CONPRINTF("%s Touch %s %f\n", this_->GetClassname(), pOther->GetClassname(), g_pKZUtils->GetServerGlobals()->curtime);
-//	}
-//}
-//
-//void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pOther)
-//{
-//	CBaseTrigger_EndTouch(this_, pOther);
-//
-//	if (pOther->IsPawn())
-//	{
-//		META_CONPRINTF("EndTouch %f\n", g_pKZUtils->GetServerGlobals()->curtime);
-//		CBasePlayerController *controller = utils::GetController(pOther);
-//		if (!controller)
-//		{
-//			return;
-//		}
-//		MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
-//		if (IsEntTriggerMultiple(this_))
-//		{
-//			if (IsTriggerStartZone(this_))
-//			{
-//				player->StartZoneEndTouch();
-//			}
-//		}
-//	}
-//}
 
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)
 {

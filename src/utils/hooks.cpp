@@ -5,6 +5,32 @@
 #include "kz/quiet/kz_quiet.h"
 
 class GameSessionConfiguration_t {};
+
+class EntListener : public IEntityListener
+{
+	virtual void OnEntitySpawned(CEntityInstance *pEntity);
+	virtual void OnEntityDeleted(CEntityInstance *pEntity);
+} entityListener;
+
+internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args);
+internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
+internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities);
+internal void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
+internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
+internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
+internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
+internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients,
+	INetworkSerializable *pEvent, const void *pData, unsigned long nSize, NetChannelBufType_t bufType);
+internal void OnStartTouch(CBaseEntity2 *pOther);
+internal void OnTouch(CBaseEntity2 *pOther);
+internal void OnEndTouch(CBaseEntity2 *pOther);
+
+internal void OnStartTouchPost(CBaseEntity2 *pOther);
+internal void OnTouchPost(CBaseEntity2 *pOther);
+internal void OnEndTouchPost(CBaseEntity2 *pOther);
+
+
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
 SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &, const Entity2Networkable_t **, const uint16 *, int);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
@@ -19,6 +45,7 @@ SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitSc
 SH_DECL_HOOK1_void(CBaseEntity2, StartTouch, SH_NOATTRIB, false, CBaseEntity2 *);
 SH_DECL_HOOK1_void(CBaseEntity2, Touch, SH_NOATTRIB, false, CBaseEntity2 *);
 SH_DECL_HOOK1_void(CBaseEntity2, EndTouch, SH_NOATTRIB, false, CBaseEntity2 *);
+
 
 void hooks::Initialize()
 {
@@ -45,6 +72,47 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 }
 
+internal void AddEntityHook(CBaseEntity2 *entity)
+{
+	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
+	{
+		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouch), false));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouch), false));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouch), false));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouchPost), true));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouchPost), true));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouchPost), true));
+		if (!V_stricmp(entity->GetClassname(), "player") && g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity)))
+		{
+			g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity))->pendingEndTouchTriggers.RemoveAll();
+			g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity))->pendingStartTouchTriggers.RemoveAll();
+			g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity))->touchedTriggers.RemoveAll();
+		}
+	}
+}
+
+internal void RemoveEntityHooks(CBaseEntity2 *entity)
+{
+	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
+	{
+		SH_REMOVE_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouch), false);
+		SH_REMOVE_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouch), false);
+		SH_REMOVE_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouch), false);
+		SH_REMOVE_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouchPost), true);
+		SH_REMOVE_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouchPost), true);
+		SH_REMOVE_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouchPost), true);
+		if (V_strstr(entity->GetClassname(), "trigger_"))
+		{
+			for (u32 i = 0; i <= MAXPLAYERS; i++)
+			{
+				g_pPlayerManager->players[i]->pendingEndTouchTriggers.FindAndRemove(entity->GetRefEHandle());
+				g_pPlayerManager->players[i]->pendingStartTouchTriggers.FindAndRemove(entity->GetRefEHandle());
+				g_pPlayerManager->players[i]->touchedTriggers.FindAndRemove(entity->GetRefEHandle());
+			}
+		}
+	}
+}
+
 void hooks::HookEntities()
 {
 	FOR_EACH_VEC(hooks::entityTouchHooks, i)
@@ -52,23 +120,12 @@ void hooks::HookEntities()
 		SH_REMOVE_HOOK_ID(hooks::entityTouchHooks[i]);
 	}
 	hooks::entityTouchHooks.Purge();
+	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 	for (CEntityIdentity *entID = GameEntitySystem()->m_EntityList.m_pFirstActiveEntity; entID != NULL; entID = entID->m_pNext)
 	{
-		if (V_strstr(entID->GetClassname(), "trigger_") || !V_stricmp(entID->GetClassname(), "player"))
-		{
-			CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(entID->m_pInstance);
-			hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, StartTouch, ent, SH_STATIC(OnStartTouch), false));
-			hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, Touch, ent, SH_STATIC(OnTouch), false));
-			hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, EndTouch, ent, SH_STATIC(OnEndTouch), false));
-			if (!V_stricmp(entID->GetClassname(), "player"))
-			{
-				g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entID->m_pInstance))->pendingEndTouchTriggers.RemoveAll();
-				g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entID->m_pInstance))->pendingStartTouchTriggers.RemoveAll();
-				g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entID->m_pInstance))->touchedTriggers.RemoveAll();
-			}
-			META_CONPRINTF("Hooked %i %s!\n", entID->GetEntityIndex(), entID->GetClassname());
-		}
+		AddEntityHook(static_cast<CBaseEntity2 *>(entID->m_pInstance));
 	}
+	GameEntitySystem()->AddListenerEntity(&entityListener);
 }
 
 internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo_DontUse)
@@ -125,7 +182,6 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 {
 	if (event)
 	{
-		//META_CONPRINTF("%s fired!\n", event->GetName());
 		if (V_stricmp(event->GetName(), "player_death") == 0)
 		{
 			CEntityInstance *instance = event->GetPlayerPawn("userid");
@@ -173,7 +229,10 @@ internal void OnStartTouch(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
-	META_CONPRINTF("[%.1f] StartTouch: %s - %s %i!\n", g_pKZUtils->GetServerGlobals()->curtime * 64.0f, pThis->GetClassname(), pOther->GetClassname(), player->touchedTriggers.Count());
+	if (!player->OnTriggerStartTouch(trigger))
+	{
+		RETURN_META(MRES_SUPERCEDE);
+	}
 	// Don't start touch this trigger twice.
 	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()))
 	{
@@ -184,12 +243,10 @@ internal void OnStartTouch(CBaseEntity2 *pOther)
 	{
 		player->touchedTriggers.AddToTail(trigger->GetRefEHandle());
 		player->pendingStartTouchTriggers.FindAndRemove(trigger->GetRefEHandle());
-		META_CONPRINTF("%s finish starttouch with %s!\n", pThis->GetClassname(), pOther->GetClassname());
 		RETURN_META(MRES_IGNORED);
 	}
 	// Must be a new interaction!
 	player->pendingStartTouchTriggers.AddToTail(trigger->GetRefEHandle());
-	META_CONPRINTF("%s initiate starttouch with %s!\n", pThis->GetClassname(), pOther->GetClassname());
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -213,10 +270,13 @@ internal void OnTouch(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
-	META_CONPRINTF("[%.1f] Touch: %s - %s %i!\n", g_pKZUtils->GetServerGlobals()->curtime * 64.0f, pThis->GetClassname(), pOther->GetClassname(), player->touchedTriggers.Count());
+	if (!player->OnTriggerTouch(trigger))
+	{
+		RETURN_META(MRES_SUPERCEDE);
+	}
+	
 	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()))
 	{
-		META_CONPRINTF("%s touches %s!\n", pThis->GetClassname(), pOther->GetClassname());
 		RETURN_META(MRES_IGNORED);
 	}
 	// Can't "touch" what isn't in the touch list.
@@ -243,18 +303,84 @@ internal void OnEndTouch(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
-	META_CONPRINTF("[%.1f] EndTouch: %s - %s %i!\n", g_pKZUtils->GetServerGlobals()->curtime * 64.0f, pThis->GetClassname(), pOther->GetClassname(), player->touchedTriggers.Count());
+	if (!player->OnTriggerEndTouch(trigger))
+	{
+		RETURN_META(MRES_SUPERCEDE);
+	}
 	if (player->touchedTriggers.FindAndRemove(trigger->GetRefEHandle()))
 	{
-		META_CONPRINTF("%s initiates endtouch %s!\n", pThis->GetClassname(), pOther->GetClassname());
 		player->pendingEndTouchTriggers.AddToTail(trigger->GetRefEHandle());
 		RETURN_META(MRES_IGNORED);
 	}
 	if (player->pendingEndTouchTriggers.FindAndRemove(trigger->GetRefEHandle()))
 	{
-		META_CONPRINTF("%s finish endtouch %s!\n", pThis->GetClassname(), pOther->GetClassname());
 		RETURN_META(MRES_IGNORED);
 	}
 	// Can't end touch on something we never touched in the first place.
 	RETURN_META(MRES_SUPERCEDE);
+}
+
+internal void OnStartTouchPost(CBaseEntity2 *pOther)
+{
+	if (META_RESULT_PREVIOUS == MRES_SUPERCEDE)
+	{
+		RETURN_META(MRES_SUPERCEDE);
+	}
+	if (V_stricmp(pOther->GetClassname(), "player"))
+	{
+		RETURN_META(MRES_IGNORED);
+	}
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
+	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
+	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))		
+	{
+		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
+		if (trigger->IsEndZone())
+		{
+			player->EndZoneStartTouch();
+		}
+		else if (trigger->IsStartZone())
+		{
+			player->StartZoneStartTouch();
+		}
+	}
+	RETURN_META(MRES_IGNORED);
+}
+
+internal void OnTouchPost(CBaseEntity2 *pOther)
+{
+	if (META_RESULT_PREVIOUS == MRES_SUPERCEDE)
+	{
+		RETURN_META(MRES_SUPERCEDE);
+	}
+	RETURN_META(MRES_IGNORED);
+}
+
+internal void OnEndTouchPost(CBaseEntity2 *pOther)
+{
+	if (META_RESULT_PREVIOUS == MRES_SUPERCEDE)
+	{
+		RETURN_META(MRES_SUPERCEDE);
+	}
+	if (V_stricmp(pOther->GetClassname(), "player"))
+	{
+		RETURN_META(MRES_IGNORED);
+	}
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
+	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
+	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple") && static_cast<CBaseTrigger *>(pThis)->IsStartZone())
+	{
+		player->StartZoneEndTouch();
+	}
+	RETURN_META(MRES_IGNORED);
+}
+
+void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
+{
+	AddEntityHook(static_cast<CBaseEntity2 *>(pEntity));
+}
+
+void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
+{
+	RemoveEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
 }

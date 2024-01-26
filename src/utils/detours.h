@@ -6,15 +6,6 @@
 
 #include "movement/movement.h"
 #include "utils/utils.h"
-//
-//void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
-//extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;
-//
-//void FASTCALL Detour_CBaseEntity_Touch(CBaseEntity2 *this_, CBaseEntity2 *pOther);
-//extern CDetour<decltype(Detour_CBaseEntity_Touch)> CBaseEntity_Touch;
-//
-//void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
-//extern CDetour<decltype(Detour_CBaseTrigger_EndTouch)> CBaseTrigger_EndTouch;
 
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock);
 extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket;

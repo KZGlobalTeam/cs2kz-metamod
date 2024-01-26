@@ -21,6 +21,7 @@ void movement::InitDetours()
 	INIT_DETOUR(LadderMove);
 	INIT_DETOUR(CheckJumpButton);
 	INIT_DETOUR(OnJump);
+	INIT_DETOUR(AirMove);
 	INIT_DETOUR(AirAccelerate);
 	INIT_DETOUR(Friction);
 	INIT_DETOUR(WalkMove);
@@ -242,6 +243,14 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 		player->OnStopTouchGround();
 	}
 	player->OnJumpPost();
+}
+
+void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
+{
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
+	player->OnAirMove();
+	AirMove(ms, mv);
+	player->OnAirMovePost();
 }
 
 void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)

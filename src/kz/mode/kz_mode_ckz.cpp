@@ -872,13 +872,16 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *p
 		this->player->SetOrigin(this->tpmOrigin);
 		this->player->SetVelocity(this->tpmVelocity);
 	}
-	if (this->airMoving && this->tpmTriggerFixOrigins.Count() > 1)
+	if (this->airMoving)
 	{
-		bbox_t bounds;
-		this->player->GetBBoxBounds(&bounds);
-		for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
+		if (this->tpmTriggerFixOrigins.Count() > 1)
 		{
-			this->player->TouchTriggersAlongPath(this->tpmTriggerFixOrigins[i], this->tpmTriggerFixOrigins[i + 1], bounds);
+			bbox_t bounds;
+			this->player->GetBBoxBounds(&bounds);
+			for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
+			{
+				this->player->TouchTriggersAlongPath(this->tpmTriggerFixOrigins[i], this->tpmTriggerFixOrigins[i + 1], bounds);
+			}
 		}
 		this->player->UpdateTriggerTouchList();
 	}
@@ -906,7 +909,6 @@ void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 		return;
 	}
 	// Only happens when triggerfix happens.
-	META_CONPRINTF("Teleported!\n");
 	if (newPosition)
 	{
 		this->player->currentMoveData->m_vecAbsOrigin = *newPosition;
@@ -915,4 +917,58 @@ void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 	{
 		this->player->currentMoveData->m_vecVelocity = *newVelocity;
 	}
+}
+
+// Only touch timer triggers on half ticks.
+bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
+{
+	if (!trigger->IsEndZone() && !trigger->IsStartZone())
+	{
+		return true;
+	}
+	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	{
+		return true;
+	}
+	if (fabs(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime - 0.5f * ENGINE_FIXED_TICK_INTERVAL) < 0.001f)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
+{
+	if (!trigger->IsEndZone() && !trigger->IsStartZone())
+	{
+		return true;
+	}
+	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	{
+		return true;
+	}
+	if (fabs(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime - 0.5f * ENGINE_FIXED_TICK_INTERVAL) < 0.001f)
+	{
+		return true;
+	}
+	return true;
+}
+
+bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
+{
+	if (!trigger->IsStartZone())
+	{
+		return true;
+	}
+	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	{
+		return true;
+	}
+	if (fabs(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime - 0.5f * ENGINE_FIXED_TICK_INTERVAL) < 0.001f)
+	{
+		return true;
+	}
+
+	return true;
 }

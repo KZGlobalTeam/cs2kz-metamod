@@ -127,6 +127,10 @@ public:
 	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
 
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
+
 	// Insert subtick timing to be called later.
 	// This is called either at the end of movement processing, or at the start of ProcessUsercmds.
 	// If it is called at the end of movement processing, it must set subtick timing into the future.

@@ -51,10 +51,16 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 	out -= (normal * adjust);
 }
 
+void KZVanillaModeService::OnDuckPost()
+{
+	this->player->UpdateTriggerTouchList();
+}
+
 // We don't actually do anything here aside from seeing if we collided with anything.
 #define MAX_CLIP_PLANES 5
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
+	this->tpmTriggerFixOrigins.RemoveAll();
 	Vector velocity, origin;
 	int			bumpcount, numbumps;
 	Vector		dir;
@@ -146,7 +152,8 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		// If we covered the entire distance, we are done
 		//  and can return.
 		
-		// AddToTouched
+		// Triggerfix related
+		this->tpmTriggerFixOrigins.AddToTail(pm.endpos);
 
 		if (pm.fraction == 1)
 		{
@@ -247,4 +254,104 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	{
 		VectorCopy(vec3_origin, velocity);
 	}
+}
+
+void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+{
+	if (this->airMoving)
+	{
+		if (this->tpmTriggerFixOrigins.Count() > 1)
+		{
+			bbox_t bounds;
+			this->player->GetBBoxBounds(&bounds);
+			for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
+			{
+				this->player->TouchTriggersAlongPath(this->tpmTriggerFixOrigins[i], this->tpmTriggerFixOrigins[i + 1], bounds);
+			}
+		}
+		this->player->UpdateTriggerTouchList();
+	}
+}
+
+void KZVanillaModeService::OnAirMove()
+{
+	this->airMoving = true;
+}
+
+void KZVanillaModeService::OnAirMovePost()
+{
+	this->airMoving = false;
+}
+
+// Only touch timer triggers on full ticks.
+bool KZVanillaModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
+{
+	if (!trigger->IsEndZone() && !trigger->IsStartZone())
+	{
+		return true;
+	}
+	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool KZVanillaModeService::OnTriggerTouch(CBaseTrigger *trigger)
+{
+	if (!trigger->IsEndZone() && !trigger->IsStartZone())
+	{
+		return true;
+	}
+	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	{
+		return true;
+	}
+	return true;
+}
+
+bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
+{
+	if (!trigger->IsStartZone())
+	{
+		return true;
+	}
+	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	{
+		return true;
+	}
+
+	return true;
+}
+
+void KZVanillaModeService::OnProcessMovementPost()
+{
+	this->player->UpdateTriggerTouchList();
+}
+
+void KZVanillaModeService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
+{
+	if (!this->player->processingMovement)
+	{
+		return;
+	}
+	// Only happens when triggerfix happens.
+	if (newPosition)
+	{
+		this->player->currentMoveData->m_vecAbsOrigin = *newPosition;
+	}
+	if (newVelocity)
+	{
+		this->player->currentMoveData->m_vecVelocity = *newVelocity;
+	}
+}
+
+void KZVanillaModeService::OnStartTouchGround()
+{
+	bbox_t bounds;
+	this->player->GetBBoxBounds(&bounds);
+	Vector ground = this->player->landingOrigin;
+	ground.z = this->player->GetGroundPosition() - 0.03125f;
+	this->player->TouchTriggersAlongPath(this->player->landingOrigin, ground, bounds);
 }

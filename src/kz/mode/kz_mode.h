@@ -81,6 +81,9 @@ public:
 	virtual void StartZoneEndTouch() {};
 	virtual void EndZoneStartTouch() {};
 
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) { return true; }
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) { return true; }
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) { return true; }
 	// Other events
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) {}
 };

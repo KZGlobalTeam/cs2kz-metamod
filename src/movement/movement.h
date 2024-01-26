@@ -141,6 +141,9 @@ public:
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();
 
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) { return true; }
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) { return true; }
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) { return true; }
 	void PlayErrorSound();
 
 	bool IsAlive() { return this->GetPawn() ? this->GetPawn()->m_lifeState() == LIFE_ALIVE : false; }
@@ -151,7 +154,7 @@ public:
 	// General
 	const i32 index;
 
-	bool processingMovement;
+	bool processingMovement{};
 	CMoveData *currentMoveData{};
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;

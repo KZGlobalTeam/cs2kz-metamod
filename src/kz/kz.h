@@ -106,6 +106,10 @@ public:
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();
 
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
+
 private:
 	bool inNoclip{};
 	bool hideLegs{};

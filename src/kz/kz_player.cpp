@@ -70,9 +70,9 @@ void KZPlayer::OnProcessMovementPost()
 {
 	this->hudService->DrawSpeedPanel();
 	this->jumpstatsService->UpdateJump();
-	MovementPlayer::OnProcessMovementPost();
 	this->modeService->OnProcessMovementPost();
 	this->jumpstatsService->OnProcessMovementPost();
+	MovementPlayer::OnProcessMovementPost();
 }
 
 void KZPlayer::OnPlayerMove()
@@ -347,7 +347,6 @@ void KZPlayer::HandleMoveCollision()
 
 void KZPlayer::StartZoneStartTouch()
 {
-	utils::PrintChatAll("%f", g_pKZUtils->GetServerGlobals()->curtime * 64.0f);
 	MovementPlayer::StartZoneStartTouch();
 	this->checkpointService->Reset();
 }
@@ -502,4 +501,22 @@ void KZPlayer::UpdateTriggerTouchList()
 			this->GetPawn()->Touch(trigger);
 		}
 	}
+}
+
+bool KZPlayer::OnTriggerStartTouch(CBaseTrigger *trigger)
+{
+	bool retValue = this->modeService->OnTriggerStartTouch(trigger);
+	return retValue;
+}
+
+bool KZPlayer::OnTriggerTouch(CBaseTrigger *trigger)
+{
+	bool retValue = this->modeService->OnTriggerTouch(trigger);
+	return retValue;
+}
+
+bool KZPlayer::OnTriggerEndTouch(CBaseTrigger *trigger)
+{
+	bool retValue = this->modeService->OnTriggerEndTouch(trigger);
+	return retValue;
 }
