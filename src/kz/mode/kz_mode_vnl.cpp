@@ -46,7 +46,6 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 		out[i] = in[i] - change;
 	}
 
-	// Rampbug/wallbug fix: always move a little bit away from the plane
 	float adjust = -0.0078125f;
 	out -= (normal * adjust);
 }
@@ -56,11 +55,12 @@ void KZVanillaModeService::OnDuckPost()
 	this->player->UpdateTriggerTouchList();
 }
 
-// We don't actually do anything here aside from seeing if we collided with anything.
+// We don't actually do anything here aside from predicting triggerfix.
 #define MAX_CLIP_PLANES 5
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
 	this->tpmTriggerFixOrigins.RemoveAll();
+
 	Vector velocity, origin;
 	int			bumpcount, numbumps;
 	Vector		dir;
@@ -330,13 +330,13 @@ void KZVanillaModeService::OnProcessMovementPost()
 	this->player->UpdateTriggerTouchList();
 }
 
+// Only happens when triggerfix happens.
 void KZVanillaModeService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
 	if (!this->player->processingMovement)
 	{
 		return;
 	}
-	// Only happens when triggerfix happens.
 	if (newPosition)
 	{
 		this->player->currentMoveData->m_vecAbsOrigin = *newPosition;

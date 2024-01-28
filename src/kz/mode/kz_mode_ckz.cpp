@@ -183,7 +183,6 @@ void KZClassicModeService::OnJump()
 	// Emulate the 128t vertical velocity before jumping
 	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND)
 	{
-		// TODO: update util functions to be accessible across plugins
 		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
 		this->player->SetVelocity(velocity);
 		this->tweakedJumpZSpeed = velocity.z;
@@ -616,7 +615,6 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 		out[i] = in[i] - change;
 	}
 
-	// Rampbug/wallbug fix: always move a little bit away from the plane
 	float adjust = -0.0078125f;
 	out -= (normal * adjust);
 }
