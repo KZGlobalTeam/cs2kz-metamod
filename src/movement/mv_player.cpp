@@ -81,7 +81,7 @@ void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const 
 	}
 	// We handle angles differently.
 	this->SetAngles(*angles);
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, NULL, velocity);
+	pawn->Teleport(origin, NULL, velocity);
 }
 
 void MovementPlayer::SetOrigin(const Vector &origin)

@@ -952,7 +952,7 @@ bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	return true;
+	return false;
 }
 
 bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
@@ -970,5 +970,5 @@ bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 		return true;
 	}
 
-	return true;
+	return false;
 }

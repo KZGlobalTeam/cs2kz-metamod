@@ -26,10 +26,12 @@ internal void OnStartTouch(CBaseEntity2 *pOther);
 internal void OnTouch(CBaseEntity2 *pOther);
 internal void OnEndTouch(CBaseEntity2 *pOther);
 
+internal bool ignoreTouchEvent{};
 internal void OnStartTouchPost(CBaseEntity2 *pOther);
 internal void OnTouchPost(CBaseEntity2 *pOther);
 internal void OnEndTouchPost(CBaseEntity2 *pOther);
 
+internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
 SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &, const Entity2Networkable_t **, const uint16 *, int);
@@ -45,6 +47,8 @@ SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitSc
 SH_DECL_HOOK1_void(CBaseEntity2, StartTouch, SH_NOATTRIB, false, CBaseEntity2 *);
 SH_DECL_HOOK1_void(CBaseEntity2, Touch, SH_NOATTRIB, false, CBaseEntity2 *);
 SH_DECL_HOOK1_void(CBaseEntity2, EndTouch, SH_NOATTRIB, false, CBaseEntity2 *);
+
+SH_DECL_HOOK3_void(CCSPlayerPawn, Teleport, SH_NOATTRIB, false, const Vector *, const QAngle *, const Vector *);
 
 
 void hooks::Initialize()
@@ -82,11 +86,13 @@ internal void AddEntityHook(CBaseEntity2 *entity)
 		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouchPost), true));
 		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouchPost), true));
 		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouchPost), true));
-		if (!V_stricmp(entity->GetClassname(), "player") && g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity)))
+		CCSPlayerPawn* pawn = static_cast<CCSPlayerPawn *>(entity);
+		if (!V_stricmp(entity->GetClassname(), "player") && g_pPlayerManager->ToPlayer(pawn))
 		{
-			g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity))->pendingEndTouchTriggers.RemoveAll();
-			g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity))->pendingStartTouchTriggers.RemoveAll();
-			g_pPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(entity))->touchedTriggers.RemoveAll();
+			hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CCSPlayerPawn, Teleport, pawn, SH_STATIC(OnTeleport), false));
+			g_pPlayerManager->ToPlayer(pawn)->pendingEndTouchTriggers.RemoveAll();
+			g_pPlayerManager->ToPlayer(pawn)->pendingStartTouchTriggers.RemoveAll();
+			g_pPlayerManager->ToPlayer(pawn)->touchedTriggers.RemoveAll();
 		}
 	}
 }
@@ -109,6 +115,10 @@ internal void RemoveEntityHooks(CBaseEntity2 *entity)
 				g_pPlayerManager->players[i]->pendingStartTouchTriggers.FindAndRemove(entity->GetRefEHandle());
 				g_pPlayerManager->players[i]->touchedTriggers.FindAndRemove(entity->GetRefEHandle());
 			}
+		}
+		else
+		{
+			SH_REMOVE_HOOK(CCSPlayerPawn, Teleport, static_cast<CCSPlayerPawn *>(entity), SH_STATIC(OnTeleport), false);
 		}
 	}
 }
@@ -231,11 +241,13 @@ internal void OnStartTouch(CBaseEntity2 *pOther)
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	if (!player->OnTriggerStartTouch(trigger))
 	{
+		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
 	// Don't start touch this trigger twice.
 	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()))
 	{
+		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
 	// StartTouch is a two way interaction. Are we waiting for this trigger?
@@ -272,6 +284,7 @@ internal void OnTouch(CBaseEntity2 *pOther)
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	if (!player->OnTriggerTouch(trigger))
 	{
+		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
 	
@@ -280,6 +293,7 @@ internal void OnTouch(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	// Can't "touch" what isn't in the touch list.
+	ignoreTouchEvent = true;
 	RETURN_META(MRES_SUPERCEDE);
 }
 
@@ -305,6 +319,7 @@ internal void OnEndTouch(CBaseEntity2 *pOther)
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	if (!player->OnTriggerEndTouch(trigger))
 	{
+		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
 	if (player->touchedTriggers.FindAndRemove(trigger->GetRefEHandle()))
@@ -317,15 +332,19 @@ internal void OnEndTouch(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	// Can't end touch on something we never touched in the first place.
+	ignoreTouchEvent = true;
 	RETURN_META(MRES_SUPERCEDE);
 }
 
 internal void OnStartTouchPost(CBaseEntity2 *pOther)
 {
-	if (META_RESULT_PREVIOUS == MRES_SUPERCEDE)
+	if (ignoreTouchEvent)
 	{
+		ignoreTouchEvent = false;
 		RETURN_META(MRES_SUPERCEDE);
 	}
+	
+	ignoreTouchEvent = false;
 	if (V_stricmp(pOther->GetClassname(), "player"))
 	{
 		RETURN_META(MRES_IGNORED);
@@ -349,19 +368,24 @@ internal void OnStartTouchPost(CBaseEntity2 *pOther)
 
 internal void OnTouchPost(CBaseEntity2 *pOther)
 {
-	if (META_RESULT_PREVIOUS == MRES_SUPERCEDE)
+	if (ignoreTouchEvent)
 	{
+		ignoreTouchEvent = false;
 		RETURN_META(MRES_SUPERCEDE);
 	}
+	ignoreTouchEvent = false;
 	RETURN_META(MRES_IGNORED);
 }
 
 internal void OnEndTouchPost(CBaseEntity2 *pOther)
 {
-	if (META_RESULT_PREVIOUS == MRES_SUPERCEDE)
+	if (ignoreTouchEvent)
 	{
+		ignoreTouchEvent = false;
 		RETURN_META(MRES_SUPERCEDE);
 	}
+
+	ignoreTouchEvent = false;
 	if (V_stricmp(pOther->GetClassname(), "player"))
 	{
 		RETURN_META(MRES_IGNORED);
@@ -371,6 +395,18 @@ internal void OnEndTouchPost(CBaseEntity2 *pOther)
 	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple") && static_cast<CBaseTrigger *>(pThis)->IsStartZone())
 	{
 		player->StartZoneEndTouch();
+	}
+	RETURN_META(MRES_IGNORED);
+}
+
+internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
+{
+	CBaseEntity2 *this_ = META_IFACEPTR(CBaseEntity2);
+	// Just to be sure.
+	if (this_->IsPawn())
+	{
+		MovementPlayer *player = g_pPlayerManager->ToPlayer(static_cast<CBasePlayerPawn *>(this_));
+		player->OnTeleport(newPosition, newAngles, newVelocity);
 	}
 	RETURN_META(MRES_IGNORED);
 }

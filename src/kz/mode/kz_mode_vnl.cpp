@@ -308,7 +308,7 @@ bool KZVanillaModeService::OnTriggerTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	return true;
+	return false;
 }
 
 bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
@@ -322,7 +322,7 @@ bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 		return true;
 	}
 
-	return true;
+	return false;
 }
 
 void KZVanillaModeService::OnProcessMovementPost()

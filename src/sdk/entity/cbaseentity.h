@@ -99,8 +99,12 @@ public:
 	// Vtable stuff
 	virtual ~CBaseEntity2() = 0;
 private:
+// Terrible workaround for linux vtables because of overloading...
+// Two of these functions are probably somewhere at the end of the linux vtable.
+#ifdef _WIN32
 	virtual void Unk_35() = 0;
 	virtual void Unk_36() = 0;
+#endif
 	virtual void Unk_37() = 0;
 	virtual void Unk_38() = 0;
 	virtual void Unk_39() = 0;
@@ -202,4 +206,20 @@ public:
 	virtual void StartTouch(CBaseEntity2 *pOther) = 0;
 	virtual void Touch(CBaseEntity2 *pOther) = 0;
 	virtual void EndTouch(CBaseEntity2 *pOther) = 0;
+private:
+	virtual void Unk_136() = 0;
+	virtual void Unk_137() = 0;
+	virtual void Unk_138() = 0;
+	virtual void Unk_139() = 0;
+	virtual void Unk_140() = 0;
+	virtual void Unk_141() = 0;
+	virtual void Unk_142() = 0;
+	virtual void Unk_143() = 0;
+	virtual void Unk_144() = 0;
+	virtual void Unk_145() = 0;
+	virtual void Unk_146() = 0;
+	virtual void Unk_147() = 0;
+	virtual void Unk_148() = 0;
+public:
+	virtual void Teleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) = 0; // only 148 on linux
 };

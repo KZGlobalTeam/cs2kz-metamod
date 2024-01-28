@@ -435,7 +435,6 @@ void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, co
 	CTraceFilterHitAllTriggers filter;
 	trace_t_s2 tr;
 	g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, tr);
-
 	FOR_EACH_VEC(filter.hitTriggerHandles, i)
 	{
 		CEntityHandle handle = filter.hitTriggerHandles[i];
@@ -494,7 +493,7 @@ void KZPlayer::UpdateTriggerTouchList()
 	{
 		CEntityHandle handle = filter.hitTriggerHandles[i];
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(g_pEntitySystem->GetBaseEntity(handle));
-		if (!V_strstr(trigger->GetClassname(), "trigger_"))
+		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
 		{
 			continue;
 		}

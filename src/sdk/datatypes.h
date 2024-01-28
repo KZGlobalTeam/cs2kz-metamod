@@ -351,6 +351,9 @@ class CTraceFilterHitAllTriggers: public CTraceFilterS2
 public:
 	CTraceFilterHitAllTriggers()
 	{
+		attr.m_nInteractsAs = 0;
+		attr.m_nInteractsExclude = 0;
+		attr.m_nInteractsWith = 4;
 		attr.m_nEntityIdToIgnore = -1;
 		attr.m_nEntityControllerIdToIgnore = -1;
 		attr.m_nOwnerEntityIdToIgnore = -1;
@@ -360,10 +363,10 @@ public:
 		attr.m_nHierarchyId = 0;
 		attr.m_bIterateEntities = true;
 		attr.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
-		attr.m_nInteractsWith = 4;
 		attr.m_bHitTrigger = true;
 	}
 	CUtlVector<CEntityHandle> hitTriggerHandles;
+	virtual ~CTraceFilterHitAllTriggers() { hitTriggerHandles.Purge(); }
 	virtual bool ShouldHitEntity(CBaseEntity2 *other)
 	{
 		hitTriggerHandles.AddToTail(other->GetRefEHandle());
