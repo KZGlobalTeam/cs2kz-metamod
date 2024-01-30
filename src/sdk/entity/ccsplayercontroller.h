@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cbaseplayercontroller.h"
+#include "random.h"
 
 class CCSPlayerController : public CBasePlayerController
 {
@@ -30,11 +31,15 @@ public:
 
 	void Respawn()
 	{
-		CCSPlayerPawn *pPawn = m_hPlayerPawn.Get();
-		if (!pPawn || pPawn->IsAlive())
+		CCSPlayerPawn *pawn = m_hPlayerPawn.Get();
+		if (!pawn || pawn->IsAlive())
 			return;
 
-		SetPawn(pPawn);
+		SetPawn(pawn);
+		if (this->m_iTeamNum() != CS_TEAM_CT && this->m_iTeamNum() != CS_TEAM_T)
+		{
+			SwitchTeam(RandomInt(CS_TEAM_T, CS_TEAM_CT));
+		}
 		CALL_VIRTUAL(void, offsets::ControllerRespawn, this);
 	}
 };
