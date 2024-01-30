@@ -19,14 +19,14 @@
 #define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length); \
 	if (!variable) { Warning("Failed to find address for %s!\n", #sig); return false; }
 
+
 InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
 InitGameTrace_t *utils::InitGameTrace = NULL;
+TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
-TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
 FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
-
 
 void modules::Initialize()
 {

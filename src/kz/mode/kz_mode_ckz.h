@@ -1,8 +1,15 @@
 #pragma once
 
 #include "kz_mode.h"
+#include "sdk/datatypes.h"
+
 #define MODE_NAME_SHORT "CKZ"
 #define MODE_NAME "Classic"
+
+#define MAX_BUMPS 4
+#define RAMP_PIERCE_DISTANCE 1.0f
+#define RAMP_BUG_THRESHOLD 0.98f
+#define NEW_RAMP_THRESHOLD 0.75f
 
 class KZClassicModePlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -94,6 +101,11 @@ class KZClassicModeService : public KZModeService
 	Vector tpmVelocity;
 	Vector tpmOrigin;
 	Vector lastValidPlane;
+
+	// Keep track of TryPlayerMove path for triggerfixing.
+	bool airMoving{};
+	CUtlVector<Vector> tpmTriggerFixOrigins;
+
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
@@ -104,12 +116,21 @@ public:
 	virtual void OnProcessUsercmds(void *, int) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
+	virtual void OnDuckPost() override;
+	virtual void OnAirMove() override;
+	virtual void OnAirMovePost() override;
 	virtual void OnJump() override;
 	virtual void OnJumpPost() override;
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
 	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
+	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
+
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
+
 	// Insert subtick timing to be called later.
 	// This is called either at the end of movement processing, or at the start of ProcessUsercmds.
 	// If it is called at the end of movement processing, it must set subtick timing into the future.

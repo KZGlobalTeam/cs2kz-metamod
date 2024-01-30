@@ -1,22 +1,17 @@
 #pragma once
 #include "cdetour.h"
-#include "irecipientfilter.h"
 #include "sdk/datatypes.h"
-#include "utils.h"
-#include "movement/movement.h"
+#include "sdk/entity/cbasetrigger.h"
 #include "sdk/steamnetworkingsockets.h"
 
-void FASTCALL Detour_CBaseTrigger_StartTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
-extern CDetour<decltype(Detour_CBaseTrigger_StartTouch)> CBaseTrigger_StartTouch;
-
-void FASTCALL Detour_CBaseTrigger_EndTouch(CBaseTrigger *this_, CBaseEntity2 *pOther);
-extern CDetour<decltype(Detour_CBaseTrigger_EndTouch)> CBaseTrigger_EndTouch;
+#include "movement/movement.h"
+#include "utils/utils.h"
 
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock);
 extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket;
 
-void FASTCALL Detour_CCSPP_Teleport(CCSPlayerPawn *this_, const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
-extern CDetour<decltype(Detour_CCSPP_Teleport)> CCSPP_Teleport;
+#define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
+#define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
 
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
@@ -34,6 +29,7 @@ DECLARE_MOVEMENT_EXTERN_DETOUR(CanUnduck);
 DECLARE_MOVEMENT_EXTERN_DETOUR(LadderMove);
 DECLARE_MOVEMENT_EXTERN_DETOUR(CheckJumpButton);
 DECLARE_MOVEMENT_EXTERN_DETOUR(OnJump);
+DECLARE_MOVEMENT_EXTERN_DETOUR(AirMove);
 DECLARE_MOVEMENT_EXTERN_DETOUR(AirAccelerate);
 DECLARE_MOVEMENT_EXTERN_DETOUR(Friction);
 DECLARE_MOVEMENT_EXTERN_DETOUR(WalkMove);

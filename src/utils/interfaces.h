@@ -38,7 +38,7 @@ public:
 
 	virtual void InitPlayerMovementTraceFilter(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
 	virtual void InitGameTrace(trace_t_s2 *trace);
-	virtual void TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm);
+	virtual void TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm);
 
 	// Normalize the angle between -180 and 180.
 	virtual f32 NormalizeDeg(f32 a);

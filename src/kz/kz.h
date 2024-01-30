@@ -4,8 +4,8 @@
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
 
-#define KZ_COLLISION_GROUP_STANDARD LAST_SHARED_COLLISION_GROUP
-#define KZ_COLLISION_GROUP_NOTRIGGER COLLISION_GROUP_DEBRIS
+#define KZ_COLLISION_GROUP_STANDARD COLLISION_GROUP_DEBRIS
+#define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
 
 #define KZ_SND_SET_CP "UIPanorama.round_report_odds_none"
 #define KZ_SND_DO_TP "UIPanorama.round_report_odds_none"
@@ -73,6 +73,8 @@ public:
 	virtual void OnCheckJumpButtonPost() override;
 	virtual void OnJump() override;
 	virtual void OnJumpPost() override;
+	virtual void OnAirMove() override;
+	virtual void OnAirMovePost() override;
 	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
 	virtual void OnFriction() override;
@@ -104,6 +106,10 @@ public:
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();
 
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
+
 private:
 	bool inNoclip{};
 	bool hideLegs{};
@@ -124,8 +130,6 @@ public:
 	KZTimerService *timerService{};
 	KZTipService *tipService{};
 
-	// Misc stuff that doesn't belong into any service.
-
 	// Noclip
 	void DisableNoclip();
 	void ToggleNoclip();
@@ -138,6 +142,15 @@ public:
 	void UpdatePlayerModelAlpha();
 	void PlayCheckpointSound();
 	void PlayTeleportSound();
+
+	// Triggerfix stuff
+	
+	// Hit all triggers from start to end with the specified bounds,
+	// and call Touch/StartTouch on triggers that the player is touching.
+	virtual void TouchTriggersAlongPath(const Vector &start, const Vector &end, const bbox_t &bounds);
+	
+	// Update the list of triggers that the player is touching, and call StartTouch/EndTouch appropriately.
+	virtual void UpdateTriggerTouchList();
 };
 
 class KZBaseService

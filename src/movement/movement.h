@@ -2,9 +2,6 @@
 #include "common.h"
 #include "sdk/datatypes.h"
 
-#define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name, &modules::server);
-#define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
-
 // TODO: better error sound
 #define MV_SND_ERROR "Buttons.snd8"
 #define MV_SND_TIMER_START "Buttons.snd9"
@@ -33,6 +30,7 @@ namespace movement
 	bool FASTCALL Detour_LadderMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckJumpButton(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_OnJump(CCSPlayer_MovementServices *, CMoveData *);
+	void FASTCALL Detour_AirMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_AirAccelerate(CCSPlayer_MovementServices *, CMoveData *, Vector &, f32, f32);
 	void FASTCALL Detour_Friction(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_WalkMove(CCSPlayer_MovementServices *, CMoveData *);
@@ -42,7 +40,6 @@ namespace movement
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostPlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
-
 }
 
 class MovementPlayer
@@ -63,12 +60,15 @@ public:
 	virtual void GetVelocity(Vector *velocity);
 	virtual void SetVelocity(const Vector &velocity);
 	virtual void GetAngles(QAngle *angles);
-
 	// It is not recommended use this to change the angle inside movement processing, it might not work!
 	virtual void SetAngles(const QAngle &angles);
 
+	virtual void GetBBoxBounds(bbox_t *bounds);
+
 	virtual TurnState GetTurning();
+
 	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
+
 	virtual void RegisterTakeoff(bool jumped);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	virtual f32 GetGroundPosition();
@@ -109,6 +109,8 @@ public:
 	virtual void OnCheckJumpButtonPost() {};
 	virtual void OnJump() {};
 	virtual void OnJumpPost() {};
+	virtual void OnAirMove() {};
+	virtual void OnAirMovePost() {};
 	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) {};
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) {};
 	virtual void OnFriction() {};
@@ -139,13 +141,20 @@ public:
 	virtual void StartZoneEndTouch();
 	virtual void EndZoneStartTouch();
 
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) { return true; }
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) { return true; }
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) { return true; }
 	void PlayErrorSound();
+
+	bool IsAlive() { return this->GetPawn() ? this->GetPawn()->m_lifeState() == LIFE_ALIVE : false; }
+	MoveType_t GetMoveType() { return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE; }
+	Collision_Group_t GetCollisionGroup() { return this->GetPawn() ? (Collision_Group_t)this->GetPawn()->m_Collision().m_CollisionGroup() : LAST_SHARED_COLLISION_GROUP; }
 
 public:
 	// General
 	const i32 index;
 
-	bool processingMovement;
+	bool processingMovement{};
 	CMoveData *currentMoveData{};
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;
@@ -181,6 +190,10 @@ public:
 
 	bool enableWaterFixThisTick{};
 	bool ignoreNextCategorizePosition{};
+
+	CUtlVector<CEntityHandle> pendingStartTouchTriggers;
+	CUtlVector<CEntityHandle> pendingEndTouchTriggers;
+	CUtlVector<CEntityHandle> touchedTriggers;
 };
 
 class CMovementPlayerManager
@@ -211,5 +224,6 @@ public:
 public:
 	MovementPlayer *players[MAXPLAYERS + 1];
 };
+
 
 extern CMovementPlayerManager *g_pPlayerManager;

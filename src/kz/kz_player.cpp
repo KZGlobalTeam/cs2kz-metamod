@@ -70,9 +70,9 @@ void KZPlayer::OnProcessMovementPost()
 {
 	this->hudService->DrawSpeedPanel();
 	this->jumpstatsService->UpdateJump();
-	MovementPlayer::OnProcessMovementPost();
 	this->modeService->OnProcessMovementPost();
 	this->jumpstatsService->OnProcessMovementPost();
+	MovementPlayer::OnProcessMovementPost();
 }
 
 void KZPlayer::OnPlayerMove()
@@ -181,6 +181,14 @@ void KZPlayer::OnJumpPost()
 {
 	this->modeService->OnJumpPost();
 }
+void KZPlayer::OnAirMove()
+{
+	this->modeService->OnAirMove();
+}
+void KZPlayer::OnAirMovePost()
+{
+	this->modeService->OnAirMovePost();
+}
 void KZPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
 	this->modeService->OnAirAccelerate(wishdir, wishspeed, accel);
@@ -280,6 +288,7 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
 	this->jumpstatsService->InvalidateJumpstats("Teleported");
+	this->modeService->OnTeleport(origin, angles, velocity);
 }
 
 void KZPlayer::EnableGodMode()
@@ -314,9 +323,9 @@ void KZPlayer::HandleMoveCollision()
 			pawn->SetMoveType(MOVETYPE_NOCLIP);
 			this->InvalidateTimer();
 		}
-		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
+		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
 		{
-			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD; 
+			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_NOTRIGGER; 
 			pawn->CollisionRulesChanged();
 		}
 		this->InvalidateTimer();
@@ -328,9 +337,9 @@ void KZPlayer::HandleMoveCollision()
 			pawn->SetMoveType(MOVETYPE_WALK);
 			this->InvalidateTimer();
 		}
-		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
+		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 		{
-			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_NOTRIGGER;
+			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
 			pawn->CollisionRulesChanged();
 		}
 	}
@@ -415,4 +424,103 @@ void KZPlayer::PlayCheckpointSound()
 void KZPlayer::PlayTeleportSound()
 {
 	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_DO_TP);
+}
+
+void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, const bbox_t &bounds)
+{
+	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
+	{
+		return;
+	}
+	CTraceFilterHitAllTriggers filter;
+	trace_t_s2 tr;
+	g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, tr);
+	FOR_EACH_VEC(filter.hitTriggerHandles, i)
+	{
+		CEntityHandle handle = filter.hitTriggerHandles[i];
+		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(g_pEntitySystem->GetBaseEntity(handle));
+		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
+		{
+			continue;
+		}
+		if (!this->touchedTriggers.HasElement(handle))
+		{
+			this->GetPawn()->StartTouch(trigger);
+			trigger->StartTouch(this->GetPawn());
+			this->GetPawn()->Touch(trigger);
+			trigger->Touch(this->GetPawn());
+		}
+	}
+}
+
+void KZPlayer::UpdateTriggerTouchList()
+{
+	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
+	{
+		FOR_EACH_VEC(this->touchedTriggers, i)
+		{
+			CBaseTrigger *trigger = static_cast<CBaseTrigger *>(g_pEntitySystem->GetBaseEntity(this->touchedTriggers[i]));
+			trigger->EndTouch(this->GetPawn());
+			this->GetPawn()->EndTouch(trigger);
+		}
+		return;
+	}
+	Vector origin;
+	this->GetOrigin(&origin);
+	bbox_t bounds;
+	this->GetBBoxBounds(&bounds);
+	CTraceFilterHitAllTriggers filter;
+	trace_t_s2 tr;
+	g_pKZUtils->TracePlayerBBox(origin, origin, bounds, &filter, tr);
+
+	FOR_EACH_VEC(this->touchedTriggers, i)
+	{
+		CEntityHandle handle = this->touchedTriggers[i];
+		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(g_pEntitySystem->GetBaseEntity(handle));
+		if (!trigger)
+		{
+			this->touchedTriggers.Remove(i);
+			continue;
+		}
+		if (!filter.hitTriggerHandles.HasElement(handle))
+		{
+			this->GetPawn()->EndTouch(trigger);
+			trigger->EndTouch(this->GetPawn());
+		}
+	}
+
+	FOR_EACH_VEC(filter.hitTriggerHandles, i)
+	{
+		CEntityHandle handle = filter.hitTriggerHandles[i];
+		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(g_pEntitySystem->GetBaseEntity(handle));
+		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
+		{
+			continue;
+		}
+		if (!this->touchedTriggers.HasElement(handle))
+		{
+			trigger->StartTouch(this->GetPawn());
+			this->GetPawn()->StartTouch(trigger);
+			trigger->Touch(this->GetPawn());
+			this->GetPawn()->Touch(trigger);
+		}
+	}
+}
+
+bool KZPlayer::OnTriggerStartTouch(CBaseTrigger *trigger)
+{
+	bool retValue = this->modeService->OnTriggerStartTouch(trigger);
+	return retValue;
+}
+
+bool KZPlayer::OnTriggerTouch(CBaseTrigger *trigger)
+{
+	bool retValue = this->modeService->OnTriggerTouch(trigger);
+	return retValue;
+}
+
+bool KZPlayer::OnTriggerEndTouch(CBaseTrigger *trigger)
+{
+	bool retValue = this->modeService->OnTriggerEndTouch(trigger);
+	return retValue;
 }

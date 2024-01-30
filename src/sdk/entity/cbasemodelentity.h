@@ -3,8 +3,6 @@
 #include "cbaseentity.h"
 #include "sdk/ccollisionproperty.h"
 
-class CBaseEntity2;
-
 class CBaseModelEntity : public CBaseEntity2
 {
 public:

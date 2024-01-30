@@ -53,7 +53,7 @@ void KZUtils::InitGameTrace(trace_t_s2 *trace)
 	utils::InitGameTrace(trace);
 }
 
-void KZUtils::TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterPlayerMovementCS *filter, trace_t_s2 &pm)
+void KZUtils::TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm)
 {
 	utils::TracePlayerBBox(start, end, bounds, filter, pm);
 }

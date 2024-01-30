@@ -1,6 +1,6 @@
 #include "movement.h"
 #include "utils/utils.h"
-
+#include "utils/detours.h"
 #include "tier0/memdbgon.h"
 
 void MovementPlayer::OnProcessMovement()
@@ -81,7 +81,7 @@ void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const 
 	}
 	// We handle angles differently.
 	this->SetAngles(*angles);
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, origin, NULL, velocity);
+	pawn->Teleport(origin, NULL, velocity);
 }
 
 void MovementPlayer::SetOrigin(const Vector &origin)
@@ -360,4 +360,14 @@ float MovementPlayer::GetPlayerMaxSpeed()
 {
 	// No effect.
 	return 0.0f;
+}
+
+void MovementPlayer::GetBBoxBounds(bbox_t *bounds)
+{
+	bounds->mins = { -16.0f, -16.0f, 0.0f };
+	bounds->maxs = { 16.0f, 16.0f, 72.0f };
+	if (this->GetMoveServices() && this->GetMoveServices()->m_bDucked())
+	{
+		bounds->maxs.z = 54.0f;
+	}
 }

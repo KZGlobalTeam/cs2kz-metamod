@@ -46,9 +46,27 @@ class KZVanillaModeService : public KZModeService
 		"0.9"				// sv_water_slow_amount
 	};
 
+	// Keep track of TryPlayerMove path for triggerfixing.
+	bool airMoving{};
+	CUtlVector<Vector> tpmTriggerFixOrigins;
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
+
+	// Triggerfix
+	virtual void OnProcessMovementPost() override;
+	virtual void OnDuckPost() override;
+	virtual void OnAirMove() override;
+	virtual void OnAirMovePost() override;
+	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
+	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
+
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
+	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
+
+	virtual void OnStartTouchGround() override;
 };
