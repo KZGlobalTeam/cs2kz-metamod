@@ -4,7 +4,7 @@
 
 class CTraceFilterPlayerMovementCS;
 class CTraceFilterS2;
-class trace_t_s2;
+struct trace_t_s2;
 class CCSPlayerController;
 class CGameResourceService;
 class CSchemaSystem;
