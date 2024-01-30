@@ -40,11 +40,17 @@ namespace offsets
 	inline constexpr int GetEventManager = 91;
 	// "Player.Respawn"
 	inline constexpr int Respawn = 326;
+	inline constexpr int CommitSuicide = 357;
 	// Check sv_fullupdate
 	inline constexpr int ClientOffset = 0x260;
 	inline constexpr int ACKOffset = 0x134;
 	// Check ProcessUsercmds
 	inline constexpr int UsercmdOffset = 0x90;
+	
+	// Controller functions, yoinked from cs2fixes
+	inline constexpr int ControllerChangeTeam = 90;
+	inline constexpr int ControllerRespawn = 242;
+	
 #else
 	inline constexpr int GameEntitySystem = 0x50;
 	inline constexpr int IsEntityPawn = 152;
@@ -53,10 +59,14 @@ namespace offsets
 	inline constexpr int CollisionRulesChanged = 173;
 	inline constexpr int Teleport = 148;
 	inline constexpr int GetEventManager = 91;
+	inline constexpr int CommitSuicide = 357;
 	inline constexpr int Respawn = 327;
 	inline constexpr int ClientOffset = 0x270;
 	inline constexpr int ACKOffset = 0x144;
 	inline constexpr int UsercmdOffset = 0x88;
+	inline constexpr int ControllerChangeTeam = 89;
+	inline constexpr int ControllerRespawn = 244;
+
 #endif
 }
 
@@ -65,8 +75,10 @@ namespace sigs
 #ifdef _WIN32
 	/* Miscellaneous */
 
-	// Inside TracePlayerBBox, only used for hooks!
-	DECLARE_SIG(TraceRay, "\x48\x89\x5C\x24\x10\x48\x89\x74\x24\x18\x48\x89\x7C\x24\x20\x48\x89\x4C\x24\x08\x55\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xAC\x24\x20\xE0\xFF\xFF");
+	// String: "CCSPlayerPawnBase::SwitchTeam", just keep in mind this is actually CCSPlayerController::SwitchTeam
+	DECLARE_SIG(CCSPlayerController_SwitchTeam, "\x40\x56\x57\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8B\xF9\x8B\xF2\x8B\xCA");
+
+	DECLARE_SIG(CBasePlayerController_SetPawn, "\x44\x88\x4C\x24\x2A\x55\x57");
 
 	// search for "WARNING: Ignoring invalid gameinfo MaxNetworkableEntities %d\n", go to the only xref.
 	DECLARE_SIG(CEntitySystem_ctor, "\x48\x89\x5C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x20\x48\x8B\xD9\xE8\x2A\x2A\x2A\x2A\x33\xFF\xC7");
@@ -211,6 +223,8 @@ namespace sigs
 	// in that function.
 	DECLARE_SIG(ProcessUsercmds, "\x48\x8B\xC4\x44\x88\x48\x20\x44\x89\x40\x18\x48\x89\x50\x10\x53");
 #else
+	DECLARE_SIG(CCSPlayerController_SwitchTeam, "\x55\x48\x89\xE5\x41\x55\x49\x89\xFD\x89\xF7");
+	DECLARE_SIG(CBasePlayerController_SetPawn, "\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x81\xEC\xC8\x00\x00\x00");
 	DECLARE_SIG(CEntitySystem_ctor, "\x55\x48\x89\xE5\x41\x54\x49\x89\xFC\x53\x48\x8D\x1D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x48\x8D\x05\x2A\x2A\x2A\x2A");
 	DECLARE_SIG(CEntitySystem_CreateEntity, "\x55\x48\x89\xE5\x41\x57\x41\x56\x49\x89\xD6\x41\x55\x45");
 	DECLARE_SIG(NetworkStateChanged, "\x4C\x8B\x07\x4D\x85\xC0\x74\x2A\x49\x8B\x40\x10");

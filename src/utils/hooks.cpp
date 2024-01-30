@@ -1,9 +1,10 @@
 #include "hooks.h"
-
+#include "igameeventsystem.h"
 #include "utils/simplecmds.h"
 
 #include "kz/quiet/kz_quiet.h"
-
+#include "utils/utils.h"
+#include "entityclass.h"
 class GameSessionConfiguration_t {};
 
 class EntListener : public IEntityListener
@@ -36,7 +37,6 @@ internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, con
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
 SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &, const Entity2Networkable_t **, const uint16 *, int);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
-SH_DECL_HOOK5(ISource2GameClients, ProcessUsercmds, SH_NOATTRIB, false, int, CPlayerSlot, bf_read *, int, bool, bool);
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
 SH_DECL_HOOK4_void(ISource2GameClients, ClientPutInServer, SH_NOATTRIB, false, CPlayerSlot, char const *, int, uint64);
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t &, ISource2WorldSession *, const char *);

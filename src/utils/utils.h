@@ -5,6 +5,7 @@
 #include "igameevents.h"
 
 class KZUtils;
+class CBasePlayerController;
 
 typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
 typedef void InitGameTrace_t(trace_t_s2 *trace);
@@ -14,6 +15,9 @@ typedef CBaseEntity2 *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *
 typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm);
+typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
+typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool);
+
 namespace utils
 {
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
@@ -36,6 +40,8 @@ namespace utils
 
 	extern GetLegacyGameEventListener_t *GetLegacyGameEventListener;
 
+	extern SwitchTeam_t *SwitchTeam;
+	extern SetPawn_t *SetPawn;
 	// Tracing stuff
 	extern InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter;
 	extern InitGameTrace_t *InitGameTrace;
@@ -70,4 +76,7 @@ namespace utils
 	extern EmitSoundFunc_t *EmitSound;
 	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
 
+	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
+	bool IsSpawnValid(const Vector &origin);
+	bool FindValidSpawn(Vector &origin, QAngle &angles);
 }

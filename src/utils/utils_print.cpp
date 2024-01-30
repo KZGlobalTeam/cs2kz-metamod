@@ -1,7 +1,7 @@
 #include "usermessages.pb.h"
 #include "public/networksystem/inetworkmessages.h"
+#include "igameeventsystem.h"
 #include "sdk/recipientfilters.h"
-
 #include "utils.h"
 
 #include "tier0/memdbgon.h"

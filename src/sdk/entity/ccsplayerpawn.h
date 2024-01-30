@@ -1,5 +1,7 @@
 #pragma once
 
+class CCSPlayer_ViewModelServices;
+
 #include "cbaseplayerpawn.h"
 
 class CCSPlayerPawnBase : public CBasePlayerPawn
@@ -9,6 +11,7 @@ public:
 	SCHEMA_FIELD(float, m_flSlopeDropOffset)
 	SCHEMA_FIELD(float, m_flSlopeDropHeight)
 	SCHEMA_FIELD(float, m_ignoreLadderJumpTime)
+	SCHEMA_FIELD(CCSPlayer_ViewModelServices*, m_pViewModelServices)
 };
 
 class CCSPlayerPawn : public CCSPlayerPawnBase

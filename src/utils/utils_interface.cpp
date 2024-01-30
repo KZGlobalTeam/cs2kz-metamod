@@ -72,3 +72,13 @@ CGameEntitySystem *KZUtils::GetGameEntitySystem()
 {
 	return GameEntitySystem();
 }
+
+void KZUtils::SwitchTeam(CCSPlayerController *controller, int team)
+{
+	utils::SwitchTeam(controller, team);
+}
+
+void KZUtils::SetPawn(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool a3, bool a4)
+{
+	utils::SetPawn(controller, pawn, a3, a4);
+}

@@ -66,8 +66,14 @@ internal SCMD_CALLBACK(Command_KzJSAlways)
 
 internal SCMD_CALLBACK(Command_KzRestart)
 {
+	controller->Respawn();
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzHideWeapon)
+{
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	CALL_VIRTUAL(void, offsets::Respawn, player->GetPawn());
+	player->quietService->ToggleHideWeapon();
 	return MRES_SUPERCEDE;
 }
 
@@ -85,6 +91,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hide",	   Command_KzHide,       "Hide other players.");
 	scmd::RegisterCmd("kz_jsalways",   Command_KzJSAlways,   "Print jumpstats for invalid jumps.");
 	scmd::RegisterCmd("kz_respawn",    Command_KzRestart,    "Respawn.");
+	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
 	KZ::mode::RegisterCommands();
 }
 
@@ -92,4 +99,60 @@ void KZ::misc::OnClientPutInServer(CPlayerSlot slot)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 	player->Reset();
+}
+
+void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
+{
+	int currentTeam = player->GetController()->GetTeam();
+
+	// Don't use CS_TEAM_NONE
+	if (newTeam == CS_TEAM_NONE)
+	{
+		newTeam = CS_TEAM_SPECTATOR;
+	}
+
+	if (newTeam == CS_TEAM_SPECTATOR && currentTeam != CS_TEAM_SPECTATOR)
+	{
+		if (currentTeam != CS_TEAM_NONE)
+		{
+			//player.GetOrigin(savedOrigin[client]);
+			//player.GetEyeAngles(savedAngles[client]);
+			//savedOnLadder[client] = player.Movetype == MOVETYPE_LADDER;
+			//hasSavedPosition[client] = true;
+		}
+
+		//if (!player.Paused && !player.CanPause)
+		//{
+		//	player.StopTimer();
+		//}
+		player->GetController()->ChangeTeam(CS_TEAM_SPECTATOR);
+		//Call_GOKZ_OnJoinTeam(client, newTeam);
+	}
+	else if (newTeam == CS_TEAM_CT && currentTeam != CS_TEAM_CT
+		|| newTeam == CS_TEAM_T && currentTeam != CS_TEAM_T)
+	{
+		player->GetPawn()->CommitSuicide(false, true);
+		player->GetController()->SwitchTeam(newTeam);
+		player->GetController()->Respawn();
+		//if (restorePos && hasSavedPosition[client])
+		//{
+		//	TeleportPlayer(client, savedOrigin[client], savedAngles[client]);
+		//	if (savedOnLadder[client])
+		//	{
+		//		player.Movetype = MOVETYPE_LADDER;
+		//	}
+		//}
+		//else
+		//{
+		//	player.StopTimer();
+		//	// Just joining a team alone can put you into weird invalid spawns. 
+		//	// Need to teleport the player to a valid one.
+		Vector spawnOrigin;
+		QAngle spawnAngles;
+		utils::FindValidSpawn(spawnOrigin, spawnAngles);
+		CALL_VIRTUAL(void, offsets::Teleport, player->GetPawn(), spawnOrigin, spawnAngles, vec3_origin);
+		//}
+		//hasSavedPosition[client] = false;
+		//Call_GOKZ_OnJoinTeam(client, newTeam);
+	}
 }

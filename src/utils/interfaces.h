@@ -1,11 +1,20 @@
 #pragma once
 
 #include "common.h"
-#include "sdk/cgameresourceserviceserver.h"
-#include "sdk/cschemasystem.h"
-#include "igameevents.h"
-#include "igameeventsystem.h"
-#include "sdk/datatypes.h"
+
+class CTraceFilterPlayerMovementCS;
+class CTraceFilterS2;
+struct trace_t_s2;
+class CCSPlayerController;
+class CGameResourceService;
+class CSchemaSystem;
+class IVEngineServer2;
+class ISource2Server;
+class IGameEventManager2;
+class IGameEventSystem;
+class CCSPlayerPawn;
+class CBaseEntity2;
+class CBasePlayerController;
 
 namespace interfaces
 {
@@ -46,6 +55,9 @@ public:
 	// c can be PI (for radians) or 180.0 (for degrees);
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
 	virtual CGameEntitySystem *GetGameEntitySystem();
+
+	virtual void SwitchTeam(CCSPlayerController *controller, int team);
+	virtual void SetPawn(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool);
 };
 
 extern KZUtils *g_pKZUtils;

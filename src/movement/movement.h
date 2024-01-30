@@ -1,7 +1,10 @@
 #pragma once
 #include "common.h"
-#include "sdk/datatypes.h"
 
+class CCSPlayer_MovementServices;
+
+#include "sdk/datatypes.h"
+#include "sdk/services.h"
 // TODO: better error sound
 #define MV_SND_ERROR "Buttons.snd8"
 #define MV_SND_TIMER_START "Buttons.snd9"
