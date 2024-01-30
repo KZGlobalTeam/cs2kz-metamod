@@ -203,24 +203,24 @@ struct touchlist_t {
 
 struct RnQueryAttr_t
 {
-	uint64 m_nInteractsWith;
-	uint64 m_nInteractsExclude;
-	uint64 m_nInteractsAs;
+	uint64 m_nInteractsWith{};
+	uint64 m_nInteractsExclude{};
+	uint64 m_nInteractsAs{};
 
-	uint32 m_nEntityIdToIgnore;
-	uint32 m_nEntityControllerIdToIgnore;
+	uint32 m_nEntityIdToIgnore = -1;
+	uint32 m_nEntityControllerIdToIgnore = -1;
 
-	uint32 m_nOwnerEntityIdToIgnore;
-	uint32 m_nControllerOwnerEntityIdToIgnore;
+	uint32 m_nOwnerEntityIdToIgnore = -1;
+	uint32 m_nControllerOwnerEntityIdToIgnore = -1;
 
-	uint16 m_nHierarchyId;
-	uint16 m_nControllerHierarchyId;
+	uint16 m_nHierarchyId{};
+	uint16 m_nControllerHierarchyId{};
 
-	uint16 m_nObjectSetMask;
-	uint8_t m_nCollisionGroup;
+	uint16 m_nObjectSetMask{};
+	uint8_t m_nCollisionGroup{};
 	union
 	{
-		uint8 m_Flags;
+		uint8 m_Flags{};
 		struct
 		{
 			uint8 m_bHitSolid : 1;

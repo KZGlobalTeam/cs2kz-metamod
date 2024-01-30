@@ -16,6 +16,7 @@ class KZQuietService : public KZBaseService
 	using KZBaseService::KZBaseService;
 	u8 lastObserverMode;
 	CHandle< CBaseEntity2 > lastObserverTarget;
+	bool hideWeapon{};
 public:
 	bool hideOtherPlayers{};
 	virtual void Reset() override;
@@ -25,4 +26,7 @@ public:
 	void SendFullUpdate();
 	bool ShouldHide();
 	bool ShouldHideIndex(u32 targetIndex);
+
+	bool ShouldHideWeapon() { return this->hideWeapon; }
+	void ToggleHideWeapon();
 };

@@ -44,5 +44,10 @@ typedef uint64 u64;
 typedef float f32;
 typedef double f64;
 
+#define CS_TEAM_NONE        0
+#define CS_TEAM_SPECTATOR   1
+#define CS_TEAM_T           2
+#define CS_TEAM_CT          3
+
 // Enable water fix.
 #define WATER_FIX

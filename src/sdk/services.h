@@ -1,11 +1,13 @@
 #pragma once
 #include <platform.h>
 
+class CBaseEntity;
+class CBaseModelEntity;
+class CBasePlayerPawn;
+
 #include "utils/schema.h"
 #include "entity/cbaseplayerpawn.h"
 #include "cinbuttonstate.h"
-class CBaseEntity;
-class CBasePlayerPawn;
 
 class CPlayerPawnComponent
 {
@@ -16,6 +18,13 @@ public:
 	uint8 chainEntity[0x28]; // Unused
 	CBasePlayerPawn *pawn; // 0x16
 	uint8 __pad0030[0x6]; // 0x0
+};
+
+class CCSPlayer_ViewModelServices : public CPlayerPawnComponent
+{
+public:
+	DECLARE_SCHEMA_CLASS(CCSPlayer_ViewModelServices)
+	SCHEMA_FIELD_POINTER(CHandle<CBaseModelEntity>, m_hViewModel);
 };
 
 class CPlayer_ObserverServices : public CPlayerPawnComponent

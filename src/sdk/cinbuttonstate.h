@@ -1,5 +1,6 @@
 #pragma once
 
+#include "common.h"
 #include "utils/schema.h"
 
 enum EInButtonState : uint64_t

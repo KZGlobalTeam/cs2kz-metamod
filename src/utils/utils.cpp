@@ -27,6 +27,8 @@ GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
 SnapViewAngles_t *utils::SnapViewAngles = NULL;
 EmitSoundFunc_t *utils::EmitSound = NULL;
 FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
+SwitchTeam_t *utils::SwitchTeam = NULL;
+SetPawn_t *utils::SetPawn = NULL;
 
 void modules::Initialize()
 {
@@ -77,6 +79,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
 	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
 	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
+	RESOLVE_SIG(modules::server, sigs::CCSPlayerController_SwitchTeam, utils::SwitchTeam);
+	RESOLVE_SIG(modules::server, sigs::CBasePlayerController_SetPawn, utils::SetPawn);
 
 	InitDetours();
 	return true;
@@ -267,4 +271,64 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+}
+
+bool utils::IsSpawnValid(const Vector &origin)
+{
+	bbox_t bounds = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
+	CTraceFilterS2 filter;
+	filter.attr.m_bHitSolid = true;
+	filter.attr.m_bShouldIgnoreDisabledPairs = true;
+	filter.attr.m_nCollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT;
+	// Solid, clips, ladder, world geometry
+	filter.attr.m_nInteractsWith = 0b100000010011001;
+	filter.attr.m_bUnkFlag3 = true;
+	trace_t_s2 tr;
+	utils::TracePlayerBBox(origin, origin, bounds, &filter, tr);
+	if (tr.fraction != 1.0 || tr.startsolid)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
+{
+	bool foundValidSpawn = false;
+	bool searchCT = false;
+	Vector spawnOrigin;
+	QAngle spawnAngles;
+	CBaseEntity2 *spawnEntity = NULL;
+	while (!foundValidSpawn)
+	{
+		if (searchCT)
+		{
+			spawnEntity = FindEntityByClassname(spawnEntity, "info_player_counterterrorist");
+		}
+		else
+		{
+			spawnEntity = FindEntityByClassname(spawnEntity, "info_player_terrorist");
+		}
+
+		if (spawnEntity != NULL)
+		{
+			spawnOrigin = spawnEntity->m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin;
+			spawnAngles = spawnEntity->m_CBodyComponent->m_pSceneNode->m_angRotation;
+			if (utils::IsSpawnValid(spawnOrigin))
+			{
+				origin = spawnOrigin;
+				angles = spawnAngles;
+				foundValidSpawn = true;
+			}
+		}
+		else if (!searchCT)
+		{
+			searchCT = true;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return foundValidSpawn;
 }

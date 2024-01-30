@@ -1,7 +1,7 @@
 #include "cs2kz.h"
 
 #include "entity2/entitysystem.h"
-
+#include "sdk/cgameresourceserviceserver.h"
 #include "utils/utils.h"
 #include "utils/hooks.h"
 

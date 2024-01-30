@@ -2,6 +2,8 @@
 #include "gameevents.pb.h"
 #include "cs_gameevents.pb.h"
 
+#include "sdk/services.h"
+
 #include "kz_quiet.h"
 
 #include "utils/utils.h"
@@ -18,13 +20,26 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
-		CCSPlayerPawn *pawn = nullptr;
 
-		while (nullptr != (pawn = (CCSPlayerPawn *)utils::FindEntityByClassname(pawn, "player")))
+		EntityInstanceByClassIter_t iter("player");
+		for (CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(iter.First());
+			pawn != NULL; 
+			pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
 		{
-			// If it's our pawn, don't hide them.
 			if (targetPlayerPawn == pawn)
 			{
+				// Hide weapon stuff.
+				if (targetPlayer->quietService->ShouldHideWeapon())
+				{
+					for (u32 j = 0; j < 3; j++)
+					{
+						if (!pawn->m_pViewModelServices->m_hViewModel[j].IsValid())
+						{
+							continue;
+						}
+						pTransmitInfo->m_pTransmitEdict->Clear(pawn->m_pViewModelServices->m_hViewModel[j].GetEntryIndex());
+					}
+				}
 				continue;
 			}
 			// Bit is not even set, don't bother.
@@ -183,4 +198,9 @@ void KZQuietService::UpdateHideState()
 	}
 	this->lastObserverMode = obsServices->m_iObserverMode();
 	this->lastObserverTarget = obsServices->m_hObserverTarget();
+}
+
+void KZQuietService::ToggleHideWeapon()
+{
+	this->hideWeapon = !this->hideWeapon;
 }

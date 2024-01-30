@@ -2,10 +2,9 @@
 
 #include "utils/addresses.h"
 #include "utils/schema.h"
-#include "mathlib/vector.h"
 #include "baseentity.h"
-#include "../ccollisionproperty.h"
 #include "ehandle.h"
+class CCollisionProperty;
 
 class CNetworkedQuantizedFloat
 {
@@ -88,13 +87,15 @@ public:
 	SCHEMA_FIELD(uint32_t, m_fFlags)
 	SCHEMA_FIELD(float, m_flGravityScale)
 	SCHEMA_FIELD(float, m_flWaterLevel)
-
+	SCHEMA_FIELD(int, m_fEffects)
 	int entindex() { return m_pEntity->m_EHandle.GetEntryIndex(); }
 	bool IsPawn() { return CALL_VIRTUAL(bool, offsets::IsEntityPawn, this); }
 	bool IsController() { return CALL_VIRTUAL(bool, offsets::IsEntityController, this); }
 
+	bool IsAlive() { return this->m_lifeState() == LIFE_ALIVE; }
 	void SetMoveType(MoveType_t movetype) { this->m_MoveType(movetype); }
 	void CollisionRulesChanged() { CALL_VIRTUAL(void, offsets::CollisionRulesChanged, this); }
+	int GetTeam() { return m_iTeamNum(); }
 
 	// Vtable stuff
 	virtual ~CBaseEntity2() = 0;

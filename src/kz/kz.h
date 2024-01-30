@@ -200,5 +200,6 @@ namespace KZ
 	{
 		void RegisterCommands();
 		void OnClientPutInServer(CPlayerSlot slot);
+		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos);
 	}
 };

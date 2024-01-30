@@ -1,6 +1,7 @@
-#include "schema.h"
-
 #include "common.h"
+
+#include "schema.h"
+#include "sdk/cschemasystem.h"
 #include "utils/interfaces.h"
 //#include <unordered_map>
 #include "tier1/utlmap.h"
