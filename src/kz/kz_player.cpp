@@ -30,6 +30,9 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
+	this->inNoclip = false;
+	this->hideLegs = false;
+	this->previousTurnState = TURN_NONE;
 
 	// TODO: reset every service.
 	this->checkpointService->Reset();
@@ -368,17 +371,18 @@ void KZPlayer::EndZoneStartTouch()
 		char time[32];
 		i32 ticks = this->tickCount - this->timerStartTick;
 		i32 chars = utils::FormatTimerText(ticks, time, sizeof(time));
-		char tpCount[32] = "";
-		if (this->checkpointService->tpCount)
+		char tpCountStr[32] = "";
+		u32 tpCount = this->checkpointService->GetTeleportCount();
+		if (tpCount)
 		{
-			snprintf(tpCount, sizeof(tpCount), " (%i teleports)", this->checkpointService->tpCount);
+			snprintf(tpCountStr, sizeof(tpCountStr), " (%i teleports)", tpCount);
 		}
 		utils::CPrintChatAll("%s %s finished the map with a %s run of %s!%s",
 			KZ_CHAT_PREFIX,
 			controller->m_iszPlayerName(),
-			this->checkpointService->tpCount ? "TP" : "PRO",
+			tpCount ? "TP" : "PRO",
 			time,
-			tpCount);
+			tpCountStr);
 	}
 	MovementPlayer::EndZoneStartTouch();
 }

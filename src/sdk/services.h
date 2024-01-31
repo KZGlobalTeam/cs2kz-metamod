@@ -61,6 +61,7 @@ public:
 	SCHEMA_FIELD(bool, m_bOldJumpPressed)
 	SCHEMA_FIELD(float, m_flJumpPressedTime)
 	SCHEMA_FIELD(float, m_flDuckSpeed)
+	SCHEMA_FIELD(float, m_flDuckAmount)
 };
 
 class CCSPlayer_ItemServices

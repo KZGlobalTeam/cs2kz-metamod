@@ -153,6 +153,8 @@ public:
 	MoveType_t GetMoveType() { return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE; }
 	Collision_Group_t GetCollisionGroup() { return this->GetPawn() ? (Collision_Group_t)this->GetPawn()->m_Collision().m_CollisionGroup() : LAST_SHARED_COLLISION_GROUP; }
 
+	void SetCollidingWithWorld() { this->collidingWithWorld = true; }
+	bool IsCollidingWithWorld() { return this->currentMoveData->m_TouchList.Count() > 0 || this->collidingWithWorld; }
 public:
 	// General
 	const i32 index;
@@ -197,6 +199,8 @@ public:
 	CUtlVector<CEntityHandle> pendingStartTouchTriggers;
 	CUtlVector<CEntityHandle> pendingEndTouchTriggers;
 	CUtlVector<CEntityHandle> touchedTriggers;
+private:
+	bool collidingWithWorld{};
 };
 
 class CMovementPlayerManager

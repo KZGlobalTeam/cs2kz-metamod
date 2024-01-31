@@ -91,6 +91,7 @@ for sdk_target in MMSPlugin.sdk_targets:
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'commands.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),

@@ -668,7 +668,6 @@ void KZJumpstatsService::UpdateJump()
 	{
 		this->jumps.Tail().Update();
 	}
-	this->DetectEdgebug();
 	this->DetectInvalidCollisions();
 	this->DetectInvalidGains();
 	this->DetectNoclip();
@@ -851,7 +850,8 @@ void KZJumpstatsService::DetectEdgebug()
 	}
 	// If the player suddenly gain speed from negative speed, they probably edgebugged.
 	this->possibleEdgebug = false;
-	if (this->tpmVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->tpmVelocity.z)
+	if (this->tpmVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->tpmVelocity.z
+		&& this->player->currentMoveData->m_vecVelocity.z > -JS_EPSILON)
 	{
 		this->possibleEdgebug = true;
 	}
@@ -863,7 +863,7 @@ void KZJumpstatsService::DetectInvalidCollisions()
 	{
 		return;
 	}
-	if (this->player->currentMoveData->m_TouchList.Count() > 0)
+	if (this->player->IsCollidingWithWorld())
 	{
 		this->jumps.Tail().touchDuration += g_pKZUtils->GetServerGlobals()->frametime;
 		// Headhit invadidates following bhops but not the current jump,
@@ -888,7 +888,10 @@ void KZJumpstatsService::DetectInvalidGains()
 	*/
 	f32 speed = this->player->currentMoveData->m_vecVelocity.Length2D();
 	f32 actualSpeed = (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
-
+	if (this->player->GetPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPawn()->m_fFlags() & FL_BASEVELOCITY)
+	{
+		this->InvalidateJumpstats("Base velocity detected");
+	}
 	if (actualSpeed - speed > JS_SPEED_MODIFICATION_TOLERANCE && actualSpeed > JS_EPSILON)
 	{
 		this->InvalidateJumpstats("Invalid gains");
@@ -900,6 +903,10 @@ void KZJumpstatsService::DetectExternalModifications()
 	if ((this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPost.m_vecAbsOrigin).LengthSqr() > JS_TELEPORT_DISTANCE_SQUARED)
 	{
 		this->InvalidateJumpstats("Externally modified");
+	}
+	if (this->player->GetPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPawn()->m_fFlags() & FL_BASEVELOCITY)
+	{
+		this->InvalidateJumpstats("Base velocity detected");
 	}
 }
 
@@ -923,7 +930,7 @@ void KZJumpstatsService::OnProcessMovementPost()
 	if (this->possibleEdgebug && !(this->player->GetPawn()->m_fFlags() & FL_ONGROUND))
 	{
 		this->InvalidateJumpstats("Edgebugged");
-		this->possibleEdgebug = false;
 	}
+	this->possibleEdgebug = false;
 	this->TrackJumpstatsVariables();
 }

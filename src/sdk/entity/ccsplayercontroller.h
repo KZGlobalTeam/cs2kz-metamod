@@ -29,6 +29,7 @@ public:
 		}
 	}
 
+	// Respawns the player if the player is not alive, does nothing otherwise.
 	void Respawn()
 	{
 		CCSPlayerPawn *pawn = m_hPlayerPawn.Get();

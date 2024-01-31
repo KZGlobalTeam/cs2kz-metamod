@@ -10,6 +10,7 @@ void MovementPlayer::OnProcessMovement()
 	this->processingMovement = true;
 	this->walkMoved = false;
 	this->takeoffFromLadder = false;
+	this->collidingWithWorld = false;
 }
 
 void MovementPlayer::OnProcessMovementPost()
@@ -354,6 +355,7 @@ void MovementPlayer::Reset()
 	this->landingTimeActual = 0.0f;
 	this->tickCount = 0;
 	this->timerStartTick = 0;
+	this->collidingWithWorld = false;
 }
 
 float MovementPlayer::GetPlayerMaxSpeed()

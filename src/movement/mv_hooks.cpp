@@ -282,7 +282,15 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->OnTryPlayerMove(pFirstDest, pFirstTrace);
+	Vector oldVelocity = mv->m_vecVelocity;
 	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace);
+	if (mv->m_vecVelocity != oldVelocity)
+	{
+		// Velocity changed, must have collided with something.
+		// In case of walkmove+stairs, it's possible that this is incorrect because TryPlayerMove won't immediately change the player's data,
+		// but for now this doesn't matter.
+		player->SetCollidingWithWorld();
+	}
 	player->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
 }
 

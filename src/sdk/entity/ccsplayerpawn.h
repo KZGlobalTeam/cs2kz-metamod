@@ -18,4 +18,6 @@ class CCSPlayerPawn : public CCSPlayerPawnBase
 {
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerPawn);
+
+	void Respawn() { CALL_VIRTUAL(void, offsets::Respawn, this); }
 };

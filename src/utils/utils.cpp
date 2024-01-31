@@ -278,11 +278,13 @@ bool utils::IsSpawnValid(const Vector &origin)
 	bbox_t bounds = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
 	CTraceFilterS2 filter;
 	filter.attr.m_bHitSolid = true;
+	filter.attr.m_bHitSolidRequiresGenerateContacts = true;
 	filter.attr.m_bShouldIgnoreDisabledPairs = true;
 	filter.attr.m_nCollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT;
-	// Solid, clips, ladder, world geometry
-	filter.attr.m_nInteractsWith = 0b100000010011001;
+	filter.attr.m_nInteractsWith = 0x2c3011;
 	filter.attr.m_bUnkFlag3 = true;
+	filter.attr.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
+	filter.attr.m_nInteractsAs = 0x40000;
 	trace_t_s2 tr;
 	utils::TracePlayerBBox(origin, origin, bounds, &filter, tr);
 	if (tr.fraction != 1.0 || tr.startsolid)

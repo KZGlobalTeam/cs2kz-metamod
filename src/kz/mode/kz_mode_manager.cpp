@@ -176,9 +176,15 @@ void KZModeManager::UnregisterMode(const char *modeName)
 
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)
 {
-	// Don't change mode if it doesn't exist.
-	if (!modeName)
+	// Don't change mode if it doesn't exist. Instead, print a list of modes to the client.
+	if (!modeName || !V_stricmp("", modeName))
 	{
+		utils::CPrintChat(player->GetController(), "%s {grey}Usage: {default}kz_mode <mode>.{grey} Check console for possible modes!", KZ_CHAT_PREFIX);
+		utils::PrintConsole(player->GetController(), "Possible modes:");
+		FOR_EACH_VEC(this->modeInfos, i)
+		{
+			utils::PrintConsole(player->GetController(), "%s (kz_mode %s / kz_mode %s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName);
+		}
 		return false;
 	}
 
