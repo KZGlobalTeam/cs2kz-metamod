@@ -88,22 +88,23 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	pawn->m_flSlopeDropOffset(cp.slopeDropOffset);
 
 	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(cp.groundEnt));
-	if (!groundEntity)
-	{
-		return;
-	}
 	// Don't attach the player onto moving platform (because they might not be there anymore). World doesn't move though.
-	if (cp.groundEnt.GetEntryIndex() == 0 || (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f))
+	if (groundEntity && (groundEntity->entindex() == 0 || (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f)))
 	{
 		pawn->m_hGroundEntity(cp.groundEnt);
 	}
 
+	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
 	if (cp.onLadder)
 	{
-		CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
 		ms->m_vecLadderNormal(cp.ladderNormal);
 		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);
 	}
+	else
+	{
+		ms->m_vecLadderNormal(vec3_origin);
+	}
+
 	this->tpCount++;
 	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->player->PlayTeleportSound();
@@ -148,21 +149,22 @@ void KZCheckpointService::TpHoldPlayerStill()
 		}
 	}
 	this->player->SetVelocity(Vector(0, 0, 0));
+	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
 	if (checkpoints[currentCpIndex].onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
 	{
+		ms->m_vecLadderNormal(checkpoints[currentCpIndex].ladderNormal);
 		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);
+	}
+	else
+	{
+		ms->m_vecLadderNormal(vec3_origin);
 	}
 	if (checkpoints[currentCpIndex].groundEnt)
 	{
 		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
 	}
 	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(checkpoints[currentCpIndex].groundEnt));
-	if (!groundEntity)
-	{
-		return;
-	}
-	// Don't attach the player onto moving platform (because they might not be there anymore).
-	if (groundEntity->entindex() == 0 || (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f))
+	if (groundEntity && (groundEntity->entindex() == 0 || (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f)))
 	{
 		this->player->GetPawn()->m_hGroundEntity(checkpoints[currentCpIndex].groundEnt);
 	}
