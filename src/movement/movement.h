@@ -149,7 +149,7 @@ public:
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) { return true; }
 	void PlayErrorSound();
 
-	bool IsAlive() { return this->GetPawn() ? this->GetPawn()->m_lifeState() == LIFE_ALIVE : false; }
+	bool IsAlive() { return this->GetPawn() ? this->GetPawn()->IsAlive() : false; }
 	MoveType_t GetMoveType() { return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE; }
 	Collision_Group_t GetCollisionGroup() { return this->GetPawn() ? (Collision_Group_t)this->GetPawn()->m_Collision().m_CollisionGroup() : LAST_SHARED_COLLISION_GROUP; }
 
@@ -164,8 +164,6 @@ public:
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;
 
-	f32 lastProcessedCurtime{};
-	u64 lastProcessedTickcount{};
 
 	QAngle oldAngles;
 

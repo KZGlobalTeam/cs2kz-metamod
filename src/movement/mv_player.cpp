@@ -16,8 +16,6 @@ void MovementPlayer::OnProcessMovement()
 void MovementPlayer::OnProcessMovementPost()
 {
 	this->processingMovement = false;
-	this->lastProcessedCurtime = g_pKZUtils->GetServerGlobals()->curtime;
-	this->lastProcessedTickcount = g_pKZUtils->GetServerGlobals()->tickcount;
 	this->oldAngles = this->moveDataPost.m_vecViewAngles;
 	this->oldWalkMoved = this->walkMoved;
 	this->enableWaterFixThisTick = false;
@@ -355,6 +353,12 @@ void MovementPlayer::Reset()
 	this->landingTimeActual = 0.0f;
 	this->tickCount = 0;
 	this->timerStartTick = 0;
+	this->collidingWithWorld = false;
+	this->enableWaterFixThisTick = false;
+	this->ignoreNextCategorizePosition = false;
+	this->pendingStartTouchTriggers.RemoveAll();
+	this->pendingEndTouchTriggers.RemoveAll();
+	this->touchedTriggers.RemoveAll();
 	this->collidingWithWorld = false;
 }
 
