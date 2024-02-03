@@ -281,6 +281,11 @@ internal void OnTouch(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
+	// This pawn have no controller attached to it. Ignore.
+	if (!player)
+	{
+		RETURN_META(MRES_IGNORED);
+	}
 	if (!player->OnTriggerTouch(trigger))
 	{
 		ignoreTouchEvent = true;
@@ -316,6 +321,11 @@ internal void OnEndTouch(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
+	// This pawn have no controller attached to it. Ignore.
+	if (!player)
+	{
+		RETURN_META(MRES_IGNORED);
+	}
 	if (!player->OnTriggerEndTouch(trigger))
 	{
 		ignoreTouchEvent = true;
@@ -349,6 +359,11 @@ internal void OnStartTouchPost(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
+	// This pawn have no controller attached to it. Ignore.
+	if (!player)
+	{
+		RETURN_META(MRES_IGNORED);
+	}
 	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
 	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))		
 	{
@@ -390,6 +405,11 @@ internal void OnEndTouchPost(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
+	// This pawn have no controller attached to it. Ignore.
+	if (!player)
+	{
+		RETURN_META(MRES_IGNORED);
+	}
 	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
 	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple") && static_cast<CBaseTrigger *>(pThis)->IsStartZone())
 	{
