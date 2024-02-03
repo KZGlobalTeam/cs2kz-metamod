@@ -93,11 +93,11 @@ void utils::Cleanup()
 
 CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
 {
-	if (!g_pEntitySystem)
+	if (!GameEntitySystem())
 	{
 		return NULL;
 	}
-	return FindEntityByClassnameFunc(g_pEntitySystem, start, name);
+	return FindEntityByClassnameFunc(GameEntitySystem(), start, name);
 }
 
 void utils::UnlockConVars()
@@ -181,11 +181,11 @@ CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	if (!g_pEntitySystem || slot.Get() < 0 || slot.Get() > MAXPLAYERS)
+	if (!GameEntitySystem() || slot.Get() < 0 || slot.Get() > MAXPLAYERS)
 	{
 		return nullptr;
 	}
-	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
 	if (!ent)
 	{
 		return nullptr;

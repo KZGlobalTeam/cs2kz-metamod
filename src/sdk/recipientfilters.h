@@ -10,13 +10,13 @@ public:
 		m_bReliable(bReliable), m_bInitMessage(bInitMessage) 
 	{
 		m_Recipients.RemoveAll();
-		if (!g_pEntitySystem)
+		if (!GameEntitySystem())
 		{
 			return;
 		}
 		for (int i = 0; i <= g_pKZUtils->GetServerGlobals()->maxClients; i++)
 		{
-			CBaseEntity *ent = g_pEntitySystem->GetBaseEntity(CEntityIndex(i));
+			CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
 			if (ent)
 			{
 				m_Recipients.AddToTail(i);

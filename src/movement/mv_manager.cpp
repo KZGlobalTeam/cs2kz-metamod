@@ -42,11 +42,11 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerSlot slot)
 
 MovementPlayer *CMovementPlayerManager::ToPlayer(CEntityIndex entIndex)
 {
-	if (!g_pEntitySystem)
+	if (!GameEntitySystem())
 	{
 		return nullptr;
 	}
-	CBaseEntity2 *ent = (CBaseEntity2 *)g_pEntitySystem->GetBaseEntity(entIndex);
+	CBaseEntity2 *ent = (CBaseEntity2 *)GameEntitySystem()->GetBaseEntity(entIndex);
 	if (!ent)
 	{
 		return nullptr;

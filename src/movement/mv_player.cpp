@@ -25,11 +25,11 @@ void MovementPlayer::OnProcessMovementPost()
 
 CCSPlayerController *MovementPlayer::GetController()
 {
-	if (!g_pEntitySystem)
+	if (!GameEntitySystem())
 	{
 		return nullptr;
 	}
-	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(g_pEntitySystem->GetBaseEntity(CEntityIndex(this->index)));
+	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(CEntityIndex(this->index)));
 	if (!ent)
 	{
 		return nullptr;

@@ -4,6 +4,7 @@
 #include "sdk/cgameresourceserviceserver.h"
 #include "utils/utils.h"
 #include "utils/hooks.h"
+#include "utils/gameconfig.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
@@ -14,9 +15,6 @@
 #include "version.h"
 
 KZPlugin g_KZPlugin;
-
-
-CEntitySystem *g_pEntitySystem = NULL;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 

@@ -117,12 +117,12 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	}
 
 	META_RES result = MRES_IGNORED;
-	if (!g_pEntitySystem)
+	if (!GameEntitySystem())
 	{
 		return result;
 	}
 
-	CCSPlayerController *controller = (CCSPlayerController *)g_pEntitySystem->GetBaseEntity(CEntityIndex((i32)slot.Get() + 1));
+	CCSPlayerController *controller = (CCSPlayerController *)GameEntitySystem()->GetBaseEntity(CEntityIndex((i32)slot.Get() + 1));
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
 		if (!g_cmdManager.cmds[i].callback)
@@ -148,7 +148,7 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 	}
 
 	META_RES result = MRES_IGNORED;
-	if (!g_pEntitySystem)
+	if (!GameEntitySystem())
 	{
 		return result;
 	}

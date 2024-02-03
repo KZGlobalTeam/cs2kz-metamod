@@ -6,7 +6,7 @@
 #include "movement/movement.h"
 
 #include "tier0/memdbgon.h"
-extern CEntitySystem *g_pEntitySystem;
+
 CUtlVector<CDetourBase *> g_vecDetours;
 
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);

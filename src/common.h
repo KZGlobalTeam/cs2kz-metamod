@@ -14,8 +14,6 @@
 #define ENGINE_FIXED_TICK_RATE (1.0f / ENGINE_FIXED_TICK_INTERVAL)
 #define EPSILON 0.000001f
 
-extern CEntitySystem *g_pEntitySystem;
-
 #ifdef _WIN32
 #define ROOTBIN "/bin/win64/"
 #define GAMEBIN "/csgo/bin/win64/"
