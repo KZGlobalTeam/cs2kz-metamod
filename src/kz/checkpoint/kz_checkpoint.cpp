@@ -108,6 +108,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	this->tpCount++;
 	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->player->PlayTeleportSound();
+	this->lastTeleportedCheckpoint = &cp;
 }
 
 void KZCheckpointService::TpToCheckpoint()
@@ -129,8 +130,8 @@ void KZCheckpointService::TpToNextCp()
 
 void KZCheckpointService::TpHoldPlayerStill()
 {
-	if (!checkpoints.IsValidIndex(currentCpIndex)
-		|| this->player->GetPawn()->m_lifeState() != LIFE_ALIVE
+	if (!this->lastTeleportedCheckpoint
+		|| !this->player->IsAlive()
 		|| g_pKZUtils->GetServerGlobals()->curtime - this->teleportTime > 0.04) 
 	{
 		return;
@@ -139,10 +140,10 @@ void KZCheckpointService::TpHoldPlayerStill()
 	this->player->GetOrigin(&currentOrigin);
 
 	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
-	if (currentOrigin != checkpoints[currentCpIndex].origin)
+	if (currentOrigin != this->lastTeleportedCheckpoint->origin)
 	{
-		this->player->SetOrigin(checkpoints[currentCpIndex].origin);
-		if (!utils::IsSpawnValid(checkpoints[currentCpIndex].origin))
+		this->player->SetOrigin(this->lastTeleportedCheckpoint->origin);
+		if (!utils::IsSpawnValid(this->lastTeleportedCheckpoint->origin))
 		{
 			this->player->GetMoveServices()->m_bDucked(true);
 			this->player->GetMoveServices()->m_flDuckAmount(1.0f);
@@ -150,23 +151,23 @@ void KZCheckpointService::TpHoldPlayerStill()
 	}
 	this->player->SetVelocity(Vector(0, 0, 0));
 	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
-	if (checkpoints[currentCpIndex].onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
+	if (this->lastTeleportedCheckpoint->onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
 	{
-		ms->m_vecLadderNormal(checkpoints[currentCpIndex].ladderNormal);
+		ms->m_vecLadderNormal(this->lastTeleportedCheckpoint->ladderNormal);
 		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);
 	}
 	else
 	{
 		ms->m_vecLadderNormal(vec3_origin);
 	}
-	if (checkpoints[currentCpIndex].groundEnt)
+	if (this->lastTeleportedCheckpoint->groundEnt)
 	{
 		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
 	}
-	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(checkpoints[currentCpIndex].groundEnt));
+	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(this->lastTeleportedCheckpoint->groundEnt));
 	if (groundEntity && (groundEntity->entindex() == 0 || (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f)))
 	{
-		this->player->GetPawn()->m_hGroundEntity(checkpoints[currentCpIndex].groundEnt);
+		this->player->GetPawn()->m_hGroundEntity(this->lastTeleportedCheckpoint->groundEnt);
 	}
 }
 

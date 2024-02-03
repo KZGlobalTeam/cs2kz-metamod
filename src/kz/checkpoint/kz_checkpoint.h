@@ -31,6 +31,7 @@ private:
 
 	bool hasCustomStartPosition{};
 	Checkpoint customStartPosition;
+	Checkpoint const *lastTeleportedCheckpoint{};
 public:
 	void SetCheckpoint();
 
