@@ -111,8 +111,6 @@ public:
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 
 private:
-	bool inNoclip{};
-	bool hideLegs{};
 	TurnState previousTurnState{};
 public:
 	KZAnticheatService *anticheatService{};
@@ -129,6 +127,9 @@ public:
 	KZStyleService *styleService{};
 	KZTimerService *timerService{};
 	KZTipService *tipService{};
+
+	bool inNoclip{};
+	bool hideLegs{};
 
 	// Noclip
 	void DisableNoclip();
