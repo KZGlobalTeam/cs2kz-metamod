@@ -20,7 +20,7 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Hidelegs set to {darkred} %s.", KZ_CHAT_PREFIX, player->hideLegs ? "true" : "false");
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Hide legs set to {darkred} %s.", KZ_CHAT_PREFIX, player->hideLegs ? "true" : "false");
 	return MRES_SUPERCEDE;
 }
 
@@ -64,6 +64,7 @@ internal SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Hide Weapon set to {darkred} %s.", KZ_CHAT_PREFIX, player->quietService->ShouldHideWeapon() ? "true" : "false");
 	return MRES_SUPERCEDE;
 }
 
