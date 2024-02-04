@@ -183,7 +183,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		utils::PrintConsole(player->GetController(), "Possible modes:");
 		FOR_EACH_VEC(this->modeInfos, i)
 		{
-			utils::PrintConsole(player->GetController(), "%s (kz_mode %s / kz_mode %s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName);
+			utils::PrintConsole(player->GetController(), "%s (kz_mode %s / kz_mode %s / kz_%s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName, this->modeInfos[i].shortModeName);
 		}
 		return false;
 	}
@@ -248,7 +248,23 @@ internal SCMD_CALLBACK(Command_KzMode)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzCkzMode)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	modeManager.SwitchToMode(player, "CKZ");
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzVnlMode)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	modeManager.SwitchToMode(player, "VNL");
+	return MRES_SUPERCEDE;
+}
+
 void KZ::mode::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_mode", Command_KzMode);
+	scmd::RegisterCmd("kz_ckz", Command_KzCkzMode);
+	scmd::RegisterCmd("kz_vnl", Command_KzVnlMode);
 }
