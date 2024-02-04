@@ -1,0 +1,72 @@
+// KZ Mapping API Version 2
+// WIP. final version will likely be bumped up to 3.
+
+@OverrideClass = trigger_multiple
+[
+	timer_trigger_type(choices) : "KZ Trigger Type" : "0" : "The type of KZ trigger." =
+	[
+		0 : "Disabled"
+
+		1 : "Start Zone"
+		2 : "End Zone"
+		3 : "Split Zone"
+		4 : "Checkpoint Zone"
+		5 : "Stage Zone"
+
+		6 : "General Teleport"
+		7 : "Multi Bhop"
+		8 : "Single Bhop"
+		9 : "Sequential Bhop"
+		10 : "Anti Bhop"
+
+		11 : "Slide"
+	]
+
+	// KZ Zone
+	timer_zone_course_descriptor(target_destination) { group="KZ Zone" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5"] } } : "Course Targetname" : : "info_target entity that describes this course. Every zone trigger must be associated with a course."
+
+	// KZ Split Zone
+	// TODO: is hammerid stable enough to be used to uniquely identify these?
+
+	// KZ Checkpoint Zone
+	// TODO: is hammerid stable enough to be used to uniquely identify these?
+
+	// KZ Stage Zone
+	timer_zone_stage_number(integer) { group="KZ Stage Zone" enabled={ variable="timer_trigger_type" value="5" } } : "Stage Number" : 1 : "Stage number. Stage numbers must be sequential, starting from 1."
+
+	// KZ Teleport
+	timer_teleport_destination(target_destination) { group="KZ Teleport" enabled={ variable="timer_trigger_type" values=["6", "7", "8", "9"] } } : "Destination" : : "The entity to which the player should be teleported. Using special targetnames starting with ! won't work. (!activator, !player etc)"
+
+	timer_teleport_delay(float) { group="KZ Teleport" enabled={ variable="timer_trigger_type" values=["6", "7", "8", "9"] } } : "Delay" : "0.0" : "This is how long the player can stay in the trigger. If it's one of the bhop triggers, then this means how long the player can stay on ground. For only bhop triggers the minimum delay is 0.08 seconds."
+	
+	timer_teleport_use_dest_angles(boolean) { group="KZ Teleport" enabled={ variable="timer_trigger_type" values=["6", "7", "8", "9"] } } : "Use Destination Angles" : 1 : "Whether to set the player's view angles to the destination entity's angles or keep the player's current view angles."
+	
+	timer_teleport_reset_speed(boolean) { group="KZ Teleport" enabled={ variable="timer_trigger_type" values=["6", "7", "8", "9"] } } : "Reset Speed" : 1 : "Whether to reset the player's speed when they get teleported"
+	
+	timer_teleport_reorient_player(boolean) { group="KZ Teleport" enabled={ variable="timer_trigger_type" values=["6", "7", "8", "9"] } } : "Reorient Player" : 0 : "Reorients the player's velocity and view yaw angle by the teleport destination's yaw angle. This overrides the value of 'Use Destination Angles'. This will cause visible lag when the player moves their mouse."
+	
+	timer_teleport_relative(boolean) { group="KZ Teleport" enabled={ variable="timer_trigger_type" values=["6", "7", "8", "9"] } } : "Relative To Trigger Origin" : 0 : "Only works if the Name is timer_teleport. "
+		+ "Gets the offset of the player to this trigger, then teleports the player to the destination with that offset added. If 'Reorient Player' is enabled, then the offset is rotated by the destination entity's yaw."
+	
+	// KZ Anti Bhop
+	timer_anti_bhop_time(float) { group="KZ Anti Bhop" enabled={ variable="timer_trigger_type" value="10" } } : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
+		+ "This is the time for which antibhop will be applied. Time is only counted when the player is on the ground."
+
+	// KZ Slide
+	timer_slide_description(string) { readonly="1" group="KZ Slide" enabled={ variable="timer_trigger_type" value="disabled" } } :"Description" : "Makes every surface surfable, if the player is touching this trigger." : "Makes every surface surfable, if the player is touching this trigger."
+]
+
+@OverrideClass = info_target
+[
+	timer_course_descriptor(boolean) : "KZ Is Course Descriptor" : 0 : "Is this info_target a course descriptor."
+
+	// KZ Course Descriptor
+	timer_zone_course_name(string) { enabled={ group="KZ Course Descriptor" variable="timer_course_descriptor" value="1" } } : "Course Name" : : "The name of the course. Every zone trigger must be associated with a course name. Only letters a-z, A-Z, digits 0-9 and space allowed."
+
+	// { group = "KZ Course Descriptor" enabled={ variable="skytexture" values=[""] } }
+]
+
+@OverrideClass = worldspawn
+[
+	timer_mapping_api_version(integer) : "KZ Mapping API Version" : 2 : "When the fgd changes with a Mapping API update and you update the fgd, then you have to change this parameter in hammer to the correct version (written at the top of the new fgd) on every map you use it on!"
+]
