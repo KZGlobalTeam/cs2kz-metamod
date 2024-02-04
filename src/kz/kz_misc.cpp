@@ -12,6 +12,7 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleNoclip();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Noclip set to {darkred} %s.", KZ_CHAT_PREFIX, player->inNoclip ? "true" : "false");
 	return MRES_SUPERCEDE;
 }
 
@@ -19,6 +20,7 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Hidelegs set to {darkred} %s.", KZ_CHAT_PREFIX, player->hideLegs ? "true" : "false");
 	return MRES_SUPERCEDE;
 }
 
@@ -26,6 +28,7 @@ internal SCMD_CALLBACK(Command_KzHide)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Hide players set to {darkred} %s.", KZ_CHAT_PREFIX, player->quietService->hideOtherPlayers ? "true" : "false");
 	return MRES_SUPERCEDE;
 }
 
@@ -53,6 +56,7 @@ internal SCMD_CALLBACK(Command_KzRestart)
 	{
 		player->checkpointService->TpToStartPosition();
 	}
+	utils::CPrintChat(player->GetPawn(), "%s {grey}You have now restarted.", KZ_CHAT_PREFIX);
 	return MRES_SUPERCEDE;
 }
 
@@ -60,6 +64,14 @@ internal SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_StopTimer)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->InvalidateTimer();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Timer {darkred} stop {grey}now!", KZ_CHAT_PREFIX);
 	return MRES_SUPERCEDE;
 }
 
@@ -73,6 +85,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_restart",    Command_KzRestart,    "Restart.");
 	scmd::RegisterCmd("kz_r",          Command_KzRestart,    "Restart.");
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
+	scmd::RegisterCmd("kz_stop",       Command_StopTimer,    "Stop timer.");
 	KZCheckpointService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 }
