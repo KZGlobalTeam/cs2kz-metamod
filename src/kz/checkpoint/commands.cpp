@@ -51,6 +51,8 @@ void KZCheckpointService::RegisterCommands()
 	scmd::RegisterCmd("kz_tp", Command_KzTeleport, "Teleport to the current checkpoint.");
 	scmd::RegisterCmd("kz_prevcp", Command_KzPrevcp, "Teleport to the last checkpoint.");
 	scmd::RegisterCmd("kz_nextcp", Command_KzNextcp, "Teleport to the next checkpoint.");
+	scmd::RegisterCmd("kz_pcp", Command_KzPrevcp, "Teleport to the last checkpoint.");
+	scmd::RegisterCmd("kz_ncp", Command_KzNextcp, "Teleport to the next checkpoint.");
 	scmd::RegisterCmd("kz_setstartpos", Command_SetStartPos, "Set your custom start position to your current position.");
 	scmd::RegisterCmd("kz_ssp", Command_SetStartPos, "Set your custom start position to your current position.");
 	scmd::RegisterCmd("kz_clearstartpos", Command_ClearStartPos, "Clear your custom start position.");
