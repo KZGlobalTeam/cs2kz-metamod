@@ -1,10 +1,13 @@
 #include "cs_usercmd.pb.h"
 #include "kz_mode_ckz.h"
+#include "utils/addresses.h"
 #include "utils/interfaces.h"
+#include "utils/gameconfig.h"
 #include "version.h"
 
 KZClassicModePlugin g_KZClassicModePlugin;
 
+CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 KZModeManager *g_pModeManager = NULL;
 ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService *{ return new KZClassicModeService(player); };
@@ -27,10 +30,9 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_UTILS_INTERFACE);
 		return false;
 	}
-
-	if (nullptr == (interfaces::pSchemaSystem = (CSchemaSystem *)g_pKZUtils->GetSchemaSystemPointer())
-		|| nullptr == (schema::StateChanged = (StateChanged_t *)g_pKZUtils->GetSchemaStateChangedPointer())
-		|| nullptr == (schema::NetworkStateChanged = (NetworkStateChanged_t *)g_pKZUtils->GetSchemaNetworkStateChangedPointer())
+	modules::Initialize();
+	if (!interfaces::Initialize(ismm, error, maxlen)
+		|| nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig())
 		|| !g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory))
 	{
 		return false;
@@ -255,7 +257,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 	this->lastDesiredViewAngleTime = g_pKZUtils->GetServerGlobals()->curtime;
 	for (i32 i = 0; i < numcmds; i++)
 	{
-		auto address = reinterpret_cast<char *>(cmds) + i * offsets::UsercmdOffset;
+		auto address = reinterpret_cast<char *>(cmds) + i * g_pGameConfig->GetOffset("UsercmdOffset");
 		CSGOUserCmdPB *usercmdsPtr = reinterpret_cast<CSGOUserCmdPB *>(address);
 		this->lastDesiredViewAngle = { usercmdsPtr->base().viewangles().x(), usercmdsPtr->base().viewangles().y(), usercmdsPtr->base().viewangles().z() };
 		for (i32 j = 0; j < usercmdsPtr->mutable_base()->subtick_moves_size(); j++)

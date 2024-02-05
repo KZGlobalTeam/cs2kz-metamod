@@ -146,8 +146,8 @@ void KZQuietService::Reset()
 
 void KZQuietService::SendFullUpdate()
 {
-	auto slots = *(void ***)((char *)g_pNetworkServerService->GetIGameServer() + offsets::ClientOffset);
-	*(uint32_t *)((char *)slots[this->player->GetPlayerSlot().Get()] + offsets::ACKOffset) = -1;
+	auto slots = *(void ***)((char *)g_pNetworkServerService->GetIGameServer() + g_pGameConfig->GetOffset("ClientOffset"));
+	*(uint32_t *)((char *)slots[this->player->GetPlayerSlot().Get()] + g_pGameConfig->GetOffset("ACKOffset")) = -1;
 }
 
 bool KZQuietService::ShouldHide()

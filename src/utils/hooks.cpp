@@ -44,15 +44,20 @@ SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEven
 SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
 SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *,
 	INetworkSerializable *, const void *, unsigned long, NetChannelBufType_t);
-SH_DECL_HOOK1_void(CBaseEntity2, StartTouch, SH_NOATTRIB, false, CBaseEntity2 *);
-SH_DECL_HOOK1_void(CBaseEntity2, Touch, SH_NOATTRIB, false, CBaseEntity2 *);
-SH_DECL_HOOK1_void(CBaseEntity2, EndTouch, SH_NOATTRIB, false, CBaseEntity2 *);
+SH_DECL_MANUALHOOK1_void(StartTouch, 0, 0, 0, CBaseEntity2 *);
+SH_DECL_MANUALHOOK1_void(Touch, 0, 0, 0, CBaseEntity2 *);
+SH_DECL_MANUALHOOK1_void(EndTouch, 0, 0, 0, CBaseEntity2 *);
 
-SH_DECL_HOOK3_void(CCSPlayerPawn, Teleport, SH_NOATTRIB, false, const Vector *, const QAngle *, const Vector *);
+SH_DECL_MANUALHOOK3_void(Teleport, 0, 0, 0, const Vector *, const QAngle *, const Vector *);
 
 
 void hooks::Initialize()
 {
+	SH_MANUALHOOK_RECONFIGURE(StartTouch, g_pGameConfig->GetOffset("StartTouch"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(Touch, g_pGameConfig->GetOffset("Touch"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(EndTouch, g_pGameConfig->GetOffset("EndTouch"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(Teleport, g_pGameConfig->GetOffset("Teleport"), 0, 0);
+
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
 	SH_ADD_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
@@ -80,16 +85,16 @@ internal void AddEntityHook(CBaseEntity2 *entity)
 {
 	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
 	{
-		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouch), false));
-		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouch), false));
-		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouch), false));
-		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouchPost), true));
-		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouchPost), true));
-		hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouchPost), true));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(StartTouch, entity, SH_STATIC(OnStartTouch), false));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Touch, entity, SH_STATIC(OnTouch), false));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(EndTouch, entity, SH_STATIC(OnEndTouch), false));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(StartTouch, entity, SH_STATIC(OnStartTouchPost), true));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Touch, entity, SH_STATIC(OnTouchPost), true));
+		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(EndTouch, entity, SH_STATIC(OnEndTouchPost), true));
 		CCSPlayerPawn* pawn = static_cast<CCSPlayerPawn *>(entity);
 		if (!V_stricmp(entity->GetClassname(), "player") && g_pPlayerManager->ToPlayer(pawn))
 		{
-			hooks::entityTouchHooks.AddToTail(SH_ADD_HOOK(CCSPlayerPawn, Teleport, pawn, SH_STATIC(OnTeleport), false));
+			hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Teleport, pawn, SH_STATIC(OnTeleport), false));
 			g_pPlayerManager->ToPlayer(pawn)->pendingEndTouchTriggers.RemoveAll();
 			g_pPlayerManager->ToPlayer(pawn)->pendingStartTouchTriggers.RemoveAll();
 			g_pPlayerManager->ToPlayer(pawn)->touchedTriggers.RemoveAll();
@@ -101,12 +106,12 @@ internal void RemoveEntityHooks(CBaseEntity2 *entity)
 {
 	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
 	{
-		SH_REMOVE_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouch), false);
-		SH_REMOVE_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouch), false);
-		SH_REMOVE_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouch), false);
-		SH_REMOVE_HOOK(CBaseEntity2, StartTouch, entity, SH_STATIC(OnStartTouchPost), true);
-		SH_REMOVE_HOOK(CBaseEntity2, Touch, entity, SH_STATIC(OnTouchPost), true);
-		SH_REMOVE_HOOK(CBaseEntity2, EndTouch, entity, SH_STATIC(OnEndTouchPost), true);
+		SH_REMOVE_MANUALHOOK(StartTouch, entity, SH_STATIC(OnStartTouch), false);
+		SH_REMOVE_MANUALHOOK(Touch, entity, SH_STATIC(OnTouch), false);
+		SH_REMOVE_MANUALHOOK(EndTouch, entity, SH_STATIC(OnEndTouch), false);
+		SH_REMOVE_MANUALHOOK(StartTouch, entity, SH_STATIC(OnStartTouchPost), true);
+		SH_REMOVE_MANUALHOOK(Touch, entity, SH_STATIC(OnTouchPost), true);
+		SH_REMOVE_MANUALHOOK(EndTouch, entity, SH_STATIC(OnEndTouchPost), true);
 		if (V_strstr(entity->GetClassname(), "trigger_"))
 		{
 			for (u32 i = 0; i <= MAXPLAYERS; i++)
@@ -118,7 +123,7 @@ internal void RemoveEntityHooks(CBaseEntity2 *entity)
 		}
 		else
 		{
-			SH_REMOVE_HOOK(CCSPlayerPawn, Teleport, static_cast<CCSPlayerPawn *>(entity), SH_STATIC(OnTeleport), false);
+			SH_REMOVE_MANUALHOOK(Teleport, static_cast<CCSPlayerPawn *>(entity), SH_STATIC(OnTeleport), false);
 		}
 	}
 }

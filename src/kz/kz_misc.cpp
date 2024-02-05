@@ -132,7 +132,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		Vector spawnOrigin;
 		QAngle spawnAngles;
 		utils::FindValidSpawn(spawnOrigin, spawnAngles);
-		CALL_VIRTUAL(void, offsets::Teleport, player->GetPawn(), spawnOrigin, spawnAngles, vec3_origin);
+		player->GetPawn()->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
 		//}
 		//hasSavedPosition[client] = false;
 		//Call_GOKZ_OnJoinTeam(client, newTeam);

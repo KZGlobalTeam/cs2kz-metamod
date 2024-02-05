@@ -1,21 +1,16 @@
 #include "utils.h"
+#include "gameconfig.h"
 
-internal KZUtils kzUtils;
-KZUtils *g_pKZUtils = &kzUtils;
+extern CGameConfig *g_pGameConfig;
 
-void *KZUtils::GetSchemaSystemPointer()
+CGameConfig *KZUtils::GetGameConfig()
 {
-	return (void *)interfaces::pSchemaSystem;
+	return g_pGameConfig;
 }
 
-void *KZUtils::GetSchemaStateChangedPointer()
+CSchemaSystem *KZUtils::GetSchemaSystemPointer()
 {
-	return (void *)schema::StateChanged;
-}
-
-void *KZUtils::GetSchemaNetworkStateChangedPointer()
-{
-	return (void *)schema::NetworkStateChanged;
+	return interfaces::pSchemaSystem;
 }
 
 CGlobalVars *KZUtils::GetServerGlobals()
@@ -43,21 +38,6 @@ CPlayerSlot KZUtils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 	return utils::GetEntityPlayerSlot(entity);
 }
 
-void KZUtils::InitPlayerMovementTraceFilter(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup)
-{
-	utils::InitPlayerMovementTraceFilter(pFilter, pHandleEntity, interactWith, collisionGroup);
-}
-
-void KZUtils::InitGameTrace(trace_t_s2 *trace)
-{
-	utils::InitGameTrace(trace);
-}
-
-void KZUtils::TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm)
-{
-	utils::TracePlayerBBox(start, end, bounds, filter, pm);
-}
-
 f32 KZUtils::NormalizeDeg(f32 a)
 {
 	return utils::NormalizeDeg(a);
@@ -71,14 +51,4 @@ f32 KZUtils::GetAngleDifference(const f32 source, const f32 target, const f32 c,
 CGameEntitySystem *KZUtils::GetGameEntitySystem()
 {
 	return GameEntitySystem();
-}
-
-void KZUtils::SwitchTeam(CCSPlayerController *controller, int team)
-{
-	utils::SwitchTeam(controller, team);
-}
-
-void KZUtils::SetPawn(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool a3, bool a4)
-{
-	utils::SetPawn(controller, pawn, a3, a4);
 }

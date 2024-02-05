@@ -1,5 +1,7 @@
 #include "networkbasetypes.pb.h"
 
+#include "addresses.h"
+#include "gameconfig.h"
 #include "utils.h"
 #include "convar.h"
 #include "tier0/dbg.h"
@@ -16,46 +18,12 @@
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
-#define RESOLVE_SIG(module, sig, variable) variable = (decltype(variable))module->FindSignature((const byte *)sig.data, sig.length); \
-	if (!variable) { Warning("Failed to find address for %s!\n", #sig); return false; }
+#define RESOLVE_SIG(gameConfig, name, type, variable) \
+	type *variable = (decltype(variable))gameConfig->ResolveSignature(name);	\
+	if (!variable) { Warning("Failed to find address for %s!\n", #name); return false; }
 
-
-InitPlayerMovementTraceFilter_t *utils::InitPlayerMovementTraceFilter = NULL;
-InitGameTrace_t *utils::InitGameTrace = NULL;
-TracePlayerBBox_t *utils::TracePlayerBBox = NULL;
-GetLegacyGameEventListener_t *utils::GetLegacyGameEventListener = NULL;
-SnapViewAngles_t *utils::SnapViewAngles = NULL;
-EmitSoundFunc_t *utils::EmitSound = NULL;
-FindEntityByClassname_t *FindEntityByClassnameFunc = NULL;
-SwitchTeam_t *utils::SwitchTeam = NULL;
-SetPawn_t *utils::SetPawn = NULL;
-
-void modules::Initialize()
-{
-	modules::engine = new CModule(ROOTBIN, "engine2");
-	modules::tier0 = new CModule(ROOTBIN, "tier0");
-	modules::server = new CModule(GAMEBIN, "server");
-	modules::schemasystem = new CModule(ROOTBIN, "schemasystem");
-	modules::steamnetworkingsockets = new CModule(ROOTBIN, "steamnetworkingsockets");
-}
-
-bool interfaces::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
-{
-	GET_V_IFACE_CURRENT(GetEngineFactory, g_pCVar, ICvar, CVAR_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameResourceServiceServer, CGameResourceService, GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameClients, ISource2GameClients, INTERFACEVERSION_SERVERGAMECLIENTS);
-	GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
-	GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
-	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pSchemaSystem, CSchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
-	GET_V_IFACE_CURRENT(GetFileSystemFactory, g_pFullFileSystem, IFileSystem, FILESYSTEM_INTERFACE_VERSION);
-	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, offsets::GetEventManager, interfaces::pServer) - 8);
-
-	return true;
-}
+CGameConfig *g_pGameConfig = NULL;
+KZUtils *g_pKZUtils = NULL;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
@@ -65,23 +33,45 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		return false;
 	}
 
+	CBufferStringGrowable<256> gamedirpath;
+	interfaces::pEngine->GetGameDir(gamedirpath);
+
+	std::string gamedirname = CGameConfig::GetDirectoryName(gamedirpath.Get());
+	const char *gamedataPath = "addons/cs2kz/gamedata/cs2kz-core.games.txt";
+
+	g_pGameConfig = new CGameConfig(gamedirname, gamedataPath);
+	char conf_error[255] = "";
+	if (!g_pGameConfig->Init(g_pFullFileSystem, conf_error, sizeof(conf_error)))
+	{
+		snprintf(error, maxlen, "Could not read %s: %s", g_pGameConfig->GetPath().c_str(), conf_error);
+		Warning("%s\n", error);
+		return false;
+	}
+	// Initialize this later because we didn't have game config before.
+	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, g_pGameConfig->GetOffset("GameEventManager"), interfaces::pServer) - 8);
+
+	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
+	RESOLVE_SIG(g_pGameConfig, "InitGameTrace", InitGameTrace_t, InitGameTrace);
+	RESOLVE_SIG(g_pGameConfig, "InitPlayerMovementTraceFilter", InitPlayerMovementTraceFilter_t, InitPlayerMovementTraceFilter);
+	RESOLVE_SIG(g_pGameConfig, "GetLegacyGameEventListener", GetLegacyGameEventListener_t, GetLegacyGameEventListener);
+	RESOLVE_SIG(g_pGameConfig, "SnapViewAngles", SnapViewAngles_t, SnapViewAngles);
+	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound);
+	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam);
+	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn);
+
+	g_pKZUtils = new KZUtils(
+		TracePlayerBBox,
+		InitGameTrace,
+		InitPlayerMovementTraceFilter,
+		GetLegacyGameEventListener,
+		SnapViewAngles,
+		EmitSound,
+		SwitchTeam,
+		SetPawn
+	);
+
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
-
-
-	RESOLVE_SIG(modules::server, sigs::NetworkStateChanged, schema::NetworkStateChanged);
-	RESOLVE_SIG(modules::server, sigs::StateChanged, schema::StateChanged);
-
-	RESOLVE_SIG(modules::server, sigs::TracePlayerBBox, utils::TracePlayerBBox);
-	RESOLVE_SIG(modules::server, sigs::InitGameTrace, utils::InitGameTrace);
-	RESOLVE_SIG(modules::server, sigs::InitPlayerMovementTraceFilter, utils::InitPlayerMovementTraceFilter);
-	RESOLVE_SIG(modules::server, sigs::GetLegacyGameEventListener, utils::GetLegacyGameEventListener);
-	RESOLVE_SIG(modules::server, sigs::SnapViewAngles, utils::SnapViewAngles);
-	RESOLVE_SIG(modules::server, sigs::EmitSound, utils::EmitSound);
-	RESOLVE_SIG(modules::server, sigs::FindEntityByClassname, FindEntityByClassnameFunc);
-	RESOLVE_SIG(modules::server, sigs::CCSPlayerController_SwitchTeam, utils::SwitchTeam);
-	RESOLVE_SIG(modules::server, sigs::CBasePlayerController_SetPawn, utils::SetPawn);
-
 	InitDetours();
 	return true;
 }
@@ -97,7 +87,9 @@ CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *n
 	{
 		return NULL;
 	}
-	return FindEntityByClassnameFunc(GameEntitySystem(), start, name);
+	EntityInstanceByClassIter_t iter(start, name);
+
+	return static_cast<CBaseEntity2 * >(iter.Next());
 }
 
 void utils::UnlockConVars()
@@ -228,7 +220,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 	EmitSound_t soundParams;
 	soundParams.m_pSoundName = sound;
 	soundParams.m_flVolume = volume;
-	utils::EmitSound(filter, player.Get() + 1, soundParams);
+	g_pKZUtils->EmitSound(filter, player.Get() + 1, soundParams);
 }
 
 f32 utils::NormalizeDeg(f32 a)
@@ -286,7 +278,7 @@ bool utils::IsSpawnValid(const Vector &origin)
 	filter.attr.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
 	filter.attr.m_nInteractsAs = 0x40000;
 	trace_t_s2 tr;
-	utils::TracePlayerBBox(origin, origin, bounds, &filter, tr);
+	g_pKZUtils->TracePlayerBBox(origin, origin, bounds, &filter, tr);
 	if (tr.fraction != 1.0 || tr.startsolid)
 	{
 		return false;

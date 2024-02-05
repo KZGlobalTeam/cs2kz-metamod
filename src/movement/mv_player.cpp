@@ -96,7 +96,7 @@ void MovementPlayer::SetOrigin(const Vector &origin)
 		{
 			return;
 		}
-		CALL_VIRTUAL(void, offsets::Teleport, pawn, &origin, NULL, NULL);
+		pawn->Teleport(&origin, NULL, NULL);
 	}
 }
 
@@ -130,7 +130,7 @@ void MovementPlayer::SetVelocity(const Vector &velocity)
 		{
 			return;
 		}
-		CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, NULL, &velocity);
+		pawn->Teleport(NULL, NULL, &velocity);
 	}
 }
 
@@ -158,8 +158,8 @@ void MovementPlayer::SetAngles(const QAngle &angles)
 	QAngle absAngles = angles;
 	absAngles.x = 0;
 
-	CALL_VIRTUAL(void, offsets::Teleport, pawn, NULL, &absAngles, NULL);
-	utils::SnapViewAngles(pawn, angles);
+	pawn->Teleport(NULL, &absAngles, NULL);
+	g_pKZUtils->SnapViewAngles(pawn, angles);
 }
 
 TurnState MovementPlayer::GetTurning()
@@ -202,7 +202,7 @@ f32 MovementPlayer::GetGroundPosition()
 	if (!this->processingMovement) mv = &this->moveDataPost;
 
 	CTraceFilterPlayerMovementCS filter;
-	utils::InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
 
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
@@ -216,9 +216,9 @@ f32 MovementPlayer::GetGroundPosition()
 	if (this->GetMoveServices()->m_bDucked()) bounds.maxs.z = 54.0;
 
 	trace_t_s2 trace;
-	utils::InitGameTrace(&trace);
+	g_pKZUtils->InitGameTrace(&trace);
 
-	utils::TracePlayerBBox(mv->m_vecAbsOrigin, ground, bounds, &filter, trace);
+	g_pKZUtils->TracePlayerBBox(mv->m_vecAbsOrigin, ground, bounds, &filter, trace);
 
 	// Doesn't hit anything, fall back to the original ground
 	if (trace.startsolid || trace.fraction == 1.0f)

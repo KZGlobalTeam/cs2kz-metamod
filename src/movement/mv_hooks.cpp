@@ -1,36 +1,38 @@
 #include "movement.h"
 #include "utils/detours.h"
-
+#include "utils/gameconfig.h"
 #include "tier0/memdbgon.h"
+
+extern CGameConfig *g_pGameConfig;
 
 void movement::InitDetours()
 {
-	INIT_DETOUR(GetMaxSpeed);
-	INIT_DETOUR(ProcessUsercmds);
-	INIT_DETOUR(ProcessMovement);
-	INIT_DETOUR(PlayerMoveNew);
-	INIT_DETOUR(CheckParameters);
-	INIT_DETOUR(CanMove);
-	INIT_DETOUR(FullWalkMove);
-	INIT_DETOUR(MoveInit);
-	INIT_DETOUR(CheckWater);
-	INIT_DETOUR(WaterMove);
-	INIT_DETOUR(CheckVelocity);
-	INIT_DETOUR(Duck);
-	INIT_DETOUR(CanUnduck);
-	INIT_DETOUR(LadderMove);
-	INIT_DETOUR(CheckJumpButton);
-	INIT_DETOUR(OnJump);
-	INIT_DETOUR(AirMove);
-	INIT_DETOUR(AirAccelerate);
-	INIT_DETOUR(Friction);
-	INIT_DETOUR(WalkMove);
-	INIT_DETOUR(TryPlayerMove);
-	INIT_DETOUR(CategorizePosition);
-	INIT_DETOUR(FinishGravity);
-	INIT_DETOUR(CheckFalling);
-	INIT_DETOUR(PostPlayerMove);
-	INIT_DETOUR(PostThink);
+	INIT_DETOUR(g_pGameConfig, GetMaxSpeed);
+	INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
+	INIT_DETOUR(g_pGameConfig, ProcessMovement);
+	INIT_DETOUR(g_pGameConfig, PlayerMoveNew);
+	INIT_DETOUR(g_pGameConfig, CheckParameters);
+	INIT_DETOUR(g_pGameConfig, CanMove);
+	INIT_DETOUR(g_pGameConfig, FullWalkMove);
+	INIT_DETOUR(g_pGameConfig, MoveInit);
+	INIT_DETOUR(g_pGameConfig, CheckWater);
+	INIT_DETOUR(g_pGameConfig, WaterMove);
+	INIT_DETOUR(g_pGameConfig, CheckVelocity);
+	INIT_DETOUR(g_pGameConfig, Duck);
+	INIT_DETOUR(g_pGameConfig, CanUnduck);
+	INIT_DETOUR(g_pGameConfig, LadderMove);
+	INIT_DETOUR(g_pGameConfig, CheckJumpButton);
+	INIT_DETOUR(g_pGameConfig, OnJump);
+	INIT_DETOUR(g_pGameConfig, AirMove);
+	INIT_DETOUR(g_pGameConfig, AirAccelerate);
+	INIT_DETOUR(g_pGameConfig, Friction);
+	INIT_DETOUR(g_pGameConfig, WalkMove);
+	INIT_DETOUR(g_pGameConfig, TryPlayerMove);
+	INIT_DETOUR(g_pGameConfig, CategorizePosition);
+	INIT_DETOUR(g_pGameConfig, FinishGravity);
+	INIT_DETOUR(g_pGameConfig, CheckFalling);
+	INIT_DETOUR(g_pGameConfig, PostPlayerMove);
+	INIT_DETOUR(g_pGameConfig, PostThink);
 }
 
 f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)

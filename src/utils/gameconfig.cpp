@@ -127,6 +127,10 @@ CModule **CGameConfig::GetModule(const char *name)
 		return &modules::server;
 	else if (strcmp(library, "tier0") == 0)
 		return &modules::tier0;
+	else if (strcmp(library, "schemasystem") == 0)
+		return &modules::schemasystem;
+	else if (strcmp(library, "steamnetworkingsockets") == 0)
+		return &modules::steamnetworkingsockets;
 	return nullptr;
 }
 
