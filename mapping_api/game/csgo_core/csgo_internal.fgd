@@ -64,7 +64,8 @@
 	timer_course_descriptor(boolean) : "KZ Is Course Descriptor" : 0 : "Is this info_target a course descriptor."
 
 	// KZ Course Descriptor
-	timer_zone_course_name(string) { enabled={ group="KZ Course Descriptor" variable="timer_course_descriptor" value="1" } } : "Course Name" : : "The name of the course. Every zone trigger must be associated with a course name. Only letters a-z, A-Z, digits 0-9 and space allowed."
+	timer_course_name(string) { enabled={ group="KZ Course Descriptor" variable="timer_course_descriptor" value="1" } } : "Course Name" : : "The name of the course. Every zone trigger must be associated with a course name. Only letters a-z, A-Z, digits 0-9 and space allowed."
+	timer_course_disable_checkpoint(boolean) { enabled={ group="KZ Course Descriptor" variable="timer_course_descriptor" value="1" } } : "Disable Checkpoints" : 0 : "Disable setting checkpoints in this course."
 
 	// { group = "KZ Course Descriptor" enabled={ variable="skytexture" values=[""] } }
 ]
