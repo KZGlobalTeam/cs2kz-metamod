@@ -111,6 +111,8 @@ public:
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 
 private:
+	bool inNoclip{};
+	bool hideLegs{};
 	TurnState previousTurnState{};
 public:
 	KZAnticheatService *anticheatService{};
@@ -128,18 +130,18 @@ public:
 	KZTimerService *timerService{};
 	KZTipService *tipService{};
 
-	bool inNoclip{};
-	bool hideLegs{};
-
 	// Noclip
 	void DisableNoclip();
 	void ToggleNoclip();
+	bool IsNoclipping() { return this->inNoclip; }
 
 	void EnableGodMode();
 	void HandleMoveCollision();
 
 	// Leg stuff
 	void ToggleHideLegs();
+	bool HidingLegs() { return this->hideLegs; }
+
 	void UpdatePlayerModelAlpha();
 	void PlayCheckpointSound();
 	void PlayTeleportSound();

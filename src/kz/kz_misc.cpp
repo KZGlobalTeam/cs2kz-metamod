@@ -12,7 +12,7 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleNoclip();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Noclip set to {darkred} %s.", KZ_CHAT_PREFIX, player->inNoclip ? "true" : "false");
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Noclip %s.", KZ_CHAT_PREFIX, player->IsNoclipping() ? "enabled" : "disabled");
 	return MRES_SUPERCEDE;
 }
 
@@ -20,7 +20,7 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Hide legs set to {darkred} %s.", KZ_CHAT_PREFIX, player->hideLegs ? "true" : "false");
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Player legs are now %s.", KZ_CHAT_PREFIX, player->HidingLegs() ? "hidden" : "shown");
 	return MRES_SUPERCEDE;
 }
 
@@ -28,7 +28,7 @@ internal SCMD_CALLBACK(Command_KzHide)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Hide players set to {darkred} %s.", KZ_CHAT_PREFIX, player->quietService->hideOtherPlayers ? "true" : "false");
+	utils::CPrintChat(player->GetPawn(), "%s {grey}You are now %s other players.", KZ_CHAT_PREFIX, player->quietService->hideOtherPlayers ? "hiding" : "showing");
 	return MRES_SUPERCEDE;
 }
 
@@ -56,7 +56,6 @@ internal SCMD_CALLBACK(Command_KzRestart)
 	{
 		player->checkpointService->TpToStartPosition();
 	}
-	utils::CPrintChat(player->GetPawn(), "%s {grey}You have now restarted.", KZ_CHAT_PREFIX);
 	return MRES_SUPERCEDE;
 }
 
@@ -64,15 +63,18 @@ internal SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Hide Weapon set to {darkred} %s.", KZ_CHAT_PREFIX, player->quietService->ShouldHideWeapon() ? "true" : "false");
+	utils::CPrintChat(player->GetPawn(), "%s {grey}You are now %s your weapons.", KZ_CHAT_PREFIX, player->quietService->ShouldHideWeapon() ? "hiding" : "showing");
 	return MRES_SUPERCEDE;
 }
 
 internal SCMD_CALLBACK(Command_StopTimer)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (player->timerIsRunning)
+	{
+		utils::CPrintChat(player->GetPawn(), "%s {darkred}Timer stopped.", KZ_CHAT_PREFIX);	
+	}
 	player->InvalidateTimer();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Timer {darkred} stop {grey}now!", KZ_CHAT_PREFIX);
 	return MRES_SUPERCEDE;
 }
 
