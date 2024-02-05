@@ -22,6 +22,11 @@
 		11 : "Slide"
 	]
 
+	// KZ Modifiers
+	timer_modifier_disable_pause(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] } } : "Disable Pausing" : 0 : "Disable pausing when the player is inside this trigger"
+	timer_modifier_disable_checkpoints(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] } } : "Disable Checkpoints" : 0 : "Disable checkpoints when the player is inside this trigger"
+	timer_modifier_disable_jumpstats(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] } } : "Disable Jumpstats" : 0 : "Disable jumpstats when the player is inside this trigger"
+
 	// KZ Zone
 	timer_zone_course_descriptor(target_destination) { group="KZ Zone" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5"] } } : "Course Targetname" : : "info_target entity that describes this course. Every zone trigger must be associated with a course."
 
