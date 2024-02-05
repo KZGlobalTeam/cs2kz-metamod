@@ -25,6 +25,7 @@
 	// KZ Modifiers
 	timer_modifier_disable_pause(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" value="11" } } : "Disable Pausing" : 0 : "Disable pausing when the player is touching this trigger"
 	timer_modifier_disable_checkpoints(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" value="11" } } : "Disable Checkpoints" : 0 : "Disable checkpoints when the player is touching this trigger"
+	timer_modifier_disable_teleports(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" value="11" } } : "Disable Teleports" : 0 : "Disable teleporting when the player is touching this trigger"
 	timer_modifier_disable_jumpstats(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values="11" } } : "Disable Jumpstats" : 0 : "Disable jumpstats when the player is touching this trigger"
 	timer_modifier_enable_slide(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values="11" } } : "Enable Slide" : 0 : "Makes every surface surfable, if the player is touching this trigger."
 
