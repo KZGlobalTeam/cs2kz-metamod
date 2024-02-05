@@ -7,6 +7,8 @@
 #include "interfaces/interfaces.h"
 
 #include "utils/simplecmds.h"
+SCMD_CALLBACK(Command_KzModeShort);
+SCMD_CALLBACK(Command_KzMode);
 
 internal KZModeManager modeManager;
 KZModeManager *g_pKZModeManager = &modeManager;
@@ -127,18 +129,29 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 
 bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
 {
+	if (!shortModeName || V_strlen(shortModeName) == 0 || !longModeName || V_strlen(longModeName) == 0)
+	{
+		return false;
+	}
 	FOR_EACH_VEC(this->modeInfos, i)
 	{
-		if (shortModeName && V_stricmp(this->modeInfos[i].shortModeName, shortModeName) == 0)
+		if (V_stricmp(this->modeInfos[i].shortModeName, shortModeName) == 0)
 		{
 			return false;
 		}
-		if (longModeName && V_stricmp(this->modeInfos[i].longModeName, longModeName) == 0)
+		if (V_stricmp(this->modeInfos[i].longModeName, longModeName) == 0)
 		{
 			return false;
 		}
 	}
-	this->modeInfos.AddToTail({ id, shortModeName, longModeName, factory });
+
+	char shortModeCmd[64];
+	char shortModeCmdDesc[256];
+	
+	V_snprintf(shortModeCmd, 64, "kz_%s", shortModeName);
+	V_snprintf(shortModeCmdDesc, 64, "Switch to %s mode.", longModeName);
+	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort, shortModeCmdDesc);
+	this->modeInfos.AddToTail({ id, shortModeName, longModeName, factory, shortCmdRegistered });
 	return true;
 }
 
@@ -159,6 +172,9 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	{
 		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
 		{
+			char shortModeCmd[64];
+			V_snprintf(shortModeCmd, 64, "kz_%s", this->modeInfos[i].shortModeName);
+			scmd::UnregisterCmd(shortModeCmd);
 			this->modeInfos.Remove(i);
 			break;
 		}
@@ -183,7 +199,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		utils::PrintConsole(player->GetController(), "Possible modes:");
 		FOR_EACH_VEC(this->modeInfos, i)
 		{
-			utils::PrintConsole(player->GetController(), "%s (kz_mode %s / kz_mode %s / kz_%s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName, this->modeInfos[i].shortModeName);
+			utils::PrintConsole(player->GetController(), "%s (kz_mode %s / kz_mode %s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName);
 		}
 		return false;
 	}
@@ -248,23 +264,32 @@ internal SCMD_CALLBACK(Command_KzMode)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzCkzMode)
+internal SCMD_CALLBACK(Command_KzModeShort)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	modeManager.SwitchToMode(player, "CKZ");
-	return MRES_SUPERCEDE;
-}
-
-internal SCMD_CALLBACK(Command_KzVnlMode)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	modeManager.SwitchToMode(player, "VNL");
+	// Strip kz_ prefix if exist.
+	size_t len = 0;
+	bool stripped = false;
+	if (!stripped)
+	{
+		len = strlen("kz_");
+		stripped = strncmp(args->Arg(0), "kz_", len) == 0;
+	}
+	if (!stripped)
+	{
+		len = 1;
+		stripped = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
+	}
+	
+	if (stripped)
+	{
+		const char *mode = args->Arg(0) + len;
+		modeManager.SwitchToMode(player, mode);
+	}
 	return MRES_SUPERCEDE;
 }
 
 void KZ::mode::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_mode", Command_KzMode);
-	scmd::RegisterCmd("kz_ckz", Command_KzCkzMode);
-	scmd::RegisterCmd("kz_vnl", Command_KzVnlMode);
+	scmd::RegisterCmd("kz_mode", Command_KzMode, "List or change mode.");
 }

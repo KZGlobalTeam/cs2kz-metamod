@@ -98,6 +98,7 @@ class KZModeManager
 		const char *shortModeName;
 		const char *longModeName;
 		ModeServiceFactory factory;
+		bool shortCmdRegistered;
 	};
 public:
 	virtual bool RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
