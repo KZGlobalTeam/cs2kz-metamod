@@ -21,6 +21,7 @@ struct CNetworkVarChainer : public CSmartPtr<CEntityInstance>
 		ChainUpdatePropagationLL_t *pNext;
 		CUtlDelegate<void(const CNetworkVarChainer &)> updateDelegate;
 	};
+	uint8 unk[24];
 	ChangeAccessorFieldPathIndex_t m_PathIndex;
 	ChainUpdatePropagationLL_t *m_pPropagationList;
 };
@@ -29,7 +30,7 @@ namespace schema
 {
 	int16_t FindChainOffset(const char *className);
 	SchemaKey GetOffset(const char *className, uint32_t classKey, const char *memberName, uint32_t memberKey);
-	void NetworkStateChanged(int64 chainEntity, int64 nLocalOffset, int64 nArrayIndex);
+	void NetworkStateChanged(int64 chainEntity, uint32 nLocalOffset, int nArrayIndex);
 }
 
 class CBaseEntity2;
