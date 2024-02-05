@@ -19,13 +19,14 @@
 		9 : "Sequential Bhop"
 		10 : "Anti Bhop"
 
-		11 : "Slide"
+		11 : "Modifiers"
 	]
 
 	// KZ Modifiers
-	timer_modifier_disable_pause(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] } } : "Disable Pausing" : 0 : "Disable pausing when the player is inside this trigger"
-	timer_modifier_disable_checkpoints(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] } } : "Disable Checkpoints" : 0 : "Disable checkpoints when the player is inside this trigger"
-	timer_modifier_disable_jumpstats(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] } } : "Disable Jumpstats" : 0 : "Disable jumpstats when the player is inside this trigger"
+	timer_modifier_disable_pause(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" value="11" } } : "Disable Pausing" : 0 : "Disable pausing when the player is touching this trigger"
+	timer_modifier_disable_checkpoints(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" value="11" } } : "Disable Checkpoints" : 0 : "Disable checkpoints when the player is touching this trigger"
+	timer_modifier_disable_jumpstats(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values="11" } } : "Disable Jumpstats" : 0 : "Disable jumpstats when the player is touching this trigger"
+	timer_modifier_enable_slide(boolean) { group="KZ Modifiers" enabled={ variable="timer_trigger_type" values="11" } } : "Enable Slide" : 0 : "Makes every surface surfable, if the player is touching this trigger."
 
 	// KZ Zone
 	timer_zone_course_descriptor(target_destination) { group="KZ Zone" enabled={ variable="timer_trigger_type" values=["1", "2", "3", "4", "5"] } } : "Course Targetname" : : "info_target entity that describes this course. Every zone trigger must be associated with a course."
@@ -56,9 +57,6 @@
 	// KZ Anti Bhop
 	timer_anti_bhop_time(float) { group="KZ Anti Bhop" enabled={ variable="timer_trigger_type" value="10" } } : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
 		+ "This is the time for which antibhop will be applied. Time is only counted when the player is on the ground."
-
-	// KZ Slide
-	timer_slide_description(string) { readonly="1" group="KZ Slide" enabled={ variable="timer_trigger_type" value="disabled" } } :"Description" : "Makes every surface surfable, if the player is touching this trigger." : "Makes every surface surfable, if the player is touching this trigger."
 ]
 
 @OverrideClass = info_target
