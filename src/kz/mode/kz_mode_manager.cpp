@@ -7,8 +7,8 @@
 #include "interfaces/interfaces.h"
 
 #include "utils/simplecmds.h"
-SCMD_CALLBACK(Command_KzModeShort);
-SCMD_CALLBACK(Command_KzMode);
+internal SCMD_CALLBACK(Command_KzModeShort);
+internal SCMD_CALLBACK(Command_KzMode);
 
 internal KZModeManager modeManager;
 KZModeManager *g_pKZModeManager = &modeManager;
