@@ -42,8 +42,8 @@ namespace offsets
 	inline constexpr int Respawn = 327;
 	inline constexpr int CommitSuicide = 359;
 	// Check sv_fullupdate
-	inline constexpr int ClientOffset = 624;
-	inline constexpr int ACKOffset = 316;
+	inline constexpr int ClientOffset = 0x260; // Need NEW
+	inline constexpr int ACKOffset = 0x134; // Need NEW
 	// Check ProcessUsercmds
 	inline constexpr int UsercmdOffset = 0x88;
 	
@@ -61,8 +61,8 @@ namespace offsets
 	inline constexpr int GetEventManager = 93;
 	inline constexpr int CommitSuicide = 359;
 	inline constexpr int Respawn = 328;
-	inline constexpr int ClientOffset = 624;
-	inline constexpr int ACKOffset = 324;
+	inline constexpr int ClientOffset = 0x270;
+	inline constexpr int ACKOffset = 0x144;
 	inline constexpr int UsercmdOffset = 0x88;
 	inline constexpr int ControllerChangeTeam = 92;
 	inline constexpr int ControllerRespawn = 244;
