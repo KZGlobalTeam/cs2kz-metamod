@@ -48,7 +48,7 @@ namespace offsets
 	inline constexpr int UsercmdOffset = 0x90;
 	
 	// Controller functions, yoinked from cs2fixes
-	inline constexpr int ControllerChangeTeam = 90;
+	inline constexpr int ControllerChangeTeam = 93;
 	inline constexpr int ControllerRespawn = 242;
 	
 #else
