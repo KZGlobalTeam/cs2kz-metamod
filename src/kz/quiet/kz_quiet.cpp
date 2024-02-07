@@ -22,7 +22,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 
-		EntityInstanceByClassIter_t iter("player");
+		EntityInstanceByClassIter_t iter(NULL, "player");
 		for (CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(iter.First());
 			pawn != NULL; 
 			pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
