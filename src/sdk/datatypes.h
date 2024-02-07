@@ -12,8 +12,6 @@
 struct TransmitInfo
 {
 	CBitVec<16384> *m_pTransmitEdict;
-	uint8 unknown[552];
-	CPlayerSlot m_nClientEntityIndex;
 };
 
 enum ObserverMode_t : uint8_t
@@ -321,21 +319,23 @@ public:
 	Vector m_vecAngles; // 0x48
 	CUtlVector<SubtickMove> m_SubtickMoves; // 0x58
 	bool m_bGameCodeMovedPlayer; // 0x70
-	CUtlVector<touchlist_t> m_TouchList; // 0x78
-	Vector m_collisionNormal; // 0x90
-	Vector m_groundNormal; // 0x9c unsure
-	Vector m_vecAbsOrigin; // 0xa8
-	uint8_t padding[4]; // 0xb4 unsure
-	bool m_nGameModeMovedPlayer; // 0xb8
-	Vector m_vecOldAngles; // 0xbc
-	float m_flMaxSpeed; // 0xc8
-	float m_flClientMaxSpeed; // 0xcc
-	float m_flSubtickAccelSpeed; // 0xd0 Related to ground acceleration subtick stuff with sv_stopspeed and friction
-	bool m_bJumpedThisTick; // 0xd4 something to do with basevelocity and the tick the player jumps
-	bool m_bShouldApplyGravity; // 0xd5
-	Vector m_outWishVel; //0xd8
+	uint8_t padding[7]; // 0x71
+	uint8_t unknown[24]; // 0x78
+	CUtlVector<touchlist_t> m_TouchList; // 0x90
+	Vector m_collisionNormal; // 0xa8
+	Vector m_groundNormal; // 0xb4 unsure
+	Vector m_vecAbsOrigin; // 0xc0
+	uint8_t padding1[4]; // 0xcc unsure
+	bool m_nGameModeMovedPlayer; // 0xd0
+	Vector m_vecOldAngles; // 0xd4
+	float m_flMaxSpeed; // 0xe0
+	float m_flClientMaxSpeed; // 0xe4
+	float m_flSubtickAccelSpeed; // 0xe8 Related to ground acceleration subtick stuff with sv_stopspeed and friction
+	bool m_bJumpedThisTick; // 0xec something to do with basevelocity and the tick the player jumps
+	bool m_bShouldApplyGravity; // 0xed
+	Vector m_outWishVel; //0xf0
 };
-static_assert(sizeof(CMoveData) == 0xE8, "Class didn't match expected size");
+static_assert(sizeof(CMoveData) == 0x100, "Class didn't match expected size");
 
 // Custom data types goes here.
 

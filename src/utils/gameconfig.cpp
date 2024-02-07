@@ -25,7 +25,7 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 		return false;
 	}
 
-	const KeyValues* game = m_pKeyValues->FindKey(m_szGameDir.c_str());
+	KeyValues* game = m_pKeyValues->FindKey(m_szGameDir.c_str());
 	if (game)
 	{
 #if defined _LINUX
@@ -34,7 +34,7 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 		const char* platform = "windows";
 #endif
 
-		const KeyValues* offsets = game->FindKey("Offsets");
+		KeyValues* offsets = game->FindKey("Offsets");
 		if (offsets)
 		{
 			FOR_EACH_SUBKEY(offsets, it)
@@ -43,7 +43,7 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 			}
 		}
 
-		const KeyValues* signatures = game->FindKey("Signatures");
+		KeyValues* signatures = game->FindKey("Signatures");
 		if (signatures)
 		{
 			FOR_EACH_SUBKEY(signatures, it)
@@ -53,7 +53,7 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 			}
 		}
 
-		const KeyValues* patches = game->FindKey("Patches");
+		KeyValues* patches = game->FindKey("Patches");
 		if (patches)
 		{
 			FOR_EACH_SUBKEY(patches, it)
