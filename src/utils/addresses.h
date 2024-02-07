@@ -64,7 +64,7 @@ namespace offsets
 	inline constexpr int ClientOffset = 0x270;
 	inline constexpr int ACKOffset = 0x144;
 	inline constexpr int UsercmdOffset = 0x88;
-	inline constexpr int ControllerChangeTeam = 89;
+	inline constexpr int ControllerChangeTeam = 92;
 	inline constexpr int ControllerRespawn = 244;
 
 #endif
