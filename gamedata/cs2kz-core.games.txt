@@ -320,12 +320,12 @@
 			// 2832 (354 * 8) is the offset
 			"CommitSuicide"
 			{
-				"windows"		"357"
-				"linux"			"357"
+				"windows"		"359"
+				"linux"			"359"
 			}
 			"ControllerRespawn"
 			{
-				"windows"		"242"
+				"windows"		"244"
 				"linux"			"244"
 			}
 			// "Player.Respawn"
@@ -337,19 +337,19 @@
 			// Check sv_fullupdate
 			"ClientOffset"
 			{
-				"windows"		"608"
+				"windows"		"624"
 				"linux"			"624"
 			}
-			// Check sv_fullupdate
+			// Check "Received acknowledgement tick" string
 			"ACKOffset"
 			{
-				"windows"		"308"
+				"windows"		"316"
 				"linux"			"324"
 			}
 			// Check ProcessUsercmds
 			"UsercmdOffset"
 			{
-				"windows"		"144"
+				"windows"		"136"
 				"linux"			"136"
 			}
 			"StartTouch"
