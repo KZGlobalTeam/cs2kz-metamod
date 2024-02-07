@@ -26,7 +26,7 @@ namespace modules
 namespace offsets
 {
 #ifdef _WIN32
-	inline constexpr int GameEntitySystem = 88;
+	inline constexpr int GameEntitySystem = 0x58;
 	// 9 functions after one with "Physics_SimulateEntity" "Server Game"
 	inline constexpr int IsEntityPawn = 153;
 	// Right after IsEntityPawn
@@ -45,14 +45,14 @@ namespace offsets
 	inline constexpr int ClientOffset = 624;
 	inline constexpr int ACKOffset = 316;
 	// Check ProcessUsercmds
-	inline constexpr int UsercmdOffset = 136;
+	inline constexpr int UsercmdOffset = 0x88;
 	
 	// Controller functions, yoinked from cs2fixes
 	inline constexpr int ControllerChangeTeam = 93;
 	inline constexpr int ControllerRespawn = 244;
 	
 #else
-	inline constexpr int GameEntitySystem = 80;
+	inline constexpr int GameEntitySystem = 0x50;
 	inline constexpr int IsEntityPawn = 152;
 	inline constexpr int IsEntityController = 153;
 	inline constexpr int SetMoveType = 76;
@@ -63,7 +63,7 @@ namespace offsets
 	inline constexpr int Respawn = 328;
 	inline constexpr int ClientOffset = 624;
 	inline constexpr int ACKOffset = 324;
-	inline constexpr int UsercmdOffset = 136;
+	inline constexpr int UsercmdOffset = 0x88;
 	inline constexpr int ControllerChangeTeam = 92;
 	inline constexpr int ControllerRespawn = 244;
 
