@@ -37,7 +37,7 @@ namespace offsets
 	inline constexpr int CollisionRulesChanged = 174;
 	// 5 functions after one with "Physics_SimulateEntity" "Server Game"
 	inline constexpr int Teleport = 149;
-	inline constexpr int GetEventManager = 91;
+	inline constexpr int GetEventManager = 93;
 	// "Player.Respawn"
 	inline constexpr int Respawn = 326;
 	inline constexpr int CommitSuicide = 357;
@@ -58,7 +58,7 @@ namespace offsets
 	inline constexpr int SetMoveType = 76;
 	inline constexpr int CollisionRulesChanged = 173;
 	inline constexpr int Teleport = 148;
-	inline constexpr int GetEventManager = 91;
+	inline constexpr int GetEventManager = 93;
 	inline constexpr int CommitSuicide = 357;
 	inline constexpr int Respawn = 327;
 	inline constexpr int ClientOffset = 0x270;
@@ -78,7 +78,7 @@ namespace sigs
 	// String: "CCSPlayerPawnBase::SwitchTeam", just keep in mind this is actually CCSPlayerController::SwitchTeam
 	DECLARE_SIG(CCSPlayerController_SwitchTeam, "\x40\x56\x57\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8B\xF9\x8B\xF2\x8B\xCA");
 
-	DECLARE_SIG(CBasePlayerController_SetPawn, "\x44\x88\x4C\x24\x2A\x55\x57");
+	DECLARE_SIG(CBasePlayerController_SetPawn, "\x44\x88\x4C\x24\x2A\x55\x57\x41\x54\x41\x56\x41\x57\x48\x8D\x6C\x24\x2A");
 
 	// search for "WARNING: Ignoring invalid gameinfo MaxNetworkableEntities %d\n", go to the only xref.
 	DECLARE_SIG(CEntitySystem_ctor, "\x48\x89\x5C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x20\x48\x8B\xD9\xE8\x2A\x2A\x2A\x2A\x33\xFF\xC7");
