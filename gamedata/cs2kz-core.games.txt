@@ -347,10 +347,11 @@
 				"linux"			"324"
 			}
 			// Check ProcessUsercmds
+			// Note: the pointer points to an array of 150 usercmds, but I don't know why there are 64 bytes after the usercmd struct itself.
 			"UsercmdOffset"
 			{
-				"windows"		"136"
-				"linux"			"136"
+				"windows"		"64"
+				"linux"			"64"
 			}
 			"StartTouch"
 			{
