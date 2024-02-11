@@ -2,6 +2,7 @@
 	Credit to CS2Fixes: https://github.com/Source2ZE/CS2Fixes/blame/main/src/gameconfig.cpp
 */
 
+#include <cstdint>
 #include "gameconfig.h"
 #include "addresses.h"
 
