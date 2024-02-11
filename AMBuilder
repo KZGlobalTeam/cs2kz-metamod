@@ -129,6 +129,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
     ] 
     mode_binary.sources += [
+      'src/utils/plat_linux.cpp',
       os.path.join(sdk['path'], 'public', 'tier0', 'memoverride.cpp')
       ]
   elif mode_binary.compiler.target.platform == 'windows':
