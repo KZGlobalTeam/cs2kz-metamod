@@ -331,7 +331,7 @@
 			// "Player.Respawn"
 			"Respawn"
 			{
-				"windows"		"327"
+				"windows"		"328"
 				"linux"			"329" // Blind guess!!!
 			}
 			// Check sv_fullupdate
