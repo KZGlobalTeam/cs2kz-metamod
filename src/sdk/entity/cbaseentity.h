@@ -82,6 +82,7 @@ public:
 	SCHEMA_FIELD(int, m_iTeamNum)
 	SCHEMA_FIELD(bool, m_bTakesDamage)
 	SCHEMA_FIELD(MoveType_t, m_MoveType)
+	SCHEMA_FIELD(MoveType_t, m_nActualMoveType)
 	SCHEMA_FIELD(Vector, m_vecBaseVelocity)
 	SCHEMA_FIELD(Vector, m_vecAbsVelocity)
 	SCHEMA_FIELD(CNetworkVelocityVector, m_vecVelocity)
@@ -99,7 +100,7 @@ public:
 
 	bool IsAlive() { return this->m_lifeState() == LIFE_ALIVE; }
 
-	void SetMoveType(MoveType_t movetype) { this->m_MoveType(movetype); }
+	void SetMoveType(MoveType_t movetype) { this->m_MoveType(movetype); this->m_nActualMoveType(movetype); }
 
 	void CollisionRulesChanged() { CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CollisionRulesChanged"), this); }
 
