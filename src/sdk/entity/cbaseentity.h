@@ -106,9 +106,9 @@ public:
 
 	int GetTeam() { return m_iTeamNum(); }
 
-	void StartTouch(CBaseEntity2 *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("StartTouch"), this); }
-	void Touch(CBaseEntity2 *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Touch"), this); }
-	void EndTouch(CBaseEntity2 *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("EndTouch"), this); }
+	void StartTouch(CBaseEntity2 *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("StartTouch"), this, pOther); }
+	void Touch(CBaseEntity2 *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Touch"), this, pOther); }
+	void EndTouch(CBaseEntity2 *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("EndTouch"), this, pOther); }
 
 	void Teleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Teleport"), this, newPosition, newAngles, newVelocity); }
 };
