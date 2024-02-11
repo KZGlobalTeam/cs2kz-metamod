@@ -331,7 +331,7 @@
 			"Respawn"
 			{
 				"windows"		"328"
-				"linux"			"329" // Blind guess!!!
+				"linux"			"329"
 			}
 			// Check sv_fullupdate
 			"ClientOffset"
@@ -355,17 +355,17 @@
 			"StartTouch"
 			{
 				"windows"		"133"
-				"linux"			"132"
+				"linux"			"134"
 			}
 			"Touch"
 			{
 				"windows"		"134"
-				"linux"			"133"
+				"linux"			"135"
 			}
 			"EndTouch"
 			{
 				"windows"		"135"
-				"linux"			"134"
+				"linux"			"136"
 			}
 		}
 	}
