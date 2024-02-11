@@ -166,7 +166,7 @@ void *CGameConfig::ResolveSignature(const char *name)
 		Warning("Invalid Module %s\n", name);
 		return nullptr;
 	}
-
+	int error = SIG_OK;
 	void *address = nullptr;
 	if (this->IsSymbol(name))
 	{
@@ -191,7 +191,12 @@ void *CGameConfig::ResolveSignature(const char *name)
 		byte *pSignature = HexToByte(signature, iLength);
 		if (!pSignature)
 			return nullptr;
-		address = (*module)->FindSignature(pSignature, iLength);
+		address = (*module)->FindSignature(pSignature, iLength, error);
+		if (error == SIG_FOUND_MULTIPLE)
+		{
+			Warning("Multiple addresses found for %s, defaulting to nullptr\n", name);
+			return nullptr;
+		}
 	}
 
 	if (!address)
