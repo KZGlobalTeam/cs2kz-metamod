@@ -272,7 +272,6 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 	{
 		auto address = reinterpret_cast<char *>(cmds) + i * (sizeof(CSGOUserCmdPB) + g_pGameConfig->GetOffset("UsercmdOffset"));
 		CSGOUserCmdPB *usercmdsPtr = reinterpret_cast<CSGOUserCmdPB *>(address);
-		PrintUserCmdData(usercmdsPtr);
 		for (i32 j = 0; j < usercmdsPtr->mutable_base()->subtick_moves_size(); j++)
 		{
 			CSubtickMoveStep *subtickMove = usercmdsPtr->mutable_base()->mutable_subtick_moves(j);
