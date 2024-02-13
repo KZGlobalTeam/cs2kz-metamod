@@ -948,7 +948,7 @@ bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_INTERVAL;
+	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
 	if (fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f)
 	{
 		return true;
