@@ -295,6 +295,10 @@ public:
 		m_bShouldApplyGravity{source.m_bShouldApplyGravity},
 		m_outWishVel{source.m_outWishVel}
 	{
+		for (int i = 0; i < source.m_AttackSubtickMoves.Count(); i++)
+		{
+			this->m_AttackSubtickMoves.AddToTail(source.m_AttackSubtickMoves[i]);
+		}
 		for (int i = 0; i < source.m_SubtickMoves.Count(); i++)
 		{
 			this->m_SubtickMoves.AddToTail(source.m_SubtickMoves[i]);
@@ -317,10 +321,10 @@ public:
 	float m_flSubtickFraction; // 0x38
 	Vector m_vecVelocity; // 0x3c
 	Vector m_vecAngles; // 0x48
-	CUtlVector<SubtickMove> m_SubtickMoves; // 0x58
-	bool m_bGameCodeMovedPlayer; // 0x70
-	uint8_t padding[7]; // 0x71
-	uint8_t unknown[24]; // 0x78
+	CUtlVector<SubtickMove> m_SubtickMoves; // 0x54
+	CUtlVector<SubtickMove> m_AttackSubtickMoves; // 0x68
+	bool m_bGameCodeMovedPlayer; // 0x88
+	bool unknown; // 0x89
 	CUtlVector<touchlist_t> m_TouchList; // 0x90
 	Vector m_collisionNormal; // 0xa8
 	Vector m_groundNormal; // 0xb4 unsure

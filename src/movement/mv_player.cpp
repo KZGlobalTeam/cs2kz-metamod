@@ -18,7 +18,6 @@ void MovementPlayer::OnProcessMovementPost()
 	this->processingMovement = false;
 	this->oldAngles = this->moveDataPost.m_vecViewAngles;
 	this->oldWalkMoved = this->walkMoved;
-	this->enableWaterFixThisTick = false;
 }
 
 CCSPlayerController *MovementPlayer::GetController()
@@ -234,7 +233,7 @@ void MovementPlayer::RegisterTakeoff(bool jumped)
 	CMoveData *mv = this->currentMoveData;
 	if (!this->processingMovement) mv = &this->moveDataPost;
 	this->takeoffOrigin = mv->m_vecAbsOrigin;
-	this->takeoffTime = g_pKZUtils->GetServerGlobals()->curtime - g_pKZUtils->GetServerGlobals()->frametime;
+	this->takeoffTime = g_pKZUtils->GetGlobals()->curtime - g_pKZUtils->GetGlobals()->frametime;
 	this->takeoffVelocity = mv->m_vecVelocity;
 	this->takeoffGroundOrigin = mv->m_vecAbsOrigin;
 	this->takeoffGroundOrigin.z = this->GetGroundPosition();
@@ -246,7 +245,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	CMoveData *mv = this->currentMoveData;
 	if (!this->processingMovement) mv = &this->moveDataPost;
 	this->landingOrigin = mv->m_vecAbsOrigin;
-	this->landingTime = g_pKZUtils->GetServerGlobals()->curtime;
+	this->landingTime = g_pKZUtils->GetGlobals()->curtime;
 	this->landingVelocity = landingVelocity;
 	if (!distbugFix)
 	{
@@ -262,7 +261,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 			if (mv->m_TouchList[i].trace.planeNormal.z > 0.7)
 			{
 				this->landingOriginActual = mv->m_TouchList[i].trace.endpos;
-				this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[i].trace.fraction) * g_pKZUtils->GetServerGlobals()->frametime; // TODO: make sure this is right
+				this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[i].trace.fraction) * g_pKZUtils->GetGlobals()->frametime; // TODO: make sure this is right
 				return;
 			}
 		}
@@ -354,7 +353,7 @@ void MovementPlayer::Reset()
 	this->tickCount = 0;
 	this->timerStartTick = 0;
 	this->collidingWithWorld = false;
-	this->enableWaterFixThisTick = false;
+	this->enableWaterFix = false;
 	this->ignoreNextCategorizePosition = false;
 	this->pendingStartTouchTriggers.RemoveAll();
 	this->pendingEndTouchTriggers.RemoveAll();

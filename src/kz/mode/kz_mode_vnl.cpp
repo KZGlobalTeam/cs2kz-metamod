@@ -87,7 +87,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	VectorCopy(velocity, primal_velocity);
 
 	allFraction = 0;
-	time_left = g_pKZUtils->GetServerGlobals()->frametime;   // Total time for this movement operation.
+	time_left = g_pKZUtils->GetGlobals()->frametime;   // Total time for this movement operation.
 
 	new_velocity.Init();
 	bbox_t bounds;
@@ -265,7 +265,8 @@ bool KZVanillaModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(time) - time) < 0.001f)
 	{
 		return true;
 	}
@@ -279,7 +280,8 @@ bool KZVanillaModeService::OnTriggerTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(time) - time) < 0.001f)
 	{
 		return true;
 	}
@@ -292,11 +294,11 @@ bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(time) - time) < 0.001f)
 	{
 		return true;
 	}
-
 	return false;
 }
 

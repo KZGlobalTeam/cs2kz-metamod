@@ -78,8 +78,8 @@ class KZClassicModeService : public KZModeService
 	bool revertJumpTweak{};
 	f32 preJumpZSpeed{};
 	f32 tweakedJumpZSpeed{};
-	f32 lastDesiredViewAngleTime{};
-	QAngle lastDesiredViewAngle;
+	bool hasValidDesiredViewAngle{};
+	QAngle lastValidDesiredViewAngle;
 	f32 lastJumpReleaseTime{};
 	bool oldDuckPressed{};
 	bool forcedUnduck{};
@@ -109,10 +109,15 @@ class KZClassicModeService : public KZModeService
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
+
+	virtual bool EnableWaterFix() override { return true; }
+
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
 	virtual f32 GetPlayerMaxSpeed() override;
 
+	virtual void OnPhysicsSimulate() override;
+	virtual void OnPhysicsSimulatePost() override;
 	virtual void OnProcessUsercmds(void *, int) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
@@ -131,11 +136,8 @@ public:
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 
-	// Insert subtick timing to be called later.
-	// This is called either at the end of movement processing, or at the start of ProcessUsercmds.
-	// If it is called at the end of movement processing, it must set subtick timing into the future.
-	// If it is called at the start of ProcessUsercmds, it must set subtick timing in the past.
-	void InsertSubtickTiming(float time, bool future);
+	// Insert subtick timing to be called later. Should only call this in PhysicsSimulate.
+	void InsertSubtickTiming(float time);
 
 	void InterpolateViewAngles();
 	void RestoreInterpolatedViewAngles();

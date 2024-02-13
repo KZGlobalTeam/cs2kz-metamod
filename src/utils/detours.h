@@ -13,6 +13,7 @@ extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket
 #define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
 
+DECLARE_MOVEMENT_EXTERN_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_EXTERN_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_EXTERN_DETOUR(ProcessMovement);

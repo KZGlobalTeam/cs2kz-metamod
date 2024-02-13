@@ -96,7 +96,8 @@ public:
 
 	virtual CGameConfig *GetGameConfig();
 	virtual CSchemaSystem *GetSchemaSystemPointer();
-	virtual CGlobalVars *GetServerGlobals();
+	virtual const CGlobalVars *GetServerGlobals();
+	virtual CGlobalVars *GetGlobals();
 
 	virtual CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
 

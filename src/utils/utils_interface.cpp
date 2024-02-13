@@ -1,5 +1,8 @@
 #include "utils.h"
 #include "gameconfig.h"
+#include "iserver.h"
+#include "interfaces.h"
+#include "cs2kz.h"
 
 extern CGameConfig *g_pGameConfig;
 
@@ -13,9 +16,19 @@ CSchemaSystem *KZUtils::GetSchemaSystemPointer()
 	return interfaces::pSchemaSystem;
 }
 
-CGlobalVars *KZUtils::GetServerGlobals()
+const CGlobalVars *KZUtils::GetServerGlobals()
 {
-	return interfaces::pEngine->GetServerGlobals();
+	return &(g_KZPlugin.serverGlobals);
+}
+
+CGlobalVars *KZUtils::GetGlobals()
+{
+	INetworkGameServer *server = g_pNetworkServerService->GetIGameServer();
+
+	if(!server)
+		return nullptr;
+
+	return server->GetGlobals();
 }
 
 CBaseEntity2 *KZUtils::FindEntityByClassname(CEntityInstance *start, const char *name)

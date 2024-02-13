@@ -7,6 +7,7 @@ extern CGameConfig *g_pGameConfig;
 
 void movement::InitDetours()
 {
+	INIT_DETOUR(g_pGameConfig, PhysicsSimulate);
 	INIT_DETOUR(g_pGameConfig, GetMaxSpeed);
 	INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
 	INIT_DETOUR(g_pGameConfig, ProcessMovement);
@@ -33,6 +34,14 @@ void movement::InitDetours()
 	INIT_DETOUR(g_pGameConfig, CheckFalling);
 	INIT_DETOUR(g_pGameConfig, PostPlayerMove);
 	INIT_DETOUR(g_pGameConfig, PostThink);
+}
+
+void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
+{
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
+	player->OnPhysicsSimulate();
+	PhysicsSimulate(controller);
+	player->OnPhysicsSimulatePost();
 }
 
 f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
@@ -117,7 +126,7 @@ bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveD
 	auto retValue = CheckWater(ms, mv);
 	player->OnCheckWaterPost();
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick)
+	if (player->enableWaterFix)
 	{
 		return player->GetPawn()->m_flWaterLevel() > 0.5f;
 	}
@@ -130,7 +139,7 @@ void FASTCALL movement::Detour_WaterMove(CCSPlayer_MovementServices *ms, CMoveDa
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->OnWaterMove();
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick)
+	if (player->enableWaterFix)
 	{
 		player->ignoreNextCategorizePosition = true;
 	}
@@ -199,7 +208,7 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	else if (result && oldMoveType == MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		// Player is on the ladder, pressing jump pushes them away from the ladder.
-		float curtime = g_pKZUtils->GetServerGlobals()->curtime;
+		float curtime = g_pKZUtils->GetGlobals()->curtime;
 		player->RegisterTakeoff(player->IsButtonPressed(IN_JUMP));
 		player->takeoffFromLadder = true;
 		player->OnChangeMoveType(MOVETYPE_LADDER);
@@ -217,7 +226,7 @@ void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, C
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f)
+	if (player->enableWaterFix && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f)
 	{
 		if (ms->m_nButtons()->m_pButtonStates[0] & IN_JUMP)
 		{
@@ -300,7 +309,7 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick && player->ignoreNextCategorizePosition)
+	if (player->enableWaterFix && player->ignoreNextCategorizePosition)
 	{
 		player->ignoreNextCategorizePosition = false;
 		return;

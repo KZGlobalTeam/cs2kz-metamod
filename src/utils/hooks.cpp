@@ -1,6 +1,7 @@
 #include "hooks.h"
 #include "igameeventsystem.h"
 #include "utils/simplecmds.h"
+#include "cs2kz.h"
 
 #include "kz/quiet/kz_quiet.h"
 #include "utils/utils.h"
@@ -158,6 +159,7 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
+	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	static int entitySystemHook = 0;
 	if (GameEntitySystem() && !entitySystemHook)
 	{

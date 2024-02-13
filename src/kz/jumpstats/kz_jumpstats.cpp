@@ -64,11 +64,11 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 	f64 accelspeed;
 	if (this->wishspeed != 0)
 	{
-		accelspeed = this->accel * this->wishspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL; // Hardcoding tickrate
+		accelspeed = this->accel * this->wishspeed * this->surfaceFriction * this->duration;
 	}
 	else
 	{
-		accelspeed = this->accel * this->maxspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL; // Hardcoding tickrate
+		accelspeed = this->accel * this->maxspeed * this->surfaceFriction * this->duration;
 	}
 	if (accelspeed <= 0.0)
 		return useRadians ? M_PI : RAD2DEG(M_PI);
@@ -124,9 +124,9 @@ f32 AACall::CalcAccelSpeed(bool tryMaxSpeed)
 {
 	if (tryMaxSpeed && this->wishspeed == 0)
 	{
-		return this->accel * this->maxspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+		return this->accel * this->maxspeed * this->surfaceFriction * this->duration;
 	}
-	return this->accel * this->wishspeed * this->surfaceFriction * this->subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+	return this->accel * this->wishspeed * this->surfaceFriction * this->duration;
 }
 
 f32 AACall::CalcIdealGain()
@@ -158,29 +158,29 @@ void Strafe::End()
 {
 	FOR_EACH_VEC(this->aaCalls, i)
 	{
-		this->duration += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+		this->duration += this->aaCalls[i].duration;
 		// Calculate BA/DA/OL
 		if (this->aaCalls[i].wishspeed == 0)
 		{
 			u64 buttonBits = IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT;
 			if (CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, buttonBits))
 			{
-				this->overlap += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+				this->overlap += this->aaCalls[i].duration;
 			}
 			else
 			{
-				this->deadAir += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+				this->deadAir += this->aaCalls[i].duration;
 			}
 		}
 		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= JS_EPSILON)
 		{
 			// This gain could just be from quantized float stuff.
-			this->badAngles += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+			this->badAngles += this->aaCalls[i].duration;
 		}
 		// Calculate sync.
 		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > JS_EPSILON)
 		{
-			this->syncDuration += this->aaCalls[i].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+			this->syncDuration += this->aaCalls[i].duration;
 		}
 
 		// Gain/loss.
@@ -275,38 +275,39 @@ bool Strafe::CalcAngleRatioStats()
 		//	this->aaCalls[i].wishdir.y,
 		//	this->aaCalls[i].wishdir.z,
 		//	this->aaCalls[i].accel,
-		//	this->aaCalls[i].subtickFraction);
+		//	this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE);
 		if (angles.y > maxYaw + 20.0f || angles.y < minYaw - 20.0f)
 		{
 			continue;
 		}
 		f32 gainRatio = (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D()) / this->aaCalls[i].CalcIdealGain();
+		f32 fraction = this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE;
 		if (angles.y < minYaw)
 		{
-			totalRatios += -1 * this->aaCalls[i].subtickFraction;
-			totalDuration += this->aaCalls[i].subtickFraction;
-			ratios.AddToTail(-1 * this->aaCalls[i].subtickFraction);
+			totalRatios += -1 * fraction;
+			totalDuration += fraction;
+			ratios.AddToTail(-1 * fraction);
 			//utils::PrintConsoleAll("No Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 			continue;
 		}
 		else if (angles.y < idealYaw)
 		{
-			totalRatios += (gainRatio - 1) * this->aaCalls[i].subtickFraction;
-			totalDuration += this->aaCalls[i].subtickFraction;
-			ratios.AddToTail((gainRatio - 1) * this->aaCalls[i].subtickFraction);
+			totalRatios += (gainRatio - 1) * fraction;
+			totalDuration += fraction;
+			ratios.AddToTail((gainRatio - 1) * fraction);
 			//utils::PrintConsoleAll("Slow Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 		}
 		else if (angles.y < maxYaw)
 		{
-			totalRatios += (1 - gainRatio) * this->aaCalls[i].subtickFraction;
-			totalDuration += this->aaCalls[i].subtickFraction;
-			ratios.AddToTail((1 - gainRatio) * this->aaCalls[i].subtickFraction);
+			totalRatios += (1 - gainRatio) * fraction;
+			totalDuration += fraction;
+			ratios.AddToTail((1 - gainRatio) * fraction);
 			//utils::PrintConsoleAll("Fast Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 		}
 		else
 		{
 			totalRatios += 1.0f;
-			totalDuration += this->aaCalls[i].subtickFraction;
+			totalDuration += fraction;
 			ratios.AddToTail(1.0f);
 			//utils::PrintConsoleAll("TooFast Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
 		}
@@ -352,7 +353,7 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	call->wishspeed = wishspeed;
 	call->accel = accel;
 	call->surfaceFriction = this->player->GetMoveServices()->m_flSurfaceFriction();
-	call->subtickFraction = this->player->currentMoveData->m_flSubtickFraction;
+	call->duration = g_pKZUtils->GetGlobals()->frametime;
 	call->ducking = this->player->GetMoveServices()->m_bDucked;
 	this->player->GetVelocity(&call->velocityPost);
 	strafe->UpdateStrafeMaxSpeed(call->velocityPost.Length2D());
@@ -390,8 +391,8 @@ void Jump::End()
 		{
 			if (this->strafes[i].aaCalls[j].ducking)
 			{
-				this->duckDuration += this->strafes[i].aaCalls[j].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
-				this->duckEndDuration += this->strafes[i].aaCalls[j].subtickFraction * ENGINE_FIXED_TICK_INTERVAL;
+				this->duckDuration += this->strafes[i].aaCalls[j].duration;
+				this->duckEndDuration += this->strafes[i].aaCalls[j].duration;
 			}
 			else
 			{
@@ -516,7 +517,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 {
 	if (this->player->takeoffFromLadder)
 	{
-		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetServerGlobals()->curtime
+		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime
 			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
 			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
 		{
@@ -626,7 +627,7 @@ bool KZJumpstatsService::HitBhop()
 
 bool KZJumpstatsService::HitDuckbugRecently()
 {
-	return g_pKZUtils->GetServerGlobals()->curtime - this->lastDuckbugTime <= JS_MAX_DUCKBUG_RESET_TIME;
+	return g_pKZUtils->GetGlobals()->curtime - this->lastDuckbugTime <= JS_MAX_DUCKBUG_RESET_TIME;
 }
 bool KZJumpstatsService::ValidWeirdJumpDropDistance()
 {
@@ -640,20 +641,28 @@ bool KZJumpstatsService::GroundSpeedCappedRecently()
 
 void KZJumpstatsService::OnAirAccelerate()
 {
+	if (g_pKZUtils->GetGlobals()->frametime == 0.0f)
+	{
+		return;
+	}
 	AACall call;
 	this->player->GetVelocity(&call.velocityPre);
 
 	// moveDataPost is still the movedata from last tick.
 	call.externalSpeedDiff = call.velocityPre.Length2D() - this->player->moveDataPost.m_vecVelocity.Length2D();
 	call.prevYaw = this->player->oldAngles.y;
-	call.curtime = g_pKZUtils->GetServerGlobals()->curtime;
-	call.tickcount = g_pKZUtils->GetServerGlobals()->tickcount;
+	call.curtime = g_pKZUtils->GetGlobals()->curtime;
+	call.tickcount = g_pKZUtils->GetGlobals()->tickcount;
 	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
 	strafe->aaCalls.AddToTail(call);
 }
 
 void KZJumpstatsService::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
 {
+	if (g_pKZUtils->GetGlobals()->frametime == 0.0f)
+	{
+		return;
+	}
 	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }
 
@@ -806,17 +815,17 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 	this->lastJumpButtonTime = this->player->GetPawn()->m_ignoreLadderJumpTime();
 	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP)
 	{
-		this->lastNoclipTime = g_pKZUtils->GetServerGlobals()->curtime;
+		this->lastNoclipTime = g_pKZUtils->GetGlobals()->curtime;
 	}
 	if (this->player->duckBugged)
 	{
-		this->lastDuckbugTime = g_pKZUtils->GetServerGlobals()->curtime;
+		this->lastDuckbugTime = g_pKZUtils->GetGlobals()->curtime;
 	}
 	if (this->player->walkMoved)
 	{
-		this->lastGroundSpeedCappedTime = g_pKZUtils->GetServerGlobals()->curtime;
+		this->lastGroundSpeedCappedTime = g_pKZUtils->GetGlobals()->curtime;
 	}
-	this->lastMovementProcessedTime = g_pKZUtils->GetServerGlobals()->curtime;
+	this->lastMovementProcessedTime = g_pKZUtils->GetGlobals()->curtime;
 }
 
 void KZJumpstatsService::ToggleJSAlways()
@@ -836,7 +845,7 @@ void KZJumpstatsService::CheckValidMoveType()
 
 void KZJumpstatsService::DetectNoclip()
 {
-	if (this->lastNoclipTime + JS_MAX_NOCLIP_RESET_TIME > g_pKZUtils->GetServerGlobals()->curtime)
+	if (this->lastNoclipTime + JS_MAX_NOCLIP_RESET_TIME > g_pKZUtils->GetGlobals()->curtime)
 	{
 		this->InvalidateJumpstats("Just noclipped");
 	}
@@ -865,7 +874,7 @@ void KZJumpstatsService::DetectInvalidCollisions()
 	}
 	if (this->player->IsCollidingWithWorld())
 	{
-		this->jumps.Tail().touchDuration += g_pKZUtils->GetServerGlobals()->frametime;
+		this->jumps.Tail().touchDuration += g_pKZUtils->GetGlobals()->frametime;
 		// Headhit invadidates following bhops but not the current jump,
 		// while other collisions do after a certain duration.
 		if (this->jumps.Tail().touchDuration > JS_TOUCH_GRACE_PERIOD)
