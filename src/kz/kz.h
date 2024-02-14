@@ -135,12 +135,15 @@ public:
 	// Noclip
 	void DisableNoclip();
 	void ToggleNoclip();
+	bool IsNoclipping() { return this->inNoclip; }
 
 	void EnableGodMode();
 	void HandleMoveCollision();
 
 	// Leg stuff
 	void ToggleHideLegs();
+	bool HidingLegs() { return this->hideLegs; }
+
 	void UpdatePlayerModelAlpha();
 	void PlayCheckpointSound();
 	void PlayTeleportSound();

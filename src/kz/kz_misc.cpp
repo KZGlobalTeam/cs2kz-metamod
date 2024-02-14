@@ -12,6 +12,7 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleNoclip();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Noclip %s.", KZ_CHAT_PREFIX, player->IsNoclipping() ? "enabled" : "disabled");
 	return MRES_SUPERCEDE;
 }
 
@@ -19,6 +20,7 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Player legs are now %s.", KZ_CHAT_PREFIX, player->HidingLegs() ? "hidden" : "shown");
 	return MRES_SUPERCEDE;
 }
 
@@ -26,6 +28,7 @@ internal SCMD_CALLBACK(Command_KzHide)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}You are now %s other players.", KZ_CHAT_PREFIX, player->quietService->hideOtherPlayers ? "hiding" : "showing");
 	return MRES_SUPERCEDE;
 }
 
@@ -60,6 +63,18 @@ internal SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}You are now %s your weapons.", KZ_CHAT_PREFIX, player->quietService->ShouldHideWeapon() ? "hiding" : "showing");
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_StopTimer)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (player->timerIsRunning)
+	{
+		utils::CPrintChat(player->GetPawn(), "%s {darkred}Timer stopped.", KZ_CHAT_PREFIX);	
+	}
+	player->InvalidateTimer();
 	return MRES_SUPERCEDE;
 }
 
@@ -73,6 +88,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_restart",    Command_KzRestart,    "Restart.");
 	scmd::RegisterCmd("kz_r",          Command_KzRestart,    "Restart.");
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
+	scmd::RegisterCmd("kz_stop",       Command_StopTimer,    "Stop timer.");
 	KZCheckpointService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 }
