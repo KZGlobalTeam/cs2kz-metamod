@@ -49,7 +49,7 @@ public:
 	f32 accel{};
 
 	f32 surfaceFriction{};
-	f32 subtickFraction{};
+	f32 duration{};
 	u64 buttons[3]{};
 	Vector velocityPre;
 	Vector velocityPost;

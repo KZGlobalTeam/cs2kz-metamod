@@ -1,10 +1,13 @@
 #include "cs_usercmd.pb.h"
 #include "kz_mode_ckz.h"
+#include "utils/addresses.h"
 #include "utils/interfaces.h"
+#include "utils/gameconfig.h"
 #include "version.h"
 
 KZClassicModePlugin g_KZClassicModePlugin;
 
+CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 KZModeManager *g_pModeManager = NULL;
 ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService *{ return new KZClassicModeService(player); };
@@ -27,10 +30,9 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_UTILS_INTERFACE);
 		return false;
 	}
-
-	if (nullptr == (interfaces::pSchemaSystem = (CSchemaSystem *)g_pKZUtils->GetSchemaSystemPointer())
-		|| nullptr == (schema::StateChanged = (StateChanged_t *)g_pKZUtils->GetSchemaStateChangedPointer())
-		|| nullptr == (schema::NetworkStateChanged = (NetworkStateChanged_t *)g_pKZUtils->GetSchemaNetworkStateChangedPointer())
+	modules::Initialize();
+	if (!interfaces::Initialize(ismm, error, maxlen)
+		|| nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig())
 		|| !g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory))
 	{
 		return false;
@@ -176,12 +178,11 @@ const char **KZClassicModeService::GetModeConVarValues()
 // Attempt to replicate 128t jump height.
 void KZClassicModeService::OnJump()
 {
-	float time = this->player->GetMoveServices()->m_flJumpPressedTime;
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	this->preJumpZSpeed = velocity.z;
 	// Emulate the 128t vertical velocity before jumping
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND)
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->GetPawn()->m_hGroundEntity().IsValid())
 	{
 		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
 		this->player->SetVelocity(velocity);
@@ -209,6 +210,11 @@ void KZClassicModeService::OnStopTouchGround()
 	this->player->GetVelocity(&velocity);
 	f32 speed = velocity.Length2D();
 
+	// Fix jump occuring at 0 frametime giving extra heights.
+	if (this->revertJumpTweak && g_pKZUtils->GetGlobals()->frametime == 0.0f)
+	{
+		this->player->GetMoveServices()->m_flJumpUntil -= ENGINE_FIXED_TICK_INTERVAL * (1.0f - g_pKZUtils->GetGlobals()->m_flSubtickFraction);
+	}
 	// If we are actually taking off, we don't need to revert the change anymore.
 	this->revertJumpTweak = false;
 
@@ -250,14 +256,22 @@ void KZClassicModeService::OnStartTouchGround()
 	this->player->TouchTriggersAlongPath(this->player->landingOrigin, ground, bounds);
 }
 
+void KZClassicModeService::OnPhysicsSimulate()
+{
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - 0.5 * ENGINE_FIXED_TICK_INTERVAL);
+}
+
+void KZClassicModeService::OnPhysicsSimulatePost()
+{
+	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL);
+}
+
 void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 {
-	this->lastDesiredViewAngleTime = g_pKZUtils->GetServerGlobals()->curtime;
 	for (i32 i = 0; i < numcmds; i++)
 	{
-		auto address = reinterpret_cast<char *>(cmds) + i * offsets::UsercmdOffset;
+		auto address = reinterpret_cast<char *>(cmds) + i * (sizeof(CSGOUserCmdPB) + g_pGameConfig->GetOffset("UsercmdOffset"));
 		CSGOUserCmdPB *usercmdsPtr = reinterpret_cast<CSGOUserCmdPB *>(address);
-		this->lastDesiredViewAngle = { usercmdsPtr->base().viewangles().x(), usercmdsPtr->base().viewangles().y(), usercmdsPtr->base().viewangles().z() };
 		for (i32 j = 0; j < usercmdsPtr->mutable_base()->subtick_moves_size(); j++)
 		{
 			CSubtickMoveStep *subtickMove = usercmdsPtr->mutable_base()->mutable_subtick_moves(j);
@@ -265,28 +279,26 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 			// Iffy logic that doesn't care about commands with multiple cmds...
 			if (subtickMove->button() == IN_JUMP)
 			{
-				f32 inputTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
+				f32 inputTime = (g_pKZUtils->GetGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
 				if (when != 0)
 				{
-					if (subtickMove->pressed() && inputTime - this->lastJumpReleaseTime > 0.0078125)
+					if (subtickMove->pressed() && inputTime - this->lastJumpReleaseTime > 0.5 * ENGINE_FIXED_TICK_INTERVAL)
 					{
 						this->player->GetMoveServices()->m_bOldJumpPressed = false;
 					}
 					if (!subtickMove->pressed())
 					{
-						this->lastJumpReleaseTime = (g_pKZUtils->GetServerGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
+						this->lastJumpReleaseTime = (g_pKZUtils->GetGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
 					}
 				}
 			}
 			subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
 		}
 	}
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - 0.5 * ENGINE_FIXED_TICK_INTERVAL, false);
 }
 
 void KZClassicModeService::OnProcessMovement()
 {
-	this->player->enableWaterFixThisTick = true;
 	this->didTPM = false;
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
@@ -299,7 +311,6 @@ void KZClassicModeService::OnProcessMovement()
 void KZClassicModeService::OnProcessMovementPost()
 {
 	this->player->UpdateTriggerTouchList();
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL, true);
 	this->RestoreInterpolatedViewAngles();
 	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonPressed(IN_DUCK, true);
 	Vector velocity;
@@ -311,7 +322,7 @@ void KZClassicModeService::OnProcessMovementPost()
 	}
 }
 
-void KZClassicModeService::InsertSubtickTiming(float time, bool future)
+void KZClassicModeService::InsertSubtickTiming(float time)
 {
 	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
 	if (!moveServices
@@ -324,21 +335,32 @@ void KZClassicModeService::InsertSubtickTiming(float time, bool future)
 
 	for (i32 i = 0; i < 4; i++)
 	{
-		// Already exists.
+		// Empty slot, let's use this.
+		if (moveServices->m_arrForceSubtickMoveWhen[i] < EPSILON)
+		{
+			moveServices->m_arrForceSubtickMoveWhen[i] = time;
+			return;
+		}
+		// Did we already add this timing?
 		if (fabs(time - moveServices->m_arrForceSubtickMoveWhen[i]) < EPSILON)
 		{
 			return;
 		}
-		if (!future)
+		// Is this subtick value still valid? If not, we use this value.
+		if (moveServices->m_arrForceSubtickMoveWhen[i] * ENGINE_FIXED_TICK_RATE < g_pKZUtils->GetServerGlobals()->tickcount - 1)
 		{
-			// Do not override other valid subtick moves that might happen.
-			if (moveServices->m_arrForceSubtickMoveWhen[i] - g_pKZUtils->GetServerGlobals()->curtime < ENGINE_FIXED_TICK_INTERVAL) continue;
 			moveServices->m_arrForceSubtickMoveWhen[i] = time;
 			return;
 		}
-		if (moveServices->m_arrForceSubtickMoveWhen[i] <= g_pKZUtils->GetServerGlobals()->curtime)
+		// Shift the later other subtick moves. We will lose the last one... oh well.
+		if (time < moveServices->m_arrForceSubtickMoveWhen[i])
 		{
+			for (i32 j = i; j < 3; j++)
+			{
+				moveServices->m_arrForceSubtickMoveWhen[j + 1] = moveServices->m_arrForceSubtickMoveWhen[j];
+			}
 			moveServices->m_arrForceSubtickMoveWhen[i] = time;
+			return;
 		}
 	}
 }
@@ -346,19 +368,17 @@ void KZClassicModeService::InsertSubtickTiming(float time, bool future)
 void KZClassicModeService::InterpolateViewAngles()
 {
 	// Second half of the movement, no change.
-	CGlobalVars *globals = g_pKZUtils->GetServerGlobals();
-	// NOTE: tickcount is half a tick ahead of curtime while in the middle of a tick.
-	if ((f64)globals->tickcount * ENGINE_FIXED_TICK_INTERVAL - globals->curtime < 0.001)
-		return;
-
-	if (this->lastDesiredViewAngleTime < g_pKZUtils->GetServerGlobals()->curtime + ENGINE_FIXED_TICK_INTERVAL)
+	CGlobalVars *globals = g_pKZUtils->GetGlobals();
+	f64 subtickFraction, whole;
+	subtickFraction = modf((f64)globals->curtime * ENGINE_FIXED_TICK_RATE, &whole);
+	if (subtickFraction < 0.001)
 	{
-		this->lastDesiredViewAngle = this->player->moveDataPost.m_vecViewAngles;
+		return;
 	}
-
+	
 	// First half of the movement, tweak the angle to be the middle of the desired angle and the last angle
 	QAngle newAngles = player->currentMoveData->m_vecViewAngles;
-	QAngle oldAngles = this->lastDesiredViewAngle;
+	QAngle oldAngles = this->hasValidDesiredViewAngle ? this->lastValidDesiredViewAngle : this->player->moveDataPost.m_vecViewAngles;
 	if (newAngles[YAW] - oldAngles[YAW] > 180)
 	{
 		newAngles[YAW] -= 360.0f;
@@ -373,13 +393,17 @@ void KZClassicModeService::InterpolateViewAngles()
 		newAngles[i] += oldAngles[i];
 		newAngles[i] *= 0.5f;
 	}
-
 	player->currentMoveData->m_vecViewAngles = newAngles;
 }
 
 void KZClassicModeService::RestoreInterpolatedViewAngles()
 {
 	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
+	if (g_pKZUtils->GetGlobals()->frametime > 0.0f)
+	{
+		this->hasValidDesiredViewAngle = true;
+		this->lastValidDesiredViewAngle = player->currentMoveData->m_vecViewAngles;
+	}
 }
 
 void KZClassicModeService::RemoveCrouchJumpBind()
@@ -410,7 +434,7 @@ void KZClassicModeService::UpdateAngleHistory()
 	u32 oldEntries = 0;
 	FOR_EACH_VEC(this->angleHistory, i)
 	{
-		if (this->angleHistory[i].when + PS_TURN_RATE_WINDOW < g_pKZUtils->GetServerGlobals()->curtime)
+		if (this->angleHistory[i].when + PS_TURN_RATE_WINDOW < g_pKZUtils->GetGlobals()->curtime)
 		{
 			oldEntries++;
 			continue;
@@ -422,8 +446,8 @@ void KZClassicModeService::UpdateAngleHistory()
 		return;
 
 	AngleHistory *angHist = this->angleHistory.AddToTailGetPtr();
-	angHist->when = g_pKZUtils->GetServerGlobals()->curtime;
-	angHist->duration = g_pKZUtils->GetServerGlobals()->frametime;
+	angHist->when = g_pKZUtils->GetGlobals()->curtime;
+	angHist->duration = g_pKZUtils->GetGlobals()->frametime;
 
 	// Not turning if velocity is null.
 	if (mv->m_vecVelocity.Length2D() == 0)
@@ -489,11 +513,11 @@ void KZClassicModeService::CalcPrestrafe()
 	if (totalDuration == 0) averageRate = 0;
 	else averageRate = sumWeightedAngles / totalDuration;
 
-	f32 rewardRate = Clamp(fabs(averageRate) / PS_MAX_REWARD_RATE, 0.0f, 1.0f) * g_pKZUtils->GetServerGlobals()->frametime;
+	f32 rewardRate = Clamp(fabs(averageRate) / PS_MAX_REWARD_RATE, 0.0f, 1.0f) * g_pKZUtils->GetGlobals()->frametime;
 	f32 punishRate = 0.0f;
-	if (this->player->landingTime + PS_LANDING_GRACE_PERIOD < g_pKZUtils->GetServerGlobals()->curtime)
+	if (this->player->landingTime + PS_LANDING_GRACE_PERIOD < g_pKZUtils->GetGlobals()->curtime)
 	{
-		punishRate = g_pKZUtils->GetServerGlobals()->frametime * PS_DECREMENT_RATIO;
+		punishRate = g_pKZUtils->GetGlobals()->frametime * PS_DECREMENT_RATIO;
 	}
 
 	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND)
@@ -518,7 +542,7 @@ void KZClassicModeService::CalcPrestrafe()
 	}
 	else
 	{
-		rewardRate = g_pKZUtils->GetServerGlobals()->frametime;
+		rewardRate = g_pKZUtils->GetGlobals()->frametime;
 		// Raise both left and right pre to the same value as the player is in the air.
 		if (this->leftPreRatio < this->rightPreRatio)
 			this->leftPreRatio = Clamp(this->leftPreRatio + rewardRate, 0.0f, rightPreRatio);
@@ -668,7 +692,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	this->didTPM = true;
 	CCSPlayerPawn *pawn = this->player->GetPawn();
 
-	f32 timeLeft = g_pKZUtils->GetServerGlobals()->frametime;
+	f32 timeLeft = g_pKZUtils->GetGlobals()->frametime;
 
 	Vector start, velocity, end;
 	this->player->GetOrigin(&start);
@@ -804,7 +828,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		{
 			break;
 		}
-		timeLeft -= g_pKZUtils->GetServerGlobals()->frametime * pm.fraction;
+		timeLeft -= g_pKZUtils->GetGlobals()->frametime * pm.fraction;
 		planes[numPlanes] = pm.planeNormal;
 		numPlanes++;
 		if (numPlanes == 1 && pawn->m_MoveType() == MOVETYPE_WALK && pawn->m_hGroundEntity().Get() == nullptr)
@@ -924,11 +948,8 @@ bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
-	{
-		return true;
-	}
-	if (fabs(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime - 0.5f * ENGINE_FIXED_TICK_INTERVAL) < 0.001f)
+	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f)
 	{
 		return true;
 	}
@@ -942,11 +963,8 @@ bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
-	{
-		return true;
-	}
-	if (fabs(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime - 0.5f * ENGINE_FIXED_TICK_INTERVAL) < 0.001f)
+	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f)
 	{
 		return true;
 	}
@@ -959,14 +977,10 @@ bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f)
 	{
 		return true;
 	}
-	if (fabs(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime - 0.5f * ENGINE_FIXED_TICK_INTERVAL) < 0.001f)
-	{
-		return true;
-	}
-
 	return false;
 }

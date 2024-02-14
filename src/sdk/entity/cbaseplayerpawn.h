@@ -19,6 +19,6 @@ public:
 
 	void CommitSuicide(bool bExplode, bool bForce)
 	{
-		CALL_VIRTUAL(void, offsets::CommitSuicide, this, bExplode, bForce);
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CommitSuicide"), this, bExplode, bForce);
 	}
 };

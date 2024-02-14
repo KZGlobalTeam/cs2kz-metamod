@@ -92,7 +92,7 @@ void KZ::mode::EnableReplicatedModeCvars()
 	}
 }
 
-void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
+void KZ::mode::ApplyModeSettings(KZPlayer *player)
 {
 	for (u32 i = 0; i < numCvar; i++)
 	{
@@ -122,6 +122,7 @@ void KZ::mode::ApplyModeCvarValues(KZPlayer *player)
 		V_memcpy(&(modeCvars[i]->values), byteArray, 16);
 		//g_pCVar->SetConVarValue(modeCvarHandles[i], 0, (CVValue_t *)player->modeService->GetModeConVarValues()[i], (CVValue_t *)modeCvars[i]->values);
 	}
+	player->enableWaterFix = player->modeService->EnableWaterFix();
 }
 
 

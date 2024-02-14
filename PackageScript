@@ -7,6 +7,8 @@ metamod_folder = builder.AddFolder(os.path.join('addons', 'metamod'))
 cfg_folder = builder.AddFolder('cfg')
 bin_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'bin')
 bin_folder = builder.AddFolder(bin_folder_path)
+gamedata_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'gamedata')
+gamedata_folder = builder.AddFolder(gamedata_folder_path)
 mode_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'modes')
 mode_folder = builder.AddFolder(mode_folder_path)
 
@@ -52,6 +54,7 @@ for task in MMSPlugin.mode_binaries:
 
 builder.AddCopy(os.path.join(builder.buildPath, MMSPlugin.plugin_name + '.vdf'), metamod_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../cfg', 'cs2kz.cfg'), cfg_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-core.games.txt'), gamedata_folder)
 
 # Generate PDB info.
 with open(os.path.join(builder.buildPath, 'pdblog.txt'), 'wt') as fp:

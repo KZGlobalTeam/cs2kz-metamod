@@ -11,7 +11,7 @@ public:
 
 	void ChangeTeam(int iTeam)
 	{
-		CALL_VIRTUAL(void, offsets::ControllerChangeTeam, this, iTeam);
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("ControllerChangeTeam"), this, iTeam);
 	}
 
 	void SwitchTeam(int iTeam)
@@ -41,6 +41,6 @@ public:
 		{
 			SwitchTeam(RandomInt(CS_TEAM_T, CS_TEAM_CT));
 		}
-		CALL_VIRTUAL(void, offsets::ControllerRespawn, this);
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("ControllerRespawn"), this);
 	}
 };

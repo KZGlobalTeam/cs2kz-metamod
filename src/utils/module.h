@@ -8,6 +8,13 @@
 #include <Psapi.h>
 #endif
 
+enum SigError
+{
+	SIG_OK,
+	SIG_NOT_FOUND,
+	SIG_FOUND_MULTIPLE,
+};
+
 class CModule
 {
 public:
@@ -35,13 +42,14 @@ public:
 #endif
 	}
 
-	void *FindSignature(const byte *pData, size_t length)
+	void *FindSignature(const byte *pData, size_t length, int &error)
 	{
 		unsigned char *pMemory;
 		void *return_addr = nullptr;
-
-		pMemory = (byte *)m_base;
-
+		error = 0;
+		
+		pMemory = (byte*)m_base;
+		
 		for (size_t i = 0; i < m_size; i++)
 		{
 			size_t Matches = 0;
@@ -49,21 +57,25 @@ public:
 			{
 				Matches++;
 				if (Matches == length)
+				{
+					if (return_addr)
+					{
+						error = SIG_FOUND_MULTIPLE;
+						return return_addr;
+					}
+					
 					return_addr = (void *)(pMemory + i);
+				}
 			}
 		}
-
+		
+		if (!return_addr)
+		{
+			error = SIG_NOT_FOUND;
+		}
+		
 		return return_addr;
 	}
-
-	// Will break with string containing \0 !!!
-	void *FindSignature(const byte *pData)
-	{
-		size_t iSigLength = V_strlen((const char *)pData);
-
-		return FindSignature(pData, iSigLength);
-	}
-
 
 	const char *m_pszModule;
 	const char* m_pszPath;
