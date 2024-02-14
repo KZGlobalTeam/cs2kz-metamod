@@ -3,13 +3,16 @@
 #include "cdetour.h"
 #include "detours.h"
 
+#include "sdk/entity/ccsplayerpawn.h"
 #include "movement/movement.h"
 
 #include "tier0/memdbgon.h"
 
 CUtlVector<CDetourBase *> g_vecDetours;
+extern CGameConfig *g_pGameConfig;
 
-DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket, &modules::steamnetworkingsockets);
+DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket);
+DECLARE_MOVEMENT_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_DETOUR(ProcessMovement);
@@ -40,7 +43,7 @@ DECLARE_MOVEMENT_DETOUR(PostThink);
 void InitDetours()
 {
 	g_vecDetours.RemoveAll();
-	INIT_DETOUR(RecvServerBrowserPacket);
+	INIT_DETOUR(g_pGameConfig, RecvServerBrowserPacket);
 }
 
 void FlushAllDetours()

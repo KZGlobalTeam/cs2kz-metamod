@@ -2,9 +2,10 @@
 
 #include "stdint.h"
 #include "virtual.h"
-
+#include "smartptr.h"
+#include "utldelegate.h"
+#include "entityinstance.h"
 #undef schema
-class CEntityInstance;
 class CBasePlayerController;
 
 struct SchemaKey
@@ -13,16 +14,23 @@ struct SchemaKey
 	bool networked;
 };
 
-typedef void FASTCALL NetworkStateChanged_t(int64 chainEntity, int64 offset, int64 a3);
-typedef void FASTCALL StateChanged_t(void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5);
+struct CNetworkVarChainer : public CSmartPtr<CEntityInstance>
+{
+	struct ChainUpdatePropagationLL_t
+	{
+		ChainUpdatePropagationLL_t *pNext;
+		CUtlDelegate<void(const CNetworkVarChainer &)> updateDelegate;
+	};
+	uint8 unk[24];
+	ChangeAccessorFieldPathIndex_t m_PathIndex;
+	ChainUpdatePropagationLL_t *m_pPropagationList;
+};
 
 namespace schema
 {
 	int16_t FindChainOffset(const char *className);
 	SchemaKey GetOffset(const char *className, uint32_t classKey, const char *memberName, uint32_t memberKey);
-
-	inline NetworkStateChanged_t *NetworkStateChanged;
-	inline StateChanged_t *StateChanged;
+	void NetworkStateChanged(int64 chainEntity, uint32 nLocalOffset, int nArrayIndex);
 }
 
 class CBaseEntity2;
@@ -86,7 +94,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 					need to have their this pointer corrected by the offset .*/												\
 						DevMsg("Attempting to call SetStateChanged on on %s::%s\n", ThisClassName, #varName);						\
 						if (!IsStruct)																								\
-							SetStateChanged((CBaseEntity2 *)pThisClass, m_key.offset + extra_offset);								\
+							((CEntityInstance *)pThisClass)->NetworkStateChanged(m_key.offset + extra_offset, -1, -1);								\
 						else if (IsPlatformPosix()) /* This is currently broken on windows */										\
 							CALL_VIRTUAL(void, 1, pThisClass, m_key.offset + extra_offset, 0xFFFFFFFF, 0xFFFF);						\
 			}																												\

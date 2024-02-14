@@ -21,6 +21,8 @@ public:
 	const char *GetLogTag();
 
 	virtual void *OnMetamodQuery(const char *iface, int *ret) override;
+
+	CGlobalVars serverGlobals;
 };
 
 extern KZPlugin g_KZPlugin;

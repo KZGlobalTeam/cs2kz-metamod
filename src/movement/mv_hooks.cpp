@@ -1,36 +1,47 @@
 #include "movement.h"
 #include "utils/detours.h"
-
+#include "utils/gameconfig.h"
 #include "tier0/memdbgon.h"
+
+extern CGameConfig *g_pGameConfig;
 
 void movement::InitDetours()
 {
-	INIT_DETOUR(GetMaxSpeed);
-	INIT_DETOUR(ProcessUsercmds);
-	INIT_DETOUR(ProcessMovement);
-	INIT_DETOUR(PlayerMoveNew);
-	INIT_DETOUR(CheckParameters);
-	INIT_DETOUR(CanMove);
-	INIT_DETOUR(FullWalkMove);
-	INIT_DETOUR(MoveInit);
-	INIT_DETOUR(CheckWater);
-	INIT_DETOUR(WaterMove);
-	INIT_DETOUR(CheckVelocity);
-	INIT_DETOUR(Duck);
-	INIT_DETOUR(CanUnduck);
-	INIT_DETOUR(LadderMove);
-	INIT_DETOUR(CheckJumpButton);
-	INIT_DETOUR(OnJump);
-	INIT_DETOUR(AirMove);
-	INIT_DETOUR(AirAccelerate);
-	INIT_DETOUR(Friction);
-	INIT_DETOUR(WalkMove);
-	INIT_DETOUR(TryPlayerMove);
-	INIT_DETOUR(CategorizePosition);
-	INIT_DETOUR(FinishGravity);
-	INIT_DETOUR(CheckFalling);
-	INIT_DETOUR(PostPlayerMove);
-	INIT_DETOUR(PostThink);
+	INIT_DETOUR(g_pGameConfig, PhysicsSimulate);
+	INIT_DETOUR(g_pGameConfig, GetMaxSpeed);
+	INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
+	INIT_DETOUR(g_pGameConfig, ProcessMovement);
+	INIT_DETOUR(g_pGameConfig, PlayerMoveNew);
+	INIT_DETOUR(g_pGameConfig, CheckParameters);
+	INIT_DETOUR(g_pGameConfig, CanMove);
+	INIT_DETOUR(g_pGameConfig, FullWalkMove);
+	INIT_DETOUR(g_pGameConfig, MoveInit);
+	INIT_DETOUR(g_pGameConfig, CheckWater);
+	INIT_DETOUR(g_pGameConfig, WaterMove);
+	INIT_DETOUR(g_pGameConfig, CheckVelocity);
+	INIT_DETOUR(g_pGameConfig, Duck);
+	INIT_DETOUR(g_pGameConfig, CanUnduck);
+	INIT_DETOUR(g_pGameConfig, LadderMove);
+	INIT_DETOUR(g_pGameConfig, CheckJumpButton);
+	INIT_DETOUR(g_pGameConfig, OnJump);
+	INIT_DETOUR(g_pGameConfig, AirMove);
+	INIT_DETOUR(g_pGameConfig, AirAccelerate);
+	INIT_DETOUR(g_pGameConfig, Friction);
+	INIT_DETOUR(g_pGameConfig, WalkMove);
+	INIT_DETOUR(g_pGameConfig, TryPlayerMove);
+	INIT_DETOUR(g_pGameConfig, CategorizePosition);
+	INIT_DETOUR(g_pGameConfig, FinishGravity);
+	INIT_DETOUR(g_pGameConfig, CheckFalling);
+	INIT_DETOUR(g_pGameConfig, PostPlayerMove);
+	INIT_DETOUR(g_pGameConfig, PostThink);
+}
+
+void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
+{
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
+	player->OnPhysicsSimulate();
+	PhysicsSimulate(controller);
+	player->OnPhysicsSimulatePost();
 }
 
 f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
@@ -45,11 +56,11 @@ f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 	return newMaxSpeed;
 }
 
-i32 FASTCALL movement::Detour_ProcessUsercmds(CBasePlayerPawn *pawn, void *cmds, int numcmds, bool paused)
+i32 FASTCALL movement::Detour_ProcessUsercmds(CBasePlayerPawn *pawn, void *cmds, int numcmds, bool paused, float margin)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
 	player->OnProcessUsercmds(cmds, numcmds);
-	auto retValue = ProcessUsercmds(pawn, cmds, numcmds, paused);
+	auto retValue = ProcessUsercmds(pawn, cmds, numcmds, paused, margin);
 	player->OnProcessUsercmdsPost(cmds, numcmds);
 	return retValue;
 }
@@ -115,7 +126,7 @@ bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveD
 	auto retValue = CheckWater(ms, mv);
 	player->OnCheckWaterPost();
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick)
+	if (player->enableWaterFix)
 	{
 		return player->GetPawn()->m_flWaterLevel() > 0.5f;
 	}
@@ -128,7 +139,7 @@ void FASTCALL movement::Detour_WaterMove(CCSPlayer_MovementServices *ms, CMoveDa
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 	player->OnWaterMove();
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick)
+	if (player->enableWaterFix)
 	{
 		player->ignoreNextCategorizePosition = true;
 	}
@@ -197,7 +208,7 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	else if (result && oldMoveType == MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		// Player is on the ladder, pressing jump pushes them away from the ladder.
-		float curtime = g_pKZUtils->GetServerGlobals()->curtime;
+		float curtime = g_pKZUtils->GetGlobals()->curtime;
 		player->RegisterTakeoff(player->IsButtonPressed(IN_JUMP));
 		player->takeoffFromLadder = true;
 		player->OnChangeMoveType(MOVETYPE_LADDER);
@@ -215,7 +226,7 @@ void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, C
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f)
+	if (player->enableWaterFix && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f)
 	{
 		if (ms->m_nButtons()->m_pButtonStates[0] & IN_JUMP)
 		{
@@ -298,7 +309,7 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
 #ifdef WATER_FIX
-	if (player->enableWaterFixThisTick && player->ignoreNextCategorizePosition)
+	if (player->enableWaterFix && player->ignoreNextCategorizePosition)
 	{
 		player->ignoreNextCategorizePosition = false;
 		return;

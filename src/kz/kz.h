@@ -42,6 +42,8 @@ public:
 
 	virtual f32 GetPlayerMaxSpeed() override;
 
+	virtual void OnPhysicsSimulate() override;
+	virtual void OnPhysicsSimulatePost() override;
 	virtual void OnProcessUsercmds(void *, int) override;
 	virtual void OnProcessUsercmdsPost(void *, int) override;
 	virtual void OnProcessMovement() override;
@@ -133,12 +135,15 @@ public:
 	// Noclip
 	void DisableNoclip();
 	void ToggleNoclip();
+	bool IsNoclipping() { return this->inNoclip; }
 
 	void EnableGodMode();
 	void HandleMoveCollision();
 
 	// Leg stuff
 	void ToggleHideLegs();
+	bool HidingLegs() { return this->hideLegs; }
+
 	void UpdatePlayerModelAlpha();
 	void PlayCheckpointSound();
 	void PlayTeleportSound();
@@ -163,7 +168,7 @@ public:
 		this->player = player;
 	}
 	// To be implemented by each service class
-	virtual void Reset() {};
+	virtual void Reset() {}
 };
 
 class CKZPlayerManager : public CMovementPlayerManager

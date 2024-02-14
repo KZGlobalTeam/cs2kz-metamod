@@ -98,7 +98,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	if (cp.onLadder)
 	{
 		ms->m_vecLadderNormal(cp.ladderNormal);
-		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);
+		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
 	}
 	else
 	{
@@ -154,7 +154,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	if (this->lastTeleportedCheckpoint->onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
 	{
 		ms->m_vecLadderNormal(this->lastTeleportedCheckpoint->ladderNormal);
-		this->player->GetPawn()->m_MoveType(MOVETYPE_LADDER);
+		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
 	}
 	else
 	{

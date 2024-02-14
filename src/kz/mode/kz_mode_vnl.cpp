@@ -72,8 +72,8 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	int			i, j;
 	trace_t_s2	pm;
 	Vector		end;
-	bool valid = true;
-	float		time, time_left, allFraction, stuckFrametime, traceFraction;
+
+	float		time, time_left, allFraction;
 
 	numbumps = 4;           // Bump up to four times
 
@@ -87,7 +87,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	VectorCopy(velocity, primal_velocity);
 
 	allFraction = 0;
-	time_left = g_pKZUtils->GetServerGlobals()->frametime;   // Total time for this movement operation.
+	time_left = g_pKZUtils->GetGlobals()->frametime;   // Total time for this movement operation.
 
 	new_velocity.Init();
 	bbox_t bounds;
@@ -100,14 +100,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	{
 		if (velocity.Length() == 0.0)
 			break;
-		if (valid)
-		{
-			time = time_left;
-		}
-		else
-		{
-			time = stuckFrametime;
-		}
+		time = time_left;
 		// Assume we can move all the way from the current origin to the
 		//  end point.
 		VectorMA(origin, time, velocity, end);
@@ -136,13 +129,6 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 			trace_t_s2 stuck;
 			g_pKZUtils->InitGameTrace(&stuck);
 			g_pKZUtils->TracePlayerBBox(pm.endpos, pm.endpos, bounds, &filter, stuck);
-			if (stuck.startsolid || stuck.fraction != 1.0f)
-			{
-				valid = false;
-				stuckFrametime = time_left * stuck.fraction * 0.9f;
-				VectorCopy(vec3_origin, velocity);
-				continue;
-			}
 			// actually covered some distance
 			origin = (pm.endpos);
 			VectorCopy(velocity, original_velocity);
@@ -159,20 +145,9 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		{
 			break;		// moved the entire distance
 		}
-
-		
-		if (valid)
-		{
-			traceFraction = pm.fraction * time_left;
-		}
-		else
-		{
-			valid = true;
-			traceFraction = pm.fraction * stuckFrametime;
-		}
 		// Reduce amount of m_flFrameTime left by total time left * fraction
 		//  that we covered.
-		time_left -= traceFraction;
+		time_left -= pm.fraction * time_left;
 
 		// Did we run out of planes to clip against?
 		if (numplanes >= MAX_CLIP_PLANES)
@@ -290,7 +265,8 @@ bool KZVanillaModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(time) - time) < 0.001f)
 	{
 		return true;
 	}
@@ -304,7 +280,8 @@ bool KZVanillaModeService::OnTriggerTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(time) - time) < 0.001f)
 	{
 		return true;
 	}
@@ -317,11 +294,11 @@ bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	if (g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - g_pKZUtils->GetServerGlobals()->curtime < 0.001f)
+	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	if (fabs(roundf(time) - time) < 0.001f)
 	{
 		return true;
 	}
-
 	return false;
 }
 

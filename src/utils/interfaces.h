@@ -1,7 +1,11 @@
 #pragma once
 
 #include "common.h"
+#include "playerslot.h"
+#include "vector.h"
+#include "igameeventsystem.h"
 
+class CGameConfig;
 class CTraceFilterPlayerMovementCS;
 class CTraceFilterS2;
 struct trace_t_s2;
@@ -12,20 +16,49 @@ class IVEngineServer2;
 class ISource2Server;
 class IGameEventManager2;
 class IGameEventSystem;
+class CBasePlayerPawn;
 class CCSPlayerPawn;
 class CBaseEntity2;
 class CBasePlayerController;
+class IGameEventListener2;
+struct SndOpEventGuid_t;
+struct EmitSound_t;
+
+typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
+typedef void InitGameTrace_t(trace_t_s2 *trace);
+typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
+typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
+typedef CBaseEntity2 *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
+typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
+typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm);
+typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
+typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool);
 
 namespace interfaces
 {
-	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
-
 	inline CGameResourceService *pGameResourceServiceServer = nullptr;
 	inline CSchemaSystem *pSchemaSystem = nullptr;
 	inline IVEngineServer2 *pEngine = nullptr;
 	inline ISource2Server *pServer = nullptr;
 	inline IGameEventManager2 *pGameEventManager = nullptr;
 	inline IGameEventSystem *pGameEventSystem = nullptr;
+
+	inline bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
+	{
+		GET_V_IFACE_CURRENT(GetEngineFactory, g_pCVar, ICvar, CVAR_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameResourceServiceServer, CGameResourceService, GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameClients, ISource2GameClients, INTERFACEVERSION_SERVERGAMECLIENTS);
+		GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
+		GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
+		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pSchemaSystem, CSchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetFileSystemFactory, g_pFullFileSystem, IFileSystem, FILESYSTEM_INTERFACE_VERSION);
+
+		return true;
+	}
 }
 
 #define KZ_UTILS_INTERFACE "KZUtilsInterface"
@@ -33,10 +66,38 @@ namespace interfaces
 class KZUtils
 {
 public:
-	virtual void *GetSchemaSystemPointer();
-	virtual void *GetSchemaStateChangedPointer();
-	virtual void *GetSchemaNetworkStateChangedPointer();
-	virtual CGlobalVars *GetServerGlobals();
+	KZUtils(TracePlayerBBox_t *TracePlayerBBox,
+			InitGameTrace_t *InitGameTrace,
+			InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter,
+			GetLegacyGameEventListener_t *GetLegacyGameEventListener,
+			SnapViewAngles_t *SnapViewAngles,
+			EmitSoundFunc_t *EmitSound,
+			SwitchTeam_t *SwitchTeam,
+			SetPawn_t *SetPawn
+		): 
+			TracePlayerBBox(TracePlayerBBox),
+			InitGameTrace(InitGameTrace),
+			InitPlayerMovementTraceFilter(InitPlayerMovementTraceFilter),
+			GetLegacyGameEventListener(GetLegacyGameEventListener),
+			SnapViewAngles(SnapViewAngles),
+			EmitSound(EmitSound),
+			SwitchTeam(SwitchTeam),
+			SetPawn(SetPawn)
+	{}
+
+	TracePlayerBBox_t *const TracePlayerBBox;
+	InitGameTrace_t *const InitGameTrace;
+	InitPlayerMovementTraceFilter_t *const InitPlayerMovementTraceFilter;
+	GetLegacyGameEventListener_t *const GetLegacyGameEventListener;
+	SnapViewAngles_t *const SnapViewAngles;
+	EmitSoundFunc_t *const EmitSound;
+	SwitchTeam_t *const SwitchTeam;
+	SetPawn_t *const SetPawn;
+
+	virtual CGameConfig *GetGameConfig();
+	virtual CSchemaSystem *GetSchemaSystemPointer();
+	virtual const CGlobalVars *GetServerGlobals();
+	virtual CGlobalVars *GetGlobals();
 
 	virtual CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
 
@@ -45,9 +106,6 @@ public:
 
 	virtual CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
 
-	virtual void InitPlayerMovementTraceFilter(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
-	virtual void InitGameTrace(trace_t_s2 *trace);
-	virtual void TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm);
 
 	// Normalize the angle between -180 and 180.
 	virtual f32 NormalizeDeg(f32 a);
@@ -55,9 +113,6 @@ public:
 	// c can be PI (for radians) or 180.0 (for degrees);
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
 	virtual CGameEntitySystem *GetGameEntitySystem();
-
-	virtual void SwitchTeam(CCSPlayerController *controller, int team);
-	virtual void SetPawn(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool);
 };
 
 extern KZUtils *g_pKZUtils;

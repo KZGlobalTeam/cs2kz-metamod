@@ -10,8 +10,8 @@ struct Scmd
 {
 	bool hasConsolePrefix;
 	i32 nameLength;
-	const char *name;
-	const char *description;
+	std::string name;
+	std::string description;
 	scmd::Callback_t *callback;
 };
 
@@ -32,8 +32,8 @@ internal SCMD_CALLBACK(Command_KzHelp)
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
 		utils::PrintConsole(controller, "%s: %s",
-			cmds[i].name,
-			cmds[i].description ? cmds[i].description : "");
+			cmds[i].name.c_str(),
+			cmds[i].description.empty() ? "" : cmds[i].description.c_str());
 	}
 	return MRES_SUPERCEDE;
 }
@@ -88,7 +88,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 			continue;
 		}
 
-		if (V_memcmp(name, g_cmdManager.cmds[i].name, nameLength) == 0)
+		if (g_cmdManager.cmds[i].name == name)
 		{
 			// TODO: print warning? error? segfault?
 			// Command already exists
@@ -102,11 +102,34 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 		hasConPrefix,
 		nameLength,
 		name,
-		description,
+		description ? description : "",
 		callback
 	};
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
 	return true;
+}
+
+bool scmd::UnregisterCmd(const char *name)
+{
+	i32 indexToDelete = -1;
+	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+	{
+		if (g_cmdManager.cmds[i].name == name)
+		{
+			indexToDelete = i;
+			break;
+		}
+	}
+	if (indexToDelete != -1)
+	{
+		for (i32 i = indexToDelete; i < g_cmdManager.cmdCount; i++)
+		{
+			g_cmdManager.cmds[i] = g_cmdManager.cmds[i + 1];
+		}
+		g_cmdManager.cmdCount--;
+		return true;
+	}
+	return false;
 }
 
 META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
@@ -132,7 +155,7 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 			continue;
 		}
 
-		if (stricmp(g_cmdManager.cmds[i].name, args[0]) == 0)
+		if (g_cmdManager.cmds[i].name == args[0])
 		{
 			result = g_cmdManager.cmds[i].callback(controller, &args);
 		}
@@ -190,7 +213,7 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 		}
 
 		const char *arg = cmdArgs[0] + 1; // skip chat trigger
-		const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
+		const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name.c_str() + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name.c_str();
 		if (stricmp(arg, cmdName) == 0)
 		{
 			cmds[i].callback(controller, &cmdArgs);

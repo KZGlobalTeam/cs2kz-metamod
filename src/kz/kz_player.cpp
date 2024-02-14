@@ -47,6 +47,16 @@ float KZPlayer::GetPlayerMaxSpeed()
 	return this->modeService->GetPlayerMaxSpeed();
 }
 
+void KZPlayer::OnPhysicsSimulate()
+{
+	this->modeService->OnPhysicsSimulate();
+}
+
+void KZPlayer::OnPhysicsSimulatePost()
+{
+	this->modeService->OnPhysicsSimulatePost();
+}
+
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
 {
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
@@ -60,7 +70,7 @@ void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 void KZPlayer::OnProcessMovement()
 {
 	MovementPlayer::OnProcessMovement();
-	KZ::mode::ApplyModeCvarValues(this);
+	KZ::mode::ApplyModeSettings(this);
 	this->modeService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
