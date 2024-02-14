@@ -331,10 +331,6 @@ void KZPlayer::HandleMoveCollision()
 	}
 	if (this->inNoclip)
 	{
-		if (!(pawn->m_fFlags() & 8))
-		{
-			pawn->m_fFlags() |= 8;
-		}
 		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
 		{
 			pawn->SetMoveType(MOVETYPE_NOCLIP);
@@ -349,10 +345,6 @@ void KZPlayer::HandleMoveCollision()
 	}
 	else
 	{
-		if (pawn->m_fFlags() & 8)
-		{
-			pawn->m_fFlags() &= ~8;
-		}
 		if (pawn->m_MoveType() == MOVETYPE_NOCLIP)
 		{
 			pawn->SetMoveType(MOVETYPE_WALK);
