@@ -69,6 +69,7 @@ for sdk_target in MMSPlugin.sdk_targets:
   binary.sources += [
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+    os.path.join(sdk['path'], 'entity2', 'entitykeyvalues.cpp'),
     os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
     os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'),
     
@@ -91,11 +92,14 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
+
+    os.path.join(builder.sourcePath, 'src', 'movement', 'mv_mappingapi.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'kz_misc.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'block_radio.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'time_limit.cpp'),
     
+
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player_print.cpp'),
