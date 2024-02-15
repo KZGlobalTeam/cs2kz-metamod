@@ -41,5 +41,3 @@ Note: does not work with gcc!
 Usage:
 
 Copy the contents of `build/package/` to your server's `csgo/` directory.
-
-For CS# compatibility: Add `addons/cs2kz/bin/win64/cs2kz`/`addons/cs2kz/bin/linuxsteamrt64/cs2kz` into Metamod's metaplugins.ini.
