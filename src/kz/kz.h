@@ -115,6 +115,8 @@ public:
 private:
 	bool inNoclip{};
 	bool hideLegs{};
+	bool NoHud{};
+	bool NoStats{};
 	TurnState previousTurnState{};
 public:
 	KZAnticheatService *anticheatService{};
@@ -131,6 +133,14 @@ public:
 	KZStyleService *styleService{};
 	KZTimerService *timerService{};
 	KZTipService *tipService{};
+
+	//NoHUD
+	void ToggleNoHud();
+	bool IsNoHud() { return this->NoHud; }
+
+	//NoStats
+	void ToggleNoStats();
+	bool IsNoStats() { return this->NoStats; }
 
 	// Noclip
 	void DisableNoclip();

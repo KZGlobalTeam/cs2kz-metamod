@@ -11,8 +11,10 @@
 
 void KZPlayer::Init()
 {
-	this->inNoclip = false;
-	this->hideLegs = false;
+	this->NoHud 	= false;
+	this->NoStats 	= false;
+	this->inNoclip 	= false;
+	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
 
 	// TODO: initialize every service.
@@ -30,8 +32,10 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->inNoclip = false;
-	this->hideLegs = false;
+	this->NoHud 	= false;
+	this->NoStats 	= false;
+	this->inNoclip 	= false;
+	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
 
 	// TODO: reset every service.
@@ -428,6 +432,16 @@ void KZPlayer::ToggleNoclip()
 void KZPlayer::DisableNoclip()
 {
 	this->inNoclip = false;
+}
+
+void KZPlayer::ToggleNoHud()
+{
+	this->NoHud = !this->NoHud;
+}
+
+void KZPlayer::ToggleNoStats()
+{
+	this->NoStats = !this->NoStats;
 }
 
 void KZPlayer::PlayCheckpointSound()
