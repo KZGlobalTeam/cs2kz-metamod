@@ -6,51 +6,104 @@
 #include <string.h>
 #include "sys/mman.h"
 #include <locale>
+#include <elf.h>
+#include <link.h>
+#include "dbg.h"
 
 #include "tier0/memdbgon.h"
 
-//returns 0 if successful
-int GetModuleInformation(const char *name, void **base, size_t *length)
+#define PAGE_SIZE			4096
+#define PAGE_ALIGN_UP(x)	((x + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1))
+
+struct ModuleInfo
 {
-	// this is the only way to do this on linux, lol
-	FILE *f = fopen("/proc/self/maps", "r");
-	if (!f)
-		return 1;
-	
-	char buf[PATH_MAX+100];
-	while (!feof(f))
+	const char *path; // in
+	uint8_t *base; // out
+	uint size; // out
+};
+
+// https://github.com/alliedmodders/sourcemod/blob/master/core/logic/MemoryUtils.cpp#L502-L587
+int GetModuleInformation(HINSTANCE hModule, void **base, size_t *length)
+{
+	struct link_map *dlmap = (struct link_map *)hModule;
+	Dl_info info;
+	Elf64_Ehdr *file;
+	Elf64_Phdr *phdr;
+	uint16_t phdrCount;
+
+	if (!dladdr((void *)dlmap->l_addr, &info))
 	{
-		if (!fgets(buf, sizeof(buf), f))
-			break;
-		
-		char *tmp = strrchr(buf, '\n');
-		if (tmp)
-			*tmp = '\0';
-		
-		char *mapname = strchr(buf, '/');
-		if (!mapname)
-			continue;
-		
-		char perm[5];
-		unsigned long begin, end;
-		sscanf(buf, "%lx-%lx %4s", &begin, &end, perm);
-		
-		// this used to compare with basename(mapname) but since we're using gameinfo to load metamod we have to use the full path
-		// this is because there are 2 libserver.so loaded, metamod's and the actual server
-		if (strcmp(mapname, name) == 0 && perm[0] == 'r' && perm[2] == 'x')
+		return 1;
+	}
+
+	if (!info.dli_fbase || !info.dli_fname)
+	{
+		return 2;
+	}
+
+	/* This is for our insane sanity checks :o */
+	uintptr_t baseAddr = reinterpret_cast<uintptr_t>(info.dli_fbase);
+	file = reinterpret_cast<Elf64_Ehdr *>(baseAddr);
+
+	/* Check ELF magic */
+	if (memcmp(ELFMAG, file->e_ident, SELFMAG) != 0)
+	{
+		return 3;
+	}
+
+	/* Check ELF version */
+	if (file->e_ident[EI_VERSION] != EV_CURRENT)
+	{
+		return 4;
+	}
+
+	/* Check ELF endianness */
+	if (file->e_ident[EI_DATA] != ELFDATA2LSB)
+	{
+		return 5;
+	}
+
+	/* Check ELF architecture */
+	if (file->e_ident[EI_CLASS] != ELFCLASS64 || file->e_machine != EM_X86_64)
+	{
+		return 6;
+	}
+
+	/* For our purposes, this must be a dynamic library/shared object */
+	if (file->e_type != ET_DYN)
+	{
+		return 7;
+	}
+
+	phdrCount = file->e_phnum;
+	phdr = reinterpret_cast<Elf64_Phdr *>(baseAddr + file->e_phoff);
+
+	for (uint16_t i = 0; i < phdrCount; i++)
+	{
+		Elf64_Phdr &hdr = phdr[i];
+
+		/* We only really care about the segment with executable code */
+		if (hdr.p_type == PT_LOAD && hdr.p_flags == (PF_X | PF_R))
 		{
-			*base = (void*)begin;
-			*length = (size_t)end-begin;
-			fclose(f);
-			return 0;
+			/* From glibc, elf/dl-load.c:
+			 * c->mapend = ((ph->p_vaddr + ph->p_filesz + GLRO(dl_pagesize) - 1)
+			 *             & ~(GLRO(dl_pagesize) - 1));
+			 *
+			 * In glibc, the segment file size is aligned up to the nearest page size and
+			 * added to the virtual address of the segment. We just want the size here.
+			 */
+			 //lib.memorySize = PAGE_ALIGN_UP(hdr.p_filesz);
+			*length = PAGE_ALIGN_UP(hdr.p_filesz);
+			*base = (void *)(baseAddr + hdr.p_paddr);
+
+			break;
 		}
 	}
-	
-	fclose(f);
-	return 2;
+
+	return 0;
 }
 
-static int parse_prot(const char* s)
+static int parse_prot(const char *s)
 {
 	int prot = 0;
 
@@ -58,32 +111,32 @@ static int parse_prot(const char* s)
 	{
 		switch (*s)
 		{
-		case '-':
-			break;
-		case 'r':
-			prot |= PROT_READ;
-			break;
-		case 'w':
-			prot |= PROT_WRITE;
-			break;
-		case 'x':
-			prot |= PROT_EXEC;
-			break;
-		case 's':
-			break;
-		case 'p':
-			break;
-		default:
-			break;
+			case '-':
+				break;
+			case 'r':
+				prot |= PROT_READ;
+				break;
+			case 'w':
+				prot |= PROT_WRITE;
+				break;
+			case 'x':
+				prot |= PROT_EXEC;
+				break;
+			case 's':
+				break;
+			case 'p':
+				break;
+			default:
+				break;
 		}
 	}
 
 	return prot;
 }
 
-static int get_prot(void* pAddr, size_t nSize)
+static int get_prot(void *pAddr, size_t nSize)
 {
-	FILE* f = fopen("/proc/self/maps", "r");
+	FILE *f = fopen("/proc/self/maps", "r");
 
 	uintptr_t nAddr = (uintptr_t)pAddr;
 
@@ -94,9 +147,9 @@ static int get_prot(void* pAddr, size_t nSize)
 		char end[16];
 		char prot[16];
 
-		const char* src = line;
+		const char *src = line;
 
-		char* dst = start;
+		char *dst = start;
 		while (*src != '-')
 			*dst++ = *src++;
 		*dst = 0;
@@ -115,8 +168,8 @@ static int get_prot(void* pAddr, size_t nSize)
 			*dst++ = *src++;
 		*dst = 0;
 
-		uintptr_t nStart = (uintptr_t)strtoul(start, NULL, 16);
-		uintptr_t nEnd = (uintptr_t)strtoul(end, NULL, 16);
+		uintptr_t nStart = (uintptr_t)strtoul(start, nullptr, 16);
+		uintptr_t nEnd = (uintptr_t)strtoul(end, nullptr, 16);
 
 		if (nStart < nAddr && nEnd >(nAddr + nSize))
 		{
@@ -129,14 +182,14 @@ static int get_prot(void* pAddr, size_t nSize)
 	return 0;
 }
 
-void Plat_WriteMemory(void* pPatchAddress, uint8_t* pPatch, int iPatchSize)
+void Plat_WriteMemory(void *pPatchAddress, uint8_t *pPatch, int iPatchSize)
 {
 	int old_prot = get_prot(pPatchAddress, iPatchSize);
 
 	uintptr_t page_size = sysconf(_SC_PAGESIZE);
-	uint8_t* align_addr = (uint8_t*)((uintptr_t)pPatchAddress & ~(page_size - 1));
+	uint8_t *align_addr = (uint8_t *)((uintptr_t)pPatchAddress & ~(page_size - 1));
 
-	uint8_t* end = (uint8_t*)pPatchAddress + iPatchSize;
+	uint8_t *end = (uint8_t *)pPatchAddress + iPatchSize;
 	uintptr_t align_size = end - align_addr;
 
 	int result = mprotect(align_addr, align_size, PROT_READ | PROT_WRITE);
@@ -146,4 +199,3 @@ void Plat_WriteMemory(void* pPatchAddress, uint8_t* pPatch, int iPatchSize)
 	result = mprotect(align_addr, align_size, old_prot);
 }
 #endif
-
