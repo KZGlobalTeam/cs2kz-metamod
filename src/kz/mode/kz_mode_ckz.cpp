@@ -638,11 +638,10 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 		f32 change = normal[i] * backoff;
 		out[i] = in[i] - change;
 	}
-	constexpr int epsilon = 0xBB000000;
 	float adjust = DotProduct(out, normal);
 	if (adjust < 0.0f)
 	{
-		adjust = MIN(adjust, *reinterpret_cast<const float *>(&epsilon));
+		adjust = MIN(adjust, -1/512);
 		out -= (normal * adjust);
 	}
 }
