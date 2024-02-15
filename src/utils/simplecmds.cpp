@@ -13,6 +13,7 @@ struct Scmd
 	std::string name;
 	std::string description;
 	scmd::Callback_t *callback;
+	bool hidden;
 };
 
 struct ScmdManager
@@ -31,6 +32,10 @@ internal SCMD_CALLBACK(Command_KzHelp)
 	Scmd *cmds = g_cmdManager.cmds;
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
+		if (cmds[i].hidden)
+		{
+			continue;
+		}
 		utils::PrintConsole(controller, "%s: %s",
 			cmds[i].name.c_str(),
 			cmds[i].description.empty() ? "" : cmds[i].description.c_str());
@@ -42,10 +47,10 @@ internal void RegisterCoreCmds()
 {
 	g_coreCmdsRegistered = true;
 
-	scmd::RegisterCmd("kz_help", Command_KzHelp);
+	scmd::RegisterCmd("kz_help", Command_KzHelp, "Show this help message.");
 }
 
-bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *description/* = nullptr*/)
+bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *description/* = nullptr*/, bool hidden)
 {
 	Assert(name);
 	Assert(callback);
@@ -103,7 +108,8 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 		nameLength,
 		name,
 		description ? description : "",
-		callback
+		callback,
+		hidden
 	};
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
 	return true;

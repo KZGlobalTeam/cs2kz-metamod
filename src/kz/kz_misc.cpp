@@ -78,6 +78,12 @@ internal SCMD_CALLBACK(Command_StopTimer)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_JoinTeam)
+{
+	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), false);
+	return MRES_SUPERCEDE;
+}
+
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
@@ -89,11 +95,12 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_r",          Command_KzRestart,    "Restart.");
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
 	scmd::RegisterCmd("kz_stop",       Command_StopTimer,    "Stop timer.");
+	scmd::RegisterCmd("jointeam",      Command_JoinTeam,     "Jointeam interceptor", true);
 	KZCheckpointService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 }
 
-void KZ::misc::OnClientPutInServer(CPlayerSlot slot)
+void KZ::misc::OnClientActive(CPlayerSlot slot)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 	player->Reset();
