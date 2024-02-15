@@ -18,7 +18,8 @@ internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args);
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
 internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
 internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities);
-internal void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
+internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
+internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
@@ -39,7 +40,8 @@ SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlay
 SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &, const Entity2Networkable_t **, const uint16 *, int);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
-SH_DECL_HOOK4_void(ISource2GameClients, ClientPutInServer, SH_NOATTRIB, false, CPlayerSlot, char const *, int, uint64);
+SH_DECL_HOOK4_void(ISource2GameClients, ClientActive, SH_NOATTRIB, false, CPlayerSlot, bool, const char *, uint64);
+SH_DECL_HOOK5_void(ISource2GameClients, ClientDisconnect, SH_NOATTRIB, false, CPlayerSlot, ENetworkDisconnectionReason, const char *, uint64 , const char *);
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t &, ISource2WorldSession *, const char *);
 SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEvent *, bool);
 SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
@@ -62,7 +64,8 @@ void hooks::Initialize()
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
 	SH_ADD_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
-	SH_ADD_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
+	SH_ADD_HOOK(ISource2GameClients, ClientActive, g_pSource2GameClients, SH_STATIC(Hook_ClientActive), false);
+	SH_ADD_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), false);
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
@@ -75,14 +78,15 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
 	SH_REMOVE_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	SH_REMOVE_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
-	SH_REMOVE_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
+	SH_REMOVE_HOOK(ISource2GameClients, ClientActive, g_pSource2GameClients, SH_STATIC(Hook_ClientActive), false);
+	SH_REMOVE_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), false);
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 	SH_REMOVE_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 }
 
-internal void AddEntityHook(CBaseEntity2 *entity)
+internal void AddEntityHooks(CBaseEntity2 *entity)
 {
 	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
 	{
@@ -139,7 +143,7 @@ void hooks::HookEntities()
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 	for (CEntityIdentity *entID = GameEntitySystem()->m_EntityList.m_pFirstActiveEntity; entID != NULL; entID = entID->m_pNext)
 	{
-		AddEntityHook(static_cast<CBaseEntity2 *>(entID->m_pInstance));
+		AddEntityHooks(static_cast<CBaseEntity2 *>(entID->m_pInstance));
 	}
 	GameEntitySystem()->AddListenerEntity(&entityListener);
 }
@@ -183,9 +187,32 @@ internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCount, CBit
 	RETURN_META(MRES_IGNORED);
 }
 
-internal void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid)
+internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
-	KZ::misc::OnClientPutInServer(slot);
+	KZ::misc::OnClientActive(slot);
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
+	if (player->GetPawn())
+	{
+		AddEntityHooks(player->GetPawn());
+	}
+	else
+	{
+		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
+	}
+	RETURN_META(MRES_IGNORED);
+}
+
+internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
+	if (player->GetPawn())
+	{
+		RemoveEntityHooks(player->GetPawn());
+	}
+	else
+	{
+		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
+	}
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -207,6 +234,10 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		{
 			interfaces::pEngine->ServerCommand("sv_full_alltalk 1");
 			hooks::HookEntities();
+		}
+		else if (V_stricmp(event->GetName(), "player_team") == 0)
+		{
+
 		}
 	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
@@ -439,10 +470,16 @@ internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, con
 
 void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 {
-	AddEntityHook(static_cast<CBaseEntity2 *>(pEntity));
+	if (V_strstr(pEntity->GetClassname(), "trigger_"))
+	{
+		AddEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
+	}
 }
 
 void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
 {
-	RemoveEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
+	if (V_strstr(pEntity->GetClassname(), "trigger_"))
+	{
+		RemoveEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
+	}
 }
