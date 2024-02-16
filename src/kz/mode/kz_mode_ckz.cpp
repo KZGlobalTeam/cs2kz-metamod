@@ -646,7 +646,6 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 	}
 }
 
-#define XYZ(vector) vector.x, vector.y, vector.z
 internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPlayerMovementCS *filter)
 {
 	trace_t_s2 stuck;
