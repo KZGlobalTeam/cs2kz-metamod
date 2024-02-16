@@ -22,6 +22,7 @@ public:
 	};
 
 	static_global void RegisterCommands();
+
 private:
 	i32 currentCpIndex{};
 	u32 tpCount{};
@@ -32,7 +33,9 @@ private:
 	bool hasCustomStartPosition{};
 	Checkpoint customStartPosition;
 	Checkpoint const *lastTeleportedCheckpoint{};
+
 public:
+	void ResetCheckpoints();
 	void SetCheckpoint();
 
 	void DoTeleport(const Checkpoint &cp);

@@ -8,12 +8,17 @@ internal const Vector NULL_VECTOR = Vector(0, 0, 0);
 
 void KZCheckpointService::Reset()
 {
+	this->ResetCheckpoints();
+	this->hasCustomStartPosition = false;
+}
+
+void KZCheckpointService::ResetCheckpoints()
+{
 	this->currentCpIndex = 0;
 	this->tpCount = 0;
 	this->holdingStill = false;
 	this->teleportTime = 0.0f;
 	this->checkpoints.Purge();
-	this->hasCustomStartPosition = false;
 }
 
 void KZCheckpointService::SetCheckpoint()
