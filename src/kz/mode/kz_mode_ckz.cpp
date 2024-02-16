@@ -638,15 +638,18 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 		f32 change = normal[i] * backoff;
 		out[i] = in[i] - change;
 	}
-
-	float adjust = -0.0078125f;
-	out -= (normal * adjust);
+	float adjust = DotProduct(out, normal);
+	if (adjust < 0.0f)
+	{
+		adjust = MIN(adjust, -1/512);
+		out -= (normal * adjust);
+	}
 }
 
 internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPlayerMovementCS *filter)
 {
 	trace_t_s2 stuck;
-	// Maybe we don't need this one
+	// Maybe we don't need this one.
 	if (tr.fraction < FLT_EPSILON)
 	{
 		return false;
@@ -669,15 +672,17 @@ internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPl
 		return false;
 	}
 
-	// Do a swept trace and a backward trace just to be sure.
+	// Do an unswept trace and a backward trace just to be sure.
 	g_pKZUtils->TracePlayerBBox(tr.endpos, tr.endpos, bounds, filter, stuck);
 	if (stuck.startsolid || stuck.fraction < 1.0f - FLT_EPSILON)
 	{
 		return false;
 	}
-
+	
 	g_pKZUtils->TracePlayerBBox(tr.endpos, tr.startpos, bounds, filter, stuck);
-	if (stuck.startsolid || stuck.fraction < 1.0f - FLT_EPSILON)
+	// For whatever reason if you can hit something in only one direction and not the other way around.
+	// Only happens since Call to Arms update, so this fraction check is commented out until it is fixed.
+	if (stuck.startsolid /*|| stuck.fraction < 1.0f - FLT_EPSILON*/)
 	{
 		return false;
 	}
@@ -712,6 +717,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	u32 bumpCount{};
 	Vector planes[5];
 	u32 numPlanes{};
+	trace_t_s2 pierce;
 
 	bbox_t bounds;
 	bounds.mins = { -16, -16, 0 };
@@ -771,11 +777,10 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 									continue;
 								}
 							}
-							trace_t_s2 pierce;
 							bool goodTrace{};
 							f32 ratio{};
 							bool hitNewPlane{};
-							for (ratio = 0.05f; ratio <= 1.0f; ratio += 0.05f)
+							for (ratio = 0.025f; ratio <= 1.0f; ratio += 0.025f)
 							{
 								g_pKZUtils->TracePlayerBBox(start + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, end + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, bounds, &filter, pierce);
 								if (!IsValidMovementTrace(pierce, bounds, &filter))
@@ -800,8 +805,16 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 								pm.startpos = start;
 								pm.fraction = Clamp((pierce.endpos - pierce.startpos).Length() / (end - start).Length(), 0.0f, 1.0f);
 								pm.endpos = test.endpos;
-								pm.planeNormal = test.planeNormal;
-								this->lastValidPlane = test.planeNormal;
+								if (pierce.planeNormal.Length() > 0.0f)
+								{
+									pm.planeNormal = pierce.planeNormal;
+									this->lastValidPlane = pierce.planeNormal;
+								}
+								else
+								{
+									pm.planeNormal = test.planeNormal;
+									this->lastValidPlane = test.planeNormal;
+								}
 								success = true;
 								this->overrideTPM = true;
 							}
@@ -815,7 +828,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 			}
 		}
 
-		if (pm.fraction > 0.03125f)
+		if (pm.fraction * velocity.Length() > 0.03125f)
 		{
 			allFraction += pm.fraction;
 			start = pm.endpos;
@@ -906,6 +919,57 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *p
 			}
 		}
 		this->player->UpdateTriggerTouchList();
+	}
+}
+
+void KZClassicModeService::OnCategorizePosition(bool bStayOnGround)
+{
+	// Already on the ground?
+	// If we are already colliding on a standable valid plane, we don't want to do the check.
+	if (bStayOnGround || this->lastValidPlane.Length() < EPSILON || this->lastValidPlane.z > 0.7f)
+	{
+		return;
+	}
+	// Only attempt to fix rampbugs while going down significantly enough.
+	if (this->player->currentMoveData->m_vecVelocity.z > -64.0f)
+	{
+		return;
+	}
+	bbox_t bounds;
+	this->player->GetBBoxBounds(&bounds);
+
+	CTraceFilterPlayerMovementCS filter;
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPawn(), this->player->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+
+	trace_t_s2 trace;
+	g_pKZUtils->InitGameTrace(&trace);
+
+	Vector origin, groundOrigin;
+	this->player->GetOrigin(&origin);
+	groundOrigin = origin;
+	groundOrigin.z -= 2.0f;
+
+	g_pKZUtils->TracePlayerBBox(origin, groundOrigin, bounds, &filter, trace);
+
+	if (trace.fraction == 1.0f)
+	{
+		return;
+	}
+	// Is this something that you should be able to actually stand on?
+	if (trace.fraction < 0.95f && trace.planeNormal.z > 0.7f && this->lastValidPlane.Dot(trace.planeNormal) < RAMP_BUG_THRESHOLD)
+	{
+		origin += this->lastValidPlane * 0.0625f;
+		groundOrigin = origin;
+		groundOrigin.z -= 2.0f;
+		g_pKZUtils->TracePlayerBBox(origin, groundOrigin, bounds, &filter, trace);
+		if (trace.startsolid)
+		{
+			return;
+		}
+		if (trace.fraction == 1.0f || this->lastValidPlane.Dot(trace.planeNormal) >= RAMP_BUG_THRESHOLD)
+		{
+			this->player->SetOrigin(origin);
+		}
 	}
 }
 

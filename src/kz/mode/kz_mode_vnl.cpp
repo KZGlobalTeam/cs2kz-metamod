@@ -120,7 +120,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		// If we moved some portion of the total distance, then
 		//  copy the end position into the pmove.origin and 
 		//  zero the plane counter.
-		if (pm.fraction > 0.03125)
+		if (pm.fraction * velocity.Length() > 0.03125)
 		{
 			// There's a precision issue with terrain tracing that can cause a swept box to successfully trace
 			// when the end position is stuck in the triangle.  Re-run the test with an uswept box to catch that

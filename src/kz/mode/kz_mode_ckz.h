@@ -7,9 +7,9 @@
 #define MODE_NAME "Classic"
 
 #define MAX_BUMPS 4
-#define RAMP_PIERCE_DISTANCE 1.0f
-#define RAMP_BUG_THRESHOLD 0.98f
-#define NEW_RAMP_THRESHOLD 0.75f
+#define RAMP_PIERCE_DISTANCE 1.25f
+#define RAMP_BUG_THRESHOLD 0.99f
+#define NEW_RAMP_THRESHOLD 0.95f
 
 class KZClassicModePlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -121,6 +121,7 @@ public:
 	virtual void OnProcessUsercmds(void *, int) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
+	virtual void OnCategorizePosition(bool bStayOnGround) override;
 	virtual void OnDuckPost() override;
 	virtual void OnAirMove() override;
 	virtual void OnAirMovePost() override;

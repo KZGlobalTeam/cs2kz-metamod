@@ -365,14 +365,14 @@ void KZPlayer::HandleMoveCollision()
 void KZPlayer::StartZoneStartTouch()
 {
 	MovementPlayer::StartZoneStartTouch();
-	this->checkpointService->Reset();
+	this->checkpointService->ResetCheckpoints();
 }
 
 void KZPlayer::StartZoneEndTouch()
 {
 	if (!this->inNoclip)
 	{
-		this->checkpointService->Reset();
+		this->checkpointService->ResetCheckpoints();
 		MovementPlayer::StartZoneEndTouch();
 	}
 }
