@@ -701,7 +701,8 @@ void KZJumpstatsService::EndJump()
 		}
 		if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
-			KZJumpstatsService::PrintJumpToChat(this->player, jump);
+			if(this->ShowJumpStats)
+				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
 		}
 	}
@@ -709,9 +710,6 @@ void KZJumpstatsService::EndJump()
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
-	if(!KZJumpstatsService::GetJumpStats()) // Need Fix
-		return;
-
 	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
 	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
