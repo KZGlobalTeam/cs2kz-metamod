@@ -229,7 +229,7 @@ private:
 public:
 	void ToggleJSAlways();
 	void ChangeJumpStats(const char *StatsType);
-	bool GetJumpStats() { this->ShowJumpStats; } // Need change to type
+	bool GetJumpStats() { return this->ShowJumpStats; } // Need change to type
 
 	virtual void Reset() override;
 	void OnProcessMovement();
