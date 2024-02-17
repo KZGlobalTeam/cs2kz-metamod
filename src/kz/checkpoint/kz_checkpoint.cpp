@@ -119,21 +119,21 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 void KZCheckpointService::TpToCheckpoint()
 {
 	DoTeleport(this->currentCpIndex);
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Teleport to checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->currentCpIndex);
+	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Teleport to checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCurrentCpIndex());
 }
 
 void KZCheckpointService::TpToPrevCp()
 {
 	this->currentCpIndex = MAX(0, this->currentCpIndex - 1);
 	DoTeleport(this->currentCpIndex);
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Teleport to previous checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->currentCpIndex);
+	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Teleport to previous checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCurrentCpIndex());
 }
 
 void KZCheckpointService::TpToNextCp()
 {
 	this->currentCpIndex = MIN(this->currentCpIndex + 1, this->checkpoints.Count() - 1);
 	DoTeleport(this->currentCpIndex);
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Teleport to next checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->currentCpIndex);
+	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Teleport to next checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCurrentCpIndex());
 }
 
 void KZCheckpointService::TpHoldPlayerStill()

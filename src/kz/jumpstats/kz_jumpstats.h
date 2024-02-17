@@ -228,7 +228,7 @@ private:
 	bool possibleEdgebug{};
 public:
 	void ToggleJSAlways();
-	void ChangeJumpStats();
+	void ChangeJumpStats(const char *StatsType);
 
 	virtual void Reset() override;
 	void OnProcessMovement();

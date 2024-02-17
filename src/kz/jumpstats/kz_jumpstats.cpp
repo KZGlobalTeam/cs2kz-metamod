@@ -708,7 +708,7 @@ void KZJumpstatsService::EndJump()
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
-	if(target->ShowJumpStats == 0)
+	if(this->ShowJumpStats == 0)
 		return;
 
 	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];

@@ -4,6 +4,8 @@
 
 #include "tier0/memdbgon.h"
 
+#include "checkpoint/kz_checkpoint.h"
+
 internal void AddSpeedText(KZPlayer *player, char *buffer, int size)
 {
 	char speed[128];
@@ -37,11 +39,22 @@ internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 	V_strncat(buffer, keys, size);
 }
 
+internal void AddTeleText(KZPlayer *player, char *buffer, int size)
+{
+	char Tele[128];
+	Tele[0] = 0;
+	snprintf(Tele, sizeof(Tele), "CP: %i/%i TPs: %i",
+		player->checkpointService->GetCurrentCpIndex(),
+		player->checkpointService->GetCheckPointsCount(),
+		player->checkpointService->GetTeleportCount());
+	V_strncat(buffer, Tele, size);
+}
+
 void KZHUDService::DrawSpeedPanel()
 {
 	if(!player->IsShowPanel())
 		return;
-	
+
 	char buffer[1024];
 	buffer[0] = 0;
 	if (player->timerIsRunning)
@@ -51,9 +64,12 @@ void KZHUDService::DrawSpeedPanel()
 		utils::PrintCentre(this->player->GetController(), "%s", buffer);
 		buffer[0] = 0;
 	}
+
 	AddSpeedText(player, buffer, sizeof(buffer));
 	strcat(buffer, "\n");
 	AddKeyText(player, buffer, sizeof(buffer));
+	strcat(buffer, "\n");
+	AddTeleText(player, buffer, sizeof(buffer));
 
 	utils::PrintAlert(this->player->GetController(), "%s", buffer);
 }
