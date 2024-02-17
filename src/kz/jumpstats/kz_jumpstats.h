@@ -215,8 +215,10 @@ public:
 	}
 	// Jumpstats
 private:
-	CUtlVector<Jump> jumps;
 	bool jsAlways{};
+	int ShowJumpStats{};
+
+	CUtlVector<Jump> jumps;
 	f32 lastJumpButtonTime{};
 	f32 lastNoclipTime{};
 	f32 lastDuckbugTime{};
@@ -225,6 +227,9 @@ private:
 	Vector tpmVelocity;
 	bool possibleEdgebug{};
 public:
+	void ToggleJSAlways();
+	void ChangeJumpStats();
+
 	virtual void Reset() override;
 	void OnProcessMovement();
 	void OnProcessMovementPost();
@@ -247,7 +252,6 @@ public:
 	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
-	void ToggleJSAlways();
 
 	void CheckValidMoveType();
 	void DetectNoclip();

@@ -39,7 +39,7 @@ internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 
 void KZHUDService::DrawSpeedPanel()
 {
-	if(player->IsNoHud())
+	if(!player->IsShowPanel())
 		return;
 	
 	char buffer[1024];

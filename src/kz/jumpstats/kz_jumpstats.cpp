@@ -708,7 +708,7 @@ void KZJumpstatsService::EndJump()
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
-	if(target->IsNoStats())
+	if(target->ShowJumpStats == 0)
 		return;
 
 	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
@@ -835,6 +835,13 @@ void KZJumpstatsService::ToggleJSAlways()
 {
 	this->jsAlways = !this->jsAlways;
 	utils::CPrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
+}
+
+// This needs to be changed to StatsType
+void KZJumpstatsService::ChangeJumpStats(const char *StatsType)
+{
+	this->ShowJumpStats = !this->ShowJumpStats;
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Jump Stats are now %s.", KZ_CHAT_PREFIX, this->ShowJumpStats ? "shown" : "hidden");
 }
 
 void KZJumpstatsService::CheckValidMoveType()

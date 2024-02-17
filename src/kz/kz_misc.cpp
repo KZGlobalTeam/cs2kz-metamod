@@ -84,19 +84,18 @@ internal SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzJumpHUD)
+internal SCMD_CALLBACK(Command_KzPanel)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->ToggleNoHud();
-	utils::CPrintChat(player->GetPawn(), "%s {gold}Jump hud are now %s.", KZ_CHAT_PREFIX, player->IsNoHud() ? "hidden" : "shown");
+	player->TogglePanel();
+	utils::CPrintChat(player->GetPawn(), "%s {gold}Panel are now %s.", KZ_CHAT_PREFIX, player->IsShowPanel() ? "shown" : "hidden");
 	return MRES_SUPERCEDE;
 }
 
 internal SCMD_CALLBACK(Command_KzJumpStats)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->ToggleNoStats();
-	utils::CPrintChat(player->GetPawn(), "%s {gold}Jump Stats are now %s.", KZ_CHAT_PREFIX, player->IsNoStats() ? "hidden" : "shown");
+	player->jumpstatsService->ChangeJumpStats(args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
@@ -112,8 +111,8 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_r",          Command_KzRestart,    	"Restart.");
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, 	"Hide weapon viewmodel.");
 	scmd::RegisterCmd("kz_stop",       Command_KzStopTimer,  	"Stop timer.");
-	scmd::RegisterCmd("kz_hud",        Command_KzJumpHUD,  		"Toggle HUD display.");
-	scmd::RegisterCmd("kz_stats",      Command_KzJumpStats, 	"Toggle Jump Stats print.");
+	scmd::RegisterCmd("kz_panel",      Command_KzPanel,  		"Toggle Panel display.");
+	scmd::RegisterCmd("kz_stats",      Command_KzJumpStats, 	"Change Jump Stats print type.");
 	scmd::RegisterCmd("jointeam",      Command_JoinTeam,     	"Jointeam interceptor", true);
 	KZCheckpointService::RegisterCommands();
 	KZ::mode::RegisterCommands();

@@ -434,14 +434,9 @@ void KZPlayer::DisableNoclip()
 	this->inNoclip = false;
 }
 
-void KZPlayer::ToggleNoHud()
+void KZPlayer::TogglePanel()
 {
-	this->NoHud = !this->NoHud;
-}
-
-void KZPlayer::ToggleNoStats()
-{
-	this->NoStats = !this->NoStats;
+	this->ShowPanel = !this->ShowPanel;
 }
 
 void KZPlayer::PlayCheckpointSound()
