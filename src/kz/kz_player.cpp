@@ -11,8 +11,7 @@
 
 void KZPlayer::Init()
 {
-	this->NoHud 	= false;
-	this->NoStats 	= false;
+	this->ShowPanel = true;
 	this->inNoclip 	= false;
 	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
@@ -32,8 +31,7 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->NoHud 	= false;
-	this->NoStats 	= false;
+	this->ShowPanel = true;
 	this->inNoclip 	= false;
 	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;

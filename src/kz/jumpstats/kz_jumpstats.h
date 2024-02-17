@@ -216,7 +216,7 @@ public:
 	// Jumpstats
 private:
 	bool jsAlways{};
-	int ShowJumpStats{};
+	bool ShowJumpStats{}; // Need change to type
 
 	CUtlVector<Jump> jumps;
 	f32 lastJumpButtonTime{};
@@ -229,6 +229,7 @@ private:
 public:
 	void ToggleJSAlways();
 	void ChangeJumpStats(const char *StatsType);
+	bool GetJumpStats() { this->ShowJumpStats; } // Need change to type
 
 	virtual void Reset() override;
 	void OnProcessMovement();

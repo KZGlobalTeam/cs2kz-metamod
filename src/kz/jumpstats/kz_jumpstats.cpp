@@ -582,6 +582,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 void KZJumpstatsService::Reset()
 {
+	this->ShowJumpStats = true;
 	this->jumps.Purge();
 	this->jsAlways = {};
 	this->lastJumpButtonTime = {};
@@ -708,7 +709,7 @@ void KZJumpstatsService::EndJump()
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
-	if(this->ShowJumpStats == 0)
+	if(!KZJumpstatsService::GetJumpStats()) // Need Fix
 		return;
 
 	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
