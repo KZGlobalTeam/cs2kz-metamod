@@ -4,7 +4,7 @@
 
 #include "tier0/memdbgon.h"
 
-#include "checkpoint/kz_checkpoint.h"
+#include "../checkpoint/kz_checkpoint.h"
 
 internal void AddSpeedText(KZPlayer *player, char *buffer, int size)
 {
