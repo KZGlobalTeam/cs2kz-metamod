@@ -110,8 +110,8 @@ internal SCMD_CALLBACK(Command_JoinTeam)
 internal SCMD_CALLBACK(Command_KzPanel)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->TogglePanel();
-	utils::CPrintChat(player->GetPawn(), "%s {gold}Panel are now %s.", KZ_CHAT_PREFIX, player->IsShowingPanel() ? "shown" : "hidden");
+	player->hudService->TogglePanel();
+	utils::CPrintChat(player->GetPawn(), "%s {gold}Panel are now %s.", KZ_CHAT_PREFIX, player->hudService->IsShowingPanel() ? "shown" : "hidden");
 	return MRES_SUPERCEDE;
 }
 

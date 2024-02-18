@@ -11,7 +11,6 @@
 
 void KZPlayer::Init()
 {
-	this->showPanel = true;
 	this->inNoclip 	= false;
 	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
@@ -31,7 +30,6 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->showPanel = true;
 	this->inNoclip 	= false;
 	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
@@ -40,6 +38,7 @@ void KZPlayer::Reset()
 	this->checkpointService->Reset();
 	this->quietService->Reset();
 	this->jumpstatsService->Reset();
+	this->hudService->Reset();
 	// TODO: Make a cvar for default mode
 	g_pKZModeManager->SwitchToMode(this, "VNL", true);
 }
@@ -430,11 +429,6 @@ void KZPlayer::ToggleNoclip()
 void KZPlayer::DisableNoclip()
 {
 	this->inNoclip = false;
-}
-
-void KZPlayer::TogglePanel()
-{
-	this->showPanel = !this->showPanel;
 }
 
 void KZPlayer::PlayCheckpointSound()

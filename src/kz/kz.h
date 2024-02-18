@@ -115,7 +115,6 @@ public:
 private:
 	bool inNoclip{};
 	bool hideLegs{};
-	bool showPanel{};
 	
 	TurnState previousTurnState{};
 public:
@@ -133,10 +132,6 @@ public:
 	KZStyleService *styleService{};
 	KZTimerService *timerService{};
 	KZTipService *tipService{};
-
-	// Panel
-	void TogglePanel();
-	bool IsShowingPanel() { return this->showPanel; }
 
 	// Noclip
 	void DisableNoclip();
