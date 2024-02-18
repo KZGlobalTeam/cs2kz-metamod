@@ -228,7 +228,7 @@ private:
 	bool possibleEdgebug{};
 public:
 	void ToggleJSAlways();
-	void ToggleJumpstatsReporting(const char *StatsType);
+	void ToggleJumpstatsReporting();
 	bool ShouldDisplayJumpstats() { return this->showJumpstats; } // Need change to type
 
 	virtual void Reset() override;

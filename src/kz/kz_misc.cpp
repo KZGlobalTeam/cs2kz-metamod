@@ -119,7 +119,7 @@ internal SCMD_CALLBACK(Command_KzPanel)
 internal SCMD_CALLBACK(Command_KzToggleJumpstats)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJumpstatsReporting(args->Arg(1));
+	player->jumpstatsService->ToggleJumpstatsReporting();
 	return MRES_SUPERCEDE;
 }
 

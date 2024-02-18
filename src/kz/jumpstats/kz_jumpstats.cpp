@@ -838,8 +838,7 @@ void KZJumpstatsService::ToggleJSAlways()
 	utils::CPrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
 }
 
-// This needs to be changed to StatsType
-void KZJumpstatsService::ToggleJumpstatsReporting(const char *StatsType)
+void KZJumpstatsService::ToggleJumpstatsReporting()
 {
 	this->showJumpstats = !this->showJumpstats;
 	utils::CPrintChat(player->GetPawn(), "%s {grey}You have %s jumpstats reporting.", KZ_CHAT_PREFIX, this->ShouldDisplayJumpstats() ? "enabled" : "disabled");
