@@ -61,7 +61,7 @@ void KZHUDService::DrawSpeedPanel()
 	AddTeleText(player, buffer, sizeof(buffer));
 	if (player->timerIsRunning)
 	{
-		strcat(buffer, "\n");
+		V_strncat(buffer, "\n", sizeof(buffer));
 		char timer[128];
 		timer[0] = 0;
 		i32 ticks = player->tickCount - player->timerStartTick;
@@ -72,7 +72,7 @@ void KZHUDService::DrawSpeedPanel()
 	buffer[0] = 0;
 
 	AddSpeedText(player, buffer, sizeof(buffer));
-	strcat(buffer, "\n");
+	V_strncat(buffer, "\n", sizeof(buffer));
 	AddKeyText(player, buffer, sizeof(buffer));
 
 	utils::PrintAlert(this->player->GetController(), buffer);
