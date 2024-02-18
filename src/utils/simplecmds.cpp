@@ -96,7 +96,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 			continue;
 		}
 
-		if (V_stricmp(g_cmdManager.cmds[i].name, name))
+		if (!V_stricmp(g_cmdManager.cmds[i].name, name))
 		{
 			// TODO: print warning? error? segfault?
 			// Command already exists
