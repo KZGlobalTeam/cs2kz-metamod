@@ -41,13 +41,13 @@ internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 
 internal void AddTeleText(KZPlayer *player, char *buffer, int size)
 {
-	char Tele[128];
+	char tele[128];
 	Tele[0] = 0;
-	snprintf(Tele, sizeof(Tele), "CP: %i/%i TPs: %i",
+	snprintf(tele, sizeof(tele), "CP: %i/%i TPs: %i",
 		player->checkpointService->GetCurrentCpIndex(),
 		player->checkpointService->GetCheckpointCount(),
 		player->checkpointService->GetTeleportCount());
-	V_strncat(buffer, Tele, size);
+	V_strncat(buffer, tele, size);
 }
 
 void KZHUDService::DrawSpeedPanel()
@@ -57,17 +57,21 @@ void KZHUDService::DrawSpeedPanel()
 
 	char buffer[1024];
 	buffer[0] = 0;
+	
+	AddTeleText(player, buffer, sizeof(buffer));
 	if (player->timerIsRunning)
 	{
+		strcat(buffer, "\n");
+		char timer[128];
+		Tele[0] = 0;
 		i32 ticks = player->tickCount - player->timerStartTick;
-		utils::FormatTimerText(ticks, buffer, sizeof(buffer));
-		utils::PrintCentre(this->player->GetController(), buffer);
-		buffer[0] = 0;
+		utils::FormatTimerText(ticks, timer, sizeof(timer));
+		V_strncat(buffer, timer, sizeof(buffer));
 	}
+	utils::PrintCentre(this->player->GetController(), buffer);
+	buffer[0] = 0;
 
 	AddSpeedText(player, buffer, sizeof(buffer));
-	strcat(buffer, "\n");
-	AddTeleText(player, buffer, sizeof(buffer));
 	strcat(buffer, "\n");
 	AddKeyText(player, buffer, sizeof(buffer));
 
