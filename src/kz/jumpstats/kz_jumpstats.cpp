@@ -813,7 +813,7 @@ void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 void KZJumpstatsService::TrackJumpstatsVariables()
 {
 	this->lastJumpButtonTime = this->player->GetPawn()->m_ignoreLadderJumpTime();
-	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP)
+	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP || this->player->GetPawn()->m_nActualMoveType == MOVETYPE_NOCLIP)
 	{
 		this->lastNoclipTime = g_pKZUtils->GetGlobals()->curtime;
 	}
