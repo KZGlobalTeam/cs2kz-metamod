@@ -119,7 +119,6 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 void KZCheckpointService::TpToCheckpoint()
 {
 	DoTeleport(this->currentCpIndex);
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Teleport to checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCurrentCpIndex());
 }
 
 void KZCheckpointService::TpToPrevCp()
