@@ -216,7 +216,7 @@ public:
 	// Jumpstats
 private:
 	bool jsAlways{};
-	bool ShowJumpStats{}; // Need change to type
+	bool showJumpStats{}; // Need change to type
 
 	CUtlVector<Jump> jumps;
 	f32 lastJumpButtonTime{};
@@ -228,8 +228,8 @@ private:
 	bool possibleEdgebug{};
 public:
 	void ToggleJSAlways();
-	void ChangeJumpStats(const char *StatsType);
-	bool GetJumpStats() { return this->ShowJumpStats; } // Need change to type
+	void ToggleJumpstatsReporting(const char *StatsType);
+	bool ShouldDisplayJumpStats() { return this->showJumpStats; } // Need change to type
 
 	virtual void Reset() override;
 	void OnProcessMovement();

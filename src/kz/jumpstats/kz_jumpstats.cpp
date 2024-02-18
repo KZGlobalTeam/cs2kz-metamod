@@ -582,7 +582,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 void KZJumpstatsService::Reset()
 {
-	this->ShowJumpStats = true;
+	this->showJumpStats = true;
 	this->jumps.Purge();
 	this->jsAlways = {};
 	this->lastJumpButtonTime = {};
@@ -701,7 +701,7 @@ void KZJumpstatsService::EndJump()
 		}
 		if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
-			if(this->ShowJumpStats)
+			if(this->ShouldDisplayJumpStats())
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
 		}
@@ -837,10 +837,10 @@ void KZJumpstatsService::ToggleJSAlways()
 }
 
 // This needs to be changed to StatsType
-void KZJumpstatsService::ChangeJumpStats(const char *StatsType)
+void KZJumpstatsService::ToggleJumpstatsReporting(const char *StatsType)
 {
-	this->ShowJumpStats = !this->ShowJumpStats;
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Jump Stats are now %s.", KZ_CHAT_PREFIX, this->ShowJumpStats ? "shown" : "hidden");
+	this->showJumpStats = !this->showJumpStats;
+	utils::CPrintChat(player->GetPawn(), "%s {grey}You have %s jumpstats reporting.", KZ_CHAT_PREFIX, this->ShouldDisplayJumpStats() ? "enabled" : "disabled");
 }
 
 void KZJumpstatsService::CheckValidMoveType()

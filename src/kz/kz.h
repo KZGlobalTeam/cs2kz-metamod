@@ -115,7 +115,7 @@ public:
 private:
 	bool inNoclip{};
 	bool hideLegs{};
-	bool ShowPanel{};
+	bool showPanel{};
 	
 	TurnState previousTurnState{};
 public:
@@ -136,7 +136,7 @@ public:
 
 	// Panel
 	void TogglePanel();
-	bool IsShowPanel() { return this->ShowPanel; }
+	bool IsShowingPanel() { return this->showPanel; }
 
 	// Noclip
 	void DisableNoclip();

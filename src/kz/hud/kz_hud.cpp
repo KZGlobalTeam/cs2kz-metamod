@@ -52,7 +52,7 @@ internal void AddTeleText(KZPlayer *player, char *buffer, int size)
 
 void KZHUDService::DrawSpeedPanel()
 {
-	if(!player->IsShowPanel())
+	if(!player->IsShowingPanel())
 		return;
 
 	char buffer[1024];

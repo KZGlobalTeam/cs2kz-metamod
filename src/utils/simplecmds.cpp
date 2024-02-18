@@ -6,12 +6,15 @@
 #include "tier0/memdbgon.h"
 
 // private structs
+#define SCMD_MAX_NAME_LEN 128
+#define SCMD_MAX_DESCRIPTION_LEN 1024
+
 struct Scmd
 {
 	bool hasConsolePrefix;
 	i32 nameLength;
-	std::string name;
-	std::string description;
+	char name[SCMD_MAX_NAME_LEN];
+	char description[SCMD_MAX_DESCRIPTION_LEN];
 	scmd::Callback_t *callback;
 	bool hidden;
 };
@@ -37,8 +40,8 @@ internal SCMD_CALLBACK(Command_KzHelp)
 			continue;
 		}
 		utils::PrintConsole(controller, "%s: %s",
-			cmds[i].name.c_str(),
-			cmds[i].description.empty() ? "" : cmds[i].description.c_str());
+			cmds[i].name,
+			cmds[i].description);
 	}
 	return MRES_SUPERCEDE;
 }
@@ -93,7 +96,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 			continue;
 		}
 
-		if (g_cmdManager.cmds[i].name == name)
+		if (V_stricmp(g_cmdManager.cmds[i].name, name))
 		{
 			// TODO: print warning? error? segfault?
 			// Command already exists
@@ -106,11 +109,13 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 	Scmd cmd = {
 		hasConPrefix,
 		nameLength,
-		name,
-		description ? description : "",
+		"",
+		"",
 		callback,
 		hidden
 	};
+	V_snprintf(cmd.name, SCMD_MAX_NAME_LEN, "%s", name);
+	V_snprintf(cmd.description, SCMD_MAX_DESCRIPTION_LEN, "%s", description);
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
 	return true;
 }
@@ -120,7 +125,7 @@ bool scmd::UnregisterCmd(const char *name)
 	i32 indexToDelete = -1;
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
-		if (g_cmdManager.cmds[i].name == name)
+		if (!V_stricmp(g_cmdManager.cmds[i].name, name))
 		{
 			indexToDelete = i;
 			break;
@@ -161,7 +166,7 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 			continue;
 		}
 
-		if (g_cmdManager.cmds[i].name == args[0])
+		if (!V_stricmp(g_cmdManager.cmds[i].name, args[0]))
 		{
 			result = g_cmdManager.cmds[i].callback(controller, &args);
 		}
@@ -219,8 +224,8 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 		}
 
 		const char *arg = cmdArgs[0] + 1; // skip chat trigger
-		const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name.c_str() + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name.c_str();
-		if (stricmp(arg, cmdName) == 0)
+		const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
+		if (!V_stricmp(arg, cmdName))
 		{
 			cmds[i].callback(controller, &cmdArgs);
 			if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
