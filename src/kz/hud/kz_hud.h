@@ -5,14 +5,15 @@ class KZHUDService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
 
+private:
+	bool showPanel{};
+
 public:
-	void Reset();
+	virtual void Reset() override;
 
 	void DrawSpeedPanel();
 
 	void TogglePanel();
 	bool IsShowingPanel() { return this->showPanel; }
 
-private:
-	bool showPanel{};
 };

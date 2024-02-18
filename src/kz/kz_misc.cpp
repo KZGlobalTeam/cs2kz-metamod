@@ -7,6 +7,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
 #include "mode/kz_mode.h"
+#include "hud/kz_hud.h"
 
 internal SCMD_CALLBACK(Command_KzNoclip)
 {
