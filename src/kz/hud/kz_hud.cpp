@@ -42,7 +42,7 @@ internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 internal void AddTeleText(KZPlayer *player, char *buffer, int size)
 {
 	char tele[128];
-	Tele[0] = 0;
+	tele[0] = 0;
 	snprintf(tele, sizeof(tele), "CP: %i/%i TPs: %i",
 		player->checkpointService->GetCurrentCpIndex(),
 		player->checkpointService->GetCheckpointCount(),
