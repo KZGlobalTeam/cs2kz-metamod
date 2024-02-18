@@ -45,7 +45,7 @@ internal void AddTeleText(KZPlayer *player, char *buffer, int size)
 	Tele[0] = 0;
 	snprintf(Tele, sizeof(Tele), "CP: %i/%i TPs: %i",
 		player->checkpointService->GetCurrentCpIndex(),
-		player->checkpointService->GetCheckPointsCount(),
+		player->checkpointService->GetCheckpointCount(),
 		player->checkpointService->GetTeleportCount());
 	V_strncat(buffer, Tele, size);
 }

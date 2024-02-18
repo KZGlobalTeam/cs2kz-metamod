@@ -53,7 +53,7 @@ public:
 		else
 			return this->currentCpIndex;
 	}
-	i32 GetCheckPointsCount() { return this->checkpoints.Count(); }
+	i32 GetCheckpointCount() { return this->checkpoints.Count(); }
 
 	void SetStartPosition();
 	void ClearStartPosition();

@@ -115,7 +115,7 @@ internal SCMD_CALLBACK(Command_KzPanel)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzToggleJumpStats)
+internal SCMD_CALLBACK(Command_KzToggleJumpstats)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleJumpstatsReporting(args->Arg(1));
@@ -139,7 +139,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_stop",		Command_KzStopTimer,		"Stop timer.");
 	scmd::RegisterCmd("jointeam",		Command_JoinTeam,			"Jointeam interceptor", true);
 	scmd::RegisterCmd("kz_panel",      	Command_KzPanel,  			"Toggle Panel display.");
-	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpStats, 	"Change Jump Stats print type.");
+	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats, 	"Change Jump Stats print type.");
 
 	KZCheckpointService::RegisterCommands();
 	KZ::mode::RegisterCommands();
