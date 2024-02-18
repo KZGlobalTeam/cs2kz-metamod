@@ -11,7 +11,7 @@
 
 void KZPlayer::Init()
 {
-	this->ShowPanel = true;
+	this->showPanel = true;
 	this->inNoclip 	= false;
 	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
@@ -31,7 +31,7 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->ShowPanel = true;
+	this->showPanel = true;
 	this->inNoclip 	= false;
 	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
@@ -434,7 +434,7 @@ void KZPlayer::DisableNoclip()
 
 void KZPlayer::TogglePanel()
 {
-	this->ShowPanel = !this->ShowPanel;
+	this->showPanel = !this->showPanel;
 }
 
 void KZPlayer::PlayCheckpointSound()
