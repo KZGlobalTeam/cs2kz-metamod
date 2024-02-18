@@ -16,29 +16,6 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzEnableNoclip)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	if (player->IsNoclipping())
-	{
-		return MRES_SUPERCEDE;
-	}
-	player->ToggleNoclip();
-	return MRES_SUPERCEDE;
-}
-
-internal SCMD_CALLBACK(Command_KzDisableNoclip)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	if (!player->IsNoclipping())
-	{
-		return MRES_SUPERCEDE;
-	}
-	player->DisableNoclip();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Noclip %s.", KZ_CHAT_PREFIX, player->IsNoclipping() ? "enabled" : "disabled");
-	return MRES_SUPERCEDE;
-}
-
 internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -111,10 +88,6 @@ internal SCMD_CALLBACK(Command_JoinTeam)
 void KZ::misc::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_noclip",		Command_KzNoclip,			"Toggle noclip.");
-	scmd::RegisterCmd("+noclip",		Command_KzEnableNoclip,		"Enable noclip.");
-	scmd::RegisterCmd("-noclip",		Command_KzDisableNoclip,	"Disable noclip.");
-	scmd::RegisterCmd("+nc",			Command_KzEnableNoclip,		"Enable noclip.");
-	scmd::RegisterCmd("-nc",			Command_KzDisableNoclip,	"Disable noclip.");
 	scmd::RegisterCmd("kz_hidelegs",	Command_KzHidelegs,			"Hide your legs in first person.");
 	scmd::RegisterCmd("kz_hide",		Command_KzHide,				"Hide other players.");
 	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,			"Print jumpstats for invalid jumps.");
