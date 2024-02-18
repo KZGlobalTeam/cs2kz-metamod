@@ -136,7 +136,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_restart",		Command_KzRestart,			"Restart.");
 	scmd::RegisterCmd("kz_r",			Command_KzRestart,			"Restart.");
 	scmd::RegisterCmd("kz_hideweapon",	Command_KzHideWeapon,		"Hide weapon viewmodel.");
-	scmd::RegisterCmd("kz_stop",		Command_StopTimer,			"Stop timer.");
+	scmd::RegisterCmd("kz_stop",		Command_KzStopTimer,		"Stop timer.");
 	scmd::RegisterCmd("jointeam",		Command_JoinTeam,			"Jointeam interceptor", true);
 	scmd::RegisterCmd("kz_panel",      	Command_KzPanel,  			"Toggle Panel display.");
 	scmd::RegisterCmd("kz_togglestats",	Command_KzJumpStats, 		"Change Jump Stats print type.");
