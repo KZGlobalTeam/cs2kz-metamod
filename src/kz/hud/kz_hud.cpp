@@ -63,7 +63,7 @@ void KZHUDService::DrawSpeedPanel()
 	{
 		strcat(buffer, "\n");
 		char timer[128];
-		Tele[0] = 0;
+		timer[0] = 0;
 		i32 ticks = player->tickCount - player->timerStartTick;
 		utils::FormatTimerText(ticks, timer, sizeof(timer));
 		V_strncat(buffer, timer, sizeof(buffer));
