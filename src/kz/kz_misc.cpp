@@ -125,8 +125,8 @@ internal SCMD_CALLBACK(Command_KzToggleJumpstats)
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_panel",      	Command_KzPanel,  			"Toggle Panel display.");
-	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats, 	"Change Jump Stats print type.");
+	scmd::RegisterCmd("kz_panel",		Command_KzPanel,			"Toggle Panel display.");
+	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_noclip",		Command_KzNoclip,			"Toggle noclip.");
 	scmd::RegisterCmd("+noclip",		Command_KzEnableNoclip,		"Enable noclip.");
 	scmd::RegisterCmd("-noclip",		Command_KzDisableNoclip,	"Disable noclip.");
