@@ -86,4 +86,9 @@ void KZHUDService::Reset()
 void KZHUDService::TogglePanel()
 {
 	this->showPanel = !this->showPanel;
+	if (!this->showPanel)
+	{
+		utils::PrintAlert(this->player->GetController(), "");
+		utils::PrintCentre(this->player->GetController(), "");
+	}
 }
