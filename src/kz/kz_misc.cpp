@@ -105,6 +105,7 @@ void KZ::misc::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_panel",		Command_KzPanel,			"Toggle Panel display.");
 	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_noclip",		Command_KzNoclip,			"Toggle noclip.");
 	scmd::RegisterCmd("kz_hidelegs",	Command_KzHidelegs,			"Hide your legs in first person.");
 	scmd::RegisterCmd("kz_hide",		Command_KzHide,				"Hide other players.");
