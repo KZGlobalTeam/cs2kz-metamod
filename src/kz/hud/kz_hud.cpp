@@ -4,6 +4,8 @@
 
 #include "tier0/memdbgon.h"
 
+#include "../checkpoint/kz_checkpoint.h"
+
 internal void AddSpeedText(KZPlayer *player, char *buffer, int size)
 {
 	char speed[128];
@@ -37,20 +39,56 @@ internal void AddKeyText(KZPlayer *player, char *buffer, int size)
 	V_strncat(buffer, keys, size);
 }
 
+internal void AddTeleText(KZPlayer *player, char *buffer, int size)
+{
+	char tele[128];
+	tele[0] = 0;
+	snprintf(tele, sizeof(tele), "CP: %i/%i TPs: %i",
+		player->checkpointService->GetCurrentCpIndex(),
+		player->checkpointService->GetCheckpointCount(),
+		player->checkpointService->GetTeleportCount());
+	V_strncat(buffer, tele, size);
+}
+
 void KZHUDService::DrawSpeedPanel()
 {
+	if(!this->IsShowingPanel())
+		return;
+
 	char buffer[1024];
 	buffer[0] = 0;
+	
+	AddTeleText(player, buffer, sizeof(buffer));
 	if (player->timerIsRunning)
 	{
+		V_strncat(buffer, "\n", sizeof(buffer));
+		char timer[128];
+		timer[0] = 0;
 		i32 ticks = player->tickCount - player->timerStartTick;
-		utils::FormatTimerText(ticks, buffer, sizeof(buffer));
-		utils::PrintCentre(this->player->GetController(), "%s", buffer);
-		buffer[0] = 0;
+		utils::FormatTimerText(ticks, timer, sizeof(timer));
+		V_strncat(buffer, timer, sizeof(buffer));
 	}
+	utils::PrintCentre(this->player->GetController(), buffer);
+	buffer[0] = 0;
+
 	AddSpeedText(player, buffer, sizeof(buffer));
-	strcat(buffer, "\n");
+	V_strncat(buffer, "\n", sizeof(buffer));
 	AddKeyText(player, buffer, sizeof(buffer));
 
-	utils::PrintAlert(this->player->GetController(), "%s", buffer);
+	utils::PrintAlert(this->player->GetController(), buffer);
+}
+
+void KZHUDService::Reset()
+{
+	this->showPanel = true;
+}
+
+void KZHUDService::TogglePanel()
+{
+	this->showPanel = !this->showPanel;
+	if (!this->showPanel)
+	{
+		utils::PrintAlert(this->player->GetController(), "");
+		utils::PrintCentre(this->player->GetController(), "");
+	}
 }

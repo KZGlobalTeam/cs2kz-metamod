@@ -46,6 +46,14 @@ public:
 	void TpToNextCp();
 
 	u32 GetTeleportCount() { return this->tpCount; }
+	i32 GetCurrentCpIndex()
+	{
+		if(this->checkpoints.Count() > 0)
+			return this->currentCpIndex + 1;
+		else
+			return this->currentCpIndex;
+	}
+	i32 GetCheckpointCount() { return this->checkpoints.Count(); }
 
 	void SetStartPosition();
 	void ClearStartPosition();

@@ -7,6 +7,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
 #include "mode/kz_mode.h"
+#include "hud/kz_hud.h"
 
 internal SCMD_CALLBACK(Command_KzNoclip)
 {
@@ -84,9 +85,27 @@ internal SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzPanel)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->hudService->TogglePanel();
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Your centre information panel has been %s.", KZ_CHAT_PREFIX, player->hudService->IsShowingPanel() ? "enabled" : "disabled");
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzToggleJumpstats)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJumpstatsReporting();
+	return MRES_SUPERCEDE;
+}
+
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
+	scmd::RegisterCmd("kz_panel",		Command_KzPanel,			"Toggle Panel display.");
+	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_noclip",		Command_KzNoclip,			"Toggle noclip.");
 	scmd::RegisterCmd("kz_hidelegs",	Command_KzHidelegs,			"Hide your legs in first person.");
 	scmd::RegisterCmd("kz_hide",		Command_KzHide,				"Hide other players.");

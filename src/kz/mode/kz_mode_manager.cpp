@@ -232,7 +232,8 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	}
 	delete player->modeService;
 	player->modeService = factory(player);
-
+	player->InvalidateTimer();
+	
 	if (player->GetController() && !silent)
 	{
 		utils::CPrintChat(player->GetController(), "%s {grey}You have switched to the {purple}%s {grey}mode.", KZ_CHAT_PREFIX, player->modeService->GetModeName());

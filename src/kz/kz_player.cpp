@@ -11,8 +11,8 @@
 
 void KZPlayer::Init()
 {
-	this->inNoclip = false;
-	this->hideLegs = false;
+	this->inNoclip 	= false;
+	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
 
 	// TODO: initialize every service.
@@ -30,14 +30,15 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->inNoclip = false;
-	this->hideLegs = false;
+	this->inNoclip 	= false;
+	this->hideLegs 	= false;
 	this->previousTurnState = TURN_NONE;
 
 	// TODO: reset every service.
 	this->checkpointService->Reset();
 	this->quietService->Reset();
 	this->jumpstatsService->Reset();
+	this->hudService->Reset();
 	// TODO: Make a cvar for default mode
 	g_pKZModeManager->SwitchToMode(this, "VNL", true);
 }

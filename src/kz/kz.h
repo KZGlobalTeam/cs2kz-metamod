@@ -115,6 +115,7 @@ public:
 private:
 	bool inNoclip{};
 	bool hideLegs{};
+	
 	TurnState previousTurnState{};
 public:
 	KZAnticheatService *anticheatService{};
