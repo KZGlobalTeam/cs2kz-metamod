@@ -89,7 +89,7 @@ internal SCMD_CALLBACK(Command_KzPanel)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->hudService->TogglePanel();
-	utils::CPrintChat(player->GetPawn(), "%s {gold}Panel are now %s.", KZ_CHAT_PREFIX, player->hudService->IsShowingPanel() ? "shown" : "hidden");
+	utils::CPrintChat(player->GetPawn(), "%s {grey}Your centre information panel has been %s.", KZ_CHAT_PREFIX, player->hudService->IsShowingPanel() ? "enabled" : "disabled");
 	return MRES_SUPERCEDE;
 }
 
