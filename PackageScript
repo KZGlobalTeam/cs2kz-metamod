@@ -11,6 +11,8 @@ gamedata_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'gamedata')
 gamedata_folder = builder.AddFolder(gamedata_folder_path)
 mode_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'modes')
 mode_folder = builder.AddFolder(mode_folder_path)
+style_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'styles')
+style_folder = builder.AddFolder(style_folder_path)
 
 for cxx in MMSPlugin.all_targets:
   if cxx.target.arch == 'x86_64':
@@ -48,6 +50,12 @@ for task in MMSPlugin.binaries:
 
 for task in MMSPlugin.mode_binaries:
   builder.AddCopy(task.binary, mode_folder)
+
+  if task.debug:
+    pdb_list.append(task.debug)
+
+for task in MMSPlugin.style_binaries:
+  builder.AddCopy(task.binary, style_folder)
 
   if task.debug:
     pdb_list.append(task.debug)

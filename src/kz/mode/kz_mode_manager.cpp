@@ -7,6 +7,7 @@
 #include "interfaces/interfaces.h"
 
 #include "utils/simplecmds.h"
+
 internal SCMD_CALLBACK(Command_KzModeShort);
 internal SCMD_CALLBACK(Command_KzMode);
 
@@ -230,9 +231,11 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		}
 		return false;
 	}
+	player->modeService->Cleanup();
 	delete player->modeService;
 	player->modeService = factory(player);
 	player->InvalidateTimer();
+	player->modeService->Init();
 	
 	if (player->GetController() && !silent)
 	{
