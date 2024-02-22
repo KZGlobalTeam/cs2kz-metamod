@@ -82,8 +82,8 @@ void KZStyleManager::UnregisterStyle(const char *styleName)
 		return;
 	}
 
-	// Cannot unregister VNL.
-	if (V_stricmp("VNL", styleName) == 0 || V_stricmp("Vanilla", styleName) == 0)
+	// Cannot unregister NRM.
+	if (V_stricmp("NRM", styleName) == 0 || V_stricmp("Normal", styleName) == 0)
 	{
 		return;
 	}
