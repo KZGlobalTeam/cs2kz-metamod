@@ -113,7 +113,7 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	if (!styleName || !V_stricmp("", styleName))
 	{
 		utils::CPrintChat(player->GetController(), "%s {grey}Usage: {default}kz_style <style>{grey}. Check console for possible styles!", KZ_CHAT_PREFIX);
-		utils::PrintConsole(player->GetController(), "Possible styles:");
+		utils::PrintConsole(player->GetController(), "Possible styles: (Current style is %s)", player->styleService->GetStyleName());
 		FOR_EACH_VEC(this->styleInfos, i)
 		{
 			utils::PrintConsole(player->GetController(), "%s (kz_style %s / kz_style %s)", this->styleInfos[i].longName, this->styleInfos[i].longName, this->styleInfos[i].shortName);
