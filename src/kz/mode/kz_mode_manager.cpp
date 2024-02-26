@@ -7,6 +7,7 @@
 #include "interfaces/interfaces.h"
 
 #include "utils/simplecmds.h"
+
 internal SCMD_CALLBACK(Command_KzModeShort);
 internal SCMD_CALLBACK(Command_KzMode);
 
@@ -197,7 +198,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	if (!modeName || !V_stricmp("", modeName))
 	{
 		utils::CPrintChat(player->GetController(), "%s {grey}Usage: {default}kz_mode <mode>.{grey} Check console for possible modes!", KZ_CHAT_PREFIX);
-		utils::PrintConsole(player->GetController(), "Possible modes:");
+		utils::PrintConsole(player->GetController(), "Possible modes: (Current mode is %s)", player->modeService->GetModeName());
 		FOR_EACH_VEC(this->modeInfos, i)
 		{
 			utils::PrintConsole(player->GetController(), "%s (kz_mode %s / kz_mode %s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName);
@@ -230,9 +231,11 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		}
 		return false;
 	}
+	player->modeService->Cleanup();
 	delete player->modeService;
 	player->modeService = factory(player);
 	player->InvalidateTimer();
+	player->modeService->Init();
 	
 	if (player->GetController() && !silent)
 	{

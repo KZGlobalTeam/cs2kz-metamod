@@ -145,6 +145,39 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
   ]
   
+  # Style binaries
+  style_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-style-autobhop", sdk)
+
+  if style_binary.compiler.family == 'gcc' or style_binary.compiler.family == 'clang':
+    style_binary.compiler.linkflags += ['-lstdc++']
+    style_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
+  if style_binary.compiler.family == 'clang':
+    style_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
+
+  style_binary.compiler.cxxincludes += CXXINCLUDES
+
+  if style_binary.compiler.target.platform == 'linux':
+    style_binary.compiler.postlink += [
+      os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
+    ] 
+    style_binary.sources += [
+      'src/utils/plat_linux.cpp',
+      os.path.join(sdk['path'], 'public', 'tier0', 'memoverride.cpp')
+      ]
+  elif style_binary.compiler.target.platform == 'windows':
+    style_binary.compiler.postlink += [
+      os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
+    ]
+
+  style_binary.sources += [
+    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
+    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_autobhop.cpp'),
+  ]
+  
   protoc_builder = builder.tools.Protoc(protoc = sdk_target.protoc, sources = PROTOS)
   protoc_builder.protoc.includes += [
     os.path.join(sdk['path'], 'gcsdk'),
@@ -153,17 +186,21 @@ for sdk_target in MMSPlugin.sdk_targets:
 
   binary.custom = [protoc_builder]
   mode_binary.custom = [protoc_builder]
+  style_binary.custom = [protoc_builder]
 
   nodes = builder.Add(binary)
   mode_nodes = builder.Add(mode_binary)
+  style_nodes = builder.Add(style_binary)
 
   # If we are generating a VS project, make sure to add the modes in, and the build folder for linter.
   if builder.options.generator == 'vs':
     binary.sources += mode_binary.sources
+    binary.sources += style_binary.sources
     binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
 
   MMSPlugin.binaries += [nodes]
   MMSPlugin.mode_binaries += [mode_nodes]
+  MMSPlugin.style_binaries += [style_nodes]
 
 # vim: filetype=python expandtab shiftwidth=2 tabstop=8 textwidth=99

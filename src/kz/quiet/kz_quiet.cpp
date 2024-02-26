@@ -143,6 +143,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 void KZQuietService::Reset()
 {
 	this->hideOtherPlayers = false;
+	this->hideWeapon = false;
 }
 
 void KZQuietService::SendFullUpdate()
@@ -192,16 +193,13 @@ void KZQuietService::UpdateHideState()
 		this->lastObserverTarget.Term();
 		return;
 	}
+	// Nuclear option, define this if things crash still!
+#if 0
 	if (obsServices->m_iObserverMode() != this->lastObserverMode || obsServices->m_hObserverTarget() != this->lastObserverTarget)
 	{
-		// Nuclear option, uncomment this if things crash still!
-		// this->SendFullUpdate();
+		this->SendFullUpdate();
 	}
+#endif
 	this->lastObserverMode = obsServices->m_iObserverMode();
 	this->lastObserverTarget = obsServices->m_hObserverTarget();
-}
-
-void KZQuietService::ToggleHideWeapon()
-{
-	this->hideWeapon = !this->hideWeapon;
 }

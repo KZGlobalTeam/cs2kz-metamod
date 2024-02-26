@@ -6,6 +6,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "hud/kz_hud.h"
 #include "mode/kz_mode.h"
+#include "style/kz_style.h"
 
 #include "tier0/memdbgon.h"
 
@@ -25,6 +26,7 @@ void KZPlayer::Init()
 	this->quietService = new KZQuietService(this);
 	this->hudService = new KZHUDService(this);
 	KZ::mode::InitModeService(this);
+	KZ::style::InitStyleService(this);
 }
 
 void KZPlayer::Reset()
@@ -39,8 +41,9 @@ void KZPlayer::Reset()
 	this->quietService->Reset();
 	this->jumpstatsService->Reset();
 	this->hudService->Reset();
-	// TODO: Make a cvar for default mode
+	// TODO: Make a config for default mode and style
 	g_pKZModeManager->SwitchToMode(this, "VNL", true);
+	g_pKZStyleManager->SwitchToStyle(this, "NRM", true);
 }
 
 float KZPlayer::GetPlayerMaxSpeed()
@@ -51,21 +54,25 @@ float KZPlayer::GetPlayerMaxSpeed()
 void KZPlayer::OnPhysicsSimulate()
 {
 	this->modeService->OnPhysicsSimulate();
+	this->styleService->OnPhysicsSimulate();
 }
 
 void KZPlayer::OnPhysicsSimulatePost()
 {
 	this->modeService->OnPhysicsSimulatePost();
+	this->styleService->OnPhysicsSimulatePost();
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
 {
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
+	this->styleService->OnProcessUsercmds(cmds, numcmds);
 }
 
 void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 {
 	this->modeService->OnProcessUsercmdsPost(cmds, numcmds);
+	this->styleService->OnProcessUsercmdsPost(cmds, numcmds);
 }
 
 void KZPlayer::OnProcessMovement()
@@ -73,6 +80,7 @@ void KZPlayer::OnProcessMovement()
 	MovementPlayer::OnProcessMovement();
 	KZ::mode::ApplyModeSettings(this);
 	this->modeService->OnProcessMovement();
+	this->styleService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 	this->EnableGodMode();
@@ -85,6 +93,7 @@ void KZPlayer::OnProcessMovementPost()
 	this->hudService->DrawSpeedPanel();
 	this->jumpstatsService->UpdateJump();
 	this->modeService->OnProcessMovementPost();
+	this->styleService->OnProcessMovementPost();
 	this->jumpstatsService->OnProcessMovementPost();
 	MovementPlayer::OnProcessMovementPost();
 }
@@ -92,211 +101,260 @@ void KZPlayer::OnProcessMovementPost()
 void KZPlayer::OnPlayerMove()
 {
 	this->modeService->OnPlayerMove();
+	this->styleService->OnPlayerMove();
 }
 
 void KZPlayer::OnPlayerMovePost()
 {
 	this->modeService->OnPlayerMovePost();
+	this->styleService->OnPlayerMovePost();
 }
 
 void KZPlayer::OnCheckParameters()
 {
 	this->modeService->OnCheckParameters();
+	this->styleService->OnCheckParameters();
 }
 void KZPlayer::OnCheckParametersPost()
 {
 	this->modeService->OnCheckParametersPost();
+	this->styleService->OnCheckParametersPost();
 }
 void KZPlayer::OnCanMove()
 {
 	this->modeService->OnCanMove();
+	this->styleService->OnCanMove();
 }
 void KZPlayer::OnCanMovePost()
 {
 	this->modeService->OnCanMovePost();
+	this->styleService->OnCanMovePost();
 }
 void KZPlayer::OnFullWalkMove(bool &ground)
 {
 	this->modeService->OnFullWalkMove(ground);
+	this->styleService->OnFullWalkMove(ground);
 }
 void KZPlayer::OnFullWalkMovePost(bool ground)
 {
 	this->modeService->OnFullWalkMovePost(ground);
+	this->styleService->OnFullWalkMovePost(ground);
 }
 void KZPlayer::OnMoveInit()
 {
 	this->modeService->OnMoveInit();
+	this->styleService->OnMoveInit();
 }
 void KZPlayer::OnMoveInitPost()
 {
 	this->modeService->OnMoveInitPost();
+	this->styleService->OnMoveInitPost();
 }
 void KZPlayer::OnCheckWater()
 {
 	this->modeService->OnCheckWater();
+	this->styleService->OnCheckWater();
 }
 void KZPlayer::OnWaterMove()
 {
 	this->modeService->OnWaterMove();
+	this->styleService->OnWaterMove();
 }
 void KZPlayer::OnWaterMovePost()
 {
 	this->modeService->OnWaterMovePost();
+	this->styleService->OnWaterMovePost();
 }
 void KZPlayer::OnCheckWaterPost()
 {
 	this->modeService->OnCheckWaterPost();
+	this->styleService->OnCheckWaterPost();
 }
 void KZPlayer::OnCheckVelocity(const char *a3)
 {
 	this->modeService->OnCheckVelocity(a3);
+	this->styleService->OnCheckVelocity(a3);
 }
 void KZPlayer::OnCheckVelocityPost(const char *a3)
 {
 	this->modeService->OnCheckVelocityPost(a3);
+	this->styleService->OnCheckVelocityPost(a3);
 }
 void KZPlayer::OnDuck()
 {
 	this->modeService->OnDuck();
+	this->styleService->OnDuck();
 }
 void KZPlayer::OnDuckPost()
 {
 	this->modeService->OnDuckPost();
+	this->styleService->OnDuckPost();
 }
-int KZPlayer::OnCanUnduck()
+void KZPlayer::OnCanUnduck()
 {
-	return this->modeService->OnCanUnduck();
+	this->modeService->OnCanUnduck();
+	this->styleService->OnCanUnduck();
 }
-void KZPlayer::OnCanUnduckPost()
+void KZPlayer::OnCanUnduckPost(bool &ret)
 {
-	this->modeService->OnCanUnduckPost();
+	this->modeService->OnCanUnduckPost(ret);
+	this->styleService->OnCanUnduckPost(ret);
 }
 void KZPlayer::OnLadderMove()
 {
 	this->modeService->OnLadderMove();
+	this->styleService->OnLadderMove();
 }
 void KZPlayer::OnLadderMovePost()
 {
 	this->modeService->OnLadderMovePost();
+	this->styleService->OnLadderMovePost();
 }
 void KZPlayer::OnCheckJumpButton()
 {
 	this->modeService->OnCheckJumpButton();
+	this->styleService->OnCheckJumpButton();
 }
 void KZPlayer::OnCheckJumpButtonPost()
 {
 	this->modeService->OnCheckJumpButtonPost();
+	this->styleService->OnCheckJumpButtonPost();
 }
 void KZPlayer::OnJump()
 {
 	this->modeService->OnJump();
+	this->styleService->OnJump();
 }
 void KZPlayer::OnJumpPost()
 {
 	this->modeService->OnJumpPost();
+	this->styleService->OnJumpPost();
 }
 void KZPlayer::OnAirMove()
 {
 	this->modeService->OnAirMove();
+	this->styleService->OnAirMove();
 }
 void KZPlayer::OnAirMovePost()
 {
 	this->modeService->OnAirMovePost();
+	this->styleService->OnAirMovePost();
 }
 void KZPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
 {
 	this->modeService->OnAirAccelerate(wishdir, wishspeed, accel);
+	this->styleService->OnAirAccelerate(wishdir, wishspeed, accel);
 	this->jumpstatsService->OnAirAccelerate();
 }
 void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
 {
 	this->modeService->OnAirAcceleratePost(wishdir, wishspeed, accel);
+	this->styleService->OnAirAcceleratePost(wishdir, wishspeed, accel);
 	this->jumpstatsService->OnAirAcceleratePost(wishdir, wishspeed, accel);
 }
 void KZPlayer::OnFriction()
 {
 	this->modeService->OnFriction();
+	this->styleService->OnFriction();
 }
 void KZPlayer::OnFrictionPost()
 {
 	this->modeService->OnFrictionPost();
+	this->styleService->OnFrictionPost();
 }
 void KZPlayer::OnWalkMove()
 {
 	this->modeService->OnWalkMove();
+	this->styleService->OnWalkMove();
 }
 void KZPlayer::OnWalkMovePost()
 {
 	this->modeService->OnWalkMovePost();
+	this->styleService->OnWalkMovePost();
 }
 void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
 	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace);
+	this->styleService->OnTryPlayerMove(pFirstDest, pFirstTrace);
 	this->jumpstatsService->OnTryPlayerMove();
 }
 void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
 	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
+	this->styleService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
 	this->jumpstatsService->OnTryPlayerMovePost();
 }
 void KZPlayer::OnCategorizePosition(bool bStayOnGround)
 {
 	this->modeService->OnCategorizePosition(bStayOnGround);
+	this->styleService->OnCategorizePosition(bStayOnGround);
 }
 void KZPlayer::OnCategorizePositionPost(bool bStayOnGround)
 {
 	this->modeService->OnCategorizePositionPost(bStayOnGround);
+	this->styleService->OnCategorizePositionPost(bStayOnGround);
 }
 void KZPlayer::OnFinishGravity()
 {
 	this->modeService->OnFinishGravity();
+	this->styleService->OnFinishGravity();
 }
 void KZPlayer::OnFinishGravityPost()
 {
 	this->modeService->OnFinishGravityPost();
+	this->styleService->OnFinishGravityPost();
 }
 void KZPlayer::OnCheckFalling()
 {
 	this->modeService->OnCheckFalling();
+	this->styleService->OnCheckFalling();
 }
 void KZPlayer::OnCheckFallingPost()
 {
 	this->modeService->OnCheckFallingPost();
+	this->styleService->OnCheckFallingPost();
 }
 void KZPlayer::OnPostPlayerMove()
 {
 	this->modeService->OnPostPlayerMove();
+	this->styleService->OnPostPlayerMove();
 }
 void KZPlayer::OnPostPlayerMovePost()
 {
 	this->modeService->OnPostPlayerMovePost();
+	this->styleService->OnPostPlayerMovePost();
 }
 void KZPlayer::OnPostThink()
 {
 	this->modeService->OnPostThink();
+	this->styleService->OnPostThink();
 	MovementPlayer::OnPostThink();
 }
 void KZPlayer::OnPostThinkPost()
 {
 	this->modeService->OnPostThinkPost();
+	this->styleService->OnPostThinkPost();
 }
 
 void KZPlayer::OnStartTouchGround()
 {
 	this->jumpstatsService->EndJump();
 	this->modeService->OnStartTouchGround();
+	this->styleService->OnStartTouchGround();
 }
 
 void KZPlayer::OnStopTouchGround()
 {
 	this->jumpstatsService->AddJump();
 	this->modeService->OnStopTouchGround();
+	this->styleService->OnStopTouchGround();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 	this->modeService->OnChangeMoveType(oldMoveType);
+	this->styleService->OnChangeMoveType(oldMoveType);
 }
 
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
@@ -525,17 +583,20 @@ void KZPlayer::UpdateTriggerTouchList()
 bool KZPlayer::OnTriggerStartTouch(CBaseTrigger *trigger)
 {
 	bool retValue = this->modeService->OnTriggerStartTouch(trigger);
+	retValue &= this->styleService->OnTriggerStartTouch(trigger);
 	return retValue;
 }
 
 bool KZPlayer::OnTriggerTouch(CBaseTrigger *trigger)
 {
 	bool retValue = this->modeService->OnTriggerTouch(trigger);
+	retValue &= this->styleService->OnTriggerTouch(trigger);
 	return retValue;
 }
 
 bool KZPlayer::OnTriggerEndTouch(CBaseTrigger *trigger)
 {
 	bool retValue = this->modeService->OnTriggerEndTouch(trigger);
+	retValue &= this->styleService->OnTriggerEndTouch(trigger);
 	return retValue;
 }

@@ -169,13 +169,9 @@ void FASTCALL movement::Detour_Duck(CCSPlayer_MovementServices *ms, CMoveData *m
 bool FASTCALL movement::Detour_CanUnduck(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(ms);
-	int overrideValue = player->OnCanUnduck();
+	player->OnCanUnduck();
 	bool canUnduck = CanUnduck(ms, mv);
-	if (overrideValue != -1)
-	{
-		canUnduck = !!overrideValue;
-	}
-	player->OnCanUnduckPost();
+	player->OnCanUnduckPost(canUnduck);
 	return canUnduck;
 }
 

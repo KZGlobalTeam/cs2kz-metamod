@@ -7,6 +7,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
 #include "mode/kz_mode.h"
+#include "style/kz_style.h"
 #include "hud/kz_hud.h"
 
 internal SCMD_CALLBACK(Command_KzNoclip)
@@ -117,6 +118,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("jointeam",		Command_JoinTeam,			"Jointeam interceptor", true);
 	KZCheckpointService::RegisterCommands();
 	KZ::mode::RegisterCommands();
+	KZ::style::RegisterCommands();
 }
 
 void KZ::misc::OnClientActive(CPlayerSlot slot)

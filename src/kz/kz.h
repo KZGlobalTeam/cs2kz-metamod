@@ -66,9 +66,9 @@ public:
 	virtual void OnCheckVelocityPost(const char *) override;
 	virtual void OnDuck() override;
 	virtual void OnDuckPost() override;
+	virtual void OnCanUnduck() override;
 	// Make an exception for this as it is the only time where we need to change the return value.
-	virtual int OnCanUnduck() override;
-	virtual void OnCanUnduckPost() override;
+	virtual void OnCanUnduckPost(bool &) override;
 	virtual void OnLadderMove() override;
 	virtual void OnLadderMovePost() override;
 	virtual void OnCheckJumpButton() override;
