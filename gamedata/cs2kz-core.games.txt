@@ -343,7 +343,7 @@
 			"ClientOffset"
 			{
 				"windows"		"624"
-				"linux"			"608"
+				"linux"			"632"
 			}
 			// Check "Received acknowledgement tick" string
 			"ACKOffset"
