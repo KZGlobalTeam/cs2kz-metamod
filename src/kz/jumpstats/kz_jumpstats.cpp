@@ -749,7 +749,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetDistance(),
 		jumpTypeStr[jump->GetJumpType()],
 		invalidateReason);
-	utils::PrintConsole(target->GetController(), "%s | %s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height\n%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
+	utils::PrintConsole(target->GetController(), "%s | %s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height",
 		jump->GetJumpPlayer()->modeService->GetModeShortName(),
 		jump->GetJumpPlayer()->styleService->GetStyleShortName(),
 		jump->strafes.Count(),
@@ -759,7 +759,8 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetBadAngles() * 100.0f,
 		jump->GetOverlap() * 100.0f,
 		jump->GetDeadAir() * 100.0f,
-		jump->GetMaxHeight(),
+		jump->GetMaxHeight());
+	utils::PrintConsole(target->GetController(), "%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
 		jump->GetGainEfficiency() * 100.0f,
 		jump->GetAirPath(),
 		jump->GetDeviation(),
