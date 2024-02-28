@@ -1,0 +1,14 @@
+"Tips"
+{	
+	"Remove"
+	{
+	}
+
+	"Insert"
+	{
+	}
+	"Settings"
+	{
+		"interval"	"75"
+	}
+}

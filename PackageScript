@@ -55,6 +55,10 @@ for task in MMSPlugin.mode_binaries:
 builder.AddCopy(os.path.join(builder.buildPath, MMSPlugin.plugin_name + '.vdf'), metamod_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../cfg', 'cs2kz.cfg'), cfg_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-core.games.txt'), gamedata_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-general.txt'), gamedata_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-jumpstats.txt'), gamedata_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-visual.txt'), gamedata_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-config.txt'), gamedata_folder)
 
 # Generate PDB info.
 with open(os.path.join(builder.buildPath, 'pdblog.txt'), 'wt') as fp:

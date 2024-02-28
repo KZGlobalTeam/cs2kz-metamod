@@ -5,6 +5,7 @@
 
 #include "kz/quiet/kz_quiet.h"
 #include "utils/utils.h"
+#include "utils/ctimer.h"
 #include "entityclass.h"
 class GameSessionConfiguration_t {};
 
@@ -163,6 +164,33 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
+
+	/* From CS2Fixes: https://github.com/Source2ZE/CS2Fixes/blob/0eae82a64c71466ca498e3719f1cf3e61b174dee/src/cs2fixes.cpp#L663-L686 */
+	for (int i = g_timers.Tail(); i != g_timers.InvalidIndex();)
+	{
+		auto timer = g_timers[i];
+
+		int prevIndex = i;
+		i = g_timers.Previous(i);
+
+		if (timer->m_flLastExecute == -1)
+			timer->m_flLastExecute = g_pKZUtils->GetGlobals()->curtime;
+
+		// Timer execute 
+		if (timer->m_flLastExecute + timer->m_flInterval <= g_pKZUtils->GetGlobals()->curtime)
+		{
+			if (!timer->Execute())
+			{
+				delete timer;
+				g_timers.Remove(prevIndex);
+			}
+			else
+			{
+				timer->m_flLastExecute = g_pKZUtils->GetGlobals()->curtime;
+			}
+		}
+	}
+
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	static int entitySystemHook = 0;
 	if (GameEntitySystem() && !entitySystemHook)

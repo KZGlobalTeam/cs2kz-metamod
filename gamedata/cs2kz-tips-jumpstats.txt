@@ -1,0 +1,5 @@
+"Tips"
+{
+	"kz_togglejs"	"{grey}You can toggle jumpstats reporting using the {default}/togglejs {grey}command."
+	"kz_jsalways"	"{grey}Use the {default}/jsalways {grey}command to receive reports for invalid jumpstats."
+}

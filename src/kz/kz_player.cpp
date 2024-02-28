@@ -6,6 +6,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "hud/kz_hud.h"
 #include "mode/kz_mode.h"
+#include "tip/kz_tip.h"
 
 #include "tier0/memdbgon.h"
 
@@ -20,10 +21,12 @@ void KZPlayer::Init()
 	delete this->jumpstatsService;
 	delete this->quietService;
 	delete this->hudService;
+	delete this->tipService;
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
 	this->quietService = new KZQuietService(this);
 	this->hudService = new KZHUDService(this);
+	this->tipService = new KZTipService(this);
 	KZ::mode::InitModeService(this);
 }
 
@@ -39,6 +42,7 @@ void KZPlayer::Reset()
 	this->quietService->Reset();
 	this->jumpstatsService->Reset();
 	this->hudService->Reset();
+	this->tipService->Reset();
 	// TODO: Make a cvar for default mode
 	g_pKZModeManager->SwitchToMode(this, "VNL", true);
 }
@@ -75,6 +79,7 @@ void KZPlayer::OnProcessMovement()
 	this->modeService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
+	//KZTipService::TipLoop();
 	this->EnableGodMode();
 	this->HandleMoveCollision();
 	this->UpdatePlayerModelAlpha();

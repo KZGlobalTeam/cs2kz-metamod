@@ -8,6 +8,7 @@
 #include "quiet/kz_quiet.h"
 #include "mode/kz_mode.h"
 #include "hud/kz_hud.h"
+#include "tip/kz_tip.h"
 
 internal SCMD_CALLBACK(Command_KzNoclip)
 {
@@ -100,6 +101,13 @@ internal SCMD_CALLBACK(Command_KzToggleJumpstats)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzToggleTips)
+{
+	KZPlayer* player = g_pKZPlayerManager->ToPlayer(controller);
+	player->tipService->ToggleTips();
+	return MRES_SUPERCEDE;
+}
+
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
@@ -110,6 +118,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hidelegs",	Command_KzHidelegs,			"Hide your legs in first person.");
 	scmd::RegisterCmd("kz_hide",		Command_KzHide,				"Hide other players.");
 	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,			"Print jumpstats for invalid jumps.");
+	scmd::RegisterCmd("kz_tips",		Command_KzToggleTips,		"Toggle tips.");
 	scmd::RegisterCmd("kz_restart",		Command_KzRestart,			"Restart.");
 	scmd::RegisterCmd("kz_r",			Command_KzRestart,			"Restart.");
 	scmd::RegisterCmd("kz_hideweapon",	Command_KzHideWeapon,		"Hide weapon viewmodel.");

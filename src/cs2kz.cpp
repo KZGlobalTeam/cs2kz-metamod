@@ -9,6 +9,7 @@
 #include "movement/movement.h"
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/tip/kz_tip.h"
 
 #include "tier0/memdbgon.h"
 
@@ -41,6 +42,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::DisableReplicatedModeCvars();
 
+	KZTipService::InitTips();
 	return true;
 }
 
