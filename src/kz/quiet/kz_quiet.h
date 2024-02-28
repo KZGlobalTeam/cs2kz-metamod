@@ -28,5 +28,5 @@ public:
 	bool ShouldHideIndex(u32 targetIndex);
 
 	bool ShouldHideWeapon() { return this->hideWeapon; }
-	void ToggleHideWeapon();
+	void ToggleHideWeapon() { this->hideWeapon = !this->hideWeapon; }
 };

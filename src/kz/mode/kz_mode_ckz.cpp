@@ -182,7 +182,7 @@ void KZClassicModeService::OnJump()
 	this->player->GetVelocity(&velocity);
 	this->preJumpZSpeed = velocity.z;
 	// Emulate the 128t vertical velocity before jumping
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->GetPawn()->m_hGroundEntity().IsValid())
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->GetPawn()->m_hGroundEntity().IsValid() && this->preJumpZSpeed < 0.0f)
 	{
 		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
 		this->player->SetVelocity(velocity);

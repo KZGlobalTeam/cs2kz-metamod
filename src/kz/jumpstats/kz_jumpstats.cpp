@@ -1,6 +1,7 @@
 #include "../kz.h"
 #include "kz_jumpstats.h"
 #include "../mode/kz_mode.h"
+#include "../style/kz_style.h"
 #include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
@@ -713,6 +714,10 @@ void KZJumpstatsService::EndJump()
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
 	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
+	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
+	{
+		jumpColor = distanceTierColors[DistanceTier_Meh];
+	}
 	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		KZ_CHAT_PREFIX,
@@ -744,8 +749,9 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetDistance(),
 		jumpTypeStr[jump->GetJumpType()],
 		invalidateReason);
-	utils::PrintConsole(target->GetController(), "%s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height\n%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
+	utils::PrintConsole(target->GetController(), "%s | %s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height",
 		jump->GetJumpPlayer()->modeService->GetModeShortName(),
+		jump->GetJumpPlayer()->styleService->GetStyleShortName(),
 		jump->strafes.Count(),
 		jump->GetSync() * 100.0f,
 		jump->GetTakeoffSpeed(),
@@ -753,7 +759,8 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetBadAngles() * 100.0f,
 		jump->GetOverlap() * 100.0f,
 		jump->GetDeadAir() * 100.0f,
-		jump->GetMaxHeight(),
+		jump->GetMaxHeight());
+	utils::PrintConsole(target->GetController(), "%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
 		jump->GetGainEfficiency() * 100.0f,
 		jump->GetAirPath(),
 		jump->GetDeviation(),

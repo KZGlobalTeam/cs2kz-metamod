@@ -107,8 +107,8 @@ public:
 	virtual void OnDuck() {}
 	virtual void OnDuckPost() {}
 	// Make an exception for this as it is the only time where we need to change the return value.
-	virtual int OnCanUnduck() { return -1; };
-	virtual void OnCanUnduckPost() {}
+	virtual void OnCanUnduck() {}
+	virtual void OnCanUnduckPost(bool &) {}
 	virtual void OnLadderMove() {}
 	virtual void OnLadderMovePost() {}
 	virtual void OnCheckJumpButton() {}

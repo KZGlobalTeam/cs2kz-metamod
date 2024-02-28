@@ -9,6 +9,7 @@
 #include "movement/movement.h"
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/style/kz_style.h"
 #include "kz/tip/kz_tip.h"
 
 #include "tier0/memdbgon.h"
@@ -31,6 +32,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	movement::InitDetours();
 
 	KZ::mode::InitModeManager();
+	KZ::style::InitStyleManager();
 
 	KZ::misc::RegisterCommands();
 	if (!KZ::mode::InitModeCvars())
@@ -52,12 +54,14 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
 	g_pKZModeManager->Cleanup();
+	g_pKZStyleManager->Cleanup();
 	return true;
 }
 
 void KZPlugin::AllPluginsLoaded()
 {
 	KZ::mode::LoadModePlugins();
+	KZ::style::LoadStylePlugins();
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)
@@ -116,6 +120,11 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	{
 		*ret = META_IFACE_OK;
 		return g_pKZModeManager;
+	}
+	else if (strcmp(iface, KZ_STYLE_MANAGER_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return g_pKZStyleManager;
 	}
 	else if (strcmp(iface, KZ_UTILS_INTERFACE) == 0)
 	{
