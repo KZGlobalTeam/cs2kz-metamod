@@ -178,16 +178,13 @@ TurnState MovementPlayer::GetTurning()
 	bool turning = this->oldAngles.y != currentAngle.y;
 	if (!turning)
 	{
-		META_CONPRINTF("%f %f %f TURN_NONE %f -> %f\n", g_pKZUtils->GetServerGlobals()->curtime, g_pKZUtils->GetGlobals()->curtime, g_pKZUtils->GetGlobals()->frametime, this->oldAngles.y, currentAngle.y);
 		return TURN_NONE;
 	}
 	if (currentAngle.y < this->oldAngles.y - 180
 		|| (currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180))
 	{
-		META_CONPRINTF("%f %f %f TURN_LEFT %f -> %f\n", g_pKZUtils->GetServerGlobals()->curtime, g_pKZUtils->GetGlobals()->curtime, g_pKZUtils->GetGlobals()->frametime, this->oldAngles.y, currentAngle.y);
 		return TURN_LEFT;
 	}
-	META_CONPRINTF("%f %f %f TURN_RIGHT %f -> %f\n", g_pKZUtils->GetServerGlobals()->curtime, g_pKZUtils->GetGlobals()->curtime, g_pKZUtils->GetGlobals()->frametime, this->oldAngles.y, currentAngle.y);
 	return TURN_RIGHT;
 }
 
