@@ -60,7 +60,7 @@ jobs:
       - name: Clone AMBuild
         uses: actions/checkout@v3
         with:
-          repository: alliedmodders/ambuild
+          repository: zer0k-z/ambuild
           path: ./ambuild
 
       - name: Install AMBuild
