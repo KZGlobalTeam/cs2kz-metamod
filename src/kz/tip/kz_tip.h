@@ -12,14 +12,14 @@ class KZTipService : public KZBaseService
 private:
 	bool showTips{};
 
-private:
-	bool ShouldPrintTip();
-	void PrintTip();
-	static void LoadTips();
-
 public:
 	virtual void Reset() override;
 	void ToggleTips();
 	static_global void InitTips();
 	static_global void PrintTips();
+
+private:
+	bool ShouldPrintTip();
+	void PrintTip();
+	static void LoadTips();
 };

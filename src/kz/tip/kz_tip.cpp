@@ -99,17 +99,13 @@ void KZTipService::InitTips()
 		META_CONPRINTF("Tip: %s - %s\n", tipNames[i], pKeyValues->GetString(tipNames[i]));
 	}
 
-	int n = tipNames.Count();
-	for (int i = n - 1; i > 0; --i)
+	for (int i = tipNames.Count() - 1; i > 0; --i)
 	{
 		int j = RandomInt(0, i);
 		V_swap(tipNames.Element(i), tipNames.Element(j));
 	}
 
-	new CTimer(tipInterval, true, []() {
-		KZTipService::PrintTips();
-		return tipInterval;
-		});
+	StartTimer(PrintTips, 5);
 }
 	
 void KZTipService::PrintTips() 
@@ -122,6 +118,5 @@ void KZTipService::PrintTips()
 			player->tipService->PrintTip();
 		}
 	}
-	META_CONPRINT(tipNames[nextTipIndex]);
 	nextTipIndex = (nextTipIndex + 1) % tipNames.Count();
 }
