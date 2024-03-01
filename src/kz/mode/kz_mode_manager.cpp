@@ -99,11 +99,11 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 {
 	for (u32 i = 0; i < numCvar; i++)
 	{
-		u8 byteArray[16] = {};
+		auto value = reinterpret_cast<CVValue_t *>(&(modeCvars[i]->values));
 		if (modeCvars[i]->m_eVarType == EConVarType_Float32)
 		{
 			f32 newValue = atof(player->modeService->GetModeConVarValues()[i]);
-			V_memcpy(byteArray, &newValue, sizeof(f32));
+			value->m_flValue = newValue;
 		}
 		else
 		{
@@ -120,10 +120,8 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 			{
 				newValue = atoi(player->modeService->GetModeConVarValues()[i]);
 			}
-			V_memcpy(byteArray, &newValue, sizeof(u32));
+			value->m_u32Value = newValue;
 		}
-		V_memcpy(&(modeCvars[i]->values), byteArray, 16);
-		//g_pCVar->SetConVarValue(modeCvarHandles[i], 0, (CVValue_t *)player->modeService->GetModeConVarValues()[i], (CVValue_t *)modeCvars[i]->values);
 	}
 	player->enableWaterFix = player->modeService->EnableWaterFix();
 }
