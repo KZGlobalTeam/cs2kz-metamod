@@ -1,4 +1,4 @@
-WIP
+WIP, not ready for release 
 
 Requirements: Metamod
 

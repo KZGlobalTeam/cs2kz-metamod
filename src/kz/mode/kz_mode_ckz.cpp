@@ -182,7 +182,8 @@ void KZClassicModeService::OnJump()
 	this->player->GetVelocity(&velocity);
 	this->preJumpZSpeed = velocity.z;
 	// Emulate the 128t vertical velocity before jumping
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->GetPawn()->m_hGroundEntity().IsValid() && this->preJumpZSpeed < 0.0f)
+	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->GetPawn()->m_hGroundEntity().IsValid() && 
+		(this->preJumpZSpeed < 0.0f || !this->player->duckBugged))
 	{
 		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
 		this->player->SetVelocity(velocity);
@@ -210,11 +211,6 @@ void KZClassicModeService::OnStopTouchGround()
 	this->player->GetVelocity(&velocity);
 	f32 speed = velocity.Length2D();
 
-	// Fix jump occuring at 0 frametime giving extra heights.
-	if (this->revertJumpTweak && g_pKZUtils->GetGlobals()->frametime == 0.0f)
-	{
-		this->player->GetMoveServices()->m_flJumpUntil -= ENGINE_FIXED_TICK_INTERVAL * (1.0f - g_pKZUtils->GetGlobals()->m_flSubtickFraction);
-	}
 	// If we are actually taking off, we don't need to revert the change anymore.
 	this->revertJumpTweak = false;
 

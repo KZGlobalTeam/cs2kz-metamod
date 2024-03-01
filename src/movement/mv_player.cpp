@@ -16,7 +16,10 @@ void MovementPlayer::OnProcessMovement()
 void MovementPlayer::OnProcessMovementPost()
 {
 	this->processingMovement = false;
-	this->oldAngles = this->moveDataPost.m_vecViewAngles;
+	if (g_pKZUtils->GetGlobals()->frametime > 0.0f)
+	{
+		this->oldAngles = this->moveDataPost.m_vecViewAngles;
+	}
 	this->oldWalkMoved = this->walkMoved;
 }
 
