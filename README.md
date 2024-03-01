@@ -2,6 +2,10 @@ WIP, not ready for release
 
 Requirements: Metamod
 
+For Kz sounds:
+- Latest [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) needs to be installed for compilation.
+- Sounds addon Workshop ID [3171124941](https://steamcommunity.com/sharedfiles/filedetails/?id=3171124941) add to ```game/csgo/cfg/multiaddonmanager/multiaddonmanager.cfg```
+  
 Compilation:
 - Remember to *recursively* clone the plugin, and symlink needs to be enabled as well!
 - Latest [AMBuild](https://github.com/alliedmodders/ambuild/) needs to be installed for compilation.
