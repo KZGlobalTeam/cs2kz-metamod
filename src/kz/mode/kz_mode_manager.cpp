@@ -107,7 +107,7 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 		}
 		else
 		{
-			u32 newValue;
+			i32 newValue;
 			if (V_stricmp(player->modeService->GetModeConVarValues()[i], "true") == 0)
 			{
 				newValue = 1;
@@ -120,7 +120,7 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 			{
 				newValue = atoi(player->modeService->GetModeConVarValues()[i]);
 			}
-			value->m_u32Value = newValue;
+			value->m_i32Value = newValue;
 		}
 	}
 	player->enableWaterFix = player->modeService->EnableWaterFix();
