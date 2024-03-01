@@ -1,5 +1,7 @@
 #include "kz_tip.h"
 
+#define KZ_DEFAULT_TIP_INTERVAL 75.0f
+
 internal KeyValues *pKeyValues;
 internal CUtlVector<const char *> tipNames;
 internal const char *tipPaths[4];
@@ -80,7 +82,11 @@ void KZTipService::LoadTips()
 		}
 	}
 
-	tipInterval = configKeyValues->GetFloat("interval");
+	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
+	if (tipInterval == 0)
+	{
+		tipInterval = KZ_DEFAULT_TIP_INTERVAL;
+	}
 }
 
 
