@@ -13,6 +13,8 @@ mode_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'modes')
 mode_folder = builder.AddFolder(mode_folder_path)
 style_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'styles')
 style_folder = builder.AddFolder(style_folder_path)
+tips_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'tips')
+tips_folder = builder.AddFolder(tips_folder_path)
 
 for cxx in MMSPlugin.all_targets:
   if cxx.target.arch == 'x86_64':
@@ -63,10 +65,10 @@ for task in MMSPlugin.style_binaries:
 builder.AddCopy(os.path.join(builder.buildPath, MMSPlugin.plugin_name + '.vdf'), metamod_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../cfg', 'cs2kz.cfg'), cfg_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-core.games.txt'), gamedata_folder)
-builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-general.txt'), gamedata_folder)
-builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-jumpstats.txt'), gamedata_folder)
-builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-visual.txt'), gamedata_folder)
-builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-tips-config.txt'), gamedata_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'general-tips.txt'), tips_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'jumpstat-tips.txt'), tips_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'visual-tips.txt'), tips_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'config.txt'), tips_folder)
 
 # Generate PDB info.
 with open(os.path.join(builder.buildPath, 'pdblog.txt'), 'wt') as fp:

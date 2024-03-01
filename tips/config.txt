@@ -1,0 +1,17 @@
+"Tips"
+{	
+	"Remove"
+	{
+		"stretch"	""
+	}
+
+	"Insert"
+	{
+		"dog"		"cat"
+		"kz_help"	"{grey}you wont get help"
+	}
+	"Settings"
+	{
+		"interval"	"3"
+	}
+}

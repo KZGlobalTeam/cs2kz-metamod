@@ -1,16 +1,14 @@
 #include "kz_tip.h"
 
-#define KZ_DEFAULT_TIP_INTERVAL 1.0f
-
 internal KeyValues *pKeyValues;
 internal CUtlVector<const char *> tipNames;
 internal const char *tipPaths[4];
 internal float tipInterval;
+internal i32 nextTipIndex;
 
 void KZTipService::Reset()
 {
 	this->showTips = true;
-	this->tipCounter = 0;
 }
 
 void KZTipService::ToggleTips()
@@ -26,27 +24,28 @@ bool KZTipService::ShouldPrintTip()
 
 void KZTipService::PrintTip()
 {
-	utils::CPrintChat(player->GetController(), "%s %s", KZ_CHAT_PREFIX, pKeyValues->GetString(tipNames[this->tipCounter]));
-	this->tipCounter = (this->tipCounter >= tipNames.Count() - 1) ? 0 : (this->tipCounter + 1);
+	utils::CPrintChat(player->GetController(), "%s %s", KZ_CHAT_PREFIX, pKeyValues->GetString(tipNames[nextTipIndex]));
 }
 
 void KZTipService::LoadTips()
 {
 	pKeyValues = new KeyValues("Tips");
-	tipPaths[0] = "addons/cs2kz/gamedata/cs2kz-tips-general.txt";
-	tipPaths[1] = "addons/cs2kz/gamedata/cs2kz-tips-jumpstats.txt";
-	tipPaths[2] = "addons/cs2kz/gamedata/cs2kz-tips-visual.txt";
-	tipPaths[3] = "addons/cs2kz/gamedata/cs2kz-tips-config.txt";
-	for (int i = 0; i < 4; i++)
+	tipPaths[0] = "addons/cs2kz/tips/general-tips.txt";
+	tipPaths[1] = "addons/cs2kz/tips/jumpstat-tips.txt";
+	tipPaths[2] = "addons/cs2kz/tips/visual-tips.txt";
+	tipPaths[3] = "addons/cs2kz/tips/config.txt";
+
+	KeyValues* configKeyValues = new KeyValues("Config");
+	if (!pKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[0], nullptr)
+		|| !pKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[1], nullptr)
+		|| !pKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[2], nullptr)
+		|| !configKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[3], nullptr))
 	{
-		if (!pKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[i], nullptr))
-		{
-			META_CONPRINTF("Failed to load %s, no tips loaded.\n", tipPaths[i]);
-			return;
-		}
+		META_CONPRINTF("Failed to load tips.\n");
+		return;
 	}
 
-	KeyValues* removedKeyValues = pKeyValues->FindKey("Remove");
+	KeyValues* removedKeyValues = configKeyValues->FindKey("Remove", true);
 	CUtlVector<const char*> removedTipNames;
 	FOR_EACH_SUBKEY(removedKeyValues, it)
 	{
@@ -55,16 +54,13 @@ void KZTipService::LoadTips()
 
 	FOR_EACH_SUBKEY(pKeyValues, it)
 	{
-		if (!removedTipNames.HasElement(it->GetName()) && 
-			V_strcmp(it->GetName(), "Remove") != 0 && 
-			V_strcmp(it->GetName(), "Insert") != 0 &&
-			V_strcmp(it->GetName(), "Settings") != 0)
+		if (!removedTipNames.HasElement(it->GetName()))
 		{
 			tipNames.AddToTail(it->GetName());
 		}
 	}
 
-	KeyValues* insertedKeyValues = pKeyValues->FindKey("Insert");
+	KeyValues* insertedKeyValues = configKeyValues->FindKey("Insert", true);
 	CUtlVector<const char*> insertedTipNames;
 	FOR_EACH_SUBKEY(insertedKeyValues, it)
 	{
@@ -84,19 +80,19 @@ void KZTipService::LoadTips()
 		}
 	}
 
-	KeyValues* settingsKeyValues = pKeyValues->FindKey("Settings");
-	tipInterval = settingsKeyValues->GetFloat("interval");
+	tipInterval = configKeyValues->GetFloat("interval");
 }
+
 
 void KZTipService::InitTips()
 {
 	LoadTips();
 
-	META_CONPRINTF("Interval: %0.2f\n", tipInterval);
 	for (int i = 0; i < tipNames.Count(); i++)
 	{
-		META_CONPRINTF("Tip: %s\n", pKeyValues->GetString(tipNames[i]));
+		META_CONPRINTF("Tip: %s - %s\n", tipNames[i], pKeyValues->GetString(tipNames[i]));
 	}
+
 	int n = tipNames.Count();
 	for (int i = n - 1; i > 0; --i)
 	{
@@ -114,10 +110,12 @@ void KZTipService::PrintTips()
 {
 	for (int i = 0; i <= MAXPLAYERS; i++)
 	{
-		KZPlayer* player = g_pKZPlayerManager->ToPlayer(i);
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
 		if (player->tipService->ShouldPrintTip())
 		{
 			player->tipService->PrintTip();
 		}
 	}
+	META_CONPRINT(tipNames[nextTipIndex]);
+	nextTipIndex = (nextTipIndex + 1) % tipNames.Count();
 }

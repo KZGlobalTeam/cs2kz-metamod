@@ -10,7 +10,6 @@ class KZTipService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 private:
-	i32 tipCounter{};
 	bool showTips{};
 
 private:
