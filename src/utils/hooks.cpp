@@ -224,7 +224,7 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 	
-	for(i32 i = 2; i < 7; i++)
+	for(i32 i = 1; i < 7; i++)
 	{
 		//engineSound->PrecacheSound(distanceTierSounds[i], true);
 		if(interfaces::pEngine->PrecacheDecal(distanceTierSounds[i], true))
