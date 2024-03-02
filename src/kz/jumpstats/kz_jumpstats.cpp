@@ -729,7 +729,7 @@ void KZJumpstatsService::EndJump()
 
 void KZJumpstatsService::ToggleJsSoundPlaying()
 {
-	this->playTiersound = !this->playTiersound;
+	this->playJsSound = !this->playJsSound;
 	utils::CPrintChat(player->GetPawn(), "%s {grey}You have %s jumpstats tier sound.", KZ_CHAT_PREFIX, this->ShouldPlayJumpstatSound() ? "enabled" : "disabled");
 }
 
