@@ -221,7 +221,7 @@ internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReaso
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
-	/*
+	
 	for(i32 i = 2; i < 7; i++)
 	{
 		utils::PrecacheSound(distanceTierSounds[i], true);
@@ -229,7 +229,7 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 
 	utils::PrecacheSound(KZ_SND_NEW_RECORD, true);
 	utils::PrecacheSound(KZ_SND_BEAT_RECORD, true);
-	*/
+	
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
