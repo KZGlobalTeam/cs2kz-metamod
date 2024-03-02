@@ -224,7 +224,6 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 	
 	for(i32 i = 2; i < 7; i++)
 	{
-		Warning("PrecacheSound: %s !\n", distanceTierSounds[i]);
 		utils::PrecacheSound(distanceTierSounds[i], true);
 	}
 
