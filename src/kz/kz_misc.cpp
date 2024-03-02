@@ -101,18 +101,17 @@ internal SCMD_CALLBACK(Command_KzToggleJumpstats)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_TestSound)
+internal SCMD_CALLBACK(Command_KzToggleJsSound)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	utils::PlaySoundToClient(player->GetPlayerSlot(), "kz.wickedsick", 0.5f);
+	player->jumpstatsService->ToggleJsSoundPlaying();
 	return MRES_SUPERCEDE;
 }
 
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_test",		Command_TestSound,			"Test sound.");
-
+	scmd::RegisterCmd("kz_sound",		Command_KzToggleJsSound,	"Toggle JsSound play.");
 	scmd::RegisterCmd("kz_panel",		Command_KzPanel,			"Toggle Panel display.");
 	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");

@@ -736,8 +736,8 @@ void KZJumpstatsService::ToggleJsSoundPlaying()
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
 	DistanceTier GetTier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	//if(GetTier < DistanceTier_Impressive) // Need change to be MinSoundTier
-	//	return;
+	if(GetTier < DistanceTier_Godlike) // Need change to be MinSoundTier
+		return;
 
 	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[GetTier], 0.5f);
 }
