@@ -219,6 +219,14 @@ internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReaso
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	
+	utils::PrecacheSound("sounds/gokz/godlike.mp3", true);
+	utils::PrecacheSound("sounds/gokz/holyshit.mp3", true);
+	utils::PrecacheSound("sounds/gokz/impressive.mp3", true);
+	utils::PrecacheSound("sounds/gokz/ownage.mp3", true);
+	utils::PrecacheSound("sounds/gokz/perfect.mp3", true);
+	utils::PrecacheSound("sounds/gokz/wickedsick.mp3", true);
+	utils::PrecacheSound("sounds/gokz/wrecker.mp3", true);
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
