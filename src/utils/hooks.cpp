@@ -230,8 +230,8 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 		interfaces::pEngine->PrecacheDecal(distanceTierSounds[i], true);
 	}
 
-	//engineSound->PrecacheSound(KZ_SND_NEW_RECORD, true);
-	//engineSound->PrecacheSound(KZ_SND_BEAT_RECORD, true);
+	interfaces::pEngine->PrecacheDecal(KZ_SND_NEW_RECORD, true);
+	interfaces::pEngine->PrecacheDecal(KZ_SND_BEAT_RECORD, true);
 	
 }
 
