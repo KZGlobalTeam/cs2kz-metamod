@@ -225,9 +225,9 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 	g_pKZUtils->EmitSound(filter, player.Get() + 1, soundParams);
 }
 
-bool utils::PrecacheSound(const char *soundPath, bool bPreload, bool bIsUISound)
+bool utils::PrecacheSound(const char *soundPath, bool bPreload)
 {
-    return engineSound->PrecacheSound(soundPath, bPreload, bIsUISound);
+    return engineSound->PrecacheSound(soundPath, bPreload);
 }
 
 bool utils::IsSoundPrecached(const char *soundPath)
