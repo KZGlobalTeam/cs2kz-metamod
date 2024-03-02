@@ -1,6 +1,5 @@
 #include "networkbasetypes.pb.h"
 
-#include "IEngineSound.h"
 #include "addresses.h"
 #include "gameconfig.h"
 #include "utils.h"
@@ -25,7 +24,7 @@
 
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
-IEngineSound* engineSound = nullptr;
+IEngineSound *engineSound = NULL;;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
@@ -60,6 +59,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound);
 	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam);
 	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn);
+
+	GET_V_IFACE_CURRENT(GetEngineFactory, enginesound, IEngineSound, IENGINESOUND_SERVER_INTERFACE_VERSION);
 
 	g_pKZUtils = new KZUtils(
 		TracePlayerBBox,

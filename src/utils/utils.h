@@ -3,10 +3,12 @@
 #include "utils/interfaces.h"
 #include "sdk/datatypes.h"
 #include "igameevents.h"
+#include <IEngineSound.h>
 
 class KZUtils;
 class CBasePlayerController;
-class IEngineSound;
+
+extern IEngineSound *enginesound;
 
 namespace utils
 {
