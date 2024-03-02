@@ -105,6 +105,10 @@ internal SCMD_CALLBACK(Command_TestSound)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	utils::PlaySoundToClient(player->GetPlayerSlot(), KZ_SND_NEW_RECORD, 0.5f);
+	for(i32 i = 2; i < 7; i++)
+	{
+		utils::PlaySoundToClient(player->GetPlayerSlot(), distanceTierSounds[i], 0.5f);
+	}
 	return MRES_SUPERCEDE;
 }
 

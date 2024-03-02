@@ -60,11 +60,11 @@ const char *distanceTierSounds[DISTANCETIER_COUNT] =
 {
 	"",
 	"",
-	"sounds/gokz/impressive.vsnd",
-	"sounds/gokz/perfect.vsnd",
-	"sounds/gokz/godlike.vsnd",
-	"sounds/gokz/ownage.vsnd",
-	"sounds/gokz/wrecker.vsnd"
+	"sounds/gokz/impressive.vsnd_c",
+	"sounds/gokz/perfect.vsnd_c",
+	"sounds/gokz/godlike.vsnd_c",
+	"sounds/gokz/ownage.vsnd_c",
+	"sounds/gokz/wrecker.vsnd_c"
 };
 
 /*

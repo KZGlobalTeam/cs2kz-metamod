@@ -227,7 +227,10 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 	for(i32 i = 2; i < 7; i++)
 	{
 		//engineSound->PrecacheSound(distanceTierSounds[i], true);
-		interfaces::pEngine->PrecacheDecal(distanceTierSounds[i], true);
+		if(interfaces::pEngine->PrecacheDecal(distanceTierSounds[i], true))
+		{
+			Warning("Precache sound %s \n", distanceTierSounds[i]);
+		}
 	}
 
 	interfaces::pEngine->PrecacheDecal(KZ_SND_NEW_RECORD, true);
