@@ -1,5 +1,6 @@
 #include "hooks.h"
 #include "igameeventsystem.h"
+#include <IEngineSound.h>
 #include "utils/simplecmds.h"
 #include "cs2kz.h"
 
@@ -8,6 +9,7 @@
 #include "kz/quiet/kz_quiet.h"
 #include "utils/utils.h"
 #include "entityclass.h"
+
 class GameSessionConfiguration_t {};
 
 class EntListener : public IEntityListener
@@ -224,11 +226,11 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 	
 	for(i32 i = 2; i < 7; i++)
 	{
-		utils::PrecacheSound(distanceTierSounds[i], true);
+		utils::engineSound->PrecacheSound(distanceTierSounds[i], true);
 	}
 
-	utils::PrecacheSound(KZ_SND_NEW_RECORD, true);
-	utils::PrecacheSound(KZ_SND_BEAT_RECORD, true);
+	utils::engineSound->PrecacheSound(KZ_SND_NEW_RECORD, true);
+	utils::engineSound->PrecacheSound(KZ_SND_BEAT_RECORD, true);
 	
 }
 

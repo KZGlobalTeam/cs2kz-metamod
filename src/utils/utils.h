@@ -3,12 +3,10 @@
 #include "utils/interfaces.h"
 #include "sdk/datatypes.h"
 #include "igameevents.h"
-#include <IEngineSound.h>
 
 class KZUtils;
 class CBasePlayerController;
-
-extern IEngineSound *enginesound;
+class IEngineSound;
 
 namespace utils
 {
@@ -55,10 +53,12 @@ namespace utils
 
 	// Sounds
 	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
-	bool PrecacheSound(const char *soundPath, bool bPreload = false);
-	bool IsSoundPrecached(const char *soundPath);
+	//bool PrecacheSound(const char *soundPath, bool bPreload = false);
+	//bool IsSoundPrecached(const char *soundPath);
 
 	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles);
+
+	extern IEngineSound *engineSound;
 }

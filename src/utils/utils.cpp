@@ -24,7 +24,8 @@
 
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
-IEngineSound *enginesound = NULL;
+
+IEngineSound* engineSound = nullptr;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
@@ -59,8 +60,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound);
 	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam);
 	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn);
-
-	GET_V_IFACE_CURRENT(GetEngineFactory, enginesound, IEngineSound, IENGINESOUND_SERVER_INTERFACE_VERSION);
 
 	g_pKZUtils = new KZUtils(
 		TracePlayerBBox,
@@ -225,7 +224,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 	soundParams.m_flVolume = volume;
 	g_pKZUtils->EmitSound(filter, player.Get() + 1, soundParams);
 }
-
+/*
 bool utils::PrecacheSound(const char *soundPath, bool bPreload)
 {
     return enginesound->PrecacheSound(soundPath, bPreload);
@@ -235,7 +234,7 @@ bool utils::IsSoundPrecached(const char *soundPath)
 {
     return enginesound->IsSoundPrecached(soundPath);
 }
-
+*/
 f32 utils::NormalizeDeg(f32 a)
 {
 	a = fmod(a, 360.0);
