@@ -6,9 +6,9 @@
 
 class KZUtils;
 class CBasePlayerController;
-class IEngineSound;
+//class IEngineSound;
 
-extern IEngineSound *engineSound;
+//extern IEngineSound *engineSound;
 
 namespace utils
 {

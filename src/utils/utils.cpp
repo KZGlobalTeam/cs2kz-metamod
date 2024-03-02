@@ -25,7 +25,7 @@
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 
-IEngineSound* engineSound = nullptr;
+//IEngineSound* engineSound = nullptr;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {

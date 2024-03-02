@@ -1,6 +1,6 @@
 #include "hooks.h"
 #include "igameeventsystem.h"
-#include <IEngineSound.h>
+//#include <IEngineSound.h>
 #include "utils/simplecmds.h"
 #include "cs2kz.h"
 
@@ -226,11 +226,12 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 	
 	for(i32 i = 2; i < 7; i++)
 	{
-		engineSound->PrecacheSound(distanceTierSounds[i], true);
+		//engineSound->PrecacheSound(distanceTierSounds[i], true);
+		interfaces::pEngine->PrecacheDecal(distanceTierSounds[i], true);
 	}
 
-	engineSound->PrecacheSound(KZ_SND_NEW_RECORD, true);
-	engineSound->PrecacheSound(KZ_SND_BEAT_RECORD, true);
+	//engineSound->PrecacheSound(KZ_SND_NEW_RECORD, true);
+	//engineSound->PrecacheSound(KZ_SND_BEAT_RECORD, true);
 	
 }
 
