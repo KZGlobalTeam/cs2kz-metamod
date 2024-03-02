@@ -8,6 +8,8 @@ class KZUtils;
 class CBasePlayerController;
 class IEngineSound;
 
+extern IEngineSound *engineSound;
+
 namespace utils
 {
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
@@ -59,6 +61,4 @@ namespace utils
 	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles);
-
-	extern IEngineSound *engineSound;
 }

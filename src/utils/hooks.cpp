@@ -226,11 +226,11 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 	
 	for(i32 i = 2; i < 7; i++)
 	{
-		utils::engineSound->PrecacheSound(distanceTierSounds[i], true);
+		engineSound->PrecacheSound(distanceTierSounds[i], true);
 	}
 
-	utils::engineSound->PrecacheSound(KZ_SND_NEW_RECORD, true);
-	utils::engineSound->PrecacheSound(KZ_SND_BEAT_RECORD, true);
+	engineSound->PrecacheSound(KZ_SND_NEW_RECORD, true);
+	engineSound->PrecacheSound(KZ_SND_BEAT_RECORD, true);
 	
 }
 
