@@ -1,6 +1,5 @@
 #include "hooks.h"
 #include "igameeventsystem.h"
-//#include <IEngineSound.h>
 #include "utils/simplecmds.h"
 #include "cs2kz.h"
 
@@ -223,7 +222,7 @@ internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReaso
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
-	
+	/*
 	for(i32 i = 1; i < 7; i++)
 	{
 		//engineSound->PrecacheSound(distanceTierSounds[i], true);
@@ -235,7 +234,7 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 
 	interfaces::pEngine->PrecacheDecal(KZ_SND_NEW_RECORD, true);
 	interfaces::pEngine->PrecacheDecal(KZ_SND_BEAT_RECORD, true);
-	
+	*/
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
