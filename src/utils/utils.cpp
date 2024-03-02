@@ -24,7 +24,7 @@
 
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
-IEngineSound *engineSound = NULL;;
+IEngineSound *enginesound = NULL;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
@@ -228,12 +228,12 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 
 bool utils::PrecacheSound(const char *soundPath, bool bPreload)
 {
-    return engineSound->PrecacheSound(soundPath, bPreload);
+    return enginesound->PrecacheSound(soundPath, bPreload);
 }
 
 bool utils::IsSoundPrecached(const char *soundPath)
 {
-    return engineSound->IsSoundPrecached(soundPath);
+    return enginesound->IsSoundPrecached(soundPath);
 }
 
 f32 utils::NormalizeDeg(f32 a)
