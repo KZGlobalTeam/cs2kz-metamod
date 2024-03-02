@@ -358,19 +358,20 @@
 				"windows"		"64"
 				"linux"			"56"
 			}
+			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
-				"windows"		"133"
+				"windows"		"135"
 				"linux"			"134"
 			}
 			"Touch"
 			{
-				"windows"		"134"
+				"windows"		"136"
 				"linux"			"135"
 			}
 			"EndTouch"
 			{
-				"windows"		"135"
+				"windows"		"137"
 				"linux"			"136"
 			}
 		}
