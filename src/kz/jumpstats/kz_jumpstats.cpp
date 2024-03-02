@@ -56,6 +56,17 @@ const char *distanceTierColors[DISTANCETIER_COUNT] =
 	"{orchid}"
 };
 
+const char *distanceTierSounds[DISTANCETIER_COUNT] =
+{
+	"",
+	"",
+	"sounds/gokz/impressive.mp3",
+	"sounds/gokz/perfect.mp3",
+	"sounds/gokz/godlike.mp3",
+	"sounds/gokz/ownage.mp3",
+	"sounds/gokz/wrecker.mp3"
+}
+
 /*
 * AACall stuff
 */
@@ -584,6 +595,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 void KZJumpstatsService::Reset()
 {
 	this->showJumpstats = true;
+	this->playJsSound = true;
 	this->jumps.Purge();
 	this->jsAlways = {};
 	this->lastJumpButtonTime = {};
@@ -706,18 +718,45 @@ void KZJumpstatsService::EndJump()
 			{
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			}
+			if(this->ShouldPlayJumpstatSound())
+			{
+				KZJumpstatsService::PlayJumpstatSound(this->player, jump);
+			}
 			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
 		}
 	}
 }
 
+void KZJumpstatsService::ToggleJsSoundPlaying()
+{
+	this->playTiersound = !this->playTiersound;
+	utils::CPrintChat(player->GetPawn(), "%s {grey}You have %s jumpstats tier sound.", KZ_CHAT_PREFIX, this->ShouldPlayJumpstatSound() ? "enabled" : "disabled");
+}
+
+void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
+{
+	DistanceTier GetTier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	//if(GetTier < DistanceTier_Impressive) // Need change to be MinSoundTier
+	//	return;
+
+	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[GetTier], 0.5f);
+}
+
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
-	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
+	DistanceTier GetTiers = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+    const char *jumpColor = distanceTierColors[GetTiers];
+
 	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
+
+	if (GetTiers > DistanceTier_Perfect)
+    {
+        utils::CPrintChatAll("%s %s {grey}jumped %s%.1f {grey}units with a %s%s {grey}", KZ_CHAT_PREFIX, jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
+    }
+
 	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		KZ_CHAT_PREFIX,

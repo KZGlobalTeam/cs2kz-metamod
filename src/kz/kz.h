@@ -12,6 +12,8 @@
 
 #define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 
+#define KZ_SND_NEW_RECORD "sounds/gokz/holyshit.mp3"
+#define KZ_SND_BEAT_RECORD "sounds/gokz/wickedsick.mp3"
 
 class KZPlayer;
 //class Jump;

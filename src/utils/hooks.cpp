@@ -3,6 +3,8 @@
 #include "utils/simplecmds.h"
 #include "cs2kz.h"
 
+#include "kz/kz.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "utils/utils.h"
 #include "entityclass.h"
@@ -220,13 +222,14 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 	
-	utils::PrecacheSound("sounds/gokz/godlike.mp3", true);
-	utils::PrecacheSound("sounds/gokz/holyshit.mp3", true);
-	utils::PrecacheSound("sounds/gokz/impressive.mp3", true);
-	utils::PrecacheSound("sounds/gokz/ownage.mp3", true);
-	utils::PrecacheSound("sounds/gokz/perfect.mp3", true);
-	utils::PrecacheSound("sounds/gokz/wickedsick.mp3", true);
-	utils::PrecacheSound("sounds/gokz/wrecker.mp3", true);
+	for(i32 i = 2; i < 7; i++)
+	{
+		Warning("PrecacheSound: %s !\n", distanceTierSounds[i]);
+		utils::PrecacheSound(distanceTierSounds[i], true);
+	}
+
+	utils::PrecacheSound(KZ_SND_NEW_RECORD, true);
+	utils::PrecacheSound(KZ_SND_BEAT_RECORD, true);
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)

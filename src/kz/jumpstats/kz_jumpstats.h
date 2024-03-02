@@ -37,6 +37,9 @@ enum DistanceTier: u8
 };
 
 extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
+
+extern const char *distanceTierSounds[DISTANCETIER_COUNT];
+
 class AACall
 {
 public:
@@ -217,6 +220,7 @@ public:
 private:
 	bool jsAlways{};
 	bool showJumpstats{}; // Need change to type
+	bool playJsSound{};
 
 	CUtlVector<Jump> jumps;
 	f32 lastJumpButtonTime{};
@@ -230,6 +234,9 @@ public:
 	void ToggleJSAlways();
 	void ToggleJumpstatsReporting();
 	bool ShouldDisplayJumpstats() { return this->showJumpstats; } // Need change to type
+
+	void ToggleJsSoundPlaying();
+	bool ShouldPlayJumpstatSound() { return this->playJsSound; }
 
 	virtual void Reset() override;
 	void OnProcessMovement();
@@ -261,6 +268,7 @@ public:
 	void DetectInvalidGains();
 	void DetectExternalModifications();
 
+	static_global void PlayJumpstatSound(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToChat(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToConsole(KZPlayer *target, Jump *jump);
 };
