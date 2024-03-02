@@ -1,5 +1,6 @@
 #include "networkbasetypes.pb.h"
 
+#include "IEngineSound.h"
 #include "addresses.h"
 #include "gameconfig.h"
 #include "utils.h"
@@ -24,6 +25,7 @@
 
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
+IEngineSound* engineSound = nullptr;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
@@ -221,6 +223,16 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 	soundParams.m_pSoundName = sound;
 	soundParams.m_flVolume = volume;
 	g_pKZUtils->EmitSound(filter, player.Get() + 1, soundParams);
+}
+
+bool utils::PrecacheSound(const char *soundPath, bool bPreload, bool bIsUISound)
+{
+    return engineSound->PrecacheSound(soundPath, bPreload, bIsUISound);
+}
+
+bool utils::IsSoundPrecached(const char *soundPath)
+{
+    return engineSound->IsSoundPrecached(soundPath);
 }
 
 f32 utils::NormalizeDeg(f32 a)
