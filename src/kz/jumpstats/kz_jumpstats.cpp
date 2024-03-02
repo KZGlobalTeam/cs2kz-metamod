@@ -56,17 +56,6 @@ const char *distanceTierColors[DISTANCETIER_COUNT] =
 	"{orchid}"
 };
 
-const char *distanceTierSoundsFilePath[DISTANCETIER_COUNT] =
-{
-	"",
-	"",
-	"sounds/gokz/impressive.vsnd_c",
-	"sounds/gokz/perfect.vsnd_c",
-	"sounds/gokz/godlike.vsnd_c",
-	"sounds/gokz/ownage.vsnd_c",
-	"sounds/gokz/wrecker.vsnd_c"
-};
-
 const char *distanceTierSounds[DISTANCETIER_COUNT] =
 {
 	"",

@@ -104,7 +104,7 @@ internal SCMD_CALLBACK(Command_KzToggleJumpstats)
 internal SCMD_CALLBACK(Command_TestSound)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	utils::PlaySoundToClient(player->GetPlayerSlot(), "music.godlike", 0.5f);
+	utils::PlaySoundToClient(player->GetPlayerSlot(), "kz.wickedsick", 0.5f);
 	return MRES_SUPERCEDE;
 }
 
