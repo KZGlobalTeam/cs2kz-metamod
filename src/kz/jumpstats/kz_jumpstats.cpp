@@ -65,7 +65,7 @@ const char *distanceTierSounds[DISTANCETIER_COUNT] =
 	"sounds/gokz/godlike.mp3",
 	"sounds/gokz/ownage.mp3",
 	"sounds/gokz/wrecker.mp3"
-}
+};
 
 /*
 * AACall stuff
