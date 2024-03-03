@@ -140,7 +140,6 @@ public:
 	KZTipService *tipService{};
 
 	void EnableGodMode();
-	void HandleMoveCollision();
 
 	// Leg stuff
 	void ToggleHideLegs();

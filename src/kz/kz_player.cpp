@@ -97,8 +97,8 @@ void KZPlayer::OnProcessMovement()
 	this->styleService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
+	this->noclipService->HandleMoveCollision();
 	this->EnableGodMode();
-	this->HandleMoveCollision();
 	this->UpdatePlayerModelAlpha();
 }
 
@@ -433,21 +433,6 @@ void KZPlayer::EnableGodMode()
 	{
 		pawn->m_bTakesDamage(false);
 	}
-}
-
-void KZPlayer::HandleMoveCollision()
-{
-	CCSPlayerPawn *pawn = this->GetPawn();
-	if (!pawn)
-	{
-		return;
-	}
-	if (pawn->m_lifeState() != LIFE_ALIVE)
-	{
-		this->noclipService->DisableNoclip();
-		return;
-	}
-	this->noclipService->HandleNoclip();
 }
 
 void KZPlayer::StartZoneStartTouch()

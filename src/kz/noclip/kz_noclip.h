@@ -18,6 +18,7 @@ public:
 	bool JustNoclipped() { return g_pKZUtils->GetServerGlobals()->curtime - lastNoclipTime < KZ_JUST_NOCLIP_TIME; }
 
 	virtual void Reset() override;
+	void HandleMoveCollision();
 	void HandleNoclip();
 
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);

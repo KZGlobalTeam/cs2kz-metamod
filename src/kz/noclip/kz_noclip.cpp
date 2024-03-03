@@ -67,3 +67,18 @@ void KZNoclipService::RegisterCommands()
 	scmd::RegisterCmd("kz_noclip", Command_KzNoclip, "Toggle noclip.");
 	scmd::RegisterCmd("noclip", Command_KzNoclip, "Toggle noclip.");
 }
+
+void KZNoclipService::HandleMoveCollision()
+{
+	CCSPlayerPawn *pawn = this->player->GetPawn();
+	if (!pawn)
+	{
+		return;
+	}
+	if (pawn->m_lifeState() != LIFE_ALIVE)
+	{
+		this->DisableNoclip();
+		return;
+	}
+	this->HandleNoclip();
+}
