@@ -7,7 +7,7 @@
 
 #include "../checkpoint/kz_checkpoint.h"
 
-KZHUDServiceTimerEventListener timerEventListener;
+internal KZHUDServiceTimerEventListener timerEventListener;
 
 void KZHUDService::Init()
 {
