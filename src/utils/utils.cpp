@@ -1,5 +1,6 @@
 #include "networkbasetypes.pb.h"
 
+#include "cs2kz.h"
 #include "addresses.h"
 #include "gameconfig.h"
 #include "utils.h"
@@ -198,6 +199,7 @@ CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 
 void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 {
+	if (g_KZPlugin.unloading) return;
 	u64 unknown = 0;
 	CSingleRecipientFilter filter(player.Get());
 	EmitSound_t soundParams;

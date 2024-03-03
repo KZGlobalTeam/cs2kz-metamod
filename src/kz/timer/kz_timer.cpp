@@ -93,6 +93,8 @@ bool KZTimerService::TimerEnd(const char *courseName)
 	{
 		return false;
 	}
+	// Update current time for one last time.
+	this->currentTime = time;
 
 	this->timerRunning = false;
 	this->lastEndTime = g_pKZUtils->GetServerGlobals()->curtime;
