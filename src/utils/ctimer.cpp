@@ -56,14 +56,7 @@ void CTimerBase::ProcessTimers()
 
 void CTimerBase::RemoveNonPersistentTimers()
 {
-	for (int i = g_NonPersistentTimers.Count()-1; i != g_NonPersistentTimers.InvalidIndex();)
-	{
-		int prevIndex = i;
-		i--;
-
-		delete g_NonPersistentTimers[prevIndex];
-		g_NonPersistentTimers.Remove(prevIndex);
-	}
+	g_NonPersistentTimers.PurgeAndDeleteElements();
 }
 
 

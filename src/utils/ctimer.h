@@ -5,6 +5,10 @@
 #include "../../hl2sdk-cs2/public/tier1/utlvector.h"
 #include "../../src/common.h"
 
+/*
+* Credit to Szwagi
+*/
+
 class CTimerBase {
 public:
 	CTimerBase(float initialInterval) :
@@ -19,8 +23,8 @@ public:
 	static_global void RemoveNonPersistentTimers();
 };
 
-extern CUtlVector<CTimerBase*> g_PersistentTimers;
-extern CUtlVector<CTimerBase*> g_NonPersistentTimers;
+extern CUtlVector<CTimerBase *> g_PersistentTimers;
+extern CUtlVector<CTimerBase *> g_NonPersistentTimers;
 
 template<typename... Args>
 class CTimer : public CTimerBase {
