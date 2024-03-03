@@ -50,7 +50,7 @@ void KZCheckpointService::SetCheckpoint()
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->currentCpIndex);
+	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCheckpointCount());
 	this->player->PlayCheckpointSound();
 }
 
