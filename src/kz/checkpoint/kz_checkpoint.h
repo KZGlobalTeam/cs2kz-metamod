@@ -59,4 +59,7 @@ public:
 	void ClearStartPosition();
 	bool HasCustomStartPosition() { return this->hasCustomStartPosition; }
 	void TpToStartPosition();
+
+	void PlayCheckpointSound();
+	void PlayTeleportSound();
 };
