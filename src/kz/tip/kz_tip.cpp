@@ -83,10 +83,6 @@ void KZTipService::LoadTips()
 	}
 
 	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
-	if (tipInterval == 0)
-	{
-		tipInterval = KZ_DEFAULT_TIP_INTERVAL;
-	}
 }
 
 
@@ -112,5 +108,6 @@ float KZTipService::PrintTips()
 		}
 	}
 	nextTipIndex = (nextTipIndex + 1) % tipNames.Count();
+
 	return tipInterval;
 }

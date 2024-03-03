@@ -37,10 +37,11 @@ public:
 	bool Execute() override
 	{
 		m_flInterval = std::apply(m_fn, m_args);
-		return m_flInterval >= 0;
+		return m_flInterval > 0;
 	}
 };
 
+/* Creates a timer for the given function, the function must return a float that represents the interval in seconds; 0 or less to stop the timer */
 template<typename... Args>
 void StartTimer(bool bPreserveMapChange, typename CTimer<Args...>::Fn fn, Args... args) {
 	auto timer = new CTimer<Args...>(bPreserveMapChange, fn, args...);
