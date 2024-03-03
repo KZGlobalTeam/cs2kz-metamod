@@ -201,10 +201,6 @@ public:
 extern CKZPlayerManager *g_pKZPlayerManager;
 namespace KZ
 {
-	namespace HUD
-	{
-		void DrawSpeedPanel(KZPlayer *player);
-	}
 	namespace misc
 	{
 		void RegisterCommands();
