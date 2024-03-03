@@ -9,6 +9,7 @@
 #include "movement/movement.h"
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/spec/kz_spec.h"
 #include "kz/style/kz_style.h"
 
 #include "tier0/memdbgon.h"
@@ -32,7 +33,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::InitModeManager();
 	KZ::style::InitStyleManager();
-
+	KZSpecService::Init();
 	KZ::misc::RegisterCommands();
 	if (!KZ::mode::InitModeCvars())
 	{

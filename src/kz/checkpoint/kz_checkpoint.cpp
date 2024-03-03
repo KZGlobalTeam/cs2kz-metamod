@@ -1,5 +1,6 @@
 #include "../kz.h"
 #include "kz_checkpoint.h"
+#include "../timer/kz_timer.h"
 #include "utils/utils.h"
 
 // TODO: replace printchat with HUD service's printchat
@@ -103,11 +104,22 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	if (cp.onLadder)
 	{
 		ms->m_vecLadderNormal(cp.ladderNormal);
-		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		if (!this->player->timerService->GetPaused())
+		{
+			this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		}
+		else
+		{
+			this->player->timerService->SetPausedOnLadder(true);
+		}
 	}
 	else
 	{
 		ms->m_vecLadderNormal(vec3_origin);
+		if (this->player->timerService->GetPaused())
+		{
+			this->player->timerService->SetPausedOnLadder(false);
+		}
 	}
 
 	this->tpCount++;

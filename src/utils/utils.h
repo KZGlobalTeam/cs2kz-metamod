@@ -48,8 +48,6 @@ namespace utils
 	void CPrintChat(CBaseEntity2 *entity, const char *format, ...);
 	void CPrintChatAll(const char *format, ...);
 
-	i32 FormatTimerText(i32 ticks, char *buffer, i32 bufferSize);
-
 	// Sounds
 	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
 
