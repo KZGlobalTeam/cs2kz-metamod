@@ -164,30 +164,7 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
-	for (int i = g_timers.Count()-1; i != g_timers.InvalidIndex();)
-	{
-		auto timer = g_timers[i];
-
-		int prevIndex = i;
-		i--;
-
-		if (timer->m_flLastExecute == -1)
-			timer->m_flLastExecute = g_pKZUtils->GetGlobals()->curtime;
-
-		if (timer->m_flLastExecute + timer->m_flInterval <= g_pKZUtils->GetGlobals()->curtime)
-		{
-			if (!timer->Execute())
-			{
-				delete timer;
-				g_timers.Remove(prevIndex);
-			}
-			else
-			{
-				timer->m_flLastExecute = g_pKZUtils->GetGlobals()->curtime;
-			}
-		}
-	}
-
+	CTimerBase::ProcessTimers();
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	static int entitySystemHook = 0;
 	if (GameEntitySystem() && !entitySystemHook)

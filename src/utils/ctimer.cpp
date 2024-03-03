@@ -1,23 +1,69 @@
 #include "ctimer.h"
 
-CUtlVector<CTimerBase*> g_timers;
+CUtlVector<CTimerBase*> g_PersistentTimers;
+CUtlVector<CTimerBase*> g_NonPersistentTimers;
 
-void RemoveTimers()
+void CTimerBase::ProcessTimers()
 {
-	g_timers.PurgeAndDeleteElements();
+	for (int i = g_PersistentTimers.Count() - 1; i != g_PersistentTimers.InvalidIndex();)
+	{
+		auto timer = g_PersistentTimers[i];
+
+		int prevIndex = i;
+		i--;
+
+		if (timer->lastExecute == -1)
+			timer->lastExecute = g_pKZUtils->GetGlobals()->curtime;
+
+		if (timer->lastExecute + timer->interval <= g_pKZUtils->GetGlobals()->curtime)
+		{
+			if (!timer->Execute())
+			{
+				delete timer;
+				g_PersistentTimers.Remove(prevIndex);
+			}
+			else
+			{
+				timer->lastExecute = g_pKZUtils->GetGlobals()->curtime;
+			}
+		}
+	}
+
+	for (int i = g_NonPersistentTimers.Count() - 1; i != g_NonPersistentTimers.InvalidIndex();)
+	{
+		auto timer = g_NonPersistentTimers[i];
+
+		int prevIndex = i;
+		i--;
+
+		if (timer->lastExecute == -1)
+			timer->lastExecute = g_pKZUtils->GetGlobals()->curtime;
+
+		if (timer->lastExecute + timer->interval <= g_pKZUtils->GetGlobals()->curtime)
+		{
+			if (!timer->Execute())
+			{
+				delete timer;
+				g_NonPersistentTimers.Remove(prevIndex);
+			}
+			else
+			{
+				timer->lastExecute = g_pKZUtils->GetGlobals()->curtime;
+			}
+		}
+	}
 }
 
-void RemoveMapTimers()
+void CTimerBase::RemoveNonPersistentTimers()
 {
-	for (int i = g_timers.Count()-1; i != g_timers.InvalidIndex();)
+	for (int i = g_NonPersistentTimers.Count()-1; i != g_NonPersistentTimers.InvalidIndex();)
 	{
 		int prevIndex = i;
 		i--;
 
-		if (g_timers[prevIndex]->m_bPreserveMapChange)
-			continue;
-
-		delete g_timers[prevIndex];
-		g_timers.Remove(prevIndex);
+		delete g_NonPersistentTimers[prevIndex];
+		g_NonPersistentTimers.Remove(prevIndex);
 	}
 }
+
+

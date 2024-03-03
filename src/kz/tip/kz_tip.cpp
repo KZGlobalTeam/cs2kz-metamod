@@ -108,6 +108,5 @@ float KZTipService::PrintTips()
 		}
 	}
 	nextTipIndex = (nextTipIndex + 1) % tipNames.Count();
-
 	return tipInterval;
 }

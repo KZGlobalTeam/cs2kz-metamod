@@ -1,23 +1,26 @@
 #pragma once
 #include <functional>
 #include <tuple>
+#include "utils/utils.h"
 #include "../../hl2sdk-cs2/public/tier1/utlvector.h"
 #include "../../src/common.h"
 
 class CTimerBase {
 public:
-	CTimerBase(float flInitialInterval, bool bPreserveMapChange) :
-		m_flInterval(flInitialInterval), m_bPreserveMapChange(bPreserveMapChange) {};
+	CTimerBase(float initialInterval) :
+		interval(initialInterval) {};
 
-	CTimerBase() {}
 	virtual bool Execute() = 0;
 
-	float m_flInterval;
-	float m_flLastExecute = -1;
-	bool m_bPreserveMapChange;
+	float interval;
+	float lastExecute = -1;
+
+	static_global void ProcessTimers();
+	static_global void RemoveNonPersistentTimers();
 };
 
-extern CUtlVector<CTimerBase*> g_timers;
+extern CUtlVector<CTimerBase*> g_PersistentTimers;
+extern CUtlVector<CTimerBase*> g_NonPersistentTimers;
 
 template<typename... Args>
 class CTimer : public CTimerBase {
@@ -27,8 +30,8 @@ public:
 	Fn m_fn;
 	std::tuple<Args...> m_args;
 
-	explicit CTimer(bool bPreserveMapChange, Fn fn, Args... args) :
-		CTimerBase(0.0f, bPreserveMapChange),
+	explicit CTimer(Fn fn, Args... args) :
+		CTimerBase(0.0f),
 		m_fn(fn),
 		m_args(std::make_tuple(std::move(args)...))
 	{
@@ -36,18 +39,22 @@ public:
 
 	bool Execute() override
 	{
-		m_flInterval = std::apply(m_fn, m_args);
-		return m_flInterval > 0;
+		interval = std::apply(m_fn, m_args);
+		return interval > 0;
 	}
 };
 
 /* Creates a timer for the given function, the function must return a float that represents the interval in seconds; 0 or less to stop the timer */
 template<typename... Args>
-void StartTimer(bool bPreserveMapChange, typename CTimer<Args...>::Fn fn, Args... args) {
-	auto timer = new CTimer<Args...>(bPreserveMapChange, fn, args...);
-	g_timers.AddToTail(timer);
+void StartTimer(bool preserveMapChange, typename CTimer<Args...>::Fn fn, Args... args) {
+	auto timer = new CTimer<Args...>(fn, args...);
+	if (preserveMapChange)
+	{
+		g_PersistentTimers.AddToTail(timer);
+	}
+	else
+	{
+		g_NonPersistentTimers.AddToTail(timer);
+	}
 }
-
-void RemoveTimers();
-void RemoveMapTimers();
 
