@@ -2,8 +2,22 @@
 
 CUtlVector<CTimerBase*> g_timers;
 
-template<typename... Args>
-void StartTimer(CTimer<Args...>::Fn fn, Args... args) {
-	auto timer = new CTimer<Args...>{ fn, ...args };
-	g_timers.AddToTail(timer);
+void RemoveTimers()
+{
+	g_timers.PurgeAndDeleteElements();
+}
+
+void RemoveMapTimers()
+{
+	for (int i = g_timers.Count()-1; i != g_timers.InvalidIndex();)
+	{
+		int prevIndex = i;
+		i--;
+
+		if (g_timers[prevIndex]->m_bPreserveMapChange)
+			continue;
+
+		delete g_timers[prevIndex];
+		g_timers.Remove(prevIndex);
+	}
 }

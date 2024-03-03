@@ -16,7 +16,7 @@ public:
 	virtual void Reset() override;
 	void ToggleTips();
 	static_global void InitTips();
-	static_global void PrintTips();
+	static_global float PrintTips();
 
 private:
 	bool ShouldPrintTip();

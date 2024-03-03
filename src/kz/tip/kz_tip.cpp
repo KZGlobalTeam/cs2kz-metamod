@@ -93,22 +93,15 @@ void KZTipService::LoadTips()
 void KZTipService::InitTips()
 {
 	LoadTips();
-
-	for (int i = 0; i < tipNames.Count(); i++)
-	{
-		META_CONPRINTF("Tip: %s - %s\n", tipNames[i], pKeyValues->GetString(tipNames[i]));
-	}
-
 	for (int i = tipNames.Count() - 1; i > 0; --i)
 	{
 		int j = RandomInt(0, i);
 		V_swap(tipNames.Element(i), tipNames.Element(j));
 	}
-
-	StartTimer(PrintTips, 5);
+	StartTimer(true, PrintTips);
 }
 	
-void KZTipService::PrintTips() 
+float KZTipService::PrintTips() 
 {
 	for (int i = 0; i <= MAXPLAYERS; i++)
 	{
@@ -119,4 +112,5 @@ void KZTipService::PrintTips()
 		}
 	}
 	nextTipIndex = (nextTipIndex + 1) % tipNames.Count();
+	return tipInterval;
 }
