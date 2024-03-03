@@ -39,7 +39,7 @@ void KZNoclipService::HandleNoclip()
 		{
 			pawn->m_fFlags.Set(pawn->m_fFlags() & ~FL_NOCLIP);
 		}
-		if (pawn->m_MoveType() == MOVETYPE_NOCLIP)
+		if (pawn->m_nActualMoveType() == MOVETYPE_NOCLIP)
 		{
 			pawn->SetMoveType(MOVETYPE_WALK);
 			this->player->timerService->TimerStop();
@@ -65,4 +65,5 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 void KZNoclipService::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_noclip", Command_KzNoclip, "Toggle noclip.");
+	scmd::RegisterCmd("noclip", Command_KzNoclip, "Toggle noclip.");
 }

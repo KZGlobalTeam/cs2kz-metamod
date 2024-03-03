@@ -190,50 +190,79 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 
 	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
 
-	if (args.ArgC() < 2)
+	if (!cmd.IsValid())
 	{
-		// no argument somehow
 		return MRES_IGNORED;
 	}
+	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
 
-	if (args[1][0] != SCMD_CHAT_TRIGGER && args[1][0] != SCMD_CHAT_SILENT_TRIGGER)
+	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{
-		// no chat command trigger
-		return MRES_IGNORED;
-	}
-
-	i32 argLen = strlen(args[1]);
-	if (argLen < 1)
-	{
-		// arg is too short!
-		return MRES_IGNORED;
-	}
-
-	Scmd *cmds = g_cmdManager.cmds;
-
-	CCommand cmdArgs;
-	cmdArgs.Tokenize(args[1]);
-
-	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
-	{
-		if (!cmds[i].callback)
+		if (args.ArgC() < 2)
 		{
-			// TODO: error?
-			Assert(cmds[i].callback);
-			continue;
+			// no argument somehow
+			return MRES_IGNORED;
 		}
 
-		const char *arg = cmdArgs[0] + 1; // skip chat trigger
-		const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
-		if (!V_stricmp(arg, cmdName))
+		if (args[1][0] != SCMD_CHAT_TRIGGER && args[1][0] != SCMD_CHAT_SILENT_TRIGGER)
 		{
-			cmds[i].callback(controller, &cmdArgs);
-			if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
+			// no chat command trigger
+			return MRES_IGNORED;
+		}
+
+		i32 argLen = strlen(args[1]);
+		if (argLen < 1)
+		{
+			// arg is too short!
+			return MRES_IGNORED;
+		}
+		Scmd *cmds = g_cmdManager.cmds;
+
+		CCommand cmdArgs;
+		cmdArgs.Tokenize(args[1]);
+
+		for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+		{
+			if (!cmds[i].callback)
 			{
-				// don't send chat message
+				// TODO: error?
+				Assert(cmds[i].callback);
+				continue;
+			}
+
+			const char *arg = cmdArgs[0] + 1; // skip chat trigger
+			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
+			if (!V_stricmp(arg, cmdName))
+			{
+				cmds[i].callback(controller, &cmdArgs);
+				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
+				{
+					// don't send chat message
+					return MRES_SUPERCEDE;
+				}
+			}
+		}
+	}
+	else // Are we overriding a console command?
+	{
+		for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+		{
+			Scmd *cmds = g_cmdManager.cmds;
+			if (!cmds[i].callback)
+			{
+				// TODO: error?
+				Assert(cmds[i].callback);
+				continue;
+			}
+
+			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
+			if (!V_stricmp(commandName, cmdName))
+			{
+				cmds[i].callback(controller, &args);
 				return MRES_SUPERCEDE;
 			}
 		}
 	}
+
 	return MRES_IGNORED;
 }
