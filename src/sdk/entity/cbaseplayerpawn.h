@@ -21,4 +21,5 @@ public:
 	{
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CommitSuicide"), this, bExplode, bForce);
 	}
+	bool IsBot() { return !!(this->m_fFlags() & FL_PAWN_FAKECLIENT); }
 };

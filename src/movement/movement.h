@@ -76,14 +76,13 @@ public:
 	virtual void RegisterTakeoff(bool jumped);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	virtual f32 GetGroundPosition();
-	virtual void InvalidateTimer(bool playErrorSound = true);
 
 	virtual void Reset();
 	virtual f32 GetPlayerMaxSpeed();
 
 	// Movement hooks
-	virtual void OnPhysicsSimulate() {}
-	virtual void OnPhysicsSimulatePost() {}
+	virtual void OnPhysicsSimulate();
+	virtual void OnPhysicsSimulatePost();
 	virtual void OnProcessUsercmds(void *, int) {}
 	virtual void OnProcessUsercmdsPost(void *, int) {}
 	virtual void OnProcessMovement();
@@ -141,16 +140,13 @@ public:
 	virtual void OnStopTouchGround() {}
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) {}
 
+	// Other events
+	virtual void OnChangeTeamPost(i32 team) {}
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) {}
-
-	virtual void StartZoneStartTouch();
-	virtual void StartZoneEndTouch();
-	virtual void EndZoneStartTouch();
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) { return true; }
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) { return true; }
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) { return true; }
-	void PlayErrorSound();
 
 	bool IsAlive() { return this->GetPawn() ? this->GetPawn()->IsAlive() : false; }
 	MoveType_t GetMoveType() { return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE; }
@@ -178,7 +174,6 @@ public:
 	bool jumped{};
 	bool takeoffFromLadder{};
 	Vector lastValidLadderOrigin;
-	bool timerIsRunning{};
 
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
@@ -191,8 +186,6 @@ public:
 	Vector landingOriginActual;
 	f32 landingTimeActual{};
 
-	i32 tickCount{};
-	i32 timerStartTick{};
 
 	bool enableWaterFix{};
 	bool ignoreNextCategorizePosition{};
@@ -202,6 +195,8 @@ public:
 	CUtlVector<CEntityHandle> touchedTriggers;
 private:
 	bool collidingWithWorld{};
+	// Movetype changes that occur outside of movement processing
+	MoveType_t lastKnownMoveType;
 };
 
 class CMovementPlayerManager

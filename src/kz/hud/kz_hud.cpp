@@ -2,6 +2,7 @@
 #include "sdk/datatypes.h"
 #include "utils/utils.h"
 
+#include "../timer/kz_timer.h"
 #include "tier0/memdbgon.h"
 
 #include "../checkpoint/kz_checkpoint.h"
@@ -57,16 +58,18 @@ void KZHUDService::DrawSpeedPanel()
 
 	char buffer[1024];
 	buffer[0] = 0;
-	
+
 	AddTeleText(player, buffer, sizeof(buffer));
-	if (player->timerIsRunning)
+	if (player->timerService->GetTimerRunning())
 	{
 		V_strncat(buffer, "\n", sizeof(buffer));
 		char timer[128];
-		timer[0] = 0;
-		i32 ticks = player->tickCount - player->timerStartTick;
-		utils::FormatTimerText(ticks, timer, sizeof(timer));
+		KZTimerService::FormatTime(player->timerService->GetTime(), timer, sizeof(timer));
 		V_strncat(buffer, timer, sizeof(buffer));
+		if (player->timerService->GetPaused())
+		{
+			V_strncat(buffer, " (PAUSED)", sizeof(buffer));
+		}
 	}
 	utils::PrintCentre(this->player->GetController(), buffer);
 	buffer[0] = 0;

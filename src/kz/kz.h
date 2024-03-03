@@ -24,10 +24,12 @@ class KZHUDService;
 class KZJumpstatsService;
 class KZMeasureService;
 class KZModeService;
+class KZNoclipService;
 class KZOptionService;
 class KZQuietService;
 class KZRacingService;
 class KZSavelocService;
+class KZSpecService;
 class KZStyleService;
 class KZTimerService;
 class KZTipService;
@@ -103,19 +105,21 @@ public:
 	virtual void OnStopTouchGround() override;
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) override;
 
+	// Other events
+	virtual void OnChangeTeamPost(i32 team) override;
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
 	// Timer events
-	virtual void StartZoneStartTouch();
-	virtual void StartZoneEndTouch();
-	virtual void EndZoneStartTouch();
+	void StartZoneStartTouch();
+	void StartZoneEndTouch();
+	void EndZoneStartTouch();
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 
+	void PlayErrorSound();
 private:
-	bool inNoclip{};
 	bool hideLegs{};
 	
 	TurnState previousTurnState{};
@@ -127,18 +131,15 @@ public:
 	KZJumpstatsService *jumpstatsService{};
 	KZMeasureService *measureService{};
 	KZModeService *modeService{};
+	KZNoclipService *noclipService{};
 	KZOptionService *optionsService{};
 	KZQuietService *quietService{};
 	KZRacingService *racingService{};
 	KZSavelocService *savelocService{};
+	KZSpecService *specService{};
 	KZStyleService *styleService{};
 	KZTimerService *timerService{};
 	KZTipService *tipService{};
-
-	// Noclip
-	void DisableNoclip();
-	void ToggleNoclip();
-	bool IsNoclipping() { return this->inNoclip; }
 
 	void EnableGodMode();
 	void HandleMoveCollision();
@@ -208,6 +209,6 @@ namespace KZ
 	{
 		void RegisterCommands();
 		void OnClientActive(CPlayerSlot slot);
-		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos);
+		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 	}
 };

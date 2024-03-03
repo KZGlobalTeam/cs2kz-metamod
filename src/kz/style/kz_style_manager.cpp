@@ -8,6 +8,8 @@
 
 #include "utils/simplecmds.h"
 
+#include "../timer/kz_timer.h"
+
 internal SCMD_CALLBACK(Command_KzStyle);
 
 internal KZStyleManager styleManager;
@@ -149,7 +151,7 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	player->styleService->Cleanup();
 	delete player->styleService;
 	player->styleService = factory(player);
-	player->InvalidateTimer();
+	player->timerService->TimerStop();
 	player->styleService->Init();
 
 	if (player->GetController() && !silent)
