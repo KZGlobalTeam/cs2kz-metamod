@@ -148,6 +148,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 			player->timerService->TimerStop();
 		}
 		player->GetController()->ChangeTeam(CS_TEAM_SPECTATOR);
+		player->quietService->SendFullUpdate();
 	}
 	else if (newTeam == CS_TEAM_CT && currentTeam != CS_TEAM_CT
 		|| newTeam == CS_TEAM_T && currentTeam != CS_TEAM_T)

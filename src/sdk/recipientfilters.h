@@ -3,11 +3,36 @@
 #include "utils/utils.h"
 #include "interfaces/interfaces.h"
 
-class CBroadcastRecipientFilter : public IRecipientFilter
+class CRecipientFilter : public IRecipientFilter
 {
 public:
-	CBroadcastRecipientFilter(bool bReliable = true, bool bInitMessage = false) :
+	CRecipientFilter(bool bReliable = true, bool bInitMessage = false) :
 		m_bReliable(bReliable), m_bInitMessage(bInitMessage) 
+	{}
+	~CRecipientFilter() override {}
+
+	bool IsReliable(void) const override { return m_bReliable; }
+	bool IsInitMessage(void) const override { return m_bInitMessage; }
+	int GetRecipientCount(void) const override { return m_Recipients.Count(); }
+
+	CPlayerSlot GetRecipientIndex(int slot) const override
+	{
+		if (slot < 0 || slot >= GetRecipientCount())
+			return CPlayerSlot(-1);
+
+		return m_Recipients[slot];
+	}
+
+	void AddRecipient(CPlayerSlot slot)
+	{
+		// Don't add if it already exists
+		if (m_Recipients.Find(slot) != m_Recipients.InvalidIndex())
+			return;
+
+		m_Recipients.AddToTail(slot);
+	}
+
+	void AddAllPlayers()
 	{
 		m_Recipients.RemoveAll();
 		if (!GameEntitySystem())
@@ -19,25 +44,38 @@ public:
 			CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
 			if (ent)
 			{
-				m_Recipients.AddToTail(i);
+				AddRecipient(i);
 			}
 		}
 	}
-
-	~CBroadcastRecipientFilter() override {}
-
-	bool IsReliable(void) const override { return m_bReliable; }
-
-	bool IsInitMessage(void) const override { return m_bInitMessage; }
-
-	int GetRecipientCount(void) const override { return m_Recipients.Count(); }
-
-	CPlayerSlot GetRecipientIndex(int slot) const override { return CPlayerSlot(m_Recipients[slot]); }
-
 private:
+	// Can't copy this unless we explicitly do it!
+	CRecipientFilter(CRecipientFilter const &source) { Assert(0); }
 	bool m_bReliable;
 	bool m_bInitMessage;
-	CUtlVector<int> m_Recipients;
+	CUtlVectorFixed<CPlayerSlot, MAXPLAYERS> m_Recipients;
+};
+
+class CBroadcastRecipientFilter : public CRecipientFilter
+{
+public:
+	CBroadcastRecipientFilter( void )
+	{
+		AddAllPlayers();
+	}
+};
+
+class CCopyRecipientFilter : public CRecipientFilter
+{
+public:
+	CCopyRecipientFilter(IRecipientFilter *source, int iExcept)
+	{
+		for (int i = 0; i < source->GetRecipientCount(); i++)
+		{
+			if (source->GetRecipientIndex(i).Get() != iExcept)
+				this->AddRecipient(source->GetRecipientIndex(i));
+		}
+	}
 };
 
 class CSingleRecipientFilter : public IRecipientFilter
@@ -60,42 +98,4 @@ private:
 	bool m_bReliable;
 	bool m_bInitMessage;
 	int m_iRecipient;
-};
-
-class CCopyRecipientFilter : public IRecipientFilter
-{
-public:
-	CCopyRecipientFilter(IRecipientFilter *source, int iExcept)
-	{
-		m_bReliable = source->IsReliable();
-		m_bInitMessage = source->IsInitMessage();
-		m_Recipients.RemoveAll();
-
-		for (int i = 0; i < source->GetRecipientCount(); i++)
-		{
-			if (source->GetRecipientIndex(i).Get() != iExcept)
-				m_Recipients.AddToTail(source->GetRecipientIndex(i));
-		}
-	}
-
-	~CCopyRecipientFilter() override {}
-
-	bool IsReliable(void) const override { return m_bReliable; }
-
-	bool IsInitMessage(void) const override { return m_bInitMessage; }
-
-	int GetRecipientCount(void) const override { return m_Recipients.Count(); }
-
-	CPlayerSlot GetRecipientIndex(int slot) const override
-	{
-		if (slot < 0 || slot >= GetRecipientCount())
-			return CPlayerSlot(-1);
-
-		return m_Recipients[slot];
-	}
-
-private:
-	bool m_bReliable;
-	bool m_bInitMessage;
-	CUtlVectorFixed<CPlayerSlot, 64> m_Recipients;
 };

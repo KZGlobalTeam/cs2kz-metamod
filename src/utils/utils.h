@@ -32,6 +32,8 @@ namespace utils
 	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c, bool relative = false);
 
 	// Print functions
+	bool CFormat(char *buffer, u64 buffer_size, const char *text);
+	void ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 	void PrintConsole(CBaseEntity2 *entity, const char *format, ...);
 	void PrintChat(CBaseEntity2 *entity, const char *format, ...);
 	void PrintCentre(CBaseEntity2 *entity, const char *format, ...);
