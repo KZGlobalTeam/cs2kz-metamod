@@ -348,7 +348,7 @@
 			// Check "Received acknowledgement tick" string
 			"ACKOffset"
 			{
-				"windows"		"316"
+				"windows"		"332"
 				"linux"			"348"
 			}
 			// Check ProcessUsercmds
