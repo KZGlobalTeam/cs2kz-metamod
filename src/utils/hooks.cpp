@@ -3,8 +3,6 @@
 #include "utils/simplecmds.h"
 #include "cs2kz.h"
 
-#include "kz/kz.h"
-#include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "utils/utils.h"

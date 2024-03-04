@@ -231,11 +231,13 @@ private:
 	Vector tpmVelocity;
 	bool possibleEdgebug{};
 public:
+	static_global void RegisterCommands();
+
 	void ToggleJSAlways();
 	void ToggleJumpstatsReporting();
 	bool ShouldDisplayJumpstats() { return this->showJumpstats; } // Need change to type
 
-	void ToggleJsSoundPlaying();
+	void ToggleJsSound();
 	bool ShouldPlayJumpstatSound() { return this->playJsSound; }
 
 	virtual void Reset() override;

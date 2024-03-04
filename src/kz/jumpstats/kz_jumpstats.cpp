@@ -714,11 +714,11 @@ void KZJumpstatsService::EndJump()
 		}
 		if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
-			if(this->ShouldDisplayJumpstats())
+			if (this->ShouldDisplayJumpstats())
 			{
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			}
-			if(this->ShouldPlayJumpstatSound())
+			if (this->ShouldPlayJumpstatSound())
 			{
 				KZJumpstatsService::PlayJumpstatSound(this->player, jump);
 			}
@@ -727,7 +727,7 @@ void KZJumpstatsService::EndJump()
 	}
 }
 
-void KZJumpstatsService::ToggleJsSoundPlaying()
+void KZJumpstatsService::ToggleJsSound()
 {
 	this->playJsSound = !this->playJsSound;
 	utils::CPrintChat(player->GetPawn(), "%s {grey}You have %s jumpstats tier sound.", KZ_CHAT_PREFIX, this->ShouldPlayJumpstatSound() ? "enabled" : "disabled");
@@ -736,27 +736,28 @@ void KZJumpstatsService::ToggleJsSoundPlaying()
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
 	DistanceTier GetTier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if(GetTier < DistanceTier_Godlike) // Need change to be MinSoundTier
+	if (GetTier < DistanceTier_Godlike) // Need change to be MinSoundTier
 		return;
 
+	//Addons determine TODO
 	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[GetTier], 0.5f);
 }
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
 	DistanceTier GetTiers = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-    const char *jumpColor = distanceTierColors[GetTiers];
+	const char *jumpColor = distanceTierColors[GetTiers];
 
 	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
-
+	/* MinTier broadcast TODO
 	if (GetTiers > DistanceTier_Perfect)
     {
         utils::CPrintChatAll("%s %s {grey}jumped %s%.1f {grey}units with a %s%s {grey}", KZ_CHAT_PREFIX, jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
     }
-
+	*/
 	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		KZ_CHAT_PREFIX,
@@ -998,4 +999,16 @@ void KZJumpstatsService::OnProcessMovementPost()
 	}
 	this->possibleEdgebug = false;
 	this->TrackJumpstatsVariables();
+}
+
+internal SCMD_CALLBACK(Command_KzToggleJsSound)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJsSound();
+	return MRES_SUPERCEDE;
+}
+
+void KZJumpstatsService::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_jssound",		Command_KzToggleJsSound,	"Toggle jumpstats sound effect.");
 }

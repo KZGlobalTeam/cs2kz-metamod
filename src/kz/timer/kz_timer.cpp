@@ -556,9 +556,9 @@ internal SCMD_CALLBACK(Command_KzPauseTimer)
 	player->timerService->TogglePause();
 	return MRES_SUPERCEDE;
 }
+
 void KZTimerService::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_stop", Command_KzStopTimer, "Stop timer.");
 	scmd::RegisterCmd("kz_pause", Command_KzPauseTimer, "Toggle timer pause.");
-
 }
