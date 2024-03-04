@@ -119,7 +119,7 @@ internal CFormatResult AddSpace(CFormatContext *ctx)
 	return CFORMAT_OK;
 }
 
-internal bool CFormat(char *buffer, u64 buffer_size, const char *text) {
+bool utils::CFormat(char *buffer, u64 buffer_size, const char *text) {
 	assert(buffer_size != 0);
 
 	CFormatContext ctx;
@@ -170,7 +170,7 @@ internal bool CFormat(char *buffer, u64 buffer_size, const char *text) {
 	return true;
 }
 
-internal void ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4)
+void utils::ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4)
 {
 	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
 	CUserMessageTextMsg msg;

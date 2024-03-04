@@ -23,6 +23,7 @@ public:
 	virtual void *OnMetamodQuery(const char *iface, int *ret) override;
 
 	CGlobalVars serverGlobals;
+	bool unloading = false;
 };
 
 extern KZPlugin g_KZPlugin;

@@ -8,7 +8,9 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/hud/kz_hud.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/spec/kz_spec.h"
 #include "kz/style/kz_style.h"
 #include "kz/tip/kz_tip.h"
 
@@ -33,7 +35,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::InitModeManager();
 	KZ::style::InitStyleManager();
-
+	KZSpecService::Init();
+	KZHUDService::Init();
 	KZ::misc::RegisterCommands();
 	if (!KZ::mode::InitModeCvars())
 	{
@@ -50,6 +53,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 bool KZPlugin::Unload(char *error, size_t maxlen)
 {
+	this->unloading = true;
 	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();

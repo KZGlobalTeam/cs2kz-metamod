@@ -4,6 +4,7 @@
 #include "cs2kz.h"
 
 #include "kz/quiet/kz_quiet.h"
+#include "kz/timer/kz_timer.h"
 #include "utils/utils.h"
 #include "utils/ctimer.h"
 #include "entityclass.h"
@@ -35,6 +36,7 @@ internal void OnStartTouchPost(CBaseEntity2 *pOther);
 internal void OnTouchPost(CBaseEntity2 *pOther);
 internal void OnEndTouchPost(CBaseEntity2 *pOther);
 
+internal void Hook_OnChangeTeamPost(i32 team);
 internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
@@ -52,6 +54,9 @@ SH_DECL_MANUALHOOK1_void(StartTouch, 0, 0, 0, CBaseEntity2 *);
 SH_DECL_MANUALHOOK1_void(Touch, 0, 0, 0, CBaseEntity2 *);
 SH_DECL_MANUALHOOK1_void(EndTouch, 0, 0, 0, CBaseEntity2 *);
 
+internal int changeTeamHook;
+SH_DECL_MANUALHOOK1_void(ChangeTeam, 0, 0, 0, int);
+
 SH_DECL_MANUALHOOK3_void(Teleport, 0, 0, 0, const Vector *, const QAngle *, const Vector *);
 
 
@@ -61,6 +66,7 @@ void hooks::Initialize()
 	SH_MANUALHOOK_RECONFIGURE(Touch, g_pGameConfig->GetOffset("Touch"), 0, 0);
 	SH_MANUALHOOK_RECONFIGURE(EndTouch, g_pGameConfig->GetOffset("EndTouch"), 0, 0);
 	SH_MANUALHOOK_RECONFIGURE(Teleport, g_pGameConfig->GetOffset("Teleport"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(ChangeTeam, g_pGameConfig->GetOffset("ControllerChangeTeam"), 0, 0);
 
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
@@ -85,11 +91,16 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+	SH_REMOVE_HOOK_ID(changeTeamHook);
 }
 
 internal void AddEntityHooks(CBaseEntity2 *entity)
 {
-	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
+	if (!V_stricmp(entity->GetClassname(), "cs_player_controller") && !changeTeamHook)
+	{
+		changeTeamHook = SH_ADD_MANUALVPHOOK(ChangeTeam, entity, SH_STATIC(Hook_OnChangeTeamPost), true);
+	}
+	else if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
 	{
 		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(StartTouch, entity, SH_STATIC(OnStartTouch), false));
 		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Touch, entity, SH_STATIC(OnTouch), false));
@@ -215,6 +226,7 @@ internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReaso
 	{
 		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
 	}
+	player->timerService->OnClientDisconnect();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -230,16 +242,34 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		if (V_stricmp(event->GetName(), "player_death") == 0)
 		{
 			CEntityInstance *instance = event->GetPlayerPawn("userid");
-			g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex())->quietService->SendFullUpdate();
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex());
+			if (player)
+			{
+				player->timerService->OnPlayerDeath();
+				player->quietService->SendFullUpdate();
+			}
 		}
 		else if (V_stricmp(event->GetName(), "round_start") == 0)
 		{
 			interfaces::pEngine->ServerCommand("sv_full_alltalk 1");
+			KZTimerService::OnRoundStart();
 			hooks::HookEntities();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)
 		{
-
+			event->SetBool("silent", true);
+		}
+		else if (V_stricmp(event->GetName(), "player_spawn") == 0)
+		{
+			CEntityInstance *instance = event->GetPlayerPawn("userid");
+			if (instance)
+			{
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex());
+				if (player)
+				{
+					player->timerService->OnPlayerSpawn();
+				}
+			}
 		}
 	}
 	RETURN_META_VALUE(MRES_IGNORED, true);
@@ -483,5 +513,15 @@ void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
 		RemoveEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
+	}
+}
+
+internal void Hook_OnChangeTeamPost(int team)
+{
+	CCSPlayerController *controller = META_IFACEPTR(CCSPlayerController);
+	MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
+	if (player)
+	{
+		player->OnChangeTeamPost(team);
 	}
 }

@@ -1,5 +1,6 @@
 #include "networkbasetypes.pb.h"
 
+#include "cs2kz.h"
 #include "addresses.h"
 #include "gameconfig.h"
 #include "utils.h"
@@ -196,25 +197,9 @@ CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 	else return controller->m_pEntity->m_EHandle.GetEntryIndex() - 1;
 }
 
-i32 utils::FormatTimerText(i32 ticks, char *buffer, i32 bufferSize)
-{
-	f64 time = ticks * ENGINE_FIXED_TICK_INTERVAL;
-	i32 milliseconds = (i32)(time * 1000.0) % 1000;
-	i32 seconds = ((i32)time) % 60;
-	i32 minutes = (i32)(time / 60.0) % 60;
-	i32 hours = (i32)(time / 3600.0);
-	if (hours == 0)
-	{
-		return snprintf(buffer, bufferSize, "%02i:%02i.%03i", minutes, seconds, milliseconds);
-	}
-	else
-	{
-		return snprintf(buffer, bufferSize, "%02i:%02i:%02i.%03i", hours, minutes, seconds, milliseconds);
-	}
-}
-
 void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 {
+	if (g_KZPlugin.unloading) return;
 	u64 unknown = 0;
 	CSingleRecipientFilter filter(player.Get());
 	EmitSound_t soundParams;

@@ -291,46 +291,6 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 
 void MovementPlayer::OnPostThink()
 {
-	this->tickCount++;
-}
-
-void MovementPlayer::InvalidateTimer(bool playErrorSound)
-{
-	if (this->timerIsRunning)
-	{
-		this->timerIsRunning = false;
-		if (playErrorSound)
-		{
-			this->PlayErrorSound();
-		}
-	}
-}
-
-void MovementPlayer::StartZoneStartTouch()
-{
-	InvalidateTimer(false);
-}
-
-void MovementPlayer::StartZoneEndTouch()
-{
-	this->timerStartTick = this->tickCount;
-	this->timerIsRunning = true;
-	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_TIMER_START);
-}
-
-// TODO: make a function like OnTimerEnd?
-void MovementPlayer::EndZoneStartTouch()
-{
-	if (this->timerIsRunning)
-	{
-		this->timerIsRunning = false;
-		utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_TIMER_END);
-	}
-}
-
-void MovementPlayer::PlayErrorSound()
-{
-	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_ERROR, 0.5f);
 }
 
 void MovementPlayer::Reset()
@@ -343,7 +303,6 @@ void MovementPlayer::Reset()
 	this->jumped = false;
 	this->takeoffFromLadder = false;
 	this->lastValidLadderOrigin.Init();
-	this->timerIsRunning = false;
 	this->takeoffOrigin.Init();
 	this->takeoffVelocity.Init();
 	this->takeoffTime = 0.0f;
@@ -353,8 +312,6 @@ void MovementPlayer::Reset()
 	this->landingTime = 0.0f;
 	this->landingOriginActual.Init();
 	this->landingTimeActual = 0.0f;
-	this->tickCount = 0;
-	this->timerStartTick = 0;
 	this->collidingWithWorld = false;
 	this->enableWaterFix = false;
 	this->ignoreNextCategorizePosition = false;
@@ -378,4 +335,17 @@ void MovementPlayer::GetBBoxBounds(bbox_t *bounds)
 	{
 		bounds->maxs.z = 54.0f;
 	}
+}
+
+void MovementPlayer::OnPhysicsSimulate()
+{
+	if (this->GetMoveType() != this->lastKnownMoveType)
+	{
+		this->OnChangeMoveType(this->lastKnownMoveType);
+	}
+}
+
+void MovementPlayer::OnPhysicsSimulatePost()
+{
+	this->lastKnownMoveType = this->GetMoveType();
 }

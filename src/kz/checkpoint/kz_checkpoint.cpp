@@ -1,5 +1,6 @@
 #include "../kz.h"
 #include "kz_checkpoint.h"
+#include "../timer/kz_timer.h"
 #include "utils/utils.h"
 
 // TODO: replace printchat with HUD service's printchat
@@ -49,8 +50,8 @@ void KZCheckpointService::SetCheckpoint()
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->currentCpIndex);
-	this->player->PlayCheckpointSound();
+	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCheckpointCount());
+	this->PlayCheckpointSound();
 }
 
 void KZCheckpointService::DoTeleport(i32 index)
@@ -103,16 +104,27 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	if (cp.onLadder)
 	{
 		ms->m_vecLadderNormal(cp.ladderNormal);
-		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		if (!this->player->timerService->GetPaused())
+		{
+			this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		}
+		else
+		{
+			this->player->timerService->SetPausedOnLadder(true);
+		}
 	}
 	else
 	{
 		ms->m_vecLadderNormal(vec3_origin);
+		if (this->player->timerService->GetPaused())
+		{
+			this->player->timerService->SetPausedOnLadder(false);
+		}
 	}
 
 	this->tpCount++;
 	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
-	this->player->PlayTeleportSound();
+	this->PlayTeleportSound();
 	this->lastTeleportedCheckpoint = &cp;
 }
 
@@ -202,4 +214,14 @@ void KZCheckpointService::ClearStartPosition()
 void KZCheckpointService::TpToStartPosition()
 {
 	this->DoTeleport(this->customStartPosition);
+}
+
+void KZCheckpointService::PlayCheckpointSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_SET_CP);
+}
+
+void KZCheckpointService::PlayTeleportSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_DO_TP);
 }

@@ -6,6 +6,7 @@
 #include "utils/utils.h"
 #include "interfaces/interfaces.h"
 
+#include "../timer/kz_timer.h"
 #include "utils/simplecmds.h"
 
 internal SCMD_CALLBACK(Command_KzModeShort);
@@ -107,7 +108,7 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 		}
 		else
 		{
-			u32 newValue;
+			i32 newValue;
 			if (V_stricmp(player->modeService->GetModeConVarValues()[i], "true") == 0)
 			{
 				newValue = 1;
@@ -120,7 +121,7 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 			{
 				newValue = atoi(player->modeService->GetModeConVarValues()[i]);
 			}
-			value->m_u32Value = newValue;
+			value->m_i32Value = newValue;
 		}
 	}
 	player->enableWaterFix = player->modeService->EnableWaterFix();
@@ -232,7 +233,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->modeService->Cleanup();
 	delete player->modeService;
 	player->modeService = factory(player);
-	player->InvalidateTimer();
+	player->timerService->TimerStop();
 	player->modeService->Init();
 	
 	if (player->GetController() && !silent)
