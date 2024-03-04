@@ -149,9 +149,6 @@ public:
 	bool HidingLegs() { return this->hideLegs; }
 
 	void UpdatePlayerModelAlpha();
-	void PlayCheckpointSound();
-	void PlayTeleportSound();
-
 	// Triggerfix stuff
 	
 	// Hit all triggers from start to end with the specified bounds,

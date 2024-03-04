@@ -42,7 +42,7 @@ private:
 	f64 lastStartSoundTime{};
 	char lastStartMode[128]{};
 	bool validTime{};
-	
+
 	f64 lastTeleportTime{};
 public:
 	static_global void RegisterCommands();

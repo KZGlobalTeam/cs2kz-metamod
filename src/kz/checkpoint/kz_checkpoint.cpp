@@ -50,8 +50,8 @@ void KZCheckpointService::SetCheckpoint()
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->currentCpIndex);
-	this->player->PlayCheckpointSound();
+	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCheckpointCount());
+	this->PlayCheckpointSound();
 }
 
 void KZCheckpointService::DoTeleport(i32 index)
@@ -124,7 +124,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 
 	this->tpCount++;
 	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
-	this->player->PlayTeleportSound();
+	this->PlayTeleportSound();
 	this->lastTeleportedCheckpoint = &cp;
 }
 
@@ -214,4 +214,14 @@ void KZCheckpointService::ClearStartPosition()
 void KZCheckpointService::TpToStartPosition()
 {
 	this->DoTeleport(this->customStartPosition);
+}
+
+void KZCheckpointService::PlayCheckpointSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_SET_CP);
+}
+
+void KZCheckpointService::PlayTeleportSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_DO_TP);
 }

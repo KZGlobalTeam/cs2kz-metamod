@@ -494,16 +494,6 @@ void KZPlayer::ToggleHideLegs()
 	this->hideLegs = !this->hideLegs;
 }
 
-void KZPlayer::PlayCheckpointSound()
-{
-	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_SET_CP);
-}
-
-void KZPlayer::PlayTeleportSound()
-{
-	utils::PlaySoundToClient(this->GetPlayerSlot(), KZ_SND_DO_TP);
-}
-
 void KZPlayer::PlayErrorSound()
 {
 	utils::PlaySoundToClient(this->GetPlayerSlot(), MV_SND_ERROR);

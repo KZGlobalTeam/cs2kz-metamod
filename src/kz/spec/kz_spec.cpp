@@ -2,7 +2,7 @@
 
 #include "utils/simplecmds.h"
 
-KZSpecServiceTimerEventListener timerEventListener;
+internal KZSpecServiceTimerEventListener timerEventListener;
 
 void KZSpecService::Reset()
 {
