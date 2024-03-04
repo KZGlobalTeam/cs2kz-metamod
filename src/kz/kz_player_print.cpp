@@ -41,7 +41,7 @@ internal CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, bool ad
 	for (int i = 0; i < g_pKZUtils->GetServerGlobals()->maxClients; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player)
+		if (!player || player->IsAlive())
 		{
 			continue;
 		}
