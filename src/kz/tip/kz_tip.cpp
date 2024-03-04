@@ -31,22 +31,21 @@ void KZTipService::PrintTip()
 
 void KZTipService::LoadTips()
 {
-	tipPaths[0] = "addons/cs2kz/tips/general-tips.txt";
-	tipPaths[1] = "addons/cs2kz/tips/jumpstat-tips.txt";
-	tipPaths[2] = "addons/cs2kz/tips/visual-tips.txt";
-	tipPaths[3] = "addons/cs2kz/tips/config.txt";
+	tipPaths[0] = "addons/cs2kz/tips/config.txt";
+	tipPaths[1] = "addons/cs2kz/tips/general-tips.txt";
+	tipPaths[2] = "addons/cs2kz/tips/jumpstat-tips.txt";
+	tipPaths[3] = "addons/cs2kz/tips/visual-tips.txt";
 
 	pTipKeyValues = new KeyValues("Tips");
 	KeyValues *configKeyValues = new KeyValues("Config");
-	if (!pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[0], nullptr)
-		|| !pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[1], nullptr)
-		|| !pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[2], nullptr))
+	configKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[0], nullptr);
+	if (!pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[1], nullptr)
+		|| !pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[2], nullptr)
+		|| !pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[3], nullptr))
 	{
 		META_CONPRINTF("Failed to load tips.\n");
 		return;
 	}
-
-	configKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[3], nullptr);
 
 	KeyValues *removedKeyValues = configKeyValues->FindKey("Remove", true);
 	CUtlVector<const char *> removedTipNames;
@@ -64,22 +63,19 @@ void KZTipService::LoadTips()
 	}
 
 	KeyValues *insertedKeyValues = configKeyValues->FindKey("Insert", true);
-	CUtlVector<const char *> insertedTipNames;
 	FOR_EACH_SUBKEY(insertedKeyValues, it)
 	{
-		insertedTipNames.AddToTail(it->GetName());
-	}
+		const char *insertedValue = insertedKeyValues->GetString(it->GetName(), "");
+		const char *currentValue = pTipKeyValues->GetString(it->GetName(), "");
 
-	for (int i = 0; i < insertedTipNames.Count(); i++)
-	{
-		if (V_strcmp(pTipKeyValues->GetString(insertedTipNames[i], ""), "") != 0)
+		if (V_strcmp(currentValue, "") != 0)
 		{
-			pTipKeyValues->SetString(insertedTipNames[i], insertedKeyValues->GetString(insertedTipNames[i]));
+			pTipKeyValues->SetString(it->GetName(), insertedValue);
 		}
 		else
 		{
-			pTipKeyValues->AddString(insertedTipNames[i], insertedKeyValues->GetString(insertedTipNames[i]));
-			tipNames.AddToTail(insertedTipNames[i]);
+			pTipKeyValues->AddString(it->GetName(), insertedValue);
+			tipNames.AddToTail(it->GetName());
 		}
 	}
 
