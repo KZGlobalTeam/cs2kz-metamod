@@ -8,6 +8,7 @@ class CCSPlayerController : public CBasePlayerController
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerController);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPlayerPawn);
+	SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hObserverPawn);
 
 	void ChangeTeam(int iTeam)
 	{

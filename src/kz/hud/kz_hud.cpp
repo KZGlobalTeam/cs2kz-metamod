@@ -95,14 +95,14 @@ void KZHUDService::DrawSpeedPanel()
 
 	this->AddTeleText(buffer, sizeof(buffer));
 	this->AddTimerText(buffer, sizeof(buffer));
-	utils::PrintCentre(this->player->GetController(), buffer);
+	this->player->PrintCentre(false, true, buffer);
 	buffer[0] = 0;
 
 	this->AddSpeedText(buffer, sizeof(buffer));
 	V_strncat(buffer, "\n", sizeof(buffer));
 	this->AddKeyText(buffer, sizeof(buffer));
 
-	utils::PrintAlert(this->player->GetController(), buffer);
+	this->player->PrintAlert(false, true, buffer);
 }
 
 void KZHUDService::TogglePanel()

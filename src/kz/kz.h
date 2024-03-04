@@ -154,6 +154,13 @@ public:
 	
 	// Update the list of triggers that the player is touching, and call StartTouch/EndTouch appropriately.
 	virtual void UpdateTriggerTouchList();
+	
+	// Print helpers
+	virtual void PrintConsole(bool addPrefix, bool includeSpectators, const char *format, ...);
+	virtual void PrintChat(bool addPrefix, bool includeSpectators, const char *format, ...); // Already supports colors.
+	virtual void PrintCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
+	virtual void PrintAlert(bool addPrefix, bool includeSpectators, const char *format, ...);
+	virtual void PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
 };
 
 class KZBaseService
