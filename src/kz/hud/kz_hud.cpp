@@ -2,6 +2,7 @@
 #include "kz_hud.h"
 #include "sdk/datatypes.h"
 #include "utils/utils.h"
+#include "utils/simplecmds.h"
 
 #include "../timer/kz_timer.h"
 #include "tier0/memdbgon.h"
