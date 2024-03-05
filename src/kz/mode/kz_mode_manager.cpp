@@ -196,11 +196,11 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	// Don't change mode if it doesn't exist. Instead, print a list of modes to the client.
 	if (!modeName || !V_stricmp("", modeName))
 	{
-		utils::CPrintChat(player->GetController(), "%s {grey}Usage: {default}kz_mode <mode>.{grey} Check console for possible modes!", KZ_CHAT_PREFIX);
-		utils::PrintConsole(player->GetController(), "Possible modes: (Current mode is %s)", player->modeService->GetModeName());
+		player->PrintChat(true, false, "{grey}Usage: {default}kz_mode <mode>.{grey} Check console for possible modes!");
+		player->PrintConsole(false, false, "Possible modes: (Current mode is %s)", player->modeService->GetModeName());
 		FOR_EACH_VEC(this->modeInfos, i)
 		{
-			utils::PrintConsole(player->GetController(), "%s (kz_mode %s / kz_mode %s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName);
+			player->PrintConsole(false, false, "%s (kz_mode %s / kz_mode %s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName);
 		}
 		return false;
 	}
@@ -224,9 +224,9 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	if (!factory)
 	{
 
-		if (player->GetController() && !silent)
+		if (!silent)
 		{
-			utils::CPrintChat(player->GetController(), "%s {grey}The {purple}%s {grey}mode is not available.", KZ_CHAT_PREFIX, modeName);
+			player->PrintChat(true, false, "{grey}The{purple} %s{grey}mode is not available.", modeName);
 		}
 		return false;
 	}
@@ -236,9 +236,9 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->timerService->TimerStop();
 	player->modeService->Init();
 	
-	if (player->GetController() && !silent)
+	if (!silent)
 	{
-		utils::CPrintChat(player->GetController(), "%s {grey}You have switched to the {purple}%s {grey}mode.", KZ_CHAT_PREFIX, player->modeService->GetModeName());
+		player->PrintChat(true, false, "{grey}You have switched to the {purple}%s {grey}mode.", player->modeService->GetModeName());
 	}
 
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), KZ::mode::numCvar);

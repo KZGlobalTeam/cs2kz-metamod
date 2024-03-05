@@ -17,7 +17,7 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Player legs are now %s.", KZ_CHAT_PREFIX, player->HidingLegs() ? "hidden" : "shown");
+	player->PrintChat(true, false, "{grey}Player legs are now %s.", player->HidingLegs() ? "hidden" : "shown");
 	return MRES_SUPERCEDE;
 }
 
@@ -25,7 +25,7 @@ internal SCMD_CALLBACK(Command_KzHide)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}You are now %s other players.", KZ_CHAT_PREFIX, player->quietService->hideOtherPlayers ? "hiding" : "showing");
+	player->PrintChat(true, false, "{grey}You are now %s other players.", player->quietService->hideOtherPlayers ? "hiding" : "showing");
 	return MRES_SUPERCEDE;
 }
 
@@ -66,7 +66,7 @@ internal SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}You are now %s your weapons.", KZ_CHAT_PREFIX, player->quietService->ShouldHideWeapon() ? "hiding" : "showing");
+	player->PrintChat(true, false, "{grey}You are now %s your weapons.", player->quietService->ShouldHideWeapon() ? "hiding" : "showing");
 	return MRES_SUPERCEDE;
 }
 
@@ -80,7 +80,7 @@ internal SCMD_CALLBACK(Command_KzPanel)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->hudService->TogglePanel();
-	utils::CPrintChat(player->GetPawn(), "%s {grey}Your centre information panel has been %s.", KZ_CHAT_PREFIX, player->hudService->IsShowingPanel() ? "enabled" : "disabled");
+	player->PrintChat(true, false, "{grey}Your centre information panel has been %s.", player->hudService->IsShowingPanel() ? "enabled" : "disabled");
 	return MRES_SUPERCEDE;
 }
 
