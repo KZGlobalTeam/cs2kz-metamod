@@ -1025,7 +1025,7 @@ internal SCMD_CALLBACK(Command_KzJsPrintMinDTier)
 	if (!GetTierChar || !V_stricmp("", GetTierChar))
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-7/impressive>.");
-		return;
+		return MRES_SUPERCEDE;
 	}
 
 	/* if() ...*/
@@ -1035,14 +1035,14 @@ internal SCMD_CALLBACK(Command_KzJsPrintMinDTier)
 	if(GetTierInt > 7 || GetTierInt < 0)
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-7/impressive>.");
-		return;
+		return MRES_SUPERCEDE;
 	}
 
 	DistanceTier GetTier = static_cast<DistanceTier>(GetTierInt);
 
 	if (GetTier == player->jumpstatsService->GetBroadcastMinTier())
 	{
-		return;
+		return MRES_SUPERCEDE;
 	}
 
 	player->jumpstatsService->SetBroadcastMinTier(GetTier);
@@ -1059,7 +1059,7 @@ internal SCMD_CALLBACK(Command_KzJsSoundMinDTier)
 	if (!GetTierChar || !V_stricmp("", GetTierChar))
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-7/impressive>.");
-		return;
+		return MRES_SUPERCEDE;
 	}
 
 	/* if() ...*/
@@ -1069,14 +1069,14 @@ internal SCMD_CALLBACK(Command_KzJsSoundMinDTier)
 	if(GetTierInt > 7 || GetTierInt < 0)
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-7/impressive>.");
-		return;
+		return MRES_SUPERCEDE;
 	}
 
 	DistanceTier GetTier = static_cast<DistanceTier>(GetTierInt);
 
 	if (GetTier == player->jumpstatsService->GetPlaySoundMinDTier())
 	{
-		return;
+		return MRES_SUPERCEDE;
 	}
 
 	player->jumpstatsService->SetPlaySoundMinDTier(GetTier);
@@ -1090,5 +1090,5 @@ void KZJumpstatsService::RegisterCommands()
 	scmd::RegisterCmd("kz_jssound",		Command_KzJsSoundMinDTier,	"Change jumpstats sound effect minimum play tier.");
 	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,			"Print jumpstats for invalid jumps.");
+	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,		"Print jumpstats for invalid jumps.");
 }
