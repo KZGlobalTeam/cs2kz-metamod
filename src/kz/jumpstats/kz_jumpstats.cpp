@@ -1,5 +1,5 @@
 #include "../kz.h"
-#include "../hooks.h"
+#include "utils/hooks.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
@@ -1032,8 +1032,17 @@ internal SCMD_CALLBACK(Command_KzJSAlways)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzJsPrintMinTier)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	//args->Arg(1);
+
+	return MRES_SUPERCEDE;
+}
+
 void KZJumpstatsService::RegisterCommands()
 {
+	scmd::RegisterCmd("kz_jsmintier",	Command_KzJsPrintMinTier,	"Change Jumpstats minimum broadcast tier.");
 	scmd::RegisterCmd("kz_jssound",		Command_KzToggleJsSound,	"Toggle jumpstats sound effect.");
 	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
