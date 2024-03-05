@@ -3,6 +3,8 @@
 #include "igameevents.h"
 #include "iserver.h"
 
+#include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
+
 namespace hooks
 {
 	inline CUtlVector<int> entityTouchHooks;
@@ -13,4 +15,4 @@ namespace hooks
 	void LoadAddons();
 }
 
-extern IMultiAddonManager *g_IMultiAddonManager;
+extern IMultiAddonManager g_IMultiAddonManager;
