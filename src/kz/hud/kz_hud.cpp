@@ -1,3 +1,4 @@
+#include "../kz.h"
 #include "kz_hud.h"
 #include "sdk/datatypes.h"
 #include "utils/utils.h"
