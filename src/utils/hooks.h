@@ -15,4 +15,4 @@ namespace hooks
 	void LoadAddons();
 }
 
-extern IMultiAddonManager g_IMultiAddonManager;
+extern IMultiAddonManager *g_IMultiAddonManager;
