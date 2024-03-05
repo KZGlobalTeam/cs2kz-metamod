@@ -736,11 +736,16 @@ void KZJumpstatsService::ToggleJsSound()
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
 	DistanceTier GetTier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (GetTier < DistanceTier_Godlike) // Need change to be MinSoundTier
+	if (GetTier < DistanceTier_Godlike)
+	{
 		return;
+	}
 
 	//Addons determine TODO
-	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[GetTier], 0.5f);
+	if(g_IMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID))
+	{
+		utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[GetTier], 0.5f);
+	}
 }
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
@@ -752,6 +757,14 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
+
+	/* MinTier broadcast TODO
+	if (GetTiers > DistanceTier_Perfect)
+    {
+        utils::CPrintChatAll("%s %s {grey}jumped %s%.1f {grey}units with a %s%s {grey}", KZ_CHAT_PREFIX, jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
+    }
+	*/
+
 	jump->GetJumpPlayer()->PrintChat(true, true, "%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		jumpColor,
@@ -1002,7 +1015,24 @@ internal SCMD_CALLBACK(Command_KzToggleJsSound)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzToggleJumpstats)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJumpstatsReporting();
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzJSAlways)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJSAlways();
+	return MRES_SUPERCEDE;
+}
+
 void KZJumpstatsService::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_jssound",		Command_KzToggleJsSound,	"Toggle jumpstats sound effect.");
+	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,			"Print jumpstats for invalid jumps.");
 }

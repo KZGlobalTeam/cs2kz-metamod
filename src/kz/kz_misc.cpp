@@ -29,13 +29,6 @@ internal SCMD_CALLBACK(Command_KzHide)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzJSAlways)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJSAlways();
-	return MRES_SUPERCEDE;
-}
-
 internal SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -76,30 +69,11 @@ internal SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzPanel)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->hudService->TogglePanel();
-	player->PrintChat(true, false, "{grey}Your centre information panel has been %s.", player->hudService->IsShowingPanel() ? "enabled" : "disabled");
-	return MRES_SUPERCEDE;
-}
-
-internal SCMD_CALLBACK(Command_KzToggleJumpstats)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJumpstatsReporting();
-	return MRES_SUPERCEDE;
-}
-
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_panel",		Command_KzPanel,			"Toggle Panel display.");
-	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_hidelegs",	Command_KzHidelegs,			"Hide your legs in first person.");
 	scmd::RegisterCmd("kz_hide",		Command_KzHide,				"Hide other players.");
-	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,			"Print jumpstats for invalid jumps.");
 	scmd::RegisterCmd("kz_restart",		Command_KzRestart,			"Restart.");
 	scmd::RegisterCmd("kz_r",			Command_KzRestart,			"Restart.");
 	scmd::RegisterCmd("kz_hideweapon",	Command_KzHideWeapon,		"Hide weapon viewmodel.");
@@ -108,6 +82,7 @@ void KZ::misc::RegisterCommands()
 	KZJumpstatsService::RegisterCommands();
 	KZTimerService::RegisterCommands();
 	KZNoclipService::RegisterCommands();
+	KZHUDService::RegisterCommands();
 	//KZSpecService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 	KZ::style::RegisterCommands();

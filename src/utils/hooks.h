@@ -10,4 +10,7 @@ namespace hooks
 	void Initialize();
 	void Cleanup();
 	void HookEntities();
+	void LoadAddons();
 }
+
+extern IMultiAddonManager *g_IMultiAddonManager;

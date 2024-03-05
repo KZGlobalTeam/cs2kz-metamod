@@ -10,6 +10,8 @@
 #define KZ_SND_SET_CP "UIPanorama.round_report_odds_none"
 #define KZ_SND_DO_TP "UIPanorama.round_report_odds_none"
 
+#define KZ_WORKSHOP_ADDONS_ID "3171124941"
+
 #define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 
 class KZPlayer;

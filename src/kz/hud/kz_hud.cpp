@@ -130,3 +130,16 @@ void KZHUDServiceTimerEventListener::OnTimerEndPost(KZPlayer *player, const char
 {
 	player->hudService->OnTimerStopped(time);
 }
+
+internal SCMD_CALLBACK(Command_KzPanel)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->hudService->TogglePanel();
+	player->PrintChat(true, false, "{grey}Your centre information panel has been %s.", player->hudService->IsShowingPanel() ? "enabled" : "disabled");
+	return MRES_SUPERCEDE;
+}
+
+void KZHUDService::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_panel",		Command_KzPanel,			"Toggle Panel display.");
+}

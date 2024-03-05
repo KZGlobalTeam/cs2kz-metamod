@@ -64,6 +64,7 @@ void KZPlugin::AllPluginsLoaded()
 {
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
+	hooks::LoadAddons();
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)
