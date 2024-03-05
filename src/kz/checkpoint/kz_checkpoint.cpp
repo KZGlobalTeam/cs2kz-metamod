@@ -32,7 +32,7 @@ void KZCheckpointService::SetCheckpoint()
 	u32 flags = pawn->m_fFlags();
 	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
 	{
-		utils::CPrintChat(this->player->GetController(), "%s {grey}Checkpoint unavailable in the air.", KZ_CHAT_PREFIX);
+		this->player->PrintChat(true, false, "{grey}Checkpoint unavailable in the air.");
 		return;
 	}
 
@@ -50,7 +50,7 @@ void KZCheckpointService::SetCheckpoint()
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
-	utils::CPrintChat(this->player->GetPawn(), "%s {grey}Checkpoint ({default}#%i{grey})", KZ_CHAT_PREFIX, this->GetCheckpointCount());
+	this->player->PrintChat(true, false, "{grey}Checkpoint ({default}#%i{grey})", this->GetCheckpointCount());
 	this->PlayCheckpointSound();
 }
 
@@ -58,7 +58,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 {
 	if (this->checkpoints.Count() <= 0)
 	{
-		utils::CPrintChat(this->player->GetController(), "%s {grey}No checkpoints available.", KZ_CHAT_PREFIX);
+		this->player->PrintChat(true, false, "{grey}No checkpoints available.");
 		return;
 	}
 	this->DoTeleport(this->checkpoints[this->currentCpIndex]);
@@ -193,7 +193,7 @@ void KZCheckpointService::SetStartPosition()
 	CCSPlayerPawn *pawn = this->player->GetPawn();
 	if (!pawn)
 	{
-		utils::CPrintChat(this->player->GetController(), "%s {grey} Failed to set your custom start position!", KZ_CHAT_PREFIX);
+		this->player->PrintChat(true, false, "{grey}Failed to set your custom start position!");
 		return;
 	}
 	this->hasCustomStartPosition = true;
@@ -202,13 +202,13 @@ void KZCheckpointService::SetStartPosition()
 	this->customStartPosition.slopeDropHeight = pawn->m_flSlopeDropHeight();
 	this->customStartPosition.slopeDropOffset = pawn->m_flSlopeDropOffset();
 	this->customStartPosition.groundEnt = pawn->m_hGroundEntity();
-	utils::CPrintChat(this->player->GetController(), "%s {grey}You have set your custom start position.", KZ_CHAT_PREFIX);
+	this->player->PrintChat(true, false, "{grey}You have set your custom start position.");
 }
 
 void KZCheckpointService::ClearStartPosition()
 {
 	this->hasCustomStartPosition = false;
-	utils::CPrintChat(this->player->GetController(), "%s {grey}You have cleared your custom start position.", KZ_CHAT_PREFIX);
+	this->player->PrintChat(true, false, "{grey}You have cleared your custom start position.");
 }
 
 void KZCheckpointService::TpToStartPosition()

@@ -294,7 +294,7 @@ void KZTimerService::Pause()
 	}
 	if (!allowPause)
 	{
-		utils::CPrintChat(this->player->GetController(), "%s %s", KZ_CHAT_PREFIX, "{grey}Can't pause right now.");
+		player->PrintChat(true, false, "%s", "{grey}Can't pause right now.");
 		// TODO: Play error sound to client
 		return;
 	}
@@ -334,7 +334,7 @@ bool KZTimerService::CanPause(bool showError)
 		{
 			if (showError)
 			{
-				utils::CPrintChat(this->player->GetController(), "%s %s", KZ_CHAT_PREFIX, "{grey}Can't pause, just resumed.");
+				player->PrintChat(true, false, "%s", "{grey}Can't pause, just resumed.");
 				this->player->PlayErrorSound();
 			}
 			return false;
@@ -344,7 +344,7 @@ bool KZTimerService::CanPause(bool showError)
 		{
 			if (showError)
 			{
-				utils::CPrintChat(this->player->GetController(), "%s %s", KZ_CHAT_PREFIX, "{grey}Can't pause, just resumed.");
+				player->PrintChat(true, false, "%s", "{grey}Can't pause, just resumed.");
 				this->player->PlayErrorSound();
 			}
 			return false;
@@ -372,7 +372,7 @@ void KZTimerService::Resume(bool force)
 	}
 	if (!allowResume)
 	{
-		utils::CPrintChat(this->player->GetController(), "%s %s", KZ_CHAT_PREFIX, "Can't resume right now.");
+		player->PrintChat(true, false, "%s", "{grey}Can't resume right now.");
 		this->player->PlayErrorSound();
 		return;
 	}
@@ -411,7 +411,7 @@ bool KZTimerService::CanResume(bool showError)
 	{
 		if (showError)
 		{
-			utils::CPrintChat(this->player->GetController(), "%s %s", KZ_CHAT_PREFIX, "{grey}Can't resume, just paused.");
+			player->PrintChat(true, false, "%s", "{grey}Can't resume, just paused.");
 			this->player->PlayErrorSound();
 		}
 		return false;

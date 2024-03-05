@@ -114,11 +114,11 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	// Don't change style if it doesn't exist. Instead, print a list of styles to the client.
 	if (!styleName || !V_stricmp("", styleName))
 	{
-		utils::CPrintChat(player->GetController(), "%s {grey}Usage: {default}kz_style <style>{grey}. Check console for possible styles!", KZ_CHAT_PREFIX);
-		utils::PrintConsole(player->GetController(), "Possible styles: (Current style is %s)", player->styleService->GetStyleName());
+		player->PrintChat(true, false, "{grey}Usage: {default}kz_style <style>{grey}. Check console for possible styles!", KZ_CHAT_PREFIX);
+		player->PrintConsole(false, false, "Possible styles: (Current style is %s)", player->styleService->GetStyleName());
 		FOR_EACH_VEC(this->styleInfos, i)
 		{
-			utils::PrintConsole(player->GetController(), "%s (kz_style %s / kz_style %s)", this->styleInfos[i].longName, this->styleInfos[i].longName, this->styleInfos[i].shortName);
+			player->PrintConsole(false, false, "%s (kz_style %s / kz_style %s)", this->styleInfos[i].longName, this->styleInfos[i].longName, this->styleInfos[i].shortName);
 		}
 		return false;
 	}
@@ -141,10 +141,9 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	}
 	if (!factory)
 	{
-
-		if (player->GetController() && !silent)
+		if (!silent)
 		{
-			utils::CPrintChat(player->GetController(), "%s {grey}The {purple}%s {grey}style is not available.", KZ_CHAT_PREFIX, styleName);
+			player->PrintChat(true, false, "{grey}The {purple}%s {grey}style is not available.", styleName);
 		}
 		return false;
 	}
@@ -154,9 +153,9 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	player->timerService->TimerStop();
 	player->styleService->Init();
 
-	if (player->GetController() && !silent)
+	if (!silent)
 	{
-		utils::CPrintChat(player->GetController(), "%s {grey}You have switched to the {purple}%s {grey}style.", KZ_CHAT_PREFIX, player->styleService->GetStyleName());
+		player->PrintChat(true, false, "%s {grey}You have switched to the {purple}%s {grey}style.", player->styleService->GetStyleName());
 	}
 
 	return true;

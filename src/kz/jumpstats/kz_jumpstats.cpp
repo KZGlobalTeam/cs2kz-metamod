@@ -718,9 +718,8 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
-	utils::CPrintChat(target->GetController(), "%s %s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+	jump->GetJumpPlayer()->PrintChat(true, true, "%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
-		KZ_CHAT_PREFIX,
 		jumpColor,
 		jumpTypeShortStr[jump->GetJumpType()],
 		jumpColor,
@@ -744,12 +743,12 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 	{
 		V_snprintf(invalidateReason, sizeof(invalidateReason), "(%s)", jump->invalidateReason);
 	}
-	utils::PrintConsole(target->GetController(), "%s jumped %.4f units with a %s %s",
+	jump->GetJumpPlayer()->PrintConsole(false, true, "%s jumped %.4f units with a %s %s",
 		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
 		jump->GetDistance(),
 		jumpTypeStr[jump->GetJumpType()],
 		invalidateReason);
-	utils::PrintConsole(target->GetController(), "%s | %s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height",
+	jump->GetJumpPlayer()->PrintConsole(false, true, "%s | %s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height",
 		jump->GetJumpPlayer()->modeService->GetModeShortName(),
 		jump->GetJumpPlayer()->styleService->GetStyleShortName(),
 		jump->strafes.Count(),
@@ -760,7 +759,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetOverlap() * 100.0f,
 		jump->GetDeadAir() * 100.0f,
 		jump->GetMaxHeight());
-	utils::PrintConsole(target->GetController(), "%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
+	jump->GetJumpPlayer()->PrintConsole(false, true, "%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
 		jump->GetGainEfficiency() * 100.0f,
 		jump->GetAirPath(),
 		jump->GetDeviation(),
@@ -769,7 +768,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetOffset(),
 		jump->GetDuckTime(true),
 		jump->GetDuckTime(false));
-	utils::PrintConsole(target->GetController(), "#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s",
+	jump->GetJumpPlayer()->PrintConsole(false, true, "#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s",
 		"Sync", "Gain", "Loss", "Max", "Air", "BA", "OL", "DA", "AvgGain", "GainEff", "AngRatio(Avg/Med/Max)");
 	FOR_EACH_VEC(jump->strafes, i)
 	{
@@ -796,7 +795,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		{
 			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
 		}
-		utils::PrintConsole(target->GetController(), "%i.%5s %7s%-10s %7s%-10s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
+		jump->GetJumpPlayer()->PrintConsole(false, true, "%i.%5s %7s%-10s %7s%-10s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
 			i + 1,
 			syncString,
 			gainString,
@@ -813,6 +812,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 			angRatioString);
 	}
 }
+
 void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 {
 	if (this->jumps.Count() > 0 && !this->jumps.Tail().AlreadyEnded())
@@ -842,13 +842,13 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 void KZJumpstatsService::ToggleJSAlways()
 {
 	this->jsAlways = !this->jsAlways;
-	utils::CPrintChat(player->GetController(), "%s JSAlways %s.", KZ_CHAT_PREFIX, this->jsAlways ? "enabled" : "disabled");
+	this->player->PrintChat(true, false, "{grey}JSAlways %s.", this->jsAlways ? "enabled" : "disabled");
 }
 
 void KZJumpstatsService::ToggleJumpstatsReporting()
 {
 	this->showJumpstats = !this->showJumpstats;
-	utils::CPrintChat(player->GetPawn(), "%s {grey}You have %s jumpstats reporting.", KZ_CHAT_PREFIX, this->ShouldDisplayJumpstats() ? "enabled" : "disabled");
+	this->player->PrintChat(true, false, "{grey}You have %s jumpstats reporting.", this->ShouldDisplayJumpstats() ? "enabled" : "disabled");
 }
 
 void KZJumpstatsService::CheckValidMoveType()
