@@ -218,9 +218,11 @@ public:
 	}
 	// Jumpstats
 private:
+	DistanceTier broadcastMinTier{};
+	DistanceTier soundMinTier{};
+	
 	bool jsAlways{};
 	bool showJumpstats{}; // Need change to type
-	bool playJsSound{};
 
 	CUtlVector<Jump> jumps;
 	f32 lastJumpButtonTime{};
@@ -233,12 +235,15 @@ private:
 public:
 	static_global void RegisterCommands();
 
+	void SetBroadcastMinTier(DistanceTier Tier) { this->broadcastMinTier = Tier; };
+	void SetPlaySoundMinDTier(DistanceTier Tier) { this->soundMinTier = Tier; }
+
+	DistanceTier GetBroadcastMinTier() { return this->broadcastMinTier; };
+	DistanceTier GetPlaySoundMinDTier() { return this->soundMinTier; }
+
 	void ToggleJSAlways();
 	void ToggleJumpstatsReporting();
 	bool ShouldDisplayJumpstats() { return this->showJumpstats; } // Need change to type
-
-	void ToggleJsSound();
-	bool ShouldPlayJumpstatSound() { return this->playJsSound; }
 
 	virtual void Reset() override;
 	void OnProcessMovement();

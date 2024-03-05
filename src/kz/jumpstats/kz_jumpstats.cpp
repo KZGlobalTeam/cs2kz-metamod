@@ -597,8 +597,9 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 void KZJumpstatsService::Reset()
 {
+	this->broadcastMinTier = DistanceTier_Godlike;
+	this->soundMinTier = DistanceTier_Godlike;
 	this->showJumpstats = true;
-	this->playJsSound = true;
 	this->jumps.Purge();
 	this->jsAlways = {};
 	this->lastJumpButtonTime = {};
@@ -721,30 +722,20 @@ void KZJumpstatsService::EndJump()
 			{
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			}
-			if (this->ShouldPlayJumpstatSound())
-			{
-				KZJumpstatsService::PlayJumpstatSound(this->player, jump);
-			}
+			KZJumpstatsService::PlayJumpstatSound(this->player, jump);
 			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
 		}
 	}
 }
 
-void KZJumpstatsService::ToggleJsSound()
-{
-	this->playJsSound = !this->playJsSound;
-	utils::CPrintChat(player->GetPawn(), "%s {grey}You have %s jumpstats tier sound.", KZ_CHAT_PREFIX, this->ShouldPlayJumpstatSound() ? "enabled" : "disabled");
-}
-
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
 	DistanceTier GetTier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (GetTier < DistanceTier_Godlike)
+	if (target->jumpstatsService->GetPlaySoundMinDTier() > GetTier || target->jumpstatsService->GetPlaySoundMinDTier() > DistanceTier_Meh)
 	{
 		return;
 	}
 
-	//Addons determine TODO
 	if(g_IMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID))
 	{
 		utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[GetTier], 0.5f);
@@ -762,7 +753,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	}
 
 	/* MinTier broadcast TODO
-	if (GetTiers > DistanceTier_Perfect)
+	if (GetTiers > target->jumpstatsService->GetBroadcastMinTier() && target->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
     {
         utils::CPrintChatAll("%s %s {grey}jumped %s%.1f {grey}units with a %s%s {grey}", KZ_CHAT_PREFIX, jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
     }
@@ -1011,13 +1002,6 @@ void KZJumpstatsService::OnProcessMovementPost()
 	this->TrackJumpstatsVariables();
 }
 
-internal SCMD_CALLBACK(Command_KzToggleJsSound)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJsSound();
-	return MRES_SUPERCEDE;
-}
-
 internal SCMD_CALLBACK(Command_KzToggleJumpstats)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -1032,18 +1016,78 @@ internal SCMD_CALLBACK(Command_KzJSAlways)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzJsPrintMinTier)
+internal SCMD_CALLBACK(Command_KzJsPrintMinDTier)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	//args->Arg(1);
 
+	char GetTierChar[64] = args->Arg(1);
+
+	if (!GetTierChar || !V_stricmp("", GetTierChar))
+	{
+		player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-7/impressive>.");
+		return;
+	}
+
+	/* if() ...*/
+
+	int GetTierInt = V_StringToInt32(GetTierChar, -1);
+
+	if(GetTierInt > 7 || GetTierInt < 0)
+	{
+		player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-7/impressive>.");
+		return;
+	}
+
+	DistanceTier GetTier = static_cast<DistanceTier>(GetTierInt);
+
+	if (GetTier == player->jumpstatsService->GetBroadcastMinTier())
+	{
+		return;
+	}
+
+	player->jumpstatsService->SetBroadcastMinTier(GetTier);
+
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzJsSoundMinDTier)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+
+	char GetTierChar[64] = args->Arg(1);
+
+	if (!GetTierChar || !V_stricmp("", GetTierChar))
+	{
+		player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-7/impressive>.");
+		return;
+	}
+
+	/* if() ...*/
+
+	int GetTierInt = V_StringToInt32(GetTierChar, -1);
+
+	if(GetTierInt > 7 || GetTierInt < 0)
+	{
+		player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-7/impressive>.");
+		return;
+	}
+
+	DistanceTier GetTier = static_cast<DistanceTier>(GetTierInt);
+
+	if (GetTier == player->jumpstatsService->GetPlaySoundMinDTier())
+	{
+		return;
+	}
+
+	player->jumpstatsService->SetPlaySoundMinDTier(GetTier);
+	
 	return MRES_SUPERCEDE;
 }
 
 void KZJumpstatsService::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_jsmintier",	Command_KzJsPrintMinTier,	"Change Jumpstats minimum broadcast tier.");
-	scmd::RegisterCmd("kz_jssound",		Command_KzToggleJsSound,	"Toggle jumpstats sound effect.");
+	scmd::RegisterCmd("kz_jsbroadcast",	Command_KzJsPrintMinDTier,	"Change Jumpstats minimum broadcast tier.");
+	scmd::RegisterCmd("kz_jssound",		Command_KzJsSoundMinDTier,	"Change jumpstats sound effect minimum play tier.");
 	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,			"Print jumpstats for invalid jumps.");
