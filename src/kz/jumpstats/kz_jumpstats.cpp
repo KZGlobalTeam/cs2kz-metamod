@@ -3,6 +3,7 @@
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
 #include "utils/utils.h"
+#include "utils/simplecmds.h"
 
 #include "tier0/memdbgon.h"
 
