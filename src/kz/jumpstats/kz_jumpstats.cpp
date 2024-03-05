@@ -752,14 +752,6 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
-	
-	/* MinTier broadcast TODO
-	if (GetTiers > DistanceTier_Perfect)
-    {
-        utils::CPrintChatAll("%s %s {grey}jumped %s%.1f {grey}units with a %s%s {grey}", KZ_CHAT_PREFIX, jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
-    }
-	*/
-
 	jump->GetJumpPlayer()->PrintChat(true, true, "%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		KZ_CHAT_PREFIX,
