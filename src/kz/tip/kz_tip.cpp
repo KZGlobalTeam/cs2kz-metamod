@@ -4,7 +4,6 @@
 
 internal KeyValues *pTipKeyValues;
 internal CUtlVector<const char *> tipNames;
-internal const char *tipPaths[4];
 internal float tipInterval;
 internal i32 nextTipIndex;
 
@@ -16,7 +15,7 @@ void KZTipService::Reset()
 void KZTipService::ToggleTips()
 {
 	this->showTips = !this->showTips;
-	player->PrintChat(true, "%s", this->showTips ? "Tips enabled." : "Tips disabled.");
+	player->PrintChat(true, false, "Tips %s.", this->showTips ? "enabled" : "disabled");
 }
 
 bool KZTipService::ShouldPrintTip()
@@ -26,11 +25,12 @@ bool KZTipService::ShouldPrintTip()
 
 void KZTipService::PrintTip()
 {
-	player->PrintChat(true, "%s", pTipKeyValues->GetString(tipNames[nextTipIndex]));
+	player->PrintChat(true, false, "%s", pTipKeyValues->GetString(tipNames[nextTipIndex]));
 }
 
 void KZTipService::LoadTips()
 {
+	const char *tipPaths[4]{};
 	tipPaths[0] = "addons/cs2kz/tips/config.txt";
 	tipPaths[1] = "addons/cs2kz/tips/general-tips.txt";
 	tipPaths[2] = "addons/cs2kz/tips/jumpstat-tips.txt";
