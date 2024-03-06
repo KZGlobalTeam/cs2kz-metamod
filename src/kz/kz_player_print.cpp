@@ -87,7 +87,7 @@ void KZPlayer::PrintChat(bool addPrefix, bool includeSpectators, const char *for
 	{
 		return;
 	}
-	utils::ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
+	utils::ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");
 }
 
 void KZPlayer::PrintCentre(bool addPrefix, bool includeSpectators, const char *format, ...)
