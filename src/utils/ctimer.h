@@ -3,7 +3,6 @@
 #include <tuple>
 #include "utils/utils.h"
 #include "../../hl2sdk-cs2/public/tier1/utlvector.h"
-#include "../../src/common.h"
 
 /*
 * Credit to Szwagi
