@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 
 class KZPlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -27,3 +28,5 @@ public:
 };
 
 extern KZPlugin g_KZPlugin;
+
+extern IMultiAddonManager *g_pIMultiAddonManager;

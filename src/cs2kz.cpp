@@ -19,6 +19,8 @@
 
 KZPlugin g_KZPlugin;
 
+IMultiAddonManager *g_pIMultiAddonManager;
+
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
@@ -64,7 +66,10 @@ void KZPlugin::AllPluginsLoaded()
 {
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
-	hooks::LoadAddons();
+
+	g_pIMultiAddonManager = (IMultiAddonManager*)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
+	g_pIMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
+	g_pIMultiAddonManager->RefreshAddons();
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)

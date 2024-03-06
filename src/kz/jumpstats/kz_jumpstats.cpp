@@ -1,5 +1,5 @@
 #include "../kz.h"
-#include "utils/hooks.h"
+#include "cs2kz.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
@@ -730,22 +730,22 @@ void KZJumpstatsService::EndJump()
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
-	DistanceTier GetTier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->jumpstatsService->GetPlaySoundMinDTier() > GetTier || target->jumpstatsService->GetPlaySoundMinDTier() > DistanceTier_Meh)
+	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	if (target->jumpstatsService->GetPlaySoundMinDTier() > tier || target->jumpstatsService->GetPlaySoundMinDTier() > DistanceTier_Meh)
 	{
 		return;
 	}
 
-	if(g_IMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID))
+	if(g_pIMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID))
 	{
-		utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[GetTier], 0.5f);
+		utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[tier], 0.5f);
 	}
 }
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
-	DistanceTier GetTiers = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	const char *jumpColor = distanceTierColors[GetTiers];
+	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	const char *jumpColor = distanceTierColors[tier];
 
 	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
 	{
@@ -753,7 +753,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	}
 
 	/* MinTier broadcast TODO
-	if (GetTiers > target->jumpstatsService->GetBroadcastMinTier() && target->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
+	if (tier > target->jumpstatsService->GetBroadcastMinTier() && target->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
     {
         utils::CPrintChatAll("%s %s {grey}jumped %s%.1f {grey}units with a %s%s {grey}", KZ_CHAT_PREFIX, jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
     }
@@ -1020,9 +1020,9 @@ internal SCMD_CALLBACK(Command_KzJsPrintMinDTier)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
-	char GetTierChar[64] = args->Arg(1);
+	const char *tierString = args->Arg(1);
 
-	if (!GetTierChar || !V_stricmp("", GetTierChar))
+	if (!tierString || !V_stricmp("", tierString))
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-7/impressive>.");
 		return MRES_SUPERCEDE;
@@ -1030,22 +1030,22 @@ internal SCMD_CALLBACK(Command_KzJsPrintMinDTier)
 
 	/* if() ...*/
 
-	int GetTierInt = V_StringToInt32(GetTierChar, -1);
+	int tierInt = V_StringToInt32(tierString, -1);
 
-	if(GetTierInt > 7 || GetTierInt < 0)
+	if(tierInt > 7 || tierInt < 0)
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-7/impressive>.");
 		return MRES_SUPERCEDE;
 	}
 
-	DistanceTier GetTier = static_cast<DistanceTier>(GetTierInt);
+	DistanceTier tier = static_cast<DistanceTier>(tierInt);
 
-	if (GetTier == player->jumpstatsService->GetBroadcastMinTier())
+	if (tier == player->jumpstatsService->GetBroadcastMinTier())
 	{
 		return MRES_SUPERCEDE;
 	}
 
-	player->jumpstatsService->SetBroadcastMinTier(GetTier);
+	player->jumpstatsService->SetBroadcastMinTier(tier);
 
 	return MRES_SUPERCEDE;
 }
@@ -1054,9 +1054,9 @@ internal SCMD_CALLBACK(Command_KzJsSoundMinDTier)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
-	char GetTierChar[64] = args->Arg(1);
+	const char *tierString = args->Arg(1);
 
-	if (!GetTierChar || !V_stricmp("", GetTierChar))
+	if (!tierString || !V_stricmp("", tierString))
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-7/impressive>.");
 		return MRES_SUPERCEDE;
@@ -1064,22 +1064,22 @@ internal SCMD_CALLBACK(Command_KzJsSoundMinDTier)
 
 	/* if() ...*/
 
-	int GetTierInt = V_StringToInt32(GetTierChar, -1);
+	int tierInt = V_StringToInt32(tierString, -1);
 
-	if(GetTierInt > 7 || GetTierInt < 0)
+	if(tierInt > 7 || tierInt < 0)
 	{
 		player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-7/impressive>.");
 		return MRES_SUPERCEDE;
 	}
 
-	DistanceTier GetTier = static_cast<DistanceTier>(GetTierInt);
+	DistanceTier tier = static_cast<DistanceTier>(tierInt);
 
-	if (GetTier == player->jumpstatsService->GetPlaySoundMinDTier())
+	if (tier == player->jumpstatsService->GetPlaySoundMinDTier())
 	{
 		return MRES_SUPERCEDE;
 	}
 
-	player->jumpstatsService->SetPlaySoundMinDTier(GetTier);
+	player->jumpstatsService->SetPlaySoundMinDTier(tier);
 	
 	return MRES_SUPERCEDE;
 }

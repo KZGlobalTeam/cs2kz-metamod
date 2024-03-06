@@ -60,8 +60,6 @@ SH_DECL_MANUALHOOK1_void(ChangeTeam, 0, 0, 0, int);
 
 SH_DECL_MANUALHOOK3_void(Teleport, 0, 0, 0, const Vector *, const QAngle *, const Vector *);
 
-IMultiAddonManager *g_IMultiAddonManager;
-
 void hooks::Initialize()
 {
 	SH_MANUALHOOK_RECONFIGURE(StartTouch, g_pGameConfig->GetOffset("StartTouch"), 0, 0);
@@ -527,8 +525,3 @@ internal void Hook_OnChangeTeamPost(int team)
 	}
 }
 
-void hooks::LoadAddons()
-{
-	g_IMultiAddonManager = (IMultiAddonManager*)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_IMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
-}
