@@ -10,7 +10,7 @@ internal i32 nextTipIndex;
 
 void KZTipService::Reset()
 {
-	this->showTips = true;
+	this->showTips = true; 
 }
 
 void KZTipService::ToggleTips()
