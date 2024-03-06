@@ -1,7 +1,5 @@
 #include "kz_tip.h"
 
-#define KZ_DEFAULT_TIP_INTERVAL 75.0f
-
 internal KeyValues *pTipKeyValues;
 internal CUtlVector<const char *> tipNames;
 internal float tipInterval;
