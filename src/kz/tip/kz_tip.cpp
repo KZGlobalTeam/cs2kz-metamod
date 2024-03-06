@@ -16,7 +16,7 @@ void KZTipService::Reset()
 void KZTipService::ToggleTips()
 {
 	this->showTips = !this->showTips;
-	utils::CPrintChat(player->GetController(), "%s Tips %s.", KZ_CHAT_PREFIX, this->showTips ? "enabled" : "disabled");
+	player->PrintChat(true, "%s", this->showTips ? "Tips enabled." : "Tips disabled.");
 }
 
 bool KZTipService::ShouldPrintTip()
@@ -26,7 +26,7 @@ bool KZTipService::ShouldPrintTip()
 
 void KZTipService::PrintTip()
 {
-	utils::CPrintChat(player->GetController(), "%s %s", KZ_CHAT_PREFIX, pTipKeyValues->GetString(tipNames[nextTipIndex]));
+	player->PrintChat(true, "%s", pTipKeyValues->GetString(tipNames[nextTipIndex]));
 }
 
 void KZTipService::LoadTips()
