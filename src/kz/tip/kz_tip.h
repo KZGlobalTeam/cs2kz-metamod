@@ -1,8 +1,10 @@
 #pragma once
 #include "../kz.h"
 #include "utils/utils.h"
+#include "utils/simplecmds.h"
 #include "KeyValues.h"
 #include "interfaces/interfaces.h"
+#include "filesystem.h"
 #include "utils/ctimer.h"
 
 class KZTipService : public KZBaseService

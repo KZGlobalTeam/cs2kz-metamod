@@ -13,7 +13,7 @@ void KZTipService::Reset()
 void KZTipService::ToggleTips()
 {
 	this->showTips = !this->showTips;
-	player->PrintChat(true, false, "Tips %s.", this->showTips ? "enabled" : "disabled");
+	player->PrintChat(true, false, "{grey}%s", this->showTips ? "You will now see random tips in chat periodically." : "You will no longer see random tips in chat periodically.");
 }
 
 bool KZTipService::ShouldPrintTip()
@@ -28,21 +28,36 @@ void KZTipService::PrintTip()
 
 void KZTipService::LoadTips()
 {
-	const char *tipPaths[4]{};
-	tipPaths[0] = "addons/cs2kz/tips/config.txt";
-	tipPaths[1] = "addons/cs2kz/tips/general-tips.txt";
-	tipPaths[2] = "addons/cs2kz/tips/jumpstat-tips.txt";
-	tipPaths[3] = "addons/cs2kz/tips/visual-tips.txt";
-
 	pTipKeyValues = new KeyValues("Tips");
 	KeyValues *configKeyValues = new KeyValues("Config");
-	configKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[0], nullptr);
-	if (!pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[1], nullptr)
-		|| !pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[2], nullptr)
-		|| !pTipKeyValues->LoadFromFile(g_pFullFileSystem, tipPaths[3], nullptr))
+
+	char buffer[1024];
+	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/tips/*.*");
+	FileFindHandle_t findHandle = {};
+	const char *output = g_pFullFileSystem->FindFirst(buffer, &findHandle);
+	if (output)
 	{
-		META_CONPRINTF("Failed to load tips.\n");
-		return;
+		do
+		{
+			char fullPath[1024];
+			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/tips/%s", g_SMAPI->GetBaseDir(), output);
+			if (V_stricmp(output, "config.txt") == 0)
+			{
+				if (!configKeyValues->LoadFromFile(g_pFullFileSystem, fullPath, nullptr))
+				{
+					META_CONPRINTF("Failed to load tips config file\n", output);
+				}
+			}
+			else 
+			{
+				if (!pTipKeyValues->LoadFromFile(g_pFullFileSystem, fullPath, nullptr))
+				{
+					META_CONPRINTF("Failed to load %s\n", output);
+				}
+			}
+			output = g_pFullFileSystem->FindNext(findHandle);
+		} while (output);
+		g_pFullFileSystem->FindClose(findHandle);
 	}
 
 	KeyValues *removedKeyValues = configKeyValues->FindKey("Remove", true);
@@ -80,9 +95,16 @@ void KZTipService::LoadTips()
 	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
 }
 
+internal SCMD_CALLBACK(Command_KzToggleTips)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->tipService->ToggleTips();
+	return MRES_SUPERCEDE;
+}
 
 void KZTipService::InitTips()
 {
+	scmd::RegisterCmd("kz_tips", Command_KzToggleTips, "Toggle tips.");
 	LoadTips();
 	for (int i = tipNames.Count() - 1; i > 0; --i)
 	{

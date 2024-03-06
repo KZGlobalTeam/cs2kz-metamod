@@ -29,9 +29,6 @@ void KZPlayer::Init()
 	delete this->timerService;
 	delete this->noclipService;
 	delete this->tipService;
-	delete this->specService;
-	delete this->timerService;
-	delete this->noclipService;
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
