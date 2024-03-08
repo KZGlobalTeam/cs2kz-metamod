@@ -58,7 +58,7 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->noclipService->ToggleNoclip();
-	player->PrintChat(true, false, "{grey}Noclip %s.", KZ_CHAT_PREFIX, player->noclipService->IsNoclipping() ? "enabled" : "disabled");
+	player->PrintChat(true, false, "{grey}Noclip %s.", player->noclipService->IsNoclipping() ? "enabled" : "disabled");
 	return MRES_SUPERCEDE;
 }
 

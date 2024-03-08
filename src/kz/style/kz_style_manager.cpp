@@ -155,7 +155,7 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 
 	if (!silent)
 	{
-		player->PrintChat(true, false, "%s {grey}You have switched to the {purple}%s {grey}style.", player->styleService->GetStyleName());
+		player->PrintChat(true, false, "{grey}You have switched to the {purple}%s {grey}style.", player->styleService->GetStyleName());
 	}
 
 	return true;
