@@ -19,7 +19,7 @@
 
 KZPlugin g_KZPlugin;
 
-IMultiAddonManager *g_pIMultiAddonManager;
+IMultiAddonManager *g_pMultiAddonManager;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
@@ -67,9 +67,14 @@ void KZPlugin::AllPluginsLoaded()
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
 
-	g_pIMultiAddonManager = (IMultiAddonManager*)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_pIMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
-	g_pIMultiAddonManager->RefreshAddons();
+	g_pMultiAddonManager = (IMultiAddonManager*)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
+	g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
+	g_pMultiAddonManager->RefreshAddons();
+}
+
+bool KZPlugin::IsAddonsMounted()
+{
+	return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID);
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)

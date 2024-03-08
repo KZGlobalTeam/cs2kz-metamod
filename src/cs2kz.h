@@ -10,6 +10,7 @@ public:
 	bool Unload(char *error, size_t maxlen);
 	bool Pause(char *error, size_t maxlen);
 	bool Unpause(char *error, size_t maxlen);
+	bool IsAddonsMounted();
 	void AllPluginsLoaded();
 public:
 	const char *GetAuthor();
@@ -28,5 +29,3 @@ public:
 };
 
 extern KZPlugin g_KZPlugin;
-
-extern IMultiAddonManager *g_pIMultiAddonManager;
