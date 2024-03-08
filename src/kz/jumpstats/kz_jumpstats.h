@@ -235,8 +235,9 @@ private:
 public:
 	static_global void RegisterCommands();
 
-	void SetBroadcastMinTier(DistanceTier Tier) { this->broadcastMinTier = Tier; };
-	void SetPlaySoundMinDTier(DistanceTier Tier) { this->soundMinTier = Tier; }
+	void SetBroadcastMinTier(const char *tierString);
+	void SetPlaySoundMinDTier(const char *tierString);
+	int GetStringTierLevel(const char *tierString);
 
 	DistanceTier GetBroadcastMinTier() { return this->broadcastMinTier; };
 	DistanceTier GetPlaySoundMinDTier() { return this->soundMinTier; }
