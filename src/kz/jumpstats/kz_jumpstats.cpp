@@ -740,20 +740,20 @@ void KZJumpstatsService::BroadcastJumpToChatAll(KZPlayer *target, Jump *jump)
 	}
 
 	if (tier > target->jumpstatsService->GetBroadcastMinTier() && target->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
-    {
-		for (int i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
     	{
-        	CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
-        	if (ent)
-        	{
-            	KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-            	if(player->jumpstatsService->ShouldDisplayJumpstats() && tier > player->jumpstatsService->GetBroadcastMinTier() && player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
-            	{
-                	player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a %s%s", jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
-            	}
-        	}
+		for (int i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+    		{
+        		CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
+        		if (ent)
+        		{
+            			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+            			if(player->jumpstatsService->ShouldDisplayJumpstats() && tier > player->jumpstatsService->GetBroadcastMinTier() && player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
+            			{
+                			player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a %s%s", jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
+            			}
+        		}
+    		}
     	}
-    }
 }
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
@@ -1066,7 +1066,9 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 	int tierInt = GetStringTierLevel(tierString);
 
 	if(tierInt == 0)
+	{
 		tierInt = V_StringToInt32(tierString, -1);
+	}
 
 	if(tierInt > 7 || tierInt < 1)
 	{
@@ -1095,7 +1097,9 @@ void KZJumpstatsService::SetPlaySoundMinDTier(const char *tierString)
 	int tierInt = GetStringTierLevel(tierString);
 
 	if(tierInt == 0)
+	{
 		tierInt = V_StringToInt32(tierString, -1);
+	}
 
 	if(tierInt > 7 || tierInt < 1)
 	{
