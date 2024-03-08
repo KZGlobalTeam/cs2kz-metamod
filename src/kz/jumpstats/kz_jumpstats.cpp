@@ -722,10 +722,38 @@ void KZJumpstatsService::EndJump()
 			{
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			}
+			KZJumpstatsService::BroadcastJumpToChatAll(this->player, jump);
 			KZJumpstatsService::PlayJumpstatSound(this->player, jump);
 			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
 		}
 	}
+}
+
+void KZJumpstatsService::BroadcastJumpToChatAll(KZPlayer *target, Jump *jump)
+{
+	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	const char *jumpColor = distanceTierColors[tier];
+
+	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
+	{
+		jumpColor = distanceTierColors[DistanceTier_Meh];
+	}
+
+	if (tier > target->jumpstatsService->GetBroadcastMinTier() && target->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
+    {
+		for (int i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+    	{
+        	CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
+        	if (ent)
+        	{
+            	KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+            	if(player->jumpstatsService->ShouldDisplayJumpstats() && tier > player->jumpstatsService->GetBroadcastMinTier() && player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
+            	{
+                	player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a %s%s", jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
+            	}
+        	}
+    	}
+    }
 }
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
@@ -744,20 +772,12 @@ void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
-	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	const char *jumpColor = distanceTierColors[tier];
+	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
 
 	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
-
-	/* MinTier broadcast TODO
-	if (tier > target->jumpstatsService->GetBroadcastMinTier() && target->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
-    {
-        utils::CPrintChatAll("%s %s {grey}jumped %s%.1f {grey}units with a %s%s {grey}", KZ_CHAT_PREFIX, jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeShortStr[jump->GetJumpType()]);
-    }
-	*/
 
 	jump->GetJumpPlayer()->PrintChat(true, true, "%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",

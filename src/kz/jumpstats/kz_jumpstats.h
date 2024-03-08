@@ -276,6 +276,7 @@ public:
 	void DetectInvalidGains();
 	void DetectExternalModifications();
 
+	static_global void BroadcastJumpToChatAll(KZPlayer *target, Jump *jump);
 	static_global void PlayJumpstatSound(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToChat(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToConsole(KZPlayer *target, Jump *jump);
