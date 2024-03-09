@@ -201,7 +201,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 {
 	if (g_KZPlugin.unloading) return;
 	
-	if (strncmp(sound, "kz.", strlen("kz.")) == 0 && !KZPlugin::IsAddonsMounted())
+	if (strncmp(sound, "kz.", strlen("kz.")) == 0 && !g_KZPlugin->IsAddonsMounted())
 	{
 		return;
 	}
