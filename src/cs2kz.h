@@ -9,8 +9,8 @@ public:
 	bool Unload(char *error, size_t maxlen);
 	bool Pause(char *error, size_t maxlen);
 	bool Unpause(char *error, size_t maxlen);
-	bool IsAddonsMounted();
-	void AllPluginLoaded();
+	bool IsAddonMounted();
+	void AllPluginsLoaded();
 public:
 	const char *GetAuthor();
 	const char *GetName();
