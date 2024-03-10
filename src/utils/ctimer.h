@@ -9,6 +9,17 @@
 * Credit to Szwagi
 */
 
+class CTimerBase {
+public:
+	CTimerBase(f64 initialInterval) :
+		interval(initialInterval) {};
+
+	virtual bool Execute() = 0;
+
+	f64 interval;
+	f64 lastExecute = -1;
+};
+
 void ProcessTimers();
 void RemoveNonPersistentTimers();
 

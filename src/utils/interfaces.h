@@ -21,6 +21,7 @@ class CCSPlayerPawn;
 class CBaseEntity2;
 class CBasePlayerController;
 class IGameEventListener2;
+class CTimerBase;
 struct SndOpEventGuid_t;
 struct EmitSound_t;
 
@@ -60,18 +61,6 @@ namespace interfaces
 		return true;
 	}
 }
-
-// Base class for timers, see ctimer.h
-class CTimerBase {
-public:
-	CTimerBase(f64 initialInterval) :
-		interval(initialInterval) {};
-
-	virtual bool Execute() = 0;
-
-	f64 interval;
-	f64 lastExecute = -1;
-};
 
 #define KZ_UTILS_INTERFACE "KZUtilsInterface"
 // Expose some of the utility functions to other plugins.
