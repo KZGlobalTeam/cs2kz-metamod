@@ -74,7 +74,7 @@ void KZPlugin::AllPluginsLoaded()
 	g_pMultiAddonManager->RefreshAddons();
 }
 
-bool KZPlugin::IsAddonsMounted()
+bool KZPlugin::IsAddonMounted()
 {
 	return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID);
 }
