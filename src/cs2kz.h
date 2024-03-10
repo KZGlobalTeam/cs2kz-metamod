@@ -10,7 +10,7 @@ public:
 	bool Pause(char *error, size_t maxlen);
 	bool Unpause(char *error, size_t maxlen);
 	bool IsAddonsMounted();
-	void AllPluginsLoaded();
+	void AllPluginLoaded();
 public:
 	const char *GetAuthor();
 	const char *GetName();
