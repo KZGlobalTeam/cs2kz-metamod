@@ -77,7 +77,7 @@ CGameEntitySystem *KZUtils::GetGameEntitySystem()
 	return GameEntitySystem();
 }
 
-void KZUtils::AddTimer(bool preserveMapChange, CTimerBase *timer)
+void KZUtils::AddTimer(CTimerBase *timer, bool preserveMapChange)
 {
 	if (preserveMapChange)
 	{

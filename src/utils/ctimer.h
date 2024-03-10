@@ -18,13 +18,13 @@ extern CUtlVector<CTimerBase *> g_NonPersistentTimers;
 template<typename... Args>
 class CTimer : public CTimerBase {
 public:
-	using Fn = float(__cdecl*)(Args... args);
+	using Fn = f64(__cdecl*)(Args... args);
 
 	Fn m_fn;
 	std::tuple<Args...> m_args;
 
 	explicit CTimer(Fn fn, Args... args) :
-		CTimerBase(0.0f),
+		CTimerBase(0.0),
 		m_fn(fn),
 		m_args(std::make_tuple(std::move(args)...))
 	{
@@ -37,11 +37,12 @@ public:
 	}
 };
 
-/* Creates a timer for the given function, the function must return a float that represents the interval in seconds; 0 or less to stop the timer */
+/* Creates a timer for the given function, the function must return a f64 that represents the interval in seconds; 0 or less to stop the timer */
 template<typename... Args>
-CTimer<Args...>* StartTimer(bool preserveMapChange, typename CTimer<Args...>::Fn fn, Args... args) {
+CTimer<Args...>* StartTimer(typename CTimer<Args...>::Fn fn, Args... args, bool preserveMapChange = true)
+{
 	auto timer = new CTimer<Args...>(fn, args...);
-	g_pKZUtils->AddTimer(preserveMapChange, timer);
+	g_pKZUtils->AddTimer(timer, preserveMapChange);
 	return timer;
 }
 

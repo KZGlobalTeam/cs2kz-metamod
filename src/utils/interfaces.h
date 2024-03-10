@@ -64,13 +64,13 @@ namespace interfaces
 // Base class for timers, see ctimer.h
 class CTimerBase {
 public:
-	CTimerBase(float initialInterval) :
+	CTimerBase(f64 initialInterval) :
 		interval(initialInterval) {};
 
 	virtual bool Execute() = 0;
 
-	float interval;
-	float lastExecute = -1;
+	f64 interval;
+	f64 lastExecute = -1;
 };
 
 #define KZ_UTILS_INTERFACE "KZUtilsInterface"
@@ -129,7 +129,7 @@ public:
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
 	virtual CGameEntitySystem *GetGameEntitySystem();
 
-	virtual void AddTimer(bool preserveMapChange, CTimerBase *timer);
+	virtual void AddTimer(CTimerBase *timer, bool preserveMapChange = true);
 	virtual void RemoveTimer(CTimerBase *timer);
 };
 

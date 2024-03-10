@@ -22,7 +22,7 @@ public:
 	virtual void Reset() override;
 	void ToggleTips();
 	static_global void InitTips();
-	static_global float PrintTips();
+	static_global f64 PrintTips();
 
 private:
 	bool ShouldPrintTip();

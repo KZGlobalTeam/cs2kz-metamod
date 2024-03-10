@@ -2,7 +2,7 @@
 
 internal KeyValues *pTipKeyValues;
 internal CUtlVector<const char *> tipNames;
-internal float tipInterval;
+internal f64 tipInterval;
 internal i32 nextTipIndex;
 internal CTimer<> *tipTimer;
 
@@ -102,10 +102,10 @@ void KZTipService::InitTips()
 		int j = RandomInt(0, i);
 		V_swap(tipNames.Element(i), tipNames.Element(j));
 	}
-	tipTimer = StartTimer(true, PrintTips);
+	tipTimer = StartTimer(PrintTips, true);
 }
 	
-float KZTipService::PrintTips()
+f64 KZTipService::PrintTips()
 {
 	for (int i = 0; i <= MAXPLAYERS; i++)
 	{
