@@ -17,6 +17,8 @@
 
 #include "version.h"
 
+#include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
+
 KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;

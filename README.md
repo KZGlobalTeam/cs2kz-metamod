@@ -2,7 +2,7 @@ WIP, not ready for release
 
 Requirements: Metamod
 
-For Play Kz sounds:
+(Optional) For KZ sound effects (eg. jumpstats):
 - Latest [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) needs to be installed.
   
 Compilation:

@@ -235,12 +235,12 @@ private:
 public:
 	static_global void RegisterCommands();
 
-	void SetBroadcastMinTier(const char *tierString);
-	void SetPlaySoundMinDTier(const char *tierString);
-	int GetStringTierLevel(const char *tierString);
+	static_global DistanceTier GetDistTierFromString(const char *tierString);
 
+	void SetBroadcastMinTier(const char *tierString);
+	void SetSoundMinTier(const char *tierString);
 	DistanceTier GetBroadcastMinTier() { return this->broadcastMinTier; };
-	DistanceTier GetPlaySoundMinDTier() { return this->soundMinTier; }
+	DistanceTier GetSoundMinTier() { return this->soundMinTier; }
 
 	void ToggleJSAlways();
 	void ToggleJumpstatsReporting();
@@ -276,7 +276,7 @@ public:
 	void DetectInvalidGains();
 	void DetectExternalModifications();
 
-	static_global void BroadcastJumpToChat(KZPlayer *target, Jump *jump);
+	static_global void BroadcastJumpToChat(Jump *jump);
 	static_global void PlayJumpstatSound(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToChat(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToConsole(KZPlayer *target, Jump *jump);
