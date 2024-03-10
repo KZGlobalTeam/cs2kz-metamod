@@ -75,8 +75,8 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hidelegs",	Command_KzHidelegs,			"Hide your legs in first person.");
 	scmd::RegisterCmd("kz_hide",		Command_KzHide,				"Hide other players.");
 	scmd::RegisterCmd("kz_restart",		Command_KzRestart,			"Restart.");
-	scmd::RegisterCmd("kz_r",			Command_KzRestart,			"Restart.");
-	scmd::RegisterCmd("kz_hideweapon",	Command_KzHideWeapon,		"Hide weapon viewmodel.");
+	scmd::RegisterCmd("kz_r",		Command_KzRestart,			"Restart.");
+	scmd::RegisterCmd("kz_hideweapon",	Command_KzHideWeapon,			"Hide weapon viewmodel.");
 	scmd::RegisterCmd("jointeam",		Command_JoinTeam,			"Jointeam interceptor", true);
 	KZCheckpointService::RegisterCommands();
 	KZJumpstatsService::RegisterCommands();
