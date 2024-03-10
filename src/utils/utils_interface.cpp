@@ -3,6 +3,7 @@
 #include "iserver.h"
 #include "interfaces.h"
 #include "cs2kz.h"
+#include "ctimer.h"
 
 extern CGameConfig *g_pGameConfig;
 
@@ -75,3 +76,36 @@ CGameEntitySystem *KZUtils::GetGameEntitySystem()
 {
 	return GameEntitySystem();
 }
+
+void KZUtils::AddTimer(bool preserveMapChange, CTimerBase *timer)
+{
+	if (preserveMapChange)
+	{
+		g_PersistentTimers.AddToTail(timer);
+	} 
+	else
+	{
+		g_NonPersistentTimers.AddToTail(timer);
+	}
+}
+
+void KZUtils::RemoveTimer(CTimerBase *timer)
+{
+	FOR_EACH_VEC(g_PersistentTimers, it)
+	{	
+		if (g_PersistentTimers.Element(it) == timer)
+		{
+			g_PersistentTimers.Remove(it);
+			return;
+		}
+	}
+	FOR_EACH_VEC(g_NonPersistentTimers, it)
+	{
+		if (g_NonPersistentTimers.Element(it) == timer)
+		{
+			g_NonPersistentTimers.Remove(it);
+			return;
+		}
+	}
+}
+

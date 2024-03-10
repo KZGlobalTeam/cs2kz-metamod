@@ -1,9 +1,9 @@
 #include "ctimer.h"
 
-CUtlVector<CTimerBase*> g_PersistentTimers;
-CUtlVector<CTimerBase*> g_NonPersistentTimers;
+CUtlVector<CTimerBase *> g_PersistentTimers;
+CUtlVector<CTimerBase *> g_NonPersistentTimers;
 
-void CTimerBase::ProcessTimers()
+void ProcessTimers()
 {
 	for (int i = g_PersistentTimers.Count() - 1; i != g_PersistentTimers.InvalidIndex();)
 	{
@@ -54,7 +54,7 @@ void CTimerBase::ProcessTimers()
 	}
 }
 
-void CTimerBase::RemoveNonPersistentTimers()
+void RemoveNonPersistentTimers()
 {
 	g_NonPersistentTimers.PurgeAndDeleteElements();
 }

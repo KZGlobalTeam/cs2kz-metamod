@@ -3,24 +3,14 @@
 #include <tuple>
 #include "utils/utils.h"
 #include "../../hl2sdk-cs2/public/tier1/utlvector.h"
+#include "interfaces.h"
 
 /*
 * Credit to Szwagi
 */
 
-class CTimerBase {
-public:
-	CTimerBase(float initialInterval) :
-		interval(initialInterval) {};
-
-	virtual bool Execute() = 0;
-
-	float interval;
-	float lastExecute = -1;
-
-	static_global void ProcessTimers();
-	static_global void RemoveNonPersistentTimers();
-};
+void ProcessTimers();
+void RemoveNonPersistentTimers();
 
 extern CUtlVector<CTimerBase *> g_PersistentTimers;
 extern CUtlVector<CTimerBase *> g_NonPersistentTimers;
@@ -49,15 +39,9 @@ public:
 
 /* Creates a timer for the given function, the function must return a float that represents the interval in seconds; 0 or less to stop the timer */
 template<typename... Args>
-void StartTimer(bool preserveMapChange, typename CTimer<Args...>::Fn fn, Args... args) {
+CTimer<Args...>* StartTimer(bool preserveMapChange, typename CTimer<Args...>::Fn fn, Args... args) {
 	auto timer = new CTimer<Args...>(fn, args...);
-	if (preserveMapChange)
-	{
-		g_PersistentTimers.AddToTail(timer);
-	}
-	else
-	{
-		g_NonPersistentTimers.AddToTail(timer);
-	}
+	g_pKZUtils->AddTimer(preserveMapChange, timer);
+	return timer;
 }
 

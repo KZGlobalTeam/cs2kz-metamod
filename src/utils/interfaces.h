@@ -61,6 +61,18 @@ namespace interfaces
 	}
 }
 
+// Base class for timers, see ctimer.h
+class CTimerBase {
+public:
+	CTimerBase(float initialInterval) :
+		interval(initialInterval) {};
+
+	virtual bool Execute() = 0;
+
+	float interval;
+	float lastExecute = -1;
+};
+
 #define KZ_UTILS_INTERFACE "KZUtilsInterface"
 // Expose some of the utility functions to other plugins.
 class KZUtils
@@ -116,6 +128,9 @@ public:
 	// c can be PI (for radians) or 180.0 (for degrees);
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
 	virtual CGameEntitySystem *GetGameEntitySystem();
+
+	virtual void AddTimer(bool preserveMapChange, CTimerBase *timer);
+	virtual void RemoveTimer(CTimerBase *timer);
 };
 
 extern KZUtils *g_pKZUtils;

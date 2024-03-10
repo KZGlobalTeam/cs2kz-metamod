@@ -175,7 +175,7 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
-	CTimerBase::ProcessTimers();
+	ProcessTimers();
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	static int entitySystemHook = 0;
 	if (GameEntitySystem() && !entitySystemHook)
