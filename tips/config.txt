@@ -8,6 +8,6 @@
 	}
 	"Settings"
 	{
-		"interval"	"5"
+		"interval"	"75"
 	}
 }

@@ -24,7 +24,7 @@ bool KZTipService::ShouldPrintTip()
 
 void KZTipService::PrintTip()
 {
-	player->PrintChat(true, false, "%s", pTipKeyValues->GetString(tipNames[nextTipIndex]));
+	player->PrintChat(true, false, "%s", pTipKeyValues->FindKey(tipNames[nextTipIndex])->GetString(this->language));
 }
 
 void KZTipService::LoadTips()
@@ -63,34 +63,24 @@ void KZTipService::LoadTips()
 
 	KeyValues *removedKeyValues = configKeyValues->FindKey("Remove", true);
 	CUtlVector<const char *> removedTipNames;
-	FOR_EACH_SUBKEY(removedKeyValues, it)
+	FOR_EACH_SUBKEY(removedKeyValues, i)
 	{
-		removedTipNames.AddToTail(it->GetName());
+		removedTipNames.AddToTail(i->GetName());
 	}
 
-	FOR_EACH_SUBKEY(pTipKeyValues, it)
+	FOR_EACH_SUBKEY(pTipKeyValues, i)
 	{
-		if (!removedTipNames.HasElement(it->GetName()))
+		if (!removedTipNames.HasElement(i->GetName()))
 		{
-			tipNames.AddToTail(it->GetName());
+			tipNames.AddToTail(i->GetName());
 		}
 	}
 
 	KeyValues *insertedKeyValues = configKeyValues->FindKey("Insert", true);
-	FOR_EACH_SUBKEY(insertedKeyValues, it)
+	FOR_EACH_SUBKEY(insertedKeyValues, i)
 	{
-		const char *insertedValue = insertedKeyValues->GetString(it->GetName(), "");
-		const char *currentValue = pTipKeyValues->GetString(it->GetName(), "");
-
-		if (V_strcmp(currentValue, "") != 0)
-		{
-			pTipKeyValues->SetString(it->GetName(), insertedValue);
-		}
-		else
-		{
-			pTipKeyValues->AddString(it->GetName(), insertedValue);
-			tipNames.AddToTail(it->GetName());
-		}
+		pTipKeyValues->FindAndDeleteSubKey(i->GetName());
+		pTipKeyValues->AddSubKey(i); 
 	}
 
 	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
@@ -115,7 +105,7 @@ void KZTipService::InitTips()
 	tipTimer = StartTimer(true, PrintTips);
 }
 	
-float KZTipService::PrintTips() 
+float KZTipService::PrintTips()
 {
 	for (int i = 0; i <= MAXPLAYERS; i++)
 	{

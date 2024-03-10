@@ -1,10 +1,31 @@
 "Tips"
 {
-	"kz_help"	"{grey}Use the {default}/help {grey}command to see all available KZ commands."
-	"kz_mode"	"{grey}You can switch to a mode by typing its abbreviation. For example, type {default}/ckz{grey} to switch to the {purple}Classic {grey}mode or {default}/vnl {grey}to switch to the {purple}Vanilla {grey}mode."
-	"kz_restart"	"{grey}You can teleport back to your start position using the {default}/restart {grey}command."
-	"kz_ssp"	"{grey}You can use {default}/setstartpos {grey}and {default}/clearstartpos {grey}to control your start teleport position."
-	"stretch"	"{grey}Look after yourself. Take regular breaks to stretch and stay hydrated."
-	"kz_tips"	"{grey}Don't need tips like this showing up in chat? You can toggle them by typing {default}/tips{grey}."
-	"bind"		"{grey}You can bind commands to keys for easy access, for example: {default}'bind {purple}<key1> {default}kz_cp; bind {purple}<key2> {default}kz_tp'."
+	"kz_help"
+	{
+		"en"	"{grey}Use the {default}/help {grey}command to see all available KZ commands."
+	}
+	"kz_mode"
+	{
+		"en"	"{grey}You can switch to a mode by typing its abbreviation. For example, type {default}/ckz{grey} to switch to the {purple}Classic {grey}mode or {default}/vnl {grey}to switch to the {purple}Vanilla {grey}mode."
+	}
+	"kz_restart"
+	{
+		"en"	"{grey}You can teleport back to your start position using the {default}/restart {grey}command."
+	}
+	"kz_ssp"
+	{
+		"en"	"{grey}You can use {default}/setstartpos {grey}and {default}/clearstartpos {grey}to control your start teleport position."
+	}
+	"stretch"
+	{
+		"en"	"{grey}Look after yourself. Take regular breaks to stretch and stay hydrated."
+	}
+	"kz_tips"
+	{
+		"en"	"{grey}Don't need tips like this showing up in chat? You can toggle them by typing {default}/tips{grey}."
+	}
+	"bind"
+	{
+		"en"	"{grey}You can bind commands to keys for easy access, for example: {default}'bind {purple}<key1> {default}kz_cp; bind {purple}<key2> {default}kz_tp'."
+	}
 }
