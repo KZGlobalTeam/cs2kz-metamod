@@ -1048,7 +1048,7 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 {
 	if (!tierString || !V_stricmp("", tierString))
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <1-7/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
 		return;
 	}
 
@@ -1061,7 +1061,7 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 
 	if (tier > DistanceTier_Wrecker || tier < DistanceTier_None)
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <1-7/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
 		return;
 	}
 
@@ -1077,7 +1077,7 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 {
 	if (!tierString || !V_stricmp("", tierString))
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <1-7/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
 		return;
 	}
 
@@ -1090,7 +1090,7 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 
 	if (tier > DistanceTier_Wrecker || tier < DistanceTier_None)
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <1-7/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
 		return;
 	}
 
