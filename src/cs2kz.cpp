@@ -70,6 +70,10 @@ void KZPlugin::AllPluginsLoaded()
 	KZ::style::LoadStylePlugins();
 
 	g_pMultiAddonManager = (IMultiAddonManager*)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
+}
+
+void KZPlugin::AddonInit()
+{
 	g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
 	g_pMultiAddonManager->RefreshAddons();
 }
