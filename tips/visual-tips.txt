@@ -14,6 +14,6 @@
 	}
 	"kz_hideweapon"
 	{
-		"en"	"{grey}Use the {default}/hideweapon {grey}command to toggle your weapon visibility."
+		"en"	"{grey}Type {default}/hideweapon {grey}to toggle your weapon visibility."
 	}
 }

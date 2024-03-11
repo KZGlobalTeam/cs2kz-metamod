@@ -26,6 +26,14 @@
 	}
 	"bind"
 	{
-		"en"	"{grey}You can bind commands to keys for easy access, for example: {default}'bind {purple}<key1> {default}kz_cp; bind {purple}<key2> {default}kz_tp'."
+		"en"	"{grey}You can bind commands to keys for easy access, for example: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
+	}
+	"kz_prevcp"
+	{
+		"en"	"{grey}Teleport to the previous checkpoint using the {default}/prevcp {grey}command."
+	}
+	"kz_nextcp"
+	{
+		"en"	"{grey}Teleport to the next checkpoint using the {default}/nextcp {grey}command."
 	}
 }

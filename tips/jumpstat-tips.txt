@@ -6,6 +6,6 @@
 	}
 	"kz_jsalways"
 	{
-		"en"	"{grey}Use the {default}/jsalways {grey}command to receive reports for invalid jumpstats."
+		"en"	"{grey}Use the {default}/jsalways {grey}command to toggle always-on jumpstats mode."
 	}
 }
