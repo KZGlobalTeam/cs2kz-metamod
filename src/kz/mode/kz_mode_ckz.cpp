@@ -218,6 +218,7 @@ void KZClassicModeService::OnStopTouchGround()
 	// Perf
 	if (timeOnGround <= BH_PERF_WINDOW)
 	{
+		this->player->hitPerf = true;
 		// Perf speed
 		Vector2D landingVelocity2D(this->player->landingVelocity.x, this->player->landingVelocity.y);
 		landingVelocity2D.NormalizeInPlace();
