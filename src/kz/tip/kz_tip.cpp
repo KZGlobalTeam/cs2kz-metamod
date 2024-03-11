@@ -32,6 +32,9 @@ void KZTipService::LoadTips()
 	pTipKeyValues = new KeyValues("Tips");
 	KeyValues *configKeyValues = new KeyValues("Config");
 
+	pTipKeyValues->UsesEscapeSequences(true);
+	configKeyValues->UsesEscapeSequences(true);
+
 	char buffer[1024];
 	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/tips/*.*");
 	FileFindHandle_t findHandle = {};
@@ -79,7 +82,10 @@ void KZTipService::LoadTips()
 	KeyValues *insertedKeyValues = configKeyValues->FindKey("Insert", true);
 	FOR_EACH_SUBKEY(insertedKeyValues, i)
 	{
-		pTipKeyValues->FindAndDeleteSubKey(i->GetName());
+		if (!pTipKeyValues->FindAndDeleteSubKey(i->GetName()))
+		{
+			tipNames.AddToTail(i->GetName());
+		}
 		pTipKeyValues->AddSubKey(i); 
 	}
 
