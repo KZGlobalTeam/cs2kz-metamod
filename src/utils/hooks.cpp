@@ -58,7 +58,6 @@ SH_DECL_MANUALHOOK1_void(ChangeTeam, 0, 0, 0, int);
 
 SH_DECL_MANUALHOOK3_void(Teleport, 0, 0, 0, const Vector *, const QAngle *, const Vector *);
 
-bool isAddonMounted = false;
 
 void hooks::Initialize()
 {
@@ -232,11 +231,7 @@ internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReaso
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
-	if(!isAddonMounted)
-	{
-		g_KZPlugin.AddonInit();
-		isAddonMounted = true;
-	}
+	g_KZPlugin.AddonInit();
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)

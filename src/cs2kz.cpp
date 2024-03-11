@@ -74,12 +74,20 @@ void KZPlugin::AllPluginsLoaded()
 
 void KZPlugin::AddonInit()
 {
-	g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
-	g_pMultiAddonManager->RefreshAddons();
+	if(g_pMultiAddonManager != nullptr && !this->addonLoaded)
+	{
+		g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
+		g_pMultiAddonManager->RefreshAddons();
+		this->addonLoaded = true;
+	}
 }
 
 bool KZPlugin::IsAddonMounted()
 {
+	if(g_pMultiAddonManager == nullptr)
+	{
+		return false;
+	}
 	return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID);
 }
 
