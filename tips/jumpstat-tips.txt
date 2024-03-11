@@ -2,10 +2,10 @@
 {
 	"kz_togglejs"
 	{
-		"en"	"{grey}You can toggle jumpstats reporting using the {default}/togglejs {grey}command."
+		"en"	"{grey}You can toggle jumpstats reporting by typing {default}/togglejs{grey}."
 	}
 	"kz_jsalways"
 	{
-		"en"	"{grey}Use the {default}/jsalways {grey}command to toggle always-on jumpstats mode."
+		"en"	"{grey}Use {default}/jsalways {grey}to toggle always-on jumpstats mode."
 	}
 }

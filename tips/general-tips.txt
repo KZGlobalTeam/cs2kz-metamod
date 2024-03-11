@@ -2,7 +2,7 @@
 {
 	"kz_help"
 	{
-		"en"	"{grey}Use the {default}/help {grey}command to see all available KZ commands."
+		"en"	"{grey}Use {default}/help {grey}to see all available KZ commands."
 	}
 	"kz_mode"
 	{
@@ -10,7 +10,7 @@
 	}
 	"kz_restart"
 	{
-		"en"	"{grey}You can teleport back to your start position using the {default}/restart {grey}command."
+		"en"	"{grey}You can teleport back to your start position using {default}/restart{grey}."
 	}
 	"kz_ssp"
 	{
@@ -22,7 +22,7 @@
 	}
 	"kz_tips"
 	{
-		"en"	"{grey}Don't need tips like this showing up in chat? You can toggle them by typing {default}/tips{grey}."
+		"en"	"{grey}Don't need tips like this showing up in chat? You can toggle them with {default}/tips{grey}."
 	}
 	"bind"
 	{
@@ -30,10 +30,10 @@
 	}
 	"kz_prevcp"
 	{
-		"en"	"{grey}Teleport to the previous checkpoint using the {default}/prevcp {grey}command."
+		"en"	"{grey}Teleport to the previous checkpoint with {default}/prevcp{grey}."
 	}
 	"kz_nextcp"
 	{
-		"en"	"{grey}Teleport to the next checkpoint using the {default}/nextcp {grey}command."
+		"en"	"{grey}Teleport to the next checkpoint with {default}/nextcp{grey}."
 	}
 }

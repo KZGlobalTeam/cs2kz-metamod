@@ -2,15 +2,15 @@
 {
 	"kz_panel"
 	{
-		"en"	"{grey}Use the {default}/panel {grey}command to toggle the panel in the middle of your screen."
+		"en"	"{grey}Use {default}/panel {grey} to toggle the panel in the middle of your screen."
 	}
 	"kz_hidelegs"
 	{
-		"en"	"{grey}You can toggle your leg visibility using the {default}/hidelegs {grey}command."
+		"en"	"{grey}You can toggle your leg visibility by typing{default}/hidelegs{grey}."
 	}
 	"kz_hide"
 	{
-		"en"	"{grey}Don't want to see other players? Use the {default}/hide {grey}command."
+		"en"	"{grey}Don't want to see other players? Use {default}/hide{grey}."
 	}
 	"kz_hideweapon"
 	{
