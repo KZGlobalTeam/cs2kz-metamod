@@ -26,7 +26,6 @@ public:
 
 	CGlobalVars serverGlobals;
 	bool unloading = false;
-	bool addonLoaded = false;
 };
 
 extern KZPlugin g_KZPlugin;
