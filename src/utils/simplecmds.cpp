@@ -30,7 +30,7 @@ internal bool g_coreCmdsRegistered = false;
 
 internal SCMD_CALLBACK(Command_KzHelp)
 {
-	utils::PrintChat(controller, "%s Look in your console for a list of commands!", KZ_CHAT_PREFIX);
+	utils::CPrintChat(controller, "%s Look in your console for a list of commands!", KZ_CHAT_PREFIX);
 	utils::PrintConsole(controller, "To use these commands, you can type \"bind <key> %s<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\"", SCMD_CONSOLE_PREFIX);
 	Scmd *cmds = g_cmdManager.cmds;
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
