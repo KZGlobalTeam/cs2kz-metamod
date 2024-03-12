@@ -746,7 +746,7 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
 			if (player->jumpstatsService->ShouldDisplayJumpstats() && tier >= player->jumpstatsService->GetBroadcastMinTier() && player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
 			{
-				player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a %s%s {grey}[{purple}%s{grey}]", jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpColor, jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
+				player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a {lime}%s {grey}[{purple}%s{grey}]", jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
 			}
 		}
 	}
