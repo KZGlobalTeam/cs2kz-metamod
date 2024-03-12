@@ -1,0 +1,19 @@
+"Tips"
+{
+	"kz_panel"
+	{
+		"en"	"{grey}Use {default}/panel {grey} to toggle the panel in the middle of your screen."
+	}
+	"kz_hidelegs"
+	{
+		"en"	"{grey}You can toggle your leg visibility by typing{default}/hidelegs{grey}."
+	}
+	"kz_hide"
+	{
+		"en"	"{grey}Don't want to see other players? Use {default}/hide{grey}."
+	}
+	"kz_hideweapon"
+	{
+		"en"	"{grey}Type {default}/hideweapon {grey}to toggle your weapon visibility."
+	}
+}

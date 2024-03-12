@@ -6,6 +6,7 @@
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "utils/utils.h"
+#include "utils/ctimer.h"
 #include "entityclass.h"
 class GameSessionConfiguration_t {};
 
@@ -174,6 +175,7 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
+	ProcessTimers();
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	static int entitySystemHook = 0;
 	if (GameEntitySystem() && !entitySystemHook)
