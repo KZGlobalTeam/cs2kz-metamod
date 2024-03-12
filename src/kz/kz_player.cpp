@@ -8,7 +8,6 @@
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
 #include "tip/kz_tip.h"
-#include "noclip/kz_noclip.h"
 #include "style/kz_style.h"
 #include "spec/kz_spec.h"
 #include "timer/kz_timer.h"
