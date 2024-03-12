@@ -1,10 +1,10 @@
 #include "kz_tip.h"
 
-internal KeyValues *pTipKeyValues;
 internal CUtlVector<const char *> tipNames;
-internal f64 tipInterval;
-internal i32 nextTipIndex;
+internal KeyValues *pTipKeyValues;
 internal CTimer<> *tipTimer;
+internal i32 nextTipIndex;
+internal f64 tipInterval;
 
 void KZTipService::Reset()
 {
@@ -31,65 +31,71 @@ void KZTipService::LoadTips()
 {
 	pTipKeyValues = new KeyValues("Tips");
 	KeyValues *configKeyValues = new KeyValues("Config");
-
 	pTipKeyValues->UsesEscapeSequences(true);
 	configKeyValues->UsesEscapeSequences(true);
 
 	char buffer[1024];
 	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/tips/*.*");
 	FileFindHandle_t findHandle = {};
-	const char *output = g_pFullFileSystem->FindFirst(buffer, &findHandle);
-	if (output)
+	const char *fileName = g_pFullFileSystem->FindFirst(buffer, &findHandle);
+	if (fileName)
 	{
 		do
 		{
 			char fullPath[1024];
-			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/tips/%s", g_SMAPI->GetBaseDir(), output);
-			if (V_stricmp(output, "config.txt") == 0)
+			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/tips/%s", g_SMAPI->GetBaseDir(), fileName);
+			if (V_stricmp(fileName, "config.txt") == 0)
 			{
 				if (!configKeyValues->LoadFromFile(g_pFullFileSystem, fullPath, nullptr))
 				{
-					META_CONPRINTF("Failed to load tips config file\n", output);
+					META_CONPRINT("Failed to load tips config file\n");
 				}
 			}
 			else 
 			{
 				if (!pTipKeyValues->LoadFromFile(g_pFullFileSystem, fullPath, nullptr))
 				{
-					META_CONPRINTF("Failed to load %s\n", output);
+					META_CONPRINTF("Failed to load %s\n", fileName);
 				}
 			}
-			output = g_pFullFileSystem->FindNext(findHandle);
-		} while (output);
+			fileName = g_pFullFileSystem->FindNext(findHandle);
+		} while (fileName);
 		g_pFullFileSystem->FindClose(findHandle);
 	}
 
-	KeyValues *removedKeyValues = configKeyValues->FindKey("Remove", true);
 	CUtlVector<const char *> removedTipNames;
-	FOR_EACH_SUBKEY(removedKeyValues, i)
+	FOR_EACH_SUBKEY(configKeyValues->FindKey("Remove", true), it)
 	{
-		removedTipNames.AddToTail(i->GetName());
+		removedTipNames.AddToTail(it->GetName());
 	}
 
-	FOR_EACH_SUBKEY(pTipKeyValues, i)
+	FOR_EACH_SUBKEY(pTipKeyValues, it)
 	{
-		if (!removedTipNames.HasElement(i->GetName()))
+		if (!removedTipNames.HasElement(it->GetName()))
 		{
-			tipNames.AddToTail(i->GetName());
+			tipNames.AddToTail(it->GetName());
 		}
 	}
 
-	KeyValues *insertedKeyValues = configKeyValues->FindKey("Insert", true);
-	FOR_EACH_SUBKEY(insertedKeyValues, i)
+	FOR_EACH_SUBKEY(configKeyValues->FindKey("Insert", true), it)
 	{
-		if (!pTipKeyValues->FindAndDeleteSubKey(i->GetName()))
+		if (!pTipKeyValues->FindAndDeleteSubKey(it->GetName()))
 		{
-			tipNames.AddToTail(i->GetName());
+			tipNames.AddToTail(it->GetName());
 		}
-		pTipKeyValues->AddSubKey(i); 
+		pTipKeyValues->AddSubKey(it); 
 	}
 
 	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
+}
+
+void KZTipService::ShuffleTips()
+{
+	for (int i = tipNames.Count() - 1; i > 0; --i)
+	{
+		int j = RandomInt(0, i);
+		V_swap(tipNames.Element(i), tipNames.Element(j));
+	}
 }
 
 internal SCMD_CALLBACK(Command_KzToggleTips)
@@ -103,11 +109,7 @@ void KZTipService::InitTips()
 {
 	scmd::RegisterCmd("kz_tips", Command_KzToggleTips, "Toggle tips.");
 	LoadTips();
-	for (int i = tipNames.Count() - 1; i > 0; --i)
-	{
-		int j = RandomInt(0, i);
-		V_swap(tipNames.Element(i), tipNames.Element(j));
-	}
+	ShuffleTips();
 	tipTimer = StartTimer(PrintTips, true);
 }
 	

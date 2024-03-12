@@ -6,7 +6,7 @@
 	}
 	"kz_hidelegs"
 	{
-		"en"	"{grey}You can toggle your leg visibility by typing{default}/hidelegs{grey}."
+		"en"	"{grey}You can toggle your leg visibility by typing{default} /hidelegs{grey}."
 	}
 	"kz_hide"
 	{
