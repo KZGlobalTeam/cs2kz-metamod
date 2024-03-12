@@ -21,6 +21,7 @@ class CCSPlayerPawn;
 class CBaseEntity2;
 class CBasePlayerController;
 class IGameEventListener2;
+class CTimerBase;
 struct SndOpEventGuid_t;
 struct EmitSound_t;
 
@@ -116,6 +117,9 @@ public:
 	// c can be PI (for radians) or 180.0 (for degrees);
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
 	virtual CGameEntitySystem *GetGameEntitySystem();
+
+	virtual void AddTimer(CTimerBase *timer, bool preserveMapChange = true);
+	virtual void RemoveTimer(CTimerBase *timer);
 };
 
 extern KZUtils *g_pKZUtils;

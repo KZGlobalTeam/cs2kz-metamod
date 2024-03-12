@@ -7,6 +7,8 @@
 #include "hud/kz_hud.h"
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
+#include "tip/kz_tip.h"
+#include "noclip/kz_noclip.h"
 #include "style/kz_style.h"
 #include "spec/kz_spec.h"
 #include "timer/kz_timer.h"
@@ -26,6 +28,7 @@ void KZPlayer::Init()
 	delete this->specService;
 	delete this->timerService;
 	delete this->noclipService;
+	delete this->tipService;
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -34,6 +37,7 @@ void KZPlayer::Init()
 	this->hudService = new KZHUDService(this);
 	this->specService = new KZSpecService(this);
 	this->timerService = new KZTimerService(this);
+	this->tipService = new KZTipService(this);
 	KZ::mode::InitModeService(this);
 	KZ::style::InitStyleService(this);
 }
@@ -51,6 +55,7 @@ void KZPlayer::Reset()
 	this->jumpstatsService->Reset();
 	this->hudService->Reset();
 	this->timerService->Reset();
+	this->tipService->Reset();
 
 	// TODO: Make a config for default mode and style
 	g_pKZModeManager->SwitchToMode(this, "VNL", true);

@@ -12,6 +12,7 @@
 #include "hud/kz_hud.h"
 #include "spec/kz_spec.h"
 #include "timer/kz_timer.h"
+#include "tip/kz_tip.h"
 
 internal SCMD_CALLBACK(Command_KzHidelegs)
 {
