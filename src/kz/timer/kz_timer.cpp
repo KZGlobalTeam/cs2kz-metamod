@@ -482,7 +482,7 @@ void KZTimerService::OnClientDisconnect()
 
 void KZTimerService::OnPlayerSpawn()
 {
-	if (!this->paused)
+	if (!this->player->GetPawn() || !this->paused)
 	{
 		return;
 	}
