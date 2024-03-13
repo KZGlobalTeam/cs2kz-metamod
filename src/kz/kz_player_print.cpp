@@ -29,6 +29,10 @@ internal CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, bool ad
 	CRecipientFilter *filter = new CRecipientFilter();
 	CPlayerSlot slot = targetPlayer->GetPlayerSlot();
 	filter->AddRecipient(slot);
+	if (!addSpectators)
+	{
+		return filter;
+	}
 	if (!targetPlayer->IsAlive())
 	{
 		return filter;
