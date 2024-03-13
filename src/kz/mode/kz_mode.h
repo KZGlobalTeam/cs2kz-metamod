@@ -101,9 +101,14 @@ class KZModeManager
 		ModeServiceFactory factory;
 		bool shortCmdRegistered;
 	};
+
+public:
+	const char *defaultMode;
+
 public:
 	virtual bool RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
 	virtual void UnregisterMode(const char *modeName);
+	void LoadDefaultMode();
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);
 	void Cleanup();
 private:

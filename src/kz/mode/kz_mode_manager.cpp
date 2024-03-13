@@ -41,6 +41,7 @@ void KZ::mode::InitModeManager()
 	}
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService *{ return new KZVanillaModeService(player); };
 	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
+	modeManager.LoadDefaultMode();
 	initialized = true;
 }
 
@@ -189,6 +190,19 @@ void KZModeManager::UnregisterMode(const char *modeName)
 			this->SwitchToMode(player, "VNL");
 		}
 	}
+}
+
+void KZModeManager::LoadDefaultMode()
+{
+	char modeCfgPath[1024];
+	modeCfgPath[0] = '\0';
+	V_strncat(modeCfgPath, g_SMAPI->GetBaseDir(), sizeof(modeCfgPath));
+	V_strncat(modeCfgPath, "/addons/cs2kz/modes/mode-config.txt", sizeof(modeCfgPath) - V_strlen(modeCfgPath) - 1);
+
+	KeyValues *modeCfgKeyValues = new KeyValues("ModeConfig");
+	modeCfgKeyValues->LoadFromFile(g_pFullFileSystem, modeCfgPath, nullptr);
+
+	defaultMode = modeCfgKeyValues->GetString("default-mode", "VNL");
 }
 
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)

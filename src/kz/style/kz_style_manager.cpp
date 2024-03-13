@@ -24,6 +24,7 @@ void KZ::style::InitStyleManager()
 	}
 	StyleServiceFactory vnlFactory = [](KZPlayer *player) -> KZStyleService *{ return new KZNormalStyleService(player); };
 	styleManager.RegisterStyle(0, "NRM", "Normal", vnlFactory);
+	styleManager.LoadDefaultStyle();
 	initialized = true;
 }
 
@@ -107,6 +108,19 @@ void KZStyleManager::UnregisterStyle(const char *styleName)
 			this->SwitchToStyle(player, "NRM");
 		}
 	}
+}
+
+void KZStyleManager::LoadDefaultStyle()
+{
+	char styleCfgPath[1024];
+	styleCfgPath[0] = '\0';
+	V_strncat(styleCfgPath, g_SMAPI->GetBaseDir(), sizeof(styleCfgPath));
+	V_strncat(styleCfgPath, "/addons/cs2kz/styles/style-config.txt", sizeof(styleCfgPath) - V_strlen(styleCfgPath) - 1);
+
+	KeyValues *styleCfgKeyValues = new KeyValues("StyleConfig");
+	styleCfgKeyValues->LoadFromFile(g_pFullFileSystem, styleCfgPath, nullptr);
+
+	defaultStyle = styleCfgKeyValues->GetString("default-style", "NRM");
 }
 
 bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool silent)

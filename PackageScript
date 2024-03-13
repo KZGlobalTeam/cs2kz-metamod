@@ -69,6 +69,8 @@ builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'general-tips.txt'), 
 builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'jumpstat-tips.txt'), tips_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'visual-tips.txt'), tips_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'config.txt'), tips_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../modes', 'mode-config.txt'), mode_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../styles', 'style-config.txt'), style_folder)
 
 # Generate PDB info.
 with open(os.path.join(builder.buildPath, 'pdblog.txt'), 'wt') as fp:

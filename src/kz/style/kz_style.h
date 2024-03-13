@@ -92,8 +92,12 @@ class KZStyleManager
 	};
 
 public:
+	const char *defaultStyle;
+
+public:
 	virtual bool RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory);
 	virtual void UnregisterStyle(const char *styleName);
+	void LoadDefaultStyle();
 	bool SwitchToStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void Cleanup();
 private:
