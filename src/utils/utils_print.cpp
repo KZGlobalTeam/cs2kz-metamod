@@ -196,6 +196,7 @@ void utils::PrintConsole(CBaseEntity2 *entity, const char *format, ...)
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintChat(CBaseEntity2 *entity, const char *format, ...)
@@ -203,6 +204,7 @@ void utils::PrintChat(CBaseEntity2 *entity, const char *format, ...)
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintCentre(CBaseEntity2 *entity, const char *format, ...)
@@ -210,6 +212,7 @@ void utils::PrintCentre(CBaseEntity2 *entity, const char *format, ...)
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintAlert(CBaseEntity2 *entity, const char *format, ...)
@@ -217,6 +220,7 @@ void utils::PrintAlert(CBaseEntity2 *entity, const char *format, ...)
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintHTMLCentre(CBaseEntity2 *entity, const char *format, ...)
@@ -249,6 +253,7 @@ void utils::PrintConsoleAll(const char *format, ...)
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter *filter = new CBroadcastRecipientFilter;
 	ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintChatAll(const char *format, ...)
@@ -256,6 +261,7 @@ void utils::PrintChatAll(const char *format, ...)
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter *filter = new CBroadcastRecipientFilter;
 	ClientPrintFilter(filter, HUD_PRINTTALK, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintCentreAll(const char *format, ...)
@@ -263,6 +269,7 @@ void utils::PrintCentreAll(const char *format, ...)
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter *filter = new CBroadcastRecipientFilter;
 	ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintAlertAll(const char *format, ...)
@@ -270,6 +277,7 @@ void utils::PrintAlertAll(const char *format, ...)
 	FORMAT_STRING(buffer);
 	CBroadcastRecipientFilter *filter = new CBroadcastRecipientFilter;
 	ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
+	delete filter;
 }
 
 void utils::PrintHTMLCentreAll(const char *format, ...)
@@ -301,6 +309,7 @@ void utils::CPrintChat(CBaseEntity2 *entity, const char *format, ...)
 	{
 		Warning("utils::CPrintChat did not have enough space to print: %s\n", buffer);
 	}
+	delete filter;
 }
 
 void utils::CPrintChatAll(const char *format, ...)
@@ -316,4 +325,5 @@ void utils::CPrintChatAll(const char *format, ...)
 	{
 		Warning("utils::CPrintChatAll did not have enough space to print: %s\n", buffer);
 	}
+	delete filter;
 }
