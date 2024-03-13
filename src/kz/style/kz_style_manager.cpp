@@ -120,7 +120,7 @@ void KZStyleManager::LoadDefaultStyle()
 	KeyValues *styleCfgKeyValues = new KeyValues("StyleConfig");
 	styleCfgKeyValues->LoadFromFile(g_pFullFileSystem, styleCfgPath, nullptr);
 
-	defaultStyle = styleCfgKeyValues->GetString("default-style", "NRM");
+	defaultStyle = styleCfgKeyValues->GetString("defaultStyle", "NRM");
 }
 
 bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool silent)

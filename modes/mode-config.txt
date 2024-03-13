@@ -1,4 +1,4 @@
 "ModeConfig"
 {
-	"default-mode"	"VNL"
+	"defaultMode"	"Classic"
 }

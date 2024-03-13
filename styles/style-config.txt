@@ -1,4 +1,4 @@
 "StyleConfig"
 {
-	"default-style"	"NRM"	
+	"defaultStyle"	"Normal"	
 }

@@ -202,7 +202,7 @@ void KZModeManager::LoadDefaultMode()
 	KeyValues *modeCfgKeyValues = new KeyValues("ModeConfig");
 	modeCfgKeyValues->LoadFromFile(g_pFullFileSystem, modeCfgPath, nullptr);
 
-	defaultMode = modeCfgKeyValues->GetString("default-mode", "VNL");
+	defaultMode = modeCfgKeyValues->GetString("defaultMode", "CKZ");
 }
 
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)
