@@ -17,15 +17,14 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 
 		// Find out who this info will be sent to.
 		uintptr_t targetAddr = reinterpret_cast<uintptr_t>(pTransmitInfo) + g_pGameConfig->GetOffset("QuietPlayerSlot");
-		CPlayerSlot targetSlot = CPlayerSlot(*reinterpret_cast<int*>(targetAddr));
+		CPlayerSlot targetSlot = CPlayerSlot(*reinterpret_cast<int *>(targetAddr));
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 
 		EntityInstanceByClassIter_t iter(NULL, "player");
-		for (CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(iter.First());
-			pawn != NULL; 
-			pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
+		for (CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(iter.First()); pawn != NULL;
+			 pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
 		{
 			if (targetPlayerPawn == pawn)
 			{

@@ -22,7 +22,7 @@ void KZ::style::InitStyleManager()
 	{
 		return;
 	}
-	StyleServiceFactory vnlFactory = [](KZPlayer *player) -> KZStyleService *{ return new KZNormalStyleService(player); };
+	StyleServiceFactory vnlFactory = [](KZPlayer *player) -> KZStyleService * { return new KZNormalStyleService(player); };
 	styleManager.RegisterStyle(0, "NRM", "Normal", vnlFactory);
 	initialized = true;
 }
@@ -73,7 +73,7 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 		}
 	}
 
-	this->styleInfos.AddToTail({ id, shortName, longName, factory });
+	this->styleInfos.AddToTail({id, shortName, longName, factory});
 	return true;
 }
 
@@ -138,7 +138,16 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 		player->PrintConsole(false, false, "Possible styles: (Current style is %s)", player->styleService->GetStyleName());
 		FOR_EACH_VEC(this->styleInfos, i)
 		{
-			player->PrintConsole(false, false, "%s (kz_style %s / kz_style %s)", this->styleInfos[i].longName, this->styleInfos[i].longName, this->styleInfos[i].shortName);
+			// clang-format off
+			player->PrintConsole(
+				false,
+				false,
+				"%s (kz_style %s / kz_style %s)",
+				this->styleInfos[i].longName,
+				this->styleInfos[i].longName,
+				this->styleInfos[i].shortName
+			);
+			// clang-format on
 		}
 		return false;
 	}
@@ -192,7 +201,10 @@ void KZStyleManager::Cleanup()
 	char error[256];
 	FOR_EACH_VEC(this->styleInfos, i)
 	{
-		if (this->styleInfos[i].id == 0) continue;
+		if (this->styleInfos[i].id == 0)
+		{
+			continue;
+		}
 		pluginManager->Unload(this->styleInfos[i].id, true, error, sizeof(error));
 	}
 }
@@ -202,7 +214,6 @@ void KZ::style::InitStyleService(KZPlayer *player)
 	delete player->styleService;
 	player->styleService = new KZNormalStyleService(player);
 }
-
 
 internal SCMD_CALLBACK(Command_KzStyle)
 {

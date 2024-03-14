@@ -24,6 +24,7 @@ bool KZTimerService::UnregisterEventListener(KZTimerServiceEventListener *eventL
 
 bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 {
+	// clang-format off
 	if (!this->player->GetPawn()->IsAlive()
 		|| this->JustStartedTimer()
 		|| this->JustTeleported()
@@ -32,6 +33,7 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
 		|| (this->GetTimerRunning() && !V_stricmp(courseName, this->currentCourse)))
+	// clang-format on
 	{
 		return false;
 	}
@@ -210,8 +212,7 @@ void KZTimerService::PlayTimerStopSound()
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_STOP);
 }
 
-
-void KZTimerService::FormatTime(f64 time, char* output, u32 length, bool precise)
+void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise)
 {
 	int roundedTime = RoundFloatToInt(time * 1000); // Time rounded to number of ms
 
@@ -256,29 +257,31 @@ void KZTimerService::PrintEndTimeString()
 	u32 tpCount = this->player->checkpointService->GetTeleportCount();
 	if (!tpCount)
 	{
-		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s{grey}", 
-			this->player->modeService->GetModeShortName(), 
-			this->player->styleService->GetStyleShortName());
+		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s{grey}", this->player->modeService->GetModeShortName(),
+				 this->player->styleService->GetStyleShortName());
 	}
 	else
 	{
 		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s {grey}|{purple} %i {grey}TPs",
-			this->player->modeService->GetModeShortName(),
-			this->player->styleService->GetStyleShortName(),
-			tpCount);
+				 this->player->modeService->GetModeShortName(), this->player->styleService->GetStyleShortName(), tpCount);
 	}
 	char courseStr[KZ_MAX_COURSE_NAME_LENGTH + 16] = "";
 	if (strlen(this->currentCourse) > 0)
 	{
 		snprintf(courseStr, sizeof(courseStr), " course {default}%s{grey} ", this->currentCourse);
 	}
-	utils::CPrintChatAll("%s {lime}%s {grey}finished %s with a%srun of {default}%s{grey}! [%s]",
+
+	// clang-format off
+	utils::CPrintChatAll(
+		"%s {lime}%s {grey}finished %s with a%srun of {default}%s{grey}! [%s]",
 		KZ_CHAT_PREFIX,
 		this->player->GetController()->m_iszPlayerName(),
 		courseStr,
 		tpCount > 0 ? " " : " {blue}PRO{grey} ",
 		time,
-		tpCountStr);
+		tpCountStr
+	);
+	// clang-format on
 }
 
 void KZTimerService::Pause()
@@ -340,8 +343,7 @@ bool KZTimerService::CanPause(bool showError)
 			}
 			return false;
 		}
-		else if (!this->player->GetPawn()->m_fFlags & FL_ONGROUND
-				&& !(velocity.Length2D() == 0.0f && velocity.z == 0.0f))
+		else if (!this->player->GetPawn()->m_fFlags & FL_ONGROUND && !(velocity.Length2D() == 0.0f && velocity.z == 0.0f))
 		{
 			if (showError)
 			{
@@ -407,8 +409,7 @@ void KZTimerService::Resume(bool force)
 
 bool KZTimerService::CanResume(bool showError)
 {
-	if (this->GetTimerRunning() && this->hasPausedInThisRun
-		&& g_pKZUtils->GetServerGlobals()->curtime - this->lastPauseTime < KZ_PAUSE_COOLDOWN)
+	if (this->GetTimerRunning() && this->hasPausedInThisRun && g_pKZUtils->GetServerGlobals()->curtime - this->lastPauseTime < KZ_PAUSE_COOLDOWN)
 	{
 		if (showError)
 		{

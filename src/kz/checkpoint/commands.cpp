@@ -45,6 +45,7 @@ internal SCMD_CALLBACK(Command_ClearStartPos)
 
 void KZCheckpointService::RegisterCommands()
 {
+	// clang-format off
 	scmd::RegisterCmd("kz_checkpoint", Command_KzCheckpoint, "Make a checkpoint on ground or on a ladder.");
 	scmd::RegisterCmd("kz_cp", Command_KzCheckpoint, "Make a checkpoint on ground or on a ladder.");
 	scmd::RegisterCmd("kz_teleport", Command_KzTeleport, "Teleport to the current checkpoint.");
@@ -57,5 +58,5 @@ void KZCheckpointService::RegisterCommands()
 	scmd::RegisterCmd("kz_ssp", Command_SetStartPos, "Set your custom start position to your current position.");
 	scmd::RegisterCmd("kz_clearstartpos", Command_ClearStartPos, "Clear your custom start position.");
 	scmd::RegisterCmd("kz_csp", Command_ClearStartPos, "Clear your custom start position.");
+	// clang-format on
 }
-

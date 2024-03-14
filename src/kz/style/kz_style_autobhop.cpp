@@ -10,7 +10,7 @@ KZAutoBhopStylePlugin g_KZAutoBhopStylePlugin;
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 KZStyleManager *g_pStyleManager = NULL;
-StyleServiceFactory g_StyleFactory = [](KZPlayer *player) -> KZStyleService *{ return new KZAutoBhopStyleService(player); };
+StyleServiceFactory g_StyleFactory = [](KZPlayer *player) -> KZStyleService * { return new KZAutoBhopStyleService(player); };
 PLUGIN_EXPOSE(KZAutoBhopStylePlugin, g_KZAutoBhopStylePlugin);
 
 ConVar *sv_autobunnyhopping;
@@ -33,8 +33,8 @@ bool KZAutoBhopStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t
 		return false;
 	}
 	modules::Initialize();
-	if (!interfaces::Initialize(ismm, error, maxlen)
-		|| nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig())
+	// TODO: find good names for these conditions
+	if (!interfaces::Initialize(ismm, error, maxlen) || nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig())
 		|| !g_pStyleManager->RegisterStyle(g_PLID, STYLE_NAME_SHORT, STYLE_NAME, g_StyleFactory))
 	{
 		return false;
@@ -55,9 +55,7 @@ bool KZAutoBhopStylePlugin::Unload(char *error, size_t maxlen)
 	return true;
 }
 
-void KZAutoBhopStylePlugin::AllPluginsLoaded()
-{
-}
+void KZAutoBhopStylePlugin::AllPluginsLoaded() {}
 
 bool KZAutoBhopStylePlugin::Pause(char *error, size_t maxlen)
 {

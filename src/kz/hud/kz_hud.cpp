@@ -46,13 +46,23 @@ void KZHUDService::AddKeyText(char *buffer, int size)
 {
 	char keys[128];
 	keys[0] = 0;
-	snprintf(keys, sizeof(keys), "Keys: %s %s %s %s %s %s",
+
+	// clang-format off
+
+	snprintf(
+		keys,
+		sizeof(keys),
+		"Keys: %s %s %s %s %s %s",
 		this->player->IsButtonPressed(IN_MOVELEFT) ? "A" : "_",
 		this->player->IsButtonPressed(IN_FORWARD) ? "W" : "_",
 		this->player->IsButtonPressed(IN_BACK) ? "S" : "_",
 		this->player->IsButtonPressed(IN_MOVERIGHT) ? "D" : "_",
 		this->player->IsButtonPressed(IN_DUCK) ? "C" : "_",
-		this->player->IsButtonPressed(IN_JUMP) ? "J" : "_");
+		this->player->IsButtonPressed(IN_JUMP) ? "J" : "_"
+	);
+
+	// clang-format on
+
 	V_strncat(buffer, keys, size);
 }
 
@@ -60,10 +70,20 @@ void KZHUDService::AddTeleText(char *buffer, int size)
 {
 	char tele[128];
 	tele[0] = 0;
-	snprintf(tele, sizeof(tele), "CP: %i/%i TPs: %i",
+
+	// clang-format off
+
+	snprintf(
+		tele,
+		sizeof(tele),
+		"CP: %i/%i TPs: %i",
 		this->player->checkpointService->GetCurrentCpIndex(),
 		this->player->checkpointService->GetCheckpointCount(),
-		this->player->checkpointService->GetTeleportCount());
+		this->player->checkpointService->GetTeleportCount()
+	);
+
+	// clang-format on
+
 	V_strncat(buffer, tele, size);
 }
 
@@ -73,7 +93,15 @@ void KZHUDService::AddTimerText(char *buffer, int size)
 	if (this->player->timerService->GetTimerRunning() || this->ShouldShowTimerAfterStop())
 	{
 		V_strncat(buffer, "\n", size);
-		f64 time = this->player->timerService->GetTimerRunning() ? player->timerService->GetTime() : this->currentTimeWhenTimerStopped;
+
+		// clang-format off
+
+		f64 time = this->player->timerService->GetTimerRunning()
+			? player->timerService->GetTime()
+			: this->currentTimeWhenTimerStopped;
+
+		// clang-format on
+
 		KZTimerService::FormatTime(time, timer, sizeof(timer));
 		V_strncat(buffer, timer, size);
 		if (!player->timerService->GetTimerRunning())
@@ -89,8 +117,10 @@ void KZHUDService::AddTimerText(char *buffer, int size)
 
 void KZHUDService::DrawSpeedPanel()
 {
-	if(!this->IsShowingPanel())
+	if (!this->IsShowingPanel())
+	{
 		return;
+	}
 
 	char buffer[1024];
 	buffer[0] = 0;

@@ -4,12 +4,12 @@
 #include "sdk/datatypes.h"
 
 #define MODE_NAME_SHORT "CKZ"
-#define MODE_NAME "Classic"
+#define MODE_NAME       "Classic"
 
-#define MAX_BUMPS 4
+#define MAX_BUMPS            4
 #define RAMP_PIERCE_DISTANCE 1.25f
-#define RAMP_BUG_THRESHOLD 0.99f
-#define NEW_RAMP_THRESHOLD 0.95f
+#define RAMP_BUG_THRESHOLD   0.99f
+#define NEW_RAMP_THRESHOLD   0.95f
 
 class KZClassicModePlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -19,6 +19,7 @@ public:
 	bool Pause(char *error, size_t maxlen);
 	bool Unpause(char *error, size_t maxlen);
 	void AllPluginsLoaded();
+
 public:
 	const char *GetAuthor();
 	const char *GetName();
@@ -34,8 +35,7 @@ class KZClassicModeService : public KZModeService
 {
 	using KZModeService::KZModeService;
 
-	f32 distanceTiers[JUMPTYPE_COUNT - 3][DISTANCETIER_COUNT] =
-	{
+	f32 distanceTiers[JUMPTYPE_COUNT - 3][DISTANCETIER_COUNT] = {
 		{217.0f, 265.0f, 270.0f, 275.0f, 280.0f, 285.0f}, // LJ
 		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // BH
 		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // MBH
@@ -45,72 +45,76 @@ class KZClassicModeService : public KZModeService
 		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // JB
 	};
 
-	const char *modeCvarValues[KZ::mode::numCvar] =
-	{
-		"false",			// slope_drop_enable
-		"6.5",				// sv_accelerate
-		"false",			// sv_accelerate_use_weapon_speed
-		"100",				// sv_airaccelerate
-		"30",				// sv_air_max_wishspeed
-		"false",			// sv_autobunnyhopping
-		"true",				// sv_enablebunnyhopping
-		"5.2",				// sv_friction
-		"800",				// sv_gravity
-		"302.0",			// sv_jump_impulse
-		"0.0078125",		// sv_jump_spam_penalty_time
-		"-0.707",			// sv_ladder_angle
-		"1",				// sv_ladder_dampen
-		"1",				// sv_ladder_scale_speed
-		"320",				// sv_maxspeed
-		"3500",				// sv_maxvelocity
-		"0",				// sv_staminajumpcost
-		"0",				// sv_staminalandcost
-		"0",				// sv_staminamax
-		"9999",				// sv_staminarecoveryrate
-		"0.7",				// sv_standable_normal
-		"0",				// sv_timebetweenducks
-		"0.7",				// sv_walkable_normal
-		"10",				// sv_wateraccelerate
-		"1",				// sv_waterfriction 
-		"0.9"				// sv_water_slow_amount
+	const char *modeCvarValues[KZ::mode::numCvar] = {
+		"false",     // slope_drop_enable
+		"6.5",       // sv_accelerate
+		"false",     // sv_accelerate_use_weapon_speed
+		"100",       // sv_airaccelerate
+		"30",        // sv_air_max_wishspeed
+		"false",     // sv_autobunnyhopping
+		"true",      // sv_enablebunnyhopping
+		"5.2",       // sv_friction
+		"800",       // sv_gravity
+		"302.0",     // sv_jump_impulse
+		"0.0078125", // sv_jump_spam_penalty_time
+		"-0.707",    // sv_ladder_angle
+		"1",         // sv_ladder_dampen
+		"1",         // sv_ladder_scale_speed
+		"320",       // sv_maxspeed
+		"3500",      // sv_maxvelocity
+		"0",         // sv_staminajumpcost
+		"0",         // sv_staminalandcost
+		"0",         // sv_staminamax
+		"9999",      // sv_staminarecoveryrate
+		"0.7",       // sv_standable_normal
+		"0",         // sv_timebetweenducks
+		"0.7",       // sv_walkable_normal
+		"10",        // sv_wateraccelerate
+		"1",         // sv_waterfriction
+		"0.9"        // sv_water_slow_amount
 	};
 
-	bool revertJumpTweak{};
-	f32 preJumpZSpeed{};
-	f32 tweakedJumpZSpeed{};
-	bool hasValidDesiredViewAngle{};
+	bool revertJumpTweak {};
+	f32 preJumpZSpeed {};
+	f32 tweakedJumpZSpeed {};
+	bool hasValidDesiredViewAngle {};
 	QAngle lastValidDesiredViewAngle;
-	f32 lastJumpReleaseTime{};
-	bool oldDuckPressed{};
-	bool forcedUnduck{};
-	f32 postProcessMovementZSpeed{};
+	f32 lastJumpReleaseTime {};
+	bool oldDuckPressed {};
+	bool forcedUnduck {};
+	f32 postProcessMovementZSpeed {};
+
 	struct AngleHistory
 	{
 		f32 rate;
 		f32 when;
 		f32 duration;
 	};
+
 	CUtlVector<AngleHistory> angleHistory;
-	f32 leftPreRatio{};
-	f32 rightPreRatio{};
-	f32 bonusSpeed{};
-	f32 maxPre{};
-	
-	bool didTPM{};
-	bool overrideTPM{};
+	f32 leftPreRatio {};
+	f32 rightPreRatio {};
+	f32 bonusSpeed {};
+	f32 maxPre {};
+
+	bool didTPM {};
+	bool overrideTPM {};
 	Vector tpmVelocity;
 	Vector tpmOrigin;
 	Vector lastValidPlane;
 
 	// Keep track of TryPlayerMove path for triggerfixing.
-	bool airMoving{};
+	bool airMoving {};
 	CUtlVector<Vector> tpmTriggerFixOrigins;
 
 public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 
-	virtual bool EnableWaterFix() override { return true; }
+	virtual bool EnableWaterFix() override
+	{
+		return true;
+	}
 
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
@@ -162,6 +166,6 @@ public:
 		duck speed is enforced. This should reduce noticeable lag.
 	*/
 	void ReduceDuckSlowdown();
-	
+
 	void SlopeFix();
 };
