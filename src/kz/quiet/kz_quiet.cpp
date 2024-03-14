@@ -160,7 +160,7 @@ bool KZQuietService::ShouldHide()
 	}
 
 	// If the player is not alive, don't hide other players.
-	if (this->player->GetController()->m_hPawn()->m_lifeState() != LIFE_ALIVE)
+	if (!this->player->IsAlive())
 	{
 		return false;
 	}

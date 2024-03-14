@@ -190,7 +190,7 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 
 	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
 
-	if (!cmd.IsValid())
+	if (!cmd.IsValid() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
 	{
 		return MRES_IGNORED;
 	}
