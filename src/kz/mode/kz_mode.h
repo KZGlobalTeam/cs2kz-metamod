@@ -103,7 +103,7 @@ class KZModeManager
 	};
 
 public:
-	const char *defaultMode;
+	const char *defaultMode = "Classic";
 
 public:
 	virtual bool RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory);

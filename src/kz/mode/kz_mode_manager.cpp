@@ -41,7 +41,6 @@ void KZ::mode::InitModeManager()
 	}
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService *{ return new KZVanillaModeService(player); };
 	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
-	modeManager.LoadDefaultMode();
 	initialized = true;
 }
 
@@ -202,7 +201,16 @@ void KZModeManager::LoadDefaultMode()
 	KeyValues *modeCfgKeyValues = new KeyValues("ModeConfig");
 	modeCfgKeyValues->LoadFromFile(g_pFullFileSystem, modeCfgPath, nullptr);
 
-	defaultMode = modeCfgKeyValues->GetString("defaultMode", "CKZ");
+	const char *modeName = modeCfgKeyValues->GetString("defaultMode");
+
+	FOR_EACH_VEC(this->modeInfos, i)
+	{
+		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
+		{
+			defaultMode = modeName;
+			break;
+		}
+	}
 }
 
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)

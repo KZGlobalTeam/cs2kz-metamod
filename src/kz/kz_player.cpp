@@ -57,19 +57,8 @@ void KZPlayer::Reset()
 	this->timerService->Reset();
 	this->tipService->Reset();
 
-	// If we are currently not on default mode and we cant switch to default mode, switch to plugin default
-	if (V_stricmp(this->modeService->GetModeName(), g_pKZModeManager->defaultMode) != 0
-		&& V_stricmp(this->modeService->GetModeShortName(), g_pKZModeManager->defaultMode) != 0
-		&& !g_pKZModeManager->SwitchToMode(this, g_pKZModeManager->defaultMode, true))
-	{
-		g_pKZModeManager->SwitchToMode(this, "CKZ", true);
-	}
-	if (V_stricmp(this->styleService->GetStyleName(), g_pKZStyleManager->defaultStyle) != 0
-		&& V_stricmp(this->styleService->GetStyleShortName(), g_pKZStyleManager->defaultStyle) != 0
-		&& !g_pKZStyleManager->SwitchToStyle(this, g_pKZStyleManager->defaultStyle, true))
-	{
-		g_pKZStyleManager->SwitchToStyle(this, "NRM", true);
-	}
+	g_pKZModeManager->SwitchToMode(this, g_pKZModeManager->defaultMode, true);
+	g_pKZStyleManager->SwitchToStyle(this, g_pKZStyleManager->defaultStyle, true);
 }
 
 float KZPlayer::GetPlayerMaxSpeed()

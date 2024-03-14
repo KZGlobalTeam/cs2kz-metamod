@@ -24,7 +24,6 @@ void KZ::style::InitStyleManager()
 	}
 	StyleServiceFactory vnlFactory = [](KZPlayer *player) -> KZStyleService *{ return new KZNormalStyleService(player); };
 	styleManager.RegisterStyle(0, "NRM", "Normal", vnlFactory);
-	styleManager.LoadDefaultStyle();
 	initialized = true;
 }
 
@@ -120,7 +119,16 @@ void KZStyleManager::LoadDefaultStyle()
 	KeyValues *styleCfgKeyValues = new KeyValues("StyleConfig");
 	styleCfgKeyValues->LoadFromFile(g_pFullFileSystem, styleCfgPath, nullptr);
 
-	defaultStyle = styleCfgKeyValues->GetString("defaultStyle", "NRM");
+	const char *styleName = styleCfgKeyValues->GetString("defaultStyle");
+
+	FOR_EACH_VEC(this->styleInfos, i)
+	{
+		if (V_stricmp(this->styleInfos[i].shortName, styleName) == 0 || V_stricmp(this->styleInfos[i].longName, styleName) == 0)
+		{
+			defaultStyle = styleName;
+			break;
+		}
+	}
 }
 
 bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool silent)

@@ -92,7 +92,7 @@ class KZStyleManager
 	};
 
 public:
-	const char *defaultStyle;
+	const char *defaultStyle = "Normal";
 
 public:
 	virtual bool RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory);
