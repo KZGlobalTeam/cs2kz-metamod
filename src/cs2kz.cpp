@@ -87,11 +87,11 @@ void KZPlugin::AddonInit()
 
 bool KZPlugin::IsAddonMounted()
 {
-	if (g_pMultiAddonManager == nullptr)
+	if (g_pMultiAddonManager != nullptr)
 	{
-		return false;
+		return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID);
 	}
-	return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID);
+	return false;
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)
