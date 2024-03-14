@@ -50,7 +50,7 @@ public:
 
 /* Creates a timer for the given function, the function must return a f64 that represents the interval in seconds; 0 or less to stop the timer */
 template<typename... Args>
-CTimer<Args...>* StartTimer(typename CTimer<Args...>::Fn fn, Args... args, bool preserveMapChange = true)
+CTimer<Args...> *StartTimer(typename CTimer<Args...>::Fn fn, Args... args, bool preserveMapChange = true)
 {
 	auto timer = new CTimer<Args...>(fn, args...);
 	g_pKZUtils->AddTimer(timer, preserveMapChange);

@@ -5,12 +5,9 @@ CUtlVector<CTimerBase *> g_NonPersistentTimers;
 
 void ProcessTimers()
 {
-	for (int i = g_PersistentTimers.Count() - 1; i != g_PersistentTimers.InvalidIndex();)
+	for (int i = g_PersistentTimers.Count() - 1; i >= 0; i--)
 	{
 		auto timer = g_PersistentTimers[i];
-
-		int prevIndex = i;
-		i--;
 
 		if (timer->lastExecute == -1)
 			timer->lastExecute = g_pKZUtils->GetGlobals()->curtime;
@@ -20,7 +17,7 @@ void ProcessTimers()
 			if (!timer->Execute())
 			{
 				delete timer;
-				g_PersistentTimers.Remove(prevIndex);
+				g_PersistentTimers.Remove(i);
 			}
 			else
 			{
@@ -29,12 +26,9 @@ void ProcessTimers()
 		}
 	}
 
-	for (int i = g_NonPersistentTimers.Count() - 1; i != g_NonPersistentTimers.InvalidIndex();)
+	for (int i = g_NonPersistentTimers.Count() - 1; i >= 0; i--)
 	{
 		auto timer = g_NonPersistentTimers[i];
-
-		int prevIndex = i;
-		i--;
 
 		if (timer->lastExecute == -1)
 			timer->lastExecute = g_pKZUtils->GetGlobals()->curtime;
@@ -44,7 +38,7 @@ void ProcessTimers()
 			if (!timer->Execute())
 			{
 				delete timer;
-				g_NonPersistentTimers.Remove(prevIndex);
+				g_NonPersistentTimers.Remove(i);
 			}
 			else
 			{

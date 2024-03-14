@@ -29,6 +29,10 @@ internal CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, bool ad
 	CRecipientFilter *filter = new CRecipientFilter();
 	CPlayerSlot slot = targetPlayer->GetPlayerSlot();
 	filter->AddRecipient(slot);
+	if (!addSpectators)
+	{
+		return filter;
+	}
 	if (!targetPlayer->IsAlive())
 	{
 		return filter;
@@ -71,6 +75,7 @@ void KZPlayer::PrintConsole(bool addPrefix, bool includeSpectators, const char *
 		return;
 	}
 	utils::ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
+	delete filter;
 }
 
 void KZPlayer::PrintChat(bool addPrefix, bool includeSpectators, const char *format, ...)
@@ -88,6 +93,7 @@ void KZPlayer::PrintChat(bool addPrefix, bool includeSpectators, const char *for
 		return;
 	}
 	utils::ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");
+	delete filter;
 }
 
 void KZPlayer::PrintCentre(bool addPrefix, bool includeSpectators, const char *format, ...)
@@ -99,6 +105,7 @@ void KZPlayer::PrintCentre(bool addPrefix, bool includeSpectators, const char *f
 		return;
 	}
 	utils::ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
+	delete filter;
 }
 
 void KZPlayer::PrintAlert(bool addPrefix, bool includeSpectators, const char *format, ...)
@@ -110,6 +117,7 @@ void KZPlayer::PrintAlert(bool addPrefix, bool includeSpectators, const char *fo
 		return;
 	}
 	utils::ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
+	delete filter;
 }
 
 void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...)
@@ -146,4 +154,5 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 		listener->FireGameEvent(event);
 	}
 	interfaces::pGameEventManager->FreeEvent(event);
+	delete filter;
 }
