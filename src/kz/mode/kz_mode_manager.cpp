@@ -194,9 +194,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 void KZModeManager::LoadDefaultMode()
 {
 	char modeCfgPath[1024];
-	modeCfgPath[0] = '\0';
-	V_strncat(modeCfgPath, g_SMAPI->GetBaseDir(), sizeof(modeCfgPath));
-	V_strncat(modeCfgPath, "/addons/cs2kz/modes/mode-config.txt", sizeof(modeCfgPath) - V_strlen(modeCfgPath) - 1);
+	V_snprintf(modeCfgPath, sizeof(modeCfgPath), "%s%s", g_SMAPI->GetBaseDir(), "/addons/cs2kz/modes/mode-config.txt");
 
 	KeyValues *modeCfgKeyValues = new KeyValues("ModeConfig");
 	modeCfgKeyValues->LoadFromFile(g_pFullFileSystem, modeCfgPath, nullptr);

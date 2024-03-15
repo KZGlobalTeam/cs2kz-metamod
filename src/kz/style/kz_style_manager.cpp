@@ -112,9 +112,7 @@ void KZStyleManager::UnregisterStyle(const char *styleName)
 void KZStyleManager::LoadDefaultStyle()
 {
 	char styleCfgPath[1024];
-	styleCfgPath[0] = '\0';
-	V_strncat(styleCfgPath, g_SMAPI->GetBaseDir(), sizeof(styleCfgPath));
-	V_strncat(styleCfgPath, "/addons/cs2kz/styles/style-config.txt", sizeof(styleCfgPath) - V_strlen(styleCfgPath) - 1);
+	V_snprintf(styleCfgPath, sizeof(styleCfgPath), "%s%s", g_SMAPI->GetBaseDir(), "/addons/cs2kz/styles/style-config.txt");
 
 	KeyValues *styleCfgKeyValues = new KeyValues("StyleConfig");
 	styleCfgKeyValues->LoadFromFile(g_pFullFileSystem, styleCfgPath, nullptr);
