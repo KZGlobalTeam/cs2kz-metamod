@@ -36,4 +36,8 @@
 	{
 		"en"	"{grey}Teleport to the next checkpoint with {default}/nextcp{grey}."
 	}
+	"bugs"
+	{
+		"en"	"{grey}Report issues related to CS2KZ on our GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+	}
 }
