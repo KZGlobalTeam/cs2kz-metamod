@@ -1071,7 +1071,7 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 	}
 
 	this->broadcastMinTier = tier;
-	this->player->PrintChat(true, false, "{grey}You has been set the jumpstats broadcast min tier to {default}%s.", tierString);
+	this->player->PrintChat(true, false, "{grey}Jumpstats minimum broadcast tier set to {default}%s.", tierString);
 }
 
 void KZJumpstatsService::SetSoundMinTier(const char *tierString)
@@ -1101,7 +1101,7 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 	}
 
 	this->soundMinTier = tier;
-	this->player->PrintChat(true, false, "{grey}You has been set the jumpstats sound effect min tier to {default}%s.", tierString);
+	this->player->PrintChat(true, false, "{grey}Jumpstats minimum sound tier set to {default}%s.", tierString);
 }
 
 internal SCMD_CALLBACK(Command_KzToggleJumpstats)
