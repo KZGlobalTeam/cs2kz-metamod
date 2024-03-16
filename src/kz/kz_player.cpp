@@ -57,9 +57,8 @@ void KZPlayer::Reset()
 	this->timerService->Reset();
 	this->tipService->Reset();
 
-	// TODO: Make a config for default mode and style
-	g_pKZModeManager->SwitchToMode(this, "VNL", true);
-	g_pKZStyleManager->SwitchToStyle(this, "NRM", true);
+	g_pKZModeManager->SwitchToMode(this, g_pKZModeManager->defaultMode, true);
+	g_pKZStyleManager->SwitchToStyle(this, g_pKZStyleManager->defaultStyle, true);
 }
 
 float KZPlayer::GetPlayerMaxSpeed()

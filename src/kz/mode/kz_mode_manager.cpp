@@ -191,6 +191,26 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	}
 }
 
+void KZModeManager::LoadDefaultMode()
+{
+	char modeCfgPath[1024];
+	V_snprintf(modeCfgPath, sizeof(modeCfgPath), "%s%s", g_SMAPI->GetBaseDir(), "/addons/cs2kz/modes/mode-config.txt");
+
+	KeyValues *modeCfgKeyValues = new KeyValues("ModeConfig");
+	modeCfgKeyValues->LoadFromFile(g_pFullFileSystem, modeCfgPath, nullptr);
+
+	const char *modeName = modeCfgKeyValues->GetString("defaultMode");
+
+	FOR_EACH_VEC(this->modeInfos, i)
+	{
+		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
+		{
+			defaultMode = modeName;
+			break;
+		}
+	}
+}
+
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)
 {
 	// Don't change mode if it doesn't exist. Instead, print a list of modes to the client.
