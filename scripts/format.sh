@@ -1,3 +1,3 @@
 #!/bin/sh
 
-clang-format -i ./src/*.{cpp,h} ./src/{kz,movement,utils}/**/*.{cpp,h} &>/dev/null
+clang-format -i $(find src -type f -name '*.cpp' -o -name '*.h' -not -path 'src/sdk/*')
