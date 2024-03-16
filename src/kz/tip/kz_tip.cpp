@@ -17,9 +17,7 @@ void KZTipService::ToggleTips()
 
 	// clang-format off
 
-	player->PrintChat(
-		true,
-		false,
+	player->PrintChat(true, false,
 		"{grey}%s",
 		this->showTips
 			? "You will now see random tips in chat periodically."

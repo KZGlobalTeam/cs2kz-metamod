@@ -49,9 +49,7 @@ void KZHUDService::AddKeyText(char *buffer, int size)
 
 	// clang-format off
 
-	snprintf(
-		keys,
-		sizeof(keys),
+	snprintf(keys, sizeof(keys),
 		"Keys: %s %s %s %s %s %s",
 		this->player->IsButtonPressed(IN_MOVELEFT) ? "A" : "_",
 		this->player->IsButtonPressed(IN_FORWARD) ? "W" : "_",
@@ -73,9 +71,7 @@ void KZHUDService::AddTeleText(char *buffer, int size)
 
 	// clang-format off
 
-	snprintf(
-		tele,
-		sizeof(tele),
+	snprintf(tele, sizeof(tele),
 		"CP: %i/%i TPs: %i",
 		this->player->checkpointService->GetCurrentCpIndex(),
 		this->player->checkpointService->GetCheckpointCount(),

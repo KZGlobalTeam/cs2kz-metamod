@@ -71,8 +71,8 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	{
 		return;
 	}
-	// If we teleport the player to the same origin, the player ends just a slightly bit off from where they are
-	// supposed to be...
+	// If we teleport the player to the same origin,
+	// the player ends just a slightly bit off from where they are supposed to be...
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
 	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.

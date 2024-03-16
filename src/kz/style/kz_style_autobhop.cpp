@@ -33,10 +33,21 @@ bool KZAutoBhopStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t
 		return false;
 	}
 	modules::Initialize();
-	// TODO: find good names for these conditions
-	if (!interfaces::Initialize(ismm, error, maxlen) || nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig())
-		|| !g_pStyleManager->RegisterStyle(g_PLID, STYLE_NAME_SHORT, STYLE_NAME, g_StyleFactory))
+	if (!interfaces::Initialize(ismm, error, maxlen))
 	{
+		V_snprintf(error, maxlen, "Failed to initialize interfaces");
+		return false;
+	}
+
+	if (nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig()))
+	{
+		V_snprintf(error, maxlen, "Failed to get game config");
+		return false;
+	}
+
+	if (!g_pStyleManager->RegisterStyle(g_PLID, STYLE_NAME_SHORT, STYLE_NAME, g_StyleFactory))
+	{
+		V_snprintf(error, maxlen, "Failed to register style");
 		return false;
 	}
 
@@ -54,8 +65,6 @@ bool KZAutoBhopStylePlugin::Unload(char *error, size_t maxlen)
 	g_pStyleManager->UnregisterStyle(STYLE_NAME);
 	return true;
 }
-
-void KZAutoBhopStylePlugin::AllPluginsLoaded() {}
 
 bool KZAutoBhopStylePlugin::Pause(char *error, size_t maxlen)
 {

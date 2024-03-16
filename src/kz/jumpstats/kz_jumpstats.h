@@ -381,7 +381,7 @@ public:
 	bool ShouldDisplayJumpstats()
 	{
 		return this->showJumpstats;
-	} // Need change to type
+	} // TODO: Use DistanceTier type instead
 
 	virtual void Reset() override;
 	void OnProcessMovement();

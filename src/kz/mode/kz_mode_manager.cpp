@@ -220,9 +220,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		FOR_EACH_VEC(this->modeInfos, i)
 		{
 			// clang-format off
-			player->PrintConsole(
-				false,
-				false,
+			player->PrintConsole(false, false,
 				"%s (kz_mode %s / kz_mode %s)",
 				this->modeInfos[i].longModeName,
 				this->modeInfos[i].longModeName,

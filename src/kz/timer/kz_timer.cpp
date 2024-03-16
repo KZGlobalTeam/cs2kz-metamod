@@ -257,14 +257,22 @@ void KZTimerService::PrintEndTimeString()
 	u32 tpCount = this->player->checkpointService->GetTeleportCount();
 	if (!tpCount)
 	{
-		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s{grey}", this->player->modeService->GetModeShortName(),
+		// clang-format off
+		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s{grey}",
+				 this->player->modeService->GetModeShortName(),
 				 this->player->styleService->GetStyleShortName());
+		// clang-format on
 	}
 	else
 	{
+		// clang-format off
 		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s {grey}|{purple} %i {grey}TPs",
-				 this->player->modeService->GetModeShortName(), this->player->styleService->GetStyleShortName(), tpCount);
+				 this->player->modeService->GetModeShortName(),
+				 this->player->styleService->GetStyleShortName(),
+				 tpCount);
+		// clang-format on
 	}
+
 	char courseStr[KZ_MAX_COURSE_NAME_LENGTH + 16] = "";
 	if (strlen(this->currentCourse) > 0)
 	{

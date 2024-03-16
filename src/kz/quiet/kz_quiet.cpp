@@ -23,8 +23,11 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 
 		EntityInstanceByClassIter_t iter(NULL, "player");
-		for (CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(iter.First()); pawn != NULL;
+		// clang-format off
+		for (CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(iter.First());
+			 pawn != NULL;
 			 pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
+		// clang-format on
 		{
 			if (targetPlayerPawn == pawn)
 			{

@@ -5,11 +5,33 @@
 
 #define MODE_NAME_SHORT "CKZ"
 #define MODE_NAME       "Classic"
-
+// Rampbug fix related
 #define MAX_BUMPS            4
 #define RAMP_PIERCE_DISTANCE 1.25f
 #define RAMP_BUG_THRESHOLD   0.99f
 #define NEW_RAMP_THRESHOLD   0.95f
+
+#define SPEED_NORMAL 250.0f
+// Prestrafe related
+#define PS_SPEED_MAX        26.0f
+#define PS_MIN_REWARD_RATE  7.0f  // Minimum computed turn rate for any prestrafe reward
+#define PS_MAX_REWARD_RATE  16.0f // Ideal computed turn rate for maximum prestrafe reward
+#define PS_MAX_PS_TIME      0.55f // Time to reach maximum prestrafe speed with optimal turning
+#define PS_TURN_RATE_WINDOW 0.02f // Turn rate will be computed over this amount of time
+#define PS_DECREMENT_RATIO  3.0f  // Prestrafe will lose this fast compared to gaining
+#define PS_RATIO_TO_SPEED   0.5f
+// Prestrafe ratio will be not go down after landing for this amount of time - helps with small movements after landing
+// Ideally should be much higher than the perf window!
+#define PS_LANDING_GRACE_PERIOD 0.25f
+// Bhop related
+#define BH_PERF_WINDOW                  0.02f // Any jump performed after landing will be a perf for this much time
+#define BH_BASE_MULTIPLIER              51.5f // Multiplier for how much speed would a perf gain in ideal scenario
+#define BH_LANDING_DECREMENT_MULTIPLIER 75.0f // How much would a non real perf impact the takeoff speed
+// Magic number so that landing speed at max ground prestrafe speed would result in the same takeoff velocity
+#define BH_NORMALIZE_FACTOR (BH_BASE_MULTIPLIER * log(SPEED_NORMAL + PS_SPEED_MAX) - (SPEED_NORMAL + PS_SPEED_MAX))
+// Misc
+#define DUCK_SPEED_NORMAL  8.0f
+#define DUCK_SPEED_MINIMUM 6.0234375f // Equal to if you just ducked/unducked for the first time in a while
 
 class KZClassicModePlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -18,7 +40,6 @@ public:
 	bool Unload(char *error, size_t maxlen);
 	bool Pause(char *error, size_t maxlen);
 	bool Unpause(char *error, size_t maxlen);
-	void AllPluginsLoaded();
 
 public:
 	const char *GetAuthor();

@@ -256,8 +256,9 @@ bool Strafe::CalcAngleRatioStats()
 		}
 		VectorAngles(this->aaCalls[i].velocityPre, velAngles);
 
-		// If no attempt to gain speed was made, use the angle of the last call as a reference, and add yaw relative to
-		// last tick's yaw. If the velocity is 0 as well, then every angle is a perfect angle.
+		// If no attempt to gain speed was made, use the angle of the last call as a reference,
+		// and add yaw relative to last tick's yaw.
+		// If the velocity is 0 as well, then every angle is a perfect angle.
 		if (this->aaCalls[i].wishspeed != 0)
 		{
 			VectorAngles(this->aaCalls[i].wishdir, angles);
@@ -294,8 +295,7 @@ bool Strafe::CalcAngleRatioStats()
 		// If the player yaw is way too off, they are probably pressing the wrong key and probably not turning too fast.
 		// So we shouldn't count them into the average calc.
 
-		// utils::PrintConsoleAll("%f %f %f %f | %f / %f / %f | %f -> %f | %f %f | ws %f wd %f %f %f accel %f fraction
-		// %f",
+		//	utils::PrintConsoleAll("%f %f %f %f | %f / %f / %f | %f -> %f | %f %f | ws %f wd %f %f %f accel %f fraction %f",
 		//	minYaw, angles.y, idealYaw, maxYaw,
 		//	utils::GetAngleDifference(angles.y, minYaw, 180.0),
 		//	utils::GetAngleDifference(idealYaw, minYaw, 180.0),
@@ -310,7 +310,6 @@ bool Strafe::CalcAngleRatioStats()
 		//	this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE);
 		if (angles.y > maxYaw + 20.0f || angles.y < minYaw - 20.0f)
 		{
-			continue;
 		}
 		f32 gainRatio = (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D()) / this->aaCalls[i].CalcIdealGain();
 		f32 fraction = this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE;
@@ -531,10 +530,11 @@ f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist)
 	return (this->landingOrigin - this->takeoffOrigin).Length2D() + addDist;
 }
 
+// TODO
 f32 Jump::GetEdge(bool landing)
 {
 	return 0.0f;
-} // TODO
+}
 
 f32 Jump::GetAirPath()
 {
@@ -807,10 +807,9 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	}
 
 	// clang-format off
-	jump->GetJumpPlayer()->PrintChat(
-		true,
-		true,
-		"%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
+	jump->GetJumpPlayer()->PrintChat(true, true,
+		"%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
+		{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		jumpColor,
 		jumpTypeShortStr[jump->GetJumpType()],
 		jumpColor,
@@ -839,9 +838,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 
 	// clang-format off
 
-	jump->GetJumpPlayer()->PrintConsole(
-		false,
-		true,
+	jump->GetJumpPlayer()->PrintConsole(false, true,
 		"%s jumped %.4f units with a %s %s",
 		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
 		jump->GetDistance(),
@@ -849,9 +846,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		invalidateReason
 	);
 
-	jump->GetJumpPlayer()->PrintConsole(
-		false,
-		true,
+	jump->GetJumpPlayer()->PrintConsole(false, true,
 		"%s | %s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height",
 		jump->GetJumpPlayer()->modeService->GetModeShortName(),
 		jump->GetJumpPlayer()->styleService->GetStyleShortName(),
@@ -865,9 +860,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetMaxHeight()
 	);
 
-	jump->GetJumpPlayer()->PrintConsole(
-		false,
-		true,
+	jump->GetJumpPlayer()->PrintConsole(false, true,
 		"%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
 		jump->GetGainEfficiency() * 100.0f,
 		jump->GetAirPath(),
@@ -879,9 +872,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetDuckTime(false)
 	);
 
-	jump->GetJumpPlayer()->PrintConsole(
-		false,
-		true,
+	jump->GetJumpPlayer()->PrintConsole(false, true,
 		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s",
 		"Sync",
 		"Gain",
@@ -916,9 +907,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 
 		if (jump->strafes[i].arStats.available)
 		{
-			V_snprintf(
-				angRatioString,
-				sizeof(angRatioString),
+			V_snprintf(angRatioString, sizeof(angRatioString),
 				"%.2f/%.2f/%.2f",
 				jump->strafes[i].arStats.average,
 				jump->strafes[i].arStats.median,
@@ -930,9 +919,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
 		}
 
-		jump->GetJumpPlayer()->PrintConsole(
-			false,
-			true,
+		jump->GetJumpPlayer()->PrintConsole(false, true,
 			"%i.%5s %7s%-10s %7s%-10s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
 			i + 1,
 			syncString,

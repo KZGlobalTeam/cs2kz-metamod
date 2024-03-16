@@ -139,9 +139,7 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 		FOR_EACH_VEC(this->styleInfos, i)
 		{
 			// clang-format off
-			player->PrintConsole(
-				false,
-				false,
+			player->PrintConsole(false, false,
 				"%s (kz_style %s / kz_style %s)",
 				this->styleInfos[i].longName,
 				this->styleInfos[i].longName,
