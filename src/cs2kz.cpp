@@ -71,6 +71,9 @@ void KZPlugin::AllPluginsLoaded()
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
 
+	g_pKZModeManager->LoadDefaultMode();
+	g_pKZStyleManager->LoadDefaultStyle();
+
 	g_pMultiAddonManager = (IMultiAddonManager*)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 }
 
