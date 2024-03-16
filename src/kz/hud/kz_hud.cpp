@@ -1,6 +1,8 @@
+#include "../kz.h"
 #include "kz_hud.h"
 #include "sdk/datatypes.h"
 #include "utils/utils.h"
+#include "utils/simplecmds.h"
 
 #include "../timer/kz_timer.h"
 #include "tier0/memdbgon.h"
@@ -129,4 +131,17 @@ void KZHUDServiceTimerEventListener::OnTimerStopped(KZPlayer *player)
 void KZHUDServiceTimerEventListener::OnTimerEndPost(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed)
 {
 	player->hudService->OnTimerStopped(time);
+}
+
+internal SCMD_CALLBACK(Command_KzPanel)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->hudService->TogglePanel();
+	player->PrintChat(true, false, "{grey}Your centre information panel has been %s.", player->hudService->IsShowingPanel() ? "enabled" : "disabled");
+	return MRES_SUPERCEDE;
+}
+
+void KZHUDService::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_panel",		Command_KzPanel,			"Toggle Panel display.");
 }

@@ -200,6 +200,12 @@ CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 {
 	if (g_KZPlugin.unloading) return;
+	
+	if (strncmp(sound, "kz.", strlen("kz.")) == 0 && !g_KZPlugin.IsAddonMounted())
+	{
+		return;
+	}
+
 	u64 unknown = 0;
 	CSingleRecipientFilter filter(player.Get());
 	EmitSound_t soundParams;

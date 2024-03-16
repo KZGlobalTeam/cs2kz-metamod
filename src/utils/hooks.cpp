@@ -233,6 +233,7 @@ internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReaso
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	g_KZPlugin.AddonInit();
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)

@@ -1,8 +1,10 @@
 #include "../kz.h"
+#include "utils/utils.h"
+#include "utils/simplecmds.h"
+
 #include "kz_jumpstats.h"
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
-#include "utils/utils.h"
 
 #include "tier0/memdbgon.h"
 
@@ -54,6 +56,17 @@ const char *distanceTierColors[DISTANCETIER_COUNT] =
 	"{darkred}",
 	"{gold}",
 	"{orchid}"
+};
+
+const char *distanceTierSounds[DISTANCETIER_COUNT] =
+{
+	"",
+	"",
+	"kz.impressive",
+	"kz.perfect",
+	"kz.godlike",
+	"kz.ownage",
+	"kz.wrecker"
 };
 
 /*
@@ -583,6 +596,8 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 void KZJumpstatsService::Reset()
 {
+	this->broadcastMinTier = DistanceTier_Godlike;
+	this->soundMinTier = DistanceTier_Godlike;
 	this->showJumpstats = true;
 	this->jumps.Purge();
 	this->jsAlways = {};
@@ -702,22 +717,61 @@ void KZJumpstatsService::EndJump()
 		}
 		if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
 		{
-			if(this->ShouldDisplayJumpstats())
+			if (this->ShouldDisplayJumpstats())
 			{
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			}
+			KZJumpstatsService::BroadcastJumpToChat(jump);
+			KZJumpstatsService::PlayJumpstatSound(this->player, jump);
 			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
 		}
 	}
 }
 
+void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
+{
+	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	{
+		return;
+	}
+
+	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	const char *jumpColor = distanceTierColors[tier];
+
+	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+	{
+		CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
+		if (ent)
+		{
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+			if (player->jumpstatsService->ShouldDisplayJumpstats() && tier >= player->jumpstatsService->GetBroadcastMinTier() && player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
+			{
+				player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a {lime}%s {grey}[{purple}%s{grey}]", jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
+			}
+		}
+	}
+}
+
+void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
+{
+	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	if (target->jumpstatsService->GetSoundMinTier() > tier || target->jumpstatsService->GetSoundMinTier() <= DistanceTier_Meh)
+	{
+		return;
+	}
+
+	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[tier], 0.5f);
+}
+
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 {
 	const char *jumpColor = distanceTierColors[jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance())];
+
 	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
+
 	jump->GetJumpPlayer()->PrintChat(true, true, "%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
 				{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
 		jumpColor,
@@ -959,4 +1013,130 @@ void KZJumpstatsService::OnProcessMovementPost()
 	}
 	this->possibleEdgebug = false;
 	this->TrackJumpstatsVariables();
+}
+
+DistanceTier KZJumpstatsService::GetDistTierFromString(const char *tierString)
+{
+	if (V_stricmp("Meh", tierString) == 0)
+	{
+		return DistanceTier_Meh;
+	}
+	if (V_stricmp("Impressive", tierString) == 0)
+	{
+		return DistanceTier_Impressive;
+	}
+	if (V_stricmp("Perfect", tierString) == 0)
+	{
+		return DistanceTier_Perfect;
+	}
+	if (V_stricmp("Godlike", tierString) == 0)
+	{
+		return DistanceTier_Godlike;
+	}
+	if (V_stricmp("Ownage", tierString) == 0)
+	{
+		return DistanceTier_Ownage;
+	}
+	if (V_stricmp("Wrecker", tierString) == 0)
+	{
+		return DistanceTier_Wrecker;
+	}
+	return DistanceTier_None;
+}
+
+void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
+{
+	if (!tierString || !V_stricmp("", tierString))
+	{
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		return;
+	}
+
+	DistanceTier tier = GetDistTierFromString(tierString);
+
+	if (tier == DistanceTier_None)
+	{
+		tier = static_cast<DistanceTier>(V_StringToInt32(tierString, -1));
+	}
+
+	if (tier > DistanceTier_Wrecker || tier < DistanceTier_None)
+	{
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		return;
+	}
+
+	if (tier == this->GetBroadcastMinTier())
+	{
+		return;
+	}
+
+	this->broadcastMinTier = tier;
+	this->player->PrintChat(true, false, "{grey}Jumpstats minimum broadcast tier set to {default}%s.", tierString);
+}
+
+void KZJumpstatsService::SetSoundMinTier(const char *tierString)
+{
+	if (!tierString || !V_stricmp("", tierString))
+	{
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		return;
+	}
+
+	DistanceTier tier = GetDistTierFromString(tierString);
+
+	if (tier == DistanceTier_None)
+	{
+		tier = static_cast<DistanceTier>(V_StringToInt32(tierString, -1));
+	}
+
+	if (tier > DistanceTier_Wrecker || tier < DistanceTier_None)
+	{
+		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		return;
+	}
+
+	if (tier == this->GetSoundMinTier())
+	{
+		return;
+	}
+
+	this->soundMinTier = tier;
+	this->player->PrintChat(true, false, "{grey}Jumpstats minimum sound tier set to {default}%s.", tierString);
+}
+
+internal SCMD_CALLBACK(Command_KzToggleJumpstats)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJumpstatsReporting();
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzJSAlways)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJSAlways();
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzJsPrintMinTier)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->SetBroadcastMinTier(args->Arg(1));
+	return MRES_SUPERCEDE;
+}
+
+internal SCMD_CALLBACK(Command_KzJsSoundMinTier)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->SetSoundMinTier(args->Arg(1));
+	return MRES_SUPERCEDE;
+}
+
+void KZJumpstatsService::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_jsbroadcast",	Command_KzJsPrintMinTier,	"Change Jumpstats minimum broadcast tier.");
+	scmd::RegisterCmd("kz_jssound",		Command_KzJsSoundMinTier,	"Change jumpstats sound effect minimum play tier.");
+	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,		"Print jumpstats for invalid jumps.");
 }

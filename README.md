@@ -2,6 +2,9 @@ WIP, not ready for release
 
 Requirements: Metamod
 
+(Optional) For KZ sound effects (eg. jumpstats):
+- Latest [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) needs to be installed.
+  
 Compilation:
 - Remember to *recursively* clone the plugin, and symlink needs to be enabled as well!
 - Latest [AMBuild](https://github.com/alliedmodders/ambuild/) needs to be installed for compilation.

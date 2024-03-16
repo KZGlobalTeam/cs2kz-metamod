@@ -37,6 +37,9 @@ enum DistanceTier: u8
 };
 
 extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
+
+extern const char *distanceTierSounds[DISTANCETIER_COUNT];
+
 class AACall
 {
 public:
@@ -215,6 +218,9 @@ public:
 	}
 	// Jumpstats
 private:
+	DistanceTier broadcastMinTier{};
+	DistanceTier soundMinTier{};
+	
 	bool jsAlways{};
 	bool showJumpstats{}; // Need change to type
 
@@ -227,6 +233,15 @@ private:
 	Vector tpmVelocity;
 	bool possibleEdgebug{};
 public:
+	static_global void RegisterCommands();
+
+	static_global DistanceTier GetDistTierFromString(const char *tierString);
+
+	void SetBroadcastMinTier(const char *tierString);
+	void SetSoundMinTier(const char *tierString);
+	DistanceTier GetBroadcastMinTier() { return this->broadcastMinTier; };
+	DistanceTier GetSoundMinTier() { return this->soundMinTier; }
+
 	void ToggleJSAlways();
 	void ToggleJumpstatsReporting();
 	bool ShouldDisplayJumpstats() { return this->showJumpstats; } // Need change to type
@@ -261,6 +276,8 @@ public:
 	void DetectInvalidGains();
 	void DetectExternalModifications();
 
+	static_global void BroadcastJumpToChat(Jump *jump);
+	static_global void PlayJumpstatSound(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToChat(KZPlayer *target, Jump *jump);
 	static_global void PrintJumpToConsole(KZPlayer *target, Jump *jump);
 };

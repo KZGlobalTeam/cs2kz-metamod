@@ -18,7 +18,11 @@
 
 #include "version.h"
 
+#include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
+
 KZPlugin g_KZPlugin;
+
+IMultiAddonManager *g_pMultiAddonManager;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
@@ -66,8 +70,31 @@ void KZPlugin::AllPluginsLoaded()
 {
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
+
 	g_pKZModeManager->LoadDefaultMode();
 	g_pKZStyleManager->LoadDefaultStyle();
+
+	g_pMultiAddonManager = (IMultiAddonManager*)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
+}
+
+void KZPlugin::AddonInit()
+{
+	local_persist bool addonLoaded;
+	if (g_pMultiAddonManager != nullptr && !addonLoaded)
+	{
+		g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
+		g_pMultiAddonManager->RefreshAddons();
+		addonLoaded = true;
+	}
+}
+
+bool KZPlugin::IsAddonMounted()
+{
+	if (g_pMultiAddonManager != nullptr)
+	{
+		return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID);
+	}
+	return false;
 }
 
 bool KZPlugin::Pause(char *error, size_t maxlen)

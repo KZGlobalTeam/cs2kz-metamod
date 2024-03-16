@@ -21,6 +21,7 @@ private:
 public:
 	virtual void Reset() override;
 	static_global void Init();
+	static_global void RegisterCommands();
 	void DrawSpeedPanel();
 
 	void TogglePanel();
