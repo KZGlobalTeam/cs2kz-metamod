@@ -778,9 +778,12 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 		if (ent)
 		{
 			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-			if (player->jumpstatsService->ShouldDisplayJumpstats() && tier >= player->jumpstatsService->GetBroadcastMinTier() && player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
+			if (player->jumpstatsService->ShouldDisplayJumpstats() && tier >= player->jumpstatsService->GetBroadcastMinTier()
+				&& player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
 			{
-				player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a {lime}%s {grey}[{purple}%s{grey}]", jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(), jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
+				player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a {lime}%s {grey}[{purple}%s{grey}]",
+								  jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(),
+								  jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
 			}
 		}
 	}
@@ -1216,9 +1219,9 @@ internal SCMD_CALLBACK(Command_KzJsSoundMinTier)
 
 void KZJumpstatsService::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_jsbroadcast",	Command_KzJsPrintMinTier,	"Change Jumpstats minimum broadcast tier.");
-	scmd::RegisterCmd("kz_jssound",		Command_KzJsSoundMinTier,	"Change jumpstats sound effect minimum play tier.");
-	scmd::RegisterCmd("kz_togglestats",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_togglejs",	Command_KzToggleJumpstats,	"Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_jsalways",	Command_KzJSAlways,		"Print jumpstats for invalid jumps.");
+	scmd::RegisterCmd("kz_jsbroadcast", Command_KzJsPrintMinTier, "Change Jumpstats minimum broadcast tier.");
+	scmd::RegisterCmd("kz_jssound", Command_KzJsSoundMinTier, "Change jumpstats sound effect minimum play tier.");
+	scmd::RegisterCmd("kz_togglestats", Command_KzToggleJumpstats, "Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_togglejs", Command_KzToggleJumpstats, "Change Jumpstats print type.");
+	scmd::RegisterCmd("kz_jsalways", Command_KzJSAlways, "Print jumpstats for invalid jumps.");
 }

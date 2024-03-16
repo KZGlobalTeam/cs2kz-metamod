@@ -180,8 +180,7 @@ TurnState MovementPlayer::GetTurning()
 	{
 		return TURN_NONE;
 	}
-	if (currentAngle.y < this->oldAngles.y - 180
-		|| (currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180))
+	if (currentAngle.y < this->oldAngles.y - 180 || (currentAngle.y > this->oldAngles.y && currentAngle.y < this->oldAngles.y + 180))
 	{
 		return TURN_LEFT;
 	}
@@ -201,10 +200,14 @@ bool MovementPlayer::IsButtonPressed(InputBitMask_t button, bool onlyDown)
 f32 MovementPlayer::GetGroundPosition()
 {
 	CMoveData *mv = this->currentMoveData;
-	if (!this->processingMovement) mv = &this->moveDataPost;
+	if (!this->processingMovement)
+	{
+		mv = &this->moveDataPost;
+	}
 
 	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(), COLLISION_GROUP_PLAYER_MOVEMENT);
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->GetPawn(), this->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
+											  COLLISION_GROUP_PLAYER_MOVEMENT);
 
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
@@ -212,10 +215,13 @@ f32 MovementPlayer::GetGroundPosition()
 	f32 standableZ = 0.7; // TODO: actually use the cvar, preferably the mode cvar
 
 	bbox_t bounds;
-	bounds.mins = { -16.0, -16.0, 0.0 };
-	bounds.maxs = { 16.0, 16.0, 72.0 };
+	bounds.mins = {-16.0, -16.0, 0.0};
+	bounds.maxs = {16.0, 16.0, 72.0};
 
-	if (this->GetMoveServices()->m_bDucked()) bounds.maxs.z = 54.0;
+	if (this->GetMoveServices()->m_bDucked())
+	{
+		bounds.maxs.z = 54.0;
+	}
 
 	trace_t_s2 trace;
 	g_pKZUtils->InitGameTrace(&trace);
@@ -234,7 +240,10 @@ f32 MovementPlayer::GetGroundPosition()
 void MovementPlayer::RegisterTakeoff(bool jumped)
 {
 	CMoveData *mv = this->currentMoveData;
-	if (!this->processingMovement) mv = &this->moveDataPost;
+	if (!this->processingMovement)
+	{
+		mv = &this->moveDataPost;
+	}
 	this->takeoffOrigin = mv->m_vecAbsOrigin;
 	this->takeoffTime = g_pKZUtils->GetGlobals()->curtime - g_pKZUtils->GetGlobals()->frametime;
 	this->takeoffVelocity = mv->m_vecVelocity;
@@ -246,7 +255,10 @@ void MovementPlayer::RegisterTakeoff(bool jumped)
 void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbugFix)
 {
 	CMoveData *mv = this->currentMoveData;
-	if (!this->processingMovement) mv = &this->moveDataPost;
+	if (!this->processingMovement)
+	{
+		mv = &this->moveDataPost;
+	}
 	this->landingOrigin = mv->m_vecAbsOrigin;
 	this->landingTime = g_pKZUtils->GetGlobals()->curtime;
 	this->landingVelocity = landingVelocity;
@@ -264,7 +276,9 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 			if (mv->m_TouchList[i].trace.planeNormal.z > 0.7)
 			{
 				this->landingOriginActual = mv->m_TouchList[i].trace.endpos;
-				this->landingTimeActual = this->landingTime - (1 - mv->m_TouchList[i].trace.fraction) * g_pKZUtils->GetGlobals()->frametime; // TODO: make sure this is right
+				this->landingTimeActual =
+					this->landingTime
+					- (1 - mv->m_TouchList[i].trace.fraction) * g_pKZUtils->GetGlobals()->frametime; // TODO: make sure this is right
 				return;
 			}
 		}
@@ -280,7 +294,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	{
 		// Predicts the landing origin if reverse bug happens
 		// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
-		Vector gravity = { 0, 0, -800 }; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
+		Vector gravity = {0, 0, -800}; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
 		// basic x + vt + (0.5a)t^2 = 0;
 		const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
 		const double time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
@@ -289,9 +303,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	}
 }
 
-void MovementPlayer::OnPostThink()
-{
-}
+void MovementPlayer::OnPostThink() {}
 
 void MovementPlayer::Reset()
 {
@@ -329,8 +341,8 @@ float MovementPlayer::GetPlayerMaxSpeed()
 
 void MovementPlayer::GetBBoxBounds(bbox_t *bounds)
 {
-	bounds->mins = { -16.0f, -16.0f, 0.0f };
-	bounds->maxs = { 16.0f, 16.0f, 72.0f };
+	bounds->mins = {-16.0f, -16.0f, 0.0f};
+	bounds->maxs = {16.0f, 16.0f, 72.0f};
 	if (this->GetMoveServices() && this->GetMoveServices()->m_bDucked())
 	{
 		bounds->maxs.z = 54.0f;

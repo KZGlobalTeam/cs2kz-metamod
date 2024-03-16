@@ -350,9 +350,9 @@ public:
 	// Jumpstats
 
 private:
-	DistanceTier broadcastMinTier{};
-	DistanceTier soundMinTier{};
-	
+	DistanceTier broadcastMinTier {};
+	DistanceTier soundMinTier {};
+
 	bool jsAlways {};
 	bool showJumpstats {}; // Need change to type
 
@@ -372,8 +372,16 @@ public:
 
 	void SetBroadcastMinTier(const char *tierString);
 	void SetSoundMinTier(const char *tierString);
-	DistanceTier GetBroadcastMinTier() { return this->broadcastMinTier; };
-	DistanceTier GetSoundMinTier() { return this->soundMinTier; }
+
+	DistanceTier GetBroadcastMinTier()
+	{
+		return this->broadcastMinTier;
+	};
+
+	DistanceTier GetSoundMinTier()
+	{
+		return this->soundMinTier;
+	}
 
 	void ToggleJSAlways();
 	void ToggleJumpstatsReporting();

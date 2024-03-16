@@ -10,4 +10,4 @@ namespace hooks
 	void Initialize();
 	void Cleanup();
 	void HookEntities();
-}
+} // namespace hooks

@@ -196,7 +196,8 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 		player->takeoffGroundOrigin = player->lastValidLadderOrigin;
 		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
-	else if (result && oldMoveType != MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_LADDER && !(player->GetPawn()->m_fFlags & FL_ONGROUND))
+	else if (result && oldMoveType != MOVETYPE_LADDER && player->GetPawn()->m_MoveType() == MOVETYPE_LADDER
+			 && !(player->GetPawn()->m_fFlags & FL_ONGROUND))
 	{
 		player->RegisterLanding(oldVelocity, false);
 		player->OnChangeMoveType(MOVETYPE_WALK);
