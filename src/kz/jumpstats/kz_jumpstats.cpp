@@ -778,8 +778,14 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 		if (ent)
 		{
 			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-			if (player->jumpstatsService->ShouldDisplayJumpstats() && tier >= player->jumpstatsService->GetBroadcastMinTier()
-				&& player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None)
+			if (player == jump->GetJumpPlayer())
+			{
+				// Do not broadcast to self.
+				continue;
+			}
+			bool broadcastEnabled = player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None;
+			bool validBroadcastTier = tier >= player->jumpstatsService->GetBroadcastMinTier();
+			if (broadcastEnabled && validBroadcastTier)
 			{
 				player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a {lime}%s {grey}[{purple}%s{grey}]",
 								  jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(),
