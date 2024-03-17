@@ -79,12 +79,8 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_r", Command_KzRestart, "Restart.");
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
 	scmd::RegisterCmd("jointeam", Command_JoinTeam, "Jointeam interceptor", true);
-	scmd::RegisterCmd("kz_panel", Command_KzPanel, "Toggle Panel display.");
-	scmd::RegisterCmd("kz_togglestats", Command_KzToggleJumpstats, "Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_togglejs", Command_KzToggleJumpstats, "Change Jumpstats print type.");
 	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs, "Hide your legs in first person.");
 	scmd::RegisterCmd("kz_hide", Command_KzHide, "Hide other players.");
-	scmd::RegisterCmd("kz_jsalways", Command_KzJSAlways, "Print jumpstats for invalid jumps.");
 	scmd::RegisterCmd("kz_restart", Command_KzRestart, "Restart.");
 	scmd::RegisterCmd("kz_r", Command_KzRestart, "Restart.");
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
