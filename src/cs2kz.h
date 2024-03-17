@@ -12,6 +12,7 @@ public:
 	void AddonInit();
 	bool IsAddonMounted();
 	void AllPluginsLoaded();
+
 public:
 	const char *GetAuthor();
 	const char *GetName();

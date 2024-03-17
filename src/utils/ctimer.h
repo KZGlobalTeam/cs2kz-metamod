@@ -6,13 +6,13 @@
 #include "interfaces.h"
 
 /*
-* Credit to Szwagi
-*/
+ * Credit to Szwagi
+ */
 
-class CTimerBase {
+class CTimerBase
+{
 public:
-	CTimerBase(f64 initialInterval) :
-		interval(initialInterval) {};
+	CTimerBase(f64 initialInterval) : interval(initialInterval) {};
 
 	virtual bool Execute() = 0;
 
@@ -27,19 +27,15 @@ extern CUtlVector<CTimerBase *> g_PersistentTimers;
 extern CUtlVector<CTimerBase *> g_NonPersistentTimers;
 
 template<typename... Args>
-class CTimer : public CTimerBase {
+class CTimer : public CTimerBase
+{
 public:
-	using Fn = f64(__cdecl*)(Args... args);
+	using Fn = f64(__cdecl *)(Args... args);
 
 	Fn m_fn;
 	std::tuple<Args...> m_args;
 
-	explicit CTimer(Fn fn, Args... args) :
-		CTimerBase(0.0),
-		m_fn(fn),
-		m_args(std::make_tuple(std::move(args)...))
-	{
-	}
+	explicit CTimer(Fn fn, Args... args) : CTimerBase(0.0), m_fn(fn), m_args(std::make_tuple(std::move(args)...)) {}
 
 	bool Execute() override
 	{
@@ -56,4 +52,3 @@ CTimer<Args...> *StartTimer(typename CTimer<Args...>::Fn fn, Args... args, bool 
 	g_pKZUtils->AddTimer(timer, preserveMapChange);
 	return timer;
 }
-

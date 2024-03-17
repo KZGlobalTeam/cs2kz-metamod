@@ -25,7 +25,8 @@ class CTimerBase;
 struct SndOpEventGuid_t;
 struct EmitSound_t;
 
-typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith, int collisionGroup);
+typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith,
+											 int collisionGroup);
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
@@ -47,7 +48,8 @@ namespace interfaces
 	inline bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	{
 		GET_V_IFACE_CURRENT(GetEngineFactory, g_pCVar, ICvar, CVAR_INTERFACE_VERSION);
-		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameResourceServiceServer, CGameResourceService, GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameResourceServiceServer, CGameResourceService,
+							GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameClients, ISource2GameClients, INTERFACEVERSION_SERVERGAMECLIENTS);
 		GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
@@ -60,31 +62,22 @@ namespace interfaces
 
 		return true;
 	}
-}
+} // namespace interfaces
 
 #define KZ_UTILS_INTERFACE "KZUtilsInterface"
+
 // Expose some of the utility functions to other plugins.
 class KZUtils
 {
 public:
-	KZUtils(TracePlayerBBox_t *TracePlayerBBox,
-			InitGameTrace_t *InitGameTrace,
-			InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter,
-			GetLegacyGameEventListener_t *GetLegacyGameEventListener,
-			SnapViewAngles_t *SnapViewAngles,
-			EmitSoundFunc_t *EmitSound,
-			SwitchTeam_t *SwitchTeam,
-			SetPawn_t *SetPawn
-		): 
-			TracePlayerBBox(TracePlayerBBox),
-			InitGameTrace(InitGameTrace),
-			InitPlayerMovementTraceFilter(InitPlayerMovementTraceFilter),
-			GetLegacyGameEventListener(GetLegacyGameEventListener),
-			SnapViewAngles(SnapViewAngles),
-			EmitSound(EmitSound),
-			SwitchTeam(SwitchTeam),
-			SetPawn(SetPawn)
-	{}
+	KZUtils(TracePlayerBBox_t *TracePlayerBBox, InitGameTrace_t *InitGameTrace, InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter,
+			GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, EmitSoundFunc_t *EmitSound,
+			SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn)
+		: TracePlayerBBox(TracePlayerBBox), InitGameTrace(InitGameTrace), InitPlayerMovementTraceFilter(InitPlayerMovementTraceFilter),
+		  GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles), EmitSound(EmitSound), SwitchTeam(SwitchTeam),
+		  SetPawn(SetPawn)
+	{
+	}
 
 	TracePlayerBBox_t *const TracePlayerBBox;
 	InitGameTrace_t *const InitGameTrace;
@@ -113,7 +106,7 @@ public:
 
 	// Normalize the angle between -180 and 180.
 	virtual f32 NormalizeDeg(f32 a);
-	// Gets the difference in angle between 2 angles. 
+	// Gets the difference in angle between 2 angles.
 	// c can be PI (for radians) or 180.0 (for degrees);
 	virtual f32 GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative = false);
 	virtual CGameEntitySystem *GetGameEntitySystem();

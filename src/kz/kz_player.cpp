@@ -17,7 +17,7 @@
 
 void KZPlayer::Init()
 {
-	this->hideLegs 	= false;
+	this->hideLegs = false;
 	this->previousTurnState = TURN_NONE;
 
 	// TODO: initialize every service.
@@ -45,7 +45,7 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->hideLegs 	= false;
+	this->hideLegs = false;
 	this->previousTurnState = TURN_NONE;
 
 	// TODO: reset every service.
@@ -416,7 +416,7 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 	this->timerService->OnChangeMoveType(oldMoveType);
 	this->modeService->OnChangeMoveType(oldMoveType);
-	this->styleService->OnChangeMoveType(oldMoveType);								
+	this->styleService->OnChangeMoveType(oldMoveType);
 }
 
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
@@ -431,7 +431,7 @@ void KZPlayer::EnableGodMode()
 	CCSPlayerPawn *pawn = this->GetPawn();
 	if (!pawn)
 	{
-		return;	
+		return;
 	}
 	if (pawn->m_bTakesDamage())
 	{

@@ -2,12 +2,11 @@
 #include "platform.h"
 #include "dbg.h"
 
-#define CALL_VIRTUAL(retType, idx, ...) \
-	vmt::CallVirtual<retType>(idx, __VA_ARGS__)
+#define CALL_VIRTUAL(retType, idx, ...) vmt::CallVirtual<retType>(idx, __VA_ARGS__)
 
 namespace vmt
 {
-	template <typename T = void *>
+	template<typename T = void *>
 	inline T GetVMethod(uint32 uIndex, void *pClass)
 	{
 		if (!pClass)
@@ -26,13 +25,13 @@ namespace vmt
 		return reinterpret_cast<T>(pVTable[uIndex]);
 	}
 
-	template <typename T, typename... Args>
+	template<typename T, typename... Args>
 	inline T CallVirtual(uint32 uIndex, void *pClass, Args... args)
 	{
 #ifdef _WIN32
 		auto pFunc = GetVMethod<T(__thiscall *)(void *, Args...)>(uIndex, pClass);
 #else
-		auto pFunc = GetVMethod<T(__cdecl*)(void*, Args...)>(uIndex, pClass);
+		auto pFunc = GetVMethod<T(__cdecl *)(void *, Args...)>(uIndex, pClass);
 #endif
 		if (!pFunc)
 		{
@@ -42,4 +41,4 @@ namespace vmt
 
 		return pFunc(pClass, args...);
 	}
-}
+} // namespace vmt

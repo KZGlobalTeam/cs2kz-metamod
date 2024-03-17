@@ -18,8 +18,7 @@ enum SigError
 class CModule
 {
 public:
-	CModule(const char *path, const char *module) :
-		m_pszModule(module), m_pszPath(path)
+	CModule(const char *path, const char *module) : m_pszModule(module), m_pszPath(path)
 	{
 		char szModule[MAX_PATH];
 
@@ -28,7 +27,9 @@ public:
 		m_hModule = dlmount(szModule);
 
 		if (!m_hModule)
+		{
 			Error("Could not find %s\n", szModule);
+		}
 
 #ifdef _WIN32
 		MODULEINFO m_hModuleInfo;
@@ -38,7 +39,9 @@ public:
 		m_size = m_hModuleInfo.SizeOfImage;
 #else
 		if (int e = GetModuleInformation(m_hModule, &m_base, &m_size))
+		{
 			Error("Failed to get module info for %s, error %d\n", szModule, e);
+		}
 #endif
 	}
 
@@ -47,9 +50,9 @@ public:
 		unsigned char *pMemory;
 		void *return_addr = nullptr;
 		error = 0;
-		
-		pMemory = (byte*)m_base;
-		
+
+		pMemory = (byte *)m_base;
+
 		for (size_t i = 0; i < m_size; i++)
 		{
 			size_t Matches = 0;
@@ -63,23 +66,23 @@ public:
 						error = SIG_FOUND_MULTIPLE;
 						return return_addr;
 					}
-					
+
 					return_addr = (void *)(pMemory + i);
 				}
 			}
 		}
-		
+
 		if (!return_addr)
 		{
 			error = SIG_NOT_FOUND;
 		}
-		
+
 		return return_addr;
 	}
 
 	const char *m_pszModule;
-	const char* m_pszPath;
+	const char *m_pszPath;
 	HINSTANCE m_hModule;
-	void* m_base;
+	void *m_base;
 	size_t m_size;
 };

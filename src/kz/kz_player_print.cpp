@@ -4,7 +4,6 @@
 #include "sdk/recipientfilters.h"
 #include "tier0/memdbgon.h"
 
-
 #define FORMAT_STRING(buffer, addPrefix) \
 	va_list args; \
 	va_start(args, format); \

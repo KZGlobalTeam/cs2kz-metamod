@@ -4,5 +4,4 @@ class KZBaseService;
 
 class KZAnticheatService : public KZBaseService
 {
-	
 };

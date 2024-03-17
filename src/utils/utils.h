@@ -27,13 +27,14 @@ namespace utils
 
 	// Normalize the angle between -180 and 180.
 	f32 NormalizeDeg(f32 a);
-	// Gets the difference in angle between 2 angles. 
+	// Gets the difference in angle between 2 angles.
 	// c can be PI (for radians) or 180.0 (for degrees);
 	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c, bool relative = false);
 
 	// Print functions
 	bool CFormat(char *buffer, u64 buffer_size, const char *text);
-	void ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
+	void ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3,
+						   const char *param4);
 	void PrintConsole(CBaseEntity2 *entity, const char *format, ...);
 	void PrintChat(CBaseEntity2 *entity, const char *format, ...);
 	void PrintCentre(CBaseEntity2 *entity, const char *format, ...);
@@ -56,4 +57,4 @@ namespace utils
 	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles);
-}
+} // namespace utils

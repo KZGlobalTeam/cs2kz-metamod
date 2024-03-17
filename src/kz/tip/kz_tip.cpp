@@ -8,13 +8,23 @@ internal CTimer<> *tipTimer;
 
 void KZTipService::Reset()
 {
-	this->showTips = true; 
+	this->showTips = true;
 }
 
 void KZTipService::ToggleTips()
 {
 	this->showTips = !this->showTips;
-	player->PrintChat(true, false, "{grey}%s", this->showTips ? "You will now see random tips in chat periodically." : "You will no longer see random tips in chat periodically.");
+
+	// clang-format off
+
+	player->PrintChat(true, false,
+		"{grey}%s",
+		this->showTips
+			? "You will now see random tips in chat periodically."
+			: "You will no longer see random tips in chat periodically."
+	);
+
+	// clang-format on
 }
 
 bool KZTipService::ShouldPrintTip()
@@ -51,7 +61,7 @@ void KZTipService::LoadTips()
 					META_CONPRINTF("Failed to load tips config file\n", fileName);
 				}
 			}
-			else 
+			else
 			{
 				if (!pTipKeyValues->LoadFromFile(g_pFullFileSystem, fullPath, nullptr))
 				{
@@ -83,7 +93,7 @@ void KZTipService::LoadTips()
 		{
 			tipNames.AddToTail(it->GetName());
 		}
-		pTipKeyValues->AddSubKey(it); 
+		pTipKeyValues->AddSubKey(it);
 	}
 
 	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
@@ -112,7 +122,7 @@ void KZTipService::InitTips()
 	ShuffleTips();
 	tipTimer = StartTimer(PrintTips, true);
 }
-	
+
 f64 KZTipService::PrintTips()
 {
 	for (int i = 0; i <= MAXPLAYERS; i++)

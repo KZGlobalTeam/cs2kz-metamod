@@ -20,8 +20,12 @@
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
 
 #define RESOLVE_SIG(gameConfig, name, type, variable) \
-	type *variable = (decltype(variable))gameConfig->ResolveSignature(name);	\
-	if (!variable) { Warning("Failed to find address for %s!\n", #name); return false; }
+	type *variable = (decltype(variable))gameConfig->ResolveSignature(name); \
+	if (!variable) \
+	{ \
+		Warning("Failed to find address for %s!\n", #name); \
+		return false; \
+	}
 
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
@@ -49,7 +53,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		return false;
 	}
 	// Initialize this later because we didn't have game config before.
-	interfaces::pGameEventManager = (IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, g_pGameConfig->GetOffset("GameEventManager"), interfaces::pServer) - 8);
+	interfaces::pGameEventManager =
+		(IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, g_pGameConfig->GetOffset("GameEventManager"), interfaces::pServer) - 8);
 
 	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
 	RESOLVE_SIG(g_pGameConfig, "InitGameTrace", InitGameTrace_t, InitGameTrace);
@@ -60,16 +65,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam);
 	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn);
 
-	g_pKZUtils = new KZUtils(
-		TracePlayerBBox,
-		InitGameTrace,
-		InitPlayerMovementTraceFilter,
-		GetLegacyGameEventListener,
-		SnapViewAngles,
-		EmitSound,
-		SwitchTeam,
-		SetPawn
-	);
+	g_pKZUtils = new KZUtils(TracePlayerBBox, InitGameTrace, InitPlayerMovementTraceFilter, GetLegacyGameEventListener, SnapViewAngles, EmitSound,
+							 SwitchTeam, SetPawn);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
@@ -90,13 +87,15 @@ CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *n
 	}
 	EntityInstanceByClassIter_t iter(start, name);
 
-	return static_cast<CBaseEntity2 * >(iter.Next());
+	return static_cast<CBaseEntity2 *>(iter.Next());
 }
 
 void utils::UnlockConVars()
 {
 	if (!g_pCVar)
+	{
 		return;
+	}
 
 	ConVar *pCvar = nullptr;
 	ConVarHandle hCvarHandle;
@@ -110,17 +109,20 @@ void utils::UnlockConVars()
 		hCvarHandle.Set(hCvarHandle.Get() + 1);
 
 		if (!pCvar || !(pCvar->flags & FCVAR_FLAGS_TO_REMOVE))
+		{
 			continue;
+		}
 
 		pCvar->flags &= ~FCVAR_FLAGS_TO_REMOVE;
 	} while (pCvar);
-
 }
 
 void utils::UnlockConCommands()
 {
 	if (!g_pCVar)
+	{
 		return;
+	}
 
 	ConCommand *pConCommand = nullptr;
 	ConCommand *pInvalidCommand = g_pCVar->GetCommand(ConCommandHandle());
@@ -134,7 +136,9 @@ void utils::UnlockConCommands()
 		hConCommandHandle.Set(hConCommandHandle.Get() + 1);
 
 		if (!pConCommand || pConCommand == pInvalidCommand || !(pConCommand->GetFlags() & FCVAR_FLAGS_TO_REMOVE))
+		{
 			continue;
+		}
 
 		pConCommand->RemoveFlags(FCVAR_FLAGS_TO_REMOVE);
 	} while (pConCommand && pConCommand != pInvalidCommand);
@@ -186,7 +190,6 @@ CBasePlayerController *utils::GetController(CPlayerSlot slot)
 	return ent->IsController() ? static_cast<CBasePlayerController *>(ent) : nullptr;
 }
 
-
 CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 {
 	CBasePlayerController *controller = utils::GetController(entity);
@@ -194,14 +197,20 @@ CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
 	{
 		return -1;
 	}
-	else return controller->m_pEntity->m_EHandle.GetEntryIndex() - 1;
+	else
+	{
+		return controller->m_pEntity->m_EHandle.GetEntryIndex() - 1;
+	}
 }
 
 void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 {
-	if (g_KZPlugin.unloading) return;
-	
 	if (strncmp(sound, "kz.", strlen("kz.")) == 0 && !g_KZPlugin.IsAddonMounted())
+	{
+		return;
+	}
+
+	if (g_KZPlugin.unloading)
 	{
 		return;
 	}
@@ -218,16 +227,22 @@ f32 utils::NormalizeDeg(f32 a)
 {
 	a = fmod(a, 360.0);
 	if (a >= 180.0)
+	{
 		a -= 360.0;
+	}
 	else if (a < -180.0)
+	{
 		a += 360.0;
+	}
 	return a;
 }
 
 f32 utils::GetAngleDifference(const f32 source, const f32 target, const f32 c, bool relative)
 {
 	if (relative)
+	{
 		return fmod((fmod(target - source, 2 * c) + 3 * c), 2 * c) - c;
+	}
 	return fmod(fabs(target - source) + c, 2 * c) - c;
 }
 

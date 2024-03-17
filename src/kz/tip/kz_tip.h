@@ -15,7 +15,7 @@ class KZTipService : public KZBaseService
 
 private:
 	bool showTips;
-	//TODO: add other languages
+	// TODO: add other languages
 	const char *language = KZ_DEFAULT_LANGUAGE;
 
 public:

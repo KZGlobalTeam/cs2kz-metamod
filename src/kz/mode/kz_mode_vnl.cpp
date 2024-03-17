@@ -5,6 +5,7 @@ const char *KZVanillaModeService::GetModeName()
 {
 	return "Vanilla";
 }
+
 const char *KZVanillaModeService::GetModeShortName()
 {
 	return "VNL";
@@ -13,9 +14,13 @@ const char *KZVanillaModeService::GetModeShortName()
 DistanceTier KZVanillaModeService::GetDistanceTier(JumpType jumpType, f32 distance)
 {
 	// No tiers given for 'Invalid' jumps.
-	if (jumpType == JumpType_Invalid || jumpType == JumpType_FullInvalid
-		|| jumpType == JumpType_Fall || jumpType == JumpType_Other
+	// clang-format off
+	if (jumpType == JumpType_Invalid
+		|| jumpType == JumpType_FullInvalid
+		|| jumpType == JumpType_Fall
+		|| jumpType == JumpType_Other
 		|| distance > 500.0f)
+	// clang-format on
 	{
 		return DistanceTier_None;
 	}
@@ -57,49 +62,54 @@ void KZVanillaModeService::OnDuckPost()
 
 // We don't actually do anything here aside from predicting triggerfix.
 #define MAX_CLIP_PLANES 5
+
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
 	this->tpmTriggerFixOrigins.RemoveAll();
 
 	Vector velocity, origin;
-	int			bumpcount, numbumps;
-	Vector		dir;
-	float		d;
-	int			numplanes;
-	Vector		planes[MAX_CLIP_PLANES];
-	Vector		primal_velocity, original_velocity;
-	Vector      new_velocity;
-	int			i, j;
-	trace_t_s2	pm;
-	Vector		end;
+	int bumpcount, numbumps;
+	Vector dir;
+	float d;
+	int numplanes;
+	Vector planes[MAX_CLIP_PLANES];
+	Vector primal_velocity, original_velocity;
+	Vector new_velocity;
+	int i, j;
+	trace_t_s2 pm;
+	Vector end;
 
-	float		time, time_left, allFraction;
+	float time, time_left, allFraction;
 
-	numbumps = 4;           // Bump up to four times
+	numbumps = 4; // Bump up to four times
 
-	numplanes = 0;           //  and not sliding along any planes
+	numplanes = 0; //  and not sliding along any planes
 
 	this->player->GetOrigin(&origin);
 	this->player->GetVelocity(&velocity);
 	g_pKZUtils->InitGameTrace(&pm);
 
-	VectorCopy(velocity, original_velocity);  // Store original velocity
+	VectorCopy(velocity, original_velocity); // Store original velocity
 	VectorCopy(velocity, primal_velocity);
 
 	allFraction = 0;
-	time_left = g_pKZUtils->GetGlobals()->frametime;   // Total time for this movement operation.
+	time_left = g_pKZUtils->GetGlobals()->frametime; // Total time for this movement operation.
 
 	new_velocity.Init();
 	bbox_t bounds;
 	this->player->GetBBoxBounds(&bounds);
 
 	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPawn(), this->player->GetPawn()->m_pCollision()->m_collisionAttribute().m_nInteractsWith, COLLISION_GROUP_PLAYER_MOVEMENT);
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPawn(),
+											  this->player->GetPawn()->m_pCollision()->m_collisionAttribute().m_nInteractsWith,
+											  COLLISION_GROUP_PLAYER_MOVEMENT);
 
 	for (bumpcount = 0; bumpcount < numbumps; bumpcount++)
 	{
 		if (velocity.Length() == 0.0)
+		{
 			break;
+		}
 		time = time_left;
 		// Assume we can move all the way from the current origin to the
 		//  end point.
@@ -118,7 +128,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		allFraction += pm.fraction;
 
 		// If we moved some portion of the total distance, then
-		//  copy the end position into the pmove.origin and 
+		//  copy the end position into the pmove.origin and
 		//  zero the plane counter.
 		if (pm.fraction * velocity.Length() > 0.03125)
 		{
@@ -137,13 +147,13 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 
 		// If we covered the entire distance, we are done
 		//  and can return.
-		
+
 		// Triggerfix related
 		this->tpmTriggerFixOrigins.AddToTail(pm.endpos);
 
 		if (pm.fraction == 1)
 		{
-			break;		// moved the entire distance
+			break; // moved the entire distance
 		}
 		// Reduce amount of m_flFrameTime left by total time left * fraction
 		//  that we covered.
@@ -165,12 +175,11 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		// modify original_velocity so it parallels all of the clip planes
 		//
 
-		// reflect player velocity 
-		// Only give this a try for first impact plane because you can get yourself stuck in an acute corner by jumping in place
+		// reflect player velocity
+		// Only give this a try for first impact plane because you can get yourself stuck in an acute corner by jumping
+		// in place
 		//  and pressing forward and nobody was really using this bounce/reflection feature anyway...
-		if (numplanes == 1 &&
-			this->player->GetPawn()->m_MoveType() == MOVETYPE_WALK &&
-			this->player->GetPawn()->m_hGroundEntity().Get() == NULL)
+		if (numplanes == 1 && this->player->GetPawn()->m_MoveType() == MOVETYPE_WALK && this->player->GetPawn()->m_hGroundEntity().Get() == NULL)
 		{
 			ClipVelocity(original_velocity, planes[0], new_velocity);
 
@@ -189,17 +198,21 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 					{
 						// Are we now moving against this plane?
 						if (velocity.Dot(planes[j]) < 0)
-							break;	// not ok
+						{
+							break; // not ok
+						}
 					}
 				}
 
-				if (j == numplanes)  // Didn't have to clip, so we're ok
+				if (j == numplanes) // Didn't have to clip, so we're ok
+				{
 					break;
+				}
 			}
 
 			// Did we go all the way through plane set
 			if (i == numplanes)
-			{	// go along the crease
+			{ // go along the crease
 				if (numplanes != 2)
 				{
 					VectorCopy(vec3_origin, velocity);
@@ -218,7 +231,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 			d = velocity.Dot(primal_velocity);
 			if (d <= 0)
 			{
-				//Con_DPrintf("Back\n");
+				// Con_DPrintf("Back\n");
 				VectorCopy(vec3_origin, velocity);
 				break;
 			}

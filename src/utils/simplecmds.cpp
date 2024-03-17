@@ -6,7 +6,7 @@
 #include "tier0/memdbgon.h"
 
 // private structs
-#define SCMD_MAX_NAME_LEN 128
+#define SCMD_MAX_NAME_LEN        128
 #define SCMD_MAX_DESCRIPTION_LEN 1024
 
 struct Scmd
@@ -31,7 +31,10 @@ internal bool g_coreCmdsRegistered = false;
 internal SCMD_CALLBACK(Command_KzHelp)
 {
 	utils::CPrintChat(controller, "%s Look in your console for a list of commands!", KZ_CHAT_PREFIX);
-	utils::PrintConsole(controller, "To use these commands, you can type \"bind <key> %s<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\"", SCMD_CONSOLE_PREFIX);
+	utils::PrintConsole(controller,
+						"To use these commands, you can type \"bind <key> %s<command name>\" in your console, or type !<command name> or /<command "
+						"name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\"",
+						SCMD_CONSOLE_PREFIX);
 	Scmd *cmds = g_cmdManager.cmds;
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
@@ -39,9 +42,7 @@ internal SCMD_CALLBACK(Command_KzHelp)
 		{
 			continue;
 		}
-		utils::PrintConsole(controller, "%s: %s",
-			cmds[i].name,
-			cmds[i].description);
+		utils::PrintConsole(controller, "%s: %s", cmds[i].name, cmds[i].description);
 	}
 	return MRES_SUPERCEDE;
 }
@@ -53,7 +54,7 @@ internal void RegisterCoreCmds()
 	scmd::RegisterCmd("kz_help", Command_KzHelp, "Show this help message.");
 }
 
-bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *description/* = nullptr*/, bool hidden)
+bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *description /* = nullptr*/, bool hidden)
 {
 	Assert(name);
 	Assert(callback);
@@ -100,20 +101,13 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 		{
 			// TODO: print warning? error? segfault?
 			// Command already exists
-			//Assert(0);
+			// Assert(0);
 			return false;
 		}
 	}
 
 	// Command name is unique!
-	Scmd cmd = {
-		hasConPrefix,
-		nameLength,
-		"",
-		"",
-		callback,
-		hidden
-	};
+	Scmd cmd = {hasConPrefix, nameLength, "", "", callback, hidden};
 	V_snprintf(cmd.name, SCMD_MAX_NAME_LEN, "%s", name);
 	V_snprintf(cmd.description, SCMD_MAX_DESCRIPTION_LEN, "%s", description);
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;

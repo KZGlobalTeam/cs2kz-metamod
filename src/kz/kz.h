@@ -4,18 +4,18 @@
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
 
-#define KZ_COLLISION_GROUP_STANDARD COLLISION_GROUP_DEBRIS
+#define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
 
 #define KZ_SND_SET_CP "UIPanorama.round_report_odds_none"
-#define KZ_SND_DO_TP "UIPanorama.round_report_odds_none"
+#define KZ_SND_DO_TP  "UIPanorama.round_report_odds_none"
 
 #define KZ_WORKSHOP_ADDONS_ID "3171124941"
 
 #define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 
 class KZPlayer;
-//class Jump;
+// class Jump;
 class KZAnticheatService;
 class KZCheckpointService;
 class KZGlobalService;
@@ -40,6 +40,7 @@ public:
 	{
 		this->Init();
 	}
+
 	void Init();
 	virtual void Reset() override;
 
@@ -118,44 +119,50 @@ public:
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 
 	void PlayErrorSound();
+
 private:
-	bool hideLegs{};
-	
-	TurnState previousTurnState{};
+	bool hideLegs {};
+
+	TurnState previousTurnState {};
+
 public:
-	KZAnticheatService *anticheatService{};
-	KZCheckpointService *checkpointService{};
-	KZGlobalService *globalService{};
-	KZHUDService *hudService{};
-	KZJumpstatsService *jumpstatsService{};
-	KZMeasureService *measureService{};
-	KZModeService *modeService{};
-	KZNoclipService *noclipService{};
-	KZOptionService *optionsService{};
-	KZQuietService *quietService{};
-	KZRacingService *racingService{};
-	KZSavelocService *savelocService{};
-	KZSpecService *specService{};
-	KZStyleService *styleService{};
-	KZTimerService *timerService{};
-	KZTipService *tipService{};
+	KZAnticheatService *anticheatService {};
+	KZCheckpointService *checkpointService {};
+	KZGlobalService *globalService {};
+	KZHUDService *hudService {};
+	KZJumpstatsService *jumpstatsService {};
+	KZMeasureService *measureService {};
+	KZModeService *modeService {};
+	KZNoclipService *noclipService {};
+	KZOptionService *optionsService {};
+	KZQuietService *quietService {};
+	KZRacingService *racingService {};
+	KZSavelocService *savelocService {};
+	KZSpecService *specService {};
+	KZStyleService *styleService {};
+	KZTimerService *timerService {};
+	KZTipService *tipService {};
 
 	void EnableGodMode();
 
 	// Leg stuff
 	void ToggleHideLegs();
-	bool HidingLegs() { return this->hideLegs; }
+
+	bool HidingLegs()
+	{
+		return this->hideLegs;
+	}
 
 	void UpdatePlayerModelAlpha();
 	// Triggerfix stuff
-	
+
 	// Hit all triggers from start to end with the specified bounds,
 	// and call Touch/StartTouch on triggers that the player is touching.
 	virtual void TouchTriggersAlongPath(const Vector &start, const Vector &end, const bbox_t &bounds);
-	
+
 	// Update the list of triggers that the player is touching, and call StartTouch/EndTouch appropriately.
 	virtual void UpdateTriggerTouchList();
-	
+
 	// Print helpers
 	virtual void PrintConsole(bool addPrefix, bool includeSpectators, const char *format, ...);
 	virtual void PrintChat(bool addPrefix, bool includeSpectators, const char *format, ...); // Already supports colors.
@@ -173,6 +180,7 @@ public:
 	{
 		this->player = player;
 	}
+
 	// To be implemented by each service class
 	virtual void Reset() {}
 };
@@ -188,6 +196,7 @@ public:
 			players[i] = new KZPlayer(i);
 		}
 	}
+
 public:
 	KZPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
 	KZPlayer *ToPlayer(CBasePlayerController *controller);
@@ -197,10 +206,14 @@ public:
 	KZPlayer *ToPlayer(CPlayerUserId userID);
 	KZPlayer *ToPlayer(u32 index);
 
-	KZPlayer *ToKZPlayer(MovementPlayer *player) { return static_cast<KZPlayer *>(player); }
+	KZPlayer *ToKZPlayer(MovementPlayer *player)
+	{
+		return static_cast<KZPlayer *>(player);
+	}
 };
 
 extern CKZPlayerManager *g_pKZPlayerManager;
+
 namespace KZ
 {
 	namespace misc
@@ -208,5 +221,5 @@ namespace KZ
 		void RegisterCommands();
 		void OnClientActive(CPlayerSlot slot);
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
-	}
-};
+	} // namespace misc
+};    // namespace KZ

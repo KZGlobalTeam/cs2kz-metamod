@@ -7,10 +7,10 @@ class CCSPlayerController;
 
 #define SCMD_CALLBACK(name) META_RES name(CCSPlayerController *controller, const CCommand *args)
 
-#define SCMD_CONSOLE_PREFIX "kz_"
+#define SCMD_CONSOLE_PREFIX      "kz_"
 #define SCMD_CHAT_SILENT_TRIGGER '/'
-#define SCMD_CHAT_TRIGGER '!'
-#define SCMD_MAX_CMDS 512
+#define SCMD_CHAT_TRIGGER        '!'
+#define SCMD_MAX_CMDS            512
 
 namespace scmd
 {
@@ -20,7 +20,6 @@ namespace scmd
 
 	META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
 	META_RES OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
-}
+} // namespace scmd
 
-
-#endif //SIMPLECMDS_H
+#endif // SIMPLECMDS_H
