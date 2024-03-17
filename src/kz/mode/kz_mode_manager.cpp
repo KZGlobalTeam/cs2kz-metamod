@@ -39,7 +39,7 @@ void KZ::mode::InitModeManager()
 	{
 		return;
 	}
-	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService *{ return new KZVanillaModeService(player); };
+	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService * { return new KZVanillaModeService(player); };
 	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
 	initialized = true;
 }
@@ -127,7 +127,6 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 	player->enableWaterFix = player->modeService->EnableWaterFix();
 }
 
-
 bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
 {
 	if (!shortModeName || V_strlen(shortModeName) == 0 || !longModeName || V_strlen(longModeName) == 0)
@@ -148,11 +147,11 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 
 	char shortModeCmd[64];
 	char shortModeCmdDesc[256];
-	
+
 	V_snprintf(shortModeCmd, 64, "kz_%s", shortModeName);
 	V_snprintf(shortModeCmdDesc, 64, "Switch to %s mode.", longModeName);
 	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort, shortModeCmdDesc);
-	this->modeInfos.AddToTail({ id, shortModeName, longModeName, factory, shortCmdRegistered });
+	this->modeInfos.AddToTail({id, shortModeName, longModeName, factory, shortCmdRegistered});
 	return true;
 }
 
@@ -220,7 +219,14 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		player->PrintConsole(false, false, "Possible modes: (Current mode is %s)", player->modeService->GetModeName());
 		FOR_EACH_VEC(this->modeInfos, i)
 		{
-			player->PrintConsole(false, false, "%s (kz_mode %s / kz_mode %s)", this->modeInfos[i].longModeName, this->modeInfos[i].longModeName, this->modeInfos[i].shortModeName);
+			// clang-format off
+			player->PrintConsole(false, false,
+				"%s (kz_mode %s / kz_mode %s)",
+				this->modeInfos[i].longModeName,
+				this->modeInfos[i].longModeName,
+				this->modeInfos[i].shortModeName
+			);
+			// clang-format on
 		}
 		return false;
 	}
@@ -243,7 +249,6 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	}
 	if (!factory)
 	{
-
 		if (!silent)
 		{
 			player->PrintChat(true, false, "{grey}The{purple} %s{grey}mode is not available.", modeName);
@@ -255,7 +260,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->modeService = factory(player);
 	player->timerService->TimerStop();
 	player->modeService->Init();
-	
+
 	if (!silent)
 	{
 		player->PrintChat(true, false, "{grey}You have switched to the {purple}%s {grey}mode.", player->modeService->GetModeName());
@@ -276,7 +281,10 @@ void KZModeManager::Cleanup()
 	char error[256];
 	FOR_EACH_VEC(this->modeInfos, i)
 	{
-		if (this->modeInfos[i].id == 0) continue;
+		if (this->modeInfos[i].id == 0)
+		{
+			continue;
+		}
 		pluginManager->Unload(this->modeInfos[i].id, true, error, sizeof(error));
 	}
 }
@@ -304,7 +312,7 @@ internal SCMD_CALLBACK(Command_KzModeShort)
 		len = 1;
 		stripped = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
 	}
-	
+
 	if (stripped)
 	{
 		const char *mode = args->Arg(0) + len;

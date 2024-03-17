@@ -3,7 +3,7 @@
 #include "schema.h"
 #include "sdk/cschemasystem.h"
 #include "utils/interfaces.h"
-//#include <unordered_map>
+// #include <unordered_map>
 #include "tier1/utlmap.h"
 #include "plat.h"
 #include "sdk/entity/cbaseentity.h"
@@ -18,7 +18,9 @@ static bool IsFieldNetworked(SchemaClassFieldData_t &field)
 	{
 		static auto networkEnabled = hash_32_fnv1a_const("MNetworkEnable");
 		if (networkEnabled == hash_32_fnv1a_const(field.m_metadata[i].m_name))
+		{
 			return true;
+		}
 	}
 
 	return false;
@@ -29,7 +31,9 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t *tableMap, const char *cla
 	CSchemaSystemTypeScope *pType = interfaces::pSchemaSystem->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
 
 	if (!pType)
+	{
 		return false;
+	}
 
 	SchemaClassInfoData_t *pClassInfo = pType->FindDeclaredClass(className);
 
@@ -57,7 +61,7 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t *tableMap, const char *cla
 		Msg("%s::%s found at -> 0x%X - %llx\n", className, field.m_name, field.m_single_inheritance_offset, &field);
 #endif
 
-		keyValueMap->Insert(hash_32_fnv1a_const(field.m_name), { field.m_single_inheritance_offset, IsFieldNetworked(field) });
+		keyValueMap->Insert(hash_32_fnv1a_const(field.m_name), {field.m_single_inheritance_offset, IsFieldNetworked(field)});
 	}
 
 	return true;
@@ -68,7 +72,9 @@ int16_t schema::FindChainOffset(const char *className)
 	CSchemaSystemTypeScope *pType = interfaces::pSchemaSystem->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
 
 	if (!pType)
+	{
 		return false;
+	}
 
 	SchemaClassInfoData_t *pClassInfo = pType->FindDeclaredClass(className);
 
@@ -97,9 +103,11 @@ SchemaKey schema::GetOffset(const char *className, uint32_t classKey, const char
 	if (!schemaTableMap.IsValidIndex(tableMapIndex))
 	{
 		if (InitSchemaFieldsForClass(&schemaTableMap, className, classKey))
+		{
 			return GetOffset(className, classKey, memberName, memberKey);
+		}
 
-		return { 0, 0 };
+		return {0, 0};
 	}
 
 	SchemaKeyValueMap_t *tableMap = schemaTableMap[tableMapIndex];
@@ -107,7 +115,7 @@ SchemaKey schema::GetOffset(const char *className, uint32_t classKey, const char
 	if (!tableMap->IsValidIndex(memberIndex))
 	{
 		Warning("schema::GetOffset(): '%s' was not found in '%s'!\n", memberName, className);
-		return { 0, 0 };
+		return {0, 0};
 	}
 
 	return tableMap->Element(memberIndex);

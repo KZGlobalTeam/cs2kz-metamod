@@ -8,17 +8,17 @@ namespace KZ::quiet
 	void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 
 	void OnPostEvent(INetworkSerializable *pEvent, const void *pData, const uint64 *clients);
-}
-
+} // namespace KZ::quiet
 
 class KZQuietService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
 	u8 lastObserverMode;
-	CHandle< CBaseEntity2 > lastObserverTarget;
-	bool hideWeapon{};
+	CHandle<CBaseEntity2> lastObserverTarget;
+	bool hideWeapon {};
+
 public:
-	bool hideOtherPlayers{};
+	bool hideOtherPlayers {};
 	virtual void Reset() override;
 
 	void ToggleHide();
@@ -27,6 +27,13 @@ public:
 	bool ShouldHide();
 	bool ShouldHideIndex(u32 targetIndex);
 
-	bool ShouldHideWeapon() { return this->hideWeapon; }
-	void ToggleHideWeapon() { this->hideWeapon = !this->hideWeapon; }
+	bool ShouldHideWeapon()
+	{
+		return this->hideWeapon;
+	}
+
+	void ToggleHideWeapon()
+	{
+		this->hideWeapon = !this->hideWeapon;
+	}
 };

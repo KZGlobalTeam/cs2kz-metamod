@@ -12,14 +12,14 @@
 
 #include "tier0/memdbgon.h"
 
-#define PAGE_SIZE			4096
-#define PAGE_ALIGN_UP(x)	((x + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1))
+#define PAGE_SIZE        4096
+#define PAGE_ALIGN_UP(x) ((x + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1))
 
 struct ModuleInfo
 {
 	const char *path; // in
-	uint8_t *base; // out
-	uint size; // out
+	uint8_t *base;    // out
+	uint size;        // out
 };
 
 // https://github.com/alliedmodders/sourcemod/blob/master/core/logic/MemoryUtils.cpp#L502-L587
@@ -92,7 +92,7 @@ int GetModuleInformation(HINSTANCE hModule, void **base, size_t *length)
 			 * In glibc, the segment file size is aligned up to the nearest page size and
 			 * added to the virtual address of the segment. We just want the size here.
 			 */
-			 //lib.memorySize = PAGE_ALIGN_UP(hdr.p_filesz);
+			// lib.memorySize = PAGE_ALIGN_UP(hdr.p_filesz);
 			*length = PAGE_ALIGN_UP(hdr.p_filesz);
 			*base = (void *)(baseAddr + hdr.p_paddr);
 
@@ -151,27 +151,33 @@ static int get_prot(void *pAddr, size_t nSize)
 
 		char *dst = start;
 		while (*src != '-')
+		{
 			*dst++ = *src++;
+		}
 		*dst = 0;
 
 		src++; // skip "-""
 
 		dst = end;
 		while (!isspace(*src))
+		{
 			*dst++ = *src++;
+		}
 		*dst = 0;
 
 		src++; // skip space
 
 		dst = prot;
 		while (!isspace(*src))
+		{
 			*dst++ = *src++;
+		}
 		*dst = 0;
 
 		uintptr_t nStart = (uintptr_t)strtoul(start, nullptr, 16);
 		uintptr_t nEnd = (uintptr_t)strtoul(end, nullptr, 16);
 
-		if (nStart < nAddr && nEnd >(nAddr + nSize))
+		if (nStart < nAddr && nEnd > (nAddr + nSize))
 		{
 			fclose(f);
 			return parse_prot(prot);

@@ -7,10 +7,10 @@
 #include "movement/movement.h"
 #include "utils/utils.h"
 
-int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void* pSock);
+int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock);
 extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket;
 
-#define DECLARE_MOVEMENT_DETOUR(name) DECLARE_DETOUR(name, movement::Detour_##name);
+#define DECLARE_MOVEMENT_DETOUR(name)        DECLARE_DETOUR(name, movement::Detour_##name);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
 
 DECLARE_MOVEMENT_EXTERN_DETOUR(PhysicsSimulate);

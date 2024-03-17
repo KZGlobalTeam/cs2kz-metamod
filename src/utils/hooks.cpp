@@ -8,7 +8,10 @@
 #include "utils/utils.h"
 #include "utils/ctimer.h"
 #include "entityclass.h"
-class GameSessionConfiguration_t {};
+
+class GameSessionConfiguration_t
+{
+};
 
 class EntListener : public IEntityListener
 {
@@ -19,19 +22,20 @@ class EntListener : public IEntityListener
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args);
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
 internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
-internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities);
+internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
+								 const uint16 *pEntityIndicies, int nEntities);
 internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
 internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
-internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients,
-	INetworkSerializable *pEvent, const void *pData, unsigned long nSize, NetChannelBufType_t bufType);
+internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkSerializable *pEvent,
+							 const void *pData, unsigned long nSize, NetChannelBufType_t bufType);
 internal void OnStartTouch(CBaseEntity2 *pOther);
 internal void OnTouch(CBaseEntity2 *pOther);
 internal void OnEndTouch(CBaseEntity2 *pOther);
 
-internal bool ignoreTouchEvent{};
+internal bool ignoreTouchEvent {};
 internal void OnStartTouchPost(CBaseEntity2 *pOther);
 internal void OnTouchPost(CBaseEntity2 *pOther);
 internal void OnEndTouchPost(CBaseEntity2 *pOther);
@@ -40,16 +44,18 @@ internal void Hook_OnChangeTeamPost(i32 team);
 internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
-SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &, const Entity2Networkable_t **, const uint16 *, int);
+SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &,
+				   const Entity2Networkable_t **, const uint16 *, int);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
 SH_DECL_HOOK4_void(ISource2GameClients, ClientActive, SH_NOATTRIB, false, CPlayerSlot, bool, const char *, uint64);
-SH_DECL_HOOK5_void(ISource2GameClients, ClientDisconnect, SH_NOATTRIB, false, CPlayerSlot, ENetworkDisconnectionReason, const char *, uint64 , const char *);
+SH_DECL_HOOK5_void(ISource2GameClients, ClientDisconnect, SH_NOATTRIB, false, CPlayerSlot, ENetworkDisconnectionReason, const char *, uint64,
+				   const char *);
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t &, ISource2WorldSession *, const char *);
 SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEvent *, bool);
 SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
-SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *,
-	INetworkSerializable *, const void *, unsigned long, NetChannelBufType_t);
+SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *, INetworkSerializable *,
+				   const void *, unsigned long, NetChannelBufType_t);
 SH_DECL_MANUALHOOK1_void(StartTouch, 0, 0, 0, CBaseEntity2 *);
 SH_DECL_MANUALHOOK1_void(Touch, 0, 0, 0, CBaseEntity2 *);
 SH_DECL_MANUALHOOK1_void(EndTouch, 0, 0, 0, CBaseEntity2 *);
@@ -58,7 +64,6 @@ internal int changeTeamHook;
 SH_DECL_MANUALHOOK1_void(ChangeTeam, 0, 0, 0, int);
 
 SH_DECL_MANUALHOOK3_void(Teleport, 0, 0, 0, const Vector *, const QAngle *, const Vector *);
-
 
 void hooks::Initialize()
 {
@@ -108,7 +113,7 @@ internal void AddEntityHooks(CBaseEntity2 *entity)
 		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(StartTouch, entity, SH_STATIC(OnStartTouchPost), true));
 		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Touch, entity, SH_STATIC(OnTouchPost), true));
 		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(EndTouch, entity, SH_STATIC(OnEndTouchPost), true));
-		CCSPlayerPawn* pawn = static_cast<CCSPlayerPawn *>(entity);
+		CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(entity);
 		if (!V_stricmp(entity->GetClassname(), "player") && g_pPlayerManager->ToPlayer(pawn))
 		{
 			hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Teleport, pawn, SH_STATIC(OnTeleport), false));
@@ -194,7 +199,8 @@ internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 	RETURN_META(MRES_IGNORED);
 }
 
-internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCount, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities)
+internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCount, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
+								 const uint16 *pEntityIndicies, int nEntities)
 {
 	KZ::quiet::OnCheckTransmit(pInfo, infoCount);
 	RETURN_META(MRES_IGNORED);
@@ -283,8 +289,8 @@ internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContex
 	RETURN_META(mres);
 }
 
-internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients,
-	INetworkSerializable *pEvent, const void *pData, unsigned long nSize, NetChannelBufType_t bufType)
+internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkSerializable *pEvent,
+							 const void *pData, unsigned long nSize, NetChannelBufType_t bufType)
 {
 	KZ::quiet::OnPostEvent(pEvent, pData, clients);
 }
@@ -362,7 +368,7 @@ internal void OnTouch(CBaseEntity2 *pOther)
 		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
-	
+
 	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()))
 	{
 		RETURN_META(MRES_IGNORED);
@@ -423,7 +429,7 @@ internal void OnStartTouchPost(CBaseEntity2 *pOther)
 		ignoreTouchEvent = false;
 		RETURN_META(MRES_SUPERCEDE);
 	}
-	
+
 	ignoreTouchEvent = false;
 	if (V_stricmp(pOther->GetClassname(), "player"))
 	{
@@ -436,7 +442,7 @@ internal void OnStartTouchPost(CBaseEntity2 *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
-	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))		
+	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
 		if (trigger->IsEndZone())

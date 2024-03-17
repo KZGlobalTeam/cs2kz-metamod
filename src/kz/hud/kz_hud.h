@@ -15,9 +15,10 @@ class KZHUDService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 private:
-	bool showPanel{};
-	f64 timerStoppedTime{};
-	f64 currentTimeWhenTimerStopped{};
+	bool showPanel {};
+	f64 timerStoppedTime {};
+	f64 currentTimeWhenTimerStopped {};
+
 public:
 	virtual void Reset() override;
 	static_global void Init();
@@ -25,15 +26,20 @@ public:
 	void DrawSpeedPanel();
 
 	void TogglePanel();
-	bool IsShowingPanel() { return this->showPanel; }
+
+	bool IsShowingPanel()
+	{
+		return this->showPanel;
+	}
 
 	void OnTimerStopped(f64 currentTimeWhenTimerStopped);
-	bool ShouldShowTimerAfterStop() 
-	{ 
-		return g_pKZUtils->GetServerGlobals()->curtime > KZ_HUD_TIMER_STOPPED_GRACE_TIME 
-			&& g_pKZUtils->GetServerGlobals()->curtime - timerStoppedTime < KZ_HUD_TIMER_STOPPED_GRACE_TIME;
+
+	bool ShouldShowTimerAfterStop()
+	{
+		return g_pKZUtils->GetServerGlobals()->curtime > KZ_HUD_TIMER_STOPPED_GRACE_TIME
+			   && g_pKZUtils->GetServerGlobals()->curtime - timerStoppedTime < KZ_HUD_TIMER_STOPPED_GRACE_TIME;
 	}
-	
+
 private:
 	void AddSpeedText(char *buffer, int size);
 	void AddKeyText(char *buffer, int size);

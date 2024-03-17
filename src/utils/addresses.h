@@ -19,4 +19,4 @@ namespace modules
 		modules::steamnetworkingsockets = new CModule(ROOTBIN, "steamnetworkingsockets");
 	}
 
-}
+} // namespace modules

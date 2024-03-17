@@ -71,7 +71,8 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	{
 		return;
 	}
-	// If we teleport the player to the same origin, the player ends just a slightly bit off from where they are supposed to be...
+	// If we teleport the player to the same origin,
+	// the player ends just a slightly bit off from where they are supposed to be...
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
 	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
@@ -94,8 +95,11 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	pawn->m_flSlopeDropOffset(cp.slopeDropOffset);
 
 	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(cp.groundEnt));
-	// Don't attach the player onto moving platform (because they might not be there anymore). World doesn't move though.
-	if (groundEntity && (groundEntity->entindex() == 0 || (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f)))
+	// Don't attach the player onto moving platform (because they might not be there anymore). World doesn't move
+	// though.
+	if (groundEntity
+		&& (groundEntity->entindex() == 0
+			|| (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f)))
 	{
 		pawn->m_hGroundEntity(cp.groundEnt);
 	}
@@ -147,12 +151,15 @@ void KZCheckpointService::TpToNextCp()
 
 void KZCheckpointService::TpHoldPlayerStill()
 {
-	if (!this->lastTeleportedCheckpoint
-		|| !this->player->IsAlive()
-		|| g_pKZUtils->GetServerGlobals()->curtime - this->teleportTime > 0.04) 
+	bool noLastTpCheckpoint = this->lastTeleportedCheckpoint == nullptr;
+	bool isAlive = this->player->IsAlive();
+	bool justTeleported = g_pKZUtils->GetServerGlobals()->curtime - this->teleportTime > 0.04;
+
+	if (noLastTpCheckpoint || !isAlive || justTeleported)
 	{
 		return;
 	}
+
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
 
@@ -182,7 +189,16 @@ void KZCheckpointService::TpHoldPlayerStill()
 		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
 	}
 	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(this->lastTeleportedCheckpoint->groundEnt));
-	if (groundEntity && (groundEntity->entindex() == 0 || (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f)))
+
+	if (!groundEntity)
+	{
+		return;
+	}
+
+	bool isWorldEntity = groundEntity->entindex() == 0;
+	bool isStaticGround = groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f;
+
+	if (isWorldEntity || isStaticGround)
 	{
 		this->player->GetPawn()->m_hGroundEntity(this->lastTeleportedCheckpoint->groundEnt);
 	}

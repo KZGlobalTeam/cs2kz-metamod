@@ -10,7 +10,7 @@ KZAutoBhopStylePlugin g_KZAutoBhopStylePlugin;
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 KZStyleManager *g_pStyleManager = NULL;
-StyleServiceFactory g_StyleFactory = [](KZPlayer *player) -> KZStyleService *{ return new KZAutoBhopStyleService(player); };
+StyleServiceFactory g_StyleFactory = [](KZPlayer *player) -> KZStyleService * { return new KZAutoBhopStyleService(player); };
 PLUGIN_EXPOSE(KZAutoBhopStylePlugin, g_KZAutoBhopStylePlugin);
 
 ConVar *sv_autobunnyhopping;
@@ -33,10 +33,21 @@ bool KZAutoBhopStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t
 		return false;
 	}
 	modules::Initialize();
-	if (!interfaces::Initialize(ismm, error, maxlen)
-		|| nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig())
-		|| !g_pStyleManager->RegisterStyle(g_PLID, STYLE_NAME_SHORT, STYLE_NAME, g_StyleFactory))
+	if (!interfaces::Initialize(ismm, error, maxlen))
 	{
+		V_snprintf(error, maxlen, "Failed to initialize interfaces");
+		return false;
+	}
+
+	if (nullptr == (g_pGameConfig = g_pKZUtils->GetGameConfig()))
+	{
+		V_snprintf(error, maxlen, "Failed to get game config");
+		return false;
+	}
+
+	if (!g_pStyleManager->RegisterStyle(g_PLID, STYLE_NAME_SHORT, STYLE_NAME, g_StyleFactory))
+	{
+		V_snprintf(error, maxlen, "Failed to register style");
 		return false;
 	}
 
@@ -53,10 +64,6 @@ bool KZAutoBhopStylePlugin::Unload(char *error, size_t maxlen)
 {
 	g_pStyleManager->UnregisterStyle(STYLE_NAME);
 	return true;
-}
-
-void KZAutoBhopStylePlugin::AllPluginsLoaded()
-{
 }
 
 bool KZAutoBhopStylePlugin::Pause(char *error, size_t maxlen)

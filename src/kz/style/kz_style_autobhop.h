@@ -1,6 +1,6 @@
 #include "kz_style.h"
 
-#define STYLE_NAME "AutoBhop"
+#define STYLE_NAME       "AutoBhop"
 #define STYLE_NAME_SHORT "ABH"
 
 class KZAutoBhopStylePlugin : public ISmmPlugin, public IMetamodListener
@@ -10,7 +10,7 @@ public:
 	bool Unload(char *error, size_t maxlen);
 	bool Pause(char *error, size_t maxlen);
 	bool Unpause(char *error, size_t maxlen);
-	void AllPluginsLoaded();
+
 public:
 	const char *GetAuthor();
 	const char *GetName();
@@ -25,9 +25,18 @@ public:
 class KZAutoBhopStyleService : public KZStyleService
 {
 	using KZStyleService::KZStyleService;
+
 public:
-	virtual const char *GetStyleName() override { return "AutoBhop"; }
-	virtual const char *GetStyleShortName() override { return "ABH"; }
+	virtual const char *GetStyleName() override
+	{
+		return "AutoBhop";
+	}
+
+	virtual const char *GetStyleShortName() override
+	{
+		return "ABH";
+	}
+
 	virtual void Init() override;
 	virtual void Cleanup() override;
 	virtual void OnCheckJumpButton() override;

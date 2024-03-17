@@ -8,15 +8,17 @@ public:
 	{
 		this->checkpoints = CUtlVector<Checkpoint>(1, 0);
 	}
+
 	virtual void Reset() override;
+
 	// Checkpoint stuff
 	struct Checkpoint
 	{
 		Vector origin;
 		QAngle angles;
 		Vector ladderNormal;
-		bool onLadder{};
-		CHandle< CBaseEntity2 > groundEnt;
+		bool onLadder {};
+		CHandle<CBaseEntity2> groundEnt;
 		f32 slopeDropOffset;
 		f32 slopeDropHeight;
 	};
@@ -24,15 +26,15 @@ public:
 	static_global void RegisterCommands();
 
 private:
-	i32 currentCpIndex{};
-	u32 tpCount{};
-	bool holdingStill{};
-	f32 teleportTime{};
+	i32 currentCpIndex {};
+	u32 tpCount {};
+	bool holdingStill {};
+	f32 teleportTime {};
 	CUtlVector<Checkpoint> checkpoints;
 
-	bool hasCustomStartPosition{};
+	bool hasCustomStartPosition {};
 	Checkpoint customStartPosition;
-	Checkpoint const *lastTeleportedCheckpoint{};
+	Checkpoint const *lastTeleportedCheckpoint {};
 
 public:
 	void ResetCheckpoints();
@@ -45,19 +47,36 @@ public:
 	void TpToPrevCp();
 	void TpToNextCp();
 
-	u32 GetTeleportCount() { return this->tpCount; }
+	u32 GetTeleportCount()
+	{
+		return this->tpCount;
+	}
+
 	i32 GetCurrentCpIndex()
 	{
-		if(this->checkpoints.Count() > 0)
+		if (this->checkpoints.Count() > 0)
+		{
 			return this->currentCpIndex + 1;
+		}
 		else
+		{
 			return this->currentCpIndex;
+		}
 	}
-	i32 GetCheckpointCount() { return this->checkpoints.Count(); }
+
+	i32 GetCheckpointCount()
+	{
+		return this->checkpoints.Count();
+	}
 
 	void SetStartPosition();
 	void ClearStartPosition();
-	bool HasCustomStartPosition() { return this->hasCustomStartPosition; }
+
+	bool HasCustomStartPosition()
+	{
+		return this->hasCustomStartPosition;
+	}
+
 	void TpToStartPosition();
 
 	void PlayCheckpointSound();

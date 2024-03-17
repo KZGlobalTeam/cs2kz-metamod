@@ -6,9 +6,9 @@ class CCSPlayer_MovementServices;
 #include "sdk/datatypes.h"
 #include "sdk/services.h"
 // TODO: better error sound
-#define MV_SND_ERROR "Buttons.snd8"
+#define MV_SND_ERROR       "Buttons.snd8"
 #define MV_SND_TIMER_START "Buttons.snd9"
-#define MV_SND_TIMER_END "UI.DeathMatch.LevelUp"
+#define MV_SND_TIMER_END   "UI.DeathMatch.LevelUp"
 
 class CCSPlayerController;
 class MovementPlayer;
@@ -44,7 +44,7 @@ namespace movement
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostPlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
-}
+} // namespace movement
 
 class MovementPlayer
 {
@@ -53,7 +53,12 @@ public:
 
 	virtual CCSPlayerController *GetController();
 	virtual CCSPlayerPawn *GetPawn();
-	virtual CPlayerSlot GetPlayerSlot() { return index - 1; }
+
+	virtual CPlayerSlot GetPlayerSlot()
+	{
+		return index - 1;
+	}
+
 	virtual CCSPlayer_MovementServices *GetMoveServices();
 
 	// This doesn't work during movement processing!
@@ -83,118 +88,199 @@ public:
 	// Movement hooks
 	virtual void OnPhysicsSimulate();
 	virtual void OnPhysicsSimulatePost();
+
 	virtual void OnProcessUsercmds(void *, int) {}
+
 	virtual void OnProcessUsercmdsPost(void *, int) {}
+
 	virtual void OnProcessMovement();
 	virtual void OnProcessMovementPost();
+
 	virtual void OnPlayerMove() {}
+
 	virtual void OnPlayerMovePost() {}
+
 	virtual void OnCheckParameters() {}
+
 	virtual void OnCheckParametersPost() {}
+
 	virtual void OnCanMove() {}
+
 	virtual void OnCanMovePost() {}
+
 	virtual void OnFullWalkMove(bool &) {}
+
 	virtual void OnFullWalkMovePost(bool) {}
+
 	virtual void OnMoveInit() {}
+
 	virtual void OnMoveInitPost() {}
+
 	virtual void OnCheckWater() {}
+
 	virtual void OnCheckWaterPost() {}
+
 	virtual void OnWaterMove() {}
+
 	virtual void OnWaterMovePost() {}
+
 	virtual void OnCheckVelocity(const char *) {}
+
 	virtual void OnCheckVelocityPost(const char *) {}
+
 	virtual void OnDuck() {}
+
 	virtual void OnDuckPost() {}
+
 	// Make an exception for this as it is the only time where we need to change the return value.
 	virtual void OnCanUnduck() {}
+
 	virtual void OnCanUnduckPost(bool &) {}
+
 	virtual void OnLadderMove() {}
+
 	virtual void OnLadderMovePost() {}
+
 	virtual void OnCheckJumpButton() {}
+
 	virtual void OnCheckJumpButtonPost() {}
+
 	virtual void OnJump() {}
+
 	virtual void OnJumpPost() {}
+
 	virtual void OnAirMove() {}
+
 	virtual void OnAirMovePost() {}
+
 	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) {}
+
 	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) {}
+
 	virtual void OnFriction() {}
+
 	virtual void OnFrictionPost() {}
+
 	virtual void OnWalkMove() {}
+
 	virtual void OnWalkMovePost() {}
+
 	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) {}
+
 	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) {}
+
 	virtual void OnCategorizePosition(bool) {}
+
 	virtual void OnCategorizePositionPost(bool) {}
+
 	virtual void OnFinishGravity() {}
+
 	virtual void OnFinishGravityPost() {}
+
 	virtual void OnCheckFalling() {}
+
 	virtual void OnCheckFallingPost() {}
+
 	virtual void OnPostPlayerMove() {}
+
 	virtual void OnPostPlayerMovePost() {}
+
 	virtual void OnPostThink();
+
 	virtual void OnPostThinkPost() {}
 
 	// Movement events
 	virtual void OnStartTouchGround() {}
+
 	virtual void OnStopTouchGround() {}
+
 	virtual void OnChangeMoveType(MoveType_t oldMoveType) {}
 
 	// Other events
 	virtual void OnChangeTeamPost(i32 team) {}
+
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) {}
 
-	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) { return true; }
-	virtual bool OnTriggerTouch(CBaseTrigger *trigger) { return true; }
-	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) { return true; }
+	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger)
+	{
+		return true;
+	}
 
-	bool IsAlive() { return this->GetPawn() ? this->GetPawn()->IsAlive() : false; }
-	MoveType_t GetMoveType() { return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE; }
-	Collision_Group_t GetCollisionGroup() { return this->GetPawn() ? (Collision_Group_t)this->GetPawn()->m_Collision().m_CollisionGroup() : LAST_SHARED_COLLISION_GROUP; }
+	virtual bool OnTriggerTouch(CBaseTrigger *trigger)
+	{
+		return true;
+	}
 
-	void SetCollidingWithWorld() { this->collidingWithWorld = true; }
-	bool IsCollidingWithWorld() { return this->currentMoveData->m_TouchList.Count() > 0 || this->collidingWithWorld; }
+	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger)
+	{
+		return true;
+	}
+
+	bool IsAlive()
+	{
+		return this->GetPawn() ? this->GetPawn()->IsAlive() : false;
+	}
+
+	MoveType_t GetMoveType()
+	{
+		return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE;
+	}
+
+	Collision_Group_t GetCollisionGroup()
+	{
+		return this->GetPawn() ? (Collision_Group_t)this->GetPawn()->m_Collision().m_CollisionGroup() : LAST_SHARED_COLLISION_GROUP;
+	}
+
+	void SetCollidingWithWorld()
+	{
+		this->collidingWithWorld = true;
+	}
+
+	bool IsCollidingWithWorld()
+	{
+		return this->currentMoveData->m_TouchList.Count() > 0 || this->collidingWithWorld;
+	}
+
 public:
 	// General
 	const i32 index;
 
-	bool processingMovement{};
-	CMoveData *currentMoveData{};
+	bool processingMovement {};
+	CMoveData *currentMoveData {};
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;
 
-
 	QAngle oldAngles;
 
-	bool processingDuck{};
-	bool duckBugged{};
-	bool walkMoved{};
-	bool oldWalkMoved{};
-	bool hitPerf{};
-	bool jumped{};
-	bool takeoffFromLadder{};
+	bool processingDuck {};
+	bool duckBugged {};
+	bool walkMoved {};
+	bool oldWalkMoved {};
+	bool hitPerf {};
+	bool jumped {};
+	bool takeoffFromLadder {};
 	Vector lastValidLadderOrigin;
 
 	Vector takeoffOrigin;
 	Vector takeoffVelocity;
-	f32 takeoffTime{};
+	f32 takeoffTime {};
 	Vector takeoffGroundOrigin;
 
 	Vector landingOrigin;
 	Vector landingVelocity;
-	f32 landingTime{};
+	f32 landingTime {};
 	Vector landingOriginActual;
-	f32 landingTimeActual{};
+	f32 landingTimeActual {};
 
-
-	bool enableWaterFix{};
-	bool ignoreNextCategorizePosition{};
+	bool enableWaterFix {};
+	bool ignoreNextCategorizePosition {};
 
 	CUtlVector<CEntityHandle> pendingStartTouchTriggers;
 	CUtlVector<CEntityHandle> pendingEndTouchTriggers;
 	CUtlVector<CEntityHandle> touchedTriggers;
+
 private:
-	bool collidingWithWorld{};
+	bool collidingWithWorld {};
 	// Movetype changes that occur outside of movement processing
 	MoveType_t lastKnownMoveType;
 };
@@ -210,6 +296,7 @@ public:
 			players[i] = new MovementPlayer(i);
 		}
 	}
+
 	~CMovementPlayerManager()
 	{
 		for (int i = 0; i < MAXPLAYERS + 1; i++)
@@ -217,6 +304,7 @@ public:
 			delete players[i];
 		}
 	}
+
 public:
 	MovementPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
 	MovementPlayer *ToPlayer(CBasePlayerController *controller);
@@ -224,9 +312,9 @@ public:
 	MovementPlayer *ToPlayer(CPlayerSlot slot);
 	MovementPlayer *ToPlayer(CEntityIndex entIndex);
 	MovementPlayer *ToPlayer(CPlayerUserId userID);
+
 public:
 	MovementPlayer *players[MAXPLAYERS + 1];
 };
-
 
 extern CMovementPlayerManager *g_pPlayerManager;

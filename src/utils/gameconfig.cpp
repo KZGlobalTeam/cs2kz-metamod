@@ -6,7 +6,7 @@
 #include "gameconfig.h"
 #include "addresses.h"
 
-CGameConfig::CGameConfig(const std::string& gameDir, const std::string& path)
+CGameConfig::CGameConfig(const std::string &gameDir, const std::string &path)
 {
 	this->m_szGameDir = gameDir;
 	this->m_szPath = path;
@@ -26,16 +26,16 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 		return false;
 	}
 
-	KeyValues* game = m_pKeyValues->FindKey(m_szGameDir.c_str());
+	KeyValues *game = m_pKeyValues->FindKey(m_szGameDir.c_str());
 	if (game)
 	{
 #if defined _LINUX
-		const char* platform = "linux";
+		const char *platform = "linux";
 #else
-		const char* platform = "windows";
+		const char *platform = "windows";
 #endif
 
-		KeyValues* offsets = game->FindKey("Offsets");
+		KeyValues *offsets = game->FindKey("Offsets");
 		if (offsets)
 		{
 			FOR_EACH_SUBKEY(offsets, it)
@@ -44,7 +44,7 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 			}
 		}
 
-		KeyValues* signatures = game->FindKey("Signatures");
+		KeyValues *signatures = game->FindKey("Signatures");
 		if (signatures)
 		{
 			FOR_EACH_SUBKEY(signatures, it)
@@ -54,7 +54,7 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 			}
 		}
 
-		KeyValues* patches = game->FindKey("Patches");
+		KeyValues *patches = game->FindKey("Patches");
 		if (patches)
 		{
 			FOR_EACH_SUBKEY(patches, it)
@@ -76,7 +76,7 @@ const std::string CGameConfig::GetPath()
 	return m_szPath;
 }
 
-const char *CGameConfig::GetSignature(const std::string& name)
+const char *CGameConfig::GetSignature(const std::string &name)
 {
 	auto it = m_umSignatures.find(name);
 	if (it == m_umSignatures.end())
@@ -86,7 +86,7 @@ const char *CGameConfig::GetSignature(const std::string& name)
 	return it->second.c_str();
 }
 
-const char *CGameConfig::GetPatch(const std::string& name)
+const char *CGameConfig::GetPatch(const std::string &name)
 {
 	auto it = m_umPatches.find(name);
 	if (it == m_umPatches.end())
@@ -96,7 +96,7 @@ const char *CGameConfig::GetPatch(const std::string& name)
 	return it->second.c_str();
 }
 
-int CGameConfig::GetOffset(const std::string& name)
+int CGameConfig::GetOffset(const std::string &name)
 {
 	auto it = m_umOffsets.find(name);
 	if (it == m_umOffsets.end())
@@ -106,7 +106,7 @@ int CGameConfig::GetOffset(const std::string& name)
 	return it->second;
 }
 
-const char *CGameConfig::GetLibrary(const std::string& name)
+const char *CGameConfig::GetLibrary(const std::string &name)
 {
 	auto it = m_umLibraries.find(name);
 	if (it == m_umLibraries.end())
@@ -120,18 +120,30 @@ CModule **CGameConfig::GetModule(const char *name)
 {
 	const char *library = this->GetLibrary(name);
 	if (!library)
+	{
 		return nullptr;
+	}
 
 	if (strcmp(library, "engine") == 0)
+	{
 		return &modules::engine;
+	}
 	else if (strcmp(library, "server") == 0)
+	{
 		return &modules::server;
+	}
 	else if (strcmp(library, "tier0") == 0)
+	{
 		return &modules::tier0;
+	}
 	else if (strcmp(library, "schemasystem") == 0)
+	{
 		return &modules::schemasystem;
+	}
 	else if (strcmp(library, "steamnetworkingsockets") == 0)
+	{
 		return &modules::steamnetworkingsockets;
+	}
 	return nullptr;
 }
 
@@ -146,7 +158,7 @@ bool CGameConfig::IsSymbol(const char *name)
 	return sigOrSymbol[0] == '@';
 }
 
-const char* CGameConfig::GetSymbol(const char *name)
+const char *CGameConfig::GetSymbol(const char *name)
 {
 	const char *symbol = this->GetSignature(name);
 
@@ -190,7 +202,9 @@ void *CGameConfig::ResolveSignature(const char *name)
 		size_t iLength = 0;
 		byte *pSignature = HexToByte(signature, iLength);
 		if (!pSignature)
+		{
 			return nullptr;
+		}
 		address = (*module)->FindSignature(pSignature, iLength, error);
 		if (error == SIG_FOUND_MULTIPLE)
 		{
@@ -210,41 +224,45 @@ void *CGameConfig::ResolveSignature(const char *name)
 // Static functions
 std::string CGameConfig::GetDirectoryName(const std::string &directoryPathInput)
 {
-    std::string directoryPath = std::string(directoryPathInput);
+	std::string directoryPath = std::string(directoryPathInput);
 
-    size_t found = std::string(directoryPath).find_last_of("/\\");
-    if (found != std::string::npos)
-    {
-        return std::string(directoryPath, found + 1);
-    }
-    return "";
+	size_t found = std::string(directoryPath).find_last_of("/\\");
+	if (found != std::string::npos)
+	{
+		return std::string(directoryPath, found + 1);
+	}
+	return "";
 }
 
-int CGameConfig::HexStringToUint8Array(const char* hexString, uint8_t* byteArray, size_t maxBytes)
+int CGameConfig::HexStringToUint8Array(const char *hexString, uint8_t *byteArray, size_t maxBytes)
 {
-    if (!hexString) {
-        printf("Invalid hex string.\n");
+	if (!hexString)
+	{
+		printf("Invalid hex string.\n");
 		return -1;
 	}
 
-    size_t hexStringLength = strlen(hexString);
-    size_t byteCount = hexStringLength / 4; // Each "\\x" represents one byte.
+	size_t hexStringLength = strlen(hexString);
+	size_t byteCount = hexStringLength / 4; // Each "\\x" represents one byte.
 
-    if (hexStringLength % 4 != 0 || byteCount == 0 || byteCount > maxBytes) {
-        printf("Invalid hex string format or byte count.\n");
-        return -1; // Return an error code.
-    }
+	if (hexStringLength % 4 != 0 || byteCount == 0 || byteCount > maxBytes)
+	{
+		printf("Invalid hex string format or byte count.\n");
+		return -1; // Return an error code.
+	}
 
-    for (size_t i = 0; i < hexStringLength; i += 4) {
-        if (sscanf(hexString + i, "\\x%2hhX", &byteArray[i / 4]) != 1) {
-            printf("Failed to parse hex string at position %zu.\n", i);
-            return -1; // Return an error code.
-        }
-    }
+	for (size_t i = 0; i < hexStringLength; i += 4)
+	{
+		if (sscanf(hexString + i, "\\x%2hhX", &byteArray[i / 4]) != 1)
+		{
+			printf("Failed to parse hex string at position %zu.\n", i);
+			return -1; // Return an error code.
+		}
+	}
 
-    byteArray[byteCount] = '\0'; // Add a null-terminating character.
+	byteArray[byteCount] = '\0'; // Add a null-terminating character.
 
-    return byteCount; // Return the number of bytes successfully converted.
+	return byteCount; // Return the number of bytes successfully converted.
 }
 
 byte *CGameConfig::HexToByte(const char *src, size_t &length)
