@@ -122,6 +122,34 @@ CGameEntitySystem *GameEntitySystem()
 	Actual mode stuff.
 */
 
+void KZClassicModeService::Reset()
+{
+	this->revertJumpTweak = {};
+	this->preJumpZSpeed = {};
+	this->tweakedJumpZSpeed = {};
+	this->hasValidDesiredViewAngle = {};
+	this->lastValidDesiredViewAngle = vec3_angle;
+	this->lastJumpReleaseTime = {};
+	this->oldDuckPressed = {};
+	this->forcedUnduck = {};
+	this->postProcessMovementZSpeed = {};
+
+	this->angleHistory.RemoveAll();
+	this->leftPreRatio = {};
+	this->rightPreRatio = {};
+	this->bonusSpeed = {};
+	this->maxPre = {};
+
+	this->didTPM = {};
+	this->overrideTPM = {};
+	this->tpmVelocity = vec3_origin;
+	this->tpmOrigin = vec3_origin;
+	this->lastValidPlane = vec3_origin;
+
+	this->airMoving = {};
+	this->tpmTriggerFixOrigins.RemoveAll();
+}
+
 const char *KZClassicModeService::GetModeName()
 {
 	return MODE_NAME;

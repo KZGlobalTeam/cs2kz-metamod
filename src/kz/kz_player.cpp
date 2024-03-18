@@ -56,6 +56,7 @@ void KZPlayer::Reset()
 	this->hudService->Reset();
 	this->timerService->Reset();
 	this->tipService->Reset();
+	this->modeService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, g_pKZModeManager->defaultMode, true);
 	g_pKZStyleManager->SwitchToStyle(this, g_pKZStyleManager->defaultStyle, true);
