@@ -28,7 +28,7 @@ public:
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
 	{
-		return 0.0f;
+		return MRES_IGNORED;
 	}
 
 	// Movement hooks
