@@ -140,7 +140,7 @@ public:
 
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
-	virtual f32 GetPlayerMaxSpeed() override;
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;

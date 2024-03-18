@@ -26,7 +26,7 @@ public:
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 	virtual const char **GetModeConVarValues() = 0;
 
-	virtual f32 GetPlayerMaxSpeed()
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
 	{
 		return 0.0f;
 	}

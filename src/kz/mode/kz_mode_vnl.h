@@ -49,10 +49,17 @@ class KZVanillaModeService : public KZModeService
 	CUtlVector<Vector> tpmTriggerFixOrigins;
 
 public:
+	virtual void Reset() override;
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
+
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
+	{
+		maxSpeed = MIN(maxSpeed, 250.0f);
+		return MRES_SUPERCEDE;
+	}
 
 	// Triggerfix
 	virtual void OnProcessMovementPost() override;

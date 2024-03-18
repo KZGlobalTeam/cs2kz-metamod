@@ -40,6 +40,12 @@ const char **KZVanillaModeService::GetModeConVarValues()
 	return modeCvarValues;
 }
 
+void KZVanillaModeService::Reset()
+{
+	this->airMoving = {};
+	this->tpmTriggerFixOrigins.RemoveAll();
+}
+
 internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 {
 	// Determine how far along plane to slide based on incoming direction.

@@ -83,7 +83,7 @@ public:
 	virtual f32 GetGroundPosition();
 
 	virtual void Reset();
-	virtual f32 GetPlayerMaxSpeed();
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed);
 
 	// Movement hooks
 	virtual void OnPhysicsSimulate();

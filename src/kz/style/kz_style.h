@@ -14,7 +14,7 @@ public:
 	virtual void Init() {};
 	virtual void Cleanup() {};
 
-	virtual f32 GetPlayerMaxSpeed()
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
 	{
 		return 0.0f;
 	}

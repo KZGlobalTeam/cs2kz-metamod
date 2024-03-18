@@ -333,10 +333,9 @@ void MovementPlayer::Reset()
 	this->collidingWithWorld = false;
 }
 
-float MovementPlayer::GetPlayerMaxSpeed()
+META_RES MovementPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
-	// No effect.
-	return 0.0f;
+	return MRES_IGNORED;
 }
 
 void MovementPlayer::GetBBoxBounds(bbox_t *bounds)

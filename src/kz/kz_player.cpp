@@ -62,9 +62,9 @@ void KZPlayer::Reset()
 	g_pKZStyleManager->SwitchToStyle(this, g_pKZStyleManager->defaultStyle, true);
 }
 
-float KZPlayer::GetPlayerMaxSpeed()
+META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
-	return this->modeService->GetPlayerMaxSpeed();
+	return this->modeService->GetPlayerMaxSpeed(maxSpeed);
 }
 
 void KZPlayer::OnPhysicsSimulate()

@@ -179,9 +179,10 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 	return tier;
 }
 
-f32 KZClassicModeService::GetPlayerMaxSpeed()
+META_RES KZClassicModeService::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
-	return SPEED_NORMAL + this->GetPrestrafeGain();
+	maxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
+	return MRES_SUPERCEDE;
 }
 
 const char **KZClassicModeService::GetModeConVarValues()
