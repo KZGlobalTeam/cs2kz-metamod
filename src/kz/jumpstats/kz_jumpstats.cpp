@@ -798,7 +798,8 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->jumpstatsService->GetSoundMinTier() > tier || tier <= DistanceTier_Meh || target->jumpstatsService->GetSoundMinTier() == DistanceTier_None)
+	if (target->jumpstatsService->GetSoundMinTier() > tier || tier <= DistanceTier_Meh
+		|| target->jumpstatsService->GetSoundMinTier() == DistanceTier_None)
 	{
 		return;
 	}
