@@ -8,6 +8,7 @@
 
 #include "../timer/kz_timer.h"
 #include "utils/simplecmds.h"
+#include "utils/plat.h"
 
 internal SCMD_CALLBACK(Command_KzModeShort);
 internal SCMD_CALLBACK(Command_KzMode);
@@ -47,7 +48,7 @@ void KZ::mode::InitModeManager()
 void KZ::mode::LoadModePlugins()
 {
 	char buffer[1024];
-	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*.*");
+	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*%s", MODULE_EXT);
 	FileFindHandle_t findHandle = {};
 	const char *output = g_pFullFileSystem->FindFirstEx(buffer, "GAME", &findHandle);
 	if (output)

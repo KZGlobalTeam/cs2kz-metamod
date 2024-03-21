@@ -9,6 +9,7 @@
 #include "utils/simplecmds.h"
 
 #include "../timer/kz_timer.h"
+#include "utils/plat.h"
 
 internal SCMD_CALLBACK(Command_KzStyle);
 
@@ -30,7 +31,7 @@ void KZ::style::InitStyleManager()
 void KZ::style::LoadStylePlugins()
 {
 	char buffer[1024];
-	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/styles/*.*");
+	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/styles/*%s", MODULE_EXT);
 	FileFindHandle_t findHandle = {};
 	const char *output = g_pFullFileSystem->FindFirstEx(buffer, "GAME", &findHandle);
 	if (output)
