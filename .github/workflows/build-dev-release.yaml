@@ -28,6 +28,22 @@ jobs:
         run: |
           ./scripts/check-newlines.sh
 
+  check-formatting:
+    name: Check for consistent formatting
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path:
+          - check: 'src'
+            exclude: 'sdk'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: jidicula/clang-format-action@v4.11.0
+        with:
+          clang-format-version: '16'
+          check-path: ${{ matrix.path['check'] }}
+          exclude-regex: ${{ matrix.path['exclude'] }}
+
   build:
     name: Build
     uses: ./.github/workflows/build.yaml
