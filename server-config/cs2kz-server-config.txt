@@ -1,0 +1,6 @@
+"ServerCfg"
+{
+	"defaultMode"	"Classic"
+	"defaultStyle"	"Normal"
+	"defaultLanguage"	"en"
+}

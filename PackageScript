@@ -15,6 +15,8 @@ style_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'styles')
 style_folder = builder.AddFolder(style_folder_path)
 tips_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'tips')
 tips_folder = builder.AddFolder(tips_folder_path)
+server_config_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'server-config')
+server_config_folder = builder.AddFolder(server_config_folder_path)
 
 for cxx in MMSPlugin.all_targets:
   if cxx.target.arch == 'x86_64':
@@ -69,8 +71,7 @@ builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'general-tips.txt'), 
 builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'jumpstat-tips.txt'), tips_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'visual-tips.txt'), tips_folder)
 builder.AddCopy(os.path.join(builder.buildPath, '../tips', 'config.txt'), tips_folder)
-builder.AddCopy(os.path.join(builder.buildPath, '../modes', 'mode-config.txt'), mode_folder)
-builder.AddCopy(os.path.join(builder.buildPath, '../styles', 'style-config.txt'), style_folder)
+builder.AddCopy(os.path.join(builder.buildPath, '../server-config', 'cs2kz-server-config.txt'), server_config_folder)
 
 # Generate PDB info.
 with open(os.path.join(builder.buildPath, 'pdblog.txt'), 'wt') as fp:

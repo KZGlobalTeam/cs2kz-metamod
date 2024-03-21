@@ -134,7 +134,7 @@ public:
 	KZMeasureService *measureService {};
 	KZModeService *modeService {};
 	KZNoclipService *noclipService {};
-	KZOptionService *optionsService {};
+	KZOptionService *optionService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
 	KZSavelocService *savelocService {};

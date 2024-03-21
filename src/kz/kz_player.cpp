@@ -12,6 +12,7 @@
 #include "style/kz_style.h"
 #include "spec/kz_spec.h"
 #include "timer/kz_timer.h"
+#include "option/kz_option.h"
 
 #include "tier0/memdbgon.h"
 
@@ -37,6 +38,7 @@ void KZPlayer::Init()
 	this->hudService = new KZHUDService(this);
 	this->specService = new KZSpecService(this);
 	this->timerService = new KZTimerService(this);
+	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
 	KZ::mode::InitModeService(this);
 	KZ::style::InitStyleService(this);
@@ -57,9 +59,10 @@ void KZPlayer::Reset()
 	this->timerService->Reset();
 	this->tipService->Reset();
 	this->modeService->Reset();
+	this->optionService->Reset();
 
-	g_pKZModeManager->SwitchToMode(this, g_pKZModeManager->defaultMode, true);
-	g_pKZStyleManager->SwitchToStyle(this, g_pKZStyleManager->defaultStyle, true);
+	g_pKZModeManager->SwitchToMode(this, g_pKZServerConfig->defaultMode, true);
+	g_pKZStyleManager->SwitchToStyle(this, g_pKZServerConfig->defaultStyle, true);
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)

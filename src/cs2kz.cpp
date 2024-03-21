@@ -13,6 +13,7 @@
 #include "kz/spec/kz_spec.h"
 #include "kz/style/kz_style.h"
 #include "kz/tip/kz_tip.h"
+#include "kz/option/kz_option.h"
 
 #include "tier0/memdbgon.h"
 
@@ -51,6 +52,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::DisableReplicatedModeCvars();
 
+	KZOptionService::InitOptions();
 	KZTipService::InitTips();
 	return true;
 }
@@ -70,9 +72,6 @@ void KZPlugin::AllPluginsLoaded()
 {
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
-
-	g_pKZModeManager->LoadDefaultMode();
-	g_pKZStyleManager->LoadDefaultStyle();
 
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 }
