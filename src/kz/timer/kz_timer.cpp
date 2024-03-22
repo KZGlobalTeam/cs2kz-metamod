@@ -32,7 +32,8 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 		|| this->player->noclipService->JustNoclipped()
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
-		|| (this->GetTimerRunning() && !V_stricmp(courseName, this->currentCourse)))
+		|| (this->GetTimerRunning() && !V_stricmp(courseName, this->currentCourse))
+		|| !this->GetValidJump())
 	// clang-format on
 	{
 		return false;
@@ -155,6 +156,12 @@ void KZTimerService::TimerStopAll(bool playSound)
 		}
 		player->timerService->TimerStop(playSound);
 	}
+}
+
+void KZTimerService::InvalidateJump()
+{
+	this->validJump = false;
+	this->lastInvalidateTime = g_pKZUtils->GetServerGlobals()->curtime;
 }
 
 void KZTimerService::PlayTimerStartSound()
@@ -448,6 +455,8 @@ void KZTimerService::Reset()
 	this->hasResumedInThisRun = {};
 	this->lastDuckValue = {};
 	this->lastStaminaValue = {};
+	this->validJump = {};
+	this->lastInvalidateTime = {};
 }
 
 void KZTimerService::OnPhysicsSimulatePost()
@@ -458,8 +467,29 @@ void KZTimerService::OnPhysicsSimulatePost()
 	}
 }
 
+void KZTimerService::OnStopTouchGround()
+{
+	if (this->HasValidMoveType() && this->lastInvalidateTime != g_pKZUtils->GetServerGlobals()->curtime)
+	{
+		this->validJump = true;
+	}
+	else
+	{
+		this->InvalidateJump();
+	}
+}
+
 void KZTimerService::OnChangeMoveType(MoveType_t oldMoveType)
 {
+	if (oldMoveType == MOVETYPE_LADDER && this->player->GetMoveType() == MOVETYPE_WALK
+		&& this->lastInvalidateTime != g_pKZUtils->GetServerGlobals()->curtime)
+	{
+		this->validJump = true;
+	}
+	else
+	{
+		this->InvalidateJump();
+	}
 	// Check if player has escaped MOVETYPE_NONE
 	if (!this->paused || this->player->GetMoveType() == MOVETYPE_NONE)
 	{
@@ -547,7 +577,10 @@ void KZTimerService::OnRoundStart()
 
 void KZTimerService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
-	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
+	if (newPosition || newVelocity)
+	{
+		this->InvalidateJump();
+	}
 }
 
 internal SCMD_CALLBACK(Command_KzStopTimer)

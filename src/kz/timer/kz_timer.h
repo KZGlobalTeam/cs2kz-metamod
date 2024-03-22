@@ -71,6 +71,9 @@ private:
 
 	f64 lastTeleportTime {};
 
+	bool validJump {};
+	f64 lastInvalidateTime {};
+
 public:
 	static_global void RegisterCommands();
 	static_global bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
@@ -125,6 +128,12 @@ public:
 	bool TimerStop(bool playSound = true);
 	static void TimerStopAll(bool playSound = true);
 
+	bool GetValidJump()
+	{
+		return validJump;
+	}
+
+	void InvalidateJump();
 	void PlayTimerStartSound();
 
 	// To be used for saveloc.
@@ -198,6 +207,7 @@ public:
 public:
 	virtual void Reset() override;
 	void OnPhysicsSimulatePost();
+	void OnStopTouchGround();
 	void OnChangeMoveType(MoveType_t oldMoveType);
 	void OnTeleportToStart();
 	void OnClientDisconnect();

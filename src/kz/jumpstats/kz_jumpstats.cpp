@@ -560,7 +560,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 {
 	if (this->player->takeoffFromLadder)
 	{
-		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime
+		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL
 			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
 			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
 		{
@@ -961,7 +961,10 @@ void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 
 void KZJumpstatsService::TrackJumpstatsVariables()
 {
-	this->lastJumpButtonTime = this->player->GetPawn()->m_ignoreLadderJumpTime();
+	if (this->player->IsButtonPressed(IN_JUMP))
+	{
+		this->lastJumpButtonTime = g_pKZUtils->GetGlobals()->curtime;
+	}
 	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP || this->player->GetPawn()->m_nActualMoveType == MOVETYPE_NOCLIP)
 	{
 		this->lastNoclipTime = g_pKZUtils->GetGlobals()->curtime;
