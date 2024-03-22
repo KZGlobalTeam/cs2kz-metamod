@@ -1,6 +1,7 @@
 #include "../kz.h"
 #include "kz_checkpoint.h"
 #include "../timer/kz_timer.h"
+#include "../noclip/kz_noclip.h"
 #include "utils/utils.h"
 
 // TODO: replace printchat with HUD service's printchat
@@ -71,6 +72,9 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	{
 		return;
 	}
+
+	this->player->noclipService->DisableNoclip();
+
 	// If we teleport the player to the same origin,
 	// the player ends just a slightly bit off from where they are supposed to be...
 	Vector currentOrigin;
