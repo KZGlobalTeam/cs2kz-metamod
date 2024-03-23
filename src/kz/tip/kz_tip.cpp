@@ -9,6 +9,7 @@ internal CTimer<> *tipTimer;
 void KZTipService::Reset()
 {
 	this->showTips = true;
+	this->language = g_pKZServerConfig->defaultLanguage;
 }
 
 void KZTipService::ToggleTips()
