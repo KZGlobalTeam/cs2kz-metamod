@@ -401,6 +401,7 @@ void KZPlayer::OnPostThinkPost()
 void KZPlayer::OnStartTouchGround()
 {
 	this->jumpstatsService->EndJump();
+	this->timerService->OnStartTouchGround();
 	this->modeService->OnStartTouchGround();
 	this->styleService->OnStartTouchGround();
 }
@@ -408,6 +409,7 @@ void KZPlayer::OnStartTouchGround()
 void KZPlayer::OnStopTouchGround()
 {
 	this->jumpstatsService->AddJump();
+	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
 	this->styleService->OnStopTouchGround();
 }
@@ -443,7 +445,7 @@ void KZPlayer::EnableGodMode()
 void KZPlayer::StartZoneStartTouch()
 {
 	this->checkpointService->ResetCheckpoints();
-	this->timerService->TimerStop(false);
+	this->timerService->StartZoneStartTouch();
 }
 
 void KZPlayer::StartZoneEndTouch()
@@ -451,7 +453,7 @@ void KZPlayer::StartZoneEndTouch()
 	if (!this->noclipService->IsNoclipping())
 	{
 		this->checkpointService->ResetCheckpoints();
-		this->timerService->TimerStart("");
+		this->timerService->StartZoneEndTouch();
 	}
 }
 

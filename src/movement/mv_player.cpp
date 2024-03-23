@@ -305,6 +305,16 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 
 void MovementPlayer::OnPostThink() {}
 
+void MovementPlayer::SetMoveType(MoveType_t newMoveType)
+{
+	MoveType_t oldMoveType = this->GetMoveType();
+	if (oldMoveType != newMoveType)
+	{
+		this->GetPawn()->SetMoveType(newMoveType);
+		this->OnChangeMoveType(oldMoveType);
+	}
+}
+
 void MovementPlayer::Reset()
 {
 	this->processingDuck = false;

@@ -22,6 +22,20 @@ bool KZTimerService::UnregisterEventListener(KZTimerServiceEventListener *eventL
 	return eventListeners.FindAndRemove(eventListener);
 }
 
+void KZTimerService::StartZoneStartTouch()
+{
+	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPawn()->m_fFlags & FL_ONGROUND);
+	this->TimerStop(false);
+}
+
+void KZTimerService::StartZoneEndTouch()
+{
+	if (this->touchedGroundSinceTouchingStartZone)
+	{
+		this->TimerStart("");
+	}
+}
+
 bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 {
 	// clang-format off
@@ -33,7 +47,7 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
 		|| (this->GetTimerRunning() && !V_stricmp(courseName, this->currentCourse))
-		|| !this->GetValidJump())
+		|| (!(this->player->GetPawn()->m_fFlags & FL_ONGROUND) && !this->GetValidJump()))
 	// clang-format on
 	{
 		return false;
@@ -323,7 +337,7 @@ void KZTimerService::Pause()
 	this->lastDuckValue = this->player->GetMoveServices()->m_flDuckAmount;
 	this->lastStaminaValue = this->player->GetMoveServices()->m_flStamina;
 	this->player->SetVelocity(vec3_origin);
-	this->player->GetPawn()->SetMoveType(MOVETYPE_NONE);
+	this->player->SetMoveType(MOVETYPE_NONE);
 
 	if (this->GetTimerRunning())
 	{
@@ -397,11 +411,11 @@ void KZTimerService::Resume(bool force)
 
 	if (this->pausedOnLadder)
 	{
-		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		this->player->SetMoveType(MOVETYPE_LADDER);
 	}
 	else
 	{
-		this->player->GetPawn()->SetMoveType(MOVETYPE_WALK);
+		this->player->SetMoveType(MOVETYPE_WALK);
 	}
 
 	// GOKZ: prevent noclip exploit
@@ -457,6 +471,7 @@ void KZTimerService::Reset()
 	this->lastStaminaValue = {};
 	this->validJump = {};
 	this->lastInvalidateTime = {};
+	this->touchedGroundSinceTouchingStartZone = {};
 }
 
 void KZTimerService::OnPhysicsSimulatePost()
@@ -465,6 +480,11 @@ void KZTimerService::OnPhysicsSimulatePost()
 	{
 		this->currentTime += ENGINE_FIXED_TICK_INTERVAL;
 	}
+}
+
+void KZTimerService::OnStartTouchGround()
+{
+	this->touchedGroundSinceTouchingStartZone = true;
 }
 
 void KZTimerService::OnStopTouchGround()

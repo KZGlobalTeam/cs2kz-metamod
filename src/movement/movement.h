@@ -221,6 +221,8 @@ public:
 		return this->GetPawn() ? this->GetPawn()->IsAlive() : false;
 	}
 
+	void SetMoveType(MoveType_t newMoveType);
+
 	MoveType_t GetMoveType()
 	{
 		return this->GetPawn() ? this->GetPawn()->m_MoveType() : MOVETYPE_NONE;

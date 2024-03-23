@@ -36,7 +36,7 @@ void KZSpecService::LoadPosition()
 	this->player->GetPawn()->Teleport(&this->savedOrigin, &this->savedAngles, nullptr);
 	if (this->savedOnLadder)
 	{
-		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		this->player->SetMoveType(MOVETYPE_LADDER);
 	}
 }
 

@@ -133,10 +133,7 @@ public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 
-	virtual bool EnableWaterFix() override
-	{
-		return true;
-	}
+	virtual bool EnableWaterFix() override;
 
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
