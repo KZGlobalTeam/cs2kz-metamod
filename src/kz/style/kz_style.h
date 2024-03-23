@@ -167,7 +167,7 @@ public:
 	bool SwitchToStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void Cleanup();
 
-public:
+private:
 	CUtlVector<StylePluginInfo> styleInfos;
 };
 

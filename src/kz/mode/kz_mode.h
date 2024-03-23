@@ -185,7 +185,7 @@ public:
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);
 	void Cleanup();
 
-public:
+private:
 	CUtlVector<ModePluginInfo> modeInfos;
 };
 
