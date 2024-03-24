@@ -2,10 +2,6 @@
 
 internal KeyValues *pServerCfgKeyValues;
 
-void KZOptionService::Reset()
-{
-}
-
 void KZOptionService::LoadDefaultOptions()
 {
 	char serverCfgPath[1024];

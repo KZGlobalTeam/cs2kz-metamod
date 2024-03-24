@@ -10,7 +10,6 @@ class KZOptionService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 public:
-	virtual void Reset() override;
 	static_global void InitOptions();
 	static_global const char *GetDefaultOptionStr(const char *optionName, const char *defaultValue = "");
 	static_global f64 GetDefaultOptionFloat(const char *optionName, f64 defaultValue = 0.0);
