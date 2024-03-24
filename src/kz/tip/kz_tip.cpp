@@ -103,7 +103,7 @@ void KZTipService::LoadTips()
 		}
 	}
 
-	tipInterval = KZOptionService::GetDefaultOptionFloat("tipInterval", 1.0);
+	tipInterval = KZOptionService::GetDefaultOptionFloat("tipInterval", 75.0);
 }
 
 void KZTipService::ShuffleTips()
