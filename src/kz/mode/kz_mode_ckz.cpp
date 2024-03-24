@@ -160,6 +160,11 @@ const char *KZClassicModeService::GetModeShortName()
 	return MODE_NAME_SHORT;
 }
 
+bool KZClassicModeService::EnableWaterFix()
+{
+	return this->player->IsButtonPressed(IN_JUMP);
+}
+
 DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distance)
 {
 	// No tiers given for 'Invalid' jumps.

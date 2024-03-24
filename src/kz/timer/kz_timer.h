@@ -123,6 +123,8 @@ public:
 		return this->player->checkpointService->GetTeleportCount() > 0 ? TimeType_Standard : TimeType_Pro;
 	}
 
+	void StartZoneStartTouch();
+	void StartZoneEndTouch();
 	bool TimerStart(const char *courseName, bool playSound = true);
 	bool TimerEnd(const char *courseName);
 	bool TimerStop(bool playSound = true);
@@ -180,6 +182,7 @@ private:
 	bool hasResumedInThisRun {};
 	f32 lastDuckValue {};
 	f32 lastStaminaValue {};
+	bool touchedGroundSinceTouchingStartZone {};
 
 public:
 	bool GetPaused()
@@ -207,6 +210,7 @@ public:
 public:
 	virtual void Reset() override;
 	void OnPhysicsSimulatePost();
+	void OnStartTouchGround();
 	void OnStopTouchGround();
 	void OnChangeMoveType(MoveType_t oldMoveType);
 	void OnTeleportToStart();

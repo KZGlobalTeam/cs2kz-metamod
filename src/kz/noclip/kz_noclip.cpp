@@ -22,7 +22,7 @@ void KZNoclipService::HandleNoclip()
 		}
 		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
 		{
-			pawn->SetMoveType(MOVETYPE_NOCLIP);
+			this->player->SetMoveType(MOVETYPE_NOCLIP);
 			this->player->timerService->TimerStop();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
@@ -41,7 +41,7 @@ void KZNoclipService::HandleNoclip()
 		}
 		if (pawn->m_nActualMoveType() == MOVETYPE_NOCLIP)
 		{
-			pawn->SetMoveType(MOVETYPE_WALK);
+			this->player->SetMoveType(MOVETYPE_WALK);
 			this->player->timerService->TimerStop();
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)

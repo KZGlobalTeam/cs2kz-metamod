@@ -7,7 +7,7 @@
 #define MODE_NAME       "Classic"
 // Rampbug fix related
 #define MAX_BUMPS            4
-#define RAMP_PIERCE_DISTANCE 1.25f
+#define RAMP_PIERCE_DISTANCE 0.25f
 #define RAMP_BUG_THRESHOLD   0.99f
 #define NEW_RAMP_THRESHOLD   0.95f
 
@@ -133,10 +133,7 @@ public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 
-	virtual bool EnableWaterFix() override
-	{
-		return true;
-	}
+	virtual bool EnableWaterFix() override;
 
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
