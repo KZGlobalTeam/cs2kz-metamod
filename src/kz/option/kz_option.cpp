@@ -9,7 +9,7 @@ void KZOptionService::LoadDefaultOptions()
 
 	pServerCfgKeyValues = new KeyValues("ServerConfig");
 	pServerCfgKeyValues->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
-}			
+}
 
 const char *KZOptionService::GetDefaultOptionStr(const char *optionName, const char *defaultValue)
 {
