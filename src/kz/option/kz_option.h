@@ -5,15 +5,6 @@
 #include "interfaces/interfaces.h"
 #include "filesystem.h"
 
-struct KZServerConfig
-{
-	const char *defaultMode = "CKZ";
-	const char *defaultStyle = "NRM";
-	const char *defaultLanguage = "en";
-};
-
-extern KZServerConfig *g_pKZServerConfig;
-
 class KZOptionService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
@@ -21,6 +12,9 @@ class KZOptionService : public KZBaseService
 public:
 	virtual void Reset() override;
 	static_global void InitOptions();
+	static_global const char *GetDefaultOptionStr(const char *optionName, const char *defaultValue = "");
+	static_global f64 GetDefaultOptionFloat(const char *optionName, f64 defaultValue = 0.0);
+	static_global i64 GetDefaultOptionInt(const char *optionName, i64 defaultValue = 0);
 
 private:
 	static void LoadDefaultOptions();

@@ -9,7 +9,7 @@ internal CTimer<> *tipTimer;
 void KZTipService::Reset()
 {
 	this->showTips = true;
-	this->language = g_pKZServerConfig->defaultLanguage;
+	this->language = KZOptionService::GetDefaultOptionStr("defaultLanguage", "en");
 }
 
 void KZTipService::ToggleTips()
@@ -103,7 +103,7 @@ void KZTipService::LoadTips()
 		}
 	}
 
-	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
+	tipInterval = KZOptionService::GetDefaultOptionFloat("tipInterval", 1.0);
 }
 
 void KZTipService::ShuffleTips()

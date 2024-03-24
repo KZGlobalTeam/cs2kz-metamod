@@ -1,6 +1,7 @@
 "ServerCfg"
 {
-	"defaultMode"	"Classic"
-	"defaultStyle"	"Normal"
+	"defaultMode"		"Classic"
+	"defaultStyle"		"Normal"
 	"defaultLanguage"	"en"
+	"tipInterval"		"75"
 }
