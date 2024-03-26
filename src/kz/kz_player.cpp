@@ -61,8 +61,8 @@ void KZPlayer::Reset()
 	this->modeService->Reset();
 	this->optionService->Reset();
 
-	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetDefaultOptionStr("defaultMode", "CKZ"), true);
-	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetDefaultOptionStr("defaultStyle", "NRM"), true);
+	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true);
+	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetOptionStr("defaultStyle", KZ_DEFAULT_STYLE), true);
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
