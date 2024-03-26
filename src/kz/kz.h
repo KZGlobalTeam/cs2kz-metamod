@@ -13,6 +13,7 @@
 #define KZ_WORKSHOP_ADDONS_ID "3171124941"
 
 #define KZ_CHAT_PREFIX			"{lime}KZ {grey}|{default}"
+
 #define KZ_DEFAULT_MODE			"Classic"
 #define KZ_DEFAULT_STYLE		"Normal"
 #define KZ_DEFAULT_LANGUAGE		"en"
