@@ -177,14 +177,11 @@ class KZModeManager
 	};
 
 public:
-	const char *defaultMode = "Classic";
-
 	// clang-format off
 	virtual bool RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
 	// clang-format on
 
 	virtual void UnregisterMode(const char *modeName);
-	void LoadDefaultMode();
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);
 	void Cleanup();
 

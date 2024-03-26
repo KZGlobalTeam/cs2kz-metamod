@@ -14,6 +14,11 @@
 
 #define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 
+#define KZ_DEFAULT_TIP_INTERVAL 75.0
+#define KZ_DEFAULT_LANGUAGE     "en"
+#define KZ_DEFAULT_STYLE        "Normal"
+#define KZ_DEFAULT_MODE         "Classic"
+
 class KZPlayer;
 // class Jump;
 class KZAnticheatService;
@@ -134,7 +139,7 @@ public:
 	KZMeasureService *measureService {};
 	KZModeService *modeService {};
 	KZNoclipService *noclipService {};
-	KZOptionService *optionsService {};
+	KZOptionService *optionService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
 	KZSavelocService *savelocService {};
