@@ -816,6 +816,8 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
 
+	f32 flooredDist = floor(jump->GetDistance() * 10) / 10;
+
 	// clang-format off
 	jump->GetJumpPlayer()->PrintChat(true, true,
 		"%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
@@ -823,7 +825,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 		jumpColor,
 		jumpTypeShortStr[jump->GetJumpType()],
 		jumpColor,
-		jump->GetDistance(),
+		flooredDist,
 		jump->strafes.Count(),
 		jump->GetSync() * 100.0f,
 		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
