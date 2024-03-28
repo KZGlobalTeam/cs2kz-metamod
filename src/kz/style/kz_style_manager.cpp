@@ -110,26 +110,6 @@ void KZStyleManager::UnregisterStyle(const char *styleName)
 	}
 }
 
-void KZStyleManager::LoadDefaultStyle()
-{
-	char styleCfgPath[1024];
-	V_snprintf(styleCfgPath, sizeof(styleCfgPath), "%s%s", g_SMAPI->GetBaseDir(), "/addons/cs2kz/styles/style-config.txt");
-
-	KeyValues *styleCfgKeyValues = new KeyValues("StyleConfig");
-	styleCfgKeyValues->LoadFromFile(g_pFullFileSystem, styleCfgPath, nullptr);
-
-	const char *styleName = styleCfgKeyValues->GetString("defaultStyle");
-
-	FOR_EACH_VEC(this->styleInfos, i)
-	{
-		if (V_stricmp(this->styleInfos[i].shortName, styleName) == 0 || V_stricmp(this->styleInfos[i].longName, styleName) == 0)
-		{
-			defaultStyle = styleName;
-			break;
-		}
-	}
-}
-
 bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool silent)
 {
 	// Don't change style if it doesn't exist. Instead, print a list of styles to the client.
