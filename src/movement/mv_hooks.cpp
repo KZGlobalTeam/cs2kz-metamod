@@ -39,6 +39,10 @@ void movement::InitDetours()
 void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
+	if (controller->m_bIsHLTV)
+	{
+		return;
+	}
 	player->OnPhysicsSimulate();
 	PhysicsSimulate(controller);
 	player->OnPhysicsSimulatePost();

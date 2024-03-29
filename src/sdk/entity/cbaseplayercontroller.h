@@ -13,6 +13,7 @@ public:
 	DECLARE_SCHEMA_CLASS(CBasePlayerController);
 
 	SCHEMA_FIELD(uint64, m_steamID)
+	SCHEMA_FIELD(bool, m_bIsHLTV)
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPawn)
 	SCHEMA_FIELD_POINTER(char, m_iszPlayerName)
 

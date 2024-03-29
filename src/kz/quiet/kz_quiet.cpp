@@ -19,6 +19,12 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		uintptr_t targetAddr = reinterpret_cast<uintptr_t>(pTransmitInfo) + g_pGameConfig->GetOffset("QuietPlayerSlot");
 		CPlayerSlot targetSlot = CPlayerSlot(*reinterpret_cast<int *>(targetAddr));
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
+		// Make sure the target isn't CSTV.
+		CCSPlayerController *targetController = targetPlayer->GetController();
+		if (!targetController || targetController->m_bIsHLTV)
+		{
+			continue;
+		}
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 
