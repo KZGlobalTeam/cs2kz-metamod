@@ -77,6 +77,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils_interface.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils_print.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'gamesystem.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'hooks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
