@@ -14,6 +14,7 @@
 #include "kz/style/kz_style.h"
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
+#include "kz/global/kz_global.h"
 
 #include "tier0/memdbgon.h"
 

@@ -14,6 +14,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(builder.sourcePath, 'src'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'steam'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
   ]
@@ -61,6 +62,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'lib', 'public', 'win64', 'steam_api64.lib'),
     ]
     binary.sources += [
       'src/utils/plat_win.cpp'
@@ -83,6 +85,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'httpmanager.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
