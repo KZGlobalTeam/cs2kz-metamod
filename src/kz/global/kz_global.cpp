@@ -1,5 +1,4 @@
 #include "kz_global.h"
-#include "../kz.h"
 
 extern ISteamHTTP *g_http;
 CSteamGameServerAPIContext g_steamAPI;
