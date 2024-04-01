@@ -84,8 +84,7 @@ void HTTPManager::HTTP_DELETE(const char *pszUrl, CallbackFn callback, std::vect
 	GenerateRequest(k_EHTTPMethodDELETE, pszUrl, "", callback, headers);
 }
 
-void HTTPManager::GenerateRequest(EHTTPMethod method, const char *pszUrl, const char *pszText, CallbackFn callback,
-								  std::vector<HTTPHeader> *headers)
+void HTTPManager::GenerateRequest(EHTTPMethod method, const char *pszUrl, const char *pszText, CallbackFn callback, std::vector<HTTPHeader> *headers)
 {
 	auto hReq = g_http->CreateHTTPRequest(method, pszUrl);
 	int size = strlen(pszText);
