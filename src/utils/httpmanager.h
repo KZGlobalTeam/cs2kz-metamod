@@ -22,17 +22,6 @@ public:
 		m_strValue = strValue;
 	}
 
-	const char *GetName()
-	{
-		return m_strName.c_str();
-	}
-
-	const char *GetValue()
-	{
-		return m_strValue.c_str();
-	}
-
-private:
 	std::string m_strName;
 	std::string m_strValue;
 };
@@ -42,6 +31,10 @@ class HTTPManager
 public:
 	void GET(const char *pszUrl, CompletedCallback callback, std::vector<HTTPHeader> *headers = nullptr);
 	void POST(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers = nullptr);
+	void PUT(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers = nullptr);
+	void PATCH(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers = nullptr);
+	// DELETE is a macro
+	void HTTP_DELETE(const char *pszUrl, CompletedCallback callback, std::vector<HTTPHeader> *headers = nullptr);
 
 	bool HasAnyPendingRequests() const
 	{

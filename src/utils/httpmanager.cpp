@@ -69,13 +69,29 @@ void HTTPManager::POST(const char *pszUrl, const char *pszText, CompletedCallbac
 	GenerateRequest(k_EHTTPMethodPOST, pszUrl, pszText, callback, headers);
 }
 
+void HTTPManager::PUT(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+{
+	GenerateRequest(k_EHTTPMethodPUT, pszUrl, pszText, callback, headers);
+}
+
+void HTTPManager::PATCH(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+{
+	GenerateRequest(k_EHTTPMethodPATCH, pszUrl, pszText, callback, headers);
+}
+
+void HTTPManager::HTTP_DELETE(const char *pszUrl, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+{
+	GenerateRequest(k_EHTTPMethodDELETE, pszUrl, "", callback, headers);
+}
+
 void HTTPManager::GenerateRequest(EHTTPMethod method, const char *pszUrl, const char *pszText, CompletedCallback callback,
 								  std::vector<HTTPHeader> *headers)
 {
 	auto hReq = g_http->CreateHTTPRequest(method, pszUrl);
 	int size = strlen(pszText);
 
-	if (method == k_EHTTPMethodPOST && !g_http->SetHTTPRequestRawPostBody(hReq, "application/json", (uint8 *)pszText, size))
+	if ((method == k_EHTTPMethodPOST || method == k_EHTTPMethodPUT || method == k_EHTTPMethodPATCH)
+		&& !g_http->SetHTTPRequestRawPostBody(hReq, "text/plain", (uint8 *)pszText, size))
 	{
 		return;
 	}
@@ -84,7 +100,7 @@ void HTTPManager::GenerateRequest(EHTTPMethod method, const char *pszUrl, const 
 	{
 		for (HTTPHeader header : *headers)
 		{
-			g_http->SetHTTPRequestHeaderValue(hReq, header.GetName(), header.GetValue());
+			g_http->SetHTTPRequestHeaderValue(hReq, header.m_strName.c_str(), header.m_strValue.c_str());
 		}
 	}
 

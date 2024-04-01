@@ -12,6 +12,7 @@ f64 KZGlobalService::Heartbeat()
 		g_http = g_steamAPI.SteamHTTP();
 	}
 	g_HTTPManager.GET("https://staging.cs2.kz/", &HeartbeatCallback);
+
 	return 5.0f;
 }
 
@@ -19,11 +20,11 @@ void KZGlobalService::HeartbeatCallback(HTTPRequestHandle request, int statusCod
 {
 	if (statusCode < 200 || statusCode > 299)
 	{
-		// API not available
+		// API unavailable
 	}
 }
 
 void KZGlobalService::Init()
 {
-	StartTimer(Heartbeat, true, false);
+	StartTimer(Heartbeat, true, true);
 }
