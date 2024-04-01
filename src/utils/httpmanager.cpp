@@ -13,7 +13,7 @@ HTTPManager g_HTTPManager;
 #undef strdup
 
 HTTPManager::TrackedRequest::TrackedRequest(HTTPRequestHandle hndl, SteamAPICall_t hCall, std::string strUrl, std::string strText,
-											CompletedCallback callback)
+											CallbackFn callback)
 {
 	m_hHTTPReq = hndl;
 	m_CallResult.SetGameserverFlag();
@@ -59,32 +59,32 @@ void HTTPManager::TrackedRequest::OnHTTPRequestCompleted(HTTPRequestCompleted_t 
 	delete this;
 }
 
-void HTTPManager::GET(const char *pszUrl, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+void HTTPManager::GET(const char *pszUrl, CallbackFn callback, std::vector<HTTPHeader> *headers)
 {
 	GenerateRequest(k_EHTTPMethodGET, pszUrl, "", callback, headers);
 }
 
-void HTTPManager::POST(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+void HTTPManager::POST(const char *pszUrl, const char *pszText, CallbackFn callback, std::vector<HTTPHeader> *headers)
 {
 	GenerateRequest(k_EHTTPMethodPOST, pszUrl, pszText, callback, headers);
 }
 
-void HTTPManager::PUT(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+void HTTPManager::PUT(const char *pszUrl, const char *pszText, CallbackFn callback, std::vector<HTTPHeader> *headers)
 {
 	GenerateRequest(k_EHTTPMethodPUT, pszUrl, pszText, callback, headers);
 }
 
-void HTTPManager::PATCH(const char *pszUrl, const char *pszText, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+void HTTPManager::PATCH(const char *pszUrl, const char *pszText, CallbackFn callback, std::vector<HTTPHeader> *headers)
 {
 	GenerateRequest(k_EHTTPMethodPATCH, pszUrl, pszText, callback, headers);
 }
 
-void HTTPManager::HTTP_DELETE(const char *pszUrl, CompletedCallback callback, std::vector<HTTPHeader> *headers)
+void HTTPManager::HTTP_DELETE(const char *pszUrl, CallbackFn callback, std::vector<HTTPHeader> *headers)
 {
 	GenerateRequest(k_EHTTPMethodDELETE, pszUrl, "", callback, headers);
 }
 
-void HTTPManager::GenerateRequest(EHTTPMethod method, const char *pszUrl, const char *pszText, CompletedCallback callback,
+void HTTPManager::GenerateRequest(EHTTPMethod method, const char *pszUrl, const char *pszText, CallbackFn callback,
 								  std::vector<HTTPHeader> *headers)
 {
 	auto hReq = g_http->CreateHTTPRequest(method, pszUrl);
