@@ -3,6 +3,8 @@
 extern ISteamHTTP *g_http;
 CSteamGameServerAPIContext g_steamAPI;
 
+#define KZ_API_BASE_URL "https://staging.cs2.kz/"
+
 f64 KZGlobalService::Heartbeat()
 {
 	if (!g_http)
@@ -10,7 +12,7 @@ f64 KZGlobalService::Heartbeat()
 		g_steamAPI.Init();
 		g_http = g_steamAPI.SteamHTTP();
 	}
-	g_HTTPManager.GET("https://staging.cs2.kz/", &HeartbeatCallback);
+	g_HTTPManager.GET(KZ_API_BASE_URL, &HeartbeatCallback);
 
 	return 5.0f;
 }
