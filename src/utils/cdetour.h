@@ -83,6 +83,11 @@ bool CDetour<T>::CreateDetour(CGameConfig *gameConfig)
 template<typename T>
 void CDetour<T>::EnableDetour()
 {
+	if (!m_hook)
+	{
+		Warning("Could not create detour for %s\n", m_pszName);
+		return;
+	}
 	funchook_install(m_hook, 0);
 }
 
