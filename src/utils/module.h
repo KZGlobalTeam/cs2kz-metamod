@@ -85,13 +85,6 @@ public:
 			Error("Failed to get module info for %s, error %d\n", szModule, e);
 		}
 #endif
-
-		for (auto &section : m_sections)
-		{
-			Msg("Section %s base: 0x%p | size: %d\n", section.m_szName.c_str(), section.m_pBase, section.m_iSize);
-		}
-
-		Msg("Initialized module %s base: 0x%p | size: %d\n", m_pszModule, m_base, m_size);
 	}
 
 	void *FindSignature(const byte *pData, size_t iSigLength, int &error)
@@ -145,8 +138,6 @@ public:
 		{
 			Error("Could not find %s in %s\n", name, m_pszModule);
 		}
-
-		Msg("Found interface %s in %s\n", name, m_pszModule);
 
 		return pInterface;
 	}
