@@ -81,8 +81,6 @@ void KZPlugin::AllPluginsLoaded()
 
 void KZPlugin::AddonInit()
 {
-	// Disable this until the crash is resolved
-#if 0
 	local_persist bool addonLoaded;
 	if (g_pMultiAddonManager != nullptr && !addonLoaded)
 	{
@@ -90,7 +88,6 @@ void KZPlugin::AddonInit()
 		g_pMultiAddonManager->RefreshAddons();
 		addonLoaded = true;
 	}
-#endif
 }
 
 bool KZPlugin::IsAddonMounted()
