@@ -780,9 +780,13 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		{
 			pm = *pFirstTrace;
 		}
-		else if (end != start)
+		else
 		{
 			g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, pm);
+			if (end == start)
+			{
+				continue;
+			}
 			if (IsValidMovementTrace(pm, bounds, &filter) && pm.fraction == 1.0f)
 			{
 				// Player won't hit anything, nothing to do.
