@@ -96,6 +96,7 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 	SH_REMOVE_HOOK_ID(changeTeamHook);
+	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
 
 internal void AddEntityHooks(CBaseEntity2 *entity)
