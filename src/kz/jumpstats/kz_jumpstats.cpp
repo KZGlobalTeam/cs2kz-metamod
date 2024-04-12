@@ -558,7 +558,7 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
-	if (this->jumps.Count() <= 0 || !this->jumps.Tail().IsValid())
+	if (this->jumps.Count() <= 0)
 	{
 		return JumpType_Invalid;
 	}
@@ -597,7 +597,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	if (this->HitBhop() && !this->HitDuckbugRecently())
 	{
 		// Check for no offset
-		if (this->jumps.Tail().DidHitHead())
+		if (this->jumps.Tail().DidHitHead() || !this->jumps.Tail().IsValid())
 		{
 			return JumpType_Invalid;
 		}
