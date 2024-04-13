@@ -2,7 +2,6 @@
 #include "utils.h"
 #include "cdetour.h"
 #include "detours.h"
-#include "ctimer.h"
 
 #include "sdk/entity/ccsplayerpawn.h"
 #include "movement/movement.h"
@@ -13,7 +12,6 @@ CUtlVector<CDetourBase *> g_vecDetours;
 extern CGameConfig *g_pGameConfig;
 
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket);
-DECLARE_DETOUR(OnServerGamePostSimulate, Detour_OnServerGamePostSimulate);
 DECLARE_MOVEMENT_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
 DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
@@ -46,7 +44,6 @@ void InitDetours()
 {
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(g_pGameConfig, RecvServerBrowserPacket);
-	INIT_DETOUR(g_pGameConfig, OnServerGamePostSimulate);
 }
 
 void FlushAllDetours()
@@ -66,10 +63,4 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)
 	// 	info.m_adrFrom.m_IPv4Bytes.b1, info.m_adrFrom.m_IPv4Bytes.b2, info.m_adrFrom.m_IPv4Bytes.b3, info.m_adrFrom.m_IPv4Bytes.b4,
 	// 	info.m_adrFrom.m_usPort, retValue, (char*)info.m_pPkt);
 	return retValue;
-}
-
-void FASTCALL Detour_OnServerGamePostSimulate(void *this_)
-{
-	ProcessTimers();
-	OnServerGamePostSimulate(this_);
 }

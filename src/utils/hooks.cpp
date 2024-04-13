@@ -1,9 +1,11 @@
 #include "hooks.h"
 #include "addresses.h"
 #include "igameeventsystem.h"
+#include "igamesystem.h"
 #include "utils/simplecmds.h"
-#include "cs2kz.h"
 
+#include "cs2kz.h"
+#include "ctimer.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "utils/utils.h"
@@ -21,6 +23,7 @@ class EntListener : public IEntityListener
 
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args);
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+internal void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *);
 internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
 internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
 								 const uint16 *pEntityIndicies, int nEntities);
@@ -48,7 +51,12 @@ SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlay
 SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &,
 				   const Entity2Networkable_t **, const uint16 *, int);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
+
+internal int serverGamePostSimulateHook;
+SH_DECL_HOOK1_void(IGameSystem, ServerGamePostSimulate, SH_NOATTRIB, false, const EventServerGamePostSimulate_t *);
+
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
+
 SH_DECL_HOOK4_void(ISource2GameClients, ClientActive, SH_NOATTRIB, false, CPlayerSlot, bool, const char *, uint64);
 SH_DECL_HOOK5_void(ISource2GameClients, ClientDisconnect, SH_NOATTRIB, false, CPlayerSlot, ENetworkDisconnectionReason, const char *, uint64,
 				   const char *);
@@ -93,6 +101,13 @@ void hooks::Initialize()
 		FinishChangeLevel, 
 		(INetworkGameServer *)modules::engine->FindVirtualTable("CNetworkGameServer"),
 		SH_STATIC(Hook_FinishChangeLevel), 
+		true
+	);
+	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
+		IGameSystem, 
+		ServerGamePostSimulate, 
+		(IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem"),
+		SH_STATIC(Hook_ServerGamePostSimulate), 
 		true
 	);
 	// clang-format on
@@ -203,6 +218,11 @@ internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 		entitySystemHook = SH_ADD_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	}
 	RETURN_META(MRES_IGNORED);
+}
+
+internal void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
+{
+	ProcessTimers();
 }
 
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
