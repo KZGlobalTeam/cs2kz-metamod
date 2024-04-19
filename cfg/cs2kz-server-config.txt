@@ -1,7 +1,9 @@
 "ServerCfg"
 {
-	"defaultMode"		"Classic"
-	"defaultStyle"		"Normal"
-	"defaultLanguage"	"en"
-	"tipInterval"		"75"
+	"defaultMode"			"Classic"
+	"defaultStyle"			"Normal"
+	"defaultLanguage"		"en"
+	"tipInterval"			"75"
+	"defaultJSBroadcastMinTier"	"4"
+	"defaultJSSoundMinTier"		"4"
 }
