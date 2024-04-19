@@ -3,7 +3,6 @@
 #include "cs2kz.h"
 #include "addresses.h"
 #include "gameconfig.h"
-#include "gamesystem.h"
 #include "utils.h"
 #include "convar.h"
 #include "tier0/dbg.h"
@@ -72,10 +71,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 
-	if (!InitGameSystems())
-	{
-		return false;
-	}
 	InitDetours();
 	return true;
 }

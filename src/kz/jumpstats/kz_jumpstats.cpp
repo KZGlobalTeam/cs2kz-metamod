@@ -559,6 +559,10 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
+	if (this->jumps.Count() <= 0)
+	{
+		return JumpType_Invalid;
+	}
 	if (this->player->takeoffFromLadder)
 	{
 		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL
@@ -594,7 +598,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	if (this->HitBhop() && !this->HitDuckbugRecently())
 	{
 		// Check for no offset
-		if (this->jumps.Tail().DidHitHead())
+		if (this->jumps.Tail().DidHitHead() || !this->jumps.Tail().IsValid())
 		{
 			return JumpType_Invalid;
 		}
