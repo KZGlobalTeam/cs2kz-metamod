@@ -12,8 +12,7 @@
 
 #define KZ_WORKSHOP_ADDONS_ID "3171124941"
 
-#define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
-
+#define KZ_DEFAULT_CHAT_PREFIX "{lime}KZ {grey}|{default}"
 #define KZ_DEFAULT_TIP_INTERVAL 75.0
 #define KZ_DEFAULT_LANGUAGE     "en"
 #define KZ_DEFAULT_STYLE        "Normal"

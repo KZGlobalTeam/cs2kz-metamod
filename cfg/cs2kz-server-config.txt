@@ -4,4 +4,5 @@
 	"defaultStyle"		"Normal"
 	"defaultLanguage"	"en"
 	"tipInterval"		"75"
+	"chatPrefix"		"{lime}KZ {grey}|{default}"
 }

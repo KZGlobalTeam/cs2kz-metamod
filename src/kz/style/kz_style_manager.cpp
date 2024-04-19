@@ -10,6 +10,7 @@
 
 #include "../timer/kz_timer.h"
 #include "utils/plat.h"
+#include "kz/option/kz_option.h"
 
 internal SCMD_CALLBACK(Command_KzStyle);
 
@@ -115,7 +116,8 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	// Don't change style if it doesn't exist. Instead, print a list of styles to the client.
 	if (!styleName || !V_stricmp("", styleName))
 	{
-		player->PrintChat(true, false, "{grey}Usage: {default}kz_style <style>{grey}. Check console for possible styles!", KZ_CHAT_PREFIX);
+		player->PrintChat(true, false, "{grey}Usage: {default}kz_style <style>{grey}. Check console for possible styles!",
+						  KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX));
 		player->PrintConsole(false, false, "Possible styles: (Current style is %s)", player->styleService->GetStyleName());
 		FOR_EACH_VEC(this->styleInfos, i)
 		{
