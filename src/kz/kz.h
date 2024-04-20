@@ -19,12 +19,12 @@
 #define KZ_DEFAULT_MODE         "Classic"
 
 class KZPlayer;
-// class Jump;
 class KZAnticheatService;
 class KZCheckpointService;
 class KZGlobalService;
 class KZHUDService;
 class KZJumpstatsService;
+class KZLanguageService;
 class KZMeasureService;
 class KZModeService;
 class KZNoclipService;
@@ -135,6 +135,7 @@ public:
 	KZGlobalService *globalService {};
 	KZHUDService *hudService {};
 	KZJumpstatsService *jumpstatsService {};
+	KZLanguageService *languageService {};
 	KZMeasureService *measureService {};
 	KZModeService *modeService {};
 	KZNoclipService *noclipService {};

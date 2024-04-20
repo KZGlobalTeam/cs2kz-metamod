@@ -1,20 +1,26 @@
 #include "kz.h"
 #include "utils/utils.h"
-
+#include "utils/ctimer.h"
 #include "checkpoint/kz_checkpoint.h"
-#include "quiet/kz_quiet.h"
-#include "jumpstats/kz_jumpstats.h"
 #include "hud/kz_hud.h"
+#include "jumpstats/kz_jumpstats.h"
+#include "language/kz_language.h"
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
-#include "tip/kz_tip.h"
-#include "noclip/kz_noclip.h"
-#include "style/kz_style.h"
-#include "spec/kz_spec.h"
-#include "timer/kz_timer.h"
 #include "option/kz_option.h"
+#include "quiet/kz_quiet.h"
+#include "spec/kz_spec.h"
+#include "style/kz_style.h"
+#include "timer/kz_timer.h"
+#include "tip/kz_tip.h"
 
 #include "tier0/memdbgon.h"
+
+double Test(KZPlayer *player)
+{
+	player->languageService->PrintConsole("Test", "zer0.k");
+	return 0.0f;
+}
 
 void KZPlayer::Init()
 {
@@ -24,6 +30,7 @@ void KZPlayer::Init()
 	// TODO: initialize every service.
 	delete this->checkpointService;
 	delete this->jumpstatsService;
+	delete this->languageService;
 	delete this->quietService;
 	delete this->hudService;
 	delete this->specService;
@@ -33,6 +40,7 @@ void KZPlayer::Init()
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
+	this->languageService = new KZLanguageService(this);
 	this->noclipService = new KZNoclipService(this);
 	this->quietService = new KZQuietService(this);
 	this->hudService = new KZHUDService(this);
@@ -63,6 +71,8 @@ void KZPlayer::Reset()
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true);
 	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetOptionStr("defaultStyle", KZ_DEFAULT_STYLE), true);
+	auto timer = new CTimer<KZPlayer *>(true, Test, this);
+	g_pKZUtils->AddTimer(timer, true);
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)

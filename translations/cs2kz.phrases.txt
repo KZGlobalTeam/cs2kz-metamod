@@ -1,0 +1,15 @@
+"Phrases"
+{
+	"Test"
+	{
+		"en"	"{grey}Hello world! %s"
+		"chi"	"{grey}Test."
+		"ru"	"{grey}Test2."
+	}
+	"Test2"
+	{
+		"en"	"{grey}Test2en"
+		"chi"	"{grey}Test2chi."
+		"ru"	"{grey}Test2ru."
+	}
+}

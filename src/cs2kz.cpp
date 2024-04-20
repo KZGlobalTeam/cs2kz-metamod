@@ -14,6 +14,7 @@
 #include "kz/style/kz_style.h"
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
+#include "kz/language/kz_language.h"
 
 #include "tier0/memdbgon.h"
 
@@ -42,6 +43,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZ::style::InitStyleManager();
 	KZSpecService::Init();
 	KZHUDService::Init();
+	KZLanguageService::Init();
 	KZ::misc::RegisterCommands();
 	if (!KZ::mode::InitModeCvars())
 	{
