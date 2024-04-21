@@ -5,6 +5,7 @@
 #include "kz_jumpstats.h"
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
+#include "../../kz/option/kz_option.h"
 
 #include "tier0/memdbgon.h"
 
@@ -632,8 +633,8 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 void KZJumpstatsService::Reset()
 {
-	this->broadcastMinTier = DistanceTier_Godlike;
-	this->soundMinTier = DistanceTier_Godlike;
+	this->broadcastMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSBroadcastMinTier", DistanceTier_Godlike));
+	this->soundMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSSoundMinTier", DistanceTier_Godlike));
 	this->showJumpstats = true;
 	this->jumps.Purge();
 	this->jsAlways = {};
