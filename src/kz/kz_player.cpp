@@ -18,7 +18,7 @@
 
 double Test(KZPlayer *player)
 {
-	player->languageService->PrintConsole("Test", "zer0.k");
+	player->languageService->PrintConsole("Test", "str", 5, 12.2354);
 	return 0.0f;
 }
 

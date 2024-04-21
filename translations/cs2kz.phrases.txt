@@ -2,14 +2,8 @@
 {
 	"Test"
 	{
-		"en"	"{grey}Hello world! %s"
-		"chi"	"{grey}Test."
-		"ru"	"{grey}Test2."
-	}
-	"Test2"
-	{
-		"en"	"{grey}Test2en"
-		"chi"	"{grey}Test2chi."
-		"ru"	"{grey}Test2ru."
+		// {grey}Hello world! str 5 12.24
+		"#format"	"string:s,decimal_value:d,float_value:.2f"
+		"en"		"{grey}Hello world! {string} {decimal_value} {float_value}"
 	}
 }
