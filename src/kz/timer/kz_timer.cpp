@@ -2,6 +2,7 @@
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
 #include "../noclip/kz_noclip.h"
+#include "../option/kz_option.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
@@ -303,7 +304,7 @@ void KZTimerService::PrintEndTimeString()
 	// clang-format off
 	utils::CPrintChatAll(
 		"%s {lime}%s {grey}finished %s with a%srun of {default}%s{grey}! [%s]",
-		KZ_CHAT_PREFIX,
+		KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX),
 		this->player->GetController()->m_iszPlayerName(),
 		courseStr,
 		tpCount > 0 ? " " : " {blue}PRO{grey} ",
