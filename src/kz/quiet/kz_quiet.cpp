@@ -131,7 +131,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide()
 				&& g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHideIndex(playerIndex))
 			{
-				*(uint64 *)clients &= ~i;
+				*(uint64 *)clients &= ~(i + 1);
 			}
 		}
 	}
@@ -142,7 +142,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 		{
 			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide())
 			{
-				*(uint64 *)clients &= ~i;
+				*(uint64 *)clients &= ~(i + 1);
 			}
 		}
 	}
