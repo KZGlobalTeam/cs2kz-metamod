@@ -2,6 +2,7 @@
 #include "vendor/tinyformat.h"
 
 #include "../kz.h"
+#include "../spec/kz_spec.h"
 
 class KZLanguageService : public KZBaseService
 {
@@ -59,14 +60,51 @@ public:
 	}
 
 	template<typename... Args>
-	void PrintConsole(const char *message, Args &&...args)
+	std::string PrepareMessage(const char *message, Args &&...args)
 	{
 		const char *language = GetLanguage();
 		const char *paramFormat = GetTranslatedFormat("#format", message);
 		const char *msgFormat = GetTranslatedFormat(language, message);
-		std::string buffer = GetFormattedMessage(msgFormat, paramFormat, args...);
-		// TODO: colors/strip color off console
-		META_CONPRINTF("%s\n", buffer.c_str());
+		if (!paramFormat)
+		{
+			// Just return the raw unformatted message if format can't be found.
+			return std::string(message);
+		}
+		return GetFormattedMessage(msgFormat, paramFormat, args...);
+	}
+
+	template<typename... Args>
+	static_global void PrintConsoleSingle(KZPlayer *player, bool addPrefix, const char *message, Args &&...args)
+	{
+		std::string msg = player->languageService->PrepareMessage(message, args...);
+		player->PrintConsole(addPrefix, false, msg.c_str());
+	}
+
+	template<typename... Args>
+	void PrintConsole(bool addPrefix, bool includeSpectators, const char *message, Args &&...args)
+	{
+		PrintConsoleSingle(this->player, addPrefix, message, args...);
+		if (includeSpectators)
+		{
+			for (KZPlayer *spec = this->player->specService->GetNextSpectator(NULL); spec != NULL;
+				 spec = this->player->specService->GetNextSpectator(spec))
+			{
+				PrintConsoleSingle(spec, addPrefix, message, args...);
+			}
+		}
+	}
+
+	template<typename... Args>
+	static_global void PrintConsoleAll(bool addPrefix, const char *message, Args &&...args)
+	{
+		for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
+			if (controller)
+			{
+				PrintConsoleSingle(g_pKZPlayerManager->ToPlayer(i), addPrefix, message, args...);
+			}
+		}
 	}
 
 private:

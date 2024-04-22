@@ -71,6 +71,10 @@ const char *KZLanguageService::GetLanguage()
 
 const char *KZLanguageService::GetTranslatedFormat(const char *language, const char *phrase)
 {
+	if (!translationKV->FindKey(phrase))
+	{
+		return NULL;
+	}
 	const char *outFormat = translationKV->FindKey(phrase)->GetString(language);
 	if (outFormat[0] == '\0')
 	{

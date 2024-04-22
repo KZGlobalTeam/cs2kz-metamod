@@ -5,7 +5,8 @@
 #include "kz_jumpstats.h"
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
-#include "../../kz/option/kz_option.h"
+#include "../option/kz_option.h"
+#include "../language/kz_language.h"
 
 #include "tier0/memdbgon.h"
 
@@ -769,6 +770,7 @@ void KZJumpstatsService::EndJump()
 
 void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 {
+	jump->GetJumpPlayer()->languageService->PrintConsole(true, true, "Test", "str", 5, 12.2354);
 	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
 	{
 		return;

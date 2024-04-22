@@ -16,12 +16,6 @@
 
 #include "tier0/memdbgon.h"
 
-double Test(KZPlayer *player)
-{
-	player->languageService->PrintConsole("Test", "str", 5, 12.2354);
-	return 0.0f;
-}
-
 void KZPlayer::Init()
 {
 	this->hideLegs = false;
@@ -71,8 +65,6 @@ void KZPlayer::Reset()
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true);
 	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetOptionStr("defaultStyle", KZ_DEFAULT_STYLE), true);
-	auto timer = new CTimer<KZPlayer *>(true, Test, this);
-	g_pKZUtils->AddTimer(timer, true);
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
