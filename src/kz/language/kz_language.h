@@ -18,6 +18,7 @@ public:
 
 	static_global const char *GetTranslatedFormat(const char *language, const char *phrase);
 
+private:
 	inline void ReplaceStringInPlace(std::string &subject, const std::string &search, const std::string &replace)
 	{
 		size_t pos = 0;
@@ -73,39 +74,97 @@ public:
 		return GetFormattedMessage(msgFormat, paramFormat, args...);
 	}
 
+	enum MessageType : u8
+	{
+		MESSAGE_CHAT,
+		MESSAGE_CONSOLE,
+		MESSAGE_CENTRE,
+		MESSAGE_ALERT,
+		MESSAGE_HTML
+	};
+
 	template<typename... Args>
-	static_global void PrintConsoleSingle(KZPlayer *player, bool addPrefix, const char *message, Args &&...args)
+	static_global void PrintType(KZPlayer *player, bool addPrefix, MessageType type, const char *message, Args &&...args)
 	{
 		std::string msg = player->languageService->PrepareMessage(message, args...);
-		player->PrintConsole(addPrefix, false, msg.c_str());
+		switch (type)
+		{
+			case MESSAGE_CHAT:
+			{
+				player->PrintChat(addPrefix, false, msg.c_str());
+				return;
+			}
+			case MESSAGE_CONSOLE:
+			{
+				player->PrintConsole(addPrefix, false, msg.c_str());
+				return;
+			}
+			case MESSAGE_CENTRE:
+			{
+				player->PrintCentre(addPrefix, false, msg.c_str());
+				return;
+			}
+			case MESSAGE_ALERT:
+			{
+				player->PrintAlert(addPrefix, false, msg.c_str());
+				return;
+			}
+			case MESSAGE_HTML:
+			{
+				player->PrintHTMLCentre(addPrefix, false, msg.c_str());
+				return;
+			}
+		}
 	}
 
 	template<typename... Args>
-	void PrintConsole(bool addPrefix, bool includeSpectators, const char *message, Args &&...args)
+	static_global void PrintSingle(KZPlayer *player, bool addPrefix, bool includeSpectators, MessageType type, const char *message, Args &&...args)
 	{
-		PrintConsoleSingle(this->player, addPrefix, message, args...);
+		PrintType(player, addPrefix, type, message, args...);
 		if (includeSpectators)
 		{
-			for (KZPlayer *spec = this->player->specService->GetNextSpectator(NULL); spec != NULL;
-				 spec = this->player->specService->GetNextSpectator(spec))
+			for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
 			{
-				PrintConsoleSingle(spec, addPrefix, message, args...);
+				PrintType(spec, addPrefix, type, message, args...);
 			}
 		}
 	}
 
-	template<typename... Args>
-	static_global void PrintConsoleAll(bool addPrefix, const char *message, Args &&...args)
-	{
-		for (u32 i = 0; i < MAXPLAYERS + 1; i++)
-		{
-			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-			if (controller)
-			{
-				PrintConsoleSingle(g_pKZPlayerManager->ToPlayer(i), addPrefix, message, args...);
-			}
-		}
+public:
+#define REGISTER_PRINT_SINGLE_FUNCTION(name, type) \
+	template<typename... Args> \
+	void name(bool addPrefix, bool includeSpectators, const char *message, Args &&...args) \
+	{ \
+		PrintSingle(this->player, addPrefix, includeSpectators, type, message, args...); \
 	}
+
+	REGISTER_PRINT_SINGLE_FUNCTION(PrintChat, MESSAGE_CHAT)
+	REGISTER_PRINT_SINGLE_FUNCTION(PrintConsole, MESSAGE_CONSOLE)
+	REGISTER_PRINT_SINGLE_FUNCTION(PrintCentre, MESSAGE_CENTRE)
+	REGISTER_PRINT_SINGLE_FUNCTION(PrintAlert, MESSAGE_ALERT)
+	REGISTER_PRINT_SINGLE_FUNCTION(PrintHTMLCentre, MESSAGE_HTML)
+#undef REGISTER_PRINT_SINGLE_FUNCTION
+
+#define REGISTER_PRINT_ALL_FUNCTION(name, type) \
+	template<typename... Args> \
+	static_global void name(bool addPrefix, const char *message, Args &&...args) \
+	{ \
+		for (u32 i = 0; i < MAXPLAYERS + 1; i++) \
+		{ \
+			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController(); \
+			if (controller) \
+			{ \
+				PrintSingle(g_pKZPlayerManager->ToPlayer(i), addPrefix, type, message, args...); \
+			} \
+		} \
+	}
+
+	REGISTER_PRINT_ALL_FUNCTION(PrintChatAll, MESSAGE_CHAT)
+	REGISTER_PRINT_ALL_FUNCTION(PrintConsoleAll, MESSAGE_CONSOLE)
+	REGISTER_PRINT_ALL_FUNCTION(PrintCentreAll, MESSAGE_CENTRE)
+	REGISTER_PRINT_ALL_FUNCTION(PrintAlertAll, MESSAGE_ALERT)
+	REGISTER_PRINT_ALL_FUNCTION(PrintHTMLCentreAll, MESSAGE_HTML)
+#undef REGISTER_PRINT_ALL_FUNCTION
 
 private:
 	bool hasQueriedLanguage {};
