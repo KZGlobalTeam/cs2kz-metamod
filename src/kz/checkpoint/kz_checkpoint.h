@@ -24,6 +24,7 @@ public:
 	};
 
 	static_global void RegisterCommands();
+	static_global void SetEndZoneVector(Vector *vector);
 
 private:
 	i32 currentCpIndex {};
@@ -46,6 +47,7 @@ public:
 	void TpToCheckpoint();
 	void TpToPrevCp();
 	void TpToNextCp();
+	void TpToEndZone();
 
 	u32 GetTeleportCount()
 	{

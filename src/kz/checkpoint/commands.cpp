@@ -29,6 +29,13 @@ internal SCMD_CALLBACK(Command_KzNextcp)
 	return MRES_SUPERCEDE;
 }
 
+internal SCMD_CALLBACK(Command_KzEnd)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->checkpointService->TpToEndZone();
+	return MRES_SUPERCEDE;
+}
+
 internal SCMD_CALLBACK(Command_SetStartPos)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -54,6 +61,7 @@ void KZCheckpointService::RegisterCommands()
 	scmd::RegisterCmd("kz_nextcp", Command_KzNextcp, "Teleport to the next checkpoint.");
 	scmd::RegisterCmd("kz_pcp", Command_KzPrevcp, "Teleport to the last checkpoint.");
 	scmd::RegisterCmd("kz_ncp", Command_KzNextcp, "Teleport to the next checkpoint.");
+	scmd::RegisterCmd("kz_end", Command_KzEnd, "Teleport to the end of the map.");
 	scmd::RegisterCmd("kz_setstartpos", Command_SetStartPos, "Set your custom start position to your current position.");
 	scmd::RegisterCmd("kz_ssp", Command_SetStartPos, "Set your custom start position to your current position.");
 	scmd::RegisterCmd("kz_clearstartpos", Command_ClearStartPos, "Clear your custom start position.");

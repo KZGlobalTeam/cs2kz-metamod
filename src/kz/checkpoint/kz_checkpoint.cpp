@@ -7,6 +7,7 @@
 // TODO: replace printchat with HUD service's printchat
 
 internal const Vector NULL_VECTOR = Vector(0, 0, 0);
+internal Vector endZoneVector = NULL_VECTOR;
 
 void KZCheckpointService::Reset()
 {
@@ -244,4 +245,24 @@ void KZCheckpointService::PlayCheckpointSound()
 void KZCheckpointService::PlayTeleportSound()
 {
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_DO_TP);
+}
+
+void KZCheckpointService::SetEndZoneVector(Vector *vector)
+{
+	endZoneVector = *vector;
+}
+
+void KZCheckpointService::TpToEndZone()
+{
+	if (endZoneVector == NULL_VECTOR)
+	{
+		this->player->PrintChat(true, false, "End zone not found!");
+	}
+	else
+	{
+		this->player->timerService->TimerStop(true);
+		QAngle angles;
+		this->player->GetAngles(&angles);
+		this->player->Teleport(&endZoneVector, &angles, &NULL_VECTOR);
+	}
 }
