@@ -30,7 +30,7 @@ internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384>
 internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
 internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
-internal void Hook_FinishChangeLevel(CServerChangelevelState *);
+internal bool Hook_ActivateServer();
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkSerializable *pEvent,
@@ -62,8 +62,8 @@ SH_DECL_HOOK5_void(ISource2GameClients, ClientDisconnect, SH_NOATTRIB, false, CP
 				   const char *);
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t &, ISource2WorldSession *, const char *);
 
-internal int finishChangeLevelHook;
-SH_DECL_HOOK1_void(INetworkGameServer, FinishChangeLevel, SH_NOATTRIB, false, CServerChangelevelState *);
+internal int activateServerHook;
+SH_DECL_HOOK0(INetworkGameServer, ActivateServer, SH_NOATTRIB, false, bool);
 
 SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEvent *, bool);
 SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
@@ -96,11 +96,11 @@ void hooks::Initialize()
 	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 	// clang-format off
-	finishChangeLevelHook =	SH_ADD_DVPHOOK(
+	activateServerHook = SH_ADD_DVPHOOK(
 		INetworkGameServer, 
-		FinishChangeLevel, 
+		ActivateServer,
 		(INetworkGameServer *)modules::engine->FindVirtualTable("CNetworkGameServer"),
-		SH_STATIC(Hook_FinishChangeLevel), 
+		SH_STATIC(Hook_ActivateServer), 
 		true
 	);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
@@ -125,7 +125,7 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
-	SH_REMOVE_HOOK_ID(finishChangeLevelHook);
+	SH_REMOVE_HOOK_ID(activateServerHook);
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
@@ -277,10 +277,10 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 	RETURN_META(MRES_IGNORED);
 }
 
-internal void Hook_FinishChangeLevel(CServerChangelevelState *)
+internal bool Hook_ActivateServer()
 {
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
-	RETURN_META(MRES_IGNORED);
+	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
@@ -564,7 +564,7 @@ void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
 	}
 }
 
-internal void Hook_OnChangeTeamPost(int team)
+internal void Hook_OnChangeTeamPost(i32 team)
 {
 	CCSPlayerController *controller = META_IFACEPTR(CCSPlayerController);
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
