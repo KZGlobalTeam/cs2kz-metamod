@@ -56,6 +56,8 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			{
 				continue;
 			}
+			// Respawn must be enabled or !hide will cause client crash.
+#if 0
 			// Do not transmit a pawn without any controller to prevent crashes.
 			if (!pawn->m_hController().IsValid())
 			{
@@ -68,6 +70,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 				continue;
 			}
+#endif
 			// Finally check if player is using !hide.
 			if (!targetPlayer->quietService->ShouldHide())
 			{
