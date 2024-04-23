@@ -553,6 +553,13 @@ void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
 		AddEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
+
+		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pEntity);
+		if (trigger->IsEndZone())
+		{
+			Vector endZoneVector = static_cast<CBaseEntity2 *>(pEntity)->m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin;
+			KZCheckpointService::SetEndZoneVector(&endZoneVector);
+		}
 	}
 }
 
@@ -561,13 +568,6 @@ void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
 		RemoveEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
-
-		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pEntity);
-		if (trigger->IsEndZone())
-		{
-			Vector endZoneVector = static_cast<CBaseEntity2 *>(pEntity)->m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin;
-			KZCheckpointService::SetEndZoneVector(&endZoneVector);
-		}
 	}
 }
 

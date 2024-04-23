@@ -256,11 +256,11 @@ void KZCheckpointService::TpToEndZone()
 {
 	if (endZoneVector == NULL_VECTOR)
 	{
-		this->player->PrintChat(true, false, "End zone not found!");
+		this->player->PrintChat(true, false, "{grey}End zone not found!");
 	}
 	else
 	{
-		this->player->timerService->TimerStop(true);
+		this->player->timerService->TimerStop(true); //TODO: remove this
 		QAngle angles;
 		this->player->GetAngles(&angles);
 		this->player->Teleport(&endZoneVector, &angles, &NULL_VECTOR);
