@@ -9,6 +9,7 @@ internal CTimer<> *tipTimer;
 void KZTipService::Reset()
 {
 	this->showTips = true;
+	this->language = KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE);
 }
 
 void KZTipService::ToggleTips()
@@ -74,7 +75,8 @@ void KZTipService::LoadTips()
 	}
 
 	CUtlVector<const char *> removedTipNames;
-	FOR_EACH_SUBKEY(configKeyValues->FindKey("Remove", true), it)
+	KeyValues *removed = configKeyValues->FindKey("Remove", true);
+	FOR_EACH_SUBKEY(removed, it)
 	{
 		removedTipNames.AddToTail(it->GetName());
 	}
@@ -87,16 +89,21 @@ void KZTipService::LoadTips()
 		}
 	}
 
-	FOR_EACH_SUBKEY(configKeyValues->FindKey("Insert", true), it)
+	KeyValues *inserted = configKeyValues->FindKey("Insert", true);
+	FOR_EACH_SUBKEY(inserted, it)
 	{
-		if (!pTipKeyValues->FindAndDeleteSubKey(it->GetName()))
+		if (pTipKeyValues->FindKey(it->GetName()))
 		{
+			pTipKeyValues->SwapSubKey(pTipKeyValues->FindKey(it->GetName()), it->MakeCopy());
+		}
+		else
+		{
+			pTipKeyValues->AddSubKey(it->MakeCopy());
 			tipNames.AddToTail(it->GetName());
 		}
-		pTipKeyValues->AddSubKey(it);
 	}
 
-	tipInterval = configKeyValues->FindKey("Settings", true)->GetFloat("interval");
+	tipInterval = KZOptionService::GetOptionFloat("tipInterval", KZ_DEFAULT_TIP_INTERVAL);
 }
 
 void KZTipService::ShuffleTips()

@@ -1,5 +1,6 @@
 #include "kz.h"
 #include "utils/utils.h"
+#include "../kz/option/kz_option.h"
 
 #include "sdk/recipientfilters.h"
 #include "tier0/memdbgon.h"
@@ -10,8 +11,9 @@
 	char buffer[512]; \
 	if (addPrefix) \
 	{ \
-		snprintf(buffer, sizeof(buffer), "%s ", KZ_CHAT_PREFIX); \
-		vsnprintf(buffer + strlen(KZ_CHAT_PREFIX) + 1, sizeof(buffer) - (strlen(KZ_CHAT_PREFIX) + 1), format, args); \
+		const char *prefix = KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX); \
+		snprintf(buffer, sizeof(buffer), "%s ", prefix); \
+		vsnprintf(buffer + strlen(prefix) + 1, sizeof(buffer) - (strlen(prefix) + 1), format, args); \
 	} \
 	else \
 	{ \

@@ -2,9 +2,16 @@
 {	
 	"Remove"
 	{
+		//EXAMPLE:
+		//"example"	""
 	}
 	"Insert"
 	{
+		//EXAMPLE:
+		//"example"
+		//{
+		//	"en"	"{grey}Example tip."
+		//}
 	}
 	"Settings"
 	{

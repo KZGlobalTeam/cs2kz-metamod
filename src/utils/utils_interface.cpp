@@ -12,11 +12,6 @@ CGameConfig *KZUtils::GetGameConfig()
 	return g_pGameConfig;
 }
 
-CSchemaSystem *KZUtils::GetSchemaSystemPointer()
-{
-	return interfaces::pSchemaSystem;
-}
-
 const CGlobalVars *KZUtils::GetServerGlobals()
 {
 	return &(g_KZPlugin.serverGlobals);

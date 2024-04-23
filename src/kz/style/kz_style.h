@@ -14,9 +14,9 @@ public:
 	virtual void Init() {};
 	virtual void Cleanup() {};
 
-	virtual f32 GetPlayerMaxSpeed()
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
 	{
-		return 0.0f;
+		return MRES_IGNORED;
 	}
 
 	// Movement hooks
@@ -162,12 +162,8 @@ class KZStyleManager
 	};
 
 public:
-	const char *defaultStyle = "Normal";
-
-public:
 	virtual bool RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory);
 	virtual void UnregisterStyle(const char *styleName);
-	void LoadDefaultStyle();
 	bool SwitchToStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void Cleanup();
 

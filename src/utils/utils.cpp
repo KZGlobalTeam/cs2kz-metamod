@@ -70,6 +70,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
+
 	InitDetours();
 	return true;
 }

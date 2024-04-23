@@ -26,9 +26,9 @@ public:
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 	virtual const char **GetModeConVarValues() = 0;
 
-	virtual f32 GetPlayerMaxSpeed()
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
 	{
-		return 0.0f;
+		return MRES_IGNORED;
 	}
 
 	// Movement hooks
@@ -177,14 +177,11 @@ class KZModeManager
 	};
 
 public:
-	const char *defaultMode = "Classic";
-
 	// clang-format off
 	virtual bool RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory);
 	// clang-format on
 
 	virtual void UnregisterMode(const char *modeName);
-	void LoadDefaultMode();
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);
 	void Cleanup();
 

@@ -79,16 +79,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_r", Command_KzRestart, "Restart.");
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
 	scmd::RegisterCmd("jointeam", Command_JoinTeam, "Jointeam interceptor", true);
-	scmd::RegisterCmd("kz_panel", Command_KzPanel, "Toggle Panel display.");
-	scmd::RegisterCmd("kz_togglestats", Command_KzToggleJumpstats, "Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_togglejs", Command_KzToggleJumpstats, "Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs, "Hide your legs in first person.");
-	scmd::RegisterCmd("kz_hide", Command_KzHide, "Hide other players.");
-	scmd::RegisterCmd("kz_jsalways", Command_KzJSAlways, "Print jumpstats for invalid jumps.");
-	scmd::RegisterCmd("kz_restart", Command_KzRestart, "Restart.");
-	scmd::RegisterCmd("kz_r", Command_KzRestart, "Restart.");
-	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
-	scmd::RegisterCmd("jointeam", Command_JoinTeam, "Jointeam interceptor", true);
+	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 	KZCheckpointService::RegisterCommands();
 	KZJumpstatsService::RegisterCommands();
 	KZTimerService::RegisterCommands();
@@ -127,6 +118,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		}
 		player->GetController()->ChangeTeam(CS_TEAM_SPECTATOR);
 		player->quietService->SendFullUpdate();
+		// TODO: put spectators of this player to freecam, and send them full updates
 	}
 	else if (newTeam == CS_TEAM_CT && currentTeam != CS_TEAM_CT || newTeam == CS_TEAM_T && currentTeam != CS_TEAM_T)
 	{

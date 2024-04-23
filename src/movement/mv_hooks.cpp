@@ -39,6 +39,10 @@ void movement::InitDetours()
 void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);
+	if (controller->m_bIsHLTV)
+	{
+		return;
+	}
 	player->OnPhysicsSimulate();
 	PhysicsSimulate(controller);
 	player->OnPhysicsSimulatePost();
@@ -47,13 +51,14 @@ void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 {
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(pawn);
-	f32 newMaxSpeed = player->GetPlayerMaxSpeed();
+	f32 maxSpeed = GetMaxSpeed(pawn);
+	f32 newMaxSpeed = maxSpeed;
 
-	if (newMaxSpeed <= 0.0f)
+	if (player->GetPlayerMaxSpeed(newMaxSpeed) != MRES_IGNORED)
 	{
-		return GetMaxSpeed(pawn);
+		return newMaxSpeed;
 	}
-	return newMaxSpeed;
+	return maxSpeed;
 }
 
 i32 FASTCALL movement::Detour_ProcessUsercmds(CBasePlayerPawn *pawn, void *cmds, int numcmds, bool paused, float margin)
@@ -185,7 +190,7 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	if (player->GetPawn()->m_lifeState() != LIFE_DEAD && !result && oldMoveType == MOVETYPE_LADDER)
 	{
 		// Do the setting part ourselves as well.
-		player->GetPawn()->SetMoveType(MOVETYPE_WALK);
+		player->SetMoveType(MOVETYPE_WALK);
 	}
 	if (!result && oldMoveType == MOVETYPE_LADDER)
 	{

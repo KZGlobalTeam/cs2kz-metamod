@@ -8,6 +8,7 @@
 
 #include "../timer/kz_timer.h"
 #include "utils/simplecmds.h"
+#include "utils/plat.h"
 
 internal SCMD_CALLBACK(Command_KzModeShort);
 internal SCMD_CALLBACK(Command_KzMode);
@@ -47,7 +48,7 @@ void KZ::mode::InitModeManager()
 void KZ::mode::LoadModePlugins()
 {
 	char buffer[1024];
-	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*.*");
+	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/modes/*%s", MODULE_EXT);
 	FileFindHandle_t findHandle = {};
 	const char *output = g_pFullFileSystem->FindFirstEx(buffer, "GAME", &findHandle);
 	if (output)
@@ -186,26 +187,6 @@ void KZModeManager::UnregisterMode(const char *modeName)
 		if (strcmp(player->modeService->GetModeName(), modeName) == 0 || strcmp(player->modeService->GetModeShortName(), modeName) == 0)
 		{
 			this->SwitchToMode(player, "VNL");
-		}
-	}
-}
-
-void KZModeManager::LoadDefaultMode()
-{
-	char modeCfgPath[1024];
-	V_snprintf(modeCfgPath, sizeof(modeCfgPath), "%s%s", g_SMAPI->GetBaseDir(), "/addons/cs2kz/modes/mode-config.txt");
-
-	KeyValues *modeCfgKeyValues = new KeyValues("ModeConfig");
-	modeCfgKeyValues->LoadFromFile(g_pFullFileSystem, modeCfgPath, nullptr);
-
-	const char *modeName = modeCfgKeyValues->GetString("defaultMode");
-
-	FOR_EACH_VEC(this->modeInfos, i)
-	{
-		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
-		{
-			defaultMode = modeName;
-			break;
 		}
 	}
 }

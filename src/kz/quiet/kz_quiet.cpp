@@ -19,6 +19,12 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		uintptr_t targetAddr = reinterpret_cast<uintptr_t>(pTransmitInfo) + g_pGameConfig->GetOffset("QuietPlayerSlot");
 		CPlayerSlot targetSlot = CPlayerSlot(*reinterpret_cast<int *>(targetAddr));
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
+		// Make sure the target isn't CSTV.
+		CCSPlayerController *targetController = targetPlayer->GetController();
+		if (!targetController || targetController->m_bIsHLTV)
+		{
+			continue;
+		}
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
 
@@ -50,6 +56,8 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			{
 				continue;
 			}
+			// Respawn must be enabled or !hide will cause client crash.
+#if 0
 			// Do not transmit a pawn without any controller to prevent crashes.
 			if (!pawn->m_hController().IsValid())
 			{
@@ -62,6 +70,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 				continue;
 			}
+#endif
 			// Finally check if player is using !hide.
 			if (!targetPlayer->quietService->ShouldHide())
 			{
@@ -125,7 +134,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide()
 				&& g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHideIndex(playerIndex))
 			{
-				*(uint64 *)clients &= ~i;
+				*(uint64 *)clients &= ~(i + 1);
 			}
 		}
 	}
@@ -136,7 +145,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 		{
 			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide())
 			{
-				*(uint64 *)clients &= ~i;
+				*(uint64 *)clients &= ~(i + 1);
 			}
 		}
 	}

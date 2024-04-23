@@ -40,4 +40,12 @@
 	{
 		"en"	"{grey}Report issues related to CS2KZ on our GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
+	"kz_jssound"
+	{
+		"en"	"{grey}You can control which jumpstats play a sound using {default}/jssound{grey}."
+	}
+	"kz_jsbroadcast"
+	{
+		"en"	"{grey}Use {default}/jsbroadcast {grey}to change which jumpstats by other players get printed to you."
+	}
 }

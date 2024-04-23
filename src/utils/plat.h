@@ -1,6 +1,15 @@
 #pragma once
+#include <vector>
+#include <string>
 #include <cstdint>
 #include "metamod_oslink.h"
+
+struct Section
+{
+	std::string m_szName;
+	void *m_pBase;
+	size_t m_iSize;
+};
 
 #if defined(_WIN32)
 #define FASTCALL __fastcall
@@ -20,7 +29,7 @@ struct Module
 };
 
 #ifndef _WIN32
-int GetModuleInformation(HINSTANCE module, void **base, size_t *length);
+int GetModuleInformation(HINSTANCE module, void **base, size_t *length, std::vector<Section> &m_sections);
 #endif
 
 #ifdef _WIN32

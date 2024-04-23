@@ -7,7 +7,7 @@
 #define MODE_NAME       "Classic"
 // Rampbug fix related
 #define MAX_BUMPS            4
-#define RAMP_PIERCE_DISTANCE 1.25f
+#define RAMP_PIERCE_DISTANCE 0.1f
 #define RAMP_BUG_THRESHOLD   0.99f
 #define NEW_RAMP_THRESHOLD   0.95f
 
@@ -58,12 +58,12 @@ class KZClassicModeService : public KZModeService
 
 	f32 distanceTiers[JUMPTYPE_COUNT - 3][DISTANCETIER_COUNT] = {
 		{217.0f, 265.0f, 270.0f, 275.0f, 280.0f, 285.0f}, // LJ
-		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // BH
-		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // MBH
-		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // WJ
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // BH
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // MBH
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // WJ
 		{120.0f, 180.0f, 185.0f, 190.0f, 195.0f, 200.0f}, // LAJ
 		{217.0f, 260.0f, 265.0f, 270.0f, 275.0f, 280.0f}, // LAH
-		{217.0f, 270.0f, 275.0f, 280.0f, 285.0f, 290.0f}, // JB
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // JB
 	};
 
 	const char *modeCvarValues[KZ::mode::numCvar] = {
@@ -129,17 +129,15 @@ class KZClassicModeService : public KZModeService
 	CUtlVector<Vector> tpmTriggerFixOrigins;
 
 public:
+	virtual void Reset() override;
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 
-	virtual bool EnableWaterFix() override
-	{
-		return true;
-	}
+	virtual bool EnableWaterFix() override;
 
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
-	virtual f32 GetPlayerMaxSpeed() override;
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;

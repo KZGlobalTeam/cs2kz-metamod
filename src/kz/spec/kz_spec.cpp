@@ -36,7 +36,7 @@ void KZSpecService::LoadPosition()
 	this->player->GetPawn()->Teleport(&this->savedOrigin, &this->savedAngles, nullptr);
 	if (this->savedOnLadder)
 	{
-		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		this->player->SetMoveType(MOVETYPE_LADDER);
 	}
 }
 
@@ -50,7 +50,7 @@ void KZSpecService::ResetSavedPosition()
 
 bool KZSpecService::IsSpectating(KZPlayer *target)
 {
-	return false;
+	return this->GetSpectatedPlayer() == target;
 }
 
 bool KZSpecService::SpectatePlayer(const char *playerName)
@@ -63,8 +63,41 @@ bool KZSpecService::CanSpectate()
 	return false;
 }
 
-KZPlayer *KZSpecService::GetSpectatingPlayer()
+KZPlayer *KZSpecService::GetSpectatedPlayer()
 {
+	if (!player || player->IsAlive())
+	{
+		return NULL;
+	}
+	if (!player->GetController() || !player->GetController()->m_hObserverPawn())
+	{
+		return NULL;
+	}
+	CPlayer_ObserverServices *obsService = player->GetController()->m_hObserverPawn()->m_pObserverServices;
+	if (!obsService)
+	{
+		return NULL;
+	}
+	if (!obsService->m_hObserverTarget().IsValid())
+	{
+		return NULL;
+	}
+	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CBasePlayerPawn *target = (CBasePlayerPawn *)obsService->m_hObserverTarget().Get();
+	// If the player is spectating their own corpse, consider that as not spectating anyone.
+	return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);
+}
+
+KZPlayer *KZSpecService::GetNextSpectator(KZPlayer *current)
+{
+	for (int i = current ? current->index + 1 : 0; i < MAXPLAYERS + 1; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+		if (player->specService->IsSpectating(this->player))
+		{
+			return player;
+		}
+	}
 	return nullptr;
 }
 

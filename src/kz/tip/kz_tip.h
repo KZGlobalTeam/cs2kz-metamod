@@ -6,8 +6,7 @@
 #include "interfaces/interfaces.h"
 #include "filesystem.h"
 #include "utils/ctimer.h"
-
-#define KZ_DEFAULT_LANGUAGE "en"
+#include "kz/option/kz_option.h"
 
 class KZTipService : public KZBaseService
 {
@@ -15,8 +14,7 @@ class KZTipService : public KZBaseService
 
 private:
 	bool showTips;
-	// TODO: add other languages
-	const char *language = KZ_DEFAULT_LANGUAGE;
+	const char *language = "en";
 
 public:
 	virtual void Reset() override;

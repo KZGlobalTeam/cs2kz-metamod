@@ -12,6 +12,7 @@
 #include "style/kz_style.h"
 #include "spec/kz_spec.h"
 #include "timer/kz_timer.h"
+#include "option/kz_option.h"
 
 #include "tier0/memdbgon.h"
 
@@ -37,6 +38,7 @@ void KZPlayer::Init()
 	this->hudService = new KZHUDService(this);
 	this->specService = new KZSpecService(this);
 	this->timerService = new KZTimerService(this);
+	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
 	KZ::mode::InitModeService(this);
 	KZ::style::InitStyleService(this);
@@ -56,14 +58,16 @@ void KZPlayer::Reset()
 	this->hudService->Reset();
 	this->timerService->Reset();
 	this->tipService->Reset();
+	this->modeService->Reset();
+	this->optionService->Reset();
 
-	g_pKZModeManager->SwitchToMode(this, g_pKZModeManager->defaultMode, true);
-	g_pKZStyleManager->SwitchToStyle(this, g_pKZStyleManager->defaultStyle, true);
+	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true);
+	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetOptionStr("defaultStyle", KZ_DEFAULT_STYLE), true);
 }
 
-float KZPlayer::GetPlayerMaxSpeed()
+META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
-	return this->modeService->GetPlayerMaxSpeed();
+	return this->modeService->GetPlayerMaxSpeed(maxSpeed);
 }
 
 void KZPlayer::OnPhysicsSimulate()
@@ -400,6 +404,7 @@ void KZPlayer::OnPostThinkPost()
 void KZPlayer::OnStartTouchGround()
 {
 	this->jumpstatsService->EndJump();
+	this->timerService->OnStartTouchGround();
 	this->modeService->OnStartTouchGround();
 	this->styleService->OnStartTouchGround();
 }
@@ -407,6 +412,7 @@ void KZPlayer::OnStartTouchGround()
 void KZPlayer::OnStopTouchGround()
 {
 	this->jumpstatsService->AddJump();
+	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
 	this->styleService->OnStopTouchGround();
 }
@@ -442,7 +448,7 @@ void KZPlayer::EnableGodMode()
 void KZPlayer::StartZoneStartTouch()
 {
 	this->checkpointService->ResetCheckpoints();
-	this->timerService->TimerStop(false);
+	this->timerService->StartZoneStartTouch();
 }
 
 void KZPlayer::StartZoneEndTouch()
@@ -450,7 +456,7 @@ void KZPlayer::StartZoneEndTouch()
 	if (!this->noclipService->IsNoclipping())
 	{
 		this->checkpointService->ResetCheckpoints();
-		this->timerService->TimerStart("");
+		this->timerService->StartZoneEndTouch();
 	}
 }
 

@@ -39,7 +39,6 @@ typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, b
 namespace interfaces
 {
 	inline CGameResourceService *pGameResourceServiceServer = nullptr;
-	inline CSchemaSystem *pSchemaSystem = nullptr;
 	inline IVEngineServer2 *pEngine = nullptr;
 	inline ISource2Server *pServer = nullptr;
 	inline IGameEventManager2 *pGameEventManager = nullptr;
@@ -54,7 +53,7 @@ namespace interfaces
 		GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);
 		GET_V_IFACE_CURRENT(GetServerFactory, interfaces::pServer, ISource2Server, INTERFACEVERSION_SERVERGAMEDLL);
-		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pSchemaSystem, CSchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, g_pSchemaSystem, ISchemaSystem, SCHEMASYSTEM_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
@@ -89,7 +88,6 @@ public:
 	SetPawn_t *const SetPawn;
 
 	virtual CGameConfig *GetGameConfig();
-	virtual CSchemaSystem *GetSchemaSystemPointer();
 	virtual const CGlobalVars *GetServerGlobals();
 	virtual CGlobalVars *GetGlobals();
 

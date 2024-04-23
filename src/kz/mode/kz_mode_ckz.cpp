@@ -122,6 +122,34 @@ CGameEntitySystem *GameEntitySystem()
 	Actual mode stuff.
 */
 
+void KZClassicModeService::Reset()
+{
+	this->revertJumpTweak = {};
+	this->preJumpZSpeed = {};
+	this->tweakedJumpZSpeed = {};
+	this->hasValidDesiredViewAngle = {};
+	this->lastValidDesiredViewAngle = vec3_angle;
+	this->lastJumpReleaseTime = {};
+	this->oldDuckPressed = {};
+	this->forcedUnduck = {};
+	this->postProcessMovementZSpeed = {};
+
+	this->angleHistory.RemoveAll();
+	this->leftPreRatio = {};
+	this->rightPreRatio = {};
+	this->bonusSpeed = {};
+	this->maxPre = {};
+
+	this->didTPM = {};
+	this->overrideTPM = {};
+	this->tpmVelocity = vec3_origin;
+	this->tpmOrigin = vec3_origin;
+	this->lastValidPlane = vec3_origin;
+
+	this->airMoving = {};
+	this->tpmTriggerFixOrigins.RemoveAll();
+}
+
 const char *KZClassicModeService::GetModeName()
 {
 	return MODE_NAME;
@@ -130,6 +158,11 @@ const char *KZClassicModeService::GetModeName()
 const char *KZClassicModeService::GetModeShortName()
 {
 	return MODE_NAME_SHORT;
+}
+
+bool KZClassicModeService::EnableWaterFix()
+{
+	return this->player->IsButtonPressed(IN_JUMP);
 }
 
 DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distance)
@@ -151,9 +184,10 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 	return tier;
 }
 
-f32 KZClassicModeService::GetPlayerMaxSpeed()
+META_RES KZClassicModeService::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
-	return SPEED_NORMAL + this->GetPrestrafeGain();
+	maxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
+	return MRES_SUPERCEDE;
 }
 
 const char **KZClassicModeService::GetModeConVarValues()
@@ -645,7 +679,7 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 	float adjust = DotProduct(out, normal);
 	if (adjust < 0.0f)
 	{
-		adjust = MIN(adjust, -1 / 512);
+		adjust = MIN(adjust, -1 / 128);
 		out -= (normal * adjust);
 	}
 }
@@ -654,10 +688,10 @@ internal bool IsValidMovementTrace(trace_t_s2 &tr, bbox_t bounds, CTraceFilterPl
 {
 	trace_t_s2 stuck;
 	// Maybe we don't need this one.
-	if (tr.fraction < FLT_EPSILON)
-	{
-		return false;
-	}
+	// if (tr.fraction < FLT_EPSILON)
+	//{
+	//	return false;
+	//}
 
 	if (tr.startsolid)
 	{
@@ -735,6 +769,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	CTraceFilterPlayerMovementCS filter;
 	g_pKZUtils->InitPlayerMovementTraceFilter(filter, pawn, pawn->m_Collision().m_collisionAttribute().m_nInteractsWith(),
 											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	bool potentiallyStuck {};
 
 	for (bumpCount = 0; bumpCount < MAX_BUMPS; bumpCount++)
 	{
@@ -749,13 +784,18 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		else
 		{
 			g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, pm);
+			if (end == start)
+			{
+				continue;
+			}
 			if (IsValidMovementTrace(pm, bounds, &filter) && pm.fraction == 1.0f)
 			{
 				// Player won't hit anything, nothing to do.
 				break;
 			}
 			if (this->lastValidPlane.Length() > FLT_EPSILON
-				&& (!IsValidMovementTrace(pm, bounds, &filter) || pm.planeNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD))
+				&& (!IsValidMovementTrace(pm, bounds, &filter) || pm.planeNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD
+					|| (potentiallyStuck && pm.fraction == 0.0f)))
 			{
 				// We hit a plane that will significantly change our velocity. Make sure that this plane is significant
 				// enough.
@@ -777,6 +817,10 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 							{
 								offsetDirection = {offsets[i], offsets[j], offsets[k]};
 								// Check if this random offset is even valid.
+								if (this->lastValidPlane.Dot(offsetDirection) <= 0.0f)
+								{
+									continue;
+								}
 								trace_t_s2 test;
 								g_pKZUtils->TracePlayerBBox(start + offsetDirection * RAMP_PIERCE_DISTANCE, start, bounds, &filter, test);
 								if (!IsValidMovementTrace(test, bounds, &filter))
@@ -787,7 +831,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 							bool goodTrace {};
 							f32 ratio {};
 							bool hitNewPlane {};
-							for (ratio = 0.025f; ratio <= 1.0f; ratio += 0.025f)
+							for (ratio = 0.25f; ratio <= 1.0f; ratio += 0.25f)
 							{
 								g_pKZUtils->TracePlayerBBox(start + offsetDirection * RAMP_PIERCE_DISTANCE * ratio,
 															end + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, bounds, &filter, pierce);
@@ -839,6 +883,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 			{
 				this->lastValidPlane = pm.planeNormal;
 			}
+			potentiallyStuck = pm.fraction == 0.0f;
 		}
 
 		if (pm.fraction * velocity.Length() > 0.03125f)

@@ -5,6 +5,7 @@
 #include "kz_jumpstats.h"
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
+#include "../../kz/option/kz_option.h"
 
 #include "tier0/memdbgon.h"
 
@@ -558,9 +559,13 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
+	if (this->jumps.Count() <= 0)
+	{
+		return JumpType_Invalid;
+	}
 	if (this->player->takeoffFromLadder)
 	{
-		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime
+		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL
 			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
 			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
 		{
@@ -593,7 +598,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	if (this->HitBhop() && !this->HitDuckbugRecently())
 	{
 		// Check for no offset
-		if (this->jumps.Tail().DidHitHead())
+		if (this->jumps.Tail().DidHitHead() || !this->jumps.Tail().IsValid())
 		{
 			return JumpType_Invalid;
 		}
@@ -628,8 +633,8 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 void KZJumpstatsService::Reset()
 {
-	this->broadcastMinTier = DistanceTier_Godlike;
-	this->soundMinTier = DistanceTier_Godlike;
+	this->broadcastMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSBroadcastMinTier", DistanceTier_Godlike));
+	this->soundMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSSoundMinTier", DistanceTier_Godlike));
 	this->showJumpstats = true;
 	this->jumps.Purge();
 	this->jsAlways = {};
@@ -798,7 +803,8 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->jumpstatsService->GetSoundMinTier() > tier || tier <= DistanceTier_Meh || target->jumpstatsService->GetSoundMinTier() == DistanceTier_None)
+	if (target->jumpstatsService->GetSoundMinTier() > tier || tier <= DistanceTier_Meh
+		|| target->jumpstatsService->GetSoundMinTier() == DistanceTier_None)
 	{
 		return;
 	}
@@ -815,6 +821,8 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
 
+	f32 flooredDist = floor(jump->GetDistance() * 10) / 10;
+
 	// clang-format off
 	jump->GetJumpPlayer()->PrintChat(true, true,
 		"%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
@@ -822,7 +830,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 		jumpColor,
 		jumpTypeShortStr[jump->GetJumpType()],
 		jumpColor,
-		jump->GetDistance(),
+		flooredDist,
 		jump->strafes.Count(),
 		jump->GetSync() * 100.0f,
 		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
@@ -960,7 +968,10 @@ void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 
 void KZJumpstatsService::TrackJumpstatsVariables()
 {
-	this->lastJumpButtonTime = this->player->GetPawn()->m_ignoreLadderJumpTime();
+	if (this->player->IsButtonPressed(IN_JUMP))
+	{
+		this->lastJumpButtonTime = g_pKZUtils->GetGlobals()->curtime;
+	}
 	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP || this->player->GetPawn()->m_nActualMoveType == MOVETYPE_NOCLIP)
 	{
 		this->lastNoclipTime = g_pKZUtils->GetGlobals()->curtime;

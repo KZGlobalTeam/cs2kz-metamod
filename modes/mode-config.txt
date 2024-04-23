@@ -1,4 +1,0 @@
-"ModeConfig"
-{
-	"defaultMode"	"Classic"
-}

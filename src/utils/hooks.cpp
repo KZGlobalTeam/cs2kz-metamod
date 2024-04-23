@@ -1,12 +1,14 @@
 #include "hooks.h"
+#include "addresses.h"
 #include "igameeventsystem.h"
+#include "igamesystem.h"
 #include "utils/simplecmds.h"
-#include "cs2kz.h"
 
+#include "cs2kz.h"
+#include "ctimer.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "utils/utils.h"
-#include "utils/ctimer.h"
 #include "entityclass.h"
 
 class GameSessionConfiguration_t
@@ -21,12 +23,14 @@ class EntListener : public IEntityListener
 
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args);
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+internal void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *);
 internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
 internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
 								 const uint16 *pEntityIndicies, int nEntities);
 internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
 internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
+internal bool Hook_ActivateServer();
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkSerializable *pEvent,
@@ -47,11 +51,20 @@ SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlay
 SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &,
 				   const Entity2Networkable_t **, const uint16 *, int);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
+
+internal int serverGamePostSimulateHook;
+SH_DECL_HOOK1_void(IGameSystem, ServerGamePostSimulate, SH_NOATTRIB, false, const EventServerGamePostSimulate_t *);
+
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
+
 SH_DECL_HOOK4_void(ISource2GameClients, ClientActive, SH_NOATTRIB, false, CPlayerSlot, bool, const char *, uint64);
 SH_DECL_HOOK5_void(ISource2GameClients, ClientDisconnect, SH_NOATTRIB, false, CPlayerSlot, ENetworkDisconnectionReason, const char *, uint64,
 				   const char *);
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t &, ISource2WorldSession *, const char *);
+
+internal int activateServerHook;
+SH_DECL_HOOK0(INetworkGameServer, ActivateServer, SH_NOATTRIB, false, bool);
+
 SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEvent *, bool);
 SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
 SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *, INetworkSerializable *,
@@ -82,6 +95,22 @@ void hooks::Initialize()
 	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+	// clang-format off
+	activateServerHook = SH_ADD_DVPHOOK(
+		INetworkGameServer, 
+		ActivateServer,
+		(INetworkGameServer *)modules::engine->FindVirtualTable("CNetworkGameServer"),
+		SH_STATIC(Hook_ActivateServer), 
+		true
+	);
+	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
+		IGameSystem, 
+		ServerGamePostSimulate, 
+		(IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem"),
+		SH_STATIC(Hook_ServerGamePostSimulate), 
+		true
+	);
+	// clang-format on
 }
 
 void hooks::Cleanup()
@@ -96,7 +125,9 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+	SH_REMOVE_HOOK_ID(activateServerHook);
 	SH_REMOVE_HOOK_ID(changeTeamHook);
+	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
 
 internal void AddEntityHooks(CBaseEntity2 *entity)
@@ -180,7 +211,6 @@ internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t 
 
 internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
-	ProcessTimers();
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	static int entitySystemHook = 0;
 	if (GameEntitySystem() && !entitySystemHook)
@@ -188,6 +218,11 @@ internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 		entitySystemHook = SH_ADD_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	}
 	RETURN_META(MRES_IGNORED);
+}
+
+internal void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
+{
+	ProcessTimers();
 }
 
 internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
@@ -238,8 +273,14 @@ internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReaso
 
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
-	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 	g_KZPlugin.AddonInit();
+	RETURN_META(MRES_IGNORED);
+}
+
+internal bool Hook_ActivateServer()
+{
+	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
@@ -523,7 +564,7 @@ void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
 	}
 }
 
-internal void Hook_OnChangeTeamPost(int team)
+internal void Hook_OnChangeTeamPost(i32 team)
 {
 	CCSPlayerController *controller = META_IFACEPTR(CCSPlayerController);
 	MovementPlayer *player = g_pPlayerManager->ToPlayer(controller);

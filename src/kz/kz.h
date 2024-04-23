@@ -12,7 +12,11 @@
 
 #define KZ_WORKSHOP_ADDONS_ID "3171124941"
 
-#define KZ_CHAT_PREFIX "{lime}KZ {grey}|{default}"
+#define KZ_DEFAULT_CHAT_PREFIX  "{lime}KZ {grey}|{default}"
+#define KZ_DEFAULT_TIP_INTERVAL 75.0
+#define KZ_DEFAULT_LANGUAGE     "en"
+#define KZ_DEFAULT_STYLE        "Normal"
+#define KZ_DEFAULT_MODE         "Classic"
 
 class KZPlayer;
 // class Jump;
@@ -44,7 +48,7 @@ public:
 	void Init();
 	virtual void Reset() override;
 
-	virtual f32 GetPlayerMaxSpeed() override;
+	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
@@ -134,7 +138,7 @@ public:
 	KZMeasureService *measureService {};
 	KZModeService *modeService {};
 	KZNoclipService *noclipService {};
-	KZOptionService *optionsService {};
+	KZOptionService *optionService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
 	KZSavelocService *savelocService {};

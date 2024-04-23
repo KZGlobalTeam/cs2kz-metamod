@@ -2,6 +2,7 @@
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
 #include "../noclip/kz_noclip.h"
+#include "../option/kz_option.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
@@ -22,6 +23,20 @@ bool KZTimerService::UnregisterEventListener(KZTimerServiceEventListener *eventL
 	return eventListeners.FindAndRemove(eventListener);
 }
 
+void KZTimerService::StartZoneStartTouch()
+{
+	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPawn()->m_fFlags & FL_ONGROUND);
+	this->TimerStop(false);
+}
+
+void KZTimerService::StartZoneEndTouch()
+{
+	if (this->touchedGroundSinceTouchingStartZone)
+	{
+		this->TimerStart("");
+	}
+}
+
 bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 {
 	// clang-format off
@@ -32,7 +47,8 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 		|| this->player->noclipService->JustNoclipped()
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
-		|| (this->GetTimerRunning() && !V_stricmp(courseName, this->currentCourse)))
+		|| (this->GetTimerRunning() && !V_stricmp(courseName, this->currentCourse))
+		|| (!(this->player->GetPawn()->m_fFlags & FL_ONGROUND) && !this->GetValidJump()))
 	// clang-format on
 	{
 		return false;
@@ -155,6 +171,12 @@ void KZTimerService::TimerStopAll(bool playSound)
 		}
 		player->timerService->TimerStop(playSound);
 	}
+}
+
+void KZTimerService::InvalidateJump()
+{
+	this->validJump = false;
+	this->lastInvalidateTime = g_pKZUtils->GetServerGlobals()->curtime;
 }
 
 void KZTimerService::PlayTimerStartSound()
@@ -282,7 +304,7 @@ void KZTimerService::PrintEndTimeString()
 	// clang-format off
 	utils::CPrintChatAll(
 		"%s {lime}%s {grey}finished %s with a%srun of {default}%s{grey}! [%s]",
-		KZ_CHAT_PREFIX,
+		KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX),
 		this->player->GetController()->m_iszPlayerName(),
 		courseStr,
 		tpCount > 0 ? " " : " {blue}PRO{grey} ",
@@ -316,7 +338,7 @@ void KZTimerService::Pause()
 	this->lastDuckValue = this->player->GetMoveServices()->m_flDuckAmount;
 	this->lastStaminaValue = this->player->GetMoveServices()->m_flStamina;
 	this->player->SetVelocity(vec3_origin);
-	this->player->GetPawn()->SetMoveType(MOVETYPE_NONE);
+	this->player->SetMoveType(MOVETYPE_NONE);
 
 	if (this->GetTimerRunning())
 	{
@@ -390,11 +412,11 @@ void KZTimerService::Resume(bool force)
 
 	if (this->pausedOnLadder)
 	{
-		this->player->GetPawn()->SetMoveType(MOVETYPE_LADDER);
+		this->player->SetMoveType(MOVETYPE_LADDER);
 	}
 	else
 	{
-		this->player->GetPawn()->SetMoveType(MOVETYPE_WALK);
+		this->player->SetMoveType(MOVETYPE_WALK);
 	}
 
 	// GOKZ: prevent noclip exploit
@@ -448,6 +470,9 @@ void KZTimerService::Reset()
 	this->hasResumedInThisRun = {};
 	this->lastDuckValue = {};
 	this->lastStaminaValue = {};
+	this->validJump = {};
+	this->lastInvalidateTime = {};
+	this->touchedGroundSinceTouchingStartZone = {};
 }
 
 void KZTimerService::OnPhysicsSimulatePost()
@@ -458,8 +483,34 @@ void KZTimerService::OnPhysicsSimulatePost()
 	}
 }
 
+void KZTimerService::OnStartTouchGround()
+{
+	this->touchedGroundSinceTouchingStartZone = true;
+}
+
+void KZTimerService::OnStopTouchGround()
+{
+	if (this->HasValidMoveType() && this->lastInvalidateTime != g_pKZUtils->GetServerGlobals()->curtime)
+	{
+		this->validJump = true;
+	}
+	else
+	{
+		this->InvalidateJump();
+	}
+}
+
 void KZTimerService::OnChangeMoveType(MoveType_t oldMoveType)
 {
+	if (oldMoveType == MOVETYPE_LADDER && this->player->GetMoveType() == MOVETYPE_WALK
+		&& this->lastInvalidateTime != g_pKZUtils->GetServerGlobals()->curtime)
+	{
+		this->validJump = true;
+	}
+	else
+	{
+		this->InvalidateJump();
+	}
 	// Check if player has escaped MOVETYPE_NONE
 	if (!this->paused || this->player->GetMoveType() == MOVETYPE_NONE)
 	{
@@ -547,7 +598,10 @@ void KZTimerService::OnRoundStart()
 
 void KZTimerService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
-	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
+	if (newPosition || newVelocity)
+	{
+		this->InvalidateJump();
+	}
 }
 
 internal SCMD_CALLBACK(Command_KzStopTimer)

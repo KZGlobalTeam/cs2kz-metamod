@@ -305,6 +305,16 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 
 void MovementPlayer::OnPostThink() {}
 
+void MovementPlayer::SetMoveType(MoveType_t newMoveType)
+{
+	MoveType_t oldMoveType = this->GetMoveType();
+	if (oldMoveType != newMoveType)
+	{
+		this->GetPawn()->SetMoveType(newMoveType);
+		this->OnChangeMoveType(oldMoveType);
+	}
+}
+
 void MovementPlayer::Reset()
 {
 	this->processingDuck = false;
@@ -333,10 +343,9 @@ void MovementPlayer::Reset()
 	this->collidingWithWorld = false;
 }
 
-float MovementPlayer::GetPlayerMaxSpeed()
+META_RES MovementPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
-	// No effect.
-	return 0.0f;
+	return MRES_IGNORED;
 }
 
 void MovementPlayer::GetBBoxBounds(bbox_t *bounds)
