@@ -260,7 +260,7 @@ void KZCheckpointService::TpToEndZone()
 	}
 	else
 	{
-		this->player->timerService->TimerStop(true); //TODO: remove this
+		this->player->timerService->TimerStop(true); // TODO: remove this
 		QAngle angles;
 		this->player->GetAngles(&angles);
 		this->player->Teleport(&endZoneVector, &angles, &NULL_VECTOR);
