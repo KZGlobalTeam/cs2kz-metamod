@@ -34,15 +34,12 @@ private:
 	{
 		std::string inputStr = std::string(input);
 		const char *tokenStart = format;
-		const char *tokenEnd;
-		const char *replaceStart;
-		const char *replaceEnd;
 		int argNumber = 0;
 		while (true)
 		{
-			tokenEnd = strstr(tokenStart, ":");
-			replaceStart = tokenEnd + 1;
-			replaceEnd = strstr(replaceStart, ",");
+			const char *tokenEnd = strstr(tokenStart, ":");
+			const char *replaceStart = tokenEnd + 1;
+			const char *replaceEnd = strstr(replaceStart, ",");
 			if (!replaceEnd)
 			{
 				replaceEnd = format + strlen(format);
