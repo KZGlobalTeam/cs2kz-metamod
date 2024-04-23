@@ -7,7 +7,7 @@
 #define MODE_NAME       "Classic"
 // Rampbug fix related
 #define MAX_BUMPS            4
-#define RAMP_PIERCE_DISTANCE 0.25f
+#define RAMP_PIERCE_DISTANCE 0.1f
 #define RAMP_BUG_THRESHOLD   0.99f
 #define NEW_RAMP_THRESHOLD   0.95f
 
