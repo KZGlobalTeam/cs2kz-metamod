@@ -10,17 +10,6 @@
 
 #include "tier0/memdbgon.h"
 
-#define IGNORE_JUMP_TIME                0.2f
-#define JS_EPSILON                      0.03125f
-#define JS_MAX_LADDERJUMP_OFFSET        2.0f
-#define JS_MAX_BHOP_GROUND_TIME         0.05f
-#define JS_MAX_DUCKBUG_RESET_TIME       0.05f
-#define JS_MAX_NOCLIP_RESET_TIME        0.4f
-#define JS_MAX_WEIRDJUMP_FALL_OFFSET    (64.0f + JS_EPSILON)
-#define JS_TOUCH_GRACE_PERIOD           0.04f
-#define JS_SPEED_MODIFICATION_TOLERANCE 0.1f
-#define JS_TELEPORT_DISTANCE_SQUARED    4096.0f * 4096.0f * ENGINE_FIXED_TICK_INTERVAL
-
 // clang-format off
 
 const char *jumpTypeStr[JUMPTYPE_COUNT] = {
@@ -68,6 +57,8 @@ const char *distanceTierSounds[DISTANCETIER_COUNT] = {
 	"kz.ownage",
 	"kz.wrecker"
 };
+
+// clang-format on
 
 /*
  * AACall stuff
@@ -518,18 +509,22 @@ Strafe *Jump::GetCurrentStrafe()
 	return &this->strafes.Tail();
 }
 
-f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist)
+f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist, i32 floorLevel)
 {
-	f32 addDist = 32.0f;
+	f32 dist = 32.0f;
 	if (this->jumpType == JumpType_LadderJump || disableAddDist)
 	{
-		addDist = 0.0f;
+		dist = 0.0f;
 	}
 	if (useDistbugFix)
 	{
-		return (this->adjustedLandingOrigin - this->adjustedTakeoffOrigin).Length2D() + addDist;
+		dist += (this->adjustedLandingOrigin - this->adjustedTakeoffOrigin).Length2D();
 	}
-	return (this->landingOrigin - this->takeoffOrigin).Length2D() + addDist;
+	else
+	{
+		dist += (this->landingOrigin - this->takeoffOrigin).Length2D();
+	}
+	return floorLevel < 0 ? dist : floor(dist * pow(10, floorLevel)) / pow(10, floorLevel);
 }
 
 // TODO
@@ -768,198 +763,6 @@ void KZJumpstatsService::EndJump()
 	}
 }
 
-void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
-{
-	jump->GetJumpPlayer()->languageService->PrintConsole(true, true, "Test", "str", 5, 12.2354);
-	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
-	{
-		return;
-	}
-
-	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	const char *jumpColor = distanceTierColors[tier];
-
-	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
-	{
-		CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
-		if (ent)
-		{
-			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-			if (player == jump->GetJumpPlayer())
-			{
-				// Do not broadcast to self.
-				continue;
-			}
-			bool broadcastEnabled = player->jumpstatsService->GetBroadcastMinTier() != DistanceTier_None;
-			bool validBroadcastTier = tier >= player->jumpstatsService->GetBroadcastMinTier();
-			if (broadcastEnabled && validBroadcastTier)
-			{
-				player->PrintChat(true, false, "%s {grey}jumped %s%.1f {grey}units with a {lime}%s {grey}[{purple}%s{grey}]",
-								  jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(),
-								  jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
-			}
-		}
-	}
-}
-
-void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
-{
-	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->jumpstatsService->GetSoundMinTier() > tier || tier <= DistanceTier_Meh
-		|| target->jumpstatsService->GetSoundMinTier() == DistanceTier_None)
-	{
-		return;
-	}
-
-	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[tier], 0.5f);
-}
-
-void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
-{
-	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	const char *jumpColor = distanceTierColors[color];
-	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
-	{
-		jumpColor = distanceTierColors[DistanceTier_Meh];
-	}
-
-	f32 flooredDist = floor(jump->GetDistance() * 10) / 10;
-
-	// clang-format off
-	jump->GetJumpPlayer()->PrintChat(true, true,
-		"%s%s{grey}: %s%.1f {grey}| {olive}%i {grey}Strafes | {olive}%.0f%% {grey}Sync | {olive}%.2f {grey}Pre | {olive}%.2f {grey}Max\n\
-		{grey}BA {olive}%.0f%% {grey}| OL {olive}%.0f%% {grey}| DA {olive}%.0f%% {grey}| {olive}%.1f {grey}Deviation | {olive}%.1f {grey}Width | {olive}%.2f {grey}Height",
-		jumpColor,
-		jumpTypeShortStr[jump->GetJumpType()],
-		jumpColor,
-		flooredDist,
-		jump->strafes.Count(),
-		jump->GetSync() * 100.0f,
-		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
-		jump->GetMaxSpeed(),
-		jump->GetBadAngles() * 100,
-		jump->GetOverlap() * 100,
-		jump->GetDeadAir() * 100,
-		jump->GetDeviation(),
-		jump->GetWidth(),
-		jump->GetMaxHeight()
-	);
-	// clang-format on
-}
-
-void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
-{
-	char invalidateReason[256] {};
-	if (jump->invalidateReason[0] != '\0')
-	{
-		V_snprintf(invalidateReason, sizeof(invalidateReason), "(%s)", jump->invalidateReason);
-	}
-
-	// clang-format off
-
-	jump->GetJumpPlayer()->PrintConsole(false, true,
-		"%s jumped %.4f units with a %s %s",
-		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
-		jump->GetDistance(),
-		jumpTypeStr[jump->GetJumpType()],
-		invalidateReason
-	);
-
-	jump->GetJumpPlayer()->PrintConsole(false, true,
-		"%s | %s | %i Strafes | %.1f%% Sync | %.2f Pre | %.2f Max | %.0f%% BA | %.0f%% OL | %.0f%% DA | %.2f Height",
-		jump->GetJumpPlayer()->modeService->GetModeShortName(),
-		jump->GetJumpPlayer()->styleService->GetStyleShortName(),
-		jump->strafes.Count(),
-		jump->GetSync() * 100.0f,
-		jump->GetTakeoffSpeed(),
-		jump->GetMaxSpeed(),
-		jump->GetBadAngles() * 100.0f,
-		jump->GetOverlap() * 100.0f,
-		jump->GetDeadAir() * 100.0f,
-		jump->GetMaxHeight()
-	);
-
-	jump->GetJumpPlayer()->PrintConsole(false, true,
-		"%.0f%% GainEff | %.3f Airpath | %.1f Deviation | %.1f Width | %.4f Airtime | %.1f Offset | %.2f/%.2f Crouched",
-		jump->GetGainEfficiency() * 100.0f,
-		jump->GetAirPath(),
-		jump->GetDeviation(),
-		jump->GetWidth(),
-		jump->GetJumpPlayer()->landingTimeActual - jump->GetJumpPlayer()->takeoffTime,
-		jump->GetOffset(),
-		jump->GetDuckTime(true),
-		jump->GetDuckTime(false)
-	);
-
-	jump->GetJumpPlayer()->PrintConsole(false, true,
-		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s",
-		"Sync",
-		"Gain",
-		"Loss",
-		"Max",
-		"Air",
-		"BA",
-		"OL",
-		"DA",
-		"AvgGain",
-		"GainEff",
-		"AngRatio(Avg/Med/Max)"
-	);
-
-	FOR_EACH_VEC(jump->strafes, i)
-	{
-		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
-		char badAngleString[16], overlapString[16], deadAirString[16], avgGainString[16], gainEffString[16];
-		char angRatioString[32];
-		V_snprintf(syncString, sizeof(syncString), "%.0f%%", jump->strafes[i].GetSync() * 100.0f);
-		V_snprintf(gainString, sizeof(gainString), "%.2f", jump->strafes[i].GetGain());
-		V_snprintf(externalGainString, sizeof(externalGainString), "(+%.2f)", fabs(jump->strafes[i].GetGain(true)));
-		V_snprintf(lossString, sizeof(lossString), "-%.2f", fabs(jump->strafes[i].GetLoss()));
-		V_snprintf(externalLossString, sizeof(externalLossString), "(-%.2f)", fabs(jump->strafes[i].GetLoss(true)));
-		V_snprintf(maxString, sizeof(maxString), "%.2f", jump->strafes[i].GetStrafeMaxSpeed());
-		V_snprintf(durationString, sizeof(durationString), "%.3f", jump->strafes[i].GetStrafeDuration());
-		V_snprintf(badAngleString, sizeof(badAngleString), "%.0f%%", jump->strafes[i].GetBadAngleDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
-		V_snprintf(overlapString, sizeof(overlapString), "%.0f%%", jump->strafes[i].GetOverlapDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
-		V_snprintf(deadAirString, sizeof(deadAirString), "%.0f%%", jump->strafes[i].GetDeadAirDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
-		V_snprintf(avgGainString, sizeof(avgGainString), "%.2f", jump->strafes[i].GetGain() / jump->strafes[i].GetStrafeDuration() * ENGINE_FIXED_TICK_INTERVAL);
-		V_snprintf(gainEffString, sizeof(gainEffString), "%.0f%%", jump->strafes[i].GetGain() / jump->strafes[i].GetMaxGain() * 100.0f);
-
-		if (jump->strafes[i].arStats.available)
-		{
-			V_snprintf(angRatioString, sizeof(angRatioString),
-				"%.2f/%.2f/%.2f",
-				jump->strafes[i].arStats.average,
-				jump->strafes[i].arStats.median,
-				jump->strafes[i].arStats.max
-			);
-		}
-		else
-		{
-			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
-		}
-
-		jump->GetJumpPlayer()->PrintConsole(false, true,
-			"%i.%5s %7s%-10s %7s%-10s %-7s %-8s %-4s %-4s %-4s %-7s %-7s %s",
-			i + 1,
-			syncString,
-			gainString,
-			externalGainString,
-			lossString,
-			externalLossString,
-			maxString,
-			durationString,
-			badAngleString,
-			overlapString,
-			deadAirString,
-			avgGainString,
-			gainEffString,
-			angRatioString
-		);
-	}
-
-	// clang-format on
-}
-
 void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 {
 	if (this->jumps.Count() > 0 && !this->jumps.Tail().AlreadyEnded())
@@ -992,13 +795,27 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 void KZJumpstatsService::ToggleJSAlways()
 {
 	this->jsAlways = !this->jsAlways;
-	this->player->PrintChat(true, false, "{grey}JSAlways %s.", this->jsAlways ? "enabled" : "disabled");
+	if (this->jsAlways)
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Always - Enable");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Always - Disable");
+	}
 }
 
 void KZJumpstatsService::ToggleJumpstatsReporting()
 {
 	this->showJumpstats = !this->showJumpstats;
-	this->player->PrintChat(true, false, "{grey}You have %s jumpstats reporting.", this->ShouldDisplayJumpstats() ? "enabled" : "disabled");
+	if (this->showJumpstats)
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Master Switch - Enable");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Master Switch - Disable");
+	}
 }
 
 void KZJumpstatsService::CheckValidMoveType()
@@ -1152,7 +969,7 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 {
 	if (!tierString || !V_stricmp("", tierString))
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint");
 		return;
 	}
 
@@ -1165,7 +982,7 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 
 	if (tier > DistanceTier_Wrecker || tier < DistanceTier_None)
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint");
 		return;
 	}
 
@@ -1175,14 +992,21 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 	}
 
 	this->broadcastMinTier = tier;
-	this->player->PrintChat(true, false, "{grey}Jumpstats minimum broadcast tier set to {default}%s.", tierString);
+	if (tier == 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response", tierString);
+	}
 }
 
 void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 {
 	if (!tierString || !V_stricmp("", tierString))
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Sound Tier - Hint");
 		return;
 	}
 
@@ -1195,7 +1019,7 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 
 	if (tier > DistanceTier_Wrecker || tier < DistanceTier_None)
 	{
-		this->player->PrintChat(true, false, "{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>.");
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Sound Tier - Hint");
 		return;
 	}
 
@@ -1205,7 +1029,14 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 	}
 
 	this->soundMinTier = tier;
-	this->player->PrintChat(true, false, "{grey}Jumpstats minimum sound tier set to {default}%s.", tierString);
+	if (tier == 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Sound Tier - Response", tierString);
+	}
 }
 
 internal SCMD_CALLBACK(Command_KzToggleJumpstats)

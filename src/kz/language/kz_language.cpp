@@ -73,12 +73,18 @@ const char *KZLanguageService::GetTranslatedFormat(const char *language, const c
 {
 	if (!translationKV->FindKey(phrase))
 	{
-		return NULL;
+		// META_CONPRINTF("Warning: Phrase '%s' not found, returning orignal message!\n", phrase);
+		return phrase;
 	}
 	const char *outFormat = translationKV->FindKey(phrase)->GetString(language);
 	if (outFormat[0] == '\0')
 	{
-		META_CONPRINTF("Warning: Phrase '%s' not found for language %s!\n", phrase, language);
+		if (!V_stricmp(language, "#format"))
+		{
+			// It is fine to have no format.
+			return NULL;
+		}
+		// META_CONPRINTF("Warning: Phrase '%s' not found for language %s!\n", phrase, language);
 		return translationKV->FindKey(phrase)->GetString(KZ_DEFAULT_LANGUAGE);
 	}
 	return outFormat;

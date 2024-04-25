@@ -19,7 +19,7 @@ public:
 	static_global const char *GetTranslatedFormat(const char *language, const char *phrase);
 
 private:
-	inline void ReplaceStringInPlace(std::string &subject, const std::string &search, const std::string &replace)
+	static_global inline void ReplaceStringInPlace(std::string &subject, std::string_view search, std::string_view replace)
 	{
 		size_t pos = 0;
 		while ((pos = subject.find(search, pos)) != std::string::npos)
@@ -30,7 +30,7 @@ private:
 	}
 
 	template<typename... Args>
-	std::string GetFormattedMessage(const char *input, const char *format, Args &&...args)
+	static_global std::string GetFormattedMessage(const char *input, const char *format, Args &&...args)
 	{
 		std::string inputStr = std::string(input);
 		const char *tokenStart = format;
@@ -38,6 +38,10 @@ private:
 		while (true)
 		{
 			const char *tokenEnd = strstr(tokenStart, ":");
+			if (!tokenEnd)
+			{
+				break;
+			}
 			const char *replaceStart = tokenEnd + 1;
 			const char *replaceEnd = strstr(replaceStart, ",");
 			if (!replaceEnd)
@@ -57,20 +61,21 @@ private:
 		return tfm::format(inputStr.c_str(), std::forward<Args>(args)...);
 	}
 
+public:
 	template<typename... Args>
-	std::string PrepareMessage(const char *message, Args &&...args)
+	static_global std::string PrepareMessage(const char *language, const char *message, Args &&...args)
 	{
-		const char *language = GetLanguage();
 		const char *paramFormat = GetTranslatedFormat("#format", message);
 		const char *msgFormat = GetTranslatedFormat(language, message);
 		if (!paramFormat)
 		{
 			// Just return the raw unformatted message if format can't be found.
-			return std::string(message);
+			return std::string(msgFormat);
 		}
 		return GetFormattedMessage(msgFormat, paramFormat, args...);
 	}
 
+private:
 	enum MessageType : u8
 	{
 		MESSAGE_CHAT,
@@ -83,7 +88,8 @@ private:
 	template<typename... Args>
 	static_global void PrintType(KZPlayer *player, bool addPrefix, MessageType type, const char *message, Args &&...args)
 	{
-		std::string msg = player->languageService->PrepareMessage(message, args...);
+		const char *language = player->languageService->GetLanguage();
+		std::string msg = PrepareMessage(language, message, args...);
 		switch (type)
 		{
 			case MESSAGE_CHAT:
@@ -135,6 +141,7 @@ public:
 		PrintSingle(this->player, addPrefix, includeSpectators, type, message, args...); \
 	}
 
+	// Note: Takes 8 '%' for every % printed for chat, 4 for console.
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintChat, MESSAGE_CHAT)
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintConsole, MESSAGE_CONSOLE)
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintCentre, MESSAGE_CENTRE)

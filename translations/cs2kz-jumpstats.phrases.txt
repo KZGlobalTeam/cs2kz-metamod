@@ -1,0 +1,273 @@
+"Phrases"
+{
+	// =====[ GENERAL ]=====
+	"Offset"
+	{
+		"en"		"Offset"
+		"chi"		"位移"
+		"ru"		"Сдвиг"
+	}
+	"Height"
+	{
+		"en"		"Height"
+		"chi"		"高度"
+		"ru"		"Высота"
+	}
+	"Pre"
+	{
+		"en"		"Pre"
+		"chi"		"地速"
+		"ru"		"Pre"
+	}
+	"Max"
+	{
+		"en"		"Max"
+		"chi"		"空速"
+		"ru"		"Макс."
+	}
+	"Strafes" // Plural
+	{
+		"en"		"Strafes"
+		"chi"		"加速"
+		"ru"		"Стрейфы"
+	}
+	"Strafe" // Singular
+	{
+		"en"		"Strafe"
+		"chi"		"加速"
+		"ru"		"Стрейф"
+	}
+	"Sync"
+	{
+		"en"		"Sync"
+		"chi"		"同步率"
+		"ru"		"Sync"
+	}
+	"Air"
+	{
+		"en"		"Air"
+		"ru"		"Air"
+	}
+	"Air Time"
+	{
+		"en"		"Airtime"
+		"chi"		"滞空"
+		"ru"		"Airtime"
+	}
+	"Block"
+	{
+		"en"		"Block"
+		"chi"		"板子"
+		"ru"		"Блок"
+	}
+	"Bad Angles (Short)"
+	{
+		"en"		"BA"
+	}
+	"Overlap (Short)"
+	{
+		"en"		"OL"
+		"chi"		"冲突"
+		"ru"		"OL"
+	}
+	"Dead Air (Short)"
+	{
+		"en"		"DA"
+		"chi"		"无操作"
+		"ru"		"DA"
+	}
+	"Edge"
+	{
+		"en"		"Edge"
+		"chi"		"边距"
+		"ru"		"Край"
+	}
+	"Deviation"
+	{
+		"en"		"Deviation"
+		"chi"		"偏移"
+		"ru"		"Отклонение"
+	}
+	"Width"
+	{
+		"en"		"Width"
+		"chi"		"幅度"
+		"ru"		"Ширина"
+	}
+	"Duck Time"
+	{
+		"en"		"Crouched"
+		"ru"		"Crouched"
+	}
+	"Gain Efficiency (Short)"
+	{
+		"en"		"GainEff"
+	}
+	"Air Path"
+	{
+		"en"		"Airpath"
+	}
+	"Angle Ratio"
+	{
+		"en"		"AngRatio(Avg/Med/Max)"
+	}
+	"Gain"
+	{
+		"en"		"Gain"
+	}
+	"Loss"
+	{
+		"en"		"Loss"
+	}
+	"Average Gain (Short)"
+	{
+		"en"		"AvgGain"
+	}
+
+	// =====[ INVALIDATION REASONS ]=====
+	"First jump"
+	{
+		"en"		"First jump"
+	}
+	"Invalid movetype change"
+	{
+		"en"		"Invalid movetype change"
+	}
+	"Invalid movetype"
+	{
+		"en"		"Invalid movetype"
+	}
+	"Just noclipped"
+	{
+		"en"		"Just noclipped"
+	}
+	"Invalid collisions"
+	{
+		"en"		"Invalid collisions"
+	}
+	"Base velocity detected"
+	{
+		"en"		"Base velocity detected"
+	}
+	"Invalid gains"
+	{
+		"en"		"Invalid gains"
+	}
+	"Externally modified"
+	{
+		"en"		"Externally modified"
+	}
+	"Edgebugged"
+	{
+		"en"		"Edgebugged"
+	}
+	"Teleported"
+	{
+		"en"		"Teleported"
+	}
+
+	// =====[OPTIONS]=====
+	"Jumpstats Option - Master Switch - Enable"
+	{
+		"en"		"{grey}You have enabled jumpstats reporting."
+		"chi"		"{grey}已开启起跳数据."
+		"ru"		"{grey}Вы включили отчеты по прыжкам."
+	}
+	"Jumpstats Option - Master Switch - Disable"
+	{
+		"en"		"{grey}You have disabled all jumpstats reporting."
+		"chi"		"{grey}已关闭起跳数据."
+		"ru"		"{grey}Вы отключили отчеты по прыжкам."
+	}
+	"Jumpstats Option - Jumpstats Always - Enable"
+	{
+		"en"		"{grey}You have enabled the always-on jumpstats."
+		"chi"		"{grey}你已开启 总是显示跳跃数据."
+		"ru"		"{grey}Вы включили постоянные отчеты по прыжкам."
+	}
+	"Jumpstats Option - Jumpstats Always - Disable"
+	{
+		"en"		"{grey}You have disabled the always-on jumpstats."
+		"chi"		"{grey}你已关闭 总是显示跳跃数据."
+		"ru"		"{grey}Вы отключили постоянные отчеты по прыжкам."
+	}
+	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
+	{
+		"en"		"{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+	}
+	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
+	{
+		"en"		"{grey}Jumpstats broadcasting disabled."
+	}
+	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
+	{
+		"#format"	"tier:s"
+		"en"		"{grey}Jumpstats broadcast threshold is now {default}{tier}."
+	}
+	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
+	{
+		"en"		"{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+	}
+	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
+	{
+		"en"		"{grey}Jumpstats sound effect disabled."
+	}
+	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
+	{
+		"#format"	"tier:s"
+		"en"		"{grey}Jumpstats sound effect threshold is now {default}{tier}."
+	}
+
+	"Broadcast Jumpstat Chat Report"
+	{
+		// zer0.k jumped 234.5 units with a Long Jump [VNL]
+		"#format"	"player:s,color:s,distance:.2f,jump_type:s,mode_short:s"
+		"en"		"{default}{player} {grey}jumped {color}{distance} {grey}units with a {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+	}
+	
+	"Jumpstats Report - Invalidation Reason"
+	{
+		// (Just noclipped)
+		"#format"	"reason:s"
+		"en"		"({reason})"
+	}
+	"Jumpstats Report - Chat Summary"
+	{
+		// LJ: 258.1 | 6 Strafes | 79% Sync | 275.81 Pre | 346.98 Max
+		// BA 13% | OL 3% | DA 4% | 3.1 Deviation | 37.2 Width | 55.83 Height
+		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,deviation:.1f,width:.1f,height:.2f"
+		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Width | {olive}{height} {grey}Height"
+	}
+	"Jumpstats Report - Console Summary"
+	{
+		// zer0.k jumped 280.3341 units with a Long Jump
+		"#format"	"player_name:s,distance:.4f,jump_type:s,invalidation_reason:s"
+		"en"		"{player_name} jumped {distance} units with a {jump_type} {invalidation_reason}"
+	}
+	"Jumpstat Report - Console Details 1"
+	{
+		// CKZ | NRM | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height
+		"#format"	"mode:s,style:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f"
+		"en"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+	}
+	"Jumpstat Report - Console Details 2"
+	{
+		// 57% GainEff | 1.048 Airpath | 17.7 Deviation | 43.1 Width | 0.8003 Airtime | -8.0 Offset | 0.12/0.12 Crouched
+		"#format"	"gain_eff:.0f,air_path:.3f,deviation:.1f,width:.1f,air_time:.4f,offset:.1f,duck_end_time:.2f,duck_total_time:.2f"
+		"en"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+	}
+	"Jumpstats Report - Strafe Report Header"
+	{
+		// #. Sync      Gain              Loss         Max     Air      BA   OL   DA   AvgGain GainEff AngRatio(Avg/Med/Max)
+		// Modify this to line up with the strafe report lines. It's not recommended to use the variables in #format.
+		"#format"	"sync_text:s,gain_text:s,loss_text:s,pre_text:s,max_text:s,air_time_text:s,bad_angles_text:s,overlap_text:s,dead_air_text:s,avg_gain_text:s,gain_eff_text:s,ang_ratio_text:s"
+		"en"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
+	}
+	"Jumpstats Report - Strafe Report"
+	{
+		// 2.  92%   13.67(+0.04)      -0.00(-0.00)    307.85  0.094    0%   0%   8%   2.28    76%     -0.12/-0.01/0.35
+		// Modify this to line up with the header. It's not recommended to use the variables in #format.
+		"#format"	"strafe_num:i,sync:s,gain:s,external_gain:s,loss:s,external_loss:s,max:s,duration:s,bad_angle:s,overlap:s,dead_air:s,avg_gain:s,gain_eff:s,ang_ratio:s"
+		"en"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
+	}
+}
