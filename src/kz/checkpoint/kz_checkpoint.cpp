@@ -2,6 +2,7 @@
 #include "kz_checkpoint.h"
 #include "../timer/kz_timer.h"
 #include "../noclip/kz_noclip.h"
+#include "../language/kz_language.h"
 #include "utils/utils.h"
 
 // TODO: replace printchat with HUD service's printchat
@@ -33,7 +34,7 @@ void KZCheckpointService::SetCheckpoint()
 	u32 flags = pawn->m_fFlags();
 	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
 	{
-		this->player->PrintChat(true, false, "{grey}Checkpoint unavailable in the air.");
+		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Midair)");
 		return;
 	}
 
@@ -51,7 +52,7 @@ void KZCheckpointService::SetCheckpoint()
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
-	this->player->PrintChat(true, false, "{grey}Checkpoint ({default}#%i{grey})", this->GetCheckpointCount());
+	this->player->languageService->PrintChat(true, false, "Make Checkpoint", this->GetCheckpointCount());
 	this->PlayCheckpointSound();
 }
 
@@ -59,7 +60,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 {
 	if (this->checkpoints.Count() <= 0)
 	{
-		this->player->PrintChat(true, false, "{grey}No checkpoints available.");
+		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
 		return;
 	}
 	this->DoTeleport(this->checkpoints[this->currentCpIndex]);
@@ -213,7 +214,7 @@ void KZCheckpointService::SetStartPosition()
 	CCSPlayerPawn *pawn = this->player->GetPawn();
 	if (!pawn)
 	{
-		this->player->PrintChat(true, false, "{grey}Failed to set your custom start position!");
+		this->player->languageService->PrintChat(true, false, "Can't Set Custom Start Position (Generic)");
 		return;
 	}
 	this->hasCustomStartPosition = true;
@@ -222,13 +223,13 @@ void KZCheckpointService::SetStartPosition()
 	this->customStartPosition.slopeDropHeight = pawn->m_flSlopeDropHeight();
 	this->customStartPosition.slopeDropOffset = pawn->m_flSlopeDropOffset();
 	this->customStartPosition.groundEnt = pawn->m_hGroundEntity();
-	this->player->PrintChat(true, false, "{grey}You have set your custom start position.");
+	this->player->languageService->PrintChat(true, false, "Set Custom Start Position");
 }
 
 void KZCheckpointService::ClearStartPosition()
 {
 	this->hasCustomStartPosition = false;
-	this->player->PrintChat(true, false, "{grey}You have cleared your custom start position.");
+	this->player->languageService->PrintChat(true, false, "Cleared Custom Start Position");
 }
 
 void KZCheckpointService::TpToStartPosition()

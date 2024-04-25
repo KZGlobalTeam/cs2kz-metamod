@@ -1,0 +1,96 @@
+"Phrases"
+{
+	"Make Checkpoint"
+	{
+		// You have made a checkpoint (#3).
+		"#format"	"checkpoint_count:d"
+		"en"		"{grey}You have made a checkpoint (#{default}{checkpoint_count}{grey})."
+		"chi"		"{grey}你存储了一个存点 (#{default}{checkpoint_count}{grey})."
+		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."
+	}
+	"Anti Checkpoint Area Warning"
+	{
+		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
+		"chi"		"{yellow}警告{grey}: 存点创建在禁用存点区域."
+	}
+	"Can't Checkpoint (Midair)"
+	{
+		"en"		"{darkred}You can't make a checkpoint mid-air."
+		"chi"		"{darkred}空中无法存点."
+		"ru"		"{darkred}Вы не можете поставить чекпойнт в воздухе."
+	}
+	"Can't Checkpoint (Just Landed)"
+	{
+		"en"		"{darkred}You can't make a checkpoint because you just landed."
+		"chi"		"{darkred}落地瞬间无法存点."
+		"ru"		"{darkred}Вы не можете поставить чекпойнт после приземления."
+	}
+	"Can't Checkpoint (Anti Checkpoint Area)"
+	{
+		"en"		"{darkred}You can't checkpoint because checkpoints are disabled in this area."
+		"chi"		"{darkred}此区域禁止存点."
+	}
+	"Can't Teleport (No Checkpoints)"
+	{
+		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
+		"chi"		"{darkred}你尚未存储任何存点,无法传送."
+		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
+	}
+	"Can't Teleport (Map)"
+	{
+		"en"		"{darkred}You can't teleport to your checkpoints in this area."
+		"chi"		"{darkred}在这个位置不能读点."
+		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпойнты здесь."
+	}
+	"Can't Prev CP (No Checkpoints)"
+	{
+		"en"		"{darkred}You have no checkpoints to go back to."
+		"chi"		"{darkred}你没有任何能退回的存点."
+		"ru"		"{darkred}У вас нет чекпойнтов, чтобы вернутся к ним."
+	}
+	"Can't Next CP (No Checkpoints)"
+	{
+		"en"		"{darkred}You have no checkpoints to go forward to."
+		"chi"		"{darkred}你没有任何能前进的存点."
+		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
+	}
+	"Can't Undo (No Teleports)"
+	{
+		"en"		"{darkred}You can't undo because there are no teleports to undo."
+		"chi"		"{darkred}你没有可以撤销的存点."
+		"ru"		"{darkred}У вас нет телепортов, которые можно отменить."
+	}
+	"Can't Undo (TP Was Midair)"
+	{
+		"en"		"{darkred}You can't undo because you teleported mid-air."
+		"chi"		"{darkred}在空中不能撤销存点."
+		"ru"		"{darkred}Вы не можете отменить, потому что телепортировались в воздухе."
+	}
+	"Can't Undo (Just Landed)"
+	{
+		"en"		"{darkred}You can't undo because you had just landed."
+		"chi"		"{darkred}落地瞬间无法撤销存点."
+		"ru"		"{darkred}Вы не можете отменить после приземления."
+	}
+	"Can't Undo (AntiCp)"
+	{
+		"en"		"{darkred}You can't undo because you teleported while in an anti-checkpoint zone."
+		"chi"		"{darkred}你无法撤销，因为你在禁止存点区域."
+	}
+	"Can't Set Custom Start Position (Generic)"
+	{
+		"en"		"{grey}Failed to set your custom start position!"
+	}
+	"Set Custom Start Position"
+	{
+		"en"		"{grey}You have set your custom start position."
+		"chi"		"{grey}你设定了自定义起始点."
+		"ru"		"{grey}Вы установили свою стартовую позицию."
+	}
+	"Cleared Custom Start Position"
+	{
+		"en"		"{grey}You have cleared your custom start position."
+		"chi"		"{grey}你清除了自定义起始点."
+		"ru"		"{grey}Вы очистили свою стартовую позицию."
+	}
+}
