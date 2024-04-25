@@ -1,0 +1,11 @@
+"Phrases"
+{
+	"Noclip - Enable"
+	{
+		"en"		"{grey}Noclip enabled."
+	}
+	"Noclip - Disable"
+	{
+		"en"		"{grey}Noclip disabled."
+	}
+}

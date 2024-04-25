@@ -1,6 +1,7 @@
 #include "kz_noclip.h"
 
 #include "../timer/kz_timer.h"
+#include "../language/kz_language.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -58,7 +59,14 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->noclipService->ToggleNoclip();
-	player->PrintChat(true, false, "{grey}Noclip %s.", player->noclipService->IsNoclipping() ? "enabled" : "disabled");
+	if (player->noclipService->IsNoclipping())
+	{
+		player->languageService->PrintChat(true, false, "Noclip - Enable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Noclip - Disable");
+	}
 	return MRES_SUPERCEDE;
 }
 
