@@ -65,6 +65,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	ismm->AddListener(this, this);
 
 	KZ::mode::DisableReplicatedModeCvars();
+	mappingapi::Initialize();
 
 	KZOptionService::InitOptions();
 	KZTipService::InitTips();
