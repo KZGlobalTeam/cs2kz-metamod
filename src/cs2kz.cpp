@@ -9,6 +9,7 @@
 #include "utils/gameconfig.h"
 
 #include "movement/movement.h"
+#include "movement/mv_mappingapi.h"
 #include "kz/kz.h"
 #include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"

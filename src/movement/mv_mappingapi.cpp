@@ -112,7 +112,7 @@ void mappingapi::Initialize()
 	
 }
 
-void mappingapi::OnSpawn(int nCount, const EntitySpawnInfo_t *pInfo)
+void mappingapi::OnSpawnPost(int nCount, const EntitySpawnInfo_t *pInfo)
 {
 	if (!pInfo)
 	{
