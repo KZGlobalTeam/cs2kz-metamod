@@ -67,7 +67,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	ismm->AddListener(this, this);
 
 	KZ::mode::DisableReplicatedModeCvars();
-	mappingapi::Initialize();
+	g_mappingInterface.Initialize();
 
 	KZOptionService::InitOptions();
 	KZTipService::InitTips();
@@ -190,6 +190,11 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	{
 		*ret = META_IFACE_OK;
 		return g_pKZUtils;
+	}
+	else if (strcmp(iface, KZ_MAPPING_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return &g_mappingInterface;
 	}
 	*ret = META_IFACE_FAILED;
 
