@@ -800,7 +800,7 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 // CEntitySystem
 static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo_DontUse)
 {
-	mappingapi::OnSpawn(nCount, pInfo);
+	g_mappingInterface.OnSpawnPost(nCount, pInfo);
 }
 
 // INetworkGameServer

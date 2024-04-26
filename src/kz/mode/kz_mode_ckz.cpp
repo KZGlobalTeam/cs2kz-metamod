@@ -13,6 +13,7 @@ KZClassicModePlugin g_KZClassicModePlugin;
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 KZModeManager *g_pModeManager = NULL;
+MappingInterface *g_pMappingInterface = NULL;
 ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService * { return new KZClassicModeService(player); };
 PLUGIN_EXPOSE(KZClassicModePlugin, g_KZClassicModePlugin);
 
@@ -31,6 +32,12 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 	if (success == META_IFACE_FAILED)
 	{
 		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_UTILS_INTERFACE);
+		return false;
+	}
+	g_pMappingInterface = (MappingInterface *)g_SMAPI->MetaFactory(KZ_MAPPING_INTERFACE, &success, 0);
+	if (success == META_IFACE_FAILED)
+	{
+		V_snprintf(error, maxlen, "Failed to find %s interface", KZ_MAPPING_INTERFACE);
 		return false;
 	}
 	modules::Initialize();
@@ -1094,7 +1101,7 @@ void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 // Only touch timer triggers on half ticks.
 bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 {
-	if (!mappingapi::IsTriggerATimerZone(trigger))
+	if (!g_pMappingInterface->IsTriggerATimerZone(trigger))
 	{
 		return true;
 	}
@@ -1109,7 +1116,7 @@ bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 
 bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
 {
-	if (!mappingapi::IsTriggerATimerZone(trigger))
+	if (!g_pMappingInterface->IsTriggerATimerZone(trigger))
 	{
 		return true;
 	}
@@ -1123,7 +1130,7 @@ bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
 
 bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 {
-	if (!mappingapi::IsTriggerATimerZone(trigger))
+	if (!g_pMappingInterface->IsTriggerATimerZone(trigger))
 	{
 		return true;
 	}
