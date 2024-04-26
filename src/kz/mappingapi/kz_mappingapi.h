@@ -1,10 +1,16 @@
+
 #pragma once
 
-namespace mappingapi
+#define KZ_MAPPING_INTERFACE "KZMappingInterface"
+
+class MappingInterface
 {
-	bool IsTriggerATimerZone(CBaseTrigger *trigger);
-	void Initialize();
-	void OnSpawnPost(int count, const EntitySpawnInfo_t *info);
-	void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
-	void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
-} // namespace mappingapi
+public:
+	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
+	virtual void Initialize();
+	virtual void OnSpawnPost(int count, const EntitySpawnInfo_t *info);
+	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
+	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
+};
+
+extern MappingInterface g_mappingInterface;
