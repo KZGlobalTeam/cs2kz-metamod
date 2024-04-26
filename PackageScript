@@ -13,8 +13,6 @@ mode_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'modes')
 mode_folder = builder.AddFolder(mode_folder_path)
 style_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'styles')
 style_folder = builder.AddFolder(style_folder_path)
-tips_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'tips')
-tips_folder = builder.AddFolder(tips_folder_path)
 translations_folder_path = os.path.join('addons', MMSPlugin.plugin_name, 'translations')
 translations_folder = builder.AddFolder(translations_folder_path)
 
@@ -68,8 +66,6 @@ builder.AddCopy(os.path.join(builder.buildPath, MMSPlugin.plugin_name + '.vdf'),
 builder.AddCopy(os.path.join(builder.buildPath, '../gamedata', 'cs2kz-core.games.txt'), gamedata_folder)
 for filename in os.listdir(os.path.join(builder.buildPath, '../cfg')):
   builder.AddCopy(os.path.join(builder.buildPath, '../cfg', filename), cfg_folder)
-for filename in os.listdir(os.path.join(builder.buildPath, '../tips')):
-  builder.AddCopy(os.path.join(builder.buildPath, '../tips', filename), tips_folder)
 for filename in os.listdir(os.path.join(builder.buildPath, '../translations')):
   builder.AddCopy(os.path.join(builder.buildPath, '../translations', filename), translations_folder)
 

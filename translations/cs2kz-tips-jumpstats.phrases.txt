@@ -1,10 +1,10 @@
 "Tips"
 {
-	"kz_togglejs"
+	"Tip - kz_togglejs"
 	{
 		"en"	"{grey}You can toggle jumpstats reporting by typing {default}/togglejs{grey}."
 	}
-	"kz_jsalways"
+	"Tip - kz_jsalways"
 	{
 		"en"	"{grey}Use {default}/jsalways {grey}to toggle always-on jumpstats mode."
 	}
