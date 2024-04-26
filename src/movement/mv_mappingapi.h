@@ -3,5 +3,5 @@
 namespace mappingapi
 {
 	void Initialize();
-	void OnSpawnPost(int nCount, const EntitySpawnInfo_t *pInfo);
+	void OnSpawnPost(int count, const EntitySpawnInfo_t *info);
 } // namespace mappingapi
