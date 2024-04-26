@@ -72,9 +72,9 @@ internal SCMD_CALLBACK(Command_KzNoclip)
 
 void KZNoclipService::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_noclip", Command_KzNoclip, "Toggle noclip.");
-	scmd::RegisterCmd("kz_nc", Command_KzNoclip, "Toggle noclip.");
-	scmd::RegisterCmd("noclip", Command_KzNoclip, "Toggle noclip.");
+	scmd::RegisterCmd("kz_noclip", Command_KzNoclip);
+	scmd::RegisterCmd("kz_nc", Command_KzNoclip);
+	scmd::RegisterCmd("noclip", Command_KzNoclip);
 }
 
 void KZNoclipService::HandleMoveCollision()

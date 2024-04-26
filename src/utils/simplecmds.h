@@ -15,7 +15,7 @@ class CCSPlayerController;
 namespace scmd
 {
 	typedef SCMD_CALLBACK(Callback_t);
-	bool RegisterCmd(const char *name, Callback_t *callback, const char *description = nullptr, bool hidden = false);
+	bool RegisterCmd(const char *name, Callback_t *callback, bool hidden = false);
 	bool UnregisterCmd(const char *name);
 
 	META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);

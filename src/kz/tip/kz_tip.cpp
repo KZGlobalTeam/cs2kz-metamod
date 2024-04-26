@@ -83,7 +83,7 @@ internal SCMD_CALLBACK(Command_KzToggleTips)
 
 void KZTipService::InitTips()
 {
-	scmd::RegisterCmd("kz_tips", Command_KzToggleTips, "Toggle tips.");
+	scmd::RegisterCmd("kz_tips", Command_KzToggleTips);
 	LoadTips();
 	ShuffleTips();
 	tipTimer = StartTimer(PrintTips, true);

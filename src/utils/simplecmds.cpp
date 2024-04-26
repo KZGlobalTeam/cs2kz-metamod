@@ -3,19 +3,18 @@
 #include "utils/utils.h"
 #include "simplecmds.h"
 #include "../kz/kz.h"
-#include "tier0/memdbgon.h"
+#include "../kz/language/kz_language.h"
 #include "../kz/option/kz_option.h"
 
+#include "tier0/memdbgon.h"
 // private structs
-#define SCMD_MAX_NAME_LEN        128
-#define SCMD_MAX_DESCRIPTION_LEN 1024
+#define SCMD_MAX_NAME_LEN 128
 
 struct Scmd
 {
 	bool hasConsolePrefix;
 	i32 nameLength;
 	char name[SCMD_MAX_NAME_LEN];
-	char description[SCMD_MAX_DESCRIPTION_LEN];
 	scmd::Callback_t *callback;
 	bool hidden;
 };
@@ -32,11 +31,8 @@ internal bool g_coreCmdsRegistered = false;
 internal SCMD_CALLBACK(Command_KzHelp)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->PrintChat(true, false, "Look in your console for a list of commands!");
-	player->PrintConsole(false, false,
-						 "To use these commands, you can type \"bind <key> %s<command name>\" in your console, or type !<command name> or /<command "
-						 "name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\"",
-						 SCMD_CONSOLE_PREFIX);
+	player->languageService->PrintChat(true, false, "Command Help Response (Chat)");
+	player->languageService->PrintConsole(false, false, "Command Help Response (Console)");
 	Scmd *cmds = g_cmdManager.cmds;
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
@@ -44,7 +40,10 @@ internal SCMD_CALLBACK(Command_KzHelp)
 		{
 			continue;
 		}
-		player->PrintConsole(false, false, "%s: %s", cmds[i].name, cmds[i].description);
+		char descriptionKey[152] {}; // About the max length of a command plus the keyword
+		V_snprintf(descriptionKey, sizeof(descriptionKey), "Command Description - %s", cmds[i].name);
+		player->PrintConsole(false, false, "%s: %s", cmds[i].name,
+							 KZLanguageService::PrepareMessage(player->languageService->GetLanguage(), descriptionKey).c_str());
 	}
 	return MRES_SUPERCEDE;
 }
@@ -53,10 +52,10 @@ internal void RegisterCoreCmds()
 {
 	g_coreCmdsRegistered = true;
 
-	scmd::RegisterCmd("kz_help", Command_KzHelp, "Show this help message.");
+	scmd::RegisterCmd("kz_help", Command_KzHelp);
 }
 
-bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *description /* = nullptr*/, bool hidden)
+bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, bool hidden)
 {
 	Assert(name);
 	Assert(callback);
@@ -109,9 +108,8 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 	}
 
 	// Command name is unique!
-	Scmd cmd = {hasConPrefix, nameLength, "", "", callback, hidden};
+	Scmd cmd = {hasConPrefix, nameLength, "", callback, hidden};
 	V_snprintf(cmd.name, SCMD_MAX_NAME_LEN, "%s", name);
-	V_snprintf(cmd.description, SCMD_MAX_DESCRIPTION_LEN, "%s", description);
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
 	return true;
 }

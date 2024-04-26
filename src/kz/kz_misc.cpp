@@ -95,12 +95,12 @@ internal SCMD_CALLBACK(Command_JoinTeam)
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs, "Hide your legs in first person.");
-	scmd::RegisterCmd("kz_hide", Command_KzHide, "Hide other players.");
-	scmd::RegisterCmd("kz_restart", Command_KzRestart, "Restart.");
-	scmd::RegisterCmd("kz_r", Command_KzRestart, "Restart.");
-	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
-	scmd::RegisterCmd("jointeam", Command_JoinTeam, "Jointeam interceptor", true);
+	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs);
+	scmd::RegisterCmd("kz_hide", Command_KzHide);
+	scmd::RegisterCmd("kz_restart", Command_KzRestart);
+	scmd::RegisterCmd("kz_r", Command_KzRestart);
+	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
+	scmd::RegisterCmd("jointeam", Command_JoinTeam, true);
 	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 	KZCheckpointService::RegisterCommands();
 	KZJumpstatsService::RegisterCommands();

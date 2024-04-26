@@ -178,5 +178,5 @@ internal SCMD_CALLBACK(Command_KzPanel)
 
 void KZHUDService::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_panel", Command_KzPanel, "Toggle Panel display.");
+	scmd::RegisterCmd("kz_panel", Command_KzPanel);
 }

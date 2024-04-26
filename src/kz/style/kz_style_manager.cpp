@@ -204,5 +204,5 @@ internal SCMD_CALLBACK(Command_KzStyle)
 
 void KZ::style::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_style", Command_KzStyle, "List or change style.");
+	scmd::RegisterCmd("kz_style", Command_KzStyle);
 }

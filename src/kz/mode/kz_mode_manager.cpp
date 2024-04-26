@@ -305,5 +305,5 @@ internal SCMD_CALLBACK(Command_KzModeShort)
 
 void KZ::mode::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_mode", Command_KzMode, "List or change mode.");
+	scmd::RegisterCmd("kz_mode", Command_KzMode);
 }

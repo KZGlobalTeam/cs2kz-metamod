@@ -1069,9 +1069,9 @@ internal SCMD_CALLBACK(Command_KzJsSoundMinTier)
 
 void KZJumpstatsService::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_jsbroadcast", Command_KzJsPrintMinTier, "Change Jumpstats minimum broadcast tier.");
-	scmd::RegisterCmd("kz_jssound", Command_KzJsSoundMinTier, "Change jumpstats sound effect minimum play tier.");
-	scmd::RegisterCmd("kz_togglestats", Command_KzToggleJumpstats, "Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_togglejs", Command_KzToggleJumpstats, "Change Jumpstats print type.");
-	scmd::RegisterCmd("kz_jsalways", Command_KzJSAlways, "Print jumpstats for invalid jumps.");
+	scmd::RegisterCmd("kz_jsbroadcast", Command_KzJsPrintMinTier);
+	scmd::RegisterCmd("kz_jssound", Command_KzJsSoundMinTier);
+	scmd::RegisterCmd("kz_togglestats", Command_KzToggleJumpstats);
+	scmd::RegisterCmd("kz_togglejs", Command_KzToggleJumpstats);
+	scmd::RegisterCmd("kz_jsalways", Command_KzJSAlways);
 }

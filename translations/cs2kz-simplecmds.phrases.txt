@@ -1,0 +1,150 @@
+"Phrases"
+{
+	"Command Help Response (Chat)"
+	{
+		"en"		"{grey}Look in your console for a list of commands!"
+	}
+	"Command Help Response (Console)"
+	{
+		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
+	}
+	
+	// Commands
+	"Command Description - kz_checkpoint"
+	{
+		"en"		"Set a checkpoint on ground or on a ladder."
+	}
+	"Command Description - kz_cp"
+	{
+		"en"		"Set a checkpoint on ground or on a ladder."
+	}
+	"Command Description - kz_teleport"
+	{
+		"en"		"Teleport to the current checkpoint."
+	}
+	"Command Description - kz_tp"
+	{
+		"en"		"Teleport to the current checkpoint."
+	}
+	"Command Description - kz_prevcp"
+	{
+		"en"		"Teleport to the last checkpoint."
+	}
+	"Command Description - kz_pcp"
+	{
+		"en"		"Teleport to the last checkpoint."
+	}
+	"Command Description - kz_nextcp"
+	{
+		"en"		"Teleport to the next checkpoint."
+	}
+	"Command Description - kz_ncp"
+	{
+		"en"		"Teleport to the next checkpoint."
+	}
+	"Command Description - kz_setstartpos"
+	{
+		"en"		"Set your custom start position to your current position."
+	}
+	"Command Description - kz_ssp"
+	{
+		"en"		"Set your custom start position to your current position."
+	}
+	"Command Description - kz_clearstartpos"
+	{
+		"en"		"Clear your custom start position."
+	}
+	"Command Description - kz_csp"
+	{
+		"en"		"Clear your custom start position."
+	}
+	"Command Description - kz_panel"
+	{
+		"en"		"Toggle centre panel display."
+	}
+	"Command Description - kz_jsbroadcast"
+	{
+		"en"		"Change jumpstats minimum threshold for broadcasting."
+	}
+	"Command Description - kz_jssound"
+	{
+		"en"		"Change jumpstats minimum threshold for sound effects."
+	}
+	"Command Description - kz_togglestats"
+	{
+		"en"		"Toggle jumpstats reporting."
+	}
+	"Command Description - kz_togglejs"
+	{
+		"en"		"Toggle jumpstats reporting."
+	}
+	"Command Description - kz_jsalways"
+	{
+		"en"		"Toggle the always-on jumpstats."
+	}
+	"Command Description - kz_mode"
+	{
+		"en"		"List or change mode."
+	}
+	"Command Description - kz_noclip"
+	{
+		"en"		"Toggle noclip."
+	}
+	"Command Description - kz_nc"
+	{
+		"en"		"Toggle noclip."
+	}
+	"Command Description - noclip"
+	{
+		"en"		"Toggle noclip."
+	}
+	"Command Description - kz_spec"
+	{
+		"en"		"Spectate a player."
+	}
+	"Command Description - kz_style"
+	{
+		"en"		"List or change style."
+	}
+	"Command Description - kz_stop"
+	{
+		"en"		"Stop timer."
+	}
+	"Command Description - kz_pause"
+	{
+		"en"		"Toggle timer pause."
+	}
+	"Command Description - kz_tips"
+	{
+		"en"		"Toggle tips."
+	}
+	"Command Description - kz_hidelegs"
+	{
+		"en"		"Hide your legs in first person."
+	}
+	"Command Description - kz_hide"
+	{
+		"en"		"Hide other players."
+	}
+	"Command Description - kz_restart"
+	{
+		"en"		"Restart."
+	}
+	"Command Description - kz_r"
+	{
+		"en"		"Restart."
+	}
+	"Command Description - kz_hideweapon"
+	{
+		"en"		"Hide weapon viewmodel."
+	}
+	"Command Description - jointeam"
+	{
+		// Hidden to users.
+		"en"		"Jointeam interceptor."
+	}
+	"Command Description - kz_help"
+	{
+		"en"		"Show this help message."
+	}
+}
