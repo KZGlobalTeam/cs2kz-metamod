@@ -1,5 +1,6 @@
 #pragma once
 #include "../kz.h"
+#include "movement/mv_mappingapi.h"
 #include "../jumpstats/kz_jumpstats.h"
 #include "UtlStringMap.h"
 

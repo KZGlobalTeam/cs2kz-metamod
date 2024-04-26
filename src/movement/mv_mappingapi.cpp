@@ -1,4 +1,5 @@
 
+#include "kz/kz.h"
 #include "movement.h"
 #include "mv_mappingapi.h"
 #include "entity2/entitykeyvalues.h"
@@ -16,11 +17,13 @@ enum MvTriggerType
 	MVTRIGGER_RESET_CHECKPOINTS,
 	MVTRIGGER_SINGLE_BHOP_RESET,
 	MVTRIGGER_ANTI_BHOP,
+
 	MVTRIGGER_ZONE_START,
 	MVTRIGGER_ZONE_END,
 	MVTRIGGER_ZONE_SPLIT,
 	MVTRIGGER_ZONE_CHECKPOINT,
 	MVTRIGGER_ZONE_STAGE,
+
 	MVTRIGGER_TELEPORT,
 	MVTRIGGER_MULTI_BHOP,
 	MVTRIGGER_SINGLE_BHOP,
@@ -31,9 +34,10 @@ enum MvTriggerType
 struct MvTrigger
 {
 	MvTriggerType type;
+	CEntityHandle entity;
 
 	// MVTRIGGER_MODIFIER
-	struct
+	struct Modifier
 	{
 		bool disablePausing;
 		bool disableCheckpoints;
@@ -43,24 +47,21 @@ struct MvTrigger
 	} modifier;
 
 	// MVTRIGGER_ANTI_BHOP
-	struct
+	struct Antibhop
 	{
 		f32 time;
 	} antibhop;
 
-	// MVTRIGGER_ZONE_* (including MVTRIGGER_ZONE_STAGE)
-	struct
+	// MVTRIGGER_ZONE_*
+	struct Zone
 	{
 		char courseDescriptor[128];
+		i32 courseIndex; // determined at runtime
+		// only used with stage zone!
+		i32 stageNumber;
 	} zone;
 
-	// MVTRIGGER_ZONE_STAGE
-	struct
-	{
-		i32 number;
-	} stageZone;
-
-	struct
+	struct Teleport
 	{
 		char destination[128];
 		f32 delay;
@@ -75,6 +76,7 @@ struct MvCourseDescriptor
 {
 	char name[128];
 	bool disableCheckpoints;
+	CEntityHandle entity;
 };
 
 internal struct
@@ -112,8 +114,9 @@ internal MvCourseDescriptor *Mapi_NewCourse()
 	return result;
 }
 
-internal void Mapi_OnTriggerMultipleSpawn(const CEntityKeyValues *ekv)
+internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 {
+	const CEntityKeyValues *ekv = info->m_pKeyValues;
 	MvTriggerType type = (MvTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, MVTRIGGER_DISABLED);
 
 	if (type <= MVTRIGGER_DISABLED || type >= MVTRIGGER_COUNT)
@@ -131,6 +134,7 @@ internal void Mapi_OnTriggerMultipleSpawn(const CEntityKeyValues *ekv)
 		return;
 	}
 
+	trigger->entity = info->m_pEntity->GetRefEHandle();
 	switch (type)
 	{
 		case MVTRIGGER_MODIFIER:
@@ -161,7 +165,11 @@ internal void Mapi_OnTriggerMultipleSpawn(const CEntityKeyValues *ekv)
 
 			if (type == MVTRIGGER_ZONE_STAGE)
 			{
-				trigger->stageZone.number = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
+				trigger->zone.stageNumber = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
+			}
+			else
+			{
+				trigger->zone.stageNumber = INVALID_STAGE_NUMBER;
 			}
 		}
 		break;
@@ -186,39 +194,11 @@ internal void Mapi_OnTriggerMultipleSpawn(const CEntityKeyValues *ekv)
 		default:
 			break;
 	}
-
-#if 0
-	FOR_EACH_ENTITYKEY(ekv, iter)
-	{
-		auto kv = ekv->GetKeyValue(iter);
-		if (!kv)
-		{
-			continue;
-		}
-		CBufferStringGrowable<128> bufferStr;
-		const char *key = ekv->GetEntityKeyId(iter).GetString();
-		const char *value = kv->ToString(bufferStr);
-		Msg("\t%s: %s\n", key, value);
-	}
-#endif
 }
 
-internal void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
+internal void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 {
-#if 1
-	FOR_EACH_ENTITYKEY(ekv, iter)
-	{
-		auto kv = ekv->GetKeyValue(iter);
-		if (!kv)
-		{
-			continue;
-		}
-		CBufferStringGrowable<128> bufferStr;
-		const char *key = ekv->GetEntityKeyId(iter).GetString();
-		const char *value = kv->ToString(bufferStr);
-		Msg("\t%s: %s\n", key, value);
-	}
-#endif
+	const CEntityKeyValues *ekv = info->m_pKeyValues;
 
 	if (!ekv->GetBool(KEY_IS_COURSE_DESCRIPTOR))
 	{
@@ -232,15 +212,109 @@ internal void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
 		return;
 	}
 
+	course->entity = info->m_pEntity->GetRefEHandle();
 	const char *name = ekv->GetString("timer_course_name");
 	V_snprintf(course->name, sizeof(course->name), "%s", name);
 	course->disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
+}
+
+internal MvTrigger *FindMvTrigger(CBaseTrigger *trigger)
+{
+	MvTrigger *result = nullptr;
+	if (!trigger->m_pEntity)
+	{
+		return result;
+	}
+
+	CEntityHandle triggerHandle = trigger->GetRefEHandle();
+	if (!trigger || !triggerHandle.IsValid() || trigger->m_pEntity->m_flags & EF_IS_INVALID_EHANDLE)
+	{
+		return result;
+	}
+
+	for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
+	{
+		if (triggerHandle == g_mappingApi.triggers[i].entity)
+		{
+			result = &g_mappingApi.triggers[i];
+			break;
+		}
+	}
+
+	return result;
+}
+
+bool mappingapi::IsTriggerATimerZone(CBaseTrigger *trigger)
+{
+	MvTrigger *mvTrigger = FindMvTrigger(trigger);
+	if (!mvTrigger)
+	{
+		return false;
+	}
+	static_assert(MVTRIGGER_ZONE_START == 5 && MVTRIGGER_ZONE_STAGE == 9,
+				  "Don't forget to change this function when changing the MvTriggerType enum!!!");
+	return mvTrigger->type >= MVTRIGGER_ZONE_START && mvTrigger->type <= MVTRIGGER_ZONE_STAGE;
 }
 
 void mappingapi::Initialize()
 {
 	g_mappingApi.triggerCount = 0;
 	g_mappingApi.courseCount = 0;
+}
+
+void mappingapi::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
+{
+	MvTrigger *touched = FindMvTrigger(trigger);
+	if (!touched)
+	{
+		return;
+	}
+
+	switch (touched->type)
+	{
+		case MVTRIGGER_ZONE_START:
+		{
+			player->StartZoneStartTouch();
+		}
+		break;
+
+		case MVTRIGGER_ZONE_END:
+		{
+			player->EndZoneStartTouch();
+		}
+		break;
+		// TODO:
+		case MVTRIGGER_ZONE_SPLIT:
+		case MVTRIGGER_ZONE_CHECKPOINT:
+		case MVTRIGGER_ZONE_STAGE:
+		default:
+			break;
+	}
+}
+
+void mappingapi::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger)
+{
+	MvTrigger *touched = FindMvTrigger(trigger);
+	if (!touched)
+	{
+		return;
+	}
+
+	switch (touched->type)
+	{
+		case MVTRIGGER_ZONE_START:
+		{
+			player->StartZoneEndTouch();
+		}
+		break;
+
+		// TODO:
+		case MVTRIGGER_ZONE_SPLIT:
+		case MVTRIGGER_ZONE_CHECKPOINT:
+		case MVTRIGGER_ZONE_STAGE:
+		default:
+			break;
+	}
 }
 
 void mappingapi::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
@@ -261,11 +335,11 @@ void mappingapi::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 		Msg("spawned classname %s\n", classname);
 		if (V_stricmp(classname, "trigger_multiple") == 0)
 		{
-			Mapi_OnTriggerMultipleSpawn(ekv);
+			Mapi_OnTriggerMultipleSpawn(&info[i]);
 		}
 		else if (V_stricmp(classname, "info_target_server_only") == 0)
 		{
-			Mapi_OnInfoTargetSpawn(ekv);
+			Mapi_OnInfoTargetSpawn(&info[i]);
 		}
 	}
 }
