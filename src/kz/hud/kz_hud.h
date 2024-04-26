@@ -23,7 +23,7 @@ public:
 	virtual void Reset() override;
 	static_global void Init();
 	static_global void RegisterCommands();
-	void DrawSpeedPanel();
+	void DrawPanels(KZPlayer *target);
 
 	void TogglePanel();
 
@@ -41,8 +41,8 @@ public:
 	}
 
 private:
-	void AddSpeedText(char *buffer, int size);
-	void AddKeyText(char *buffer, int size);
-	void AddTeleText(char *buffer, int size);
-	void AddTimerText(char *buffer, int size);
+	std::string GetSpeedText(const char *language = KZ_DEFAULT_LANGUAGE);
+	std::string GetKeyText(const char *language = KZ_DEFAULT_LANGUAGE);
+	std::string GetCheckpointText(const char *language = KZ_DEFAULT_LANGUAGE);
+	std::string GetTimerText(const char *language = KZ_DEFAULT_LANGUAGE);
 };

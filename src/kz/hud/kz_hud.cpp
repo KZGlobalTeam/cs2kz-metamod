@@ -5,10 +5,12 @@
 #include "utils/simplecmds.h"
 
 #include "../timer/kz_timer.h"
-#include "tier0/memdbgon.h"
-
+#include "../language/kz_language.h"
 #include "../checkpoint/kz_checkpoint.h"
 
+#include "tier0/memdbgon.h"
+
+#define HUD_ON_GROUND_THRESHOLD 0.07f
 internal KZHUDServiceTimerEventListener timerEventListener;
 
 void KZHUDService::Init()
@@ -23,72 +25,54 @@ void KZHUDService::Reset()
 	this->currentTimeWhenTimerStopped = {};
 }
 
-void KZHUDService::AddSpeedText(char *buffer, int size)
+std::string KZHUDService::GetSpeedText(const char *language)
 {
-	char speed[128];
-	speed[0] = 0;
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
-	if ((this->player->GetPawn()->m_fFlags & FL_ONGROUND && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > 0.07)
+	if ((this->player->GetPawn()->m_fFlags & FL_ONGROUND
+		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > HUD_ON_GROUND_THRESHOLD)
 		|| (this->player->GetPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{
-		snprintf(speed, sizeof(speed), "Speed: %.0f", velocity.Length2D());
+		return KZLanguageService::PrepareMessage(language, "HUD - Speed Text", velocity.Length2D());
 	}
-	else
-	{
-		snprintf(speed, sizeof(speed), "Speed: %.0f (%.0f)", velocity.Length2D(), this->player->takeoffVelocity.Length2D());
-	}
-	V_strncat(buffer, speed, size);
+	return KZLanguageService::PrepareMessage(language, "HUD - Speed Text (Takeoff)", velocity.Length2D(), this->player->takeoffVelocity.Length2D());
 }
 
-void KZHUDService::AddKeyText(char *buffer, int size)
+std::string KZHUDService::GetKeyText(const char *language)
 {
-	char keys[128];
-	keys[0] = 0;
-
 	// clang-format off
 
-	snprintf(keys, sizeof(keys),
-		"Keys: %s %s %s %s %s %s",
-		this->player->IsButtonPressed(IN_MOVELEFT) ? "A" : "_",
-		this->player->IsButtonPressed(IN_FORWARD) ? "W" : "_",
-		this->player->IsButtonPressed(IN_BACK) ? "S" : "_",
-		this->player->IsButtonPressed(IN_MOVERIGHT) ? "D" : "_",
-		this->player->IsButtonPressed(IN_DUCK) ? "C" : "_",
-		this->player->IsButtonPressed(IN_JUMP) ? "J" : "_"
+	return KZLanguageService::PrepareMessage(language, "HUD - Key Text",
+		this->player->IsButtonPressed(IN_MOVELEFT) ? 'A' : '_',
+		this->player->IsButtonPressed(IN_FORWARD) ? 'W' : '_',
+		this->player->IsButtonPressed(IN_BACK) ? 'S' : '_',
+		this->player->IsButtonPressed(IN_MOVERIGHT) ? 'D' : '_',
+		this->player->IsButtonPressed(IN_DUCK) ? 'C' : '_',
+		this->player->IsButtonPressed(IN_JUMP) ? 'J' : '_'
 	);
 
 	// clang-format on
-
-	V_strncat(buffer, keys, size);
 }
 
-void KZHUDService::AddTeleText(char *buffer, int size)
+std::string KZHUDService::GetCheckpointText(const char *language)
 {
-	char tele[128];
-	tele[0] = 0;
-
 	// clang-format off
 
-	snprintf(tele, sizeof(tele),
-		"CP: %i/%i TPs: %i",
+	return KZLanguageService::PrepareMessage(language, "HUD - Checkpoint Text",
 		this->player->checkpointService->GetCurrentCpIndex(),
 		this->player->checkpointService->GetCheckpointCount(),
 		this->player->checkpointService->GetTeleportCount()
 	);
 
 	// clang-format on
-
-	V_strncat(buffer, tele, size);
 }
 
-void KZHUDService::AddTimerText(char *buffer, int size)
+std::string KZHUDService::GetTimerText(const char *language)
 {
-	char timer[128];
 	if (this->player->timerService->GetTimerRunning() || this->ShouldShowTimerAfterStop())
 	{
-		V_strncat(buffer, "\n", size);
+		char timeText[128];
 
 		// clang-format off
 
@@ -96,41 +80,59 @@ void KZHUDService::AddTimerText(char *buffer, int size)
 			? player->timerService->GetTime()
 			: this->currentTimeWhenTimerStopped;
 
-		// clang-format on
 
-		KZTimerService::FormatTime(time, timer, sizeof(timer));
-		V_strncat(buffer, timer, size);
-		if (!player->timerService->GetTimerRunning())
-		{
-			V_strncat(buffer, " (STOPPED)", size);
-		}
-		if (player->timerService->GetPaused())
-		{
-			V_strncat(buffer, " (PAUSED)", size);
-		}
+		KZTimerService::FormatTime(time, timeText, sizeof(timeText));
+		return KZLanguageService::PrepareMessage(language, "HUD - Timer Text",
+			timeText,
+			player->timerService->GetTimerRunning() ? "" : KZLanguageService::PrepareMessage(language, "HUD - Stopped Text").c_str(),
+			player->timerService->GetPaused() ? KZLanguageService::PrepareMessage(language, "HUD - Paused Text").c_str() : ""
+		);
+		// clang-format on
 	}
+	return std::string("");
 }
 
-void KZHUDService::DrawSpeedPanel()
+void KZHUDService::DrawPanels(KZPlayer *target)
 {
 	if (!this->IsShowingPanel())
 	{
 		return;
 	}
-
+	const char *language = target->languageService->GetLanguage();
 	char buffer[1024];
 	buffer[0] = 0;
+	std::string keyText = this->GetKeyText(language);
+	std::string checkpointText = this->GetCheckpointText(language);
+	std::string timerText = this->GetTimerText(language);
+	std::string speedText = this->GetSpeedText(language);
 
-	this->AddTeleText(buffer, sizeof(buffer));
-	this->AddTimerText(buffer, sizeof(buffer));
-	this->player->PrintCentre(false, true, buffer);
-	buffer[0] = 0;
+	// clang-format off
+	std::string centerText = KZLanguageService::PrepareMessage(language, "HUD - Center Text", 
+		keyText.c_str(), checkpointText.c_str(), timerText.c_str(), speedText.c_str());
+	std::string alertText = KZLanguageService::PrepareMessage(language, "HUD - Alert Text", 
+		keyText.c_str(), checkpointText.c_str(), timerText.c_str(), speedText.c_str());
+	std::string htmlText = KZLanguageService::PrepareMessage(language, "HUD - Html Center Text",
+		keyText.c_str(), checkpointText.c_str(), timerText.c_str(), speedText.c_str());
 
-	this->AddSpeedText(buffer, sizeof(buffer));
-	V_strncat(buffer, "\n", sizeof(buffer));
-	this->AddKeyText(buffer, sizeof(buffer));
+	// clang-format on
 
-	this->player->PrintAlert(false, true, buffer);
+	centerText = centerText.substr(0, centerText.find_last_not_of('\n') + 1);
+	alertText = alertText.substr(0, alertText.find_last_not_of('\n') + 1);
+	htmlText = htmlText.substr(0, htmlText.find_last_not_of('\n') + 1);
+
+	// Remove trailing newlines just in case a line is empty.
+	if (!centerText.empty())
+	{
+		target->PrintCentre(false, true, centerText.c_str());
+	}
+	if (!alertText.empty())
+	{
+		target->PrintAlert(false, true, alertText.c_str());
+	}
+	if (!htmlText.empty())
+	{
+		target->PrintHTMLCentre(false, true, htmlText.c_str());
+	}
 }
 
 void KZHUDService::TogglePanel()
@@ -163,7 +165,14 @@ internal SCMD_CALLBACK(Command_KzPanel)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->hudService->TogglePanel();
-	player->PrintChat(true, false, "{grey}Your centre information panel has been %s.", player->hudService->IsShowingPanel() ? "enabled" : "disabled");
+	if (player->hudService->IsShowingPanel())
+	{
+		player->languageService->PrintChat(true, false, "HUD Option - Info Panel - Enable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "HUD Option - Info Panel - Disable");
+	}
 	return MRES_SUPERCEDE;
 }
 

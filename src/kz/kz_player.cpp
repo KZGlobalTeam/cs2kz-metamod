@@ -114,7 +114,14 @@ void KZPlayer::OnProcessMovement()
 
 void KZPlayer::OnProcessMovementPost()
 {
-	this->hudService->DrawSpeedPanel();
+	if (this->specService->GetSpectatedPlayer())
+	{
+		this->specService->GetSpectatedPlayer()->hudService->DrawPanels(this);
+	}
+	else
+	{
+		this->hudService->DrawPanels(this);
+	}
 	this->jumpstatsService->UpdateJump();
 	this->modeService->OnProcessMovementPost();
 	this->styleService->OnProcessMovementPost();

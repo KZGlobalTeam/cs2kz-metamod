@@ -878,7 +878,7 @@ inline void formatImpl(std::ostream& out, const char* fmt,
         fmt = printFormatStringLiteral(out, fmt);
         if (*fmt == '\0') {
             if (!positionalMode && argIndex < numArgs) {
-                TINYFORMAT_ERROR("tinyformat: Not enough conversion specifiers in format string");
+                //TINYFORMAT_ERROR("tinyformat: Not enough conversion specifiers in format string");
             }
             break;
         }
