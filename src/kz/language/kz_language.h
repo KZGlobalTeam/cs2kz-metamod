@@ -158,7 +158,7 @@ public:
 			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController(); \
 			if (controller) \
 			{ \
-				PrintSingle(g_pKZPlayerManager->ToPlayer(i), addPrefix, type, message, args...); \
+				PrintSingle(g_pKZPlayerManager->ToPlayer(i), addPrefix, false, type, message, args...); \
 			} \
 		} \
 	}

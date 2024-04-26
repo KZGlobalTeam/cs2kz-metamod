@@ -3,6 +3,7 @@
 #include "../style/kz_style.h"
 #include "../noclip/kz_noclip.h"
 #include "../option/kz_option.h"
+#include "../language/kz_language.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
@@ -270,6 +271,12 @@ void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise
 	}
 }
 
+internal std::string GetTeleportCountText(int tpCount, const char *language)
+{
+	return tpCount == 1 ? KZLanguageService::PrepareMessage(language, "1 Teleport Text")
+						: KZLanguageService::PrepareMessage(language, "0/2+ Teleports Text", tpCount);
+}
+
 void KZTimerService::PrintEndTimeString()
 {
 	CCSPlayerController *controller = this->player->GetController();
@@ -277,41 +284,61 @@ void KZTimerService::PrintEndTimeString()
 	KZTimerService::FormatTime(this->GetTime(), time, sizeof(time));
 	char tpCountStr[128] = "";
 	u32 tpCount = this->player->checkpointService->GetTeleportCount();
-	if (!tpCount)
+	switch (tpCount)
 	{
-		// clang-format off
-		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s{grey}",
-				 this->player->modeService->GetModeShortName(),
-				 this->player->styleService->GetStyleShortName());
-		// clang-format on
+		case 0:
+		{
+			// clang-format off
+			KZLanguageService::PrintChatAll(true, strlen(this->currentCourse) > 0 ? "Beat Course (PRO)" : "Beat Map (PRO)",
+				this->player->GetController()->m_iszPlayerName(),
+				this->currentCourse,
+				time,
+				this->player->modeService->GetModeShortName(),
+				this->player->styleService->GetStyleShortName());
+			// clang-format on
+			break;
+		}
+		case 1:
+		{
+			// clang-format off
+			for (u32 i = 0; i < MAXPLAYERS + 1; i++) 
+			{ 
+				CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController(); 
+				if (controller) 
+				{ 
+					g_pKZPlayerManager->ToPlayer(i)->languageService->PrintChat(true, false, strlen(this->currentCourse) > 0 ? "Beat Course (Standard)" : "Beat Map (Standard)",
+						this->player->GetController()->m_iszPlayerName(),
+						this->currentCourse,
+						time,
+						this->player->modeService->GetModeShortName(),
+						this->player->styleService->GetStyleShortName(),
+						KZLanguageService::PrepareMessage(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "1 Teleport Text"));
+				}
+			}
+			// clang-format on
+			break;
+		}
+		default:
+		{
+			// clang-format off
+			for (u32 i = 0; i < MAXPLAYERS + 1; i++) 
+			{ 
+				CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController(); 
+				if (controller) 
+				{ 
+					g_pKZPlayerManager->ToPlayer(i)->languageService->PrintChat(true, false, strlen(this->currentCourse) > 0 ? "Beat Course (Standard)" : "Beat Map (Standard)",
+						this->player->GetController()->m_iszPlayerName(),
+						this->currentCourse,
+						time,
+						this->player->modeService->GetModeShortName(),
+						this->player->styleService->GetStyleShortName(),
+						KZLanguageService::PrepareMessage(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "2+ Teleport Text"));
+				}
+			}
+			// clang-format on
+			break;
+		}
 	}
-	else
-	{
-		// clang-format off
-		snprintf(tpCountStr, sizeof(tpCountStr), "{purple}%s {grey}|{purple} %s {grey}|{purple} %i {grey}TPs",
-				 this->player->modeService->GetModeShortName(),
-				 this->player->styleService->GetStyleShortName(),
-				 tpCount);
-		// clang-format on
-	}
-
-	char courseStr[KZ_MAX_COURSE_NAME_LENGTH + 16] = "";
-	if (strlen(this->currentCourse) > 0)
-	{
-		snprintf(courseStr, sizeof(courseStr), " course {default}%s{grey} ", this->currentCourse);
-	}
-
-	// clang-format off
-	utils::CPrintChatAll(
-		"%s {lime}%s {grey}finished %s with a%srun of {default}%s{grey}! [%s]",
-		KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX),
-		this->player->GetController()->m_iszPlayerName(),
-		courseStr,
-		tpCount > 0 ? " " : " {blue}PRO{grey} ",
-		time,
-		tpCountStr
-	);
-	// clang-format on
 }
 
 void KZTimerService::Pause()
@@ -328,8 +355,8 @@ void KZTimerService::Pause()
 	}
 	if (!allowPause)
 	{
-		player->PrintChat(true, false, "%s", "{grey}Can't pause right now.");
-		// TODO: Play error sound to client
+		this->player->languageService->PrintChat(true, false, "Can't Pause (Generic)");
+		this->player->PlayErrorSound();
 		return;
 	}
 
@@ -368,7 +395,7 @@ bool KZTimerService::CanPause(bool showError)
 		{
 			if (showError)
 			{
-				player->PrintChat(true, false, "%s", "{grey}Can't pause, just resumed.");
+				this->player->languageService->PrintChat(true, false, "Can't Pause (Just Resumed)");
 				this->player->PlayErrorSound();
 			}
 			return false;
@@ -377,7 +404,7 @@ bool KZTimerService::CanPause(bool showError)
 		{
 			if (showError)
 			{
-				player->PrintChat(true, false, "%s", "{grey}Can't pause, just resumed.");
+				this->player->languageService->PrintChat(true, false, "Can't Pause (Just Resumed)");
 				this->player->PlayErrorSound();
 			}
 			return false;
@@ -405,7 +432,7 @@ void KZTimerService::Resume(bool force)
 	}
 	if (!allowResume)
 	{
-		player->PrintChat(true, false, "%s", "{grey}Can't resume right now.");
+		this->player->languageService->PrintChat(true, false, "Can't Resume (Generic)");
 		this->player->PlayErrorSound();
 		return;
 	}
@@ -443,7 +470,7 @@ bool KZTimerService::CanResume(bool showError)
 	{
 		if (showError)
 		{
-			player->PrintChat(true, false, "%s", "{grey}Can't resume, just paused.");
+			this->player->languageService->PrintChat(true, false, "Can't Resume (Just Paused)");
 			this->player->PlayErrorSound();
 		}
 		return false;
