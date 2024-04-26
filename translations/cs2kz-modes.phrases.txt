@@ -1,0 +1,28 @@
+"Phrases"
+{
+	"Mode Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_mode <mode>.{grey} Check console for possible modes!"
+	}
+	"Possible & Current Modes"
+	{
+		"#format"	"mode:s"
+		"en"		"Possible modes: (Current mode is {mode})"
+	}
+	"Mode Not Available"
+	{
+		// The Vanilla mode is currently not available.
+		"#format"	"mode:s"
+		"en"		"{grey}The {purple}{mode} {grey}mode is currently not available."
+		"chi"		"{grey}模式{purple}{mode}{grey}当前不可用."
+		"ru"		"{grey}Режим {purple}{mode} {grey}в настоящее время недоступен."
+	}
+	"Switched Mode"
+	{
+		// You have switched to the Vanilla mode.
+		"#format"	"mode:s"
+		"en"		"{grey}You have switched to the {purple}{mode} {grey}mode."
+		"chi"		"{grey}你已切换到{purple}{mode}{grey}模式."
+		"ru"		"{grey}Вы переключились на {purple}{mode} {grey}режим."
+	}
+}

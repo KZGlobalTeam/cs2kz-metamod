@@ -7,6 +7,7 @@
 #include "interfaces/interfaces.h"
 
 #include "../timer/kz_timer.h"
+#include "../language/kz_language.h"
 #include "utils/simplecmds.h"
 #include "utils/plat.h"
 
@@ -196,8 +197,8 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	// Don't change mode if it doesn't exist. Instead, print a list of modes to the client.
 	if (!modeName || !V_stricmp("", modeName))
 	{
-		player->PrintChat(true, false, "{grey}Usage: {default}kz_mode <mode>.{grey} Check console for possible modes!");
-		player->PrintConsole(false, false, "Possible modes: (Current mode is %s)", player->modeService->GetModeName());
+		player->languageService->PrintChat(true, false, "Mode Command Usage");
+		player->languageService->PrintConsole(false, false, "Possible & Current Modes", player->modeService->GetModeName());
 		FOR_EACH_VEC(this->modeInfos, i)
 		{
 			// clang-format off
@@ -232,7 +233,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	{
 		if (!silent)
 		{
-			player->PrintChat(true, false, "{grey}The{purple} %s{grey}mode is not available.", modeName);
+			player->languageService->PrintChat(true, false, "Mode Not Available", modeName);
 		}
 		return false;
 	}
@@ -244,7 +245,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	if (!silent)
 	{
-		player->PrintChat(true, false, "{grey}You have switched to the {purple}%s {grey}mode.", player->modeService->GetModeName());
+		player->languageService->PrintChat(true, false, "Switched Mode", player->modeService->GetModeName());
 	}
 
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), KZ::mode::numCvar);
