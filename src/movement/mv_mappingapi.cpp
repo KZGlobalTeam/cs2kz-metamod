@@ -29,6 +29,7 @@ enum MvTriggerType
 struct MvTrigger
 {
 	MvTriggerType type;
+
 	// MVTRIGGER_MODIFIER
 	struct
 	{
@@ -38,19 +39,19 @@ struct MvTrigger
 		bool disableJumpstats;
 		bool enableSlide;
 	} modifier;
-	
+
 	// MVTRIGGER_ANTI_BHOP
 	struct
 	{
 		f32 time;
 	} antibhop;
-	
+
 	// MVTRIGGER_ZONE_*
 	struct
 	{
 		char courseDescriptor[128];
 	} zone;
-	
+
 	struct
 	{
 		char destination[128];
@@ -72,15 +73,19 @@ internal MvTrigger *MapiNewTrigger(MvTriggerType type)
 {
 	// TODO: bounds checking
 	assert(g_mappingApi.triggerCount < Q_ARRAYSIZE(g_mappingApi.triggers));
-	MvTrigger *result = &g_mappingApi.triggers[g_mappingApi.triggerCount++];
-	result->type = type;
+	MvTrigger *result = nullptr;
+	if (g_mappingApi.triggerCount < Q_ARRAYSIZE(g_mappingApi.triggers))
+	{
+		result = &g_mappingApi.triggers[g_mappingApi.triggerCount++];
+		result->type = type;
+	}
 	return result;
 }
 
 internal void MapiOnMappingTriggerSpawn(MvTriggerType type, const CEntityKeyValues *ekv)
 {
 	MvTrigger *trigger = MapiNewTrigger(type);
-	
+
 	FOR_EACH_ENTITYKEY(ekv, iter)
 	{
 		auto kv = ekv->GetKeyValue(iter);
@@ -91,26 +96,19 @@ internal void MapiOnMappingTriggerSpawn(MvTriggerType type, const CEntityKeyValu
 		CBufferStringGrowable<128> bufferStr;
 		const char *key = ekv->GetEntityKeyId(iter).GetString();
 		const char *value = kv->ToString(bufferStr);
-		
+
 		switch (type)
 		{
 			case MVTRIGGER_MODIFIER:
-			{
-				
-			} break;
-			
+				break;
+
 			default:
-			{
-				
-			} break;
+				break;
 		}
 	}
 }
 
-void mappingapi::Initialize()
-{
-	
-}
+void mappingapi::Initialize() {}
 
 void mappingapi::OnSpawnPost(int nCount, const EntitySpawnInfo_t *pInfo)
 {
@@ -118,7 +116,7 @@ void mappingapi::OnSpawnPost(int nCount, const EntitySpawnInfo_t *pInfo)
 	{
 		return;
 	}
-	
+
 	for (i32 i = 0; i < nCount; i++)
 	{
 		if (!pInfo[i].m_pEntity || !pInfo->m_pKeyValues)
@@ -131,7 +129,7 @@ void mappingapi::OnSpawnPost(int nCount, const EntitySpawnInfo_t *pInfo)
 		{
 			continue;
 		}
-		
+
 		auto ekv = pInfo->m_pKeyValues;
 		FOR_EACH_ENTITYKEY(ekv, iter)
 		{
@@ -144,12 +142,12 @@ void mappingapi::OnSpawnPost(int nCount, const EntitySpawnInfo_t *pInfo)
 			const char *key = ekv->GetEntityKeyId(iter).GetString();
 			const char *value = kv->ToString(bufferStr);
 			// Msg("\t%s: %s\n", key, value);
-			
+
 			if (strncmp(key, TRIGGER_TYPE_KEY, sizeof(TRIGGER_TYPE_KEY)) != 0)
 			{
 				continue;
 			}
-			
+
 			MvTriggerType type = (MvTriggerType)V_StringToInt32(value, MVTRIGGER_DISABLED);
 			if (type > MVTRIGGER_DISABLED && type < MVTRIGGER_COUNT)
 			{
