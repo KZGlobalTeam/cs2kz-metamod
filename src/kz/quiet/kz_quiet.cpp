@@ -56,14 +56,14 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			{
 				continue;
 			}
-			// Respawn must be enabled or !hide will cause client crash.
-#if 0
 			// Do not transmit a pawn without any controller to prevent crashes.
 			if (!pawn->m_hController().IsValid())
 			{
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 				continue;
 			}
+			// Respawn must be enabled or !hide will cause client crash.
+#if 0
 			// Never send dead players to prevent crashes.
 			if (pawn->m_lifeState() != LIFE_ALIVE)
 			{
@@ -193,6 +193,14 @@ bool KZQuietService::ShouldHideIndex(u32 targetIndex)
 void KZQuietService::ToggleHide()
 {
 	this->hideOtherPlayers = !this->hideOtherPlayers;
+	if (!this->hideOtherPlayers)
+	{
+		this->SendFullUpdate();
+		// Keep the player's angles the same.
+		QAngle angles;
+		this->player->GetAngles(&angles);
+		this->player->SetAngles(angles);
+	}
 }
 
 void KZQuietService::UpdateHideState()
