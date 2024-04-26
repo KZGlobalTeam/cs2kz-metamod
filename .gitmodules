@@ -11,6 +11,3 @@
 [submodule "vendor/ClientCvarValue"]
 	path = vendor/ClientCvarValue
 	url = https://github.com/komashchenko/ClientCvarValue.git
-[submodule "build/vendor/ClientCvarValue"]
-	path = build/vendor/ClientCvarValue
-	url = https://github.com/komashchenko/ClientCvarValue.git
