@@ -1,7 +1,7 @@
 
 #include "kz/kz.h"
-#include "movement.h"
-#include "mv_mappingapi.h"
+#include "movement/movement.h"
+#include "kz_mappingapi.h"
 #include "entity2/entitykeyvalues.h"
 
 #include "tier0/memdbgon.h"
@@ -10,33 +10,33 @@
 #define KEY_IS_COURSE_DESCRIPTOR "timer_course_descriptor"
 #define INVALID_STAGE_NUMBER     -1
 
-enum MvTriggerType
+enum KzTriggerType
 {
-	MVTRIGGER_DISABLED = 0,
-	MVTRIGGER_MODIFIER,
-	MVTRIGGER_RESET_CHECKPOINTS,
-	MVTRIGGER_SINGLE_BHOP_RESET,
-	MVTRIGGER_ANTI_BHOP,
+	KZTRIGGER_DISABLED = 0,
+	KZTRIGGER_MODIFIER,
+	KZTRIGGER_RESET_CHECKPOINTS,
+	KZTRIGGER_SINGLE_BHOP_RESET,
+	KZTRIGGER_ANTI_BHOP,
 
-	MVTRIGGER_ZONE_START,
-	MVTRIGGER_ZONE_END,
-	MVTRIGGER_ZONE_SPLIT,
-	MVTRIGGER_ZONE_CHECKPOINT,
-	MVTRIGGER_ZONE_STAGE,
+	KZTRIGGER_ZONE_START,
+	KZTRIGGER_ZONE_END,
+	KZTRIGGER_ZONE_SPLIT,
+	KZTRIGGER_ZONE_CHECKPOINT,
+	KZTRIGGER_ZONE_STAGE,
 
-	MVTRIGGER_TELEPORT,
-	MVTRIGGER_MULTI_BHOP,
-	MVTRIGGER_SINGLE_BHOP,
-	MVTRIGGER_SEQUENTIAL_BHOP,
-	MVTRIGGER_COUNT,
+	KZTRIGGER_TELEPORT,
+	KZTRIGGER_MULTI_BHOP,
+	KZTRIGGER_SINGLE_BHOP,
+	KZTRIGGER_SEQUENTIAL_BHOP,
+	KZTRIGGER_COUNT,
 };
 
-struct MvTrigger
+struct KzTrigger
 {
-	MvTriggerType type;
+	KzTriggerType type;
 	CEntityHandle entity;
 
-	// MVTRIGGER_MODIFIER
+	// KZTRIGGER_MODIFIER
 	struct Modifier
 	{
 		bool disablePausing;
@@ -46,13 +46,13 @@ struct MvTrigger
 		bool enableSlide;
 	} modifier;
 
-	// MVTRIGGER_ANTI_BHOP
+	// KZTRIGGER_ANTI_BHOP
 	struct Antibhop
 	{
 		f32 time;
 	} antibhop;
 
-	// MVTRIGGER_ZONE_*
+	// KZTRIGGER_ZONE_*
 	struct Zone
 	{
 		char courseDescriptor[128];
@@ -82,16 +82,16 @@ struct MvCourseDescriptor
 internal struct
 {
 	i32 triggerCount;
-	MvTrigger triggers[2048];
+	KzTrigger triggers[2048];
 	i32 courseCount;
 	MvCourseDescriptor courses[512];
 } g_mappingApi;
 
-internal MvTrigger *Mapi_NewTrigger(MvTriggerType type)
+internal KzTrigger *Mapi_NewTrigger(KzTriggerType type)
 {
 	// TODO: bounds checking
 	assert(g_mappingApi.triggerCount < Q_ARRAYSIZE(g_mappingApi.triggers));
-	MvTrigger *result = nullptr;
+	KzTrigger *result = nullptr;
 	if (g_mappingApi.triggerCount < Q_ARRAYSIZE(g_mappingApi.triggers))
 	{
 		result = &g_mappingApi.triggers[g_mappingApi.triggerCount++];
@@ -117,15 +117,15 @@ internal MvCourseDescriptor *Mapi_NewCourse()
 internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 {
 	const CEntityKeyValues *ekv = info->m_pKeyValues;
-	MvTriggerType type = (MvTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, MVTRIGGER_DISABLED);
+	KzTriggerType type = (KzTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, KZTRIGGER_DISABLED);
 
-	if (type <= MVTRIGGER_DISABLED || type >= MVTRIGGER_COUNT)
+	if (type <= KZTRIGGER_DISABLED || type >= KZTRIGGER_COUNT)
 	{
 		// TODO: print error!
 		assert(0);
 		return;
 	}
-	MvTrigger *trigger = Mapi_NewTrigger(type);
+	KzTrigger *trigger = Mapi_NewTrigger(type);
 
 	if (!trigger)
 	{
@@ -137,7 +137,7 @@ internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 	trigger->entity = info->m_pEntity->GetRefEHandle();
 	switch (type)
 	{
-		case MVTRIGGER_MODIFIER:
+		case KZTRIGGER_MODIFIER:
 		{
 			trigger->modifier.disablePausing = ekv->GetBool("timer_modifier_disable_pause");
 			trigger->modifier.disableCheckpoints = ekv->GetBool("timer_modifier_disable_checkpoints");
@@ -147,23 +147,23 @@ internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 
-		case MVTRIGGER_ANTI_BHOP:
+		case KZTRIGGER_ANTI_BHOP:
 		{
 			trigger->antibhop.time = ekv->GetFloat("timer_anti_bhop_time");
 		}
 		break;
 
-		case MVTRIGGER_ZONE_START:
-		case MVTRIGGER_ZONE_END:
-		case MVTRIGGER_ZONE_SPLIT:
-		case MVTRIGGER_ZONE_CHECKPOINT:
-		case MVTRIGGER_ZONE_STAGE:
+		case KZTRIGGER_ZONE_START:
+		case KZTRIGGER_ZONE_END:
+		case KZTRIGGER_ZONE_SPLIT:
+		case KZTRIGGER_ZONE_CHECKPOINT:
+		case KZTRIGGER_ZONE_STAGE:
 		{
 			// TODO: find course descriptor entity!
 			const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
 			V_snprintf(trigger->zone.courseDescriptor, sizeof(trigger->zone.courseDescriptor), "%s", courseDescriptor);
 
-			if (type == MVTRIGGER_ZONE_STAGE)
+			if (type == KZTRIGGER_ZONE_STAGE)
 			{
 				trigger->zone.stageNumber = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
 			}
@@ -174,10 +174,10 @@ internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 
-		case MVTRIGGER_TELEPORT:
-		case MVTRIGGER_MULTI_BHOP:
-		case MVTRIGGER_SINGLE_BHOP:
-		case MVTRIGGER_SEQUENTIAL_BHOP:
+		case KZTRIGGER_TELEPORT:
+		case KZTRIGGER_MULTI_BHOP:
+		case KZTRIGGER_SINGLE_BHOP:
+		case KZTRIGGER_SEQUENTIAL_BHOP:
 		{
 			const char *destination = ekv->GetString("timer_teleport_destination");
 			V_snprintf(trigger->teleport.destination, sizeof(trigger->teleport.destination), "%s", destination);
@@ -189,8 +189,8 @@ internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 
-		// case MVTRIGGER_RESET_CHECKPOINTS:
-		// case MVTRIGGER_SINGLE_BHOP_RESET:
+		// case KZTRIGGER_RESET_CHECKPOINTS:
+		// case KZTRIGGER_SINGLE_BHOP_RESET:
 		default:
 			break;
 	}
@@ -218,9 +218,9 @@ internal void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 	course->disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
 }
 
-internal MvTrigger *FindMvTrigger(CBaseTrigger *trigger)
+internal KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 {
-	MvTrigger *result = nullptr;
+	KzTrigger *result = nullptr;
 	if (!trigger->m_pEntity)
 	{
 		return result;
@@ -246,14 +246,14 @@ internal MvTrigger *FindMvTrigger(CBaseTrigger *trigger)
 
 bool mappingapi::IsTriggerATimerZone(CBaseTrigger *trigger)
 {
-	MvTrigger *mvTrigger = FindMvTrigger(trigger);
+	KzTrigger *mvTrigger = Mapi_FindKzTrigger(trigger);
 	if (!mvTrigger)
 	{
 		return false;
 	}
-	static_assert(MVTRIGGER_ZONE_START == 5 && MVTRIGGER_ZONE_STAGE == 9,
-				  "Don't forget to change this function when changing the MvTriggerType enum!!!");
-	return mvTrigger->type >= MVTRIGGER_ZONE_START && mvTrigger->type <= MVTRIGGER_ZONE_STAGE;
+	static_assert(KZTRIGGER_ZONE_START == 5 && KZTRIGGER_ZONE_STAGE == 9,
+				  "Don't forget to change this function when changing the KzTriggerType enum!!!");
+	return mvTrigger->type >= KZTRIGGER_ZONE_START && mvTrigger->type <= KZTRIGGER_ZONE_STAGE;
 }
 
 void mappingapi::Initialize()
@@ -264,7 +264,7 @@ void mappingapi::Initialize()
 
 void mappingapi::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
 {
-	MvTrigger *touched = FindMvTrigger(trigger);
+	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
 	if (!touched)
 	{
 		return;
@@ -272,21 +272,21 @@ void mappingapi::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger 
 
 	switch (touched->type)
 	{
-		case MVTRIGGER_ZONE_START:
+		case KZTRIGGER_ZONE_START:
 		{
 			player->StartZoneStartTouch();
 		}
 		break;
 
-		case MVTRIGGER_ZONE_END:
+		case KZTRIGGER_ZONE_END:
 		{
 			player->EndZoneStartTouch();
 		}
 		break;
 		// TODO:
-		case MVTRIGGER_ZONE_SPLIT:
-		case MVTRIGGER_ZONE_CHECKPOINT:
-		case MVTRIGGER_ZONE_STAGE:
+		case KZTRIGGER_ZONE_SPLIT:
+		case KZTRIGGER_ZONE_CHECKPOINT:
+		case KZTRIGGER_ZONE_STAGE:
 		default:
 			break;
 	}
@@ -294,7 +294,7 @@ void mappingapi::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger 
 
 void mappingapi::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger)
 {
-	MvTrigger *touched = FindMvTrigger(trigger);
+	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
 	if (!touched)
 	{
 		return;
@@ -302,16 +302,16 @@ void mappingapi::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *t
 
 	switch (touched->type)
 	{
-		case MVTRIGGER_ZONE_START:
+		case KZTRIGGER_ZONE_START:
 		{
 			player->StartZoneEndTouch();
 		}
 		break;
 
 		// TODO:
-		case MVTRIGGER_ZONE_SPLIT:
-		case MVTRIGGER_ZONE_CHECKPOINT:
-		case MVTRIGGER_ZONE_STAGE:
+		case KZTRIGGER_ZONE_SPLIT:
+		case KZTRIGGER_ZONE_CHECKPOINT:
+		case KZTRIGGER_ZONE_STAGE:
 		default:
 			break;
 	}

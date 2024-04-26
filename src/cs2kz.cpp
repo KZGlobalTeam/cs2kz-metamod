@@ -21,6 +21,7 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
+#include "kz/mappingapi/kz_mappingapi.h"
 
 #include "version.h"
 
