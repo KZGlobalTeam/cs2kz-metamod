@@ -87,7 +87,8 @@ internal struct
 	KzCourseDescriptor courses[512];
 } g_mappingApi;
 
-MappingInterface g_mappingInterface;
+internal MappingInterface g_mappingInterface;
+MappingInterface *g_pMappingApi = nullptr;
 
 internal KzTrigger *Mapi_NewTrigger(KzTriggerType type)
 {
@@ -220,7 +221,7 @@ internal void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 	course->disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
 }
 
-internal KzTrigger *Mapi_Mapi_FindKzTrigger(CBaseTrigger *trigger)
+internal KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 {
 	KzTrigger *result = nullptr;
 	if (!trigger->m_pEntity)
@@ -248,7 +249,7 @@ internal KzTrigger *Mapi_Mapi_FindKzTrigger(CBaseTrigger *trigger)
 
 bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
 {
-	KzTrigger *mvTrigger = Mapi_Mapi_FindKzTrigger(trigger);
+	KzTrigger *mvTrigger = Mapi_FindKzTrigger(trigger);
 	if (!mvTrigger)
 	{
 		return false;
@@ -258,15 +259,16 @@ bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
 	return mvTrigger->type >= KZTRIGGER_ZONE_START && mvTrigger->type <= KZTRIGGER_ZONE_STAGE;
 }
 
-void MappingInterface::Initialize()
+void Mappingapi_Initialize()
 {
+	g_pMappingApi = &g_mappingInterface;
 	g_mappingApi.triggerCount = 0;
 	g_mappingApi.courseCount = 0;
 }
 
 void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
 {
-	KzTrigger *touched = Mapi_Mapi_FindKzTrigger(trigger);
+	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
 	if (!touched)
 	{
 		return;
@@ -311,7 +313,7 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 
 void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger)
 {
-	KzTrigger *touched = Mapi_Mapi_FindKzTrigger(trigger);
+	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
 	if (!touched)
 	{
 		return;
@@ -349,7 +351,6 @@ void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 			continue;
 		}
 		const char *classname = info[i].m_pEntity->GetClassname();
-		Msg("spawned classname %s\n", classname);
 		if (V_stricmp(classname, "trigger_multiple") == 0)
 		{
 			Mapi_OnTriggerMultipleSpawn(&info[i]);
