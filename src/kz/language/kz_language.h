@@ -12,8 +12,13 @@ public:
 	static_global void Init();
 	static_global void LoadLanguages();
 	static_global void LoadTranslations();
+	static_global void RegisterCommands();
 
-	void SetLanguage(const char *lang);
+	void SetLanguage(const char *lang)
+	{
+		V_strncpy(language, lang, sizeof(language));
+	}
+
 	const char *GetLanguage();
 
 	static_global const char *GetTranslatedFormat(const char *language, const char *phrase);

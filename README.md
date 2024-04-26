@@ -6,7 +6,7 @@ WIP, not ready for release
 
 - Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) for KZ sound effects (eg. jumpstats)
 
-- Optional: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for client language support
+- Optional: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
   
 # Installation:
 

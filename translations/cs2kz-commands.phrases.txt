@@ -8,7 +8,13 @@
 	{
 		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 	}
-	
+	"Switch Language"
+	{
+		// You have switched your language to english.
+		"#format"	"language:s"
+		"en"		"{grey}You have switched your language to {default}{language}{grey}."
+	}
+
 	// Commands
 	"Command Description - kz_checkpoint"
 	{
@@ -146,5 +152,9 @@
 	"Command Description - kz_help"
 	{
 		"en"		"Show this help message."
+	}
+	"Command Description - kz_language"
+	{
+		"en"		"Switch current language."
 	}
 }

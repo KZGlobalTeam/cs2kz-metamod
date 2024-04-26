@@ -107,6 +107,7 @@ void KZ::misc::RegisterCommands()
 	KZTimerService::RegisterCommands();
 	KZNoclipService::RegisterCommands();
 	KZHUDService::RegisterCommands();
+	KZLanguageService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 	KZ::style::RegisterCommands();
 }

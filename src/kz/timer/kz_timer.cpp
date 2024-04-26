@@ -274,7 +274,7 @@ void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise
 internal std::string GetTeleportCountText(int tpCount, const char *language)
 {
 	return tpCount == 1 ? KZLanguageService::PrepareMessage(language, "1 Teleport Text")
-						: KZLanguageService::PrepareMessage(language, "0/2+ Teleports Text", tpCount);
+						: KZLanguageService::PrepareMessage(language, "2+ Teleports Text", tpCount);
 }
 
 void KZTimerService::PrintEndTimeString()

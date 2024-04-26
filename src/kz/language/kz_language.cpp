@@ -6,6 +6,10 @@
 #include "filesystem.h"
 #include "utils/ctimer.h"
 
+#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
+
+extern IClientCvarValue *g_pClientCvarValue;
+
 internal KeyValues *translationKV;
 internal KeyValues *languagesKV;
 
@@ -62,9 +66,19 @@ void KZLanguageService::LoadTranslations()
 
 const char *KZLanguageService::GetLanguage()
 {
+	const char *lang = "";
 	if (this->hasQueriedLanguage || this->hasSavedLanguage)
 	{
-		return this->language;
+		lang = this->language;
+	}
+	else if (g_pClientCvarValue)
+	{
+		lang = g_pClientCvarValue->GetClientLanguage(this->player->GetPlayerSlot());
+	}
+
+	if (lang && lang[0] != '\0')
+	{
+		return (languagesKV->GetString(lang), lang);
 	}
 	return KZ_DEFAULT_LANGUAGE;
 }
@@ -88,4 +102,21 @@ const char *KZLanguageService::GetTranslatedFormat(const char *language, const c
 		return translationKV->FindKey(phrase)->GetString(KZ_DEFAULT_LANGUAGE);
 	}
 	return outFormat;
+}
+
+internal SCMD_CALLBACK(Command_KzSetLanguage)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	char language[32] {};
+	V_snprintf(language, sizeof(language), "%s", args->Arg(1));
+	V_strlower(language);
+	player->languageService->SetLanguage(language);
+	player->languageService->PrintChat(true, false, "Switch Language", language);
+
+	return MRES_SUPERCEDE;
+}
+
+void KZLanguageService::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_language", Command_KzSetLanguage);
 }
