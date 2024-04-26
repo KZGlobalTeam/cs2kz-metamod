@@ -9,8 +9,8 @@
 #include "utils/simplecmds.h"
 
 #include "../timer/kz_timer.h"
+#include "../language/kz_language.h"
 #include "utils/plat.h"
-#include "kz/option/kz_option.h"
 
 internal SCMD_CALLBACK(Command_KzStyle);
 
@@ -116,9 +116,8 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	// Don't change style if it doesn't exist. Instead, print a list of styles to the client.
 	if (!styleName || !V_stricmp("", styleName))
 	{
-		player->PrintChat(true, false, "{grey}Usage: {default}kz_style <style>{grey}. Check console for possible styles!",
-						  KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX));
-		player->PrintConsole(false, false, "Possible styles: (Current style is %s)", player->styleService->GetStyleName());
+		player->languageService->PrintChat(true, false, "Style Command Usage");
+		player->languageService->PrintConsole(false, false, "Possible & Current Styles", player->styleService->GetStyleName());
 		FOR_EACH_VEC(this->styleInfos, i)
 		{
 			// clang-format off
@@ -153,7 +152,7 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 	{
 		if (!silent)
 		{
-			player->PrintChat(true, false, "{grey}The {purple}%s {grey}style is not available.", styleName);
+			player->languageService->PrintChat(true, false, "Style Not Available", styleName);
 		}
 		return false;
 	}
@@ -165,7 +164,7 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 
 	if (!silent)
 	{
-		player->PrintChat(true, false, "{grey}You have switched to the {purple}%s {grey}style.", player->styleService->GetStyleName());
+		player->languageService->PrintChat(true, false, "Switched Style", player->styleService->GetStyleName());
 	}
 
 	return true;

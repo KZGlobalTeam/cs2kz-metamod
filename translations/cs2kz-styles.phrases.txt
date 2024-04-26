@@ -1,0 +1,24 @@
+"Phrases"
+{
+	"Style Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_style <style>.{grey} Check console for possible styles!"
+	}
+	"Possible & Current Styles"
+	{
+		"#format"	"style:s"
+		"en"		"Possible styles: (Current style is {style})"
+	}
+	"Style Not Available"
+	{
+		// The AutoBhop style is currently not available.
+		"#format"	"style:s"
+		"en"		"{grey}The {purple}{style} {grey}style is currently not available."
+	}
+	"Switched Style"
+	{
+		// You have switched to the Normal style.
+		"#format"	"style:s"
+		"en"		"{grey}You have switched to the {purple}{style} {grey}style."
+	}
+}
