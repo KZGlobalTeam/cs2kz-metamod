@@ -148,11 +148,9 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	}
 
 	char shortModeCmd[64];
-	char shortModeCmdDesc[256];
 
 	V_snprintf(shortModeCmd, 64, "kz_%s", shortModeName);
-	V_snprintf(shortModeCmdDesc, 64, "Switch to %s mode.", longModeName);
-	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort, shortModeCmdDesc);
+	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort);
 	this->modeInfos.AddToTail({id, shortModeName, longModeName, factory, shortCmdRegistered});
 	return true;
 }

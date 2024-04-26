@@ -157,4 +157,12 @@
 	{
 		"en"		"Switch current language."
 	}
+	"Command Description - kz_vnl"
+	{
+		"en"		"Switch to Vanilla mode."
+	}
+	"Command Description - kz_ckz"
+	{
+		"en"		"Switch to Classic mode."
+	}
 }
