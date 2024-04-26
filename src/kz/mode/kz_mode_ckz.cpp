@@ -1094,7 +1094,7 @@ void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 // Only touch timer triggers on half ticks.
 bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 {
-	if (!trigger->IsEndZone() && !trigger->IsStartZone())
+	if (!mappingapi::IsTriggerATimerZone(trigger))
 	{
 		return true;
 	}
@@ -1109,7 +1109,7 @@ bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 
 bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
 {
-	if (!trigger->IsEndZone() && !trigger->IsStartZone())
+	if (!mappingapi::IsTriggerATimerZone(trigger))
 	{
 		return true;
 	}
@@ -1123,7 +1123,7 @@ bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
 
 bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 {
-	if (!trigger->IsStartZone())
+	if (!mappingapi::IsTriggerATimerZone(trigger))
 	{
 		return true;
 	}
