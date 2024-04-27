@@ -1,4 +1,5 @@
 #include "kz_tip.h"
+#include "../language/kz_language.h"
 
 internal KeyValues *pTipKeyValues;
 internal CUtlVector<const char *> tipNames;
@@ -9,23 +10,12 @@ internal CTimer<> *tipTimer;
 void KZTipService::Reset()
 {
 	this->showTips = true;
-	this->language = KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE);
 }
 
 void KZTipService::ToggleTips()
 {
 	this->showTips = !this->showTips;
-
-	// clang-format off
-
-	player->PrintChat(true, false,
-		"{grey}%s",
-		this->showTips
-			? "You will now see random tips in chat periodically."
-			: "You will no longer see random tips in chat periodically."
-	);
-
-	// clang-format on
+	player->languageService->PrintChat(true, false, this->showTips ? "Option - Tips - Enable" : "Option - Tips - Disable");
 }
 
 bool KZTipService::ShouldPrintTip()
@@ -35,7 +25,7 @@ bool KZTipService::ShouldPrintTip()
 
 void KZTipService::PrintTip()
 {
-	player->PrintChat(true, false, "%s", pTipKeyValues->FindKey(tipNames[nextTipIndex])->GetString(this->language));
+	this->player->languageService->PrintChat(true, false, tipNames[nextTipIndex]);
 }
 
 void KZTipService::LoadTips()
@@ -46,7 +36,7 @@ void KZTipService::LoadTips()
 	configKeyValues->UsesEscapeSequences(true);
 
 	char buffer[1024];
-	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/tips/*.*");
+	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/translations/*.*");
 	FileFindHandle_t findHandle = {};
 	const char *fileName = g_pFullFileSystem->FindFirst(buffer, &findHandle);
 	if (fileName)
@@ -54,15 +44,8 @@ void KZTipService::LoadTips()
 		do
 		{
 			char fullPath[1024];
-			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/tips/%s", g_SMAPI->GetBaseDir(), fileName);
-			if (V_stricmp(fileName, "config.txt") == 0)
-			{
-				if (!configKeyValues->LoadFromFile(g_pFullFileSystem, fullPath, nullptr))
-				{
-					META_CONPRINTF("Failed to load tips config file\n", fileName);
-				}
-			}
-			else
+			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/translations/%s", g_SMAPI->GetBaseDir(), fileName);
+			if (V_strstr(fileName, "cs2kz-tips-"))
 			{
 				if (!pTipKeyValues->LoadFromFile(g_pFullFileSystem, fullPath, nullptr))
 				{
@@ -74,33 +57,9 @@ void KZTipService::LoadTips()
 		g_pFullFileSystem->FindClose(findHandle);
 	}
 
-	CUtlVector<const char *> removedTipNames;
-	KeyValues *removed = configKeyValues->FindKey("Remove", true);
-	FOR_EACH_SUBKEY(removed, it)
-	{
-		removedTipNames.AddToTail(it->GetName());
-	}
-
 	FOR_EACH_SUBKEY(pTipKeyValues, it)
 	{
-		if (!removedTipNames.HasElement(it->GetName()))
-		{
-			tipNames.AddToTail(it->GetName());
-		}
-	}
-
-	KeyValues *inserted = configKeyValues->FindKey("Insert", true);
-	FOR_EACH_SUBKEY(inserted, it)
-	{
-		if (pTipKeyValues->FindKey(it->GetName()))
-		{
-			pTipKeyValues->SwapSubKey(pTipKeyValues->FindKey(it->GetName()), it->MakeCopy());
-		}
-		else
-		{
-			pTipKeyValues->AddSubKey(it->MakeCopy());
-			tipNames.AddToTail(it->GetName());
-		}
+		tipNames.AddToTail(it->GetName());
 	}
 
 	tipInterval = KZOptionService::GetOptionFloat("tipInterval", KZ_DEFAULT_TIP_INTERVAL);
@@ -124,7 +83,7 @@ internal SCMD_CALLBACK(Command_KzToggleTips)
 
 void KZTipService::InitTips()
 {
-	scmd::RegisterCmd("kz_tips", Command_KzToggleTips, "Toggle tips.");
+	scmd::RegisterCmd("kz_tips", Command_KzToggleTips);
 	LoadTips();
 	ShuffleTips();
 	tipTimer = StartTimer(PrintTips, true);

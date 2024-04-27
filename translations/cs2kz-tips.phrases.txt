@@ -1,0 +1,16 @@
+"Phrases"
+{
+	// =====[ CHAT MESSAGES ]=====
+	"Option - Tips - Enable"
+	{
+		"en"		"{grey}You will now see random tips in chat periodically."
+		"chi"		"{grey}现在，您将定期在聊天中看到随机提示."
+		"ru"		"{grey}Теперь иногда вы будете видеть подсказки в чате."
+	}
+	"Option - Tips - Disable"
+	{
+		"en"		"{grey}You will no longer see random tips in chat periodically."
+		"chi"		"{grey}您将不再定期在聊天中看到随机提示."
+		"ru"		"{grey}Теперь вы не видите подсказок в чате."
+	}
+}

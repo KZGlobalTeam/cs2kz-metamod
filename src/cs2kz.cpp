@@ -14,16 +14,19 @@
 #include "kz/style/kz_style.h"
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
+#include "kz/language/kz_language.h"
 
 #include "tier0/memdbgon.h"
 
 #include "version.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
+#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
 KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
+IClientCvarValue *g_pClientCvarValue;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
@@ -42,6 +45,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZ::style::InitStyleManager();
 	KZSpecService::Init();
 	KZHUDService::Init();
+	KZLanguageService::Init();
 	KZ::misc::RegisterCommands();
 	if (!KZ::mode::InitModeCvars())
 	{
@@ -74,6 +78,7 @@ void KZPlugin::AllPluginsLoaded()
 	KZ::style::LoadStylePlugins();
 
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
+	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::AddonInit()

@@ -36,7 +36,20 @@ enum DistanceTier : u8
 	DISTANCETIER_COUNT
 };
 
+#define IGNORE_JUMP_TIME                0.2f
+#define JS_EPSILON                      0.03125f
+#define JS_MAX_LADDERJUMP_OFFSET        2.0f
+#define JS_MAX_BHOP_GROUND_TIME         0.05f
+#define JS_MAX_DUCKBUG_RESET_TIME       0.05f
+#define JS_MAX_NOCLIP_RESET_TIME        0.4f
+#define JS_MAX_WEIRDJUMP_FALL_OFFSET    (64.0f + JS_EPSILON)
+#define JS_TOUCH_GRACE_PERIOD           0.04f
+#define JS_SPEED_MODIFICATION_TOLERANCE 0.1f
+#define JS_TELEPORT_DISTANCE_SQUARED    4096.0f * 4096.0f * ENGINE_FIXED_TICK_INTERVAL
+
+extern const char *jumpTypeStr[JUMPTYPE_COUNT];
 extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
+extern const char *distanceTierColors[DISTANCETIER_COUNT];
 extern const char *distanceTierSounds[DISTANCETIER_COUNT];
 
 class AACall
@@ -284,7 +297,7 @@ public:
 		return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z;
 	}
 
-	f32 GetDistance(bool useDistbugFix = true, bool disableAddDist = false);
+	f32 GetDistance(bool useDistbugFix = true, bool disableAddDist = false, i32 floorLevel = -1);
 
 	f32 GetMaxSpeed()
 	{
@@ -336,6 +349,24 @@ public:
 	}
 
 	f32 GetDeviation();
+
+	std::string GetStrafeCountString(const char *language = NULL);
+	std::string GetSyncString(const char *language = NULL, bool console = false);
+	std::string GetTakeoffSpeedString(const char *language = NULL);
+	std::string GetMaxSpeedString(const char *language = NULL);
+	std::string GetBadAnglesString(const char *language = NULL);
+	std::string GetOverlapString(const char *language = NULL);
+	std::string GetDeadAirString(const char *language = NULL);
+	std::string GetDeviationString(const char *language = NULL);
+	std::string GetWidthString(const char *language = NULL);
+	std::string GetMaxHeightString(const char *language = NULL);
+	std::string GetGainEfficiencyString(const char *language = NULL);
+	std::string GetAirPathString(const char *language = NULL);
+	std::string GetAirTimeString(const char *language = NULL);
+	std::string GetOffsetString(const char *language = NULL);
+	std::string GetDuckTimeString(const char *language = NULL);
+	std::string GetAngleRatioString(const char *language = NULL);
+	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
 };
 
 class KZJumpstatsService : public KZBaseService

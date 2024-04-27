@@ -7,6 +7,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "quiet/kz_quiet.h"
 #include "mode/kz_mode.h"
+#include "language/kz_language.h"
 #include "style/kz_style.h"
 #include "noclip/kz_noclip.h"
 #include "hud/kz_hud.h"
@@ -18,7 +19,14 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
-	player->PrintChat(true, false, "{grey}Player legs are now %s.", player->HidingLegs() ? "hidden" : "shown");
+	if (player->HidingLegs())
+	{
+		player->languageService->PrintChat(true, false, "Quiet Option - Show Player Legs - Disable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Quiet Option - Show Player Legs - Enable");
+	}
 	return MRES_SUPERCEDE;
 }
 
@@ -26,7 +34,14 @@ internal SCMD_CALLBACK(Command_KzHide)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
-	player->PrintChat(true, false, "{grey}You are now %s other players.", player->quietService->hideOtherPlayers ? "hiding" : "showing");
+	if (player->quietService->hideOtherPlayers)
+	{
+		player->languageService->PrintChat(true, false, "Quiet Option - Show Players - Disable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Quiet Option - Show Players - Enable");
+	}
 	return MRES_SUPERCEDE;
 }
 
@@ -60,7 +75,14 @@ internal SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
-	player->PrintChat(true, false, "{grey}You are now %s your weapons.", player->quietService->ShouldHideWeapon() ? "hiding" : "showing");
+	if (player->quietService->ShouldHideWeapon())
+	{
+		player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Disable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Enable");
+	}
 	return MRES_SUPERCEDE;
 }
 
@@ -73,18 +95,19 @@ internal SCMD_CALLBACK(Command_JoinTeam)
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs, "Hide your legs in first person.");
-	scmd::RegisterCmd("kz_hide", Command_KzHide, "Hide other players.");
-	scmd::RegisterCmd("kz_restart", Command_KzRestart, "Restart.");
-	scmd::RegisterCmd("kz_r", Command_KzRestart, "Restart.");
-	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon, "Hide weapon viewmodel.");
-	scmd::RegisterCmd("jointeam", Command_JoinTeam, "Jointeam interceptor", true);
+	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs);
+	scmd::RegisterCmd("kz_hide", Command_KzHide);
+	scmd::RegisterCmd("kz_restart", Command_KzRestart);
+	scmd::RegisterCmd("kz_r", Command_KzRestart);
+	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
+	scmd::RegisterCmd("jointeam", Command_JoinTeam, true);
 	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 	KZCheckpointService::RegisterCommands();
 	KZJumpstatsService::RegisterCommands();
 	KZTimerService::RegisterCommands();
 	KZNoclipService::RegisterCommands();
 	KZHUDService::RegisterCommands();
+	KZLanguageService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 	KZ::style::RegisterCommands();
 }

@@ -1,0 +1,81 @@
+"Phrases"
+{
+	"Speed"
+	{
+		"en"	"Speed"
+	}
+	"HUD - Stopped Text"
+	{
+		// (STOPPED)
+		"en"		" (STOPPED)"
+	}
+	"HUD - Paused Text"
+	{
+		// (PAUSED)
+		"en"		" (PAUSED)"
+	}
+	"HUD - Speed Text"
+	{
+		// Speed: 234
+		"#format"	"speed:.0f"
+		"en"		"Speed: {speed}"
+	}
+	"HUD - Speed Text (Takeoff)"
+	{
+		// Speed: 234 (200)
+		"#format"	"speed:.0f,takeoff_speed:.0f"
+		"en"		"Speed: {speed} ({takeoff_speed})"
+	}
+	"HUD - Key Text"
+	{
+		// Keys: A W S D C J
+		"#format"	"left:c,forward:c,back:c,right:c,duck:c,jump:c"
+		"en"		"Keys: {left} {forward} {back} {right} {duck} {jump}"
+	}
+	"HUD - Checkpoint Text"
+	{
+		// CP: 4/4, TPs: 12
+		"#format"	"checkpoint_index:d,checkpoint_count:d,teleport_count:d"
+		"en"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
+	}
+	"HUD - Timer Text"
+	{
+		// 01:23:45 (STOPPED) (PAUSED)
+		"#format"	"time:s,stop_text:s,pause_text:s"
+		"en"		"{time}{stop_text}{pause_text}"
+	}
+	"HUD - Center Text"
+	{
+		// CP: 4/4, TPs: 12
+		// 01:23:45 (STOPPED) (PAUSED)
+		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
+		"en"		"{checkpoint_text}\n{timer_text}"
+	}
+	// This text is actually "more" center.
+	"HUD - Alert Text"
+	{
+		// Speed: 234 (200)
+		// Keys: A W S D C J
+		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
+		"en"		"{speed_text}\n{key_text}"
+	}
+	"HUD - HTML Center Text"
+	{
+		// Unused
+		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
+		"en"		""
+	}
+	
+	"HUD Option - Info Panel - Enable"
+	{
+		"en"		"{grey}Your centre information panel has been enabled."
+		"chi"		"{grey}你的中心面板已打开."
+		"ru"		"{grey}Ваша центровая информационная панель была включена."
+	}
+	"HUD Option - Info Panel - Disable"
+	{
+		"en"		"{grey}Your centre information panel has been disabled."
+		"chi"		"{grey}你的中心面板已关闭."
+		"ru"		"{grey}Ваша центровая информационная панель была выключена."
+	}
+}

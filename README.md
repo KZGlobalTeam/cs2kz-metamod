@@ -1,11 +1,18 @@
 WIP, not ready for release 
 
-Requirements: Metamod
+# Requirements
 
-(Optional) For KZ sound effects (eg. jumpstats):
-- Latest [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) needs to be installed.
+- (Metamod 2.0.0+)[https://www.metamodsource.net/downloads.php/?branch=master]
+
+- Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) for KZ sound effects (eg. jumpstats)
+
+- Optional: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
   
-Compilation:
+# Installation:
+
+- Download the latest version in the release section and extract them to your server's `csgo/` directory.
+
+# Compilation
 - Remember to *recursively* clone the plugin, and symlink needs to be enabled as well!
 - Latest [AMBuild](https://github.com/alliedmodders/ambuild/) needs to be installed for compilation.
 
@@ -40,7 +47,5 @@ docker run --rm -v ./build:/app/build cs2kz-linux-builder
 ```
 
 Note: does not work with gcc!
-
-Usage:
 
 Copy the contents of `build/package/` to your server's `csgo/` directory.

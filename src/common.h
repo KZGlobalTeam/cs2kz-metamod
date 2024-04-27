@@ -6,6 +6,9 @@
 
 #include <ISmmPlugin.h>
 #include <stdint.h>
+// This is quite wild, this library must be included here so memory corruption doesn't happen on windows...
+#define TINYFORMAT_USE_VARIADIC_TEMPLATES
+#include "vendor/tinyformat.h"
 
 #include "entity2/entitysystem.h"
 #define MAXPLAYERS 64

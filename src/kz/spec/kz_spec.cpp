@@ -113,5 +113,5 @@ internal SCMD_CALLBACK(Command_KzSpec)
 
 void KZSpecService::RegisterCommands()
 {
-	scmd::RegisterCmd("kz_spec", Command_KzSpec, "TODO: Spectate a player.");
+	scmd::RegisterCmd("kz_spec", Command_KzSpec);
 }
