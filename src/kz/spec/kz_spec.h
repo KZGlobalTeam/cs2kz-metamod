@@ -7,7 +7,7 @@ class KZTimerServiceEventListener;
 
 class KZTimerServiceEventListener_Spec : public KZTimerServiceEventListener
 {
-	virtual void OnTimerStartPost(KZPlayer *player, const char *courseName) override;
+	virtual void OnTimerStartPost(KZPlayer *player, const KzCourseDescriptor *course) override;
 };
 
 class KZSpecService : public KZBaseService

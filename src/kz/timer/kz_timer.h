@@ -1,9 +1,9 @@
 #pragma once
 #include "../kz.h"
 #include "../checkpoint/kz_checkpoint.h"
+#include "kz/mappingapi/kz_mappingapi.h"
 
-#define KZ_MAX_COURSE_NAME_LENGTH 128
-#define KZ_MAX_MODE_NAME_LENGTH   128
+#define KZ_MAX_MODE_NAME_LENGTH 128
 
 #define KZ_TIMER_MIN_GROUND_TIME 0.05f
 #define KZ_TIMER_SOUND_COOLDOWN  0.15f
@@ -14,24 +14,26 @@
 
 #define KZ_PAUSE_COOLDOWN 1.0f
 
+// struct KzCourseDescriptor;
+
 class KZTimerServiceEventListener
 {
 public:
-	virtual bool OnTimerStart(KZPlayer *player, const char *courseName)
+	virtual bool OnTimerStart(KZPlayer *player, const KzCourseDescriptor *course)
 	{
 		return true;
 	}
 
-	virtual void OnTimerStartPost(KZPlayer *player, const char *courseName) {}
+	virtual void OnTimerStartPost(KZPlayer *player, const KzCourseDescriptor *course) {}
 
-	virtual bool OnTimerEnd(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed)
+	virtual bool OnTimerEnd(KZPlayer *player, const KzCourseDescriptor *course, f32 time, u32 teleportsUsed)
 	{
 		return true;
 	}
 
-	virtual void OnTimerEndPost(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed) {}
+	virtual void OnTimerEndPost(KZPlayer *player, const KzCourseDescriptor *course, f32 time, u32 teleportsUsed) {}
 
-	virtual void OnTimerStopped(KZPlayer *player) {}
+	virtual void OnTimerStopped(KZPlayer *player, const KzCourseDescriptor *course) {}
 
 	virtual void OnTimerInvalidated(KZPlayer *player) {}
 
@@ -57,7 +59,7 @@ class KZTimerService : public KZBaseService
 private:
 	bool timerRunning {};
 	f64 currentTime {};
-	char currentCourse[KZ_MAX_COURSE_NAME_LENGTH] {};
+	const KzCourseDescriptor *currentCourse {};
 	f64 lastEndTime {};
 	f64 lastFalseEndTime {};
 	f64 lastStartSoundTime {};
@@ -128,14 +130,14 @@ public:
 		timerRunning = time > 0.0f;
 	}
 
-	void GetCourse(char *buffer, u32 size)
+	const KzCourseDescriptor *GetCourse()
 	{
-		V_snprintf(buffer, size, "%s", currentCourse);
+		return currentCourse;
 	}
 
-	void SetCourse(const char *name)
+	void SetCourse(const KzCourseDescriptor *course)
 	{
-		V_strncpy(currentCourse, name, KZ_MAX_COURSE_NAME_LENGTH);
+		currentCourse = course;
 	}
 
 	enum TimeType_t
@@ -149,10 +151,10 @@ public:
 		return this->player->checkpointService->GetTeleportCount() > 0 ? TimeType_Standard : TimeType_Pro;
 	}
 
-	void StartZoneStartTouch();
-	void StartZoneEndTouch();
-	bool TimerStart(const char *courseName, bool playSound = true);
-	bool TimerEnd(const char *courseName);
+	void StartZoneStartTouch(const KzCourseDescriptor *course);
+	void StartZoneEndTouch(const KzCourseDescriptor *course);
+	bool TimerStart(const KzCourseDescriptor *course, bool playSound = true);
+	bool TimerEnd(const KzCourseDescriptor *course);
 	bool TimerStop(bool playSound = true);
 	static void TimerStopAll(bool playSound = true);
 

@@ -72,13 +72,6 @@ struct KzTrigger
 	} teleport;
 };
 
-struct KzCourseDescriptor
-{
-	char name[128];
-	bool disableCheckpoints;
-	CEntityHandle entity;
-};
-
 internal struct
 {
 	i32 triggerCount;
@@ -165,6 +158,7 @@ internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			// TODO: find course descriptor entity!
 			const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
 			V_snprintf(trigger->zone.courseDescriptor, sizeof(trigger->zone.courseDescriptor), "%s", courseDescriptor);
+			trigger->zone.courseIndex = -1;
 
 			if (type == KZTRIGGER_ZONE_STAGE)
 			{
@@ -215,9 +209,9 @@ internal void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 		return;
 	}
 
-	course->entity = info->m_pEntity->GetRefEHandle();
-	const char *name = ekv->GetString("timer_course_name");
-	V_snprintf(course->name, sizeof(course->name), "%s", name);
+	V_snprintf(course->entityTargetname, sizeof(course->entityTargetname), "%s", ekv->GetString("targetname"));
+	V_snprintf(course->name, sizeof(course->name), "%s", ekv->GetString("timer_course_name"));
+
 	course->disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
 }
 
@@ -266,12 +260,51 @@ void Mappingapi_Initialize()
 	g_mappingApi.courseCount = 0;
 }
 
+const KzCourseDescriptor *Mapi_FindCourse(const char *targetname)
+{
+	KzCourseDescriptor *result = nullptr;
+	if (!targetname)
+	{
+		return result;
+	}
+
+	for (i32 i = 0; i < g_mappingApi.courseCount; i++)
+	{
+		if (V_stricmp(g_mappingApi.courses[i].entityTargetname, targetname) == 0)
+		{
+			result = &g_mappingApi.courses[i];
+			break;
+		}
+	}
+
+	return result;
+}
+
 void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
 {
 	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
 	if (!touched)
 	{
 		return;
+	}
+
+	const KzCourseDescriptor *course = nullptr;
+	switch (touched->type)
+	{
+		case KZTRIGGER_ZONE_START:
+		case KZTRIGGER_ZONE_END:
+		case KZTRIGGER_ZONE_SPLIT:
+		case KZTRIGGER_ZONE_CHECKPOINT:
+		case KZTRIGGER_ZONE_STAGE:
+		{
+			course = Mapi_FindCourse(touched->zone.courseDescriptor);
+			if (!course)
+			{
+				// TODO: print error!
+				return;
+			}
+		}
+		break;
 	}
 
 	switch (touched->type)
@@ -284,13 +317,13 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 
 		case KZTRIGGER_ZONE_START:
 		{
-			player->StartZoneStartTouch();
+			player->StartZoneStartTouch(course);
 		}
 		break;
 
 		case KZTRIGGER_ZONE_END:
 		{
-			player->EndZoneStartTouch();
+			player->EndZoneStartTouch(course);
 		}
 		break;
 		// TODO:
@@ -319,11 +352,30 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 		return;
 	}
 
+	const KzCourseDescriptor *course = nullptr;
+	switch (touched->type)
+	{
+		case KZTRIGGER_ZONE_START:
+		case KZTRIGGER_ZONE_END:
+		case KZTRIGGER_ZONE_SPLIT:
+		case KZTRIGGER_ZONE_CHECKPOINT:
+		case KZTRIGGER_ZONE_STAGE:
+		{
+			course = Mapi_FindCourse(touched->zone.courseDescriptor);
+			if (!course)
+			{
+				// TODO: print error!
+				return;
+			}
+		}
+		break;
+	}
+
 	switch (touched->type)
 	{
 		case KZTRIGGER_ZONE_START:
 		{
-			player->StartZoneEndTouch();
+			player->StartZoneEndTouch(course);
 		}
 		break;
 
