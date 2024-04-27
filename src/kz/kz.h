@@ -43,6 +43,7 @@ class KZStyleService;
 class KZTelemetryService;
 class KZTimerService;
 class KZTipService;
+struct KzCourseDescriptor;
 
 class KZPlayer : public MovementPlayer
 {
@@ -126,9 +127,9 @@ public:
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
 	// Timer events
-	void StartZoneStartTouch();
-	void StartZoneEndTouch();
-	void EndZoneStartTouch();
+	void StartZoneStartTouch(const KzCourseDescriptor *course);
+	void StartZoneEndTouch(const KzCourseDescriptor *course);
+	void EndZoneStartTouch(const KzCourseDescriptor *course);
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;

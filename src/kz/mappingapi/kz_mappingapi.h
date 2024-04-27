@@ -1,9 +1,15 @@
 
 #pragma once
 
-#define KZ_MAPPING_INTERFACE "KZMappingInterface"
+#define KZ_MAPPING_INTERFACE      "KZMappingInterface"
+#define KZ_MAX_COURSE_NAME_LENGTH 128
 
-void Mappingapi_Initialize();
+struct KzCourseDescriptor
+{
+	char entityTargetname[128];
+	char name[KZ_MAX_COURSE_NAME_LENGTH];
+	bool disableCheckpoints;
+};
 
 class MappingInterface
 {
@@ -13,5 +19,7 @@ public:
 	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 };
+
+void Mappingapi_Initialize();
 
 extern MappingInterface *g_pMappingApi;
