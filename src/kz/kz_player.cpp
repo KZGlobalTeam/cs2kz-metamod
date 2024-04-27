@@ -673,25 +673,24 @@ void KZPlayer::EnableGodMode()
 	}
 }
 
-void KZPlayer::StartZoneStartTouch()
+void KZPlayer::StartZoneStartTouch(const KzCourseDescriptor *course)
 {
 	this->checkpointService->ResetCheckpoints();
-	this->timerService->StartZoneStartTouch();
+	this->timerService->StartZoneStartTouch(course);
 }
 
-void KZPlayer::StartZoneEndTouch()
+void KZPlayer::StartZoneEndTouch(const KzCourseDescriptor *course)
 {
 	if (!this->noclipService->IsNoclipping())
 	{
 		this->checkpointService->ResetCheckpoints();
-		this->timerService->StartZoneEndTouch();
+		this->timerService->StartZoneEndTouch(course);
 	}
 }
 
-void KZPlayer::EndZoneStartTouch()
+void KZPlayer::EndZoneStartTouch(const KzCourseDescriptor *course)
 {
-	// TODO: get course name
-	this->timerService->TimerEnd("Main");
+	this->timerService->TimerEnd(course);
 }
 
 void KZPlayer::UpdatePlayerModelAlpha()
