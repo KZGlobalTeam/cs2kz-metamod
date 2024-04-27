@@ -37,7 +37,6 @@ for sdk_target in MMSPlugin.sdk_targets:
   binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.plugin_name, sdk)
 
   if binary.compiler.family == 'gcc' or binary.compiler.family == 'clang':
-    binary.compiler.linkflags += ['-lstdc++']
     binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
 
   if binary.compiler.family == 'clang':
@@ -124,7 +123,6 @@ for sdk_target in MMSPlugin.sdk_targets:
   mode_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-mode-ckz", sdk)
 
   if mode_binary.compiler.family == 'gcc' or mode_binary.compiler.family == 'clang':
-    mode_binary.compiler.linkflags += ['-lstdc++']
     mode_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
 
   if mode_binary.compiler.family == 'clang':
@@ -160,7 +158,6 @@ for sdk_target in MMSPlugin.sdk_targets:
   style_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-style-autobhop", sdk)
 
   if style_binary.compiler.family == 'gcc' or style_binary.compiler.family == 'clang':
-    style_binary.compiler.linkflags += ['-lstdc++']
     style_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
 
   if style_binary.compiler.family == 'clang':
