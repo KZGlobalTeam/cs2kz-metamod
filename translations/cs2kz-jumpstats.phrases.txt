@@ -284,7 +284,7 @@
 	{
 		// 57% GainEff | 1.048 Airpath | 17.7 Deviation | 43.1 Width | 0.8003 Airtime | -8.0 Offset | 0.12/0.12 Crouched
 		"#format"	"gain_eff:.0f,air_path:.3f,deviation:.1f,width:.1f,air_time:.4f,offset:.1f,duck_end_time:.2f,duck_total_time:.2f"
-		"en"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"\
+		"en"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"chi"		"{gain_eff}%%%% 增益效率 | {air_path} 空中路径 | {deviation} 偏移 | {width} 幅度 | {air_time} 滞空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 蹲占比"
 	}
 	"Jumpstats Report - Strafe Report Header"
@@ -293,6 +293,7 @@
 		// Modify this to line up with the strafe report lines. It's not recommended to use the variables in #format.
 		"#format"	"sync_text:s,gain_text:s,loss_text:s,pre_text:s,max_text:s,air_time_text:s,bad_angles_text:s,overlap_text:s,dead_air_text:s,avg_gain_text:s,gain_eff_text:s,ang_ratio_text:s"
 		"en"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
+		"chi"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
 	}
 	"Jumpstats Report - Strafe Report"
 	{
@@ -300,5 +301,6 @@
 		// Modify this to line up with the header. It's not recommended to use the variables in #format.
 		"#format"	"strafe_num:i,sync:s,gain:s,external_gain:s,loss:s,external_loss:s,max:s,duration:s,bad_angle:s,overlap:s,dead_air:s,avg_gain:s,gain_eff:s,ang_ratio:s"
 		"en"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
+		"chi"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 	}
 }
