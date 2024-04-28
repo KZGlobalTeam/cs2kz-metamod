@@ -46,7 +46,7 @@
 	"Air"
 	{
 		"en"		"Air"
-    "chi"   "滞空"
+		"chi"		"滞空"
 		"ru"		"Air"
 	}
 	"Air Time"
@@ -64,7 +64,7 @@
 	"Bad Angles (Short)"
 	{
 		"en"		"BA"
-    "chi"		"无效角度"
+		"chi"		"无效角度"
 	}
 	"Overlap (Short)"
 	{
@@ -110,7 +110,7 @@
 	"Air Path"
 	{
 		"en"		"Airpath"
-    "chi"   "空中路径"
+		"chi"		"空中路径"
 	}
 	"Angle Ratio"
 	{
@@ -137,52 +137,52 @@
 	"First jump"
 	{
 		"en"		"First jump"
-    "chi"		"第一次起跳"
+		"chi"		"第一次起跳"
 	}
 	"Invalid movetype change"
 	{
 		"en"		"Invalid movetype change"
-    "chi"   "无效的动作更换"
+		"chi"		"无效的动作更换"
 	}
 	"Invalid movetype"
 	{
 		"en"		"Invalid movetype"
-    "en"		"无效的动作"
+		"en"		"无效的动作"
 	}
 	"Just noclipped"
 	{
 		"en"		"Just noclipped"
-    "chi"   "刚刚切换了飞行"
+		"chi"		"刚刚切换了飞行"
 	}
 	"Invalid collisions"
 	{
 		"en"		"Invalid collisions"
-    "en"		"无效的碰撞"
+		"en"		"无效的碰撞"
 	}
 	"Base velocity detected"
 	{
 		"en"		"Base velocity detected"
-    "chi"   "检测到最低速度"
+		"chi"		"检测到最低速度"
 	}
 	"Invalid gains"
 	{
 		"en"		"Invalid gains"
-    "chi"		"无效的增益"
+		"chi"		"无效的增益"
 	}
 	"Externally modified"
 	{
 		"en"		"Externally modified"
-    "chi"   "已从外部修改"
+		"chi"		"已从外部修改"
 	}
 	"Edgebugged"
 	{
 		"en"		"Edgebugged"
-    "chi"   "已触发边缘bug"
+		"chi"		"已触发边缘bug"
 	}
 	"Teleported"
 	{
 		"en"		"Teleported"
-    "chi"   "已传送"
+		"chi"		"已传送"
 	}
 
 	// =====[OPTIONS]=====
@@ -256,7 +256,7 @@
 		// (Just noclipped)
 		"#format"	"reason:s"
 		"en"		"({reason})"
-    "chi"   "({reason})"
+		"chi"		"({reason})"
 	}
 	"Jumpstats Report - Chat Summary"
 	{
@@ -271,7 +271,7 @@
 		// zer0.k jumped 280.3341 units with a Long Jump
 		"#format"	"player_name:s,distance:.4f,jump_type:s,invalidation_reason:s"
 		"en"		"{player_name} jumped {distance} units with a {jump_type} {invalidation_reason}"
-    "chi"		"{player_name} 通过 {jump_type} 跳出了 {distance} 距离 {invalidation_reason}"
+		"chi"		"{player_name} 通过 {jump_type} 跳出了 {distance} 距离 {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{
