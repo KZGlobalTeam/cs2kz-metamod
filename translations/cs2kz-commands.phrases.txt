@@ -107,7 +107,7 @@
 	"Command Description - kz_jsalways"
 	{
 		"en"		"Toggle the always-on jumpstats."
-		"chi"		"切换显示全部跳跃提示的开关"
+		"chi"		"切换 总是显示跳跃数据 的开关"
 	}
 	"Command Description - kz_mode"
 	{
