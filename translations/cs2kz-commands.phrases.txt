@@ -82,7 +82,7 @@
 	"Command Description - kz_panel"
 	{
 		"en"		"Toggle centre panel display."
-		"chi"		"切换中央面板的显示."
+		"chi"		"切换中心面板的显示."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
