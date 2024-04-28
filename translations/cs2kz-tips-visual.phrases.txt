@@ -3,7 +3,7 @@
 	"Tip - kz_panel"
 	{
 		"en"	"{grey}Use {default}/panel {grey} to toggle the panel in the middle of your screen."
-		"chi"	"{grey}使用 {default}/panel {grey} 可以切换屏幕中间面板的显示."
+		"chi"	"{grey}使用 {default}/panel {grey} 可以切换屏幕中心面板的显示."
 	}
 	"Tip - kz_hidelegs"
 	{
@@ -18,6 +18,6 @@
 	"Tip - kz_hideweapon"
 	{
 		"en"	"{grey}Type {default}/hideweapon {grey}to toggle your weapon visibility."
-		"chi"	"{grey}输入 {default}/hideweapon {grey}可以关掉枪械显示."
+		"chi"	"{grey}输入 {default}/hideweapon {grey}可以关掉枪械模型显示."
 	}
 }

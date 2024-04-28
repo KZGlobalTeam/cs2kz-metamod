@@ -4,13 +4,13 @@
 	"Option - Tips - Enable"
 	{
 		"en"		"{grey}You will now see random tips in chat periodically."
-		"chi"		"{grey}现在，您将定期在聊天中看到随机提示."
+		"chi"		"{grey}你现在会定期在聊天栏中看到随机提示."
 		"ru"		"{grey}Теперь иногда вы будете видеть подсказки в чате."
 	}
 	"Option - Tips - Disable"
 	{
 		"en"		"{grey}You will no longer see random tips in chat periodically."
-		"chi"		"{grey}您将不再定期在聊天中看到随机提示."
+		"chi"		"{grey}你现在不会在聊天栏中看到随机提示."
 		"ru"		"{grey}Теперь вы не видите подсказок в чате."
 	}
 }
