@@ -30,14 +30,14 @@
 	{
 		// Bill finished course "Name" in 01:23.45 [Mode | Style | 12 TPs]
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s,tp_count_text:s"
-		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 	}
 	"Beat Course (PRO)"
 	{
 		// Bill finished course "Name" in 01:23.45 [Mode | Style | PRO]
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s"
-		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 	}
 	
