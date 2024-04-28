@@ -2,22 +2,24 @@
 {
 	"Quiet Option - Show Player Legs - Enable"
 	{
-		"en"		"{grey} Your player's legs are now visible."
+		"en"		"{grey}Your player's legs are now visible."
+		"chi"		"{grey}你现在能看到你的腿部了."
 	}
 	"Quiet Option - Show Player Legs - Disable"
 	{
-		"en"		"{grey} Your player's legs are now hidden."
+		"en"		"{grey}Your player's legs are now hidden."
+		"chi"		"{grey}你现在隐藏了你的腿部."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
 		"en"		"{grey}You are now showing other players."
-		"chi"		"{grey}已取消屏蔽其他玩家."
+		"chi"		"{grey}已显示其他玩家."
 		"ru"		"{grey}Теперь вы видите остальных игроков."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
 		"en"		"{grey}You are now hiding other players."
-		"chi"		"{grey}已屏蔽其他玩家模型."
+		"chi"		"{grey}已隐藏其他玩家模型."
 		"ru"		"{grey}Теперь вы не видите остальных игроков."
 	}
 	"Quiet Option - Show Weapon - Enable"
@@ -29,7 +31,7 @@
 	"Quiet Option - Show Weapon - Disable"
 	{
 		"en"		"{grey}You are now hiding your weapon."
-		"chi"		"{grey}你现在屏蔽了你的武器显示."
+		"chi"		"{grey}你现在隐藏了你的武器."
 		"ru"		"{grey}Теперь вы скрыли свое оружие."
 	}
 }

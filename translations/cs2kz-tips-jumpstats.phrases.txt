@@ -3,11 +3,11 @@
 	"Tip - kz_togglejs"
 	{
 		"en"	"{grey}You can toggle jumpstats reporting by typing {default}/togglejs{grey}."
-		"chi"	"{grey}你可以使用 {default}/togglejs{grey} 开启或关闭跳跃提示."
+		"chi"	"{grey}你可以使用 {default}/togglejs{grey} 开启或关闭跳跃数据播报."
 	}
 	"Tip - kz_jsalways"
 	{
 		"en"	"{grey}Use {default}/jsalways {grey}to toggle always-on jumpstats mode."
-		"chi"	"{grey}使用 {default}/jsalways {grey}可以显示全部的跳跃提示，包括无效跳跃."
+		"chi"	"{grey}使用 {default}/jsalways {grey}开启或关闭始终播报跳跃数据."
 	}
 }

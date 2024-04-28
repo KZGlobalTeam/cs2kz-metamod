@@ -3,11 +3,13 @@
 	"1 Teleport Text"
 	{
 		"en"		"{yellow}1{grey} TP"
+		"chi"		"{yellow}1{grey} 个读点"
 	}
 	"2+ Teleports Text"
 	{
 		"#format"	"tp_count:d"
 		"en"		"{yellow}{tp_count}{grey} TPs"
+		"chi"		"{yellow}{tp_count}{grey} 个读点"
 	}
 
 	"Beat Map (Standard)"
@@ -16,6 +18,7 @@
 		// Note: course_name is empty.
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s,tp_count_text:s"
 		"en"		"{lime}{player_name} {grey}finished the map in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 	}
 	"Beat Map (PRO)"
 	{
@@ -23,18 +26,21 @@
 		// Note: course_name is empty.
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s"
 		"en"		"{lime}{player_name} {grey}finished the map in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 	}
 	"Beat Course (NUB)"
 	{
 		// Bill finished course "Name" in 01:23.45 [Mode | Style | 12 TPs]
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s,tp_count_text:s"
 		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 	}
 	"Beat Course (PRO)"
 	{
 		// Bill finished course "Name" in 01:23.45 [Mode | Style | PRO]
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s"
 		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 	}
 	
 	"Can't Pause (Generic)"
@@ -45,7 +51,7 @@
 	"Can't Pause (Just Resumed)"
 	{
 		"en"		"{darkred}You can't pause because you just resumed."
-		"chi"		"{darkred}你刚刚才恢复计时,无法暂停."
+		"chi"		"{darkred}你刚刚才恢复计时, 无法暂停."
 		"ru"		"{darkred}Вы не можете после возобновления поставить вновь паузу."
 	}
 	"Can't Pause (Midair)"
@@ -57,7 +63,7 @@
 	"Can't Pause (Just Landed)"
 	{
 		"en"		"{darkred}You can't pause because you just landed."
-		"chi"		"{darkred}你不能暂停，因为你还没有站稳."	
+		"chi"		"{darkred}你不能暂停, 因为你还没有站稳."	
 		"ru"		"{darkred}Вы не можете поставить паузу после приземления."
 	}
 	"Can't Pause (Anti Pause Area)"
@@ -73,7 +79,7 @@
 	"Can't Resume (Just Paused)"
 	{
 		"en"		"{darkred}You can't resume because you just paused."
-		"chi"		"{darkred}你刚刚才暂停计时,无法恢复计时."
+		"chi"		"{darkred}你刚刚才暂停计时, 无法恢复计时."
 		"ru"		"{darkred}Вы не можете возобновить, потому что только что сделали паузу."
 	}
 }

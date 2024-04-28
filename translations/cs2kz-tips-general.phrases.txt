@@ -8,7 +8,7 @@
 	"Tip - kz_mode"
 	{
 		"en"	"{grey}You can switch to a mode by typing its abbreviation. For example, type {default}/ckz{grey} to switch to the {purple}Classic {grey}mode or {default}/vnl {grey}to switch to the {purple}Vanilla {grey}mode."
-		"chi"	"{grey}你可以输入缩写进行切换模式. 例如：输入 {default}/ckz{grey} 可以切换到 {purple}经典 {grey}模式 或者 {default}/vnl {grey}切换到 {purple}官匹 {grey}模式等."
+		"chi"	"{grey}你可以输入缩写切换模式. 例如：输入 {default}/ckz{grey} 可以切换到 {purple}经典 {grey}模式 或者 {default}/vnl {grey}切换到 {purple}官匹 {grey}模式等."
 	}
 	"Tip - kz_restart"
 	{
@@ -38,26 +38,26 @@
 	"Tip - kz_prevcp"
 	{
 		"en"	"{grey}Teleport to the previous checkpoint with {default}/prevcp{grey}."
-		"chi" 	"{grey}传送到上一个记录点请使用 {default}/prevcp{grey}."
+		"chi" 	"{grey}传送到上一个存点请使用 {default}/prevcp{grey}."
 	}
 	"Tip - kz_nextcp"
 	{
 		"en"	"{grey}Teleport to the next checkpoint with {default}/nextcp{grey}."
-		"chi"	"{grey}传送到下一个记录点请使用 {default}/nextcp{grey}."
+		"chi"	"{grey}传送到下一个存点请使用 {default}/nextcp{grey}."
 	}
 	"Tip - bugs"
 	{
 		"en"	"{grey}Report issues related to CS2KZ on our GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
-		"chi"	"{grey}遇到问题可以访问CS2KZ的仓库: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey} 进行反馈"
+		"chi"	"{grey}遇到问题可以访问CS2KZ的Github仓库: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey} 进行反馈"
 	}
 	"Tip - kz_jssound"
 	{
 		"en"	"{grey}You can control which jumpstats play a sound using {default}/jssound{grey}."
-		"chi"	"{grey}你可以使用 {default}/jssound{grey} 来控制声音播报等级."
+		"chi"	"{grey}你可以使用 {default}/jssound{grey} 来控制跳跃数据音效的最低播报等级."
 	}
 	"Tip - kz_jsbroadcast"
 	{
 		"en"	"{grey}Use {default}/jsbroadcast {grey}to change which jumpstats by other players get printed to you."
-		"chi"	"{grey}使用 {default}/jsbroadcast {grey}可以控制你的跳跃提示播报等级."
+		"chi"	"{grey}使用 {default}/jsbroadcast {grey}更改播报其他玩家的跳跃数据的最低等级."
 	}
 }
