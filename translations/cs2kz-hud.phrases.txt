@@ -74,6 +74,7 @@
 		// Unused
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		""
+		"chi"		""
 	}
 	
 	"HUD Option - Info Panel - Enable"
