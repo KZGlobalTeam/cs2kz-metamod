@@ -3,7 +3,7 @@
 	"Tip - kz_togglejs"
 	{
 		"en"	"{grey}You can toggle jumpstats reporting by typing {default}/togglejs{grey}."
-		"chi"	"{grey}你可以使用 {default}/togglejs{grey} 开启或关闭跳跃提示."
+		"chi"	"{grey}你可以使用 {default}/togglejs{grey} 开启或关闭起跳提示."
 	}
 	"Tip - kz_jsalways"
 	{
