@@ -2,7 +2,7 @@ WIP, not ready for release
 
 # Requirements
 
-- (Metamod 2.0.0+)[https://www.metamodsource.net/downloads.php/?branch=master]
+- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1284 or later
 
 - Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) for KZ sound effects (eg. jumpstats)
 
