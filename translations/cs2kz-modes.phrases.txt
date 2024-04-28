@@ -3,11 +3,13 @@
 	"Mode Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_mode <mode>.{grey} Check console for possible modes!"
+		"chi"		"{grey}用法: {default}kz_mode <模式名字>.{grey} 在控制台中查看可用模式!"
 	}
 	"Possible & Current Modes"
 	{
 		"#format"	"mode:s"
 		"en"		"Possible modes: (Current mode is {mode})"
+		"chi"		"可用模式: (当前模式为 {mode})"
 	}
 	"Mode Not Available"
 	{
