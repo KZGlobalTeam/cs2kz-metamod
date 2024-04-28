@@ -5,13 +5,13 @@
 		// You have made a checkpoint (#3).
 		"#format"	"checkpoint_count:d"
 		"en"		"{grey}You have made a checkpoint (#{default}{checkpoint_count}{grey})."
-		"chi"		"{grey}你存储了一个存点 (#{default}{checkpoint_count}{grey})."
+		"chi"		"{grey}你设置了一个存点 (#{default}{checkpoint_count}{grey})."
 		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
-		"chi"		"{yellow}警告{grey}: 存点创建在禁用存点区域."
+		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
 	}
 	"Can't Checkpoint (Midair)"
 	{
@@ -33,13 +33,13 @@
 	"Can't Teleport (No Checkpoints)"
 	{
 		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
-		"chi"		"{darkred}你尚未存储任何存点,无法传送."
+		"chi"		"{darkred}你尚未设置任何存点, 无法传送."
 		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
 	}
 	"Can't Teleport (Map)"
 	{
 		"en"		"{darkred}You can't teleport to your checkpoints in this area."
-		"chi"		"{darkred}在这个位置不能读点."
+		"chi"		"{darkred}在这个位置你不能读点."
 		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпойнты здесь."
 	}
 	"Can't Prev CP (No Checkpoints)"
@@ -80,17 +80,18 @@
 	"Can't Set Custom Start Position (Generic)"
 	{
 		"en"		"{grey}Failed to set your custom start position!"
+		"chi"		"{grey}设置你的自定义起点失败!"
 	}
 	"Set Custom Start Position"
 	{
 		"en"		"{grey}You have set your custom start position."
-		"chi"		"{grey}你设定了自定义起始点."
+		"chi"		"{grey}你设置了自定义起点."
 		"ru"		"{grey}Вы установили свою стартовую позицию."
 	}
 	"Cleared Custom Start Position"
 	{
 		"en"		"{grey}You have cleared your custom start position."
-		"chi"		"{grey}你清除了自定义起始点."
+		"chi"		"{grey}你清除了自定义起点."
 		"ru"		"{grey}Вы очистили свою стартовую позицию."
 	}
 }
