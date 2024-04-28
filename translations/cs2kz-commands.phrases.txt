@@ -3,146 +3,181 @@
 	"Command Help Response (Chat)"
 	{
 		"en"		"{grey}Look in your console for a list of commands!"
+		"chi"		"{grey}请在控制台中查看指令列表!"
 	}
 	"Command Help Response (Console)"
 	{
 		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
+		"chi"		"使用这些命令, 你可以在控制台中输入 \"bind <按键> kz_<命令名字>\", 或者在聊天栏中输入 !<命令名字> 或 /<命令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
 	}
 	"Switch Language"
 	{
 		// You have switched your language to english.
 		"#format"	"language:s"
 		"en"		"{grey}You have switched your language to {default}{language}{grey}."
+		"chi"		"{grey}你选择了你的语言为 {default}{language}{grey}."
 	}
 
 	// Commands
 	"Command Description - kz_checkpoint"
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
+		"chi"		"在地上或梯子上设置一个存点."
 	}
 	"Command Description - kz_cp"
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
+		"chi"		"在地上或梯子上设置一个存点."
 	}
 	"Command Description - kz_teleport"
 	{
 		"en"		"Teleport to the current checkpoint."
+		"chi"		"传送到当前存点."
 	}
 	"Command Description - kz_tp"
 	{
 		"en"		"Teleport to the current checkpoint."
+		"chi"		"传送到当前存点."
 	}
 	"Command Description - kz_prevcp"
 	{
 		"en"		"Teleport to the last checkpoint."
+		"chi"		"传送到上一个存点."
 	}
 	"Command Description - kz_pcp"
 	{
 		"en"		"Teleport to the last checkpoint."
+		"chi"		"传送到上一个存点."
 	}
 	"Command Description - kz_nextcp"
 	{
 		"en"		"Teleport to the next checkpoint."
+		"chi"		"传送到下一个存点."
 	}
 	"Command Description - kz_ncp"
 	{
 		"en"		"Teleport to the next checkpoint."
+		"chi"		"传送到下一个存点."
 	}
 	"Command Description - kz_setstartpos"
 	{
 		"en"		"Set your custom start position to your current position."
+		"chi"		"设置你的自定义起点为当前位置."
 	}
 	"Command Description - kz_ssp"
 	{
 		"en"		"Set your custom start position to your current position."
+		"chi"		"设置你的自定义起点为当前位置."
 	}
 	"Command Description - kz_clearstartpos"
 	{
 		"en"		"Clear your custom start position."
+		"chi"		"清除你的自定义起点."
 	}
 	"Command Description - kz_csp"
 	{
 		"en"		"Clear your custom start position."
+		"chi"		"清除你的自定义起点."
 	}
 	"Command Description - kz_panel"
 	{
 		"en"		"Toggle centre panel display."
+		"chi"		"切换中央面板的显示."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
+		"chi"		"更改广播跳跃提示的最小阈值."
 	}
 	"Command Description - kz_jssound"
 	{
 		"en"		"Change jumpstats minimum threshold for sound effects."
+		"chi"		"更改播放跳跃提示音的最小阈值."
 	}
 	"Command Description - kz_togglestats"
 	{
 		"en"		"Toggle jumpstats reporting."
+		"chi"		"切换跳跃提示报告的开关"
 	}
 	"Command Description - kz_togglejs"
 	{
 		"en"		"Toggle jumpstats reporting."
+		"chi"		"切换跳跃提示报告的开关"
 	}
 	"Command Description - kz_jsalways"
 	{
 		"en"		"Toggle the always-on jumpstats."
+		"chi"		"切换显示全部跳跃提示的开关"
 	}
 	"Command Description - kz_mode"
 	{
 		"en"		"List or change mode."
+		"chi"		"列出或更改模式."
 	}
 	"Command Description - kz_noclip"
 	{
 		"en"		"Toggle noclip."
+		"chi"		"切换飞行状态."
 	}
 	"Command Description - kz_nc"
 	{
 		"en"		"Toggle noclip."
+		"chi"		"切换飞行状态."
 	}
 	"Command Description - noclip"
 	{
 		"en"		"Toggle noclip."
+		"chi"		"切换飞行状态."
 	}
 	"Command Description - kz_spec"
 	{
 		"en"		"Spectate a player."
+		"chi"		"观看一个玩家."
 	}
 	"Command Description - kz_style"
 	{
 		"en"		"List or change style."
+		"chi"		"列出或更改风格."
 	}
 	"Command Description - kz_stop"
 	{
 		"en"		"Stop timer."
+		"chi"		"停止计时."
 	}
 	"Command Description - kz_pause"
 	{
 		"en"		"Toggle timer pause."
+		"chi"		"暂停计时."
 	}
 	"Command Description - kz_tips"
 	{
 		"en"		"Toggle tips."
+		"chi"		"切换提示的开关."
 	}
 	"Command Description - kz_hidelegs"
 	{
 		"en"		"Hide your legs in first person."
+		"chi"		"在第一人称中隐藏腿部."
 	}
 	"Command Description - kz_hide"
 	{
 		"en"		"Hide other players."
+		"chi"		"隐藏其他的玩家."
 	}
 	"Command Description - kz_restart"
 	{
 		"en"		"Restart."
+		"chi"		"重新开始."
 	}
 	"Command Description - kz_r"
 	{
 		"en"		"Restart."
+		"chi"		"重新开始."
 	}
 	"Command Description - kz_hideweapon"
 	{
 		"en"		"Hide weapon viewmodel."
+		"chi"		"隐藏武器模型显示."
 	}
 	"Command Description - jointeam"
 	{
@@ -152,17 +187,21 @@
 	"Command Description - kz_help"
 	{
 		"en"		"Show this help message."
+		"chi"		"显示帮助信息."
 	}
 	"Command Description - kz_language"
 	{
 		"en"		"Switch current language."
+		"chi"		"切换当前语言."
 	}
 	"Command Description - kz_vnl"
 	{
 		"en"		"Switch to Vanilla mode."
+		"chi"		"切换为官匹模式."
 	}
 	"Command Description - kz_ckz"
 	{
 		"en"		"Switch to Classic mode."
+		"chi"		"切换为经典模式."
 	}
 }
