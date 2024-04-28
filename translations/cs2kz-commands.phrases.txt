@@ -97,12 +97,12 @@
 	"Command Description - kz_togglestats"
 	{
 		"en"		"Toggle jumpstats reporting."
-		"chi"		"切换跳跃提示报告的开关"
+		"chi"		"切换起跳提示报告的开关"
 	}
 	"Command Description - kz_togglejs"
 	{
 		"en"		"Toggle jumpstats reporting."
-		"chi"		"切换跳跃提示报告的开关"
+		"chi"		"切换起跳提示报告的开关"
 	}
 	"Command Description - kz_jsalways"
 	{
