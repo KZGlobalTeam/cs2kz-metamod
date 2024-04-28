@@ -15,8 +15,8 @@
 	{
 		// The AutoBhop style is currently not available.
 		"#format"	"style:s"
-		"en"		"{grey}风格 {purple}{style} {grey}style is currently not available."
-		"chi"		"{grey}The {purple}{style} {grey}当前不可用."
+		"en"		"{grey}The {purple}{style} {grey}style is currently not available."
+		"chi"		"{grey}风格 {purple}{style} {grey}当前不可用."
 	}
 	"Switched Style"
 	{
