@@ -38,12 +38,12 @@
 	"Tip - kz_prevcp"
 	{
 		"en"	"{grey}Teleport to the previous checkpoint with {default}/prevcp{grey}."
-		"chi" 	"{grey}传送到上一个记录点请使用 {default}/prevcp{grey}."
+		"chi" 	"{grey}传送到上一个存点请使用 {default}/prevcp{grey}."
 	}
 	"Tip - kz_nextcp"
 	{
 		"en"	"{grey}Teleport to the next checkpoint with {default}/nextcp{grey}."
-		"chi"	"{grey}传送到下一个记录点请使用 {default}/nextcp{grey}."
+		"chi"	"{grey}传送到下一个存点请使用 {default}/nextcp{grey}."
 	}
 	"Tip - bugs"
 	{
