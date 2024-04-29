@@ -16,6 +16,7 @@ public:
 
 	void SetLanguage(const char *lang)
 	{
+		hasSavedLanguage = true;
 		V_strncpy(language, lang, sizeof(language));
 	}
 

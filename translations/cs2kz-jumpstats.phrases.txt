@@ -167,7 +167,7 @@
 	"Invalid gains"
 	{
 		"en"		"Invalid gains"
-		"chi		"无效增益"
+		"chi"		"无效增益"
 	}
 	"Externally modified"
 	{
