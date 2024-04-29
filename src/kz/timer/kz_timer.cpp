@@ -332,7 +332,7 @@ void KZTimerService::PrintEndTimeString()
 						time,
 						this->player->modeService->GetModeShortName(),
 						this->player->styleService->GetStyleShortName(),
-						KZLanguageService::PrepareMessage(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "2+ Teleports Text"));
+						KZLanguageService::PrepareMessage(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "2+ Teleports Text", tpCount));
 				}
 			}
 			// clang-format on
