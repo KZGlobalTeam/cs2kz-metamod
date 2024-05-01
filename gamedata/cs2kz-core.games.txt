@@ -342,8 +342,8 @@
 			// Check sv_fullupdate
 			"ClientOffset"
 			{
-				"windows"		"624"
-				"linux"			"640"
+				"windows"		"608"
+				"linux"			"624"
 			}
 			// Check "Received acknowledgement tick" string
 			"ACKOffset"
