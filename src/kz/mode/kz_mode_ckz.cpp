@@ -963,7 +963,12 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 
 void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
 {
-	if (this->overrideTPM)
+	Vector velocity;
+	this->player->GetVelocity(&velocity);
+	bool velocityHeavilyModified =
+		this->tpmVelocity.Normalized().Dot(velocity.Normalized()) < RAMP_BUG_THRESHOLD
+		|| (this->tpmVelocity.Length() > 50.0f && velocity.Length() / this->tpmVelocity.Length() < RAMP_BUG_VELOCITY_THRESHOLD);
+	if (this->overrideTPM && velocityHeavilyModified)
 	{
 		this->player->SetOrigin(this->tpmOrigin);
 		this->player->SetVelocity(this->tpmVelocity);
