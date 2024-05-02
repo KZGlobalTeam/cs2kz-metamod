@@ -279,6 +279,21 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 
 internal bool Hook_ActivateServer()
 {
+	local_persist bool infiniteAmmoUnlocked {};
+	if (!infiniteAmmoUnlocked)
+	{
+		infiniteAmmoUnlocked = true;
+		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
+		if (cvarHandle.IsValid())
+		{
+			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
+		}
+		else
+		{
+			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
+		}
+	}
+
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
