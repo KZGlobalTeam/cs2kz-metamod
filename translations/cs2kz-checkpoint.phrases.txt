@@ -7,91 +7,107 @@
 		"en"		"{grey}You have made a checkpoint (#{default}{checkpoint_count}{grey})."
 		"chi"		"{grey}你设置了一个存点 (#{default}{checkpoint_count}{grey})."
 		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."
+		"pl"		"{grey}Utworzyłeś punkt kontrolny (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
+		"pl"		"{yellow}UWAGA!{grey}: Stworzyłeś punkt kontrolny w niedozwolonym miejscu."
 	}
 	"Can't Checkpoint (Midair)"
 	{
 		"en"		"{darkred}You can't make a checkpoint mid-air."
 		"chi"		"{darkred}空中无法存点."
 		"ru"		"{darkred}Вы не можете поставить чекпойнт в воздухе."
+		"pl"		"{darkred}Nie możesz utworzyć punktu kontrolnego będąc w powietrzu."
 	}
 	"Can't Checkpoint (Just Landed)"
 	{
 		"en"		"{darkred}You can't make a checkpoint because you just landed."
 		"chi"		"{darkred}落地瞬间无法存点."
 		"ru"		"{darkred}Вы не можете поставить чекпойнт после приземления."
+		"pl"		"{darkred}Nie możesz utworzyć punktu kontrolnego, ponieważ dopiero wylądowałeś."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
-	{
+	{`
 		"en"		"{darkred}You can't checkpoint because checkpoints are disabled in this area."
 		"chi"		"{darkred}此区域禁止存点."
+		"pl"		"{darkred}W tym miejscu nie można utworzyć punktu kontrolnego."
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
 		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
 		"chi"		"{darkred}你尚未设置任何存点, 无法传送."
 		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
+		"pl"		"{darkred}Nie możesz użyć teleportu, ponieważ nie ustawiłeś żadnego punktu kontrolnego."
 	}
 	"Can't Teleport (Map)"
 	{
 		"en"		"{darkred}You can't teleport to your checkpoints in this area."
 		"chi"		"{darkred}在这个位置你不能读点."
 		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпойнты здесь."
+		"pl"		"{darkred}Nie możesz użyć teleportu w tym miejscu."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
 		"en"		"{darkred}You have no checkpoints to go back to."
 		"chi"		"{darkred}你没有任何能退回的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, чтобы вернутся к ним."
+		"pl"		"{darkred}Nie posiadasz żadnych punktów kontrolnych do których możesz wrócić."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
 		"en"		"{darkred}You have no checkpoints to go forward to."
 		"chi"		"{darkred}你没有任何能前进的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
+		"pl"		"{darkred}Nie posiadasz żadnych punktów kontrolnych których możesz przejść."
 	}
 	"Can't Undo (No Teleports)"
 	{
 		"en"		"{darkred}You can't undo because there are no teleports to undo."
 		"chi"		"{darkred}你没有可以撤销的存点."
 		"ru"		"{darkred}У вас нет телепортов, которые можно отменить."
+		"pl"		"{darkred}Nie możesz się cofnąć, ponieważ nie ma do czego."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
 		"en"		"{darkred}You can't undo because you teleported mid-air."
 		"chi"		"{darkred}在空中不能撤销存点."
 		"ru"		"{darkred}Вы не можете отменить, потому что телепортировались в воздухе."
+		"pl"		"{darkred}Nie możesz się cofnąć, ponieważ użyłeś teleportu w powietrzu."
 	}
 	"Can't Undo (Just Landed)"
 	{
 		"en"		"{darkred}You can't undo because you had just landed."
 		"chi"		"{darkred}落地瞬间无法撤销存点."
 		"ru"		"{darkred}Вы не можете отменить после приземления."
+		"pl"		"{darkred}Nie możesz się cofnąć, ponieważ dopiero co wylądowałeś."
 	}
 	"Can't Undo (AntiCp)"
 	{
 		"en"		"{darkred}You can't undo because you teleported while in an anti-checkpoint zone."
 		"chi"		"{darkred}你无法撤销，因为你在禁止存点区域."
+		"pl"		"{darkred}Nie możesz się cofnąć, ponieważ użyłeś teleportu będąc w miejscu niedozwolonym."
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
 		"en"		"{grey}Failed to set your custom start position!"
 		"chi"		"{grey}设置你的自定义起点失败!"
+		"pl"		"{grey}Nie udało Ci się ustawić niestandardowego miejsca startu!"
 	}
 	"Set Custom Start Position"
 	{
 		"en"		"{grey}You have set your custom start position."
 		"chi"		"{grey}你设置了自定义起点."
 		"ru"		"{grey}Вы установили свою стартовую позицию."
+		"pl"		"{grey}Ustawiłeś niestandardowe miejsce startu."
 	}
 	"Cleared Custom Start Position"
 	{
 		"en"		"{grey}You have cleared your custom start position."
 		"chi"		"{grey}你清除了自定义起点."
 		"ru"		"{grey}Вы очистили свою стартовую позицию."
+		"pl"		"{grey}Usunąłeś niestandardowe miejsce startu."
 	}
 }
