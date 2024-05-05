@@ -105,13 +105,13 @@
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"pl"		"Zmień minimalny próg dźwięku nadawanego dla jumpstatów."	
+		"pl"		"ustaw minimalny próg wyświetlania jumpstatów."	
 	}
 	"Command Description - kz_jssound"
 	{
 		"en"		"Change jumpstats minimum threshold for sound effects."
 		"chi"		"更改播放跳跃提示音的最小阈值."
-		"pl"		"Zmień minimalny próg dla efektów dźwiękowych podczas jumpstatów."	
+		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."	
 	}
 	"Command Description - kz_togglestats"
 	{
