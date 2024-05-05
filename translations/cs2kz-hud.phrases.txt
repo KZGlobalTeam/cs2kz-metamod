@@ -18,7 +18,7 @@
 		// (PAUSED)
 		"en"		" (PAUSED)"
 		"chi"		" (暂停)"
-		"fi"		" (PYSÄYTETTY)"
+		"fi"		" (KESKEYTETTY)"
 	}
 	"HUD - Speed Text"
 	{

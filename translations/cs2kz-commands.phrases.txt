@@ -26,73 +26,73 @@
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"fi"		"Asettaa tarkistuspisteen maahan tai tikkaille."
+		"fi"		"Asettaa tallenuspisteen maahan tai tikkaille."
 	}
 	"Command Description - kz_cp"
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"fi"		"Asettaa tarkistuspisteen maahan tai tikkaille."
+		"fi"		"Asettaa tallenuspisteen maahan tai tikkaille."
 	}
 	"Command Description - kz_teleport"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"fi"		"Teleporttaa tämänhetkiseen tarkistuspisteeseen."
+		"fi"		"Teleporttaa tämänhetkiseen tallenuspisteeseen."
 	}
 	"Command Description - kz_tp"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"fi"		"Teleporttaa tämänhetkiseen tarkistuspisteeseen."
+		"fi"		"Teleporttaa tämänhetkiseen ttallenuspisteeseen."
 	}
 	"Command Description - kz_prevcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"fi"		"Teleporttaa edelliseen tarkistuspisteeseen."
+		"fi"		"Teleporttaa edelliseen tallenuspisteeseen."
 	}
 	"Command Description - kz_pcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"fi"		"Teleporttaa edelliseen tarkistuspisteeseen."
+		"fi"		"Teleporttaa edelliseen tallenuspisteeseen."
 	}
 	"Command Description - kz_nextcp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"fi"		"Teleporttaa seuraavaan tarkistuspisteeseen."
+		"fi"		"Teleporttaa seuraavaan tallenuspisteeseen."
 	}
 	"Command Description - kz_ncp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"fi"		"Teleporttaa seuraavaan tarkistuspisteeseen."
+		"fi"		"Teleporttaa seuraavaan tallenuspisteeseen."
 	}
 	"Command Description - kz_setstartpos"
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"fi"		"Aseta custom aloituspisteesi sinun tämänhetkiseen sijaintiisi."
+		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 	}
 	"Command Description - kz_ssp"
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"fi"		"Aseta custom aloituspisteesi sinun tämänhetkiseen sijaintiisi."
+		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 	}
 	"Command Description - kz_clearstartpos"
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"fi"		"Tyhjennä sinun custom aloituspisteesi."
+		"fi"		"Tyhjennä custom aloituspisteesi."
 	}
 	"Command Description - kz_csp"
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"fi"		"Tyhjennä sinun custom aloituspisteesi."
+		"fi"		"Tyhjennä custom aloituspisteesi."
 	}
 	"Command Description - kz_panel"
 	{
@@ -104,31 +104,31 @@
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"fi"		"Muuta hyppystatistiikan lähetystoiminnon minimi kynnysarvoa."
+		"fi"		"Muuta muiden pelaajien chatissä näkyvien jumpstattien minimi kynnysarvoa."
 	}
 	"Command Description - kz_jssound"
 	{
 		"en"		"Change jumpstats minimum threshold for sound effects."
 		"chi"		"更改播放跳跃提示音的最小阈值."
-		"fi"		"Muuta hyppystatistiikan äänitehosteiden minimi kynnysarvoa."
+		"fi"		"Muuta jumpstattien äänitehosteiden minimi kynnysarvoa."
 	}
 	"Command Description - kz_togglestats"
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"fi"		"Vaihda hyppystatistiikan reportoinnin asetusta."
+		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 	}
 	"Command Description - kz_togglejs"
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"fi"		"Vaihda hyppystatistiikan reportoinnin asetusta."
+		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 	}
 	"Command Description - kz_jsalways"
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换 总是显示跳跃数据 的开关"
-		"fi"		"Vaihda aina-päällä hyppystatistiikan reportoinnin asetusta."
+		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
 	}
 	"Command Description - kz_mode"
 	{
@@ -140,19 +140,19 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"fi"		"Kytke noclip."
+		"fi"		"Vaiha noclip:n tilaa."
 	}
 	"Command Description - kz_nc"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"fi"		"Kytke noclip."
+		"fi"		"Vaiha noclip:n tilaa."
 	}
 	"Command Description - noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"fi"		"Kytke noclip."
+		"fi"		"Vaiha noclip:n tilaa."
 	}
 	"Command Description - kz_spec"
 	{
@@ -229,7 +229,7 @@
 	{
 		"en"		"Switch current language."
 		"chi"		"切换当前语言."
-		"fi"		"Vaiha käytössäolevaa kieltä."
+		"fi"		"Vaihda käytössäolevaa kieltä."
 	}
 	"Command Description - kz_vnl"
 	{

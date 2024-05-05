@@ -4,13 +4,13 @@
 	{
 		"en"	"{grey}Use {default}/help {grey}to see all available KZ commands."
 		"chi"	"{grey}使用 {default}/help {grey}查看全部指令."
-		"fi"	"{grey}Käytä {default}/help {grey}nähdäksesi kaikki mahdolliset KZ komennot."
+		"fi"	"{grey}Käytä {default}/help {grey}komentoa nähdäksesi kaikki mahdolliset KZ komennot."
 	}
 	"Tip - kz_mode"
 	{
 		"en"	"{grey}You can switch to a mode by typing its abbreviation. For example, type {default}/ckz{grey} to switch to the {purple}Classic {grey}mode or {default}/vnl {grey}to switch to the {purple}Vanilla {grey}mode."
 		"chi"	"{grey}你可以输入缩写进行切换模式. 例如：输入 {default}/ckz{grey} 可以切换到 {purple}经典 {grey}模式 或者 {default}/vnl {grey}切换到 {purple}官匹 {grey}模式等."
-		"fi"	"{grey}Voit vaihtaa moodia kirjoittamalla sen lyhennyksen. Esimerkiksi, kirjoita {default}/ckz{grey} vaihtaaksesi {purple}Classic {grey}moodiin tai {default}/vnl {grey}vaihtaaksesi {purple}Vanilla {grey}moodiin."
+		"fi"	"{grey}Voit vaihtaa moodia kirjoittamalla sen lyhennyksen. Esimerkiksi, voit kirjoittaa {default}/ckz{grey} chattiin vaihtaaksesi {purple}Classic {grey}moodiin tai {default}/vnl {grey}vaihtaaksesi {purple}Vanilla {grey}moodiin."
 	}
 	"Tip - kz_restart"
 	{
@@ -34,7 +34,7 @@
 	{
 		"en"	"{grey}Don't need tips like this showing up in chat? You can toggle them with {default}/tips{grey}."
 		"chi"	"{grey}不需要这些提示? 可以使用 {default}/tips{grey} 切换开关."
-		"fi"	"{grey}Etkö tarvitse vihejeitä niinkuin tämä chatissasi? Voit muuttaa niiden asetusta {default}/tips{grey} komennolla."
+		"fi"	"{grey}Etkö tarvitse vihejeitä kuten tämä chatissasi? Voit muuttaa niiden asetusta {default}/tips{grey} komennolla."
 	}
 	"Tip - bind"
 	{
@@ -64,12 +64,12 @@
 	{
 		"en"	"{grey}You can control which jumpstats play a sound using {default}/jssound{grey}."
 		"chi"	"{grey}你可以使用 {default}/jssound{grey} 来控制声音播报等级."
-		"fi"	"{grey}Voit valita mitkä hyppystatistiikat soittavat äänieffektin käyttämällä {default}/jssound{grey} komentoa."
+		"fi"	"{grey}Voit valita mitkä jumpstatit soittavat äänieffektin käyttämällä {default}/jssound{grey} komentoa."
 	}
 	"Tip - kz_jsbroadcast"
 	{
 		"en"	"{grey}Use {default}/jsbroadcast {grey}to change which jumpstats by other players get printed to you."
 		"chi"	"{grey}使用 {default}/jsbroadcast {grey}可以控制你的跳跃提示播报等级."
-		"fi"	"{grey}Käytä {default}/jsbroadcast {grey}komentoa vaihtaaksesi mitkä muiden pelaajien saamat hyppystatistiikat printataan sinulle."
+		"fi"	"{grey}Käytä {default}/jsbroadcast {grey}komentoa vaihtaaksesi mitkä muiden pelaajien saamat jumpstatit printataan sinulle."
 	}
 }

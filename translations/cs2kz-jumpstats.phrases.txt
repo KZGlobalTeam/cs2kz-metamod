@@ -224,28 +224,28 @@
 		"en"		"{grey}You have enabled jumpstats reporting."
 		"chi"		"{grey}已开启起跳数据."
 		"ru"		"{grey}Вы включили отчеты по прыжкам."
-		"fi"		"{grey}Olet ottanut käyttöön hyppystatistiikan reportoinnin."
+		"fi"		"{grey}Olet ottanut käyttöön jumpstattien reportoinnin."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
 		"en"		"{grey}You have disabled all jumpstats reporting."
 		"chi"		"{grey}已关闭起跳数据."
 		"ru"		"{grey}Вы отключили отчеты по прыжкам."
-		"fi"		"{grey}Olet poistanut käytöstä hyppystatistiikan reportoinnin."
+		"fi"		"{grey}Olet poistanut käytöstä jumpstattien reportoinnin."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
 		"en"		"{grey}You have enabled the always-on jumpstats."
 		"chi"		"{grey}你已开启 总是显示跳跃数据."
 		"ru"		"{grey}Вы включили постоянные отчеты по прыжкам."
-		"fi"		"{grey}Olet ottanut käyttöön aina-päällä hyppystatistiikan reportoinnin."
+		"fi"		"{grey}Olet ottanut käyttöön \"aina-päällä\" jumpstattien reportoinnin."
 	}
 	"Jumpstats Option - Jumpstats Always - Disable"
 	{
 		"en"		"{grey}You have disabled the always-on jumpstats."
 		"chi"		"{grey}你已关闭 总是显示跳跃数据."
 		"ru"		"{grey}Вы отключили постоянные отчеты по прыжкам."
-		"fi"		"{grey}Olet poistanut käytöstä aina-päällä hyppystatistiikan reportoinnin."
+		"fi"		"{grey}Olet poistanut käytöstä \"aina-päällä\" jumpstattien reportoinnin."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -257,14 +257,14 @@
 	{
 		"en"		"{grey}Jumpstats broadcasting disabled."
 		"chi"		"{grey}广播跳跃提示禁用中."
-		"fi"		"{grey}Hyppystatistiikan lähetystoiminto poistettu käytöstä."
+		"fi"		"{grey}Jumpstattien lähetystoiminto poistettu käytöstä."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats broadcast threshold is now {default}{tier}."
 		"chi"		"{grey}广播跳跃提示阈值现在为 {default}{tier}."
-		"fi"		"{grey}Hyppystatistiikan lähetystoiminnon kynnysarvo on nyt {default}{tier}."
+		"fi"		"{grey}Muiden pelaajien chatissa näkyvien jumpstattien kynnysarvo on nyt {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -276,14 +276,14 @@
 	{
 		"en"		"{grey}Jumpstats sound effect disabled."
 		"chi"		"{grey}跳跃提示音禁用中."
-		"fi"		"{grey}Hyppystatistiikan äänitehoste poistettu käytöstä."
+		"fi"		"{grey}Jumpstattien äänitehosteet poistettu käytöstä."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats sound effect threshold is now {default}{tier}."
 		"chi"		"{grey}跳跃提示音阈值现在为 {default}{tier}."
-		"fi"		"{grey}Hyppystatistiikan äänitehosteiden kynnysarvo on nyt {default}{tier}."
+		"fi"		"{grey}Jumpstattien äänitehosteiden kynnysarvo on nyt {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"
@@ -334,7 +334,7 @@
 		"#format"	"gain_eff:.0f,air_path:.3f,deviation:.1f,width:.1f,air_time:.4f,offset:.1f,duck_end_time:.2f,duck_total_time:.2f"
 		"en"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"chi"		"{gain_eff}%%%% 增益效率 | {air_path} 空中路径 | {deviation} 偏移 | {width} 幅度 | {air_time} 滞空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 蹲占比"
-		"fi"		"{gain_eff}%%%% GainTeho | {air_path} Lentotie | {deviation} Deviaatio | {width} Leveys | {air_time} Ilma-aika | {offset} Kompensaatio | {duck_end_time}/{duck_total_time} Kyykyssä"
+		"fi"		"{gain_eff}%%%% Tehokkuus | {air_path} Lentotie | {deviation} Deviaatio | {width} Leveys | {air_time} Ilma-aika | {offset} Kompensaatio | {duck_end_time}/{duck_total_time} Kyykyssä"
 	}
 	"Jumpstats Report - Strafe Report Header"
 	{

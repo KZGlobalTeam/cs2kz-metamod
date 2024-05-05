@@ -19,7 +19,7 @@
 		"#format"	"style:s"
 		"en"		"{grey}The {purple}{style} {grey}style is currently not available."
 		"chi"		"{grey}风格 {purple}{style} {grey}当前不可用."
-		"fi"		"{grey}Tyyli {purple}{style} {grey}ei ole tällähetkellä saatavilla."
+		"fi"		"{grey}Tyyli {purple}{style} {grey}ei ole tällä hetkellä saatavilla."
 	}
 	"Switched Style"
 	{
