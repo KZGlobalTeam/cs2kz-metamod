@@ -26,49 +26,49 @@
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"pl"		"Ustaw punkt kontrolny na ziemi bądź drabinie."
+		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 	}
 	"Command Description - kz_cp"
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"pl"		"Ustaw punkt kontrolny na ziemi bądź drabinie."
+		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 	}
 	"Command Description - kz_teleport"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"pl"		"Teleportuj się do aktualnego punktu kontrolnego."
+		"pl"		"Teleportuj się do aktualnego checkpoint'u."
 	}
 	"Command Description - kz_tp"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"pl"		"Teleportuj się do aktualnego punktu kontrolnego."
+		"pl"		"Teleportuj się do aktualnego checkpoint'u."
 	}
 	"Command Description - kz_prevcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"pl"		"Teleportuj się do poprzedniego punktu kontrolnego."
+		"pl"		"Teleportuj się do poprzedniego checkpoint'u."
 	}
 	"Command Description - kz_pcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"pl"		"Teleportuj się do poprzedniego punktu kontrolnego."
+		"pl"		"Teleportuj się do poprzedniego checkpoint'u."
 	}
 	"Command Description - kz_nextcp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"pl"		"Teleportuj się do następnego punktu kontrolnego."
+		"pl"		"Teleportuj się do następnego checkpoint'u."
 	}
 	"Command Description - kz_ncp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"pl"		"Teleportuj się do następnego punktu kontrolnego."	
+		"pl"		"Teleportuj się do następnego checkpoint'u."	
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -128,7 +128,7 @@
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换 总是显示跳跃数据 的开关"
-		"pl"		"Zawsze pokazuj jumpstaty."	
+		"pl"		"Zawsze pokazuj jumpstat'y."	
 	}
 	"Command Description - kz_mode"
 	{
