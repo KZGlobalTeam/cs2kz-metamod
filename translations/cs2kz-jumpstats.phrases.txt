@@ -6,121 +6,142 @@
 		"en"		"Offset"
 		"chi"		"位移"
 		"ru"		"Сдвиг"
+		"pl"		"Różnica"
 	}
 	"Height"
 	{
 		"en"		"Height"
 		"chi"		"高度"
 		"ru"		"Высота"
+		"pl"		"Wysokość"
 	}
 	"Pre"
 	{
 		"en"		"Pre"
 		"chi"		"地速"
 		"ru"		"Pre"
+		"pl"		"Pre"
 	}
 	"Max"
 	{
 		"en"		"Max"
 		"chi"		"空速"
 		"ru"		"Макс."
+		"pl"		"Max"
 	}
 	"Strafes" // Plural
 	{
 		"en"		"Strafes"
 		"chi"		"加速"
 		"ru"		"Стрейфы"
+		"pl"		"Strefy"
 	}
 	"Strafe" // Singular
 	{
 		"en"		"Strafe"
 		"chi"		"加速"
 		"ru"		"Стрейф"
+		"pl"		"Strefa"
 	}
 	"Sync"
 	{
 		"en"		"Sync"
 		"chi"		"同步率"
 		"ru"		"Sync"
+		"pl"		"Synch"
 	}
 	"Air"
 	{
 		"en"		"Air"
 		"chi"		"滞空"
 		"ru"		"Air"
+		"pl"		"Air"
 	}
 	"Air Time"
 	{
 		"en"		"Airtime"
 		"chi"		"滞空"
 		"ru"		"Airtime"
+		"pl"		"Czas lotu"
 	}
 	"Block"
 	{
 		"en"		"Block"
 		"chi"		"板子"
 		"ru"		"Блок"
+
 	}
 	"Bad Angles (Short)"
 	{
 		"en"		"BA"
 		"chi"		"无效角度"
+		"pl"		"BA"
 	}
 	"Overlap (Short)"
 	{
 		"en"		"OL"
 		"chi"		"冲突"
 		"ru"		"OL"
+		"pl"		"OL"
 	}
 	"Dead Air (Short)"
 	{
 		"en"		"DA"
 		"chi"		"无操作"
 		"ru"		"DA"
+		"pl"		"DA"
 	}
 	"Edge"
 	{
 		"en"		"Edge"
 		"chi"		"边距"
 		"ru"		"Край"
+		"pl"		"Krawędź"
 	}
 	"Deviation"
 	{
 		"en"		"Deviation"
 		"chi"		"偏移"
 		"ru"		"Отклонение"
+		"pl"		"Dewiacja"
 	}
 	"Width"
 	{
 		"en"		"Width"
 		"chi"		"幅度"
 		"ru"		"Ширина"
+		"pl"		"Szerokość"
 	}
 	"Duck Time"
 	{
 		"en"		"Crouched"
 		"chi"		"蹲占比"
 		"ru"		"Crouched"
+		"pl"		"Crouched"
 	}
 	"Gain Efficiency (Short)"
 	{
 		"en"		"GainEff"
 		"chi"		"增益效率"
+		"pl"		"GainEff"
 	}
 	"Air Path"
 	{
 		"en"		"Airpath"
 		"chi"		"空中路径"
+		"pl"		"Ścieżka"
 	}
 	"Angle Ratio"
 	{
 		"en"		"AngRatio(Avg/Med/Max)"
 		"chi"		"角度(平均/最小/最大)"
+		"pl"		"AngRatio(Avg/Med/Max)"
 	}
 	"Gain"
 	{
 		"en"		"Gain"
 		"chi"		"增益"
+		"pl"		"Gain"
 	}
 	"Loss"
 	{
