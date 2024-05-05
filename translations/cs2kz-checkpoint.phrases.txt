@@ -13,7 +13,7 @@
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
-		"pl"		"{yellow}UWAGA!{grey}: Stworzyłeś punkt kontrolny w niedozwolonym miejscu."
+		"pl"		"{yellow}UWAGA!{grey}: Utworzyłeś punkt kontrolny w niedozwolonym miejscu."
 	}
 	"Can't Checkpoint (Midair)"
 	{
@@ -27,7 +27,7 @@
 		"en"		"{darkred}You can't make a checkpoint because you just landed."
 		"chi"		"{darkred}落地瞬间无法存点."
 		"ru"		"{darkred}Вы не можете поставить чекпойнт после приземления."
-		"pl"		"{darkred}Nie możesz utworzyć punktu kontrolnego, ponieważ dopiero wylądowałeś."
+		"pl"		"{darkred}Nie możesz utworzyć punktu kontrolnego, ponieważ dopiero co wylądowałeś."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{`
@@ -54,14 +54,14 @@
 		"en"		"{darkred}You have no checkpoints to go back to."
 		"chi"		"{darkred}你没有任何能退回的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, чтобы вернутся к ним."
-		"pl"		"{darkred}Nie posiadasz żadnych punktów kontrolnych do których możesz wrócić."
+		"pl"		"{darkred}Nie posiadasz żadnych punktów kontrolnych do których możesz powrócić."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
 		"en"		"{darkred}You have no checkpoints to go forward to."
 		"chi"		"{darkred}你没有任何能前进的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
-		"pl"		"{darkred}Nie posiadasz żadnych punktów kontrolnych których możesz przejść."
+		"pl"		"{darkred}Nie posiadasz żadnych punktów kontrolnych do których możesz przejść."
 	}
 	"Can't Undo (No Teleports)"
 	{
