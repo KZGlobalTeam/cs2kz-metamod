@@ -231,7 +231,7 @@
 		"en"		"{grey}You have disabled all jumpstats reporting."
 		"chi"		"{grey}已关闭起跳数据."
 		"ru"		"{grey}Вы отключили отчеты по прыжкам."
-		"fi"		"{grey}Olet poistanut käyttöstä hyppystatistiikan reportoinnin."
+		"fi"		"{grey}Olet poistanut käytöstä hyppystatistiikan reportoinnin."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -245,7 +245,7 @@
 		"en"		"{grey}You have disabled the always-on jumpstats."
 		"chi"		"{grey}你已关闭 总是显示跳跃数据."
 		"ru"		"{grey}Вы отключили постоянные отчеты по прыжкам."
-		"fi"		"{grey}Olet poistanut käyttöstä aina-päällä hyppystatistiikan reportoinnin."
+		"fi"		"{grey}Olet poistanut käytöstä aina-päällä hyppystatistiikan reportoinnin."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -292,7 +292,7 @@
 		"#format"	"player:s,color:s,distance:.2f,jump_type:s,mode_short:s"
 		"en"		"{default}{player} {grey}jumped {color}{distance} {grey}units with a {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"chi"		"{default}{player} {grey}通过 {lime}{jump_type} {grey}跳出了 {color}{distance} {grey} 距离 [{purple}{mode_short}{grey}]"
-		"fi"		"{default}{player} {grey}hyppäsi {color}{distance} {grey}yksilöä hyppytyylillä {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+		"fi"		"{default}{player} {grey}hyppäsi {color}{distance} {grey}uniittia hyppytyylillä {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 	}
 	
 	"Jumpstats Report - Invalidation Reason"
@@ -318,7 +318,7 @@
 		"#format"	"player_name:s,distance:.4f,jump_type:s,invalidation_reason:s"
 		"en"		"{player_name} jumped {distance} units with a {jump_type} {invalidation_reason}"
 		"chi"		"{player_name} 通过 {jump_type} 跳出了 {distance} 距离 {invalidation_reason}"
-		"fi"		"{player_name} hyppäsi {distance} yksilöä hyppytyylillä {jump_type} {invalidation_reason}"
+		"fi"		"{player_name} hyppäsi {distance} uniittia hyppytyylillä {jump_type} {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{

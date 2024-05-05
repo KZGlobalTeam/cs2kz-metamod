@@ -10,7 +10,7 @@
 	{
 		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 		"chi"		"使用这些命令, 你可以在控制台中输入 \"bind <按键> kz_<命令名字>\", 或者在聊天栏中输入 !<命令名字> 或 /<命令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
-		"fi"		"Käyttääksesi näitä komentoja, voit kirjoittaa \"bind <key> kz_<command name>\" konsoliisi, tai kirjoittaa !<komento> tai /<komento> chattiin.\nEsimerkiksi: \"bind 1 kz_cp\" tai \"!cp\" tai \"/cp\""
+		"fi"		"Käyttääksesi näitä komentoja, voit kirjoittaa \"bind <key> kz_<komennon nimi>\" konsoliisi, tai kirjoittaa !<komento> tai /<komento> chattiin.\nEsimerkiksi: \"bind 1 kz_cp\" tai \"!cp\" tai \"/cp\""
 	}
 	"Switch Language"
 	{
@@ -18,7 +18,7 @@
 		"#format"	"language:s"
 		"en"		"{grey}You have switched your language to {default}{language}{grey}."
 		"chi"		"{grey}你选择了你的语言为 {default}{language}{grey}."
-		"fi"		"{grey}Olet vaihtanut kielesi {default}{language}{grey}."
+		"fi"		"{grey}Kielesi on nyt {default}{language}{grey}."
 	}
 
 	// Commands
@@ -74,13 +74,13 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"fi"		"Aseta cusom aloituspisteesi sinun tämänhetkiseen sijaintiisi."
+		"fi"		"Aseta custom aloituspisteesi sinun tämänhetkiseen sijaintiisi."
 	}
 	"Command Description - kz_ssp"
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"fi"		"Aseta cusom aloituspisteesi sinun tämänhetkiseen sijaintiisi."
+		"fi"		"Aseta custom aloituspisteesi sinun tämänhetkiseen sijaintiisi."
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -182,7 +182,7 @@
 	{
 		"en"		"Toggle tips."
 		"chi"		"切换提示的开关."
-		"fi"		"Vaihda tippien asetusta."
+		"fi"		"Vaihda vihjeiden asetusta."
 	}
 	"Command Description - kz_hidelegs"
 	{

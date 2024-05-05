@@ -34,7 +34,7 @@
 	{
 		"en"	"{grey}Don't need tips like this showing up in chat? You can toggle them with {default}/tips{grey}."
 		"chi"	"{grey}不需要这些提示? 可以使用 {default}/tips{grey} 切换开关."
-		"fi"	"{grey}Etkö tarvitse tippejä niinkiun tämä chatissasi? Voit muuttaa niiden asetusta {default}/tips{grey} komennolla."
+		"fi"	"{grey}Etkö tarvitse vihejeitä niinkuin tämä chatissasi? Voit muuttaa niiden asetusta {default}/tips{grey} komennolla."
 	}
 	"Tip - bind"
 	{

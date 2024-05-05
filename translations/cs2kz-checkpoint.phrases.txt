@@ -27,7 +27,7 @@
 		"en"		"{darkred}You can't make a checkpoint because you just landed."
 		"chi"		"{darkred}落地瞬间无法存点."
 		"ru"		"{darkred}Вы не можете поставить чекпойнт после приземления."
-		"fi" 		"{darkred}Et voi asettaa tarkistuspistettä sillä juuri laskeuduit."
+		"fi" 		"{darkred}Et voi asettaa tarkistuspistettä sillä laskeuduit juuri."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{
@@ -82,7 +82,7 @@
 		"en"		"{darkred}You can't undo because you had just landed."
 		"chi"		"{darkred}落地瞬间无法撤销存点."
 		"ru"		"{darkred}Вы не можете отменить после приземления."
-		"fi"		"{darkred}Et voi palata takaisin, sillä juuri laskeuduit."
+		"fi"		"{darkred}Et voi palata takaisin, sillä laskeuduit juuri."
 	}
 	"Can't Undo (AntiCp)"
 	{

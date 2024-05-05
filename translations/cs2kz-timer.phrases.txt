@@ -59,7 +59,7 @@
 		"en"		"{darkred}You can't pause because you just resumed."
 		"chi"		"{darkred}你刚刚才恢复计时,无法暂停."
 		"ru"		"{darkred}Вы не можете после возобновления поставить вновь паузу."
-		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä juuri jatkoit ajastintasi."
+		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä jatkoit juuri ajastintasi."
 	}
 	"Can't Pause (Midair)"
 	{
@@ -73,7 +73,7 @@
 		"en"		"{darkred}You can't pause because you just landed."
 		"chi"		"{darkred}你不能暂停, 因为你还没有站稳."	
 		"ru"		"{darkred}Вы не можете поставить паузу после приземления."
-		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä juuri laskeuduit."
+		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä laskeuduit juuri."
 	}
 	"Can't Pause (Anti Pause Area)"
 	{
@@ -92,6 +92,6 @@
 		"en"		"{darkred}You can't resume because you just paused."
 		"chi"		"{darkred}你刚刚才暂停计时,无法恢复计时."
 		"ru"		"{darkred}Вы не можете возобновить, потому что только что сделали паузу."
-		"fi"		"{darkred}Et voi jatkaa ajastintasi, sillä juuri pysäytit sen."
+		"fi"		"{darkred}Et voi jatkaa ajastintasi, sillä pysäytit sen juuri."
 	}
 }

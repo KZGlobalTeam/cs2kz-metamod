@@ -38,6 +38,6 @@
 		"en"		"{grey}You are now hiding your weapon."
 		"chi"		"{grey}你现在隐藏了你的武器."
 		"ru"		"{grey}Теперь вы скрыли свое оружие."
-		"fi"		"{grey}Sinun pelaajasi ase on nyt piilossas."
+		"fi"		"{grey}Sinun pelaajasi ase on nyt piilossa."
 	}
 }
