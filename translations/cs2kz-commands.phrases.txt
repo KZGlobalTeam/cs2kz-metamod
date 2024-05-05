@@ -99,13 +99,13 @@
 	{
 		"en"		"Toggle centre panel display."
 		"chi"		"切换中心面板的显示."
-		"pl"		"Włącz lub wyłącz środkowy panel."	
+		"pl"		"Wyświetlanie panelu środkowego."	
 	}
 	"Command Description - kz_jsbroadcast"
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"pl"		"ustaw minimalny próg wyświetlania jumpstatów."	
+		"pl"		"Ustaw minimalny próg wyświetlania jumpstatów."	
 	}
 	"Command Description - kz_jssound"
 	{
