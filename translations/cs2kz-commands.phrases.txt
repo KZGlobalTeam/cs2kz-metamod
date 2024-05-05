@@ -104,7 +104,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"pl"		"Ustaw minimalny dla próg wyświetlania jumpstatów."	
+		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."	
 	}
 	"Command Description - kz_jssound"
 	{
@@ -134,26 +134,26 @@
 	{
 		"en"		"List or change mode."
 		"chi"		"列出或更改模式."
-		"pl"		"Lista stylów gry bądź zmiana stylu."	
+		"pl"		"Lista trybów gry bądź jego zmiana."	
 	}
 	"Command Description - kz_noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."	
+		"pl"		"Włącz lub wyłącz noclip'a."	
 	}
 	"Command Description - kz_nc"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."
+		"pl"		"Włącz lub wyłącz noclip'a."
 
 	}
 	"Command Description - noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."
+		"pl"		"Włącz lub wyłącz noclip'a."
 	}
 	"Command Description - kz_spec"
 	{
@@ -165,7 +165,7 @@
 	{
 		"en"		"List or change style."
 		"chi"		"列出或更改风格."
-		"pl"		"Lista stylów gry bądź zmiana stylu."	
+		"pl"		"Lista trybów gry bądź jego zmiana."	
 	}
 	"Command Description - kz_stop"
 	{
@@ -177,7 +177,7 @@
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"pl"		"Przełącz pauze timera."	
+		"pl"		"Przełącz pauze timer'a."	
 	}
 	"Command Description - kz_tips"
 	{
@@ -225,7 +225,6 @@
 	{
 		"en"		"Show this help message."
 		"chi"		"显示帮助信息."
-		"pl"		"Restart."
 	}
 	"Command Description - kz_language"
 	{
