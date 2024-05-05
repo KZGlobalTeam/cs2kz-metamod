@@ -40,14 +40,14 @@
 		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
 		"chi"		"{darkred}你尚未设置任何存点, 无法传送."
 		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
-		"pl"		"{darkred}Nie możesz użyć teleportu, ponieważ nie ustawiłeś żadnego punktu kontrolnego."
+		"pl"		"{darkred}Nie możesz się teleportować, ponieważ nie ustawiłeś żadnego punktu kontrolnego."
 	}
 	"Can't Teleport (Map)"
 	{
 		"en"		"{darkred}You can't teleport to your checkpoints in this area."
 		"chi"		"{darkred}在这个位置你不能读点."
 		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпойнты здесь."
-		"pl"		"{darkred}Nie możesz użyć teleportu w tym miejscu."
+		"pl"		"{darkred}Nie możesz się teleportować w tym miejscu."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
