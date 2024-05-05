@@ -10,7 +10,7 @@
 	{
 		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 		"chi"		"使用这些命令, 你可以在控制台中输入 \"bind <按键> kz_<命令名字>\", 或者在聊天栏中输入 !<命令名字> 或 /<命令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
-		"pl"		"Aby użyć tych poleceń, wpisz w konsoli\"bind <klawisz> kz_<nazwa polecenia>\", albo wpisz !<nazwa polecenia> lub /<nazwa polecenia> na czacie.\nnp.: \"bind 1 kz_cp\" lub \"!cp\" lub \"/cp\""
+		"pl"		"Aby użyć tych poleceń, wpisz w konsoli \"bind <klawisz> kz_<nazwa polecenia>\", albo wpisz !<nazwa polecenia> lub /<nazwa polecenia> na czacie.\nnp.: \"bind 1 kz_cp\" lub \"!cp\" lub \"/cp\""
 	}
 	"Switch Language"
 	{
