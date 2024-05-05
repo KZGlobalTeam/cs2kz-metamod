@@ -30,7 +30,7 @@
 		"pl"		"{darkred}Nie możesz utworzyć punktu kontrolnego, ponieważ dopiero co wylądowałeś."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
-	{`
+	{
 		"en"		"{darkred}You can't checkpoint because checkpoints are disabled in this area."
 		"chi"		"{darkred}此区域禁止存点."
 		"pl"		"{darkred}W tym miejscu nie można utworzyć punktu kontrolnego."
