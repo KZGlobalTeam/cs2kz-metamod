@@ -4,12 +4,14 @@
 	{
 		"en"		"{grey}Usage: {default}kz_style <style>.{grey} Check console for possible styles!"
 		"chi"		"{grey}用法: {default}kz_style <风格名字>.{grey} 在控制台中查看可用模式!"
+		"fi"		"{grey}Käyttö: {default}kz_style <tyyli>.{grey} Tarkista konsolista mahdolliset tyylit."
 	}
 	"Possible & Current Styles"
 	{
 		"#format"	"style:s"
 		"en"		"Possible styles: (Current style is {style})"
 		"chi"		"可用风格: (当前风格为 {style})"
+		"fi"		"Mahdolliset tyylit: (Tämän hetkinen tyyli on {style})"
 	}
 	"Style Not Available"
 	{
@@ -17,6 +19,7 @@
 		"#format"	"style:s"
 		"en"		"{grey}The {purple}{style} {grey}style is currently not available."
 		"chi"		"{grey}风格 {purple}{style} {grey}当前不可用."
+		"fi"		"{grey}Tyyli {purple}{style} {grey}ei ole tällähetkellä saatavilla."
 	}
 	"Switched Style"
 	{
@@ -24,5 +27,6 @@
 		"#format"	"style:s"
 		"en"		"{grey}You have switched to the {purple}{style} {grey}style."
 		"chi"		"{grey}你已切换到 {purple}{style} {grey}风格."
+		"fi"		"{grey}Olet vaihtanut {purple}{style} {grey}tyyliin."
 	}
 }
