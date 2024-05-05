@@ -11,7 +11,7 @@
 		"#format"	"mode:s"
 		"en"		"Possible modes: (Current mode is {mode})"
 		"chi"		"可用模式: (当前模式为 {mode})"
-		"pl"		"Możliwe tryby: (Obecny tryb to {mode})"
+		"pl"		"Możliwe tryby: (Obecny tryb gry to {mode})"
 	}
 	"Mode Not Available"
 	{
