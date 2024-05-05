@@ -4,20 +4,24 @@
 	{
 		"en"	"{grey}Use {default}/panel {grey} to toggle the panel in the middle of your screen."
 		"chi"	"{grey}使用 {default}/panel {grey} 可以切换屏幕中心面板的显示."
+		"pl"	"{grey}Użyj {default}/panel {grey} aby włączyć lub wyłączyć panel na środku ekranu."
 	}
 	"Tip - kz_hidelegs"
 	{
 		"en"	"{grey}You can toggle your leg visibility by typing{default} /hidelegs{grey}."
 		"chi"	"{grey}你需要隐藏腿部吗？ 输入 {default}/hidelegs{grey} 切换显示或隐藏."
+		"pl"	"{grey}Nie będziesz już widział swoich nóg."
 	}
 	"Tip - kz_hide"
 	{
 		"en"	"{grey}Don't want to see other players? Use {default}/hide{grey}."
 		"chi"	"{grey}不想看到其他玩家？ 输入 {default}/hide{grey} 切换显示或隐藏."
+		"pl"	"{grey}Nie chcesz widzieć innych graczy? Użyj {default}/hide{grey}."
 	}
 	"Tip - kz_hideweapon"
 	{
 		"en"	"{grey}Type {default}/hideweapon {grey}to toggle your weapon visibility."
 		"chi"	"{grey}输入 {default}/hideweapon {grey}可以关掉枪械模型显示."
+		"pl"	"{grey}Użyj {default}/hideweapon {grey} aby włączyć lub wyłączyć widoczność broni.
 	}
 }
