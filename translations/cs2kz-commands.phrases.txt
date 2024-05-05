@@ -105,7 +105,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"pl"		"Ustaw minimalny próg wyświetlania jumpstatów."	
+		"pl"		"Ustaw minimalny dla próg wyświetlania jumpstatów."	
 	}
 	"Command Description - kz_jssound"
 	{
