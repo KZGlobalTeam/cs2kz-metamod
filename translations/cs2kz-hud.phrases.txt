@@ -11,7 +11,7 @@
 		// (STOPPED)
 		"en"		" (STOPPED)"
 		"chi"		" (停止)"
-		"en"		" (STOPPAD)"
+		"sv"		" (STOPPAD)"
 	}
 	"HUD - Paused Text"
 	{
