@@ -231,7 +231,7 @@
 		"en"		"{grey}You have disabled all jumpstats reporting."
 		"chi"		"{grey}已关闭起跳数据."
 		"ru"		"{grey}Вы отключили отчеты по прыжкам."
-		"sv"		"{grey}Du har deaktiverat rapportering av jumpstats."
+		"sv"		"{grey}Du har inaktiverat rapportering av jumpstats."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -245,7 +245,7 @@
 		"en"		"{grey}You have disabled the always-on jumpstats."
 		"chi"		"{grey}你已关闭 总是显示跳跃数据."
 		"ru"		"{grey}Вы отключили постоянные отчеты по прыжкам."
-		"sv"		"{grey}Du har deaktiverat "alltid på" jumpstats."
+		"sv"		"{grey}Du har inaktiverat "alltid på" jumpstats."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -257,14 +257,14 @@
 	{
 		"en"		"{grey}Jumpstats broadcasting disabled."
 		"chi"		"{grey}广播跳跃提示禁用中."
-		"sv"		"{grey}Deaktiverat chattutskrift av jumpstats från andra personer."
+		"sv"		"{grey}Inaktiverat chatt utskrifter av jumpstats från andra personer."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats broadcast threshold is now {default}{tier}."
 		"chi"		"{grey}广播跳跃提示阈值现在为 {default}{tier}."
-		"sv"		"{grey}Minimigräns för jumpstats chattutskrift från andra personer är nu {default}{tier}."
+		"sv"		"{grey}Minimigränsen för jumpstats chatt utskrifter från andra personer är nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -276,14 +276,14 @@
 	{
 		"en"		"{grey}Jumpstats sound effect disabled."
 		"chi"		"{grey}跳跃提示音禁用中."
-		"sv"		"{grey}Deaktiverat egna jumpstats ljudeffekter."
+		"sv"		"{grey}Inaktiverat egna jumpstats ljudeffekter."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats sound effect threshold is now {default}{tier}."
 		"chi"		"{grey}跳跃提示音阈值现在为 {default}{tier}."
-		"sv"		"{grey}Minimigräns för jumpstats ljudeffekter är nu {default}{tier}."
+		"sv"		"{grey}Minimigränsen för jumpstats ljudeffekter är nu {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"
