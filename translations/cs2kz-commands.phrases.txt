@@ -116,13 +116,13 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"sv"		"Ändra jumpstats raportering."
+		"sv"		"Ändra jumpstats rapportering."
 	}
 	"Command Description - kz_togglejs"
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"sv"		"Ändra jumpstats raportering."
+		"sv"		"Ändra jumpstats rapportering."
 	}
 	"Command Description - kz_jsalways"
 	{
