@@ -4,10 +4,14 @@
 	{
 		"en"	"{grey}You can toggle jumpstats reporting by typing {default}/togglejs{grey}."
 		"chi"	"{grey}你可以使用 {default}/togglejs{grey} 开启或关闭起跳提示."
+		"sv"	"{grey}Du kan ändra jumpstats chattutskriften genom att skriva {default}/togglejs{grey}."
+
 	}
 	"Tip - kz_jsalways"
 	{
 		"en"	"{grey}Use {default}/jsalways {grey}to toggle always-on jumpstats mode."
 		"chi"	"{grey}使用 {default}/jsalways {grey}可以显示全部的跳跃提示，包括无效跳跃."
+		"sv"	"{grey}Använd {default}/jsalways {grey}för att ändra "alltid på" jumpstats."
+
 	}
 }
