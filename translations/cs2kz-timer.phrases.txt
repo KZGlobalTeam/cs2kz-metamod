@@ -80,13 +80,13 @@
 	{
 		"en"		"{darkred}You can't pause because pausing is disabled in this area."
 		"chi"		"{darkred}此区域禁止暂停."
-		"sv"		"{darkred}Du kan inte pausa eftersom det är deaktiverat på detta området."
+		"sv"		"{darkred}Du kan inte pausa eftersom det är inaktiverat på detta området."
 	}
 	"Can't Resume (Generic)"
 	{
 		"en"		"{darkred}You can't resume right now."
 		"chi"		"{darkred}你现在不能恢复计时."
-		"sv"		"{darkred}Du kan inte fortsätta nu."
+		"sv"		"{darkred}Du kan inte fortsätta just nu."
 	}
 	"Can't Resume (Just Paused)"
 	{
