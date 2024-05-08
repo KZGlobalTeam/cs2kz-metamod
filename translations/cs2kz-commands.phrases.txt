@@ -116,7 +116,7 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"sv"		"Ändra chatmeddelanden för jumpstats."
+		"sv"		"Toggla chatmeddelanden för jumpstats."
 	}
 	"Command Description - kz_togglejs"
 	{
@@ -194,7 +194,7 @@
 	{
 		"en"		"Hide other players."
 		"chi"		"隐藏其他的玩家."
-		"sv"		"Dölj andra spelare."
+		"sv"		"Dölj/visa andra spelare."
 	}
 	"Command Description - kz_restart"
 	{
