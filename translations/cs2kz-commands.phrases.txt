@@ -4,13 +4,13 @@
 	{
 		"en"		"{grey}Look in your console for a list of commands!"
 		"chi"		"{grey}请在控制台中查看指令列表!"
-		"sv"		"{grey}Look in your console for a list of commands!"
+		"sv"		"{grey}Kolla i konsolen för en lista av kommandon!"
 	}
 	"Command Help Response (Console)"
 	{
 		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 		"chi"		"使用这些命令, 你可以在控制台中输入 \"bind <按键> kz_<命令名字>\", 或者在聊天栏中输入 !<命令名字> 或 /<命令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
-		"sv"		"För att använda dessa kommandon, kan du skriva \"bind <knapp> kz_<kommandos namn>\" i din konsol, eller skriv !<kommandos namn> eller /<kommandos namn> i chattten.\nTill exempel: \"bind 1 kz_cp\" eller \"!cp\" eller \"/cp\""
+		"sv"		"För att använda dessa kommandon, kan du skriva \"bind <knapp> kz_<kommandos namn>\" i din konsol, eller skriv !<kommandos namn> eller /<kommandos namn> i chatten.\nTill exempel: \"bind 1 kz_cp\" eller \"!cp\" eller \"/cp\""
 	}
 	"Switch Language"
 	{
@@ -74,13 +74,13 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"sv"		"Skapa ny startposition på nuvarande position"
+		"sv"		"Skapa ny startposition på nuvarande position."
 	}
 	"Command Description - kz_ssp"
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"sv"		"Skapa ny startposition på nuvarande position"
+		"sv"		"Skapa ny startposition på nuvarande position."
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -134,7 +134,7 @@
 	{
 		"en"		"List or change mode."
 		"chi"		"列出或更改模式."
-		"sv"		"Lista eller ändra KZ form"
+		"sv"		"Lista eller ändra KZ form."
 	}
 	"Command Description - kz_noclip"
 	{
