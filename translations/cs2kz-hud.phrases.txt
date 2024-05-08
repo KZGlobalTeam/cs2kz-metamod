@@ -100,6 +100,6 @@
 		"en"		"{grey}Your centre information panel has been disabled."
 		"chi"		"{grey}你的中心面板已关闭."
 		"ru"		"{grey}Ваша центровая информационная панель была выключена."
-		"sv"		"{grey}Din mittpanel har deaktiverats."
+		"sv"		"{grey}Din mittpanel har inaktiverats."
 	}
 }
