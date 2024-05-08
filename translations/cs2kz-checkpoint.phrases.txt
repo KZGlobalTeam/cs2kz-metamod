@@ -6,92 +6,108 @@
 		"#format"	"checkpoint_count:d"
 		"en"		"{grey}You have made a checkpoint (#{default}{checkpoint_count}{grey})."
 		"chi"		"{grey}你设置了一个存点 (#{default}{checkpoint_count}{grey})."
-		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."
+		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."0
+		"sv"		"{grey}Du har skapat en checkpoint (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
+		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på förbjudet område."
 	}
 	"Can't Checkpoint (Midair)"
 	{
 		"en"		"{darkred}You can't make a checkpoint mid-air."
 		"chi"		"{darkred}空中无法存点."
 		"ru"		"{darkred}Вы не можете поставить чекпойнт в воздухе."
+		"sv"		"{darkred}Kan inte skapa checkpoint i luften."
 	}
 	"Can't Checkpoint (Just Landed)"
 	{
 		"en"		"{darkred}You can't make a checkpoint because you just landed."
 		"chi"		"{darkred}落地瞬间无法存点."
 		"ru"		"{darkred}Вы не можете поставить чекпойнт после приземления."
+		"sv"		"{darkred}Kan inte skapa checkpoint eftersom du landade nyligen."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{
 		"en"		"{darkred}You can't checkpoint because checkpoints are disabled in this area."
 		"chi"		"{darkred}此区域禁止存点."
+		"sv"		"{darkred}Kan inte skapa checkpoint eftersom checkpoints är förbjudna på detta området."
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
 		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
 		"chi"		"{darkred}你尚未设置任何存点, 无法传送."
 		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
+		"sv"		"{darkred}Du kan inte teleportera eftersom du inte har skapat en checkpoint."
 	}
 	"Can't Teleport (Map)"
 	{
 		"en"		"{darkred}You can't teleport to your checkpoints in this area."
 		"chi"		"{darkred}在这个位置你不能读点."
 		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпойнты здесь."
+		"sv"		"{darkred}Du kan inte teleportera till checkpoints på detta området."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
 		"en"		"{darkred}You have no checkpoints to go back to."
 		"chi"		"{darkred}你没有任何能退回的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, чтобы вернутся к ним."
+		"sv"		"{darkred}Du har inte checkpoints att teleportera till."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
 		"en"		"{darkred}You have no checkpoints to go forward to."
 		"chi"		"{darkred}你没有任何能前进的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
+		"sv"		"{darkred}Du har inte checkpoints att gå framåt till."
 	}
 	"Can't Undo (No Teleports)"
 	{
 		"en"		"{darkred}You can't undo because there are no teleports to undo."
 		"chi"		"{darkred}你没有可以撤销的存点."
 		"ru"		"{darkred}У вас нет телепортов, которые можно отменить."
+		"sv"		"{darkred}Du kan inte ångra din teleport eftersom det inte finns en teleport att ångra."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
 		"en"		"{darkred}You can't undo because you teleported mid-air."
 		"chi"		"{darkred}在空中不能撤销存点."
 		"ru"		"{darkred}Вы не можете отменить, потому что телепортировались в воздухе."
+		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade i luften."
 	}
 	"Can't Undo (Just Landed)"
 	{
 		"en"		"{darkred}You can't undo because you had just landed."
 		"chi"		"{darkred}落地瞬间无法撤销存点."
 		"ru"		"{darkred}Вы не можете отменить после приземления."
+		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du hade precis landat."
 	}
 	"Can't Undo (AntiCp)"
 	{
 		"en"		"{darkred}You can't undo because you teleported while in an anti-checkpoint zone."
 		"chi"		"{darkred}你无法撤销，因为你在禁止存点区域."
+		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade på ett förbjudet område."
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
 		"en"		"{grey}Failed to set your custom start position!"
 		"chi"		"{grey}设置你的自定义起点失败!"
+		"sv"		"{grey}Misslyckades med att lägga din startposition!"
 	}
 	"Set Custom Start Position"
 	{
 		"en"		"{grey}You have set your custom start position."
 		"chi"		"{grey}你设置了自定义起点."
 		"ru"		"{grey}Вы установили свою стартовую позицию."
+		"sv"		"{grey}Du har skapat din startposition."
 	}
 	"Cleared Custom Start Position"
 	{
 		"en"		"{grey}You have cleared your custom start position."
 		"chi"		"{grey}你清除了自定义起点."
 		"ru"		"{grey}Вы очистили свою стартовую позицию."
+		"sv"		"{grey}Du har rensat din startposition."
 	}
 }
