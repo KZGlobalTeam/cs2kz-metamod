@@ -116,13 +116,13 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"sv"		"Ändra jumpstats rapportering."
+		"sv"		"Ändra chatmeddelanden för jumpstats."
 	}
 	"Command Description - kz_togglejs"
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"sv"		"Ändra jumpstats rapportering."
+		"sv"		"Ändra chatmeddelanden för jumpstats."
 	}
 	"Command Description - kz_jsalways"
 	{
@@ -212,7 +212,7 @@
 	{
 		"en"		"Hide weapon viewmodel."
 		"chi"		"隐藏武器模型显示."
-		"sv"		"Dölj vapenmodellen."
+		"sv"		"Dölj vapen."
 	}
 	"Command Description - jointeam"
 	{
@@ -223,7 +223,7 @@
 	{
 		"en"		"Show this help message."
 		"chi"		"显示帮助信息."
-		"sv"		"Visa detta hjälp meddelandet."
+		"sv"		"Visa detta hjälpmeddelandet."
 	}
 	"Command Description - kz_language"
 	{
