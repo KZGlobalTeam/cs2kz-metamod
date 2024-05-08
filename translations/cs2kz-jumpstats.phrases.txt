@@ -224,14 +224,14 @@
 		"en"		"{grey}You have enabled jumpstats reporting."
 		"chi"		"{grey}已开启起跳数据."
 		"ru"		"{grey}Вы включили отчеты по прыжкам."
-		"sv"		"{grey}Du har aktiverat raportering av jumpstats."
+		"sv"		"{grey}Du har aktiverat rapportering av jumpstats."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
 		"en"		"{grey}You have disabled all jumpstats reporting."
 		"chi"		"{grey}已关闭起跳数据."
 		"ru"		"{grey}Вы отключили отчеты по прыжкам."
-		"sv"		"{grey}Du har deaktiverat raportering av jumpstats."
+		"sv"		"{grey}Du har deaktiverat rapportering av jumpstats."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
