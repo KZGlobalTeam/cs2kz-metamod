@@ -50,13 +50,13 @@
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"sv"		"Teleportera till förra checkpoint."
+		"sv"		"Teleportera till föregående checkpoint."
 	}
 	"Command Description - kz_pcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"sv"		"Teleportera till förra checkpoint."
+		"sv"		"Teleportera till föregående checkpoint."
 	}
 	"Command Description - kz_nextcp"
 	{
@@ -98,7 +98,7 @@
 	{
 		"en"		"Toggle centre panel display."
 		"chi"		"切换中心面板的显示."
-		"sv"		"Aktivera/deaktivera mittpanelen."
+		"sv"		"Toggla mittpanelen."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
@@ -122,37 +122,37 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"sv"		"Ändra chatmeddelanden för jumpstats."
+		"sv"		"Toggla chatmeddelanden för jumpstats."
 	}
 	"Command Description - kz_jsalways"
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换 总是显示跳跃数据 的开关"
-		"sv"		"Ändra "alltid på" jumpstats."
+		"sv"		"Toggla alla (egna) jumpstats i chatten."
 	}
 	"Command Description - kz_mode"
 	{
 		"en"		"List or change mode."
 		"chi"		"列出或更改模式."
-		"sv"		"Lista eller ändra KZ form."
+		"sv"		"Lista eller ändra KZ mode."
 	}
 	"Command Description - kz_noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"sv"		"Ändra noclip."
+		"sv"		"Toggla noclip."
 	}
 	"Command Description - kz_nc"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"sv"		"Ändra noclip."
+		"sv"		"Toggla noclip."
 	}
 	"Command Description - noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"sv"		"Ändra noclip."
+		"sv"		"Toggla noclip."
 	}
 	"Command Description - kz_spec"
 	{
@@ -164,31 +164,31 @@
 	{
 		"en"		"List or change style."
 		"chi"		"列出或更改风格."
-		"sv"		"Lista eller ändra KZ form."
+		"sv"		"Lista eller ändra KZ mode."
 	}
 	"Command Description - kz_stop"
 	{
 		"en"		"Stop timer."
 		"chi"		"停止计时."
-		"sv"		"Stoppa timern."
+		"sv"		"Stoppa timer."
 	}
 	"Command Description - kz_pause"
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"sv"		"Pausa timern."
+		"sv"		"Pausa timer."
 	}
 	"Command Description - kz_tips"
 	{
 		"en"		"Toggle tips."
 		"chi"		"切换提示的开关."
-		"sv"		"Visa/dölj tips."
+		"sv"		"Toggla tips."
 	}
 	"Command Description - kz_hidelegs"
 	{
 		"en"		"Hide your legs in first person."
 		"chi"		"在第一人称中隐藏腿部."
-		"sv"		"Dölj egna ben i första person."
+		"sv"		"Toggla egna bens synlighet i första person."
 	}
 	"Command Description - kz_hide"
 	{
@@ -235,12 +235,12 @@
 	{
 		"en"		"Switch to Vanilla mode."
 		"chi"		"切换为官匹模式."
-		"sv"		"Byt till Vanilla form."
+		"sv"		"Byt till Vanilla mode."
 	}
 	"Command Description - kz_ckz"
 	{
 		"en"		"Switch to Classic mode."
 		"chi"		"切换为经典模式."
-		"sv"		"Byt till Classic form."
+		"sv"		"Byt till Classic mode."
 	}
 }
