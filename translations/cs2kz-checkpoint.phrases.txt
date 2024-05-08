@@ -54,14 +54,14 @@
 		"en"		"{darkred}You have no checkpoints to go back to."
 		"chi"		"{darkred}你没有任何能退回的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, чтобы вернутся к ним."
-		"sv"		"{darkred}Du har inte checkpoints att teleportera till."
+		"sv"		"{darkred}Du har inga checkpoints att teleportera till."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
 		"en"		"{darkred}You have no checkpoints to go forward to."
 		"chi"		"{darkred}你没有任何能前进的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
-		"sv"		"{darkred}Du har inte checkpoints att gå framåt till."
+		"sv"		"{darkred}Du har inga checkpoints att gå framåt till."
 	}
 	"Can't Undo (No Teleports)"
 	{
