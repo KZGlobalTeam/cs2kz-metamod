@@ -13,7 +13,7 @@
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
-		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på förbjudet område."
+		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på otillåtet område."
 	}
 	"Can't Checkpoint (Midair)"
 	{
@@ -33,14 +33,14 @@
 	{
 		"en"		"{darkred}You can't checkpoint because checkpoints are disabled in this area."
 		"chi"		"{darkred}此区域禁止存点."
-		"sv"		"{darkred}Kan inte skapa checkpoint eftersom checkpoints är förbjudna på detta området."
+		"sv"		"{darkred}Kan inte skapa checkpoint eftersom checkpoints är otillåtna på detta området."
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
 		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
 		"chi"		"{darkred}你尚未设置任何存点, 无法传送."
 		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
-		"sv"		"{darkred}Du kan inte teleportera eftersom du har inte skapat en checkpoint."
+		"sv"		"{darkred}Du kan inte teleportera eftersom du har inga checkpoints."
 	}
 	"Can't Teleport (Map)"
 	{
@@ -68,7 +68,7 @@
 		"en"		"{darkred}You can't undo because there are no teleports to undo."
 		"chi"		"{darkred}你没有可以撤销的存点."
 		"ru"		"{darkred}У вас нет телепортов, которые можно отменить."
-		"sv"		"{darkred}Du kan inte ångra din teleport eftersom det inte finns en teleport att ångra."
+		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du har ingen föregående teleport."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
@@ -88,7 +88,7 @@
 	{
 		"en"		"{darkred}You can't undo because you teleported while in an anti-checkpoint zone."
 		"chi"		"{darkred}你无法撤销，因为你在禁止存点区域."
-		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade på ett förbjudet område."
+		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade på ett otillåtet område."
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
