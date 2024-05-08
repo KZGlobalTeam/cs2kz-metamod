@@ -4,7 +4,7 @@
 	{
 		"en"	"{grey}Use {default}/panel {grey} to toggle the panel in the middle of your screen."
 		"chi"	"{grey}使用 {default}/panel {grey} 可以切换屏幕中心面板的显示."
-		"sv"	"{grey}Använd {default}/panel {grey} för att ändra synligheten av panelen i mitten av rutan."
+		"sv"	"{grey}Använd {default}/panel {grey} för att ändra synligheten av rutan i mitten av skärmen."
 	}
 	"Tip - kz_hidelegs"
 	{
