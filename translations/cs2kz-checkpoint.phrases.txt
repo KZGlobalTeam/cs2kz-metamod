@@ -61,14 +61,14 @@
 		"en"		"{darkred}You have no checkpoints to go forward to."
 		"chi"		"{darkred}你没有任何能前进的存点."
 		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
-		"sv"		"{darkred}Du har inga checkpoints att gå framåt till."
+		"sv"		"{darkred}Du har inga checkpoints att teleportera framåt till."
 	}
 	"Can't Undo (No Teleports)"
 	{
 		"en"		"{darkred}You can't undo because there are no teleports to undo."
 		"chi"		"{darkred}你没有可以撤销的存点."
 		"ru"		"{darkred}У вас нет телепортов, которые можно отменить."
-		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du har ingen föregående teleport."
+		"sv"		"{darkred}Du kan inte ångra din teleportering eftersom du har ingen föregående teleport."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
