@@ -94,7 +94,7 @@
 	{
 		"en"		"{grey}Failed to set your custom start position!"
 		"chi"		"{grey}设置你的自定义起点失败!"
-		"sv"		"{grey}Misslyckades med att lägga din startposition!"
+		"sv"		"{grey}Misslyckades med att skapa din startposition!"
 	}
 	"Set Custom Start Position"
 	{
