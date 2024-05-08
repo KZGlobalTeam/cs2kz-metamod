@@ -11,7 +11,7 @@
 		"#format"	"style:s"
 		"en"		"Possible styles: (Current style is {style})"
 		"chi"		"可用风格: (当前风格为 {style})"
-		"sv"		"Möjliga stiler: (Nuvarande KZ form är {style})"
+		"sv"		"Möjliga KZ former: (Nuvarande KZ form är {style})"
 	}
 	"Style Not Available"
 	{
