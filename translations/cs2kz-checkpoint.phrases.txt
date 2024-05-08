@@ -6,7 +6,7 @@
 		"#format"	"checkpoint_count:d"
 		"en"		"{grey}You have made a checkpoint (#{default}{checkpoint_count}{grey})."
 		"chi"		"{grey}你设置了一个存点 (#{default}{checkpoint_count}{grey})."
-		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."0
+		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."
 		"sv"		"{grey}Du har skapat en checkpoint (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
