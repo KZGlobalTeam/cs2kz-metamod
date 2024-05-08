@@ -4,10 +4,12 @@
 	{
 		"en"		"{grey}Noclip enabled."
 		"chi"		"{grey}飞行已启用."
+		"sv"		"{grey}Noclip aktiverat."
 	}
 	"Noclip - Disable"
 	{
 		"en"		"{grey}Noclip disabled."
 		"chi"		"{grey}飞行已禁用."
+		"sv"		"{grey}Noclip deaktiverat."
 	}
 }
