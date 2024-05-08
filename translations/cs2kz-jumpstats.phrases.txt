@@ -257,14 +257,14 @@
 	{
 		"en"		"{grey}Jumpstats broadcasting disabled."
 		"chi"		"{grey}广播跳跃提示禁用中."
-		"sv"		"{grey}Inaktiverat chatt utskrifter av jumpstats från andra personer."
+		"sv"		"{grey}Inaktiverat chattutskrifter av jumpstats från andra personer."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats broadcast threshold is now {default}{tier}."
 		"chi"		"{grey}广播跳跃提示阈值现在为 {default}{tier}."
-		"sv"		"{grey}Minimigränsen för jumpstats chatt utskrifter från andra personer är nu {default}{tier}."
+		"sv"		"{grey}Minimigränsen för jumpstats chattutskrifter från andra personer är nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
