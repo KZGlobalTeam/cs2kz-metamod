@@ -10,6 +10,6 @@
 	{
 		"en"		"{grey}Noclip disabled."
 		"chi"		"{grey}飞行已禁用."
-		"sv"		"{grey}Noclip deaktiverat."
+		"sv"		"{grey}Noclip inaktiverat."
 	}
 }
