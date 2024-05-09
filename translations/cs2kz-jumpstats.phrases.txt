@@ -230,7 +230,7 @@
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats broadcast threshold is now {default}{tier}."
 		"chi"		"{grey}广播跳跃提示阈值现在为 {default}{tier}."
-		"pl"		"{grey}Próg nadawania jumpstatów to {default}{tier}."
+		"pl"		"{grey}Próg nadawania jumpstatów został zmieniony na {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
