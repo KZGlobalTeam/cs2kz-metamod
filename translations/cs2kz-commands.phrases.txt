@@ -4,7 +4,7 @@
 	{
 		"en"		"{grey}Look in your console for a list of commands!"
 		"chi"		"{grey}请在控制台中查看指令列表!"
-		"pl"		"{grey}Spójrz do konsoli po wykaz komend!"
+		"pl"		"{grey}Spójrz do konsoli po listę komend!"
 	}
 	"Command Help Response (Console)"
 	{
@@ -74,25 +74,25 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"pl"		"Ustaw niestandardową pozycję startową."	
+		"pl"		"Ustaw własną pozycję startową."	
 	}
 	"Command Description - kz_ssp"
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"pl"		"Ustaw niestandardową pozycję startową."	
+		"pl"		"Ustaw własną pozycję startową."	
 	}
 	"Command Description - kz_clearstartpos"
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"pl"		"Usuń niestandardową pozycję startową."	
+		"pl"		"Usuń własną pozycję startową."	
 	}
 	"Command Description - kz_csp"
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"pl"		"Usuń niestandardową pozycję startową."	
+		"pl"		"Usuń własną pozycję startową."	
 	}
 	"Command Description - kz_panel"
 	{
@@ -165,7 +165,7 @@
 	{
 		"en"		"List or change style."
 		"chi"		"列出或更改风格."
-		"pl"		"Lista trybów gry bądź jego zmiana."	
+		"pl"		"Lista stylów gry bądź jego zmiana."	
 	}
 	"Command Description - kz_stop"
 	{
@@ -177,7 +177,7 @@
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"pl"		"Przełącz pauze timer'a."	
+		"pl"		"Przełącz pauzę timer'a."	
 	}
 	"Command Description - kz_tips"
 	{
@@ -214,7 +214,7 @@
 	{
 		"en"		"Hide weapon viewmodel."
 		"chi"		"隐藏武器模型显示."
-		"pl"		"Ukryj viewmodel."
+		"pl"		"Ukryj broń."
 	}
 	"Command Description - jointeam"
 	{
@@ -236,12 +236,12 @@
 	{
 		"en"		"Switch to Vanilla mode."
 		"chi"		"切换为官匹模式."
-		"pl"		"Zmień tryb na podstawowy"
+		"pl"		"Zmień tryb na Vanilla"
 	}
 	"Command Description - kz_ckz"
 	{
 		"en"		"Switch to Classic mode."
 		"chi"		"切换为经典模式."
-		"pl"		"Zmień tryb na klasyczny."
+		"pl"		"Zmień tryb na Classic."
 	}
 }
