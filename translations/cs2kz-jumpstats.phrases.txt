@@ -6,131 +6,154 @@
 		"en"		"Offset"
 		"chi"		"位移"
 		"ru"		"Сдвиг"
+		"pl"		"Offset"
 	}
 	"Height"
 	{
 		"en"		"Height"
 		"chi"		"高度"
 		"ru"		"Высота"
+		"pl"		"Height"
 	}
 	"Pre"
 	{
 		"en"		"Pre"
 		"chi"		"地速"
 		"ru"		"Pre"
+		"pl"		"Pre"
 	}
 	"Max"
 	{
 		"en"		"Max"
 		"chi"		"空速"
 		"ru"		"Макс."
+		"pl"		"Max"
 	}
 	"Strafes" // Plural
 	{
 		"en"		"Strafes"
 		"chi"		"加速"
 		"ru"		"Стрейфы"
+		"pl"		"Strafes"
 	}
 	"Strafe" // Singular
 	{
 		"en"		"Strafe"
 		"chi"		"加速"
 		"ru"		"Стрейф"
+		"pl"		"Strafe"
 	}
 	"Sync"
 	{
 		"en"		"Sync"
 		"chi"		"同步率"
 		"ru"		"Sync"
+		"pl"		"Sync"
 	}
 	"Air"
 	{
 		"en"		"Air"
 		"chi"		"滞空"
 		"ru"		"Air"
+		"pl"		"Air"
 	}
 	"Air Time"
 	{
 		"en"		"Airtime"
 		"chi"		"滞空"
 		"ru"		"Airtime"
+		"pl"		"Airtime"
 	}
 	"Block"
 	{
 		"en"		"Block"
 		"chi"		"板子"
 		"ru"		"Блок"
+		"pl"		"Block"
 	}
 	"Bad Angles (Short)"
 	{
 		"en"		"BA"
 		"chi"		"无效角度"
+		"pl"		"BA"
 	}
 	"Overlap (Short)"
 	{
 		"en"		"OL"
 		"chi"		"冲突"
 		"ru"		"OL"
+		"pl"		"OL"
 	}
 	"Dead Air (Short)"
 	{
 		"en"		"DA"
 		"chi"		"无操作"
 		"ru"		"DA"
+		"pl"		"DA"
 	}
 	"Edge"
 	{
 		"en"		"Edge"
 		"chi"		"边距"
 		"ru"		"Край"
+		"pl"		"Edge"
 	}
 	"Deviation"
 	{
 		"en"		"Deviation"
 		"chi"		"偏移"
 		"ru"		"Отклонение"
+		"pl"		"Deviation"
 	}
 	"Width"
 	{
 		"en"		"Width"
 		"chi"		"幅度"
 		"ru"		"Ширина"
+		"pl"		"Width"
 	}
 	"Duck Time"
 	{
 		"en"		"Crouched"
 		"chi"		"蹲占比"
 		"ru"		"Crouched"
+		"pl"		"Crouched"
 	}
 	"Gain Efficiency (Short)"
 	{
 		"en"		"GainEff"
 		"chi"		"增益效率"
+		"pl"		"GainEff"
 	}
 	"Air Path"
 	{
 		"en"		"Airpath"
 		"chi"		"空中路径"
+		"pl"		"Airpath"
 	}
 	"Angle Ratio"
 	{
 		"en"		"AngRatio(Avg/Med/Max)"
 		"chi"		"角度(平均/最小/最大)"
+		"pl"		"Angratio(Avg/Med/Max)"
 	}
 	"Gain"
 	{
 		"en"		"Gain"
 		"chi"		"增益"
+		"pl"		"Gain"
 	}
 	"Loss"
 	{
 		"en"		"Loss"
 		"chi"		"损失"
+		"pl"		"Loss"
 	}
 	"Average Gain (Short)"
 	{
 		"en"		"AvgGain"
 		"chi"		"平均增益"
+		"pl"		"AvgGain"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -138,51 +161,61 @@
 	{
 		"en"		"First jump"
 		"chi"		"第一次起跳"
+		"pl"		"First Jump"
 	}
 	"Invalid movetype change"
 	{
 		"en"		"Invalid movetype change"
 		"chi"		"无效的移动类型更改"
+		"pl"		"Invalid movetype change"
 	}
 	"Invalid movetype"
 	{
 		"en"		"Invalid movetype"
 		"chi"		"无效移动类型"
+		"pl"		"Invalid movetype"
 	}
 	"Just noclipped"
 	{
 		"en"		"Just noclipped"
 		"chi"		"刚切换了飞行模式"
+		"pl"		"Just noclipped"
 	}
 	"Invalid collisions"
 	{
 		"en"		"Invalid collisions"
 		"chi"		"无效的碰撞"
+		"pl"		"Invalid collisions"
 	}
 	"Base velocity detected"
 	{
 		"en"		"Base velocity detected"
 		"chi"		"检测为最低速度"
+		"pl"		"Base velocity detected"
 	}
 	"Invalid gains"
 	{
 		"en"		"Invalid gains"
 		"chi"		"无效增益"
+		"pl"		"Invalid gains"
 	}
 	"Externally modified"
 	{
 		"en"		"Externally modified"
 		"chi"		"已从外部修改"
+		"pl"		"Externally modified"
 	}
 	"Edgebugged"
 	{
 		"en"		"Edgebugged"
 		"chi"		"触发边缘Bug"
+		"pl"		"Edgebugged"
 	}
 	"Teleported"
 	{
 		"en"		"Teleported"
 		"chi"		"已传送"
+		"pl"		"Teleported"
 	}
 
 	// =====[OPTIONS]=====
