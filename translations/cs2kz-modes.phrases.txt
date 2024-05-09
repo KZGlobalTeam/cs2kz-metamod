@@ -29,6 +29,6 @@
 		"en"		"{grey}You have switched to the {purple}{mode} {grey}mode."
 		"chi"		"{grey}你已切换到 {purple}{mode} {grey}模式."
 		"ru"		"{grey}Вы переключились на {purple}{mode} {grey}режим."
-		"pl"		"{grey}Zmieniłeś tryb gry na {purple}{mode} {grey}режим."
+		"pl"		"{grey}Zmieniłeś tryb gry na {purple}{mode}."
 	}
 }
