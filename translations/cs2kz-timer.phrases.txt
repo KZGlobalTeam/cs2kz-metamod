@@ -58,7 +58,7 @@
 		"en"		"{darkred}You can't pause because you just resumed."
 		"chi"		"{darkred}你刚刚才恢复计时,无法暂停."
 		"ru"		"{darkred}Вы не можете после возобновления поставить вновь паузу."
-		"pl"		"{darkred}Zbyt szybko zatrzymujesz czas, zaczekaj chwilę."
+		"pl"		"{darkred}Próbujesz wstrzymać czas zbyt szybko, zaczekaj chwilę."
 	}
 	"Can't Pause (Midair)"
 	{
@@ -91,6 +91,6 @@
 		"en"		"{darkred}You can't resume because you just paused."
 		"chi"		"{darkred}你刚刚才暂停计时,无法恢复计时."
 		"ru"		"{darkred}Вы не можете возобновить, потому что только что сделали паузу."
-		"pl"		"{darkred}Nie możesz teraz wznowić czasu, ponieważ dopiero użyłeś pauzy."
+		"pl"		"{darkred}Nie możesz teraz wznowić czasu, ponieważ dopiero co użyłeś pauzy."
 	}
 }
