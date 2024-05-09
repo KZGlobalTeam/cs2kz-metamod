@@ -38,37 +38,37 @@
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"pl"		"Teleportuj się do aktualnego checkpoint'u."
+		"pl"		"Teleportuj się do aktualnego checkpointu."
 	}
 	"Command Description - kz_tp"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"pl"		"Teleportuj się do aktualnego checkpoint'u."
+		"pl"		"Teleportuj się do aktualnego checkpointu."
 	}
 	"Command Description - kz_prevcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"pl"		"Teleportuj się do poprzedniego checkpoint'u."
+		"pl"		"Teleportuj się do poprzedniego checkpointu."
 	}
 	"Command Description - kz_pcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"pl"		"Teleportuj się do poprzedniego checkpoint'u."
+		"pl"		"Teleportuj się do poprzedniego checkpointu."
 	}
 	"Command Description - kz_nextcp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"pl"		"Teleportuj się do następnego checkpoint'u."
+		"pl"		"Teleportuj się do następnego checkpointu."
 	}
 	"Command Description - kz_ncp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"pl"		"Teleportuj się do następnego checkpoint'u."	
+		"pl"		"Teleportuj się do następnego checkpointu."	
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -128,7 +128,7 @@
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换 总是显示跳跃数据 的开关"
-		"pl"		"Zawsze pokazuj jumpstat'y."	
+		"pl"		"Zawsze pokazuj jumpstaty."	
 	}
 	"Command Description - kz_mode"
 	{
@@ -140,20 +140,20 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclip'a."	
+		"pl"		"Włącz lub wyłącz noclipa."	
 	}
 	"Command Description - kz_nc"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclip'a."
+		"pl"		"Włącz lub wyłącz noclipa."
 
 	}
 	"Command Description - noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclip'a."
+		"pl"		"Włącz lub wyłącz noclipa."
 	}
 	"Command Description - kz_spec"
 	{
@@ -177,7 +177,7 @@
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"pl"		"Przełącz pauzę timer'a."	
+		"pl"		"Przełącz pauzę timera."	
 	}
 	"Command Description - kz_tips"
 	{
