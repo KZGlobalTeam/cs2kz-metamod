@@ -50,7 +50,7 @@
 		"#format"	"checkpoint_index:d,checkpoint_count:d,teleport_count:d"
 		"en"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"chi"		"存点: {checkpoint_index}/{checkpoint_count} 传送: {teleport_count}"
-		"pl"		"CP: {checkpoint_index}/{checkpoint_count} 传送: {teleport_count}"
+		"pl"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
