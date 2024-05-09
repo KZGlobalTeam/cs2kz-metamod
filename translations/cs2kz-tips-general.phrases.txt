@@ -10,7 +10,7 @@
 	{
 		"en"	"{grey}You can switch to a mode by typing its abbreviation. For example, type {default}/ckz{grey} to switch to the {purple}Classic {grey}mode or {default}/vnl {grey}to switch to the {purple}Vanilla {grey}mode."
 		"chi"	"{grey}你可以输入缩写进行切换模式. 例如：输入 {default}/ckz{grey} 可以切换到 {purple}经典 {grey}模式 或者 {default}/vnl {grey}切换到 {purple}官匹 {grey}模式等."
-		"pl"	"{grey}Możesz przełączać się między trybami używając skrótów. Na przykład, użyj {default}/ckz{grey} aby zmienić tryb na {purple}Klasyczny {grey} lub {default}/vnl {grey}aby zmienić {purple}tryb na Vanilla {grey}mode."
+		"pl"	"{grey}Możesz przełączać się między trybami używając skrótów. Na przykład, użyj {default}/ckz{grey} aby zmienić tryb na {purple}Klasyczny {grey} lub {default}/vnl {grey}aby zmienić tryb na {purple}Vanilla {grey}mode."
 	}
 	"Tip - kz_restart"
 	{
