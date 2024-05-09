@@ -58,7 +58,7 @@
 	{
 		"en"	"{grey}Report issues related to CS2KZ on our GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"chi"	"{grey}遇到问题可以访问CS2KZ的仓库: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey} 进行反馈"
-		"pl"	"{grey}Wszystkie problemy związane z CS2KZ zgłoś na GitHub'ie: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"pl"	"{grey}Wszystkie problemy związane z CS2KZ zgłoś na GitHubie: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
 	"Tip - kz_jssound"
 	{
@@ -70,6 +70,6 @@
 	{
 		"en"	"{grey}Use {default}/jsbroadcast {grey}to change which jumpstats by other players get printed to you."
 		"chi"	"{grey}使用 {default}/jsbroadcast {grey}可以控制你的跳跃提示播报等级."
-		"pl"	"{grey}Użyj {default}/jsbroadcast {grey}aby kontrolować jakie jumpstat'y innych graczy są nadawane do Ciebie."
+		"pl"	"{grey}Użyj {default}/jsbroadcast {grey}aby kontrolować jakie jumpstaty innych graczy są nadawane do ciebie."
 	}
 }
