@@ -24,7 +24,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	const char *language = target->languageService->GetLanguage();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[color];
-	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
+	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
