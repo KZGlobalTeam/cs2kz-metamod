@@ -192,7 +192,7 @@ void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 	{
 		return;
 	}
-	
+
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	if (target->jumpstatsService->GetSoundMinTier() > tier || tier <= DistanceTier_Meh
 		|| target->jumpstatsService->GetSoundMinTier() == DistanceTier_None)
