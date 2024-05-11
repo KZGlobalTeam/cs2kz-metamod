@@ -26,7 +26,7 @@ internal void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
 internal void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *);
 internal void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
 internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
-								 const uint16 *pEntityIndicies, int nEntities);
+								 const uint16 *pEntityIndicies, int nEntities, bool bEnablePVSBits);
 internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
 internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
@@ -35,21 +35,21 @@ internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkSerializable *pEvent,
 							 const void *pData, unsigned long nSize, NetChannelBufType_t bufType);
-internal void OnStartTouch(CBaseEntity2 *pOther);
-internal void OnTouch(CBaseEntity2 *pOther);
-internal void OnEndTouch(CBaseEntity2 *pOther);
+internal void OnStartTouch(CBaseEntity *pOther);
+internal void OnTouch(CBaseEntity *pOther);
+internal void OnEndTouch(CBaseEntity *pOther);
 
 internal bool ignoreTouchEvent {};
-internal void OnStartTouchPost(CBaseEntity2 *pOther);
-internal void OnTouchPost(CBaseEntity2 *pOther);
-internal void OnEndTouchPost(CBaseEntity2 *pOther);
+internal void OnStartTouchPost(CBaseEntity *pOther);
+internal void OnTouchPost(CBaseEntity *pOther);
+internal void OnEndTouchPost(CBaseEntity *pOther);
 
 internal void Hook_OnChangeTeamPost(i32 team);
 internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
-SH_DECL_HOOK6_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &,
-				   const Entity2Networkable_t **, const uint16 *, int);
+SH_DECL_HOOK7_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &,
+				   const Entity2Networkable_t **, const uint16 *, int, bool);
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
 
 internal int serverGamePostSimulateHook;
@@ -69,9 +69,9 @@ SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEven
 SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
 SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *, INetworkSerializable *,
 				   const void *, unsigned long, NetChannelBufType_t);
-SH_DECL_MANUALHOOK1_void(StartTouch, 0, 0, 0, CBaseEntity2 *);
-SH_DECL_MANUALHOOK1_void(Touch, 0, 0, 0, CBaseEntity2 *);
-SH_DECL_MANUALHOOK1_void(EndTouch, 0, 0, 0, CBaseEntity2 *);
+SH_DECL_MANUALHOOK1_void(StartTouch, 0, 0, 0, CBaseEntity *);
+SH_DECL_MANUALHOOK1_void(Touch, 0, 0, 0, CBaseEntity *);
+SH_DECL_MANUALHOOK1_void(EndTouch, 0, 0, 0, CBaseEntity *);
 
 internal int changeTeamHook;
 SH_DECL_MANUALHOOK1_void(ChangeTeam, 0, 0, 0, int);
@@ -130,7 +130,7 @@ void hooks::Cleanup()
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
 
-internal void AddEntityHooks(CBaseEntity2 *entity)
+internal void AddEntityHooks(CBaseEntity *entity)
 {
 	if (!V_stricmp(entity->GetClassname(), "cs_player_controller") && !changeTeamHook)
 	{
@@ -155,7 +155,7 @@ internal void AddEntityHooks(CBaseEntity2 *entity)
 	}
 }
 
-internal void RemoveEntityHooks(CBaseEntity2 *entity)
+internal void RemoveEntityHooks(CBaseEntity *entity)
 {
 	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
 	{
@@ -191,7 +191,7 @@ void hooks::HookEntities()
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 	for (CEntityIdentity *entID = GameEntitySystem()->m_EntityList.m_pFirstActiveEntity; entID != NULL; entID = entID->m_pNext)
 	{
-		AddEntityHooks(static_cast<CBaseEntity2 *>(entID->m_pInstance));
+		AddEntityHooks(static_cast<CBaseEntity *>(entID->m_pInstance));
 	}
 	GameEntitySystem()->AddListenerEntity(&entityListener);
 }
@@ -235,7 +235,7 @@ internal void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 }
 
 internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCount, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
-								 const uint16 *pEntityIndicies, int nEntities)
+								 const uint16 *pEntityIndicies, int nEntities, bool bEnablePVSBits)
 {
 	KZ::quiet::OnCheckTransmit(pInfo, infoCount);
 	RETURN_META(MRES_IGNORED);
@@ -351,9 +351,9 @@ internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClien
 	KZ::quiet::OnPostEvent(pEvent, pData, clients);
 }
 
-internal void OnStartTouch(CBaseEntity2 *pOther)
+internal void OnStartTouch(CBaseEntity *pOther)
 {
-	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	CCSPlayerPawn *pawn = NULL;
 	CBaseTrigger *trigger = NULL;
 	if (!V_stricmp(pThis->GetClassname(), "player"))
@@ -394,9 +394,9 @@ internal void OnStartTouch(CBaseEntity2 *pOther)
 	RETURN_META(MRES_IGNORED);
 }
 
-internal void OnTouch(CBaseEntity2 *pOther)
+internal void OnTouch(CBaseEntity *pOther)
 {
-	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	CCSPlayerPawn *pawn = NULL;
 	CBaseTrigger *trigger = NULL;
 	if (!V_stricmp(pThis->GetClassname(), "player"))
@@ -434,9 +434,9 @@ internal void OnTouch(CBaseEntity2 *pOther)
 	RETURN_META(MRES_SUPERCEDE);
 }
 
-internal void OnEndTouch(CBaseEntity2 *pOther)
+internal void OnEndTouch(CBaseEntity *pOther)
 {
-	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	CCSPlayerPawn *pawn = NULL;
 	CBaseTrigger *trigger = NULL;
 	if (!V_stricmp(pThis->GetClassname(), "player"))
@@ -478,7 +478,7 @@ internal void OnEndTouch(CBaseEntity2 *pOther)
 	RETURN_META(MRES_SUPERCEDE);
 }
 
-internal void OnStartTouchPost(CBaseEntity2 *pOther)
+internal void OnStartTouchPost(CBaseEntity *pOther)
 {
 	if (ignoreTouchEvent)
 	{
@@ -497,7 +497,7 @@ internal void OnStartTouchPost(CBaseEntity2 *pOther)
 	{
 		RETURN_META(MRES_IGNORED);
 	}
-	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
@@ -513,7 +513,7 @@ internal void OnStartTouchPost(CBaseEntity2 *pOther)
 	RETURN_META(MRES_IGNORED);
 }
 
-internal void OnTouchPost(CBaseEntity2 *pOther)
+internal void OnTouchPost(CBaseEntity *pOther)
 {
 	if (ignoreTouchEvent)
 	{
@@ -524,7 +524,7 @@ internal void OnTouchPost(CBaseEntity2 *pOther)
 	RETURN_META(MRES_IGNORED);
 }
 
-internal void OnEndTouchPost(CBaseEntity2 *pOther)
+internal void OnEndTouchPost(CBaseEntity *pOther)
 {
 	if (ignoreTouchEvent)
 	{
@@ -543,7 +543,7 @@ internal void OnEndTouchPost(CBaseEntity2 *pOther)
 	{
 		RETURN_META(MRES_IGNORED);
 	}
-	CBaseEntity2 *pThis = META_IFACEPTR(CBaseEntity2);
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple") && static_cast<CBaseTrigger *>(pThis)->IsStartZone())
 	{
 		player->StartZoneEndTouch();
@@ -553,7 +553,7 @@ internal void OnEndTouchPost(CBaseEntity2 *pOther)
 
 internal void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
-	CBaseEntity2 *this_ = META_IFACEPTR(CBaseEntity2);
+	CBaseEntity *this_ = META_IFACEPTR(CBaseEntity);
 	// Just to be sure.
 	if (this_->IsPawn())
 	{
@@ -567,7 +567,7 @@ void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 {
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
-		AddEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
+		AddEntityHooks(static_cast<CBaseEntity *>(pEntity));
 	}
 }
 
@@ -575,7 +575,7 @@ void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
 {
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
-		RemoveEntityHooks(static_cast<CBaseEntity2 *>(pEntity));
+		RemoveEntityHooks(static_cast<CBaseEntity *>(pEntity));
 	}
 }
 

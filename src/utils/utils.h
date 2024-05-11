@@ -18,12 +18,12 @@ namespace utils
 	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
 	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
 
-	CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
+	CBaseEntity *FindEntityByClassname(CEntityInstance *start, const char *name);
 
-	CBasePlayerController *GetController(CBaseEntity2 *entity);
+	CBasePlayerController *GetController(CBaseEntity *entity);
 	CBasePlayerController *GetController(CPlayerSlot slot);
 
-	CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
+	CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 
 	// Normalize the angle between -180 and 180.
 	f32 NormalizeDeg(f32 a);
@@ -35,11 +35,11 @@ namespace utils
 	bool CFormat(char *buffer, u64 buffer_size, const char *text);
 	void ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3,
 						   const char *param4);
-	void PrintConsole(CBaseEntity2 *entity, const char *format, ...);
-	void PrintChat(CBaseEntity2 *entity, const char *format, ...);
-	void PrintCentre(CBaseEntity2 *entity, const char *format, ...);
-	void PrintAlert(CBaseEntity2 *entity, const char *format, ...);
-	void PrintHTMLCentre(CBaseEntity2 *entity, const char *format, ...); // This one uses HTML formatting.
+	void PrintConsole(CBaseEntity *entity, const char *format, ...);
+	void PrintChat(CBaseEntity *entity, const char *format, ...);
+	void PrintCentre(CBaseEntity *entity, const char *format, ...);
+	void PrintAlert(CBaseEntity *entity, const char *format, ...);
+	void PrintHTMLCentre(CBaseEntity *entity, const char *format, ...); // This one uses HTML formatting.
 
 	void PrintConsoleAll(const char *format, ...);
 	void PrintChatAll(const char *format, ...);
@@ -48,7 +48,7 @@ namespace utils
 	void PrintHTMLCentreAll(const char *format, ...); // This one uses HTML formatting.
 
 	// Color print
-	void CPrintChat(CBaseEntity2 *entity, const char *format, ...);
+	void CPrintChat(CBaseEntity *entity, const char *format, ...);
 	void CPrintChatAll(const char *format, ...);
 
 	// Sounds

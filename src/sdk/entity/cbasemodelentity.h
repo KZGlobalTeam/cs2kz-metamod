@@ -3,7 +3,7 @@
 #include "cbaseentity.h"
 #include "sdk/ccollisionproperty.h"
 
-class CBaseModelEntity : public CBaseEntity2
+class CBaseModelEntity : public CBaseEntity
 {
 public:
 	DECLARE_SCHEMA_CLASS(CBaseModelEntity);
