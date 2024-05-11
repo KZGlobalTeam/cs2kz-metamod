@@ -118,7 +118,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 			return;
 		}
 	}
-	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(CEntityIndex(entIndex)));
+	CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(entIndex)));
 	if (!ent)
 	{
 		return;

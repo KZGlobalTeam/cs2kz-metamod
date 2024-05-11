@@ -274,7 +274,7 @@ void utils::ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char
 	vsnprintf(buffer, sizeof(buffer), format, args); \
 	va_end(args);
 
-void utils::PrintConsole(CBaseEntity2 *entity, const char *format, ...)
+void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
@@ -282,7 +282,7 @@ void utils::PrintConsole(CBaseEntity2 *entity, const char *format, ...)
 	delete filter;
 }
 
-void utils::PrintChat(CBaseEntity2 *entity, const char *format, ...)
+void utils::PrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
@@ -290,7 +290,7 @@ void utils::PrintChat(CBaseEntity2 *entity, const char *format, ...)
 	delete filter;
 }
 
-void utils::PrintCentre(CBaseEntity2 *entity, const char *format, ...)
+void utils::PrintCentre(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
@@ -298,7 +298,7 @@ void utils::PrintCentre(CBaseEntity2 *entity, const char *format, ...)
 	delete filter;
 }
 
-void utils::PrintAlert(CBaseEntity2 *entity, const char *format, ...)
+void utils::PrintAlert(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());
@@ -306,7 +306,7 @@ void utils::PrintAlert(CBaseEntity2 *entity, const char *format, ...)
 	delete filter;
 }
 
-void utils::PrintHTMLCentre(CBaseEntity2 *entity, const char *format, ...)
+void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
 {
 	CBasePlayerController *controller = utils::GetController(entity);
 	if (!controller)
@@ -379,7 +379,7 @@ void utils::PrintHTMLCentreAll(const char *format, ...)
 	interfaces::pGameEventManager->FireEvent(event);
 }
 
-void utils::CPrintChat(CBaseEntity2 *entity, const char *format, ...)
+void utils::CPrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
 	CSingleRecipientFilter *filter = new CSingleRecipientFilter(utils::GetEntityPlayerSlot(entity).Get());

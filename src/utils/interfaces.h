@@ -18,7 +18,7 @@ class IGameEventManager2;
 class IGameEventSystem;
 class CBasePlayerPawn;
 class CCSPlayerPawn;
-class CBaseEntity2;
+class CBaseEntity;
 class CBasePlayerController;
 class IGameEventListener2;
 class CTimerBase;
@@ -30,7 +30,7 @@ typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilt
 typedef void InitGameTrace_t(trace_t_s2 *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
-typedef CBaseEntity2 *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
+typedef CBaseEntity *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
 typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm);
 typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
@@ -91,12 +91,12 @@ public:
 	virtual const CGlobalVars *GetServerGlobals();
 	virtual CGlobalVars *GetGlobals();
 
-	virtual CBaseEntity2 *FindEntityByClassname(CEntityInstance *start, const char *name);
+	virtual CBaseEntity *FindEntityByClassname(CEntityInstance *start, const char *name);
 
-	virtual CBasePlayerController *GetController(CBaseEntity2 *entity);
+	virtual CBasePlayerController *GetController(CBaseEntity *entity);
 	virtual CBasePlayerController *GetController(CPlayerSlot slot);
 
-	virtual CPlayerSlot GetEntityPlayerSlot(CBaseEntity2 *entity);
+	virtual CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 
 	// Convar stuff.
 	virtual void SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value);

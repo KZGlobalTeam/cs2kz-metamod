@@ -150,7 +150,7 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 		return result;
 	}
 
-	CCSPlayerController *controller = (CCSPlayerController *)GameEntitySystem()->GetBaseEntity(CEntityIndex((i32)slot.Get() + 1));
+	CCSPlayerController *controller = (CCSPlayerController *)GameEntitySystem()->GetEntityInstance(CEntityIndex((i32)slot.Get() + 1));
 
 	if (!controller || !g_pKZPlayerManager->ToPlayer(controller))
 	{

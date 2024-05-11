@@ -169,7 +169,7 @@ enum CollisionFunctionMask_t : uint32
 struct alignas(16) trace_t_s2
 {
 	void *m_pSurfaceProperties;
-	CBaseEntity2 *m_pEnt;
+	CBaseEntity *m_pEnt;
 	void *m_pHitbox;
 	void *m_hBody;
 	void *m_hShape;
@@ -241,7 +241,7 @@ class CTraceFilterS2
 public:
 	RnQueryAttr_t attr;
 	virtual ~CTraceFilterS2() {}
-	virtual bool ShouldHitEntity(CBaseEntity2 *other)
+	virtual bool ShouldHitEntity(CBaseEntity *other)
 	{
 		return false;
 	}
@@ -371,7 +371,7 @@ public:
 	}
 	CUtlVector<CEntityHandle> hitTriggerHandles;
 	virtual ~CTraceFilterHitAllTriggers() { hitTriggerHandles.Purge(); }
-	virtual bool ShouldHitEntity(CBaseEntity2 *other)
+	virtual bool ShouldHitEntity(CBaseEntity *other)
 	{
 		hitTriggerHandles.AddToTail(other->GetRefEHandle());
 		return false;

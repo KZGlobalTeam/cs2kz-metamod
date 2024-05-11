@@ -46,7 +46,7 @@ MovementPlayer *CMovementPlayerManager::ToPlayer(CEntityIndex entIndex)
 	{
 		return nullptr;
 	}
-	CBaseEntity2 *ent = (CBaseEntity2 *)GameEntitySystem()->GetBaseEntity(entIndex);
+	CBaseEntity *ent = static_cast<CBaseEntity *>((CBaseEntity *)GameEntitySystem()->GetEntityInstance(entIndex));
 	if (!ent)
 	{
 		return nullptr;
