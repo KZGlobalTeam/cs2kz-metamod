@@ -34,8 +34,8 @@ namespace schema
 	void NetworkStateChanged(int64 chainEntity, uint32 nLocalOffset, int nArrayIndex);
 } // namespace schema
 
-class CBaseEntity2;
-void SetStateChanged(CBaseEntity2 *pEntity, int offset);
+class CBaseEntity;
+void SetStateChanged(CBaseEntity *pEntity, int offset);
 
 constexpr uint32_t val_32_const = 0x811c9dc5;
 constexpr uint32_t prime_32_const = 0x1000193;

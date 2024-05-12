@@ -14,7 +14,7 @@ class KZQuietService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
 	u8 lastObserverMode;
-	CHandle<CBaseEntity2> lastObserverTarget;
+	CHandle<CBaseEntity> lastObserverTarget;
 	bool hideWeapon {};
 
 public:

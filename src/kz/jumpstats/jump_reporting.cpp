@@ -165,7 +165,7 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 
 	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
 	{
-		CBaseEntity *ent = GameEntitySystem()->GetBaseEntity(CEntityIndex(i));
+		CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(i)));
 		if (ent)
 		{
 			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);

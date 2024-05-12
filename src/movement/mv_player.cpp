@@ -29,7 +29,7 @@ CCSPlayerController *MovementPlayer::GetController()
 	{
 		return nullptr;
 	}
-	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(CEntityIndex(this->index)));
+	CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(this->index)));
 	if (!ent)
 	{
 		return nullptr;
