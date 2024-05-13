@@ -629,6 +629,10 @@ void KZTimerService::OnTeleport(const Vector *newPosition, const QAngle *newAngl
 	{
 		this->InvalidateJump();
 	}
+	if (newPosition)
+	{
+		this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
+	}
 }
 
 internal SCMD_CALLBACK(Command_KzStopTimer)
