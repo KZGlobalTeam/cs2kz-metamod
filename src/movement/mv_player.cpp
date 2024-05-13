@@ -6,7 +6,6 @@
 void MovementPlayer::OnProcessMovement()
 {
 	this->duckBugged = false;
-	this->hitPerf = false;
 	this->processingMovement = true;
 	this->walkMoved = false;
 	this->takeoffFromLadder = false;
@@ -15,6 +14,11 @@ void MovementPlayer::OnProcessMovement()
 
 void MovementPlayer::OnProcessMovementPost()
 {
+	// On ground or a ladder, definitely not in a perf.
+	if (this->GetPawn()->m_fFlags() & FL_ONGROUND || this->GetMoveType() != MOVETYPE_WALK)
+	{
+		this->inPerf = false;
+	}
 	this->processingMovement = false;
 	if (g_pKZUtils->GetGlobals()->frametime > 0.0f)
 	{
@@ -259,6 +263,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	{
 		mv = &this->moveDataPost;
 	}
+	this->inPerf = false;
 	this->landingOrigin = mv->m_vecAbsOrigin;
 	this->landingTime = g_pKZUtils->GetGlobals()->curtime;
 	this->landingVelocity = landingVelocity;
@@ -321,7 +326,7 @@ void MovementPlayer::Reset()
 	this->duckBugged = false;
 	this->walkMoved = false;
 	this->oldWalkMoved = false;
-	this->hitPerf = false;
+	this->inPerf = false;
 	this->jumped = false;
 	this->takeoffFromLadder = false;
 	this->lastValidLadderOrigin.Init();
