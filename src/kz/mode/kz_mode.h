@@ -182,7 +182,7 @@ public:
 	// clang-format on
 
 	virtual void UnregisterMode(const char *modeName);
-	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false);
+	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false, bool force = false);
 	void Cleanup();
 
 private:

@@ -164,7 +164,7 @@ class KZStyleManager
 public:
 	virtual bool RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory);
 	virtual void UnregisterStyle(const char *styleName);
-	bool SwitchToStyle(KZPlayer *player, const char *styleName, bool silent = false);
+	bool SwitchToStyle(KZPlayer *player, const char *styleName, bool silent = false, bool force = false);
 	void Cleanup();
 
 private:
