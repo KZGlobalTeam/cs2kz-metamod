@@ -147,7 +147,6 @@
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
 		"pl"		"Włącz lub wyłącz noclipa."
-
 	}
 	"Command Description - noclip"
 	{
@@ -208,7 +207,6 @@
 		"en"		"Restart."
 		"chi"		"重新开始."
 		"pl"		"Restart."
-
 	}
 	"Command Description - kz_hideweapon"
 	{
