@@ -4,12 +4,14 @@
 	{
 		"en"		"{yellow}1{grey} TP"
 		"chi"		"{yellow}1{grey} 传送"
+		"pl"		"{yellow}1{grey} TP"
 	}
 	"2+ Teleports Text"
 	{
 		"#format"	"tp_count:d"
 		"en"		"{yellow}{tp_count}{grey} TPs"
 		"chi"		"{yellow}{tp_count}{grey} 传送"
+		"pl"		"{yellow}{tp_count}{grey} TPs"
 	}
 
 	"Beat Map (Standard)"
