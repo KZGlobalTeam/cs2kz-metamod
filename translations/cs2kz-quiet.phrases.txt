@@ -4,40 +4,40 @@
 	{
 		"en"		"{grey}Your player's legs are now visible."
 		"chi"		"{grey}你现在能看到你的腿部了."
-		"pl"		"{grey}Twoje nogi są teraz widoczne."
+		"fi"		"{grey}Pelaajasi jalat ovat nyt näkyvissä."
 	}
 	"Quiet Option - Show Player Legs - Disable"
 	{
 		"en"		"{grey}Your player's legs are now hidden."
 		"chi"		"{grey}你现在隐藏了你的腿部."
-		"pl"		"{grey}Twoje nogi nie są już widoczne."
+		"fi"		"{grey}Pelaajasi jalat ovat nyt piilossa."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
 		"en"		"{grey}You are now showing other players."
 		"chi"		"{grey}已取消隐藏其他玩家."
 		"ru"		"{grey}Теперь вы видите остальных игроков."
-		"pl"		"{grey}Inni gracze są teraz widoczni."
+		"fi"		"{grey}Näet nyt muita pelaajia."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
 		"en"		"{grey}You are now hiding other players."
 		"chi"		"{grey}已隐藏其他玩家模型."
 		"ru"		"{grey}Теперь вы не видите остальных игроков."
-		"pl"		"{grey}Inni gracze nie są już widoczni."
+		"fi"		"{grey}Nyt et näe muita pelaajia."
 	}
 	"Quiet Option - Show Weapon - Enable"
 	{
 		"en"		"{grey}You are now showing your weapon."
 		"chi"		"{grey}你现在能看到你的武器了."
 		"ru"		"{grey}Теперь вы показываете свое оружие."
-		"pl"		"{grey}Twoja broń jest teraz widoczna."
+		"fi"		"{grey}Pelaajasi ase on nyt näkyvissä."
 	}
 	"Quiet Option - Show Weapon - Disable"
 	{
 		"en"		"{grey}You are now hiding your weapon."
 		"chi"		"{grey}你现在隐藏了你的武器."
 		"ru"		"{grey}Теперь вы скрыли свое оружие."
-		"pl"		"{grey}Twoja broń nie jest już widoczna."
+		"fi"		"{grey}Pelaajasi ase on nyt piilossa."
 	}
 }

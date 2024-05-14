@@ -4,72 +4,72 @@
 	{
 		"en"	"{grey}Use {default}/help {grey}to see all available KZ commands."
 		"chi"	"{grey}使用 {default}/help {grey}查看全部指令."
-		"pl"	"{grey}Użyj {default}/help {grey}żeby zobaczyć wszystkie dostępne komendy."
+		"fi"	"{grey}Käytä {default}/help {grey}komentoa nähdäksesi kaikki mahdolliset KZ komennot."
 	}
 	"Tip - kz_mode"
 	{
 		"en"	"{grey}You can switch to a mode by typing its abbreviation. For example, type {default}/ckz{grey} to switch to the {purple}Classic {grey}mode or {default}/vnl {grey}to switch to the {purple}Vanilla {grey}mode."
 		"chi"	"{grey}你可以输入缩写进行切换模式. 例如：输入 {default}/ckz{grey} 可以切换到 {purple}经典 {grey}模式 或者 {default}/vnl {grey}切换到 {purple}官匹 {grey}模式等."
-		"pl"	"{grey}Możesz przełączać się między trybami używając skrótów. Na przykład, użyj {default}/ckz{grey} aby zmienić tryb na {purple}Klasyczny {grey} lub {default}/vnl {grey}aby zmienić tryb na {purple}Vanilla {grey}mode."
+		"fi"	"{grey}Voit vaihtaa moodia kirjoittamalla sen lyhennyksen. Esimerkiksi, voit kirjoittaa {default}/ckz{grey} chattiin vaihtaaksesi {purple}Classic {grey}moodiin tai {default}/vnl {grey}vaihtaaksesi {purple}Vanilla {grey}moodiin."
 	}
 	"Tip - kz_restart"
 	{
 		"en"	"{grey}You can teleport back to your start position using {default}/restart{grey}."
 		"chi"	"{grey}使用 {default}/restart{grey} 可以快速重生到起点."
-		"pl"	"{grey}Użyj {default}/restart{grey} aby wrócić na pozycję startową."
+		"fi"	"{grey}Voit teleportata takaisin aloituspisteeseesi käyttämällä {default}/restart{grey} komentoa."
 	}
 	"Tip - kz_ssp"
 	{
 		"en"	"{grey}You can use {default}/setstartpos {grey}and {default}/clearstartpos {grey}to control your start teleport position."
 		"chi"	"{grey}你可以使用 {default}/setstartpos {grey}和 {default}/clearstartpos {grey}来控制你的起点."
-		"pl"	"{grey}Możesz użyć {default}/setstartpos {grey}lub {default}/clearstartpos {grey}aby zmieniać pozycję startową."
+		"fi"	"{grey}Voit käyttää {default}/setstartpos {grey}ja {default}/clearstartpos {grey}komentoja mukauttamaan custom aloituspistettäsi."
 	}
 	"Tip - stretch"
 	{
 		"en"	"{grey}Look after yourself. Take regular breaks to stretch and stay hydrated."
 		"chi"	"{grey}照顾好自己，定期休息，伸展身体，保持水分充足."
-		"pl"	"{grey}Dbaj o siebie. Pamiętaj o regularnych przerwach i nawodnieniu."
+		"fi"	"{grey}Pidä itsestäsi huolta. Pidä taukoja säännöllisesti venytelläksesi ja juo vettä."
 	}
 	"Tip - kz_tips"
 	{
 		"en"	"{grey}Don't need tips like this showing up in chat? You can toggle them with {default}/tips{grey}."
 		"chi"	"{grey}不需要这些提示? 可以使用 {default}/tips{grey} 切换开关."
-		"pl"	"{grey}Nie potrzebujesz wskazówek na czacie? Możesz je wyłączyć używając {default}/tips{grey}."
+		"fi"	"{grey}Etkö tarvitse vihejeitä kuten tämä chatissasi? Voit muuttaa niiden asetusta {default}/tips{grey} komennolla."
 	}
 	"Tip - bind"
 	{
 		"en"	"{grey}You can bind commands to keys for easy access, for example: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"chi"	"{grey}你可以绑定某些按键, 例如: {default}bind {purple}<按键1> {default}\"kz_cp\"; bind {purple}<按键2> {default}\"kz_tp\"."
-		"pl"	"{grey}Możesz przypisać komendy do wybranych klawiszy dla łatwego dostępu, na przykład: {default}bind {purple}<klawisz1> {default}\"kz_cp\"; bind {purple}<klawisz2> {default}\"kz_tp\"."
+		"fi"	"{grey}Voit asettaa komentoja näppäimiisi helpotukseksesi, esimerkiksi: {default}bind {purple}<näppäin1> {default}\"kz_cp\"; bind {purple}<näppäin2> {default}\"kz_tp\"."
 	}
 	"Tip - kz_prevcp"
 	{
 		"en"	"{grey}Teleport to the previous checkpoint with {default}/prevcp{grey}."
 		"chi" 	"{grey}传送到上一个存点请使用 {default}/prevcp{grey}."
-		"pl"	"{grey}Aby wrócić poprzedniego checkpointu wpisz{default}/prevcp{grey}."
+		"fi"	"{grey}Teleporttaa edelliseen tarkistuspisteeseen {default}/prevcp{grey} komennolla."
 	}
 	"Tip - kz_nextcp"
 	{
 		"en"	"{grey}Teleport to the next checkpoint with {default}/nextcp{grey}."
 		"chi"	"{grey}传送到下一个存点请使用 {default}/nextcp{grey}."
-		"pl"	"{grey}Aby teleportować się do następnego checkpointu wpisz{default}/nextcp{grey}."
+		"fi"	"{grey}Teleporttaa seuraavaan tarkistuspisteeseen {default}/nextcp{grey} komennolla."
 	}
 	"Tip - bugs"
 	{
 		"en"	"{grey}Report issues related to CS2KZ on our GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"chi"	"{grey}遇到问题可以访问CS2KZ的仓库: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey} 进行反馈"
-		"pl"	"{grey}Wszystkie problemy związane z CS2KZ zgłoś na GitHubie: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"fi"	"{grey}Reportoi ongelmia CS2KZ liittyen meidän GitHub sivuilla: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
 	"Tip - kz_jssound"
 	{
 		"en"	"{grey}You can control which jumpstats play a sound using {default}/jssound{grey}."
 		"chi"	"{grey}你可以使用 {default}/jssound{grey} 来控制声音播报等级."
-		"pl"	"{grey}Możesz kontrolować dźwięki jumpstatów poprzez {default}/jssound{grey}."
+		"fi"	"{grey}Voit valita mitkä jumpstatit soittavat äänieffektin käyttämällä {default}/jssound{grey} komentoa."
 	}
 	"Tip - kz_jsbroadcast"
 	{
 		"en"	"{grey}Use {default}/jsbroadcast {grey}to change which jumpstats by other players get printed to you."
 		"chi"	"{grey}使用 {default}/jsbroadcast {grey}可以控制你的跳跃提示播报等级."
-		"pl"	"{grey}Użyj {default}/jsbroadcast {grey}aby kontrolować jakie jumpstaty innych graczy są nadawane do ciebie."
+		"fi"	"{grey}Käytä {default}/jsbroadcast {grey}komentoa vaihtaaksesi mitkä muiden pelaajien saamat jumpstatit printataan sinulle."
 	}
 }
