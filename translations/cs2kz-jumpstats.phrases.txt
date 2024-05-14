@@ -289,10 +289,7 @@
 		"en"		"{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"chi"		"{grey}用法: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"pl"		"{grey}Użycie: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
-<<<<<<< HEAD
 		"fi"		"{grey}Käyttö: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
-=======
->>>>>>> 9744a54f7ecf7d2e2a7b8dda089720e1fdf79b6c
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
 	{
@@ -314,10 +311,7 @@
 		"en"		"{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"chi"		"{grey}用法: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"pl"		"{grey}Użycie: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
-<<<<<<< HEAD
 		"fi"		"{grey}Käyttö: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
-=======
->>>>>>> 9744a54f7ecf7d2e2a7b8dda089720e1fdf79b6c
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
 	{

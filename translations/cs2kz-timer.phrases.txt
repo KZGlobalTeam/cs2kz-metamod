@@ -5,10 +5,7 @@
 		"en"		"{yellow}1{grey} TP"
 		"chi"		"{yellow}1{grey} 传送"
 		"pl"		"{yellow}1{grey} TP"
-<<<<<<< HEAD
 		"fi"		"{yellow}1{grey} TP"
-=======
->>>>>>> 9744a54f7ecf7d2e2a7b8dda089720e1fdf79b6c
 	}
 	"2+ Teleports Text"
 	{
@@ -16,10 +13,7 @@
 		"en"		"{yellow}{tp_count}{grey} TPs"
 		"chi"		"{yellow}{tp_count}{grey} 传送"
 		"pl"		"{yellow}{tp_count}{grey} TPs"
-<<<<<<< HEAD
 		"fi"		"{yellow}{tp_count}{grey} TPt"
-=======
->>>>>>> 9744a54f7ecf7d2e2a7b8dda089720e1fdf79b6c
 	}
 
 	"Beat Map (Standard)"
