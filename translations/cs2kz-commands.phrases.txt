@@ -30,56 +30,56 @@
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
-		"fi"		"Asettaa tallenuspisteen maahan tai tikkaille."
+		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
 	}
 	"Command Description - kz_cp"
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
-		"fi"		"Asettaa tallenuspisteen maahan tai tikkaille."
+		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
 	}
 	"Command Description - kz_teleport"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
 		"pl"		"Teleportuj się do aktualnego checkpointu."
-		"fi"		"Teleporttaa tämänhetkiseen ttallenuspisteeseen."
+		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
 	}
 	"Command Description - kz_tp"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
 		"pl"		"Teleportuj się do aktualnego checkpointu."
-		"fi"		"Teleporttaa tämänhetkiseen ttallenuspisteeseen."
+		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
 	}
 	"Command Description - kz_prevcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
-		"fi"		"Teleporttaa edelliseen tallenuspisteeseen."
+		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
 	}
 	"Command Description - kz_pcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
-		"fi"		"Teleporttaa edelliseen tallenuspisteeseen."
+		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
 	}
 	"Command Description - kz_nextcp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
 		"pl"		"Teleportuj się do następnego checkpointu."
-		"fi"		"Teleporttaa seuraavaan tallenuspisteeseen."
+		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
 	}
 	"Command Description - kz_ncp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
 		"pl"		"Teleportuj się do następnego checkpointu."	
-		"fi"		"Teleporttaa seuraavaan tallenuspisteeseen."
+		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
 	}
 	"Command Description - kz_setstartpos"
 	{
