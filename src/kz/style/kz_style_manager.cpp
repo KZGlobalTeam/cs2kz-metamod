@@ -111,7 +111,7 @@ void KZStyleManager::UnregisterStyle(const char *styleName)
 	}
 }
 
-bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool silent)
+bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool silent, bool force)
 {
 	// Don't change style if it doesn't exist. Instead, print a list of styles to the client.
 	if (!styleName || !V_stricmp("", styleName))
@@ -132,8 +132,9 @@ bool KZStyleManager::SwitchToStyle(KZPlayer *player, const char *styleName, bool
 		return false;
 	}
 
-	// If it's the same style, do nothing.
-	if (V_stricmp(player->styleService->GetStyleName(), styleName) == 0 || V_stricmp(player->styleService->GetStyleShortName(), styleName) == 0)
+	// If it's the same style, do nothing, unless it's forced.
+	if (!force
+		&& (V_stricmp(player->styleService->GetStyleName(), styleName) == 0 || V_stricmp(player->styleService->GetStyleShortName(), styleName) == 0))
 	{
 		return false;
 	}
