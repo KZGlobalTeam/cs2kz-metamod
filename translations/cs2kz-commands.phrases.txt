@@ -258,6 +258,7 @@
 	{
 		"en"		"Show this help message."
 		"chi"		"显示帮助信息."
+		"pl"		"Pokaż tą pomocną wiadomość."
 		"fi"		"Näytä tämä apuviesti."
 	}
 	"Command Description - kz_language"
