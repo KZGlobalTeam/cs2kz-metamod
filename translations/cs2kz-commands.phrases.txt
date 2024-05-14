@@ -259,7 +259,10 @@
 		"en"		"Show this help message."
 		"chi"		"显示帮助信息."
 		"pl"		"Pokaż tą pomocną wiadomość."
+<<<<<<< HEAD
 		"fi"		"Näytä tämä apuviesti."
+=======
+>>>>>>> 9744a54f7ecf7d2e2a7b8dda089720e1fdf79b6c
 	}
 	"Command Description - kz_language"
 	{
