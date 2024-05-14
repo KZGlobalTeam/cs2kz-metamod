@@ -4,13 +4,13 @@
 	{
 		"en"		"{grey}Look in your console for a list of commands!"
 		"chi"		"{grey}请在控制台中查看指令列表!"
-		"fi"		"{grey}Löydät komentolistan katsomalla konsoliisi!"
+		"pl"		"{grey}Spójrz do konsoli po listę komend!"
 	}
 	"Command Help Response (Console)"
 	{
 		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 		"chi"		"使用这些命令, 你可以在控制台中输入 \"bind <按键> kz_<命令名字>\", 或者在聊天栏中输入 !<命令名字> 或 /<命令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
-		"fi"		"Käyttääksesi näitä komentoja, voit kirjoittaa \"bind <key> kz_<komennon nimi>\" konsoliisi, tai kirjoittaa !<komento> tai /<komento> chattiin.\nEsimerkiksi: \"bind 1 kz_cp\" tai \"!cp\" tai \"/cp\""
+		"pl"		"Aby użyć tych komend, wpisz w konsoli \"bind <klawisz> kz_<nazwa komendy>\", albo wpisz !<nazwa komendy> lub /<nazwa komendy> na czacie.\nnp.: \"bind 1 kz_cp\" lub \"!cp\" lub \"/cp\""
 	}
 	"Switch Language"
 	{
@@ -18,7 +18,7 @@
 		"#format"	"language:s"
 		"en"		"{grey}You have switched your language to {default}{language}{grey}."
 		"chi"		"{grey}你选择了你的语言为 {default}{language}{grey}."
-		"fi"		"{grey}Kielesi on nyt {default}{language}{grey}."
+		"pl"		"{grey}Zmieniłeś język na {default}{language}{grey}."
 	}
 
 	// Commands
@@ -26,193 +26,193 @@
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"fi"		"Asettaa tallenuspisteen maahan tai tikkaille."
+		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 	}
 	"Command Description - kz_cp"
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"fi"		"Asettaa tallenuspisteen maahan tai tikkaille."
+		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 	}
 	"Command Description - kz_teleport"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"fi"		"Teleporttaa tämänhetkiseen tallenuspisteeseen."
+		"pl"		"Teleportuj się do aktualnego checkpointu."
 	}
 	"Command Description - kz_tp"
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"fi"		"Teleporttaa tämänhetkiseen ttallenuspisteeseen."
+		"pl"		"Teleportuj się do aktualnego checkpointu."
 	}
 	"Command Description - kz_prevcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"fi"		"Teleporttaa edelliseen tallenuspisteeseen."
+		"pl"		"Teleportuj się do poprzedniego checkpointu."
 	}
 	"Command Description - kz_pcp"
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"fi"		"Teleporttaa edelliseen tallenuspisteeseen."
+		"pl"		"Teleportuj się do poprzedniego checkpointu."
 	}
 	"Command Description - kz_nextcp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"fi"		"Teleporttaa seuraavaan tallenuspisteeseen."
+		"pl"		"Teleportuj się do następnego checkpointu."
 	}
 	"Command Description - kz_ncp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"fi"		"Teleporttaa seuraavaan tallenuspisteeseen."
+		"pl"		"Teleportuj się do następnego checkpointu."	
 	}
 	"Command Description - kz_setstartpos"
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
+		"pl"		"Ustaw własną pozycję startową."	
 	}
 	"Command Description - kz_ssp"
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
+		"pl"		"Ustaw własną pozycję startową."	
 	}
 	"Command Description - kz_clearstartpos"
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"fi"		"Tyhjennä custom aloituspisteesi."
+		"pl"		"Usuń własną pozycję startową."	
 	}
 	"Command Description - kz_csp"
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"fi"		"Tyhjennä custom aloituspisteesi."
+		"pl"		"Usuń własną pozycję startową."	
 	}
 	"Command Description - kz_panel"
 	{
 		"en"		"Toggle centre panel display."
 		"chi"		"切换中心面板的显示."
-		"fi"		"Vaihda keskipaneelin näyttämisen asetusta."
+		"pl"		"Wyświetlanie panelu środkowego."	
 	}
 	"Command Description - kz_jsbroadcast"
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"fi"		"Muuta muiden pelaajien chatissä näkyvien jumpstattien minimi kynnysarvoa."
+		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."	
 	}
 	"Command Description - kz_jssound"
 	{
 		"en"		"Change jumpstats minimum threshold for sound effects."
 		"chi"		"更改播放跳跃提示音的最小阈值."
-		"fi"		"Muuta jumpstattien äänitehosteiden minimi kynnysarvoa."
+		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."	
 	}
 	"Command Description - kz_togglestats"
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
+		"pl"		"Przełącz wykaz jumpstatów."	
 	}
 	"Command Description - kz_togglejs"
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换起跳提示报告的开关"
-		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
+		"pl"		"Przełącz wykaz jumpstatów."	
 	}
 	"Command Description - kz_jsalways"
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换 总是显示跳跃数据 的开关"
-		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
+		"pl"		"Zawsze pokazuj jumpstaty."	
 	}
 	"Command Description - kz_mode"
 	{
 		"en"		"List or change mode."
 		"chi"		"列出或更改模式."
-		"fi"		"Listaa tai vaihda moodia."
+		"pl"		"Lista trybów gry bądź jego zmiana."	
 	}
 	"Command Description - kz_noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"fi"		"Vaiha noclip:n tilaa."
+		"pl"		"Włącz lub wyłącz noclipa."	
 	}
 	"Command Description - kz_nc"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"fi"		"Vaiha noclip:n tilaa."
+		"pl"		"Włącz lub wyłącz noclipa."
 	}
 	"Command Description - noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"fi"		"Vaiha noclip:n tilaa."
+		"pl"		"Włącz lub wyłącz noclipa."
 	}
 	"Command Description - kz_spec"
 	{
 		"en"		"Spectate a player."
 		"chi"		"观看一个玩家."
-		"fi"		"Katsele pelaajaa."
+		"pl"		"Obserwuj innego gracza."
 	}
 	"Command Description - kz_style"
 	{
 		"en"		"List or change style."
 		"chi"		"列出或更改风格."
-		"fi"		"Listaa tai vaihda tyyliä."
+		"pl"		"Lista stylów gry bądź jego zmiana."	
 	}
 	"Command Description - kz_stop"
 	{
 		"en"		"Stop timer."
 		"chi"		"停止计时."
-		"fi"		"Pysäytä ajastin."
+		"pl"		"Wyłącz timer."	
 	}
 	"Command Description - kz_pause"
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"fi"		"Vaihda ajastimen keskeytyksen asetusta."
+		"pl"		"Przełącz pauzę timera."	
 	}
 	"Command Description - kz_tips"
 	{
 		"en"		"Toggle tips."
 		"chi"		"切换提示的开关."
-		"fi"		"Vaihda vihjeiden asetusta."
+		"pl"		"Włącz lub wyłącz wskazówki."	
 	}
 	"Command Description - kz_hidelegs"
 	{
 		"en"		"Hide your legs in first person."
 		"chi"		"在第一人称中隐藏腿部."
-		"fi"		"Piilota omat jalkasi ensimmäisessä persoonassa."
+		"pl"		"Ukryj nogi w pierwszej osobie."	
 	}
 	"Command Description - kz_hide"
 	{
 		"en"		"Hide other players."
 		"chi"		"隐藏其他的玩家."
-		"fi"		"Piilota muut pelaajat."
+		"pl"		"Ukryj innych graczy."	
 	}
 	"Command Description - kz_restart"
 	{
 		"en"		"Restart."
 		"chi"		"重新开始."
-		"fi"		"Aloita alusta."
+		"pl"		"Restart."	
 	}
 	"Command Description - kz_r"
 	{
 		"en"		"Restart."
 		"chi"		"重新开始."
-		"fi"		"Aloita alusta."
+		"pl"		"Restart."
 	}
 	"Command Description - kz_hideweapon"
 	{
 		"en"		"Hide weapon viewmodel."
 		"chi"		"隐藏武器模型显示."
-		"fi"		"Piilota ase ja pelaajamalli."
+		"pl"		"Ukryj broń."
 	}
 	"Command Description - jointeam"
 	{
@@ -223,24 +223,23 @@
 	{
 		"en"		"Show this help message."
 		"chi"		"显示帮助信息."
-		"fi"		"Näytä tämä apuviesti."
 	}
 	"Command Description - kz_language"
 	{
 		"en"		"Switch current language."
 		"chi"		"切换当前语言."
-		"fi"		"Vaihda käytössäolevaa kieltä."
+		"pl"		"Zmień obecnie ustawiony język"
 	}
 	"Command Description - kz_vnl"
 	{
 		"en"		"Switch to Vanilla mode."
 		"chi"		"切换为官匹模式."
-		"fi"		"Vaihda Vanilla moodiin."
+		"pl"		"Zmień tryb na Vanilla"
 	}
 	"Command Description - kz_ckz"
 	{
 		"en"		"Switch to Classic mode."
 		"chi"		"切换为经典模式."
-		"fi"		"Vaihda Classic moodiin."
+		"pl"		"Zmień tryb na Classic."
 	}
 }

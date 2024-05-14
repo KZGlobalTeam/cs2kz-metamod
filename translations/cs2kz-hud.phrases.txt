@@ -4,21 +4,21 @@
 	{
 		"en"	"Speed"
 		"chi"	"速度"
-		"fi"	"Nopeus"
+		"pl"	"Prędkość"
 	}
 	"HUD - Stopped Text"
 	{
 		// (STOPPED)
 		"en"		" (STOPPED)"
 		"chi"		" (停止)"
-		"fi"		" (PYSÄYTETTY)"
+		"pl"		" (PRZERWANY)"
 	}
 	"HUD - Paused Text"
 	{
 		// (PAUSED)
 		"en"		" (PAUSED)"
 		"chi"		" (暂停)"
-		"fi"		" (KESKEYTETTY)"
+		"pl"		" (WSTRZYMANY)"
 	}
 	"HUD - Speed Text"
 	{
@@ -26,7 +26,7 @@
 		"#format"	"speed:.0f"
 		"en"		"Speed: {speed}"
 		"chi"		"速度: {speed}"
-		"fi"		"Nopeus: {speed}"
+		"pl"		"Prędkość: {speed}"
 	}
 	"HUD - Speed Text (Takeoff)"
 	{
@@ -34,7 +34,7 @@
 		"#format"	"speed:.0f,takeoff_speed:.0f"
 		"en"		"Speed: {speed} ({takeoff_speed})"
 		"chi"		"速度: {speed} ({takeoff_speed})"
-		"fi"		"Nopeus: {speed} ({takeoff_speed})"
+		"pl"		"Prędkość: {speed} ({takeoff_speed})"
 	}
 	"HUD - Key Text"
 	{
@@ -42,7 +42,7 @@
 		"#format"	"left:c,forward:c,back:c,right:c,duck:c,jump:c"
 		"en"		"Keys: {left} {forward} {back} {right} {duck} {jump}"
 		"chi"		"按键: {left} {forward} {back} {right} {duck} {jump}"
-		"fi"		"Näppäimet: {left} {forward} {back} {right} {duck} {jump}"
+		"pl"		"Klawisze: {left} {forward} {back} {right} {duck} {jump}"
 	}
 	"HUD - Checkpoint Text"
 	{
@@ -50,7 +50,7 @@
 		"#format"	"checkpoint_index:d,checkpoint_count:d,teleport_count:d"
 		"en"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"chi"		"存点: {checkpoint_index}/{checkpoint_count} 传送: {teleport_count}"
-		"fi"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
+		"pl"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
@@ -58,7 +58,7 @@
 		"#format"	"time:s,stop_text:s,pause_text:s"
 		"en"		"{time}{stop_text}{pause_text}"
 		"chi"		"{time}{stop_text}{pause_text}"
-		"fi"		"{time}{stop_text}{pause_text}"
+		"pl"		"{time}{stop_text}{pause_text}"
 	}
 	"HUD - Center Text"
 	{
@@ -67,7 +67,7 @@
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		"{checkpoint_text}\n{timer_text}"
 		"chi"		"{checkpoint_text}\n{timer_text}"
-		"fi"		"{checkpoint_text}\n{timer_text}"
+		"pl"		"{checkpoint_text}\n{timer_text}"
 	}
 	// This text is actually "more" center.
 	"HUD - Alert Text"
@@ -77,7 +77,7 @@
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		"{speed_text}\n{key_text}"
 		"chi"		"{speed_text}\n{key_text}"
-		"fi"		"{speed_text}\n{key_text}"
+		"pl"		"{speed_text}\n{key_text}"
 	}
 	"HUD - HTML Center Text"
 	{
@@ -85,7 +85,7 @@
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		""
 		"chi"		""
-		"fi"		""
+		"pl"		""
 	}
 	
 	"HUD Option - Info Panel - Enable"
@@ -93,13 +93,13 @@
 		"en"		"{grey}Your centre information panel has been enabled."
 		"chi"		"{grey}你的中心面板已打开."
 		"ru"		"{grey}Ваша центровая информационная панель была включена."
-		"fi"		"{grey}Sinun keski-infopaneelisi on otettu käyttöön."
+		"pl"		"{grey}Środkowy panel informacyjny został włączony."
 	}
 	"HUD Option - Info Panel - Disable"
 	{
 		"en"		"{grey}Your centre information panel has been disabled."
 		"chi"		"{grey}你的中心面板已关闭."
 		"ru"		"{grey}Ваша центровая информационная панель была выключена."
-		"fi"		"{grey}Sinun keski-infopaneelisi on poistettu käyttöstä."
+		"pl"		"{grey}Środkowy panel informacyjny został wyłączony."
 	}
 }
