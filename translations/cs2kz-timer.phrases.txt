@@ -21,6 +21,7 @@
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s,tp_count_text:s"
 		"en"		"{lime}{player_name} {grey}finished the map in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 	}
 	"Beat Map (PRO)"
@@ -30,6 +31,7 @@
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s"
 		"en"		"{lime}{player_name} {grey}finished the map in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 	}
 	"Beat Course (NUB)"
@@ -38,6 +40,7 @@
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s,tp_count_text:s"
 		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 	}
 	"Beat Course (PRO)"
@@ -46,12 +49,15 @@
 		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s"
 		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 	}
+	
 	"Can't Pause (Generic)"
 	{
 		"en"		"{darkred}You can't pause right now."
 		"chi"		"{darkred}你现在不能暂停."
+		"pl"		"{darkred}Nie możesz teraz zapauzować."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta juuri nyt."
 	}
 	"Can't Pause (Just Resumed)"
@@ -59,6 +65,7 @@
 		"en"		"{darkred}You can't pause because you just resumed."
 		"chi"		"{darkred}你刚刚才恢复计时,无法暂停."
 		"ru"		"{darkred}Вы не можете после возобновления поставить вновь паузу."
+		"pl"		"{darkred}Próbujesz wstrzymać czas zbyt szybko, zaczekaj chwilę."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä jatkoit juuri ajastintasi."
 	}
 	"Can't Pause (Midair)"
@@ -66,6 +73,7 @@
 		"en"		"{darkred}You can't pause in mid-air."
 		"chi"		"{darkred}空中不能暂停."
 		"ru"		"{darkred}Вы не можете поставить паузу в воздухе."
+		"pl"		"{darkred}Nie możesz zapauzować bedąc w powietrzu."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta ilmassa."
 	}
 	"Can't Pause (Just Landed)"
@@ -73,18 +81,21 @@
 		"en"		"{darkred}You can't pause because you just landed."
 		"chi"		"{darkred}你不能暂停, 因为你还没有站稳."	
 		"ru"		"{darkred}Вы не можете поставить паузу после приземления."
+		"pl"		"{darkred}Nie możesz zapauzować, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä laskeuduit juuri."
 	}
 	"Can't Pause (Anti Pause Area)"
 	{
 		"en"		"{darkred}You can't pause because pausing is disabled in this area."
 		"chi"		"{darkred}此区域禁止暂停."
+		"pl"		"{darkred}Pauzowanie jest wyłączone w tym miejscu."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta sillä se on poissa käytöstä tällä alueella."
 	}
 	"Can't Resume (Generic)"
 	{
 		"en"		"{darkred}You can't resume right now."
-		"chi"		"{darkred}你现在不能恢复计时."
+		"chi"		"{darkred}你现在不能恢复计时."	
+		"pl"		"{darkred}Nie możesz teraz wznowić czasu."
 		"fi"		"{darkred}Et voi jatkaa ajastinta juuri nyt."
 	}
 	"Can't Resume (Just Paused)"
@@ -92,6 +103,7 @@
 		"en"		"{darkred}You can't resume because you just paused."
 		"chi"		"{darkred}你刚刚才暂停计时,无法恢复计时."
 		"ru"		"{darkred}Вы не можете возобновить, потому что только что сделали паузу."
+		"pl"		"{darkred}Nie możesz teraz wznowić czasu, ponieważ dopiero co użyłeś pauzy."
 		"fi"		"{darkred}Et voi jatkaa ajastintasi, sillä pysäytit sen juuri."
 	}
 }
