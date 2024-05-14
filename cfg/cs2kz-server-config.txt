@@ -7,4 +7,18 @@
 	"defaultJSBroadcastMinTier"	"4"
 	"defaultJSSoundMinTier"		"4"
 	"chatPrefix"			"{lime}KZ {grey}|{default}"
+	"db"
+	{
+		"driver"	"sqlite"
+		"database"	"cs2kz"
+		
+		// MySQL connections only, required
+		"host"		"192.168.1.8"
+		"user"		"root"
+		"pass"		"root"
+		
+		// MySQL connections only, optional
+		//"timeout"			"60"
+		//"port"			"3306"
+	}
 }

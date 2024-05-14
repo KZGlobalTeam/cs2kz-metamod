@@ -8,6 +8,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/spec/kz_spec.h"
@@ -76,6 +77,7 @@ void KZPlugin::AllPluginsLoaded()
 {
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
+	KZDBService::Init();
 
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);

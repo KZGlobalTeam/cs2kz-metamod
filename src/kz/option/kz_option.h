@@ -14,6 +14,7 @@ public:
 	static const char *GetOptionStr(const char *optionName, const char *defaultValue = "");
 	static f64 GetOptionFloat(const char *optionName, f64 defaultValue = 0.0);
 	static i64 GetOptionInt(const char *optionName, i64 defaultValue = 0);
+	static KeyValues *GetOptionKV(const char *optionName);
 
 private:
 	static void LoadDefaultOptions();

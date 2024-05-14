@@ -16,7 +16,7 @@ constexpr char mysql_mapcourses_create[] = "\
 CREATE TABLE IF NOT EXISTS MapCourses ( \
     MapCourseID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, \
     MapID INTEGER UNSIGNED NOT NULL, \
-    Course VARCHAR(32) UNSIGNED NOT NULL, \
+    Course VARCHAR(32) NOT NULL, \
     Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, \
     CONSTRAINT PK_MapCourses PRIMARY KEY (MapCourseID), \
     CONSTRAINT UQ_MapCourses_MapIDCourse UNIQUE (MapID, Course), \

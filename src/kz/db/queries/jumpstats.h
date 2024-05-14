@@ -125,7 +125,7 @@ SELECT MAX(js.Distance), js.Mode, js.JumpType, js.Block \
 			WHERE \
 				IsBlockJump=1 AND \
 				SteamID32=%d \
-			GROUP BY \ 
+			GROUP BY \
 				Mode, JumpType \
 	) pb \
 	ON \
@@ -137,7 +137,7 @@ SELECT MAX(js.Distance), js.Mode, js.JumpType, js.Block \
 	GROUP BY \
 		js.Mode, js.JumpType, js.Block";
 
-constexpr char sql_jumpstats_gettop[] = "\
+constexpr char sql_jumpstats_ranking_gettop[] = "\
 SELECT j.JumpID, p.SteamID32, p.Alias, j.Block, j.Distance, j.Strafes, j.Sync, j.Pre, j.Max, j.Airtime \
 	FROM \
 		Jumpstats j \
@@ -177,7 +177,7 @@ SELECT j.JumpID, p.SteamID32, p.Alias, j.Block, j.Distance, j.Strafes, j.Sync, j
     ORDER BY j.Block DESC, j.Distance DESC \
     LIMIT %d";
 
-constexpr char sql_jumpstats_getrecord[] = "\
+constexpr char sql_jumpstats_ranking_getrecord[] = "\
 SELECT JumpID, Distance, Block \
     FROM \
         Jumpstats rec \
@@ -188,7 +188,7 @@ SELECT JumpID, Distance, Block \
         IsBlockJump = %d \
     ORDER BY Block DESC, Distance DESC";
 
-constexpr char sql_jumpstats_getpbs[] = "\
+constexpr char sql_jumpstats_ranking_getpbs[] = "\
 SELECT b.JumpID, b.JumpType, b.Distance, b.Strafes, b.Sync, b.Pre, b.Max, b.Airtime \
     FROM Jumpstats b \
     INNER JOIN ( \
@@ -200,7 +200,7 @@ SELECT b.JumpID, b.JumpType, b.Distance, b.Strafes, b.Sync, b.Pre, b.Max, b.Airt
     WHERE a.SteamID32=b.SteamID32 AND a.Mode=b.Mode AND NOT b.IsBlockJump \
     ORDER BY b.JumpType";
 
-constexpr char sql_jumpstats_getblockpbs[] = "\
+constexpr char sql_jumpstats_ranking_getblockpbs[] = "\
 SELECT c.JumpID, c.JumpType, c.Block, c.Distance, c.Strafes, c.Sync, c.Pre, c.Max, c.Airtime \
     FROM Jumpstats c \
     INNER JOIN ( \
