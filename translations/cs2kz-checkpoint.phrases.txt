@@ -45,7 +45,7 @@
 		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
 		"chi"		"{darkred}你尚未设置任何存点, 无法传送."
 		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
-		"pl"		"{darkred}Nie możesz się teleportować, ponieważ nie ustawiłeś żadnego checkpoint'u."
+		"pl"		"{darkred}Nie możesz się teleportować, ponieważ nie ustawiłeś żadnego checkpointu."
 		"fi"		"{darkred}Et voi teleportata, sillä et ole asettanut tallennuspistettä."
 	}
 	"Can't Teleport (Map)"
