@@ -6,6 +6,8 @@
 		"en"		"{grey}You will now see random tips in chat periodically."
 		"chi"		"{grey}你现在会定期在聊天栏中看到随机提示."
 		"ru"		"{grey}Теперь иногда вы будете видеть подсказки в чате."
+		"pl"		"{grey}Od teraz na czacie będą się czasami wyświetlać wskazówki."
+		"fi"		"{grey}Näet nyt satunnaisia vihjeitä chatissäsi määräajoin."
 		"sv"		"{grey}Nu kommer du att se tips i chatten med jämna mellanrum."
 	}
 	"Option - Tips - Disable"
@@ -13,6 +15,8 @@
 		"en"		"{grey}You will no longer see random tips in chat periodically."
 		"chi"		"{grey}你现在不会在聊天栏中看到随机提示."
 		"ru"		"{grey}Теперь вы не видите подсказок в чате."
+		"pl"		"{grey}Od teraz na czacie nie będą się wyświetlać wskazówki."
+		"fi"		"{grey}Et enää näe satunnaisia vihjeitä chatissäsi määräajoin."
 		"sv"		"{grey}Nu kommer du inte att se tips i chatten med jämna mellanrum."
 	}
 }
