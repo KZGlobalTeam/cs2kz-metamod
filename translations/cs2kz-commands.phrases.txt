@@ -6,10 +6,7 @@
 		"chi"		"{grey}请在控制台中查看指令列表!"
 		"pl"		"{grey}Spójrz do konsoli po listę komend!"
 		"fi"		"{grey}Löydät komentolistan katsomalla konsoliisi!"
-<<<<<<< HEAD
 		"sv"		"{grey}Kolla i konsolen för en lista av kommandon!"
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Help Response (Console)"
 	{
@@ -17,10 +14,7 @@
 		"chi"		"使用这些命令, 你可以在控制台中输入 \"bind <按键> kz_<命令名字>\", 或者在聊天栏中输入 !<命令名字> 或 /<命令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
 		"pl"		"Aby użyć tych komend, wpisz w konsoli \"bind <klawisz> kz_<nazwa komendy>\", albo wpisz !<nazwa komendy> lub /<nazwa komendy> na czacie.\nnp.: \"bind 1 kz_cp\" lub \"!cp\" lub \"/cp\""
 		"fi"		"Käyttääksesi näitä komentoja, voit kirjoittaa \"bind <key> kz_<komennon nimi>\" konsoliisi, tai kirjoittaa !<komento> tai /<komento> chattiin.\nEsimerkiksi: \"bind 1 kz_cp\" tai \"!cp\" tai \"/cp\""
-<<<<<<< HEAD
 		"sv"		"För att använda dessa kommandon, kan du skriva \"bind <knapp> kz_<kommandos namn>\" i din konsol, eller skriv !<kommandos namn> eller /<kommandos namn> i chatten.\nTill exempel: \"bind 1 kz_cp\" eller \"!cp\" eller \"/cp\""
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Switch Language"
 	{
@@ -30,10 +24,7 @@
 		"chi"		"{grey}你选择了你的语言为 {default}{language}{grey}."
 		"pl"		"{grey}Zmieniłeś język na {default}{language}{grey}."
 		"fi"		"{grey}Kielesi on nyt {default}{language}{grey}."
-<<<<<<< HEAD
 		"sv"		"{grey}Du har bytt språket till {default}{language}{grey}."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 
 	// Commands
@@ -43,10 +34,7 @@
 		"chi"		"在地上或梯子上设置一个存点."
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
-<<<<<<< HEAD
 		"sv"		"Skapa en checkpoint på mark eller stege."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_cp"
 	{
@@ -54,10 +42,7 @@
 		"chi"		"在地上或梯子上设置一个存点."
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
-<<<<<<< HEAD
 		"sv"		"Skapa en checkpoint på mark eller stege."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_teleport"
 	{
@@ -65,10 +50,7 @@
 		"chi"		"传送到当前存点."
 		"pl"		"Teleportuj się do aktualnego checkpointu."
 		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
-<<<<<<< HEAD
 		"sv"		"Teleportera till nuvarande checkpoint."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_tp"
 	{
@@ -76,10 +58,7 @@
 		"chi"		"传送到当前存点."
 		"pl"		"Teleportuj się do aktualnego checkpointu."
 		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
-<<<<<<< HEAD
 		"sv"		"Teleportera till nuvarande checkpoint."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_prevcp"
 	{
@@ -87,10 +66,7 @@
 		"chi"		"传送到上一个存点."
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
 		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
-<<<<<<< HEAD
 		"sv"		"Teleportera till föregående checkpoint."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_pcp"
 	{
@@ -98,10 +74,7 @@
 		"chi"		"传送到上一个存点."
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
 		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
-<<<<<<< HEAD
 		"sv"		"Teleportera till föregående checkpoint."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_nextcp"
 	{
@@ -109,23 +82,15 @@
 		"chi"		"传送到下一个存点."
 		"pl"		"Teleportuj się do następnego checkpointu."
 		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
-<<<<<<< HEAD
 		"sv"		"Teleportera till nästa checkpoint."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_ncp"
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-<<<<<<< HEAD
 		"pl"		"Teleportuj się do następnego checkpointu."
 		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
 		"sv"		"Teleportera till nästa checkpoint."
-=======
-		"pl"		"Teleportuj się do następnego checkpointu."	
-		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -133,10 +98,7 @@
 		"chi"		"设置你的自定义起点为当前位置."
 		"pl"		"Ustaw własną pozycję startową."	
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
-<<<<<<< HEAD
 		"sv"		"Skapa ny startposition på nuvarande position."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_ssp"
 	{
@@ -144,10 +106,7 @@
 		"chi"		"设置你的自定义起点为当前位置."
 		"pl"		"Ustaw własną pozycję startową."	
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
-<<<<<<< HEAD
 		"sv"		"Skapa ny startposition på nuvarande position."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -155,10 +114,7 @@
 		"chi"		"清除你的自定义起点."
 		"pl"		"Usuń własną pozycję startową."	
 		"fi"		"Tyhjennä custom aloituspisteesi."
-<<<<<<< HEAD
 		"sv"		"Rensa justerad startposition."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_csp"
 	{
@@ -166,10 +122,7 @@
 		"chi"		"清除你的自定义起点."
 		"pl"		"Usuń własną pozycję startową."	
 		"fi"		"Tyhjennä custom aloituspisteesi."
-<<<<<<< HEAD
 		"sv"		"Rensa justerad startposition."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_panel"
 	{
@@ -177,10 +130,7 @@
 		"chi"		"切换中心面板的显示."
 		"pl"		"Wyświetlanie panelu środkowego."	
 		"fi"		"Vaihda keskipaneelin näyttämisen asetusta."
-<<<<<<< HEAD
 		"sv"		"Toggla mittpanelen."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_jsbroadcast"
 	{
@@ -188,10 +138,7 @@
 		"chi"		"更改广播跳跃提示的最小阈值."
 		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."	
 		"fi"		"Muuta muiden pelaajien chatissä näkyvien jumpstattien minimi kynnysarvoa."
-<<<<<<< HEAD
 		"sv"		"Ändra minimigräns för sändning av andra spelares jumpstat."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_jssound"
 	{
@@ -199,10 +146,7 @@
 		"chi"		"更改播放跳跃提示音的最小阈值."
 		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."	
 		"fi"		"Muuta jumpstattien äänitehosteiden minimi kynnysarvoa."
-<<<<<<< HEAD
 		"sv"		"Ändra minimigräns för ljudeffekter av jumpstats."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_togglestats"
 	{
@@ -210,10 +154,7 @@
 		"chi"		"切换起跳提示报告的开关"
 		"pl"		"Przełącz wykaz jumpstatów."	
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
-<<<<<<< HEAD
 		"sv"		"Toggla chatmeddelanden för jumpstats."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_togglejs"
 	{
@@ -221,10 +162,7 @@
 		"chi"		"切换起跳提示报告的开关"
 		"pl"		"Przełącz wykaz jumpstatów."	
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
-<<<<<<< HEAD
 		"sv"		"Toggla chatmeddelanden för jumpstats."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_jsalways"
 	{
@@ -232,10 +170,7 @@
 		"chi"		"切换 总是显示跳跃数据 的开关"
 		"pl"		"Zawsze pokazuj jumpstaty."	
 		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
-<<<<<<< HEAD
 		"sv"		"Toggla alla (egna) jumpstats i chatten."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_mode"
 	{
@@ -243,10 +178,7 @@
 		"chi"		"列出或更改模式."
 		"pl"		"Lista trybów gry bądź jego zmiana."	
 		"fi"		"Listaa tai vaihda moodia."
-<<<<<<< HEAD
 		"sv"		"Lista eller ändra KZ mode."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_noclip"
 	{
@@ -254,36 +186,23 @@
 		"chi"		"切换飞行状态."
 		"pl"		"Włącz lub wyłącz noclipa."	
 		"fi"		"Vaiha noclip:n tilaa."
-<<<<<<< HEAD
 		"sv"		"Toggla noclip."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_nc"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-<<<<<<< HEAD
 		"pl"		"Włącz lub wyłącz noclipa."	
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
-=======
-		"pl"		"Włącz lub wyłącz noclipa."
-		"fi"		"Vaiha noclip:n tilaa."
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - noclip"
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-<<<<<<< HEAD
 		"pl"		"Włącz lub wyłącz noclipa."	
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
-=======
-		"pl"		"Włącz lub wyłącz noclipa."
-		"fi"		"Vaiha noclip:n tilaa."
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_spec"
 	{
@@ -291,10 +210,7 @@
 		"chi"		"观看一个玩家."
 		"pl"		"Obserwuj innego gracza."
 		"fi"		"Katsele pelaajaa."
-<<<<<<< HEAD
 		"sv"		"Åskåda en spelare."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_style"
 	{
@@ -302,10 +218,7 @@
 		"chi"		"列出或更改风格."
 		"pl"		"Lista stylów gry bądź jego zmiana."	
 		"fi"		"Listaa tai vaihda tyyliä."
-<<<<<<< HEAD
 		"sv"		"Lista eller ändra KZ mode."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_stop"
 	{
@@ -313,10 +226,7 @@
 		"chi"		"停止计时."
 		"pl"		"Wyłącz timer."	
 		"fi"		"Pysäytä ajastin."
-<<<<<<< HEAD
 		"sv"		"Stoppa timer."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_pause"
 	{
@@ -324,10 +234,7 @@
 		"chi"		"暂停计时."
 		"pl"		"Przełącz pauzę timera."	
 		"fi"		"Vaihda ajastimen keskeytyksen asetusta."
-<<<<<<< HEAD
 		"sv"		"Pausa timer."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_tips"
 	{
@@ -335,10 +242,7 @@
 		"chi"		"切换提示的开关."
 		"pl"		"Włącz lub wyłącz wskazówki."	
 		"fi"		"Vaihda vihjeiden asetusta."
-<<<<<<< HEAD
 		"sv"		"Toggla tips."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_hidelegs"
 	{
@@ -346,10 +250,7 @@
 		"chi"		"在第一人称中隐藏腿部."
 		"pl"		"Ukryj nogi w pierwszej osobie."	
 		"fi"		"Piilota omat jalkasi ensimmäisessä persoonassa."
-<<<<<<< HEAD
 		"sv"		"Toggla egna bens synlighet i första person."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_hide"
 	{
@@ -357,10 +258,7 @@
 		"chi"		"隐藏其他的玩家."
 		"pl"		"Ukryj innych graczy."	
 		"fi"		"Piilota muut pelaajat."
-<<<<<<< HEAD
 		"sv"		"Dölj/visa andra spelare."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_restart"
 	{
@@ -368,10 +266,7 @@
 		"chi"		"重新开始."
 		"pl"		"Restart."	
 		"fi"		"Aloita alusta."
-<<<<<<< HEAD
 		"sv"		"Starta om."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_r"
 	{
@@ -379,10 +274,7 @@
 		"chi"		"重新开始."
 		"pl"		"Restart."
 		"fi"		"Aloita alusta."
-<<<<<<< HEAD
 		"sv"		"Starta om."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -390,10 +282,7 @@
 		"chi"		"隐藏武器模型显示."
 		"pl"		"Ukryj broń."
 		"fi"		"Piilota ase ja pelaajamalli."
-<<<<<<< HEAD
 		"sv"		"Dölj vapen."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - jointeam"
 	{
@@ -406,10 +295,7 @@
 		"chi"		"显示帮助信息."
 		"pl"		"Pokaż tą pomocną wiadomość."
 		"fi"		"Näytä tämä apuviesti."
-<<<<<<< HEAD
 		"sv"		"Visa detta hjälpmeddelandet."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_language"
 	{
@@ -417,10 +303,7 @@
 		"chi"		"切换当前语言."
 		"pl"		"Zmień obecnie ustawiony język"
 		"fi"		"Vaihda käytössäolevaa kieltä."
-<<<<<<< HEAD
 		"sv"		"Byt nuvarande språk."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_vnl"
 	{
@@ -428,10 +311,7 @@
 		"chi"		"切换为官匹模式."
 		"pl"		"Zmień tryb na Vanilla"
 		"fi"		"Vaihda Vanilla moodiin."
-<<<<<<< HEAD
 		"sv"		"Byt till Vanilla mode."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Command Description - kz_ckz"
 	{
@@ -439,9 +319,6 @@
 		"chi"		"切换为经典模式."
 		"pl"		"Zmień tryb na Classic."
 		"fi"		"Vaihda Classic moodiin."
-<<<<<<< HEAD
 		"sv"		"Byt till Classic mode."
-=======
->>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 }
