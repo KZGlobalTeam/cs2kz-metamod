@@ -190,7 +190,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	}
 }
 
-bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent)
+bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent, bool force)
 {
 	// Don't change mode if it doesn't exist. Instead, print a list of modes to the client.
 	if (!modeName || !V_stricmp("", modeName))
@@ -211,8 +211,8 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		return false;
 	}
 
-	// If it's the same mode, do nothing.
-	if (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0)
+	// If it's the same style, do nothing, unless it's forced.
+	if (!force && (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0))
 	{
 		return false;
 	}

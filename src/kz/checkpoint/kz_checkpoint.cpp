@@ -99,7 +99,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	pawn->m_flSlopeDropHeight(cp.slopeDropHeight);
 	pawn->m_flSlopeDropOffset(cp.slopeDropOffset);
 
-	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(cp.groundEnt));
+	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(cp.groundEnt));
 	// Don't attach the player onto moving platform (because they might not be there anymore). World doesn't move
 	// though.
 	if (groundEntity
@@ -193,7 +193,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	{
 		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
 	}
-	CBaseEntity2 *groundEntity = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(this->lastTeleportedCheckpoint->groundEnt));
+	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(this->lastTeleportedCheckpoint->groundEnt));
 
 	if (!groundEntity)
 	{

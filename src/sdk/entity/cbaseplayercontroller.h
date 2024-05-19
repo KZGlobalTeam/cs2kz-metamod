@@ -7,7 +7,7 @@
 
 class CCSPlayerPawn;
 
-class CBasePlayerController : public CBaseEntity2
+class CBasePlayerController : public CBaseEntity
 {
 public:
 	DECLARE_SCHEMA_CLASS(CBasePlayerController);

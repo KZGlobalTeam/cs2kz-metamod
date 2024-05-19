@@ -80,7 +80,7 @@ void utils::Cleanup()
 	FlushAllDetours();
 }
 
-CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
+CBaseEntity *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
 {
 	if (!GameEntitySystem())
 	{
@@ -88,7 +88,7 @@ CBaseEntity2 *utils::FindEntityByClassname(CEntityInstance *start, const char *n
 	}
 	EntityInstanceByClassIter_t iter(start, name);
 
-	return static_cast<CBaseEntity2 *>(iter.Next());
+	return static_cast<CBaseEntity *>(iter.Next());
 }
 
 void utils::UnlockConVars()
@@ -145,7 +145,7 @@ void utils::UnlockConCommands()
 	} while (pConCommand && pConCommand != pInvalidCommand);
 }
 
-CBasePlayerController *utils::GetController(CBaseEntity2 *entity)
+CBasePlayerController *utils::GetController(CBaseEntity *entity)
 {
 	CCSPlayerController *controller = nullptr;
 
@@ -183,7 +183,7 @@ CBasePlayerController *utils::GetController(CPlayerSlot slot)
 	{
 		return nullptr;
 	}
-	CBaseEntity2 *ent = static_cast<CBaseEntity2 *>(GameEntitySystem()->GetBaseEntity(CEntityIndex(slot.Get() + 1)));
+	CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(slot.Get() + 1)));
 	if (!ent)
 	{
 		return nullptr;
@@ -191,7 +191,7 @@ CBasePlayerController *utils::GetController(CPlayerSlot slot)
 	return ent->IsController() ? static_cast<CBasePlayerController *>(ent) : nullptr;
 }
 
-CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity2 *entity)
+CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
 {
 	CBasePlayerController *controller = utils::GetController(entity);
 	if (!controller)
@@ -299,7 +299,7 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
 	bool searchCT = false;
 	Vector spawnOrigin;
 	QAngle spawnAngles;
-	CBaseEntity2 *spawnEntity = NULL;
+	CBaseEntity *spawnEntity = NULL;
 	while (!foundValidSpawn)
 	{
 		if (searchCT)

@@ -6,7 +6,10 @@
 		"chi"		"{grey}飞行已启用."
 		"pl"		"{grey}Noclip włączony."
 		"fi"		"{grey}Noclip asetettu päälle."
+<<<<<<< HEAD
 		"sv"		"{grey}Noclip aktiverat."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Noclip - Disable"
 	{
@@ -14,6 +17,9 @@
 		"chi"		"{grey}飞行已禁用."
 		"pl"		"{grey}Noclip wyłączony."
 		"fi"		"{grey}Noclip asetettu pois päältä."
+<<<<<<< HEAD
 		"sv"		"{grey}Noclip inaktiverat."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 }

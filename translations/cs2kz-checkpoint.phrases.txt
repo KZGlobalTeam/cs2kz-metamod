@@ -9,7 +9,10 @@
 		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."
 		"pl"		"{grey}Ustawiłeś checkpoint (#{default}{checkpoint_count}{grey})."
 		"fi"		"{grey}Olet asettanut tallennuspisteen (#{default}{checkpoint_count}{grey})."
+<<<<<<< HEAD
 		"sv"		"{grey}Du har skapat en checkpoint (#{default}{checkpoint_count}{grey})."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Anti Checkpoint Area Warning"
 	{
@@ -17,7 +20,10 @@
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
 		"pl"		"{yellow}UWAGA!{grey}: Ustawiłeś checkpoint w niedozwolonym miejscu."
 		"fi"		"{yellow}Varoitus{grey}: tallennuspiste asetettu kieltoalueelle."
+<<<<<<< HEAD
 		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på otillåtet område."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Checkpoint (Midair)"
 	{
@@ -26,7 +32,10 @@
 		"ru"		"{darkred}Вы не можете поставить чекпойнт в воздухе."
 		"pl"		"{darkred}Nie możesz ustawić checkpointu będąc w powietrzu."
 		"fi" 		"{darkred}Et voi asettaa tallennuspistettä ilmassa."
+<<<<<<< HEAD
 		"sv"		"{darkred}Kan inte skapa checkpoint i luften."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Checkpoint (Just Landed)"
 	{
@@ -35,7 +44,10 @@
 		"ru"		"{darkred}Вы не можете поставить чекпойнт после приземления."
 		"pl"		"{darkred}Nie możesz ustawić checkpointu, ponieważ dopiero wylądowałeś."
 		"fi" 		"{darkred}Et voi asettaa tallennuspistettä sillä laskeuduit juuri."
+<<<<<<< HEAD
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom du landade nyligen."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{
@@ -43,7 +55,10 @@
 		"chi"		"{darkred}此区域禁止存点."
 		"pl"		"{darkred}Nie możesz ustawić checkpointu w tym miejscu."
 		"fi"		"{darkred}Et voi asettaa tallennuspistettä, sillä ne ovat poissa käytöstä tällä alueella."
+<<<<<<< HEAD
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom checkpoints är otillåtna på detta området."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
@@ -52,7 +67,10 @@
 		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
 		"pl"		"{darkred}Nie możesz się teleportować, ponieważ nie ustawiłeś żadnego checkpointu."
 		"fi"		"{darkred}Et voi teleportata, sillä et ole asettanut tallennuspistettä."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte teleportera eftersom du har inga checkpoints."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Teleport (Map)"
 	{
@@ -61,7 +79,10 @@
 		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпойнты здесь."
 		"pl"		"{darkred}Nie możesz się teleportować w tym miejscu."
 		"fi"		"{darkred}Et voi teleportata, sillä se on poissa käytöstä tällä alueella."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte teleportera till checkpoints på detta området."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
@@ -70,7 +91,10 @@
 		"ru"		"{darkred}У вас нет чекпойнтов, чтобы вернутся к ним."
 		"pl"		"{darkred}Nie masz żadnych checkpointów do których możesz wrócić."
 		"fi"		"{darkred}Et ole asettanut tallennuspistettä johon palata."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du har inga checkpoints att teleportera till."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
@@ -79,7 +103,10 @@
 		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
 		"pl"		"{darkred}Nie masz żadnych checkpointów do których możesz przejść."
 		"fi"		"{darkred}Et ole asettanut tallennuspistettä johon edetä."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du har inga checkpoints att teleportera framåt till."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Undo (No Teleports)"
 	{
@@ -88,7 +115,10 @@
 		"ru"		"{darkred}У вас нет телепортов, которые можно отменить."
 		"pl"		"{darkred}Nie masz żadnych teleportów do cofnięcia."
 		"fi"		"{darkred}Et voi palata takaisin, sillä ei ole teleporttia johon palata."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte ångra din teleportering eftersom du har ingen föregående teleport."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Undo (TP Was Midair)"
 	{
@@ -97,7 +127,10 @@
 		"ru"		"{darkred}Вы не можете отменить, потому что телепортировались в воздухе."
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ użyłeś teleportu w powietrzu."
 		"fi"		"{darkred}Et voi palata takaisin, sillä teleporttasit ilmassa."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade i luften."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Undo (Just Landed)"
 	{
@@ -106,7 +139,10 @@
 		"ru"		"{darkred}Вы не можете отменить после приземления."
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi palata takaisin, sillä laskeuduit juuri."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du hade precis landat."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Undo (AntiCp)"
 	{
@@ -114,7 +150,10 @@
 		"chi"		"{darkred}你无法撤销，因为你在禁止存点区域."
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ użyłeś teleportu będąc w miejscu niedozwolonym."
 		"fi"		"{darkred}Et voi palata takaisin, sillä teleporttasit tallennuspiste-kieltoalueella."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade på ett otillåtet område."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
@@ -122,7 +161,10 @@
 		"chi"		"{grey}设置你的自定义起点失败!"
 		"pl"		"{grey}Nie udało się tobie ustawić własnego miejsca startu!"
 		"fi" 		"{grey}Custom aloituspisteen asettaminen epäonnistui!"
+<<<<<<< HEAD
 		"sv"		"{grey}Misslyckades med att skapa din startposition!"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Set Custom Start Position"
 	{
@@ -131,7 +173,10 @@
 		"ru"		"{grey}Вы установили свою стартовую позицию."
 		"pl"		"{grey}Ustawiłeś własne miejsce startu."
 		"fi" 		"{grey}Olet asettanut custom aloituspisteen."
+<<<<<<< HEAD
 		"sv"		"{grey}Du har skapat din startposition."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Cleared Custom Start Position"
 	{
@@ -140,6 +185,9 @@
 		"ru"		"{grey}Вы очистили свою стартовую позицию."
 		"pl"		"{grey}Usunąłeś własne miejsce startu."
 		"fi" 		"{grey}Olet tyhjentänyt custom aloituspisteesi."
+<<<<<<< HEAD
 		"sv"		"{grey}Du har rensat din startposition."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 }

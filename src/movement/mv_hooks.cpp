@@ -251,7 +251,7 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 	OnJump(ms, mv);
 	if (ms->m_flJumpUntil() != oldJumpUntil)
 	{
-		player->hitPerf = (oldMoveType != MOVETYPE_LADDER && !player->oldWalkMoved);
+		player->inPerf = (oldMoveType != MOVETYPE_LADDER && !player->oldWalkMoved);
 		player->RegisterTakeoff(true);
 		player->OnStopTouchGround();
 	}

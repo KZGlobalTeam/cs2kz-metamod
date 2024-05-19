@@ -6,7 +6,10 @@
 		"chi"		"{grey}用法: {default}kz_style <风格名字>.{grey} 在控制台中查看可用模式!"
 		"pl"		"{grey}Użycie: {default}kz_style <mode>.{grey} Sprawdź konsolę aby zobaczyć dostępne style!"
 		"fi"		"{grey}Käyttö: {default}kz_style <tyyli>.{grey} Tarkista konsolista mahdolliset tyylit."
+<<<<<<< HEAD
 		"sv"		"{grey}Användning: {default}kz_style <mode>.{grey} Kolla konsolen för möjliga KZ modes!"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Possible & Current Styles"
 	{
@@ -15,7 +18,10 @@
 		"chi"		"可用风格: (当前风格为 {style})"
 		"pl"		"Możliwe style: (Obecny styl to {style})"
 		"fi"		"Mahdolliset tyylit: (Tämän hetkinen tyyli on {style})"
+<<<<<<< HEAD
 		"sv"		"Möjliga KZ modes: (Nuvarande KZ mode är {style})"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Style Not Available"
 	{
@@ -25,7 +31,10 @@
 		"chi"		"{grey}风格 {purple}{style} {grey}当前不可用."
 		"pl"		"{grey}Styl {purple}{style} {grey}jest obecnie niedostępny."
 		"fi"		"{grey}Tyyli {purple}{style} {grey}ei ole tällä hetkellä saatavilla."
+<<<<<<< HEAD
 		"sv"		"{grey}Användning av {purple}{style} {grey}mode är inte tillgängligt nu."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Switched Style"
 	{
@@ -35,6 +44,9 @@
 		"chi"		"{grey}你已切换到 {purple}{style} {grey}风格."
 		"pl"		"{grey}Zmieniłeś styl na {purple}{style}."
 		"fi"		"{grey}Olet vaihtanut {purple}{style} {grey}tyyliin."
+<<<<<<< HEAD
 		"sv"		"{grey}Du har valt {purple}{style} {grey}mode."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 }

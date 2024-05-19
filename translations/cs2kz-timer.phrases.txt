@@ -6,7 +6,10 @@
 		"chi"		"{yellow}1{grey} 传送"
 		"pl"		"{yellow}1{grey} TP"
 		"fi"		"{yellow}1{grey} TP"
+<<<<<<< HEAD
 		"sv"		"{yellow}1{grey} TP"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"2+ Teleports Text"
 	{
@@ -15,7 +18,10 @@
 		"chi"		"{yellow}{tp_count}{grey} 传送"
 		"pl"		"{yellow}{tp_count}{grey} TPs"
 		"fi"		"{yellow}{tp_count}{grey} TPt"
+<<<<<<< HEAD
 		"sv"		"{yellow}{tp_count}{grey} TPs"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 
 	"Beat Map (Standard)"
@@ -27,7 +33,10 @@
 		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+<<<<<<< HEAD
 		"sv"		"{lime}{player_name} {grey}har klarat mappen på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Beat Map (PRO)"
 	{
@@ -38,7 +47,10 @@
 		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+<<<<<<< HEAD
 		"sv"		"{lime}{player_name} {grey}har klarat mappen på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Beat Course (NUB)"
 	{
@@ -48,7 +60,10 @@
 		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+<<<<<<< HEAD
 		"sv"		"{lime}{player_name} {grey}har klarat mappen {bluegrey}\"{course_name}\" {grey}på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Beat Course (PRO)"
 	{
@@ -58,7 +73,10 @@
 		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+<<<<<<< HEAD
 		"sv"		"{lime}{player_name} {grey}har klarat mappen {bluegrey}\"{course_name}\" {grey}på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	
 	"Can't Pause (Generic)"
@@ -67,7 +85,10 @@
 		"chi"		"{darkred}你现在不能暂停."
 		"pl"		"{darkred}Nie możesz teraz zapauzować."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta juuri nyt."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte pausa just nu."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Pause (Just Resumed)"
 	{
@@ -76,7 +97,10 @@
 		"ru"		"{darkred}Вы не можете после возобновления поставить вновь паузу."
 		"pl"		"{darkred}Próbujesz wstrzymać czas zbyt szybko, zaczekaj chwilę."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä jatkoit juuri ajastintasi."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte pausa eftersom du fortsatte nyligen."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Pause (Midair)"
 	{
@@ -85,7 +109,10 @@
 		"ru"		"{darkred}Вы не можете поставить паузу в воздухе."
 		"pl"		"{darkred}Nie możesz zapauzować bedąc w powietrzu."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta ilmassa."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte pausa i luften."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Pause (Just Landed)"
 	{
@@ -94,7 +121,10 @@
 		"ru"		"{darkred}Вы не можете поставить паузу после приземления."
 		"pl"		"{darkred}Nie możesz zapauzować, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä laskeuduit juuri."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte pausa eftersom du landade nyligen."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Pause (Anti Pause Area)"
 	{
@@ -102,15 +132,24 @@
 		"chi"		"{darkred}此区域禁止暂停."
 		"pl"		"{darkred}Pauzowanie jest wyłączone w tym miejscu."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta sillä se on poissa käytöstä tällä alueella."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte pausa eftersom det är inaktiverat på detta området."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Resume (Generic)"
 	{
 		"en"		"{darkred}You can't resume right now."
+<<<<<<< HEAD
 		"chi"		"{darkred}你现在不能恢复计时."
 		"pl"		"{darkred}Nie możesz teraz wznowić czasu."
 		"fi"		"{darkred}Et voi jatkaa ajastinta juuri nyt."
 		"sv"		"{darkred}Du kan inte fortsätta just nu."
+=======
+		"chi"		"{darkred}你现在不能恢复计时."	
+		"pl"		"{darkred}Nie możesz teraz wznowić czasu."
+		"fi"		"{darkred}Et voi jatkaa ajastinta juuri nyt."
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Can't Resume (Just Paused)"
 	{
@@ -119,6 +158,9 @@
 		"ru"		"{darkred}Вы не можете возобновить, потому что только что сделали паузу."
 		"pl"		"{darkred}Nie możesz teraz wznowić czasu, ponieważ dopiero co użyłeś pauzy."
 		"fi"		"{darkred}Et voi jatkaa ajastintasi, sillä pysäytit sen juuri."
+<<<<<<< HEAD
 		"sv"		"{darkred}Du kan inte fortsätta eftersom du pausade nyligen."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 }

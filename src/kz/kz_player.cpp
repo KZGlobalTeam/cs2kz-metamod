@@ -63,8 +63,8 @@ void KZPlayer::Reset()
 	this->modeService->Reset();
 	this->optionService->Reset();
 
-	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true);
-	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetOptionStr("defaultStyle", KZ_DEFAULT_STYLE), true);
+	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
+	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetOptionStr("defaultStyle", KZ_DEFAULT_STYLE), true, true);
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
@@ -515,7 +515,7 @@ void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, co
 	FOR_EACH_VEC(filter.hitTriggerHandles, i)
 	{
 		CEntityHandle handle = filter.hitTriggerHandles[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetBaseEntity(handle));
+		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
 		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
 		{
 			continue;
@@ -536,7 +536,7 @@ void KZPlayer::UpdateTriggerTouchList()
 	{
 		FOR_EACH_VEC(this->touchedTriggers, i)
 		{
-			CBaseTrigger *trigger = static_cast<CBaseTrigger *>(GameEntitySystem()->GetBaseEntity(this->touchedTriggers[i]));
+			CBaseTrigger *trigger = static_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(this->touchedTriggers[i]));
 			trigger->EndTouch(this->GetPawn());
 			this->GetPawn()->EndTouch(trigger);
 		}
@@ -553,7 +553,7 @@ void KZPlayer::UpdateTriggerTouchList()
 	FOR_EACH_VEC(this->touchedTriggers, i)
 	{
 		CEntityHandle handle = this->touchedTriggers[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetBaseEntity(handle));
+		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
 		if (!trigger)
 		{
 			this->touchedTriggers.Remove(i);
@@ -569,7 +569,7 @@ void KZPlayer::UpdateTriggerTouchList()
 	FOR_EACH_VEC(filter.hitTriggerHandles, i)
 	{
 		CEntityHandle handle = filter.hitTriggerHandles[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetBaseEntity(handle));
+		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
 		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
 		{
 			continue;

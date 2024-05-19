@@ -258,7 +258,7 @@ public:
 	bool duckBugged {};
 	bool walkMoved {};
 	bool oldWalkMoved {};
-	bool hitPerf {};
+	bool inPerf {};
 	bool jumped {};
 	bool takeoffFromLadder {};
 	Vector lastValidLadderOrigin;

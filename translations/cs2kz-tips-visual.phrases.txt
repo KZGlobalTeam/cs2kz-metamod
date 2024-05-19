@@ -6,7 +6,10 @@
 		"chi"	"{grey}使用 {default}/panel {grey} 可以切换屏幕中心面板的显示."
 		"pl"	"{grey}Użyj {default}/panel {grey} aby włączyć lub wyłączyć panel na środku ekranu."
 		"fi"	"{grey}Käytä {default}/panel {grey}komentoa vaihtaaksesi keskipaneelin näyttämisen asetusta."
+<<<<<<< HEAD
 		"sv"	"{grey}Använd {default}/panel {grey} för att ändra synligheten av rutan i mitten av skärmen."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Tip - kz_hidelegs"
 	{
@@ -14,7 +17,10 @@
 		"chi"	"{grey}你需要隐藏腿部吗？ 输入 {default}/hidelegs{grey} 切换显示或隐藏."
 		"pl"	"{grey}Jeśli nie chcesz widzieć swoich nóg, użyj{default} /hidelegs{grey}."
 		"fi"	"{grey}Voit vaihtaa jalkojesi näkyvyyttä kirjoittamalla{default} /hidelegs{grey} komennon."
+<<<<<<< HEAD
 		"sv"	"{grey}Du kan ändra dina bens synlighet genom att skriva{default} /hidelegs{grey}."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Tip - kz_hide"
 	{
@@ -22,7 +28,10 @@
 		"chi"	"{grey}不想看到其他玩家？ 输入 {default}/hide{grey} 切换显示或隐藏."
 		"pl"	"{grey}Nie chcesz widzieć innych graczy? Użyj {default}/hide{grey}."
 		"fi"	"{grey}Etkö halua nähdä muita pelaajia? Käytä {default}/hide{grey} komentoa."
+<<<<<<< HEAD
 		"sv"	"{grey}Vill du inte se andra spelare? Använd {default}/hide{grey}."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 	"Tip - kz_hideweapon"
 	{
@@ -30,6 +39,9 @@
 		"chi"	"{grey}输入 {default}/hideweapon {grey}可以关掉枪械模型显示."
 		"pl"	"{grey}Użyj {default}/hideweapon {grey}aby włączyć lub wyłączyć widoczność broni."
 		"fi"	"{grey}Kirjoita {default}/hideweapon {grey}vaihtaaksesi aseesi näkyvyyden asetusta."
+<<<<<<< HEAD
 		"sv"	"{grey}Vill du ändra ditt vapens synlighet? Använd {default}/hide{grey}."
+=======
+>>>>>>> a621ca5d91a0e75a862f65f44ca74312a3016646
 	}
 }

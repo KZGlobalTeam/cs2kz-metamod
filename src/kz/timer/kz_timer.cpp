@@ -44,7 +44,7 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 	if (!this->player->GetPawn()->IsAlive()
 		|| this->JustStartedTimer()
 		|| this->JustTeleported()
-		|| this->player->hitPerf
+		|| this->player->inPerf
 		|| this->player->noclipService->JustNoclipped()
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
@@ -628,6 +628,10 @@ void KZTimerService::OnTeleport(const Vector *newPosition, const QAngle *newAngl
 	if (newPosition || newVelocity)
 	{
 		this->InvalidateJump();
+	}
+	if (newPosition)
+	{
+		this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 }
 
