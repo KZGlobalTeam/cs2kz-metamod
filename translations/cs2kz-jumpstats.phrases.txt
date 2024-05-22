@@ -8,6 +8,7 @@
 		"ru"		"Сдвиг"
 		"pl"		"Offset"
 		"fi"		"Kompensaatio"
+		"sv"		"Offset"
 	}
 	"Height"
 	{
@@ -16,6 +17,7 @@
 		"ru"		"Высота"
 		"pl"		"Height"
 		"fi"		"Korkeus"
+		"sv"		"Höjd"
 	}
 	"Pre"
 	{
@@ -24,6 +26,7 @@
 		"ru"		"Pre"
 		"pl"		"Pre"
 		"fi"		"Edeltävä"
+		"sv"		"Pre"
 	}
 	"Max"
 	{
@@ -32,6 +35,7 @@
 		"ru"		"Макс."
 		"pl"		"Max"
 		"fi"		"Maks."
+		"sv"		"Max"
 	}
 	"Strafes" // Plural
 	{
@@ -40,6 +44,7 @@
 		"ru"		"Стрейфы"
 		"pl"		"Strafes"
 		"fi"		"Strafet"
+		"sv"		"Strafes"
 	}
 	"Strafe" // Singular
 	{
@@ -48,6 +53,7 @@
 		"ru"		"Стрейф"
 		"pl"		"Strafe"
 		"fi"		"Strafe"
+		"sv"		"Strafe"
 	}
 	"Sync"
 	{
@@ -56,6 +62,7 @@
 		"ru"		"Sync"
 		"pl"		"Sync"
 		"fi"		"Synkronisointi"
+		"sv"		"Synk"
 	}
 	"Air"
 	{
@@ -64,6 +71,7 @@
 		"ru"		"Air"
 		"pl"		"Air"
 		"fi"		"Ilma"
+		"sv"		"Air"
 	}
 	"Air Time"
 	{
@@ -72,6 +80,7 @@
 		"ru"		"Airtime"
 		"pl"		"Airtime"
 		"fi"		"Ilma-aika"
+		"sv"		"Airtid"
 	}
 	"Block"
 	{
@@ -80,6 +89,7 @@
 		"ru"		"Блок"
 		"pl"		"Block"
 		"fi"		"Palikka"
+		"sv"		"Block"
 	}
 	"Bad Angles (Short)"
 	{
@@ -87,6 +97,7 @@
 		"chi"		"无效角度"
 		"pl"		"BA"
 		"fi"		"BA"
+		"sv"		"BA"
 	}
 	"Overlap (Short)"
 	{
@@ -95,6 +106,7 @@
 		"ru"		"OL"
 		"pl"		"OL"
 		"fi"		"OL"
+		"sv"		"OL"
 	}
 	"Dead Air (Short)"
 	{
@@ -103,6 +115,7 @@
 		"ru"		"DA"
 		"pl"		"DA"
 		"fi"		"DA"
+		"sv"		"DA"
 	}
 	"Edge"
 	{
@@ -111,6 +124,7 @@
 		"ru"		"Край"
 		"pl"		"Edge"
 		"fi"		"Reuna"
+		"sv"		"Kant"
 	}
 	"Deviation"
 	{
@@ -119,6 +133,7 @@
 		"ru"		"Отклонение"
 		"pl"		"Deviation"
 		"fi"		"Deviaatio"
+		"sv"		"Deviation"
 	}
 	"Width"
 	{
@@ -127,6 +142,7 @@
 		"ru"		"Ширина"
 		"pl"		"Width"
 		"fi"		"Leveys"
+		"sv"		"Bredd"
 	}
 	"Duck Time"
 	{
@@ -135,6 +151,7 @@
 		"ru"		"Crouched"
 		"pl"		"Crouched"
 		"fi"		"Kyykyssä"
+		"sv"		"Crouchad"
 	}
 	"Gain Efficiency (Short)"
 	{
@@ -142,6 +159,7 @@
 		"chi"		"增益效率"
 		"pl"		"GainEff"
 		"fi"		"Tehokkuus"
+		"sv"		"GainEff"
 	}
 	"Air Path"
 	{
@@ -149,6 +167,7 @@
 		"chi"		"空中路径"
 		"pl"		"Airpath"
 		"fi"		"Lentotie"
+		"sv"		"Airpath"
 	}
 	"Angle Ratio"
 	{
@@ -156,6 +175,7 @@
 		"chi"		"角度(平均/最小/最大)"
 		"pl"		"Angratio(Avg/Med/Max)"
 		"fi"		"KulmaSuhde(Kesk/Med/Maks)"
+		"sv"		"AngRatio(Avg/Med/Max)"
 	}
 	"Gain"
 	{
@@ -163,6 +183,7 @@
 		"chi"		"增益"
 		"pl"		"Gain"
 		"fi"		"Gain"
+		"sv"		"Gain"
 	}
 	"Loss"
 	{
@@ -170,6 +191,7 @@
 		"chi"		"损失"
 		"pl"		"Loss"
 		"fi"		"Häviö"
+		"sv"		"Loss"
 	}
 	"Average Gain (Short)"
 	{
@@ -177,6 +199,7 @@
 		"chi"		"平均增益"
 		"pl"		"AvgGain"
 		"fi"		"KeskGain"
+		"sv"		"AvgGain"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -186,6 +209,7 @@
 		"chi"		"第一次起跳"
 		"pl"		"First Jump"
 		"fi"		"Ensimmäinen hyppy"
+		"sv"		"Första hoppet"
 	}
 	"Invalid movetype change"
 	{
@@ -193,6 +217,7 @@
 		"chi"		"无效的移动类型更改"
 		"pl"		"Invalid movetype change"
 		"fi"		"Virheellinen liiketyyppi muutos"
+		"sv"		"Ogiltig ändring av rörelsetyp"
 	}
 	"Invalid movetype"
 	{
@@ -200,6 +225,7 @@
 		"chi"		"无效移动类型"
 		"pl"		"Invalid movetype"
 		"fi"		"Virheellinen liiketyyppi"
+		"sv"		"Ogiltig rörelsetyp"
 	}
 	"Just noclipped"
 	{
@@ -207,6 +233,7 @@
 		"chi"		"刚切换了飞行模式"
 		"pl"		"Just noclipped"
 		"fi"		"Juuri noclip:pasit"
+		"sv"		"Nyligen noclippat"
 	}
 	"Invalid collisions"
 	{
@@ -214,6 +241,7 @@
 		"chi"		"无效的碰撞"
 		"pl"		"Invalid collisions"
 		"fi"		"Virheelliset törmäykset"
+		"sv"		"Ogiltig kollision"
 	}
 	"Base velocity detected"
 	{
@@ -221,6 +249,7 @@
 		"chi"		"检测为最低速度"
 		"pl"		"Base velocity detected"
 		"fi"		"Perusnopeus havaittu"
+		"sv"		"Bashastigheten upptäckt"
 	}
 	"Invalid gains"
 	{
@@ -228,6 +257,7 @@
 		"chi"		"无效增益"
 		"pl"		"Invalid gains"
 		"fi"		"Virheelliset gainit"
+		"sv"		"Ogiltiga gains"
 	}
 	"Externally modified"
 	{
@@ -235,6 +265,7 @@
 		"chi"		"已从外部修改"
 		"pl"		"Externally modified"
 		"fi"		"Ulkoisesti modifoidut"
+		"sv"		"Externt modifierat"
 	}
 	"Edgebugged"
 	{
@@ -242,6 +273,7 @@
 		"chi"		"触发边缘Bug"
 		"pl"		"Edgebugged"
 		"fi"		"Reunabugasit"
+		"sv"		"Edgebuggad"
 	}
 	"Teleported"
 	{
@@ -249,6 +281,7 @@
 		"chi"		"已传送"
 		"pl"		"Teleported"
 		"fi"		"Teleporttasit"
+		"sv"		"Teleporterad"
 	}
 
 	// =====[OPTIONS]=====
@@ -259,6 +292,7 @@
 		"ru"		"{grey}Вы включили отчеты по прыжкам."
 		"pl"		"{grey}Włączyłeś wykaz jumpstatów."
 		"fi"		"{grey}Olet ottanut käyttöön jumpstattien reportoinnin."
+		"sv"		"{grey}Du har aktiverat rapportering av jumpstats."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
@@ -267,6 +301,7 @@
 		"ru"		"{grey}Вы отключили отчеты по прыжкам."
 		"pl"		"{grey}Wyłączyłeś wykaz jumpstatów."
 		"fi"		"{grey}Olet poistanut käytöstä jumpstattien reportoinnin."
+		"sv"		"{grey}Du har inaktiverat rapportering av jumpstats."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -275,6 +310,7 @@
 		"ru"		"{grey}Вы включили постоянные отчеты по прыжкам."
 		"pl"		"{grey}Włączyłeś wyświetlanie dystansu dla każdego skoku."
 		"fi"		"{grey}Olet ottanut käyttöön \"aina-päällä\" jumpstattien reportoinnin."
+		"sv"		"{grey}Du har aktiverat \"alltid på\" jumpstats."
 	}
 	"Jumpstats Option - Jumpstats Always - Disable"
 	{
@@ -283,6 +319,7 @@
 		"ru"		"{grey}Вы отключили постоянные отчеты по прыжкам."
 		"pl"		"{grey}Wyłączyłeś wyświetlanie dystansu dla każdego skoku."
 		"fi"		"{grey}Olet poistanut käytöstä \"aina-päällä\" jumpstattien reportoinnin."
+		"sv"		"{grey}Du har inaktiverat \"alltid på\" jumpstats."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -290,6 +327,7 @@
 		"chi"		"{grey}用法: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"pl"		"{grey}Użycie: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"fi"		"{grey}Käyttö: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"sv"		"{grey}Användning: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
 	{
@@ -297,6 +335,7 @@
 		"chi"		"{grey}广播跳跃提示禁用中."
 		"pl"		"{grey}Nadawanie jumpstatów zostało wyłączone."
 		"fi"		"{grey}Jumpstattien lähetystoiminto poistettu käytöstä."
+		"sv"		"{grey}Inaktiverat chattutskrifter av jumpstats från andra personer."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
@@ -305,6 +344,7 @@
 		"chi"		"{grey}广播跳跃提示阈值现在为 {default}{tier}."
 		"pl"		"{grey}Próg nadawania jumpstatów został zmieniony na {default}{tier}."
 		"fi"		"{grey}Muiden pelaajien chatissa näkyvien jumpstattien kynnysarvo on nyt {default}{tier}."
+		"sv"		"{grey}Minimigränsen för jumpstats chattutskrifter från andra personer är nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -312,6 +352,7 @@
 		"chi"		"{grey}用法: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"pl"		"{grey}Użycie: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"fi"		"{grey}Käyttö: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"sv"		"{grey}Användning: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
 	{
@@ -319,6 +360,7 @@
 		"chi"		"{grey}跳跃提示音禁用中."
 		"pl"		"{grey}Dźwięk jumpstatów został wyłączony."
 		"fi"		"{grey}Jumpstattien äänitehosteet poistettu käytöstä."
+		"sv"		"{grey}Inaktiverat egna jumpstats ljudeffekter."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
@@ -327,6 +369,7 @@
 		"chi"		"{grey}跳跃提示音阈值现在为 {default}{tier}."
 		"pl"		"{grey}Próg nadawania efektów dźwiękowych to {default}{tier}."
 		"fi"		"{grey}Jumpstattien äänitehosteiden kynnysarvo on nyt {default}{tier}."
+		"sv"		"{grey}Minimigränsen för jumpstats ljudeffekter är nu {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"
@@ -337,6 +380,7 @@
 		"chi"		"{default}{player} {grey}通过 {lime}{jump_type} {grey}跳出了 {color}{distance} {grey} 距离 [{purple}{mode_short}{grey}]"
 		"pl"		"{default}{player} {grey}Skoczył {color}{distance} {grey}unitów | {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"fi"		"{default}{player} {grey}hyppäsi {color}{distance} {grey}uniittia hyppytyylillä {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+		"sv"		"{default}{player} {grey}hoppade {color}{distance} {grey}units med {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 	}
 	
 	"Jumpstats Report - Invalidation Reason"
@@ -347,6 +391,7 @@
 		"chi"		"({reason})"
 		"pl"		"({reason})"
 		"fi"		"({reason})"
+		"sv"		"({reason})"
 	}
 	"Jumpstats Report - Chat Summary"
 	{
@@ -357,6 +402,7 @@
 		"chi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}同步 | {olive}{pre} {grey}地速 | {olive}{max} {grey}空速\n{grey}无效角度 {olive}{bad_angles}%%%% {grey}| 冲突 {olive}{overlap}%%%% {grey}| 无操作 {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}偏移 | {olive}{width} {grey}幅度 | {olive}{height} {grey}高度"
 		"pl"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Width | {olive}{height} {grey}Height"
 		"fi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Synkki | {olive}{pre} {grey}Edeltävä | {olive}{max} {grey}Maks\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviaatio | {olive}{width} {grey}Leveys | {olive}{height} {grey}Korkeus"
+		"sv"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Synk | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Bredd | {olive}{height} {grey}Höjd"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -366,6 +412,7 @@
 		"chi"		"{player_name} 通过 {jump_type} 跳出了 {distance} 距离 {invalidation_reason}"
 		"pl"		"{player_name} skoczył {distance} unitów | {jump_type} {invalidation_reason}"
 		"fi"		"{player_name} hyppäsi {distance} uniittia hyppytyylillä {jump_type} {invalidation_reason}"
+		"sv"		"{player_name} hoppade {distance} units med {jump_type} {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{
@@ -375,6 +422,7 @@
 		"chi"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效角度 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度"
 		"pl"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
 		"fi"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Synkki | {pre} Edeltävä | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Korkeus"
+		"sv"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Synk | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Höjd"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
@@ -384,6 +432,7 @@
 		"chi"		"{gain_eff}%%%% 增益效率 | {air_path} 空中路径 | {deviation} 偏移 | {width} 幅度 | {air_time} 滞空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 蹲占比"
 		"pl"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"fi"		"{gain_eff}%%%% Tehokkuus | {air_path} Lentotie | {deviation} Deviaatio | {width} Leveys | {air_time} Ilma-aika | {offset} Kompensaatio | {duck_end_time}/{duck_total_time} Kyykyssä"
+		"sv"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Bredd | {air_time} Airtid | {offset} Offset | {duck_end_time}/{duck_total_time} Crouchad"
 	}
 	"Jumpstats Report - Strafe Report Header"
 	{
@@ -394,6 +443,7 @@
 		"chi"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
 		"pl"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
 		"fi"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
+		"sv"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
 	}
 	"Jumpstats Report - Strafe Report"
 	{
@@ -404,5 +454,6 @@
 		"chi"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 		"pl"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 		"fi"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
+		"sv"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 	}
 }
