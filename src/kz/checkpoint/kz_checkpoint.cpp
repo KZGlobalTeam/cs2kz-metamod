@@ -74,7 +74,7 @@ void KZCheckpointService::UndoTeleport()
 		this->player->languageService->PrintChat(true, false, "Can't Undo (TP Was Midair)");
 		return;
 	}
-	if (!this->undoTeleportData.teleportInAntiCpTrigger)
+	if (this->undoTeleportData.teleportInAntiCpTrigger)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (AntiCp)");
 		return;
