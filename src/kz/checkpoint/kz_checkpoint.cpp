@@ -17,6 +17,7 @@ void KZCheckpointService::Reset()
 
 void KZCheckpointService::ResetCheckpoints()
 {
+	this->undoTeleportData = {};
 	this->currentCpIndex = 0;
 	this->tpCount = 0;
 	this->holdingStill = false;
@@ -56,6 +57,32 @@ void KZCheckpointService::SetCheckpoint()
 	this->PlayCheckpointSound();
 }
 
+void KZCheckpointService::UndoTeleport()
+{
+	CCSPlayerPawn *pawn = this->player->GetPawn();
+	if (!pawn || !pawn->IsAlive())
+	{
+		return;
+	}
+	if (this->checkpoints.Count() <= 0 || this->undoTeleportData.origin == NULL_VECTOR || this->tpCount <= 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Undo (No Teleports)");
+		return;
+	}
+	if (!this->undoTeleportData.teleportOnGround)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Undo (TP Was Midair)");
+		return;
+	}
+	if (!this->undoTeleportData.teleportInAntiCpTrigger)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Undo (AntiCp)");
+		return;
+	}
+
+	this->DoTeleport(this->undoTeleportData);
+}
+
 void KZCheckpointService::DoTeleport(i32 index)
 {
 	if (this->checkpoints.Count() <= 0)
@@ -76,10 +103,25 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 
 	this->player->noclipService->DisableNoclip();
 
-	// If we teleport the player to the same origin,
-	// the player ends just a slightly bit off from where they are supposed to be...
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
+
+	// Update data for undoing teleports
+	u32 flags = pawn->m_fFlags();
+	this->undoTeleportData.teleportOnGround = ((flags & FL_ONGROUND) || (pawn->m_MoveType() == MOVETYPE_LADDER));
+	this->undoTeleportData.origin = currentOrigin;
+	this->player->GetAngles(&this->undoTeleportData.angles);
+	this->undoTeleportData.slopeDropHeight = pawn->m_flSlopeDropHeight();
+	this->undoTeleportData.slopeDropOffset = pawn->m_flSlopeDropOffset();
+	if (this->player->GetMoveServices())
+	{
+		this->undoTeleportData.ladderNormal = this->player->GetMoveServices()->m_vecLadderNormal();
+		this->undoTeleportData.onLadder = pawn->m_MoveType() == MOVETYPE_LADDER;
+	}
+	this->undoTeleportData.groundEnt = pawn->m_hGroundEntity();
+
+	// If we teleport the player to the same origin,
+	// the player ends just a slightly bit off from where they are supposed to be...
 	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
 	// So we only set the player origin if it doesn't match.
 	if (currentOrigin != cp.origin)

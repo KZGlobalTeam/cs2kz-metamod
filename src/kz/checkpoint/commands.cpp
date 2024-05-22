@@ -1,6 +1,13 @@
 #include "kz_checkpoint.h"
 #include "utils/simplecmds.h"
 
+internal SCMD_CALLBACK(Command_KzUndoTeleport)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->checkpointService->UndoTeleport();
+	return MRES_SUPERCEDE;
+}
+
 internal SCMD_CALLBACK(Command_KzCheckpoint)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -46,6 +53,7 @@ internal SCMD_CALLBACK(Command_ClearStartPos)
 void KZCheckpointService::RegisterCommands()
 {
 	// clang-format off
+	scmd::RegisterCmd("kz_undo", Command_KzUndoTeleport);
 	scmd::RegisterCmd("kz_checkpoint", Command_KzCheckpoint);
 	scmd::RegisterCmd("kz_cp", Command_KzCheckpoint);
 	scmd::RegisterCmd("kz_teleport", Command_KzTeleport);
