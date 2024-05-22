@@ -22,6 +22,8 @@ class CBaseEntity;
 class CBasePlayerController;
 class IGameEventListener2;
 class CTimerBase;
+class CServerSideClient;
+
 struct SndOpEventGuid_t;
 struct EmitSound_t;
 
@@ -111,6 +113,12 @@ public:
 
 	virtual void AddTimer(CTimerBase *timer, bool preserveMapChange = true);
 	virtual void RemoveTimer(CTimerBase *timer);
+	virtual CUtlVector<CServerSideClient *> *GetClientList();
+
+	CServerSideClient *GetClientBySlot(CPlayerSlot slot)
+	{
+		return GetClientList() ? GetClientList()->Element(slot.Get()) : nullptr;
+	}
 };
 
 extern KZUtils *g_pKZUtils;

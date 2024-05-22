@@ -27,7 +27,7 @@ void KZCheckpointService::ResetCheckpoints()
 
 void KZCheckpointService::SetCheckpoint()
 {
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn)
 	{
 		return;
@@ -96,7 +96,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 
 void KZCheckpointService::DoTeleport(const Checkpoint cp)
 {
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn || !pawn->IsAlive())
 	{
 		return;
@@ -222,7 +222,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	}
 	this->player->SetVelocity(Vector(0, 0, 0));
 	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
-	if (this->lastTeleportedCheckpoint.onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
+	if (this->lastTeleportedCheckpoint.onLadder && this->player->GetPlayerPawn()->m_MoveType() != MOVETYPE_NONE)
 	{
 		ms->m_vecLadderNormal(this->lastTeleportedCheckpoint.ladderNormal);
 		this->player->SetMoveType(MOVETYPE_LADDER);
@@ -233,7 +233,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	}
 	if (this->lastTeleportedCheckpoint.groundEnt)
 	{
-		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
+		this->player->GetPlayerPawn()->m_fFlags(this->player->GetPlayerPawn()->m_fFlags | FL_ONGROUND);
 	}
 	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(this->lastTeleportedCheckpoint.groundEnt));
 
@@ -247,13 +247,13 @@ void KZCheckpointService::TpHoldPlayerStill()
 
 	if (isWorldEntity || isStaticGround)
 	{
-		this->player->GetPawn()->m_hGroundEntity(this->lastTeleportedCheckpoint.groundEnt);
+		this->player->GetPlayerPawn()->m_hGroundEntity(this->lastTeleportedCheckpoint.groundEnt);
 	}
 }
 
 void KZCheckpointService::SetStartPosition()
 {
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Set Custom Start Position (Generic)");

@@ -14,7 +14,7 @@ void KZNoclipService::Reset()
 
 void KZNoclipService::HandleNoclip()
 {
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (this->inNoclip)
 	{
 		if ((pawn->m_fFlags() & FL_NOCLIP) == 0)
@@ -79,7 +79,7 @@ void KZNoclipService::RegisterCommands()
 
 void KZNoclipService::HandleMoveCollision()
 {
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn)
 	{
 		return;

@@ -202,10 +202,10 @@ void KZClassicModeService::OnJump()
 	this->player->GetVelocity(&velocity);
 	this->preJumpZSpeed = velocity.z;
 	// Emulate the 128t vertical velocity before jumping
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND && this->player->GetPawn()->m_hGroundEntity().IsValid()
+	if (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->GetPlayerPawn()->m_hGroundEntity().IsValid()
 		&& (this->preJumpZSpeed < 0.0f || !this->player->duckBugged))
 	{
-		velocity.z += 0.25 * this->player->GetPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
+		velocity.z += 0.25 * this->player->GetPlayerPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
 		this->player->SetVelocity(velocity);
 		this->tweakedJumpZSpeed = velocity.z;
 		this->revertJumpTweak = true;
@@ -427,7 +427,7 @@ void KZClassicModeService::RemoveCrouchJumpBind()
 {
 	this->forcedUnduck = false;
 
-	bool onGround = this->player->GetPawn()->m_fFlags & FL_ONGROUND;
+	bool onGround = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND;
 	bool justJumped = !this->player->GetMoveServices()->m_bOldJumpPressed && this->player->IsButtonPressed(IN_JUMP);
 
 	if (onGround && !this->oldDuckPressed && justJumped)
@@ -463,7 +463,7 @@ void KZClassicModeService::UpdateAngleHistory()
 		break;
 	}
 	this->angleHistory.RemoveMultipleFromHead(oldEntries);
-	if ((this->player->GetPawn()->m_fFlags & FL_ONGROUND) == 0)
+	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0)
 	{
 		return;
 	}
@@ -551,7 +551,7 @@ void KZClassicModeService::CalcPrestrafe()
 		punishRate = g_pKZUtils->GetGlobals()->frametime * PS_DECREMENT_RATIO;
 	}
 
-	if (this->player->GetPawn()->m_fFlags & FL_ONGROUND)
+	if (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND)
 	{
 		// Prevent instant full pre from crouched prestrafe.
 		Vector velocity;
@@ -613,8 +613,8 @@ void KZClassicModeService::CheckVelocityQuantization()
 void KZClassicModeService::SlopeFix()
 {
 	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPawn(),
-											  this->player->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPlayerPawn(),
+											  this->player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
 											  COLLISION_GROUP_PLAYER_MOVEMENT);
 
 	Vector ground = this->player->currentMoveData->m_vecAbsOrigin;
@@ -733,7 +733,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 	this->tpmTriggerFixOrigins.RemoveAll();
 	this->overrideTPM = false;
 	this->didTPM = true;
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 
 	f32 timeLeft = g_pKZUtils->GetGlobals()->frametime;
 
@@ -1005,8 +1005,8 @@ void KZClassicModeService::OnCategorizePosition(bool bStayOnGround)
 	this->player->GetBBoxBounds(&bounds);
 
 	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPawn(),
-											  this->player->GetPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPlayerPawn(),
+											  this->player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
 											  COLLISION_GROUP_PLAYER_MOVEMENT);
 
 	trace_t_s2 trace;

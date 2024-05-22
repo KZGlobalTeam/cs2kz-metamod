@@ -342,14 +342,8 @@
 			// Check sv_fullupdate
 			"ClientOffset"
 			{
-				"windows"		"608"
-				"linux"			"624"
-			}
-			// Check "Received acknowledgement tick" string
-			"ACKOffset"
-			{
-				"windows"		"332"
-				"linux"			"348"
+				"windows"		"600"
+				"linux"			"616"
 			}
 			// Check ProcessUsercmds
 			// Note: the pointer points to an array of 150 usercmds, but I don't know why there are 64 bytes after the usercmd struct itself.

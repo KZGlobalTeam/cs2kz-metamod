@@ -55,7 +55,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 	const char *language = target->languageService->GetLanguage();
 	// clang-format off
 	target->languageService->PrintConsole(false, false, "Jumpstats Report - Console Summary",
-		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
+		jump->GetJumpPlayer()->GetName(),
 		jump->GetDistance(),
 		jumpTypeStr[jump->GetJumpType()],
 		jump->GetInvalidationReasonString(jump->invalidateReason)
@@ -178,9 +178,9 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 			bool validBroadcastTier = tier >= player->jumpstatsService->GetBroadcastMinTier();
 			if (broadcastEnabled && validBroadcastTier)
 			{
-				player->languageService->PrintChat(true, false, "Broadcast Jumpstat Chat Report",
-												   jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(),
-												   jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
+				player->languageService->PrintChat(true, false, "Broadcast Jumpstat Chat Report", jump->GetJumpPlayer()->GetName(), jumpColor,
+												   jump->GetDistance(), jumpTypeStr[jump->GetJumpType()],
+												   jump->GetJumpPlayer()->modeService->GetModeName());
 			}
 		}
 	}

@@ -50,7 +50,7 @@ internal SCMD_CALLBACK(Command_KzRestart)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
 	player->timerService->OnTeleportToStart();
-	if (player->GetPawn()->IsAlive())
+	if (player->GetPlayerPawn()->IsAlive())
 	{
 		// Fix players spawning 500u under spawn positions.
 		if (player->noclipService->IsNoclipping())
@@ -58,7 +58,7 @@ internal SCMD_CALLBACK(Command_KzRestart)
 			player->noclipService->DisableNoclip();
 			player->noclipService->HandleNoclip();
 		}
-		player->GetPawn()->Respawn();
+		player->GetPlayerPawn()->Respawn();
 	}
 	else
 	{
@@ -112,12 +112,6 @@ void KZ::misc::RegisterCommands()
 	KZ::style::RegisterCommands();
 }
 
-void KZ::misc::OnClientActive(CPlayerSlot slot)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
-	player->Reset();
-}
-
 void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 {
 	int currentTeam = player->GetController()->GetTeam();
@@ -145,7 +139,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 	}
 	else if (newTeam == CS_TEAM_CT && currentTeam != CS_TEAM_CT || newTeam == CS_TEAM_T && currentTeam != CS_TEAM_T)
 	{
-		player->GetPawn()->CommitSuicide(false, true);
+		player->GetPlayerPawn()->CommitSuicide(false, true);
 		player->GetController()->SwitchTeam(newTeam);
 		player->GetController()->Respawn();
 		if (restorePos && player->specService->HasSavedPosition())
@@ -160,7 +154,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 			Vector spawnOrigin;
 			QAngle spawnAngles;
 			utils::FindValidSpawn(spawnOrigin, spawnAngles);
-			player->GetPawn()->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
+			player->GetPlayerPawn()->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
 		}
 		player->specService->ResetSavedPosition();
 	}
