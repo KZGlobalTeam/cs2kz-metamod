@@ -64,23 +64,26 @@ void KZCheckpointService::UndoTeleport()
 	{
 		return;
 	}
-	if (this->checkpoints.Count() <= 0 || this->undoTeleportData.origin == NULL_VECTOR || this->tpCount <= 0)
+
+	UndoTeleportData getUndoTeleportData = this->undoTeleportData;
+
+	if (this->checkpoints.Count() <= 0 || getUndoTeleportData.origin.IsZero() || this->tpCount <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (No Teleports)");
 		return;
 	}
-	if (!this->undoTeleportData.teleportOnGround)
+	if (!getUndoTeleportData.teleportOnGround)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (TP Was Midair)");
 		return;
 	}
-	if (this->undoTeleportData.teleportInAntiCpTrigger)
+	if (getUndoTeleportData.teleportInAntiCpTrigger)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (AntiCp)");
 		return;
 	}
-
-	this->DoTeleport(this->undoTeleportData);
+	
+	this->DoTeleport(getUndoTeleportData);
 }
 
 void KZCheckpointService::DoTeleport(i32 index)
@@ -101,8 +104,6 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 		return;
 	}
 
-	this->player->noclipService->DisableNoclip();
-
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
 
@@ -119,6 +120,8 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 		this->undoTeleportData.onLadder = pawn->m_MoveType() == MOVETYPE_LADDER;
 	}
 	this->undoTeleportData.groundEnt = pawn->m_hGroundEntity();
+
+	this->player->noclipService->DisableNoclip();
 
 	// If we teleport the player to the same origin,
 	// the player ends just a slightly bit off from where they are supposed to be...
