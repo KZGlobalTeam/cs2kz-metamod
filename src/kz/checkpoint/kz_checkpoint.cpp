@@ -59,7 +59,7 @@ void KZCheckpointService::SetCheckpoint()
 
 void KZCheckpointService::UndoTeleport()
 {
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn || !pawn->IsAlive())
 	{
 		return;
