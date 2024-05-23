@@ -7,4 +7,12 @@
 	"defaultJSBroadcastMinTier"	"4"
 	"defaultJSSoundMinTier"		"4"
 	"chatPrefix"			"{lime}KZ {grey}|{default}"
+	"customChatTrigger"
+	{
+		"."
+	}
+	"customSilentChatTrigger"
+	{
+		"@"
+	}
 }
