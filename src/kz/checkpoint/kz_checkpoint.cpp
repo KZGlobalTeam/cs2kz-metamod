@@ -94,7 +94,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 	this->DoTeleport(this->checkpoints[this->currentCpIndex]);
 }
 
-void KZCheckpointService::DoTeleport(const Checkpoint &cp)
+void KZCheckpointService::DoTeleport(const Checkpoint cp)
 {
 	CCSPlayerPawn *pawn = this->player->GetPawn();
 	if (!pawn || !pawn->IsAlive())
@@ -177,7 +177,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint &cp)
 	this->tpCount++;
 	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->PlayTeleportSound();
-	this->lastTeleportedCheckpoint = &cp;
+	this->lastTeleportedCheckpoint = cp;
 }
 
 void KZCheckpointService::TpToCheckpoint()
@@ -199,11 +199,10 @@ void KZCheckpointService::TpToNextCp()
 
 void KZCheckpointService::TpHoldPlayerStill()
 {
-	bool noLastTpCheckpoint = this->lastTeleportedCheckpoint == nullptr;
 	bool isAlive = this->player->IsAlive();
 	bool justTeleported = g_pKZUtils->GetServerGlobals()->curtime - this->teleportTime > 0.04;
 
-	if (noLastTpCheckpoint || !isAlive || justTeleported)
+	if (!isAlive || justTeleported)
 	{
 		return;
 	}
@@ -212,10 +211,10 @@ void KZCheckpointService::TpHoldPlayerStill()
 	this->player->GetOrigin(&currentOrigin);
 
 	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
-	if (currentOrigin != this->lastTeleportedCheckpoint->origin)
+	if (currentOrigin != this->lastTeleportedCheckpoint.origin)
 	{
-		this->player->SetOrigin(this->lastTeleportedCheckpoint->origin);
-		if (!utils::IsSpawnValid(this->lastTeleportedCheckpoint->origin))
+		this->player->SetOrigin(this->lastTeleportedCheckpoint.origin);
+		if (!utils::IsSpawnValid(this->lastTeleportedCheckpoint.origin))
 		{
 			this->player->GetMoveServices()->m_bDucked(true);
 			this->player->GetMoveServices()->m_flDuckAmount(1.0f);
@@ -223,20 +222,20 @@ void KZCheckpointService::TpHoldPlayerStill()
 	}
 	this->player->SetVelocity(Vector(0, 0, 0));
 	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
-	if (this->lastTeleportedCheckpoint->onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
+	if (this->lastTeleportedCheckpoint.onLadder && this->player->GetPawn()->m_MoveType() != MOVETYPE_NONE)
 	{
-		ms->m_vecLadderNormal(this->lastTeleportedCheckpoint->ladderNormal);
+		ms->m_vecLadderNormal(this->lastTeleportedCheckpoint.ladderNormal);
 		this->player->SetMoveType(MOVETYPE_LADDER);
 	}
 	else
 	{
 		ms->m_vecLadderNormal(vec3_origin);
 	}
-	if (this->lastTeleportedCheckpoint->groundEnt)
+	if (this->lastTeleportedCheckpoint.groundEnt)
 	{
 		this->player->GetPawn()->m_fFlags(this->player->GetPawn()->m_fFlags | FL_ONGROUND);
 	}
-	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(this->lastTeleportedCheckpoint->groundEnt));
+	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(this->lastTeleportedCheckpoint.groundEnt));
 
 	if (!groundEntity)
 	{
@@ -248,7 +247,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 
 	if (isWorldEntity || isStaticGround)
 	{
-		this->player->GetPawn()->m_hGroundEntity(this->lastTeleportedCheckpoint->groundEnt);
+		this->player->GetPawn()->m_hGroundEntity(this->lastTeleportedCheckpoint.groundEnt);
 	}
 }
 

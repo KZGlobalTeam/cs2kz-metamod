@@ -43,14 +43,14 @@ private:
 
 	bool hasCustomStartPosition {};
 	Checkpoint customStartPosition;
-	Checkpoint const *lastTeleportedCheckpoint {};
+	Checkpoint lastTeleportedCheckpoint {};
 
 public:
 	void ResetCheckpoints();
 	void SetCheckpoint();
 
 	void UndoTeleport();
-	void DoTeleport(const Checkpoint &cp);
+	void DoTeleport(const Checkpoint cp);
 	void DoTeleport(i32 index);
 	void TpHoldPlayerStill();
 	void TpToCheckpoint();
