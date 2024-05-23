@@ -65,23 +65,17 @@ void KZCheckpointService::UndoTeleport()
 		return;
 	}
 
-	UndoTeleportData getUndoTeleportData = this->undoTeleportData;
-
-	if (this->checkpoints.Count() <= 0 || getUndoTeleportData.origin.IsZero() || this->tpCount <= 0)
+	if (this->checkpoints.Count() <= 0 || this->undoTeleportData.origin.IsZero() || this->tpCount <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (No Teleports)");
 		return;
 	}
-	if (!getUndoTeleportData.teleportOnGround)
+	if (!this->undoTeleportData.teleportOnGround)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (TP Was Midair)");
 		return;
 	}
-<<<<<<< HEAD
-	if (getUndoTeleportData.teleportInAntiCpTrigger)
-=======
-	if (!this->undoTeleportData.teleportInAntiCpTrigger)
->>>>>>> parent of 9d63bcc (Fix a error)
+	if (this->undoTeleportData.teleportInAntiCpTrigger)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (AntiCp)");
 		return;
