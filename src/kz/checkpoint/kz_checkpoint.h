@@ -23,6 +23,14 @@ public:
 		f32 slopeDropHeight;
 	};
 
+	// UndoTeleport stuff
+	struct UndoTeleportData : public Checkpoint
+	{
+		bool teleportOnGround {};
+		bool teleportInBhopTrigger {};
+		bool teleportInAntiCpTrigger {};
+	};
+
 	static_global void RegisterCommands();
 
 private:
@@ -31,16 +39,18 @@ private:
 	bool holdingStill {};
 	f32 teleportTime {};
 	CUtlVector<Checkpoint> checkpoints;
+	UndoTeleportData undoTeleportData;
 
 	bool hasCustomStartPosition {};
 	Checkpoint customStartPosition;
-	Checkpoint const *lastTeleportedCheckpoint {};
+	Checkpoint lastTeleportedCheckpoint {};
 
 public:
 	void ResetCheckpoints();
 	void SetCheckpoint();
 
-	void DoTeleport(const Checkpoint &cp);
+	void UndoTeleport();
+	void DoTeleport(const Checkpoint cp);
 	void DoTeleport(i32 index);
 	void TpHoldPlayerStill();
 	void TpToCheckpoint();
