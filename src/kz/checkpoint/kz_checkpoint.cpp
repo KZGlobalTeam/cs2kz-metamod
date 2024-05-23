@@ -81,7 +81,7 @@ void KZCheckpointService::UndoTeleport()
 		return;
 	}
 
-	this->DoTeleport(getUndoTeleportData);
+	this->DoTeleport(this->undoTeleportData);
 }
 
 void KZCheckpointService::DoTeleport(i32 index)
