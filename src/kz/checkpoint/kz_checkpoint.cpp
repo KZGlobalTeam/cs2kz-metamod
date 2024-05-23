@@ -80,7 +80,7 @@ void KZCheckpointService::UndoTeleport()
 		this->player->languageService->PrintChat(true, false, "Can't Undo (AntiCp)");
 		return;
 	}
-	
+
 	this->DoTeleport(getUndoTeleportData);
 }
 
