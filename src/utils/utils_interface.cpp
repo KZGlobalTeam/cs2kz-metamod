@@ -19,14 +19,7 @@ const CGlobalVars *KZUtils::GetServerGlobals()
 
 CGlobalVars *KZUtils::GetGlobals()
 {
-	INetworkGameServer *server = g_pNetworkServerService->GetIGameServer();
-
-	if (!server)
-	{
-		return nullptr;
-	}
-
-	return server->GetGlobals();
+	return interfaces::pEngine->GetServerGlobals();
 }
 
 CBaseEntity *KZUtils::FindEntityByClassname(CEntityInstance *start, const char *name)

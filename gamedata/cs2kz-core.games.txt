@@ -15,8 +15,8 @@
 			"CBasePlayerController_SetPawn"
 			{
 				"library" 	"server"
-				"windows" 	"\x44\x88\x4C\x24\x20\x55\x57\x41\x54\x41\x56\x41\x57\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A"
-				"linux" 	"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x81\xEC\xC8\x00\x00\x00"
+				"windows"	"\x44\x88\x4C\x24\x2A\x55\x56\x57\x41\x54\x41\x56\x48\x8D\x6C\x24\x2A"
+				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x89\xD6\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
 			}
 			// CSource2GameClients::StartHLTVServer: game event %s not found.
 			// Function right before the first virtual function call
@@ -293,45 +293,45 @@
 			// 5 functions after one with "Physics_SimulateEntity" "Server Game"
 			"Teleport"
 			{
-				"windows"		"149"
-				"linux"			"148"
+				"windows"		"155"
+				"linux"			"154"
 			}
 			// 5 functions after one with "targethealthfrac"
 			"CollisionRulesChanged"
 			{
-				"windows"		"174"
-				"linux"			"175"
+				"windows"		"178"
+				"linux"			"177"
 			}
 			// 9 functions after one with "Physics_SimulateEntity" "Server Game"
 			"IsEntityPawn"
 			{
-				"windows"		"153"
-				"linux"			"152"
+				"windows"		"160"
+				"linux"			"159"
 			}
 			// Right after IsEntityPawn
 			"IsEntityController"
 			{
-				"windows"		"154"
-				"linux"			"153"
+				"windows"		"161"
+				"linux"			"160"
 			}
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"ControllerChangeTeam"
 			{
-				"windows"		"93"
-				"linux"			"92"
+				"windows"		"98"
+				"linux"			"97"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2832LL))(v9, v27, 0LL);
 			// 2832 (354 * 8) is the offset
 			"CommitSuicide"
 			{
-				"windows"		"360"
-				"linux"			"360"
+				"windows"		"372"
+				"linux"			"372"
 			}
 			"ControllerRespawn"
 			{
-				"windows"		"244"
-				"linux"			"246"
+				"windows"		"254"
+				"linux"			"256"
 			}
 			// "Player.Respawn"
 			"Respawn"
@@ -343,13 +343,13 @@
 			"ClientOffset"
 			{
 				"windows"		"608"
-				"linux"			"624"
+				"linux"			"648"
 			}
 			// Check "Received acknowledgement tick" string
 			"ACKOffset"
 			{
 				"windows"		"332"
-				"linux"			"348"
+				"linux"			"324"
 			}
 			// Check ProcessUsercmds
 			// Note: the pointer points to an array of 150 usercmds, but I don't know why there are 64 bytes after the usercmd struct itself.
@@ -362,17 +362,17 @@
 			"StartTouch"
 			{
 				"windows"		"135"
-				"linux"			"134"
+				"linux"			"140"
 			}
 			"Touch"
 			{
 				"windows"		"136"
-				"linux"			"135"
+				"linux"			"141"
 			}
 			"EndTouch"
 			{
 				"windows"		"137"
-				"linux"			"136"
+				"linux"			"142"
 			}
 		}
 	}

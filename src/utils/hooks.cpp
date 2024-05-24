@@ -30,6 +30,7 @@ internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384>
 internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
 internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
+internal int  Hook_LoadEventsFromFile(const char *filename, bool bSearchAll);
 internal bool Hook_ActivateServer();
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
@@ -65,6 +66,8 @@ SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const G
 internal int activateServerHook;
 SH_DECL_HOOK0(INetworkGameServer, ActivateServer, SH_NOATTRIB, false, bool);
 
+internal int loadEventsFromFileHook;
+SH_DECL_HOOK2(IGameEventManager2, LoadEventsFromFile, SH_NOATTRIB, 0, int, const char *, bool);
 SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEvent *, bool);
 SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
 SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *, INetworkSerializable *,
@@ -92,10 +95,18 @@ void hooks::Initialize()
 	SH_ADD_HOOK(ISource2GameClients, ClientActive, g_pSource2GameClients, SH_STATIC(Hook_ClientActive), false);
 	SH_ADD_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), false);
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
-	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 	// clang-format off
+	auto pCGameEventManagerVTable = (IGameEventManager2*)modules::server->FindVirtualTable("CGameEventManager");
+
+	loadEventsFromFileHook = SH_ADD_DVPHOOK(
+		IGameEventManager2,
+		LoadEventsFromFile,
+		pCGameEventManagerVTable,
+		SH_STATIC(Hook_LoadEventsFromFile),
+		false
+	);
 	activateServerHook = SH_ADD_DVPHOOK(
 		INetworkGameServer, 
 		ActivateServer,
@@ -125,6 +136,7 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
 	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+	SH_REMOVE_HOOK_ID(loadEventsFromFileHook);
 	SH_REMOVE_HOOK_ID(activateServerHook);
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
@@ -275,6 +287,14 @@ internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISour
 {
 	g_KZPlugin.AddonInit();
 	RETURN_META(MRES_IGNORED);
+}
+
+internal int Hook_LoadEventsFromFile(const char *filename, bool bSearchAll)
+{
+	ExecuteOnce(interfaces::pGameEventManager = META_IFACEPTR(IGameEventManager2));
+	SH_ADD_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
+
+	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
 internal bool Hook_ActivateServer()
