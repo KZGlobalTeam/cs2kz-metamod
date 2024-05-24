@@ -30,7 +30,7 @@ internal void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384>
 internal void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
 internal void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 internal void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *);
-internal int  Hook_LoadEventsFromFile(const char *filename, bool bSearchAll);
+internal int Hook_LoadEventsFromFile(const char *filename, bool bSearchAll);
 internal bool Hook_ActivateServer();
 internal bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
