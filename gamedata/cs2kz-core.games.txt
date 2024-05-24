@@ -280,11 +280,6 @@
 				"windows"		"584"
 				"linux"			"584"
 			}
-			"GameEventManager"
-			{
-				"windows"		"93"
-				"linux"			"93"
-			}
 			"GameEntitySystem"
 			{
 				"windows"		"88"
@@ -330,8 +325,8 @@
 			}
 			"ControllerRespawn"
 			{
-				"windows"		"244"
-				"linux"			"246"
+				"windows"		"254"
+				"linux"			"256"
 			}
 			// "Player.Respawn"
 			"Respawn"
