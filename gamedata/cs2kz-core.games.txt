@@ -4,6 +4,14 @@
 	{
 		"Signatures"
 		{
+			// "Game System %s is defined twice!\n"
+			// Note that this signature points to the instruction with sm_pFirst which is the first qword referenced in the function.
+			"IGameSystem_InitAllSystems_pFirst"
+			{
+				"library"		"server"
+				"windows"		"\x48\x8B\x1D\x2A\x2A\x2A\x2A\x48\x85\xDB\x0F\x84\x2A\x2A\x2A\x2A\xBE\x2A\x2A\x2A\x2A\x0F\x1F\x00\x48\x8B\x7B\x10"
+				"linux"			"\x4C\x8B\x35\x2A\x2A\x2A\x2A\x4D\x85\xF6\x75\x2D\xE9\x2A\x2A\x2A\x2A\x0F\x1F\x40\x00\x48\x8B\x05"
+			}
 			// Taken from cs2fixes
 			"CCSPlayerController_SwitchTeam"
 			{
@@ -15,8 +23,8 @@
 			"CBasePlayerController_SetPawn"
 			{
 				"library" 	"server"
-				"windows" 	"\x44\x88\x4C\x24\x20\x55\x57\x41\x54\x41\x56\x41\x57\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A"
-				"linux" 	"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x81\xEC\xC8\x00\x00\x00"
+				"windows"		"\x44\x88\x4C\x24\x2A\x55\x56\x57\x41\x54\x41\x56\x48\x8D\x6C\x24\x2A"
+				"linux"			"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x89\xD6\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
 			}
 			// CSource2GameClients::StartHLTVServer: game event %s not found.
 			// Function right before the first virtual function call
@@ -24,7 +32,7 @@
 			{
 				"library" 	"server"
 				"windows" 	"\x48\x8B\x15\x2A\x2A\x2A\x2A\x48\x85\xD2\x74\x2A\x85\xC9\x74"
-				"linux" 	"\x48\x8B\x05\x2A\x2A\x2A\x2A\x48\x85\xC0\x74\x2A\x83\xFF\x3F\x76\x2A\x31\xC0"
+				"linux" 	"\x48\x8B\x05\x2A\x2A\x2A\x2A\x48\x85\xC0\x74\x2A\x85\xFF"
 			}
 			// RecvServerBrowserPacketTask vtable reference
 			"RecvServerBrowserPacket"
@@ -258,6 +266,14 @@
 				"windows"	"\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x48\x89\x7C\x24\x20\x41\x56\x48\x83\xEC\x30\x48\x8B\xEA"
 				"linux"		"\x55\x48\x89\xE5\x41\x56\x49\x89\xD6\x41\x55\x41\x89\xF5\x41\x54\x48\x8D\x35\x2A\x2A\x2A\x2A"
 			}
+			// next to "soundname", in windows it's the last referenced sub while in linux it's right after
+			// this is a vscript binding though so it may be removed in the future?
+			"EmitSoundParams"
+			{
+				"library"		"server"
+				"windows"		"\x48\x8B\xC4\x48\x89\x58\x10\x48\x89\x70\x18\x55\x57\x41\x56\x48\x8D\xA8\x08\xFF\xFF\xFF"
+				"linux"			"\x48\xB8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x55\x48\x89\xE5\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x89\xF3"
+			}
 			// "sv: Clamped invalid attack history %d index in cmd to -1. Was %d, cmd size %d.\n"
 			"ProcessUsercmds"
 			{
@@ -293,8 +309,8 @@
 			// 5 functions after one with "Physics_SimulateEntity" "Server Game"
 			"Teleport"
 			{
-				"windows"		"149"
-				"linux"			"148"
+				"windows"		"155"
+				"linux"			"154"
 			}
 			// 5 functions after one with "targethealthfrac"
 			"CollisionRulesChanged"
@@ -305,28 +321,28 @@
 			// 9 functions after one with "Physics_SimulateEntity" "Server Game"
 			"IsEntityPawn"
 			{
-				"windows"		"153"
-				"linux"			"152"
+				"windows"		"165"
+				"linux"			"164"
 			}
 			// Right after IsEntityPawn
 			"IsEntityController"
 			{
-				"windows"		"154"
-				"linux"			"153"
+				"windows"		"161"
+				"linux"			"160"
 			}
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"ControllerChangeTeam"
 			{
-				"windows"		"93"
-				"linux"			"92"
+				"windows"		"98"
+				"linux"			"97"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2832LL))(v9, v27, 0LL);
 			// 2832 (354 * 8) is the offset
 			"CommitSuicide"
 			{
-				"windows"		"360"
-				"linux"			"360"
+				"windows"		"372"
+				"linux"			"372"
 			}
 			"ControllerRespawn"
 			{
