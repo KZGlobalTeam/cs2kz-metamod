@@ -342,13 +342,13 @@
 			// Check sv_fullupdate
 			"ClientOffset"
 			{
-				"windows"		"608"
+				"windows"		"632"
 				"linux"			"648"
 			}
 			// Check "Received acknowledgement tick" string
 			"ACKOffset"
 			{
-				"windows"		"332"
+				"windows"		"308"
 				"linux"			"324"
 			}
 			// Check ProcessUsercmds
@@ -361,17 +361,17 @@
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
-				"windows"		"135"
+				"windows"		"141"
 				"linux"			"140"
 			}
 			"Touch"
 			{
-				"windows"		"136"
+				"windows"		"142"
 				"linux"			"141"
 			}
 			"EndTouch"
 			{
-				"windows"		"137"
+				"windows"		"143"
 				"linux"			"142"
 			}
 		}
