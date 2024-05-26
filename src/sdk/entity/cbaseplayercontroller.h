@@ -45,6 +45,6 @@ public:
 
 	void SetPawn(CCSPlayerPawn *pawn)
 	{
-		g_pKZUtils->SetPawn(this, pawn, true, false);
+		g_pKZUtils->SetPawn(this, pawn, true, false, false);
 	}
 };
