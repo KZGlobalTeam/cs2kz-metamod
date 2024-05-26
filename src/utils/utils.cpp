@@ -1,5 +1,6 @@
 #include "networkbasetypes.pb.h"
 
+#include "common.h"
 #include "cs2kz.h"
 #include "addresses.h"
 #include "gameconfig.h"
@@ -52,9 +53,24 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		Warning("%s\n", error);
 		return false;
 	}
-	// Initialize this later because we didn't have game config before.
-	interfaces::pGameEventManager =
-		(IGameEventManager2 *)(CALL_VIRTUAL(uintptr_t, g_pGameConfig->GetOffset("GameEventManager"), interfaces::pServer) - 8);
+
+	// Convoluted way of having GameEventManager regardless of lateloading
+	u8 *ptr = (u8 *)g_pGameConfig->ResolveSignature("GameEventManager");
+
+	if (!ptr)
+	{
+		return false;
+	}
+
+	ptr += 3;
+	// Grab the offset as 4 bytes
+	u32 offset = *(u32 *)ptr;
+
+	// Go to the next instruction, which is the starting point of the relative jump
+	ptr += 4;
+
+	// Now grab our pointer
+	interfaces::pGameEventManager = (IGameEventManager2 *)(ptr + offset);
 
 	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
 	RESOLVE_SIG(g_pGameConfig, "InitGameTrace", InitGameTrace_t, InitGameTrace);

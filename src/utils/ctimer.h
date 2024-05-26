@@ -1,4 +1,5 @@
 #pragma once
+#include "common.h"
 #include <functional>
 #include <tuple>
 #include "utils/utils.h"
@@ -24,8 +25,8 @@ public:
 void ProcessTimers();
 void RemoveNonPersistentTimers();
 
-extern CUtlVector<CTimerBase *> g_PersistentTimers;
 extern CUtlVector<CTimerBase *> g_NonPersistentTimers;
+extern CUtlVector<CTimerBase *> g_PersistentTimers;
 
 template<typename... Args>
 class CTimer : public CTimerBase

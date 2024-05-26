@@ -11,14 +11,13 @@ class Player
 public:
 	Player(int i) : index(i) {}
 
+	virtual ~Player() {}
+
 	virtual void Init() {}
 
 	virtual void Reset()
 	{
-		if (unauthenticatedSteamID)
-		{
-			delete unauthenticatedSteamID;
-		}
+		unauthenticatedSteamID = k_steamIDNil;
 	}
 
 	virtual CCSPlayerController *GetController();
@@ -92,7 +91,7 @@ public:
 		{
 			return *client->GetClientSteamID();
 		}
-		return unauthenticatedSteamID ? *unauthenticatedSteamID : invalidId;
+		return unauthenticatedSteamID;
 	}
 
 	u64 GetSteamId64(bool validated = true)
@@ -107,11 +106,7 @@ public:
 
 	void SetUnauthenticatedSteamID(u64 xuid)
 	{
-		if (unauthenticatedSteamID)
-		{
-			delete unauthenticatedSteamID;
-		}
-		unauthenticatedSteamID = new CSteamID(xuid);
+		unauthenticatedSteamID = CSteamID(xuid);
 	}
 
 public:
@@ -119,7 +114,7 @@ public:
 	const i32 index;
 
 private:
-	CSteamID *unauthenticatedSteamID {};
+	CSteamID unauthenticatedSteamID = k_steamIDNil;
 };
 
 class PlayerManager

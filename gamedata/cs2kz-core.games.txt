@@ -15,8 +15,8 @@
 			"CBasePlayerController_SetPawn"
 			{
 				"library" 	"server"
-				"windows" 	"\x44\x88\x4C\x24\x20\x55\x57\x41\x54\x41\x56\x41\x57\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A"
-				"linux" 	"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x81\xEC\xC8\x00\x00\x00"
+				"windows"	"\x44\x88\x4C\x24\x2A\x55\x56\x57\x41\x54\x41\x56\x48\x8D\x6C\x24\x2A"
+				"linux" 	"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x89\xD6\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
 			}
 			// CSource2GameClients::StartHLTVServer: game event %s not found.
 			// Function right before the first virtual function call
@@ -24,7 +24,7 @@
 			{
 				"library" 	"server"
 				"windows" 	"\x48\x8B\x15\x2A\x2A\x2A\x2A\x48\x85\xD2\x74\x2A\x85\xC9\x74"
-				"linux" 	"\x48\x8B\x05\x2A\x2A\x2A\x2A\x48\x85\xC0\x74\x2A\x83\xFF\x3F\x76\x2A\x31\xC0"
+				"linux" 	"\x48\x8B\x05\x2A\x2A\x2A\x2A\x48\x85\xC0\x74\x2A\x85\xFF"
 			}
 			// RecvServerBrowserPacketTask vtable reference
 			"RecvServerBrowserPacket"
@@ -138,8 +138,8 @@
 			"CheckVelocity"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x4C\x89\x40\x18\x55\x53\x56\x57\x41\x54"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xFD\x41\x54\x53\x48\x89\xF3\x48\x83\xEC\x2A\x48\x8B\x7F"
+				"windows"	"\x48\x8B\xC4\x4C\x89\x40\x18\x55\x53\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\x68\xA1"
+				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x49\x89\xFE\x41\x55\x41\x54\x49\x89\xF4\x53\x48\x83\xEC\x58"
 			}
 			// called after MoveInit in PlayerMoveNew in switch statement with movetype 5
 			"Duck"
@@ -173,7 +173,7 @@
 			"OnJump"
 			{
 				"library"	"server"
-				"windows"	"\x40\x53\x57\x48\x81\xEC\x98\x00\x00\x00\x48\x8B\xD9\x48\x8B\xFA"
+				"windows"	"\x40\x53\x57\x48\x81\xEC\xA8\x00\x00\x00\x48\x8B\xD9"
 				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x83\xEC\x2A\x48\x8B\x7F"
 			}
 			// sv_air_pushaway_dist
@@ -234,7 +234,7 @@
 			{
 				"library"	"server"
 				"windows"	"\x48\x89\x5C\x24\x10\x57\x48\x83\xEC\x60\xF3\x0F\x10\x81\x28\x02\x00\x00"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x48\x83\xEC\x2A\x48\x8B\x7F\x2A\xE8"
+				"linux"		"\x55\x66\x0F\xEF\xDB\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x48\x83\xEC\x38"
 			}
 			"PostPlayerMove"
 			{
@@ -272,6 +272,13 @@
 				"windows"	"\x40\x55\x53\x48\x8D\x6C\x24\xB1\x48\x81\xEC\xD8\x00\x00\x00"
 				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x81\xEC\xB8\x00\x00\x00\xE8\x2A\x2A\x2A\x2A"
 			}
+			// Check function associated with net_reloadgameevents
+			"GameEventManager"
+			{
+				"library"	"server"
+				"windows"	"\x48\x8D\x0D\x2A\x2A\x2A\x2A\x48\x0F\x45\xD0\x48\x8B\x05"
+				"linux"		"\x48\x8D\x3D\x2A\x2A\x2A\x2A\x4C\x89\xE0"
+			}
 		}
 		"Offsets"
 		{
@@ -280,70 +287,64 @@
 				"windows"		"584"
 				"linux"			"584"
 			}
-			"GameEventManager"
-			{
-				"windows"		"93"
-				"linux"			"93"
-			}
 			"GameEntitySystem"
 			{
 				"windows"		"88"
 				"linux"			"80"
 			}
-			// 5 functions after one with "Physics_SimulateEntity" "Server Game"
 			"Teleport"
 			{
-				"windows"		"149"
-				"linux"			"148"
+				"windows"		"155"
+				"linux"			"154"
 			}
-			// 5 functions after one with "targethealthfrac"
+			// 2 functions after one with "targethealthfrac"
 			"CollisionRulesChanged"
 			{
-				"windows"		"174"
-				"linux"			"175"
+				"windows"		"178"
+				"linux"			"179"
 			}
-			// 9 functions after one with "Physics_SimulateEntity" "Server Game"
+			// 9 functions after one with "CBasePlayerPawn::PhysicsSimulate"
 			"IsEntityPawn"
 			{
-				"windows"		"153"
-				"linux"			"152"
+				"windows"		"160"
+				"linux"			"159"
 			}
 			// Right after IsEntityPawn
 			"IsEntityController"
 			{
-				"windows"		"154"
-				"linux"			"153"
+				"windows"		"161"
+				"linux"			"160"
 			}
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"ControllerChangeTeam"
 			{
-				"windows"		"93"
-				"linux"			"92"
+				"windows"		"98"
+				"linux"			"97"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2832LL))(v9, v27, 0LL);
 			// 2832 (354 * 8) is the offset
 			"CommitSuicide"
 			{
-				"windows"		"360"
-				"linux"			"360"
+				"windows"		"372"
+				"linux"			"372"
 			}
 			"ControllerRespawn"
 			{
-				"windows"		"244"
-				"linux"			"246"
+				"windows"		"254"
+				"linux"			"256"
 			}
 			// "Player.Respawn"
 			"Respawn"
 			{
-				"windows"		"328"
-				"linux"			"329"
+				"windows"		"340"
+				"linux"			"341"
 			}
 			// Check sv_fullupdate
 			"ClientOffset"
 			{
-				"windows"		"600"
-				"linux"			"616"
+				"windows"		"624"
+				"linux"			"640"
 			}
 			// Check ProcessUsercmds
 			// Note: the pointer points to an array of 150 usercmds, but I don't know why there are 64 bytes after the usercmd struct itself.
@@ -355,18 +356,18 @@
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
-				"windows"		"135"
-				"linux"			"134"
+				"windows"		"141"
+				"linux"			"140"
 			}
 			"Touch"
 			{
-				"windows"		"136"
-				"linux"			"135"
+				"windows"		"142"
+				"linux"			"141"
 			}
 			"EndTouch"
 			{
-				"windows"		"137"
-				"linux"			"136"
+				"windows"		"143"
+				"linux"			"142"
 			}
 		}
 	}
