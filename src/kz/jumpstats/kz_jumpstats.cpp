@@ -563,7 +563,8 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	{
 		if (this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL
 			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
-			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
+			&& this->player->jumpstatsService->lastJumpButtonTime
+				   < this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
 		{
 			return JumpType_Invalid;
 		}
