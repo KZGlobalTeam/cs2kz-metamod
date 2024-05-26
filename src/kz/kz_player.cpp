@@ -18,8 +18,8 @@
 
 void KZPlayer::Init()
 {
+	MovementPlayer::Init();
 	this->hideLegs = false;
-	this->previousTurnState = TURN_NONE;
 
 	// TODO: initialize every service.
 	delete this->checkpointService;
@@ -29,6 +29,7 @@ void KZPlayer::Init()
 	delete this->hudService;
 	delete this->specService;
 	delete this->timerService;
+	delete this->optionService;
 	delete this->noclipService;
 	delete this->tipService;
 
@@ -50,17 +51,18 @@ void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
 	this->hideLegs = false;
-	this->previousTurnState = TURN_NONE;
 
 	// TODO: reset every service.
 	this->checkpointService->Reset();
 	this->noclipService->Reset();
 	this->quietService->Reset();
+	this->languageService->Reset();
 	this->jumpstatsService->Reset();
 	this->hudService->Reset();
 	this->timerService->Reset();
 	this->tipService->Reset();
 	this->modeService->Reset();
+	this->specService->Reset();
 	this->optionService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
@@ -443,7 +445,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 
 void KZPlayer::EnableGodMode()
 {
-	CCSPlayerPawn *pawn = this->GetPawn();
+	CCSPlayerPawn *pawn = this->GetPlayerPawn();
 	if (!pawn)
 	{
 		return;
@@ -477,7 +479,7 @@ void KZPlayer::EndZoneStartTouch()
 
 void KZPlayer::UpdatePlayerModelAlpha()
 {
-	CCSPlayerPawn *pawn = this->GetPawn();
+	CCSPlayerPawn *pawn = this->GetPlayerPawn();
 	if (!pawn)
 	{
 		return;
@@ -522,10 +524,10 @@ void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, co
 		}
 		if (!this->touchedTriggers.HasElement(handle))
 		{
-			this->GetPawn()->StartTouch(trigger);
-			trigger->StartTouch(this->GetPawn());
-			this->GetPawn()->Touch(trigger);
-			trigger->Touch(this->GetPawn());
+			this->GetPlayerPawn()->StartTouch(trigger);
+			trigger->StartTouch(this->GetPlayerPawn());
+			this->GetPlayerPawn()->Touch(trigger);
+			trigger->Touch(this->GetPlayerPawn());
 		}
 	}
 }
@@ -537,8 +539,8 @@ void KZPlayer::UpdateTriggerTouchList()
 		FOR_EACH_VEC(this->touchedTriggers, i)
 		{
 			CBaseTrigger *trigger = static_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(this->touchedTriggers[i]));
-			trigger->EndTouch(this->GetPawn());
-			this->GetPawn()->EndTouch(trigger);
+			trigger->EndTouch(this->GetPlayerPawn());
+			this->GetPlayerPawn()->EndTouch(trigger);
 		}
 		return;
 	}
@@ -561,8 +563,8 @@ void KZPlayer::UpdateTriggerTouchList()
 		}
 		if (!filter.hitTriggerHandles.HasElement(handle))
 		{
-			this->GetPawn()->EndTouch(trigger);
-			trigger->EndTouch(this->GetPawn());
+			this->GetPlayerPawn()->EndTouch(trigger);
+			trigger->EndTouch(this->GetPlayerPawn());
 		}
 	}
 
@@ -576,10 +578,10 @@ void KZPlayer::UpdateTriggerTouchList()
 		}
 		if (!this->touchedTriggers.HasElement(handle))
 		{
-			trigger->StartTouch(this->GetPawn());
-			this->GetPawn()->StartTouch(trigger);
-			trigger->Touch(this->GetPawn());
-			this->GetPawn()->Touch(trigger);
+			trigger->StartTouch(this->GetPlayerPawn());
+			this->GetPlayerPawn()->StartTouch(trigger);
+			trigger->Touch(this->GetPlayerPawn());
+			this->GetPlayerPawn()->Touch(trigger);
 		}
 	}
 }

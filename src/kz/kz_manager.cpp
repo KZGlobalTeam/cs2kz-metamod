@@ -4,11 +4,11 @@
 CKZPlayerManager g_KZPlayerManager;
 
 CKZPlayerManager *g_pKZPlayerManager = &g_KZPlayerManager;
-CMovementPlayerManager *g_pPlayerManager = dynamic_cast<CMovementPlayerManager *>(&g_KZPlayerManager);
+PlayerManager *g_pPlayerManager = dynamic_cast<PlayerManager *>(&g_KZPlayerManager);
 
-KZPlayer *CKZPlayerManager::ToPlayer(CCSPlayer_MovementServices *ms)
+KZPlayer *CKZPlayerManager::ToPlayer(CPlayerPawnComponent *component)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(ms));
+	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(component));
 }
 
 KZPlayer *CKZPlayerManager::ToPlayer(CBasePlayerController *controller)

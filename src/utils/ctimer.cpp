@@ -1,13 +1,13 @@
 #include "ctimer.h"
 
-CUtlVector<CTimerBase *> g_PersistentTimers;
 CUtlVector<CTimerBase *> g_NonPersistentTimers;
+CUtlVector<CTimerBase *> g_PersistentTimers;
 
 internal void ProcessTimerList(CUtlVector<CTimerBase *> &timers)
 {
 	for (int i = timers.Count() - 1; i >= 0; i--)
 	{
-		auto timer = g_PersistentTimers[i];
+		auto timer = timers[i];
 		f64 currentTime = timer->useRealTime ? g_pKZUtils->GetGlobals()->realtime : g_pKZUtils->GetGlobals()->curtime;
 		if (timer->lastExecute == -1)
 		{

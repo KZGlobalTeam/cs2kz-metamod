@@ -9,6 +9,7 @@
 #include "ehandle.h"
 #include "sdk/entity/ccsplayercontroller.h"
 #include "sdk/entity/cbasetrigger.h"
+
 struct TransmitInfo
 {
 	CBitVec<16384> *m_pTransmitEdict;
@@ -27,12 +28,12 @@ enum ObserverMode_t : uint8_t
 
 enum MsgDest : int32_t
 {
-	HUD_PRINTNOTIFY  = 1,
+	HUD_PRINTNOTIFY = 1,
 	HUD_PRINTCONSOLE = 2,
-	HUD_PRINTTALK    = 3,
-	HUD_PRINTCENTER  = 4,
-	HUD_PRINTTALK2   = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
-	HUD_PRINTALERT   = 6
+	HUD_PRINTTALK = 3,
+	HUD_PRINTCENTER = 4,
+	HUD_PRINTTALK2 = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
+	HUD_PRINTALERT = 6
 };
 
 enum InputBitMask_t : uint64_t
@@ -63,11 +64,13 @@ enum InputBitMask_t : uint64_t
 // Sound stuff.
 
 typedef uint32 SoundEventGuid_t;
+
 struct SndOpEventGuid_t
 {
 	SoundEventGuid_t m_nGuid;
 	uint64 m_hStackHash;
 };
+
 // used with EmitSound_t
 enum gender_t : uint8
 {
@@ -96,6 +99,7 @@ enum gender_t : uint8
 
 struct EmitSound_t
 {
+	// clang-format off
 	EmitSound_t() :
 		m_nChannel( 0 ),
 		m_pSoundName( 0 ),
@@ -115,6 +119,8 @@ struct EmitSound_t
 		m_SpeakerGender( GENDER_NONE )
 	{
 	}
+
+	// clang-format on
 	int m_nChannel;
 	const char *m_pSoundName;
 	float m_flVolume;
@@ -128,7 +134,7 @@ struct EmitSound_t
 	bool m_bWarnOnMissingCloseCaption;
 	bool m_bWarnOnDirectWaveReference;
 	CEntityIndex m_nSpeakerEntity;
-	CUtlVector<Vector,CUtlMemory<Vector,int> > m_UtlVecSoundOrigin;
+	CUtlVector<Vector, CUtlMemory<Vector, int>> m_UtlVecSoundOrigin;
 	SoundEventGuid_t m_nForceGuid;
 	gender_t m_SpeakerGender;
 };
@@ -194,16 +200,17 @@ static_assert(offsetof(trace_t_s2, endpos) == 132);
 static_assert(offsetof(trace_t_s2, startsolid) == 183);
 static_assert(offsetof(trace_t_s2, fraction) == 172);
 
-struct touchlist_t {
+struct touchlist_t
+{
 	Vector deltavelocity;
 	trace_t_s2 trace;
 };
 
 struct RnQueryAttr_t
 {
-	uint64 m_nInteractsWith{};
-	uint64 m_nInteractsExclude{};
-	uint64 m_nInteractsAs{};
+	uint64 m_nInteractsWith {};
+	uint64 m_nInteractsExclude {};
+	uint64 m_nInteractsAs {};
 
 	uint32 m_nEntityIdToIgnore = -1;
 	uint32 m_nEntityControllerIdToIgnore = -1;
@@ -211,25 +218,27 @@ struct RnQueryAttr_t
 	uint32 m_nOwnerEntityIdToIgnore = -1;
 	uint32 m_nControllerOwnerEntityIdToIgnore = -1;
 
-	uint16 m_nHierarchyId{};
-	uint16 m_nControllerHierarchyId{};
+	uint16 m_nHierarchyId {};
+	uint16 m_nControllerHierarchyId {};
 
-	uint16 m_nObjectSetMask{};
-	uint8_t m_nCollisionGroup{};
+	uint16 m_nObjectSetMask {};
+	uint8_t m_nCollisionGroup {};
+
 	union
 	{
-		uint8 m_Flags{};
+		uint8 m_Flags {};
+
 		struct
 		{
-			uint8 m_bHitSolid : 1;
-			uint8 m_bHitSolidRequiresGenerateContacts : 1;
-			uint8 m_bHitTrigger : 1;
-			uint8 m_bShouldIgnoreDisabledPairs : 1;
+			uint8 m_bHitSolid: 1;
+			uint8 m_bHitSolidRequiresGenerateContacts: 1;
+			uint8 m_bHitTrigger: 1;
+			uint8 m_bShouldIgnoreDisabledPairs: 1;
 
-			uint8 m_bUnkFlag1 : 1;
-			uint8 m_bUnkFlag2 : 1;
-			uint8 m_bUnkFlag3 : 1;
-			uint8 m_bUnkFlag4 : 1;
+			uint8 m_bUnkFlag1: 1;
+			uint8 m_bUnkFlag2: 1;
+			uint8 m_bUnkFlag3: 1;
+			uint8 m_bUnkFlag4: 1;
 		};
 	};
 
@@ -240,7 +249,9 @@ class CTraceFilterS2
 {
 public:
 	RnQueryAttr_t attr;
+
 	virtual ~CTraceFilterS2() {}
+
 	virtual bool ShouldHitEntity(CBaseEntity *other)
 	{
 		return false;
@@ -265,35 +276,40 @@ struct SubtickMove
 	bool pressed;
 };
 
-// Size: 0xE8
+// Size: 0xF8
 class CMoveData
 {
 public:
 	CMoveData() = default;
-	CMoveData( const CMoveData &source ) : 
-		moveDataFlags{source.moveDataFlags},
-		m_nPlayerHandle{source.m_nPlayerHandle},
-		m_vecAbsViewAngles{ source.m_vecAbsViewAngles},
-		m_vecViewAngles{source.m_vecViewAngles},
-		m_vecLastMovementImpulses{source.m_vecLastMovementImpulses},
-		m_flForwardMove{source.m_flForwardMove},
-		m_flSideMove{source.m_flSideMove},
-		m_flUpMove{source.m_flUpMove},
-		m_flSubtickFraction{source.m_flSubtickFraction},
-		m_vecVelocity{source.m_vecVelocity},
-		m_vecAngles{source.m_vecAngles},
-		m_bGameCodeMovedPlayer{source.m_bGameCodeMovedPlayer},
-		m_collisionNormal{source.m_collisionNormal},
-		m_groundNormal{source.m_groundNormal},
-		m_vecAbsOrigin{source.m_vecAbsOrigin},
-		m_nGameModeMovedPlayer{source.m_nGameModeMovedPlayer},
-		m_vecOldAngles{source.m_vecOldAngles},
-		m_flMaxSpeed{source.m_flMaxSpeed},
-		m_flClientMaxSpeed{source.m_flClientMaxSpeed},
-		m_flSubtickAccelSpeed{source.m_flSubtickAccelSpeed},
-		m_bJumpedThisTick{source.m_bJumpedThisTick},
-		m_bShouldApplyGravity{source.m_bShouldApplyGravity},
-		m_outWishVel{source.m_outWishVel}
+
+	CMoveData(const CMoveData &source)
+		// clang-format off
+		: moveDataFlags {source.moveDataFlags}, 
+		m_nPlayerHandle {source.m_nPlayerHandle},
+		m_vecAbsViewAngles {source.m_vecAbsViewAngles},
+		m_vecViewAngles {source.m_vecViewAngles},
+		m_vecLastMovementImpulses {source.m_vecLastMovementImpulses},
+		m_flForwardMove {source.m_flForwardMove}, 
+		m_flSideMove {source.m_flSideMove}, 
+		m_flUpMove {source.m_flUpMove},
+		m_flSubtickFraction {source.m_flSubtickFraction}, 
+		m_vecVelocity {source.m_vecVelocity}, 
+		m_vecAngles {source.m_vecAngles},
+		m_bHasSubtickInputs {source.m_bHasSubtickInputs},
+		m_collisionNormal {source.m_collisionNormal},
+		m_groundNormal {source.m_groundNormal}, 
+		m_vecAbsOrigin {source.m_vecAbsOrigin},
+		m_nGameModeMovedPlayer {source.m_nGameModeMovedPlayer},
+		m_outWishVel {source.m_outWishVel},
+		m_vecOldAngles {source.m_vecOldAngles}, 
+		m_flMaxSpeed {source.m_flMaxSpeed}, 
+		m_flClientMaxSpeed {source.m_flClientMaxSpeed},
+		m_flSubtickAccelSpeed {source.m_flSubtickAccelSpeed}, 
+		m_bJumpedThisTick {source.m_bJumpedThisTick},
+		m_bOnGround {source.m_bOnGround},
+		m_bShouldApplyGravity {source.m_bShouldApplyGravity}, 
+		m_bGameCodeMovedPlayer {source.m_bGameCodeMovedPlayer}
+	// clang-format on
 	{
 		for (int i = 0; i < source.m_AttackSubtickMoves.Count(); i++)
 		{
@@ -307,39 +323,50 @@ public:
 		{
 			this->m_TouchList.AddToTail(source.m_TouchList[i]);
 		}
-
 	}
+
 public:
-	uint8_t moveDataFlags; // 0x0
-	CHandle<CCSPlayerPawn> m_nPlayerHandle; // 0x4 don't know if this is actually a CHandle. <CBaseEntity> is a placeholder
-	QAngle m_vecAbsViewAngles; // 0x8 unsure
-	QAngle m_vecViewAngles; // 0x14
+	uint8_t moveDataFlags;
+	CHandle<CCSPlayerPawn> m_nPlayerHandle;
+	QAngle m_vecAbsViewAngles;
+	QAngle m_vecViewAngles;
 	Vector m_vecLastMovementImpulses;
-	float m_flForwardMove; // 0x20
-	float m_flSideMove; // 0x24 Warning! Flipped compared to CS:GO, moving right gives negative value
-	float m_flUpMove; // 0x28
-	float m_flSubtickFraction; // 0x38
-	Vector m_vecVelocity; // 0x3c
-	Vector m_vecAngles; // 0x48
-	CUtlVector<SubtickMove> m_SubtickMoves; // 0x54
-	CUtlVector<SubtickMove> m_AttackSubtickMoves; // 0x68
-	bool m_bGameCodeMovedPlayer; // 0x88
-	bool unknown; // 0x89
-	CUtlVector<touchlist_t> m_TouchList; // 0x90
-	Vector m_collisionNormal; // 0xa8
-	Vector m_groundNormal; // 0xb4 unsure
-	Vector m_vecAbsOrigin; // 0xc0
-	uint8_t padding1[4]; // 0xcc unsure
-	bool m_nGameModeMovedPlayer; // 0xd0
-	Vector m_vecOldAngles; // 0xd4
-	float m_flMaxSpeed; // 0xe0
-	float m_flClientMaxSpeed; // 0xe4
-	float m_flSubtickAccelSpeed; // 0xe8 Related to ground acceleration subtick stuff with sv_stopspeed and friction
-	bool m_bJumpedThisTick; // 0xec something to do with basevelocity and the tick the player jumps
-	bool m_bShouldApplyGravity; // 0xed
-	Vector m_outWishVel; //0xf0
+	float m_flForwardMove;
+	float m_flSideMove; // Warning! Flipped compared to CS:GO, moving right gives negative value
+	float m_flUpMove;
+	float m_flSubtickFraction;
+	Vector m_vecVelocity;
+	Vector m_vecAngles;
+	CUtlVector<SubtickMove> m_SubtickMoves;
+	CUtlVector<SubtickMove> m_AttackSubtickMoves;
+	bool m_bHasSubtickInputs;
+	CUtlVector<touchlist_t> m_TouchList;
+	Vector m_collisionNormal;
+	Vector m_groundNormal; // unsure
+	Vector m_vecAbsOrigin;
+	bool m_nGameModeMovedPlayer;
+	Vector m_outWishVel;
+	Vector m_vecOldAngles;
+	float m_flMaxSpeed;
+	float m_flClientMaxSpeed;
+	float m_flSubtickAccelSpeed; // Related to ground acceleration subtick stuff with sv_stopspeed and friction
+	bool m_bJumpedThisTick;      // something to do with basevelocity and the tick the player jumps
+	bool m_bOnGround;
+	bool m_bShouldApplyGravity;
+	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
-static_assert(sizeof(CMoveData) == 0x100, "Class didn't match expected size");
+
+static_assert(offsetof(CMoveData, m_vecViewAngles) == 0x14);
+static_assert(offsetof(CMoveData, m_vecVelocity) == 0x3c);
+static_assert(offsetof(CMoveData, m_vecAngles) == 0x48);
+static_assert(offsetof(CMoveData, m_vecAbsOrigin) == 0xc0);
+static_assert(offsetof(CMoveData, m_outWishVel) == 0xd0);
+static_assert(offsetof(CMoveData, m_flMaxSpeed) == 0xe8);
+static_assert(offsetof(CMoveData, m_flClientMaxSpeed) == 0xec);
+static_assert(offsetof(CMoveData, m_flSubtickAccelSpeed) == 0xf0);
+static_assert(offsetof(CMoveData, m_bJumpedThisTick) == 0xf4);
+static_assert(offsetof(CMoveData, m_bOnGround) == 0xf5);
+static_assert(sizeof(CMoveData) == 248, "Class didn't match expected size");
 
 // Custom data types goes here.
 
@@ -350,7 +377,7 @@ enum TurnState
 	TURN_RIGHT = 1
 };
 
-class CTraceFilterHitAllTriggers: public CTraceFilterS2
+class CTraceFilterHitAllTriggers : public CTraceFilterS2
 {
 public:
 	CTraceFilterHitAllTriggers()
@@ -369,8 +396,14 @@ public:
 		attr.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
 		attr.m_bHitTrigger = true;
 	}
+
 	CUtlVector<CEntityHandle> hitTriggerHandles;
-	virtual ~CTraceFilterHitAllTriggers() { hitTriggerHandles.Purge(); }
+
+	virtual ~CTraceFilterHitAllTriggers()
+	{
+		hitTriggerHandles.Purge();
+	}
+
 	virtual bool ShouldHitEntity(CBaseEntity *other)
 	{
 		hitTriggerHandles.AddToTail(other->GetRefEHandle());

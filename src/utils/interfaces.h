@@ -22,6 +22,8 @@ class CBaseEntity;
 class CBasePlayerController;
 class IGameEventListener2;
 class CTimerBase;
+class CServerSideClient;
+
 struct SndOpEventGuid_t;
 struct EmitSound_t;
 
@@ -34,7 +36,7 @@ typedef CBaseEntity *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *,
 typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm);
 typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
-typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool);
+typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool, bool);
 
 namespace interfaces
 {
@@ -111,6 +113,12 @@ public:
 
 	virtual void AddTimer(CTimerBase *timer, bool preserveMapChange = true);
 	virtual void RemoveTimer(CTimerBase *timer);
+	virtual CUtlVector<CServerSideClient *> *GetClientList();
+
+	CServerSideClient *GetClientBySlot(CPlayerSlot slot)
+	{
+		return GetClientList() ? GetClientList()->Element(slot.Get()) : nullptr;
+	}
 };
 
 extern KZUtils *g_pKZUtils;

@@ -105,3 +105,13 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 		}
 	}
 }
+
+CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
+{
+	if (!g_pNetworkServerService)
+	{
+		return nullptr;
+	}
+	local_persist const int offset = g_pGameConfig->GetOffset("ClientOffset");
+	return (CUtlVector<CServerSideClient *> *)((char *)g_pNetworkServerService->GetIGameServer() + offset);
+}

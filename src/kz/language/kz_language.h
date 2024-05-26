@@ -14,6 +14,13 @@ public:
 	static_global void LoadTranslations();
 	static_global void RegisterCommands();
 
+	virtual void Reset() override
+	{
+		hasQueriedLanguage = {};
+		hasSavedLanguage = {};
+		language[0] = 0;
+	}
+
 	void SetLanguage(const char *lang)
 	{
 		hasSavedLanguage = true;
