@@ -16,7 +16,7 @@
 			{
 				"library" 	"server"
 				"windows"	"\x44\x88\x4C\x24\x2A\x55\x56\x57\x41\x54\x41\x56\x48\x8D\x6C\x24\x2A"
-				"linux" 	"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x89\xD6\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
+				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x89\xD6\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
 			}
 			// CSource2GameClients::StartHLTVServer: game event %s not found.
 			// Function right before the first virtual function call
@@ -301,7 +301,7 @@
 			"CollisionRulesChanged"
 			{
 				"windows"		"178"
-				"linux"			"179"
+				"linux"			"177"
 			}
 			// 9 functions after one with "CBasePlayerPawn::PhysicsSimulate"
 			"IsEntityPawn"
