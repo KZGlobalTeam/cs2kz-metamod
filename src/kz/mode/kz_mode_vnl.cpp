@@ -185,7 +185,8 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirs
 		// Only give this a try for first impact plane because you can get yourself stuck in an acute corner by jumping
 		// in place
 		//  and pressing forward and nobody was really using this bounce/reflection feature anyway...
-		if (numplanes == 1 && this->player->GetPlayerPawn()->m_MoveType() == MOVETYPE_WALK && this->player->GetPlayerPawn()->m_hGroundEntity().Get() == NULL)
+		if (numplanes == 1 && this->player->GetPlayerPawn()->m_MoveType() == MOVETYPE_WALK
+			&& this->player->GetPlayerPawn()->m_hGroundEntity().Get() == NULL)
 		{
 			ClipVelocity(original_velocity, planes[0], new_velocity);
 

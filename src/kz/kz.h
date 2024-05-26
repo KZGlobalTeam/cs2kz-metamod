@@ -224,4 +224,4 @@ namespace KZ
 		void RegisterCommands();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 	} // namespace misc
-}; // namespace KZ
+};    // namespace KZ
