@@ -32,6 +32,7 @@
 	{
 		"en"		"Undo teleport."
 		"chi"		"撤销传送."
+		"pl"		"Cofnij teleport"
 	}
 	"Command Description - kz_checkpoint"
 	{
