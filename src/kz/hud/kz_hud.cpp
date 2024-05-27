@@ -30,9 +30,9 @@ std::string KZHUDService::GetSpeedText(const char *language)
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
-	if ((this->player->GetPawn()->m_fFlags & FL_ONGROUND
+	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
 		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > HUD_ON_GROUND_THRESHOLD)
-		|| (this->player->GetPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
+		|| (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{
 		return KZLanguageService::PrepareMessage(language, "HUD - Speed Text", velocity.Length2D());
 	}

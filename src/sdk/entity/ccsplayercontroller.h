@@ -10,6 +10,16 @@ public:
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPlayerPawn);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hObserverPawn);
 
+	CCSPlayerPawn *GetPlayerPawn()
+	{
+		return m_hPlayerPawn.Get();
+	}
+
+	CCSPlayerPawnBase *GetObserverPawn()
+	{
+		return m_hObserverPawn.Get();
+	}
+
 	void ChangeTeam(int iTeam)
 	{
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("ControllerChangeTeam"), this, iTeam);
@@ -18,7 +28,9 @@ public:
 	void SwitchTeam(int iTeam)
 	{
 		if (!IsController())
+		{
 			return;
+		}
 
 		if (iTeam == CS_TEAM_SPECTATOR)
 		{
@@ -33,9 +45,11 @@ public:
 	// Respawns the player if the player is not alive, does nothing otherwise.
 	void Respawn()
 	{
-		CCSPlayerPawn *pawn = m_hPlayerPawn.Get();
+		CCSPlayerPawn *pawn = GetPlayerPawn();
 		if (!pawn || pawn->IsAlive())
+		{
 			return;
+		}
 
 		SetPawn(pawn);
 		if (this->m_iTeamNum() != CS_TEAM_CT && this->m_iTeamNum() != CS_TEAM_T)

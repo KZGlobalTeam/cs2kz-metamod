@@ -45,7 +45,7 @@ public:
 		this->Init();
 	}
 
-	void Init();
+	virtual void Init() override;
 	virtual void Reset() override;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
@@ -127,8 +127,6 @@ public:
 private:
 	bool hideLegs {};
 
-	TurnState previousTurnState {};
-
 public:
 	KZAnticheatService *anticheatService {};
 	KZCheckpointService *checkpointService {};
@@ -203,7 +201,7 @@ public:
 	}
 
 public:
-	KZPlayer *ToPlayer(CCSPlayer_MovementServices *ms);
+	KZPlayer *ToPlayer(CPlayerPawnComponent *component);
 	KZPlayer *ToPlayer(CBasePlayerController *controller);
 	KZPlayer *ToPlayer(CBasePlayerPawn *pawn);
 	KZPlayer *ToPlayer(CPlayerSlot slot);
@@ -224,7 +222,6 @@ namespace KZ
 	namespace misc
 	{
 		void RegisterCommands();
-		void OnClientActive(CPlayerSlot slot);
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 	} // namespace misc
 };    // namespace KZ

@@ -33,7 +33,7 @@ void KZSpecService::LoadPosition()
 	{
 		return;
 	}
-	this->player->GetPawn()->Teleport(&this->savedOrigin, &this->savedAngles, nullptr);
+	this->player->GetPlayerPawn()->Teleport(&this->savedOrigin, &this->savedAngles, nullptr);
 	if (this->savedOnLadder)
 	{
 		this->player->SetMoveType(MOVETYPE_LADDER);
@@ -82,7 +82,7 @@ KZPlayer *KZSpecService::GetSpectatedPlayer()
 	{
 		return NULL;
 	}
-	CCSPlayerPawn *pawn = this->player->GetPawn();
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	CBasePlayerPawn *target = (CBasePlayerPawn *)obsService->m_hObserverTarget().Get();
 	// If the player is spectating their own corpse, consider that as not spectating anyone.
 	return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);

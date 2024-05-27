@@ -65,7 +65,6 @@ public:
 	SCHEMA_FIELD(CGameSceneNode *, m_pSceneNode)
 };
 
-
 class CBaseEntity : public CEntityInstance
 {
 public:
@@ -85,28 +84,65 @@ public:
 	SCHEMA_FIELD(Vector, m_vecAbsVelocity)
 	SCHEMA_FIELD(CNetworkVelocityVector, m_vecVelocity)
 	SCHEMA_FIELD(CCollisionProperty *, m_pCollision)
-	SCHEMA_FIELD(CHandle< CBaseEntity >, m_hGroundEntity)
+	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hGroundEntity)
 	SCHEMA_FIELD(uint32_t, m_fFlags)
 	SCHEMA_FIELD(float, m_flGravityScale)
 	SCHEMA_FIELD(float, m_flWaterLevel)
 	SCHEMA_FIELD(int, m_fEffects)
 
-	int entindex() { return m_pEntity->m_EHandle.GetEntryIndex(); }
+	int entindex()
+	{
+		return m_pEntity->m_EHandle.GetEntryIndex();
+	}
 
-	bool IsPawn() { return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("IsEntityPawn"), this); }
-	bool IsController() { return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("IsEntityController"), this); }
+	bool IsPawn()
+	{
+		return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("IsEntityPawn"), this);
+	}
 
-	bool IsAlive() { return this->m_lifeState() == LIFE_ALIVE; }
+	bool IsController()
+	{
+		return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("IsEntityController"), this);
+	}
 
-	void SetMoveType(MoveType_t movetype) { this->m_MoveType(movetype); this->m_nActualMoveType(movetype); }
+	bool IsAlive()
+	{
+		return this->m_lifeState() == LIFE_ALIVE;
+	}
 
-	void CollisionRulesChanged() { CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CollisionRulesChanged"), this); }
+	void SetMoveType(MoveType_t movetype)
+	{
+		this->m_MoveType(movetype);
+		this->m_nActualMoveType(movetype);
+	}
 
-	int GetTeam() { return m_iTeamNum(); }
+	void CollisionRulesChanged()
+	{
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CollisionRulesChanged"), this);
+	}
 
-	void StartTouch(CBaseEntity *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("StartTouch"), this, pOther); }
-	void Touch(CBaseEntity *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Touch"), this, pOther); }
-	void EndTouch(CBaseEntity *pOther) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("EndTouch"), this, pOther); }
+	int GetTeam()
+	{
+		return m_iTeamNum();
+	}
 
-	void Teleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) { CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Teleport"), this, newPosition, newAngles, newVelocity); }
+	void StartTouch(CBaseEntity *pOther)
+	{
+		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("StartTouch"), this, pOther);
+	}
+
+	void Touch(CBaseEntity *pOther)
+	{
+		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Touch"), this, pOther);
+	}
+
+	void EndTouch(CBaseEntity *pOther)
+	{
+		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("EndTouch"), this, pOther);
+	}
+
+	void Teleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
+	{
+		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Teleport"), this, newPosition, newAngles, newVelocity);
+	}
 };

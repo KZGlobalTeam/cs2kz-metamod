@@ -26,7 +26,7 @@ bool KZTimerService::UnregisterEventListener(KZTimerServiceEventListener *eventL
 
 void KZTimerService::StartZoneStartTouch()
 {
-	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPawn()->m_fFlags & FL_ONGROUND);
+	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND);
 	this->TimerStop(false);
 }
 
@@ -41,7 +41,7 @@ void KZTimerService::StartZoneEndTouch()
 bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 {
 	// clang-format off
-	if (!this->player->GetPawn()->IsAlive()
+	if (!this->player->GetPlayerPawn()->IsAlive()
 		|| this->JustStartedTimer()
 		|| this->JustTeleported()
 		|| this->player->inPerf
@@ -49,7 +49,7 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
 		|| (this->GetTimerRunning() && !V_stricmp(courseName, this->currentCourse))
-		|| (!(this->player->GetPawn()->m_fFlags & FL_ONGROUND) && !this->GetValidJump()))
+		|| (!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) && !this->GetValidJump()))
 	// clang-format on
 	{
 		return false;
@@ -120,7 +120,7 @@ bool KZTimerService::TimerEnd(const char *courseName)
 	this->lastEndTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->PlayTimerEndSound();
 
-	if (!this->player->GetPawn()->IsBot())
+	if (!this->player->GetPlayerPawn()->IsBot())
 	{
 		bool showMessage = true;
 		FOR_EACH_VEC(eventListeners, i)
@@ -290,7 +290,7 @@ void KZTimerService::PrintEndTimeString()
 		{
 			// clang-format off
 			KZLanguageService::PrintChatAll(true, strlen(this->currentCourse) > 0 ? "Beat Course (PRO)" : "Beat Map (PRO)",
-				this->player->GetController()->m_iszPlayerName(),
+				this->player->GetName(),
 				this->currentCourse,
 				time,
 				this->player->modeService->GetModeShortName(),
@@ -307,7 +307,7 @@ void KZTimerService::PrintEndTimeString()
 				if (controller) 
 				{ 
 					g_pKZPlayerManager->ToPlayer(i)->languageService->PrintChat(true, false, strlen(this->currentCourse) > 0 ? "Beat Course (Standard)" : "Beat Map (Standard)",
-						this->player->GetController()->m_iszPlayerName(),
+						this->player->GetName(),
 						this->currentCourse,
 						time,
 						this->player->modeService->GetModeShortName(),
@@ -327,7 +327,7 @@ void KZTimerService::PrintEndTimeString()
 				if (controller) 
 				{ 
 					g_pKZPlayerManager->ToPlayer(i)->languageService->PrintChat(true, false, strlen(this->currentCourse) > 0 ? "Beat Course (Standard)" : "Beat Map (Standard)",
-						this->player->GetController()->m_iszPlayerName(),
+						this->player->GetName(),
 						this->currentCourse,
 						time,
 						this->player->modeService->GetModeShortName(),
@@ -400,7 +400,7 @@ bool KZTimerService::CanPause(bool showError)
 			}
 			return false;
 		}
-		else if (!this->player->GetPawn()->m_fFlags & FL_ONGROUND && !(velocity.Length2D() == 0.0f && velocity.z == 0.0f))
+		else if (!this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && !(velocity.Length2D() == 0.0f && velocity.z == 0.0f))
 		{
 			if (showError)
 			{
@@ -447,7 +447,7 @@ void KZTimerService::Resume(bool force)
 	}
 
 	// GOKZ: prevent noclip exploit
-	this->player->GetPawn()->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
+	this->player->GetPlayerPawn()->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
 
 	this->paused = false;
 	if (this->GetTimerRunning())
@@ -569,7 +569,7 @@ void KZTimerService::OnClientDisconnect()
 
 void KZTimerService::OnPlayerSpawn()
 {
-	if (!this->player->GetPawn() || !this->paused)
+	if (!this->player->GetPlayerPawn() || !this->paused)
 	{
 		return;
 	}

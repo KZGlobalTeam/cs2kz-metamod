@@ -24,7 +24,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	const char *language = target->languageService->GetLanguage();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[color];
-	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM"))
+	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
@@ -55,7 +55,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 	const char *language = target->languageService->GetLanguage();
 	// clang-format off
 	target->languageService->PrintConsole(false, false, "Jumpstats Report - Console Summary",
-		jump->GetJumpPlayer()->GetController()->m_iszPlayerName(),
+		jump->GetJumpPlayer()->GetName(),
 		jump->GetDistance(),
 		jumpTypeStr[jump->GetJumpType()],
 		jump->GetInvalidationReasonString(jump->invalidateReason)
@@ -178,9 +178,9 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 			bool validBroadcastTier = tier >= player->jumpstatsService->GetBroadcastMinTier();
 			if (broadcastEnabled && validBroadcastTier)
 			{
-				player->languageService->PrintChat(true, false, "Broadcast Jumpstat Chat Report",
-												   jump->GetJumpPlayer()->GetController()->m_iszPlayerName(), jumpColor, jump->GetDistance(),
-												   jumpTypeStr[jump->GetJumpType()], jump->GetJumpPlayer()->modeService->GetModeName());
+				player->languageService->PrintChat(true, false, "Broadcast Jumpstat Chat Report", jump->GetJumpPlayer()->GetName(), jumpColor,
+												   jump->GetDistance(), jumpTypeStr[jump->GetJumpType()],
+												   jump->GetJumpPlayer()->modeService->GetModeName());
 			}
 		}
 	}
@@ -188,6 +188,11 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
+	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	{
+		return;
+	}
+
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	if (target->jumpstatsService->GetSoundMinTier() > tier || tier <= DistanceTier_Meh
 		|| target->jumpstatsService->GetSoundMinTier() == DistanceTier_None)

@@ -26,7 +26,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			continue;
 		}
 		targetPlayer->quietService->UpdateHideState();
-		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPawn();
+		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPlayerPawn();
 
 		EntityInstanceByClassIter_t iter(NULL, "player");
 		// clang-format off
@@ -159,8 +159,10 @@ void KZQuietService::Reset()
 
 void KZQuietService::SendFullUpdate()
 {
-	auto slots = *(void ***)((char *)g_pNetworkServerService->GetIGameServer() + g_pGameConfig->GetOffset("ClientOffset"));
-	*(uint32_t *)((char *)slots[this->player->GetPlayerSlot().Get()] + g_pGameConfig->GetOffset("ACKOffset")) = -1;
+	if (CServerSideClient *client = g_pKZUtils->GetClientBySlot(this->player->GetPlayerSlot()))
+	{
+		client->ForceFullUpdate();
+	}
 }
 
 bool KZQuietService::ShouldHide()

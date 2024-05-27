@@ -28,6 +28,13 @@
 	}
 
 	// Commands
+	"Command Description - kz_undo"
+	{
+		"en"		"Undo teleport."
+		"chi"		"撤销传送."
+		"pl"		"Cofnij teleport."
+		"fi"		"Kumoa teleportti."
+	}
 	"Command Description - kz_checkpoint"
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."

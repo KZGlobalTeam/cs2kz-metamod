@@ -561,9 +561,10 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	}
 	if (this->player->takeoffFromLadder)
 	{
-		if (this->player->GetPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL
-			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
-			&& this->player->jumpstatsService->lastJumpButtonTime < this->player->GetPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
+		if (this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL
+			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
+			&& this->player->jumpstatsService->lastJumpButtonTime
+				   < this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
 		{
 			return JumpType_Invalid;
 		}
@@ -659,11 +660,11 @@ void KZJumpstatsService::OnProcessMovement()
 
 void KZJumpstatsService::OnChangeMoveType(MoveType_t oldMoveType)
 {
-	if (oldMoveType == MOVETYPE_LADDER && this->player->GetPawn()->m_MoveType() == MOVETYPE_WALK)
+	if (oldMoveType == MOVETYPE_LADDER && this->player->GetPlayerPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		this->AddJump();
 	}
-	else if (oldMoveType == MOVETYPE_WALK && this->player->GetPawn()->m_MoveType() == MOVETYPE_LADDER)
+	else if (oldMoveType == MOVETYPE_WALK && this->player->GetPlayerPawn()->m_MoveType() == MOVETYPE_LADDER)
 	{
 		// Not really a valid jump for jumpstats purposes.
 		this->InvalidateJumpstats("Invalid movetype change");
@@ -777,7 +778,7 @@ void KZJumpstatsService::TrackJumpstatsVariables()
 	{
 		this->lastJumpButtonTime = g_pKZUtils->GetGlobals()->curtime;
 	}
-	if (this->player->GetPawn()->m_MoveType == MOVETYPE_NOCLIP || this->player->GetPawn()->m_nActualMoveType == MOVETYPE_NOCLIP)
+	if (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_NOCLIP || this->player->GetPlayerPawn()->m_nActualMoveType == MOVETYPE_NOCLIP)
 	{
 		this->lastNoclipTime = g_pKZUtils->GetGlobals()->curtime;
 	}
@@ -821,7 +822,7 @@ void KZJumpstatsService::ToggleJumpstatsReporting()
 void KZJumpstatsService::CheckValidMoveType()
 {
 	// Invalidate jumpstats if movetype is invalid.
-	if (this->player->GetPawn()->m_MoveType() != MOVETYPE_WALK && this->player->GetPawn()->m_MoveType() != MOVETYPE_LADDER)
+	if (this->player->GetPlayerPawn()->m_MoveType() != MOVETYPE_WALK && this->player->GetPlayerPawn()->m_MoveType() != MOVETYPE_LADDER)
 	{
 		this->InvalidateJumpstats("Invalid movetype");
 	}
@@ -885,7 +886,7 @@ void KZJumpstatsService::DetectInvalidGains()
 	f32 speed = this->player->currentMoveData->m_vecVelocity.Length2D();
 	f32 actualSpeed = (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
 
-	if (this->player->GetPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPawn()->m_fFlags() & FL_BASEVELOCITY)
+	if (this->player->GetPlayerPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPlayerPawn()->m_fFlags() & FL_BASEVELOCITY)
 	{
 		this->InvalidateJumpstats("Base velocity detected");
 	}
@@ -904,7 +905,7 @@ void KZJumpstatsService::DetectExternalModifications()
 	{
 		this->InvalidateJumpstats("Externally modified");
 	}
-	if (this->player->GetPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPawn()->m_fFlags() & FL_BASEVELOCITY)
+	if (this->player->GetPlayerPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPlayerPawn()->m_fFlags() & FL_BASEVELOCITY)
 	{
 		this->InvalidateJumpstats("Base velocity detected");
 	}
@@ -928,7 +929,7 @@ void KZJumpstatsService::OnTryPlayerMovePost()
 
 void KZJumpstatsService::OnProcessMovementPost()
 {
-	if (this->possibleEdgebug && !(this->player->GetPawn()->m_fFlags() & FL_ONGROUND))
+	if (this->possibleEdgebug && !(this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND))
 	{
 		this->InvalidateJumpstats("Edgebugged");
 	}
