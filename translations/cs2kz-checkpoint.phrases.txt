@@ -10,6 +10,7 @@
 		"pl"		"{grey}Ustawiłeś checkpoint (#{default}{checkpoint_count}{grey})."
 		"fi"		"{grey}Olet asettanut tallennuspisteen (#{default}{checkpoint_count}{grey})."
 		"sv"		"{grey}Du har skapat en checkpoint (#{default}{checkpoint_count}{grey})."
+                "fr"		"{grey}Vous avez placer un checkpoint (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
 	{
