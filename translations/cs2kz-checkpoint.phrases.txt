@@ -19,6 +19,7 @@
 		"pl"		"{yellow}UWAGA!{grey}: Ustawiłeś checkpoint w niedozwolonym miejscu."
 		"fi"		"{yellow}Varoitus{grey}: tallennuspiste asetettu kieltoalueelle."
 		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på otillåtet område."
+		"fr" 		"{yellow}Attention{grey}: Checkpoint crée dans un lieu inapproprié."
 	}
 	"Can't Checkpoint (Midair)"
 	{
