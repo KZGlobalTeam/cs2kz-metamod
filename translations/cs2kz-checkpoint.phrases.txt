@@ -29,6 +29,7 @@
 		"pl"		"{darkred}Nie możesz ustawić checkpointu będąc w powietrzu."
 		"fi" 		"{darkred}Et voi asettaa tallennuspistettä ilmassa."
 		"sv"		"{darkred}Kan inte skapa checkpoint i luften."
+		"fr"		"{darkred}Vous ne pouvez pas checkpoint dans les airs."
 	}
 	"Can't Checkpoint (Just Landed)"
 	{
@@ -38,6 +39,7 @@
 		"pl"		"{darkred}Nie możesz ustawić checkpointu, ponieważ dopiero wylądowałeś."
 		"fi" 		"{darkred}Et voi asettaa tallennuspistettä sillä laskeuduit juuri."
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom du landade nyligen."
+		"fr"		"{darkred}Vous ne pouvez pas checkpoint car vous venez d'atterrir."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{
@@ -46,6 +48,7 @@
 		"pl"		"{darkred}Nie możesz ustawić checkpointu w tym miejscu."
 		"fi"		"{darkred}Et voi asettaa tallennuspistettä, sillä ne ovat poissa käytöstä tällä alueella."
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom checkpoints är otillåtna på detta området."
+		"fr"		"{darkred}Vous ne pouvez pas checkpoints car les checkpoints sont desactivés dans cette zone."
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
@@ -55,6 +58,7 @@
 		"pl"		"{darkred}Nie możesz się teleportować, ponieważ nie ustawiłeś żadnego checkpointu."
 		"fi"		"{darkred}Et voi teleportata, sillä et ole asettanut tallennuspistettä."
 		"sv"		"{darkred}Du kan inte teleportera eftersom du har inga checkpoints."
+		"fr"		"{darkred}Vous ne pouvez pas vous téléportez car vous n'avez pas mis de checkpoint." 
 	}
 	"Can't Teleport (Map)"
 	{
@@ -64,6 +68,7 @@
 		"pl"		"{darkred}Nie możesz się teleportować w tym miejscu."
 		"fi"		"{darkred}Et voi teleportata, sillä se on poissa käytöstä tällä alueella."
 		"sv"		"{darkred}Du kan inte teleportera till checkpoints på detta området."
+		"fr"		"{darkred}Vous ne pouvez pas vous téléportez a votre checkpoint dans cette zone."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
@@ -73,6 +78,7 @@
 		"pl"		"{darkred}Nie masz żadnych checkpointów do których możesz wrócić."
 		"fi"		"{darkred}Et ole asettanut tallennuspistettä johon palata."
 		"sv"		"{darkred}Du har inga checkpoints att teleportera till."
+		"fr"		"{darkred}Vous n'avez pas de précedent checkpoints."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
@@ -82,6 +88,7 @@
 		"pl"		"{darkred}Nie masz żadnych checkpointów do których możesz przejść."
 		"fi"		"{darkred}Et ole asettanut tallennuspistettä johon edetä."
 		"sv"		"{darkred}Du har inga checkpoints att teleportera framåt till."
+		"fr"		"{darkred}Vous n'avez pas de checkpoints suivant."
 	}
 	"Can't Undo (No Teleports)"
 	{
@@ -91,6 +98,7 @@
 		"pl"		"{darkred}Nie masz żadnych teleportów do cofnięcia."
 		"fi"		"{darkred}Et voi palata takaisin, sillä ei ole teleporttia johon palata."
 		"sv"		"{darkred}Du kan inte ångra din teleportering eftersom du har ingen föregående teleport."
+		"fr"		"{darkred}Vous ne pouvez pas annuler car il n'y a aucun teleport à annuler."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
@@ -100,6 +108,7 @@
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ użyłeś teleportu w powietrzu."
 		"fi"		"{darkred}Et voi palata takaisin, sillä teleporttasit ilmassa."
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade i luften."
+		"fr"		"{darkred}Vous ne pouvez pas annuler car vous vous êtes téléporter dans les airs."
 	}
 	"Can't Undo (Just Landed)"
 	{
@@ -109,6 +118,7 @@
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi palata takaisin, sillä laskeuduit juuri."
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du hade precis landat."
+		"fr"		"{darkred}Vous ne pouvez pas annuler car vous venez d'atterrir."
 	}
 	"Can't Undo (AntiCp)"
 	{
@@ -117,6 +127,7 @@
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ użyłeś teleportu będąc w miejscu niedozwolonym."
 		"fi"		"{darkred}Et voi palata takaisin, sillä teleporttasit tallennuspiste-kieltoalueella."
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade på ett otillåtet område."
+		"fr"		"{darkred}Vous ne pouvez pas annuler car vous vous êtes téléporter dans une zone anti-checkpoint."
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
@@ -125,6 +136,7 @@
 		"pl"		"{grey}Nie udało się tobie ustawić własnego miejsca startu!"
 		"fi" 		"{grey}Custom aloituspisteen asettaminen epäonnistui!"
 		"sv"		"{grey}Misslyckades med att skapa din startposition!"
+		"fr"		"{grey}Impossible de placer votre point de départ customisé!"
 	}
 	"Set Custom Start Position"
 	{
@@ -134,6 +146,7 @@
 		"pl"		"{grey}Ustawiłeś własne miejsce startu."
 		"fi" 		"{grey}Olet asettanut custom aloituspisteen."
 		"sv"		"{grey}Du har skapat din startposition."
+		"fr"		"{grey}Vous avez placer votre point de départ customisé."
 	}
 	"Cleared Custom Start Position"
 	{
@@ -143,5 +156,6 @@
 		"pl"		"{grey}Usunąłeś własne miejsce startu."
 		"fi" 		"{grey}Olet tyhjentänyt custom aloituspisteesi."
 		"sv"		"{grey}Du har rensat din startposition."
+		"fr"		"{grey}Vous avez effacer votre point de départ customisé."
 	}
 }
