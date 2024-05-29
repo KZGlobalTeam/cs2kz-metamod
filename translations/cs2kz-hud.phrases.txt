@@ -71,7 +71,7 @@
 		// 01:23:45 (STOPPED) (PAUSED)
 		"#format"	"time:s,stop_text:s,pause_text:s"
 		"en"		"{time}{stop_text}{pause_text}"
-		"chi"		"{time}{stop_text}{pause_text}"
+		"chi"		"计时: {time}{stop_text}{pause_text}"
 		"pl"		"{time}{stop_text}{pause_text}"
 		"fi"		"{time}{stop_text}{pause_text}"
 		"sv"		"{time}{stop_text}{pause_text}"
