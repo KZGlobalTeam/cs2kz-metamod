@@ -226,6 +226,7 @@ namespace KZ
 {
 	namespace misc
 	{
+		void OnServerActivate();
 		void RegisterCommands();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 	} // namespace misc

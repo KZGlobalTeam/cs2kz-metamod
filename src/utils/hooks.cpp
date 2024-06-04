@@ -724,6 +724,7 @@ static_function bool Hook_ActivateServer()
 	}
 
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	KZ::misc::OnServerActivate();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

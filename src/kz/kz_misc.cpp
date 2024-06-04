@@ -92,6 +92,26 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
+void KZ::misc::OnServerActivate() 
+{
+	local_persist bool infiniteAmmoUnlocked {};
+	if (!infiniteAmmoUnlocked)
+	{
+		infiniteAmmoUnlocked = true;
+		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
+		if (cvarHandle.IsValid())
+		{
+			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
+		}
+		else
+		{
+			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
+		}
+	}
+
+	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+}
+
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
