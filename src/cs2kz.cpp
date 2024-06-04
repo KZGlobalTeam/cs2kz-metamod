@@ -59,6 +59,11 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZOptionService::InitOptions();
 	KZTipService::InitTips();
+	if (late)
+	{
+		KZ::misc::OnServerActivate();
+		// g_pKZPlayerManager->OnLateLoad();
+	}
 	return true;
 }
 

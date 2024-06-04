@@ -267,6 +267,20 @@ void KZModeManager::Cleanup()
 		}
 		pluginManager->Unload(this->modeInfos[i].id, true, error, sizeof(error));
 	}
+	// Restore cvars to normal values.
+	for (u32 i = 0; i < KZ::mode::numCvar; i++)
+	{
+		auto value = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[i]->values));
+		auto defaultValue = KZ::mode::modeCvars[i]->m_cvvDefaultValue;
+		if (KZ::mode::modeCvars[i]->m_eVarType == EConVarType_Float32)
+		{
+			value->m_flValue = defaultValue->m_flValue;
+		}
+		else
+		{
+			value->m_i64Value = defaultValue->m_i64Value;
+		}
+	}
 }
 
 static_function SCMD_CALLBACK(Command_KzMode)
