@@ -45,6 +45,4 @@ bool KZDatabaseService::IsReady()
 
 void KZDatabaseService::RegisterCommands() {}
 
-void KZDatabaseService::SetupMap() {}
-
 void KZDatabaseService::SetupCourses() {}

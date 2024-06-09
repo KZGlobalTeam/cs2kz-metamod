@@ -92,9 +92,9 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
-void KZ::misc::OnServerActivate() 
+void KZ::misc::OnServerActivate()
 {
-	local_persist bool infiniteAmmoUnlocked {};
+	static_persist bool infiniteAmmoUnlocked {};
 	if (!infiniteAmmoUnlocked)
 	{
 		infiniteAmmoUnlocked = true;

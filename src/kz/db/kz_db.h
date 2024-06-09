@@ -91,6 +91,7 @@ public:
 	static_global void OnDatabaseConnected(bool connect);
 
 	static_global void CreateTables();
+	static_global bool IsMapSetUp();
 	static_global void SetupMap();
 	static_global void SetupCourses();
 	static_global void SetupClient(KZPlayer *player);

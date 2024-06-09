@@ -19,6 +19,7 @@ for sdk_target in MMSPlugin.sdk_targets:
   ]
 
   PROTOS = [
+    os.path.join(sdk['path'], 'common', 'netmessages.proto'),
     os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
     os.path.join(sdk['path'], 'common', 'network_connection.proto'),
     os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
@@ -69,6 +70,8 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
     os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
+    os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'),
+    
     
     os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
     

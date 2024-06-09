@@ -10,8 +10,11 @@
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/db/kz_db.h"
 #include "utils/utils.h"
 #include "entityclass.h"
+
+#include "memdbgon.h"
 
 extern CSteamGameServerAPIContext g_steamAPI;
 
@@ -714,23 +717,8 @@ static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawn
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
-	static_persist bool infiniteAmmoUnlocked {};
-	if (!infiniteAmmoUnlocked)
-	{
-		infiniteAmmoUnlocked = true;
-		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
-		if (cvarHandle.IsValid())
-		{
-			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
-		}
-		else
-		{
-			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
-		}
-	}
-
-	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 	KZ::misc::OnServerActivate();
+	// KZDatabaseService::SetupMap();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 
