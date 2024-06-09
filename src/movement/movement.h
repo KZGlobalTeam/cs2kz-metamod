@@ -42,7 +42,7 @@ namespace movement
 	void FASTCALL Detour_AirAccelerate(CCSPlayer_MovementServices *, CMoveData *, Vector &, f32, f32);
 	void FASTCALL Detour_Friction(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_WalkMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_TryPlayerMove(CCSPlayer_MovementServices *, CMoveData *, Vector *, trace_t_s2 *);
+	void FASTCALL Detour_TryPlayerMove(CCSPlayer_MovementServices *, CMoveData *, Vector *, trace_t *);
 	void FASTCALL Detour_CategorizePosition(CCSPlayer_MovementServices *, CMoveData *, bool);
 	void FASTCALL Detour_FinishGravity(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
@@ -161,9 +161,9 @@ public:
 
 	virtual void OnWalkMovePost() {}
 
-	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) {}
+	virtual void OnTryPlayerMove(Vector *, trace_t *) {}
 
-	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) {}
+	virtual void OnTryPlayerMovePost(Vector *, trace_t *) {}
 
 	virtual void OnCategorizePosition(bool) {}
 
@@ -224,9 +224,10 @@ public:
 		return this->GetPlayerPawn() ? this->GetPlayerPawn()->m_MoveType() : MOVETYPE_NONE;
 	}
 
-	Collision_Group_t GetCollisionGroup()
+	StandardCollisionGroups_t GetCollisionGroup()
 	{
-		return this->GetPlayerPawn() ? (Collision_Group_t)this->GetPlayerPawn()->m_Collision().m_CollisionGroup() : LAST_SHARED_COLLISION_GROUP;
+		return this->GetPlayerPawn() ? (StandardCollisionGroups_t)this->GetPlayerPawn()->m_Collision().m_CollisionGroup()
+									 : LAST_SHARED_COLLISION_GROUP;
 	}
 
 	void SetCollidingWithWorld()

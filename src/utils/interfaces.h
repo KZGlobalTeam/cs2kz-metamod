@@ -7,8 +7,7 @@
 
 class CGameConfig;
 class CTraceFilterPlayerMovementCS;
-class CTraceFilterS2;
-struct trace_t_s2;
+class CTraceFilter;
 class CCSPlayerController;
 class CGameResourceService;
 class CSchemaSystem;
@@ -29,12 +28,12 @@ struct EmitSound_t;
 
 typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith,
 											 int collisionGroup);
-typedef void InitGameTrace_t(trace_t_s2 *trace);
+typedef void InitGameTrace_t(trace_t *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
 typedef CBaseEntity *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
 typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
-typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm);
+typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilter *filter, trace_t &pm);
 typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
 typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool, bool);
 

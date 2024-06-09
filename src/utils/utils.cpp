@@ -11,6 +11,7 @@
 #include "igameeventsystem.h"
 #include "sdk/recipientfilters.h"
 #include "public/networksystem/inetworkmessages.h"
+#include "gametrace.h"
 
 #include "module.h"
 #include "detours.h"
@@ -291,18 +292,18 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 bool utils::IsSpawnValid(const Vector &origin)
 {
 	bbox_t bounds = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
-	CTraceFilterS2 filter;
-	filter.attr.m_bHitSolid = true;
-	filter.attr.m_bHitSolidRequiresGenerateContacts = true;
-	filter.attr.m_bShouldIgnoreDisabledPairs = true;
-	filter.attr.m_nCollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT;
-	filter.attr.m_nInteractsWith = 0x2c3011;
-	filter.attr.m_bUnkFlag3 = true;
-	filter.attr.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
-	filter.attr.m_nInteractsAs = 0x40000;
-	trace_t_s2 tr;
+	CTraceFilter filter;
+	filter.m_bHitSolid = true;
+	filter.m_bHitSolidRequiresGenerateContacts = true;
+	filter.m_bShouldIgnoreDisabledPairs = true;
+	filter.m_nCollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT;
+	filter.m_nInteractsWith = 0x2c3011;
+	filter.m_bUnknown = true;
+	filter.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
+	filter.m_nInteractsAs = 0x40000;
+	trace_t tr;
 	g_pKZUtils->TracePlayerBBox(origin, origin, bounds, &filter, tr);
-	if (tr.fraction != 1.0 || tr.startsolid)
+	if (tr.m_flFraction != 1.0 || tr.m_bStartInSolid)
 	{
 		return false;
 	}

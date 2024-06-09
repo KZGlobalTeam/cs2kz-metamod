@@ -293,7 +293,7 @@ void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveDat
 	player->OnWalkMovePost();
 }
 
-void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t *pFirstTrace)
 {
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnTryPlayerMove(pFirstDest, pFirstTrace);

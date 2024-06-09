@@ -337,14 +337,14 @@ void KZPlayer::OnWalkMovePost()
 	this->styleService->OnWalkMovePost();
 }
 
-void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
 {
 	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace);
 	this->styleService->OnTryPlayerMove(pFirstDest, pFirstTrace);
 	this->jumpstatsService->OnTryPlayerMove();
 }
 
-void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace)
+void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
 {
 	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
 	this->styleService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
@@ -512,7 +512,7 @@ void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, co
 		return;
 	}
 	CTraceFilterHitAllTriggers filter;
-	trace_t_s2 tr;
+	trace_t tr;
 	g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, tr);
 	FOR_EACH_VEC(filter.hitTriggerHandles, i)
 	{
@@ -549,7 +549,7 @@ void KZPlayer::UpdateTriggerTouchList()
 	bbox_t bounds;
 	this->GetBBoxBounds(&bounds);
 	CTraceFilterHitAllTriggers filter;
-	trace_t_s2 tr;
+	trace_t tr;
 	g_pKZUtils->TracePlayerBBox(origin, origin, bounds, &filter, tr);
 
 	FOR_EACH_VEC(this->touchedTriggers, i)

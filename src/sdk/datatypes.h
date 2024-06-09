@@ -9,6 +9,7 @@
 #include "ehandle.h"
 #include "sdk/entity/ccsplayercontroller.h"
 #include "sdk/entity/cbasetrigger.h"
+#include "gametrace.h"
 
 struct TransmitInfo
 {
@@ -140,125 +141,14 @@ struct EmitSound_t
 };
 
 // Tracing stuff.
-struct RnCollisionAttr_t
-{ // Unsure, doesn't seem right either for the first few members.
-	uint64_t m_nInteractsAs;
-	uint64_t m_nInteractsWith;
-	uint64_t m_nInteractsExclude;
-	uint32_t m_nEntityId;
-	uint32_t m_nOwnerId;
-	uint16_t m_nHierarchyId;
-	uint8_t m_nCollisionGroup;
-	uint8_t m_nCollisionFunctionMask;
-};
-
-enum RnQueryObjectSet : uint32
-{
-	RNQUERY_OBJECTS_STATIC = 0x1,
-	RNQUERY_OBJECTS_DYNAMIC = 0x2,
-	RNQUERY_OBJECTS_NON_COLLIDEABLE = 0x4,
-	RNQUERY_OBJECTS_KEYFRAMED_ONLY = 0x108,
-	RNQUERY_OBJECTS_DYNAMIC_ONLY = 0x110,
-	RNQUERY_OBJECTS_ALL = 0x7
-};
-
-enum CollisionFunctionMask_t : uint32
-{
-	FCOLLISION_FUNC_ENABLE_SOLID_CONTACT = 0x1,
-	FCOLLISION_FUNC_ENABLE_TRACE_QUERY = 0x2,
-	FCOLLISION_FUNC_ENABLE_TOUCH_EVENT = 0x4,
-	FCOLLISION_FUNC_ENABLE_SELF_COLLISIONS = 0x8,
-	FCOLLISION_FUNC_IGNORE_FOR_HITBOX_TEST = 0x10,
-	FCOLLISION_FUNC_ENABLE_TOUCH_PERSISTS = 0x20,
-};
-
-struct alignas(16) trace_t_s2
-{
-	void *m_pSurfaceProperties;
-	CBaseEntity *m_pEnt;
-	void *m_pHitbox;
-	void *m_hBody;
-	void *m_hShape;
-	uint64_t contents;
-	Vector traceunknown[2];
-	uint8_t padding[2];
-	RnCollisionAttr_t m_ShapeAttributes;
-	Vector startpos;
-	Vector endpos;
-	Vector planeNormal;
-	Vector traceunknown1;
-	float traceunknown2;
-	float fraction;
-	uint8_t traceunknown3[4];
-	uint16_t traceunknown4;
-	uint8_t traceType;
-	bool startsolid;
-};
-
-static_assert(offsetof(trace_t_s2, startpos) == 120);
-static_assert(offsetof(trace_t_s2, endpos) == 132);
-static_assert(offsetof(trace_t_s2, startsolid) == 183);
-static_assert(offsetof(trace_t_s2, fraction) == 172);
 
 struct touchlist_t
 {
 	Vector deltavelocity;
-	trace_t_s2 trace;
+	trace_t trace;
 };
 
-struct RnQueryAttr_t
-{
-	uint64 m_nInteractsWith {};
-	uint64 m_nInteractsExclude {};
-	uint64 m_nInteractsAs {};
-
-	uint32 m_nEntityIdToIgnore = -1;
-	uint32 m_nEntityControllerIdToIgnore = -1;
-
-	uint32 m_nOwnerEntityIdToIgnore = -1;
-	uint32 m_nControllerOwnerEntityIdToIgnore = -1;
-
-	uint16 m_nHierarchyId {};
-	uint16 m_nControllerHierarchyId {};
-
-	uint16 m_nObjectSetMask {};
-	uint8_t m_nCollisionGroup {};
-
-	union
-	{
-		uint8 m_Flags {};
-
-		struct
-		{
-			uint8 m_bHitSolid: 1;
-			uint8 m_bHitSolidRequiresGenerateContacts: 1;
-			uint8 m_bHitTrigger: 1;
-			uint8 m_bShouldIgnoreDisabledPairs: 1;
-
-			uint8 m_bUnkFlag1: 1;
-			uint8 m_bUnkFlag2: 1;
-			uint8 m_bUnkFlag3: 1;
-			uint8 m_bUnkFlag4: 1;
-		};
-	};
-
-	bool m_bIterateEntities;
-};
-
-class CTraceFilterS2
-{
-public:
-	RnQueryAttr_t attr;
-
-	virtual ~CTraceFilterS2() {}
-
-	virtual bool ShouldHitEntity(CBaseEntity *other)
-	{
-		return false;
-	}
-};
-
-class CTraceFilterPlayerMovementCS : public CTraceFilterS2
+class CTraceFilterPlayerMovementCS : public CTraceFilter
 {
 };
 
@@ -321,7 +211,24 @@ public:
 		}
 		for (int i = 0; i < source.m_TouchList.Count(); i++)
 		{
-			this->m_TouchList.AddToTail(source.m_TouchList[i]);
+			auto touch = this->m_TouchList.AddToTailGetPtr();
+			touch->deltavelocity = m_TouchList[i].deltavelocity;
+			touch->trace.m_pSurfaceProperties = m_TouchList[i].trace.m_pSurfaceProperties;
+			touch->trace.m_pEnt = m_TouchList[i].trace.m_pEnt;
+			touch->trace.m_pHitbox = m_TouchList[i].trace.m_pHitbox;
+			touch->trace.m_hBody = m_TouchList[i].trace.m_hBody;
+			touch->trace.m_hShape = m_TouchList[i].trace.m_hShape;
+			touch->trace.m_nContents = m_TouchList[i].trace.m_nContents;
+			touch->trace.m_BodyTransform = m_TouchList[i].trace.m_BodyTransform;
+			touch->trace.m_vHitNormal = m_TouchList[i].trace.m_vHitNormal;
+			touch->trace.m_vHitPoint = m_TouchList[i].trace.m_vHitPoint;
+			touch->trace.m_flHitOffset = m_TouchList[i].trace.m_flHitOffset;
+			touch->trace.m_flFraction = m_TouchList[i].trace.m_flFraction;
+			touch->trace.m_nTriangle = m_TouchList[i].trace.m_nTriangle;
+			touch->trace.m_nHitboxBoneIndex = m_TouchList[i].trace.m_nHitboxBoneIndex;
+			touch->trace.m_eRayType = m_TouchList[i].trace.m_eRayType;
+			touch->trace.m_bStartInSolid = m_TouchList[i].trace.m_bStartInSolid;
+			touch->trace.m_bExactHitPoint = m_TouchList[i].trace.m_bExactHitPoint;
 		}
 	}
 
@@ -377,24 +284,24 @@ enum TurnState
 	TURN_RIGHT = 1
 };
 
-class CTraceFilterHitAllTriggers : public CTraceFilterS2
+class CTraceFilterHitAllTriggers : public CTraceFilter
 {
 public:
 	CTraceFilterHitAllTriggers()
 	{
-		attr.m_nInteractsAs = 0;
-		attr.m_nInteractsExclude = 0;
-		attr.m_nInteractsWith = 4;
-		attr.m_nEntityIdToIgnore = -1;
-		attr.m_nEntityControllerIdToIgnore = -1;
-		attr.m_nOwnerEntityIdToIgnore = -1;
-		attr.m_nControllerOwnerEntityIdToIgnore = -1;
-		attr.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
-		attr.m_nControllerHierarchyId = 0;
-		attr.m_nHierarchyId = 0;
-		attr.m_bIterateEntities = true;
-		attr.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
-		attr.m_bHitTrigger = true;
+		m_nInteractsAs = 0;
+		m_nInteractsExclude = 0;
+		m_nInteractsWith = 4;
+		m_nEntityIdsToIgnore[0] = -1;
+		m_nEntityIdsToIgnore[1] = -1;
+		m_nOwnerIdsToIgnore[0] = -1;
+		m_nOwnerIdsToIgnore[1] = -1;
+		m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
+		m_nHierarchyIds[0] = 0;
+		m_nHierarchyIds[1] = 0;
+		m_bIterateEntities = true;
+		m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
+		m_bHitTrigger = true;
 	}
 
 	CUtlVector<CEntityHandle> hitTriggerHandles;
@@ -404,7 +311,7 @@ public:
 		hitTriggerHandles.Purge();
 	}
 
-	virtual bool ShouldHitEntity(CBaseEntity *other)
+	virtual bool ShouldHitEntity(CEntityInstance *other) override
 	{
 		hitTriggerHandles.AddToTail(other->GetRefEHandle());
 		return false;

@@ -68,7 +68,7 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)
 	return retValue;
 }
 
-void Detour_TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilterS2 *filter, trace_t_s2 &pm)
+void Detour_TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilter *filter, trace_t &pm)
 {
 	TracePlayerBBox(start, end, bounds, filter, pm);
 }

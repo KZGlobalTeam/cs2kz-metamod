@@ -66,8 +66,8 @@ public:
 	virtual void OnDuckPost() override;
 	virtual void OnAirMove() override;
 	virtual void OnAirMovePost() override;
-	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
-	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
+	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace) override;
+	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace) override;
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;

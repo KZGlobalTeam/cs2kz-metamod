@@ -102,9 +102,9 @@ public:
 
 	virtual void OnWalkMovePost() {}
 
-	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) {}
+	virtual void OnTryPlayerMove(Vector *, trace_t *) {}
 
-	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) {}
+	virtual void OnTryPlayerMovePost(Vector *, trace_t *) {}
 
 	virtual void OnCategorizePosition(bool) {}
 

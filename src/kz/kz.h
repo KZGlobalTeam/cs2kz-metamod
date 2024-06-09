@@ -91,8 +91,8 @@ public:
 	virtual void OnFrictionPost() override;
 	virtual void OnWalkMove() override;
 	virtual void OnWalkMovePost() override;
-	virtual void OnTryPlayerMove(Vector *, trace_t_s2 *) override;
-	virtual void OnTryPlayerMovePost(Vector *, trace_t_s2 *) override;
+	virtual void OnTryPlayerMove(Vector *, trace_t *) override;
+	virtual void OnTryPlayerMovePost(Vector *, trace_t *) override;
 	virtual void OnCategorizePosition(bool) override;
 	virtual void OnCategorizePositionPost(bool) override;
 	virtual void OnFinishGravity() override;

@@ -153,8 +153,8 @@ public:
 	virtual void OnJumpPost() override;
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
-	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
-	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t_s2 *pFirstTrace) override;
+	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace) override;
+	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace) override;
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;

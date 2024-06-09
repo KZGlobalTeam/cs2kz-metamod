@@ -204,18 +204,18 @@ f32 MovementPlayer::GetGroundPosition()
 		bounds.maxs.z = 54.0;
 	}
 
-	trace_t_s2 trace;
+	trace_t trace;
 	g_pKZUtils->InitGameTrace(&trace);
 
 	g_pKZUtils->TracePlayerBBox(mv->m_vecAbsOrigin, ground, bounds, &filter, trace);
 
 	// Doesn't hit anything, fall back to the original ground
-	if (trace.startsolid || trace.fraction == 1.0f)
+	if (trace.m_bStartInSolid || trace.m_flFraction == 1.0f)
 	{
 		return mv->m_vecAbsOrigin.z;
 	}
 
-	return trace.endpos.z;
+	return trace.m_vEndPos.z;
 }
 
 void MovementPlayer::RegisterTakeoff(bool jumped)
@@ -255,12 +255,12 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 		// The true landing origin from TryPlayerMove, use this whenever you can
 		FOR_EACH_VEC(mv->m_TouchList, i)
 		{
-			if (mv->m_TouchList[i].trace.planeNormal.z > 0.7)
+			if (mv->m_TouchList[i].trace.m_vHitNormal.z > 0.7)
 			{
-				this->landingOriginActual = mv->m_TouchList[i].trace.endpos;
+				this->landingOriginActual = mv->m_TouchList[i].trace.m_vEndPos;
 				this->landingTimeActual =
 					this->landingTime
-					- (1 - mv->m_TouchList[i].trace.fraction) * g_pKZUtils->GetGlobals()->frametime; // TODO: make sure this is right
+					- (1 - mv->m_TouchList[i].trace.m_flFraction) * g_pKZUtils->GetGlobals()->frametime; // TODO: make sure this is right
 				return;
 			}
 		}
