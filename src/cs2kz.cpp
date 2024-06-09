@@ -1,6 +1,8 @@
 #include "cs2kz.h"
 
 #include "entity2/entitysystem.h"
+#include "steam/steam_gameserver.h"
+
 #include "sdk/cgameresourceserviceserver.h"
 #include "utils/utils.h"
 #include "utils/hooks.h"
@@ -16,7 +18,6 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
-
 #include "tier0/memdbgon.h"
 
 #include "version.h"
@@ -28,6 +29,7 @@ KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
 IClientCvarValue *g_pClientCvarValue;
+CSteamGameServerAPIContext g_steamAPI;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
@@ -62,7 +64,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	if (late)
 	{
 		KZ::misc::OnServerActivate();
-		// g_pKZPlayerManager->OnLateLoad();
+		g_steamAPI.Init();
+		g_pKZPlayerManager->OnLateLoad();
 	}
 	return true;
 }
@@ -75,6 +78,8 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	utils::Cleanup();
 	g_pKZModeManager->Cleanup();
 	g_pKZStyleManager->Cleanup();
+	g_pPlayerManager->Cleanup();
+	KZDatabaseService::Cleanup();
 	return true;
 }
 
@@ -82,7 +87,7 @@ void KZPlugin::AllPluginsLoaded()
 {
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
-	KZDBService::Init();
+	KZDatabaseService::Init();
 
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);

@@ -25,6 +25,7 @@ public:
 
 	virtual void *OnMetamodQuery(const char *iface, int *ret) override;
 
+	bool simulatingPhysics = false;
 	CGlobalVars serverGlobals;
 	bool unloading = false;
 };

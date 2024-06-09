@@ -2,6 +2,7 @@
 #include "utils/utils.h"
 #include "utils/ctimer.h"
 #include "checkpoint/kz_checkpoint.h"
+#include "db/kz_db.h"
 #include "hud/kz_hud.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "language/kz_language.h"
@@ -14,7 +15,10 @@
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
 
+#include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
+
+extern CSteamGameServerAPIContext g_steamAPI;
 
 void KZPlayer::Init()
 {
@@ -25,6 +29,7 @@ void KZPlayer::Init()
 	delete this->checkpointService;
 	delete this->jumpstatsService;
 	delete this->languageService;
+	delete this->databaseService;
 	delete this->quietService;
 	delete this->hudService;
 	delete this->specService;
@@ -35,6 +40,7 @@ void KZPlayer::Init()
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
+	this->databaseService = new KZDatabaseService(this);
 	this->languageService = new KZLanguageService(this);
 	this->noclipService = new KZNoclipService(this);
 	this->quietService = new KZQuietService(this);
@@ -67,6 +73,12 @@ void KZPlayer::Reset()
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->SwitchToStyle(this, KZOptionService::GetOptionStr("defaultStyle", KZ_DEFAULT_STYLE), true, true);
+}
+
+void KZPlayer::OnAuthorized()
+{
+	MovementPlayer::OnAuthorized();
+	KZDatabaseService::SetupClient(this);
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)

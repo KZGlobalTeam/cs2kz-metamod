@@ -1,4 +1,7 @@
 #include "player.h"
+#include "steam/steam_gameserver.h"
+
+extern CSteamGameServerAPIContext g_steamAPI;
 
 CCSPlayerController *Player::GetController()
 {
@@ -17,4 +20,9 @@ CCSPlayerController *Player::GetController()
 void Player::Kick(const char *internalReason, ENetworkDisconnectionReason reason)
 {
 	interfaces::pEngine->KickClient(this->GetPlayerSlot(), internalReason, reason);
+}
+
+void Player::OnAuthorized()
+{
+	this->hasPrime = (g_steamAPI.SteamGameServer()->UserHasLicenseForApp(*this->GetClient()->GetClientSteamID(), 624820) == 0);
 }

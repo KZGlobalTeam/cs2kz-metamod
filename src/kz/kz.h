@@ -23,6 +23,7 @@
 class KZPlayer;
 class KZAnticheatService;
 class KZCheckpointService;
+class KZDatabaseService;
 class KZGlobalService;
 class KZHUDService;
 class KZJumpstatsService;
@@ -46,9 +47,10 @@ public:
 	{
 		this->Init();
 	}
-
+	// General events
 	virtual void Init() override;
 	virtual void Reset() override;
+	virtual void OnAuthorized() override;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
 
@@ -126,6 +128,7 @@ public:
 
 	void PlayErrorSound();
 
+
 private:
 	bool hideLegs {};
 	f64 lastTeleportTime {};
@@ -133,6 +136,7 @@ private:
 public:
 	KZAnticheatService *anticheatService {};
 	KZCheckpointService *checkpointService {};
+	KZDatabaseService *databaseService {};
 	KZGlobalService *globalService {};
 	KZHUDService *hudService {};
 	KZJumpstatsService *jumpstatsService {};

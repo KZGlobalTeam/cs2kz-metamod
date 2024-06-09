@@ -14,7 +14,7 @@ CGameConfig *KZUtils::GetGameConfig()
 
 const CGlobalVars *KZUtils::GetServerGlobals()
 {
-	return &(g_KZPlugin.serverGlobals);
+	return g_KZPlugin.simulatingPhysics ? &(g_KZPlugin.serverGlobals) : this->GetGlobals();
 }
 
 CGlobalVars *KZUtils::GetGlobals()

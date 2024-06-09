@@ -1,5 +1,6 @@
 #include "player.h"
 #include "utils/utils.h"
+#include "iserver.h"
 
 Player *PlayerManager::ToPlayer(CPlayerPawnComponent *component)
 {
@@ -101,3 +102,55 @@ void PlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionRe
 void PlayerManager::OnClientVoice(CPlayerSlot slot) {}
 
 void PlayerManager::OnClientSettingsChanged(CPlayerSlot slot) {}
+
+void PlayerManager::Cleanup()
+{
+	if (callbackRegistered)
+	{
+		m_CallbackValidateAuthTicketResponse.Unregister();
+	}
+}
+
+void PlayerManager::OnLateLoad()
+{
+	if (!g_pNetworkServerService)
+	{
+		META_CONPRINTF("Warning: Plugin lateloaded but g_pNetworkServerService is not available. Auth callbacks will not be registered.\n");
+		return;
+	}
+	if (g_pNetworkServerService->IsActiveInGame())
+	{
+		this->RegisterSteamAPICallback();
+	}
+	for (auto player : players)
+	{
+		if (player->IsAuthenticated())
+		{
+			player->OnAuthorized();
+		}
+	}
+}
+
+void PlayerManager::OnSteamAPIActivated()
+{
+	this->RegisterSteamAPICallback();
+}
+
+void PlayerManager::OnValidateAuthTicket(ValidateAuthTicketResponse_t *pResponse)
+{
+	if (pResponse->m_eAuthSessionResponse != k_EAuthSessionResponseOK)
+	{
+		return;
+	}
+	uint64 iSteamId = pResponse->m_SteamID.ConvertToUint64();
+
+	for (Player *player : players)
+	{
+		CServerSideClient *cl = player->GetClient();
+		if (cl && *cl->GetClientSteamID() == pResponse->m_SteamID)
+		{
+			player->OnAuthorized();
+			return;
+		}
+	}
+}

@@ -116,7 +116,7 @@ public:
 
 	CServerSideClient *GetClientBySlot(CPlayerSlot slot)
 	{
-		return GetClientList() ? GetClientList()->Element(slot.Get()) : nullptr;
+		return (GetClientList() && GetController(slot)) ? GetClientList()->Element(slot.Get()) : nullptr;
 	}
 };
 

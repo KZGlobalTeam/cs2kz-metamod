@@ -13,6 +13,8 @@
 #include "utils/utils.h"
 #include "entityclass.h"
 
+extern CSteamGameServerAPIContext g_steamAPI;
+
 class GameSessionConfiguration_t
 {
 };
@@ -551,7 +553,11 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	RETURN_META(MRES_IGNORED);
 }
 
-static_function void Hook_GameServerSteamAPIActivated() {}
+static_function void Hook_GameServerSteamAPIActivated()
+{
+	g_steamAPI.Init();
+	g_pKZPlayerManager->OnSteamAPIActivated();
+}
 
 static_function void Hook_GameServerSteamAPIDeactivated() {}
 

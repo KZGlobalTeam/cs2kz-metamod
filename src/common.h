@@ -53,3 +53,7 @@ typedef double f64;
 
 // Enable water fix.
 #define WATER_FIX
+
+// Common macro for service event listeners in different parts of the project.
+#define CALL_FORWARD(listeners, func, ...)                FOR_EACH_VEC(listeners, i) listeners[i]->func(__VA_ARGS__);
+#define CALL_FORWARD_BOOL(retValue, listeners, func, ...) FOR_EACH_VEC(listeners, i) retValue &= listeners[i]->func(__VA_ARGS__)
