@@ -32,32 +32,32 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 		{
 			// UPDATE OR IGNORE
 			V_snprintf(query, sizeof(query), sqlite_players_update, escapedName.c_str(), clientIP, steamID64);
-			txn.AddQuery(query);
+			txn.queries.push_back(query);
 			// INSERT OR IGNORE
 			V_snprintf(query, sizeof(query), sqlite_players_insert, escapedName.c_str(), clientIP, steamID64);
-			txn.AddQuery(query);
+			txn.queries.push_back(query);
 			break;
 		}
 		case DatabaseType_MySQL:
 		{
 			// INSERT ... ON DUPLICATE KEY ...
 			V_snprintf(query, sizeof(query), mysql_players_upsert, escapedName.c_str(), clientIP, steamID64);
-			txn.AddQuery(query);
+			txn.queries.push_back(query);
 			break;
 		}
 	}
 
 	V_snprintf(query, sizeof(query), sql_players_get_cheater, steamID64);
-	txn.AddQuery(query);
-	for (u32 i = 0; i < txn.GetQueryCount(); i++)
+	txn.queries.push_back(query);
+	for (u32 i = 0; i < txn.queries.size(); i++)
 	{
-		auto queryStr = txn.GetQuery(i);
+		auto queryStr = txn.queries[i];
 		META_CONPRINTF("Query: %s\n", queryStr.c_str());
 	}
 	CPlayerUserId userID = player->GetClient()->GetUserID();
 
 	GetDatabaseConnection()->ExecuteTransaction(
-		&txn,
+		txn,
 		[userID, steamID64](std::vector<ISQLQuery *> queries)
 		{
 			KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
