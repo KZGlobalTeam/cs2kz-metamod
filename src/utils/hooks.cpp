@@ -4,6 +4,7 @@
 #include "igameeventsystem.h"
 #include "igamesystem.h"
 #include "utils/simplecmds.h"
+#include "steam/steam_gameserver.h"
 
 #include "cs2kz.h"
 #include "ctimer.h"
