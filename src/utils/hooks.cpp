@@ -719,6 +719,12 @@ static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawn
 static_function bool Hook_ActivateServer()
 {
 	KZ::misc::OnServerActivate();
+	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
+	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
+	u64 size = g_pKZUtils->GetCurrentMapSize();
+	char md5[32];
+	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
+	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
 	// KZDatabaseService::SetupMap();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }

@@ -118,6 +118,13 @@ public:
 	{
 		return (GetClientList() && GetController(slot)) ? GetClientList()->Element(slot.Get()) : nullptr;
 	}
+
+	virtual u64 GetCurrentMapWorkshopID();
+	virtual CUtlString GetCurrentMapVPK();
+	virtual CUtlString GetCurrentMapDirectory();
+	virtual u64 GetCurrentMapSize();
+	virtual void UpdateCurrentMapMD5();
+	virtual bool GetCurrentMapMD5(char *buffer, i32 size);
 };
 
 extern KZUtils *g_pKZUtils;

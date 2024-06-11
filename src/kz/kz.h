@@ -47,6 +47,7 @@ public:
 	{
 		this->Init();
 	}
+
 	// General events
 	virtual void Init() override;
 	virtual void Reset() override;
@@ -127,7 +128,6 @@ public:
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 
 	void PlayErrorSound();
-
 
 private:
 	bool hideLegs {};

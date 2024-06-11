@@ -108,7 +108,7 @@ void KZ::misc::OnServerActivate()
 			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
 		}
 	}
-
+	g_pKZUtils->UpdateCurrentMapMD5();
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 }
 
