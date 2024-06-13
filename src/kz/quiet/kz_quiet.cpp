@@ -118,7 +118,6 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			return;
 		}
 	}
-	META_CONPRINTF("Event %i, entIndex %i\n", info->m_MessageId, entIndex);
 	CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(entIndex)));
 	if (!ent)
 	{
