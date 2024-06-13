@@ -165,7 +165,23 @@ void utils::UnlockConCommands()
 CBasePlayerController *utils::GetController(CBaseEntity *entity)
 {
 	CCSPlayerController *controller = nullptr;
-
+	if (!V_stricmp(entity->GetClassname(), "observer"))
+	{
+		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
+		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
+		{
+			for (i32 i = 0; i <= g_pKZUtils->GetServerGlobals()->maxClients; i++)
+			{
+				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
+				if (controller && controller->m_hObserverPawn() && controller->m_hObserverPawn().Get() == entity)
+				{
+					return controller;
+				}
+			}
+			return nullptr;
+		}
+		return pawn->m_hController.Get();
+	}
 	if (entity->IsPawn())
 	{
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
@@ -266,19 +282,20 @@ f32 utils::GetAngleDifference(const f32 source, const f32 target, const f32 c, b
 
 void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 {
-	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
-	CNETMsg_SetConVar *msg = new CNETMsg_SetConVar;
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
 	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
 	cvar->set_name(conVar->m_pszName);
 	cvar->set_value(value);
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	netmsg->DeallocateMessage(msg);
 }
 
 void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, u32 size)
 {
-	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
-	CNETMsg_SetConVar *msg = new CNETMsg_SetConVar;
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
 	for (u32 i = 0; i < size; i++)
 	{
 		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
@@ -287,6 +304,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	netmsg->DeallocateMessage(msg);
 }
 
 bool utils::IsSpawnValid(const Vector &origin)

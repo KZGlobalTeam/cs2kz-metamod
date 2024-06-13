@@ -51,8 +51,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
     ] 
     binary.sources += [
-      'src/utils/plat_linux.cpp',
-      os.path.join(sdk['path'], 'public', 'tier0', 'memoverride.cpp')
+      'src/utils/plat_linux.cpp'
       ]
   elif binary.compiler.target.platform == 'windows':
     binary.compiler.postlink += [
@@ -138,8 +137,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
     ] 
     mode_binary.sources += [
-      'src/utils/plat_linux.cpp',
-      os.path.join(sdk['path'], 'public', 'tier0', 'memoverride.cpp')
+      'src/utils/plat_linux.cpp'
       ]
   elif mode_binary.compiler.target.platform == 'windows':
     mode_binary.compiler.postlink += [
@@ -173,8 +171,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
     ] 
     style_binary.sources += [
-      'src/utils/plat_linux.cpp',
-      os.path.join(sdk['path'], 'public', 'tier0', 'memoverride.cpp')
+      'src/utils/plat_linux.cpp'
       ]
   elif style_binary.compiler.target.platform == 'windows':
     style_binary.compiler.postlink += [

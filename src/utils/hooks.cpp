@@ -95,10 +95,10 @@ SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, 
 internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 
 // IGameEventSystem
-SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *, INetworkSerializable *,
-				   const void *, unsigned long, NetChannelBufType_t);
-internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkSerializable *pEvent,
-							 const void *pData, unsigned long nSize, NetChannelBufType_t bufType);
+SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *, INetworkMessageInternal *,
+				   const CNetMessage *, unsigned long, NetChannelBufType_t);
+internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkMessageInternal *pEvent,
+							 const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType);
 
 // CEntitySystem
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
@@ -660,8 +660,8 @@ internal void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContex
 }
 
 // IGameEventSystem
-internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkSerializable *pEvent,
-							 const void *pData, unsigned long nSize, NetChannelBufType_t bufType)
+internal void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkMessageInternal *pEvent,
+							 const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType)
 {
 	KZ::quiet::OnPostEvent(pEvent, pData, clients);
 }

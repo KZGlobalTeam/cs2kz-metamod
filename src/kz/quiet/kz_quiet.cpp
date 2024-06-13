@@ -85,7 +85,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 	}
 }
 
-void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, const uint64 *clients)
+void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *pData, const uint64 *clients)
 {
 	NetMessageInfo_t *info = pEvent->GetNetMessageInfo();
 	u32 entIndex, playerIndex;
@@ -95,21 +95,21 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 		// Hide bullet decals, and sound.
 		case GE_FireBulletsId:
 		{
-			CMsgTEFireBullets *msg = (CMsgTEFireBullets *)pData;
+			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgTEFireBullets>();
 			entIndex = msg->player() & 0x3FFF;
 			break;
 		}
 		// Hide reload sounds.
 		case CS_UM_WeaponSound:
 		{
-			CCSUsrMsg_WeaponSound *msg = (CCSUsrMsg_WeaponSound *)pData;
+			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CCSUsrMsg_WeaponSound>();
 			entIndex = msg->entidx();
 			break;
 		}
 		// Hide other sounds from player (eg. armor equipping)
 		case GE_SosStartSoundEvent:
 		{
-			CMsgSosStartSoundEvent *msg = (CMsgSosStartSoundEvent *)pData;
+			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgSosStartSoundEvent>();
 			entIndex = msg->source_entity_index();
 			break;
 		}
@@ -118,6 +118,7 @@ void KZ::quiet::OnPostEvent(INetworkSerializable *pEvent, const void *pData, con
 			return;
 		}
 	}
+	META_CONPRINTF("Event %i, entIndex %i\n", info->m_MessageId, entIndex);
 	CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(entIndex)));
 	if (!ent)
 	{

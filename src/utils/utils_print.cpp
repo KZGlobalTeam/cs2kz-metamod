@@ -255,16 +255,17 @@ bool utils::CFormat(char *buffer, u64 buffer_size, const char *text)
 void utils::ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2,
 							  const char *param3, const char *param4)
 {
-	INetworkSerializable *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
-	CUserMessageTextMsg msg;
-	msg.set_dest(msg_dest);
-	msg.add_param(msg_name);
-	msg.add_param(param1);
-	msg.add_param(param2);
-	msg.add_param(param3);
-	msg.add_param(param4);
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("TextMsg");
+	auto msg = netmsg->AllocateMessage()->ToPB<CUserMessageTextMsg>();
+	msg->set_dest(msg_dest);
+	msg->add_param(msg_name);
+	msg->add_param(param1);
+	msg->add_param(param2);
+	msg->add_param(param3);
+	msg->add_param(param4);
 
-	interfaces::pGameEventSystem->PostEventAbstract(0, false, filter, netmsg, &msg, 0);
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, filter, netmsg, msg, 0);
+	netmsg->DeallocateMessage(msg);
 }
 
 #define FORMAT_STRING(buffer) \
