@@ -159,6 +159,7 @@ class KZStyleManager
 		const char *shortName;
 		const char *longName;
 		StyleServiceFactory factory;
+		char md5[33];
 	};
 
 public:

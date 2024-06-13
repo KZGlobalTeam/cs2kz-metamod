@@ -151,7 +151,15 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 
 	V_snprintf(shortModeCmd, 64, "kz_%s", shortModeName);
 	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort);
-	this->modeInfos.AddToTail({id, shortModeName, longModeName, factory, shortCmdRegistered});
+	ModePluginInfo info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
+	if (id)
+	{
+		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
+		const char *path;
+		pluginManager->Query(id, &path, nullptr, nullptr);
+		g_pKZUtils->GetFileMD5(path, info.md5, sizeof(info.md5));
+	}
+	this->modeInfos.AddToTail(info);
 	return true;
 }
 

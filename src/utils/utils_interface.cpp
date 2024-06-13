@@ -10,7 +10,7 @@
 
 #include "memdbgon.h"
 
-internal unsigned char md5Digest[MD5_DIGEST_LENGTH];
+internal char currentMapMD5[33];
 internal bool md5NeedsUpdating {};
 
 extern CGameConfig *g_pGameConfig;
@@ -174,12 +174,30 @@ u64 KZUtils::GetCurrentMapSize()
 	return 0;
 }
 
-void KZUtils::UpdateCurrentMapMD5()
+bool KZUtils::UpdateCurrentMapMD5()
 {
-	md5NeedsUpdating = true;
-	u8 chunk[65536];
-	FileHandle_t file = g_pFullFileSystem->OpenEx(this->GetCurrentMapVPK(), "rb", 0, "GAME");
-	i64 sizeRemaining = this->GetCurrentMapSize();
+	return this->GetFileMD5(this->GetCurrentMapVPK(), currentMapMD5, sizeof(currentMapMD5));
+}
+
+bool KZUtils::GetCurrentMapMD5(char *buffer, i32 size)
+{
+	if (md5NeedsUpdating)
+	{
+		md5NeedsUpdating = this->UpdateCurrentMapMD5();
+	}
+	if (!md5NeedsUpdating)
+	{
+		V_strncpy(buffer, currentMapMD5, size);
+		return true;
+	}
+	return false;
+}
+
+bool KZUtils::GetFileMD5(const char *filePath, char *buffer, i32 size)
+{
+	u8 chunk[8192];
+	FileHandle_t file = g_pFullFileSystem->OpenEx(filePath, "rb");
+	i64 sizeRemaining = g_pFullFileSystem->Size(file);
 	i32 bytesRead;
 	MD5Context_t ctx;
 	unsigned char digest[MD5_DIGEST_LENGTH];
@@ -206,29 +224,16 @@ void KZUtils::UpdateCurrentMapMD5()
 			{
 				g_pFullFileSystem->Close(file);
 			}
-			return;
+			return false;
 		}
 	}
 
 	MD5Final(digest, &ctx);
-	md5NeedsUpdating = false;
+	char *data = MD5_Print(digest, sizeof(digest));
+	V_strncpy(buffer, data, size);
 	if (file)
 	{
 		g_pFullFileSystem->Close(file);
 	}
-}
-
-bool KZUtils::GetCurrentMapMD5(char *buffer, i32 size)
-{
-	if (md5NeedsUpdating)
-	{
-		this->UpdateCurrentMapMD5();
-	}
-	if (!md5NeedsUpdating)
-	{
-		char *data = MD5_Print(md5Digest, size);
-		V_strncpy(buffer, data, size);
-		return true;
-	}
-	return false;
+	return true;
 }

@@ -174,6 +174,7 @@ class KZModeManager
 		const char *longModeName;
 		ModeServiceFactory factory;
 		bool shortCmdRegistered;
+		char md5[33];
 	};
 
 public:

@@ -88,7 +88,7 @@ void KZPlugin::AllPluginsLoaded()
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
 	KZDatabaseService::Init();
-
+	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 }
@@ -183,6 +183,14 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	*ret = META_IFACE_FAILED;
 
 	return NULL;
+}
+
+void KZPlugin::UpdateSelfMD5()
+{
+	ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
+	const char *path;
+	pluginManager->Query(g_PLID, &path, nullptr, nullptr);
+	g_pKZUtils->GetFileMD5(path, this->md5, sizeof(this->md5));
 }
 
 CGameEntitySystem *GameEntitySystem()

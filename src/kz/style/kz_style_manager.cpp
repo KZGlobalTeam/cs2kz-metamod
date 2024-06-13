@@ -75,7 +75,15 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 		}
 	}
 
-	this->styleInfos.AddToTail({id, shortName, longName, factory});
+	StylePluginInfo info = {id, shortName, longName, factory};
+	if (id)
+	{
+		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
+		const char *path;
+		pluginManager->Query(id, &path, nullptr, nullptr);
+		g_pKZUtils->GetFileMD5(path, info.md5, sizeof(info.md5));
+	}
+	this->styleInfos.AddToTail(info);
 	return true;
 }
 
