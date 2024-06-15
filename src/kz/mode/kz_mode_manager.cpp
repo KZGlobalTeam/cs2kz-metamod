@@ -8,6 +8,7 @@
 
 #include "../timer/kz_timer.h"
 #include "../language/kz_language.h"
+#include "../db/kz_db.h"
 #include "utils/simplecmds.h"
 #include "utils/plat.h"
 
@@ -16,6 +17,14 @@ static_function SCMD_CALLBACK(Command_KzMode);
 
 static_global KZModeManager modeManager;
 KZModeManager *g_pKZModeManager = &modeManager;
+
+CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
+
+class KZDatabaseServiceEventListener_Modes : public KZDatabaseServiceEventListener
+{
+public:
+	virtual void OnDatabaseConnect() override;
+} databaseEventListener;
 
 bool KZ::mode::InitModeCvars()
 {
@@ -43,6 +52,7 @@ void KZ::mode::InitModeManager()
 	}
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService * { return new KZVanillaModeService(player); };
 	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
+	KZDatabaseService::RegisterEventListener(&databaseEventListener);
 	initialized = true;
 }
 
@@ -71,6 +81,18 @@ void KZ::mode::LoadModePlugins()
 		} while (output);
 
 		g_pFullFileSystem->FindClose(findHandle);
+	}
+}
+
+void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id)
+{
+	FOR_EACH_VEC(modeInfos, i)
+	{
+		if (!V_stricmp(modeInfos[i].longModeName, name))
+		{
+			modeInfos[i].databaseID = id;
+			return;
+		}
 	}
 }
 
@@ -135,13 +157,13 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	{
 		return false;
 	}
-	FOR_EACH_VEC(this->modeInfos, i)
+	FOR_EACH_VEC(modeInfos, i)
 	{
-		if (V_stricmp(this->modeInfos[i].shortModeName, shortModeName) == 0)
+		if (V_stricmp(modeInfos[i].shortModeName, shortModeName) == 0)
 		{
 			return false;
 		}
-		if (V_stricmp(this->modeInfos[i].longModeName, longModeName) == 0)
+		if (V_stricmp(modeInfos[i].longModeName, longModeName) == 0)
 		{
 			return false;
 		}
@@ -151,15 +173,19 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 
 	V_snprintf(shortModeCmd, 64, "kz_%s", shortModeName);
 	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort);
-	ModePluginInfo info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
+	ModePluginInfo *info = modeInfos.AddToTailGetPtr();
+	*info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
+	if (KZDatabaseService::IsReady())
+	{
+		KZDatabaseService::GetModeID(longModeName);
+	}
 	if (id)
 	{
 		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
 		const char *path;
 		pluginManager->Query(id, &path, nullptr, nullptr);
-		g_pKZUtils->GetFileMD5(path, info.md5, sizeof(info.md5));
+		g_pKZUtils->GetFileMD5(path, info->md5, sizeof(info->md5));
 	}
-	this->modeInfos.AddToTail(info);
 	return true;
 }
 
@@ -176,14 +202,14 @@ void KZModeManager::UnregisterMode(const char *modeName)
 		return;
 	}
 
-	FOR_EACH_VEC(this->modeInfos, i)
+	FOR_EACH_VEC(modeInfos, i)
 	{
-		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
+		if (V_stricmp(modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(modeInfos[i].longModeName, modeName) == 0)
 		{
 			char shortModeCmd[64];
-			V_snprintf(shortModeCmd, 64, "kz_%s", this->modeInfos[i].shortModeName);
+			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[i].shortModeName);
 			scmd::UnregisterCmd(shortModeCmd);
-			this->modeInfos.Remove(i);
+			modeInfos.Remove(i);
 			break;
 		}
 	}
@@ -205,14 +231,14 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	{
 		player->languageService->PrintChat(true, false, "Mode Command Usage");
 		player->languageService->PrintConsole(false, false, "Possible & Current Modes", player->modeService->GetModeName());
-		FOR_EACH_VEC(this->modeInfos, i)
+		FOR_EACH_VEC(modeInfos, i)
 		{
 			// clang-format off
 			player->PrintConsole(false, false,
 				"%s (kz_mode %s / kz_mode %s)",
-				this->modeInfos[i].longModeName,
-				this->modeInfos[i].longModeName,
-				this->modeInfos[i].shortModeName
+				modeInfos[i].longModeName,
+				modeInfos[i].longModeName,
+				modeInfos[i].shortModeName
 			);
 			// clang-format on
 		}
@@ -227,11 +253,11 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	ModeServiceFactory factory = nullptr;
 
-	FOR_EACH_VEC(this->modeInfos, i)
+	FOR_EACH_VEC(modeInfos, i)
 	{
-		if (V_stricmp(this->modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(this->modeInfos[i].longModeName, modeName) == 0)
+		if (V_stricmp(modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(modeInfos[i].longModeName, modeName) == 0)
 		{
-			factory = this->modeInfos[i].factory;
+			factory = modeInfos[i].factory;
 			break;
 		}
 	}
@@ -258,6 +284,17 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	return true;
 }
 
+void KZModeManager::OnDatabaseConnect()
+{
+	FOR_EACH_VEC(modeInfos, i)
+	{
+		if (modeInfos[i].databaseID == -1)
+		{
+			KZDatabaseService::GetModeID(modeInfos[i].longModeName);
+		}
+	}
+}
+
 void KZModeManager::Cleanup()
 {
 	int ret;
@@ -267,13 +304,13 @@ void KZModeManager::Cleanup()
 		return;
 	}
 	char error[256];
-	FOR_EACH_VEC(this->modeInfos, i)
+	FOR_EACH_VEC(modeInfos, i)
 	{
-		if (this->modeInfos[i].id == 0)
+		if (modeInfos[i].id == 0)
 		{
 			continue;
 		}
-		pluginManager->Unload(this->modeInfos[i].id, true, error, sizeof(error));
+		pluginManager->Unload(modeInfos[i].id, true, error, sizeof(error));
 	}
 	// Restore cvars to normal values.
 	for (u32 i = 0; i < KZ::mode::numCvar; i++)
@@ -326,4 +363,9 @@ static_function SCMD_CALLBACK(Command_KzModeShort)
 void KZ::mode::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_mode", Command_KzMode);
+}
+
+void KZDatabaseServiceEventListener_Modes::OnDatabaseConnect()
+{
+	modeManager.OnDatabaseConnect();
 }

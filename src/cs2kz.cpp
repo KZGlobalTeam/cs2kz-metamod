@@ -85,9 +85,9 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 
 void KZPlugin::AllPluginsLoaded()
 {
+	KZDatabaseService::Init();
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
-	KZDatabaseService::Init();
 	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);

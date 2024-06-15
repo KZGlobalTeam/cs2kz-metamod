@@ -38,10 +38,6 @@ void KZDatabaseService::Cleanup()
 	}
 }
 
-bool KZDatabaseService::IsReady()
-{
-	return databaseConnection != nullptr;
-}
 
 void KZDatabaseService::RegisterCommands() {}
 

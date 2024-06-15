@@ -1,6 +1,7 @@
 #pragma once
 #include "../kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/mode/kz_mode.h"
 #include <type_traits>
 
 class ISQLConnection;
@@ -95,6 +96,7 @@ public:
 	static_global void SetupMap();
 	static_global void SetupCourses();
 	static_global void SetupClient(KZPlayer *player);
+	static_global void GetModeID(CUtlString modeName);
 
 	bool isCheater;
 	bool isSetUp;

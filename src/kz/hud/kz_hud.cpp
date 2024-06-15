@@ -11,7 +11,7 @@
 #include "tier0/memdbgon.h"
 
 #define HUD_ON_GROUND_THRESHOLD 0.07f
-static_global KZHUDServiceTimerEventListener timerEventListener;
+static_global KZTimerServiceEventListener_HUD timerEventListener;
 
 void KZHUDService::Init()
 {
@@ -151,12 +151,12 @@ void KZHUDService::OnTimerStopped(f64 currentTimeWhenTimerStopped)
 	this->currentTimeWhenTimerStopped = currentTimeWhenTimerStopped;
 }
 
-void KZHUDServiceTimerEventListener::OnTimerStopped(KZPlayer *player)
+void KZTimerServiceEventListener_HUD::OnTimerStopped(KZPlayer *player)
 {
 	player->hudService->OnTimerStopped(player->timerService->GetTime());
 }
 
-void KZHUDServiceTimerEventListener::OnTimerEndPost(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed)
+void KZTimerServiceEventListener_HUD::OnTimerEndPost(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed)
 {
 	player->hudService->OnTimerStopped(time);
 }

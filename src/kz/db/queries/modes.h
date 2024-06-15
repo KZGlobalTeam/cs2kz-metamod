@@ -10,3 +10,12 @@ CREATE TABLE IF NOT EXISTS `Modes` ( \
     ModeID INTEGER NOT NULL, \
     Name VARCHAR(32) NOT NULL UNIQUE, \
     CONSTRAINT PK_Modes PRIMARY KEY (ModeID))";
+
+constexpr char sqlite_modes_insert[] = "\
+INSERT OR IGNORE INTO Modes (Name) VALUES ('%s');";
+
+constexpr char mysql_modes_insert[] = "\
+INSERT IGNORE INTO Modes (Name) VALUES ('%s');";
+
+constexpr char sql_modes_findid[] = "\
+SELECT ModeID FROM Modes WHERE Name = '%s'";
