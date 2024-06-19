@@ -191,8 +191,8 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	bool result = LadderMove(ms, mv);
 	if (player->GetPlayerPawn()->m_lifeState() != LIFE_DEAD && !result && oldMoveType == MOVETYPE_LADDER)
 	{
-		// Do the setting part ourselves as well.
-		player->SetMoveType(MOVETYPE_WALK);
+		// Do the setting part ourselves as well, but do not fire callback because it will be called later with the correct parameters.
+		player->SetMoveType(MOVETYPE_WALK, false);
 	}
 	if (!result && oldMoveType == MOVETYPE_LADDER)
 	{
@@ -212,7 +212,6 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	else if (result && oldMoveType == MOVETYPE_LADDER && player->GetPlayerPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		// Player is on the ladder, pressing jump pushes them away from the ladder.
-		float curtime = g_pKZUtils->GetGlobals()->curtime;
 		player->RegisterTakeoff(player->IsButtonPressed(IN_JUMP));
 		player->takeoffFromLadder = true;
 		player->OnChangeMoveType(MOVETYPE_LADDER);

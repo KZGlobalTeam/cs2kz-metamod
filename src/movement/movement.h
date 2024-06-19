@@ -217,7 +217,7 @@ public:
 		return this->GetPlayerPawn() ? this->GetPlayerPawn()->IsAlive() : false;
 	}
 
-	void SetMoveType(MoveType_t newMoveType);
+	void SetMoveType(MoveType_t newMoveType, bool fireCallback = true);
 
 	MoveType_t GetMoveType()
 	{

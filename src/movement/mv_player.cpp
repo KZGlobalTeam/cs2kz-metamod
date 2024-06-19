@@ -287,13 +287,16 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 
 void MovementPlayer::OnPostThink() {}
 
-void MovementPlayer::SetMoveType(MoveType_t newMoveType)
+void MovementPlayer::SetMoveType(MoveType_t newMoveType, bool fireCallback)
 {
 	MoveType_t oldMoveType = this->GetMoveType();
 	if (oldMoveType != newMoveType)
 	{
 		this->GetPlayerPawn()->SetMoveType(newMoveType);
-		this->OnChangeMoveType(oldMoveType);
+		if (fireCallback)
+		{
+			this->OnChangeMoveType(oldMoveType);
+		}
 	}
 }
 

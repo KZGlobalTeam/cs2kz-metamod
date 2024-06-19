@@ -555,16 +555,20 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
-	if (this->jumps.Count() <= 0)
+	if (this->jumps.Count() <= 0 || this->player->JustTeleported())
 	{
 		return JumpType_Invalid;
 	}
 	if (this->player->takeoffFromLadder)
 	{
-		if (this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL
-			&& this->player->jumpstatsService->lastJumpButtonTime > this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() - IGNORE_JUMP_TIME
-			&& this->player->jumpstatsService->lastJumpButtonTime
-				   < this->player->GetPlayerPawn()->m_ignoreLadderJumpTime() + ENGINE_FIXED_TICK_INTERVAL)
+		f32 ignoreLadderJumpTime = this->player->GetPlayerPawn()->m_ignoreLadderJumpTime();
+
+		bool ignoringLadder = ignoreLadderJumpTime > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL;
+		bool holdingJumpDuringIgnoreLadderPeriod =
+			this->player->jumpstatsService->lastJumpButtonTime > ignoreLadderJumpTime - IGNORE_JUMP_TIME
+			&& this->player->jumpstatsService->lastJumpButtonTime < ignoreLadderJumpTime + ENGINE_FIXED_TICK_INTERVAL;
+
+		if (ignoringLadder && holdingJumpDuringIgnoreLadderPeriod)
 		{
 			return JumpType_Invalid;
 		}

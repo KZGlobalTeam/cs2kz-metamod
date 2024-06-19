@@ -43,7 +43,7 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 	// clang-format off
 	if (!this->player->GetPlayerPawn()->IsAlive()
 		|| this->JustStartedTimer()
-		|| this->JustTeleported()
+		|| this->player->JustTeleported()
 		|| this->player->inPerf
 		|| this->player->noclipService->JustNoclipped()
 		|| !this->HasValidMoveType()
@@ -208,11 +208,6 @@ void KZTimerService::InvalidateRun()
 bool KZTimerService::HasValidMoveType()
 {
 	return KZTimerService::IsValidMoveType(this->player->GetMoveType());
-}
-
-bool KZTimerService::JustTeleported()
-{
-	return g_pKZUtils->GetServerGlobals()->curtime - this->lastTeleportTime < KZ_TIMER_MIN_GROUND_TIME;
 }
 
 bool KZTimerService::JustEndedTimer()
@@ -488,7 +483,6 @@ void KZTimerService::Reset()
 	this->lastStartSoundTime = {};
 	this->lastStartMode[0] = 0;
 	this->validTime = {};
-	this->lastTeleportTime = {};
 	this->paused = {};
 	this->pausedOnLadder = {};
 	this->lastPauseTime = {};
@@ -628,10 +622,6 @@ void KZTimerService::OnTeleport(const Vector *newPosition, const QAngle *newAngl
 	if (newPosition || newVelocity)
 	{
 		this->InvalidateJump();
-	}
-	if (newPosition)
-	{
-		this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 }
 

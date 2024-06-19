@@ -36,7 +36,7 @@ enum DistanceTier : u8
 	DISTANCETIER_COUNT
 };
 
-#define IGNORE_JUMP_TIME                0.2f
+#define IGNORE_JUMP_TIME                (0.2f + 0.001f) // To take floating errors into account
 #define JS_EPSILON                      0.03125f
 #define JS_MAX_LADDERJUMP_OFFSET        2.0f
 #define JS_MAX_BHOP_GROUND_TIME         0.05f

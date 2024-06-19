@@ -69,8 +69,6 @@ private:
 	char lastStartMode[128] {};
 	bool validTime {};
 
-	f64 lastTeleportTime {};
-
 	bool validJump {};
 	f64 lastInvalidateTime {};
 
@@ -148,8 +146,6 @@ private:
 	{
 		return moveType == MOVETYPE_WALK || moveType == MOVETYPE_LADDER || moveType == MOVETYPE_NONE || moveType == MOVETYPE_OBSERVER;
 	}
-
-	bool JustTeleported();
 
 	bool JustLanded()
 	{

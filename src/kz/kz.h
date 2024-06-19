@@ -18,6 +18,8 @@
 #define KZ_DEFAULT_STYLE        "Normal"
 #define KZ_DEFAULT_MODE         "Classic"
 
+#define KZ_RECENT_TELEPORT_THRESHOLD 0.05f
+
 class KZPlayer;
 class KZAnticheatService;
 class KZCheckpointService;
@@ -126,6 +128,7 @@ public:
 
 private:
 	bool hideLegs {};
+	f64 lastTeleportTime {};
 
 public:
 	KZAnticheatService *anticheatService {};
@@ -157,6 +160,8 @@ public:
 	}
 
 	void UpdatePlayerModelAlpha();
+	// Teleport checking, used for multiple services
+	virtual bool JustTeleported();
 	// Triggerfix stuff
 
 	// Hit all triggers from start to end with the specified bounds,

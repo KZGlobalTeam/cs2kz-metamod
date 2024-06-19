@@ -438,6 +438,7 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
+	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->jumpstatsService->InvalidateJumpstats("Teleported");
 	this->modeService->OnTeleport(origin, angles, velocity);
 	this->timerService->OnTeleport(origin, angles, velocity);
@@ -493,6 +494,11 @@ void KZPlayer::UpdatePlayerModelAlpha()
 	{
 		pawn->m_clrRender(Color(255, 255, 255, 255));
 	}
+}
+
+bool KZPlayer::JustTeleported()
+{
+	return g_pKZUtils->GetServerGlobals()->curtime - this->lastTeleportTime < KZ_RECENT_TELEPORT_THRESHOLD;
 }
 
 void KZPlayer::ToggleHideLegs()
