@@ -207,7 +207,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 		if (V_stricmp(modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(modeInfos[i].longModeName, modeName) == 0)
 		{
 			char shortModeCmd[64];
-			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[i].shortModeName);
+			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[i].shortModeName.Get());
 			scmd::UnregisterCmd(shortModeCmd);
 			modeInfos.Remove(i);
 			break;
@@ -236,9 +236,9 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 			// clang-format off
 			player->PrintConsole(false, false,
 				"%s (kz_mode %s / kz_mode %s)",
-				modeInfos[i].longModeName,
-				modeInfos[i].longModeName,
-				modeInfos[i].shortModeName
+				modeInfos[i].longModeName.Get(),
+				modeInfos[i].longModeName.Get(),
+				modeInfos[i].shortModeName.Get()
 			);
 			// clang-format on
 		}
