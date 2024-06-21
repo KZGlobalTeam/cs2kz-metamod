@@ -23,7 +23,7 @@ namespace movement
 
 	void FASTCALL Detour_PhysicsSimulate(CCSPlayerController *);
 	f32 FASTCALL Detour_GetMaxSpeed(CCSPlayerPawn *);
-	i32 FASTCALL Detour_ProcessUsercmds(CBasePlayerPawn *, void *, int, bool, float);
+	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, void *, int, bool, float);
 	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_PlayerMoveNew(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckParameters(CCSPlayer_MovementServices *, CMoveData *);

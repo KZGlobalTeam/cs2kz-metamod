@@ -63,11 +63,11 @@ f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 	return maxSpeed;
 }
 
-i32 FASTCALL movement::Detour_ProcessUsercmds(CBasePlayerPawn *pawn, void *cmds, int numcmds, bool paused, float margin)
+i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, void *cmds, int numcmds, bool paused, float margin)
 {
-	MovementPlayer *player = playerManager->ToPlayer(pawn);
+	MovementPlayer *player = playerManager->ToPlayer(controller);
 	player->OnProcessUsercmds(cmds, numcmds);
-	auto retValue = ProcessUsercmds(pawn, cmds, numcmds, paused, margin);
+	auto retValue = ProcessUsercmds(controller, cmds, numcmds, paused, margin);
 	player->OnProcessUsercmdsPost(cmds, numcmds);
 	return retValue;
 }
