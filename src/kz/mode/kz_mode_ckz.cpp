@@ -330,6 +330,7 @@ void KZClassicModeService::OnProcessMovementPost()
 	this->player->UpdateTriggerTouchList();
 	this->RestoreInterpolatedViewAngles();
 	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonPressed(IN_DUCK, true);
+	this->oldJumpPressed = this->player->IsButtonPressed(IN_JUMP);
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	this->postProcessMovementZSpeed = velocity.z;
@@ -428,7 +429,7 @@ void KZClassicModeService::RemoveCrouchJumpBind()
 	this->forcedUnduck = false;
 
 	bool onGround = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND;
-	bool justJumped = !this->player->GetMoveServices()->m_bOldJumpPressed && this->player->IsButtonPressed(IN_JUMP);
+	bool justJumped = !this->oldJumpPressed && this->player->IsButtonPressed(IN_JUMP);
 
 	if (onGround && !this->oldDuckPressed && justJumped)
 	{

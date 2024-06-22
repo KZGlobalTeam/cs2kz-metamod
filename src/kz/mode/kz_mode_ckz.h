@@ -103,6 +103,7 @@ class KZClassicModeService : public KZModeService
 	QAngle lastValidDesiredViewAngle;
 	f32 lastJumpReleaseTime {};
 	bool oldDuckPressed {};
+	bool oldJumpPressed {};
 	bool forcedUnduck {};
 	f32 postProcessMovementZSpeed {};
 
