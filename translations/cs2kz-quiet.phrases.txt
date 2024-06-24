@@ -7,6 +7,7 @@
 		"pl"		"{grey}Twoje nogi są teraz widoczne."
 		"fi"		"{grey}Pelaajasi jalat ovat nyt näkyvissä."
 		"sv"		"{grey}Nu är dina ben synliga."
+		"ua"		"{grey}Ваші ноги тепер видно."
 	}
 	"Quiet Option - Show Player Legs - Disable"
 	{
@@ -15,6 +16,7 @@
 		"pl"		"{grey}Twoje nogi nie są już widoczne."
 		"fi"		"{grey}Pelaajasi jalat ovat nyt piilossa."
 		"sv"		"{grey}Nu är dina ben osynliga."
+		"ua"		"{grey}Ви приховали свої ноги."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
@@ -24,6 +26,7 @@
 		"pl"		"{grey}Inni gracze są teraz widoczni."
 		"fi"		"{grey}Näet nyt muita pelaajia."
 		"sv"		"{grey}Nu kan du se andra spelare."
+		"ua"		"{grey}Ви тепер можете бачити інших гравців."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
@@ -33,6 +36,7 @@
 		"pl"		"{grey}Inni gracze nie są już widoczni."
 		"fi"		"{grey}Nyt et näe muita pelaajia."
 		"sv"		"{grey}Nu kan du inte se andra spelare."
+		"ua"		"{grey}Ви приховали інших гравців."
 	}
 	"Quiet Option - Show Weapon - Enable"
 	{
@@ -42,6 +46,7 @@
 		"pl"		"{grey}Twoja broń jest teraz widoczna."
 		"fi"		"{grey}Pelaajasi ase on nyt näkyvissä."
 		"sv"		"{grey}Nu kan du se ditt vapen."
+		"ua"		"{grey}Ви тепер бачите свою зброю."
 	}
 	"Quiet Option - Show Weapon - Disable"
 	{
@@ -51,5 +56,6 @@
 		"pl"		"{grey}Twoja broń nie jest już widoczna."
 		"fi"		"{grey}Pelaajasi ase on nyt piilossa."
 		"sv"		"{grey}Nu kan du inte se ditt vapen."
+		"ua"		"{grey}Ви приховали свою зброю."
 	}
 }

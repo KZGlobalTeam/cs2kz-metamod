@@ -7,6 +7,7 @@
 		"pl"		"{grey}Noclip włączony."
 		"fi"		"{grey}Noclip asetettu päälle."
 		"sv"		"{grey}Noclip aktiverat."
+		"ua"		"{grey}Noclip активовано."
 	}
 	"Noclip - Disable"
 	{
@@ -15,5 +16,6 @@
 		"pl"		"{grey}Noclip wyłączony."
 		"fi"		"{grey}Noclip asetettu pois päältä."
 		"sv"		"{grey}Noclip inaktiverat."
+		"ua"		"{grey}Noclip вимкнено."
 	}
 }

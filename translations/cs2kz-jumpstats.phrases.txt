@@ -9,6 +9,7 @@
 		"pl"		"Offset"
 		"fi"		"Kompensaatio"
 		"sv"		"Offset"
+		"ua"		"Зсув"
 	}
 	"Height"
 	{
@@ -18,6 +19,7 @@
 		"pl"		"Height"
 		"fi"		"Korkeus"
 		"sv"		"Höjd"
+		"ua"		"Висота"
 	}
 	"Pre"
 	{
@@ -27,6 +29,7 @@
 		"pl"		"Pre"
 		"fi"		"Edeltävä"
 		"sv"		"Pre"
+		"ua"		"Pre"
 	}
 	"Max"
 	{
@@ -36,6 +39,7 @@
 		"pl"		"Max"
 		"fi"		"Maks."
 		"sv"		"Max"
+		"ua"		"Макс."
 	}
 	"Strafes" // Plural
 	{
@@ -45,6 +49,7 @@
 		"pl"		"Strafes"
 		"fi"		"Strafet"
 		"sv"		"Strafes"
+		"ua"		"Стрейфи"
 	}
 	"Strafe" // Singular
 	{
@@ -54,6 +59,7 @@
 		"pl"		"Strafe"
 		"fi"		"Strafe"
 		"sv"		"Strafe"
+		"ua"		"Стрейф"
 	}
 	"Sync"
 	{
@@ -63,6 +69,7 @@
 		"pl"		"Sync"
 		"fi"		"Synkronisointi"
 		"sv"		"Synk"
+		"ua"		"Синхр."
 	}
 	"Air"
 	{
@@ -72,6 +79,7 @@
 		"pl"		"Air"
 		"fi"		"Ilma"
 		"sv"		"Air"
+		"ua"		"Air"
 	}
 	"Air Time"
 	{
@@ -81,6 +89,7 @@
 		"pl"		"Airtime"
 		"fi"		"Ilma-aika"
 		"sv"		"Airtid"
+		"ua"		"Airtime"
 	}
 	"Block"
 	{
@@ -90,6 +99,7 @@
 		"pl"		"Block"
 		"fi"		"Palikka"
 		"sv"		"Block"
+		"ua"		"Блок"
 	}
 	"Bad Angles (Short)"
 	{
@@ -98,6 +108,7 @@
 		"pl"		"BA"
 		"fi"		"BA"
 		"sv"		"BA"
+		"ua"		"BA"
 	}
 	"Overlap (Short)"
 	{
@@ -107,6 +118,7 @@
 		"pl"		"OL"
 		"fi"		"OL"
 		"sv"		"OL"
+		"ua"		"OL"
 	}
 	"Dead Air (Short)"
 	{
@@ -116,6 +128,7 @@
 		"pl"		"DA"
 		"fi"		"DA"
 		"sv"		"DA"
+		"ua"		"DA"
 	}
 	"Edge"
 	{
@@ -125,6 +138,7 @@
 		"pl"		"Edge"
 		"fi"		"Reuna"
 		"sv"		"Kant"
+		"ua"		"Край"
 	}
 	"Deviation"
 	{
@@ -134,6 +148,7 @@
 		"pl"		"Deviation"
 		"fi"		"Deviaatio"
 		"sv"		"Deviation"
+		"ua"		"Відхилення"
 	}
 	"Width"
 	{
@@ -143,6 +158,7 @@
 		"pl"		"Width"
 		"fi"		"Leveys"
 		"sv"		"Bredd"
+		"ua"		"Ширина"
 	}
 	"Duck Time"
 	{
@@ -152,6 +168,7 @@
 		"pl"		"Crouched"
 		"fi"		"Kyykyssä"
 		"sv"		"Crouchad"
+		"ua"		"Присівши"
 	}
 	"Gain Efficiency (Short)"
 	{
@@ -160,6 +177,7 @@
 		"pl"		"GainEff"
 		"fi"		"Tehokkuus"
 		"sv"		"GainEff"
+		"ua"		"GainEff"
 	}
 	"Air Path"
 	{
@@ -168,6 +186,7 @@
 		"pl"		"Airpath"
 		"fi"		"Lentotie"
 		"sv"		"Airpath"
+		"ua"		"Airpath"
 	}
 	"Angle Ratio"
 	{
@@ -176,6 +195,7 @@
 		"pl"		"Angratio(Avg/Med/Max)"
 		"fi"		"KulmaSuhde(Kesk/Med/Maks)"
 		"sv"		"AngRatio(Avg/Med/Max)"
+		"ua"		"AngRatio(Avg/Med/Max)"
 	}
 	"Gain"
 	{
@@ -184,6 +204,7 @@
 		"pl"		"Gain"
 		"fi"		"Gain"
 		"sv"		"Gain"
+		"ua"		"Приріст"
 	}
 	"Loss"
 	{
@@ -192,6 +213,7 @@
 		"pl"		"Loss"
 		"fi"		"Häviö"
 		"sv"		"Loss"
+		"ua"		"Втрати"
 	}
 	"Average Gain (Short)"
 	{
@@ -200,6 +222,7 @@
 		"pl"		"AvgGain"
 		"fi"		"KeskGain"
 		"sv"		"AvgGain"
+		"ua"		"Ср.Приріст"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -210,6 +233,7 @@
 		"pl"		"First Jump"
 		"fi"		"Ensimmäinen hyppy"
 		"sv"		"Första hoppet"
+		"ua"		"Перший стрибок"
 	}
 	"Invalid movetype change"
 	{
@@ -218,6 +242,7 @@
 		"pl"		"Invalid movetype change"
 		"fi"		"Virheellinen liiketyyppi muutos"
 		"sv"		"Ogiltig ändring av rörelsetyp"
+		"ua"		"Невірна зміна типу руху"
 	}
 	"Invalid movetype"
 	{
@@ -226,6 +251,7 @@
 		"pl"		"Invalid movetype"
 		"fi"		"Virheellinen liiketyyppi"
 		"sv"		"Ogiltig rörelsetyp"
+		"ua"		"Невірний тип руху"
 	}
 	"Just noclipped"
 	{
@@ -234,6 +260,7 @@
 		"pl"		"Just noclipped"
 		"fi"		"Juuri noclip:pasit"
 		"sv"		"Nyligen noclippat"
+		"ua"		"Використано noclip"
 	}
 	"Invalid collisions"
 	{
@@ -242,6 +269,7 @@
 		"pl"		"Invalid collisions"
 		"fi"		"Virheelliset törmäykset"
 		"sv"		"Ogiltig kollision"
+		"ua"		"Невірні колізії"
 	}
 	"Base velocity detected"
 	{
@@ -250,6 +278,7 @@
 		"pl"		"Base velocity detected"
 		"fi"		"Perusnopeus havaittu"
 		"sv"		"Bashastigheten upptäckt"
+		"ua"		"Визначено базову швидкість"
 	}
 	"Invalid gains"
 	{
@@ -258,6 +287,7 @@
 		"pl"		"Invalid gains"
 		"fi"		"Virheelliset gainit"
 		"sv"		"Ogiltiga gains"
+		"ua"		"Невірні прирости"
 	}
 	"Externally modified"
 	{
@@ -266,6 +296,7 @@
 		"pl"		"Externally modified"
 		"fi"		"Ulkoisesti modifoidut"
 		"sv"		"Externt modifierat"
+		"ua"		"Зовнішньо модифіковані"
 	}
 	"Edgebugged"
 	{
@@ -274,6 +305,7 @@
 		"pl"		"Edgebugged"
 		"fi"		"Reunabugasit"
 		"sv"		"Edgebuggad"
+		"ua"		"Edgebugged"
 	}
 	"Teleported"
 	{
@@ -282,6 +314,7 @@
 		"pl"		"Teleported"
 		"fi"		"Teleporttasit"
 		"sv"		"Teleporterad"
+		"ua"		"Телепортований"
 	}
 
 	// =====[OPTIONS]=====
@@ -293,6 +326,7 @@
 		"pl"		"{grey}Włączyłeś wykaz jumpstatów."
 		"fi"		"{grey}Olet ottanut käyttöön jumpstattien reportoinnin."
 		"sv"		"{grey}Du har aktiverat rapportering av jumpstats."
+		"ua"		"{grey}Ви увімкнули статистику щодо стрибків."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
@@ -302,6 +336,7 @@
 		"pl"		"{grey}Wyłączyłeś wykaz jumpstatów."
 		"fi"		"{grey}Olet poistanut käytöstä jumpstattien reportoinnin."
 		"sv"		"{grey}Du har inaktiverat rapportering av jumpstats."
+		"ua"		"{grey}Ви вимкнули статистику по стрибкам."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -311,6 +346,7 @@
 		"pl"		"{grey}Włączyłeś wyświetlanie dystansu dla każdego skoku."
 		"fi"		"{grey}Olet ottanut käyttöön \"aina-päällä\" jumpstattien reportoinnin."
 		"sv"		"{grey}Du har aktiverat \"alltid på\" jumpstats."
+		"ua"		"{grey}Ви увімкнули постійне відображення статистики стрибків."
 	}
 	"Jumpstats Option - Jumpstats Always - Disable"
 	{
@@ -320,6 +356,7 @@
 		"pl"		"{grey}Wyłączyłeś wyświetlanie dystansu dla każdego skoku."
 		"fi"		"{grey}Olet poistanut käytöstä \"aina-päällä\" jumpstattien reportoinnin."
 		"sv"		"{grey}Du har inaktiverat \"alltid på\" jumpstats."
+		"ua"		"{grey}Ви вимкнули постійне відображення статистики стрибків."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -328,6 +365,7 @@
 		"pl"		"{grey}Użycie: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"fi"		"{grey}Käyttö: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"sv"		"{grey}Användning: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"ua"		"{grey}Використання: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
 	{
@@ -336,6 +374,7 @@
 		"pl"		"{grey}Nadawanie jumpstatów zostało wyłączone."
 		"fi"		"{grey}Jumpstattien lähetystoiminto poistettu käytöstä."
 		"sv"		"{grey}Inaktiverat chattutskrifter av jumpstats från andra personer."
+		"ua"		"{grey}Ви вимкнули трансляцію статистики стрибків."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
@@ -345,6 +384,7 @@
 		"pl"		"{grey}Próg nadawania jumpstatów został zmieniony na {default}{tier}."
 		"fi"		"{grey}Muiden pelaajien chatissa näkyvien jumpstattien kynnysarvo on nyt {default}{tier}."
 		"sv"		"{grey}Minimigränsen för jumpstats chattutskrifter från andra personer är nu {default}{tier}."
+		"ua"		"{grey}Мінмальний поріг трансляції статистики стрибків — {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -353,6 +393,7 @@
 		"pl"		"{grey}Użycie: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"fi"		"{grey}Käyttö: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"sv"		"{grey}Användning: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"ua"		"{grey}Використання: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
 	{
@@ -361,6 +402,7 @@
 		"pl"		"{grey}Dźwięk jumpstatów został wyłączony."
 		"fi"		"{grey}Jumpstattien äänitehosteet poistettu käytöstä."
 		"sv"		"{grey}Inaktiverat egna jumpstats ljudeffekter."
+		"ua"		"{grey}Звукові ефекти для стрибків вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
@@ -370,6 +412,7 @@
 		"pl"		"{grey}Próg nadawania efektów dźwiękowych to {default}{tier}."
 		"fi"		"{grey}Jumpstattien äänitehosteiden kynnysarvo on nyt {default}{tier}."
 		"sv"		"{grey}Minimigränsen för jumpstats ljudeffekter är nu {default}{tier}."
+		"ua"		"{grey}Мінімальний стрибок для котрого увімкнені звукові ефекти — {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"
@@ -381,6 +424,7 @@
 		"pl"		"{default}{player} {grey}Skoczył {color}{distance} {grey}unitów | {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"fi"		"{default}{player} {grey}hyppäsi {color}{distance} {grey}uniittia hyppytyylillä {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"sv"		"{default}{player} {grey}hoppade {color}{distance} {grey}units med {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+		"ua"		"{default}{player} {grey}стрибнув {color}{distance} {grey}units з {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 	}
 	
 	"Jumpstats Report - Invalidation Reason"
@@ -392,6 +436,7 @@
 		"pl"		"({reason})"
 		"fi"		"({reason})"
 		"sv"		"({reason})"
+		"ua"		"({reason})"
 	}
 	"Jumpstats Report - Chat Summary"
 	{
@@ -403,6 +448,7 @@
 		"pl"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Width | {olive}{height} {grey}Height"
 		"fi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Synkki | {olive}{pre} {grey}Edeltävä | {olive}{max} {grey}Maks\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviaatio | {olive}{width} {grey}Leveys | {olive}{height} {grey}Korkeus"
 		"sv"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Synk | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Bredd | {olive}{height} {grey}Höjd"
+		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр. | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс.\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Відхилення | {olive}{width} {grey}Ширина | {olive}{height} {grey}Висота"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -413,6 +459,7 @@
 		"pl"		"{player_name} skoczył {distance} unitów | {jump_type} {invalidation_reason}"
 		"fi"		"{player_name} hyppäsi {distance} uniittia hyppytyylillä {jump_type} {invalidation_reason}"
 		"sv"		"{player_name} hoppade {distance} units med {jump_type} {invalidation_reason}"
+		"ua"		"{player_name} стрибнув {distance} units з {jump_type} {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{
@@ -423,6 +470,7 @@
 		"pl"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
 		"fi"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Synkki | {pre} Edeltävä | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Korkeus"
 		"sv"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Synk | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Höjd"
+		"ua"		"{mode} | {style} | {strafe_count} {strafe_text} | {sync} Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
@@ -433,6 +481,7 @@
 		"pl"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"fi"		"{gain_eff}%%%% Tehokkuus | {air_path} Lentotie | {deviation} Deviaatio | {width} Leveys | {air_time} Ilma-aika | {offset} Kompensaatio | {duck_end_time}/{duck_total_time} Kyykyssä"
 		"sv"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Bredd | {air_time} Airtid | {offset} Offset | {duck_end_time}/{duck_total_time} Crouchad"
+		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зсув | {duck_end_time}/{duck_total_time} Присівши"
 	}
 	"Jumpstats Report - Strafe Report Header"
 	{
@@ -444,6 +493,7 @@
 		"pl"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
 		"fi"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
 		"sv"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
+		"ua"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
 	}
 	"Jumpstats Report - Strafe Report"
 	{
@@ -455,5 +505,6 @@
 		"pl"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 		"fi"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 		"sv"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
+		"ua"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 	}
 }

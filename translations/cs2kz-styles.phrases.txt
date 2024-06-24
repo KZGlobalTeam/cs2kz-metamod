@@ -7,6 +7,7 @@
 		"pl"		"{grey}Użycie: {default}kz_style <mode>.{grey} Sprawdź konsolę aby zobaczyć dostępne style!"
 		"fi"		"{grey}Käyttö: {default}kz_style <tyyli>.{grey} Tarkista konsolista mahdolliset tyylit."
 		"sv"		"{grey}Användning: {default}kz_style <mode>.{grey} Kolla konsolen för möjliga KZ modes!"
+		"ua"		"{grey}Використання: {default}kz_style <style>.{grey} Перевірте консоль, щоб побачити список доступних стилів!"
 	}
 	"Possible & Current Styles"
 	{
@@ -16,6 +17,7 @@
 		"pl"		"Możliwe style: (Obecny styl to {style})"
 		"fi"		"Mahdolliset tyylit: (Tämän hetkinen tyyli on {style})"
 		"sv"		"Möjliga KZ modes: (Nuvarande KZ mode är {style})"
+		"ua"		"Доступні KZ стилі: (Поточний стиль — {style})"
 	}
 	"Style Not Available"
 	{
@@ -26,6 +28,7 @@
 		"pl"		"{grey}Styl {purple}{style} {grey}jest obecnie niedostępny."
 		"fi"		"{grey}Tyyli {purple}{style} {grey}ei ole tällä hetkellä saatavilla."
 		"sv"		"{grey}Användning av {purple}{style} {grey}mode är inte tillgängligt nu."
+		"ua"		"{grey}Стиль {purple}{style} {grey}наразі недоступний."
 	}
 	"Switched Style"
 	{
@@ -36,5 +39,6 @@
 		"pl"		"{grey}Zmieniłeś styl na {purple}{style}."
 		"fi"		"{grey}Olet vaihtanut {purple}{style} {grey}tyyliin."
 		"sv"		"{grey}Du har valt {purple}{style} {grey}mode."
+		"ua"		"{grey}Ви переключилися на {purple}{style} {grey}стиль."
 	}
 }
