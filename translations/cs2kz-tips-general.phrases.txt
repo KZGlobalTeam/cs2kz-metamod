@@ -7,6 +7,7 @@
 		"pl"	"{grey}Użyj {default}/help {grey}żeby zobaczyć wszystkie dostępne komendy."
 		"fi"	"{grey}Käytä {default}/help {grey}komentoa nähdäksesi kaikki mahdolliset KZ komennot."
 		"sv"	"{grey}Använd {default}/help {grey}för att se alla möjliga KZ kommandon."
+		"ua"	"{grey}Використовуйте {default}/help {grey}щоб побачити всі доступні KZ команди."
 	}
 	"Tip - kz_mode"
 	{
@@ -15,6 +16,7 @@
 		"pl"	"{grey}Możesz przełączać się między trybami używając skrótów. Na przykład, użyj {default}/ckz{grey} aby zmienić tryb na {purple}Klasyczny {grey} lub {default}/vnl {grey}aby zmienić tryb na {purple}Vanilla {grey}mode."
 		"fi"	"{grey}Voit vaihtaa moodia kirjoittamalla sen lyhennyksen. Esimerkiksi, voit kirjoittaa {default}/ckz{grey} chattiin vaihtaaksesi {purple}Classic {grey}moodiin tai {default}/vnl {grey}vaihtaaksesi {purple}Vanilla {grey}moodiin."
 		"sv"	"{grey}Du kan byta till en annan KZ mode genom att använda förkortningen. Skriv t.ex. {default}/ckz{grey} för att byta till {purple}Classic {grey}mode eller {default}/vnl {grey}för att byta till {purple}Vanilla {grey}mode."
+		"ua"	"{grey}Ви можете змінити KZ режим написавши його абревіатуру. Наприклад, напишіть в чат {default}/ckz{grey} щоб переключитися на {purple}Classic {grey}режим або {default}/vnl {grey}аби переключитися на {purple}Vanilla {grey}режим."
 	}
 	"Tip - kz_restart"
 	{
@@ -23,6 +25,7 @@
 		"pl"	"{grey}Użyj {default}/restart{grey} aby wrócić na pozycję startową."
 		"fi"	"{grey}Voit teleportata takaisin aloituspisteeseesi käyttämällä {default}/restart{grey} komentoa."
 		"sv"	"{grey}Du kan teleportera tillbaka till början genom att skriva {default}/restart{grey}."
+		"ua"	"{grey}Ви можете повернутися до своєї стартової позиції написавши в чат {default}/restart{grey}."
 	}
 	"Tip - kz_ssp"
 	{
@@ -31,6 +34,7 @@
 		"pl"	"{grey}Możesz użyć {default}/setstartpos {grey}lub {default}/clearstartpos {grey}aby zmieniać pozycję startową."
 		"fi"	"{grey}Voit käyttää {default}/setstartpos {grey}ja {default}/clearstartpos {grey}komentoja mukauttamaan custom aloituspistettäsi."
 		"sv"	"{grey}Du kan använda {default}/setstartpos {grey}och {default}/clearstartpos {grey}för att ändra din startposition."
+		"ua"	"{grey}Ви можете написати в чат{default}/setstartpos {grey}та {default}/clearstartpos {grey}щоб керувати своєю стартовою позицією."
 	}
 	"Tip - stretch"
 	{
@@ -39,6 +43,7 @@
 		"pl"	"{grey}Dbaj o siebie. Pamiętaj o regularnych przerwach i nawodnieniu."
 		"fi"	"{grey}Pidä itsestäsi huolta. Pidä taukoja säännöllisesti venytelläksesi ja juo vettä."
 		"sv"	"{grey}Ta hand om dig själv. Ta regelbundna pauser för att stretcha och dricka vatten."
+		"ua"	"{grey}Слідкуйте за собою. Робіть регулярні перерви, щоб розминатись і підтримувати водний баланс."
 	}
 	"Tip - kz_tips"
 	{
@@ -47,6 +52,7 @@
 		"pl"	"{grey}Nie potrzebujesz wskazówek na czacie? Możesz je wyłączyć używając {default}/tips{grey}."
 		"fi"	"{grey}Etkö tarvitse vihejeitä kuten tämä chatissasi? Voit muuttaa niiden asetusta {default}/tips{grey} komennolla."
 		"sv"	"{grey}Vill du inte se tips som dessa i chatten? Du kan ändra det med {default}/tips{grey}."
+		"ua"	"{grey}Якщо ви не хочете бачити такі поради в чаті, то вимкніть їх написавши {default}/tips{grey}."
 	}
 	"Tip - bind"
 	{
@@ -55,6 +61,7 @@
 		"pl"	"{grey}Możesz przypisać komendy do wybranych klawiszy dla łatwego dostępu, na przykład: {default}bind {purple}<klawisz1> {default}\"kz_cp\"; bind {purple}<klawisz2> {default}\"kz_tp\"."
 		"fi"	"{grey}Voit asettaa komentoja näppäimiisi helpotukseksesi, esimerkiksi: {default}bind {purple}<näppäin1> {default}\"kz_cp\"; bind {purple}<näppäin2> {default}\"kz_tp\"."
 		"sv"	"{grey}Du kan binda kommandon till knappar, som t.ex: {default}bind {purple}<knapp1> {default}\"kz_cp\"; bind {purple}<knapp2> {default}\"kz_tp\"."
+		"ua"	"{grey}Ви можете прив'язати команди до кнопок для легшого доступу, наприклад: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 	}
 	"Tip - kz_prevcp"
 	{
@@ -63,6 +70,7 @@
 		"pl"	"{grey}Aby wrócić poprzedniego checkpointu wpisz{default}/prevcp{grey}."
 		"fi"	"{grey}Teleporttaa edelliseen tarkistuspisteeseen {default}/prevcp{grey} komennolla."
 		"sv"	"{grey}Teleportera till föregående checkpoint med {default}/prevcp{grey}."
+		"ua"	"{grey}Поверніться до попереднього чекпоінту написавши {default}/prevcp{grey}."
 	}
 	"Tip - kz_nextcp"
 	{
@@ -71,6 +79,7 @@
 		"pl"	"{grey}Aby teleportować się do następnego checkpointu wpisz{default}/nextcp{grey}."
 		"fi"	"{grey}Teleporttaa seuraavaan tarkistuspisteeseen {default}/nextcp{grey} komennolla."
 		"sv"	"{grey}Teleportera till nästa checkpoint med {default}/nextcp{grey}."
+		"ua"	"{grey}Телепортуйтеся до наступного чекпоінту написавши {default}/nextcp{grey}."
 	}
 	"Tip - bugs"
 	{
@@ -79,6 +88,7 @@
 		"pl"	"{grey}Wszystkie problemy związane z CS2KZ zgłoś na GitHubie: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"fi"	"{grey}Reportoi ongelmia CS2KZ liittyen meidän GitHub sivuilla: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"sv"	"{grey}Anmäl problem angående CS2KZ på vår GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"ua"	"{grey}Повідомляйте про проблеми, пов'язані з CS2KZ, на нашому GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
 	"Tip - kz_jssound"
 	{
@@ -87,6 +97,7 @@
 		"pl"	"{grey}Możesz kontrolować dźwięki jumpstatów poprzez {default}/jssound{grey}."
 		"fi"	"{grey}Voit valita mitkä jumpstatit soittavat äänieffektin käyttämällä {default}/jssound{grey} komentoa."
 		"sv"	"{grey}Du kan ändra vilka jumpstats som spelar ljud med {default}/jssound{grey}."
+		"ua"	"{grey}Ви можете керувати тим, які стрибки будуть відтворювати звуковий ефект, за допомогою {default}/jssound{grey}."
 	}
 	"Tip - kz_jsbroadcast"
 	{
@@ -95,5 +106,6 @@
 		"pl"	"{grey}Użyj {default}/jsbroadcast {grey}aby kontrolować jakie jumpstaty innych graczy są nadawane do ciebie."
 		"fi"	"{grey}Käytä {default}/jsbroadcast {grey}komentoa vaihtaaksesi mitkä muiden pelaajien saamat jumpstatit printataan sinulle."
 		"sv"	"{grey}Använd {default}/jsbroadcast {grey}för att ändra vilka jumpstats från andra personer som ska vara synliga till dig."
+		"ua"	"{grey}Напишіть в чат {default}/jsbroadcast {grey}щоб змінити типи стрибків інших гравців котрі будуть видні в чаті."
 	}
 }

@@ -7,6 +7,7 @@
 		"pl"	"{grey}Użyj {default}/togglejs{grey} aby włączyć lub wyłączyć wykaz jumpstatów."
 		"fi"	"{grey}Voit vaihtaa jumpstattien reportoinnin asetusta käyttämällä {default}/togglejs{grey} komentoa."
 		"sv"	"{grey}Du kan ändra jumpstats chattutskriften genom att skriva {default}/togglejs{grey}."
+		"ua"	"{grey}Ви можете увімк./вимк. статистику стрибків написавши в чат {default}/togglejs{grey}."
 	}
 	"Tip - kz_jsalways"
 	{
@@ -15,5 +16,6 @@
 		"pl"	"{grey}Użyj {default}/togglejs{grey} aby włączyć lub wyłączyć wyświetlanie dystansu dla każdego skoku."
 		"fi"	"{grey}Käytä {default}/jsalways {grey}komentoa vaihtaaksesi \"aina-päällä\" jumpstattien asetuksen tilaa."
 		"sv"	"{grey}Använd {default}/jsalways {grey}för att toggla alla egna jumpstats."
+		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}щоб увімк./вимк. постійне відображення статистики стрибків."
 	}
 }

@@ -7,6 +7,7 @@
 		"pl"		"{yellow}1{grey} TP"
 		"fi"		"{yellow}1{grey} TP"
 		"sv"		"{yellow}1{grey} TP"
+		"ua"		"{yellow}1{grey} TP"
 	}
 	"2+ Teleports Text"
 	{
@@ -16,6 +17,7 @@
 		"pl"		"{yellow}{tp_count}{grey} TPs"
 		"fi"		"{yellow}{tp_count}{grey} TPt"
 		"sv"		"{yellow}{tp_count}{grey} TPs"
+		"ua"		"{yellow}{tp_count}{grey} TPs"
 	}
 
 	"Beat Map (Standard)"
@@ -28,6 +30,7 @@
 		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"sv"		"{lime}{player_name} {grey}har klarat mappen på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		"ua"		"{lime}{player_name} {grey}завершив мапу за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 	}
 	"Beat Map (PRO)"
 	{
@@ -39,6 +42,7 @@
 		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"sv"		"{lime}{player_name} {grey}har klarat mappen på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		"ua"		"{lime}{player_name} {grey}завершив мапу за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 	}
 	"Beat Course (NUB)"
 	{
@@ -48,7 +52,8 @@
 		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"sv"		"{lime}{player_name} {grey}har klarat mappen {bluegrey}\"{course_name}\" {grey}på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		"sv"		"{lime}{player_name} {grey}har klarat mappen {bluegrey}\"{course_name}\" {grey}på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"		
+		"ua"		"{lime}{player_name} {grey}завершив курс{bluegrey}\"{course_name}\" {grey}за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
 	}
 	"Beat Course (PRO)"
 	{
@@ -59,6 +64,7 @@
 		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 		"sv"		"{lime}{player_name} {grey}har klarat mappen {bluegrey}\"{course_name}\" {grey}på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		"ua"		"{lime}{player_name} {grey}завершив курс {bluegrey}\"{course_name}\" {grey}за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
 	}
 	
 	"Can't Pause (Generic)"
@@ -68,6 +74,7 @@
 		"pl"		"{darkred}Nie możesz teraz zapauzować."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta juuri nyt."
 		"sv"		"{darkred}Du kan inte pausa just nu."
+		"ua"		"{darkred}Ви не можете поставити на паузу прямо зараз."
 	}
 	"Can't Pause (Just Resumed)"
 	{
@@ -77,6 +84,7 @@
 		"pl"		"{darkred}Próbujesz wstrzymać czas zbyt szybko, zaczekaj chwilę."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä jatkoit juuri ajastintasi."
 		"sv"		"{darkred}Du kan inte pausa eftersom du fortsatte nyligen."
+		"ua"		"{darkred}Ви не можете поставити на паузу, тому що ви щойно відновили."
 	}
 	"Can't Pause (Midair)"
 	{
@@ -86,6 +94,7 @@
 		"pl"		"{darkred}Nie możesz zapauzować bedąc w powietrzu."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta ilmassa."
 		"sv"		"{darkred}Du kan inte pausa i luften."
+		"ua"		"{darkred}Ви не можете поставити на паузу у повітрі."
 	}
 	"Can't Pause (Just Landed)"
 	{
@@ -95,6 +104,7 @@
 		"pl"		"{darkred}Nie możesz zapauzować, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä laskeuduit juuri."
 		"sv"		"{darkred}Du kan inte pausa eftersom du landade nyligen."
+		"ua"		"{darkred}Ви не можете поставити на паузу, ви щойно приземлилися."
 	}
 	"Can't Pause (Anti Pause Area)"
 	{
@@ -103,6 +113,7 @@
 		"pl"		"{darkred}Pauzowanie jest wyłączone w tym miejscu."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta sillä se on poissa käytöstä tällä alueella."
 		"sv"		"{darkred}Du kan inte pausa eftersom det är inaktiverat på detta området."
+		"ua"		"{darkred}Ви не можете поставити на паузу, тому що в цій області паузу вимкнено."
 	}
 	"Can't Resume (Generic)"
 	{
@@ -111,6 +122,7 @@
 		"pl"		"{darkred}Nie możesz teraz wznowić czasu."
 		"fi"		"{darkred}Et voi jatkaa ajastinta juuri nyt."
 		"sv"		"{darkred}Du kan inte fortsätta just nu."
+		"ua"		"{darkred}Ви не можете продовжити прямо зараз."
 	}
 	"Can't Resume (Just Paused)"
 	{
@@ -120,5 +132,6 @@
 		"pl"		"{darkred}Nie możesz teraz wznowić czasu, ponieważ dopiero co użyłeś pauzy."
 		"fi"		"{darkred}Et voi jatkaa ajastintasi, sillä pysäytit sen juuri."
 		"sv"		"{darkred}Du kan inte fortsätta eftersom du pausade nyligen."
+		"ua"		"{darkred}Ви не можете продовжити, тому що ви щойно ставили на паузу."
 	}
 }

@@ -7,6 +7,7 @@
 		"pl"		"{grey}Spójrz do konsoli po listę komend!"
 		"fi"		"{grey}Löydät komentolistan katsomalla konsoliisi!"
 		"sv"		"{grey}Kolla i konsolen för en lista av kommandon!"
+		"ua"		"{grey}Перегляньте список доступних команд у консолі!"
 	}
 	"Command Help Response (Console)"
 	{
@@ -15,6 +16,7 @@
 		"pl"		"Aby użyć tych komend, wpisz w konsoli \"bind <klawisz> kz_<nazwa komendy>\", albo wpisz !<nazwa komendy> lub /<nazwa komendy> na czacie.\nnp.: \"bind 1 kz_cp\" lub \"!cp\" lub \"/cp\""
 		"fi"		"Käyttääksesi näitä komentoja, voit kirjoittaa \"bind <key> kz_<komennon nimi>\" konsoliisi, tai kirjoittaa !<komento> tai /<komento> chattiin.\nEsimerkiksi: \"bind 1 kz_cp\" tai \"!cp\" tai \"/cp\""
 		"sv"		"För att använda dessa kommandon, kan du skriva \"bind <knapp> kz_<kommandos namn>\" i din konsol, eller skriv !<kommandos namn> eller /<kommandos namn> i chatten.\nTill exempel: \"bind 1 kz_cp\" eller \"!cp\" eller \"/cp\""
+		"ua"		"Щоб використати ці команди напишіть \"bind <key> kz_<назва команди>\" у вашій консолі, або напишіть !<назва команди> чи /<назва команди> в чаті.\nНаприклад: \"bind 1 kz_cp\" або \"!cp\" чи \"/cp\""
 	}
 	"Switch Language"
 	{
@@ -25,6 +27,7 @@
 		"pl"		"{grey}Zmieniłeś język na {default}{language}{grey}."
 		"fi"		"{grey}Kielesi on nyt {default}{language}{grey}."
 		"sv"		"{grey}Du har bytt språket till {default}{language}{grey}."
+		"ua"		"{grey}Ви змінили мову на {default}{language}{grey}."
 	}
 
 	// Commands
@@ -35,6 +38,7 @@
 		"pl"		"Cofnij teleport."
 		"fi"		"Kumoa teleportti."
 		"sv"		"Ångra teleport."
+		"ua"		"Скасувати телепорт."
 	}
 	"Command Description - kz_checkpoint"
 	{
@@ -43,6 +47,7 @@
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
 		"sv"		"Skapa en checkpoint på mark eller stege."
+		"ua"		"Поставити чекпоінт на землі або на драбині."
 	}
 	"Command Description - kz_cp"
 	{
@@ -51,6 +56,7 @@
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
 		"sv"		"Skapa en checkpoint på mark eller stege."
+		"ua"		"Поставити чекпоінт на землі або на драбині."
 	}
 	"Command Description - kz_teleport"
 	{
@@ -59,6 +65,7 @@
 		"pl"		"Teleportuj się do aktualnego checkpointu."
 		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
 		"sv"		"Teleportera till nuvarande checkpoint."
+		"ua"		"Телепортуватися до поточного чекпоінту."
 	}
 	"Command Description - kz_tp"
 	{
@@ -67,6 +74,7 @@
 		"pl"		"Teleportuj się do aktualnego checkpointu."
 		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
 		"sv"		"Teleportera till nuvarande checkpoint."
+		"ua"		"Телепортуватися до поточного чекпоінту."
 	}
 	"Command Description - kz_prevcp"
 	{
@@ -75,6 +83,7 @@
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
 		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
 		"sv"		"Teleportera till föregående checkpoint."
+		"ua"		"Телепортуватися до попереднього чекпоінту."
 	}
 	"Command Description - kz_pcp"
 	{
@@ -83,6 +92,7 @@
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
 		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
 		"sv"		"Teleportera till föregående checkpoint."
+		"ua"		"Телепортуватися до попереднього чекпоінту."
 	}
 	"Command Description - kz_nextcp"
 	{
@@ -91,6 +101,7 @@
 		"pl"		"Teleportuj się do następnego checkpointu."
 		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
 		"sv"		"Teleportera till nästa checkpoint."
+		"ua"		"Телепортуватися до наступного чекпоінту."
 	}
 	"Command Description - kz_ncp"
 	{
@@ -99,6 +110,7 @@
 		"pl"		"Teleportuj się do następnego checkpointu."
 		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
 		"sv"		"Teleportera till nästa checkpoint."
+		"ua"		"Телепортуватися до наступного чекпоінту."
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -107,6 +119,7 @@
 		"pl"		"Ustaw własną pozycję startową."	
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 		"sv"		"Skapa ny startposition på nuvarande position."
+		"ua"		"Встановити поточну позицію як стартову."
 	}
 	"Command Description - kz_ssp"
 	{
@@ -115,6 +128,7 @@
 		"pl"		"Ustaw własną pozycję startową."	
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 		"sv"		"Skapa ny startposition på nuvarande position."
+		"ua"		"Встановити поточну позицію як стартову."
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -123,6 +137,7 @@
 		"pl"		"Usuń własną pozycję startową."	
 		"fi"		"Tyhjennä custom aloituspisteesi."
 		"sv"		"Rensa justerad startposition."
+		"ua"		"Очистити власну стартову позицію."
 	}
 	"Command Description - kz_csp"
 	{
@@ -131,6 +146,7 @@
 		"pl"		"Usuń własną pozycję startową."	
 		"fi"		"Tyhjennä custom aloituspisteesi."
 		"sv"		"Rensa justerad startposition."
+		"ua"		"Очистити власну стартову позицію."
 	}
 	"Command Description - kz_panel"
 	{
@@ -139,6 +155,7 @@
 		"pl"		"Wyświetlanie panelu środkowego."	
 		"fi"		"Vaihda keskipaneelin näyttämisen asetusta."
 		"sv"		"Toggla mittpanelen."
+		"ua"		"Перемикання відображення центральної панелі."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
@@ -147,6 +164,7 @@
 		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."	
 		"fi"		"Muuta muiden pelaajien chatissä näkyvien jumpstattien minimi kynnysarvoa."
 		"sv"		"Ändra minimigräns för sändning av andra spelares jumpstat."
+		"ua"		"Змінити мінімальний поріг стрибків інших гравців для відображення в чаті."
 	}
 	"Command Description - kz_jssound"
 	{
@@ -155,6 +173,7 @@
 		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."	
 		"fi"		"Muuta jumpstattien äänitehosteiden minimi kynnysarvoa."
 		"sv"		"Ändra minimigräns för ljudeffekter av jumpstats."
+		"ua"		"Змінити мінімальний поріг для звукових ефектів під час стрибків."
 	}
 	"Command Description - kz_togglestats"
 	{
@@ -163,6 +182,7 @@
 		"pl"		"Przełącz wykaz jumpstatów."	
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
+		"ua"		"Перемикання відображення статистики стрибків."
 	}
 	"Command Description - kz_togglejs"
 	{
@@ -171,6 +191,7 @@
 		"pl"		"Przełącz wykaz jumpstatów."	
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
+		"ua"		"Перемикання відображення статистики стрибків."
 	}
 	"Command Description - kz_jsalways"
 	{
@@ -179,6 +200,7 @@
 		"pl"		"Zawsze pokazuj jumpstaty."	
 		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla alla (egna) jumpstats i chatten."
+		"ua"		"Перемикання відображення статистики для будь-яких стрибків."
 	}
 	"Command Description - kz_mode"
 	{
@@ -187,6 +209,7 @@
 		"pl"		"Lista trybów gry bądź jego zmiana."	
 		"fi"		"Listaa tai vaihda moodia."
 		"sv"		"Lista eller ändra KZ mode."
+		"ua"		"Відобразити чи змінити KZ режим."
 	}
 	"Command Description - kz_noclip"
 	{
@@ -195,6 +218,7 @@
 		"pl"		"Włącz lub wyłącz noclipa."	
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
+		"ua"		"Перемикання noclip."
 	}
 	"Command Description - kz_nc"
 	{
@@ -203,6 +227,7 @@
 		"pl"		"Włącz lub wyłącz noclipa."	
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
+		"ua"		"Перемикання noclip."
 	}
 	"Command Description - noclip"
 	{
@@ -211,6 +236,7 @@
 		"pl"		"Włącz lub wyłącz noclipa."	
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
+		"ua"		"Перемикання noclip."
 	}
 	"Command Description - kz_spec"
 	{
@@ -219,6 +245,7 @@
 		"pl"		"Obserwuj innego gracza."
 		"fi"		"Katsele pelaajaa."
 		"sv"		"Åskåda en spelare."
+		"ua"		"Спостерігати за гравцем."
 	}
 	"Command Description - kz_style"
 	{
@@ -227,6 +254,7 @@
 		"pl"		"Lista stylów gry bądź jego zmiana."	
 		"fi"		"Listaa tai vaihda tyyliä."
 		"sv"		"Lista eller ändra KZ mode."
+		"ua"		"Відобразити чи змінити KZ режим."
 	}
 	"Command Description - kz_stop"
 	{
@@ -235,6 +263,7 @@
 		"pl"		"Wyłącz timer."	
 		"fi"		"Pysäytä ajastin."
 		"sv"		"Stoppa timer."
+		"ua"		"Зупинити таймер."
 	}
 	"Command Description - kz_pause"
 	{
@@ -243,6 +272,7 @@
 		"pl"		"Przełącz pauzę timera."	
 		"fi"		"Vaihda ajastimen keskeytyksen asetusta."
 		"sv"		"Pausa timer."
+		"ua"		"Перемикання таймера на паузу."
 	}
 	"Command Description - kz_tips"
 	{
@@ -251,6 +281,7 @@
 		"pl"		"Włącz lub wyłącz wskazówki."	
 		"fi"		"Vaihda vihjeiden asetusta."
 		"sv"		"Toggla tips."
+		"ua"		"Перемикання відображення підказок."
 	}
 	"Command Description - kz_hidelegs"
 	{
@@ -259,6 +290,7 @@
 		"pl"		"Ukryj nogi w pierwszej osobie."	
 		"fi"		"Piilota omat jalkasi ensimmäisessä persoonassa."
 		"sv"		"Toggla egna bens synlighet i första person."
+		"ua"		"Приховати свої ноги від першої особи."
 	}
 	"Command Description - kz_hide"
 	{
@@ -267,6 +299,7 @@
 		"pl"		"Ukryj innych graczy."	
 		"fi"		"Piilota muut pelaajat."
 		"sv"		"Dölj/visa andra spelare."
+		"ua"		"Приховати інших гравців."
 	}
 	"Command Description - kz_restart"
 	{
@@ -275,6 +308,7 @@
 		"pl"		"Restart."	
 		"fi"		"Aloita alusta."
 		"sv"		"Starta om."
+		"ua"		"Рестарт."
 	}
 	"Command Description - kz_r"
 	{
@@ -283,6 +317,7 @@
 		"pl"		"Restart."
 		"fi"		"Aloita alusta."
 		"sv"		"Starta om."
+		"ua"		"Рестарт."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -291,6 +326,7 @@
 		"pl"		"Ukryj broń."
 		"fi"		"Piilota ase ja pelaajamalli."
 		"sv"		"Dölj vapen."
+		"ua"		"Приховати зброю."
 	}
 	"Command Description - jointeam"
 	{
@@ -304,6 +340,7 @@
 		"pl"		"Pokaż tą pomocną wiadomość."
 		"fi"		"Näytä tämä apuviesti."
 		"sv"		"Visa detta hjälpmeddelandet."
+		"ua"		"Показати це довідкове повідомлення."
 	}
 	"Command Description - kz_language"
 	{
@@ -312,6 +349,7 @@
 		"pl"		"Zmień obecnie ustawiony język"
 		"fi"		"Vaihda käytössäolevaa kieltä."
 		"sv"		"Byt nuvarande språk."
+		"ua"		"Змінити мову."
 	}
 	"Command Description - kz_vnl"
 	{
@@ -320,6 +358,7 @@
 		"pl"		"Zmień tryb na Vanilla"
 		"fi"		"Vaihda Vanilla moodiin."
 		"sv"		"Byt till Vanilla mode."
+		"ua"		"Переключитися на режим Vanilla."
 	}
 	"Command Description - kz_ckz"
 	{
@@ -328,5 +367,6 @@
 		"pl"		"Zmień tryb na Classic."
 		"fi"		"Vaihda Classic moodiin."
 		"sv"		"Byt till Classic mode."
+		"ua"		"Переключитися на режим Classic."
 	}
 }
