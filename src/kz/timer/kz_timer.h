@@ -14,8 +14,6 @@
 
 #define KZ_PAUSE_COOLDOWN 1.0f
 
-// struct KzCourseDescriptor;
-
 class KZTimerServiceEventListener
 {
 public:
