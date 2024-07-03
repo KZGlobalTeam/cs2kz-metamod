@@ -1,3 +1,5 @@
+#pragma once
+
 #include "common.h"
 #include "steam/isteamuser.h"
 #include "sdk/serversideclient.h"
@@ -116,6 +118,7 @@ public:
 	// General
 	const i32 index;
 	bool hasPrime {};
+	const char *name;
 
 private:
 	CSteamID unauthenticatedSteamID = k_steamIDNil;

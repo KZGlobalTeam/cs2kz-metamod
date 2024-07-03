@@ -1,3 +1,6 @@
+#include "../kz/kz.h"
+#include "../kz/language/kz_language.h"
+#include "../kz/global/kz_global.h"
 #include "player.h"
 #include "utils/utils.h"
 #include "iserver.h"
@@ -77,6 +80,8 @@ Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1,
 									CBufferString *pRejectReason)
 {
+	Player *player = ToPlayer(slot);
+	player->name = pszName;
 }
 
 void PlayerManager::OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress,
@@ -92,11 +97,52 @@ void PlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char 
 {
 	this->ToPlayer(slot)->Reset();
 	this->ToPlayer(slot)->SetUnauthenticatedSteamID(xuid);
+
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
+
+	// N.B. we reset the default-constructed session to a session with a valid timestamp
+	player->session = KZ::API::Session(g_pKZUtils->GetServerGlobals()->realtime);
+
+	auto onSuccess = [player](std::optional<KZ::API::Player> playerInfo) {
+		if (playerInfo)
+		{
+			player->languageService->PrintChat(true, false, "Display Hello", playerInfo->name.c_str());
+			player->info = playerInfo.value();
+			return;
+		}
+
+		KZGlobalService::RegisterPlayer(player, [player](std::optional<KZ::API::Error> error) {
+			if (error)
+			{
+				player->languageService->PrintError(error.value());
+			}
+		});
+	};
+
+	auto onError = [player](KZ::API::Error error) {
+		player->languageService->PrintError(error);
+	};
+
+	KZGlobalService::FetchPlayer(player->GetSteamId64(), onSuccess, onError);
 }
 
 void PlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid,
 									   const char *pszNetworkID)
 {
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
+
+	// flush timestamp
+	player->session.GoActive();
+
+	KZGlobalService::UpdatePlayer(player, [player](std::optional<KZ::API::Error> error) {
+		if (error)
+		{
+			META_CONPRINTF("[KZ::Global] Failed to send player update: %s\n", error->message.c_str());
+			return;
+		}
+
+		META_CONPRINTF("[KZ::Global] Updated `%s`.\n", player->GetName());
+	});
 }
 
 void PlayerManager::OnClientVoice(CPlayerSlot slot) {}

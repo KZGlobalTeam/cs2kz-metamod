@@ -472,4 +472,16 @@
 		"ua"		"Показати персональний найкращий час."
 		"tr"		"Kişisel rekor istatistiklerini gösterir."
 	}
+	"Command Description - kz_profile"
+	{
+		"en"		"Display player stats."
+	}
+	"Command Description - kz_mapinfo"
+	{
+		"en"		"Display information about the current map."
+	}
+	"Command Description - kz_minfo"
+	{
+		"en"		"Alias for kz_mapinfo"
+	}
 }

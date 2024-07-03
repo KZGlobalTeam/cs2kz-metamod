@@ -10,7 +10,9 @@ KZAutoBhopStylePlugin g_KZAutoBhopStylePlugin;
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 KZStyleManager *g_pStyleManager = NULL;
-StyleServiceFactory g_StyleFactory = [](KZPlayer *player) -> KZStyleService * { return new KZAutoBhopStyleService(player); };
+StyleServiceFactory g_StyleFactory = [](KZPlayer *player) -> KZStyleService * {
+	return new KZAutoBhopStyleService(player);
+};
 PLUGIN_EXPOSE(KZAutoBhopStylePlugin, g_KZAutoBhopStylePlugin);
 
 ConVar *sv_autobunnyhopping;

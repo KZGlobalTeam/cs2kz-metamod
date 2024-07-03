@@ -1,3 +1,5 @@
+#include "global/kz_global.h"
+
 #include "common.h"
 #include "utils/utils.h"
 #include "kz/kz.h"
@@ -131,6 +133,7 @@ void KZ::misc::RegisterCommands()
 	KZNoclipService::RegisterCommands();
 	KZHUDService::RegisterCommands();
 	KZLanguageService::RegisterCommands();
+	KZGlobalService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 	KZ::style::RegisterCommands();
 }

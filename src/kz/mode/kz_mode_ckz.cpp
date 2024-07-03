@@ -10,7 +10,9 @@ KZClassicModePlugin g_KZClassicModePlugin;
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 KZModeManager *g_pModeManager = NULL;
-ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService * { return new KZClassicModeService(player); };
+ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService * {
+	return new KZClassicModeService(player);
+};
 PLUGIN_EXPOSE(KZClassicModePlugin, g_KZClassicModePlugin);
 
 bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)

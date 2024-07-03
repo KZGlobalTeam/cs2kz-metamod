@@ -1,3 +1,5 @@
+#include "kz/global/kz_global.h"
+
 #include "hooks.h"
 #include "addresses.h"
 #include "bufferstring.h"
@@ -11,11 +13,11 @@
 #include "ctimer.h"
 #include "kz/kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
+#include "entityclass.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/db/kz_db.h"
 #include "utils/utils.h"
-#include "entityclass.h"
 
 #include "memdbgon.h"
 
@@ -775,6 +777,46 @@ static_function bool Hook_ActivateServer()
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
 	KZDatabaseService::SetupMap();
+	static_persist bool infiniteAmmoUnlocked {};
+	if (!infiniteAmmoUnlocked)
+	{
+		infiniteAmmoUnlocked = true;
+		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
+		if (cvarHandle.IsValid())
+		{
+			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
+		}
+		else
+		{
+			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
+		}
+	}
+
+	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
+
+	if (networkGameServer != nullptr)
+	{
+		auto onSuccess = [](std::optional<KZ::API::Map> map) {
+			if (!map)
+			{
+				META_CONPRINTF("[KZ::Global] Current map is not global.\n");
+			}
+			else
+			{
+				META_CONPRINTF("[KZ::Global] Fetched %s from the API.\n", map->name.c_str());
+			}
+
+			KZGlobalService::currentMap = map;
+		};
+
+		auto onError = [](KZ::API::Error error) {
+			META_CONPRINTF("[KZ::Global] Failed to fetch map from API: %s\n", error.message.c_str());
+		};
+
+		KZGlobalService::FetchMap(networkGameServer->GetMapName(), onSuccess, onError);
+	}
+
+	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

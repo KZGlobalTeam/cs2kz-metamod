@@ -15,6 +15,8 @@
 #include "style/kz_style.h"
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
+#include "global/kz_global.h"
+#include "global/players.h"
 
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
@@ -616,9 +618,16 @@ void KZPlayer::OnStopTouchGround()
 	this->jumpstatsService->AddJump();
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
+
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnStopTouchGround();
+		this->styleService->OnStopTouchGround();
+	}
+
+	if (this->jumped)
+	{
+		this->session.Jump(this->inPerf);
 	}
 }
 

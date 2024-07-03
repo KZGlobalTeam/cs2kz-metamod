@@ -58,7 +58,7 @@ void KZDatabaseService::SetupMap()
 	txn.queries.push_back(query);
 	// clang-format off
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(
-		txn, 
+		txn,
 		[databaseType](std::vector<ISQLQuery *> queries) 
 		{
 			switch (databaseType)

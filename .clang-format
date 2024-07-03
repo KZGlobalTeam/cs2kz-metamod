@@ -9,18 +9,39 @@ AllowShortCaseLabelsOnASingleLine: false
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: None
 AllowShortLoopsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: true
 BitFieldColonSpacing: After
+
+BraceWrapping:
+    AfterCaseLabel: true
+    AfterClass: true
+    AfterControlStatement: Always
+    AfterEnum: true
+    AfterFunction: true
+    AfterNamespace: true
+    AfterStruct: true
+    AfterUnion: true
+    AfterExternBlock: true
+    BeforeCatch: true
+    BeforeElse: true
+    BeforeLambdaBody: false
+    BeforeWhile: false
+    SplitEmptyFunction: true
+    SplitEmptyRecord: true
+    SplitEmptyNamespace: true
+
 BreakArrays: true
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
 BreakBeforeTernaryOperators: true
-AlwaysBreakTemplateDeclarations: true
 ColumnLimit: 150
 CompactNamespaces: false
 EmptyLineBeforeAccessModifier: Always
 IncludeBlocks: Preserve
 IndentCaseLabels: true
+IndentWidth: 4
 InsertBraces: true
 InsertNewlineAtEOF: true
 KeepEmptyLinesAtTheStartOfBlocks: false
@@ -45,6 +66,5 @@ SpaceBeforeSquareBrackets: false
 SpaceInEmptyBlock: false
 SpacesInAngles: Never
 SpacesInSquareBrackets: false
-UseTab: ForContinuationAndIndentation
-IndentWidth: 4
 TabWidth: 4
+UseTab: ForContinuationAndIndentation
