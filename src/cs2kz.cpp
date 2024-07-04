@@ -83,7 +83,7 @@ void KZPlugin::AllPluginsLoaded()
 
 void KZPlugin::AddonInit()
 {
-	local_persist bool addonLoaded;
+	static_persist bool addonLoaded;
 	if (g_pMultiAddonManager != nullptr && !addonLoaded)
 	{
 		g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);

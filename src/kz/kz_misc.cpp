@@ -15,7 +15,7 @@
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
 
-internal SCMD_CALLBACK(Command_KzHidelegs)
+static_function SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
@@ -30,7 +30,7 @@ internal SCMD_CALLBACK(Command_KzHidelegs)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzHide)
+static_function SCMD_CALLBACK(Command_KzHide)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
@@ -45,7 +45,7 @@ internal SCMD_CALLBACK(Command_KzHide)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzRestart)
+static_function SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
@@ -71,7 +71,7 @@ internal SCMD_CALLBACK(Command_KzRestart)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzHideWeapon)
+static_function SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
@@ -86,7 +86,7 @@ internal SCMD_CALLBACK(Command_KzHideWeapon)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_JoinTeam)
+static_function SCMD_CALLBACK(Command_JoinTeam)
 {
 	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), false);
 	return MRES_SUPERCEDE;

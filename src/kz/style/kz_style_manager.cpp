@@ -12,14 +12,14 @@
 #include "../language/kz_language.h"
 #include "utils/plat.h"
 
-internal SCMD_CALLBACK(Command_KzStyle);
+static_function SCMD_CALLBACK(Command_KzStyle);
 
-internal KZStyleManager styleManager;
+static_global KZStyleManager styleManager;
 KZStyleManager *g_pKZStyleManager = &styleManager;
 
 void KZ::style::InitStyleManager()
 {
-	static bool initialized = false;
+	static_persist bool initialized = false;
 	if (initialized)
 	{
 		return;
@@ -196,7 +196,7 @@ void KZ::style::InitStyleService(KZPlayer *player)
 	player->styleService = new KZNormalStyleService(player);
 }
 
-internal SCMD_CALLBACK(Command_KzStyle)
+static_function SCMD_CALLBACK(Command_KzStyle)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.SwitchToStyle(player, args->Arg(1));

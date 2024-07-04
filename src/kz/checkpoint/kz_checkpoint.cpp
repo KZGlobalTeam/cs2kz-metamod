@@ -7,7 +7,7 @@
 
 // TODO: replace printchat with HUD service's printchat
 
-internal const Vector NULL_VECTOR = Vector(0, 0, 0);
+static_global const Vector NULL_VECTOR = Vector(0, 0, 0);
 
 void KZCheckpointService::Reset()
 {

@@ -31,7 +31,7 @@ public:
 		bool teleportInAntiCpTrigger {};
 	};
 
-	static_global void RegisterCommands();
+	static void RegisterCommands();
 
 private:
 	i32 currentCpIndex {};

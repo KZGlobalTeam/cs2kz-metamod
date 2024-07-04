@@ -12,7 +12,7 @@ private:
 	bool inNoclip {};
 
 public:
-	static_global void RegisterCommands();
+	static void RegisterCommands();
 
 	void DisableNoclip()
 	{

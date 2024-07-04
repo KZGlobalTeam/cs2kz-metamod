@@ -25,10 +25,10 @@ struct ScmdManager
 	Scmd cmds[SCMD_MAX_CMDS];
 };
 
-internal ScmdManager g_cmdManager = {};
-internal bool g_coreCmdsRegistered = false;
+static_global ScmdManager g_cmdManager = {};
+static_global bool g_coreCmdsRegistered = false;
 
-internal SCMD_CALLBACK(Command_KzHelp)
+static_function SCMD_CALLBACK(Command_KzHelp)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->languageService->PrintChat(true, false, "Command Help Response (Chat)");
@@ -48,7 +48,7 @@ internal SCMD_CALLBACK(Command_KzHelp)
 	return MRES_SUPERCEDE;
 }
 
-internal void RegisterCoreCmds()
+static_function void RegisterCoreCmds()
 {
 	g_coreCmdsRegistered = true;
 

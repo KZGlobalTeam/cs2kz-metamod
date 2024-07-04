@@ -1,49 +1,49 @@
 #include "kz_checkpoint.h"
 #include "utils/simplecmds.h"
 
-internal SCMD_CALLBACK(Command_KzUndoTeleport)
+static_function SCMD_CALLBACK(Command_KzUndoTeleport)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->checkpointService->UndoTeleport();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzCheckpoint)
+static_function SCMD_CALLBACK(Command_KzCheckpoint)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->checkpointService->SetCheckpoint();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzTeleport)
+static_function SCMD_CALLBACK(Command_KzTeleport)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->checkpointService->TpToCheckpoint();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzPrevcp)
+static_function SCMD_CALLBACK(Command_KzPrevcp)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->checkpointService->TpToPrevCp();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzNextcp)
+static_function SCMD_CALLBACK(Command_KzNextcp)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->checkpointService->TpToNextCp();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_SetStartPos)
+static_function SCMD_CALLBACK(Command_SetStartPos)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->checkpointService->SetStartPosition();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_ClearStartPos)
+static_function SCMD_CALLBACK(Command_ClearStartPos)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->checkpointService->ClearStartPosition();

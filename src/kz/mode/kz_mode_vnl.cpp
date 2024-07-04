@@ -46,7 +46,7 @@ void KZVanillaModeService::Reset()
 	this->tpmTriggerFixOrigins.RemoveAll();
 }
 
-internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
+static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 {
 	// Determine how far along plane to slide based on incoming direction.
 	f32 backoff = DotProduct(in, normal);

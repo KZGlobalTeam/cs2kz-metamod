@@ -73,9 +73,9 @@ private:
 	f64 lastInvalidateTime {};
 
 public:
-	static_global void RegisterCommands();
-	static_global bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
-	static_global bool UnregisterEventListener(KZTimerServiceEventListener *eventListener);
+	static void RegisterCommands();
+	static bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
+	static bool UnregisterEventListener(KZTimerServiceEventListener *eventListener);
 
 	bool GetTimerRunning()
 	{
@@ -92,7 +92,7 @@ public:
 		return currentTime;
 	}
 
-	static_global void FormatTime(f64 time, char *output, u32 length, bool precise = true);
+	static void FormatTime(f64 time, char *output, u32 length, bool precise = true);
 
 	void SetTime(f64 time)
 	{
@@ -142,7 +142,7 @@ public:
 private:
 	bool HasValidMoveType();
 
-	static_global bool IsValidMoveType(MoveType_t moveType)
+	static bool IsValidMoveType(MoveType_t moveType)
 	{
 		return moveType == MOVETYPE_WALK || moveType == MOVETYPE_LADDER || moveType == MOVETYPE_NONE || moveType == MOVETYPE_OBSERVER;
 	}
@@ -215,6 +215,6 @@ public:
 	void OnPlayerJoinTeam(i32 team);
 	void OnPlayerDeath();
 	void OnOptionsChanged();
-	static_global void OnRoundStart();
+	static void OnRoundStart();
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 };

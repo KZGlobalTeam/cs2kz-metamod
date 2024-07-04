@@ -3,7 +3,7 @@
 CUtlVector<CTimerBase *> g_NonPersistentTimers;
 CUtlVector<CTimerBase *> g_PersistentTimers;
 
-internal void ProcessTimerList(CUtlVector<CTimerBase *> &timers)
+static_function void ProcessTimerList(CUtlVector<CTimerBase *> &timers)
 {
 	for (int i = timers.Count() - 1; i >= 0; i--)
 	{

@@ -176,7 +176,7 @@ public:
 	// Closer to 100 if it passes the optimal value.
 	// Note: if the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
 	// Returns false if there is no available stats.
-	internal int SortFloat(const f32 *a, const f32 *b)
+	static int SortFloat(const f32 *a, const f32 *b)
 	{
 		return *a > *b;
 	}
@@ -397,9 +397,9 @@ private:
 	bool possibleEdgebug {};
 
 public:
-	static_global void RegisterCommands();
+	static void RegisterCommands();
 
-	static_global DistanceTier GetDistTierFromString(const char *tierString);
+	static DistanceTier GetDistTierFromString(const char *tierString);
 
 	void SetBroadcastMinTier(const char *tierString);
 	void SetSoundMinTier(const char *tierString);
@@ -452,8 +452,8 @@ public:
 	void DetectInvalidGains();
 	void DetectExternalModifications();
 
-	static_global void BroadcastJumpToChat(Jump *jump);
-	static_global void PlayJumpstatSound(KZPlayer *target, Jump *jump);
-	static_global void PrintJumpToChat(KZPlayer *target, Jump *jump);
-	static_global void PrintJumpToConsole(KZPlayer *target, Jump *jump);
+	static void BroadcastJumpToChat(Jump *jump);
+	static void PlayJumpstatSound(KZPlayer *target, Jump *jump);
+	static void PrintJumpToChat(KZPlayer *target, Jump *jump);
+	static void PrintJumpToConsole(KZPlayer *target, Jump *jump);
 };

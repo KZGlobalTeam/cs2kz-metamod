@@ -1,11 +1,11 @@
 #include "kz_tip.h"
 #include "../language/kz_language.h"
 
-internal KeyValues *pTipKeyValues;
-internal CUtlVector<const char *> tipNames;
-internal f64 tipInterval;
-internal i32 nextTipIndex;
-internal CTimer<> *tipTimer;
+static_global KeyValues *pTipKeyValues;
+static_global CUtlVector<const char *> tipNames;
+static_global f64 tipInterval;
+static_global i32 nextTipIndex;
+static_global CTimer<> *tipTimer;
 
 void KZTipService::Reset()
 {
@@ -74,7 +74,7 @@ void KZTipService::ShuffleTips()
 	}
 }
 
-internal SCMD_CALLBACK(Command_KzToggleTips)
+static_function SCMD_CALLBACK(Command_KzToggleTips)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->tipService->ToggleTips();

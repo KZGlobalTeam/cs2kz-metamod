@@ -9,10 +9,10 @@ class KZLanguageService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 public:
-	static_global void Init();
-	static_global void LoadLanguages();
-	static_global void LoadTranslations();
-	static_global void RegisterCommands();
+	static void Init();
+	static void LoadLanguages();
+	static void LoadTranslations();
+	static void RegisterCommands();
 
 	virtual void Reset() override
 	{
@@ -29,10 +29,10 @@ public:
 
 	const char *GetLanguage();
 
-	static_global const char *GetTranslatedFormat(const char *language, const char *phrase);
+	static const char *GetTranslatedFormat(const char *language, const char *phrase);
 
 private:
-	static_global inline void ReplaceStringInPlace(std::string &subject, std::string_view search, std::string_view replace)
+	static inline void ReplaceStringInPlace(std::string &subject, std::string_view search, std::string_view replace)
 	{
 		size_t pos = 0;
 		while ((pos = subject.find(search, pos)) != std::string::npos)
@@ -43,7 +43,7 @@ private:
 	}
 
 	template<typename... Args>
-	static_global std::string GetFormattedMessage(const char *input, const char *format, Args &&...args)
+	static std::string GetFormattedMessage(const char *input, const char *format, Args &&...args)
 	{
 		std::string inputStr = std::string(input);
 		const char *tokenStart = format;
@@ -76,7 +76,7 @@ private:
 
 public:
 	template<typename... Args>
-	static_global std::string PrepareMessage(const char *language, const char *message, Args &&...args)
+	static std::string PrepareMessage(const char *language, const char *message, Args &&...args)
 	{
 		const char *paramFormat = GetTranslatedFormat("#format", message);
 		const char *msgFormat = GetTranslatedFormat(language, message);
@@ -99,7 +99,7 @@ private:
 	};
 
 	template<typename... Args>
-	static_global void PrintType(KZPlayer *player, bool addPrefix, MessageType type, const char *message, Args &&...args)
+	static void PrintType(KZPlayer *player, bool addPrefix, MessageType type, const char *message, Args &&...args)
 	{
 		const char *language = player->languageService->GetLanguage();
 		std::string msg = PrepareMessage(language, message, args...);
@@ -134,7 +134,7 @@ private:
 	}
 
 	template<typename... Args>
-	static_global void PrintSingle(KZPlayer *player, bool addPrefix, bool includeSpectators, MessageType type, const char *message, Args &&...args)
+	static void PrintSingle(KZPlayer *player, bool addPrefix, bool includeSpectators, MessageType type, const char *message, Args &&...args)
 	{
 		PrintType(player, addPrefix, type, message, args...);
 		if (includeSpectators)
@@ -164,7 +164,7 @@ public:
 
 #define REGISTER_PRINT_ALL_FUNCTION(name, type) \
 	template<typename... Args> \
-	static_global void name(bool addPrefix, const char *message, Args &&...args) \
+	static void name(bool addPrefix, const char *message, Args &&...args) \
 	{ \
 		for (u32 i = 0; i < MAXPLAYERS + 1; i++) \
 		{ \

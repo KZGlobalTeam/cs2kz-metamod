@@ -21,8 +21,8 @@ private:
 
 public:
 	virtual void Reset() override;
-	static_global void Init();
-	static_global void RegisterCommands();
+	static void Init();
+	static void RegisterCommands();
 	void DrawPanels(KZPlayer *target);
 
 	void TogglePanel();

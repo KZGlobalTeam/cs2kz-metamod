@@ -21,7 +21,7 @@
 	} \
 	va_end(args);
 
-internal CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, bool addSpectators)
+static_function CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, bool addSpectators)
 {
 	if (!targetPlayer->GetController())
 	{

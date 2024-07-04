@@ -11,10 +11,10 @@
 #include "utils/simplecmds.h"
 #include "utils/plat.h"
 
-internal SCMD_CALLBACK(Command_KzModeShort);
-internal SCMD_CALLBACK(Command_KzMode);
+static_function SCMD_CALLBACK(Command_KzModeShort);
+static_function SCMD_CALLBACK(Command_KzMode);
 
-internal KZModeManager modeManager;
+static_global KZModeManager modeManager;
 KZModeManager *g_pKZModeManager = &modeManager;
 
 bool KZ::mode::InitModeCvars()
@@ -36,7 +36,7 @@ bool KZ::mode::InitModeCvars()
 
 void KZ::mode::InitModeManager()
 {
-	static bool initialized = false;
+	static_persist bool initialized = false;
 	if (initialized)
 	{
 		return;
@@ -269,14 +269,14 @@ void KZModeManager::Cleanup()
 	}
 }
 
-internal SCMD_CALLBACK(Command_KzMode)
+static_function SCMD_CALLBACK(Command_KzMode)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	modeManager.SwitchToMode(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzModeShort)
+static_function SCMD_CALLBACK(Command_KzModeShort)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	// Strip kz_ prefix if exist.
