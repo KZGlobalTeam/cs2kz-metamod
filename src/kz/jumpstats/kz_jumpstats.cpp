@@ -1044,28 +1044,28 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 	}
 }
 
-internal SCMD_CALLBACK(Command_KzToggleJumpstats)
+static_function SCMD_CALLBACK(Command_KzToggleJumpstats)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleJumpstatsReporting();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzJSAlways)
+static_function SCMD_CALLBACK(Command_KzJSAlways)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleJSAlways();
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzJsPrintMinTier)
+static_function SCMD_CALLBACK(Command_KzJsPrintMinTier)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetBroadcastMinTier(args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzJsSoundMinTier)
+static_function SCMD_CALLBACK(Command_KzJsSoundMinTier)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetSoundMinTier(args->Arg(1));

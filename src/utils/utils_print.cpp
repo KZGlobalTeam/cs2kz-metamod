@@ -10,7 +10,7 @@
  * Credit to Szwagi
  */
 
-internal char ConvertColorStringToByte(const char *str, size_t length)
+static_function char ConvertColorStringToByte(const char *str, size_t length)
 {
 	switch (length)
 	{
@@ -108,12 +108,12 @@ struct CFormatContext
 	char *result_end;
 };
 
-internal bool HasEnoughSpace(const CFormatContext *ctx, uintptr_t space)
+static_function bool HasEnoughSpace(const CFormatContext *ctx, uintptr_t space)
 {
 	return (uintptr_t)(ctx->result_end - ctx->result) > space;
 }
 
-internal CFormatResult EscapeChars(CFormatContext *ctx)
+static_function CFormatResult EscapeChars(CFormatContext *ctx)
 {
 	if (*ctx->current == '{' && *(ctx->current + 1) == '{')
 	{
@@ -129,7 +129,7 @@ internal CFormatResult EscapeChars(CFormatContext *ctx)
 	return CFORMAT_NOT_US;
 }
 
-internal CFormatResult ParseColors(CFormatContext *ctx)
+static_function CFormatResult ParseColors(CFormatContext *ctx)
 {
 	const char *current = ctx->current;
 	if (*current == '{')
@@ -160,7 +160,7 @@ internal CFormatResult ParseColors(CFormatContext *ctx)
 	return CFORMAT_NOT_US;
 }
 
-internal CFormatResult ReplaceNewlines(CFormatContext *ctx)
+static_function CFormatResult ReplaceNewlines(CFormatContext *ctx)
 {
 	if (*ctx->current == '\n')
 	{
@@ -178,7 +178,7 @@ internal CFormatResult ReplaceNewlines(CFormatContext *ctx)
 	return CFORMAT_NOT_US;
 }
 
-internal CFormatResult AddSpace(CFormatContext *ctx)
+static_function CFormatResult AddSpace(CFormatContext *ctx)
 {
 	if (!HasEnoughSpace(ctx, 1))
 	{

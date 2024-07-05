@@ -10,8 +10,8 @@
 
 extern IClientCvarValue *g_pClientCvarValue;
 
-internal KeyValues *translationKV;
-internal KeyValues *languagesKV;
+static_global KeyValues *translationKV;
+static_global KeyValues *languagesKV;
 
 void KZLanguageService::Init()
 {
@@ -104,7 +104,7 @@ const char *KZLanguageService::GetTranslatedFormat(const char *language, const c
 	return outFormat;
 }
 
-internal SCMD_CALLBACK(Command_KzSetLanguage)
+static_function SCMD_CALLBACK(Command_KzSetLanguage)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	char language[32] {};

@@ -7,7 +7,7 @@
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
-internal CUtlVector<KZTimerServiceEventListener *> eventListeners;
+static_global CUtlVector<KZTimerServiceEventListener *> eventListeners;
 
 bool KZTimerService::RegisterEventListener(KZTimerServiceEventListener *eventListener)
 {
@@ -266,7 +266,7 @@ void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise
 	}
 }
 
-internal std::string GetTeleportCountText(int tpCount, const char *language)
+static_function std::string GetTeleportCountText(int tpCount, const char *language)
 {
 	return tpCount == 1 ? KZLanguageService::PrepareMessage(language, "1 Teleport Text")
 						: KZLanguageService::PrepareMessage(language, "2+ Teleports Text", tpCount);
@@ -625,7 +625,7 @@ void KZTimerService::OnTeleport(const Vector *newPosition, const QAngle *newAngl
 	}
 }
 
-internal SCMD_CALLBACK(Command_KzStopTimer)
+static_function SCMD_CALLBACK(Command_KzStopTimer)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (player->timerService->GetTimerRunning())
@@ -635,7 +635,7 @@ internal SCMD_CALLBACK(Command_KzStopTimer)
 	return MRES_SUPERCEDE;
 }
 
-internal SCMD_CALLBACK(Command_KzPauseTimer)
+static_function SCMD_CALLBACK(Command_KzPauseTimer)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->timerService->TogglePause();

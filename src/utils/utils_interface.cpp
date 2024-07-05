@@ -112,6 +112,6 @@ CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
 	{
 		return nullptr;
 	}
-	local_persist const int offset = g_pGameConfig->GetOffset("ClientOffset");
+	static_persist const int offset = g_pGameConfig->GetOffset("ClientOffset");
 	return (CUtlVector<CServerSideClient *> *)((char *)g_pNetworkServerService->GetIGameServer() + offset);
 }

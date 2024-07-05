@@ -1,6 +1,6 @@
 #include "kz_option.h"
 
-internal KeyValues *pServerCfgKeyValues;
+static_global KeyValues *pServerCfgKeyValues;
 
 void KZOptionService::LoadDefaultOptions()
 {

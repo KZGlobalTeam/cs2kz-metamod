@@ -11,7 +11,7 @@
 #include "tier0/memdbgon.h"
 
 #define HUD_ON_GROUND_THRESHOLD 0.07f
-internal KZHUDServiceTimerEventListener timerEventListener;
+static_global KZHUDServiceTimerEventListener timerEventListener;
 
 void KZHUDService::Init()
 {
@@ -161,7 +161,7 @@ void KZHUDServiceTimerEventListener::OnTimerEndPost(KZPlayer *player, const char
 	player->hudService->OnTimerStopped(time);
 }
 
-internal SCMD_CALLBACK(Command_KzPanel)
+static_function SCMD_CALLBACK(Command_KzPanel)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->hudService->TogglePanel();

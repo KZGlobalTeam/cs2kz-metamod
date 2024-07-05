@@ -81,7 +81,7 @@ public:
 
 	const CSteamID &GetSteamId(bool validated = true)
 	{
-		local_persist const CSteamID invalidId = k_steamIDNil;
+		static_persist const CSteamID invalidId = k_steamIDNil;
 		if (validated && !IsAuthenticated())
 		{
 			return invalidId;

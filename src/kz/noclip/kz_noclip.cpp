@@ -55,7 +55,7 @@ void KZNoclipService::HandleNoclip()
 
 // Commands
 
-internal SCMD_CALLBACK(Command_KzNoclip)
+static_function SCMD_CALLBACK(Command_KzNoclip)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->noclipService->ToggleNoclip();

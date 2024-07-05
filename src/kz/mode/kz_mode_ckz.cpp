@@ -667,7 +667,7 @@ void KZClassicModeService::SlopeFix()
 	}
 }
 
-internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
+static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 {
 	// Determine how far along plane to slide based on incoming direction.
 	f32 backoff = DotProduct(in, normal);
@@ -685,7 +685,7 @@ internal void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 	}
 }
 
-internal bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilterPlayerMovementCS *filter)
+static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilterPlayerMovementCS *filter)
 {
 	trace_t stuck;
 	// Maybe we don't need this one.

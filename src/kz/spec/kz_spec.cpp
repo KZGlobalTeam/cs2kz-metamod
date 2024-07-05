@@ -2,7 +2,7 @@
 
 #include "utils/simplecmds.h"
 
-internal KZSpecServiceTimerEventListener timerEventListener;
+static_global KZSpecServiceTimerEventListener timerEventListener;
 
 void KZSpecService::Reset()
 {
@@ -106,7 +106,7 @@ void KZSpecServiceTimerEventListener::OnTimerStartPost(KZPlayer *player, const c
 	player->specService->Reset();
 }
 
-internal SCMD_CALLBACK(Command_KzSpec)
+static_function SCMD_CALLBACK(Command_KzSpec)
 {
 	return MRES_HANDLED;
 }

@@ -27,10 +27,11 @@
 
 PLUGIN_GLOBALVARS();
 
-// these are for searchability, because static behaves differently in different scopes.
-#define internal      static // static functions & static global variables
-#define local_persist static // static local variables
-#define static_global static // static class functions
+// These are for searchability, because static behaves differently in different scopes.
+// Regular static is for static class functions.
+#define static_global   static // static global variables
+#define static_persist  static // static local variables
+#define static_function static // static functions
 
 typedef int8 i8;
 typedef int16 i16;
