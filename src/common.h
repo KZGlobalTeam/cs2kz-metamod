@@ -27,7 +27,8 @@
 
 PLUGIN_GLOBALVARS();
 
-// these are for searchability, because static behaves differently in different scopes.
+// These are for searchability, because static behaves differently in different scopes.
+// Regular static is for static class functions.
 #define static_global   static // static global variables
 #define static_persist  static // static local variables
 #define static_function static // static functions
