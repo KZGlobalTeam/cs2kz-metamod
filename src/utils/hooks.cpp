@@ -394,7 +394,7 @@ static_function void Hook_OnTouch(CBaseEntity *pOther)
 		RETURN_META(MRES_SUPERCEDE);
 	}
 
-	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()))
+	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()) || player->pendingStartTouchTriggers.HasElement(trigger->GetRefEHandle()))
 	{
 		RETURN_META(MRES_IGNORED);
 	}
