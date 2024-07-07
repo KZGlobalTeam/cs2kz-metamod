@@ -25,7 +25,7 @@ parser.options.add_argument('-a', '--plugin-alias', type=str, dest='plugin_alias
                        help='Plugin alias')
 parser.options.add_argument('--hl2sdk-root', type=str, dest='hl2sdk_root', default='../',
                        help='Root search folder for HL2SDKs')
-parser.options.add_argument('--hl2sdk-manifests', type=str, dest='hl2sdk_manifests', default='/hl2sdk-manifests',
+parser.options.add_argument('--hl2sdk-manifests', type=str, dest='hl2sdk_manifests', default='./metamod-source/hl2sdk-manifests',
                        help='HL2SDK manifests source tree folder')
 parser.options.add_argument('--mms_path', type=str, dest='mms_path', default='../metamod-source',
                        help='Metamod:Source source tree folder')
