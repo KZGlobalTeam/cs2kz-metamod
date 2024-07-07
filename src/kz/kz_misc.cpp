@@ -12,6 +12,7 @@
 #include "noclip/kz_noclip.h"
 #include "hud/kz_hud.h"
 #include "spec/kz_spec.h"
+#include "goto/kz_goto.h"
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
 
@@ -102,6 +103,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
 	scmd::RegisterCmd("jointeam", Command_JoinTeam, true);
 	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
+	KZGotoService::RegisterCommands();
 	KZCheckpointService::RegisterCommands();
 	KZJumpstatsService::RegisterCommands();
 	KZTimerService::RegisterCommands();
