@@ -2,8 +2,8 @@
 
 constexpr char sqlite_jumpstats_create[] = "\
 CREATE TABLE IF NOT EXISTS Jumpstats ( \
-    JumpID INTEGER NOT NULL, \
-    SteamID32 INTEGER NOT NULL, \
+    ID INTEGER NOT NULL, \
+    SteamID64 INTEGER NOT NULL, \
     JumpType INTEGER NOT NULL, \
     Mode INTEGER NOT NULL, \
     Distance INTEGER NOT NULL, \
@@ -15,14 +15,14 @@ CREATE TABLE IF NOT EXISTS Jumpstats ( \
     Max INTEGER NOT NULL, \
     Airtime INTEGER NOT NULL, \
     Created INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, \
-    CONSTRAINT PK_Jumpstats PRIMARY KEY (JumpID), \
-    CONSTRAINT FK_Jumpstats_SteamID32 FOREIGN KEY (SteamID32) REFERENCES Players(SteamID32) \
+    CONSTRAINT PK_Jumpstats PRIMARY KEY (ID), \
+    CONSTRAINT FK_Jumpstats_SteamID64 FOREIGN KEY (SteamID64) REFERENCES Players(SteamID64) \
     ON UPDATE CASCADE ON DELETE CASCADE)";
 
 constexpr char mysql_jumpstats_create[] = "\
 CREATE TABLE IF NOT EXISTS Jumpstats ( \
-    JumpID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, \
-    SteamID32 INTEGER UNSIGNED NOT NULL, \
+    ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, \
+    SteamID64 INTEGER UNSIGNED NOT NULL, \
     JumpType TINYINT UNSIGNED NOT NULL, \
     Mode TINYINT UNSIGNED NOT NULL, \
     Distance INTEGER UNSIGNED NOT NULL, \
@@ -34,18 +34,18 @@ CREATE TABLE IF NOT EXISTS Jumpstats ( \
     Max INTEGER UNSIGNED NOT NULL, \
     Airtime INTEGER UNSIGNED NOT NULL, \
     Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, \
-    CONSTRAINT PK_Jumpstats PRIMARY KEY (JumpID), \
-    CONSTRAINT FK_Jumpstats_SteamID32 FOREIGN KEY (SteamID32) REFERENCES Players(SteamID32) \
+    CONSTRAINT PK_Jumpstats PRIMARY KEY (ID), \
+    CONSTRAINT FK_Jumpstats_SteamID64 FOREIGN KEY (SteamID64) REFERENCES Players(SteamID64) \
     ON UPDATE CASCADE ON DELETE CASCADE)";
 
 constexpr char sql_jumpstats_insert[] = "\
-INSERT INTO Jumpstats (SteamID32, JumpType, Mode, Distance, IsBlockJump, Block, Strafes, Sync, Pre, Max, Airtime) \
+INSERT INTO Jumpstats (SteamID64, JumpType, Mode, Distance, IsBlockJump, Block, Strafes, Sync, Pre, Max, Airtime) \
     VALUES (%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)";
 
 constexpr char sql_jumpstats_update[] = "\
 UPDATE Jumpstats \
     SET \
-        SteamID32=%d, \
+        SteamID64=%llu, \
         JumpType=%d, \
         Mode=%d, \
         Distance=%d, \
@@ -57,14 +57,14 @@ UPDATE Jumpstats \
         Max=%d, \
         Airtime=%d \
     WHERE \
-        JumpID=%d";
+        ID=%d";
 
 constexpr char sql_jumpstats_getrecord[] = "\
-SELECT JumpID, Distance, Block \
+SELECT ID, Distance, Block \
     FROM \
         Jumpstats \
     WHERE \
-        SteamID32=%d AND \
+        SteamID64=%llu AND \
         JumpType=%d AND \
         Mode=%d AND \
         IsBlockJump=%d \
@@ -75,13 +75,13 @@ DELETE \
     FROM \
         Jumpstats \
     WHERE \
-        JumpID = \
+        ID = \
         ( SELECT * FROM ( \
-            SELECT JumpID \
+            SELECT ID \
                 FROM \
                     Jumpstats \
                 WHERE \
-                    SteamID32=%d AND \
+                    SteamID64=%llu AND \
                     JumpType=%d AND \
                     Mode=%d AND \
                     IsBlockJump=%d \
@@ -95,21 +95,21 @@ DELETE \
 	FROM \
 		Jumpstats \
 	WHERE \
-		SteamID32 = %d;";
+		SteamID64 = %llu;";
 
 constexpr char sql_jumpstats_deletejump[] = "\
 DELETE \
 	FROM \
 		Jumpstats \
 	WHERE \
-		JumpID = %d;";
+		ID = %d;";
 
 constexpr char sql_jumpstats_getpbs[] = "\
 SELECT MAX(Distance), Mode, JumpType \
     FROM \
         Jumpstats \
     WHERE \
-        SteamID32=%d \
+        SteamID64=%llu \
     GROUP BY \
     	Mode, JumpType";
 
@@ -124,7 +124,7 @@ SELECT MAX(js.Distance), js.Mode, js.JumpType, js.Block \
 				Jumpstats \
 			WHERE \
 				IsBlockJump=1 AND \
-				SteamID32=%d \
+				SteamID64=%llu \
 			GROUP BY \
 				Mode, JumpType \
 	) pb \
@@ -133,43 +133,43 @@ SELECT MAX(js.Distance), js.Mode, js.JumpType, js.Block \
 		js.JumpType=pb.JumpType AND \
 		js.Block=pb.Block \
 	WHERE \
-		js.SteamID32=%d \
+		js.SteamID64=%llu \
 	GROUP BY \
 		js.Mode, js.JumpType, js.Block";
 
 constexpr char sql_jumpstats_ranking_gettop[] = "\
-SELECT j.JumpID, p.SteamID32, p.Alias, j.Block, j.Distance, j.Strafes, j.Sync, j.Pre, j.Max, j.Airtime \
+SELECT j.ID, p.SteamID64, p.Alias, j.Block, j.Distance, j.Strafes, j.Sync, j.Pre, j.Max, j.Airtime \
 	FROM \
 		Jumpstats j \
     INNER JOIN \
         Players p ON \
-            p.SteamID32=j.SteamID32 AND \
+            p.SteamID64=j.SteamID64 AND \
 			p.Cheater = 0 \
 	INNER JOIN \
 		( \
-			SELECT j.SteamID32, j.JumpType, j.Mode, j.IsBlockJump, MAX(j.Distance) BestDistance \
+			SELECT j.SteamID64, j.JumpType, j.Mode, j.IsBlockJump, MAX(j.Distance) BestDistance \
 			    FROM \
 			        Jumpstats j \
 			    INNER JOIN \
 			        ( \
-			            SELECT SteamID32, MAX(Block) AS MaxBlockDist \
+			            SELECT SteamID64, MAX(Block) AS MaxBlockDist \
 			                FROM \
 			                    Jumpstats \
 			                WHERE \
 			                    JumpType = %d AND \
 			                    Mode = %d AND \
 			                    IsBlockJump = %d \
-			                GROUP BY SteamID32 \
+			                GROUP BY SteamID64 \
 			        ) MaxBlock ON \
-			            j.SteamID32 = MaxBlock.SteamID32 AND \
+			            j.SteamID64 = MaxBlock.SteamID64 AND \
 			            j.Block = MaxBlock.MaxBlockDist \
 			    WHERE \
 			        j.JumpType = %d AND \
 			        j.Mode = %d AND \
 			        j.IsBlockJump = %d \
-			    GROUP BY j.SteamID32, j.JumpType, j.Mode, j.IsBlockJump \
+			    GROUP BY j.SteamID64, j.JumpType, j.Mode, j.IsBlockJump \
 		) MaxDist ON \
-			j.SteamID32 = MaxDist.SteamID32 AND \
+			j.SteamID64 = MaxDist.SteamID64 AND \
 			j.JumpType = MaxDist.JumpType AND \
 			j.Mode = MaxDist.Mode AND \
 			j.IsBlockJump = MaxDist.IsBlockJump AND \
@@ -178,42 +178,42 @@ SELECT j.JumpID, p.SteamID32, p.Alias, j.Block, j.Distance, j.Strafes, j.Sync, j
     LIMIT %d";
 
 constexpr char sql_jumpstats_ranking_getrecord[] = "\
-SELECT JumpID, Distance, Block \
+SELECT ID, Distance, Block \
     FROM \
         Jumpstats rec \
     WHERE \
-        SteamID32 = %d AND \
+        SteamID64 = %llu AND \
         JumpType = %d AND \
         Mode = %d AND \
         IsBlockJump = %d \
     ORDER BY Block DESC, Distance DESC";
 
 constexpr char sql_jumpstats_ranking_getpbs[] = "\
-SELECT b.JumpID, b.JumpType, b.Distance, b.Strafes, b.Sync, b.Pre, b.Max, b.Airtime \
+SELECT b.ID, b.JumpType, b.Distance, b.Strafes, b.Sync, b.Pre, b.Max, b.Airtime \
     FROM Jumpstats b \
     INNER JOIN ( \
-        SELECT a.SteamID32, a.Mode, a.JumpType, MAX(a.Distance) Distance \
+        SELECT a.SteamID64, a.Mode, a.JumpType, MAX(a.Distance) Distance \
         FROM Jumpstats a \
-        WHERE a.SteamID32=%d AND a.Mode=%d AND NOT a.IsBlockJump \
-        GROUP BY a.JumpType, a.Mode, a.SteamID32 \
+        WHERE a.SteamID64=%llu AND a.Mode=%d AND NOT a.IsBlockJump \
+        GROUP BY a.JumpType, a.Mode, a.SteamID64 \
     ) a ON a.JumpType=b.JumpType AND a.Distance=b.Distance \
-    WHERE a.SteamID32=b.SteamID32 AND a.Mode=b.Mode AND NOT b.IsBlockJump \
+    WHERE a.SteamID64=b.SteamID64 AND a.Mode=b.Mode AND NOT b.IsBlockJump \
     ORDER BY b.JumpType";
 
 constexpr char sql_jumpstats_ranking_getblockpbs[] = "\
-SELECT c.JumpID, c.JumpType, c.Block, c.Distance, c.Strafes, c.Sync, c.Pre, c.Max, c.Airtime \
+SELECT c.ID, c.JumpType, c.Block, c.Distance, c.Strafes, c.Sync, c.Pre, c.Max, c.Airtime \
     FROM Jumpstats c \
     INNER JOIN ( \
-        SELECT a.SteamID32, a.Mode, a.JumpType, a.Block, MAX(b.Distance) Distance \
+        SELECT a.SteamID64, a.Mode, a.JumpType, a.Block, MAX(b.Distance) Distance \
         FROM Jumpstats b \
         INNER JOIN ( \
-            SELECT a.SteamID32, a.Mode, a.JumpType, MAX(a.Block) Block \
+            SELECT a.SteamID64, a.Mode, a.JumpType, MAX(a.Block) Block \
             FROM Jumpstats a \
-            WHERE a.SteamID32=%d AND a.Mode=%d AND a.IsBlockJump \
-            GROUP BY a.JumpType, a.Mode, a.SteamID32 \
+            WHERE a.SteamID64=%llu AND a.Mode=%d AND a.IsBlockJump \
+            GROUP BY a.JumpType, a.Mode, a.SteamID64 \
         ) a ON a.JumpType=b.JumpType AND a.Block=b.Block \
-        WHERE a.SteamID32=b.SteamID32 AND a.Mode=b.Mode AND b.IsBlockJump \
-        GROUP BY a.JumpType, a.Mode, a.SteamID32, a.Block \
+        WHERE a.SteamID64=b.SteamID64 AND a.Mode=b.Mode AND b.IsBlockJump \
+        GROUP BY a.JumpType, a.Mode, a.SteamID64, a.Block \
     ) b ON b.JumpType=c.JumpType AND b.Block=c.Block AND b.Distance=c.Distance \
-    WHERE b.SteamID32=c.SteamID32 AND b.Mode=c.Mode AND c.IsBlockJump \
+    WHERE b.SteamID64=c.SteamID64 AND b.Mode=c.Mode AND c.IsBlockJump \
     ORDER BY c.JumpType";

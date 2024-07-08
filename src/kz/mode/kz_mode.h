@@ -240,5 +240,8 @@ namespace KZ::mode
 	void DisableReplicatedModeCvars();
 	void EnableReplicatedModeCvars();
 
+	KZModeManager::ModePluginInfo GetModeInfo(KZModeService *mode);
+	KZModeManager::ModePluginInfo GetModeInfo(CUtlString modeName);
+
 	void RegisterCommands();
 }; // namespace KZ::mode

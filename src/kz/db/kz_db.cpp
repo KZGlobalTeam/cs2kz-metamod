@@ -38,7 +38,4 @@ void KZDatabaseService::Cleanup()
 	}
 }
 
-
 void KZDatabaseService::RegisterCommands() {}
-
-void KZDatabaseService::SetupCourses() {}

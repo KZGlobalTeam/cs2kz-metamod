@@ -10,9 +10,7 @@ class CCSPlayer_MovementServices;
 #include "sdk/datatypes.h"
 #include "sdk/services.h"
 // TODO: better error sound
-#define MV_SND_ERROR       "Buttons.snd8"
-#define MV_SND_TIMER_START "Buttons.snd9"
-#define MV_SND_TIMER_END   "UI.DeathMatch.LevelUp"
+#define MV_SND_ERROR "Buttons.snd8"
 
 class CCSPlayerController;
 class MovementPlayer;

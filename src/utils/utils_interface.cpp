@@ -10,8 +10,8 @@
 
 #include "memdbgon.h"
 
-internal char currentMapMD5[33];
-internal bool md5NeedsUpdating {};
+static_global char currentMapMD5[33];
+static_global bool md5NeedsUpdating {};
 
 extern CGameConfig *g_pGameConfig;
 

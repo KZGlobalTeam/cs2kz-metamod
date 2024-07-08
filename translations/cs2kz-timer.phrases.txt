@@ -19,52 +19,53 @@
 		"sv"		"{yellow}{tp_count}{grey} TPs"
 		"ua"		"{yellow}{tp_count}{grey} TPs"
 	}
+	
+	"Personal Best Difference"
+	{
+		// Must have a space here!
+		//  (PB +12:34.56)
+		"#format"	"color:s,diff_text:s"
+		"en"		" (PB {color}{diff_text}{grey})"
+	}
 
-	"Beat Map (Standard)"
+	"Beat Course Info - Basic"
 	{
-		// Bill finished the map in 01:23.45 [Mode | Style | 12 TPs]
-		// Note: course_name is empty.
-		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s,tp_count_text:s"
-		"en"		"{lime}{player_name} {grey}finished the map in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"sv"		"{lime}{player_name} {grey}har klarat mappen på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"ua"		"{lime}{player_name} {grey}завершив мапу за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		// GameChaos finished "blocks2006" in 10:06.84 [VNL | PRO]
+		"#format"	"player_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
+		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey}! [{mode_style_text} | {tp_count_text}]"
 	}
-	"Beat Map (PRO)"
+	
+	"Beat Course Info - Local (TP)"
 	{
-		// Bill finished the map in 01:23.45 [Mode | Style | PRO]
-		// Note: course_name is empty.
-		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s"
-		"en"		"{lime}{player_name} {grey}finished the map in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"chi"		"{lime}{player_name} {grey}完成地图用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"pl"		"{lime}{player_name} {grey}ukończył(a) mapę w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"fi"		"{lime}{player_name} {grey}läpäisi kentän ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"sv"		"{lime}{player_name} {grey}har klarat mappen på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"ua"		"{lime}{player_name} {grey}завершив мапу за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		// Server Rank: #1/24 Standard (PB -1:00.00)
+		"#format"	"rank:d,max_rank:d,pb_diff_text:s"
+		"en"		"{grey}Server Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
 	}
-	"Beat Course (NUB)"
+	"Beat Course Info - Local (PRO)"
 	{
-		// Bill finished course "Name" in 01:23.45 [Mode | Style | 12 TPs]
-		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s,tp_count_text:s"
-		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
-		"sv"		"{lime}{player_name} {grey}har klarat mappen {bluegrey}\"{course_name}\" {grey}på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"		
-		"ua"		"{lime}{player_name} {grey}завершив курс{bluegrey}\"{course_name}\" {grey}за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {tp_count_text}]"
+		// Server Rank: #1/24 Standard (PB -1:00.00) | #1/10 PRO (PB -2:00)
+		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
+		"en"		"{grey}Server Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
-	"Beat Course (PRO)"
+	
+	"Beat Course Info - Global (TP)"
 	{
-		// Bill finished course "Name" in 01:23.45 [Mode | Style | PRO]
-		"#format"	"player_name:s,course_name:s,time:s,mode:s,style:s"
-		"en"		"{lime}{player_name} {grey}finished course {bluegrey}\"{course_name}\" {grey}in {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"chi"		"{lime}{player_name} {grey}完成关卡 {bluegrey}\"{course_name}\" {grey}用时 {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"pl"		"{lime}{player_name} {grey}ukończył trasę {bluegrey}\"{course_name}\" {grey}w {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"fi"		"{lime}{player_name} {grey}läpäisi kentän {bluegrey}\"{course_name}\" {grey}ajassa {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"sv"		"{lime}{player_name} {grey}har klarat mappen {bluegrey}\"{course_name}\" {grey}på {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
-		"ua"		"{lime}{player_name} {grey}завершив курс {bluegrey}\"{course_name}\" {grey}за {default}{time}{grey}! [{purple}{mode}{grey} | {purple}{style}{grey} | {blue}PRO{grey}]"
+		// Global Rank: #1/24 Standard (PB -1:00.00)
+		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
+		"en"		"{grey}Global Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
+	}
+	"Beat Course Info - Global (PRO)"
+	{
+		// Global Rank: #1/24 Standard (PB -1:00.00) | #1/10 PRO (PB -2:00)
+		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
+		"en"		"{grey}Global Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+	}
+	
+	"Beat Course Info - Global Points"
+	{
+		// Map Points: 2345 (+512) | Player Rating: 34475
+		"#format"	"total_map_points:d,map_points_gained:d,player_rating:d"
+		"en"		"{grey}Map Points: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
 	}
 	
 	"Can't Pause (Generic)"

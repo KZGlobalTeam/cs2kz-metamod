@@ -149,7 +149,7 @@ public:
 	KZRacingService *racingService {};
 	KZSavelocService *savelocService {};
 	KZSpecService *specService {};
-	KZStyleService *styleService {};
+	CUtlVector<KZStyleService *> styleServices {};
 	KZTimerService *timerService {};
 	KZTipService *tipService {};
 

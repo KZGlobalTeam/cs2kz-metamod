@@ -34,7 +34,8 @@ void KZTimerService::StartZoneEndTouch()
 {
 	if (this->touchedGroundSinceTouchingStartZone)
 	{
-		this->TimerStart("");
+		// TODO: Get the actual course name
+		this->TimerStart("Main");
 	}
 }
 
@@ -122,15 +123,7 @@ bool KZTimerService::TimerEnd(const char *courseName)
 
 	if (!this->player->GetPlayerPawn()->IsBot())
 	{
-		bool showMessage = true;
-		FOR_EACH_VEC(eventListeners, i)
-		{
-			showMessage &= eventListeners[i]->OnTimerEndMessage(this->player, courseName, time, teleportsUsed);
-		}
-		if (showMessage)
-		{
-			this->PrintEndTimeString();
-		}
+		KZ::timer::AddRunToAnnounceQueue(player, courseName, time, teleportsUsed);
 	}
 
 	FOR_EACH_VEC(eventListeners, i)
@@ -268,8 +261,8 @@ void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise
 
 static_function std::string GetTeleportCountText(int tpCount, const char *language)
 {
-	return tpCount == 1 ? KZLanguageService::PrepareMessage(language, "1 Teleport Text")
-						: KZLanguageService::PrepareMessage(language, "2+ Teleports Text", tpCount);
+	return tpCount == 1 ? KZLanguageService::PrepareMessageWithLang(language, "1 Teleport Text")
+						: KZLanguageService::PrepareMessageWithLang(language, "2+ Teleports Text", tpCount);
 }
 
 void KZTimerService::PrintEndTimeString()
@@ -289,7 +282,7 @@ void KZTimerService::PrintEndTimeString()
 				this->currentCourse,
 				time,
 				this->player->modeService->GetModeShortName(),
-				this->player->styleService->GetStyleShortName());
+				"NRM");
 			// clang-format on
 			break;
 		}
@@ -306,8 +299,8 @@ void KZTimerService::PrintEndTimeString()
 						this->currentCourse,
 						time,
 						this->player->modeService->GetModeShortName(),
-						this->player->styleService->GetStyleShortName(),
-						KZLanguageService::PrepareMessage(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "1 Teleport Text"));
+						"NRM",
+						KZLanguageService::PrepareMessageWithLang(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "1 Teleport Text"));
 				}
 			}
 			// clang-format on
@@ -326,8 +319,8 @@ void KZTimerService::PrintEndTimeString()
 						this->currentCourse,
 						time,
 						this->player->modeService->GetModeShortName(),
-						this->player->styleService->GetStyleShortName(),
-						KZLanguageService::PrepareMessage(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "2+ Teleports Text", tpCount));
+						"NRM",
+						KZLanguageService::PrepareMessageWithLang(g_pKZPlayerManager->ToPlayer(i)->languageService->GetLanguage(), "2+ Teleports Text", tpCount));
 				}
 			}
 			// clang-format on

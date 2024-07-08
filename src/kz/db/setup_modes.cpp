@@ -1,4 +1,5 @@
 #include "kz_db.h"
+#include "kz/mode/kz_mode.h"
 #include "queries/modes.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
@@ -38,8 +39,12 @@ void KZDatabaseService::GetModeID(CUtlString modeName)
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(
 		txn, 
 		[modeName](std::vector<ISQLQuery *> queries) 
-		{ 
-			KZ::mode::UpdateModeDatabaseID(modeName, queries[1]->GetResultSet()->GetInt(0));
+		{
+			auto resultSet = queries[1]->GetResultSet();
+			if (resultSet->FetchRow())
+			{
+				KZ::mode::UpdateModeDatabaseID(modeName, queries[1]->GetResultSet()->GetInt(0));
+			}
 		},
 		OnGenericTxnFailure);
 	// clang-format on

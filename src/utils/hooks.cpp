@@ -554,6 +554,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	{
 		entitySystemHook = SH_ADD_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	}
+	KZ::timer::CheckAnnounceQueue();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -718,6 +719,7 @@ static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawn
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
+	KZ::timer::ClearAnnounceQueue();
 	KZ::misc::OnServerActivate();
 	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
@@ -725,7 +727,7 @@ static_function bool Hook_ActivateServer()
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
-	// KZDatabaseService::SetupMap();
+	KZDatabaseService::SetupMap();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

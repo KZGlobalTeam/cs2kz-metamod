@@ -42,8 +42,7 @@ static_function SCMD_CALLBACK(Command_KzHelp)
 		}
 		char descriptionKey[152] {}; // About the max length of a command plus the keyword
 		V_snprintf(descriptionKey, sizeof(descriptionKey), "Command Description - %s", cmds[i].name);
-		player->PrintConsole(false, false, "%s: %s", cmds[i].name,
-							 KZLanguageService::PrepareMessage(player->languageService->GetLanguage(), descriptionKey).c_str());
+		player->PrintConsole(false, false, "%s: %s", cmds[i].name, player->languageService->PrepareMessage(descriptionKey).c_str());
 	}
 	return MRES_SUPERCEDE;
 }

@@ -3,35 +3,35 @@
 
 constexpr char sqlite_mapcourses_create[] = "\
 CREATE TABLE IF NOT EXISTS MapCourses ( \
-    MapCourseID INTEGER NOT NULL, \
+    ID INTEGER NOT NULL, \
     MapID INTEGER NOT NULL, \
-    Course VARCHAR(32) NOT NULL, \
+    Name VARCHAR(32) NOT NULL, \
     Created INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, \
-    CONSTRAINT PK_MapCourses PRIMARY KEY (MapCourseID), \
-    CONSTRAINT UQ_MapCourses_MapIDCourse UNIQUE (MapID, Course), \
-    CONSTRAINT FK_MapCourses_MapID FOREIGN KEY (MapID) REFERENCES Maps(MapID) \
+    CONSTRAINT PK_MapCourses PRIMARY KEY (ID), \
+    CONSTRAINT UQ_MapCourses_MapIDCourse UNIQUE (MapID, Name), \
+    CONSTRAINT FK_MapCourses_MapID FOREIGN KEY (MapID) REFERENCES Maps(ID) \
     ON UPDATE CASCADE ON DELETE CASCADE)";
 
 constexpr char mysql_mapcourses_create[] = "\
 CREATE TABLE IF NOT EXISTS MapCourses ( \
-    MapCourseID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, \
+    ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, \
     MapID INTEGER UNSIGNED NOT NULL, \
-    Course VARCHAR(32) NOT NULL, \
+    Name VARCHAR(32) NOT NULL, \
     Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, \
-    CONSTRAINT PK_MapCourses PRIMARY KEY (MapCourseID), \
-    CONSTRAINT UQ_MapCourses_MapIDCourse UNIQUE (MapID, Course), \
-    CONSTRAINT FK_MapCourses_MapID FOREIGN KEY (MapID) REFERENCES Maps(MapID) \
+    CONSTRAINT PK_MapCourses PRIMARY KEY (ID), \
+    CONSTRAINT UQ_MapCourses_MapIDCourse UNIQUE (MapID, Name), \
+    CONSTRAINT FK_MapCourses_MapID FOREIGN KEY (MapID) REFERENCES Maps(ID) \
     ON UPDATE CASCADE ON DELETE CASCADE)";
 
 constexpr char sqlite_mapcourses_insert[] = "\
-INSERT OR IGNORE INTO MapCourses (MapID, Course) \
-    VALUES (%d, %s)";
+INSERT OR IGNORE INTO MapCourses (MapID, Name) \
+    VALUES (%d, '%s')";
 
 constexpr char mysql_mapcourses_insert[] = "\
-INSERT IGNORE INTO MapCourses (MapID, Course) \
-    VALUES (%d, %s)";
+INSERT IGNORE INTO MapCourses (MapID, Name) \
+    VALUES (%d, '%s')";
 
 constexpr char sql_mapcourses_findid[] = "\
-SELECT MapCourseID \
+SELECT ID \
     FROM MapCourses \
-    WHERE MapID=%d AND Course=%s";
+    WHERE MapID=%d AND Name='%s'";

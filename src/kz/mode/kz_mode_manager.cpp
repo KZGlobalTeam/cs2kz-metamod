@@ -360,6 +360,42 @@ static_function SCMD_CALLBACK(Command_KzModeShort)
 	return MRES_SUPERCEDE;
 }
 
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
+{
+	KZModeManager::ModePluginInfo emptyInfo;
+	if (!mode)
+	{
+		META_CONPRINTF("[KZ] Warning: Getting mode info from a nullptr!\n");
+		return emptyInfo;
+	}
+	FOR_EACH_VEC(modeInfos, i)
+	{
+		if (!V_stricmp(mode->GetModeName(), modeInfos[i].longModeName))
+		{
+			return modeInfos[i];
+		}
+	}
+	return emptyInfo;
+}
+
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
+{
+	KZModeManager::ModePluginInfo emptyInfo;
+	if (modeName.IsEmpty())
+	{
+		META_CONPRINTF("[KZ] Warning: Getting mode info from a nullptr!\n");
+		return emptyInfo;
+	}
+	FOR_EACH_VEC(modeInfos, i)
+	{
+		if (modeName.IsEqual_FastCaseInsensitive(modeInfos[i].shortModeName) || modeName.IsEqual_FastCaseInsensitive(modeInfos[i].longModeName))
+		{
+			return modeInfos[i];
+		}
+	}
+	return emptyInfo;
+}
+
 void KZ::mode::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_mode", Command_KzMode);

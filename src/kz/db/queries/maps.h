@@ -3,19 +3,19 @@
 
 constexpr char sqlite_maps_create[] = "\
 CREATE TABLE IF NOT EXISTS Maps ( \
-    MapID INTEGER NOT NULL, \
+    ID INTEGER NOT NULL, \
     Name VARCHAR(32) NOT NULL UNIQUE, \
     LastPlayed TIMESTAMP NULL DEFAULT NULL, \
     Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, \
-    CONSTRAINT PK_Maps PRIMARY KEY (MapID))";
+    CONSTRAINT PK_Maps PRIMARY KEY (ID))";
 
 constexpr char mysql_maps_create[] = "\
 CREATE TABLE IF NOT EXISTS Maps ( \
-    MapID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, \
+    ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, \
     Name VARCHAR(32) NOT NULL UNIQUE, \
     LastPlayed TIMESTAMP NULL DEFAULT NULL, \
     Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, \
-    CONSTRAINT PK_Maps PRIMARY KEY (MapID))";
+    CONSTRAINT PK_Maps PRIMARY KEY (ID))";
 
 constexpr char sqlite_maps_insert[] = "\
 INSERT OR IGNORE INTO Maps (Name, LastPlayed) \
@@ -33,7 +33,7 @@ INSERT INTO Maps (Name, LastPlayed) \
     LastPlayed=CURRENT_TIMESTAMP";
 
 constexpr char sql_maps_findid[] = "\
-SELECT MapID, Name \
+SELECT ID, Name \
     FROM Maps \
     WHERE Name LIKE '%%%s%%' \
     ORDER BY (Name='%s') DESC, LENGTH(Name) \
@@ -42,10 +42,10 @@ SELECT MapID, Name \
 constexpr char sql_maps_getname[] = "\
 SELECT Name \
     FROM Maps \
-    WHERE MapID=%d";
+    WHERE ID=%d";
 
 constexpr char sql_maps_searchbyname[] = "\
-SELECT MapID, Name \
+SELECT ID, Name \
     FROM Maps \
     WHERE Name LIKE '%%%s%%' \
     ORDER BY (Name='%s') DESC, LENGTH(Name) \
