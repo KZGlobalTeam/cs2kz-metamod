@@ -330,6 +330,7 @@ static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 
 static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 {
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (ignoreTouchEvent)
 	{
 		ignoreTouchEvent = false;
@@ -347,8 +348,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 	{
 		RETURN_META(MRES_IGNORED);
 	}
-	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))
+	if (!V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
 		if (trigger->IsEndZone())
@@ -359,6 +359,11 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 		{
 			player->StartZoneStartTouch();
 		}
+	}
+	// Player has a modified velocity through trigger touching, take this into account.
+	if (player->processingMovement && player->moveDataPre.m_vecVelocity != player->GetPlayerPawn()->m_vecAbsVelocity())
+	{
+		player->SetVelocity(player->currentMoveData->m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -411,6 +416,16 @@ static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 		RETURN_META(MRES_SUPERCEDE);
 	}
 	ignoreTouchEvent = false;
+
+	// Player has a modified velocity through trigger touching, take this into account.
+	if (!V_stricmp(pOther->GetClassname(), "player"))
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
+		if (player->processingMovement && player->moveDataPre.m_vecVelocity != player->GetPlayerPawn()->m_vecAbsVelocity())
+		{
+			player->SetVelocity(player->currentMoveData->m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
+		}
+	}
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -460,6 +475,7 @@ static_function void Hook_OnEndTouch(CBaseEntity *pOther)
 
 static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 {
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (ignoreTouchEvent)
 	{
 		ignoreTouchEvent = false;
@@ -477,7 +493,6 @@ static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 	{
 		RETURN_META(MRES_IGNORED);
 	}
-	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple") && static_cast<CBaseTrigger *>(pThis)->IsStartZone())
 	{
 		player->StartZoneEndTouch();
