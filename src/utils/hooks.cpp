@@ -361,9 +361,10 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 		}
 	}
 	// Player has a modified velocity through trigger touching, take this into account.
-	if (player->processingMovement && player->moveDataPre.m_vecVelocity != player->GetPlayerPawn()->m_vecAbsVelocity())
+	bool modifiedVelocity = fabs(player->moveDataPre.m_vecVelocity.Length() - player->GetPlayerPawn()->m_vecAbsVelocity().Length()) > 0.1f;
+	if (player->processingMovement && modifiedVelocity)
 	{
-		player->SetVelocity(player->currentMoveData->m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
+		player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -421,9 +422,11 @@ static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 	if (!V_stricmp(pOther->GetClassname(), "player"))
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
-		if (player->processingMovement && player->moveDataPre.m_vecVelocity != player->GetPlayerPawn()->m_vecAbsVelocity())
+		bool modifiedVelocity = fabs(player->moveDataPre.m_vecVelocity.Length() - player->GetPlayerPawn()->m_vecAbsVelocity().Length()) > 0.1f;
+		if (player->processingMovement && modifiedVelocity)
 		{
-			player->SetVelocity(player->currentMoveData->m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
+			player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity
+								+ player->GetPlayerPawn()->m_vecAbsVelocity());
 		}
 	}
 	RETURN_META(MRES_IGNORED);
