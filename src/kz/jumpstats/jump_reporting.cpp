@@ -60,18 +60,14 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jumpTypeStr[jump->GetJumpType()],
 		jump->GetInvalidationReasonString(jump->invalidateReason)
 	);
-	std::string styleNames = "";
+	std::string modeStyleNames = jump->GetJumpPlayer()->modeService->GetModeShortName();
 	FOR_EACH_VEC(jump->GetJumpPlayer()->styleServices, i)
 	{
-		if (i != 0)
-		{
-			styleNames += '+';
-		}
-		styleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();
+		modeStyleNames += " +";
+		modeStyleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();
 	}
 	target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Details 1",
-		jump->GetJumpPlayer()->modeService->GetModeShortName(),
-		styleNames.c_str(),
+		modeStyleNames.c_str(),
 		jump->strafes.Count(),
 		KZLanguageService::PrepareMessageWithLang(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
 		jump->GetSync() * 100.0f,

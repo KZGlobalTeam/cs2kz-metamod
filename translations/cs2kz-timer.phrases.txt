@@ -23,9 +23,9 @@
 	"Personal Best Difference"
 	{
 		// Must have a space here!
-		//  (PB +12:34.56)
+		//  (+12:34.56)
 		"#format"	"color:s,diff_text:s"
-		"en"		" (PB {color}{diff_text}{grey})"
+		"en"		" ({color}{diff_text}{grey})"
 	}
 
 	"Beat Course Info - Basic"
@@ -37,28 +37,28 @@
 	
 	"Beat Course Info - Local (TP)"
 	{
-		// Server Rank: #1/24 Standard (PB -1:00.00)
+		// Server: #1/24 Standard (-1:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s"
-		"en"		"{grey}Server Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
+		"en"		"{grey}Server: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Local (PRO)"
 	{
-		// Server Rank: #1/24 Standard (PB -1:00.00) | #1/10 PRO (PB -2:00)
+		// Server: #1/24 Standard (-1:00.00) | #1/10 PRO (-2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
-		"en"		"{grey}Server Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"en"		"{grey}Server: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global (TP)"
 	{
-		// Global Rank: #1/24 Standard (PB -1:00.00)
+		// Global: #1/24 Standard (PB -1:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
-		"en"		"{grey}Global Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
+		"en"		"{grey}Global: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Global (PRO)"
 	{
-		// Global Rank: #1/24 Standard (PB -1:00.00) | #1/10 PRO (PB -2:00)
+		// Global: #1/24 Standard (PB -1:00.00) | #1/10 PRO (PB -2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
-		"en"		"{grey}Global Rank: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"en"		"{grey}Global: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global Points"
