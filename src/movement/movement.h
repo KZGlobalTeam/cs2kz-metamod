@@ -246,7 +246,6 @@ public:
 	CMoveData *currentMoveData {};
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;
-
 	QAngle oldAngles;
 
 	bool processingDuck {};
@@ -272,6 +271,7 @@ public:
 	bool enableWaterFix {};
 	bool ignoreNextCategorizePosition {};
 
+	Vector velocityBeforeTriggerTouch;
 	CUtlVector<CEntityHandle> pendingStartTouchTriggers;
 	CUtlVector<CEntityHandle> pendingEndTouchTriggers;
 	CUtlVector<CEntityHandle> touchedTriggers;

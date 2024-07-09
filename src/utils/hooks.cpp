@@ -305,6 +305,7 @@ static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(pawn);
+	player->velocityBeforeTriggerTouch = pawn->m_vecAbsVelocity();
 	if (!player->OnTriggerStartTouch(trigger))
 	{
 		ignoreTouchEvent = true;
@@ -361,7 +362,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 		}
 	}
 	// Player has a modified velocity through trigger touching, take this into account.
-	bool modifiedVelocity = fabs(player->moveDataPre.m_vecVelocity.Length() - player->GetPlayerPawn()->m_vecAbsVelocity().Length()) > 0.1f;
+	bool modifiedVelocity = player->velocityBeforeTriggerTouch != player->GetPlayerPawn()->m_vecAbsVelocity();
 	if (player->processingMovement && modifiedVelocity)
 	{
 		player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
@@ -389,6 +390,7 @@ static_function void Hook_OnTouch(CBaseEntity *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(pawn);
+	player->velocityBeforeTriggerTouch = pawn->m_vecAbsVelocity();
 	// This pawn have no controller attached to it. Ignore.
 	if (!player)
 	{
@@ -422,7 +424,7 @@ static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 	if (!V_stricmp(pOther->GetClassname(), "player"))
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
-		bool modifiedVelocity = fabs(player->moveDataPre.m_vecVelocity.Length() - player->GetPlayerPawn()->m_vecAbsVelocity().Length()) > 0.1f;
+		bool modifiedVelocity = player->velocityBeforeTriggerTouch != player->GetPlayerPawn()->m_vecAbsVelocity();
 		if (player->processingMovement && modifiedVelocity)
 		{
 			player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity
