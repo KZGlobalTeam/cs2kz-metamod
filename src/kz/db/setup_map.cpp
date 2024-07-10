@@ -32,7 +32,7 @@ void KZDatabaseService::SetupMap()
 	auto databaseType = KZDatabaseService::GetDatabaseType();
 	switch (databaseType)
 	{
-		case DatabaseType_SQLite:
+		case DatabaseType::SQLite:
 		{
 			V_snprintf(query, sizeof(query), sqlite_maps_insert, mapName);
 			txn.queries.push_back(query);
@@ -40,7 +40,7 @@ void KZDatabaseService::SetupMap()
 			txn.queries.push_back(query);
 			break;
 		}
-		case DatabaseType_MySQL:
+		case DatabaseType::MySQL:
 		{
 			V_snprintf(query, sizeof(query), mysql_maps_upsert, mapName);
 			txn.queries.push_back(query);
@@ -63,7 +63,7 @@ void KZDatabaseService::SetupMap()
 		{
 			switch (databaseType)
 			{
-				case DatabaseType_SQLite:
+				case DatabaseType::SQLite:
 				{
 					auto resultSet = queries[2]->GetResultSet();
 					if (resultSet->FetchRow())
@@ -72,7 +72,7 @@ void KZDatabaseService::SetupMap()
 					}
 					break;
 				}
-				case DatabaseType_MySQL:
+				case DatabaseType::MySQL:
 				{
 					auto resultSet = queries[1]->GetResultSet();
 					if (resultSet->FetchRow())

@@ -115,32 +115,39 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 	{
 		return false;
 	}
+	StylePluginInfo *info = nullptr;
 	FOR_EACH_VEC(styleInfos, i)
 	{
-		if (V_stricmp(styleInfos[i].shortName, shortName) == 0)
+		if (!V_stricmp(styleInfos[i].shortName, shortName) || !V_stricmp(styleInfos[i].longName, longName))
 		{
-			return false;
-		}
-		if (V_stricmp(styleInfos[i].longName, longName) == 0)
-		{
+			if (styleInfos[i].id < 0)
+			{
+				info = &styleInfos[i];
+				break;
+			}
 			return false;
 		}
 	}
 
-	StylePluginInfo *info = styleInfos.AddToTailGetPtr();
-	*info = {id, shortName, longName, factory};
-	ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
-	if (KZDatabaseService::IsReady())
+	// Add to the list otherwise, and update the database for ID.
+	if (!info)
 	{
-		KZDatabaseService::GetStyleID(longName);
+		info = styleInfos.AddToTailGetPtr();
+		// If there is already information about this mode while the ID is -1, that means it has to come from the database, so no need to update it.
+		KZDatabaseService::InsertAndUpdateStyleIDs(longName, shortName);
 	}
+	*info = {id, shortName, longName, factory};
+
+	ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
 	const char *path;
 	pluginManager->Query(id, &path, nullptr, nullptr);
 	g_pKZUtils->GetFileMD5(path, info->md5, sizeof(info->md5));
+
 	for (u32 i = 0; i < incompatibleStylesCount; i++)
 	{
 		info->incompatibleStyles.AddToTail(incompatibleStyles[i]);
 	}
+
 	return true;
 }
 
@@ -155,7 +162,10 @@ void KZStyleManager::UnregisterStyle(const char *styleName)
 	{
 		if (V_stricmp(styleInfos[i].shortName, styleName) == 0 || V_stricmp(styleInfos[i].longName, styleName) == 0)
 		{
-			styleInfos.Remove(i);
+			styleInfos[i].id = -1;
+			styleInfos[i].md5[0] = 0;
+			styleInfos[i].factory = nullptr;
+			styleInfos[i].incompatibleStyles.RemoveAll();
 			break;
 		}
 	}
@@ -186,7 +196,7 @@ void KZStyleManager::Cleanup()
 	char error[256];
 	FOR_EACH_VEC(styleInfos, i)
 	{
-		if (styleInfos[i].id == 0)
+		if (styleInfos[i].id <= 0)
 		{
 			continue;
 		}
@@ -380,6 +390,10 @@ void KZStyleManager::PrintAllStyles(KZPlayer *player)
 	player->languageService->PrintConsole(false, false, "Possible Styles");
 	FOR_EACH_VEC(styleInfos, i)
 	{
+		if (styleInfos[i].id < 0)
+		{
+			continue;
+		}
 		// clang-format off
 		player->PrintConsole(false, false,
 			"%s (%s)",
@@ -394,13 +408,7 @@ void KZ::style::InitStyleService(KZPlayer *player) {}
 
 void KZDatabaseServiceEventListener_Styles::OnDatabaseConnect()
 {
-	FOR_EACH_VEC(styleInfos, i)
-	{
-		if (styleInfos[i].databaseID == -1)
-		{
-			KZDatabaseService::GetStyleID(styleInfos[i].longName);
-		}
-	}
+	KZDatabaseService::UpdateStyleIDs();
 }
 
 static_function SCMD_CALLBACK(Command_KzToggleStyle)

@@ -5,7 +5,26 @@
 
 using namespace KZ::Database;
 
-void KZDatabaseService::GetModeID(CUtlString modeName)
+void KZDatabaseService::UpdateModeIDs()
+{
+	if (!KZDatabaseService::IsReady())
+	{
+		return;
+	}
+	// clang-format off
+	KZDatabaseService::GetDatabaseConnection()->Query(sql_modes_fetch_all,
+		[](ISQLQuery *query)
+		{
+			auto resultSet = query->GetResultSet();
+			while (resultSet->FetchRow())
+			{
+				KZ::mode::UpdateModeDatabaseID(query->GetResultSet()->GetString(1), query->GetResultSet()->GetInt(0));
+			}
+		});
+	// clang-format on
+}
+
+void KZDatabaseService::InsertAndUpdateModeIDs(CUtlString modeName, CUtlString shortName)
 {
 	if (!KZDatabaseService::IsReady())
 	{
@@ -15,14 +34,14 @@ void KZDatabaseService::GetModeID(CUtlString modeName)
 	char query[1024];
 	switch (KZDatabaseService::GetDatabaseType())
 	{
-		case DatabaseType_SQLite:
+		case DatabaseType::SQLite:
 		{
-			V_snprintf(query, sizeof(query), sqlite_modes_insert, modeName.Get());
+			V_snprintf(query, sizeof(query), sqlite_modes_insert, modeName.Get(), shortName.Get());
 			break;
 		}
-		case DatabaseType_MySQL:
+		case DatabaseType::MySQL:
 		{
-			V_snprintf(query, sizeof(query), mysql_modes_insert, modeName.Get());
+			V_snprintf(query, sizeof(query), mysql_modes_insert, modeName.Get(), shortName.Get());
 			break;
 		}
 		default:
@@ -41,7 +60,7 @@ void KZDatabaseService::GetModeID(CUtlString modeName)
 		[modeName](std::vector<ISQLQuery *> queries) 
 		{
 			auto resultSet = queries[1]->GetResultSet();
-			if (resultSet->FetchRow())
+			while (resultSet->FetchRow())
 			{
 				KZ::mode::UpdateModeDatabaseID(modeName, queries[1]->GetResultSet()->GetInt(0));
 			}

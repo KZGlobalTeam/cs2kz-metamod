@@ -38,5 +38,5 @@ constexpr char mysql_mapcourses_insert[] = R"(
 constexpr char sql_mapcourses_findid[] = R"(
     SELECT ID 
         FROM MapCourses 
-        WHERE MapID=%d AND Name='%s'";
+        WHERE MapID=%d AND Name='%s';
 )";

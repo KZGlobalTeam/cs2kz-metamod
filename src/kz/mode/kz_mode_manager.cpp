@@ -84,16 +84,23 @@ void KZ::mode::LoadModePlugins()
 	}
 }
 
-void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id)
+void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName)
 {
+	// Check if the mode already exists in the list, if yes, we update it.
 	FOR_EACH_VEC(modeInfos, i)
 	{
 		if (!V_stricmp(modeInfos[i].longModeName, name))
 		{
 			modeInfos[i].databaseID = id;
+			if (!shortName.IsEmpty())
+			{
+				modeInfos[i].shortModeName = shortName;
+			}
 			return;
 		}
 	}
+	// If the code reaches here, that means the mode is not in the list yet.
+	modeInfos.AddToTail({-1, name.Get(), shortName.Get()});
 }
 
 void KZ::mode::InitModeService(KZPlayer *player)
@@ -157,14 +164,17 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	{
 		return false;
 	}
+	// Update the info list if already exists
+	ModePluginInfo *info = nullptr;
 	FOR_EACH_VEC(modeInfos, i)
 	{
-		if (V_stricmp(modeInfos[i].shortModeName, shortModeName) == 0)
+		if (!V_stricmp(modeInfos[i].shortModeName, shortModeName) || !V_stricmp(modeInfos[i].longModeName, longModeName))
 		{
-			return false;
-		}
-		if (V_stricmp(modeInfos[i].longModeName, longModeName) == 0)
-		{
+			if (modeInfos[i].id < 0)
+			{
+				info = &modeInfos[i];
+				break;
+			}
 			return false;
 		}
 	}
@@ -173,12 +183,15 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 
 	V_snprintf(shortModeCmd, 64, "kz_%s", shortModeName);
 	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort);
-	ModePluginInfo *info = modeInfos.AddToTailGetPtr();
-	*info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
-	if (KZDatabaseService::IsReady())
+
+	// Add to the list otherwise, and update the database for ID.
+	if (!info)
 	{
-		KZDatabaseService::GetModeID(longModeName);
+		info = modeInfos.AddToTailGetPtr();
+		// If there is already information about this mode while the ID is -1, that means it has to come from the database, so no need to update it.
+		KZDatabaseService::InsertAndUpdateModeIDs(longModeName, shortModeName);
 	}
+	*info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
 	if (id)
 	{
 		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
@@ -209,7 +222,11 @@ void KZModeManager::UnregisterMode(const char *modeName)
 			char shortModeCmd[64];
 			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[i].shortModeName.Get());
 			scmd::UnregisterCmd(shortModeCmd);
-			modeInfos.Remove(i);
+
+			modeInfos[i].id = -1;
+			modeInfos[i].md5[0] = 0;
+			modeInfos[i].factory = nullptr;
+			modeInfos[i].shortCmdRegistered = false;
 			break;
 		}
 	}
@@ -233,6 +250,10 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		player->languageService->PrintConsole(false, false, "Possible & Current Modes", player->modeService->GetModeName());
 		FOR_EACH_VEC(modeInfos, i)
 		{
+			if (modeInfos[i].id < 0)
+			{
+				continue;
+			}
 			// clang-format off
 			player->PrintConsole(false, false,
 				"%s (kz_mode %s / kz_mode %s)",
@@ -282,17 +303,6 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), KZ::mode::numCvar);
 	return true;
-}
-
-void KZModeManager::OnDatabaseConnect()
-{
-	FOR_EACH_VEC(modeInfos, i)
-	{
-		if (modeInfos[i].databaseID == -1)
-		{
-			KZDatabaseService::GetModeID(modeInfos[i].longModeName);
-		}
-	}
 }
 
 void KZModeManager::Cleanup()
@@ -383,7 +393,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 	KZModeManager::ModePluginInfo emptyInfo;
 	if (modeName.IsEmpty())
 	{
-		META_CONPRINTF("[KZ] Warning: Getting mode info from a nullptr!\n");
+		META_CONPRINTF("[KZ] Warning: Getting mode info from an empty string!\n");
 		return emptyInfo;
 	}
 	FOR_EACH_VEC(modeInfos, i)
@@ -403,5 +413,5 @@ void KZ::mode::RegisterCommands()
 
 void KZDatabaseServiceEventListener_Modes::OnDatabaseConnect()
 {
-	modeManager.OnDatabaseConnect();
+	KZDatabaseService::UpdateModeIDs();
 }

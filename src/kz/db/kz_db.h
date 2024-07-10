@@ -1,5 +1,6 @@
 #pragma once
 #include "../kz.h"
+#include "utils/simplecmds.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 
 class ISQLConnection;
@@ -9,11 +10,11 @@ namespace KZ
 {
 	namespace Database
 	{
-		enum DatabaseType
+		enum class DatabaseType
 		{
-			DatabaseType_None = -1,
-			DatabaseType_SQLite,
-			DatabaseType_MySQL
+			None = -1,
+			SQLite,
+			MySQL
 		};
 	} // namespace Database
 } // namespace KZ
@@ -110,10 +111,15 @@ public:
 
 	static void SetupClient(KZPlayer *player);
 
-	static void GetModeID(CUtlString modeName);
-	static void GetStyleID(CUtlString styleID);
+	static void UpdateModeIDs();
+	static void InsertAndUpdateModeIDs(CUtlString modeName, CUtlString shortName);
+
+	static void UpdateStyleIDs();
+	static void InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString shortName);
 
 	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
+
+	static SCMD_CALLBACK(CommandKZPB);
 	bool isCheater;
 	bool isSetUp;
 };

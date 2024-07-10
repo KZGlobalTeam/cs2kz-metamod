@@ -173,9 +173,9 @@ public:
 		PluginId id;
 		CUtlString shortModeName;
 		CUtlString longModeName;
-		ModeServiceFactory factory;
-		bool shortCmdRegistered;
-		char md5[33];
+		ModeServiceFactory factory {};
+		bool shortCmdRegistered {};
+		char md5[33] {};
 		i32 databaseID = -1;
 	};
 
@@ -184,7 +184,6 @@ public:
 	// clang-format on
 
 	virtual void UnregisterMode(const char *modeName);
-	void OnDatabaseConnect();
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false, bool force = false);
 	void Cleanup();
 };
@@ -197,7 +196,7 @@ namespace KZ::mode
 	void InitModeService(KZPlayer *player);
 	void InitModeManager();
 	void LoadModePlugins();
-	void UpdateModeDatabaseID(CUtlString name, i32 id);
+	void UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName = "");
 	// clang-format off
 
 	inline const char *modeCvarNames[] = {

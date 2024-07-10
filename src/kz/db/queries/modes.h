@@ -4,6 +4,7 @@ constexpr char mysql_modes_create[] = R"(
     CREATE TABLE IF NOT EXISTS `Modes` ( 
         ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, 
         Name VARCHAR(32) NOT NULL UNIQUE, 
+        ShortName VARCHAR(16) NOT NULL UNIQUE, 
         CONSTRAINT PK_Modes PRIMARY KEY (ID))
 )";
 

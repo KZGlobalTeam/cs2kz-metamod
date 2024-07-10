@@ -5,7 +5,26 @@
 
 using namespace KZ::Database;
 
-void KZDatabaseService::GetStyleID(CUtlString styleName)
+void KZDatabaseService::UpdateStyleIDs()
+{
+	if (!KZDatabaseService::IsReady())
+	{
+		return;
+	}
+	// clang-format off
+	KZDatabaseService::GetDatabaseConnection()->Query(sql_styles_fetch_all,
+		[](ISQLQuery *query)
+		{
+			auto resultSet = query->GetResultSet();
+			while (resultSet->FetchRow())
+			{
+				KZ::style::UpdateStyleDatabaseID(query->GetResultSet()->GetString(1), query->GetResultSet()->GetInt(0));
+			}
+		});
+	// clang-format on
+}
+
+void KZDatabaseService::InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString shortName)
 {
 	if (!KZDatabaseService::IsReady())
 	{
@@ -15,14 +34,14 @@ void KZDatabaseService::GetStyleID(CUtlString styleName)
 	char query[1024];
 	switch (KZDatabaseService::GetDatabaseType())
 	{
-		case DatabaseType_SQLite:
+		case DatabaseType::SQLite:
 		{
-			V_snprintf(query, sizeof(query), sqlite_styles_insert, styleName.Get());
+			V_snprintf(query, sizeof(query), sqlite_styles_insert, styleName.Get(), shortName.Get());
 			break;
 		}
-		case DatabaseType_MySQL:
+		case DatabaseType::MySQL:
 		{
-			V_snprintf(query, sizeof(query), mysql_styles_insert, styleName.Get());
+			V_snprintf(query, sizeof(query), mysql_styles_insert, styleName.Get(), shortName.Get());
 			break;
 		}
 		default:

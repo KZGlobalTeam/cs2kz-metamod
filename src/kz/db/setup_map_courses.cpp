@@ -27,13 +27,13 @@ void KZDatabaseService::SetupCourse(const char *courseName)
 	auto cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName);
 	switch (databaseType)
 	{
-		case DatabaseType_SQLite:
+		case DatabaseType::SQLite:
 		{
 			V_snprintf(query, sizeof(query), sqlite_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str());
 			txn.queries.push_back(query);
 			break;
 		}
-		case DatabaseType_MySQL:
+		case DatabaseType::MySQL:
 		{
 			V_snprintf(query, sizeof(query), mysql_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str());
 			txn.queries.push_back(query);

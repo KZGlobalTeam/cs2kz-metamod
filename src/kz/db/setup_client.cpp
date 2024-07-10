@@ -28,7 +28,7 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 
 	switch (GetDatabaseType())
 	{
-		case DatabaseType_SQLite:
+		case DatabaseType::SQLite:
 		{
 			// UPDATE OR IGNORE
 			V_snprintf(query, sizeof(query), sqlite_players_update, escapedName.c_str(), clientIP, steamID64);
@@ -38,7 +38,7 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 			txn.queries.push_back(query);
 			break;
 		}
-		case DatabaseType_MySQL:
+		case DatabaseType::MySQL:
 		{
 			// INSERT ... ON DUPLICATE KEY ...
 			V_snprintf(query, sizeof(query), mysql_players_upsert, escapedName.c_str(), clientIP, steamID64);
@@ -68,12 +68,12 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 			ISQLResult *result = NULL;
 			switch (GetDatabaseType())
 			{
-				case DatabaseType_SQLite:
+				case DatabaseType::SQLite:
 				{
 					result = queries[2]->GetResultSet();
 					break;
 				}
-				case DatabaseType_MySQL:
+				case DatabaseType::MySQL:
 				{
 					result = queries[1]->GetResultSet();
 					break;

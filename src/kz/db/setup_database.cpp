@@ -30,14 +30,14 @@ void KZDatabaseService::SetupDatabase()
 		V_snprintf(path, sizeof(path), "addons/cs2kz/data/%s.sqlite3", config->GetString("database"));
 		info.database = path;
 		databaseConnection = sqlInterface->GetSQLiteClient()->CreateSQLiteConnection(info);
-		databaseType = DatabaseType_SQLite;
+		databaseType = DatabaseType::SQLite;
 	}
 	else if (!V_stricmp(driver, "mysql"))
 	{
 		MySQLConnectionInfo info = {config->GetString("host"),     config->GetString("user"),    config->GetString("pass"),
 									config->GetString("database"), config->GetInt("port", 3306), config->GetInt("timeout", 60)};
 		databaseConnection = sqlInterface->GetMySQLClient()->CreateMySQLConnection(info);
-		databaseType = DatabaseType_MySQL;
+		databaseType = DatabaseType::MySQL;
 	}
 	else
 	{

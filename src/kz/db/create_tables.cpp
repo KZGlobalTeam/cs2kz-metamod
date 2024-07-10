@@ -20,7 +20,7 @@ void KZDatabaseService::CreateTables()
 	Transaction txn;
 	switch (KZDatabaseService::GetDatabaseType())
 	{
-		case DatabaseType_MySQL:
+		case DatabaseType::MySQL:
 		{
 			txn.queries.push_back(mysql_players_create);
 			txn.queries.push_back(mysql_modes_create);
@@ -32,7 +32,7 @@ void KZDatabaseService::CreateTables()
 			txn.queries.push_back(mysql_startpos_create);
 			break;
 		}
-		case DatabaseType_SQLite:
+		case DatabaseType::SQLite:
 		{
 			txn.queries.push_back(sqlite_players_create);
 			txn.queries.push_back(sqlite_modes_create);
