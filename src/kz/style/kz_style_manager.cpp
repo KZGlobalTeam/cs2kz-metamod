@@ -211,7 +211,6 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 	{
 		player->languageService->PrintChat(true, false, "Add Style Command Usage");
 		// clang-format off
-		player->languageService->PrintConsole(false, false, "Possible Styles");
 		KZStyleManager::PrintAllStyles(player);
 		return;
 		// clang-format on
@@ -298,7 +297,6 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	if (!styleName || !V_stricmp("", styleName))
 	{
 		player->languageService->PrintChat(true, false, "Toggle Style Command Usage");
-		player->languageService->PrintConsole(false, false, "Possible Styles");
 		KZStyleManager::PrintAllStyles(player);
 		return;
 	}
