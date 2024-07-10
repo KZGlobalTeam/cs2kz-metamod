@@ -7,6 +7,7 @@
 
 #include "cs2kz.h"
 #include "ctimer.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "utils/utils.h"
@@ -366,6 +367,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 	if (player->processingMovement && modifiedVelocity)
 	{
 		player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
+		player->jumpstatsService->InvalidateJumpstats("Externally modified");
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -429,6 +431,7 @@ static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 		{
 			player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity
 								+ player->GetPlayerPawn()->m_vecAbsVelocity());
+			player->jumpstatsService->InvalidateJumpstats("Externally modified");
 		}
 	}
 	RETURN_META(MRES_IGNORED);
