@@ -272,6 +272,7 @@ public:
 	bool ignoreNextCategorizePosition {};
 
 	Vector velocityBeforeTriggerTouch;
+	Vector originBeforeTriggerTouch;
 	CUtlVector<CEntityHandle> pendingStartTouchTriggers;
 	CUtlVector<CEntityHandle> pendingEndTouchTriggers;
 	CUtlVector<CEntityHandle> touchedTriggers;

@@ -306,18 +306,23 @@ static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 		RETURN_META(MRES_IGNORED);
 	}
 	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(pawn);
+
 	player->velocityBeforeTriggerTouch = pawn->m_vecAbsVelocity();
+	player->originBeforeTriggerTouch = player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+
 	if (!player->OnTriggerStartTouch(trigger))
 	{
 		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
+
 	// Don't start touch this trigger twice.
 	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()))
 	{
 		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
+
 	// StartTouch is a two way interaction. Are we waiting for this trigger?
 	if (player->pendingStartTouchTriggers.HasElement(trigger->GetRefEHandle()))
 	{
@@ -325,6 +330,7 @@ static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 		player->pendingStartTouchTriggers.FindAndRemove(trigger->GetRefEHandle());
 		RETURN_META(MRES_IGNORED);
 	}
+
 	// Must be a new interaction!
 	player->pendingStartTouchTriggers.AddToTail(trigger->GetRefEHandle());
 	RETURN_META(MRES_IGNORED);
@@ -350,6 +356,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 	{
 		RETURN_META(MRES_IGNORED);
 	}
+
 	if (!V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
@@ -362,6 +369,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 			player->StartZoneStartTouch();
 		}
 	}
+
 	// Player has a modified velocity through trigger touching, take this into account.
 	bool modifiedVelocity = player->velocityBeforeTriggerTouch != player->GetPlayerPawn()->m_vecAbsVelocity();
 	if (player->processingMovement && modifiedVelocity)
@@ -369,6 +377,14 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 		player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
 		player->jumpstatsService->InvalidateJumpstats("Externally modified");
 	}
+
+	bool modifiedOrigin = player->originBeforeTriggerTouch != player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+	if (player->processingMovement && modifiedOrigin)
+	{
+		player->SetOrigin(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin());
+		player->jumpstatsService->InvalidateJumpstats("Externally modified");
+	}
+
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -387,17 +403,23 @@ static_function void Hook_OnTouch(CBaseEntity *pOther)
 		pawn = static_cast<CCSPlayerPawn *>(pOther);
 		trigger = static_cast<CBaseTrigger *>(pThis);
 	}
+
 	if (V_stricmp(pawn->GetClassname(), "player") != 0 || !V_strstr(trigger->GetClassname(), "trigger_"))
 	{
 		RETURN_META(MRES_IGNORED);
 	}
+
 	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(pawn);
+
 	player->velocityBeforeTriggerTouch = pawn->m_vecAbsVelocity();
+	player->originBeforeTriggerTouch = player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+
 	// This pawn have no controller attached to it. Ignore.
 	if (!player)
 	{
 		RETURN_META(MRES_IGNORED);
 	}
+
 	if (!player->OnTriggerTouch(trigger))
 	{
 		ignoreTouchEvent = true;
@@ -431,6 +453,12 @@ static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 		{
 			player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity
 								+ player->GetPlayerPawn()->m_vecAbsVelocity());
+			player->jumpstatsService->InvalidateJumpstats("Externally modified");
+		}
+		bool modifiedOrigin = player->originBeforeTriggerTouch != player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+		if (player->processingMovement && modifiedOrigin)
+		{
+			player->SetOrigin(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin());
 			player->jumpstatsService->InvalidateJumpstats("Externally modified");
 		}
 	}
