@@ -673,24 +673,52 @@ void KZPlayer::EnableGodMode()
 	}
 }
 
-void KZPlayer::StartZoneStartTouch(const KzCourseDescriptor *course)
+void KZPlayer::ZoneStartTouch(const KzCourseDescriptor *course, KzTriggerType zoneType)
 {
-	this->checkpointService->ResetCheckpoints();
-	this->timerService->StartZoneStartTouch(course);
-}
-
-void KZPlayer::StartZoneEndTouch(const KzCourseDescriptor *course)
-{
-	if (!this->noclipService->IsNoclipping())
+	switch (zoneType)
 	{
-		this->checkpointService->ResetCheckpoints();
-		this->timerService->StartZoneEndTouch(course);
+		case KZTRIGGER_ZONE_START:
+		{
+			this->checkpointService->ResetCheckpoints();
+			this->timerService->StartZoneStartTouch(course);
+		}
+		break;
+		
+		case KZTRIGGER_ZONE_END:
+		{
+			this->timerService->TimerEnd(course);
+		}
+		break;
+		
+		default:
+			break;
 	}
 }
 
-void KZPlayer::EndZoneStartTouch(const KzCourseDescriptor *course)
+void KZPlayer::ZoneEndTouch(const KzCourseDescriptor *course, KzTriggerType zoneType)
 {
-	this->timerService->TimerEnd(course);
+	switch (zoneType)
+	{
+		case KZTRIGGER_ZONE_START:
+		{
+			this->checkpointService->ResetCheckpoints();
+			this->timerService->StartZoneEndTouch(course);
+		}
+		break;
+		
+		default:
+			break;
+	}
+}
+
+void KZPlayer::StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber)
+{
+	// TODO:
+}
+
+void KZPlayer::StageZoneEndTouch(const KzCourseDescriptor *course, i32 stageNumber)
+{
+	// TODO:
 }
 
 void KZPlayer::UpdatePlayerModelAlpha()
