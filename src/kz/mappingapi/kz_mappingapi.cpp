@@ -72,7 +72,7 @@ struct KzTrigger
 	} teleport;
 };
 
-internal struct
+static_function struct
 {
 	i32 triggerCount;
 	KzTrigger triggers[2048];
@@ -80,10 +80,10 @@ internal struct
 	KzCourseDescriptor courses[512];
 } g_mappingApi;
 
-internal MappingInterface g_mappingInterface;
+static_function MappingInterface g_mappingInterface;
 MappingInterface *g_pMappingApi = nullptr;
 
-internal KzTrigger *Mapi_NewTrigger(KzTriggerType type)
+static_function KzTrigger *Mapi_NewTrigger(KzTriggerType type)
 {
 	// TODO: bounds checking
 	assert(g_mappingApi.triggerCount < Q_ARRAYSIZE(g_mappingApi.triggers));
@@ -97,7 +97,7 @@ internal KzTrigger *Mapi_NewTrigger(KzTriggerType type)
 	return result;
 }
 
-internal KzCourseDescriptor *Mapi_NewCourse()
+static_function KzCourseDescriptor *Mapi_NewCourse()
 {
 	// TODO: bounds checking
 	assert(g_mappingApi.courseCount < Q_ARRAYSIZE(g_mappingApi.courses));
@@ -110,7 +110,7 @@ internal KzCourseDescriptor *Mapi_NewCourse()
 	return result;
 }
 
-internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
+static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 {
 	const CEntityKeyValues *ekv = info->m_pKeyValues;
 	KzTriggerType type = (KzTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, KZTRIGGER_DISABLED);
@@ -193,7 +193,7 @@ internal void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 	}
 }
 
-internal void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
+static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 {
 	const CEntityKeyValues *ekv = info->m_pKeyValues;
 
@@ -215,7 +215,7 @@ internal void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 	course->disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
 }
 
-internal KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
+static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 {
 	KzTrigger *result = nullptr;
 	if (!trigger->m_pEntity)
