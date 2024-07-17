@@ -3,6 +3,7 @@
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
+#include "mappingapi/kz_mappingapi.h"
 
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
@@ -127,9 +128,10 @@ public:
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
 	// Timer events
-	void StartZoneStartTouch(const KzCourseDescriptor *course);
-	void StartZoneEndTouch(const KzCourseDescriptor *course);
-	void EndZoneStartTouch(const KzCourseDescriptor *course);
+	void ZoneStartTouch(const KzCourseDescriptor *course, KzTriggerType zoneType);
+	void ZoneEndTouch(const KzCourseDescriptor *course, KzTriggerType zoneType);
+	void StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber);
+	void StageZoneEndTouch(const KzCourseDescriptor *course, i32 stageNumber);
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;

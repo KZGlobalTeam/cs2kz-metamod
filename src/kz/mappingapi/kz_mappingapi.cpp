@@ -10,66 +10,19 @@
 #define KEY_IS_COURSE_DESCRIPTOR "timer_course_descriptor"
 #define INVALID_STAGE_NUMBER     -1
 
-enum KzTriggerType
-{
-	KZTRIGGER_DISABLED = 0,
-	KZTRIGGER_MODIFIER,
-	KZTRIGGER_RESET_CHECKPOINTS,
-	KZTRIGGER_SINGLE_BHOP_RESET,
-	KZTRIGGER_ANTI_BHOP,
-
-	KZTRIGGER_ZONE_START,
-	KZTRIGGER_ZONE_END,
-	KZTRIGGER_ZONE_SPLIT,
-	KZTRIGGER_ZONE_CHECKPOINT,
-	KZTRIGGER_ZONE_STAGE,
-
-	KZTRIGGER_TELEPORT,
-	KZTRIGGER_MULTI_BHOP,
-	KZTRIGGER_SINGLE_BHOP,
-	KZTRIGGER_SEQUENTIAL_BHOP,
-	KZTRIGGER_COUNT,
-};
-
 struct KzTrigger
 {
 	KzTriggerType type;
 	CEntityHandle entity;
 
-	// KZTRIGGER_MODIFIER
-	struct Modifier
+	union
 	{
-		bool disablePausing;
-		bool disableCheckpoints;
-		bool disableTeleports;
-		bool disableJumpstats;
-		bool enableSlide;
-	} modifier;
-
-	// KZTRIGGER_ANTI_BHOP
-	struct Antibhop
-	{
-		f32 time;
-	} antibhop;
-
-	// KZTRIGGER_ZONE_*
-	struct Zone
-	{
-		char courseDescriptor[128];
-		i32 courseIndex; // determined at runtime
-		// only used with stage zone!
-		i32 stageNumber;
-	} zone;
-
-	struct Teleport
-	{
-		char destination[128];
-		f32 delay;
-		bool useDestinationAngles;
-		bool resetSpeed;
-		bool reorientPlayer;
-		bool relative;
-	} teleport;
+		Modifier modifier;
+		Antibhop antibhop;
+		Zone zone;
+		StageZone stageZone;
+		Teleport teleport;
+	};
 };
 
 static_function struct
@@ -158,15 +111,10 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			// TODO: find course descriptor entity!
 			const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
 			V_snprintf(trigger->zone.courseDescriptor, sizeof(trigger->zone.courseDescriptor), "%s", courseDescriptor);
-			trigger->zone.courseIndex = -1;
 
 			if (type == KZTRIGGER_ZONE_STAGE)
 			{
-				trigger->zone.stageNumber = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
-			}
-			else
-			{
-				trigger->zone.stageNumber = INVALID_STAGE_NUMBER;
+				trigger->stageZone.stageNumber = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
 			}
 		}
 		break;
@@ -316,29 +264,25 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 			break;
 
 		case KZTRIGGER_ZONE_START:
+		case KZTRIGGER_ZONE_END:
+		case KZTRIGGER_ZONE_SPLIT:
+		case KZTRIGGER_ZONE_CHECKPOINT:
 		{
-			player->StartZoneStartTouch(course);
+			player->ZoneStartTouch(course, touched->type);
 		}
 		break;
 
-		case KZTRIGGER_ZONE_END:
+		case KZTRIGGER_ZONE_STAGE:
 		{
-			player->EndZoneStartTouch(course);
+			player->StageZoneStartTouch(course, touched->stageZone.stageNumber);
 		}
 		break;
-		// TODO:
-		case KZTRIGGER_ZONE_SPLIT:
-		case KZTRIGGER_ZONE_CHECKPOINT:
-		case KZTRIGGER_ZONE_STAGE:
-			break;
 
 		case KZTRIGGER_TELEPORT:
 		case KZTRIGGER_MULTI_BHOP:
 		case KZTRIGGER_SINGLE_BHOP:
 		case KZTRIGGER_SEQUENTIAL_BHOP:
-		{
-		}
-		break;
+			break;
 		default:
 			break;
 	}
@@ -374,15 +318,19 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 	switch (touched->type)
 	{
 		case KZTRIGGER_ZONE_START:
-		{
-			player->StartZoneEndTouch(course);
-		}
-		break;
-
-		// TODO:
 		case KZTRIGGER_ZONE_SPLIT:
 		case KZTRIGGER_ZONE_CHECKPOINT:
+		{
+			player->ZoneEndTouch(course, touched->type);
+		}
+		break;
+		
 		case KZTRIGGER_ZONE_STAGE:
+		{
+			player->StageZoneEndTouch(course, touched->stageZone.stageNumber);
+		}
+		break;
+		
 		default:
 			break;
 	}
