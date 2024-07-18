@@ -4,8 +4,8 @@ constexpr char sql_getpb[] = R"(
     SELECT Times.RunTime, Times.Teleports 
         FROM Times 
         INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        WHERE Times.SteamID64=%llu AND MapCourses.MapID=%d 
-        AND MapCourses.Name='%s' AND Times.ModeID=%d AND Times.StyleIDFlags=%llu
+        WHERE Times.SteamID64=%llu AND MapCourses.ID=%d
+        AND Times.ModeID=%d AND Times.StyleIDFlags=%llu
         ORDER BY Times.RunTime 
         LIMIT %d
 )";
@@ -14,9 +14,9 @@ constexpr char sql_getpbpro[] = R"(
     SELECT Times.RunTime 
         FROM Times 
         INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        WHERE Times.SteamID64=%llu AND MapCourses.MapID=%d 
-        AND MapCourses.Name='%s' AND Times.ModeID=%d 
-        AND Times.StyleIDFlags=%llu AND Times.Teleports=0 
+        WHERE Times.SteamID64=%llu AND MapCourses.ID=%d
+        AND Times.ModeID=%d AND Times.StyleIDFlags=%llu
+        AND Times.Teleports=0 
         ORDER BY Times.RunTime 
         LIMIT %d
 )";

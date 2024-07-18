@@ -68,6 +68,7 @@ private:
 	f64 lastInvalidateTime {};
 
 public:
+	static void Init();
 	static void RegisterCommands();
 	static bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
 	static bool UnregisterEventListener(KZTimerServiceEventListener *eventListener);
@@ -233,6 +234,7 @@ namespace KZ
 {
 	namespace timer
 	{
+		// Announcements
 		struct LocalRankData
 		{
 			bool firstTime {};
@@ -268,5 +270,22 @@ namespace KZ
 		void CheckAnnounceQueue();
 		void UpdateLocalRankData(u32 id, LocalRankData data);
 		void UpdateGlobalRankData(u32 id, GlobalRankData data);
+
+		// Courses
+		struct CourseInfo
+		{
+			u32 uid {};
+			CUtlString courseName;
+			i32 stageID = -1;
+			i32 databaseID {};
+		};
+
+		void ClearCourses();
+		void InsertCourse(const char *courseName, i32 stageID);
+		void SetupCourses();
+		void UpdateCourseDatabaseID(u32 uid, i32 databaseID);
+		bool GetCourseInformation(const char *courseName, CourseInfo &info);
+		bool GetFirstCourseInformation(CourseInfo &info);
+
 	} // namespace timer
 } // namespace KZ

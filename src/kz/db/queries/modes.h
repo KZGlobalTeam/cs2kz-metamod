@@ -12,6 +12,7 @@ constexpr char sqlite_modes_create[] = R"(
     CREATE TABLE IF NOT EXISTS `Modes` ( 
         ID INTEGER NOT NULL, 
         Name VARCHAR(32) NOT NULL UNIQUE, 
+        ShortName VARCHAR(16) NOT NULL UNIQUE 
         CONSTRAINT PK_Modes PRIMARY KEY (ID))
 )";
 

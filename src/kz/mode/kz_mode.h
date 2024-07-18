@@ -170,7 +170,10 @@ class KZModeManager
 public:
 	struct ModePluginInfo
 	{
-		PluginId id;
+		// ID 0 is reserved for VNL
+		// -1 is for mode that exists in the database (but not loaded in the plugin)
+		// -2 is for invalid mode.
+		PluginId id = -2;
 		CUtlString shortModeName;
 		CUtlString longModeName;
 		ModeServiceFactory factory {};

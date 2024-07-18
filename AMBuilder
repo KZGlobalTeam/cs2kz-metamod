@@ -91,8 +91,9 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
-
-    os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
+    
+    os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'kz_misc.cpp'),
+    
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player_print.cpp'),
@@ -112,7 +113,6 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'player_top.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'print_average.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'print_js.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'print_pbs.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'print_records.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'process_new_time.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_js.cpp'),
@@ -147,6 +147,8 @@ for sdk_target in MMSPlugin.sdk_targets:
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'announce_queue.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'personal_best.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'courses.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
   ]

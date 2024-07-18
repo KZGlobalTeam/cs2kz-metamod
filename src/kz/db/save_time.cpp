@@ -29,8 +29,9 @@ void KZDatabaseService::SaveTime(u32 id, KZPlayer *player, CUtlString courseName
 		}
 		styleIDs &= (1ull << styleDatabaseID);
 	}
+	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName);
 	Transaction txn;
-	V_snprintf(query, sizeof(query), sql_times_insert, steamID, modeID, styleIDs, time, teleportsUsed, GetMapID(), courseName);
+	V_snprintf(query, sizeof(query), sql_times_insert, steamID, modeID, styleIDs, time, teleportsUsed, GetMapID(), cleanedCourseName.c_str());
 	txn.queries.push_back(query);
 	if (styleIDs != 0)
 	{
@@ -39,24 +40,26 @@ void KZDatabaseService::SaveTime(u32 id, KZPlayer *player, CUtlString courseName
 	else
 	{
 		// Get Top 2 PRO PBs
-		V_snprintf(query, sizeof(query), sql_getpb, steamID, GetMapID(), courseName, modeID, styleIDs, 2);
+		V_snprintf(query, sizeof(query), sql_getpb, steamID, GetMapID(), cleanedCourseName.c_str(), modeID, styleIDs, 2);
 		txn.queries.push_back(query);
 		// Get Rank
-		V_snprintf(query, sizeof(query), sql_getmaprank, GetMapID(), courseName, modeID, steamID, GetMapID(), courseName, modeID);
+		V_snprintf(query, sizeof(query), sql_getmaprank, GetMapID(), cleanedCourseName.c_str(), modeID, steamID, GetMapID(),
+				   cleanedCourseName.c_str(), modeID);
 		txn.queries.push_back(query);
 		// Get Number of Players with Times
-		V_snprintf(query, sizeof(query), sql_getlowestmaprank, GetMapID(), courseName, modeID);
+		V_snprintf(query, sizeof(query), sql_getlowestmaprank, GetMapID(), cleanedCourseName.c_str(), modeID);
 		txn.queries.push_back(query);
 		if (teleportsUsed == 0)
 		{
 			// Get Top 2 PRO PBs
-			V_snprintf(query, sizeof(query), sql_getpbpro, steamID, GetMapID(), courseName, modeID, styleIDs, 2);
+			V_snprintf(query, sizeof(query), sql_getpbpro, steamID, GetMapID(), cleanedCourseName.c_str(), modeID, styleIDs, 2);
 			txn.queries.push_back(query);
 			// Get PRO Rank
-			V_snprintf(query, sizeof(query), sql_getmaprankpro, GetMapID(), courseName, modeID, steamID, GetMapID(), courseName, modeID);
+			V_snprintf(query, sizeof(query), sql_getmaprankpro, GetMapID(), cleanedCourseName.c_str(), modeID, steamID, GetMapID(),
+					   cleanedCourseName.c_str(), modeID);
 			txn.queries.push_back(query);
 			// Get Number of Players with Times
-			V_snprintf(query, sizeof(query), sql_getlowestmaprankpro, GetMapID(), courseName, modeID);
+			V_snprintf(query, sizeof(query), sql_getlowestmaprankpro, GetMapID(), cleanedCourseName.c_str(), modeID);
 			txn.queries.push_back(query);
 		}
 		KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(

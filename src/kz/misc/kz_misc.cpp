@@ -1,19 +1,19 @@
 #include "common.h"
 #include "utils/utils.h"
-#include "kz.h"
+#include "kz/kz.h"
 #include "utils/simplecmds.h"
 
-#include "checkpoint/kz_checkpoint.h"
-#include "jumpstats/kz_jumpstats.h"
-#include "quiet/kz_quiet.h"
-#include "mode/kz_mode.h"
-#include "language/kz_language.h"
-#include "style/kz_style.h"
-#include "noclip/kz_noclip.h"
-#include "hud/kz_hud.h"
-#include "spec/kz_spec.h"
-#include "timer/kz_timer.h"
-#include "tip/kz_tip.h"
+#include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/quiet/kz_quiet.h"
+#include "kz/mode/kz_mode.h"
+#include "kz/language/kz_language.h"
+#include "kz/style/kz_style.h"
+#include "kz/noclip/kz_noclip.h"
+#include "kz/hud/kz_hud.h"
+#include "kz/spec/kz_spec.h"
+#include "kz/timer/kz_timer.h"
+#include "kz/tip/kz_tip.h"
 
 static_function SCMD_CALLBACK(Command_KzHidelegs)
 {
@@ -48,6 +48,12 @@ static_function SCMD_CALLBACK(Command_KzHide)
 static_function SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->PrintHTMLCentre(
+		false, false,
+		"<div style=\"font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: "
+		"6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: "
+		"6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;\"> Hello "
+		"world!");
 	player->timerService->OnTeleportToStart();
 	if (player->GetPlayerPawn()->IsAlive())
 	{

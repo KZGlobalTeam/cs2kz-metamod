@@ -52,7 +52,6 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 	for (u32 i = 0; i < txn.queries.size(); i++)
 	{
 		auto queryStr = txn.queries[i];
-		META_CONPRINTF("Query: %s\n", queryStr.c_str());
 	}
 	CPlayerUserId userID = player->GetClient()->GetUserID();
 

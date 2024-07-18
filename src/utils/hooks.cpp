@@ -720,6 +720,7 @@ static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawn
 static_function bool Hook_ActivateServer()
 {
 	KZ::timer::ClearAnnounceQueue();
+	KZ::timer::SetupCourses();
 	KZ::misc::OnServerActivate();
 	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();

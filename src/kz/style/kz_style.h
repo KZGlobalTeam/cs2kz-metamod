@@ -161,7 +161,9 @@ class KZStyleManager
 public:
 	struct StylePluginInfo
 	{
-		PluginId id = -1;
+		// -1 is for style that exists in the database (but not loaded in the plugin)
+		// -2 is for invalid style.
+		PluginId id = -2;
 		const char *shortName {};
 		const char *longName {};
 		StyleServiceFactory factory {};

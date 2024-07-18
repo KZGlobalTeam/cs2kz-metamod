@@ -1,7 +1,7 @@
 #pragma once
 #include "../kz.h"
-#include "utils/simplecmds.h"
 #include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/timer/kz_timer.h"
 
 class ISQLConnection;
 class ISQLQuery;
@@ -58,14 +58,17 @@ public:
 	static void Init();
 	static void Cleanup();
 	static bool IsReady();
+
 	static void RegisterCommands();
+	static void RegisterPBCommand();
 
 private:
 	static KZ::Database::DatabaseType databaseType;
 	static ISQLConnection *databaseConnection;
 
 	static i32 currentMapID;
-	static std::unordered_map<std::string, i32> courses;
+
+private:
 	static CUtlVector<KZDatabaseServiceEventListener *> eventListeners;
 
 public:
@@ -104,22 +107,23 @@ public:
 		return currentMapID;
 	}
 
-	static void ClearCourses();
-	static void SetupCourse(const char *courseName);
-	static void SetupCourses();
-	static i32 GetCourseID(const char *courseName);
+	// Course
+	static bool AreCoursesSetUp();
+	static void SetupCourses(CUtlVector<KZ::timer::CourseInfo> &courseInfos);
 
+	// Client
 	static void SetupClient(KZPlayer *player);
+	bool isCheater {};
+	bool isSetUp {};
 
+	// Mode
 	static void UpdateModeIDs();
 	static void InsertAndUpdateModeIDs(CUtlString modeName, CUtlString shortName);
 
+	// Styles
 	static void UpdateStyleIDs();
 	static void InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString shortName);
 
+	// Times
 	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
-
-	static SCMD_CALLBACK(CommandKZPB);
-	bool isCheater;
-	bool isSetUp;
 };

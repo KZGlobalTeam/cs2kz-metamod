@@ -28,6 +28,7 @@ class KZGlobalService;
 class KZHUDService;
 class KZJumpstatsService;
 class KZLanguageService;
+class KZMapService;
 class KZMeasureService;
 class KZModeService;
 class KZNoclipService;

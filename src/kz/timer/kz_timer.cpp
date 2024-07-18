@@ -1,4 +1,5 @@
 #include "kz_timer.h"
+#include "kz/db/kz_db.h"
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
 #include "../noclip/kz_noclip.h"
@@ -6,6 +7,12 @@
 #include "../language/kz_language.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
+
+class KZDatabaseServiceEventListener_Timer : public KZDatabaseServiceEventListener
+{
+public:
+	virtual void OnMapSetup() override;
+} databaseEventListener;
 
 static_global CUtlVector<KZTimerServiceEventListener *> eventListeners;
 
@@ -635,8 +642,18 @@ static_function SCMD_CALLBACK(Command_KzPauseTimer)
 	return MRES_SUPERCEDE;
 }
 
+void KZTimerService::Init()
+{
+	KZDatabaseService::RegisterEventListener(&databaseEventListener);
+}
+
 void KZTimerService::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_stop", Command_KzStopTimer);
 	scmd::RegisterCmd("kz_pause", Command_KzPauseTimer);
+}
+
+void KZDatabaseServiceEventListener_Timer::OnMapSetup()
+{
+	KZ::timer::SetupCourses();
 }

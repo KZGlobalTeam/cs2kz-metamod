@@ -3,79 +3,64 @@
 #include "queries/courses.h"
 using namespace KZ::Database;
 
-std::unordered_map<std::string, i32> KZDatabaseService::courses;
+static_global bool coursesSetUp = false;
 
-i32 KZDatabaseService::GetCourseID(const char *courseName)
+bool KZDatabaseService::AreCoursesSetUp()
 {
-	if (courses.count(courseName) == 0)
-	{
-		return -1;
-	}
-	return courses[courseName];
+	return coursesSetUp;
 }
 
-void KZDatabaseService::ClearCourses()
-{
-	KZDatabaseService::courses.clear();
-}
-
-void KZDatabaseService::SetupCourse(const char *courseName)
+void KZDatabaseService::SetupCourses(CUtlVector<KZ::timer::CourseInfo> &courseInfos)
 {
 	char query[1024];
-	courses[courseName] = -1;
 	Transaction txn;
-	auto cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName);
-	switch (databaseType)
+	FOR_EACH_VEC(courseInfos, i)
 	{
-		case DatabaseType::SQLite:
+		auto courseInfo = courseInfos[i];
+		std::string cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseInfo.courseName.Get());
+		switch (databaseType)
 		{
-			V_snprintf(query, sizeof(query), sqlite_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str());
-			txn.queries.push_back(query);
-			break;
-		}
-		case DatabaseType::MySQL:
-		{
-			V_snprintf(query, sizeof(query), mysql_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str());
-			txn.queries.push_back(query);
-			break;
-		}
-		default:
-		{
-			// This shouldn't happen.
-			query[0] = 0;
-			break;
+			case DatabaseType::SQLite:
+			{
+				V_snprintf(query, sizeof(query), sqlite_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), courseInfo.uid);
+				txn.queries.push_back(query);
+				break;
+			}
+			case DatabaseType::MySQL:
+			{
+				V_snprintf(query, sizeof(query), mysql_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), courseInfo.uid);
+				txn.queries.push_back(query);
+				break;
+			}
+			default:
+			{
+				// This shouldn't happen.
+				query[0] = 0;
+				break;
+			}
 		}
 	}
-	V_snprintf(query, sizeof(query), sql_mapcourses_findid, KZDatabaseService::GetMapID(), cleanCourseName.c_str());
+	V_snprintf(query, sizeof(query), sql_mapcourses_findall, KZDatabaseService::GetMapID());
 	txn.queries.push_back(query);
 	// clang-format off
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(
-		txn, 
-		[cleanCourseName](std::vector<ISQLQuery *> queries) 
+		txn,
+		[](std::vector<ISQLQuery *> queries) 
 		{
-			auto resultSet = queries[1]->GetResultSet();
-			if (resultSet->FetchRow())
+			auto resultSet = queries.back()->GetResultSet();
+			while (resultSet->FetchRow())
 			{
-				courses[cleanCourseName.c_str()] = resultSet->GetInt(0);
-				META_CONPRINTF("[KZDB] Course '%s' registered with ID %i\n", cleanCourseName.c_str(), courses[cleanCourseName.c_str()]);
+				const char* name = resultSet->GetString(0);
+				KZ::timer::CourseInfo info;
+				if (!KZ::timer::GetCourseInformation(name, info))
+				{
+					continue;
+				}
+				KZ::timer::UpdateCourseDatabaseID(info.uid, resultSet->GetInt(1));
+				META_CONPRINTF("[KZDB] Course '%s' registered with ID %i\n", info.courseName.Get(), resultSet->GetInt(0));
 			}
+			coursesSetUp = true;
 		},
 		OnGenericTxnFailure);
 	// clang-format on
-}
-
-void KZDatabaseService::SetupCourses()
-{
-	ClearCourses();
-	SetupCourse("Main");
-	// TODO: Loop through timer_start_zone entities, check their mapping api data (course name), then insert the course into the database.
-	/*
-	 * for entities in map
-	 * {
-	 *	get course name from entities
-	 *	add it to courses with default value
-	 *	call setupcourse
-	 * }
-	 */
-	// Get every course names and id and store it in the map.
 }
