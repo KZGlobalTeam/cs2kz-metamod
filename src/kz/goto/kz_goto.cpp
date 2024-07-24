@@ -20,7 +20,7 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		return false;
 	}
 
-	if (!this->player->timerService->GetTimerRunning())
+	if (this->player->timerService->GetTimerRunning())
 	{
 		this->player->languageService->PrintChat(true, false, "Goto - Error Message (Timer Running)");
 		return false;
@@ -31,7 +31,7 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
 		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
 
-		if (!controller)
+		if (!controller || this->player == otherPlayer)
 		{
 			continue;
 		}
