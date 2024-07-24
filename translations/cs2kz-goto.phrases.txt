@@ -20,8 +20,8 @@
 	"Goto - Teleported"
 	{
 		"#format"	"player:s"
-		"en"		"{darkred}Teleported to {player}."
-		"sv"		"{darkred}Teleporterade till {player}."
+		"en"		"{grey}Teleported to {player}."
+		"sv"		"{grey}Teleporterade till {player}."
 	}
 	"Goto - Command Usage"
 	{
