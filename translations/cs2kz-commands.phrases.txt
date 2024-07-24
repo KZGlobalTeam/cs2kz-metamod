@@ -250,11 +250,7 @@
 	"Command Description - kz_goto"
 	{
 		"en"		"Go to a player."
-		"chi"		""
-		"pl"		""
-		"fi"		""
 		"sv"		"Gå till en spelare."
-		"ua"		""
 	}
 	"Command Description - kz_style"
 	{

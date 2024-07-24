@@ -8,25 +8,27 @@
 
 static_global const Vector NULL_VECTOR = Vector(0, 0, 0);
 
-void KZGotoService::Init()
-{
-}
+void KZGotoService::Init() {}
 
-void KZGotoService::Reset()
-{
-}
+void KZGotoService::Reset() {}
 
-bool KZGotoService::GotoPlayer(const char* playerNamePart) 
+bool KZGotoService::GotoPlayer(const char *playerNamePart)
 {
-	if (!this->player->timerService->GetValidTimer())
+	if (!playerNamePart || !V_stricmp("", playerNamePart))
 	{
-		this->player->languageService->PrintChat(true, false, "Stop your timer before trying to teleport.");
+		player->languageService->PrintChat(true, false, "Goto - Command Usage");
+		return false;
+	}
+
+	if (!this->player->timerService->GetTimerRunning())
+	{
+		this->player->languageService->PrintChat(true, false, "Goto - Error Message (Timer Running)");
 		return false;
 	}
 
 	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
 	{
-		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController(); 
+		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
 		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
 
 		if (!controller)
@@ -34,11 +36,11 @@ bool KZGotoService::GotoPlayer(const char* playerNamePart)
 			continue;
 		}
 
-		if (V_strstr(V_strlower((char*)otherPlayer->GetName()), V_strlower((char*)playerNamePart)))
+		if (V_strstr(V_strlower((char *)otherPlayer->GetName()), V_strlower((char *)playerNamePart)))
 		{
 			if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
 			{
-				this->player->languageService->PrintChat(true, false, "Cannot teleport. %s is in spec", otherPlayer->GetName());
+				this->player->languageService->PrintChat(true, false, "Goto - Error Message (Player In Spec)", otherPlayer->GetName());
 				return false;
 			}
 
@@ -65,15 +67,14 @@ bool KZGotoService::GotoPlayer(const char* playerNamePart)
 			otherPlayer->GetOrigin(&origin);
 			otherPlayer->GetAngles(&angles);
 
-			this->player->timerService->TimerStop();
 			this->player->GetPlayerPawn()->Teleport(&origin, &angles, &NULL_VECTOR);
-			this->player->languageService->PrintChat(true, false, "Teleported to %s", otherPlayer->GetName());
-			
+			this->player->languageService->PrintChat(true, false, "Goto - Teleported", otherPlayer->GetName());
+
 			return true;
 		}
 	}
 
-	player->languageService->PrintChat(true, false, "Could not find a player going by \"%s\"", playerNamePart);
+	player->languageService->PrintChat(true, false, "Goto - Error Message (Player Not Found)", playerNamePart);
 	return false;
 }
 
