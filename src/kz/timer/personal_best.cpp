@@ -216,8 +216,8 @@ struct PBRequest
 			else if (!localPBData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [#1/24 Standard]
-				player->languageService->PrintChat(true, false, "PB Time - Standard (Server)", localStandardTime, localPBData.teleportsUsed,
-												   localPBData.rank, localPBData.maxRank);
+				player->languageService->PrintChat(true, false, "PB Time - Standard (Server)", localStandardTime, localTPText, localPBData.rank,
+												   localPBData.maxRank);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 			else if (localPBData.teleportsUsed == 0)
@@ -229,8 +229,8 @@ struct PBRequest
 			else
 			{
 				// KZ | Server: 12.34 (5 TPs) [#1/24 Standard] | 23.45 [#1/2 PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localStandardTime, localPBData.teleportsUsed,
-												   localPBData.rank, localPBData.maxRank, localProTime, localPBData.rankPro, localPBData.maxRankPro);
+				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localStandardTime, localTPText, localPBData.rank,
+												   localPBData.maxRank, localProTime, localPBData.rankPro, localPBData.maxRankPro);
 			}
 		}
 		else
@@ -242,7 +242,7 @@ struct PBRequest
 			else if (!localPBData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Standard]
-				player->languageService->PrintChat(true, false, "PB Time - Standard Rankless (Server)", localStandardTime, localPBData.teleportsUsed);
+				player->languageService->PrintChat(true, false, "PB Time - Standard Rankless (Server)", localStandardTime, localTPText);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 			else if (localPBData.teleportsUsed == 0)
@@ -253,8 +253,7 @@ struct PBRequest
 			else
 			{
 				// KZ | Server: 12.34 (5 TPs) [Standard] | 23.45 [PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Server)", localStandardTime, localPBData.teleportsUsed,
-												   localProTime);
+				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Server)", localStandardTime, localTPText, localProTime);
 			}
 		}
 	}
