@@ -57,7 +57,7 @@ void KZDatabaseService::SetupCourses(CUtlVector<KZ::timer::CourseInfo> &courseIn
 					continue;
 				}
 				KZ::timer::UpdateCourseDatabaseID(info.uid, resultSet->GetInt(1));
-				META_CONPRINTF("[KZDB] Course '%s' registered with ID %i\n", info.courseName.Get(), resultSet->GetInt(0));
+				META_CONPRINTF("[KZDB] Course '%s' registered with ID %i\n", info.courseName.Get(), resultSet->GetInt(1));
 			}
 			coursesSetUp = true;
 		},

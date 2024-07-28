@@ -46,6 +46,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::InitModeManager();
 	KZ::style::InitStyleManager();
+	KZTimerService::Init();
 	KZSpecService::Init();
 	KZHUDService::Init();
 	KZLanguageService::Init();

@@ -54,7 +54,7 @@ void KZDatabaseService::SetupMap()
 		}
 	}
 
-	V_snprintf(query, sizeof(query), sql_maps_findid, mapName, mapName.c_str());
+	V_snprintf(query, sizeof(query), sql_maps_findid, mapName.c_str(), mapName.c_str());
 	txn.queries.push_back(query);
 	// clang-format off
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(
@@ -87,6 +87,7 @@ void KZDatabaseService::SetupMap()
 					break;
 				}
 			}
+			mapSetUp = true;
 			META_CONPRINTF("[KZDB] Map setup successful, current map ID: %i\n", KZDatabaseService::currentMapID);
 			CALL_FORWARD(eventListeners, OnMapSetup);
 		},

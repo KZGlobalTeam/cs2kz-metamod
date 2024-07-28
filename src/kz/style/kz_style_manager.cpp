@@ -406,6 +406,13 @@ void KZ::style::InitStyleService(KZPlayer *player) {}
 
 void KZDatabaseServiceEventListener_Styles::OnDatabaseConnect()
 {
+	FOR_EACH_VEC(styleInfos, i)
+	{
+		if (styleInfos[i].databaseID == -1)
+		{
+			KZDatabaseService::InsertAndUpdateStyleIDs(styleInfos[i].longName, styleInfos[i].shortName);
+		}
+	}
 	KZDatabaseService::UpdateStyleIDs();
 }
 

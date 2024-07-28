@@ -40,14 +40,10 @@ constexpr char mysql_mapcourses_insert[] = R"(
 )";
 
 constexpr char sql_mapcourses_findfirst_mapname[] = R"(
-    SELECT ID
+    SELECT MapCourses.Name
         FROM MapCourses
-        WHERE MapID=(
-            SELECT ID 
-                FROM Maps 
-                WHERE Name='%s'
-                LIMIT 1
-            )
+        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
+        WHERE Maps.Name='%s'
         ORDER BY StageID ASC
         LIMIT 1
 )";

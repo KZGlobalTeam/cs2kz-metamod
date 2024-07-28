@@ -555,6 +555,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 		entitySystemHook = SH_ADD_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	}
 	KZ::timer::CheckAnnounceQueue();
+	KZ::timer::CheckPBRequests();
 	RETURN_META(MRES_IGNORED);
 }
 

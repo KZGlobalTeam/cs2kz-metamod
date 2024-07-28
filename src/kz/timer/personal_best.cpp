@@ -2,374 +2,718 @@
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
+#include "kz/timer/kz_timer.h"
 #include "utils/simplecmds.h"
 #include "iserver.h"
 
-#include "kz/db/queries/general.h"
+#include "kz/db/queries/personal_best.h"
 #include "kz/db/queries/players.h"
 #include "kz/db/queries/courses.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
+struct PBData
+{
+	bool hasPB {};
+	f32 runTime {};
+	u32 teleportsUsed {};
+	u32 rank {};
+	u32 maxRank {};
+
+	bool hasPBPro {};
+	f32 runTimePro {};
+	u32 rankPro {};
+	u32 maxRankPro {};
+};
+
 #define PB_WAIT_THRESHOLD 3.0f
 
-static_function void UpdatePBRequestTargetPlayer(u64 uid, u64 steamID64, CUtlString name);
-static_function void UpdatePBRequestLocalCourseID(u64 uid, i32 courseID);
-static_function void DisableLocalPBRequest(u64 uid);
-
-// Every time the player calls !pb, a request struct is created and stored in a vector.
-// The request queries all the information required in order to make a request to the database,
-// waits for responses from local and global database, and print a coherent result message to the player.
+/*
+	Every time the player calls !pb, a request struct is created and stored in a vector.
+	The request queries all the information required in order to make a request to the database,
+	waits for responses from local and global database, and print a coherent result message to the player.
+*/
+// TODO: Error messages
 struct PBRequest
 {
-	PBRequest(KZPlayer *callingPlayer) : callerUserID(callingPlayer->GetClient()->GetUserID()), targetSteamID64(callingPlayer->GetSteamId64())
+	PBRequest() : userID(0) {}
+
+	PBRequest(u64 uid, KZPlayer *callingPlayer, CUtlString playerName, CUtlString mapName, CUtlString courseName, CUtlString modeName,
+			  CUtlString styleNames)
+		: uid(uid), userID(callingPlayer->GetClient()->GetUserID()), targetPlayerName(playerName), mapName(mapName), courseName(courseName),
+		  modeName(modeName), styleNames(styleNames)
 	{
 		timestamp = g_pKZUtils->GetServerGlobals()->realtime;
-		shouldRequestLocal = KZDatabaseService::IsReady();
-		shouldRequestGlobal = false;
+		localRequestState = KZDatabaseService::IsReady() ? LocalRequestState::ENABLED : LocalRequestState::DISABLED;
+		SetupSteamID64(callingPlayer);
+		SetupCourse(callingPlayer);
+		SetupMode(callingPlayer);
+		SetupStyles(callingPlayer);
 	}
 
+	// Global identifier and timestamp for timeout
 	u64 uid;
 	f32 timestamp;
 
-	CPlayerUserId callerUserID;
+	// UserID for callback.
+	CPlayerUserId userID;
 
+	// Query parameters
 	bool hasValidTarget {};
-	u64 targetSteamID64;
 	CUtlString targetPlayerName;
+	u64 targetSteamID64;
 
-	void SetupSteamID64(KZPlayer *callingPlayer, CUtlString playerName)
+	CUtlString mapName;
+
+	bool hasValidCourseName {};
+	CUtlString courseName;
+
+	CUtlString modeName;
+
+	// Don't get ranks if styles are involved.
+	// ..or target player is banned (TODO)
+	bool queryRanking = true;
+	CUtlString styleNames;
+	CUtlVector<CUtlString> styleList;
+
+	// Local exclusive stuff.
+	enum struct LocalRequestState
 	{
-		/*
-			1. no player specified -> default to calling player's steamid
-			2. player specified -> find steamid of player with matching name in the server
-			3. no server matching player -> find steamid of player name in the local database
-			4. no localdb matching player -> find steamid of player name in the api (TODO)
-			5. no matching name in the api -> abort
-		*/
-		if (playerName.IsEmpty())
-		{
-			hasValidTarget = true;
-			targetPlayerName = callingPlayer->GetName();
-			return;
-		}
-		for (u32 i = 1; i < MAXPLAYERS + 1; i++)
-		{
-			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-			CServerSideClient *client = player->GetClient();
-			if (!client)
-			{
-				continue;
-			}
-			if (playerName == client->GetClientName())
-			{
-				hasValidTarget = true;
-				targetPlayerName = player->GetName();
-				targetSteamID64 = player->GetSteamId64();
-				return;
-			}
-		}
-		if (KZDatabaseService::IsReady())
-		{
-			Transaction txn;
-			char query[1024];
-			V_snprintf(query, sizeof(query), sql_players_searchbyalias, playerName.Get());
-			txn.queries.push_back(query);
-
-			u64 uid = this->uid;
-
-			auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
-			{
-				ISQLResult *result = queries[0]->GetResultSet();
-				UpdatePBRequestTargetPlayer(uid, result->GetInt(0), result->GetString(1));
-			};
-
-			auto onQueryFailure = [uid](std::string, int)
-			{
-				// find steamid of player name in the api (TODO)
-				DisableLocalPBRequest(uid);
-			};
-
-			KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
-		}
-	}
+		FAILED = -1,
+		DISABLED,
+		ENABLED,
+		RUNNING,
+		FINISHED
+	} localRequestState;
 
 	struct LocalDBRequestParams
 	{
 		i32 modeID;
 		u64 styleIDs;
-		i32 courseID;
 
 		bool hasValidModeID {};
 		bool hasValidStyleIDs {};
-		bool hasValidCourseIDs {};
 
 		bool HasValidParams()
 		{
-			return hasValidModeID && hasValidStyleIDs && hasValidCourseIDs;
+			return hasValidModeID && hasValidStyleIDs;
 		}
 	} localDBRequestParams;
 
-	void SetupMode(KZPlayer *callingPlayer, CUtlString modeName)
+	PBData localPBData, globalPBData;
+
+	/*
+		Get the player's steamID64 for querying.
+		1. No player specified -> default to calling player's steamid
+		2. Player specified -> find steamid of player with matching name in the server
+		3. No server matching player -> find steamid of player name in the local database
+		4. No localdb matching player -> find steamid of player name in the api (TODO)
+		5. No matching name in the api -> abort
+	*/
+	void SetupSteamID64(KZPlayer *callingPlayer);
+
+	/*
+		Get the player's mode for querying:
+		Local:
+		- Compute modeID from the list of modes, disable the local query if it fails.
+		- If the mode is not global, disable the global query. (TODO)
+	*/
+	void SetupMode(KZPlayer *callingPlayer);
+
+	/*
+		Get the player's styles for querying:
+		Local:
+		- Compute styleIDs from the list of modes, disable the local query if it fails.
+		- If a style is specified, disable ranking queries.
+		- If the style is not global, disable the global query. (TODO)
+	*/
+	void SetupStyles(KZPlayer *callingPlayer);
+
+	// Get the course name and the map name for querying.
+	void SetupCourse(KZPlayer *callingPlayer);
+
+	// Returns whether we should query and whether the parameters are ready for querying.
+	bool ShouldQueryLocal()
 	{
-		if (!shouldRequestLocal)
-		{
-			return;
-		}
-		// TODO: shouldRequestGlobal = false if mode is not global
-		KZModeManager::ModePluginInfo modeInfo =
-			modeName.IsEmpty() ? KZ::mode::GetModeInfo(callingPlayer->modeService) : KZ::mode::GetModeInfo(modeName);
-		if (modeInfo.databaseID < 0)
-		{
-			callingPlayer->languageService->PrintChat(true, false, "PB Query - Unavailable Mode Name", modeName.Get());
-			shouldRequestLocal = false;
-			return;
-		}
-		localDBRequestParams.hasValidModeID = true;
-		localDBRequestParams.modeID = modeInfo.databaseID;
+		return localRequestState == LocalRequestState::ENABLED && hasValidTarget && hasValidCourseName && localDBRequestParams.HasValidParams();
 	}
 
-	void SetupStyle(KZPlayer *callingPlayer, CUtlString styleNames)
+	// Execute queries to get pb in the local db.
+	void ExecuteLocalRequest();
+
+	// For non styled runs.
+	void ExecuteStandardLocalQuery();
+
+	// For styled runs.
+	void ExecuteRanklessLocalQuery();
+
+	void UpdateLocalData(PBData data)
 	{
-		if (!shouldRequestLocal)
+		localPBData = data;
+		if (localRequestState == LocalRequestState::RUNNING)
+		{
+			localRequestState = LocalRequestState::FINISHED;
+		}
+	}
+
+	// Whether this request should still be looked at or not. Once this returns false, it should be deleted off the list.
+	// TODO: Implement this for global!
+	bool IsValid()
+	{
+		bool timedOut = g_pKZUtils->GetServerGlobals()->realtime - timestamp > PB_WAIT_THRESHOLD;
+		return timedOut || localRequestState >= LocalRequestState::ENABLED;
+	}
+
+	bool ShouldReply()
+	{
+		bool localReady = (localRequestState == LocalRequestState::FINISHED || localRequestState <= LocalRequestState::DISABLED);
+		bool globalReady = true;
+		bool timedOut = g_pKZUtils->GetServerGlobals()->realtime - timestamp > PB_WAIT_THRESHOLD;
+		return timedOut || (localReady && globalReady);
+	}
+
+	void Reply()
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		if (!player)
 		{
 			return;
 		}
-		// TODO: shouldRequestGlobal = false if styles are not global
-		if (styleNames.IsEmpty())
+		if (localRequestState != LocalRequestState::FINISHED)
 		{
-			FOR_EACH_VEC(callingPlayer->styleServices, i)
+			player->languageService->PrintChat(true, false, "PB Request - Failed (Generic)");
+			return;
+		}
+		CUtlString combinedModeStyleText;
+		combinedModeStyleText.Format("{purple}%s{grey}", modeName.Get());
+		FOR_EACH_VEC(styleList, i)
+		{
+			combinedModeStyleText += " +{grey2}";
+			combinedModeStyleText.Append(styleList[i].Get());
+			combinedModeStyleText += "{grey}";
+		}
+
+		// Local stuff
+		std::string localTPText;
+		if (localPBData.teleportsUsed > 0)
+		{
+			localTPText = localPBData.teleportsUsed == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
+														 : player->languageService->PrepareMessage("2+ Teleports Text", localPBData.teleportsUsed);
+		}
+
+		char localStandardTime[32];
+		KZTimerService::FormatTime(localPBData.runTime, localStandardTime, sizeof(localStandardTime));
+		char localProTime[32];
+		KZTimerService::FormatTime(localPBData.runTimePro, localProTime, sizeof(localProTime));
+
+		// Player on kz_map [VNL]
+		player->languageService->PrintChat(true, false, "PB Header", targetPlayerName.Get(), mapName.Get(), combinedModeStyleText.Get());
+		if (queryRanking)
+		{
+			if (!localPBData.hasPB)
 			{
-				KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(callingPlayer->styleServices[i]);
-				if (info.databaseID < 0)
-				{
-					callingPlayer->PrintChat(true, false, "PB Query - Unavailable Style Name", styleNames.Get());
-					shouldRequestLocal = false;
-					return;
-				}
-				localDBRequestParams.hasValidStyleIDs = true;
-				localDBRequestParams.styleIDs &= (1ull << info.databaseID);
+				player->languageService->PrintChat(true, false, "PB Time - No Times");
+			}
+			else if (!localPBData.hasPBPro)
+			{
+				// KZ | Server: 12.34 (5 TPs) [#1/24 Standard]
+				player->languageService->PrintChat(true, false, "PB Time - Standard (Server)", localStandardTime, localPBData.teleportsUsed,
+												   localPBData.rank, localPBData.maxRank);
+			}
+			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			else if (localPBData.teleportsUsed == 0)
+			{
+				// KZ | Server: 12.34 [#1/24 Standard] [#1/2 PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Combined (Server)", localStandardTime, localPBData.rank,
+												   localPBData.maxRank, localPBData.rankPro, localPBData.maxRankPro);
+			}
+			else
+			{
+				// KZ | Server: 12.34 (5 TPs) [#1/24 Standard] | 23.45 [#1/2 PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localStandardTime, localPBData.teleportsUsed,
+												   localPBData.rank, localPBData.maxRank, localProTime, localPBData.rankPro, localPBData.maxRankPro);
 			}
 		}
 		else
 		{
-			CSplitString stylesSplit(styleNames.Get(), ",");
-			FOR_EACH_VEC(stylesSplit, i)
+			if (!localPBData.hasPB)
 			{
-				KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(stylesSplit[i]);
-				if (info.databaseID < 0)
-				{
-					callingPlayer->PrintChat(true, false, "PB Query - Unavailable Style Name", styleNames.Get());
-					shouldRequestLocal = false;
-					return;
-				}
-				localDBRequestParams.hasValidStyleIDs = true;
-				localDBRequestParams.styleIDs &= (1ull << info.databaseID);
+				player->languageService->PrintChat(true, false, "PB Time - No Times");
 			}
-		}
-	}
-
-	void SetupCourse(KZPlayer *callingPlayer, CUtlString mapName, CUtlString courseName)
-	{
-		if (!shouldRequestLocal)
-		{
-			return;
-		}
-		KZ::timer::CourseInfo info;
-
-		// We are querying for the current map, but the current map hasn't finished initializing yet.
-		// In that case, we pretend that the current map was manually
-		if (!KZDatabaseService::IsMapSetUp() && mapName.IsEmpty())
-		{
-			CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
-			if (networkGameServer)
+			else if (!localPBData.hasPBPro)
 			{
-				mapName = networkGameServer->GetMapName();
+				// KZ | Server: 12.34 (5 TPs) [Standard]
+				player->languageService->PrintChat(true, false, "PB Time - Standard Rankless (Server)", localStandardTime, localPBData.teleportsUsed);
 			}
-		}
-
-		// Same for courses.
-		if (!KZDatabaseService::AreCoursesSetUp() && courseName.IsEmpty())
-		{
-			CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
-			if (networkGameServer)
+			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			else if (localPBData.teleportsUsed == 0)
 			{
-				mapName = networkGameServer->GetMapName();
+				// KZ | Server: 12.34 [Standard/PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Combined Rankless (Server)", localStandardTime);
 			}
-		}
-
-		if (mapName.IsEmpty())
-		{
-			// Map + Course empty => current map, current course (first course if just joined)
-			if (courseName.IsEmpty())
-			{
-				char course[KZ_MAX_COURSE_NAME_LENGTH];
-				callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
-
-				if ((!course[0] && !KZ::timer::GetFirstCourseInformation(info)) || !KZ::timer::GetCourseInformation(course, info))
-				{
-					callingPlayer->PrintChat(true, false, "PB Query - Invalid Course Name", course);
-					shouldRequestLocal = false;
-					return;
-				}
-				localDBRequestParams.hasValidCourseIDs = true;
-				localDBRequestParams.courseID = info.databaseID;
-			}
-			// Map empty, course not empty => current map, check course dbid from course list
 			else
 			{
-				if (!KZ::timer::GetCourseInformation(courseName.Get(), info))
-				{
-					callingPlayer->PrintChat(true, false, "PB Query - Invalid Course Name", courseName.Get());
-					shouldRequestLocal = false;
-					return;
-				}
-				localDBRequestParams.hasValidCourseIDs = true;
-				localDBRequestParams.courseID = info.databaseID;
+				// KZ | Server: 12.34 (5 TPs) [Standard] | 23.45 [PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Server)", localStandardTime, localPBData.teleportsUsed,
+												   localProTime);
 			}
 		}
-		// Map name isn't empty...
-		else
-		{
-			u64 uid = this->uid;
-
-			auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
-			auto cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
-
-			auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
-			{
-				ISQLResult *result = queries[0]->GetResultSet();
-				UpdatePBRequestLocalCourseID(uid, result->GetInt(0));
-			};
-
-			auto onQueryFailure = [uid](std::string, int) { DisableLocalPBRequest(uid); };
-
-			char query[1024];
-			Transaction txn;
-			// map not empty, course empty => query courseid of such map, first one sorted by UID
-			if (courseName.IsEmpty())
-			{
-				V_snprintf(query, sizeof(query), sql_mapcourses_findfirst_mapname, cleanMapName.c_str());
-			}
-			// map not empty, course not empty => query courseid of such map and course name
-			else
-			{
-				V_snprintf(query, sizeof(query), sql_mapcourses_findname_mapname, cleanMapName.c_str(), cleanCourseName.c_str());
-			}
-			txn.queries.push_back(query);
-			KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
-		}
-	}
-
-	bool CanQueryLocalDB()
-	{
-		return hasValidTarget && localDBRequestParams.HasValidParams();
-	}
-
-	void QueryLocalDB()
-	{
-		if (queryingLocalDB || !CanQueryLocalDB())
-		{
-			return;
-		}
-		queryingLocalDB = true;
-		Transaction txn;
-		char query[1024];
-		V_snprintf(query, sizeof(query), sql_getpb, targetSteamID64, localDBRequestParams.courseID, localDBRequestParams.modeID,
-				   localDBRequestParams.styleIDs);
-	}
-
-	bool shouldRequestLocal {};
-	bool queryingLocalDB {};
-
-	bool hasLocalData {};
-
-	struct GlobalRequestParams
-	{
-		CUtlString modeName;
-		CUtlString styleNames;
-		CUtlString mapName;
-		CUtlString courseName;
-	} globalRequestParams;
-
-	bool shouldRequestGlobal {};
-	bool hasGlobalData {};
-
-	bool ShouldAnnounce()
-	{
-		return false;
 	}
 };
 
-static_global CUtlVector<PBRequest> pbReqQueue;
-static_global u32 pbReqCount = 0;
-
-// TODO: Integrate global service
-void RequestPBData(KZPlayer *callingPlayer, CUtlString playerName, CUtlString mapName, CUtlString courseName, CUtlString modeName,
-				   CUtlString styleNames)
+static_global struct
 {
-	u64 steamID64 = callingPlayer->GetSteamId64();
-	u64 mapID = KZDatabaseService::GetMapID();
+	CUtlVector<PBRequest> pbRequests;
+	u32 pbReqCount = 0;
 
-	KZ::timer::CourseInfo courseInfo;
-	KZ::timer::GetCourseInformation(courseName, courseInfo);
-	u64 courseID = courseInfo.databaseID;
-
-	pbReqCount++;
-
-	PBRequest req(callingPlayer);
-	req.uid = pbReqCount;
-	req.SetupMode(callingPlayer, modeName);
-	req.SetupStyle(callingPlayer, styleNames);
-	req.SetupCourse(callingPlayer, mapName, courseName);
-
-	if (!req.shouldRequestLocal && !req.shouldRequestGlobal)
+	void AddRequest(KZPlayer *callingPlayer, CUtlString playerName, CUtlString mapName, CUtlString courseName, CUtlString modeName,
+					CUtlString styleNames)
 	{
-		callingPlayer->languageService->PrintChat(true, false, "PB Query - Data Not Available");
+		PBRequest *req = pbRequests.AddToTailGetPtr();
+		*req = PBRequest(pbReqCount++, callingPlayer, playerName, mapName, courseName, modeName, styleNames);
+	}
+
+	template<typename... Args>
+	void InvalidLocal(u64 uid, CUtlString reason = "", Args &&...args)
+	{
+		FOR_EACH_VEC(pbRequests, i)
+		{
+			if (pbRequests[i].uid == uid)
+			{
+				pbRequests[i].localRequestState = PBRequest::LocalRequestState::FAILED;
+				// TODO: check for global.
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(pbRequests[i].userID);
+				if (player && player->IsInGame())
+				{
+					player->languageService->PrintChat(true, false, reason.IsEmpty() ? "PB Request - Failed (Generic)" : reason.Get(), args...);
+				}
+				return;
+			}
+		}
+	}
+
+	void SetRequestTargetPlayer(u64 uid, u64 steamID64, CUtlString name)
+	{
+		FOR_EACH_VEC(pbRequests, i)
+		{
+			if (pbRequests[i].uid == uid)
+			{
+				pbRequests[i].hasValidTarget = true;
+				pbRequests[i].targetSteamID64 = steamID64;
+				pbRequests[i].targetPlayerName = name;
+				return;
+			}
+		}
+	}
+
+	void UpdateCourseName(u64 uid, CUtlString name)
+	{
+		FOR_EACH_VEC(pbRequests, i)
+		{
+			if (pbRequests[i].uid == uid)
+			{
+				pbRequests[i].courseName = name;
+				pbRequests[i].hasValidCourseName = true;
+				return;
+			}
+		}
+	}
+
+	void UpdateLocalPBData(u64 uid, PBData data)
+	{
+		FOR_EACH_VEC(pbRequests, i)
+		{
+			if (pbRequests[i].uid == uid)
+			{
+				pbRequests[i].UpdateLocalData(data);
+				return;
+			}
+		}
+	}
+
+	void CheckRequests()
+	{
+		FOR_EACH_VEC(pbRequests, i)
+		{
+			if (pbRequests[i].ShouldQueryLocal())
+			{
+				pbRequests[i].ExecuteLocalRequest();
+			}
+			if (pbRequests[i].ShouldReply())
+			{
+				pbRequests[i].Reply();
+				pbRequests.Remove(i);
+				i--;
+				continue;
+			}
+			if (!pbRequests[i].IsValid())
+			{
+				pbRequests.Remove(i);
+				i--;
+				continue;
+			}
+		}
+	}
+} pbReqQueueManager;
+
+void PBRequest::SetupSteamID64(KZPlayer *callingPlayer)
+{
+	if (targetPlayerName.IsEmpty())
+	{
+		hasValidTarget = true;
+		targetPlayerName = callingPlayer->GetName();
+		targetSteamID64 = callingPlayer->GetSteamId64();
+		return;
+	}
+	for (u32 i = 1; i < MAXPLAYERS + 1; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+		CServerSideClient *client = player->GetClient();
+		if (!client)
+		{
+			continue;
+		}
+		if (targetPlayerName == client->GetClientName())
+		{
+			hasValidTarget = true;
+			targetPlayerName = player->GetName();
+			targetSteamID64 = player->GetSteamId64();
+			return;
+		}
+	}
+	if (KZDatabaseService::IsReady())
+	{
+		Transaction txn;
+		char query[1024];
+
+		// Get player's steamID through their alias.
+		std::string cleanedPlayerName = KZDatabaseService::GetDatabaseConnection()->Escape(targetPlayerName.Get());
+		V_snprintf(query, sizeof(query), sql_players_searchbyalias, cleanedPlayerName.c_str());
+		txn.queries.push_back(query);
+
+		u64 uid = this->uid;
+
+		auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
+		{
+			ISQLResult *result = queries[0]->GetResultSet();
+			pbReqQueueManager.SetRequestTargetPlayer(uid, result->GetInt(0), result->GetString(1));
+		};
+
+		auto onQueryFailure = [uid](std::string, int)
+		{
+			// find steamid of player name in the api (TODO)
+			pbReqQueueManager.InvalidLocal(uid);
+		};
+
+		KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
+	}
+}
+
+void PBRequest::SetupMode(KZPlayer *callingPlayer)
+{
+	if (localRequestState <= LocalRequestState::DISABLED)
+	{
+		return;
+	}
+
+	KZModeManager::ModePluginInfo modeInfo = modeName.IsEmpty() ? KZ::mode::GetModeInfo(callingPlayer->modeService) : KZ::mode::GetModeInfo(modeName);
+
+	if (modeInfo.databaseID < 0)
+	{
+		pbReqQueueManager.InvalidLocal(this->uid);
+		return;
+	}
+
+	// Change the mode name to the right one for later usage.
+	modeName = modeInfo.shortModeName;
+
+	localDBRequestParams.hasValidModeID = true;
+	localDBRequestParams.modeID = modeInfo.databaseID;
+}
+
+void PBRequest::SetupStyles(KZPlayer *callingPlayer)
+{
+	if (localRequestState <= LocalRequestState::DISABLED)
+	{
+		return;
+	}
+	// If the style name is empty, take the calling player's styles.
+	if (styleNames.IsEmpty())
+	{
+		localDBRequestParams.hasValidStyleIDs = true;
+		localDBRequestParams.styleIDs = 0;
+		FOR_EACH_VEC(callingPlayer->styleServices, i)
+		{
+			KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(callingPlayer->styleServices[i]);
+			if (info.databaseID < 0)
+			{
+				pbReqQueueManager.InvalidLocal(this->uid);
+				return;
+			}
+
+			styleList.AddToTail(info.shortName);
+
+			localDBRequestParams.styleIDs |= (1ull << info.databaseID);
+			queryRanking = false;
+		}
+	}
+	else if (styleNames.IsEqual_FastCaseInsensitive("none"))
+	{
+		localDBRequestParams.hasValidStyleIDs = true;
+		localDBRequestParams.styleIDs = 0;
+	}
+	// Example: VNL,CKZ
+	else
+	{
+		CSplitString stylesSplit(styleNames.Get(), ",");
+		FOR_EACH_VEC(stylesSplit, i)
+		{
+			KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(stylesSplit[i]);
+			if (info.databaseID < 0)
+			{
+				pbReqQueueManager.InvalidLocal(this->uid);
+				return;
+			}
+
+			styleList.AddToTail(info.shortName);
+
+			localDBRequestParams.hasValidStyleIDs = true;
+			localDBRequestParams.styleIDs |= (1ull << info.databaseID);
+			queryRanking = false;
+		}
+	}
+}
+
+void PBRequest::SetupCourse(KZPlayer *callingPlayer)
+{
+	if (localRequestState <= LocalRequestState::DISABLED)
+	{
+		return;
+	}
+
+	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
+	CUtlString currentMap;
+	if (networkGameServer)
+	{
+		currentMap = networkGameServer->GetMapName();
+	}
+	else // Shouldn't happen.
+	{
+		pbReqQueueManager.InvalidLocal(this->uid);
+		return;
+	}
+
+	if (mapName.IsEmpty())
+	{
+		mapName = currentMap;
+	}
+
+	// Map + Course empty => current map, current course (first course if just joined)
+	if (courseName.IsEmpty())
+	{
+		// If it's the current map...
+		if (mapName == currentMap)
+		{
+			// Try to get the player's current course.
+			char course[KZ_MAX_COURSE_NAME_LENGTH];
+			callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
+			if (course[0])
+			{
+				courseName = course;
+			}
+			else // No course? Take the map's first course.
+			{
+				KZ::timer::CourseInfo info;
+				if (!KZ::timer::GetFirstCourseInformation(info))
+				{
+					pbReqQueueManager.InvalidLocal(this->uid, "PB Request - Invalid Course Name", course);
+					return;
+				}
+				courseName = info.courseName;
+			}
+			hasValidCourseName = true;
+		}
+		else
+		{
+			// Query the first course.
+			auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+
+			char query[1024];
+			V_snprintf(query, sizeof(query), sql_mapcourses_findfirst_mapname, cleanMapName.c_str());
+
+			Transaction txn;
+			txn.queries.push_back(query);
+
+			u64 uid = this->uid;
+			auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
+			{
+				ISQLResult *result = queries[0]->GetResultSet();
+
+				pbReqQueueManager.UpdateCourseName(uid, result->GetString(0));
+			};
+
+			auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+
+			KZDatabaseService::GetDatabaseConnection()->Query(
+				sql_mapcourses_findfirst_mapname, [](ISQLQuery *) {}, cleanMapName.c_str());
+		}
 	}
 	else
 	{
-		pbReqQueue.AddToTail(req);
-	}
-	// TODO: Global stuff
-}
-
-void UpdatePBRequestTargetPlayer(u64 uid, u64 steamID64, CUtlString name)
-{
-	FOR_EACH_VEC(pbReqQueue, i)
-	{
-		if (pbReqQueue[i].uid == uid)
-		{
-			pbReqQueue[i].hasValidTarget = true;
-			pbReqQueue[i].targetSteamID64 = steamID64;
-			pbReqQueue[i].targetPlayerName = name;
-			return;
-		}
+		// No empty field, should be valid.
+		hasValidCourseName = true;
 	}
 }
 
-void UpdatePBRequestLocalCourseID(u64 uid, i32 courseID)
+void PBRequest::ExecuteLocalRequest()
 {
-	FOR_EACH_VEC(pbReqQueue, i)
+	// No player to respond to, don't bother.
+	KZPlayer *callingPlayer = g_pKZPlayerManager->ToPlayer(userID);
+	if (!callingPlayer)
 	{
-		if (pbReqQueue[i].uid == uid)
-		{
-			pbReqQueue[i].localDBRequestParams.hasValidCourseIDs = true;
-			pbReqQueue[i].localDBRequestParams.courseID = courseID;
-			return;
-		}
+		pbReqQueueManager.InvalidLocal(this->uid);
+		return;
+	}
+
+	localRequestState = LocalRequestState::RUNNING;
+	if (queryRanking)
+	{
+		ExecuteStandardLocalQuery();
+	}
+	else
+	{
+		ExecuteRanklessLocalQuery();
 	}
 }
 
-void DisableLocalPBRequest(u64 uid)
+void PBRequest::ExecuteStandardLocalQuery()
 {
-	FOR_EACH_VEC(pbReqQueue, i)
+	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
+
+	Transaction txn;
+
+	char query[1024];
+	// Get PB
+	V_snprintf(query, sizeof(query), sql_getpb, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, 0,
+			   1);
+	txn.queries.push_back(query);
+
+	// Get Rank
+	V_snprintf(query, sizeof(query), sql_getmaprank, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, targetSteamID64,
+			   cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
+	txn.queries.push_back(query);
+
+	// Get Number of Players with Times
+	V_snprintf(query, sizeof(query), sql_getlowestmaprank, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
+	txn.queries.push_back(query);
+
+	// Get PRO PB
+	V_snprintf(query, sizeof(query), sql_getpbpro, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, 0,
+			   1);
+	txn.queries.push_back(query);
+
+	// Get PRO Rank
+	V_snprintf(query, sizeof(query), sql_getmaprankpro, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
+			   targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
+	txn.queries.push_back(query);
+
+	// Get Number of Players with Times
+	V_snprintf(query, sizeof(query), sql_getlowestmaprankpro, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
+	txn.queries.push_back(query);
+
+	u64 uid = this->uid;
+
+	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 	{
-		if (pbReqQueue[i].uid == uid)
+		PBData data {};
+		ISQLResult *result = queries[0]->GetResultSet();
+		if (result && result->GetRowCount() > 0)
 		{
-			pbReqQueue[i].shouldRequestLocal = false;
-			return;
+			data.hasPB = true;
+			if (result->FetchRow())
+			{
+				data.runTime = result->GetFloat(0);
+				data.teleportsUsed = result->GetInt(1);
+			}
+			if ((result = queries[1]->GetResultSet()) && result->FetchRow())
+			{
+				data.rank = result->GetInt(0);
+			}
+			if ((result = queries[2]->GetResultSet()) && result->FetchRow())
+			{
+				data.maxRank = result->GetInt(0);
+			}
 		}
-	}
+		if ((result = queries[3]->GetResultSet()) && result->GetRowCount() > 0)
+		{
+			data.hasPBPro = true;
+			if (result->FetchRow())
+			{
+				data.runTimePro = result->GetFloat(0);
+			}
+			if ((result = queries[4]->GetResultSet()) && result->FetchRow())
+			{
+				data.rankPro = result->GetInt(0);
+			}
+			if ((result = queries[5]->GetResultSet()) && result->FetchRow())
+			{
+				data.maxRankPro = result->GetInt(0);
+			}
+		}
+		pbReqQueueManager.UpdateLocalPBData(uid, data);
+	};
+
+	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+
+	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
+}
+
+void PBRequest::ExecuteRanklessLocalQuery()
+{
+	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+
+	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
+
+	char query[1024];
+	Transaction txn;
+	// Get PB
+	V_snprintf(query, sizeof(query), sql_getpb, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
+			   localDBRequestParams.styleIDs, 1);
+	txn.queries.push_back(query);
+	// Get PRO PB
+	V_snprintf(query, sizeof(query), sql_getpbpro, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
+			   localDBRequestParams.styleIDs, 1);
+	txn.queries.push_back(query);
+
+	u64 uid = this->uid;
+
+	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
+	{
+		PBData data;
+		ISQLResult *result = queries[0]->GetResultSet();
+		if (result && result->GetRowCount() > 0)
+		{
+			data.hasPB = true;
+			if (result->FetchRow())
+			{
+				data.runTime = result->GetFloat(0);
+				data.teleportsUsed = result->GetInt(1);
+			}
+		}
+		if ((result = queries[1]->GetResultSet()) && result->GetRowCount() > 0)
+		{
+			data.hasPBPro = true;
+			if (result->FetchRow())
+			{
+				data.runTimePro = result->GetFloat(0);
+			}
+		}
+		pbReqQueueManager.UpdateLocalPBData(uid, data);
+	};
+
+	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+
+	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
 }
 
 SCMD_CALLBACK(CommandKZPB)
@@ -398,6 +742,10 @@ SCMD_CALLBACK(CommandKZPB)
 		{
 			modeName = arg.Get() + 5;
 		}
+		else if (arg.MatchesPattern("map=*"))
+		{
+			mapName = arg.Get() + 4;
+		}
 		else if (arg.MatchesPattern("p=*"))
 		{
 			playerName = arg.Get() + 2;
@@ -417,11 +765,18 @@ SCMD_CALLBACK(CommandKZPB)
 		else
 		{
 			player->languageService->PrintChat(true, false, "PB Command Usage");
+			player->languageService->PrintConsole(false, false, "PB Command Usage - Console");
 			return MRES_SUPERCEDE;
 		}
 	}
-	RequestPBData(player, playerName, mapName, courseName, modeName, styleNames);
+
+	pbReqQueueManager.AddRequest(player, playerName, mapName, courseName, modeName, styleNames);
 	return MRES_SUPERCEDE;
+}
+
+void KZ::timer::CheckPBRequests()
+{
+	pbReqQueueManager.CheckRequests();
 }
 
 void KZDatabaseService::RegisterPBCommand()

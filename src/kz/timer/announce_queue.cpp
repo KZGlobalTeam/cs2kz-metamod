@@ -84,6 +84,7 @@ public:
 	{
 		char formattedTime[32];
 		KZTimerService::FormatTime(time, formattedTime, sizeof(formattedTime));
+
 		CUtlString combinedModeStyleText;
 		combinedModeStyleText.Format("{purple}%s{grey}", modeName.Get());
 		FOR_EACH_VEC(styleNames, i)
@@ -92,19 +93,23 @@ public:
 			combinedModeStyleText.Append(styleNames[i].Get());
 			combinedModeStyleText += "{grey}";
 		}
+
 		char formattedDiffTimeLocal[32];
 		KZTimerService::FormatDiffTime(localRankData.pbDiff, formattedDiffTimeLocal, sizeof(formattedDiffTimeLocal));
+
 		char formattedDiffTimeLocalPro[32];
 		KZTimerService::FormatDiffTime(localRankData.pbDiffPro, formattedDiffTimeLocalPro, sizeof(formattedDiffTimeLocalPro));
+
 		char formattedDiffTimeGlobal[32];
 		KZTimerService::FormatDiffTime(globalRankData.pbDiff, formattedDiffTimeGlobal, sizeof(formattedDiffTimeGlobal));
+
 		char formattedDiffTimeGlobalPro[32];
 		KZTimerService::FormatDiffTime(globalRankData.pbDiffPro, formattedDiffTimeGlobalPro, sizeof(formattedDiffTimeGlobalPro));
 
 		/*
 			KZ | GameChaos finished "blocks2006" in 10:06.84 [VNL | PRO]
-			KZ | Server Rank: #1/24 Standard (PB -1:00.00) | #1/10 PRO (PB -2:00)
-			KZ | Global Rank: #1/123 Standard (PB -1:00.00) | #1/23 PRO (PB -2:00)
+			KZ | Server Rank: #1/24 Standard (-1:00.00) | #1/10 PRO (-2:00)
+			KZ | Global Rank: #1/123 Standard (-1:00.00) | #1/23 PRO (-2:00)
 			KZ | Map Points: 2345 (+512) | Player Rating: 34475
 		*/
 		for (u32 i = 0; i < MAXPLAYERS + 1; i++)

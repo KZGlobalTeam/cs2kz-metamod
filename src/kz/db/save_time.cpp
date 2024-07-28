@@ -2,7 +2,7 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/timer/kz_timer.h"
-#include "queries/general.h"
+#include "queries/save_time.h"
 #include "queries/times.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 

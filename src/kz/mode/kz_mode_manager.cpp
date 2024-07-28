@@ -413,5 +413,12 @@ void KZ::mode::RegisterCommands()
 
 void KZDatabaseServiceEventListener_Modes::OnDatabaseConnect()
 {
+	FOR_EACH_VEC(modeInfos, i)
+	{
+		if (modeInfos[i].databaseID == -1)
+		{
+			KZDatabaseService::InsertAndUpdateModeIDs(modeInfos[i].longModeName, modeInfos[i].shortModeName);
+		}
+	}
 	KZDatabaseService::UpdateModeIDs();
 }

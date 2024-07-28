@@ -287,5 +287,7 @@ namespace KZ
 		bool GetCourseInformation(const char *courseName, CourseInfo &info);
 		bool GetFirstCourseInformation(CourseInfo &info);
 
+		// PB Requests
+		void CheckPBRequests();
 	} // namespace timer
 } // namespace KZ
