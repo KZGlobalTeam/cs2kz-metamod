@@ -387,7 +387,7 @@ void PBRequest::SetupSteamID64(KZPlayer *callingPlayer)
 
 		// Get player's steamID through their alias.
 		std::string cleanedPlayerName = KZDatabaseService::GetDatabaseConnection()->Escape(targetPlayerName.Get());
-		V_snprintf(query, sizeof(query), sql_players_searchbyalias, cleanedPlayerName.c_str());
+		V_snprintf(query, sizeof(query), sql_players_searchbyalias, cleanedPlayerName.c_str(), cleanedPlayerName.c_str());
 		txn.queries.push_back(query);
 
 		u64 uid = this->uid;
@@ -594,7 +594,7 @@ void PBRequest::ExecuteStandardLocalQuery()
 
 	char query[1024];
 	// Get PB
-	V_snprintf(query, sizeof(query), sql_getpb, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, 0,
+	V_snprintf(query, sizeof(query), sql_getpb, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, 0ull,
 			   1);
 	txn.queries.push_back(query);
 
@@ -608,8 +608,8 @@ void PBRequest::ExecuteStandardLocalQuery()
 	txn.queries.push_back(query);
 
 	// Get PRO PB
-	V_snprintf(query, sizeof(query), sql_getpbpro, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, 0,
-			   1);
+	V_snprintf(query, sizeof(query), sql_getpbpro, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
+			   0ull, 1);
 	txn.queries.push_back(query);
 
 	// Get PRO Rank
