@@ -8,7 +8,7 @@
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
-class KZDatabaseServiceEventListener_Timer : public KZDatabaseServiceEventListener
+static_global class KZDatabaseServiceEventListener_Timer : public KZDatabaseServiceEventListener
 {
 public:
 	virtual void OnMapSetup() override;

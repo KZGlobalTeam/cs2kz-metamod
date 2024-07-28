@@ -41,7 +41,7 @@ constexpr char mysql_times_create[] = R"(
 
 constexpr char sql_times_insert[] = R"(
     INSERT INTO Times (SteamID64, MapCourseID, ModeID, StyleIDFlags, RunTime, Teleports) 
-        SELECT %llu, ID, %d, %llu, %.7f, %d 
+        SELECT %llu, ID, %d, %llu, %.7f, %llu 
         FROM MapCourses 
         WHERE MapID=%d AND Name='%s'
 )";

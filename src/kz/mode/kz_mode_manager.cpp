@@ -20,7 +20,7 @@ KZModeManager *g_pKZModeManager = &modeManager;
 
 CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
 
-class KZDatabaseServiceEventListener_Modes : public KZDatabaseServiceEventListener
+static_global class KZDatabaseServiceEventListener_Modes : public KZDatabaseServiceEventListener
 {
 public:
 	virtual void OnDatabaseConnect() override;

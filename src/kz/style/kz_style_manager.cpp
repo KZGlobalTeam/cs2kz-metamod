@@ -15,7 +15,7 @@ static_global KZStyleManager styleManager;
 KZStyleManager *g_pKZStyleManager = &styleManager;
 static_global CUtlVector<KZStyleManager::StylePluginInfo> styleInfos;
 
-class KZDatabaseServiceEventListener_Styles : public KZDatabaseServiceEventListener
+static_global class KZDatabaseServiceEventListener_Styles : public KZDatabaseServiceEventListener
 {
 public:
 	virtual void OnDatabaseConnect() override;
