@@ -141,12 +141,12 @@ public:
 				// clang-format on
 				if (teleportsUsed > 0)
 				{
-					player->languageService->PrintChat(false, false, "Beat Course Info - Local (TP)", localRankData.rank, localRankData.maxRank,
+					player->languageService->PrintChat(true, false, "Beat Course Info - Local (TP)", localRankData.rank, localRankData.maxRank,
 													   diffText.c_str());
 				}
 				else
 				{
-					player->languageService->PrintChat(false, false, "Beat Course Info - Local (PRO)", localRankData.rank, localRankData.maxRank,
+					player->languageService->PrintChat(true, false, "Beat Course Info - Local (PRO)", localRankData.rank, localRankData.maxRank,
 													   diffText.c_str(), localRankData.rankPro, localRankData.maxRankPro, diffTextPro.c_str());
 				}
 			}
@@ -162,15 +162,15 @@ public:
 				// clang-format on
 				if (teleportsUsed > 0)
 				{
-					player->languageService->PrintChat(false, false, "Beat Course Info - Global (TP)", globalRankData.rank, globalRankData.maxRank,
+					player->languageService->PrintChat(true, false, "Beat Course Info - Global (TP)", globalRankData.rank, globalRankData.maxRank,
 													   diffText.c_str());
 				}
 				else
 				{
-					player->languageService->PrintChat(false, false, "Beat Course Info - Global (PRO)", globalRankData.rank, globalRankData.maxRank,
+					player->languageService->PrintChat(true, false, "Beat Course Info - Global (PRO)", globalRankData.rank, globalRankData.maxRank,
 													   diffText.c_str(), globalRankData.rankPro, globalRankData.maxRankPro, diffTextPro.c_str());
 				}
-				player->languageService->PrintChat(false, false, "Beat Course Info - Global Points", globalRankData.mapPointsGained,
+				player->languageService->PrintChat(true, false, "Beat Course Info - Global Points", globalRankData.mapPointsGained,
 												   globalRankData.totalMapPoints, globalRankData.playerRating);
 			}
 		}
