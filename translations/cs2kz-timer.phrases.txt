@@ -30,35 +30,35 @@
 
 	"Beat Course Info - Basic"
 	{
-		// GameChaos finished "blocks2006" in 10:06.84 [VNL | PRO]
+		// GameChaos finished "blocks2006" in 10:06.84 | VNL | PRO
 		"#format"	"player_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
-		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey}! [{mode_style_text} | {tp_count_text}]"
+		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey} {mode_style_text} | {tp_count_text}]"
 	}
 	
 	"Beat Course Info - Local (TP)"
 	{
-		// Server: #1/24 Standard (-1:00.00)
+		// Server: #1/24 Overall (-1:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s"
-		"en"		"{grey}Server: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
+		"en"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Local (PRO)"
 	{
-		// Server: #1/24 Standard (-1:00.00) | #1/10 PRO (-2:00.00)
+		// Server: #1/24 Overall (-1:00.00) | #1/10 PRO (-2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
-		"en"		"{grey}Server: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"en"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global (TP)"
 	{
-		// Global: #1/24 Standard (-1:00.00)
+		// Global: #1/24 Overall (-1:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
-		"en"		"{grey}Global: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text}"
+		"en"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Global (PRO)"
 	{
-		// Global: #1/24 Standard (-1:00.00) | #1/10 PRO (-2:00.00)
+		// Global: #1/24 Overall (-1:00.00) | #1/10 PRO (-2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
-		"en"		"{grey}Global: #{rank}/{max_rank} {yellow}Standard{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"en"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global Points"
@@ -78,41 +78,41 @@
 	{
 		"en"		"{grey}You haven't set a time... yet."
 	}
-	"PB Time - Standard (Server)"
+	"PB Time - Overall (Server)"
 	{
-		// Server: 12.34 (5 TPs) [#1/24 Standard]
+		// Server: 12.34 (5 TPs) [#1/24 Overall]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d"
-		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Standard{grey}]"
+		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}]"
 	}
 	"PB Time - Combined (Server)"
 	{
-		// Server: 12.34 [#1/24 Standard] [#1/2 PRO]
+		// Server: 12.34 [#1/24 Overall] [#1/2 PRO]
 		"#format"	"time:s,rank:d,max_rank:d,rank_pro:d,max_rank_pro:d"
-		"en"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Standard{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"en"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Split (Server)"
 	{
-		// Server: 12.34 (5 TPs) [#1/24 Standard] | 23.45 [#1/2 PRO]
+		// Server: 12.34 (5 TPs) [#1/24 Overall] | 23.45 [#1/2 PRO]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d,time_pro:s,rank_pro:d,max_rank_pro:d"
-		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Standard{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
-	"PB Time - Standard Rankless (Server)"
+	"PB Time - Overall Rankless (Server)"
 	{
-		// Server: 12.34 (5 TPs) [Standard]
+		// Server: 12.34 (5 TPs) [Overall]
 		"#format"	"time:s,tp_count_text:s"
-		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Standard{grey}]"
+		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}]"
 	}
 	"PB Time - Combined Rankless (Server)"
 	{
-		// Server: 12.34 [Standard/PRO]
+		// Server: 12.34 [Overall/PRO]
 		"#format"	"time:s"
-		"en"		"{grey}Server: {default}{time}{grey} [{yellow}Standard{grey}/{blue}PRO{grey}]"
+		"en"		"{grey}Server: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Server)"
 	{
-		// Server: 12.34 (5 TPs) [Standard] | 23.45 [PRO]
+		// Server: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
 		"#format"	"time:s,tp_count_text:s,time_pro:s"
-		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Standard{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)" 
 	{

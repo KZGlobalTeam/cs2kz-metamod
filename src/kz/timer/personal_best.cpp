@@ -218,7 +218,7 @@ struct PBRequest
 			else if (!localPBData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [#1/24 Standard]
-				player->languageService->PrintChat(true, false, "PB Time - Standard (Server)", localStandardTime, localTPText, localPBData.rank,
+				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", localStandardTime, localTPText, localPBData.rank,
 												   localPBData.maxRank);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
@@ -244,7 +244,7 @@ struct PBRequest
 			else if (!localPBData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Standard]
-				player->languageService->PrintChat(true, false, "PB Time - Standard Rankless (Server)", localStandardTime, localTPText);
+				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", localStandardTime, localTPText);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 			else if (localPBData.teleportsUsed == 0)
