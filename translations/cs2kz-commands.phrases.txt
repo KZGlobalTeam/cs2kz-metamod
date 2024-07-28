@@ -376,4 +376,8 @@
 		"sv"		"Byt till Classic mode."
 		"ua"		"Переключитися на режим Classic."
 	}
+	"Command Description - kz_pb"
+	{
+		"en"		"Retrieve personal best statistics."
+	}
 }

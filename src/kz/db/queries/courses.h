@@ -43,22 +43,8 @@ constexpr char sql_mapcourses_findfirst_mapname[] = R"(
     SELECT MapCourses.Name
         FROM MapCourses
         INNER JOIN Maps ON Maps.ID = MapCourses.MapID
-        WHERE Maps.Name='%s'
-        ORDER BY StageID ASC
-        LIMIT 1
-)";
-
-constexpr char sql_mapcourses_findname_mapname[] = R"(
-    SELECT ID
-        FROM MapCourses
-        WHERE MapID=(
-            SELECT ID 
-                FROM Maps 
-                WHERE Name='%s'
-                LIMIT 1
-            )
-        AND Name='%s'
-        ORDER BY StageID ASC
+        WHERE Maps.Name LIKE '%%%s%%'
+        ORDER BY (Maps.Name='%s') DESC, StageID ASC
         LIMIT 1
 )";
 

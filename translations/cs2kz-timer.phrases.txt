@@ -70,9 +70,9 @@
 	
 	"PB Header"
 	{
-		// Player on kz_map [CKZ +ABH]
-		"#format"	"player_name:s,map_name:s,mode_style_text:s"
-		"en"		"{lime}{player_name}{grey} on {default}{map_name} {grey}[{purple}{mode_style_text}{grey}]"
+		// Player on kz_map (Main) [CKZ +ABH]
+		"#format"	"player_name:s,map_name:s,course_name:s,mode_style_text:s"
+		"en"		"{lime}{player_name}{grey} on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 	}
 	"PB Time - No Times"
 	{

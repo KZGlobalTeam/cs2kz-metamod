@@ -44,10 +44,6 @@ struct PBRequest
 	{
 		timestamp = g_pKZUtils->GetServerGlobals()->realtime;
 		localRequestState = KZDatabaseService::IsReady() ? LocalRequestState::ENABLED : LocalRequestState::DISABLED;
-		SetupSteamID64(callingPlayer);
-		SetupCourse(callingPlayer);
-		SetupMode(callingPlayer);
-		SetupStyles(callingPlayer);
 	}
 
 	// Global identifier and timestamp for timeout
@@ -178,9 +174,14 @@ struct PBRequest
 		{
 			return;
 		}
+		// TODO: How does this work with global?
 		if (localRequestState != LocalRequestState::FINISHED)
 		{
-			player->languageService->PrintChat(true, false, "PB Request - Failed (Generic)");
+			// If the request failed, then the error message is already sent in InvalidLocal.
+			if (localRequestState != LocalRequestState::FAILED)
+			{
+				player->languageService->PrintChat(true, false, "PB Request - Failed (Generic)");
+			}
 			return;
 		}
 		CUtlString combinedModeStyleText;
@@ -205,8 +206,9 @@ struct PBRequest
 		char localProTime[32];
 		KZTimerService::FormatTime(localPBData.runTimePro, localProTime, sizeof(localProTime));
 
-		// Player on kz_map [VNL]
-		player->languageService->PrintChat(true, false, "PB Header", targetPlayerName.Get(), mapName.Get(), combinedModeStyleText.Get());
+		// Player on kz_map (Main) [VNL]
+		player->languageService->PrintChat(true, false, "PB Header", targetPlayerName.Get(), mapName.Get(), courseName.Get(),
+										   combinedModeStyleText.Get());
 		if (queryRanking)
 		{
 			if (!localPBData.hasPB)
@@ -268,7 +270,12 @@ static_global struct
 					CUtlString styleNames)
 	{
 		PBRequest *req = pbRequests.AddToTailGetPtr();
-		*req = PBRequest(pbReqCount++, callingPlayer, playerName, mapName, courseName, modeName, styleNames);
+		*req = PBRequest(pbReqCount, callingPlayer, playerName, mapName, courseName, modeName, styleNames);
+		req->SetupSteamID64(callingPlayer);
+		req->SetupCourse(callingPlayer);
+		req->SetupMode(callingPlayer);
+		req->SetupStyles(callingPlayer);
+		pbReqCount++;
 	}
 
 	template<typename... Args>
@@ -394,7 +401,14 @@ void PBRequest::SetupSteamID64(KZPlayer *callingPlayer)
 		auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 		{
 			ISQLResult *result = queries[0]->GetResultSet();
-			pbReqQueueManager.SetRequestTargetPlayer(uid, result->GetInt(0), result->GetString(1));
+			if (result->GetRowCount() > 0 && result->FetchRow())
+			{
+				pbReqQueueManager.SetRequestTargetPlayer(uid, result->GetInt(0), result->GetString(1));
+			}
+			else
+			{
+				pbReqQueueManager.InvalidLocal(uid);
+			}
 		};
 
 		auto onQueryFailure = [uid](std::string, int)
@@ -537,7 +551,7 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 			auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
 
 			char query[1024];
-			V_snprintf(query, sizeof(query), sql_mapcourses_findfirst_mapname, cleanMapName.c_str());
+			V_snprintf(query, sizeof(query), sql_mapcourses_findfirst_mapname, cleanMapName.c_str(), cleanMapName.c_str());
 
 			Transaction txn;
 			txn.queries.push_back(query);
@@ -546,14 +560,19 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 			auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 			{
 				ISQLResult *result = queries[0]->GetResultSet();
-
-				pbReqQueueManager.UpdateCourseName(uid, result->GetString(0));
+				if (result->GetRowCount() > 0 && result->FetchRow())
+				{
+					pbReqQueueManager.UpdateCourseName(uid, result->GetString(0));
+				}
+				else
+				{
+					pbReqQueueManager.InvalidLocal(uid);
+				}
 			};
 
 			auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
 
-			KZDatabaseService::GetDatabaseConnection()->Query(
-				sql_mapcourses_findfirst_mapname, [](ISQLQuery *) {}, cleanMapName.c_str());
+			KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
 		}
 	}
 	else
