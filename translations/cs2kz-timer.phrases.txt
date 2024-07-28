@@ -32,7 +32,7 @@
 	{
 		// GameChaos finished "blocks2006" in 10:06.84 | VNL | PRO
 		"#format"	"player_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
-		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey} {mode_style_text} | {tp_count_text}]"
+		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 	}
 	
 	"Beat Course Info - Local (TP)"
