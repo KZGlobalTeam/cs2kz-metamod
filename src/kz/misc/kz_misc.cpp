@@ -48,12 +48,6 @@ static_function SCMD_CALLBACK(Command_KzHide)
 static_function SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->PrintHTMLCentre(
-		false, false,
-		"<div style=\"font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: "
-		"6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: "
-		"6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;font-size: 6px;\"> Hello "
-		"world!");
 	player->timerService->OnTeleportToStart();
 	if (player->GetPlayerPawn()->IsAlive())
 	{
