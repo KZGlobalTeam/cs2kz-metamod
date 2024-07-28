@@ -178,3 +178,87 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		player->specService->ResetSavedPosition();
 	}
 }
+
+static_function void SanitizeMsg(const char *input, char *output, u32 size)
+{
+	int x = 0;
+	for (int i = 0; input[i] != '\0'; i++)
+	{
+		if (x + 1 == size)
+		{
+			break;
+		}
+
+		int character = input[i];
+
+		if (character > 0x10)
+		{
+			if (character == '\\')
+			{
+				output[x++] = character;
+			}
+			output[x++] = character;
+		}
+	}
+
+	output[x] = '\0';
+}
+
+META_RES KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+{
+	META_RES result = MRES_IGNORED;
+	if (!GameEntitySystem())
+	{
+		return result;
+	}
+	CPlayerSlot slot = ctx.GetPlayerSlot();
+
+	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
+
+	KZPlayer *player = NULL;
+
+	if (!cmd.IsValid() || !controller || !(player = g_pKZPlayerManager->ToPlayer(controller)))
+	{
+		return MRES_IGNORED;
+	}
+	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
+
+	// Is it a chat message?
+	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
+	{
+		if (args.ArgC() < 2)
+		{
+			// no argument somehow
+			return MRES_IGNORED;
+		}
+
+		i32 argLen = strlen(args[1]);
+		if (argLen < 1)
+		{
+			// arg is too short!
+			return MRES_IGNORED;
+		}
+		CUtlString message;
+		for (int i = 1; i < args.ArgC(); i++)
+		{
+			if (i > 1)
+			{
+				message += ' ';
+			}
+			message += args[i];
+		}
+		if (player->IsAlive())
+		{
+			utils::CPrintChatAll("{lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::PrintConsoleAll("%s: %s", player->GetName(), message.Get());
+		}
+		else
+		{
+			utils::CPrintChatAll("{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
+		}
+		return MRES_SUPERCEDE;
+	}
+
+	return MRES_IGNORED;
+}

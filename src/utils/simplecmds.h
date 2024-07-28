@@ -19,7 +19,7 @@ namespace scmd
 	bool UnregisterCmd(const char *name);
 
 	META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
-	META_RES OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
+	void OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 } // namespace scmd
 
 #endif // SIMPLECMDS_H
