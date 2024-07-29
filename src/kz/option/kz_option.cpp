@@ -26,6 +26,11 @@ i64 KZOptionService::GetOptionInt(const char *optionName, i64 defaultValue)
 	return pServerCfgKeyValues->GetInt(optionName, defaultValue);
 }
 
+KeyValues *KZOptionService::GetOptionKV(const char *optionName)
+{
+	return pServerCfgKeyValues->FindKey(optionName);
+}
+
 void KZOptionService::InitOptions()
 {
 	LoadDefaultOptions();

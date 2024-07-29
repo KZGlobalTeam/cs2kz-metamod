@@ -249,12 +249,19 @@
 	}
 	"Command Description - kz_style"
 	{
-		"en"		"List or change style."
-		"chi"		"列出或更改风格."
-		"pl"		"Lista stylów gry bądź jego zmiana."	
-		"fi"		"Listaa tai vaihda tyyliä."
-		"sv"		"Lista eller ändra KZ mode."
-		"ua"		"Відобразити чи змінити KZ режим."
+		"en"		"List, add, remove or toggle style."
+	}
+	"Command Description - kz_addstyle"
+	{
+		"en"		"List or add style."
+	}
+	"Command Description - kz_removestyle"
+	{
+		"en"		"List active styles or remove style."
+	}
+	"Command Description - kz_togglestyle"
+	{
+		"en"		"List or toggle style."
 	}
 	"Command Description - kz_stop"
 	{
@@ -368,5 +375,9 @@
 		"fi"		"Vaihda Classic moodiin."
 		"sv"		"Byt till Classic mode."
 		"ua"		"Переключитися на режим Classic."
+	}
+	"Command Description - kz_pb"
+	{
+		"en"		"Retrieve personal best statistics."
 	}
 }

@@ -4,14 +4,20 @@
 #include "igameeventsystem.h"
 #include "igamesystem.h"
 #include "utils/simplecmds.h"
+#include "steam/steam_gameserver.h"
 
 #include "cs2kz.h"
 #include "ctimer.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/db/kz_db.h"
 #include "utils/utils.h"
 #include "entityclass.h"
+
+#include "memdbgon.h"
+
+extern CSteamGameServerAPIContext g_steamAPI;
 
 class GameSessionConfiguration_t
 {
@@ -576,10 +582,16 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	{
 		entitySystemHook = SH_ADD_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 	}
+	KZ::timer::CheckAnnounceQueue();
+	KZ::timer::CheckPBRequests();
 	RETURN_META(MRES_IGNORED);
 }
 
-static_function void Hook_GameServerSteamAPIActivated() {}
+static_function void Hook_GameServerSteamAPIActivated()
+{
+	g_steamAPI.Init();
+	g_pKZPlayerManager->OnSteamAPIActivated();
+}
 
 static_function void Hook_GameServerSteamAPIDeactivated() {}
 
@@ -707,8 +719,9 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 // ICvar
 static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
-	META_RES mres = scmd::OnDispatchConCommand(cmd, ctx, args);
+	META_RES mres = KZ::misc::ProcessConCommand(cmd, ctx, args);
 
+	scmd::OnDispatchConCommand(cmd, ctx, args);
 	RETURN_META(mres);
 }
 
@@ -736,22 +749,16 @@ static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawn
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
-	static_persist bool infiniteAmmoUnlocked {};
-	if (!infiniteAmmoUnlocked)
-	{
-		infiniteAmmoUnlocked = true;
-		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
-		if (cvarHandle.IsValid())
-		{
-			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
-		}
-		else
-		{
-			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
-		}
-	}
-
-	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	KZ::timer::ClearAnnounceQueue();
+	KZ::timer::SetupCourses();
+	KZ::misc::OnServerActivate();
+	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
+	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
+	u64 size = g_pKZUtils->GetCurrentMapSize();
+	char md5[33];
+	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
+	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
+	KZDatabaseService::SetupMap();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

@@ -19,6 +19,7 @@ for sdk_target in MMSPlugin.sdk_targets:
   ]
 
   PROTOS = [
+    os.path.join(sdk['path'], 'common', 'netmessages.proto'),
     os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
     os.path.join(sdk['path'], 'common', 'network_connection.proto'),
     os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
@@ -59,6 +60,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib')
     ]
     binary.sources += [
       'src/utils/plat_win.cpp'
@@ -68,6 +70,8 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
     os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
+    os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'),
+    
     
     os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
     
@@ -87,8 +91,9 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
-
-    os.path.join(builder.sourcePath, 'src', 'kz', 'kz_misc.cpp'),
+    
+    os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'kz_misc.cpp'),
+    
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player_print.cpp'),
@@ -96,6 +101,31 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'commands.cpp'),
+    
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'kz_db.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'cache_js.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'cache_pbs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'cache_records.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'create_tables.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'display_js.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'js_top.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'map_top.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'player_top.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'print_average.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'print_js.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'print_records.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'process_new_time.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_js.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_time.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'set_cheater.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_client.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_database.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_map_courses.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_map.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_modes.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_styles.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'timer_setup.cpp'),
+
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
 
@@ -114,8 +144,12 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'saveloc', 'kz_saveloc.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'spec', 'kz_spec.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_manager.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_normal.cpp'),
+    
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'announce_queue.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'personal_best.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'courses.cpp'),
+    
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
   ]
 

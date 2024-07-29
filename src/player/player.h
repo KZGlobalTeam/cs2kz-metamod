@@ -1,4 +1,5 @@
 #include "common.h"
+#include "steam/isteamuser.h"
 #include "sdk/serversideclient.h"
 #include "sdk/datatypes.h"
 #include "sdk/services.h"
@@ -44,7 +45,7 @@ public:
 
 	bool IsAuthenticated()
 	{
-		return interfaces::pEngine->IsClientFullyAuthenticated(GetPlayerSlot());
+		return IsConnected() && !IsFakeClient() && interfaces::pEngine->IsClientFullyAuthenticated(GetPlayerSlot());
 	}
 
 	bool IsConnected()
@@ -109,9 +110,12 @@ public:
 		unauthenticatedSteamID = CSteamID(xuid);
 	}
 
+	virtual void OnAuthorized();
+
 public:
 	// General
 	const i32 index;
+	bool hasPrime {};
 
 private:
 	CSteamID unauthenticatedSteamID = k_steamIDNil;
@@ -145,6 +149,11 @@ public:
 	Player *ToPlayer(CEntityIndex entIndex);
 	Player *ToPlayer(CPlayerUserId userID);
 
+	void Cleanup();
+	void OnLateLoad();
+
+	void OnSteamAPIActivated();
+
 	void OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1, CBufferString *pRejectReason);
 	void OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress, bool bFakePlayer);
 	void OnClientFullyConnect(CPlayerSlot slot);
@@ -153,6 +162,21 @@ public:
 	void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 	void OnClientVoice(CPlayerSlot slot);
 	void OnClientSettingsChanged(CPlayerSlot slot);
+
+	STEAM_GAMESERVER_CALLBACK_MANUAL(PlayerManager, OnValidateAuthTicket, ValidateAuthTicketResponse_t, m_CallbackValidateAuthTicketResponse);
+
+	void RegisterSteamAPICallback()
+	{
+		if (callbackRegistered)
+		{
+			return;
+		}
+		callbackRegistered = true;
+		m_CallbackValidateAuthTicketResponse.Register(this, &PlayerManager::OnValidateAuthTicket);
+	}
+
+private:
+	bool callbackRegistered {};
 
 public:
 	Player *players[MAXPLAYERS + 1];

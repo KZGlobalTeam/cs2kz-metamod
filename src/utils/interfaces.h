@@ -116,8 +116,18 @@ public:
 
 	CServerSideClient *GetClientBySlot(CPlayerSlot slot)
 	{
-		return GetClientList() ? GetClientList()->Element(slot.Get()) : nullptr;
+		return (GetClientList() && GetController(slot)) ? GetClientList()->Element(slot.Get()) : nullptr;
 	}
+
+	virtual u64 GetCurrentMapWorkshopID();
+	virtual CUtlString GetCurrentMapVPK();
+	virtual CUtlString GetCurrentMapDirectory();
+	virtual u64 GetCurrentMapSize();
+	// MD5 calculation is not very fast, avoid doing this too often!
+	virtual bool UpdateCurrentMapMD5();
+	virtual bool GetCurrentMapMD5(char *buffer, i32 size);
+	// Must be absolute path.
+	virtual bool GetFileMD5(const char *filePath, char *buffer, i32 size);
 };
 
 extern KZUtils *g_pKZUtils;

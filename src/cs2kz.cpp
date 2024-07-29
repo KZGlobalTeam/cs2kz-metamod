@@ -1,6 +1,8 @@
 #include "cs2kz.h"
 
 #include "entity2/entitysystem.h"
+#include "steam/steam_gameserver.h"
+
 #include "sdk/cgameresourceserviceserver.h"
 #include "utils/utils.h"
 #include "utils/hooks.h"
@@ -8,6 +10,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/spec/kz_spec.h"
@@ -15,7 +18,6 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
-
 #include "tier0/memdbgon.h"
 
 #include "version.h"
@@ -27,6 +29,7 @@ KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
 IClientCvarValue *g_pClientCvarValue;
+CSteamGameServerAPIContext g_steamAPI;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
@@ -43,6 +46,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::InitModeManager();
 	KZ::style::InitStyleManager();
+	KZTimerService::Init();
 	KZSpecService::Init();
 	KZHUDService::Init();
 	KZLanguageService::Init();
@@ -58,6 +62,12 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZOptionService::InitOptions();
 	KZTipService::InitTips();
+	if (late)
+	{
+		KZ::misc::OnServerActivate();
+		g_steamAPI.Init();
+		g_pKZPlayerManager->OnLateLoad();
+	}
 	return true;
 }
 
@@ -69,14 +79,17 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	utils::Cleanup();
 	g_pKZModeManager->Cleanup();
 	g_pKZStyleManager->Cleanup();
+	g_pPlayerManager->Cleanup();
+	KZDatabaseService::Cleanup();
 	return true;
 }
 
 void KZPlugin::AllPluginsLoaded()
 {
+	KZDatabaseService::Init();
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
-
+	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 }
@@ -171,6 +184,14 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	*ret = META_IFACE_FAILED;
 
 	return NULL;
+}
+
+void KZPlugin::UpdateSelfMD5()
+{
+	ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, nullptr, nullptr);
+	const char *path;
+	pluginManager->Query(g_PLID, &path, nullptr, nullptr);
+	g_pKZUtils->GetFileMD5(path, this->md5, sizeof(this->md5));
 }
 
 CGameEntitySystem *GameEntitySystem()
