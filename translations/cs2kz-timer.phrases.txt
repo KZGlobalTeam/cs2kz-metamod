@@ -125,11 +125,11 @@
 	}
 	"PB Command Usage"
 	{
-		"en"		"{grey}Usage: {default}kz_pb {purple}<c/course/mode/p/player/s/style=...>{grey}. Check console for details!"
+		"en"		"{grey}Usage: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Check console for details!"
 	}
 	"PB Command Usage - Console"
 	{
-		"en"		"Usage: kz_pb <c/course/mode/p/player/s/style=...>\nExample: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nTo specify no style, use \"style=none\"."
+		"en"		"Usage: kz_pb <c/course/map/mode/p/player/s/style=...>\nExample: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nTo specify no style, use \"style=none\"."
 	}
 	
 	"Can't Pause (Generic)"
