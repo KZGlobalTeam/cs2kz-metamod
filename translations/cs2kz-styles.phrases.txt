@@ -56,12 +56,18 @@
 	"Style Added"
 	{
 		"#format"	"style:s"
-		"en"		"{grey}You have added  {purple}{style}{grey} style."
+		"en"		"{grey}You have added {purple}{style}{grey} style."
 	}
 	"Style Already Active"
 	{
 		"#format"	"style:s"
-		"en"		"{darkred}The style {purple}{style}{darkred} is already active."
+		"en"		"{darkred}The {purple}{style}{darkred} style is already active."
+	}
+	"Style Not Active"
+	{
+		// The AutoBhop style is currently not available.
+		"#format"	"style:s"
+		"en"		"{darkred}The {purple}{style}{darkred} style is not active."
 	}
 	"Style Conflict"
 	{

@@ -289,6 +289,10 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 			return;
 		}
 	}
+	if (!silent)
+	{
+		player->languageService->PrintChat(true, false, "Style Not Active", styleName);
+	}
 }
 
 void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool silent)
@@ -463,7 +467,7 @@ static_function SCMD_CALLBACK(Command_KzRemoveStyle)
 static_function SCMD_CALLBACK(Command_KzClearStyles)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	styleManager.ClearStyles(player, args->Arg(1));
+	styleManager.ClearStyles(player);
 	return MRES_SUPERCEDE;
 }
 
