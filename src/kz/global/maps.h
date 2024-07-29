@@ -87,7 +87,7 @@ namespace KZ::API
 		std::optional<std::string> description {};
 		GlobalStatus globalStatus;
 		u32 workshopID;
-		u32 checksum;
+		std::string checksum;
 		std::vector<Player> mappers {};
 		std::vector<Course> courses {};
 		std::string createdOn;

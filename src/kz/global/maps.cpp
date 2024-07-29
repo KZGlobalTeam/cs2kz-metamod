@@ -70,7 +70,7 @@ namespace KZ::API
 			return KZ::API::ParseError("map object is missing `checksum` property");
 		}
 
-		if (!json["checksum"].is_number_unsigned())
+		if (!json["checksum"].is_string())
 		{
 			return KZ::API::ParseError("map object `checksum` property is not an integer");
 		}
