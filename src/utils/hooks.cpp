@@ -719,9 +719,9 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 // ICvar
 static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
-	META_RES mres = KZ::misc::ProcessConCommand(cmd, ctx, args);
+	KZ::misc::ProcessConCommand(cmd, ctx, args);
 
-	scmd::OnDispatchConCommand(cmd, ctx, args);
+	META_RES mres = scmd::OnDispatchConCommand(cmd, ctx, args);
 	RETURN_META(mres);
 }
 

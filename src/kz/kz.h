@@ -234,6 +234,6 @@ namespace KZ
 		void OnServerActivate();
 		void RegisterCommands();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
-		META_RES ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
+		void ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 	} // namespace misc
 };    // namespace KZ

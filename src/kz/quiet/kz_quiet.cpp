@@ -1,4 +1,5 @@
 #include "cstrike15_usermessages.pb.h"
+#include "usermessages.pb.h"
 #include "gameevents.pb.h"
 #include "cs_gameevents.pb.h"
 
@@ -112,6 +113,15 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgSosStartSoundEvent>();
 			entIndex = msg->source_entity_index();
 			break;
+		}
+		// Used by kz_misc to block valve's player say messages.
+		case CS_UM_SayText:
+		case CS_UM_SayText2:
+		case UM_SayText:
+		case UM_SayText2:
+		{
+			*(uint64 *)clients = 0;
+			return;
 		}
 		default:
 		{

@@ -204,12 +204,11 @@ static_function void SanitizeMsg(const char *input, char *output, u32 size)
 	output[x] = '\0';
 }
 
-META_RES KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
-	META_RES result = MRES_IGNORED;
 	if (!GameEntitySystem())
 	{
-		return result;
+		return;
 	}
 	CPlayerSlot slot = ctx.GetPlayerSlot();
 
@@ -219,7 +218,7 @@ META_RES KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext
 
 	if (!cmd.IsValid() || !controller || !(player = g_pKZPlayerManager->ToPlayer(controller)))
 	{
-		return MRES_IGNORED;
+		return;
 	}
 	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
 
@@ -229,14 +228,14 @@ META_RES KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext
 		if (args.ArgC() < 2)
 		{
 			// no argument somehow
-			return MRES_IGNORED;
+			return;
 		}
 
 		i32 argLen = strlen(args[1]);
 		if (argLen < 1)
 		{
 			// arg is too short!
-			return MRES_IGNORED;
+			return;
 		}
 		CUtlString message;
 		for (int i = 1; i < args.ArgC(); i++)
@@ -257,8 +256,8 @@ META_RES KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext
 			utils::CPrintChatAll("{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
 			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
 		}
-		return MRES_SUPERCEDE;
+		return;
 	}
 
-	return MRES_IGNORED;
+	return;
 }

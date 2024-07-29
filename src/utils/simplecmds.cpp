@@ -173,16 +173,17 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	return result;
 }
 
-void scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
 	if (!g_coreCmdsRegistered)
 	{
 		RegisterCoreCmds();
 	}
 
+	META_RES result = MRES_IGNORED;
 	if (!GameEntitySystem())
 	{
-		return;
+		return result;
 	}
 	CPlayerSlot slot = ctx.GetPlayerSlot();
 
@@ -190,7 +191,7 @@ void scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx
 
 	if (!cmd.IsValid() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
 	{
-		return;
+		return MRES_IGNORED;
 	}
 	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
 
@@ -199,20 +200,20 @@ void scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx
 		if (args.ArgC() < 2)
 		{
 			// no argument somehow
-			return;
+			return MRES_IGNORED;
 		}
 
 		if (args[1][0] != SCMD_CHAT_TRIGGER && args[1][0] != SCMD_CHAT_SILENT_TRIGGER)
 		{
 			// no chat command trigger
-			return;
+			return MRES_IGNORED;
 		}
 
 		i32 argLen = strlen(args[1]);
 		if (argLen < 1)
 		{
 			// arg is too short!
-			return;
+			return MRES_IGNORED;
 		}
 		Scmd *cmds = g_cmdManager.cmds;
 
@@ -236,7 +237,7 @@ void scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx
 				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
 				{
 					// don't send chat message
-					return;
+					return MRES_SUPERCEDE;
 				}
 			}
 		}
@@ -257,10 +258,10 @@ void scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx
 			if (!V_stricmp(commandName, cmdName))
 			{
 				cmds[i].callback(controller, &args);
-				return;
+				return MRES_SUPERCEDE;
 			}
 		}
 	}
 
-	return;
+	return MRES_IGNORED;
 }
