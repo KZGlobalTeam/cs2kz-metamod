@@ -263,6 +263,10 @@
 	{
 		"en"		"List or toggle style."
 	}
+	"Command Description - kz_clearstyles"
+	{
+		"en"		"Clear all styles."
+	}
 	"Command Description - kz_stop"
 	{
 		"en"		"Stop timer."
