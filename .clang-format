@@ -13,28 +13,9 @@ AllowShortLambdasOnASingleLine: None
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakTemplateDeclarations: true
 BitFieldColonSpacing: After
-
-BraceWrapping:
-    AfterCaseLabel: true
-    AfterClass: true
-    AfterControlStatement: Always
-    AfterEnum: true
-    AfterFunction: true
-    AfterNamespace: true
-    AfterStruct: true
-    AfterUnion: true
-    AfterExternBlock: true
-    BeforeCatch: true
-    BeforeElse: true
-    BeforeLambdaBody: false
-    BeforeWhile: false
-    SplitEmptyFunction: true
-    SplitEmptyRecord: true
-    SplitEmptyNamespace: true
-
 BreakArrays: true
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeBraces: Custom
+BreakBeforeBraces: Allman
 BreakBeforeTernaryOperators: true
 ColumnLimit: 150
 CompactNamespaces: false

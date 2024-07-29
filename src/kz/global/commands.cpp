@@ -6,7 +6,8 @@ static_function SCMD_CALLBACK(Command_KzProfile)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
-	auto onSuccess = [player](std::optional<KZ::API::Player> info) {
+	auto onSuccess = [player](std::optional<KZ::API::Player> info)
+	{
 		if (!info)
 		{
 			player->languageService->PrintChat(true, false, "Player not found");
@@ -20,7 +21,8 @@ static_function SCMD_CALLBACK(Command_KzProfile)
 		player->languageService->PrintChat(true, false, "Display PlayerInfo", name, steamID, isBanned);
 	};
 
-	auto onError = [player](KZ::API::Error error) {
+	auto onError = [player](KZ::API::Error error)
+	{
 		player->languageService->PrintError(error);
 	};
 
@@ -45,7 +47,8 @@ static_function SCMD_CALLBACK(Command_KzMapInfo)
 
 	if (mapIdentifier[0] != '\0')
 	{
-		auto onSuccess = [player](std::optional<KZ::API::Map> map) {
+		auto onSuccess = [player](std::optional<KZ::API::Map> map)
+		{
 			if (!map)
 			{
 				player->languageService->PrintChat(true, false, "MapNotGlobal");
@@ -55,7 +58,8 @@ static_function SCMD_CALLBACK(Command_KzMapInfo)
 			player->languageService->PrintMap(map.value());
 		};
 
-		auto onError = [player](KZ::API::Error error) {
+		auto onError = [player](KZ::API::Error error)
+		{
 			player->languageService->PrintError(error);
 		};
 

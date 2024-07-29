@@ -570,7 +570,10 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 				}
 			};
 
-			auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+			auto onQueryFailure = [uid](std::string, int)
+			{
+				pbReqQueueManager.InvalidLocal(uid);
+			};
 
 			KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
 		}
@@ -681,7 +684,10 @@ void PBRequest::ExecuteStandardLocalQuery()
 		pbReqQueueManager.UpdateLocalPBData(uid, data);
 	};
 
-	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+	auto onQueryFailure = [uid](std::string, int)
+	{
+		pbReqQueueManager.InvalidLocal(uid);
+	};
 
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
 }
@@ -729,7 +735,10 @@ void PBRequest::ExecuteRanklessLocalQuery()
 		pbReqQueueManager.UpdateLocalPBData(uid, data);
 	};
 
-	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+	auto onQueryFailure = [uid](std::string, int)
+	{
+		pbReqQueueManager.InvalidLocal(uid);
+	};
 
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
 }

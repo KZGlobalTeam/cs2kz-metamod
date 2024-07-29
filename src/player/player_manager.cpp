@@ -103,7 +103,8 @@ void PlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char 
 	// N.B. we reset the default-constructed session to a session with a valid timestamp
 	player->session = KZ::API::Session(g_pKZUtils->GetServerGlobals()->realtime);
 
-	auto onSuccess = [player](std::optional<KZ::API::Player> playerInfo) {
+	auto onSuccess = [player](std::optional<KZ::API::Player> playerInfo)
+	{
 		if (playerInfo)
 		{
 			player->languageService->PrintChat(true, false, "Display Hello", playerInfo->name.c_str());
@@ -111,15 +112,19 @@ void PlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char 
 			return;
 		}
 
-		KZGlobalService::RegisterPlayer(player, [player](std::optional<KZ::API::Error> error) {
+		auto onError = [player](std::optional<KZ::API::Error> error)
+		{
 			if (error)
 			{
 				player->languageService->PrintError(error.value());
 			}
-		});
+		};
+
+		KZGlobalService::RegisterPlayer(player, onError);
 	};
 
-	auto onError = [player](KZ::API::Error error) {
+	auto onError = [player](KZ::API::Error error)
+	{
 		player->languageService->PrintError(error);
 	};
 
@@ -134,7 +139,8 @@ void PlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionRe
 	// flush timestamp
 	player->session.GoActive();
 
-	KZGlobalService::UpdatePlayer(player, [player](std::optional<KZ::API::Error> error) {
+	auto onError = [player](std::optional<KZ::API::Error> error)
+	{
 		if (error)
 		{
 			META_CONPRINTF("[KZ::Global] Failed to send player update: %s\n", error->message.c_str());
@@ -142,7 +148,9 @@ void PlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionRe
 		}
 
 		META_CONPRINTF("[KZ::Global] Updated `%s`.\n", player->GetName());
-	});
+	};
+
+	KZGlobalService::UpdatePlayer(player, onError);
 }
 
 void PlayerManager::OnClientVoice(CPlayerSlot slot) {}

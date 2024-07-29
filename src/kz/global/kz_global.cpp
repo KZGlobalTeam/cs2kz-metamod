@@ -49,7 +49,8 @@ f64 KZGlobalService::Heartbeat()
 {
 	HTTP::Request request(HTTP::Method::GET, apiURL);
 
-	request.Send([](HTTP::Response response) {
+	auto onResponse = [](HTTP::Response response)
+	{
 		switch (response.status)
 		{
 			case 0:
@@ -90,7 +91,9 @@ f64 KZGlobalService::Heartbeat()
 				return;
 			}
 		}
-	});
+	};
+
+	request.Send(onResponse);
 
 	return heartbeatInterval;
 }
@@ -118,7 +121,8 @@ f64 KZGlobalService::Auth()
 
 	request.SetBody(authPayload.value());
 
-	request.Send([](HTTP::Response response) {
+	auto onResponse = [](HTTP::Response response)
+	{
 		switch (response.status)
 		{
 			case 0:
@@ -165,7 +169,9 @@ f64 KZGlobalService::Auth()
 				return;
 			}
 		}
-	});
+	};
+
+	request.Send(onResponse);
 
 	return authInterval;
 }
@@ -182,7 +188,8 @@ bool FetchPlayerImpl(const char *url, KZGlobalService::Callback<std::optional<KZ
 
 	HTTP::Request request(HTTP::Method::GET, url);
 
-	request.Send([onSuccess, onError](HTTP::Response response) {
+	auto onResponse = [onSuccess, onError](HTTP::Response response)
+	{
 		switch (response.status)
 		{
 			case 0:
@@ -229,7 +236,9 @@ bool FetchPlayerImpl(const char *url, KZGlobalService::Callback<std::optional<KZ
 				return;
 			}
 		}
-	});
+	};
+
+	request.Send(onResponse);
 
 	return true;
 }
@@ -275,7 +284,8 @@ bool KZGlobalService::RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> 
 	request.SetHeader("Authorization", (std::string("Bearer ") + apiToken.value()));
 	request.SetBody(requestBody.dump());
 
-	request.Send([player, onError](HTTP::Response response) {
+	auto onResponse = [player, onError](HTTP::Response response)
+	{
 		switch (response.status)
 		{
 			case 0:
@@ -286,7 +296,8 @@ bool KZGlobalService::RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> 
 
 			case 201:
 			{
-				auto onSuccess = [player](std::optional<KZ::API::Player> info) {
+				auto onSuccess = [player](std::optional<KZ::API::Player> info)
+				{
 					if (!info)
 					{
 						player->languageService->PrintChat(true, false, "Player not found after registration");
@@ -297,7 +308,8 @@ bool KZGlobalService::RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> 
 					player->info = info.value();
 				};
 
-				auto onError = [player](KZ::API::Error error) {
+				auto onError = [player](KZ::API::Error error)
+				{
 					player->languageService->PrintError(error);
 				};
 
@@ -313,7 +325,9 @@ bool KZGlobalService::RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> 
 				return;
 			}
 		}
-	});
+	};
+
+	request.Send(onResponse);
 
 	return true;
 }
@@ -339,7 +353,9 @@ bool KZGlobalService::UpdatePlayer(KZPlayer *player, Callback<std::optional<KZ::
 	request.SetBody(requestBody.dump());
 
 	META_CONPRINTF("[KZ::Global] updating player at `%s` with `%s`\n", url.Get(), requestBody.dump().c_str());
-	request.Send([player, onError](HTTP::Response response) {
+
+	auto onResponse = [player, onError](HTTP::Response response)
+	{
 		switch (response.status)
 		{
 			case 0:
@@ -361,7 +377,9 @@ bool KZGlobalService::UpdatePlayer(KZPlayer *player, Callback<std::optional<KZ::
 				return;
 			}
 		}
-	});
+	};
+
+	request.Send(onResponse);
 
 	return true;
 }
@@ -378,7 +396,8 @@ bool FetchMapImpl(const char *url, KZGlobalService::Callback<std::optional<KZ::A
 
 	HTTP::Request request(HTTP::Method::GET, url);
 
-	request.Send([onSuccess, onError](HTTP::Response response) {
+	auto onResponse = [onSuccess, onError](HTTP::Response response)
+	{
 		switch (response.status)
 		{
 			case 0:
@@ -425,7 +444,9 @@ bool FetchMapImpl(const char *url, KZGlobalService::Callback<std::optional<KZ::A
 				return;
 			}
 		}
-	});
+	};
+
+	request.Send(onResponse);
 
 	return true;
 }

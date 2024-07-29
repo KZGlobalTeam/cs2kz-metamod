@@ -796,7 +796,8 @@ static_function bool Hook_ActivateServer()
 
 	if (networkGameServer != nullptr)
 	{
-		auto onSuccess = [](std::optional<KZ::API::Map> map) {
+		auto onSuccess = [](std::optional<KZ::API::Map> map)
+		{
 			if (!map)
 			{
 				META_CONPRINTF("[KZ::Global] Current map is not global.\n");
@@ -809,7 +810,8 @@ static_function bool Hook_ActivateServer()
 			KZGlobalService::currentMap = map;
 		};
 
-		auto onError = [](KZ::API::Error error) {
+		auto onError = [](KZ::API::Error error)
+		{
 			META_CONPRINTF("[KZ::Global] Failed to fetch map from API: %s\n", error.message.c_str());
 		};
 
