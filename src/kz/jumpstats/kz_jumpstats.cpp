@@ -915,7 +915,7 @@ void KZJumpstatsService::DetectExternalModifications()
 	}
 }
 
-void KZJumpstatsService::DetectEdgebug()
+void KZJumpstatsService::DetectWater()
 {
 	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid())
 	{
