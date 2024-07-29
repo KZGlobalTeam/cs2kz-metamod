@@ -51,7 +51,7 @@ public:
 	static bool FetchPlayer(u64 steamID, Callback<std::optional<KZ::API::Player>> onSuccess, Callback<KZ::API::Error> onError);
 
 	/// Registers a player with the API.
-	static bool RegisterPlayer(KZPlayer *player, Callback<std::optional<KZ::API::Error>> onError);
+	static bool RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> onError);
 
 	/// Sends a player update to the API.
 	static bool UpdatePlayer(KZPlayer *player, Callback<std::optional<KZ::API::Error>> onError);

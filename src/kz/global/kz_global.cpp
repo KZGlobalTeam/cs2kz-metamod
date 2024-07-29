@@ -176,6 +176,7 @@ bool FetchPlayerImpl(const char *url, KZGlobalService::Callback<std::optional<KZ
 	if (!KZGlobalService::IsHealthy())
 	{
 		META_CONPRINTF("[KZ::Global] Cannot fetch player (API is currently not healthy).\n", url);
+		onError({503, "unreachable"});
 		return false;
 	}
 
@@ -247,17 +248,19 @@ bool KZGlobalService::FetchPlayer(u64 steamID, Callback<std::optional<KZ::API::P
 	return FetchPlayerImpl(url.Get(), onSuccess, onError);
 }
 
-bool KZGlobalService::RegisterPlayer(KZPlayer *player, Callback<std::optional<KZ::API::Error>> onError)
+bool KZGlobalService::RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> onError)
 {
 	if (!IsHealthy())
 	{
 		META_CONPRINTF("[KZ::Global] Cannot register player (API is currently not healthy).\n");
+		onError({503, "unreachable"});
 		return false;
 	}
 
 	if (!IsAuthenticated())
 	{
 		META_CONPRINTF("[KZ::Global] Cannot register player (not authenticated with API).\n");
+		onError({401, "server is not global"});
 		return false;
 	}
 
@@ -320,6 +323,7 @@ bool KZGlobalService::UpdatePlayer(KZPlayer *player, Callback<std::optional<KZ::
 	if (!KZGlobalService::IsHealthy())
 	{
 		META_CONPRINTF("[KZ::Global] Cannot fetch map (API is currently not healthy).\n");
+		onError(std::make_optional<KZ::API::Error>({503, "unreachable"}));
 		return false;
 	}
 
@@ -368,6 +372,7 @@ bool FetchMapImpl(const char *url, KZGlobalService::Callback<std::optional<KZ::A
 	if (!KZGlobalService::IsHealthy())
 	{
 		META_CONPRINTF("[KZ::Global] Cannot fetch map (API is currently not healthy).\n");
+		onError({503, "unreachable"});
 		return false;
 	}
 

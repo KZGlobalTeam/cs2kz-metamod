@@ -1,4 +1,4 @@
-#include "global/kz_global.h"
+#include "kz/global/kz_global.h"
 
 #include "common.h"
 #include "utils/utils.h"

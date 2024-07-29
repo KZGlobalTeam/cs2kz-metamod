@@ -29,10 +29,6 @@ void KZ::style::InitStyleManager()
 		return;
 	}
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
-	StyleServiceFactory vnlFactory = [](KZPlayer *player) -> KZStyleService * {
-		return new KZNormalStyleService(player);
-	};
-	styleManager.RegisterStyle(0, "NRM", "Normal", vnlFactory);
 	initialized = true;
 }
 

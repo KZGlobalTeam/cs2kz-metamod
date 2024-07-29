@@ -622,7 +622,6 @@ void KZPlayer::OnStopTouchGround()
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnStopTouchGround();
-		this->styleService->OnStopTouchGround();
 	}
 
 	if (this->jumped)
