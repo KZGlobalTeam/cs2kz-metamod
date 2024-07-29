@@ -717,7 +717,6 @@ void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, co
 
 void KZPlayer::UpdateTriggerTouchList()
 {
-	return;
 	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 	{
 		FOR_EACH_VEC(this->touchedTriggers, i)
