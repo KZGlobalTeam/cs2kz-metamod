@@ -14,7 +14,7 @@ constexpr char sqlite_players_create[] = R"(
 
 constexpr char mysql_players_create[] = R"(
     CREATE TABLE IF NOT EXISTS Players ( 
-        SteamID64 INTEGER UNSIGNED NOT NULL, 
+        SteamID64 BIGINT UNSIGNED NOT NULL, 
         Alias VARCHAR(32), 
         IP VARCHAR(15), 
         Cheater TINYINT UNSIGNED NOT NULL DEFAULT '0', 

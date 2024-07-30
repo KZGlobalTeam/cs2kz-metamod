@@ -80,7 +80,7 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 			}
 			if (result)
 			{
-				bool isCheater = result->GetInt(0) == 1;
+				bool isCheater = (result->FetchRow() && result->GetInt(0) == 1);
 				META_CONPRINTF("SetupClient done, steamID %lld\n", steamID64);
 			}
 		},
