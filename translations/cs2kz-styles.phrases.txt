@@ -4,16 +4,19 @@
 	{
 		"en"		"{grey}Usage: {default}kz_style <style>/+<style>/-<style>{grey}. Check console for possible styles!"
 		"sv"		"{grey}Användande: {default}kz_style <style>/+<style>/-<style>{grey}. Kolla konsolen för möjliga styles!"
+		"ua"		"{grey}Використання: {default}kz_style <style>/+<style>/-<style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
 	"Add Style Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_addstyle <style>{grey}. Check console for possible styles!"
 		"sv"		"{grey}Användande: {default}kz_addstyle <style>{grey}. Kolla konsolen för möjliga styles!"
+		"ua"		"{grey}Використання: {default}kz_addstyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
 	"Remove Style Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_removestyle <style>{grey}. Check console for possible styles!"
 		"sv"		"{grey}Användande: {default}kz_removestyle <style>{grey}. Kolla konsolen för möjliga styles!"
+		"ua"		"{grey}Використання: {default}kz_removestyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
 	"Toggle Style Command Usage"
 	{
@@ -28,6 +31,7 @@
 	{
 		"en"		"Currently active styles:"
 		"sv"		"Nuvarande aktiva styles:"
+		"ua"		"Поточні активні стилі:"
 	}
 	"Possible Styles"
 	{
@@ -36,6 +40,7 @@
 		"pl"		"Możliwe style:"
 		"fi"		"Mahdolliset tyylit:"
 		"sv"		"Möjliga KZ styles:"
+		"ua"		"Доступні стилі:"
 	}
 	"Style Not Available"
 	{
@@ -52,24 +57,28 @@
 	{
 		"en"		"{grey}You have cleared your styles."
 		"sv"		"{grey}Du har rensat dina styles."
+		"ua"		"{grey}Ви очистили свої стилі."
 	}
 	"Style Removed"
 	{
 		"#format"	"style:s"
 		"en"		"{grey}You have removed {purple}{style}{grey} style."
 		"sv"		"{grey}Du har tagit bort {purple}{style}{grey} style."
+		"ua"		"{grey}Ви видалили {purple}{style}{grey} стиль."
 	}
 	"Style Added"
 	{
 		"#format"	"style:s"
 		"en"		"{grey}You have added {purple}{style}{grey} style."
 		"sv"		"{grey}Du har lagt till {purple}{style}{grey} style."
+		"ua"		"{grey}Ви додали {purple}{style}{grey} стиль."
 	}
 	"Style Already Active"
 	{
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is already active."
 		"sv"		"{purple}{style}{darkred} style är redan aktiv."
+		"ua"		"{darkred}{purple}{style}{darkred} стиль вже активний."
 	}
 	"Style Not Active"
 	{
@@ -77,11 +86,13 @@
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is not active."
 		"sv"		"{purple}{style}{darkred} style är inte aktiv."
+		"ua"		"{darkred}{purple}{style}{darkred} стиль не активовано."
 	}
 	"Style Conflict"
 	{
 		"#format"	"style:s,conflict_style:s"
 		"en"		"{darkred}Unable to add style {purple}{style}{darkred} as the conflicting style {purple}{conflict_style}{darkred} is active."
 		"en"		"{darkred}Det gick inte att lägga till style {purple}{style}{darkred} eftersom den konflikterande style {purple}{conflict_style}{darkred} är aktiv."
+		"ua"		"{darkred}Неможливо додати стиль {purple}{style}{darkred}, оскільки конфліктний стиль {purple}{conflict_style}{darkred} наразі активний."
 	}
 }
