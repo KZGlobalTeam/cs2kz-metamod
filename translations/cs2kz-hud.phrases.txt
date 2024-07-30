@@ -124,6 +124,7 @@
 	"HUD - HTML Panel Disabled"
 	{
 		"en"		"Panel disabled."
+		"ua"		"Панель вимкнено."
 	}
 
 	"HUD Option - Info Panel - Enable"
