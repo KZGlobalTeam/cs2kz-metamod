@@ -3,14 +3,17 @@
 	"Style Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_style <style>/+<style>/-<style>{grey}. Check console for possible styles!"
+		"ua"		"{grey}Використання: {default}kz_style <style>/+<style>/-<style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
 	"Add Style Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_addstyle <style>{grey}. Check console for possible styles!"
+		"ua"		"{grey}Використання: {default}kz_addstyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
 	"Remove Style Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_removestyle <style>{grey}. Check console for possible styles!"
+		"ua"		"{grey}Використання: {default}kz_removestyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
 	"Toggle Style Command Usage"
 	{
@@ -24,6 +27,7 @@
 	"Current Styles"
 	{
 		"en"		"Currently active styles:"
+		"ua"		"Поточні активні стилі:"
 	}
 	"Possible Styles"
 	{
@@ -32,6 +36,7 @@
 		"pl"		"Możliwe style:"
 		"fi"		"Mahdolliset tyylit:"
 		"sv"		"Möjliga KZ styles:"
+		"ua"		"Доступні стилі:"
 	}
 	"Style Not Available"
 	{
@@ -47,31 +52,37 @@
 	"Styles Cleared"
 	{
 		"en"		"{grey}You have cleared your styles."
+		"ua"		"{grey}Ви очистили свої стилі."
 	}
 	"Style Removed"
 	{
 		"#format"	"style:s"
 		"en"		"{grey}You have removed {purple}{style}{grey} style."
+		"ua"		"{grey}Ви видалили {purple}{style}{grey} стиль."
 	}
 	"Style Added"
 	{
 		"#format"	"style:s"
 		"en"		"{grey}You have added {purple}{style}{grey} style."
+		"ua"		"{grey}Ви додали {purple}{style}{grey} стиль."
 	}
 	"Style Already Active"
 	{
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is already active."
+		"ua"		"{darkred}{purple}{style}{darkred} стиль вже активний."
 	}
 	"Style Not Active"
 	{
 		// The AutoBhop style is currently not available.
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is not active."
+		"ua"		"{darkred}{purple}{style}{darkred} стиль не активовано."
 	}
 	"Style Conflict"
 	{
 		"#format"	"style:s,conflict_style:s"
 		"en"		"{darkred}Unable to add style {purple}{style}{darkred} as the conflicting style {purple}{conflict_style}{darkred} is active."
+		"ua"		"{darkred}Неможливо додати стиль {purple}{style}{darkred}, оскільки конфліктний стиль {purple}{conflict_style}{darkred} наразі активний."
 	}
 }

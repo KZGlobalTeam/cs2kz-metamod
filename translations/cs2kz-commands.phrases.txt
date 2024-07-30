@@ -250,22 +250,27 @@
 	"Command Description - kz_style"
 	{
 		"en"		"List, add, remove or toggle style."
+		"ua"		"Показати, додати, прибрати або перемикнути стиль."
 	}
 	"Command Description - kz_addstyle"
 	{
 		"en"		"List or add style."
+		"ua"		"Показати або додати стиль."
 	}
 	"Command Description - kz_removestyle"
 	{
 		"en"		"List active styles or remove style."
+		"ua"		"Показати активні стилі або видалити стиль."
 	}
 	"Command Description - kz_togglestyle"
 	{
 		"en"		"List or toggle style."
+		"ua"		"Показати або перемикнути стиль."
 	}
 	"Command Description - kz_clearstyles"
 	{
 		"en"		"Clear all styles."
+		"ua"		"Очистити всі стилі."
 	}
 	"Command Description - kz_stop"
 	{
@@ -383,5 +388,6 @@
 	"Command Description - kz_pb"
 	{
 		"en"		"Retrieve personal best statistics."
+		"ua"		"Показати персональний найкращий час."
 	}
 }
