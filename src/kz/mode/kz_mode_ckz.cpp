@@ -150,6 +150,14 @@ void KZClassicModeService::Reset()
 	this->tpmTriggerFixOrigins.RemoveAll();
 }
 
+void KZClassicModeService::Cleanup()
+{
+	if (this->player->GetPlayerPawn())
+	{
+		this->player->GetPlayerPawn()->m_flVelocityModifier(1.0f);
+	}
+}
+
 const char *KZClassicModeService::GetModeName()
 {
 	return MODE_NAME;
@@ -186,7 +194,9 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 
 META_RES KZClassicModeService::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
-	maxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
+	this->originalMaxSpeed = maxSpeed;
+	this->tweakedMaxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
+	maxSpeed = tweakedMaxSpeed;
 	return MRES_SUPERCEDE;
 }
 
@@ -317,6 +327,7 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 void KZClassicModeService::OnProcessMovement()
 {
 	this->didTPM = false;
+	this->player->GetPlayerPawn()->m_flVelocityModifier(1.0f);
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
@@ -338,6 +349,7 @@ void KZClassicModeService::OnProcessMovementPost()
 	{
 		this->lastValidPlane = vec3_origin;
 	}
+	this->player->GetPlayerPawn()->m_flVelocityModifier(this->originalMaxSpeed >= 0 ? this->tweakedMaxSpeed / this->originalMaxSpeed : 1.0f);
 }
 
 void KZClassicModeService::InsertSubtickTiming(float time)

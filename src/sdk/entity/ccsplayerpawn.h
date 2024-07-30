@@ -19,6 +19,8 @@ public:
 	SCHEMA_FIELD(float, m_flSlopeDropOffset)
 	SCHEMA_FIELD(float, m_flSlopeDropHeight)
 
+	SCHEMA_FIELD(float, m_flVelocityModifier)
+
 	void Respawn()
 	{
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("Respawn"), this);
