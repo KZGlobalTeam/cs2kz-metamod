@@ -63,7 +63,7 @@ constexpr char sql_players_getalias[] = R"(
 constexpr char sql_players_searchbyalias[] = R"(
     SELECT SteamID64, Alias 
         FROM Players 
-        WHERE Players.Cheater=0 AND LOWER(Alias) LIKE '%%%s%%' 
-        ORDER BY (LOWER(Alias)='%s') DESC, LastPlayed DESC 
+        WHERE LOWER(Alias) LIKE '%%%s%%' 
+        ORDER BY (Players.Cheater=0) DESC, (LOWER(Alias)='%s') DESC, LastPlayed DESC 
         LIMIT 1
 )";
