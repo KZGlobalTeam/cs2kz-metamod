@@ -69,14 +69,14 @@
 	{
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is already active."
-		"sv"		"{darkred}Denna {purple}{style}{darkred} style är redan aktiv."
+		"sv"		"{purple}{style}{darkred} style är redan aktiv."
 	}
 	"Style Not Active"
 	{
 		// The AutoBhop style is currently not available.
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is not active."
-		"sv"		"{darkred}Denna {purple}{style}{darkred} style är inte aktiv."
+		"sv"		"{purple}{style}{darkred} style är inte aktiv."
 	}
 	"Style Conflict"
 	{
