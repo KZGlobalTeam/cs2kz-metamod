@@ -16,7 +16,7 @@ constexpr char sqlite_times_create[] = R"(
         CONSTRAINT FK_Times_MapCourseID 
         FOREIGN KEY (MapCourseID) REFERENCES MapCourses(ID) 
         ON UPDATE CASCADE ON DELETE CASCADE, 
-        CONSTRAINT FK_Times_Mode FOREIGN KEY (ModeID) REFERENCES Modes(ModeID) 
+        CONSTRAINT FK_Times_Mode FOREIGN KEY (ModeID) REFERENCES Modes(ID)  
         ON UPDATE CASCADE ON DELETE CASCADE)
 )";
 
@@ -35,7 +35,7 @@ constexpr char mysql_times_create[] = R"(
         ON UPDATE CASCADE ON DELETE CASCADE, 
         CONSTRAINT FK_Times_MapCourseID FOREIGN KEY (MapCourseID) REFERENCES MapCourses(ID) 
         ON UPDATE CASCADE ON DELETE CASCADE, 
-        CONSTRAINT FK_Times_Mode FOREIGN KEY (ModeID) REFERENCES Modes(ModeID) 
+        CONSTRAINT FK_Times_Mode FOREIGN KEY (ModeID) REFERENCES Modes(ID) 
         ON UPDATE CASCADE ON DELETE CASCADE)
 )";
 

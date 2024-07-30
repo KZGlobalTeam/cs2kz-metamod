@@ -11,7 +11,7 @@ constexpr char sqlite_startpos_create[] = R"(
 		Angle1 REAL NOT NULL, 
 		CONSTRAINT PK_StartPosition PRIMARY KEY (SteamID64, MapID), 
 		CONSTRAINT FK_StartPosition_SteamID64 FOREIGN KEY (SteamID64) REFERENCES Players(SteamID64) 
-		CONSTRAINT FK_StartPosition_MapID FOREIGN KEY (MapID) REFERENCES Maps(MapID) 
+		CONSTRAINT FK_StartPosition_MapID FOREIGN KEY (MapID) REFERENCES Maps(ID) 
 		ON UPDATE CASCADE ON DELETE CASCADE)
 )";
 
@@ -26,7 +26,7 @@ constexpr char mysql_startpos_create[] = R"(
 		Angle1 REAL NOT NULL, 
 		CONSTRAINT PK_StartPosition PRIMARY KEY (SteamID64, MapID), 
 		CONSTRAINT FK_StartPosition_SteamID64 FOREIGN KEY (SteamID64) REFERENCES Players(SteamID64), 
-		CONSTRAINT FK_StartPosition_MapID FOREIGN KEY (MapID) REFERENCES Maps(MapID) 
+		CONSTRAINT FK_StartPosition_MapID FOREIGN KEY (MapID) REFERENCES Maps(ID) 
 		ON UPDATE CASCADE ON DELETE CASCADE)
 )";
 
