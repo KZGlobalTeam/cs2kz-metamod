@@ -15,6 +15,8 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/tip/kz_tip.h"
 
+#include "sdk/gamerules.h"
+
 static_function SCMD_CALLBACK(Command_KzHidelegs)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -260,4 +262,13 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 	}
 
 	return;
+}
+
+void KZ::misc::OnRoundStart()
+{
+	CCSGameRules *gameRules = g_pKZUtils->GetGameRules();
+	if (gameRules)
+	{
+		gameRules->m_bGameRestart(true);
+	}
 }

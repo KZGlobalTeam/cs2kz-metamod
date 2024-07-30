@@ -22,6 +22,7 @@ class CBasePlayerController;
 class IGameEventListener2;
 class CTimerBase;
 class CServerSideClient;
+class CCSGameRules;
 
 struct SndOpEventGuid_t;
 struct EmitSound_t;
@@ -128,6 +129,9 @@ public:
 	virtual bool GetCurrentMapMD5(char *buffer, i32 size);
 	// Must be absolute path.
 	virtual bool GetFileMD5(const char *filePath, char *buffer, i32 size);
+
+	// Getting the entity could be expensive, do not spam this function!
+	virtual CCSGameRules *GetGameRules();
 };
 
 extern KZUtils *g_pKZUtils;

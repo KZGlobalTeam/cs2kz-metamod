@@ -323,7 +323,7 @@ void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
 		return;
 	}
 	event->SetString("loc_token", buffer);
-	event->SetInt("duration", 5);
+	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 
 	CPlayerSlot slot = controller->entindex() - 1;

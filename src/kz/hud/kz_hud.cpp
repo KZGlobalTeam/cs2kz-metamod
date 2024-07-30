@@ -142,8 +142,9 @@ void KZHUDService::TogglePanel()
 	this->showPanel = !this->showPanel;
 	if (!this->showPanel)
 	{
-		utils::PrintAlert(this->player->GetController(), "");
-		utils::PrintCentre(this->player->GetController(), "");
+		utils::PrintAlert(this->player->GetController(), "#SFUI_EmptyString");
+		utils::PrintCentre(this->player->GetController(), "#SFUI_EmptyString");
+		this->player->languageService->PrintHTMLCentre(false, false, "HUD - HTML Panel Disabled");
 	}
 }
 

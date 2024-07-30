@@ -9,7 +9,7 @@
 #include "checksum_md5.h"
 
 #include "memdbgon.h"
-
+#include "sdk/gamerules.h"
 static_global char currentMapMD5[33];
 static_global bool md5NeedsUpdating {};
 
@@ -236,4 +236,15 @@ bool KZUtils::GetFileMD5(const char *filePath, char *buffer, i32 size)
 		g_pFullFileSystem->Close(file);
 	}
 	return true;
+}
+
+CCSGameRules *KZUtils::GetGameRules()
+{
+	CCSGameRulesProxy *proxy = NULL;
+	proxy = (CCSGameRulesProxy *)utils::FindEntityByClassname(proxy, "cs_gamerules");
+	if (proxy)
+	{
+		return proxy->m_pGameRules();
+	}
+	return nullptr;
 }
