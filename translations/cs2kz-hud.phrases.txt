@@ -99,18 +99,6 @@
 	// This text is actually "more" center.
 	"HUD - Alert Text"
 	{
-		// Speed: 234 (200)
-		// Keys: A W S D C J
-		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
-		"en"		"{speed_text}\n{key_text}"
-		"chi"		"{speed_text}\n{key_text}"
-		"pl"		"{speed_text}\n{key_text}"
-		"fi"		"{speed_text}\n{key_text}"
-		"sv"		"{speed_text}\n{key_text}"
-		"ua"		"{speed_text}\n{key_text}"
-	}
-	"HUD - HTML Center Text"
-	{
 		// Unused
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		""
@@ -120,7 +108,26 @@
 		"sv"		""
 		"ua"		""
 	}
+	"HUD - HTML Center Text"
+	{
+		// Speed: 234 (200)
+		// Keys: A W S D C J
+		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
+		"en"		"{speed_text}<br>{key_text}"
+		"chi"		"{speed_text}<br>{key_text}"
+		"pl"		"{speed_text}<br>{key_text}"
+		"fi"		"{speed_text}<br>{key_text}"
+		"sv"		"{speed_text}<br>{key_text}"
+		"ua"		"{speed_text}<br>{key_text}"
+	}
 	
+	"HUD - HTML Panel Disabled"
+	{
+		"en"		"Panel disabled."
+		"sv"		"Panel inaktiverad."
+		"ua"		"Панель вимкнено."
+	}
+
 	"HUD Option - Info Panel - Enable"
 	{
 		"en"		"{grey}Your centre information panel has been enabled."

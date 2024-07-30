@@ -25,8 +25,19 @@ public:
 
 	virtual void *OnMetamodQuery(const char *iface, int *ret) override;
 
+	bool simulatingPhysics = false;
 	CGlobalVars serverGlobals;
 	bool unloading = false;
+
+private:
+	void UpdateSelfMD5();
+	char md5[33];
+
+public:
+	const char *GetMD5()
+	{
+		return md5;
+	}
 };
 
 extern KZPlugin g_KZPlugin;

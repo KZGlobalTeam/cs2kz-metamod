@@ -915,6 +915,18 @@ void KZJumpstatsService::DetectExternalModifications()
 	}
 }
 
+void KZJumpstatsService::DetectWater()
+{
+	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid())
+	{
+		return;
+	}
+	if (player->GetPlayerPawn()->m_flWaterLevel() > 0.0f)
+	{
+		this->InvalidateJumpstats("Touched water");
+	}
+}
+
 void KZJumpstatsService::OnTryPlayerMove()
 {
 	this->tpmVelocity = this->player->currentMoveData->m_vecVelocity;
@@ -929,6 +941,7 @@ void KZJumpstatsService::OnTryPlayerMovePost()
 	f32 velocity = this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmVelocity.Length2D();
 	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(velocity);
 	this->DetectEdgebug();
+	this->DetectWater();
 }
 
 void KZJumpstatsService::OnProcessMovementPost()

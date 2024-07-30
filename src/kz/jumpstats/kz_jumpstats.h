@@ -451,6 +451,7 @@ public:
 	void DetectInvalidCollisions();
 	void DetectInvalidGains();
 	void DetectExternalModifications();
+	void DetectWater();
 
 	static void BroadcastJumpToChat(Jump *jump);
 	static void PlayJumpstatSound(KZPlayer *target, Jump *jump);

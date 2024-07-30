@@ -1,20 +1,22 @@
 #include "common.h"
 #include "utils/utils.h"
-#include "kz.h"
+#include "kz/kz.h"
 #include "utils/simplecmds.h"
 
-#include "checkpoint/kz_checkpoint.h"
-#include "jumpstats/kz_jumpstats.h"
-#include "quiet/kz_quiet.h"
-#include "mode/kz_mode.h"
-#include "language/kz_language.h"
-#include "style/kz_style.h"
-#include "noclip/kz_noclip.h"
-#include "hud/kz_hud.h"
-#include "spec/kz_spec.h"
-#include "goto/kz_goto.h"
-#include "timer/kz_timer.h"
-#include "tip/kz_tip.h"
+#include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/quiet/kz_quiet.h"
+#include "kz/mode/kz_mode.h"
+#include "kz/language/kz_language.h"
+#include "kz/style/kz_style.h"
+#include "kz/noclip/kz_noclip.h"
+#include "kz/hud/kz_hud.h"
+#include "kz/spec/kz_spec.h"
+#include "kz/goto/kz_goto.h"
+#include "kz/timer/kz_timer.h"
+#include "kz/tip/kz_tip.h"
+
+#include "sdk/gamerules.h"
 
 static_function SCMD_CALLBACK(Command_KzHidelegs)
 {
@@ -49,7 +51,6 @@ static_function SCMD_CALLBACK(Command_KzHide)
 static_function SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-
 	player->timerService->OnTeleportToStart();
 	if (player->GetPlayerPawn()->IsAlive())
 	{
@@ -91,6 +92,26 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 {
 	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), false);
 	return MRES_SUPERCEDE;
+}
+
+void KZ::misc::OnServerActivate()
+{
+	static_persist bool infiniteAmmoUnlocked {};
+	if (!infiniteAmmoUnlocked)
+	{
+		infiniteAmmoUnlocked = true;
+		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
+		if (cvarHandle.IsValid())
+		{
+			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
+		}
+		else
+		{
+			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
+		}
+	}
+	g_pKZUtils->UpdateCurrentMapMD5();
+	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 }
 
 // TODO: move command registration to the service class?
@@ -159,5 +180,97 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 			player->GetPlayerPawn()->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
 		}
 		player->specService->ResetSavedPosition();
+	}
+}
+
+static_function void SanitizeMsg(const char *input, char *output, u32 size)
+{
+	int x = 0;
+	for (int i = 0; input[i] != '\0'; i++)
+	{
+		if (x + 1 == size)
+		{
+			break;
+		}
+
+		int character = input[i];
+
+		if (character > 0x10)
+		{
+			if (character == '\\')
+			{
+				output[x++] = character;
+			}
+			output[x++] = character;
+		}
+	}
+
+	output[x] = '\0';
+}
+
+void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+{
+	if (!GameEntitySystem())
+	{
+		return;
+	}
+	CPlayerSlot slot = ctx.GetPlayerSlot();
+
+	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
+
+	KZPlayer *player = NULL;
+
+	if (!cmd.IsValid() || !controller || !(player = g_pKZPlayerManager->ToPlayer(controller)))
+	{
+		return;
+	}
+	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
+
+	// Is it a chat message?
+	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
+	{
+		if (args.ArgC() < 2)
+		{
+			// no argument somehow
+			return;
+		}
+
+		i32 argLen = strlen(args[1]);
+		if (argLen < 1)
+		{
+			// arg is too short!
+			return;
+		}
+		CUtlString message;
+		for (int i = 1; i < args.ArgC(); i++)
+		{
+			if (i > 1)
+			{
+				message += ' ';
+			}
+			message += args[i];
+		}
+		if (player->IsAlive())
+		{
+			utils::CPrintChatAll("{lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::PrintConsoleAll("%s: %s", player->GetName(), message.Get());
+		}
+		else
+		{
+			utils::CPrintChatAll("{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
+		}
+		return;
+	}
+
+	return;
+}
+
+void KZ::misc::OnRoundStart()
+{
+	CCSGameRules *gameRules = g_pKZUtils->GetGameRules();
+	if (gameRules)
+	{
+		gameRules->m_bGameRestart(true);
 	}
 }

@@ -254,12 +254,33 @@
 	}
 	"Command Description - kz_style"
 	{
-		"en"		"List or change style."
-		"chi"		"列出或更改风格."
-		"pl"		"Lista stylów gry bądź jego zmiana."	
-		"fi"		"Listaa tai vaihda tyyliä."
-		"sv"		"Lista eller ändra KZ mode."
-		"ua"		"Відобразити чи змінити KZ режим."
+		"en"		"List, add, remove or toggle style."
+		"sv"		"Lista, lägg till, ta bort eller toggla style."
+		"ua"		"Показати, додати, прибрати або перемикнути стиль."
+	}
+	"Command Description - kz_addstyle"
+	{
+		"en"		"List or add style."
+		"sv"		"Lista eller lägg till style."
+		"ua"		"Показати або додати стиль."
+	}
+	"Command Description - kz_removestyle"
+	{
+		"en"		"List active styles or remove style."
+		"sv"		"Lista aktiva styles eller ta bort style."
+		"ua"		"Показати активні стилі або видалити стиль."
+	}
+	"Command Description - kz_togglestyle"
+	{
+		"en"		"List or toggle style."
+		"sv"		"Lista eller toggla style."
+		"ua"		"Показати або перемикнути стиль."
+	}
+	"Command Description - kz_clearstyles"
+	{
+		"en"		"Clear all styles."
+		"sv"		"Rensa alla styles."
+		"ua"		"Очистити всі стилі."
 	}
 	"Command Description - kz_stop"
 	{
@@ -337,6 +358,7 @@
 	{
 		// Hidden to users.
 		"en"		"Jointeam interceptor."
+		"sv"		"Jointeam interceptor."
 	}
 	"Command Description - kz_help"
 	{
@@ -373,5 +395,11 @@
 		"fi"		"Vaihda Classic moodiin."
 		"sv"		"Byt till Classic mode."
 		"ua"		"Переключитися на режим Classic."
+	}
+	"Command Description - kz_pb"
+	{
+		"en"		"Retrieve personal best statistics."
+		"sv"		"Hämta personlig bästa statistik."
+		"ua"		"Показати персональний найкращий час."
 	}
 }

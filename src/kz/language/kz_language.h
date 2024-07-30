@@ -76,7 +76,7 @@ private:
 
 public:
 	template<typename... Args>
-	static std::string PrepareMessage(const char *language, const char *message, Args &&...args)
+	static std::string PrepareMessageWithLang(const char *language, const char *message, Args &&...args)
 	{
 		const char *paramFormat = GetTranslatedFormat("#format", message);
 		const char *msgFormat = GetTranslatedFormat(language, message);
@@ -86,6 +86,13 @@ public:
 			return std::string(msgFormat);
 		}
 		return GetFormattedMessage(msgFormat, paramFormat, args...);
+	}
+
+	template<typename... Args>
+	std::string PrepareMessage(const char *message, Args &&...args)
+	{
+		const char *language = GetLanguage();
+		return KZLanguageService::PrepareMessageWithLang(language, message, args...);
 	}
 
 private:
@@ -102,7 +109,7 @@ private:
 	static void PrintType(KZPlayer *player, bool addPrefix, MessageType type, const char *message, Args &&...args)
 	{
 		const char *language = player->languageService->GetLanguage();
-		std::string msg = PrepareMessage(language, message, args...);
+		std::string msg = PrepareMessageWithLang(language, message, args...);
 		switch (type)
 		{
 			case MESSAGE_CHAT:

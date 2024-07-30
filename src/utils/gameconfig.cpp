@@ -221,6 +221,27 @@ void *CGameConfig::ResolveSignature(const char *name)
 	return address;
 }
 
+void *CGameConfig::ResolveSignatureFromMov(const char *name)
+{
+	// Convoluted way of having GameEventManager regardless of lateloading
+	u8 *ptr = (u8 *)this->ResolveSignature(name);
+
+	if (!ptr)
+	{
+		return nullptr;
+	}
+
+	ptr += 3;
+	// Grab the offset as 4 bytes
+	u32 offset = *(u32 *)ptr;
+
+	// Go to the next instruction, which is the starting point of the relative jump
+	ptr += 4;
+
+	// Now grab our pointer
+	return (void *)(ptr + offset);
+}
+
 // Static functions
 std::string CGameConfig::GetDirectoryName(const std::string &directoryPathInput)
 {

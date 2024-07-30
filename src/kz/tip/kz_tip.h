@@ -14,7 +14,6 @@ class KZTipService : public KZBaseService
 
 private:
 	bool showTips;
-	const char *language = "en";
 
 public:
 	virtual void Reset() override;

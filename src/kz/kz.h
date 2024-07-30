@@ -23,10 +23,12 @@
 class KZPlayer;
 class KZAnticheatService;
 class KZCheckpointService;
+class KZDatabaseService;
 class KZGlobalService;
 class KZHUDService;
 class KZJumpstatsService;
 class KZLanguageService;
+class KZMapService;
 class KZMeasureService;
 class KZModeService;
 class KZNoclipService;
@@ -48,8 +50,10 @@ public:
 		this->Init();
 	}
 
+	// General events
 	virtual void Init() override;
 	virtual void Reset() override;
+	virtual void OnAuthorized() override;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
 
@@ -134,6 +138,7 @@ private:
 public:
 	KZAnticheatService *anticheatService {};
 	KZCheckpointService *checkpointService {};
+	KZDatabaseService *databaseService {};
 	KZGlobalService *globalService {};
 	KZHUDService *hudService {};
 	KZJumpstatsService *jumpstatsService {};
@@ -148,6 +153,7 @@ public:
 	KZSpecService *specService {};
 	KZGotoService *gotoService {};
 	KZStyleService *styleService {};
+	CUtlVector<KZStyleService *> styleServices {};
 	KZTimerService *timerService {};
 	KZTipService *tipService {};
 
@@ -228,7 +234,10 @@ namespace KZ
 {
 	namespace misc
 	{
+		void OnServerActivate();
 		void RegisterCommands();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
+		void ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
+		void OnRoundStart();
 	} // namespace misc
 };    // namespace KZ

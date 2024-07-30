@@ -15,8 +15,8 @@ std::string Jump::GetInvalidationReasonString(const char *reason, const char *la
 		return "";
 	}
 	const char *lang = language ? language : this->GetJumpPlayer()->languageService->GetLanguage();
-	std::string reasonText = KZLanguageService::PrepareMessage(lang, reason);
-	return std::string(KZLanguageService::PrepareMessage(lang, "Jumpstats Report - Invalidation Reason", reasonText.c_str()));
+	std::string reasonText = KZLanguageService::PrepareMessageWithLang(lang, reason);
+	return std::string(KZLanguageService::PrepareMessageWithLang(lang, "Jumpstats Report - Invalidation Reason", reasonText.c_str()));
 }
 
 void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
@@ -24,7 +24,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	const char *language = target->languageService->GetLanguage();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[color];
-	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	if (jump->GetJumpPlayer()->styleServices.Count() > 0 || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
@@ -37,7 +37,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 		jumpTypeShortStr[jump->GetJumpType()],
 		jump->GetDistance(true, false, 1),
 		jump->strafes.Count(), 
-		KZLanguageService::PrepareMessage(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
 		jump->GetSync() * 100.0f,
 		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
 		jump->GetMaxSpeed(),
@@ -60,12 +60,16 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jumpTypeStr[jump->GetJumpType()],
 		jump->GetInvalidationReasonString(jump->invalidateReason)
 	);
-
+	std::string modeStyleNames = jump->GetJumpPlayer()->modeService->GetModeShortName();
+	FOR_EACH_VEC(jump->GetJumpPlayer()->styleServices, i)
+	{
+		modeStyleNames += " +";
+		modeStyleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();
+	}
 	target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Details 1",
-		jump->GetJumpPlayer()->modeService->GetModeShortName(),
-		jump->GetJumpPlayer()->styleService->GetStyleShortName(),
+		modeStyleNames.c_str(),
 		jump->strafes.Count(),
-		KZLanguageService::PrepareMessage(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
 		jump->GetSync() * 100.0f,
 		jump->GetTakeoffSpeed(),
 		jump->GetMaxSpeed(),
@@ -87,17 +91,17 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 	);
 	
 	target->languageService->PrintConsole(false, true, "Jumpstats Report - Strafe Report Header",
-		KZLanguageService::PrepareMessage(language, "Sync").c_str(),
-		KZLanguageService::PrepareMessage(language, "Gain").c_str(),
-		KZLanguageService::PrepareMessage(language, "Loss").c_str(),
-		KZLanguageService::PrepareMessage(language, "Max").c_str(),
-		KZLanguageService::PrepareMessage(language, "Air Time").c_str(),
-		KZLanguageService::PrepareMessage(language, "Bad Angles (Short)").c_str(),
-		KZLanguageService::PrepareMessage(language, "Overlap (Short)").c_str(),
-		KZLanguageService::PrepareMessage(language, "Dead Air (Short)").c_str(),
-		KZLanguageService::PrepareMessage(language, "Average Gain (Short)").c_str(),
-		KZLanguageService::PrepareMessage(language, "Gain Efficiency (Short)").c_str(),
-		KZLanguageService::PrepareMessage(language, "Angle Ratio").c_str()
+		KZLanguageService::PrepareMessageWithLang(language, "Sync").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Gain").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Loss").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Max").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Air Time").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Bad Angles (Short)").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Overlap (Short)").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Dead Air (Short)").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Average Gain (Short)").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Gain Efficiency (Short)").c_str(),
+		KZLanguageService::PrepareMessageWithLang(language, "Angle Ratio").c_str()
 	);
 
 	FOR_EACH_VEC(jump->strafes, i)
@@ -155,7 +159,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 
 void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 {
-	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	if (jump->GetJumpPlayer()->styleServices.Count() > 0 || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
 	{
 		return;
 	}
@@ -188,7 +192,7 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
-	if (V_stricmp(jump->GetJumpPlayer()->styleService->GetStyleShortName(), "NRM") || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	if (jump->GetJumpPlayer()->styleServices.Count() > 0 || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
 	{
 		return;
 	}

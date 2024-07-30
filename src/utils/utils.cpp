@@ -56,22 +56,10 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	}
 
 	// Convoluted way of having GameEventManager regardless of lateloading
-	u8 *ptr = (u8 *)g_pGameConfig->ResolveSignature("GameEventManager");
-
-	if (!ptr)
+	if (!(interfaces::pGameEventManager = (IGameEventManager2 *)g_pGameConfig->ResolveSignatureFromMov("GameEventManager")))
 	{
 		return false;
 	}
-
-	ptr += 3;
-	// Grab the offset as 4 bytes
-	u32 offset = *(u32 *)ptr;
-
-	// Go to the next instruction, which is the starting point of the relative jump
-	ptr += 4;
-
-	// Now grab our pointer
-	interfaces::pGameEventManager = (IGameEventManager2 *)(ptr + offset);
 
 	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
 	RESOLVE_SIG(g_pGameConfig, "InitGameTrace", InitGameTrace_t, InitGameTrace);

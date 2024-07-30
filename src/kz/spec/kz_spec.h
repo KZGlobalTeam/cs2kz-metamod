@@ -5,7 +5,7 @@ class KZTimerServiceEventListener;
 
 #include "../timer/kz_timer.h"
 
-class KZSpecServiceTimerEventListener : public KZTimerServiceEventListener
+class KZTimerServiceEventListener_Spec : public KZTimerServiceEventListener
 {
 	virtual void OnTimerStartPost(KZPlayer *player, const char *courseName) override;
 };

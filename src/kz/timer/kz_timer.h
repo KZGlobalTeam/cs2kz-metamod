@@ -8,7 +8,7 @@
 #define KZ_TIMER_MIN_GROUND_TIME 0.05f
 #define KZ_TIMER_SOUND_COOLDOWN  0.15f
 #define KZ_TIMER_SND_START       "Buttons.snd9"
-#define KZ_TIMER_SND_END         "UI.DeathMatch.LevelUp"
+#define KZ_TIMER_SND_END         "tr.ScoreRegular"
 #define KZ_TIMER_SND_FALSE_END   "UIPanorama.buymenu_failure"
 #define KZ_TIMER_SND_STOP        "tr.PuckFail"
 
@@ -25,11 +25,6 @@ public:
 	virtual void OnTimerStartPost(KZPlayer *player, const char *courseName) {}
 
 	virtual bool OnTimerEnd(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed)
-	{
-		return true;
-	}
-
-	virtual bool OnTimerEndMessage(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed)
 	{
 		return true;
 	}
@@ -73,6 +68,7 @@ private:
 	f64 lastInvalidateTime {};
 
 public:
+	static void Init();
 	static void RegisterCommands();
 	static bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
 	static bool UnregisterEventListener(KZTimerServiceEventListener *eventListener);
@@ -93,6 +89,21 @@ public:
 	}
 
 	static void FormatTime(f64 time, char *output, u32 length, bool precise = true);
+
+	static void FormatDiffTime(f64 time, char *output, u32 length, bool precise = true)
+	{
+		char temp[32];
+		if (time > 0)
+		{
+			FormatTime(time, temp, sizeof(temp));
+			V_snprintf(output, length, "+%s", temp);
+		}
+		else
+		{
+			FormatTime(-time, temp, sizeof(temp));
+			V_snprintf(output, length, "-%s", temp);
+		}
+	}
 
 	void SetTime(f64 time)
 	{
@@ -218,3 +229,65 @@ public:
 	static void OnRoundStart();
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 };
+
+namespace KZ
+{
+	namespace timer
+	{
+		// Announcements
+		struct LocalRankData
+		{
+			bool firstTime {};
+			f32 pbDiff {};
+			u32 rank {};
+			u32 maxRank {};
+
+			bool firstTimePro {};
+			f32 pbDiffPro {};
+			u32 rankPro {};
+			u32 maxRankPro {};
+		};
+
+		struct GlobalRankData
+		{
+			u32 mapPointsGained {};
+			u32 totalMapPoints {};
+			u32 playerRating {};
+
+			bool firstTime {};
+			f32 pbDiff {};
+			u32 rank {};
+			u32 maxRank {};
+
+			bool firstTimePro {};
+			f32 pbDiffPro {};
+			u32 rankPro {};
+			u32 maxRankPro {};
+		};
+
+		void AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
+		void ClearAnnounceQueue();
+		void CheckAnnounceQueue();
+		void UpdateLocalRankData(u32 id, LocalRankData data);
+		void UpdateGlobalRankData(u32 id, GlobalRankData data);
+
+		// Courses
+		struct CourseInfo
+		{
+			u32 uid {};
+			CUtlString courseName;
+			i32 stageID = -1;
+			i32 databaseID {};
+		};
+
+		void ClearCourses();
+		void InsertCourse(const char *courseName, i32 stageID);
+		void SetupCourses();
+		void UpdateCourseDatabaseID(u32 uid, i32 databaseID);
+		bool GetCourseInformation(const char *courseName, CourseInfo &info);
+		bool GetFirstCourseInformation(CourseInfo &info);
+
+		// PB Requests
+		void CheckPBRequests();
+	} // namespace timer
+} // namespace KZ
