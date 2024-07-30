@@ -365,6 +365,10 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 
 void KZStyleManager::ClearStyles(KZPlayer *player, bool silent)
 {
+	FOR_EACH_VEC(player->styleServices, i)
+	{
+		player->styleServices[i]->Cleanup();
+	}
 	player->styleServices.PurgeAndDeleteElements();
 	if (!silent)
 	{
