@@ -5,7 +5,7 @@ constexpr char mysql_styles_create[] = R"(
         ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, 
         Name VARCHAR(16) NOT NULL UNIQUE, 
         ShortName VARCHAR(16) NOT NULL UNIQUE, 
-        CONSTRAINT PK_Styles PRIMARY KEY (ID)))
+        CONSTRAINT PK_Styles PRIMARY KEY (ID))
 )";
 
 constexpr char sqlite_styles_create[] = R"(
