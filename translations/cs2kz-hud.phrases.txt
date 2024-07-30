@@ -105,7 +105,7 @@
 		"chi"		""
 		"pl"		""
 		"fi"		""
-		"sv"		"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
+		"sv"		""
 		"ua"		""
 	}
 	"HUD - HTML Center Text"
