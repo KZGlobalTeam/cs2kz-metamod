@@ -35,7 +35,7 @@ constexpr char sqlite_players_update[] = R"(
 )";
 
 constexpr char mysql_players_upsert[] = R"(
-    INSERT INTO Players (Alias, Country, IP, SteamID64, LastPlayed) 
+    INSERT INTO Players (Alias, IP, SteamID64, LastPlayed) 
         VALUES ('%s', '%s', %lld, CURRENT_TIMESTAMP) 
         ON DUPLICATE KEY UPDATE 
         SteamID64=VALUES(SteamID64), Alias=VALUES(Alias), 
