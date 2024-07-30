@@ -21,7 +21,7 @@ constexpr char sqlite_styles_insert[] = R"(
 )";
 
 constexpr char mysql_styles_insert[] = R"(
-    INSERT OR IGNORE INTO Styles (Name, ShortName) VALUES ('%s', '%s')
+    INSERT IGNORE INTO Styles (Name, ShortName) VALUES ('%s', '%s')
 )";
 
 constexpr char sql_styles_findid[] = R"(
