@@ -17,7 +17,7 @@ constexpr char sqlite_startpos_create[] = R"(
 
 constexpr char mysql_startpos_create[] = R"(
 	CREATE TABLE IF NOT EXISTS StartPosition ( 
-		SteamID64 INTEGER UNSIGNED NOT NULL, 
+		SteamID64 BIGINT UNSIGNED NOT NULL, 
 		MapID INTEGER UNSIGNED NOT NULL, 
 		X REAL NOT NULL, 
 		Y REAL NOT NULL, 

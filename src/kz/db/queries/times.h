@@ -23,7 +23,7 @@ constexpr char sqlite_times_create[] = R"(
 constexpr char mysql_times_create[] = R"(
     CREATE TABLE IF NOT EXISTS Times ( 
         ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, 
-        SteamID64 INTEGER UNSIGNED NOT NULL, 
+        SteamID64 BIGINT UNSIGNED NOT NULL, 
         MapCourseID INTEGER UNSIGNED NOT NULL, 
         ModeID INTEGER UNSIGNED NOT NULL, 
         StyleIDFlags INTEGER UNSIGNED NOT NULL, 
