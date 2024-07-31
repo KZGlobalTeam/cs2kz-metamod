@@ -124,6 +124,7 @@
 	"HUD - HTML Panel Disabled"
 	{
 		"en"		"Panel disabled."
+		"ru"		"Панель отключена."
 		"sv"		"Panel inaktiverad."
 		"ua"		"Панель вимкнено."
 	}

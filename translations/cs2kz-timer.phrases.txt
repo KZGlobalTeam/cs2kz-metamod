@@ -26,6 +26,7 @@
 		//  (+12:34.56)
 		"#format"	"color:s,diff_text:s"
 		"en"		" ({color}{diff_text}{grey})"
+		"ru"		" ({color}{diff_text}{grey})"
 		"sv"		" ({color}{diff_text}{grey})"
 		"ua"		" ({color}{diff_text}{grey})"
 	}
@@ -35,6 +36,7 @@
 		// GameChaos finished "blocks2006" in 10:06.84 | VNL | PRO
 		"#format"	"player_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
 		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
+		"ru"		"{lime}{player_name} {grey}завершил {default}{course_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"sv"		"{lime}{player_name} {grey}klarade {default}{course_name}{grey} på {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"ua"		"{lime}{player_name} {grey}завершив {default}{course_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 	}
@@ -44,6 +46,7 @@
 		// Server: #1/24 Overall (-1:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s"
 		"en"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text}"
+		"ru"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Среди всех{grey}{pb_diff_text}"
 		"sv"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text}"
 		"ua"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text}"
 	}
@@ -52,6 +55,7 @@
 		// Server: #1/24 Overall (-1:00.00) | #1/10 PRO (-2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
 		"en"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"en"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Среди всех{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"sv"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"ua"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
