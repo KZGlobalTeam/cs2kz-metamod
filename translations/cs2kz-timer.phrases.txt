@@ -188,7 +188,7 @@
 	"PB Command Usage - Console"
 	{
 		"en"		"Usage: kz_pb <c/course/map/mode/p/player/s/style=...>\nExample: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nTo specify no style, use \"style=none\"."
-		"fi"		"Käyttö: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsimerkki: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nMäärittääksesi \"Ei tyyliä\", käytä \"style=none\"."
+		"fi"		"Käyttö: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsimerkki: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nJos et halua määrittää tyyliä, käytä \"style=none\"."
 		"sv"		"Användande: kz_pb <c/course/map/mode/p/player/s/style=...>\nExempel: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nFör att ange ingen style, använd \"style=none\"."
 		"ua"		"Використання: kz_pb <c/course/map/mode/p/player/s/style=...>\Наприклад: \"kz_pb map=kz_map p=Player c=Основний стиль=ABH\"\nЩоб не задавати жодного стилю, введіть \"style=none\"."
 	}
