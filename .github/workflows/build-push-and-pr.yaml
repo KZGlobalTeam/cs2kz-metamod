@@ -6,7 +6,17 @@ on:
       - dev
     tags-ignore:
       - v*
+    paths-ignore:
+      - 'README.md'
+      - 'cfg/'
+      - 'gamedata/'
+      - 'translations/'
   pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'cfg/'
+      - 'gamedata/'
+      - 'translations/'
 
 jobs:
   get-version-string:
