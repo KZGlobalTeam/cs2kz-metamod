@@ -4,6 +4,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_style <style>/+<style>/-<style>{grey}. Check console for possible styles!"
 		"ru"		"{grey}Применение: {default}kz_style <style>/+<style>/-<style>{grey}. Проверьте консоль, чтобы увидеть список доступных стилей!"
+		"fi"		"{grey}Käyttö: {default}kz_style <tyyli>/+<tyyli>/-<tyyli>{grey}. Tarkista konsolista mahdolliset tyylit!"
 		"sv"		"{grey}Användande: {default}kz_style <style>/+<style>/-<style>{grey}. Kolla konsolen för möjliga styles!"
 		"ua"		"{grey}Використання: {default}kz_style <style>/+<style>/-<style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
@@ -11,6 +12,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_addstyle <style>{grey}. Check console for possible styles!"
 		"ru"		"{grey}Применение: {default}kz_addstyle <style>{grey}. Проверьте консоль, чтобы увидеть список доступных стилей!"
+		"fi"		"{grey}Käyttö: {default}kz_addstyle <tyyli>{grey}. Tarkista konsolista mahdolliset tyylit!"
 		"sv"		"{grey}Användande: {default}kz_addstyle <style>{grey}. Kolla konsolen för möjliga styles!"
 		"ua"		"{grey}Використання: {default}kz_addstyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
@@ -18,6 +20,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_removestyle <style>{grey}. Check console for possible styles!"
 		"ru"		"{grey}Применение: {default}kz_removestyle <style>{grey}. Проверьте консоль, чтобы увидеть список доступных стилей!"
+		"fi"		"{grey}Käyttö: {default}kz_removestyle <tyyli>{grey}. Tarkista konsolista mahdolliset tyylit!"
 		"sv"		"{grey}Användande: {default}kz_removestyle <style>{grey}. Kolla konsolen för möjliga styles!"
 		"ua"		"{grey}Використання: {default}kz_removestyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 	}
@@ -34,6 +37,7 @@
 	{
 		"en"		"Currently active styles:"
 		"ru"		"Активные стили:"
+		"fi"		"Käytössä olevat tyylit:"
 		"sv"		"Nuvarande aktiva styles:"
 		"ua"		"Поточні активні стилі:"
 	}
@@ -61,6 +65,7 @@
 	{
 		"en"		"{grey}You have cleared your styles."
 		"ru"		"{grey}Вы очистили свои стили."
+		"fi"		"{grey}Olet tyhjentänyt käytössä olleet tyylit."
 		"sv"		"{grey}Du har rensat dina styles."
 		"ua"		"{grey}Ви очистили свої стилі."
 	}
@@ -69,6 +74,7 @@
 		"#format"	"style:s"
 		"en"		"{grey}You have removed {purple}{style}{grey} style."
 		"ru"		"{grey}Вы удалили стиль {purple}{style}{grey}."
+		"fi"		"{grey}Olet poistanut {purple}{style}{grey} tyylin käytöstä."
 		"sv"		"{grey}Du har tagit bort {purple}{style}{grey} style."
 		"ua"		"{grey}Ви видалили {purple}{style}{grey} стиль."
 	}
@@ -77,6 +83,7 @@
 		"#format"	"style:s"
 		"en"		"{grey}You have added {purple}{style}{grey} style."
 		"ru"		"{grey}Вы добавили стиль {purple}{style}{grey}."
+		"fi"		"{grey}Olet lisännyt {purple}{style}{grey} tyylin käyttöön."
 		"sv"		"{grey}Du har lagt till {purple}{style}{grey} style."
 		"ua"		"{grey}Ви додали {purple}{style}{grey} стиль."
 	}
@@ -85,6 +92,7 @@
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is already active."
 		"ru"		"{darkred}Стиль {purple}{style}{darkred} уже активен."
+		"fi"		"{darkred}Tyyli {purple}{style}{darkred} on jo käytössä."
 		"sv"		"{purple}{style}{darkred} style är redan aktiv."
 		"ua"		"{darkred}{purple}{style}{darkred} стиль вже активний."
 	}
@@ -94,6 +102,7 @@
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is not active."
 		"ru"		"{darkred}Стиль {purple}{style}{darkred} не активен."
+		"fi"		"{darkred}Tyyli {purple}{style}{darkred} ei ole käytössä."
 		"sv"		"{purple}{style}{darkred} style är inte aktiv."
 		"ua"		"{darkred}{purple}{style}{darkred} стиль не активовано."
 	}
@@ -102,6 +111,7 @@
 		"#format"	"style:s,conflict_style:s"
 		"en"		"{darkred}Unable to add style {purple}{style}{darkred} as the conflicting style {purple}{conflict_style}{darkred} is active."
 		"ru"		"{darkred}Не удалось добавить стиль {purple}{style}{darkred}, поскольку конфликтный стиль {purple}{conflict_style}{darkred} сейчас активен."
+		"fi"		"{darkred}Tyyliä {purple}{style}{darkred} ei voitu lisätä, koska konfliktoiva tyyli {purple}{conflict_style}{darkred} on jo käytössä."
 		"sv"		"{darkred}Det gick inte att lägga till style {purple}{style}{darkred} eftersom den konflikterande style {purple}{conflict_style}{darkred} är aktiv."
 		"ua"		"{darkred}Неможливо додати стиль {purple}{style}{darkred}, оскільки конфліктний стиль {purple}{conflict_style}{darkred} наразі активний."
 	}
