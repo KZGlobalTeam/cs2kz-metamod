@@ -267,7 +267,7 @@
 	{
 		"en"		"List active styles or remove style."
 		"ru"		"Показать активные стили или удалить стиль."
-		"fi"		"Listaa aktiiviset tyyliit tai poista tyyli."
+		"fi"		"Listaa aktiiviset tyylit tai poista tyyli."
 		"sv"		"Lista aktiva styles eller ta bort style."
 		"ua"		"Показати активні стилі або видалити стиль."
 	}
