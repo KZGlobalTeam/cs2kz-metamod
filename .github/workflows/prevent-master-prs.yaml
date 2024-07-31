@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
-        if: ${{ github.repository != 'zer0k-z/cs2kz_metamod' }}
+        if: ${{ github.repository != 'KZGlobalTeam/cs2kz-metamod' }}
         with:
-          script: core.setFailed('Can not merge into master from outside of zer0k-z/cs2kz_metamod!')
+          script: core.setFailed('Can not merge into master from outside of KZGlobalTeam/cs2kz-metamod!')
 
       - uses: actions/github-script@v6
         if: ${{ github.head_ref != 'dev' }}
