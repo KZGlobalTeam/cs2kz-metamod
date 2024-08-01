@@ -125,6 +125,7 @@
 	{
 		"en"		"Panel disabled."
 		"ru"		"Панель отключена."
+		"fi"		"Paneeli poistettu käytöstä."
 		"sv"		"Panel inaktiverad."
 		"ua"		"Панель вимкнено."
 	}

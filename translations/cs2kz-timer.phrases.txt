@@ -27,6 +27,7 @@
 		"#format"	"color:s,diff_text:s"
 		"en"		" ({color}{diff_text}{grey})"
 		"ru"		" ({color}{diff_text}{grey})"
+		"fi"		" ({color}{diff_text}{grey})"
 		"sv"		" ({color}{diff_text}{grey})"
 		"ua"		" ({color}{diff_text}{grey})"
 	}
@@ -37,6 +38,7 @@
 		"#format"	"player_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
 		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"ru"		"{lime}{player_name} {grey}завершил {default}{course_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
+		"fi"		"{lime}{player_name} {grey}läpäisi {default}{course_name}{grey} ajassa {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"sv"		"{lime}{player_name} {grey}klarade {default}{course_name}{grey} på {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"ua"		"{lime}{player_name} {grey}завершив {default}{course_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 	}
@@ -47,6 +49,7 @@
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s"
 		"en"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text}"
 		"ru"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Среди всех{grey}{pb_diff_text}"
+		"fi"		"{grey}Palvelin: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}{pb_diff_text}"
 		"sv"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text}"
 		"ua"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text}"
 	}
@@ -56,6 +59,7 @@
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
 		"en"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"ru"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Среди всех{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"fi"		"{grey}Palvelin: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"sv"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"ua"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
@@ -65,6 +69,7 @@
 		// Global: #1/24 Overall (-1:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
 		"en"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text}"
+		"fi"		"{grey}Maailmassa: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}{pb_diff_text}"
 		"sv"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text}"
 		"ua"		"{grey}Глобальний: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text}"
 	}
@@ -73,6 +78,7 @@
 		// Global: #1/24 Overall (-1:00.00) | #1/10 PRO (-2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
 		"en"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"fi"		"{grey}Maailmassa: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"sv"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"ua"		"{grey}Глобальний: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
@@ -82,6 +88,7 @@
 		// Map Points: 2345 (+512) | Player Rating: 34475
 		"#format"	"total_map_points:d,map_points_gained:d,player_rating:d"
 		"en"		"{grey}Map Points: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"fi"		"{grey}Kenttä Pisteet: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Pelaajan Pisteet: {purple}{player_rating}{grey}"
 		"sv"		"{grey}Map Poäng: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Spelarens Rating: {purple}{player_rating}{grey}"
 		"ua"		"{grey}Очки за мапу: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
 	}
@@ -91,12 +98,14 @@
 		// Player on kz_map (Main) [CKZ +ABH]
 		"#format"	"player_name:s,map_name:s,course_name:s,mode_style_text:s"
 		"en"		"{lime}{player_name}{grey} on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
+		"fi"		"{lime}{player_name}{grey} kentällä {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"sv"		"{lime}{player_name}{grey} på {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"ua"		"{lime}{player_name}{grey} на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 	}
 	"PB Time - No Times"
 	{
 		"en"		"{grey}You haven't set a time... yet."
+		"fi"		"{grey}Et ole vielä asettanut aikaa...."
 		"sv"		"{grey}Du har inte satt en tid... än så länge."
 		"ua"		"{grey}У вас ще не має встановленого часу."
 	}
@@ -105,6 +114,7 @@
 		// Server: 12.34 (5 TPs) [#1/24 Overall]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d"
 		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}]"
+		"fi"		"{grey}Palvelin: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}]"
 	}
@@ -113,6 +123,7 @@
 		// Server: 12.34 [#1/24 Overall] [#1/2 PRO]
 		"#format"	"time:s,rank:d,max_rank:d,rank_pro:d,max_rank_pro:d"
 		"en"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"fi"		"{grey}Palvelin: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
@@ -121,6 +132,7 @@
 		// Server: 12.34 (5 TPs) [#1/24 Overall] | 23.45 [#1/2 PRO]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d,time_pro:s,rank_pro:d,max_rank_pro:d"
 		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"fi"		"{grey}Palvelin: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
@@ -129,6 +141,7 @@
 		// Server: 12.34 (5 TPs) [Overall]
 		"#format"	"time:s,tp_count_text:s"
 		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}]"
+		"fi"		"{grey}Palvelin: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kokonaisuus{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Total{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}]"
 	}
@@ -137,6 +150,7 @@
 		// Server: 12.34 [Overall/PRO]
 		"#format"	"time:s"
 		"en"		"{grey}Server: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
+		"fi"		"{grey}Palvelin: {default}{time}{grey} [{yellow}Kokonaisuus{grey}/{blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} [{yellow}Total{grey}/{blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} [{yellow}Загальний{grey}/{blue}PRO{grey}]"
 	}
@@ -145,12 +159,14 @@
 		// Server: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
 		"#format"	"time:s,tp_count_text:s,time_pro:s"
 		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"fi"		"{grey}Palvelin: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kokonaisuus{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Total{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)" 
 	{
 		"en"		"{darkred}Failed to retrieve personal best stats."
+		"fi"		"{darkred}Henkilökohtaisen parhaan rekordin haku epäonnistui."
 		"sv"		"{darkred}Det gick inte att hämta personlig bästa statistik."
 		"ua"		"{darkred}Не вдалося отримати особистий найкращий результат."
 	}
@@ -158,18 +174,21 @@
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Failed to retrieve personal best stats. {grey}(Invalid course name {default}{course_name}{grey})"
+		"fi"		"{darkred}Henkilökohtaisen parhaan rekordin haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
 		"sv"		"{darkred}Det gick inte att hämta personlig bästa statistik. {grey}(Ogiltigt namn {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати особистий найкращий результат. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 	}
 	"PB Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Check console for details!"
+		"fi"		"{grey}Käyttö: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Tarkista konsolista yksityiskohdat!"
 		"sv"		"{grey}Användande: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Kolla konsolen för detaljer!"
 		"ua"		"{grey}Використання: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Деталі дивіться в консолі!"
 	}
 	"PB Command Usage - Console"
 	{
 		"en"		"Usage: kz_pb <c/course/map/mode/p/player/s/style=...>\nExample: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nTo specify no style, use \"style=none\"."
+		"fi"		"Käyttö: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsimerkki: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nJos et halua määrittää tyyliä, käytä \"style=none\"."
 		"sv"		"Användande: kz_pb <c/course/map/mode/p/player/s/style=...>\nExempel: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nFör att ange ingen style, använd \"style=none\"."
 		"ua"		"Використання: kz_pb <c/course/map/mode/p/player/s/style=...>\Наприклад: \"kz_pb map=kz_map p=Player c=Основний стиль=ABH\"\nЩоб не задавати жодного стилю, введіть \"style=none\"."
 	}
