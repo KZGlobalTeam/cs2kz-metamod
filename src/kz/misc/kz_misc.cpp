@@ -234,11 +234,12 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 		}
 
 		i32 argLen = strlen(args[1]);
-		if (argLen < 1)
+		if (argLen < 1 || args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
 		{
 			// arg is too short!
 			return;
 		}
+
 		CUtlString message;
 		for (int i = 1; i < args.ArgC(); i++)
 		{
@@ -248,15 +249,18 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 			}
 			message += args[i];
 		}
+
 		if (player->IsAlive())
 		{
 			utils::CPrintChatAll("{lime}%s{default}: %s", player->GetName(), message.Get());
 			utils::PrintConsoleAll("%s: %s", player->GetName(), message.Get());
+			META_CONPRINTF("%s: %s\n", player->GetName(), message.Get());
 		}
 		else
 		{
 			utils::CPrintChatAll("{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
 			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
+			META_CONPRINTF("* %s: %s\n", player->GetName(), message.Get());
 		}
 		return;
 	}
