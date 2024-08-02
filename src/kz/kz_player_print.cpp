@@ -123,17 +123,29 @@ void KZPlayer::PrintAlert(bool addPrefix, bool includeSpectators, const char *fo
 
 void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...)
 {
-	FORMAT_STRING(buffer, addPrefix);
+	CUtlString buffer;
+	va_list args;
+	va_start(args, format);
+	buffer.FormatV(format, args);
+
+	if (addPrefix)
+	{
+		const char *prefix = KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX);
+		buffer.Format("%s %s", prefix, buffer.Get());
+	}
+
 	if (!includeSpectators)
 	{
-		utils::PrintHTMLCentre(this->GetController(), buffer);
+		utils::PrintHTMLCentre(this->GetController(), buffer.Get());
 		return;
 	}
+
 	CRecipientFilter *filter = CreateRecipientFilter(this, includeSpectators);
 	if (!filter)
 	{
 		return;
 	}
+
 	CBasePlayerController *controller = this->GetController();
 	if (!controller)
 	{
@@ -145,8 +157,8 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 	{
 		return;
 	}
-	event->SetString("loc_token", buffer);
-	event->SetInt("duration", 5);
+	event->SetString("loc_token", buffer.Get());
+	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 
 	for (int i = 0; i < filter->GetRecipientCount(); i++)
