@@ -119,6 +119,8 @@ class KZClassicModeService : public KZModeService
 	f32 rightPreRatio {};
 	f32 bonusSpeed {};
 	f32 maxPre {};
+	f32 originalMaxSpeed {};
+	f32 tweakedMaxSpeed {};
 
 	bool didTPM {};
 	bool overrideTPM {};
@@ -132,6 +134,7 @@ class KZClassicModeService : public KZModeService
 
 public:
 	virtual void Reset() override;
+	virtual void Cleanup() override;
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 

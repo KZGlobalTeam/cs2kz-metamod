@@ -23,7 +23,7 @@ constexpr char sqlite_jumpstats_create[] = R"(
 constexpr char mysql_jumpstats_create[] = R"(
     CREATE TABLE IF NOT EXISTS Jumpstats ( 
         ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, 
-        SteamID64 INTEGER UNSIGNED NOT NULL, 
+        SteamID64 BIGINT UNSIGNED NOT NULL, 
         JumpType TINYINT UNSIGNED NOT NULL, 
         Mode TINYINT UNSIGNED NOT NULL, 
         Distance INTEGER UNSIGNED NOT NULL, 

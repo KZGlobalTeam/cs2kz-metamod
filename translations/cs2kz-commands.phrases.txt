@@ -255,30 +255,40 @@
 	"Command Description - kz_style"
 	{
 		"en"		"List, add, remove or toggle style."
+		"ru"		"Показать, добавить, удалить или переключить стиль."
+		"fi"		"Listaa, lisää, poista tai vaihda tyyliä."
 		"sv"		"Lista, lägg till, ta bort eller toggla style."
 		"ua"		"Показати, додати, прибрати або перемикнути стиль."
 	}
 	"Command Description - kz_addstyle"
 	{
 		"en"		"List or add style."
+		"ru"		"Показать или добавить стиль"
+		"fi"		"Listaa tai lisää tyyli."
 		"sv"		"Lista eller lägg till style."
 		"ua"		"Показати або додати стиль."
 	}
 	"Command Description - kz_removestyle"
 	{
 		"en"		"List active styles or remove style."
+		"ru"		"Показать активные стили или удалить стиль."
+		"fi"		"Listaa aktiiviset tyylit tai poista tyyli."
 		"sv"		"Lista aktiva styles eller ta bort style."
 		"ua"		"Показати активні стилі або видалити стиль."
 	}
 	"Command Description - kz_togglestyle"
 	{
 		"en"		"List or toggle style."
+		"ru"		"Показать или переключить стиль."
+		"fi"		"Listaa tai vaihda tyyliä."
 		"sv"		"Lista eller toggla style."
 		"ua"		"Показати або перемикнути стиль."
 	}
 	"Command Description - kz_clearstyles"
 	{
 		"en"		"Clear all styles."
+		"ru"		"Очистить все стили."
+		"fi"		"Tyhjennä kaikki tyylit."
 		"sv"		"Rensa alla styles."
 		"ua"		"Очистити всі стилі."
 	}
@@ -358,6 +368,7 @@
 	{
 		// Hidden to users.
 		"en"		"Jointeam interceptor."
+		"fi"		"Jointeam interceptor."
 		"sv"		"Jointeam interceptor."
 	}
 	"Command Description - kz_help"
@@ -399,6 +410,8 @@
 	"Command Description - kz_pb"
 	{
 		"en"		"Retrieve personal best statistics."
+		"ru"		"Показать личный рекорд."
+		"fi"		"Hae henkilökohtaiset parhaat statistiikat."
 		"sv"		"Hämta personlig bästa statistik."
 		"ua"		"Показати персональний найкращий час."
 	}
