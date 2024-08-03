@@ -3,29 +3,34 @@
 	"Goto - Error Message (Timer Running)"
 	{
 		"en"		"{darkred}Stop your timer before trying to teleport."
+		"ru"		"{darkred}Остановите свой таймер перед попыткой телепортации."
 		"sv"		"{darkred}Stäng av din timer innan du försöker teleportera."
 	}
 	"Goto - Error Message (Player In Spec)"
 	{
 		"#format"	"player:s"
 		"en"		"{darkred}Cannot teleport. {player} is a spectator."
+		"ru"		"{darkred}Невозможно телепортироваться. {player} находится наблюдателях."
 		"sv"		"{darkred}Kan inte teleportra. {player} är en åskådare."
 	}
 	"Goto - Error Message (Player Not Found)"
 	{
 		"#format"	"player:s"
 		"en"		"{darkred}Could not find a player going by \"{player}\""
+		"ru"		"{darkred}Невозможно найти игрока \"{player}\""
 		"sv"		"{darkred}Kunde inte hitta någon som heter något med \"{player}\""
 	}
 	"Goto - Teleported"
 	{
 		"#format"	"player:s"
 		"en"		"{grey}Teleported to {player}."
+		"ru"		"{grey}Телепортация к {player}."
 		"sv"		"{grey}Teleporterade till {player}."
 	}
 	"Goto - Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_goto <player name>"
+		"ru"		"{grey}Использование: {default}kz_goto <никнейм игрока>"
 		"sv"		"{grey}Användning: {default}kz_goto <spelares namn>"
 	}
 }
