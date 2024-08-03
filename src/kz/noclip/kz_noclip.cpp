@@ -28,8 +28,7 @@ void KZNoclipService::HandleNoclip()
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
 		{
-			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_NOTRIGGER;
-			pawn->CollisionRulesChanged();
+			g_pKZUtils->SetCollisionGroup(pawn->m_pCollision(), KZ_COLLISION_GROUP_NOTRIGGER);
 		}
 		this->lastNoclipTime = g_pKZUtils->GetServerGlobals()->curtime;
 		this->player->timerService->TimerStop();
@@ -47,8 +46,7 @@ void KZNoclipService::HandleNoclip()
 		}
 		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 		{
-			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
-			pawn->CollisionRulesChanged();
+			g_pKZUtils->SetCollisionGroup(pawn->m_pCollision(), KZ_COLLISION_GROUP_STANDARD);
 		}
 	}
 }

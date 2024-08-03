@@ -69,9 +69,10 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound);
 	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam);
 	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn);
+	RESOLVE_SIG(g_pGameConfig, "SetCollisionGroup", SetCollisionGroup_t, SetCollisionGroup);
 
 	g_pKZUtils = new KZUtils(TracePlayerBBox, InitGameTrace, InitPlayerMovementTraceFilter, GetLegacyGameEventListener, SnapViewAngles, EmitSound,
-							 SwitchTeam, SetPawn);
+							 SwitchTeam, SetPawn, SetCollisionGroup);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
