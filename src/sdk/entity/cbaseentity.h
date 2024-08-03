@@ -116,6 +116,11 @@ public:
 		this->m_nActualMoveType(movetype);
 	}
 
+	void CollisionRulesChanged()
+	{
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CollisionRulesChanged"), this);
+	}
+
 	int GetTeam()
 	{
 		return m_iTeamNum();

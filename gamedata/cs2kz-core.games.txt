@@ -279,11 +279,6 @@
 				"windows"	"\x48\x8D\x0D\x2A\x2A\x2A\x2A\x48\x0F\x45\xD0\x48\x8B\x05"
 				"linux"		"\x48\x8D\x3D\x2A\x2A\x2A\x2A\x4C\x89\xE0"
 			}
-			"SetCollisionGroup"
-			{
-				"library"	"server"
-				"windows"	"\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x0F\xB6\x41\x5E"
-			}
 		}
 		"Offsets"
 		{
@@ -301,6 +296,12 @@
 			{
 				"windows"		"155"
 				"linux"			"154"
+			}
+			// 2 functions after one with "targethealthfrac"
+			"CollisionRulesChanged"
+			{
+				"windows"		"178"
+				"linux"			"177"
 			}
 			// 9 functions after one with "CBasePlayerPawn::PhysicsSimulate"
 			"IsEntityPawn"
