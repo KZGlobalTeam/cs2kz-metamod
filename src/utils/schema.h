@@ -92,7 +92,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 				DevMsg("Attempting to call SetStateChanged on on %s::%s\n", ThisClassName, #varName); \
 				if (!IsStruct) \
 					((CEntityInstance *)pThisClass)->NetworkStateChanged(m_key.offset + extra_offset, -1, -1); \
-				else if (IsPlatformPosix()) /* This is currently broken on windows */ \
+				else \
 					CALL_VIRTUAL(void, 1, pThisClass, m_key.offset + extra_offset, 0xFFFFFFFF, 0xFFFF); \
 			} \
 			*reinterpret_cast<std::add_pointer_t<type>>((uintptr_t)(pThisClass) + m_key.offset + extra_offset) = val; \
