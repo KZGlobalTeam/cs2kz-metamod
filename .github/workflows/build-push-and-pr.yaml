@@ -11,9 +11,9 @@ on:
   pull_request:
     paths-ignore:
       - 'README.md'
-      - 'cfg/'
-      - 'gamedata/'
-      - 'translations/'
+      - 'cfg/**'
+      - 'gamedata/**'
+      - 'translations/**'
 
 jobs:
   get-version-string:
