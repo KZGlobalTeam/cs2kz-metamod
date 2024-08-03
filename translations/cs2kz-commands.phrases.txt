@@ -250,6 +250,7 @@
 	"Command Description - kz_goto"
 	{
 		"en"		"Go to a player."
+		"ru"		"Телепортироваться к игроку."
 		"sv"		"Gå till en spelare."
 	}
 	"Command Description - kz_style"
