@@ -247,6 +247,11 @@
 		"sv"		"Åskåda en spelare."
 		"ua"		"Спостерігати за гравцем."
 	}
+	"Command Description - kz_goto"
+	{
+		"en"		"Go to a player."
+		"sv"		"Gå till en spelare."
+	}
 	"Command Description - kz_style"
 	{
 		"en"		"List, add, remove or toggle style."
