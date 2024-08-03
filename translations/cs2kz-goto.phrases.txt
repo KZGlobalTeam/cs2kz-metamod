@@ -28,7 +28,7 @@
 		"#format"	"player:s"
 		"en"		"{grey}Teleported to {player}."
 		"ru"		"{grey}Телепортация к {player}."
-		"fi"		"{grey}Teleporttasit pelaajan {player} luokse.
+		"fi"		"{grey}Teleporttasit pelaajan {player} luokse."
 		"sv"		"{grey}Teleporterade till {player}."
 	}
 	"Goto - Command Usage"
