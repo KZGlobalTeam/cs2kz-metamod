@@ -11,6 +11,7 @@
 #include "option/kz_option.h"
 #include "quiet/kz_quiet.h"
 #include "spec/kz_spec.h"
+#include "goto/kz_goto.h"
 #include "style/kz_style.h"
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
@@ -46,6 +47,7 @@ void KZPlayer::Init()
 	this->quietService = new KZQuietService(this);
 	this->hudService = new KZHUDService(this);
 	this->specService = new KZSpecService(this);
+	this->gotoService = new KZGotoService(this);
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
