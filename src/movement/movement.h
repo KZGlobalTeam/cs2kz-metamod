@@ -287,10 +287,10 @@ private:
 	MoveType_t lastKnownMoveType {};
 };
 
-class CMovementPlayerManager : public PlayerManager
+class MovementPlayerManager : public PlayerManager
 {
 public:
-	CMovementPlayerManager()
+	MovementPlayerManager()
 	{
 		for (int i = 0; i < MAXPLAYERS + 1; i++)
 		{

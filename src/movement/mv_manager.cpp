@@ -3,37 +3,37 @@
 
 #include "tier0/memdbgon.h"
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerPawnComponent *component)
+MovementPlayer *MovementPlayerManager::ToPlayer(CPlayerPawnComponent *component)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::ToPlayer(component));
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CBasePlayerController *controller)
+MovementPlayer *MovementPlayerManager::ToPlayer(CBasePlayerController *controller)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::ToPlayer(controller));
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CBasePlayerPawn *pawn)
+MovementPlayer *MovementPlayerManager::ToPlayer(CBasePlayerPawn *pawn)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::ToPlayer(pawn));
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerSlot slot)
+MovementPlayer *MovementPlayerManager::ToPlayer(CPlayerSlot slot)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::ToPlayer(slot));
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CEntityIndex entIndex)
+MovementPlayer *MovementPlayerManager::ToPlayer(CEntityIndex entIndex)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::ToPlayer(entIndex));
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(CPlayerUserId userID)
+MovementPlayer *MovementPlayerManager::ToPlayer(CPlayerUserId userID)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::ToPlayer(userID));
 }
 
-MovementPlayer *CMovementPlayerManager::ToPlayer(u32 index)
+MovementPlayer *MovementPlayerManager::ToPlayer(u32 index)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::players[index]);
 }

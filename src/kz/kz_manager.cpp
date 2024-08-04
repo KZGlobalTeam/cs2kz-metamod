@@ -1,42 +1,42 @@
 #include "kz.h"
 
 #include "tier0/memdbgon.h"
-CKZPlayerManager g_KZPlayerManager;
+KZPlayerManager g_KZPlayerManager;
 
-CKZPlayerManager *g_pKZPlayerManager = &g_KZPlayerManager;
+KZPlayerManager *g_pKZPlayerManager = &g_KZPlayerManager;
 PlayerManager *g_pPlayerManager = dynamic_cast<PlayerManager *>(&g_KZPlayerManager);
 
-KZPlayer *CKZPlayerManager::ToPlayer(CPlayerPawnComponent *component)
+KZPlayer *KZPlayerManager::ToPlayer(CPlayerPawnComponent *component)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(component));
+	return static_cast<KZPlayer *>(MovementPlayerManager::ToPlayer(component));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(CBasePlayerController *controller)
+KZPlayer *KZPlayerManager::ToPlayer(CBasePlayerController *controller)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(controller));
+	return static_cast<KZPlayer *>(MovementPlayerManager::ToPlayer(controller));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(CBasePlayerPawn *pawn)
+KZPlayer *KZPlayerManager::ToPlayer(CBasePlayerPawn *pawn)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(pawn));
+	return static_cast<KZPlayer *>(MovementPlayerManager::ToPlayer(pawn));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(CPlayerSlot slot)
+KZPlayer *KZPlayerManager::ToPlayer(CPlayerSlot slot)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(slot));
+	return static_cast<KZPlayer *>(MovementPlayerManager::ToPlayer(slot));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(CEntityIndex entIndex)
+KZPlayer *KZPlayerManager::ToPlayer(CEntityIndex entIndex)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(entIndex));
+	return static_cast<KZPlayer *>(MovementPlayerManager::ToPlayer(entIndex));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(CPlayerUserId userID)
+KZPlayer *KZPlayerManager::ToPlayer(CPlayerUserId userID)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::ToPlayer(userID));
+	return static_cast<KZPlayer *>(MovementPlayerManager::ToPlayer(userID));
 }
 
-KZPlayer *CKZPlayerManager::ToPlayer(u32 index)
+KZPlayer *KZPlayerManager::ToPlayer(u32 index)
 {
-	return static_cast<KZPlayer *>(CMovementPlayerManager::players[index]);
+	return static_cast<KZPlayer *>(MovementPlayerManager::players[index]);
 }

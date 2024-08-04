@@ -203,10 +203,10 @@ public:
 	virtual void Reset() {}
 };
 
-class CKZPlayerManager : public CMovementPlayerManager
+class KZPlayerManager : public MovementPlayerManager
 {
 public:
-	CKZPlayerManager()
+	KZPlayerManager()
 	{
 		for (int i = 0; i < MAXPLAYERS + 1; i++)
 		{
@@ -230,7 +230,7 @@ public:
 	}
 };
 
-extern CKZPlayerManager *g_pKZPlayerManager;
+extern KZPlayerManager *g_pKZPlayerManager;
 
 namespace KZ
 {

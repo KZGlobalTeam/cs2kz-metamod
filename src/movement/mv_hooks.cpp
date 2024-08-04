@@ -38,7 +38,7 @@ void movement::InitDetours()
 	INIT_DETOUR(g_pGameConfig, PostThink);
 }
 
-CMovementPlayerManager *playerManager = static_cast<CMovementPlayerManager *>(g_pPlayerManager);
+MovementPlayerManager *playerManager = static_cast<MovementPlayerManager *>(g_pPlayerManager);
 
 void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 {
