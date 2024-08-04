@@ -66,7 +66,9 @@ GS_EVENT_MEMBER(CGameSystem, BuildGameSessionManifest)
 	// This takes any resource type, model or not
 	// Any resource adding MUST be done here, the resource manifest is not long-lived
 	// pResourceManifest->AddResource("characters/models/my_character_model.vmdl");
-
-	Warning("[CS2KZ] Precache soundevents_kz\n");
-	pResourceManifest->AddResource("soundevents/soundevents_kz.vsndevts");
+	if (g_KZPlugin.IsAddonMounted())
+	{
+		Warning("[CS2KZ] Precache soundevents_kz\n");
+		pResourceManifest->AddResource("soundevents/soundevents_kz.vsndevts");
+	}
 }
