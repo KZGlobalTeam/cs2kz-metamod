@@ -253,6 +253,7 @@
 		"ru"		"Телепортироваться к игроку."
 		"fi"		"Mene pelaajan luokse."
 		"sv"		"Gå till en spelare."
+		"ua"		"Телепортуватися до гравця"
 	}
 	"Command Description - kz_style"
 	{
