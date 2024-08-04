@@ -1,4 +1,5 @@
 #include "kz.h"
+#include "kz/global/kz_global.h"
 
 #include "tier0/memdbgon.h"
 KZPlayerManager g_KZPlayerManager;
@@ -39,4 +40,33 @@ KZPlayer *KZPlayerManager::ToPlayer(CPlayerUserId userID)
 KZPlayer *KZPlayerManager::ToPlayer(u32 index)
 {
 	return static_cast<KZPlayer *>(MovementPlayerManager::players[index]);
+}
+
+void CKZPlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
+{
+	META_CONPRINTF("OnClientActive yippie `%s`\n", pszName);
+	return;
+	KZPlayer *player = this->ToPlayer(slot);
+
+	if (player->IsFakeClient())
+	{
+		return;
+	}
+
+	player->globalService->OnClientActive();
+}
+
+void CKZPlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid,
+										  const char *pszNetworkID)
+{
+	META_CONPRINTF("OnClientDisconnect yippie `%s`\n", pszName);
+	return;
+	KZPlayer *player = this->ToPlayer(slot);
+
+	if (player->IsFakeClient())
+	{
+		return;
+	}
+
+	player->globalService->OnClientDisconnect();
 }

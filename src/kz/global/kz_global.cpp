@@ -15,8 +15,8 @@
 
 std::optional<KZ::API::Map> KZGlobalService::currentMap = std::nullopt;
 const char *KZGlobalService::apiURL = "https://api.cs2kz.org";
-std::atomic<bool> KZGlobalService::isHealthy = false;
-std::atomic<bool> KZGlobalService::authTimerInitialized = false;
+bool KZGlobalService::isHealthy = false;
+bool KZGlobalService::authTimerInitialized = false;
 std::optional<std::string> KZGlobalService::apiKey = std::nullopt;
 std::optional<std::string> KZGlobalService::authPayload = std::nullopt;
 std::optional<std::string> KZGlobalService::apiToken = std::nullopt;
@@ -176,6 +176,30 @@ f64 KZGlobalService::Auth()
 	return authInterval;
 }
 
+void KZGlobalService::Hook_ActivateServer(const char *mapName)
+{
+	auto onSuccess = [](std::optional<KZ::API::Map> map)
+	{
+		if (!map)
+		{
+			META_CONPRINTF("[KZ::Global] Current map is not global.\n");
+		}
+		else
+		{
+			META_CONPRINTF("[KZ::Global] Fetched %s from the API.\n", map->name.c_str());
+		}
+
+		KZGlobalService::currentMap = map;
+	};
+
+	auto onError = [](KZ::API::Error error)
+	{
+		META_CONPRINTF("[KZ::Global] Failed to fetch map from API: %s\n", error.message.c_str());
+	};
+
+	KZGlobalService::FetchMap(mapName, onSuccess, onError);
+}
+
 bool FetchPlayerImpl(const char *url, KZGlobalService::Callback<std::optional<KZ::API::Player>> onSuccess,
 					 KZGlobalService::Callback<KZ::API::Error> onError)
 {
@@ -257,133 +281,6 @@ bool KZGlobalService::FetchPlayer(u64 steamID, Callback<std::optional<KZ::API::P
 	return FetchPlayerImpl(url.Get(), onSuccess, onError);
 }
 
-bool KZGlobalService::RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> onError)
-{
-	if (!IsHealthy())
-	{
-		META_CONPRINTF("[KZ::Global] Cannot register player (API is currently not healthy).\n");
-		onError({503, "unreachable"});
-		return false;
-	}
-
-	if (!IsAuthenticated())
-	{
-		META_CONPRINTF("[KZ::Global] Cannot register player (not authenticated with API).\n");
-		onError({401, "server is not global"});
-		return false;
-	}
-
-	CUtlString url;
-	url.Format("%s/players", apiURL);
-
-	auto newPlayer = KZ::API::NewPlayer {player->GetName(), player->GetSteamId64(), player->GetIpAddress()};
-	json requestBody = newPlayer.Serialize();
-
-	HTTP::Request request(HTTP::Method::POST, url.Get());
-
-	request.SetHeader("Authorization", (std::string("Bearer ") + apiToken.value()));
-	request.SetBody(requestBody.dump());
-
-	auto onResponse = [player, onError](HTTP::Response response)
-	{
-		switch (response.status)
-		{
-			case 0:
-			{
-				META_CONPRINTF("[KZ::Global] Failed to make HTTP request.\n");
-				break;
-			}
-
-			case 201:
-			{
-				auto onSuccess = [player](std::optional<KZ::API::Player> info)
-				{
-					if (!info)
-					{
-						player->languageService->PrintChat(true, false, "Player not found after registration");
-						return;
-					}
-
-					player->languageService->PrintChat(true, false, "Display Hello", info->name.c_str());
-					player->info = info.value();
-				};
-
-				auto onError = [player](KZ::API::Error error)
-				{
-					player->languageService->PrintError(error);
-				};
-
-				KZGlobalService::FetchPlayer(player->GetSteamId64(), onSuccess, onError);
-
-				break;
-			}
-
-			default:
-			{
-				KZ::API::Error error(response.status, response.Body().value_or(""));
-				onError(error);
-				return;
-			}
-		}
-	};
-
-	request.Send(onResponse);
-
-	return true;
-}
-
-bool KZGlobalService::UpdatePlayer(KZPlayer *player, Callback<std::optional<KZ::API::Error>> onError)
-{
-	if (!KZGlobalService::IsHealthy())
-	{
-		META_CONPRINTF("[KZ::Global] Cannot fetch map (API is currently not healthy).\n");
-		onError(std::make_optional<KZ::API::Error>({503, "unreachable"}));
-		return false;
-	}
-
-	CUtlString url;
-	url.Format("%s/players/%llu", apiURL, player->GetSteamId64());
-
-	const KZ::API::PlayerUpdate playerUpdate = {player->GetName(), player->GetIpAddress(), json::object(), player->session};
-	const json requestBody = playerUpdate.Serialize();
-
-	HTTP::Request request(HTTP::Method::PATCH, url.Get());
-
-	request.SetHeader("Authorization", (std::string("Bearer ") + apiToken.value()));
-	request.SetBody(requestBody.dump());
-
-	META_CONPRINTF("[KZ::Global] updating player at `%s` with `%s`\n", url.Get(), requestBody.dump().c_str());
-
-	auto onResponse = [player, onError](HTTP::Response response)
-	{
-		switch (response.status)
-		{
-			case 0:
-			{
-				META_CONPRINTF("[KZ::Global] Failed to make HTTP request.\n");
-				return;
-			}
-
-			case 204:
-			{
-				onError(std::nullopt);
-				break;
-			}
-
-			default:
-			{
-				KZ::API::Error error(response.status, response.Body().value_or(""));
-				onError(error);
-				return;
-			}
-		}
-	};
-
-	request.Send(onResponse);
-
-	return true;
-}
-
 bool FetchMapImpl(const char *url, KZGlobalService::Callback<std::optional<KZ::API::Map>> onSuccess,
 				  KZGlobalService::Callback<KZ::API::Error> onError)
 {
@@ -463,4 +360,222 @@ bool KZGlobalService::FetchMap(u16 id, Callback<std::optional<KZ::API::Map>> onS
 	CUtlString url;
 	url.Format("%s/maps/%d", apiURL, id);
 	return FetchMapImpl(url.Get(), onSuccess, onError);
+}
+
+void KZGlobalService::OnClientActive()
+{
+	session = KZ::API::Session(g_pKZUtils->GetServerGlobals()->realtime);
+
+	auto onSuccess = [this](std::optional<KZ::API::Player> playerInfo)
+	{
+		if (playerInfo)
+		{
+			player->languageService->PrintChat(true, false, "Display Hello", playerInfo->name.c_str());
+			this->playerInfo = playerInfo.value();
+			return;
+		}
+
+		auto onError = [this](std::optional<KZ::API::Error> error)
+		{
+			if (error)
+			{
+				ReportError(error.value());
+			}
+		};
+
+		RegisterPlayer(onError);
+	};
+
+	auto onError = [this](KZ::API::Error error)
+	{
+		ReportError(error);
+	};
+
+	KZGlobalService::FetchPlayer(player->GetSteamId64(), onSuccess, onError);
+}
+
+void KZGlobalService::OnClientDisconnect()
+{
+	// flush timestamp
+	session.UpdateTime();
+
+	auto onError = [this](std::optional<KZ::API::Error> error)
+	{
+		if (error)
+		{
+			META_CONPRINTF("[KZ::Global] Failed to send player update: %s\n", error->message.c_str());
+			return;
+		}
+
+		META_CONPRINTF("[KZ::Global] Updated `%s`.\n", player->GetName());
+	};
+
+	KZGlobalService::UpdatePlayer(onError);
+}
+
+void KZGlobalService::OnStopTouchGround()
+{
+	if (player->jumped)
+	{
+		session.Jump(player->inPerf);
+	}
+}
+
+bool KZGlobalService::RegisterPlayer(Callback<KZ::API::Error> onError)
+{
+	if (!IsHealthy())
+	{
+		META_CONPRINTF("[KZ::Global] Cannot register player (API is currently not healthy).\n");
+		onError({503, "unreachable"});
+		return false;
+	}
+
+	if (!IsAuthenticated())
+	{
+		META_CONPRINTF("[KZ::Global] Cannot register player (not authenticated with API).\n");
+		onError({401, "server is not global"});
+		return false;
+	}
+
+	CUtlString url;
+	url.Format("%s/players", apiURL);
+
+	auto newPlayer = KZ::API::NewPlayer {player->GetName(), player->GetSteamId64(), player->GetIpAddress()};
+	json requestBody = newPlayer.Serialize();
+
+	HTTP::Request request(HTTP::Method::POST, url.Get());
+
+	request.SetHeader("Authorization", (std::string("Bearer ") + apiToken.value()));
+	request.SetBody(requestBody.dump());
+
+	auto onResponse = [this, onError](HTTP::Response response)
+	{
+		switch (response.status)
+		{
+			case 0:
+			{
+				META_CONPRINTF("[KZ::Global] Failed to make HTTP request.\n");
+				break;
+			}
+
+			case 201:
+			{
+				auto onSuccess = [this](std::optional<KZ::API::Player> info)
+				{
+					if (!info)
+					{
+						player->languageService->PrintChat(true, false, "Player not found after registration");
+						return;
+					}
+
+					player->languageService->PrintChat(true, false, "Display Hello", info->name.c_str());
+					this->playerInfo = info.value();
+				};
+
+				auto onError = [this](KZ::API::Error error)
+				{
+					ReportError(error);
+				};
+
+				KZGlobalService::FetchPlayer(player->GetSteamId64(), onSuccess, onError);
+
+				break;
+			}
+
+			default:
+			{
+				KZ::API::Error error(response.status, response.Body().value_or(""));
+				onError(error);
+				return;
+			}
+		}
+	};
+
+	request.Send(onResponse);
+
+	return true;
+}
+
+bool KZGlobalService::UpdatePlayer(Callback<std::optional<KZ::API::Error>> onError)
+{
+	if (!KZGlobalService::IsHealthy())
+	{
+		META_CONPRINTF("[KZ::Global] Cannot update player (API is currently not healthy).\n");
+		onError(std::make_optional<KZ::API::Error>({503, "unreachable"}));
+		return false;
+	}
+
+	CUtlString url;
+	url.Format("%s/players/%llu", apiURL, player->GetSteamId64());
+
+	const KZ::API::PlayerUpdate playerUpdate = {player->GetName(), player->GetIpAddress(), json::object(), session};
+	const json requestBody = playerUpdate.Serialize();
+
+	HTTP::Request request(HTTP::Method::PATCH, url.Get());
+
+	request.SetHeader("Authorization", (std::string("Bearer ") + apiToken.value()));
+	request.SetBody(requestBody.dump());
+
+	META_CONPRINTF("[KZ::Global] updating player at `%s` with `%s`\n", url.Get(), requestBody.dump().c_str());
+
+	auto onResponse = [this, onError](HTTP::Response response)
+	{
+		switch (response.status)
+		{
+			case 0:
+			{
+				META_CONPRINTF("[KZ::Global] Failed to make HTTP request.\n");
+				return;
+			}
+
+			case 204:
+			{
+				onError(std::nullopt);
+				break;
+			}
+
+			default:
+			{
+				KZ::API::Error error(response.status, response.Body().value_or(""));
+				onError(error);
+				return;
+			}
+		}
+	};
+
+	request.Send(onResponse);
+
+	return true;
+}
+
+void KZGlobalService::ReportError(const KZ::API::Error &error)
+{
+	player->languageService->PrintChat(true, false, "API Error", error.status);
+	player->languageService->PrintConsole(false, false, "API Error Details", error.message.c_str(),
+										  error.details.is_null() ? "" : error.details.dump().c_str());
+}
+
+void KZGlobalService::DisplayMapInfo(const KZ::API::Map &map)
+{
+	std::string sep;
+
+	if (map.description)
+	{
+		sep = " | ";
+	}
+
+	std::string mappersText;
+
+	for (size_t idx = 0; idx < map.mappers.size(); idx++)
+	{
+		mappersText += map.mappers[idx].name;
+
+		if (idx != (map.mappers.size() - 1))
+		{
+			mappersText += ", ";
+		}
+	}
+
+	player->languageService->PrintChat(true, false, "CurrentMap", map.id, map.name, sep, map.description.value_or("").c_str(), map.workshopID,
+									   mappersText);
 }

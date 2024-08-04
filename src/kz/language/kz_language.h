@@ -170,36 +170,6 @@ public:
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintAlert, MESSAGE_ALERT)
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintHTMLCentre, MESSAGE_HTML)
 
-	void PrintError(const KZ::API::Error &error)
-	{
-		PrintChat(true, false, "API Error", error.status);
-		PrintConsole(false, false, "API Error Details", error.message.c_str(), error.details.is_null() ? "" : error.details.dump().c_str());
-	}
-
-	void PrintMap(const KZ::API::Map &map)
-	{
-		std::string sep;
-
-		if (map.description)
-		{
-			sep = " | ";
-		}
-
-		std::string mappersText;
-
-		for (size_t idx = 0; idx < map.mappers.size(); idx++)
-		{
-			mappersText += map.mappers[idx].name;
-
-			if (idx != (map.mappers.size() - 1))
-			{
-				mappersText += ", ";
-			}
-		}
-
-		PrintChat(true, false, "CurrentMap", map.id, map.name, sep, map.description.value_or("").c_str(), map.workshopID, mappersText);
-	}
-
 #undef REGISTER_PRINT_SINGLE_FUNCTION
 
 #define REGISTER_PRINT_ALL_FUNCTION(name, type) \

@@ -5,8 +5,6 @@
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
-#include "kz/global/error.h"
-#include "kz/global/players.h"
 
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
@@ -138,9 +136,6 @@ public:
 
 	void PlayErrorSound();
 
-	std::optional<KZ::API::Player> info {};
-	KZ::API::Session session;
-
 private:
 	bool hideLegs {};
 	f64 lastTeleportTime {};
@@ -236,6 +231,9 @@ public:
 	{
 		return static_cast<KZPlayer *>(player);
 	}
+
+	void OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
+	void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 };
 
 extern KZPlayerManager *g_pKZPlayerManager;

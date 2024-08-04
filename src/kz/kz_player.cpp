@@ -40,6 +40,7 @@ void KZPlayer::Init()
 	delete this->optionService;
 	delete this->noclipService;
 	delete this->tipService;
+	delete this->globalService;
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -53,6 +54,7 @@ void KZPlayer::Init()
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
+	this->globalService = new KZGlobalService(this);
 	KZ::mode::InitModeService(this);
 	KZ::style::InitStyleService(this);
 }
@@ -624,10 +626,7 @@ void KZPlayer::OnStopTouchGround()
 		this->styleServices[i]->OnStopTouchGround();
 	}
 
-	if (this->jumped)
-	{
-		this->session.Jump(this->inPerf);
-	}
+	this->globalService->OnStopTouchGround();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)

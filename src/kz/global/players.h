@@ -81,15 +81,12 @@ namespace KZ::API
 	{
 	public:
 		// HACK: this ctor is called before the clock initializes, so we can't set a correct `latestTimestamp` right away.
-		Session() : currentState(State::ACTIVE), secondsActive(0.0f), secondsAFK(0.0f), secondsSpectating(0.0f), latestTimestamp(0) {}
+		Session() : secondsActive(0.0f), secondsAFK(0.0f), secondsSpectating(0.0f), latestTimestamp(0) {}
 
 		/// Constructs a new session with a custom starting point in time.
 		///
 		/// This should only be called when a player joins!
-		Session(float timestamp)
-			: currentState(State::ACTIVE), secondsActive(0.0f), secondsAFK(0.0f), secondsSpectating(0.0f), latestTimestamp(timestamp)
-		{
-		}
+		Session(float timestamp) : secondsActive(0.0f), secondsAFK(0.0f), secondsSpectating(0.0f), latestTimestamp(timestamp) {}
 
 		/// Switches the player's state to "active" and updates playtime.
 		///
@@ -112,6 +109,9 @@ namespace KZ::API
 		/// Returns the delta between now and the last time we updated something.
 		float GoSpectating();
 
+		/// Updates `latestTimestamp` and returns the delta between now and the previous `latestTimestamp`.
+		float UpdateTime();
+
 		/// Switches the current course to the given `courseID` and updates stats for the given mode.
 		///
 		/// # Return
@@ -133,17 +133,14 @@ namespace KZ::API
 			SPECTATING,
 		};
 
-		State currentState;
 		float secondsActive;
 		float secondsAFK;
 		float secondsSpectating;
 		float latestTimestamp;
+		State currentState = State::ACTIVE;
 		BhopStats bhopStats {};
 		std::optional<u16> currentCourse {};
 		std::unordered_map<u16, CourseSession> courseSessions {};
-
-		/// Updates `latestTimestamp` and returns the delta between now and the previous `latestTimestamp`.
-		float UpdateTime();
 	};
 
 	struct PlayerUpdate

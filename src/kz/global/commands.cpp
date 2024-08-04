@@ -23,18 +23,18 @@ static_function SCMD_CALLBACK(Command_KzProfile)
 
 	auto onError = [player](KZ::API::Error error)
 	{
-		player->languageService->PrintError(error);
+		player->globalService->ReportError(error);
 	};
 
 	const char *playerIdentifier = args->Arg(1);
 
 	if (playerIdentifier[0] == '\0')
 	{
-		KZGlobalService::FetchPlayer(player->GetSteamId64(), onSuccess, onError);
+		player->globalService->FetchPlayer(player->GetSteamId64(), onSuccess, onError);
 	}
 	else
 	{
-		KZGlobalService::FetchPlayer(playerIdentifier, onSuccess, onError);
+		player->globalService->FetchPlayer(playerIdentifier, onSuccess, onError);
 	}
 
 	return MRES_SUPERCEDE;
@@ -55,19 +55,19 @@ static_function SCMD_CALLBACK(Command_KzMapInfo)
 				return;
 			}
 
-			player->languageService->PrintMap(map.value());
+			player->globalService->DisplayMapInfo(map.value());
 		};
 
 		auto onError = [player](KZ::API::Error error)
 		{
-			player->languageService->PrintError(error);
+			player->globalService->ReportError(error);
 		};
 
-		KZGlobalService::FetchMap(mapIdentifier, onSuccess, onError);
+		player->globalService->FetchMap(mapIdentifier, onSuccess, onError);
 	}
 	else if (KZGlobalService::currentMap)
 	{
-		player->languageService->PrintMap(KZGlobalService::currentMap.value());
+		player->globalService->DisplayMapInfo(KZGlobalService::currentMap.value());
 	}
 	else
 	{

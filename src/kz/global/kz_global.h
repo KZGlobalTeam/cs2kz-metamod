@@ -1,6 +1,5 @@
 #pragma once
 
-#include <atomic>
 #include <functional>
 #include <optional>
 #include <string>
@@ -20,6 +19,7 @@ public:
 	template<typename T>
 	using Callback = std::function<void(T)>;
 
+	/// API info about the current map.
 	static std::optional<KZ::API::Map> currentMap;
 
 	/// Initializes a global instance of this service.
@@ -27,6 +27,8 @@ public:
 
 	/// Registers commands.
 	static void RegisterCommands();
+
+	static void Hook_ActivateServer(const char *mapName);
 
 	/// Checks whether the API is healthy.
 	static bool IsHealthy()
@@ -50,17 +52,21 @@ public:
 	/// Returns whether an HTTP request was made.
 	static bool FetchPlayer(u64 steamID, Callback<std::optional<KZ::API::Player>> onSuccess, Callback<KZ::API::Error> onError);
 
-	/// Registers a player with the API.
-	static bool RegisterPlayer(KZPlayer *player, Callback<KZ::API::Error> onError);
-
-	/// Sends a player update to the API.
-	static bool UpdatePlayer(KZPlayer *player, Callback<std::optional<KZ::API::Error>> onError);
-
 	/// Fetches a map from the API using its name.
 	static bool FetchMap(const char *name, Callback<std::optional<KZ::API::Map>> onSuccess, Callback<KZ::API::Error> onError);
 
 	/// Fetches a map from the API using its ID.
 	static bool FetchMap(u16 id, Callback<std::optional<KZ::API::Map>> onSuccess, Callback<KZ::API::Error> onError);
+
+	/// Reports an API error to the player.
+	void ReportError(const KZ::API::Error &error);
+
+	/// Displays information about a map to the player.
+	void DisplayMapInfo(const KZ::API::Map &map);
+
+	void OnClientActive();
+	void OnClientDisconnect();
+	void OnStopTouchGround();
 
 private:
 	/// The API URL used for making requests.
@@ -71,12 +77,12 @@ private:
 	/// Whether the API responded since the last heartbeat.
 	///
 	/// This is private with a public getter so other classes can check the API status but not tamper with it.
-	static std::atomic<bool> isHealthy;
+	static bool isHealthy;
 
 	/// Whether the timer for the authentication flow has already been started.
 	///
 	/// This is initialized as `false` and later set to `true` after the first successful heartbeat.
-	static std::atomic<bool> authTimerInitialized;
+	static bool authTimerInitialized;
 
 	/// The server's API key used for generating access tokens.
 	///
@@ -104,4 +110,16 @@ private:
 
 	/// Timer callback for fetching access tokens every `authInterval` seconds.
 	static f64 Auth();
+
+	/// API info about the current player.
+	std::optional<KZ::API::Player> playerInfo {};
+
+	/// Session information we send to the API when the player disconnects.
+	KZ::API::Session session {};
+
+	/// Registers this player with the API.
+	bool RegisterPlayer(Callback<KZ::API::Error> onError);
+
+	/// Sends an update for this player update to the API.
+	bool UpdatePlayer(Callback<std::optional<KZ::API::Error>> onError);
 };
