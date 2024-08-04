@@ -250,6 +250,7 @@
 	"Command Description - kz_goto"
 	{
 		"en"		"Go to a player."
+		"chi"		"传送到一个玩家身边."
 		"ru"		"Телепортироваться к игроку."
 		"fi"		"Mene pelaajan luokse."
 		"sv"		"Gå till en spelare."
@@ -258,6 +259,7 @@
 	"Command Description - kz_style"
 	{
 		"en"		"List, add, remove or toggle style."
+		"chi"		"列出, 添加, 移除或切换风格."
 		"ru"		"Показать, добавить, удалить или переключить стиль."
 		"fi"		"Listaa, lisää, poista tai vaihda tyyliä."
 		"sv"		"Lista, lägg till, ta bort eller toggla style."
@@ -266,6 +268,7 @@
 	"Command Description - kz_addstyle"
 	{
 		"en"		"List or add style."
+		"chi"		"列出或添加风格."
 		"ru"		"Показать или добавить стиль"
 		"fi"		"Listaa tai lisää tyyli."
 		"sv"		"Lista eller lägg till style."
@@ -274,6 +277,7 @@
 	"Command Description - kz_removestyle"
 	{
 		"en"		"List active styles or remove style."
+		"chi"		"列出已激活风格或移除风格."
 		"ru"		"Показать активные стили или удалить стиль."
 		"fi"		"Listaa aktiiviset tyylit tai poista tyyli."
 		"sv"		"Lista aktiva styles eller ta bort style."
@@ -282,6 +286,7 @@
 	"Command Description - kz_togglestyle"
 	{
 		"en"		"List or toggle style."
+		"chi"		"列出或切换风格."
 		"ru"		"Показать или переключить стиль."
 		"fi"		"Listaa tai vaihda tyyliä."
 		"sv"		"Lista eller toggla style."
@@ -290,6 +295,7 @@
 	"Command Description - kz_clearstyles"
 	{
 		"en"		"Clear all styles."
+		"chi"		"清除所有风格."
 		"ru"		"Очистить все стили."
 		"fi"		"Tyhjennä kaikki tyylit."
 		"sv"		"Rensa alla styles."
@@ -371,6 +377,7 @@
 	{
 		// Hidden to users.
 		"en"		"Jointeam interceptor."
+		"chi"		"Jointeam interceptor."
 		"fi"		"Jointeam interceptor."
 		"sv"		"Jointeam interceptor."
 	}
@@ -413,6 +420,7 @@
 	"Command Description - kz_pb"
 	{
 		"en"		"Retrieve personal best statistics."
+		"chi"		"查询个人最佳数据."
 		"ru"		"Показать личный рекорд."
 		"fi"		"Hae henkilökohtaiset parhaat statistiikat."
 		"sv"		"Hämta personlig bästa statistik."

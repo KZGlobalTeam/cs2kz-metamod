@@ -124,6 +124,7 @@
 	"HUD - HTML Panel Disabled"
 	{
 		"en"		"Panel disabled."
+		"chi"		"面板关闭."
 		"ru"		"Панель отключена."
 		"fi"		"Paneeli poistettu käytöstä."
 		"sv"		"Panel inaktiverad."
