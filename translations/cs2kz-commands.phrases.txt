@@ -251,6 +251,7 @@
 	{
 		"en"		"Go to a player."
 		"ru"		"Телепортироваться к игроку."
+		"fi"		"Mene pelaajan luokse."
 		"sv"		"Gå till en spelare."
 	}
 	"Command Description - kz_style"
