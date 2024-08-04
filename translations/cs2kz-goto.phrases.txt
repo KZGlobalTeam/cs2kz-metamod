@@ -15,7 +15,7 @@
 		"en"		"{darkred}Cannot teleport. {player} is a spectator."
 		"chi"		"{darkred}传送失败. {player} 处于观察状态."
 		"ru"		"{darkred}Невозможно телепортироваться. {player} находится наблюдателях."
-		"fi		"{darkred}Ei voida teleportata. {player} on katselija."
+		"fi"		"{darkred}Ei voida teleportata. {player} on katselija."
 		"sv"		"{darkred}Kan inte teleportra. {player} är en åskådare."
 		"ua"		"{darkred}Неможливо телепортуватися. {player} знаходиться в спостерігачах."
 	}
