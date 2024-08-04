@@ -78,9 +78,6 @@ void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, CSGOUse
 {
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	CBasePlayerController *controller = player->GetController();
-
-	META_CONPRINTF("[SV %i | CL %i] Running command %i for %s. \n", g_pKZUtils->GetServerGlobals()->tickcount, g_pKZUtils->GetGlobals()->tickcount,
-				   pb->base().command_number(), player->GetName());
 	player->OnSetupMove(pb);
 	SetupMove(ms, pb, mv);
 	player->OnSetupMovePost(pb);
