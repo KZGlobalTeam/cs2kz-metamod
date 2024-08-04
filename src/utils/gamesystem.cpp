@@ -34,7 +34,7 @@ IGameSystemFactory *CGameSystem::sm_Factory = nullptr;
 // This mess is needed to get the pointer to sm_pFirst so we can insert game systems
 bool InitGameSystems()
 {
-	uint8 *ptr = (uint8*)g_pGameConfig->ResolveSignature("IGameSystem_InitAllSystems_pFirst") + 3;
+	uint8 *ptr = (uint8 *)g_pGameConfig->ResolveSignature("IGameSystem_InitAllSystems_pFirst") + 3;
 
 	if (!ptr)
 	{
@@ -43,7 +43,7 @@ bool InitGameSystems()
 	}
 
 	// Grab the offset as 4 bytes
-	uint32 offset = *(uint32*)ptr;
+	uint32 offset = *(uint32 *)ptr;
 
 	// Go to the next instruction, which is the starting point of the relative jump
 	ptr += 4;

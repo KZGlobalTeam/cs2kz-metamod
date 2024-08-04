@@ -28,7 +28,7 @@ class CGameSystem : public CBaseGameSystem
 {
 public:
 	GS_EVENT(BuildGameSessionManifest);
-	
+
 	void Shutdown() override
 	{
 		Warning("CGameSystem::Shutdown\n");
@@ -38,7 +38,9 @@ public:
 	void SetGameSystemGlobalPtrs(void *pValue) override
 	{
 		if (sm_Factory)
+		{
 			sm_Factory->SetGlobalPtr(pValue);
+		}
 	}
 
 	bool DoesGameSystemReallocate() override
@@ -55,9 +57,9 @@ public:
 class IEntityResourceManifest
 {
 public:
-	virtual void AddResource(const char*) = 0;
-	virtual void AddResource(const char*, void*) = 0;
-	virtual void AddResource(const char*, void*, void*, void*) = 0;
+	virtual void AddResource(const char *) = 0;
+	virtual void AddResource(const char *, void *) = 0;
+	virtual void AddResource(const char *, void *, void *, void *) = 0;
 	virtual void unk_04() = 0;
 	virtual void unk_05() = 0;
 	virtual void unk_06() = 0;
