@@ -42,7 +42,7 @@ KZPlayer *KZPlayerManager::ToPlayer(u32 index)
 	return static_cast<KZPlayer *>(MovementPlayerManager::players[index]);
 }
 
-void CKZPlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
+void KZPlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
 	META_CONPRINTF("OnClientActive yippie `%s`\n", pszName);
 	return;
@@ -56,8 +56,8 @@ void CKZPlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const ch
 	player->globalService->OnClientActive();
 }
 
-void CKZPlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid,
-										  const char *pszNetworkID)
+void KZPlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid,
+										 const char *pszNetworkID)
 {
 	META_CONPRINTF("OnClientDisconnect yippie `%s`\n", pszName);
 	return;
