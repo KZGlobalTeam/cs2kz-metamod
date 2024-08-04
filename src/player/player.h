@@ -118,7 +118,6 @@ public:
 	// General
 	const i32 index;
 	bool hasPrime {};
-	const char *name;
 
 private:
 	CSteamID unauthenticatedSteamID = k_steamIDNil;

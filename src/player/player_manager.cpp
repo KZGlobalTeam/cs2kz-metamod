@@ -80,8 +80,6 @@ Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1,
 									CBufferString *pRejectReason)
 {
-	Player *player = ToPlayer(slot);
-	player->name = pszName;
 }
 
 void PlayerManager::OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress,
