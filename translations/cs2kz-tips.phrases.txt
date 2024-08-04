@@ -10,6 +10,7 @@
 		"fi"		"{grey}Näet nyt satunnaisia vihjeitä chatissäsi määräajoin."
 		"sv"		"{grey}Nu kommer du att se tips i chatten med jämna mellanrum."
 		"ua"		"{grey}Тепер ви періодично будете бачити випадкові поради та підказки в чаті."
+		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler göreceksin."
 	}
 	"Option - Tips - Disable"
 	{
@@ -20,5 +21,6 @@
 		"fi"		"{grey}Et enää näe satunnaisia vihjeitä chatissäsi määräajoin."
 		"sv"		"{grey}Nu kommer du inte att se tips i chatten med jämna mellanrum."
 		"ua"		"{grey}Ви більше не будете бачити підказок в чаті."
+		"tr"		"{grey}}Periyodik olarak sohbette rastgele öneriler görmeyeceksin."
 	}
 }
