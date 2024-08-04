@@ -37,7 +37,10 @@ public:
 	Fn m_fn;
 	std::tuple<Args...> m_args;
 
-	explicit CTimer(bool useRealTime, Fn fn, Args... args) : CTimerBase(0.0, useRealTime), m_fn(fn), m_args(std::make_tuple(std::move(args)...)) {}
+	explicit CTimer(bool useRealTime, f32 initialDelay, Fn fn, Args... args)
+		: CTimerBase(initialDelay, useRealTime), m_fn(fn), m_args(std::make_tuple(std::move(args)...))
+	{
+	}
 
 	bool Execute() override
 	{
@@ -48,9 +51,9 @@ public:
 
 /* Creates a timer for the given function, the function must return a f64 that represents the interval in seconds; 0 or less to stop the timer */
 template<typename... Args>
-CTimer<Args...> *StartTimer(typename CTimer<Args...>::Fn fn, Args... args, bool preserveMapChange = true, bool useRealTime = false)
+CTimer<Args...> *StartTimer(typename CTimer<Args...>::Fn fn, Args... args, f64 initialDelay, bool preserveMapChange = true, bool useRealTime = false)
 {
-	auto timer = new CTimer<Args...>(useRealTime, fn, args...);
+	auto timer = new CTimer<Args...>(useRealTime, initialDelay, fn, args...);
 	g_pKZUtils->AddTimer(timer, preserveMapChange);
 	return timer;
 }
