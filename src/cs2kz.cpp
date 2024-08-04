@@ -7,6 +7,7 @@
 #include "utils/utils.h"
 #include "utils/hooks.h"
 #include "utils/gameconfig.h"
+#include "utils/gamesystem.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
@@ -42,6 +43,12 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	{
 		return false;
 	}
+	
+	if (!InitGameSystems())
+	{
+		return false;
+	}
+
 	hooks::Initialize();
 	movement::InitDetours();
 
