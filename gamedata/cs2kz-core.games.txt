@@ -4,14 +4,6 @@
 	{
 		"Signatures"
 		{
-			// "Game System %s is defined twice!\n"
-			// Note that this signature points to the instruction with sm_pFirst which is the first qword referenced in the function.
-			"IGameSystem_InitAllSystems_pFirst"
-			{
-				"library"		"server"
-				"windows"		"\x48\x8B\x1D\x2A\x2A\x2A\x2A\x48\x85\xDB\x0F\x84\x2A\x2A\x2A\x2A\xBE\x2A\x2A\x2A\x2A\x0F\x1F\x00\x48\x8B\x7B\x10"
-				"linux"			"\x4C\x8B\x35\x2A\x2A\x2A\x2A\x4D\x85\xF6\x75\x2D\xE9\x2A\x2A\x2A\x2A\x0F\x1F\x40\x00\x48\x8B\x05"
-			}
 			// Taken from cs2fixes
 			"CCSPlayerController_SwitchTeam"
 			{
