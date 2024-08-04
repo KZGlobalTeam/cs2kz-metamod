@@ -43,7 +43,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	{
 		return false;
 	}
-	
+
 	if (!InitGameSystems())
 	{
 		return false;
