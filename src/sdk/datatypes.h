@@ -247,6 +247,7 @@ public:
 	CUtlVector<SubtickMove> m_SubtickMoves;
 	CUtlVector<SubtickMove> m_AttackSubtickMoves;
 	bool m_bHasSubtickInputs;
+	float unknown; // Set to 1.0 during SetupMove, never change during gameplay.
 	CUtlVector<touchlist_t> m_TouchList;
 	Vector m_collisionNormal;
 	Vector m_groundNormal; // unsure
