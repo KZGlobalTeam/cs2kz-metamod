@@ -34,6 +34,10 @@ public:
 
 	virtual void OnProcessUsercmdsPost(void *, int) {}
 
+	virtual void OnSetupMove(CSGOUserCmdPB *) {}
+
+	virtual void OnSetupMovePost(CSGOUserCmdPB *) {}
+
 	virtual void OnProcessMovement() {}
 
 	virtual void OnProcessMovementPost() {}

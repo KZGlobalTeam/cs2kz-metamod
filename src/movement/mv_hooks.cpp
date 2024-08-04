@@ -1,3 +1,4 @@
+#include "cs_usercmd.pb.h"
 #include "movement.h"
 #include "utils/detours.h"
 #include "utils/gameconfig.h"
@@ -10,6 +11,7 @@ void movement::InitDetours()
 	INIT_DETOUR(g_pGameConfig, PhysicsSimulate);
 	INIT_DETOUR(g_pGameConfig, GetMaxSpeed);
 	INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
+	INIT_DETOUR(g_pGameConfig, SetupMove);
 	INIT_DETOUR(g_pGameConfig, ProcessMovement);
 	INIT_DETOUR(g_pGameConfig, PlayerMoveNew);
 	INIT_DETOUR(g_pGameConfig, CheckParameters);
@@ -70,6 +72,18 @@ i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, v
 	auto retValue = ProcessUsercmds(controller, cmds, numcmds, paused, margin);
 	player->OnProcessUsercmdsPost(cmds, numcmds);
 	return retValue;
+}
+
+void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, CSGOUserCmdPB *pb, CMoveData *mv)
+{
+	MovementPlayer *player = playerManager->ToPlayer(ms);
+	CBasePlayerController *controller = player->GetController();
+
+	META_CONPRINTF("[SV %i | CL %i] Running command %i for %s. \n", g_pKZUtils->GetServerGlobals()->tickcount, g_pKZUtils->GetGlobals()->tickcount,
+				   pb->base().command_number(), player->GetName());
+	player->OnSetupMove(pb);
+	SetupMove(ms, pb, mv);
+	player->OnSetupMovePost(pb);
 }
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)

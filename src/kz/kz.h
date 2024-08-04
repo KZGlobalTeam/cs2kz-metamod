@@ -61,6 +61,8 @@ public:
 	virtual void OnPhysicsSimulatePost() override;
 	virtual void OnProcessUsercmds(void *, int) override;
 	virtual void OnProcessUsercmdsPost(void *, int) override;
+	virtual void OnSetupMove(CSGOUserCmdPB *) override;
+	virtual void OnSetupMovePost(CSGOUserCmdPB *) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnPlayerMove() override;

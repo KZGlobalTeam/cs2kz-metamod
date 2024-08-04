@@ -127,6 +127,24 @@ void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 	}
 }
 
+void KZPlayer::OnSetupMove(CSGOUserCmdPB *pb)
+{
+	this->modeService->OnSetupMove(pb);
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnSetupMove(pb);
+	}
+}
+
+void KZPlayer::OnSetupMovePost(CSGOUserCmdPB *pb)
+{
+	this->modeService->OnSetupMovePost(pb);
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnSetupMovePost(pb);
+	}
+}
+
 void KZPlayer::OnProcessMovement()
 {
 	MovementPlayer::OnProcessMovement();
