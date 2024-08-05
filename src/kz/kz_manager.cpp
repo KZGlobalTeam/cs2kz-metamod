@@ -44,8 +44,6 @@ KZPlayer *KZPlayerManager::ToPlayer(u32 index)
 
 void KZPlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
-	META_CONPRINTF("OnClientActive yippie `%s`\n", pszName);
-	return;
 	KZPlayer *player = this->ToPlayer(slot);
 
 	if (player->IsFakeClient())
@@ -59,8 +57,6 @@ void KZPlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const cha
 void KZPlayerManager::OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid,
 										 const char *pszNetworkID)
 {
-	META_CONPRINTF("OnClientDisconnect yippie `%s`\n", pszName);
-	return;
 	KZPlayer *player = this->ToPlayer(slot);
 
 	if (player->IsFakeClient())
