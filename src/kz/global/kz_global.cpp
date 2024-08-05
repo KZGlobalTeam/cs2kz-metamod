@@ -440,7 +440,7 @@ bool KZGlobalService::RegisterPlayer(Callback<KZ::API::Error> onError)
 	CUtlString url;
 	url.Format("%s/players", apiURL);
 
-	auto newPlayer = KZ::API::NewPlayer {player->GetName(), player->GetSteamId64(), player->GetIpAddress()};
+	KZ::API::NewPlayer newPlayer = {player->GetName(), player->GetSteamId64(), player->GetIpAddress()};
 	json requestBody = newPlayer.Serialize();
 
 	HTTP::Request request(HTTP::Method::POST, url.Get());

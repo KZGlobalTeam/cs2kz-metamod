@@ -1,6 +1,3 @@
-#include "../kz/kz.h"
-#include "../kz/language/kz_language.h"
-#include "../kz/global/kz_global.h"
 #include "player.h"
 #include "utils/utils.h"
 #include "iserver.h"
