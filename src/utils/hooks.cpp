@@ -9,6 +9,7 @@
 
 #include "cs2kz.h"
 #include "ctimer.h"
+#include "kz/kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
@@ -790,6 +791,6 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 	if (g_KZPlugin.IsAddonMounted())
 	{
 		Warning("[CS2KZ] Precache kz soundevents \n");
-		pResourceManifest->AddResource("soundevents/soundevents_kz.vsndevts");
+		pResourceManifest->AddResource(KZ_WORKSHOP_ADDONS_SNDEVENT_FILE);
 	}
 }

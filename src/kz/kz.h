@@ -11,6 +11,7 @@
 #define KZ_SND_DO_TP  "UIPanorama.round_report_odds_none"
 
 #define KZ_WORKSHOP_ADDONS_ID "3171124941"
+#define KZ_WORKSHOP_ADDONS_SNDEVENT_FILE "soundevents/soundevents_kz.vsndevts"
 
 #define KZ_DEFAULT_CHAT_PREFIX  "{lime}KZ {grey}|{default}"
 #define KZ_DEFAULT_TIP_INTERVAL 75.0
