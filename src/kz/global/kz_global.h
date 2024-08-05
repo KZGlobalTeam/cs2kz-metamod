@@ -66,7 +66,9 @@ public:
 
 	void OnClientActive();
 	void OnClientDisconnect();
-	void OnStopTouchGround();
+
+	/// Gets called when the player lands a bhop-like jump.
+	void OnBhop(bool perf);
 
 private:
 	/// The API URL used for making requests.

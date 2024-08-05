@@ -413,12 +413,9 @@ void KZGlobalService::OnClientDisconnect()
 	KZGlobalService::UpdatePlayer(onError);
 }
 
-void KZGlobalService::OnStopTouchGround()
+void KZGlobalService::OnBhop(bool perf)
 {
-	if (player->jumped)
-	{
-		session.Jump(player->inPerf);
-	}
+	session.Jump(perf);
 }
 
 bool KZGlobalService::RegisterPlayer(Callback<KZ::API::Error> onError)

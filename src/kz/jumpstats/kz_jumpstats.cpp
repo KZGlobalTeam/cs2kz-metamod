@@ -7,6 +7,7 @@
 #include "../style/kz_style.h"
 #include "../option/kz_option.h"
 #include "../language/kz_language.h"
+#include "../global/kz_global.h"
 
 #include "tier0/memdbgon.h"
 
@@ -725,7 +726,17 @@ void KZJumpstatsService::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 
 
 void KZJumpstatsService::AddJump()
 {
-	this->jumps.AddToTail(Jump(this->player));
+	Jump jump(this->player);
+
+	this->jumps.AddToTail(jump);
+
+	int bhopJumpTypes = JumpType_Bhop | JumpType_MultiBhop | JumpType_WeirdJump;
+	JumpType jumpType = jump.GetJumpType();
+
+	if ((bhopJumpTypes & jumpType) == jumpType)
+	{
+		this->player->globalService->OnBhop(this->player->inPerf);
+	}
 }
 
 void KZJumpstatsService::UpdateJump()

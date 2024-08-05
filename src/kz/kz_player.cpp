@@ -625,8 +625,6 @@ void KZPlayer::OnStopTouchGround()
 	{
 		this->styleServices[i]->OnStopTouchGround();
 	}
-
-	this->globalService->OnStopTouchGround();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
