@@ -216,6 +216,8 @@ void hooks::Cleanup()
 
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 
+	SH_REMOVE_HOOK_ID(buildGameSessionManifestHookID);
+
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
 
