@@ -44,6 +44,8 @@ KZPlayer *KZPlayerManager::ToPlayer(u32 index)
 
 void KZPlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
+	MovementPlayerManager::OnClientActive(slot, bLoadGame, pszName, xuid);
+
 	KZPlayer *player = this->ToPlayer(slot);
 
 	if (player->IsFakeClient())
