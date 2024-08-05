@@ -8,6 +8,7 @@
 		"fi"	"{grey}Voit vaihtaa jumpstattien reportoinnin asetusta käyttämällä {default}/togglejs{grey} komentoa."
 		"sv"	"{grey}Du kan ändra jumpstats chattutskriften genom att skriva {default}/togglejs{grey}."
 		"ua"	"{grey}Ви можете увімк./вимк. статистику стрибків написавши в чат {default}/togglejs{grey}."
+		"tr"	"{grey}Zıplama istatistiklerinin sohbette gözükmesi için {default}/togglejs{grey}."
 	}
 	"Tip - kz_jsalways"
 	{
@@ -17,5 +18,6 @@
 		"fi"	"{grey}Käytä {default}/jsalways {grey}komentoa vaihtaaksesi \"aina-päällä\" jumpstattien asetuksen tilaa."
 		"sv"	"{grey}Använd {default}/jsalways {grey}för att toggla alla egna jumpstats."
 		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}щоб увімк./вимк. постійне відображення статистики стрибків."
+		"tr"	"{grey}{default}/jsalways {grey}kullanarak tüm zıplama istatistiklerinin sohbette gözükmesini açabilirsin."
 	}
 }

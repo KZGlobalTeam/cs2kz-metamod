@@ -8,6 +8,7 @@
 		"fi"		"{darkred}Pysäytä ajastimesi ennen, kuin koitat teleportata."
 		"sv"		"{darkred}Stäng av din timer innan du försöker teleportera."
 		"ua"		"{darkred}Зупиніть таймер перед тим як телепортуватися."
+		"tr"		"{darkred}Bir oyuncuya ışınlanmadan önce süreyi durdur."
 	}
 	"Goto - Error Message (Player In Spec)"
 	{
@@ -18,6 +19,7 @@
 		"fi"		"{darkred}Ei voida teleportata. {player} on katselija."
 		"sv"		"{darkred}Kan inte teleportra. {player} är en åskådare."
 		"ua"		"{darkred}Неможливо телепортуватися. {player} знаходиться в спостерігачах."
+		"tr"		"{darkred}Işınlanamazsın. {player} izleyici takımında."
 	}
 	"Goto - Error Message (Player Not Found)"
 	{
@@ -28,6 +30,7 @@
 		"fi"		"{darkred}Pelaajaa nimeltä \"{player}\" ei löytynyt."
 		"sv"		"{darkred}Kunde inte hitta någon som heter något med \"{player}\"."
 		"ua"		"{darkred}Неможливо знайти гравця \"{player}\"."
+		"tr"		"{darkred}\"{player}\" isminde bir oyuncu bulunamadı."
 	}
 	"Goto - Teleported"
 	{
@@ -38,6 +41,7 @@
 		"fi"		"{grey}Teleporttasit pelaajan {player} luokse."
 		"sv"		"{grey}Teleporterade till {player}."
 		"ua"		"{grey}Ви телепортувалися до {player}."
+		"tr"		"{grey}{player} isimli oyuncuya ışınlandın."
 	}
 	"Goto - Command Usage"
 	{
@@ -47,5 +51,6 @@
 		"fi"		"{grey}Käyttö: {default}kz_goto <pelaajan nimi>"
 		"sv"		"{grey}Användning: {default}kz_goto <spelares namn>"
 		"ua"		"{grey}Використання: {default}kz_goto <нікнейм гравця>"
+		"tr"		"{grey}Kullanım: {default}kz_goto <oyuncu ismi>"
 	}
 }

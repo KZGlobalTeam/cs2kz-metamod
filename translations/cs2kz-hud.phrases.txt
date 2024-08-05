@@ -8,6 +8,7 @@
 		"fi"	"Nopeus"
 		"sv"	"Hastighet"
 		"ua"	"Швидкість"
+		"tr"	"Hız"
 	}
 	"HUD - Stopped Text"
 	{
@@ -18,6 +19,7 @@
 		"fi"		" (PYSÄYTETTY)"
 		"sv"		" (STOPPAD)"
 		"ua"		" (ЗУПИНЕНО)"
+		"tr"		" (DURDURULDU)"
 	}
 	"HUD - Paused Text"
 	{
@@ -28,6 +30,7 @@
 		"fi"		" (KESKEYTETTY)"
 		"sv"		" (PAUSAD)"
 		"ua"		" (НА ПАУЗІ)"
+		"tr"		" (DURAKLATILDI)"
 	}
 	"HUD - Speed Text"
 	{
@@ -39,6 +42,7 @@
 		"fi"		"Nopeus: {speed}"
 		"sv"		"Hastighet: {speed}"
 		"ua"		"Швидкість: {speed}"
+		"tr"		"Hız: {speed}"
 	}
 	"HUD - Speed Text (Takeoff)"
 	{
@@ -50,6 +54,7 @@
 		"fi"		"Nopeus: {speed} ({takeoff_speed})"
 		"sv"		"Hastighet: {speed} ({takeoff_speed})"
 		"ua"		"Швидкість: {speed} ({takeoff_speed})"
+		"tr"		"Hız: {speed} ({takeoff_speed})"
 	}
 	"HUD - Key Text"
 	{
@@ -61,6 +66,7 @@
 		"fi"		"Näppäimet: {left} {forward} {back} {right} {duck} {jump}"
 		"sv"		"Knappar: {left} {forward} {back} {right} {duck} {jump}"
 		"ua"		"Кнопки: {left} {forward} {back} {right} {duck} {jump}"
+		"tr"		"Tuşlar: {left} {forward} {back} {right} {duck} {jump}"
 	}
 	"HUD - Checkpoint Text"
 	{
@@ -72,6 +78,7 @@
 		"fi"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"sv"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"ua"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
+		"tr"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
@@ -83,6 +90,7 @@
 		"fi"		"{time}{stop_text}{pause_text}"
 		"sv"		"{time}{stop_text}{pause_text}"
 		"ua"		"{time}{stop_text}{pause_text}"
+		"tr"		"{time}{stop_text}{pause_text}"
 	}
 	"HUD - Center Text"
 	{
@@ -95,6 +103,7 @@
 		"fi"		"{checkpoint_text}\n{timer_text}"
 		"sv"		"{checkpoint_text}\n{timer_text}"
 		"ua"		"{checkpoint_text}\n{timer_text}"
+		"tr"		"{checkpoint_text}\n{timer_text}"
 	}
 	// This text is actually "more" center.
 	"HUD - Alert Text"
@@ -107,6 +116,7 @@
 		"fi"		""
 		"sv"		""
 		"ua"		""
+		"tr"		""
 	}
 	"HUD - HTML Center Text"
 	{
@@ -119,6 +129,7 @@
 		"fi"		"{speed_text}<br>{key_text}"
 		"sv"		"{speed_text}<br>{key_text}"
 		"ua"		"{speed_text}<br>{key_text}"
+		"tr"		"{speed_text}<br>{key_text}"
 	}
 	
 	"HUD - HTML Panel Disabled"
@@ -129,6 +140,7 @@
 		"fi"		"Paneeli poistettu käytöstä."
 		"sv"		"Panel inaktiverad."
 		"ua"		"Панель вимкнено."
+		"tr"		"Panel kapatıldı."
 	}
 
 	"HUD Option - Info Panel - Enable"
@@ -140,6 +152,7 @@
 		"fi"		"{grey}Sinun keski-infopaneelisi on otettu käyttöön."
 		"sv"		"{grey}Din mittpanel har aktiverats."
 		"ua"		"{grey}Ви увімкнули відображення центральної панелі."
+		"tr"		"{grey}Orta bilgi paneli açıldı."
 	}
 	"HUD Option - Info Panel - Disable"
 	{
@@ -150,5 +163,6 @@
 		"fi"		"{grey}Sinun keski-infopaneelisi on poistettu käyttöstä."
 		"sv"		"{grey}Din mittpanel har inaktiverats."
 		"ua"		"{grey}Ви вимкнули відображення центральної панелі."
+		"tr"		"{grey}Orta bilgi paneli kapatıldı."
 	}
 }
