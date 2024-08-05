@@ -4,10 +4,12 @@
 #include "igameeventsystem.h"
 #include "igamesystem.h"
 #include "utils/simplecmds.h"
+#include "utils/gamesystem.h"
 #include "steam/steam_gameserver.h"
 
 #include "cs2kz.h"
 #include "ctimer.h"
+#include "kz/kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
@@ -122,6 +124,10 @@ static_global int serverGamePostSimulateHook {};
 SH_DECL_HOOK1_void(IGameSystem, ServerGamePostSimulate, SH_NOATTRIB, false, const EventServerGamePostSimulate_t *);
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *);
 
+static_global int buildGameSessionManifestHookID {};
+SH_DECL_HOOK1_void(IGameSystem, BuildGameSessionManifest, SH_NOATTRIB, false, const EventBuildGameSessionManifest_t *);
+static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg);
+
 static_global bool ignoreTouchEvent {};
 
 void hooks::Initialize()
@@ -170,6 +176,13 @@ void hooks::Initialize()
 		SH_STATIC(Hook_ServerGamePostSimulate), 
 		true
 	);
+	buildGameSessionManifestHookID = SH_ADD_DVPHOOK(
+		IGameSystem, 
+		BuildGameSessionManifest, 
+		(IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem"), 
+		SH_STATIC(Hook_BuildGameSessionManifest), 
+		true
+	);
 	// clang-format on
 }
 
@@ -203,6 +216,8 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK_ID(activateServerHook);
 
 	SH_REMOVE_HOOK_ID(changeTeamHook);
+
+	SH_REMOVE_HOOK_ID(buildGameSessionManifestHookID);
 
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
@@ -767,4 +782,15 @@ static_function bool Hook_ActivateServer()
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
 {
 	ProcessTimers();
+}
+
+static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg)
+{
+	Warning("[CS2KZ] IGameSystem::BuildGameSessionManifest\n");
+	IEntityResourceManifest *pResourceManifest = msg->m_pResourceManifest;
+	if (g_KZPlugin.IsAddonMounted())
+	{
+		Warning("[CS2KZ] Precache kz soundevents \n");
+		pResourceManifest->AddResource(KZ_WORKSHOP_ADDONS_SNDEVENT_FILE);
+	}
 }

@@ -42,6 +42,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	{
 		return false;
 	}
+
 	hooks::Initialize();
 	movement::InitDetours();
 
