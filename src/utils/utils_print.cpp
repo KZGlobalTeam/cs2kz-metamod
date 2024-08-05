@@ -275,6 +275,28 @@ void utils::ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char
 	vsnprintf(buffer, sizeof(buffer), format, args); \
 	va_end(args);
 
+void utils::SayChat(CBaseEntity *entity, const char *format, ...)
+{
+	FORMAT_STRING(buffer);
+
+	char coloredBuffer[512];
+	if (!CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
+	{
+		Warning("utils::SayChat did not have enough space to print: %s\n", buffer);
+	}
+
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SayText2");
+	auto msg = netmsg->AllocateMessage()->ToPB<CUserMessageSayText2>();
+	msg->set_entityindex(entity->entindex());
+	msg->set_messagename(coloredBuffer);
+	msg->set_chat(false);
+
+	CBroadcastRecipientFilter *filter = new CBroadcastRecipientFilter;
+
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, filter, netmsg, msg, 0);
+	netmsg->DeallocateMessage(msg);
+}
+
 void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);

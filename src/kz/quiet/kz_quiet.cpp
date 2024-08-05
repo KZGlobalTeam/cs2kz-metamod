@@ -116,11 +116,18 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 		}
 		// Used by kz_misc to block valve's player say messages.
 		case CS_UM_SayText:
-		case CS_UM_SayText2:
 		case UM_SayText:
-		case UM_SayText2:
 		{
 			*(uint64 *)clients = 0;
+		}
+		case CS_UM_SayText2:
+		case UM_SayText2:
+		{
+			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CUserMessageSayText2>();
+			if (!msg->mutable_param1()->empty() || !msg->mutable_param2()->empty())
+			{
+				*(uint64 *)clients = 0;
+			}
 			return;
 		}
 		default:

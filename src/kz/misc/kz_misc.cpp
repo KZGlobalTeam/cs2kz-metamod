@@ -254,13 +254,13 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 
 		if (player->IsAlive())
 		{
-			utils::CPrintChatAll("{lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::SayChat(player->GetController(), "{lime}%s{default}: %s", player->GetName(), message.Get());
 			utils::PrintConsoleAll("%s: %s", player->GetName(), message.Get());
 			META_CONPRINTF("%s: %s\n", player->GetName(), message.Get());
 		}
 		else
 		{
-			utils::CPrintChatAll("{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::SayChat(player->GetController(), "{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
 			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
 			META_CONPRINTF("* %s: %s\n", player->GetName(), message.Get());
 		}

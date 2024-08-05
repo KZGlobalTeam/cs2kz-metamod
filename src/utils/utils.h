@@ -33,6 +33,7 @@ namespace utils
 
 	// Print functions
 	bool CFormat(char *buffer, u64 buffer_size, const char *text);
+	void SayChat(CBaseEntity *entity, const char *format, ...);
 	void ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3,
 						   const char *param4);
 	void PrintConsole(CBaseEntity *entity, const char *format, ...);
