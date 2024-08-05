@@ -24,7 +24,7 @@ namespace HTTP
 
 	extern std::vector<InFlightRequest *> g_InFlightRequests;
 
-	/// HTTP methods we care about.
+	// HTTP methods we care about.
 	enum class Method
 	{
 		GET,
@@ -33,22 +33,22 @@ namespace HTTP
 		PATCH,
 	};
 
-	/// An HTTP request.
+	// An HTTP request.
 	class Request
 	{
 	public:
 		Request(Method method, std::string url) : method(method), url(url) {}
 
-		/// Set a query parameter.
+		// Set a query parameter.
 		void SetQuery(std::string key, std::string value);
 
-		/// Set a header.
+		// Set a header.
 		void SetHeader(std::string name, std::string value);
 
-		/// Set the request body.
+		// Set the request body.
 		void SetBody(std::string body);
 
-		/// Send the request.
+		// Send the request.
 		void Send(ResponseCallback onResponse) const;
 
 	private:
@@ -59,7 +59,7 @@ namespace HTTP
 		std::string body {};
 	};
 
-	/// An HTTP response.
+	// An HTTP response.
 	class Response
 	{
 	public:
@@ -67,10 +67,10 @@ namespace HTTP
 
 		Response(u16 status, HTTPRequestHandle requestHandle) : status(status), requestHandle(requestHandle) {}
 
-		/// Retrieves a header if it exists.
+		// Retrieves a header if it exists.
 		std::optional<std::string> Header(const char *name) const;
 
-		/// Extracts the body if it exists.
+		// Extracts the body if it exists.
 		std::optional<std::string> Body() const;
 
 	private:
