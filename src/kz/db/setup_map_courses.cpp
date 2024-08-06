@@ -22,13 +22,14 @@ void KZDatabaseService::SetupCourses(CUtlVector<KZ::timer::CourseInfo> &courseIn
 		{
 			case DatabaseType::SQLite:
 			{
-				V_snprintf(query, sizeof(query), sqlite_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), courseInfo.uid);
+				V_snprintf(query, sizeof(query), sqlite_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(),
+						   courseInfo.stageID);
 				txn.queries.push_back(query);
 				break;
 			}
 			case DatabaseType::MySQL:
 			{
-				V_snprintf(query, sizeof(query), mysql_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), courseInfo.uid);
+				V_snprintf(query, sizeof(query), mysql_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), courseInfo.stageID);
 				txn.queries.push_back(query);
 				break;
 			}
