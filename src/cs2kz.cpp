@@ -19,6 +19,7 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
+#include "kz/replays/kz_replays.h"
 #include "tier0/memdbgon.h"
 
 #include "version.h"
@@ -51,6 +52,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZTimerService::Init();
 	KZSpecService::Init();
 	KZGotoService::Init();
+	KZReplayService::Init();
 	KZHUDService::Init();
 	KZLanguageService::Init();
 	KZ::misc::RegisterCommands();

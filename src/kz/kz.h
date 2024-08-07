@@ -41,6 +41,7 @@ class KZSpecService;
 class KZGotoService;
 class KZStyleService;
 class KZTimerService;
+class KZReplayService;
 class KZTipService;
 
 class KZPlayer : public MovementPlayer
@@ -158,6 +159,7 @@ public:
 	KZStyleService *styleService {};
 	CUtlVector<KZStyleService *> styleServices {};
 	KZTimerService *timerService {};
+	KZReplayService *replayService {};
 	KZTipService *tipService {};
 
 	void EnableGodMode();

@@ -14,6 +14,7 @@
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/replays/kz_replays.h"
 #include "kz/tip/kz_tip.h"
 
 #include "sdk/gamerules.h"
@@ -128,6 +129,7 @@ void KZ::misc::RegisterCommands()
 	KZCheckpointService::RegisterCommands();
 	KZJumpstatsService::RegisterCommands();
 	KZTimerService::RegisterCommands();
+	KZReplayService::RegisterCommands();
 	KZNoclipService::RegisterCommands();
 	KZHUDService::RegisterCommands();
 	KZLanguageService::RegisterCommands();

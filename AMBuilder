@@ -84,6 +84,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'mempatch.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'player', 'player_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'player', 'player.cpp'),

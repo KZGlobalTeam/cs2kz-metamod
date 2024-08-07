@@ -5,6 +5,7 @@
 #include "../noclip/kz_noclip.h"
 #include "../option/kz_option.h"
 #include "../language/kz_language.h"
+#include "../replays/kz_replays.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
@@ -92,6 +93,9 @@ bool KZTimerService::TimerStart(const char *courseName, bool playSound)
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseName);
 	}
+
+	this->player->replayService->OnTimerStart();
+
 	return true;
 }
 
@@ -157,6 +161,8 @@ bool KZTimerService::TimerStop(bool playSound)
 	{
 		eventListeners[i]->OnTimerStopped(this->player);
 	}
+
+	this->player->replayService->OnTimerStop();
 
 	return true;
 }

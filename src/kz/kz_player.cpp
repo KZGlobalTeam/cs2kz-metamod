@@ -14,6 +14,7 @@
 #include "goto/kz_goto.h"
 #include "style/kz_style.h"
 #include "timer/kz_timer.h"
+#include "replays/kz_replays.h"
 #include "tip/kz_tip.h"
 
 #include "steam/isteamgameserver.h"
@@ -48,6 +49,7 @@ void KZPlayer::Init()
 	this->hudService = new KZHUDService(this);
 	this->specService = new KZSpecService(this);
 	this->gotoService = new KZGotoService(this);
+	this->replayService = new KZReplayService(this);
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
@@ -107,6 +109,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 		this->styleServices[i]->OnPhysicsSimulatePost();
 	}
 	this->timerService->OnPhysicsSimulatePost();
+	this->replayService->OnPhysicsSimulatePost();
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)

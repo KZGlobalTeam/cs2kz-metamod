@@ -16,6 +16,7 @@
 #include "module.h"
 #include "detours.h"
 #include "virtual.h"
+#include "mempatch.h"
 
 #include "tier0/memdbgon.h"
 
@@ -29,6 +30,8 @@
 		return false; \
 	}
 
+MemPatch *botAddPatch = NULL;
+MemPatch *botAddPatch2 = NULL;
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
 
@@ -76,12 +79,23 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 
+	byte *CreateBot_Sig = (byte *)"\x48\x85\xC0\x74\x2E\x80\xB8\x2A\x2A\x2A\x2A\x00\x74\x25";
+	byte *CreateBot_Sig2 = (byte *)"\xE9\x15\x00\x00\x00";
+
+	botAddPatch = new MemPatch(CreateBot_Sig, modules::server, 14);
+	botAddPatch->Patch();
+
+	botAddPatch2 = new MemPatch(CreateBot_Sig2, modules::server, 5);
+	botAddPatch2->Patch(); 
+
 	InitDetours();
 	return true;
 }
 
 void utils::Cleanup()
 {
+	botAddPatch->Unpatch();
+	botAddPatch2->Unpatch();
 	FlushAllDetours();
 }
 

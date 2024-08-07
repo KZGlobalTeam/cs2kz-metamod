@@ -19,6 +19,11 @@ public:
 		this->inNoclip = false;
 	}
 
+	void EnableNoclip()
+	{
+		this->inNoclip = true;
+	}
+
 	void ToggleNoclip()
 	{
 		this->inNoclip = !this->inNoclip;
