@@ -941,7 +941,6 @@ void KZJumpstatsService::OnTryPlayerMovePost()
 	f32 velocity = this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmVelocity.Length2D();
 	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(velocity);
 	this->DetectEdgebug();
-	this->DetectWater();
 }
 
 void KZJumpstatsService::OnProcessMovementPost()
@@ -952,6 +951,7 @@ void KZJumpstatsService::OnProcessMovementPost()
 	}
 	this->possibleEdgebug = false;
 	this->TrackJumpstatsVariables();
+	this->DetectWater();
 }
 
 DistanceTier KZJumpstatsService::GetDistTierFromString(const char *tierString)
