@@ -52,9 +52,7 @@ void KZDatabaseService::OnDatabaseConnected(bool connect)
 	{
 		META_CONPRINT("[KZDB] LocalDB connected.\n");
 		localDBConnected = true;
-		KZDatabaseService::CreateTables();
-		KZDatabaseService::SetupMap();
-		CALL_FORWARD(eventListeners, OnDatabaseConnect);
+		KZDatabaseService::RunMigrations();
 	}
 	else
 	{

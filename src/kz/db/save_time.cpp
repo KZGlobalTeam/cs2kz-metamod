@@ -27,7 +27,7 @@ void KZDatabaseService::SaveTime(u32 id, KZPlayer *player, CUtlString courseName
 			styleIDs = -1;
 			break;
 		}
-		styleIDs &= (1ull << styleDatabaseID);
+		styleIDs |= (1ull << styleDatabaseID);
 	}
 	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName);
 	Transaction txn;

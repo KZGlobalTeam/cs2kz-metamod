@@ -181,7 +181,7 @@ public:
 	virtual void UnregisterStyle(const char *styleName);
 	void Cleanup();
 
-	void OnDatabaseConnect();
+	void OnDatabaseSetup();
 
 	void AddStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void RemoveStyle(KZPlayer *player, const char *styleName, bool silent = false);

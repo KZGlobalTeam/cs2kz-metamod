@@ -18,7 +18,7 @@ static_global CUtlVector<KZStyleManager::StylePluginInfo> styleInfos;
 static_global class KZDatabaseServiceEventListener_Styles : public KZDatabaseServiceEventListener
 {
 public:
-	virtual void OnDatabaseConnect() override;
+	virtual void OnDatabaseSetup() override;
 } databaseEventListener;
 
 void KZ::style::InitStyleManager()
@@ -412,7 +412,7 @@ void KZStyleManager::PrintAllStyles(KZPlayer *player)
 
 void KZ::style::InitStyleService(KZPlayer *player) {}
 
-void KZDatabaseServiceEventListener_Styles::OnDatabaseConnect()
+void KZDatabaseServiceEventListener_Styles::OnDatabaseSetup()
 {
 	FOR_EACH_VEC(styleInfos, i)
 	{

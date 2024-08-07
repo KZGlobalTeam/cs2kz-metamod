@@ -23,7 +23,7 @@ CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
 static_global class KZDatabaseServiceEventListener_Modes : public KZDatabaseServiceEventListener
 {
 public:
-	virtual void OnDatabaseConnect() override;
+	virtual void OnDatabaseSetup() override;
 } databaseEventListener;
 
 bool KZ::mode::InitModeCvars()
@@ -411,7 +411,7 @@ void KZ::mode::RegisterCommands()
 	scmd::RegisterCmd("kz_mode", Command_KzMode);
 }
 
-void KZDatabaseServiceEventListener_Modes::OnDatabaseConnect()
+void KZDatabaseServiceEventListener_Modes::OnDatabaseSetup()
 {
 	FOR_EACH_VEC(modeInfos, i)
 	{

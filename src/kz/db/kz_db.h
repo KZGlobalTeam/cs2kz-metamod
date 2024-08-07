@@ -22,7 +22,7 @@ namespace KZ
 class KZDatabaseServiceEventListener
 {
 public:
-	virtual void OnDatabaseConnect() {}
+	virtual void OnDatabaseSetup() {}
 
 	virtual void OnClientSetup(Player *player, u64 steamID64, bool isCheater) {}
 
@@ -97,8 +97,12 @@ public:
 	static void SetupDatabase();
 	static void OnDatabaseConnected(bool connect);
 
-	static void CreateTables();
+	static void RunMigrations();
 
+private:
+	static void CheckMigrations(std::vector<ISQLQuery *> queries);
+
+public:
 	static bool IsMapSetUp();
 	static void SetupMap();
 

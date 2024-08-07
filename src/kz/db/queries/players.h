@@ -6,7 +6,8 @@ constexpr char sqlite_players_create[] = R"(
         SteamID64 INTEGER NOT NULL, 
         Alias TEXT, 
         IP TEXT, 
-        Cheater INTEGER NOT NULL DEFAULT '0', 
+        Preferences TEXT,
+        Cheater INTEGER NOT NULL DEFAULT '0',
         LastPlayed TIMESTAMP NULL DEFAULT NULL, 
         Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
         CONSTRAINT PK_Player PRIMARY KEY (SteamID64))
@@ -17,6 +18,7 @@ constexpr char mysql_players_create[] = R"(
         SteamID64 BIGINT UNSIGNED NOT NULL, 
         Alias VARCHAR(32), 
         IP VARCHAR(15), 
+        Preferences TEXT,
         Cheater TINYINT UNSIGNED NOT NULL DEFAULT '0', 
         LastPlayed TIMESTAMP NULL DEFAULT NULL, 
         Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
