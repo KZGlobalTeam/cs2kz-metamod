@@ -277,7 +277,7 @@ void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 	cvar->set_value(value);
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
-	netmsg->DeallocateMessage(msg);
+	delete msg;
 }
 
 void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, u32 size)
@@ -292,7 +292,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
-	netmsg->DeallocateMessage(msg);
+	delete msg;
 }
 
 bool utils::IsSpawnValid(const Vector &origin)

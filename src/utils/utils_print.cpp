@@ -265,7 +265,7 @@ void utils::ClientPrintFilter(IRecipientFilter *filter, int msg_dest, const char
 	msg->add_param(param4);
 
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, filter, netmsg, msg, 0);
-	netmsg->DeallocateMessage(msg);
+	delete msg;
 }
 
 #define FORMAT_STRING(buffer) \
@@ -294,7 +294,7 @@ void utils::SayChat(CBaseEntity *entity, const char *format, ...)
 	CBroadcastRecipientFilter *filter = new CBroadcastRecipientFilter;
 
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, filter, netmsg, msg, 0);
-	netmsg->DeallocateMessage(msg);
+	delete msg;
 }
 
 void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
