@@ -636,7 +636,7 @@ void KZJumpstatsService::Reset()
 {
 	this->broadcastMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSBroadcastMinTier", DistanceTier_Godlike));
 	this->soundMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSSoundMinTier", DistanceTier_Godlike));
-	this->showJumpstats = true;
+	this->showJumpstats = KZOptionService::GetOptionInt("defaultShowJS", true);
 	this->jumps.Purge();
 	this->jsAlways = {};
 	this->lastJumpButtonTime = {};
