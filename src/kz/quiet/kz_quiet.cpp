@@ -3,9 +3,8 @@
 #include "gameevents.pb.h"
 #include "cs_gameevents.pb.h"
 
-#include "sdk/services.h"
-
 #include "kz_quiet.h"
+#include "sdk/services.h"
 
 #include "utils/utils.h"
 

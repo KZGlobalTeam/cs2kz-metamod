@@ -1,12 +1,12 @@
 "ServerCfg"
 {
-	"defaultMode"			"Classic"
-	"defaultStyle"			"Normal"
-	"defaultLanguage"		"en"
-	"tipInterval"			"75"
-	"defaultJSBroadcastMinTier"	"4"
-	"defaultJSSoundMinTier"		"4"
-	"chatPrefix"			"{lime}KZ {grey}|{default}"
+	"defaultMode"                "Classic"
+	"defaultStyle"               "Normal"
+	"defaultLanguage"            "en"
+	"tipInterval"                "75"
+	"defaultJSBroadcastMinTier"  "4"
+	"defaultJSSoundMinTier"      "4"
+	"chatPrefix"                 "{lime}KZ {grey}|{default}"
 	"db"
 	{
 		"driver"	"sqlite"
@@ -21,4 +21,5 @@
 		//"timeout"			"60"
 		//"port"			"3306"
 	}
+	"apiUrl"                     "http://localhost:42069"
 }

@@ -11,11 +11,11 @@
 #include "ctimer.h"
 #include "kz/kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/global/kz_global.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/db/kz_db.h"
 #include "utils/utils.h"
-#include "entityclass.h"
 
 #include "memdbgon.h"
 
@@ -775,6 +775,15 @@ static_function bool Hook_ActivateServer()
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
 	KZDatabaseService::SetupMap();
+
+	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
+
+	if (networkGameServer != nullptr)
+	{
+		KZGlobalService::Hook_ActivateServer(networkGameServer->GetMapName());
+	}
+
+	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

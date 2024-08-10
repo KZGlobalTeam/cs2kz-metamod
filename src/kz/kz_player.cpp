@@ -15,6 +15,8 @@
 #include "style/kz_style.h"
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
+#include "global/kz_global.h"
+#include "global/players.h"
 
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
@@ -38,6 +40,7 @@ void KZPlayer::Init()
 	delete this->optionService;
 	delete this->noclipService;
 	delete this->tipService;
+	delete this->globalService;
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -51,6 +54,7 @@ void KZPlayer::Init()
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
+	this->globalService = new KZGlobalService(this);
 	KZ::mode::InitModeService(this);
 	KZ::style::InitStyleService(this);
 }
@@ -616,6 +620,7 @@ void KZPlayer::OnStopTouchGround()
 	this->jumpstatsService->AddJump();
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
+
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnStopTouchGround();

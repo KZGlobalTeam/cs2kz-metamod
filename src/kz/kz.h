@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
@@ -229,6 +231,9 @@ public:
 	{
 		return static_cast<KZPlayer *>(player);
 	}
+
+	void OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
+	void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 };
 
 extern KZPlayerManager *g_pKZPlayerManager;

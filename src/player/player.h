@@ -1,3 +1,5 @@
+#pragma once
+
 #include "common.h"
 #include "steam/isteamuser.h"
 #include "sdk/serversideclient.h"

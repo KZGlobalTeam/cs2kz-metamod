@@ -1,0 +1,49 @@
+"Phrases"
+{
+	"API Error"
+	{
+		"#format"	"status:d"
+		"en"		"{red}API request failed with code {default}{status}{red}. Please check your console for details."
+	}
+	"API Error Details"
+	{
+		"#format"	"message:s,details:s"
+		"en"		"API Error: {message}{details}"
+	}
+	"Display Hello"
+	{
+		"#format"	"name:s"
+		"en"		"{grey}Hello, {default}{name}{grey}! You have been authenticated with the API."
+	}
+	"Display PlayerInfo"
+	{
+		"#format"	"name:s,steamID:s,banned:s"
+		"en"		"{default}{name}{grey} is currently {default}{banned}{grey}banned. Their SteamID is {default}{steamID}{grey}."
+	}
+	"Player not found"
+	{
+		"en"		"{grey}Player not found."
+	}
+	"Player not found after registration"
+	{
+		"en"		"{red}Failed to register you with the API. This is a bug! Please report it."
+	}
+	"View Preferences Response"
+	{
+		"en"		"{grey}Open your console."
+	}
+	"Display Raw Preferences"
+	{
+		"#format"	"preferences:s"
+		"en"		"Preferences:\n{preferences}"
+	}
+	"MapNotGlobal"
+	{
+		"en"		"{grey}Map is not global."
+	}
+	"CurrentMap"
+	{
+		"#format"	"id:d,name:s,sep:s,description:s,workshopID:d,mappers:s"
+		"en"		"{name} {grey}{default}{sep}{description}\n{grey}⠀⠀• ID: {default}{id}\n{grey}⠀⠀• Workshop ID: {default}{workshopID}\n{grey}⠀⠀• Mapper(s): {default}{mappers}"
+	}
+}

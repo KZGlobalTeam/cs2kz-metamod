@@ -1,3 +1,4 @@
+#include "kz/global/kz_global.h"
 #include "cs2kz.h"
 
 #include "entity2/entitysystem.h"
@@ -65,12 +66,15 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZOptionService::InitOptions();
 	KZTipService::InitTips();
+	KZGlobalService::Init();
+
 	if (late)
 	{
 		KZ::misc::OnServerActivate();
 		g_steamAPI.Init();
 		g_pKZPlayerManager->OnLateLoad();
 	}
+
 	return true;
 }
 

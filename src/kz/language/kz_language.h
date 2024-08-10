@@ -3,6 +3,8 @@
 
 #include "../kz.h"
 #include "../spec/kz_spec.h"
+#include "kz/global/error.h"
+#include "kz/global/maps.h"
 
 class KZLanguageService : public KZBaseService
 {
@@ -167,6 +169,7 @@ public:
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintCentre, MESSAGE_CENTRE)
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintAlert, MESSAGE_ALERT)
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintHTMLCentre, MESSAGE_HTML)
+
 #undef REGISTER_PRINT_SINGLE_FUNCTION
 
 #define REGISTER_PRINT_ALL_FUNCTION(name, type) \

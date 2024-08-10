@@ -1,4 +1,3 @@
-
 #include "common.h"
 #include "utils/utils.h"
 #include "simplecmds.h"
