@@ -143,8 +143,8 @@ public:
 
 	// Times
 	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
-	static void QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u64 modeID, TransactionSuccessCallbackFunc onSuccess,
+	static void QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, TransactionSuccessCallbackFunc onSuccess,
 						TransactionFailureCallbackFunc onFailure);
-	static void QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u64 modeID, u64 styleIDFlags,
+	static void QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, u64 styleIDFlags,
 								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 };

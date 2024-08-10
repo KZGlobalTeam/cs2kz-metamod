@@ -2,7 +2,7 @@
 #include "vendor/sql_mm/src/public/sql_mm.h"
 #include "queries/personal_best.h"
 
-void KZDatabaseService::QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u64 modeID, TransactionSuccessCallbackFunc onSuccess,
+void KZDatabaseService::QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, TransactionSuccessCallbackFunc onSuccess,
 								TransactionFailureCallbackFunc onFailure)
 {
 	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
@@ -40,7 +40,7 @@ void KZDatabaseService::QueryPB(u64 steamID64, CUtlString mapName, CUtlString co
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
 }
 
-void KZDatabaseService::QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u64 modeID, u64 styleIDFlags,
+void KZDatabaseService::QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, u64 styleIDFlags,
 										TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
 {
 	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
