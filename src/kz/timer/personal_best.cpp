@@ -6,9 +6,6 @@
 #include "utils/simplecmds.h"
 #include "iserver.h"
 
-#include "kz/db/queries/personal_best.h"
-#include "kz/db/queries/players.h"
-#include "kz/db/queries/courses.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
 struct PBData
@@ -388,14 +385,6 @@ void PBRequest::SetupSteamID64(KZPlayer *callingPlayer)
 	}
 	if (KZDatabaseService::IsReady())
 	{
-		Transaction txn;
-		char query[1024];
-
-		// Get player's steamID through their alias.
-		std::string cleanedPlayerName = KZDatabaseService::GetDatabaseConnection()->Escape(targetPlayerName.Get());
-		V_snprintf(query, sizeof(query), sql_players_searchbyalias, cleanedPlayerName.c_str(), cleanedPlayerName.c_str());
-		txn.queries.push_back(query);
-
 		u64 uid = this->uid;
 
 		auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
@@ -417,7 +406,7 @@ void PBRequest::SetupSteamID64(KZPlayer *callingPlayer)
 			pbReqQueueManager.InvalidLocal(uid);
 		};
 
-		KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
+		KZDatabaseService::FindPlayerByAlias(targetPlayerName, onQuerySuccess, onQueryFailure);
 	}
 }
 
@@ -547,15 +536,6 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 		}
 		else
 		{
-			// Query the first course.
-			auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
-
-			char query[1024];
-			V_snprintf(query, sizeof(query), sql_mapcourses_findfirst_mapname, cleanMapName.c_str(), cleanMapName.c_str());
-
-			Transaction txn;
-			txn.queries.push_back(query);
-
 			u64 uid = this->uid;
 			auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 			{
@@ -571,8 +551,7 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 			};
 
 			auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
-
-			KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
+			KZDatabaseService::FindFirstCourseByMapName(mapName, onQuerySuccess, onQueryFailure);
 		}
 	}
 	else
@@ -605,40 +584,6 @@ void PBRequest::ExecuteLocalRequest()
 
 void PBRequest::ExecuteStandardLocalQuery()
 {
-	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
-	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
-
-	Transaction txn;
-
-	char query[1024];
-	// Get PB
-	V_snprintf(query, sizeof(query), sql_getpb, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, 0ull,
-			   1);
-	txn.queries.push_back(query);
-
-	// Get Rank
-	V_snprintf(query, sizeof(query), sql_getmaprank, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID, targetSteamID64,
-			   cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
-	txn.queries.push_back(query);
-
-	// Get Number of Players with Times
-	V_snprintf(query, sizeof(query), sql_getlowestmaprank, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
-	txn.queries.push_back(query);
-
-	// Get PRO PB
-	V_snprintf(query, sizeof(query), sql_getpbpro, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
-			   0ull, 1);
-	txn.queries.push_back(query);
-
-	// Get PRO Rank
-	V_snprintf(query, sizeof(query), sql_getmaprankpro, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
-			   targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
-	txn.queries.push_back(query);
-
-	// Get Number of Players with Times
-	V_snprintf(query, sizeof(query), sql_getlowestmaprankpro, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID);
-	txn.queries.push_back(query);
-
 	u64 uid = this->uid;
 
 	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
@@ -683,28 +628,12 @@ void PBRequest::ExecuteStandardLocalQuery()
 
 	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
 
-	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
+	KZDatabaseService::QueryPB(targetSteamID64, mapName, courseName, localDBRequestParams.modeID, onQuerySuccess, onQueryFailure);
 }
 
 void PBRequest::ExecuteRanklessLocalQuery()
 {
-	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
-
-	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
-
-	char query[1024];
-	Transaction txn;
-	// Get PB
-	V_snprintf(query, sizeof(query), sql_getpb, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
-			   localDBRequestParams.styleIDs, 1);
-	txn.queries.push_back(query);
-	// Get PRO PB
-	V_snprintf(query, sizeof(query), sql_getpbpro, targetSteamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), localDBRequestParams.modeID,
-			   localDBRequestParams.styleIDs, 1);
-	txn.queries.push_back(query);
-
 	u64 uid = this->uid;
-
 	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 	{
 		PBData data;
@@ -731,7 +660,8 @@ void PBRequest::ExecuteRanklessLocalQuery()
 
 	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
 
-	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onQuerySuccess, onQueryFailure);
+	KZDatabaseService::QueryPBRankless(targetSteamID64, mapName, courseName, localDBRequestParams.modeID, localDBRequestParams.styleIDs,
+									   onQuerySuccess, onQueryFailure);
 }
 
 SCMD_CALLBACK(CommandKZPB)

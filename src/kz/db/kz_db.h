@@ -5,6 +5,8 @@
 
 class ISQLConnection;
 class ISQLQuery;
+typedef std::function<void(std::vector<ISQLQuery *>)> TransactionSuccessCallbackFunc;
+typedef std::function<void(std::string, int)> TransactionFailureCallbackFunc;
 
 namespace KZ
 {
@@ -114,11 +116,22 @@ public:
 	// Course
 	static bool AreCoursesSetUp();
 	static void SetupCourses(CUtlVector<KZ::timer::CourseInfo> &courseInfos);
+	static void FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
-	// Client
+	// Client/Player
 	static void SetupClient(KZPlayer *player);
 	bool isCheater {};
+
+private:
 	bool isSetUp {};
+
+public:
+	bool IsSetup()
+	{
+		return isSetUp;
+	}
+
+	static void FindPlayerByAlias(CUtlString playerName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Mode
 	static void UpdateModeIDs();
@@ -130,4 +143,8 @@ public:
 
 	// Times
 	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
+	static void QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u64 modeID, TransactionSuccessCallbackFunc onSuccess,
+						TransactionFailureCallbackFunc onFailure);
+	static void QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u64 modeID, u64 styleIDFlags,
+								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 };
