@@ -96,10 +96,10 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 
 void KZ::misc::OnServerActivate()
 {
-	static_persist bool infiniteAmmoUnlocked {};
-	if (!infiniteAmmoUnlocked)
+	static_persist bool cvTweaked {};
+	if (!cvTweaked)
 	{
-		infiniteAmmoUnlocked = true;
+		cvTweaked = true;
 		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
 		if (cvarHandle.IsValid())
 		{
@@ -108,6 +108,15 @@ void KZ::misc::OnServerActivate()
 		else
 		{
 			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
+		}
+		cvarHandle = g_pCVar->FindConVar("bot_stop");
+		if (cvarHandle.IsValid())
+		{
+			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
+		}
+		else
+		{
+			META_CONPRINTF("Warning: bot_stop is not found!\n");
 		}
 	}
 	g_pKZUtils->UpdateCurrentMapMD5();
