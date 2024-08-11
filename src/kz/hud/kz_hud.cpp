@@ -5,23 +5,38 @@
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
-#include "../timer/kz_timer.h"
-#include "../language/kz_language.h"
-#include "../checkpoint/kz_checkpoint.h"
+#include "kz/option/kz_option.h"
+#include "kz/timer/kz_timer.h"
+#include "kz/language/kz_language.h"
+#include "kz/checkpoint/kz_checkpoint.h"
 
 #include "tier0/memdbgon.h"
 
 #define HUD_ON_GROUND_THRESHOLD 0.07f
-static_global KZTimerServiceEventListener_HUD timerEventListener;
+
+static_global class KZTimerServiceEventListener_HUD : public KZTimerServiceEventListener
+{
+	virtual void OnTimerStopped(KZPlayer *player) override;
+	virtual void OnTimerEndPost(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed) override;
+} timerEventListener;
+
+static_global class KZOptionServiceEventListener_HUD : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		player->hudService->ResetShowPanel();
+	}
+} optionEventListener;
 
 void KZHUDService::Init()
 {
 	KZTimerService::RegisterEventListener(&timerEventListener);
+	KZOptionService::RegisterEventListener(&optionEventListener);
 }
 
 void KZHUDService::Reset()
 {
-	this->showPanel = true;
+	this->showPanel = this->player->optionService->GetPreferenceBool("ShowPanel", true);
 	this->timerStoppedTime = {};
 	this->currentTimeWhenTimerStopped = {};
 }
@@ -137,9 +152,15 @@ void KZHUDService::DrawPanels(KZPlayer *target)
 	}
 }
 
+void KZHUDService::ResetShowPanel()
+{
+	this->showPanel = this->player->optionService->GetPreferenceBool("ShowPanel", true);
+}
+
 void KZHUDService::TogglePanel()
 {
 	this->showPanel = !this->showPanel;
+	this->player->optionService->SetPreferenceBool("ShowPanel", false);
 	if (!this->showPanel)
 	{
 		utils::PrintAlert(this->player->GetController(), "#SFUI_EmptyString");

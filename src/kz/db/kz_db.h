@@ -119,7 +119,8 @@ public:
 	static void FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Client/Player
-	static void SetupClient(KZPlayer *player);
+	void SetupClient();
+	void SavePrefs(CUtlString prefs);
 	bool isCheater {};
 
 private:

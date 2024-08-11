@@ -80,7 +80,7 @@ void KZPlayer::Reset()
 void KZPlayer::OnAuthorized()
 {
 	MovementPlayer::OnAuthorized();
-	KZDatabaseService::SetupClient(this);
+	this->databaseService->SetupClient();
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)

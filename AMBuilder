@@ -107,6 +107,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_pb.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_player.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'migrations.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_prefs.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_time.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_client.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_database.cpp'),
