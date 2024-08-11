@@ -175,8 +175,6 @@ private:
 	void PlayTimerFalseEndSound();
 	void PlayTimerStopSound();
 
-	void PrintEndTimeString();
-
 	/*
 	 * Pause stuff also goes here.
 	 */
