@@ -152,7 +152,7 @@ void KZClassicModeService::Reset()
 
 void KZClassicModeService::Cleanup()
 {
-	if (this->player->GetPlayerPawn())
+	if (this->player->GetPlayerPawn() && this->player->GetPlayerPawn()->m_flVelocityModifier() != 1.0f)
 	{
 		this->player->GetPlayerPawn()->m_flVelocityModifier(1.0f);
 	}
@@ -327,7 +327,10 @@ void KZClassicModeService::OnProcessUsercmds(void *cmds, int numcmds)
 void KZClassicModeService::OnProcessMovement()
 {
 	this->didTPM = false;
-	this->player->GetPlayerPawn()->m_flVelocityModifier(1.0f);
+	if (this->player->GetPlayerPawn()->m_flVelocityModifier() != 1.0f)
+	{
+		this->player->GetPlayerPawn()->m_flVelocityModifier(1.0f);
+	}
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
@@ -349,7 +352,11 @@ void KZClassicModeService::OnProcessMovementPost()
 	{
 		this->lastValidPlane = vec3_origin;
 	}
-	this->player->GetPlayerPawn()->m_flVelocityModifier(this->originalMaxSpeed >= 0 ? this->tweakedMaxSpeed / this->originalMaxSpeed : 1.0f);
+	f32 velMod = this->originalMaxSpeed >= 0 ? this->tweakedMaxSpeed / this->originalMaxSpeed : 1.0f;
+	if (this->player->GetPlayerPawn()->m_flVelocityModifier() != velMod)
+	{
+		this->player->GetPlayerPawn()->m_flVelocityModifier(velMod);
+	}
 }
 
 void KZClassicModeService::InsertSubtickTiming(float time)
