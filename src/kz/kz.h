@@ -54,6 +54,7 @@ public:
 	// General events
 	virtual void Init() override;
 	virtual void Reset() override;
+	virtual void OnPlayerActive() override;
 	virtual void OnAuthorized() override;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
