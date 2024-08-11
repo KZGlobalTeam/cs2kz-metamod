@@ -443,6 +443,7 @@ void KZTimerService::Resume(bool force)
 
 	// GOKZ: prevent noclip exploit
 	this->player->GetPlayerPawn()->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
+	this->player->GetPlayerPawn()->CollisionRulesChanged();
 
 	this->paused = false;
 	if (this->GetTimerRunning())
