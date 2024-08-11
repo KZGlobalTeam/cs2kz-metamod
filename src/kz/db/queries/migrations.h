@@ -19,6 +19,7 @@ constexpr char sqlite_migrations_create[] = R"(
 constexpr char sql_migrations_fetchall[] = R"(
     SELECT ID, CRC32 
         FROM Migrations
+        ORDER BY ID
 )";
 
 constexpr char sql_migrations_insert[] = R"(
