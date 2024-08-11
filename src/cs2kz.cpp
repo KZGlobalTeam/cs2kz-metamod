@@ -19,13 +19,13 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
-#include "tier0/memdbgon.h"
 
 #include "version.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
+#include "tier0/memdbgon.h"
 KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
@@ -65,6 +65,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZOptionService::InitOptions();
 	KZTipService::InitTips();
+	g_pKZPlayerManager->ResetPlayers();
 	if (late)
 	{
 		KZ::misc::OnServerActivate();

@@ -130,6 +130,7 @@ public:
 		{
 			delete players[i];
 			players[i] = new Player(i);
+			players[i]->Reset();
 		}
 	}
 
@@ -148,6 +149,14 @@ public:
 	Player *ToPlayer(CPlayerSlot slot);
 	Player *ToPlayer(CEntityIndex entIndex);
 	Player *ToPlayer(CPlayerUserId userID);
+
+	virtual void ResetPlayers()
+	{
+		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			players[i]->Reset();
+		}
+	}
 
 	void Cleanup();
 	void OnLateLoad();
