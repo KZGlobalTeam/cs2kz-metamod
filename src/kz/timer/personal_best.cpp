@@ -198,8 +198,8 @@ struct PBRequest
 														 : player->languageService->PrepareMessage("2+ Teleports Text", localPBData.teleportsUsed);
 		}
 
-		char localStandardTime[32];
-		KZTimerService::FormatTime(localPBData.runTime, localStandardTime, sizeof(localStandardTime));
+		char localOverallTime[32];
+		KZTimerService::FormatTime(localPBData.runTime, localOverallTime, sizeof(localOverallTime));
 		char localProTime[32];
 		KZTimerService::FormatTime(localPBData.runTimePro, localProTime, sizeof(localProTime));
 
@@ -214,21 +214,21 @@ struct PBRequest
 			}
 			else if (!localPBData.hasPBPro)
 			{
-				// KZ | Server: 12.34 (5 TPs) [#1/24 Standard]
-				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", localStandardTime, localTPText, localPBData.rank,
+				// KZ | Server: 12.34 (5 TPs) [Overall]
+				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", localOverallTime, localTPText, localPBData.rank,
 												   localPBData.maxRank);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 			else if (localPBData.teleportsUsed == 0)
 			{
-				// KZ | Server: 12.34 [#1/24 Standard] [#1/2 PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Combined (Server)", localStandardTime, localPBData.rank,
+				// KZ | Server: 12.34 [#1/24 Overall] [#1/2 PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Combined (Server)", localOverallTime, localPBData.rank,
 												   localPBData.maxRank, localPBData.rankPro, localPBData.maxRankPro);
 			}
 			else
 			{
-				// KZ | Server: 12.34 (5 TPs) [#1/24 Standard] | 23.45 [#1/2 PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localStandardTime, localTPText, localPBData.rank,
+				// KZ | Server: 12.34 (5 TPs) [#1/24 Overall] | 23.45 [#1/2 PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localOverallTime, localTPText, localPBData.rank,
 												   localPBData.maxRank, localProTime, localPBData.rankPro, localPBData.maxRankPro);
 			}
 		}
@@ -240,19 +240,19 @@ struct PBRequest
 			}
 			else if (!localPBData.hasPBPro)
 			{
-				// KZ | Server: 12.34 (5 TPs) [Standard]
-				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", localStandardTime, localTPText);
+				// KZ | Server: 12.34 (5 TPs) [Overall]
+				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", localOverallTime, localTPText);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 			else if (localPBData.teleportsUsed == 0)
 			{
-				// KZ | Server: 12.34 [Standard/PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Combined Rankless (Server)", localStandardTime);
+				// KZ | Server: 12.34 [Overall/PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Combined Rankless (Server)", localOverallTime);
 			}
 			else
 			{
-				// KZ | Server: 12.34 (5 TPs) [Standard] | 23.45 [PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Server)", localStandardTime, localTPText, localProTime);
+				// KZ | Server: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Server)", localOverallTime, localTPText, localProTime);
 			}
 		}
 	}

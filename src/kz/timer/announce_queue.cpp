@@ -108,8 +108,8 @@ public:
 
 		/*
 			KZ | GameChaos finished "blocks2006" in 10:06.84 [VNL | PRO]
-			KZ | Server Rank: #1/24 Standard (-1:00.00) | #1/10 PRO (-2:00)
-			KZ | Global Rank: #1/123 Standard (-1:00.00) | #1/23 PRO (-2:00)
+			KZ | Server Rank: #1/24 Overall (-1:00.00) | #1/10 PRO (-2:00)
+			KZ | Global Rank: #1/123 Overall (-1:00.00) | #1/23 PRO (-2:00)
 			KZ | Map Points: 2345 (+512) | Player Rating: 34475
 		*/
 		for (u32 i = 0; i < MAXPLAYERS + 1; i++)
