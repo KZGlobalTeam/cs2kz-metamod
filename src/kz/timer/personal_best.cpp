@@ -727,7 +727,7 @@ void KZ::timer::CheckPBRequests()
 	pbReqQueueManager.CheckRequests();
 }
 
-void KZDatabaseService::RegisterPBCommand()
+void KZTimerService::RegisterPBCommand()
 {
 	scmd::RegisterCmd("kz_pb", CommandKZPB);
 }

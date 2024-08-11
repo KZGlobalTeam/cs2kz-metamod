@@ -61,9 +61,6 @@ public:
 	static void Cleanup();
 	static bool IsReady();
 
-	static void RegisterCommands();
-	static void RegisterPBCommand();
-
 private:
 	static KZ::Database::DatabaseType databaseType;
 	static ISQLConnection *databaseConnection;
