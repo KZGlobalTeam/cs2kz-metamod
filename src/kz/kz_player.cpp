@@ -80,6 +80,10 @@ void KZPlayer::OnPlayerActive()
 	this->hudService->Reset();
 	this->timerService->Reset();
 	this->specService->Reset();
+
+	// Refresh the convars because they couldn't receive the message when connecting.
+	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true);
+	g_pKZStyleManager->RefreshStyles(this);
 }
 
 void KZPlayer::OnAuthorized()

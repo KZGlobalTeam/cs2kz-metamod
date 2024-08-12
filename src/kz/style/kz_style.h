@@ -187,6 +187,7 @@ public:
 	void RemoveStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void ToggleStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void ClearStyles(KZPlayer *player, bool silent = false);
+	void RefreshStyles(KZPlayer *player);
 	void PrintActiveStyles(KZPlayer *player);
 	void PrintAllStyles(KZPlayer *player);
 
