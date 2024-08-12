@@ -600,6 +600,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	}
 	KZ::timer::CheckAnnounceQueue();
 	KZ::timer::CheckPBRequests();
+	KZ::timer::CheckRecordRequests();
 	RETURN_META(MRES_IGNORED);
 }
 

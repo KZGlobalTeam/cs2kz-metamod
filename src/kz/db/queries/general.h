@@ -124,37 +124,3 @@ constexpr char sql_getaverage_pro[] = R"(
         AND MapCourses.Name='%s' AND Times.ModeID=%d AND Times.Teleports=0 
         GROUP BY Times.SteamID64) AS PBTimes
 )";
-
-constexpr char sql_getrecentrecords[] = R"(
-    SELECT Maps.Name, MapCourses.Name, MapCourses.ID, Players.Alias, a.RunTime 
-        FROM Times AS a 
-        INNER JOIN MapCourses ON a.MapCourseID=MapCourses.ID 
-        INNER JOIN Maps ON MapCourses.MapID=Maps.MapID 
-        INNER JOIN Players ON a.SteamID64=Players.SteamID64 
-        WHERE Players.Cheater=0 AND a.ModeID=%d AND Times.StyleIDFlags=0 
-        AND NOT EXISTS 
-        (SELECT * 
-        FROM Times AS b 
-        WHERE a.MapCourseID=b.MapCourseID 
-        AND a.ModeID=b.ModeID AND a.StyleIDFlags=b.StyleIDFlags 
-        AND a.Created>b.Created AND a.RunTime>b.RunTime) 
-        ORDER BY a.TimeID DESC 
-        LIMIT %d
-)";
-
-constexpr char sql_getrecentrecords_pro[] = R"(
-    SELECT Maps.Name, MapCourses.Name, MapCourses.ID, Players.Alias, a.RunTime 
-        FROM Times AS a 
-        INNER JOIN MapCourses ON a.MapCourseID=MapCourses.ID 
-        INNER JOIN Maps ON MapCourses.MapID=Maps.MapID 
-        INNER JOIN Players ON a.SteamID64=Players.SteamID64 
-        WHERE Players.Cheater=0 AND a.ModeID=%d AND Times.StyleIDFlags=0 AND a.Teleports=0 
-        AND NOT EXISTS 
-        (SELECT * 
-        FROM Times AS b 
-        WHERE b.Teleports=0 AND a.MapCourseID=b.MapCourseID 
-        AND a.ModeID=b.ModeID AND a.StyleIDFlags=b.StyleIDFlags 
-        AND a.Created>b.Created AND a.RunTime>b.RunTime) 
-        ORDER BY a.TimeID DESC 
-        LIMIT %d
-)";
