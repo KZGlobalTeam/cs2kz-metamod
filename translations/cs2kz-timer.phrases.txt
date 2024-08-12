@@ -238,11 +238,13 @@
 		// Server Records on kz_map (Main) [VNL]
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"Server Records on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"fi"		"Palvelimen ennätykset kentällä {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ua"		"Рекорди сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"SR - No Times"
 	{
 		"en"		"No times were found!"
+		"fi"		"Aikoja ei löytynyt!"
 		"ua"		"Не знайдено жодного часу!"
 	}
 	"SR - Overall"
@@ -250,6 +252,7 @@
 		// KZ | Overall Record: 01:23.45 (5 TP) by Bill
 		"#format"	"time:s,player_name:s,tp_count_text:s"
 		"en"		"{yellow}Overall{grey}: {default}{time}{grey} by {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"fi"		"{yellow}Kokonaisuus{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey} ({yellow}{tp_count_text}{grey})"
 		"ua"		"{yellow}Загальний{grey}: {default}{time}{grey} від {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 	}
 	"SR - Combined"
@@ -257,6 +260,7 @@
 		// KZ | Overall/PRO Record: 01:23.45 by Bill
 		"#format"	"time:s,player_name:s"
 		"en"		"{yellow}Overall/{blue}PRO{grey}: {default}{time}{grey} by {lime}{player_name}{grey}"
+		"fi"		"{yellow}Kokonaisuus/{blue}PRO{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey}"
 		"ua"		"{yellow}Загальний/{blue}PRO{grey}: {default}{time}{grey} від {lime}{player_name}{grey}"
 	}
 	"SR - PRO"
@@ -264,18 +268,21 @@
 		// KZ | PRO Record: 23.45 by Player
 		"#format"	"time_pro:s,player_name_pro:s"
 		"en"		"{blue}PRO{grey}: {default}{time_pro}{grey} by {lime}{player_name_pro}{grey}"
+		"fi"		"{blue}PRO{grey}: {lime}{player_name_pro}{grey} ajassa {default}{time_pro}{grey}"
 		"ua"		"{blue}PRO{grey}: {default}{time_pro}{grey} від {lime}{player_name_pro}{grey}"
 	}
 
 	"Record Request - Failed (Generic)" 
 	{
 		"en"		"{darkred}Failed to retrieve record information."
+		"fi"		"{darkred}Ennätysten haku epäonnistui."
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд."
 	}
 	"Record Request - Invalid Course Name"
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Failed to retrieve record information. {grey}(Invalid course name {default}{course_name}{grey})"
+		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 	}
 	"WR/SR Command Usage"
