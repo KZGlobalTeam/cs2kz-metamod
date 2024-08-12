@@ -19,8 +19,10 @@ class KZQuietService : public KZBaseService
 
 public:
 	bool hideOtherPlayers {};
+	static void Init();
 	virtual void Reset() override;
 
+	void OnPlayerPreferencesLoaded();
 	void ToggleHide();
 	void UpdateHideState();
 	void SendFullUpdate();
@@ -32,8 +34,5 @@ public:
 		return this->hideWeapon;
 	}
 
-	void ToggleHideWeapon()
-	{
-		this->hideWeapon = !this->hideWeapon;
-	}
+	void ToggleHideWeapon();
 };

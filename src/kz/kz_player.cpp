@@ -58,7 +58,6 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->hideLegs = false;
 
 	// Reset services that should not persist across player sessions.
 	this->languageService->Reset();
@@ -73,6 +72,8 @@ void KZPlayer::Reset()
 void KZPlayer::OnPlayerActive()
 {
 	// Reset services that should not persist across map changes.
+
+	this->hideLegs = this->optionService->GetPreferenceBool("hideLegs", false);
 	this->checkpointService->Reset();
 	this->noclipService->Reset();
 	this->quietService->Reset();
@@ -710,6 +711,7 @@ bool KZPlayer::JustTeleported()
 void KZPlayer::ToggleHideLegs()
 {
 	this->hideLegs = !this->hideLegs;
+	this->optionService->SetPreferenceBool("hideLegs", this->hideLegs);
 }
 
 void KZPlayer::PlayErrorSound()

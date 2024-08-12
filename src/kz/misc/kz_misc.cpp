@@ -11,12 +11,25 @@
 #include "kz/style/kz_style.h"
 #include "kz/noclip/kz_noclip.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/option/kz_option.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/tip/kz_tip.h"
 
 #include "sdk/gamerules.h"
+
+static_global class KZOptionServiceEventListener_Misc : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		bool hideLegs = player->optionService->GetPreferenceBool("hideLegs", false);
+		if (player->HidingLegs() != hideLegs)
+		{
+			player->ToggleHideLegs();
+		}
+	}
+} optionEventListener;
 
 static_function SCMD_CALLBACK(Command_KzHidelegs)
 {
@@ -92,6 +105,11 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 {
 	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), false);
 	return MRES_SUPERCEDE;
+}
+
+void KZ::misc::Init()
+{
+	KZOptionService::RegisterEventListener(&optionEventListener);
 }
 
 void KZ::misc::OnServerActivate()

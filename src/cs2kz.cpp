@@ -16,6 +16,7 @@
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
 #include "kz/style/kz_style.h"
+#include "kz/quiet/kz_quiet.h"
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
@@ -53,6 +54,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZGotoService::Init();
 	KZHUDService::Init();
 	KZLanguageService::Init();
+	KZ::misc::Init();
+	KZQuietService::Init();
 	KZ::misc::RegisterCommands();
 	if (!KZ::mode::InitModeCvars())
 	{
