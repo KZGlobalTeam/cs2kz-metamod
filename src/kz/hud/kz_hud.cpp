@@ -36,7 +36,7 @@ void KZHUDService::Init()
 
 void KZHUDService::Reset()
 {
-	this->showPanel = this->player->optionService->GetPreferenceBool("ShowPanel", true);
+	this->showPanel = this->player->optionService->GetPreferenceBool("showPanel", true);
 	this->timerStoppedTime = {};
 	this->currentTimeWhenTimerStopped = {};
 }
@@ -154,13 +154,13 @@ void KZHUDService::DrawPanels(KZPlayer *target)
 
 void KZHUDService::ResetShowPanel()
 {
-	this->showPanel = this->player->optionService->GetPreferenceBool("ShowPanel", true);
+	this->showPanel = this->player->optionService->GetPreferenceBool("showPanel", true);
 }
 
 void KZHUDService::TogglePanel()
 {
 	this->showPanel = !this->showPanel;
-	this->player->optionService->SetPreferenceBool("ShowPanel", false);
+	this->player->optionService->SetPreferenceBool("showPanel", false);
 	if (!this->showPanel)
 	{
 		utils::PrintAlert(this->player->GetController(), "#SFUI_EmptyString");
