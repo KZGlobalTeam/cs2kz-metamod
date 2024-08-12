@@ -262,11 +262,11 @@
 		"en"		"{blue}PRO{grey}: {default}{time_pro}{grey} by {lime}{player_name_pro}{grey}"
 	}
 
-	"PB Request - Failed (Generic)" 
+	"Record Request - Failed (Generic)" 
 	{
 		"en"		"{darkred}Failed to retrieve record information."
 	}
-	"PB Request - Invalid Course Name"
+	"Record Request - Invalid Course Name"
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Failed to retrieve record information. {grey}(Invalid course name {default}{course_name}{grey})"
