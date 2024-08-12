@@ -9,6 +9,7 @@
 	"defaultShowJS"				"true"
 
 	"chatPrefix"				"{lime}KZ {grey}|{default}"
+	"overridePlayerChat"		"true"
 	"db"
 	{
 		"driver"	"sqlite"

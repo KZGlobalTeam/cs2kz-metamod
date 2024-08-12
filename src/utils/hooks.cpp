@@ -738,7 +738,10 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 // ICvar
 static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
-	KZ::misc::ProcessConCommand(cmd, ctx, args);
+	if (KZOptionService::GetOptionInt("overridePlayerChat", true))
+	{
+		KZ::misc::ProcessConCommand(cmd, ctx, args);
+	}
 
 	META_RES mres = scmd::OnDispatchConCommand(cmd, ctx, args);
 	RETURN_META(mres);

@@ -6,7 +6,7 @@
 #include "sdk/services.h"
 
 #include "kz_quiet.h"
-
+#include "kz/option/kz_option.h"
 #include "utils/utils.h"
 
 void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
@@ -118,11 +118,20 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 		case CS_UM_SayText:
 		case UM_SayText:
 		{
+			if (!KZOptionService::GetOptionInt("overridePlayerChat", true))
+			{
+				return;
+			}
 			*(uint64 *)clients = 0;
+			return;
 		}
 		case CS_UM_SayText2:
 		case UM_SayText2:
 		{
+			if (!KZOptionService::GetOptionInt("overridePlayerChat", true))
+			{
+				return;
+			}
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CUserMessageSayText2>();
 			if (!msg->mutable_param1()->empty() || !msg->mutable_param2()->empty())
 			{
