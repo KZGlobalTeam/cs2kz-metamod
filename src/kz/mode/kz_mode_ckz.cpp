@@ -3,6 +3,9 @@
 #include "utils/addresses.h"
 #include "utils/interfaces.h"
 #include "utils/gameconfig.h"
+
+#include "sdk/entity/cbasetrigger.h"
+
 #include "version.h"
 
 KZClassicModePlugin g_KZClassicModePlugin;

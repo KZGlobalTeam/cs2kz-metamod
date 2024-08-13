@@ -18,6 +18,8 @@
 #include "utils/utils.h"
 #include "entityclass.h"
 
+#include "sdk/entity/cbasetrigger.h"
+
 #include "memdbgon.h"
 
 extern CSteamGameServerAPIContext g_steamAPI;

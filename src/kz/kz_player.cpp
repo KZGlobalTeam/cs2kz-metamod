@@ -16,6 +16,8 @@
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
 
+#include "sdk/entity/cbasetrigger.h"
+
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
 

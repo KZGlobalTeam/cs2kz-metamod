@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "sdk/datatypes.h"
 #include "playerslot.h"
 #include "vector.h"
 #include "igameeventsystem.h"

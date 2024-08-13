@@ -3,6 +3,7 @@
 #include "sdk/serversideclient.h"
 #include "sdk/datatypes.h"
 #include "sdk/services.h"
+#include "sdk/entity/ccsplayercontroller.h"
 #include "utils/utils.h"
 
 // The index is the entity index associated with the player's controller's entity index.

@@ -3,6 +3,7 @@
 #include "utils/utils.h"
 #include "interfaces/interfaces.h"
 #include "inetchannel.h"
+#include "sdk/entity/cbaseentity.h"
 
 class CRecipientFilter : public IRecipientFilter
 {
