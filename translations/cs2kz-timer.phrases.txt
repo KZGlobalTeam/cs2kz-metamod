@@ -288,7 +288,7 @@
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Failed to retrieve record information. {grey}(Invalid course name {default}{course_name}{grey})"
-		"ru"		"{darkred}Не удалось получить информацию о рекорде. {grey}(Неверное название курса. {default}{course_name}{grey})"
+		"ru"		"{darkred}Не удалось получить информацию о рекорде. {grey}(Неверное название курса {default}{course_name}{grey})"
 		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 	}
