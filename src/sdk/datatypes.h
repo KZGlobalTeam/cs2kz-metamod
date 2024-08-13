@@ -70,10 +70,10 @@ typedef uint32 SoundEventGuid_t;
 
 struct SndOpEventGuid_t
 {
+	SndOpEventGuid_t() : m_nGuid(0), m_hStackHash(-1) {}
+
 	SoundEventGuid_t m_nGuid;
 	uint32 m_hStackHash;
-	uint32 unknown;
-	uint32 unknown2;
 };
 
 // used with EmitSound_t
