@@ -87,13 +87,13 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			} \
 			else if (m_key.networked) \
 			{ \
-				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \
+				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \ \
 					need to have their this pointer corrected by the offset .*/ \
 				DevMsg("Attempting to call SetStateChanged on %s::%s\n", ThisClassName, #varName); \
 				if (!IsStruct) \
 					((CEntityInstance *)pThisClass)->NetworkStateChanged(m_key.offset + extra_offset, -1, -1); \
 				else \
-					CALL_VIRTUAL(void, 1, pThisClass, m_key.offset + extra_offset, 0xFFFFFFFF, 0xFFFF); \
+					CALL_VIRTUAL(void, 1, pThisClass, m_key.offset + extra_offset, 0xFFFFFFFF, 0xFFFFFFFF); \
 			} \
 			*reinterpret_cast<std::add_pointer_t<type>>((uintptr_t)(pThisClass) + m_key.offset + extra_offset) = val; \
 		} \
