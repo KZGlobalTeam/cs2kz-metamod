@@ -51,10 +51,10 @@ void KZPlayer::Init()
 	this->hudService = new KZHUDService(this);
 	this->specService = new KZSpecService(this);
 	this->gotoService = new KZGotoService(this);
-	this->replayService = new KZReplayService(this);
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
+	this->replayService = new KZReplayService(this);
 	KZ::mode::InitModeService(this);
 	KZ::style::InitStyleService(this);
 }
@@ -178,6 +178,7 @@ void KZPlayer::OnProcessMovement()
 
 void KZPlayer::OnProcessMovementPost()
 {
+	this->replayService->OnProcessMovementPost();
 	if (this->specService->GetSpectatedPlayer())
 	{
 		this->specService->GetSpectatedPlayer()->hudService->DrawPanels(this);

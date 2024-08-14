@@ -92,6 +92,18 @@
 		"ua"		"{time}{stop_text}{pause_text}"
 		"tr"		"{time}{stop_text}{pause_text}"
 	}
+	"HUD - Timer Text Bot"
+	{
+		// 01:23:45/01:23:45
+		"#format"	"time:s,total_time:s"
+		"en"		"{time}/{total_time}"
+		"chi"		"计时: {time}/{total_time}"
+		"pl"		"{time}/{total_time}"
+		"fi"		"{time}/{total_time}"
+		"sv"		"{time}/{total_time}"
+		"ua"		"{time}/{total_time}"
+		"tr"		"{time}/{total_time}"
+	}
 	"HUD - Center Text"
 	{
 		// CP: 4/4, TPs: 12

@@ -31,6 +31,7 @@ public:
 
 	bool IsSpectating(KZPlayer *target);
 	bool SpectatePlayer(const char *playerName);
+	bool SpectatePlayer(KZPlayer *playerToSpec);
 	bool CanSpectate();
 
 	KZPlayer *GetSpectatedPlayer();

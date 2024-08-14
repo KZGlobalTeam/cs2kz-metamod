@@ -7,15 +7,54 @@
 #include "../timer/kz_timer.h"
 #include "../noclip/kz_noclip.h"
 
-void KZReplayService::Init() {}
+static_global CUtlVector<Frame> srReplay = CUtlVector<Frame>(1, 0);
+static_global KZPlayer *summoner = nullptr;
+static_global KZPlayer *replayBot = nullptr;
+
+static_global const Vector NULL_VECTOR = Vector(0, 0, 0);
+static_global f64 botChillTimeAfterReplayBeforeGettingKicked = 3;
+
+void KZReplayService::Init() 
+{
+	interfaces::pEngine->ServerCommand("sv_cheats 1");
+	interfaces::pEngine->ServerCommand("mp_autoteambalance 0");
+	interfaces::pEngine->ServerCommand("bot_kick");
+	interfaces::pEngine->ServerCommand("bot_chatter 0");
+	interfaces::pEngine->ServerCommand("bot_dont_shoot 1");
+	interfaces::pEngine->ServerCommand("bot_zombie 1");
+	interfaces::pEngine->ServerCommand("bot_controllable 0");
+	interfaces::pEngine->ServerCommand("sv_cheats 0");
+}
+
 void KZReplayService::Reset() {}
+
+void KZReplayService::OnProcessMovementPost() 
+{
+	if (!this->isReplayBot)
+	{
+		return;
+	}
+	if (this->frames.Count() == 0)
+	{
+		return;
+	}
+
+	Frame frame = this->frames.Element(this->lastIndex + 1);
+	this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[0] = frame.buttons;
+}
 
 void KZReplayService::OnPhysicsSimulatePost()
 {
-	if (this->replay)
+	if (this->isReplayBot)
 	{
-		this->player->languageService->PrintChat(true, false, "Playing bot...");
 		return Play();
+	}
+
+	// This is such a dumb way of doing this but I can't for the life of me figure out how to do it otherwise. The controller never seems to exist...
+	if (this->player->GetPlayerPawn()->IsBot())
+	{
+		InitializeReplayBot();
+		return;
 	}
 
 	if (!this->player->timerService->GetValidTimer())
@@ -23,6 +62,13 @@ void KZReplayService::OnPhysicsSimulatePost()
 		return;
 	}
 
+	this->time += ENGINE_FIXED_TICK_INTERVAL;
+
+	AddFrame();
+}
+
+void KZReplayService::AddFrame() 
+{
 	Vector origin;
 	Vector velocity;
 	QAngle angles;
@@ -31,141 +77,152 @@ void KZReplayService::OnPhysicsSimulatePost()
 	this->player->GetVelocity(&velocity);
 
 	Frame frame;
-	frame.tick = this->player->timerService->GetTime();
+	frame.time = this->time;
 	frame.orientation = angles;
 	frame.position = origin;
 	frame.velocity = velocity;
 	frame.duckAmount = this->player->GetMoveServices()->m_flDuckAmount;
 	frame.moveType = this->player->GetMoveType();
 	frame.flags = this->player->GetPlayerPawn()->m_fFlags;
+	frame.buttons = this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[0];
 
 	this->frames.AddToTail(frame);
 }
 
 void KZReplayService::Play() 
 {
-	this->time += ENGINE_FIXED_TICK_INTERVAL;
-
-	Frame frame;
-	int i = this->lastIndex;
-	do
+	if (this->frames.Count() == 0)
 	{
-		frame = this->frames.Element(i++);
-	} 
-	while (i < this->frames.Count() - 1 && frame.tick < this->time);
-
-	this->lastIndex = i;
-
-	if (i == this->frames.Count())
-	{
-		this->replayDone = true;
-
-		META_CONPRINTF("Bot done, restart in 3...\n");
-
-		if (this->time > frame.tick + 3)
-		{
-			this->StartReplay(this->frames);
-		}
 		return;
 	}
 
-	//Vector origin;
-	//this->player->GetOrigin(&origin);
-	//f32 distance = (origin - frame.position).Length2D();
+	this->time += ENGINE_FIXED_TICK_INTERVAL;
 
-	if (frame.flags & FL_ONGROUND)
+	Frame frame;
+	int i = this->lastIndex - 1;
+	do
 	{
-		this->player->noclipService->EnableNoclip();
-	}
-	else
-	{
-		this->player->noclipService->DisableNoclip();
-	}
+		frame = this->frames.Element(++i);
+	} 
+	while (i < this->frames.Count() - 1 && frame.time < this->time);
 
-	this->player->GetPlayerPawn()->Teleport(&frame.position, &frame.orientation, &frame.velocity);
+	this->lastIndex = i;
+
+	if (i == this->frames.Count() - 1)
+	{
+		this->replayDone = true;
+
+		if (this->time > frame.time + botChillTimeAfterReplayBeforeGettingKicked)
+		{
+			this->player->Kick("Replay over", NETWORK_DISCONNECT_KICKED);
+			replayBot = nullptr;
+			return;
+		}
+	}
+	
 	this->player->SetMoveType(frame.moveType);
-	this->player->GetMoveServices()->m_flDuckAmount = frame.duckAmount;
-	//this->player->GetMoveServices()->m_nButtons = IN_FORWARD;
+	this->player->GetMoveServices()->m_bDucked(frame.duckAmount > .0001);
+	this->player->GetMoveServices()->m_flDuckAmount(frame.duckAmount > .0001 ? frame.duckAmount : 0);
+	this->player->GetPlayerPawn()->Teleport(&frame.position, &frame.orientation, &frame.velocity);
 }
 
-void KZReplayService::StartReplay(CUtlVector<Frame> &frames) 
+void KZReplayService::InitializeReplayBot()
+{
+	if (summoner)
+	{
+		summoner->specService->SpectatePlayer(this->player);
+		//summoner = nullptr;
+	}
+
+	replayBot = this->player;
+
+	this->player->GetName();
+
+	StartReplay();
+}
+
+void KZReplayService::StartReplay() 
 {
 	this->replayDone = false;
 	this->time = 0;
 	this->lastIndex = 0;
-	this->frames = frames;
-	this->replay = true;
+	this->frames = srReplay;
+	this->isReplayBot = true;
 }
 
 void KZReplayService::OnTimerStart()
 {
+	this->frames.Purge();
 	this->frames = CUtlVector<Frame>(1, 0);
-	interfaces::pEngine->ServerCommand("sv_cheats 1");
-	interfaces::pEngine->ServerCommand("bot_kick");
-	interfaces::pEngine->ServerCommand("bot_quota_mode fill");
-	interfaces::pEngine->ServerCommand("bot_quota 1");
-	interfaces::pEngine->ServerCommand("bot_join_team CT");
-	interfaces::pEngine->ServerCommand("bot_add_ct");
-	interfaces::pEngine->ServerCommand("bot_stop 1");
-	interfaces::pEngine->ServerCommand("bot_dont_shoot 1");
-	interfaces::pEngine->ServerCommand("bot_zombie 1");
-	interfaces::pEngine->ServerCommand("bot_controllable 0");
-	interfaces::pEngine->ServerCommand("sv_cheats 0");
+	this->time = 0;
+	AddFrame();
 }
 
 void KZReplayService::OnTimerStop()
 {
-	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
-	{
-		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-
-		if (controller)
-		{
-			this->player->languageService->PrintConsole(true, false, "asd %s", otherPlayer->GetName());
-
-			if (V_strstr(V_strlower((char *)otherPlayer->GetName()), "bot"))
-			{
-				this->player->languageService->PrintConsole(true, false, "Spectating %s", otherPlayer->GetName());
-				otherPlayer->replayService->StartReplay(this->frames);
-			}
-
-			return;
-		}
-	}
+	srReplay.Purge();
+	srReplay = CUtlVector<Frame>(1, 0);
+	srReplay.CopyArray(this->frames.Base(), this->frames.Count());
 }
 
-static_function KZPlayer *GetReplayBot(const char *playerName)
+static_function bool isValidInteger(const char *str)
 {
-	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+	if (*str == '-' || *str == '+')
 	{
-		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-		CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(i)));
-
-		if (ent && !V_stricmp(otherPlayer->GetName(), playerName))
-		{
-			return otherPlayer;
-		}
+		str++;
 	}
-
-	return nullptr;
+	if (*str == '\0')
+	{
+		return false;
+	}
+	while (*str)
+	{
+		if (!std::isdigit(*str))
+		{
+			return false;
+		}
+		str++;
+	}
+	return true;
 }
 
 void KZReplayService::Skip(int seconds)
 {
-	this->time += seconds;
+	Frame lastFrame = this->frames.Element(this->frames.Count() - 1);
+	this->time = MAX(MIN(this->time + seconds, lastFrame.time - botChillTimeAfterReplayBeforeGettingKicked), 0);
+
+	if (seconds < 0 && this->lastIndex >= 0)
+	{
+		Frame frame;
+		int i = this->lastIndex;
+		do
+		{
+			frame = this->frames.Element(i--);
+		} while (i >= 0 && frame.time > this->time);
+
+		this->lastIndex = i;
+	}
+}
+
+void KZReplayService::Skip(const char *secondsStr)
+{
+	if (isValidInteger(secondsStr))
+	{
+		const int seconds = std::atoi(secondsStr);
+		Skip(seconds);
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Replay Skip - Command Usage");
+	}
 }
 
 static_function SCMD_CALLBACK(Command_KzReplaySkip)
 {
 	const char *secondsStr = args->Arg(1);
-	const char *playerName = args->Arg(2);
-	KZPlayer *replayBot = GetReplayBot(playerName);
-
 	if (replayBot)
 	{
-		int seconds = std::stoi(secondsStr);
-		replayBot->replayService->Skip(seconds);
+		replayBot->replayService->Skip(secondsStr);
 	}
 
 	return MRES_SUPERCEDE;
@@ -174,20 +231,14 @@ static_function SCMD_CALLBACK(Command_KzReplaySkip)
 static_function SCMD_CALLBACK(Command_KzReplay)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	const char *playerName = args->Arg(1);
-	KZPlayer *replayBot = GetReplayBot(playerName);
 
-	if (replayBot)
-	{
-		player->timerService->InvalidateRun();
-		player->timerService->TimerStop();
-		replayBot->replayService->StartReplay(player->replayService->frames);
-	}
-
+	summoner = player;
+	interfaces::pEngine->ServerCommand("bot_add_ct");
 	return MRES_SUPERCEDE;
 }
 
-void KZReplayService::RegisterCommands() {
+void KZReplayService::RegisterCommands() 
+{
 	scmd::RegisterCmd("kz_replay", Command_KzReplay);
 	scmd::RegisterCmd("kz_replay_skip", Command_KzReplaySkip);
 }

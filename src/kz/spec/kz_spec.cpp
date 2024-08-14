@@ -58,6 +58,17 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	return false;
 }
 
+bool KZSpecService::SpectatePlayer(KZPlayer *playerToSpec) 
+{
+	// Some of the time, this works all of the time.
+	this->player->GetController()->SwitchTeam(CS_TEAM_SPECTATOR);
+
+	CPlayer_ObserverServices *obsService = this->player->GetController()->m_hObserverPawn()->m_pObserverServices;
+	obsService->m_hObserverTarget.Set(playerToSpec->GetController()->m_hPlayerPawn.Get());
+
+	return true;
+}
+
 bool KZSpecService::CanSpectate()
 {
 	return false;

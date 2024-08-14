@@ -7,6 +7,7 @@
 
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/replays/kz_replays.h"
 #include "kz/language/kz_language.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 
@@ -87,7 +88,7 @@ std::string KZHUDService::GetCheckpointText(const char *language)
 
 std::string KZHUDService::GetTimerText(const char *language)
 {
-	if (this->player->timerService->GetTimerRunning() || this->ShouldShowTimerAfterStop())
+	if (this->player->timerService->GetTimerRunning() || this->ShouldShowTimerAfterStop() || this->player->replayService->isReplayBot)
 	{
 		char timeText[128];
 
@@ -96,9 +97,17 @@ std::string KZHUDService::GetTimerText(const char *language)
 		f64 time = this->player->timerService->GetTimerRunning()
 			? player->timerService->GetTime()
 			: this->currentTimeWhenTimerStopped;
-
-
+		
 		KZTimerService::FormatTime(time, timeText, sizeof(timeText));
+
+		if (this->player->replayService->isReplayBot)
+		{
+			char totalTimeText[128];
+			KZTimerService::FormatTime(this->player->replayService->time, totalTimeText, sizeof(totalTimeText));
+
+			return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text Bot", timeText);
+		}
+
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
 			timeText,
 			player->timerService->GetTimerRunning() ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
