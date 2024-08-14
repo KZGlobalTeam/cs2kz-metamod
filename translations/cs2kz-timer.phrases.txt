@@ -238,12 +238,14 @@
 		// Server Records on kz_map (Main) [VNL]
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"Server Records on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"ru"		"Рекорды сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"fi"		"Palvelimen ennätykset kentällä {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ua"		"Рекорди сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"SR - No Times"
 	{
 		"en"		"No times were found!"
+		"ru"		"Рекордов не найдено!"
 		"fi"		"Aikoja ei löytynyt!"
 		"ua"		"Не знайдено жодного часу!"
 	}
@@ -252,6 +254,7 @@
 		// KZ | Overall Record: 01:23.45 (5 TP) by Bill
 		"#format"	"time:s,player_name:s,tp_count_text:s"
 		"en"		"{yellow}Overall{grey}: {default}{time}{grey} by {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"ru"		"{yellow}Абсолютный{grey}: {default}{time}{grey} от {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"fi"		"{yellow}Kokonaisuus{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey} ({yellow}{tp_count_text}{grey})"
 		"ua"		"{yellow}Загальний{grey}: {default}{time}{grey} від {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 	}
@@ -260,6 +263,7 @@
 		// KZ | Overall/PRO Record: 01:23.45 by Bill
 		"#format"	"time:s,player_name:s"
 		"en"		"{yellow}Overall/{blue}PRO{grey}: {default}{time}{grey} by {lime}{player_name}{grey}"
+		"ru"		"{yellow}Абсолютный/{blue}PRO{grey}: {default}{time}{grey} от {lime}{player_name}{grey}"
 		"fi"		"{yellow}Kokonaisuus/{blue}PRO{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey}"
 		"ua"		"{yellow}Загальний/{blue}PRO{grey}: {default}{time}{grey} від {lime}{player_name}{grey}"
 	}
@@ -268,6 +272,7 @@
 		// KZ | PRO Record: 23.45 by Player
 		"#format"	"time_pro:s,player_name_pro:s"
 		"en"		"{blue}PRO{grey}: {default}{time_pro}{grey} by {lime}{player_name_pro}{grey}"
+		"ru"		"{blue}PRO{grey}: {default}{time_pro}{grey} от {lime}{player_name_pro}{grey}"
 		"fi"		"{blue}PRO{grey}: {lime}{player_name_pro}{grey} ajassa {default}{time_pro}{grey}"
 		"ua"		"{blue}PRO{grey}: {default}{time_pro}{grey} від {lime}{player_name_pro}{grey}"
 	}
@@ -275,6 +280,7 @@
 	"Record Request - Failed (Generic)" 
 	{
 		"en"		"{darkred}Failed to retrieve record information."
+		"ru"		"{darkred}Не удалось получить информацию о рекорде."
 		"fi"		"{darkred}Ennätysten haku epäonnistui."
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд."
 	}
@@ -282,6 +288,7 @@
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Failed to retrieve record information. {grey}(Invalid course name {default}{course_name}{grey})"
+		"ru"		"{darkred}Не удалось получить информацию о рекорде. {grey}(Неверное название курса {default}{course_name}{grey})"
 		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 	}
