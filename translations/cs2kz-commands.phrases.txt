@@ -472,4 +472,16 @@
 		"ua"		"Показати персональний найкращий час."
 		"tr"		"Kişisel rekor istatistiklerini gösterir."
 	}
+	"Command Description - kz_wr"
+	{
+		"en"		"Retrieve server and world records."
+		"fi"		"Hae palvelimen ja maailman ennätykset."
+		"ua"		"Показати рекорд сервера та світовий рекорд."
+	}
+	"Command Description - kz_sr"
+	{
+		"en"		"Retrieve server records."
+		"fi"		"Hae palvelimen ennätykset."
+		"ua"		"Показати рекорди сервера."
+	}
 }

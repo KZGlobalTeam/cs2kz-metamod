@@ -11,6 +11,7 @@
 #include "kz/style/kz_style.h"
 #include "kz/noclip/kz_noclip.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/option/kz_option.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
 #include "kz/timer/kz_timer.h"
@@ -18,6 +19,18 @@
 #include "kz/tip/kz_tip.h"
 
 #include "sdk/gamerules.h"
+
+static_global class KZOptionServiceEventListener_Misc : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		bool hideLegs = player->optionService->GetPreferenceBool("hideLegs", false);
+		if (player->HidingLegs() != hideLegs)
+		{
+			player->ToggleHideLegs();
+		}
+	}
+} optionEventListener;
 
 static_function SCMD_CALLBACK(Command_KzHidelegs)
 {
@@ -95,12 +108,17 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
+void KZ::misc::Init()
+{
+	KZOptionService::RegisterEventListener(&optionEventListener);
+}
+
 void KZ::misc::OnServerActivate()
 {
-	static_persist bool infiniteAmmoUnlocked {};
-	if (!infiniteAmmoUnlocked)
+	static_persist bool cvTweaked {};
+	if (!cvTweaked)
 	{
-		infiniteAmmoUnlocked = true;
+		cvTweaked = true;
 		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
 		if (cvarHandle.IsValid())
 		{
@@ -109,6 +127,15 @@ void KZ::misc::OnServerActivate()
 		else
 		{
 			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
+		}
+		cvarHandle = g_pCVar->FindConVar("bot_stop");
+		if (cvarHandle.IsValid())
+		{
+			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
+		}
+		else
+		{
+			META_CONPRINTF("Warning: bot_stop is not found!\n");
 		}
 	}
 	g_pKZUtils->UpdateCurrentMapMD5();

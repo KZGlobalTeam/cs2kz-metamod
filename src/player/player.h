@@ -3,6 +3,7 @@
 #include "sdk/serversideclient.h"
 #include "sdk/datatypes.h"
 #include "sdk/services.h"
+#include "sdk/entity/ccsplayercontroller.h"
 #include "utils/utils.h"
 
 // The index is the entity index associated with the player's controller's entity index.
@@ -110,6 +111,8 @@ public:
 		unauthenticatedSteamID = CSteamID(xuid);
 	}
 
+	virtual void OnPlayerActive() {}
+
 	virtual void OnAuthorized();
 
 public:
@@ -130,6 +133,7 @@ public:
 		{
 			delete players[i];
 			players[i] = new Player(i);
+			players[i]->Reset();
 		}
 	}
 
@@ -148,6 +152,14 @@ public:
 	Player *ToPlayer(CPlayerSlot slot);
 	Player *ToPlayer(CEntityIndex entIndex);
 	Player *ToPlayer(CPlayerUserId userID);
+
+	virtual void ResetPlayers()
+	{
+		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			players[i]->Reset();
+		}
+	}
 
 	void Cleanup();
 	void OnLateLoad();

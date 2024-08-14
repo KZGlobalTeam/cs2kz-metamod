@@ -1,17 +1,18 @@
 #include "kz_db.h"
+#include "kz/option/kz_option.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
 #include "queries/players.h"
 
 using namespace KZ::Database;
 
-void KZDatabaseService::SetupClient(KZPlayer *player)
+void KZDatabaseService::SetupClient()
 {
 	if (!KZDatabaseService::IsReady())
 	{
 		return;
 	}
-	if (!player || player->IsFakeClient())
+	if (!this->player || this->player->IsFakeClient())
 	{
 		return;
 	}
@@ -19,10 +20,10 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 	char query[1024];
 
 	// Note: The player must have been authenticated and have a valid steamID at this point.
-	const char *clientName = player->GetName();
+	const char *clientName = this->player->GetName();
 	std::string escapedName = GetDatabaseConnection()->Escape(clientName);
-	u64 steamID64 = player->GetClient()->GetClientSteamID()->ConvertToUint64();
-	const char *clientIP = player->GetClient()->GetRemoteAddress()->ToString(true);
+	u64 steamID64 = this->player->GetClient()->GetClientSteamID()->ConvertToUint64();
+	const char *clientIP = this->player->GetClient()->GetRemoteAddress()->ToString(true);
 
 	Transaction txn;
 
@@ -47,20 +48,20 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 		}
 	}
 
-	V_snprintf(query, sizeof(query), sql_players_get_cheater, steamID64);
+	V_snprintf(query, sizeof(query), sql_players_get_infos, steamID64);
 	txn.queries.push_back(query);
 	for (u32 i = 0; i < txn.queries.size(); i++)
 	{
 		auto queryStr = txn.queries[i];
 	}
-	CPlayerUserId userID = player->GetClient()->GetUserID();
+	CPlayerUserId userID = this->player->GetClient()->GetUserID();
 
 	GetDatabaseConnection()->ExecuteTransaction(
 		txn,
-		[userID, steamID64](std::vector<ISQLQuery *> queries)
+		[&, userID, steamID64](std::vector<ISQLQuery *> queries)
 		{
-			KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
-			if (!player || !player->IsAuthenticated())
+			KZPlayer *pl = g_pKZPlayerManager->ToPlayer(userID);
+			if (!pl || !pl->IsAuthenticated())
 			{
 				return;
 			}
@@ -81,7 +82,11 @@ void KZDatabaseService::SetupClient(KZPlayer *player)
 			if (result)
 			{
 				bool isCheater = (result->FetchRow() && result->GetInt(0) == 1);
+				const char *prefs = result->GetString(1);
 				META_CONPRINTF("SetupClient done, steamID %lld\n", steamID64);
+				this->isSetUp = true;
+				pl->optionService->InitializeLocalPrefs(prefs);
+				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isCheater);
 			}
 		},
 		OnGenericTxnFailure);

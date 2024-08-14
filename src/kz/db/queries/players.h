@@ -44,9 +44,15 @@ constexpr char mysql_players_upsert[] = R"(
         IP=VALUES(IP), LastPlayed=VALUES(LastPlayed)
 )";
 
-constexpr char sql_players_get_cheater[] = R"(
-    SELECT Cheater 
+constexpr char sql_players_get_infos[] = R"(
+    SELECT Cheater, Preferences
         FROM Players 
+        WHERE SteamID64=%lld
+)";
+
+constexpr char sql_players_set_prefs[] = R"(
+    UPDATE Players 
+        SET Preferences='%s'
         WHERE SteamID64=%lld
 )";
 

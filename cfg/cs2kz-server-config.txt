@@ -1,12 +1,15 @@
 "ServerCfg"
 {
-	"defaultMode"			"Classic"
-	"defaultStyle"			"Normal"
-	"defaultLanguage"		"en"
-	"tipInterval"			"75"
+	"defaultMode"				"Classic"
+	"defaultStyle"				"Normal"
+	"defaultLanguage"			"en"
+	"tipInterval"				"75"
 	"defaultJSBroadcastMinTier"	"4"
 	"defaultJSSoundMinTier"		"4"
-	"chatPrefix"			"{lime}KZ {grey}|{default}"
+	"defaultShowJS"				"true"
+
+	"chatPrefix"				"{lime}KZ {grey}|{default}"
+	"overridePlayerChat"		"true"
 	"db"
 	{
 		"driver"	"sqlite"

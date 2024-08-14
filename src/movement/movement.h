@@ -15,6 +15,7 @@ class CCSPlayer_MovementServices;
 class CCSPlayerController;
 class MovementPlayer;
 class CSGOUserCmdPB;
+class CCSPlayerPawnBase;
 
 namespace movement
 {

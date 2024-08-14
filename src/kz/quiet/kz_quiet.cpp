@@ -6,8 +6,16 @@
 #include "sdk/services.h"
 
 #include "kz_quiet.h"
-
+#include "kz/option/kz_option.h"
 #include "utils/utils.h"
+
+static_global class KZOptionServiceEventListener_Quiet : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		player->quietService->OnPlayerPreferencesLoaded();
+	}
+} optionEventListener;
 
 void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 {
@@ -118,11 +126,20 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 		case CS_UM_SayText:
 		case UM_SayText:
 		{
+			if (!KZOptionService::GetOptionInt("overridePlayerChat", true))
+			{
+				return;
+			}
 			*(uint64 *)clients = 0;
+			return;
 		}
 		case CS_UM_SayText2:
 		case UM_SayText2:
 		{
+			if (!KZOptionService::GetOptionInt("overridePlayerChat", true))
+			{
+				return;
+			}
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CUserMessageSayText2>();
 			if (!msg->mutable_param1()->empty() || !msg->mutable_param2()->empty())
 			{
@@ -168,10 +185,15 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 	}
 }
 
+void KZQuietService::Init()
+{
+	KZOptionService::RegisterEventListener(&optionEventListener);
+}
+
 void KZQuietService::Reset()
 {
-	this->hideOtherPlayers = false;
-	this->hideWeapon = false;
+	this->hideOtherPlayers = this->player->optionService->GetPreferenceBool("hideOtherPlayers", false);
+	this->hideWeapon = this->player->optionService->GetPreferenceBool("hideWeapon", false);
 }
 
 void KZQuietService::SendFullUpdate()
@@ -180,6 +202,10 @@ void KZQuietService::SendFullUpdate()
 	{
 		client->ForceFullUpdate();
 	}
+	// Keep the player's angles the same.
+	QAngle angles;
+	this->player->GetAngles(&angles);
+	this->player->SetAngles(angles);
 }
 
 bool KZQuietService::ShouldHide()
@@ -209,16 +235,31 @@ bool KZQuietService::ShouldHideIndex(u32 targetIndex)
 	return true;
 }
 
+void KZQuietService::ToggleHideWeapon()
+{
+	this->hideWeapon = !this->hideWeapon;
+	this->player->optionService->SetPreferenceBool("hideWeapon", this->hideWeapon);
+}
+
+void KZQuietService::OnPlayerPreferencesLoaded()
+{
+	this->hideWeapon = this->player->optionService->GetPreferenceBool("hideWeapon", false);
+
+	bool newShouldHide = this->player->optionService->GetPreferenceBool("hideOtherPlayers", false);
+	if (!newShouldHide && this->hideOtherPlayers && this->player->IsInGame())
+	{
+		this->SendFullUpdate();
+	}
+	this->hideOtherPlayers = newShouldHide;
+}
+
 void KZQuietService::ToggleHide()
 {
 	this->hideOtherPlayers = !this->hideOtherPlayers;
+	this->player->optionService->SetPreferenceBool("hideOtherPlayers", this->hideOtherPlayers);
 	if (!this->hideOtherPlayers)
 	{
 		this->SendFullUpdate();
-		// Keep the player's angles the same.
-		QAngle angles;
-		this->player->GetAngles(&angles);
-		this->player->SetAngles(angles);
 	}
 }
 

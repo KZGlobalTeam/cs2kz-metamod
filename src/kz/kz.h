@@ -55,6 +55,7 @@ public:
 	// General events
 	virtual void Init() override;
 	virtual void Reset() override;
+	virtual void OnPlayerActive() override;
 	virtual void OnAuthorized() override;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
@@ -239,6 +240,7 @@ namespace KZ
 {
 	namespace misc
 	{
+		void Init();
 		void OnServerActivate();
 		void RegisterCommands();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);

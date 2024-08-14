@@ -70,6 +70,8 @@ private:
 public:
 	static void Init();
 	static void RegisterCommands();
+	static void RegisterPBCommand();
+	static void RegisterRecordCommands();
 	static bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
 	static bool UnregisterEventListener(KZTimerServiceEventListener *eventListener);
 
@@ -173,8 +175,6 @@ private:
 	void PlayTimerEndSound();
 	void PlayTimerFalseEndSound();
 	void PlayTimerStopSound();
-
-	void PrintEndTimeString();
 
 	/*
 	 * Pause stuff also goes here.
@@ -289,5 +289,8 @@ namespace KZ
 
 		// PB Requests
 		void CheckPBRequests();
+
+		// Record requests
+		void CheckRecordRequests();
 	} // namespace timer
 } // namespace KZ

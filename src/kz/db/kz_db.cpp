@@ -25,7 +25,6 @@ bool KZDatabaseService::UnregisterEventListener(KZDatabaseServiceEventListener *
 
 void KZDatabaseService::Init()
 {
-	KZDatabaseService::RegisterCommands();
 	KZDatabaseService::SetupDatabase();
 }
 
@@ -36,9 +35,4 @@ void KZDatabaseService::Cleanup()
 		databaseConnection->Destroy();
 		databaseConnection = NULL;
 	}
-}
-
-void KZDatabaseService::RegisterCommands()
-{
-	KZDatabaseService::RegisterPBCommand();
 }

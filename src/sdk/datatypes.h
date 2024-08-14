@@ -7,9 +7,11 @@
 #pragma clang diagnostic pop
 #endif
 #include "ehandle.h"
-#include "sdk/entity/ccsplayercontroller.h"
-#include "sdk/entity/cbasetrigger.h"
 #include "gametrace.h"
+
+class CCSPlayerPawn;
+class CCSPlayerController;
+class CBaseTrigger;
 
 struct TransmitInfo
 {
@@ -68,8 +70,10 @@ typedef uint32 SoundEventGuid_t;
 
 struct SndOpEventGuid_t
 {
+	SndOpEventGuid_t() : m_nGuid(0), m_hStackHash(-1) {}
+
 	SoundEventGuid_t m_nGuid;
-	uint64 m_hStackHash;
+	uint32 m_hStackHash;
 };
 
 // used with EmitSound_t

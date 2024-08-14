@@ -1,6 +1,23 @@
 #include "kz_option.h"
-
+#include "kz/db/kz_db.h"
 static_global KeyValues *pServerCfgKeyValues;
+
+CUtlVector<KZOptionServiceEventListener *> KZOptionService::eventListeners;
+
+bool KZOptionService::RegisterEventListener(KZOptionServiceEventListener *eventListener)
+{
+	if (eventListeners.Find(eventListener) >= 0)
+	{
+		return false;
+	}
+	eventListeners.AddToTail(eventListener);
+	return true;
+}
+
+bool KZOptionService::UnregisterEventListener(KZOptionServiceEventListener *eventListener)
+{
+	return eventListeners.FindAndRemove(eventListener);
+}
 
 void KZOptionService::LoadDefaultOptions()
 {
@@ -34,4 +51,38 @@ KeyValues *KZOptionService::GetOptionKV(const char *optionName)
 void KZOptionService::InitOptions()
 {
 	LoadDefaultOptions();
+}
+
+void KZOptionService::InitializeLocalPrefs(CUtlString text)
+{
+	if (this->initState > LOCAL)
+	{
+		return;
+	}
+	if (text.IsEmpty())
+	{
+		text = "{\n}";
+	}
+	CUtlString error;
+	LoadKV3FromJSON(&this->prefKV, &error, text.Get(), "");
+	if (!error.IsEmpty())
+	{
+		META_CONPRINTF("[KZ::DB] Error fetching local preference: %s\n", error.Get());
+		return;
+	}
+	this->initState = LOCAL;
+
+	CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+}
+
+void KZOptionService::SaveLocalPrefs()
+{
+	CUtlString error, output;
+	SaveKV3AsJSON(&this->prefKV, &error, &output);
+	if (!error.IsEmpty())
+	{
+		META_CONPRINTF("[KZ::DB] Error saving local preference: %s\n", error.Get());
+		return;
+	}
+	this->player->databaseService->SavePrefs(output);
 }

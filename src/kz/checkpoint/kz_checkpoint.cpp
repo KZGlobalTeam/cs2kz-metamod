@@ -187,12 +187,22 @@ void KZCheckpointService::TpToCheckpoint()
 
 void KZCheckpointService::TpToPrevCp()
 {
+	if (this->checkpoints.Count() <= 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
+		return;
+	}
 	this->currentCpIndex = MAX(0, this->currentCpIndex - 1);
 	DoTeleport(this->currentCpIndex);
 }
 
 void KZCheckpointService::TpToNextCp()
 {
+	if (this->checkpoints.Count() <= 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
+		return;
+	}
 	this->currentCpIndex = MIN(this->currentCpIndex + 1, this->checkpoints.Count() - 1);
 	DoTeleport(this->currentCpIndex);
 }

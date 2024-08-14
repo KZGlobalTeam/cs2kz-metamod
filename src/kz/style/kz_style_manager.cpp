@@ -376,6 +376,20 @@ void KZStyleManager::ClearStyles(KZPlayer *player, bool silent)
 	}
 }
 
+void KZStyleManager::RefreshStyles(KZPlayer *player)
+{
+	CUtlVector<StylePluginInfo> styles;
+	FOR_EACH_VEC(player->styleServices, i)
+	{
+		styles.AddToTail(KZ::style::GetStyleInfo(player->styleServices[i]->GetStyleName()));
+	}
+	KZStyleManager::ClearStyles(player, true);
+	FOR_EACH_VEC(styles, i)
+	{
+		KZStyleManager::AddStyle(player, styles[i].longName, true);
+	}
+}
+
 void KZStyleManager::PrintActiveStyles(KZPlayer *player)
 {
 	player->languageService->PrintConsole(false, false, "Current Styles");

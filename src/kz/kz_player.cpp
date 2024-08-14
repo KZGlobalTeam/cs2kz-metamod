@@ -17,6 +17,8 @@
 #include "replays/kz_replays.h"
 #include "tip/kz_tip.h"
 
+#include "sdk/entity/cbasetrigger.h"
+
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
 
@@ -60,29 +62,39 @@ void KZPlayer::Init()
 void KZPlayer::Reset()
 {
 	MovementPlayer::Reset();
-	this->hideLegs = false;
 
-	// TODO: reset every service.
-	this->checkpointService->Reset();
-	this->noclipService->Reset();
-	this->quietService->Reset();
+	// Reset services that should not persist across player sessions.
 	this->languageService->Reset();
-	this->jumpstatsService->Reset();
-	this->hudService->Reset();
-	this->timerService->Reset();
 	this->tipService->Reset();
 	this->modeService->Reset();
-	this->specService->Reset();
 	this->optionService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
 }
 
+void KZPlayer::OnPlayerActive()
+{
+	// Reset services that should not persist across map changes.
+
+	this->hideLegs = this->optionService->GetPreferenceBool("hideLegs", false);
+	this->checkpointService->Reset();
+	this->noclipService->Reset();
+	this->quietService->Reset();
+	this->jumpstatsService->Reset();
+	this->hudService->Reset();
+	this->timerService->Reset();
+	this->specService->Reset();
+
+	// Refresh the convars because they couldn't receive the message when connecting.
+	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true);
+	g_pKZStyleManager->RefreshStyles(this);
+}
+
 void KZPlayer::OnAuthorized()
 {
 	MovementPlayer::OnAuthorized();
-	KZDatabaseService::SetupClient(this);
+	this->databaseService->SetupClient();
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
@@ -704,6 +716,7 @@ bool KZPlayer::JustTeleported()
 void KZPlayer::ToggleHideLegs()
 {
 	this->hideLegs = !this->hideLegs;
+	this->optionService->SetPreferenceBool("hideLegs", this->hideLegs);
 }
 
 void KZPlayer::PlayErrorSound()

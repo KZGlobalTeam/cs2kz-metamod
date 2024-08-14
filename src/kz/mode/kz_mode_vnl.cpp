@@ -1,6 +1,8 @@
 #include "kz_mode_vnl.h"
 #include "utils/interfaces.h"
 
+#include "sdk/entity/cbasetrigger.h"
+
 const char *KZVanillaModeService::GetModeName()
 {
 	return "Vanilla";
