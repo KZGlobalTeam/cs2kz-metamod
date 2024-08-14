@@ -1,0 +1,7 @@
+"Phrases"
+{
+	"Replay Skip - Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_replay_skip <seconds>"
+	}
+}
