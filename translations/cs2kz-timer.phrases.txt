@@ -244,10 +244,10 @@
 	}
 	"SR - No Times"
 	{
-		"en"		"No times were found!"
-		"ru"		"Рекордов не найдено!"
-		"fi"		"Aikoja ei löytynyt!"
-		"ua"		"Не знайдено жодного часу!"
+		"en"		"{grey}No times were found!"
+		"ru"		"{grey}Рекордов не найдено!"
+		"fi"		"{grey}Aikoja ei löytynyt!"
+		"ua"		"{grey}Не знайдено жодного часу!"
 	}
 	"SR - Overall"
 	{

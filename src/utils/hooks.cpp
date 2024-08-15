@@ -119,7 +119,7 @@ static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawn
 
 // INetworkGameServer
 static_global int activateServerHook {};
-SH_DECL_HOOK0(INetworkGameServer, ActivateServer, SH_NOATTRIB, false, bool);
+SH_DECL_HOOK0(CNetworkGameServerBase, ActivateServer, SH_NOATTRIB, false, bool);
 static_function bool Hook_ActivateServer();
 
 // IGameSystem
@@ -166,12 +166,13 @@ void hooks::Initialize()
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 	// clang-format off
 	activateServerHook = SH_ADD_DVPHOOK(
-		INetworkGameServer, 
+		CNetworkGameServerBase, 
 		ActivateServer,
-		(INetworkGameServer *)modules::engine->FindVirtualTable("CNetworkGameServer"),
+		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
 		SH_STATIC(Hook_ActivateServer), 
 		true
 	);
+	META_CONPRINTF("\n\n\n[DEBUG] hook = %d\n\n\n", activateServerHook);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
 		IGameSystem, 
 		ServerGamePostSimulate, 

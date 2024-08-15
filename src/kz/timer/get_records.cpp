@@ -179,12 +179,12 @@ struct RecordRequest
 
 static_global struct
 {
-	CUtlVector<RecordRequest> wrRequests;
+	CUtlVector<RecordRequest> recordRequests;
 	u32 pbReqCount = 0;
 
 	void AddRequest(KZPlayer *callingPlayer, CUtlString mapName, CUtlString courseName, CUtlString modeName, bool serverOnly)
 	{
-		RecordRequest *req = wrRequests.AddToTailGetPtr();
+		RecordRequest *req = recordRequests.AddToTailGetPtr();
 		*req = RecordRequest(pbReqCount, callingPlayer, mapName, courseName, modeName, serverOnly);
 		req->SetupCourse(callingPlayer);
 		req->SetupMode(callingPlayer);
@@ -194,13 +194,13 @@ static_global struct
 	template<typename... Args>
 	void InvalidLocal(u64 uid, CUtlString reason = "", Args &&...args)
 	{
-		FOR_EACH_VEC(wrRequests, i)
+		FOR_EACH_VEC(recordRequests, i)
 		{
-			if (wrRequests[i].uid == uid)
+			if (recordRequests[i].uid == uid)
 			{
-				wrRequests[i].localRequestState = RecordRequest::LocalRequestState::FAILED;
+				recordRequests[i].localRequestState = RecordRequest::LocalRequestState::FAILED;
 				// TODO: check for global.
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(wrRequests[i].userID);
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(recordRequests[i].userID);
 				if (player && player->IsInGame())
 				{
 					player->languageService->PrintChat(true, false, reason.IsEmpty() ? "Record Request - Failed (Generic)" : reason.Get(), args...);
@@ -212,12 +212,12 @@ static_global struct
 
 	void UpdateCourseName(u64 uid, CUtlString name)
 	{
-		FOR_EACH_VEC(wrRequests, i)
+		FOR_EACH_VEC(recordRequests, i)
 		{
-			if (wrRequests[i].uid == uid)
+			if (recordRequests[i].uid == uid)
 			{
-				wrRequests[i].courseName = name;
-				wrRequests[i].hasValidCourseName = true;
+				recordRequests[i].courseName = name;
+				recordRequests[i].hasValidCourseName = true;
 				return;
 			}
 		}
@@ -225,11 +225,11 @@ static_global struct
 
 	void UpdateSRData(u64 uid, RecordData data)
 	{
-		FOR_EACH_VEC(wrRequests, i)
+		FOR_EACH_VEC(recordRequests, i)
 		{
-			if (wrRequests[i].uid == uid)
+			if (recordRequests[i].uid == uid)
 			{
-				wrRequests[i].UpdateSRData(data);
+				recordRequests[i].UpdateSRData(data);
 				return;
 			}
 		}
@@ -237,28 +237,28 @@ static_global struct
 
 	void CheckRequests()
 	{
-		FOR_EACH_VEC(wrRequests, i)
+		FOR_EACH_VEC(recordRequests, i)
 		{
-			if (wrRequests[i].ShouldQueryLocal())
+			if (recordRequests[i].ShouldQueryLocal())
 			{
-				wrRequests[i].ExecuteLocalRequest();
+				recordRequests[i].ExecuteLocalRequest();
 			}
-			if (wrRequests[i].ShouldReply())
+			if (recordRequests[i].ShouldReply())
 			{
-				wrRequests[i].Reply();
-				wrRequests.Remove(i);
+				recordRequests[i].Reply();
+				recordRequests.Remove(i);
 				i--;
 				continue;
 			}
-			if (!wrRequests[i].IsValid())
+			if (!recordRequests[i].IsValid())
 			{
-				wrRequests.Remove(i);
+				recordRequests.Remove(i);
 				i--;
 				continue;
 			}
 		}
 	}
-} pbReqQueueManager;
+} recReqQueueManager;
 
 void RecordRequest::SetupMode(KZPlayer *callingPlayer)
 {
@@ -272,7 +272,7 @@ void RecordRequest::SetupMode(KZPlayer *callingPlayer)
 
 	if (modeInfo.databaseID < 0)
 	{
-		pbReqQueueManager.InvalidLocal(this->uid);
+		recReqQueueManager.InvalidLocal(this->uid);
 		return;
 	}
 
@@ -298,7 +298,7 @@ void RecordRequest::SetupCourse(KZPlayer *callingPlayer)
 	}
 	else // Shouldn't happen.
 	{
-		pbReqQueueManager.InvalidLocal(this->uid);
+		recReqQueueManager.InvalidLocal(this->uid);
 		return;
 	}
 
@@ -325,7 +325,7 @@ void RecordRequest::SetupCourse(KZPlayer *callingPlayer)
 				KZ::timer::CourseInfo info;
 				if (!KZ::timer::GetFirstCourseInformation(info))
 				{
-					pbReqQueueManager.InvalidLocal(this->uid, "Record Request - Invalid Course Name", course);
+					recReqQueueManager.InvalidLocal(this->uid, "Record Request - Invalid Course Name", course);
 					return;
 				}
 				courseName = info.courseName;
@@ -340,15 +340,15 @@ void RecordRequest::SetupCourse(KZPlayer *callingPlayer)
 				ISQLResult *result = queries[0]->GetResultSet();
 				if (result->GetRowCount() > 0 && result->FetchRow())
 				{
-					pbReqQueueManager.UpdateCourseName(uid, result->GetString(0));
+					recReqQueueManager.UpdateCourseName(uid, result->GetString(0));
 				}
 				else
 				{
-					pbReqQueueManager.InvalidLocal(uid);
+					recReqQueueManager.InvalidLocal(uid);
 				}
 			};
 
-			auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+			auto onQueryFailure = [uid](std::string, int) { recReqQueueManager.InvalidLocal(uid); };
 			KZDatabaseService::FindFirstCourseByMapName(mapName, onQuerySuccess, onQueryFailure);
 		}
 	}
@@ -365,7 +365,7 @@ void RecordRequest::ExecuteLocalRequest()
 	KZPlayer *callingPlayer = g_pKZPlayerManager->ToPlayer(userID);
 	if (!callingPlayer)
 	{
-		pbReqQueueManager.InvalidLocal(this->uid);
+		recReqQueueManager.InvalidLocal(this->uid);
 		return;
 	}
 
@@ -396,10 +396,10 @@ void RecordRequest::ExecuteLocalRequest()
 				data.runTimePro = result->GetFloat(3);
 			}
 		}
-		pbReqQueueManager.UpdateSRData(uid, data);
+		recReqQueueManager.UpdateSRData(uid, data);
 	};
 
-	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
+	auto onQueryFailure = [uid](std::string, int) { recReqQueueManager.InvalidLocal(uid); };
 
 	KZDatabaseService::QueryRecords(mapName, courseName, localDBRequestParams.modeID, onQuerySuccess, onQueryFailure);
 }
@@ -440,7 +440,7 @@ void QueryRecords(CCSPlayerController *controller, const CCommand *args, bool se
 		}
 	}
 
-	pbReqQueueManager.AddRequest(player, mapName, courseName, modeName, serverOnly);
+	recReqQueueManager.AddRequest(player, mapName, courseName, modeName, serverOnly);
 	return;
 }
 
@@ -458,7 +458,7 @@ SCMD_CALLBACK(CommandKZSR)
 
 void KZ::timer::CheckRecordRequests()
 {
-	pbReqQueueManager.CheckRequests();
+	recReqQueueManager.CheckRequests();
 }
 
 void KZTimerService::RegisterRecordCommands()
