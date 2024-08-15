@@ -168,7 +168,7 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide()
 				&& g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHideIndex(playerIndex))
 			{
-				*(uint64 *)clients &= ~(i + 1);
+				*(uint64 *)clients &= ~i;
 			}
 		}
 	}
@@ -179,7 +179,7 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 		{
 			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide())
 			{
-				*(uint64 *)clients &= ~(i + 1);
+				*(uint64 *)clients &= ~i;
 			}
 		}
 	}
