@@ -46,15 +46,15 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		{
 			if (targetPlayerPawn == pawn)
 			{
-				// Hide weapon stuff.
-				if (targetPlayer->quietService->ShouldHideWeapon())
+				for (u32 j = 0; j < 3; j++)
 				{
-					for (u32 j = 0; j < 3; j++)
+					if (!pawn->m_pViewModelServices->m_hViewModel[j].IsValid())
 					{
-						if (!pawn->m_pViewModelServices->m_hViewModel[j].IsValid())
-						{
-							continue;
-						}
+						continue;
+					}
+					// Hide weapon stuff.
+					if (targetPlayer->quietService->ShouldHideWeapon(j))
+					{
 						pTransmitInfo->m_pTransmitEdict->Clear(pawn->m_pViewModelServices->m_hViewModel[j].GetEntryIndex());
 					}
 				}

@@ -14,8 +14,8 @@ class CCSPlayer_MovementServices;
 
 class CCSPlayerController;
 class MovementPlayer;
-class CSGOUserCmdPB;
 class CCSPlayerPawnBase;
+class CUserCmd;
 
 namespace movement
 {
@@ -23,7 +23,7 @@ namespace movement
 
 	void FASTCALL Detour_PhysicsSimulate(CCSPlayerController *);
 	f32 FASTCALL Detour_GetMaxSpeed(CCSPlayerPawn *);
-	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, CSGOUserCmdPB *, CMoveData *);
+	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, CUserCmd *, CMoveData *);
 	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, void *, int, bool, float);
 	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_PlayerMoveNew(CCSPlayer_MovementServices *, CMoveData *);
@@ -90,9 +90,9 @@ public:
 
 	virtual void OnProcessUsercmdsPost(void *, int) {}
 
-	virtual void OnSetupMove(CSGOUserCmdPB *) {}
+	virtual void OnSetupMove(CUserCmd *) {}
 
-	virtual void OnSetupMovePost(CSGOUserCmdPB *) {}
+	virtual void OnSetupMovePost(CUserCmd *) {}
 
 	virtual void OnProcessMovement();
 	virtual void OnProcessMovementPost();

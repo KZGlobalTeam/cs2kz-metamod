@@ -3,7 +3,7 @@
 #include "utils/detours.h"
 #include "utils/gameconfig.h"
 #include "tier0/memdbgon.h"
-
+#include "sdk/usercmd.h"
 extern CGameConfig *g_pGameConfig;
 
 void movement::InitDetours()
@@ -74,7 +74,7 @@ i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, v
 	return retValue;
 }
 
-void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, CSGOUserCmdPB *pb, CMoveData *mv)
+void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, CUserCmd *pb, CMoveData *mv)
 {
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	CBasePlayerController *controller = player->GetController();

@@ -160,7 +160,7 @@ void KZHUDService::ResetShowPanel()
 void KZHUDService::TogglePanel()
 {
 	this->showPanel = !this->showPanel;
-	this->player->optionService->SetPreferenceBool("showPanel", false);
+	this->player->optionService->SetPreferenceBool("showPanel", this->showPanel);
 	if (!this->showPanel)
 	{
 		utils::PrintAlert(this->player->GetController(), "#SFUI_EmptyString");
