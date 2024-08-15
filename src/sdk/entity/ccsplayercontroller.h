@@ -1,7 +1,14 @@
 #pragma once
-
 #include "cbaseplayercontroller.h"
 #include "random.h"
+
+struct SnapTapStats
+{
+	uint32 perfect;
+	uint32 overlaps[16];
+	uint32 underlaps[16];
+	uint32 max_success_in_20;
+};
 
 class CCSPlayerController : public CBasePlayerController
 {
@@ -9,6 +16,13 @@ public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerController);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPlayerPawn);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hObserverPawn);
+	SCHEMA_FIELD_OFFSET(SnapTapStats, m_nNonSuspiciousHitStreak, 4);
+
+	// Update gamerules' roundendcount to request an update from the client.
+	SnapTapStats GetSnapTapStats()
+	{
+		return m_nNonSuspiciousHitStreak();
+	}
 
 	CCSPlayerPawn *GetPlayerPawn()
 	{
