@@ -20,7 +20,7 @@ jobs:
     name: Get version string
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set vars
         id: vars
@@ -33,7 +33,7 @@ jobs:
     name: Check for CRLF and final newlines
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: ./scripts/check-newlines.sh
 
   check-formatting:
@@ -45,8 +45,8 @@ jobs:
           - check: 'src'
             exclude: 'sdk'
     steps:
-      - uses: actions/checkout@v3
-      - uses: jidicula/clang-format-action@v4.11.0
+      - uses: actions/checkout@v4
+      - uses: jidicula/clang-format-action@v4.13.0
         with:
           clang-format-version: '16'
           check-path: ${{ matrix.path['check'] }}

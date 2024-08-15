@@ -10,7 +10,7 @@ jobs:
     name: Get version string
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set vars
         id: vars
@@ -23,7 +23,7 @@ jobs:
     name: Check for CRLF and final newlines
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check for CRLF and final newlines
         run: |
           ./scripts/check-newlines.sh
@@ -37,8 +37,8 @@ jobs:
           - check: 'src'
             exclude: 'sdk'
     steps:
-      - uses: actions/checkout@v3
-      - uses: jidicula/clang-format-action@v4.11.0
+      - uses: actions/checkout@v4
+      - uses: jidicula/clang-format-action@v4.13.0
         with:
           clang-format-version: '16'
           check-path: ${{ matrix.path['check'] }}
@@ -58,7 +58,7 @@ jobs:
       - get-version-string
       - build
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -66,7 +66,7 @@ jobs:
         run: |
           mkdir /home/runner/releases
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           path: /home/runner/artifacts
 
@@ -89,7 +89,7 @@ jobs:
           git push origin ${{ needs.get-version-string.outputs.version_string }}
 
       - name: Dev Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.get-version-string.outputs.version_string }}
           files: |

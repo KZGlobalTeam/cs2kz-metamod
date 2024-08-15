@@ -9,12 +9,12 @@ jobs:
   protect-master-pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         if: ${{ github.repository != 'KZGlobalTeam/cs2kz-metamod' }}
         with:
           script: core.setFailed('Can not merge into master from outside of KZGlobalTeam/cs2kz-metamod!')
 
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         if: ${{ github.head_ref != 'dev' }}
         with:
           script: core.setFailed('Can not merge into master from branch other than dev!')
