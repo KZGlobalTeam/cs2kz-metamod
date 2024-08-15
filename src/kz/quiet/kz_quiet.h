@@ -30,6 +30,11 @@ public:
 	bool ShouldHide();
 	bool ShouldHideIndex(u32 targetIndex);
 
+	bool ShouldHideWeapon()
+	{
+		return this->hideWeapon;
+	}
+
 	bool ShouldHideWeapon(u32 slot)
 	{
 		if (!this->weaponShownAtLeastOnce[slot])
