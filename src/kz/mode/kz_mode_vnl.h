@@ -37,6 +37,7 @@ class KZVanillaModeService : public KZModeService
 		"80",            // sv_staminamax
 		"60",            // sv_staminarecoveryrate
 		"0.7",           // sv_standable_normal
+		"64.0",          // sv_step_move_vel_min
 		"0.4",           // sv_timebetweenducks
 		"0.7",           // sv_walkable_normal
 		"10",            // sv_wateraccelerate

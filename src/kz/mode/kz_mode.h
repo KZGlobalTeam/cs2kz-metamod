@@ -228,6 +228,7 @@ namespace KZ::mode
 		"sv_staminamax",
 		"sv_staminarecoveryrate",
 		"sv_standable_normal",
+		"sv_step_move_vel_min",
 		"sv_timebetweenducks",
 		"sv_walkable_normal",
 		"sv_wateraccelerate",
