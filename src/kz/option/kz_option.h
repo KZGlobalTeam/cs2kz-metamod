@@ -79,8 +79,13 @@ public:
 		{
 			return defaultValue;
 		}
-		KeyValues3 *option = prefKV.FindMember(optionName);
-		return option ? option->GetBool(defaultValue) : defaultValue;
+		bool created = false;
+		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
+		if (created)
+		{
+			option->SetBool(defaultValue);
+		}
+		return option->GetBool(defaultValue);
 	}
 
 	void SetPreferenceFloat(const char *optionName, f64 value)
@@ -95,8 +100,13 @@ public:
 		{
 			return defaultValue;
 		}
-		KeyValues3 *option = prefKV.FindMember(optionName);
-		return option ? option->GetDouble(defaultValue) : defaultValue;
+		bool created = false;
+		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
+		if (created)
+		{
+			option->SetDouble(defaultValue);
+		}
+		return option->GetDouble(defaultValue);
 	}
 
 	void SetPreferenceInt(const char *optionName, i64 value)
@@ -111,8 +121,13 @@ public:
 		{
 			return defaultValue;
 		}
-		KeyValues3 *option = prefKV.FindMember(optionName);
-		return option ? option->GetInt64(defaultValue) : defaultValue;
+		bool created = false;
+		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
+		if (created)
+		{
+			option->SetInt64(defaultValue);
+		}
+		return option->GetInt64(defaultValue);
 	}
 
 	void SetPreferenceStr(const char *optionName, const char *value)
@@ -127,8 +142,13 @@ public:
 		{
 			return defaultValue;
 		}
-		KeyValues3 *option = prefKV.FindMember(optionName);
-		return option ? option->GetString(defaultValue) : defaultValue;
+		bool created = false;
+		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
+		if (created)
+		{
+			option->SetString(defaultValue);
+		}
+		return option->GetString(defaultValue);
 	}
 
 	void SetPreferenceVector(const char *optionName, const Vector &value)
@@ -143,8 +163,13 @@ public:
 		{
 			return defaultValue;
 		}
-		KeyValues3 *option = prefKV.FindMember(optionName);
-		return option ? option->GetVector(defaultValue) : defaultValue;
+		bool created = false;
+		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
+		if (created)
+		{
+			option->SetVector(defaultValue);
+		}
+		return option->GetVector(defaultValue);
 	}
 
 	void SetPreferenceTable(const char *optionName, const KeyValues3 &value)
@@ -157,11 +182,17 @@ public:
 
 	void GetPreferenceTable(const char *optionName, KeyValues3 &output, const KeyValues3 &defaultValue = KeyValues3())
 	{
-		KeyValues3 *option;
-		if (!IsInitialized() || !(option = prefKV.FindMember(optionName)))
+		if (!IsInitialized())
 		{
 			output = defaultValue;
 			return;
+		}
+
+		bool created = false;
+		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
+		if (created)
+		{
+			*option = defaultValue;
 		}
 		output = *option;
 	}

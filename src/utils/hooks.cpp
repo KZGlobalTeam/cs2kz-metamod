@@ -172,7 +172,6 @@ void hooks::Initialize()
 		SH_STATIC(Hook_ActivateServer), 
 		true
 	);
-	META_CONPRINTF("\n\n\n[DEBUG] hook = %d\n\n\n", activateServerHook);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
 		IGameSystem, 
 		ServerGamePostSimulate, 
