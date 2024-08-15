@@ -475,6 +475,7 @@
 	"Command Description - kz_wr"
 	{
 		"en"		"Retrieve server and world records."
+		"chi"		"查询服务器记录和世界记录."
 		"ru"		"Показать рекорд сервера и мировой рекорд."
 		"fi"		"Hae palvelimen ja maailman ennätykset."
 		"ua"		"Показати рекорд сервера та світовий рекорд."
@@ -482,6 +483,7 @@
 	"Command Description - kz_sr"
 	{
 		"en"		"Retrieve server records."
+		"chi"		"查询服务器记录."
 		"ru"		"Показать рекорд сервера."
 		"fi"		"Hae palvelimen ennätykset."
 		"ua"		"Показати рекорди сервера."
