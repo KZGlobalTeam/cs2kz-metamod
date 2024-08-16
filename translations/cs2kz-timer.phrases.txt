@@ -241,6 +241,7 @@
 		"ru"		"Рекорды сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"fi"		"Palvelimen ennätykset kentällä {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ua"		"Рекорди сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"tr"		"{default}{map_name}{grey} haritasındaki sunucu rekorları ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"SR - No Times"
 	{
@@ -248,6 +249,7 @@
 		"ru"		"{grey}Рекордов не найдено!"
 		"fi"		"{grey}Aikoja ei löytynyt!"
 		"ua"		"{grey}Не знайдено жодного часу!"
+		"tr"		"{grey}Süre bulunamadı!"
 	}
 	"SR - Overall"
 	{
@@ -257,6 +259,7 @@
 		"ru"		"{yellow}Абсолютный{grey}: {default}{time}{grey} от {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"fi"		"{yellow}Kokonaisuus{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey} ({yellow}{tp_count_text}{grey})"
 		"ua"		"{yellow}Загальний{grey}: {default}{time}{grey} від {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"tr"		"{yellow}Tümünde{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 	}
 	"SR - Combined"
 	{
@@ -266,6 +269,7 @@
 		"ru"		"{yellow}Абсолютный/{blue}PRO{grey}: {default}{time}{grey} от {lime}{player_name}{grey}"
 		"fi"		"{yellow}Kokonaisuus/{blue}PRO{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey}"
 		"ua"		"{yellow}Загальний/{blue}PRO{grey}: {default}{time}{grey} від {lime}{player_name}{grey}"
+		"tr"		"{yellow}Tümünde/{blue}PRO{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey}"
 	}
 	"SR - PRO"
 	{
@@ -275,6 +279,7 @@
 		"ru"		"{blue}PRO{grey}: {default}{time_pro}{grey} от {lime}{player_name_pro}{grey}"
 		"fi"		"{blue}PRO{grey}: {lime}{player_name_pro}{grey} ajassa {default}{time_pro}{grey}"
 		"ua"		"{blue}PRO{grey}: {default}{time_pro}{grey} від {lime}{player_name_pro}{grey}"
+		"tr"		"{blue}PRO{grey}: {default}{time_pro}{grey} tarafından {lime}{player_name_pro}{grey}"
 	}
 
 	"Record Request - Failed (Generic)" 
@@ -283,6 +288,7 @@
 		"ru"		"{darkred}Не удалось получить информацию о рекорде."
 		"fi"		"{darkred}Ennätysten haku epäonnistui."
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд."
+		"tr"		"{darkred}Rekor bilgisi alınamadı."
 	}
 	"Record Request - Invalid Course Name"
 	{
@@ -291,6 +297,7 @@
 		"ru"		"{darkred}Не удалось получить информацию о рекорде. {grey}(Неверное название курса {default}{course_name}{grey})"
 		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
+		"tr"		"{darkred}Rekor bilgisi alınamadı. {grey}(Hatalı harita ismi {default}{course_name}{grey})"
 	}
 	"WR/SR Command Usage"
 	{
