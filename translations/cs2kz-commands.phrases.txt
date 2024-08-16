@@ -479,6 +479,7 @@
 		"ru"		"Показать рекорд сервера и мировой рекорд."
 		"fi"		"Hae palvelimen ja maailman ennätykset."
 		"ua"		"Показати рекорд сервера та світовий рекорд."
+		"tr"		"Dünya ve sunucu rekorlarını gösterir."
 	}
 	"Command Description - kz_sr"
 	{
@@ -487,5 +488,6 @@
 		"ru"		"Показать рекорд сервера."
 		"fi"		"Hae palvelimen ennätykset."
 		"ua"		"Показати рекорди сервера."
+		"tr"		"Sunucu rekorlarını gösterir."
 	}
 }
