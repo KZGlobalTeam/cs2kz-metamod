@@ -21,6 +21,6 @@
 		"fi"		"{grey}Et enää näe satunnaisia vihjeitä chatissäsi määräajoin."
 		"sv"		"{grey}Nu kommer du inte att se tips i chatten med jämna mellanrum."
 		"ua"		"{grey}Ви більше не будете бачити підказок в чаті."
-		"tr"		"{grey}}Periyodik olarak sohbette rastgele öneriler görmeyeceksin."
+		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler görmeyeceksin."
 	}
 }

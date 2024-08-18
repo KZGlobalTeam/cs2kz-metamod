@@ -108,7 +108,7 @@
 		"fi"		"{darkred}Et voi palata takaisin, sillä ei ole teleporttia johon palata."
 		"sv"		"{darkred}Du kan inte ångra din teleportering eftersom du har ingen föregående teleport."
 		"ua"		"{darkred}У вас немає телепортів, які можна скасувати."
-		"tr"		"{darkred}.Geri alamazsın çünkü geri alınabilecek ışınlanma noktası yok."
+		"tr"		"{darkred}Geri alamazsın çünkü geri alınabilecek ışınlanma noktası yok."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
