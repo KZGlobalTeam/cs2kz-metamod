@@ -6,8 +6,6 @@
 
 using namespace KZ::Database;
 
-static_global bool localDBConnected = false;
-
 void KZDatabaseService::SetupDatabase()
 {
 	KeyValues *config = KZOptionService::GetOptionKV("db");
@@ -51,21 +49,14 @@ void KZDatabaseService::OnDatabaseConnected(bool connect)
 	if (connect)
 	{
 		META_CONPRINT("[KZDB] LocalDB connected.\n");
-		localDBConnected = true;
 		KZDatabaseService::RunMigrations();
 	}
 	else
 	{
 		META_CONPRINT("[KZDB] Failed to connect\n");
-
 		// make sure to properly destroy the connection
 		databaseConnection->Destroy();
 		databaseConnection = nullptr;
 	}
 	return;
-}
-
-bool KZDatabaseService::IsReady()
-{
-	return localDBConnected;
 }

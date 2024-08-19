@@ -20,6 +20,8 @@
 
 using namespace KZ::Database;
 
+static_global bool localDBConnected = false;
+
 std::string trimString(const char *str)
 {
 	static_persist const std::regex pattern("\\s+");
@@ -104,7 +106,7 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 	for (u32 i = 0; i < current; i++)
 	{
 		result->FetchRow();
-		CRC32_t currentCRC = result->GetInt64(1);
+		u32 currentCRC = result->GetInt(1);
 		std::string migrationQuery;
 
 		switch (KZDatabaseService::GetDatabaseType())
@@ -121,11 +123,15 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 			}
 		}
 
-		CRC32_t crc = CRC32_ProcessSingleBuffer(migrationQuery.c_str(), migrationQuery.length());
+		u32 crc = CRC32_ProcessSingleBuffer(migrationQuery.c_str(), migrationQuery.length());
+		META_CONPRINTF("crc = %lu, currentCRC = %lu\n", crc, currentCRC);
 		if (currentCRC != crc)
 		{
-			META_CONPRINTF("[KZDB] Fatal error: Migration query %s with CRC %lu does not match the database's %lu!\n", migrationQuery.c_str(),
-						   currentCRC, crc);
+			META_CONPRINTF("[KZDB] Fatal error: Migration query %s with CRC %lu does not match the database's %lu!\n", migrationQuery.c_str(), crc,
+						   currentCRC);
+			META_CONPRINT("[KZDB] Database migration failed. LocalDB will not be available.");
+			databaseConnection->Destroy();
+			databaseConnection = nullptr;
 			return;
 		}
 	}
@@ -165,8 +171,20 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 	auto onSuccess = [](std::vector<ISQLQuery *> queries)
 	{
 		KZDatabaseService::SetupMap();
+		localDBConnected = true;
 		CALL_FORWARD(eventListeners, OnDatabaseSetup);
 	};
 
-	GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, OnGenericTxnFailure);
+	auto onFailure = [](std::string error, int failIndex)
+	{
+		META_CONPRINT("[KZDB] Database migration failed. LocalDB will not be available.");
+		databaseConnection->Destroy();
+		databaseConnection = nullptr;
+	};
+	GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
+}
+
+bool KZDatabaseService::IsReady()
+{
+	return localDBConnected;
 }
