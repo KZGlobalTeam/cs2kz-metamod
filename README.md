@@ -8,7 +8,8 @@ WIP, not ready for release
 
 - Optional: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
   
-- Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) for local database support
+- Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) 1.3.3 or later for local database support
+
 # Installation:
 
 - Download the latest version in the release section and extract them to your server's `csgo/` directory.

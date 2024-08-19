@@ -104,7 +104,7 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 	for (u32 i = 0; i < current; i++)
 	{
 		result->FetchRow();
-		CRC32_t currentCRC = result->GetInt(1);
+		CRC32_t currentCRC = result->GetInt64(1);
 		std::string migrationQuery;
 
 		switch (KZDatabaseService::GetDatabaseType())

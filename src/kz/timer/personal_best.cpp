@@ -392,7 +392,7 @@ void PBRequest::SetupSteamID64(KZPlayer *callingPlayer)
 			ISQLResult *result = queries[0]->GetResultSet();
 			if (result->GetRowCount() > 0 && result->FetchRow())
 			{
-				pbReqQueueManager.SetRequestTargetPlayer(uid, result->GetInt(0), result->GetString(1));
+				pbReqQueueManager.SetRequestTargetPlayer(uid, result->GetInt64(0), result->GetString(1));
 			}
 			else
 			{
