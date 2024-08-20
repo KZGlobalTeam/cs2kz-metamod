@@ -2,7 +2,7 @@
 #pragma once
 
 #define KZ_MAPPING_INTERFACE      "KZMappingInterface"
-#define KZ_MAX_COURSE_NAME_LENGTH 128
+#define KZ_MAX_COURSE_NAME_LENGTH 65
 
 enum KzTriggerType
 {
@@ -69,6 +69,8 @@ struct KzCourseDescriptor
 {
 	char entityTargetname[128];
 	char name[KZ_MAX_COURSE_NAME_LENGTH];
+	i32 number;
+	i32 hammerId;
 	bool disableCheckpoints;
 };
 
