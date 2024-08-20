@@ -74,6 +74,13 @@ void KZCheckpointService::SetCheckpoint()
 	{
 		return;
 	}
+
+	if (this->player->modifiers.disableCheckpointsCount > 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Anti Checkpoint Area)");
+		return;
+	}
+
 	u32 flags = pawn->m_fFlags();
 	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
 	{
@@ -141,6 +148,12 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp)
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn || !pawn->IsAlive())
 	{
+		return;
+	}
+
+	if (this->player->modifiers.disableTeleportsCount > 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Teleport (Map)");
 		return;
 	}
 

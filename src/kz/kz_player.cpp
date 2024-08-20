@@ -23,6 +23,8 @@
 #include "tier0/memdbgon.h"
 
 extern CSteamGameServerAPIContext g_steamAPI;
+static_global ConVar *sv_standable_normal;
+static_global ConVar *sv_walkable_normal;
 
 void KZPlayer::Init()
 {
@@ -166,8 +168,41 @@ void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 
 void KZPlayer::OnProcessMovement()
 {
+	if (!sv_standable_normal)
+	{
+		ConVarHandle handle = g_pCVar->FindConVar("sv_standable_normal");
+		sv_standable_normal = g_pCVar->GetConVar(handle);
+	}
+	
+	if (!sv_walkable_normal)
+	{
+		ConVarHandle handle = g_pCVar->FindConVar("sv_walkable_normal");
+		sv_walkable_normal = g_pCVar->GetConVar(handle);
+	}
+	
 	MovementPlayer::OnProcessMovement();
 	KZ::mode::ApplyModeSettings(this);
+
+	// apply slide
+	assert(sv_standable_normal && sv_walkable_normal);
+	if (sv_standable_normal && sv_walkable_normal)
+	{		
+		if (this->modifiers.enableSlideCount > 0)
+		{
+			auto standableValue = reinterpret_cast<CVValue_t *>(&(sv_standable_normal->values));
+			auto walkableValue = reinterpret_cast<CVValue_t *>(&(sv_walkable_normal->values));
+			standableValue->m_flValue = 2;
+			walkableValue->m_flValue = 2;
+			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_standable_normal, "2");
+			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_walkable_normal, "2");
+		}
+		else
+		{
+			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_standable_normal, "0.7");
+			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_walkable_normal, "0.7");
+		}
+	}
+	
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -673,10 +708,40 @@ void KZPlayer::EnableGodMode()
 	}
 }
 
-void KZPlayer::ZoneStartTouch(const KzCourseDescriptor *course, KzTriggerType zoneType)
+void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KzCourseDescriptor *course)
 {
-	switch (zoneType)
+	switch (touched->type)
 	{
+		case KZTRIGGER_MODIFIER:
+		{
+			KzMapModifier modifier = touched->modifier;
+			this->modifiers.disablePausingCount += modifier.disablePausing ? 1 : 0;
+			this->modifiers.disableCheckpointsCount += modifier.disableCheckpoints ? 1 : 0;
+			this->modifiers.disableTeleportsCount += modifier.disableTeleports ? 1 : 0;
+			this->modifiers.disableJumpstatsCount += modifier.disableJumpstats ? 1 : 0;
+			this->modifiers.enableSlideCount += modifier.enableSlide ? 1 : 0;
+		}
+		break;
+
+		case KZTRIGGER_RESET_CHECKPOINTS:
+		{
+			this->languageService->PrintChat(true, false, "Checkpoints cleared by map");
+			this->checkpointService->ResetCheckpoints();
+		};
+		break;
+
+		case KZTRIGGER_SINGLE_BHOP_RESET:
+		{
+			// TODO:
+		}
+		break;
+
+		case KZTRIGGER_ANTI_BHOP:
+		{
+			// TODO:
+		}
+		break;
+
 		case KZTRIGGER_ZONE_START:
 		{
 			this->checkpointService->ResetCheckpoints();
@@ -690,15 +755,73 @@ void KZPlayer::ZoneStartTouch(const KzCourseDescriptor *course, KzTriggerType zo
 		}
 		break;
 
+		case KZTRIGGER_ZONE_SPLIT:
+		{
+			// TODO:
+		}
+		break;
+
+		case KZTRIGGER_ZONE_CHECKPOINT:
+		{
+			// TODO:
+		}
+		break;
+
+		case KZTRIGGER_ZONE_STAGE:
+		{
+			// TODO:
+		}
+		break;
+
+		case KZTRIGGER_TELEPORT:
+		{
+			// TODO:
+		}
+		break;
+
+		case KZTRIGGER_MULTI_BHOP:
+		{
+			// TODO:
+		}
+		break;
+
+		case KZTRIGGER_SINGLE_BHOP:
+		{
+			// TODO:
+		}
+		break;
+
+		case KZTRIGGER_SEQUENTIAL_BHOP:
+		{
+			// TODO:
+		}
+		break;
+
 		default:
 			break;
 	}
 }
 
-void KZPlayer::ZoneEndTouch(const KzCourseDescriptor *course, KzTriggerType zoneType)
+void KZPlayer::MappingApiTriggerEndTouch(const KzTrigger *touched, const KzCourseDescriptor *course)
 {
-	switch (zoneType)
+	switch (touched->type)
 	{
+		case KZTRIGGER_MODIFIER:
+		{
+			KzMapModifier modifier = touched->modifier;
+			this->modifiers.disablePausingCount -= modifier.disablePausing ? 1 : 0;
+			this->modifiers.disableCheckpointsCount -= modifier.disableCheckpoints ? 1 : 0;
+			this->modifiers.disableTeleportsCount -= modifier.disableTeleports ? 1 : 0;
+			this->modifiers.disableJumpstatsCount -= modifier.disableJumpstats ? 1 : 0;
+			this->modifiers.enableSlideCount -= modifier.enableSlide ? 1 : 0;
+			assert(this->modifiers.disablePausingCount >= 0);
+			assert(this->modifiers.disableCheckpointsCount >= 0);
+			assert(this->modifiers.disableTeleportsCount >= 0);
+			assert(this->modifiers.disableJumpstatsCount >= 0);
+			assert(this->modifiers.enableSlideCount >= 0);
+		}
+		break;
+
 		case KZTRIGGER_ZONE_START:
 		{
 			this->checkpointService->ResetCheckpoints();
@@ -709,16 +832,6 @@ void KZPlayer::ZoneEndTouch(const KzCourseDescriptor *course, KzTriggerType zone
 		default:
 			break;
 	}
-}
-
-void KZPlayer::StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber)
-{
-	// TODO:
-}
-
-void KZPlayer::StageZoneEndTouch(const KzCourseDescriptor *course, i32 stageNumber)
-{
-	// TODO:
 }
 
 void KZPlayer::UpdatePlayerModelAlpha()

@@ -206,4 +206,8 @@
 		"it"		"{grey}Zona di partenza custom eliminata."
 		"es"		"{grey}Ha eliminado su posición de inicio personalizada."
 	}
+	"Checkpoints cleared by map"
+	{
+		"en"		"{darkred}The map has cleared your checkpoints."
+	}
 }

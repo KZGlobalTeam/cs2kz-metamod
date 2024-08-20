@@ -26,7 +26,7 @@ enum KzTriggerType
 };
 
 // KZTRIGGER_MODIFIER
-struct Modifier
+struct KzMapModifier
 {
 	bool disablePausing;
 	bool disableCheckpoints;
@@ -36,26 +36,26 @@ struct Modifier
 };
 
 // KZTRIGGER_ANTI_BHOP
-struct Antibhop
+struct KzMapAntibhop
 {
 	f32 time;
 };
 
 // KZTRIGGER_ZONE_*
-struct Zone
+struct KzMapZone
 {
 	char courseDescriptor[128];
 };
 
 // KZTRIGGER_ZONE_STAGE
-struct StageZone
+struct KzMapStageZone
 {
 	char courseDescriptor[128];
 	i32 stageNumber;
 };
 
 // KZTRIGGER_TELEPORT/_MULTI_BHOP/_SINGLE_BHOP/_SEQUENTIAL_BHOP
-struct Teleport
+struct KzMapTeleport
 {
 	char destination[128];
 	f32 delay;
@@ -72,6 +72,22 @@ struct KzCourseDescriptor
 	i32 number;
 	i32 hammerId;
 	bool disableCheckpoints;
+};
+
+struct KzTrigger
+{
+	KzTriggerType type;
+	CEntityHandle entity;
+	i32 hammerId;
+
+	union
+	{
+		KzMapModifier modifier;
+		KzMapAntibhop antibhop;
+		KzMapZone zone;
+		KzMapStageZone stageZone;
+		KzMapTeleport teleport;
+	};
 };
 
 class KZPlayer;
