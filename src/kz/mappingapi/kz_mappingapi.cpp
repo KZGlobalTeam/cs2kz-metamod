@@ -52,7 +52,7 @@ static_global CTimer<> *errorTimer;
 static_function MappingInterface g_mappingInterface;
 MappingInterface *g_pMappingApi = nullptr;
 
-static_function void Mapi_Error(char *format, ...)
+static_function void Mapi_Error(const char *format, ...)
 {
 	i32 errorIndex = g_mappingApi.errorCount;
 	if (errorIndex >= Q_ARRAYSIZE(g_mappingApi.errors[0]))
@@ -75,7 +75,7 @@ static_function void Mapi_Error(char *format, ...)
 
 static_function f64 Mapi_PrintErrors()
 {
-	char *prefix = "{red} ERROR: ";
+	const char *prefix = "{red} ERROR: ";
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_TRIGGERS)
 	{
 		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", prefix, Q_ARRAYSIZE(g_mappingApi.triggers));
