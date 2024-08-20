@@ -47,7 +47,8 @@ static_global struct
 	char errors[32][256];
 } g_mappingApi;
 
-static_global CTimer<> *errorTimer;
+static_global CTimer<> *g_errorTimer;
+static_global const char *g_errorPrefix = "{darkred} ERROR: ";
 static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset Checkpoints", "Single Bhop Reset", "Antibhop",
 
 											  "Start zone", "End zone",   "Split zone",        "Checkpoint zone",   "Stage zone",
@@ -82,21 +83,20 @@ static_function void Mapi_Error(const char *format, ...)
 
 static_function f64 Mapi_PrintErrors()
 {
-	const char *prefix = "{red} ERROR: ";
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_TRIGGERS)
 	{
-		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", prefix, Q_ARRAYSIZE(g_mappingApi.triggers));
+		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", g_errorPrefix, Q_ARRAYSIZE(g_mappingApi.triggers));
 	}
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_COURSES)
 	{
-		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", prefix, Q_ARRAYSIZE(g_mappingApi.courses));
+		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, Q_ARRAYSIZE(g_mappingApi.courses));
 	}
 	for (i32 i = 0; i < g_mappingApi.errorCount; i++)
 	{
-		utils::CPrintChatAll("%s%s", prefix, g_mappingApi.errors[i]);
+		utils::CPrintChatAll("%s%s", g_errorPrefix, g_mappingApi.errors[i]);
 	}
 
-	return 30.0;
+	return 60.0;
 }
 
 static_function bool Mapi_AddTrigger(KzTrigger trigger)
@@ -172,13 +172,15 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 	const CEntityKeyValues *ekv = info->m_pKeyValues;
 	i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
+	Vector origin = ekv->GetVector("origin");
+
 	KzTriggerType type = (KzTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, KZTRIGGER_DISABLED);
 
 	if (type <= KZTRIGGER_DISABLED || type >= KZTRIGGER_COUNT)
 	{
 		assert(0);
-		Mapi_Error("Trigger type %i is invalid and out of range (%i-%i) for trigger with Hammer ID %i!", type, KZTRIGGER_DISABLED, KZTRIGGER_COUNT,
-				   hammerId);
+		Mapi_Error("Trigger type %i is invalid and out of range (%i-%i) for trigger with Hammer ID %i, origin (%.0f %.0f %.0f)!", type,
+				   KZTRIGGER_DISABLED, KZTRIGGER_COUNT, hammerId, origin.x, origin.y, origin.z);
 		return;
 	}
 
@@ -223,7 +225,8 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 			if (!courseDescriptor || !courseDescriptor[0])
 			{
-				Mapi_Error("Course descriptor targetname of %s trigger is empty! Hammer ID %i!", g_triggerNames[type], hammerId);
+				Mapi_Error("Course descriptor targetname of %s trigger is empty! Hammer ID %i, origin (%.0f %.0f %.0f)", g_triggerNames[type],
+						   hammerId, origin.x, origin.y, origin.z);
 				assert(0);
 				return;
 			}
@@ -235,7 +238,8 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 				if (trigger.stageZone.stageNumber <= INVALID_STAGE_NUMBER)
 				{
-					Mapi_Error("Stage zone number \"%i\" is invalid! Hammer ID %i!", trigger.stageZone.stageNumber, hammerId);
+					Mapi_Error("Stage zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.stageZone.stageNumber, hammerId,
+							   origin.x, origin.y, origin.z);
 					assert(0);
 					return;
 				}
@@ -283,27 +287,30 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 	KzCourseDescriptor course = {};
 	course.number = ekv->GetInt("timer_course_number", INVALID_COURSE_NUMBER);
 	course.hammerId = ekv->GetInt("hammerUniqueId", -1);
+	Vector origin = ekv->GetVector("origin");
 
 	// TODO: make sure course descriptor names are unique!
 
 	if (course.number <= INVALID_COURSE_NUMBER)
 	{
-		Mapi_Error("Course number must be bigger than -1! Course descriptor Hammer ID %i", course.hammerId);
+		Mapi_Error("Course number must be bigger than -1! Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", course.hammerId, origin.x,
+				   origin.y, origin.z);
 		return;
 	}
 
 	V_snprintf(course.name, sizeof(course.name), "%s", ekv->GetString("timer_course_name"));
 	if (!course.name[0])
 	{
-		Mapi_Error("Course name is empty! Course number %i. Course descriptor Hammer ID %i!", course.number, course.hammerId);
+		Mapi_Error("Course name is empty! Course number %i. Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", course.number, course.hammerId,
+				   origin.x, origin.y, origin.z);
 		return;
 	}
 
 	V_snprintf(course.entityTargetname, sizeof(course.entityTargetname), "%s", ekv->GetString("targetname"));
 	if (!course.entityTargetname[0])
 	{
-		Mapi_Error("Course targetname is empty! Course name \"%s\". Course number %i. Course descriptor Hammer ID %i!", course.name, course.number,
-				   course.hammerId);
+		Mapi_Error("Course targetname is empty! Course name \"%s\". Course number %i. Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)",
+				   course.name, course.number, course.hammerId, origin.x, origin.y, origin.z);
 		return;
 	}
 
@@ -375,7 +382,7 @@ void Mappingapi_Initialize()
 	g_mappingApi = {};
 	g_pMappingApi = &g_mappingInterface;
 
-	errorTimer = StartTimer(Mapi_PrintErrors, true);
+	g_errorTimer = StartTimer(Mapi_PrintErrors, true);
 }
 
 void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
@@ -398,7 +405,8 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 			course = Mapi_FindCourse(touched->zone.courseDescriptor);
 			if (!course)
 			{
-				Mapi_Error("trigger_multiple StartTouch: Couldn't find course descriptor from name \"%s\"!", touched->zone.courseDescriptor);
+				utils::CPrintChatAll("%strigger_multiple StartTouch: Couldn't find course descriptor from name \"%s\"! Trigger's Hammer Id: %i",
+									 g_errorPrefix, touched->zone.courseDescriptor, touched->hammerId);
 				return;
 			}
 		}
@@ -458,7 +466,8 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 			course = Mapi_FindCourse(touched->zone.courseDescriptor);
 			if (!course)
 			{
-				Mapi_Error("trigger_multiple EndTouch: Couldn't find course descriptor from name %s!", touched->zone.courseDescriptor);
+				utils::CPrintChatAll("%strigger_multiple EndTouch: Couldn't find course descriptor from name \"%s\"! Trigger's Hammer Id: %i",
+									 g_errorPrefix, touched->zone.courseDescriptor, touched->hammerId);
 				return;
 			}
 		}
