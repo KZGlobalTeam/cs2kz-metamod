@@ -19,22 +19,6 @@ enum
 	MAPI_ERR_TOO_MANY_COURSES = 1 << 1,
 };
 
-struct KzTrigger
-{
-	KzTriggerType type;
-	CEntityHandle entity;
-	i32 hammerId;
-
-	union
-	{
-		Modifier modifier;
-		Antibhop antibhop;
-		Zone zone;
-		StageZone stageZone;
-		Teleport teleport;
-	};
-};
-
 static_global struct
 {
 	i32 triggerCount;
@@ -50,9 +34,7 @@ static_global struct
 static_global CTimer<> *g_errorTimer;
 static_global const char *g_errorPrefix = "{darkred} ERROR: ";
 static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset Checkpoints", "Single Bhop Reset", "Antibhop",
-
 											  "Start zone", "End zone",   "Split zone",        "Checkpoint zone",   "Stage zone",
-
 											  "Teleport",   "Multi bhop", "Single bhop",       "Sequential bhop"};
 
 static_function MappingInterface g_mappingInterface;
@@ -201,12 +183,10 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 
+		// NOTE: Nothing to do here
 		case KZTRIGGER_RESET_CHECKPOINTS:
 		case KZTRIGGER_SINGLE_BHOP_RESET:
-		{
-			// TODO:
-		}
-		break;
+			break;
 
 		case KZTRIGGER_ANTI_BHOP:
 		{
@@ -413,37 +393,7 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 		break;
 	}
 
-	switch (touched->type)
-	{
-		case KZTRIGGER_MODIFIER:
-		case KZTRIGGER_RESET_CHECKPOINTS:
-		case KZTRIGGER_SINGLE_BHOP_RESET:
-		case KZTRIGGER_ANTI_BHOP:
-			break;
-
-		case KZTRIGGER_ZONE_START:
-		case KZTRIGGER_ZONE_END:
-		case KZTRIGGER_ZONE_SPLIT:
-		case KZTRIGGER_ZONE_CHECKPOINT:
-		{
-			player->ZoneStartTouch(course, touched->type);
-		}
-		break;
-
-		case KZTRIGGER_ZONE_STAGE:
-		{
-			player->StageZoneStartTouch(course, touched->stageZone.stageNumber);
-		}
-		break;
-
-		case KZTRIGGER_TELEPORT:
-		case KZTRIGGER_MULTI_BHOP:
-		case KZTRIGGER_SINGLE_BHOP:
-		case KZTRIGGER_SEQUENTIAL_BHOP:
-			break;
-		default:
-			break;
-	}
+	player->MappingApiTriggerStartTouch(touched, course);
 }
 
 void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger)
@@ -474,25 +424,7 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 		break;
 	}
 
-	switch (touched->type)
-	{
-		case KZTRIGGER_ZONE_START:
-		case KZTRIGGER_ZONE_SPLIT:
-		case KZTRIGGER_ZONE_CHECKPOINT:
-		{
-			player->ZoneEndTouch(course, touched->type);
-		}
-		break;
-
-		case KZTRIGGER_ZONE_STAGE:
-		{
-			player->StageZoneEndTouch(course, touched->stageZone.stageNumber);
-		}
-		break;
-
-		default:
-			break;
-	}
+	player->MappingApiTriggerEndTouch(touched, course);
 }
 
 void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)

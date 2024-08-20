@@ -316,6 +316,15 @@ bool KZTimerService::CanPause(bool showError)
 		return false;
 	}
 
+	if (this->player->modifiers.disablePausingCount > 0)
+	{
+		if (showError)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Pause (Anti Pause Area)");
+		}
+		return false;
+	}
+
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 
