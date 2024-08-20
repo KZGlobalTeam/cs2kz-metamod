@@ -252,4 +252,4 @@ namespace KZ
 		void InitTimeLimit();
 		void EnforceTimeLimit();
 	} // namespace misc
-}; // namespace KZ
+};    // namespace KZ
