@@ -67,10 +67,9 @@
 	timer_course_descriptor(boolean) : "KZ | Is Course Descriptor" : 0 : "Mark this info_target as a course descriptor."
 
 	// KZ Course Descriptor
-	timer_course_name(string) { enabled={group="KZ | Course Descriptor" variable="timer_course_descriptor" value="1"}} : "Course Name" : : "The name of the course. Every zone trigger must be associated with a course name. Only letters a-z, A-Z, digits 0-9 and space allowed, 127 characters max."
+	timer_course_name(string) { enabled={group="KZ | Course Descriptor" variable="timer_course_descriptor" value="1"}} : "Course Name" : : "The name of the course. Every zone trigger must be associated with a course name, which can be a maximum of 64 bytes long (non-english characters take up more bytes)."
 	timer_course_disable_checkpoint(boolean) { enabled={group="KZ | Course Descriptor" variable="timer_course_descriptor" value="1"}} : "Disable Checkpoints" : 0 : "Disable setting checkpoints in this course."
-
-	// {group = "KZ Course Descriptor" enabled={variable="skytexture" values=[""]}}
+timer_course_number(integer) {group="KZ | Course Descriptor" enabled={variable="timer_course_descriptor" value="1"}} : "Course Number" : 1 : "Course number to uniquely identify this course. Must be bigger than or equal to 0."
 ]
 
 @OverrideClass = worldspawn
