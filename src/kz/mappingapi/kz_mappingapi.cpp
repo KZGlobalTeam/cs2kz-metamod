@@ -48,9 +48,16 @@ static_global struct
 } g_mappingApi;
 
 static_global CTimer<> *errorTimer;
+static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset Checkpoints", "Single Bhop Reset", "Antibhop",
+
+											  "Start zone", "End zone",   "Split zone",        "Checkpoint zone",   "Stage zone",
+
+											  "Teleport",   "Multi bhop", "Single bhop",       "Sequential bhop"};
 
 static_function MappingInterface g_mappingInterface;
 MappingInterface *g_pMappingApi = nullptr;
+
+// TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
 
 static_function void Mapi_Error(const char *format, ...)
 {
@@ -192,15 +199,16 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 
-		// TODO:
 		case KZTRIGGER_RESET_CHECKPOINTS:
 		case KZTRIGGER_SINGLE_BHOP_RESET:
 		{
+			// TODO:
 		}
 		break;
 
 		case KZTRIGGER_ANTI_BHOP:
 		{
+			// TODO: min value for antibhop time (bigger or equal to 0)
 			trigger.antibhop.time = ekv->GetFloat("timer_anti_bhop_time");
 		}
 		break;
@@ -212,11 +220,25 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		case KZTRIGGER_ZONE_STAGE:
 		{
 			const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
-			V_snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), "%s", courseDescriptor);
 
+			if (!courseDescriptor || !courseDescriptor[0])
+			{
+				Mapi_Error("Course descriptor targetname of %s trigger is empty! Hammer ID %i!", g_triggerNames[type], hammerId);
+				assert(0);
+				return;
+			}
+
+			snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), "%s", courseDescriptor);
 			if (type == KZTRIGGER_ZONE_STAGE)
 			{
 				trigger.stageZone.stageNumber = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
+
+				if (trigger.stageZone.stageNumber <= INVALID_STAGE_NUMBER)
+				{
+					Mapi_Error("Stage zone number \"%i\" is invalid! Hammer ID %i!", trigger.stageZone.stageNumber, hammerId);
+					assert(0);
+					return;
+				}
 			}
 		}
 		break;
@@ -228,6 +250,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		{
 			const char *destination = ekv->GetString("timer_teleport_destination");
 			V_snprintf(trigger.teleport.destination, sizeof(trigger.teleport.destination), "%s", destination);
+			// TODO: min/max values for delay
 			trigger.teleport.delay = ekv->GetFloat("timer_anti_bhop_time", -1.0f);
 			trigger.teleport.useDestinationAngles = ekv->GetBool("timer_teleport_use_dest_angles");
 			trigger.teleport.resetSpeed = ekv->GetBool("timer_teleport_reset_speed");
@@ -238,6 +261,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 		default:
 		{
+			// technically impossible to happen, leave an assert here anyway for debug builds.
 			assert(0);
 			return;
 		}
@@ -374,7 +398,7 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 			course = Mapi_FindCourse(touched->zone.courseDescriptor);
 			if (!course)
 			{
-				Mapi_Error("trigger_multiple StartTouch: Couldn't find course descriptor from name %s!", touched->zone.courseDescriptor);
+				Mapi_Error("trigger_multiple StartTouch: Couldn't find course descriptor from name \"%s\"!", touched->zone.courseDescriptor);
 				return;
 			}
 		}
