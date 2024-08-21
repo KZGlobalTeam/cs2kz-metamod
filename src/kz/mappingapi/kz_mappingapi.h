@@ -90,12 +90,20 @@ struct KzTrigger
 	};
 };
 
+struct KzTouchingTrigger
+{
+	const KzTrigger *trigger;
+	f32 startTouchTime;
+	f32 groundTouchTime;
+};
+
 class KZPlayer;
 
 class MappingInterface
 {
 public:
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
+	virtual bool IsBhopTrigger(KzTriggerType triggerType);
 	virtual void OnSpawnPost(int count, const EntitySpawnInfo_t *info);
 	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);

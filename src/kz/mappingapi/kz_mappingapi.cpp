@@ -235,7 +235,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			const char *destination = ekv->GetString("timer_teleport_destination");
 			V_snprintf(trigger.teleport.destination, sizeof(trigger.teleport.destination), "%s", destination);
 			// TODO: min/max values for delay
-			trigger.teleport.delay = ekv->GetFloat("timer_anti_bhop_time", -1.0f);
+			trigger.teleport.delay = ekv->GetFloat("timer_teleport_delay", -1.0f);
 			trigger.teleport.useDestinationAngles = ekv->GetBool("timer_teleport_use_dest_angles");
 			trigger.teleport.resetSpeed = ekv->GetBool("timer_teleport_reset_speed");
 			trigger.teleport.reorientPlayer = ekv->GetBool("timer_teleport_reorient_player");
@@ -355,6 +355,12 @@ bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
 	static_assert(KZTRIGGER_ZONE_START == 5 && KZTRIGGER_ZONE_STAGE == 9,
 				  "Don't forget to change this function when changing the KzTriggerType enum!!!");
 	return mvTrigger->type >= KZTRIGGER_ZONE_START && mvTrigger->type <= KZTRIGGER_ZONE_STAGE;
+}
+
+bool MappingInterface::IsBhopTrigger(KzTriggerType triggerType)
+{
+	bool result = triggerType == KZTRIGGER_MULTI_BHOP || triggerType == KZTRIGGER_SINGLE_BHOP || triggerType == KZTRIGGER_SEQUENTIAL_BHOP;
+	return result;
 }
 
 void Mappingapi_Initialize()
