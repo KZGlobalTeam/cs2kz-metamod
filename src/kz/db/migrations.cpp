@@ -136,11 +136,25 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 		}
 	}
 
+	auto onSuccess = []()
+	{
+		META_CONPRINT("[KZDB] Database migration successful.\n");
+		localDBConnected = true;
+		KZDatabaseService::SetupMap();
+		CALL_FORWARD(eventListeners, OnDatabaseSetup);
+	};
+
+	auto onFailure = []()
+	{
+		META_CONPRINT("[KZDB] Database migration failed. LocalDB will not be available.\n");
+		databaseConnection->Destroy();
+		databaseConnection = nullptr;
+	};
+
 	// If there's no migration needed, the database is already fully setup.
 	if (current == max)
 	{
-		KZDatabaseService::SetupMap();
-		CALL_FORWARD(eventListeners, OnDatabaseSetup);
+		onSuccess();
 		return;
 	}
 
@@ -168,20 +182,8 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 		txn.queries.push_back(query);
 	}
 
-	auto onSuccess = [](std::vector<ISQLQuery *> queries)
-	{
-		KZDatabaseService::SetupMap();
-		localDBConnected = true;
-		CALL_FORWARD(eventListeners, OnDatabaseSetup);
-	};
-
-	auto onFailure = [](std::string error, int failIndex)
-	{
-		META_CONPRINT("[KZDB] Database migration failed. LocalDB will not be available.");
-		databaseConnection->Destroy();
-		databaseConnection = nullptr;
-	};
-	GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
+	GetDatabaseConnection()->ExecuteTransaction(
+		txn, [onSuccess](std::vector<ISQLQuery *> queries) { onSuccess(); }, [onFailure](std::string error, int failIndex) { onFailure(); });
 }
 
 bool KZDatabaseService::IsReady()
