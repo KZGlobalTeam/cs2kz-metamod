@@ -4,6 +4,7 @@
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
 #include "mappingapi/kz_mappingapi.h"
+#include "circularbuffer.h"
 
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
@@ -141,7 +142,24 @@ public:
 private:
 	bool hideLegs {};
 	f64 lastTeleportTime {};
-	CUtlVectorFixed<const KzTrigger *, 64> triggerTouchList {};
+	CEntityHandle lastTouchedSingleBhop {};
+	i32 bhopTouchCount {};
+
+	class CSequentialBhopBuffer : public CFixedSizeCircularBuffer<CEntityHandle, 64>
+	{
+		virtual void ElementAlloc(CEntityHandle &element) {};
+		virtual void ElementRelease(CEntityHandle &element) {};
+	};
+
+	CSequentialBhopBuffer lastTouchedSequentialBhops {};
+
+	CUtlVectorFixed<KzTouchingTrigger, 64> kzTriggerTouchList {};
+
+	void AddKzTriggerToTouchList(const KzTrigger *trigger);
+	void RemoveKzTriggerFromTouchList(const KzTrigger *trigger);
+	void TouchAntibhopTrigger(KzTouchingTrigger touching);
+	bool TouchTeleportTrigger(KzTouchingTrigger touching);
+	void ResetBhopState();
 
 public:
 	KZAnticheatService *anticheatService {};
