@@ -1,7 +1,10 @@
 
 #pragma once
 
-#define KZ_MAPPING_INTERFACE      "KZMappingInterface"
+#define KZ_MAPPING_INTERFACE "KZMappingInterface"
+
+#define KZ_MAPAPI_VERSION 2
+
 #define KZ_MAX_COURSE_NAME_LENGTH 65
 #define KZ_MAX_SPLIT_ZONES        100
 #define KZ_MAX_CHECKPOINT_ZONES   100
