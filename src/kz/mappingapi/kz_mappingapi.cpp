@@ -8,10 +8,12 @@
 
 #include "tier0/memdbgon.h"
 
-#define KEY_TRIGGER_TYPE         "timer_trigger_type"
-#define KEY_IS_COURSE_DESCRIPTOR "timer_course_descriptor"
-#define INVALID_STAGE_NUMBER     -1
-#define INVALID_COURSE_NUMBER    -1
+#define KEY_TRIGGER_TYPE          "timer_trigger_type"
+#define KEY_IS_COURSE_DESCRIPTOR  "timer_course_descriptor"
+#define INVALID_SPLIT_NUMBER      0
+#define INVALID_CHECKPOINT_NUMBER 0
+#define INVALID_STAGE_NUMBER      0
+#define INVALID_COURSE_NUMBER     0
 
 enum
 {
@@ -26,6 +28,7 @@ static_global struct
 	i32 courseCount;
 	KzCourseDescriptor courses[512];
 
+	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
@@ -158,11 +161,19 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 	KzTriggerType type = (KzTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, KZTRIGGER_DISABLED);
 
-	if (type <= KZTRIGGER_DISABLED || type >= KZTRIGGER_COUNT)
+	if (type < KZTRIGGER_DISABLED || type >= KZTRIGGER_COUNT)
 	{
 		assert(0);
 		Mapi_Error("Trigger type %i is invalid and out of range (%i-%i) for trigger with Hammer ID %i, origin (%.0f %.0f %.0f)!", type,
-				   KZTRIGGER_DISABLED, KZTRIGGER_COUNT, hammerId, origin.x, origin.y, origin.z);
+				   KZTRIGGER_DISABLED, KZTRIGGER_COUNT - 1, hammerId, origin.x, origin.y, origin.z);
+		return;
+	}
+
+	if (!g_mappingApi.roundIsStarting)
+	{
+		// Only allow triggers and zones that were spawned during the round start phase.
+		Mapi_Error("Trigger %s spawned after the map was loaded, the trigger won't be loaded! Hammer ID %i, origin (%.0f %.0f %.0f)",
+				   g_triggerNames[type], hammerId, origin.x, origin.y, origin.z);
 		return;
 	}
 
@@ -212,14 +223,38 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			}
 
 			snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), "%s", courseDescriptor);
-			if (type == KZTRIGGER_ZONE_STAGE)
+			// TODO: code is a little repetitive...
+			if (type == KZTRIGGER_ZONE_SPLIT)
 			{
-				trigger.stageZone.stageNumber = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
-
-				if (trigger.stageZone.stageNumber <= INVALID_STAGE_NUMBER)
+				trigger.zone.number = ekv->GetInt("timer_zone_split_number", INVALID_SPLIT_NUMBER);
+				if (trigger.zone.number <= INVALID_SPLIT_NUMBER)
 				{
-					Mapi_Error("Stage zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.stageZone.stageNumber, hammerId,
+					Mapi_Error("Split zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.zone.number, hammerId, origin.x,
+							   origin.y, origin.z);
+					assert(0);
+					return;
+				}
+			}
+			else if (type == KZTRIGGER_ZONE_CHECKPOINT)
+			{
+				trigger.zone.number = ekv->GetInt("timer_zone_checkpoint_number", INVALID_CHECKPOINT_NUMBER);
+
+				if (trigger.zone.number <= INVALID_CHECKPOINT_NUMBER)
+				{
+					Mapi_Error("Checkpoint zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.zone.number, hammerId,
 							   origin.x, origin.y, origin.z);
+					assert(0);
+					return;
+				}
+			}
+			else if (type == KZTRIGGER_ZONE_STAGE)
+			{
+				trigger.zone.number = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
+
+				if (trigger.zone.number <= INVALID_STAGE_NUMBER)
+				{
+					Mapi_Error("Stage zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.zone.number, hammerId, origin.x,
+							   origin.y, origin.z);
 					assert(0);
 					return;
 				}
@@ -264,17 +299,26 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 		return;
 	}
 
+	i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
+	Vector origin = ekv->GetVector("origin");
+	if (!g_mappingApi.roundIsStarting)
+	{
+		// Only allow courses that were spawned during the round start phase.
+		Mapi_Error("Course spawned after the map was loaded, the course will be ignored! Hammer ID %i, origin (%.0f %.0f %.0f)", hammerId, origin.x,
+				   origin.y, origin.z);
+		return;
+	}
+
 	KzCourseDescriptor course = {};
 	course.number = ekv->GetInt("timer_course_number", INVALID_COURSE_NUMBER);
-	course.hammerId = ekv->GetInt("hammerUniqueId", -1);
-	Vector origin = ekv->GetVector("origin");
+	course.hammerId = hammerId;
 
 	// TODO: make sure course descriptor names are unique!
 
 	if (course.number <= INVALID_COURSE_NUMBER)
 	{
-		Mapi_Error("Course number must be bigger than -1! Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", course.hammerId, origin.x,
-				   origin.y, origin.z);
+		Mapi_Error("Course number must be bigger than %i! Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", INVALID_COURSE_NUMBER,
+				   course.hammerId, origin.x, origin.y, origin.z);
 		return;
 	}
 
@@ -363,12 +407,72 @@ bool MappingInterface::IsBhopTrigger(KzTriggerType triggerType)
 	return result;
 }
 
-void Mappingapi_Initialize()
+void Mappingapi_RoundPrestart()
 {
 	g_mappingApi = {};
 	g_pMappingApi = &g_mappingInterface;
+	g_mappingApi.roundIsStarting = true;
 
 	g_errorTimer = StartTimer(Mapi_PrintErrors, true);
+}
+
+void Mappingapi_RoundStart()
+{
+	g_mappingApi.roundIsStarting = false;
+	for (i32 courseInd = 0; courseInd < g_mappingApi.courseCount; courseInd++)
+	{
+		// find the number of split/checkpoint/stage zones that a course has
+		//  and make sure that they all start from 1 and are consecutive by
+		//  XORing the values with a consecutive 1...n sequence.
+		//  https://florian.github.io/xor-trick/
+		i32 splitXor = 0;
+		i32 cpXor = 0;
+		i32 stageXor = 0;
+		i32 splitCount = 0;
+		i32 cpCount = 0;
+		i32 stageCount = 0;
+		KzCourseDescriptor *course = &g_mappingApi.courses[courseInd];
+		for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
+		{
+			KzTrigger *trigger = &g_mappingApi.triggers[i];
+			switch (trigger->type)
+			{
+				case KZTRIGGER_ZONE_SPLIT:
+					splitXor ^= (++splitCount) ^ trigger->zone.number;
+					break;
+				case KZTRIGGER_ZONE_CHECKPOINT:
+					cpXor ^= (++cpCount) ^ trigger->zone.number;
+					break;
+				case KZTRIGGER_ZONE_STAGE:
+					stageXor ^= (++stageCount) ^ trigger->zone.number;
+					break;
+			}
+		}
+		if (splitXor != 0)
+		{
+			Mapi_Error("Course \"%s\" Split zones aren't consecutive or don't start at 1!", course->name);
+		}
+		if (cpXor != 0)
+		{
+			Mapi_Error("Course \"%s\" Checkpoint zones aren't consecutive or don't start at 1!", course->name);
+		}
+		if (stageXor != 0)
+		{
+			Mapi_Error("Course \"%s\" Stage zones aren't consecutive or don't start at 1!", course->name);
+		}
+		// remove course if split/cp/stage zones aren't consecutive or don't start at 1
+		if (splitXor != 0 || cpXor != 0 || stageXor != 0)
+		{
+			// TODO: change to cutlvectorfixed
+			if (g_mappingApi.courseCount > 1)
+			{
+				g_mappingApi.courses[courseInd] = g_mappingApi.courses[g_mappingApi.courseCount - 1];
+			}
+			courseInd--;
+			g_mappingApi.courseCount--;
+			break;
+		}
+	}
 }
 
 void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
@@ -455,6 +559,7 @@ void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 		else if (V_stricmp(classname, "info_target_server_only") == 0)
 		{
 			Mapi_OnInfoTargetSpawn(&info[i]);
+			Msg("info target\n");
 		}
 	}
 }

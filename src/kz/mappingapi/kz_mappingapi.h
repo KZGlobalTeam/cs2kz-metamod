@@ -45,13 +45,7 @@ struct KzMapAntibhop
 struct KzMapZone
 {
 	char courseDescriptor[128];
-};
-
-// KZTRIGGER_ZONE_STAGE
-struct KzMapStageZone
-{
-	char courseDescriptor[128];
-	i32 stageNumber;
+	i32 number; // not used on start/end zones
 };
 
 // KZTRIGGER_TELEPORT/_MULTI_BHOP/_SINGLE_BHOP/_SEQUENTIAL_BHOP
@@ -72,6 +66,10 @@ struct KzCourseDescriptor
 	i32 number;
 	i32 hammerId;
 	bool disableCheckpoints;
+
+	i32 splitCount;
+	i32 checkpointCount;
+	i32 stageCount;
 };
 
 struct KzTrigger
@@ -85,7 +83,6 @@ struct KzTrigger
 		KzMapModifier modifier;
 		KzMapAntibhop antibhop;
 		KzMapZone zone;
-		KzMapStageZone stageZone;
 		KzMapTeleport teleport;
 	};
 };
@@ -109,6 +106,7 @@ public:
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 };
 
-void Mappingapi_Initialize();
+void Mappingapi_RoundPrestart();
+void Mappingapi_RoundStart();
 
 extern MappingInterface *g_pMappingApi;
