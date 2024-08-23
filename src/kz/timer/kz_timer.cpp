@@ -49,13 +49,13 @@ void KZTimerService::StageZoneStartTouch(const KzCourseDescriptor *course, i32 s
 {
 	if (stageNumber > this->currentStage + 1)
 	{
-		// TODO: error sound or no?
+		this->PlayMissedZoneSound();
 		this->player->languageService->PrintChat(true, false, "Missed stage", this->currentStage + 1);
 		return;
 	}
 	if (stageNumber == this->currentStage + 1)
 	{
-		// TODO: any fancy messages or sounds maybe?
+		this->PlayReachedStageSound();
 		this->currentStage++;
 	}
 }
@@ -126,7 +126,7 @@ bool KZTimerService::TimerEnd(const KzCourseDescriptor *course)
 
 	if (this->currentStage != course->stageCount)
 	{
-		this->PlayTimerFalseEndSound();
+		this->PlayMissedZoneSound();
 		this->player->languageService->PrintChat(true, false, "Can't finish run (Missed stage)", this->currentStage + 1);
 		return false;
 	}
@@ -245,6 +245,26 @@ void KZTimerService::PlayTimerEndSound()
 void KZTimerService::PlayTimerFalseEndSound()
 {
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_FALSE_END);
+}
+
+void KZTimerService::PlayMissedZoneSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_MISSED_ZONE);
+}
+
+void KZTimerService::PlayReachedSplitSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_REACH_SPLIT);
+}
+
+void KZTimerService::PlayReachedCheckpointSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_REACH_CHECKPOINT);
+}
+
+void KZTimerService::PlayReachedStageSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_REACH_STAGE);
 }
 
 void KZTimerService::PlayTimerStopSound()

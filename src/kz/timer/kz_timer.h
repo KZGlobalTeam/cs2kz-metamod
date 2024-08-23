@@ -5,12 +5,16 @@
 
 #define KZ_MAX_MODE_NAME_LENGTH 128
 
-#define KZ_TIMER_MIN_GROUND_TIME 0.05f
-#define KZ_TIMER_SOUND_COOLDOWN  0.15f
-#define KZ_TIMER_SND_START       "Buttons.snd9"
-#define KZ_TIMER_SND_END         "tr.ScoreRegular"
-#define KZ_TIMER_SND_FALSE_END   "UIPanorama.buymenu_failure"
-#define KZ_TIMER_SND_STOP        "tr.PuckFail"
+#define KZ_TIMER_MIN_GROUND_TIME      0.05f
+#define KZ_TIMER_SOUND_COOLDOWN       0.15f
+#define KZ_TIMER_SND_START            "Buttons.snd9"
+#define KZ_TIMER_SND_END              "tr.ScoreRegular"
+#define KZ_TIMER_SND_FALSE_END        "UIPanorama.buymenu_failure"
+#define KZ_TIMER_SND_MISSED_ZONE      "UIPanorama.buymenu_failure"
+#define KZ_TIMER_SND_REACH_SPLIT      "tr.Popup"
+#define KZ_TIMER_SND_REACH_CHECKPOINT "tr.Popup"
+#define KZ_TIMER_SND_REACH_STAGE      "UIPanorama.round_report_odds_up"
+#define KZ_TIMER_SND_STOP             "tr.PuckFail"
 
 #define KZ_PAUSE_COOLDOWN 1.0f
 
@@ -191,6 +195,10 @@ private:
 
 	void PlayTimerEndSound();
 	void PlayTimerFalseEndSound();
+	void PlayMissedZoneSound();
+	void PlayReachedSplitSound();
+	void PlayReachedCheckpointSound();
+	void PlayReachedStageSound();
 	void PlayTimerStopSound();
 
 	/*
