@@ -976,7 +976,7 @@ void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KzCou
 
 		case KZTRIGGER_ZONE_STAGE:
 		{
-			// TODO:
+			this->timerService->StageZoneStartTouch(course, touched->zone.number);
 		}
 		break;
 

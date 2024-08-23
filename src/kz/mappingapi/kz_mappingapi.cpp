@@ -421,7 +421,7 @@ void Mappingapi_RoundStart()
 	g_mappingApi.roundIsStarting = false;
 	for (i32 courseInd = 0; courseInd < g_mappingApi.courseCount; courseInd++)
 	{
-		// find the number of split/checkpoint/stage zones that a course has
+		// Find the number of split/checkpoint/stage zones that a course has
 		//  and make sure that they all start from 1 and are consecutive by
 		//  XORing the values with a consecutive 1...n sequence.
 		//  https://florian.github.io/xor-trick/
@@ -472,6 +472,9 @@ void Mappingapi_RoundStart()
 			g_mappingApi.courseCount--;
 			break;
 		}
+		course->splitCount = splitCount;
+		course->checkpointCount = cpCount;
+		course->stageCount = stageCount;
 	}
 }
 
