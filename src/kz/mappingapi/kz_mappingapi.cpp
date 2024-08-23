@@ -23,10 +23,14 @@ static_global struct
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
 	CUtlVectorFixed<KzCourseDescriptor, 512> courses;
 
+	i32 mapApiVersion;
+
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
+
+	bool fatalFailure;
 } g_mappingApi;
 
 static_global CTimer<> *g_errorTimer;
@@ -108,22 +112,6 @@ static_function f64 Mapi_PrintErrors()
 */
 static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 {
-#if 0
-	// Debug print for all keyvalues
-	FOR_EACH_ENTITYKEY(ekv, iter)
-	{
-		auto kv = ekv->GetKeyValue(iter);
-		if (!kv)
-		{
-			continue;
-		}
-		CBufferStringGrowable<128> bufferStr;
-		const char *key = ekv->GetEntityKeyId(iter).GetString();
-		const char *value = kv->ToString(bufferStr);
-		Msg("\t%s: %s\n", key, value);
-	}
-#endif
-
 	const CEntityKeyValues *ekv = info->m_pKeyValues;
 	i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
 	Vector origin = ekv->GetVector("origin");
@@ -170,8 +158,8 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 		case KZTRIGGER_ANTI_BHOP:
 		{
-			// TODO: min value for antibhop time (bigger or equal to 0)
 			trigger.antibhop.time = ekv->GetFloat("timer_anti_bhop_time");
+			trigger.antibhop.time = max(trigger.antibhop.time, 0);
 		}
 		break;
 
@@ -238,8 +226,8 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		{
 			const char *destination = ekv->GetString("timer_teleport_destination");
 			V_snprintf(trigger.teleport.destination, sizeof(trigger.teleport.destination), "%s", destination);
-			// TODO: min/max values for delay
-			trigger.teleport.delay = ekv->GetFloat("timer_teleport_delay", -1.0f);
+			trigger.teleport.delay = ekv->GetFloat("timer_teleport_delay", 0);
+			trigger.teleport.delay = max(trigger.teleport.delay, 0);
 			trigger.teleport.useDestinationAngles = ekv->GetBool("timer_teleport_use_dest_angles");
 			trigger.teleport.resetSpeed = ekv->GetBool("timer_teleport_reset_speed");
 			trigger.teleport.reorientPlayer = ekv->GetBool("timer_teleport_reorient_player");
@@ -283,6 +271,7 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 	course.hammerId = hammerId;
 
 	// TODO: make sure course descriptor names are unique!
+	// TODO: make sure course descriptor numbers are unique!
 
 	if (course.number <= INVALID_COURSE_NUMBER)
 	{
@@ -478,8 +467,8 @@ void MappingInterface::OnProcessMovement(KZPlayer *player)
 	}
 	else if (player->lastModifiers.enableSlideCount > 0)
 	{
-		const char *standableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_IMPULSE];
-		const char *walkableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_IMPULSE];
+		const char *standableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_STANDABLE_NORMAL];
+		const char *walkableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_WALKABLE_NORMAL];
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableModeValue, true);
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableModeValue, true);
 	}
@@ -567,7 +556,7 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 
 void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 {
-	if (!info)
+	if (!info || g_mappingApi.fatalFailure)
 	{
 		return;
 	}
@@ -575,6 +564,22 @@ void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 	for (i32 i = 0; i < count; i++)
 	{
 		auto ekv = info[i].m_pKeyValues;
+#if 0
+		// Debug print for all keyvalues
+		FOR_EACH_ENTITYKEY(ekv, iter)
+		{
+			auto kv = ekv->GetKeyValue(iter);
+			if (!kv)
+			{
+				continue;
+			}
+			CBufferStringGrowable<128> bufferStr;
+			const char *key = ekv->GetEntityKeyId(iter).GetString();
+			const char *value = kv->ToString(bufferStr);
+			Msg("\t%s: %s\n", key, value);
+		}
+#endif
+
 		if (!info[i].m_pEntity || !ekv || !info[i].m_pEntity->GetClassname())
 		{
 			continue;
@@ -587,7 +592,24 @@ void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 		else if (V_stricmp(classname, "info_target_server_only") == 0)
 		{
 			Mapi_OnInfoTargetSpawn(&info[i]);
-			Msg("info target\n");
 		}
+		else if (V_stricmp(classname, "worldent") == 0)
+		{
+			g_mappingApi.mapApiVersion = ekv->GetInt("timer_mapping_api_version", -1);
+			// NOTE(GameChaos): When a new mapping api version comes out, this will change
+			//  for backwards compatibility.
+			if (g_mappingApi.mapApiVersion != KZ_MAPAPI_VERSION)
+			{
+				Mapi_Error("FATAL. Mapping API version %i is invalid!", g_mappingApi.mapApiVersion);
+				g_mappingApi.fatalFailure = true;
+				break;
+			}
+		}
+	}
+
+	if (g_mappingApi.fatalFailure)
+	{
+		g_mappingApi.triggers.RemoveAll();
+		g_mappingApi.courses.RemoveAll();
 	}
 }

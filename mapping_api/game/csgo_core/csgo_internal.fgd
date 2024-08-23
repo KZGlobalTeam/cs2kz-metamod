@@ -74,5 +74,5 @@
 
 @OverrideClass = worldspawn
 [
-	timer_mapping_api_version(integer) : "KZ | Mapping API Version" : 2 : "When the fgd changes with a Mapping API update and you update the fgd, then you have to change this parameter in hammer to the correct version (written at the top of the new fgd) on every map you use it on!"
+	timer_mapping_api_version(integer) {min="2" max="2"} : "KZ | Mapping API Version" : 2 : "When the fgd changes with a Mapping API update and you update the fgd, then you have to change this parameter in hammer to the correct version (written at the top of the new fgd) on every map you use it on!"
 ]
