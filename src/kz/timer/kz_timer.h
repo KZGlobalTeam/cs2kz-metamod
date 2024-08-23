@@ -63,6 +63,7 @@ private:
 	f64 lastStartSoundTime {};
 	char lastStartMode[128] {};
 	bool validTime {};
+	i32 currentStage;
 
 	bool validJump {};
 	f64 lastInvalidateTime {};
@@ -151,6 +152,7 @@ public:
 
 	void StartZoneStartTouch(const KzCourseDescriptor *course);
 	void StartZoneEndTouch(const KzCourseDescriptor *course);
+	void StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber);
 	bool TimerStart(const KzCourseDescriptor *course, bool playSound = true);
 	bool TimerEnd(const KzCourseDescriptor *course);
 	bool TimerStop(bool playSound = true);
