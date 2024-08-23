@@ -45,6 +45,21 @@ void KZTimerService::StartZoneEndTouch(const KzCourseDescriptor *course)
 	}
 }
 
+void KZTimerService::StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber)
+{
+	if (stageNumber > this->currentStage + 1)
+	{
+		// TODO: error sound or no?
+		this->player->languageService->PrintChat(true, false, "Missed stage", this->currentStage + 1);
+		return;
+	}
+	if (stageNumber == this->currentStage + 1)
+	{
+		// TODO: any fancy messages or sounds maybe?
+		this->currentStage++;
+	}
+}
+
 bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound)
 {
 	// clang-format off
@@ -79,6 +94,7 @@ bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound
 
 	this->currentTime = 0.0f;
 	this->timerRunning = true;
+	this->currentStage = 0;
 	SetCourse(course);
 	V_strncpy(this->lastStartMode, this->player->modeService->GetModeName(), KZ_MAX_MODE_NAME_LENGTH);
 	validTime = true;
@@ -105,6 +121,13 @@ bool KZTimerService::TimerEnd(const KzCourseDescriptor *course)
 	{
 		this->PlayTimerFalseEndSound();
 		this->lastFalseEndTime = g_pKZUtils->GetServerGlobals()->curtime;
+		return false;
+	}
+
+	if (this->currentStage != course->stageCount)
+	{
+		this->PlayTimerFalseEndSound();
+		this->player->languageService->PrintChat(true, false, "Can't finish run (Missed stage)", this->currentStage + 1);
 		return false;
 	}
 

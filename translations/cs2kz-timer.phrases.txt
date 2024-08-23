@@ -232,4 +232,20 @@
 		"es"		"{darkred}No puede reanudar porque acaba de pausar."
 		"de"		"{darkred}Du kannst nicht fortfahren, weil du gerade pausiert hast."
 	}
+	"Can't finish run (Missed checkpoint zone)"
+	{
+		"#format"	"stage_number:i,stage_count:i"
+		"en"		"{darkred}You can't finish your run, because you missed a checkpoint zone."
+	}
+	"Can't finish run (Missed stage)"
+	{
+		"#format"	"stage_number:i"
+		"en"		"{darkred}You can't finish your run, because you missed stage zone {stage_number}."
+	}
+	"Missed stage"
+	{
+		"#format"	"stage_number:i"
+		"en"		"{darkred}You missed stage zone {stage_number}!"
+	}
+	
 }
