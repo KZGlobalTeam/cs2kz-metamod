@@ -1,5 +1,6 @@
 
 #include "kz/kz.h"
+#include "kz/mode/kz_mode.h"
 #include "movement/movement.h"
 #include "kz_mappingapi.h"
 #include "entity2/entitykeyvalues.h"
@@ -254,7 +255,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 	}
-	
+
 	g_mappingApi.triggers.AddToTail(trigger);
 }
 
@@ -307,7 +308,7 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 	}
 
 	course.disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
-	
+
 	g_mappingApi.courses.AddToTail(course);
 }
 
@@ -325,7 +326,7 @@ static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 		return result;
 	}
 
-	for (i32 i = 0; i < g_mappingApi.triggers.Count(); i++)
+	FOR_EACH_VEC(g_mappingApi.triggers, i)
 	{
 		if (triggerHandle == g_mappingApi.triggers[i].entity)
 		{
@@ -344,7 +345,7 @@ static_function const KzCourseDescriptor *Mapi_FindCourse(const char *targetname
 	{
 		return result;
 	}
-	
+
 	FOR_EACH_VEC(g_mappingApi.courses, i)
 	{
 		if (V_stricmp(g_mappingApi.courses[i].entityTargetname, targetname) == 0)
@@ -463,6 +464,42 @@ void Mappingapi_RoundStart()
 		course->splitCount = splitCount;
 		course->checkpointCount = cpCount;
 		course->stageCount = stageCount;
+	}
+}
+
+void MappingInterface::OnProcessMovement(KZPlayer *player)
+{
+	// apply slide
+	if (player->modifiers.enableSlideCount > 0)
+	{
+		bool replicate = !player->lastModifiers.enableSlideCount;
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", "2", replicate);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", "2", replicate);
+	}
+	else if (player->lastModifiers.enableSlideCount > 0)
+	{
+		const char *standableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_IMPULSE];
+		const char *walkableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_IMPULSE];
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableModeValue, true);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableModeValue, true);
+	}
+
+	// apply antibhop
+	if (player->antiBhopActive)
+	{
+		bool replicate = !player->lastAntiBhopActive;
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", "0.0", replicate);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
+		player->GetMoveServices()->m_nButtons()->m_pButtonStates[0] &= ~IN_JUMP;
+		player->GetMoveServices()->m_nButtons()->m_pButtonStates[1] &= ~IN_JUMP;
+		player->GetMoveServices()->m_nButtons()->m_pButtonStates[2] &= ~IN_JUMP;
+	}
+	else if (player->lastAntiBhopActive)
+	{
+		const char *impulseModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_IMPULSE];
+		const char *spamModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_SPAM_PENALTY_TIME];
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", impulseModeValue, true);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue, true);
 	}
 }
 

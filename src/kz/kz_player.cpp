@@ -168,7 +168,17 @@ void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 
 void KZPlayer::TouchAntibhopTrigger(KzTouchingTrigger touching)
 {
-	// TODO
+	if (touching.groundTouchTime <= 0)
+	{
+		return;
+	}
+
+	float touchingTime = g_pKZUtils->GetServerGlobals()->curtime - touching.groundTouchTime;
+	const KzTrigger *trigger = touching.trigger;
+	if (trigger->antibhop.time == 0 || touchingTime <= trigger->antibhop.time)
+	{
+		this->antiBhopActive = true;
+	}
 }
 
 bool KZPlayer::TouchTeleportTrigger(KzTouchingTrigger touching)
@@ -292,51 +302,24 @@ bool KZPlayer::TouchTeleportTrigger(KzTouchingTrigger touching)
 
 void KZPlayer::OnProcessMovement()
 {
-	if (!sv_standable_normal)
-	{
-		ConVarHandle handle = g_pCVar->FindConVar("sv_standable_normal");
-		sv_standable_normal = g_pCVar->GetConVar(handle);
-	}
-
-	if (!sv_walkable_normal)
-	{
-		ConVarHandle handle = g_pCVar->FindConVar("sv_walkable_normal");
-		sv_walkable_normal = g_pCVar->GetConVar(handle);
-	}
-
 	MovementPlayer::OnProcessMovement();
 	KZ::mode::ApplyModeSettings(this);
-
-	// apply slide
-	assert(sv_standable_normal && sv_walkable_normal);
-	if (sv_standable_normal && sv_walkable_normal)
-	{
-		if (this->modifiers.enableSlideCount > 0)
-		{
-			auto standableValue = reinterpret_cast<CVValue_t *>(&(sv_standable_normal->values));
-			auto walkableValue = reinterpret_cast<CVValue_t *>(&(sv_walkable_normal->values));
-			standableValue->m_flValue = 2;
-			walkableValue->m_flValue = 2;
-			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_standable_normal, "2");
-			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_walkable_normal, "2");
-		}
-		else
-		{
-			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_standable_normal, "0.7");
-			g_pKZUtils->SendConVarValue(this->GetPlayerSlot(), sv_walkable_normal, "0.7");
-		}
-	}
 
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnProcessMovement();
 	}
+
+	g_pMappingApi->OnProcessMovement(this);
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 	this->noclipService->HandleMoveCollision();
 	this->EnableGodMode();
 	this->UpdatePlayerModelAlpha();
+
+	this->lastModifiers = this->modifiers;
+	this->lastAntiBhopActive = this->antiBhopActive;
 }
 
 void KZPlayer::ResetBhopState()
@@ -355,6 +338,7 @@ void KZPlayer::OnProcessMovementPost()
 		this->ResetBhopState();
 	}
 
+	this->antiBhopActive = false;
 	// Check if we're touching any triggers and act accordingly.
 	// NOTE: Read through the touch list in reverse order, so
 	//  that we resolve most recently touched triggers first.
