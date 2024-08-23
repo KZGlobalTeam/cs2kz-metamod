@@ -8,12 +8,8 @@
 
 #include "tier0/memdbgon.h"
 
-#define KEY_TRIGGER_TYPE          "timer_trigger_type"
-#define KEY_IS_COURSE_DESCRIPTOR  "timer_course_descriptor"
-#define INVALID_SPLIT_NUMBER      0
-#define INVALID_CHECKPOINT_NUMBER 0
-#define INVALID_STAGE_NUMBER      0
-#define INVALID_COURSE_NUMBER     0
+#define KEY_TRIGGER_TYPE         "timer_trigger_type"
+#define KEY_IS_COURSE_DESCRIPTOR "timer_course_descriptor"
 
 enum
 {
@@ -448,20 +444,45 @@ void Mappingapi_RoundStart()
 					break;
 			}
 		}
+
+		bool invalid = false;
 		if (splitXor != 0)
 		{
 			Mapi_Error("Course \"%s\" Split zones aren't consecutive or don't start at 1!", course->name);
+			invalid = true;
 		}
+
 		if (cpXor != 0)
 		{
 			Mapi_Error("Course \"%s\" Checkpoint zones aren't consecutive or don't start at 1!", course->name);
+			invalid = true;
 		}
+
 		if (stageXor != 0)
 		{
 			Mapi_Error("Course \"%s\" Stage zones aren't consecutive or don't start at 1!", course->name);
+			invalid = true;
 		}
-		// remove course if split/cp/stage zones aren't consecutive or don't start at 1
-		if (splitXor != 0 || cpXor != 0 || stageXor != 0)
+
+		if (splitCount > KZ_MAX_SPLIT_ZONES)
+		{
+			Mapi_Error("Course \"%s\" Too many split zones! Maximum is %i.", course->name, KZ_MAX_SPLIT_ZONES);
+			invalid = true;
+		}
+
+		if (cpCount > KZ_MAX_CHECKPOINT_ZONES)
+		{
+			Mapi_Error("Course \"%s\" Too many checkpoint zones! Maximum is %i.", course->name, KZ_MAX_CHECKPOINT_ZONES);
+			invalid = true;
+		}
+
+		if (stageCount > KZ_MAX_STAGE_ZONES)
+		{
+			Mapi_Error("Course \"%s\" Too many stage zones! Maximum is %i.", course->name, KZ_MAX_STAGE_ZONES);
+			invalid = true;
+		}
+
+		if (invalid)
 		{
 			// TODO: change to cutlvectorfixed
 			if (g_mappingApi.courseCount > 1)

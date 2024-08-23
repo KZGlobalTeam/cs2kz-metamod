@@ -45,16 +45,63 @@ void KZTimerService::StartZoneEndTouch(const KzCourseDescriptor *course)
 	}
 }
 
+void KZTimerService::SplitZoneStartTouch(const KzCourseDescriptor *course, i32 splitNumber)
+{
+	if (!this->GetTimerRunning())
+	{
+		return;
+	}
+
+	assert(splitNumber > INVALID_SPLIT_NUMBER && splitNumber < KZ_MAX_SPLIT_ZONES);
+
+	if (this->splitZoneTimes[splitNumber - 1] < 0)
+	{
+		this->PlayReachedSplitSound();
+		this->splitZoneTimes[splitNumber - 1] = this->GetTime();
+	}
+}
+
+void KZTimerService::CheckpointZoneStartTouch(const KzCourseDescriptor *course, i32 cpNumber)
+{
+	if (!this->GetTimerRunning())
+	{
+		return;
+	}
+
+	assert(cpNumber > INVALID_CHECKPOINT_NUMBER && cpNumber < KZ_MAX_CHECKPOINT_ZONES);
+
+	if (this->cpZoneTimes[cpNumber - 1] < 0)
+	{
+		Msg("reached checkpoint %i\n", cpNumber);
+		this->PlayReachedCheckpointSound();
+		this->cpZoneTimes[cpNumber - 1] = this->GetTime();
+		this->reachedCheckpoints++;
+	}
+	else
+	{
+		Msg("already reached checkpoint %i, time %f\n", cpNumber, this->cpZoneTimes[cpNumber - 1]);
+	}
+}
+
 void KZTimerService::StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber)
 {
+	if (!this->GetTimerRunning())
+	{
+		return;
+	}
+
+	assert(stageNumber > INVALID_STAGE_NUMBER && stageNumber < KZ_MAX_STAGE_ZONES);
+
 	if (stageNumber > this->currentStage + 1)
 	{
 		this->PlayMissedZoneSound();
-		this->player->languageService->PrintChat(true, false, "Missed stage", this->currentStage + 1);
+		this->player->languageService->PrintChat(true, false, "Touched too high stage number (Missed stage)", this->currentStage + 1);
 		return;
 	}
+
 	if (stageNumber == this->currentStage + 1)
 	{
+		this->stageZoneTimes[this->currentStage] = this->GetTime();
 		this->PlayReachedStageSound();
 		this->currentStage++;
 	}
@@ -95,6 +142,17 @@ bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound
 	this->currentTime = 0.0f;
 	this->timerRunning = true;
 	this->currentStage = 0;
+	this->reachedCheckpoints = 0;
+
+	f64 invalidTime = -1;
+	this->splitZoneTimes.SetSize(course->splitCount);
+	this->cpZoneTimes.SetSize(course->checkpointCount);
+	this->stageZoneTimes.SetSize(course->checkpointCount);
+
+	this->splitZoneTimes.FillWithValue(invalidTime);
+	this->cpZoneTimes.FillWithValue(invalidTime);
+	this->stageZoneTimes.FillWithValue(invalidTime);
+
 	SetCourse(course);
 	V_strncpy(this->lastStartMode, this->player->modeService->GetModeName(), KZ_MAX_MODE_NAME_LENGTH);
 	validTime = true;
@@ -128,6 +186,21 @@ bool KZTimerService::TimerEnd(const KzCourseDescriptor *course)
 	{
 		this->PlayMissedZoneSound();
 		this->player->languageService->PrintChat(true, false, "Can't finish run (Missed stage)", this->currentStage + 1);
+		return false;
+	}
+
+	if (this->reachedCheckpoints != course->checkpointCount)
+	{
+		this->PlayMissedZoneSound();
+		i32 missCount = course->checkpointCount - this->reachedCheckpoints;
+		if (missCount == 1)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't finish run (Missed a checkpoint zone)");
+		}
+		else
+		{
+			this->player->languageService->PrintChat(true, false, "Can't finish run (Missed checkpoint zones)", missCount);
+		}
 		return false;
 	}
 
