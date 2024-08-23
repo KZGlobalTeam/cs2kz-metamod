@@ -479,9 +479,7 @@ void MappingInterface::OnProcessMovement(KZPlayer *player)
 		bool replicate = !player->lastAntiBhopActive;
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", "0.0", replicate);
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
-		player->GetMoveServices()->m_nButtons()->m_pButtonStates[0] &= ~IN_JUMP;
-		player->GetMoveServices()->m_nButtons()->m_pButtonStates[1] &= ~IN_JUMP;
-		player->GetMoveServices()->m_nButtons()->m_pButtonStates[2] &= ~IN_JUMP;
+		player->GetMoveServices()->m_bOldJumpPressed() = true;
 	}
 	else if (player->lastAntiBhopActive)
 	{
