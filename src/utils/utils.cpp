@@ -268,6 +268,104 @@ f32 utils::GetAngleDifference(const f32 source, const f32 target, const f32 c, b
 	return fmod(fabs(target - source) + c, 2 * c) - c;
 }
 
+bool utils::SetConvarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate)
+{
+	ConVarHandle cvarHandle = g_pCVar->FindConVar(name);
+	if (!cvarHandle.IsValid())
+	{
+		assert(0);
+		META_CONPRINTF("Failed to find %s!\n", name);
+		return false;
+	}
+
+	if (!name || !value)
+	{
+		assert(0);
+		return false;
+	}
+
+	ConVar *cvar = g_pCVar->GetConVar(cvarHandle);
+	assert(cvar);
+	auto cvarValue = reinterpret_cast<CVValue_t *>(&(cvar->values));
+	bool result = true;
+	switch (cvar->m_eVarType)
+	{
+		case EConVarType_Bool:
+		{
+			cvarValue->m_bValue = !(value[0] == 'f' || value[0] == '0');
+		}
+		break;
+
+		case EConVarType_Int16:
+		case EConVarType_UInt16:
+		case EConVarType_Int32:
+		case EConVarType_UInt32:
+		case EConVarType_Int64:
+		case EConVarType_UInt64:
+		{
+			char *end = nullptr;
+			i64 integer = strtol(value, &end, 10);
+			if (value != end && value != nullptr)
+			{
+				cvarValue->m_i64Value = integer;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		break;
+
+		case EConVarType_Float32:
+		{
+			char *end = nullptr;
+			f32 floatValue = strtof(value, &end);
+			if (value != end && value != nullptr)
+			{
+				cvarValue->m_flValue = floatValue;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		break;
+
+		case EConVarType_Float64:
+		{
+			char *end = nullptr;
+			f64 floatValue = strtod(value, &end);
+			if (value != end && value != nullptr)
+			{
+				cvarValue->m_dbValue = floatValue;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		break;
+
+		case EConVarType_String:
+		{
+			cvarValue->m_szValue = value;
+		}
+		break;
+
+		default:
+			assert(0);
+			break;
+	}
+
+	if (result && replicate)
+	{
+		SendConVarValue(slot, cvar, value);
+	}
+	assert(result);
+
+	return result;
+}
+
 void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 {
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");

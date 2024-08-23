@@ -109,6 +109,8 @@ class MappingInterface
 public:
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
 	virtual bool IsBhopTrigger(KzTriggerType triggerType);
+
+	virtual void OnProcessMovement(KZPlayer *player);
 	virtual void OnSpawnPost(int count, const EntitySpawnInfo_t *info);
 	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
