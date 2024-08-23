@@ -32,25 +32,25 @@
 	timer_modifier_enable_slide(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Enable Slide" : 0 : "Makes every surface surfable, if the player is touching this trigger."
 	
 	// KZ Anti Bhop
-	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
-	+ "This is the time for which antibhop will be applied. Time is only counted when the player is on the ground."
+	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
+	+ "0.0 prevents jumping completely. This is the time for which antibhop will be applied. Time is only counted when the player is on the ground."
 	
 	// KZ Zone
 	timer_zone_course_descriptor(target_destination) {group="KZ | Zone" enabled={variable="timer_trigger_type" values=["5", "6", "7", "8", "9"]}} : "Course Descriptor" : : "info_target entity that describes this course. Every zone trigger must be associated with a course. Maximum length is 127 characters."
 
 	// KZ Split Zone
-	// TODO: is hammerid stable enough to be used to uniquely identify these?
+	timer_zone_split_number(integer) {group="KZ | Zone" min="1" enabled={variable="timer_trigger_type" value="7"}} : "Split Number" : 1 : "Split number. Split numbers must be sequential, starting from 1."
 
 	// KZ Checkpoint Zone
-	// TODO: is hammerid stable enough to be used to uniquely identify these?
+	timer_zone_checkpoint_number(integer) {group="KZ | Zone" min="1" enabled={variable="timer_trigger_type" value="8"}} : "Checkpoint Number" : 1 : "Checkpoint number. Checkpoint numbers must be sequential, starting from 1."
 
 	// KZ Stage Zone
-	timer_zone_stage_number(integer) {group="KZ | Stage Zone" enabled={variable="timer_trigger_type" value="8"}} : "Stage Number" : 1 : "Stage number. Stage numbers must be sequential, starting from 1."
+	timer_zone_stage_number(integer) {group="KZ | Zone" min="1" enabled={variable="timer_trigger_type" value="9"}} : "Stage Number" : 1 : "Stage number. Stage numbers must be sequential, starting from 1."
 
 	// KZ Teleport
 	timer_teleport_destination(target_destination) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Destination" : : "The entity to which the player should be teleported. Using special targetnames starting with ! won't work. (!activator, !player etc) Maximum length is 127 characters."
 
-	timer_teleport_delay(float) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Delay" : "0.0" : "This is how long the player can stay in the trigger. If it's one of the bhop triggers, then this means how long the player can stay on ground. For only bhop triggers the minimum delay is 0.08 seconds."
+	timer_teleport_delay(float) {group="KZ | Teleport" min="0.0" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Delay" : "0.0" : "This is how long the player can stay in the trigger. If it's one of the bhop triggers, then this means how long the player can stay on ground. For only bhop triggers the minimum delay is 0.1 seconds."
 	
 	timer_teleport_use_dest_angles(boolean) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Use Destination Angles" : 1 : "Whether to set the player's view angles to the destination entity's angles or keep the player's current view angles."
 	
@@ -67,9 +67,9 @@
 	timer_course_descriptor(boolean) : "KZ | Is Course Descriptor" : 0 : "Mark this info_target as a course descriptor."
 
 	// KZ Course Descriptor
-	timer_course_name(string) { enabled={group="KZ | Course Descriptor" variable="timer_course_descriptor" value="1"}} : "Course Name" : : "The name of the course. Every zone trigger must be associated with a course name, which can be a maximum of 64 bytes long (non-english characters take up more bytes)."
-	timer_course_disable_checkpoint(boolean) { enabled={group="KZ | Course Descriptor" variable="timer_course_descriptor" value="1"}} : "Disable Checkpoints" : 0 : "Disable setting checkpoints in this course."
-timer_course_number(integer) {group="KZ | Course Descriptor" enabled={variable="timer_course_descriptor" value="1"}} : "Course Number" : 1 : "Course number to uniquely identify this course. Must be bigger than or equal to 0."
+	timer_course_name(string) {group="KZ | Course Descriptor" enabled={variable="timer_course_descriptor" value="1"}} : "Course Name" : : "The name of the course. Every zone trigger must be associated with a course name, which can be a maximum of 64 bytes long (non-english characters take up more bytes)."
+	timer_course_disable_checkpoint(boolean) {group="KZ | Course Descriptor" enabled={variable="timer_course_descriptor" value="1"}} : "Disable Checkpoints" : 0 : "Disable setting checkpoints in this course."
+	timer_course_number(integer) {group="KZ | Course Descriptor" min="1"  enabled={variable="timer_course_descriptor" value="1"}} : "Course Number" : 1 : "Course number to uniquely identify this course."
 ]
 
 @OverrideClass = worldspawn
