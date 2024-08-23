@@ -19,10 +19,8 @@ enum
 
 static_global struct
 {
-	i32 triggerCount;
-	KzTrigger triggers[2048];
-	i32 courseCount;
-	KzCourseDescriptor courses[512];
+	CUtlVectorFixed<KzTrigger, 2048> triggers;
+	CUtlVectorFixed<KzCourseDescriptor, 512> courses;
 
 	bool roundIsStarting;
 	i32 errorFlags;
@@ -66,11 +64,11 @@ static_function f64 Mapi_PrintErrors()
 {
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_TRIGGERS)
 	{
-		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", g_errorPrefix, Q_ARRAYSIZE(g_mappingApi.triggers));
+		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", g_errorPrefix, g_mappingApi.triggers.Count());
 	}
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_COURSES)
 	{
-		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, Q_ARRAYSIZE(g_mappingApi.courses));
+		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, g_mappingApi.courses.Count());
 	}
 	for (i32 i = 0; i < g_mappingApi.errorCount; i++)
 	{
@@ -78,32 +76,6 @@ static_function f64 Mapi_PrintErrors()
 	}
 
 	return 60.0;
-}
-
-static_function bool Mapi_AddTrigger(KzTrigger trigger)
-{
-	if (g_mappingApi.triggerCount >= Q_ARRAYSIZE(g_mappingApi.triggers))
-	{
-		assert(0);
-		g_mappingApi.errorFlags |= MAPI_ERR_TOO_MANY_TRIGGERS;
-		return false;
-	}
-
-	g_mappingApi.triggers[g_mappingApi.triggerCount++] = trigger;
-	return true;
-}
-
-static_function void Mapi_AddCourse(KzCourseDescriptor course)
-{
-	assert(g_mappingApi.courseCount < Q_ARRAYSIZE(g_mappingApi.courses));
-	if (g_mappingApi.courseCount >= Q_ARRAYSIZE(g_mappingApi.courses))
-	{
-		assert(0);
-		g_mappingApi.errorFlags |= MAPI_ERR_TOO_MANY_COURSES;
-		return;
-	}
-
-	g_mappingApi.courses[g_mappingApi.courseCount++] = course;
 }
 
 // Example keyvalues:
@@ -282,8 +254,8 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 	}
-
-	Mapi_AddTrigger(trigger);
+	
+	g_mappingApi.triggers.AddToTail(trigger);
 }
 
 static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
@@ -335,8 +307,8 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 	}
 
 	course.disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
-
-	Mapi_AddCourse(course);
+	
+	g_mappingApi.courses.AddToTail(course);
 }
 
 static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
@@ -353,7 +325,7 @@ static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 		return result;
 	}
 
-	for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
+	for (i32 i = 0; i < g_mappingApi.triggers.Count(); i++)
 	{
 		if (triggerHandle == g_mappingApi.triggers[i].entity)
 		{
@@ -372,8 +344,8 @@ static_function const KzCourseDescriptor *Mapi_FindCourse(const char *targetname
 	{
 		return result;
 	}
-
-	for (i32 i = 0; i < g_mappingApi.courseCount; i++)
+	
+	FOR_EACH_VEC(g_mappingApi.courses, i)
 	{
 		if (V_stricmp(g_mappingApi.courses[i].entityTargetname, targetname) == 0)
 		{
@@ -415,7 +387,7 @@ void Mappingapi_RoundPrestart()
 void Mappingapi_RoundStart()
 {
 	g_mappingApi.roundIsStarting = false;
-	for (i32 courseInd = 0; courseInd < g_mappingApi.courseCount; courseInd++)
+	FOR_EACH_VEC(g_mappingApi.courses, courseInd)
 	{
 		// Find the number of split/checkpoint/stage zones that a course has
 		//  and make sure that they all start from 1 and are consecutive by
@@ -428,7 +400,7 @@ void Mappingapi_RoundStart()
 		i32 cpCount = 0;
 		i32 stageCount = 0;
 		KzCourseDescriptor *course = &g_mappingApi.courses[courseInd];
-		for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
+		FOR_EACH_VEC(g_mappingApi.triggers, i)
 		{
 			KzTrigger *trigger = &g_mappingApi.triggers[i];
 			switch (trigger->type)
@@ -484,13 +456,8 @@ void Mappingapi_RoundStart()
 
 		if (invalid)
 		{
-			// TODO: change to cutlvectorfixed
-			if (g_mappingApi.courseCount > 1)
-			{
-				g_mappingApi.courses[courseInd] = g_mappingApi.courses[g_mappingApi.courseCount - 1];
-			}
+			g_mappingApi.courses.FastRemove(courseInd);
 			courseInd--;
-			g_mappingApi.courseCount--;
 			break;
 		}
 		course->splitCount = splitCount;
