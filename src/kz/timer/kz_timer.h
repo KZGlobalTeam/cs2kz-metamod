@@ -67,7 +67,11 @@ private:
 	f64 lastStartSoundTime {};
 	char lastStartMode[128] {};
 	bool validTime {};
-	i32 currentStage;
+	i32 currentStage {};
+	i32 reachedCheckpoints {};
+	CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> splitZoneTimes {};
+	CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> cpZoneTimes {};
+	CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> stageZoneTimes {};
 
 	bool validJump {};
 	f64 lastInvalidateTime {};
@@ -156,6 +160,8 @@ public:
 
 	void StartZoneStartTouch(const KzCourseDescriptor *course);
 	void StartZoneEndTouch(const KzCourseDescriptor *course);
+	void SplitZoneStartTouch(const KzCourseDescriptor *course, i32 splitNumber);
+	void CheckpointZoneStartTouch(const KzCourseDescriptor *course, i32 cpNumber);
 	void StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber);
 	bool TimerStart(const KzCourseDescriptor *course, bool playSound = true);
 	bool TimerEnd(const KzCourseDescriptor *course);

@@ -964,13 +964,13 @@ void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KzCou
 
 		case KZTRIGGER_ZONE_SPLIT:
 		{
-			// TODO:
+			this->timerService->SplitZoneStartTouch(course, touched->zone.number);
 		}
 		break;
 
 		case KZTRIGGER_ZONE_CHECKPOINT:
 		{
-			// TODO:
+			this->timerService->CheckpointZoneStartTouch(course, touched->zone.number);
 		}
 		break;
 

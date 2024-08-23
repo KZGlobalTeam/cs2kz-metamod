@@ -3,6 +3,14 @@
 
 #define KZ_MAPPING_INTERFACE      "KZMappingInterface"
 #define KZ_MAX_COURSE_NAME_LENGTH 65
+#define KZ_MAX_SPLIT_ZONES        100
+#define KZ_MAX_CHECKPOINT_ZONES   100
+#define KZ_MAX_STAGE_ZONES        100
+
+#define INVALID_SPLIT_NUMBER      0
+#define INVALID_CHECKPOINT_NUMBER 0
+#define INVALID_STAGE_NUMBER      0
+#define INVALID_COURSE_NUMBER     0
 
 enum KzTriggerType
 {
