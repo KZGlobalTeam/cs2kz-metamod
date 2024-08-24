@@ -9,8 +9,8 @@
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
 
-#define KZ_SND_SET_CP "UIPanorama.round_report_odds_none"
-#define KZ_SND_DO_TP  "UIPanorama.round_report_odds_none"
+#define KZ_SND_SET_CP    "UIPanorama.round_report_odds_none"
+#define KZ_SND_DO_TP     "UIPanorama.round_report_odds_none"
 #define KZ_SND_RESET_CPS "UIPanorama.round_report_odds_dn"
 
 #define KZ_WORKSHOP_ADDONS_ID            "3171124941"

@@ -59,7 +59,7 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 
 void KZCheckpointService::ResetCheckpoints(bool playSound)
 {
-	if (playSound && this->checkpoints.Count() > 0)
+	if (playSound && this->GetCheckpointCount())
 	{
 		this->PlayCheckpointResetSound();
 	}
