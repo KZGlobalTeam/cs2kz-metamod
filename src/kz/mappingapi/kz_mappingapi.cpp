@@ -228,6 +228,10 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			V_snprintf(trigger.teleport.destination, sizeof(trigger.teleport.destination), "%s", destination);
 			trigger.teleport.delay = ekv->GetFloat("timer_teleport_delay", 0);
 			trigger.teleport.delay = max(trigger.teleport.delay, 0);
+			if (g_mappingInterface.IsBhopTrigger(type))
+			{
+				trigger.teleport.delay = max(trigger.teleport.delay, 0.1);
+			}
 			trigger.teleport.useDestinationAngles = ekv->GetBool("timer_teleport_use_dest_angles");
 			trigger.teleport.resetSpeed = ekv->GetBool("timer_teleport_reset_speed");
 			trigger.teleport.reorientPlayer = ekv->GetBool("timer_teleport_reorient_player");
