@@ -159,7 +159,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		case KZTRIGGER_ANTI_BHOP:
 		{
 			trigger.antibhop.time = ekv->GetFloat("timer_anti_bhop_time");
-			trigger.antibhop.time = max(trigger.antibhop.time, 0);
+			trigger.antibhop.time = MAX(trigger.antibhop.time, 0);
 		}
 		break;
 
@@ -227,10 +227,10 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			const char *destination = ekv->GetString("timer_teleport_destination");
 			V_snprintf(trigger.teleport.destination, sizeof(trigger.teleport.destination), "%s", destination);
 			trigger.teleport.delay = ekv->GetFloat("timer_teleport_delay", 0);
-			trigger.teleport.delay = max(trigger.teleport.delay, 0);
+			trigger.teleport.delay = MAX(trigger.teleport.delay, 0);
 			if (g_mappingInterface.IsBhopTrigger(type))
 			{
-				trigger.teleport.delay = max(trigger.teleport.delay, 0.1);
+				trigger.teleport.delay = MAX(trigger.teleport.delay, 0.1);
 			}
 			trigger.teleport.useDestinationAngles = ekv->GetBool("timer_teleport_use_dest_angles");
 			trigger.teleport.resetSpeed = ekv->GetBool("timer_teleport_reset_speed");
