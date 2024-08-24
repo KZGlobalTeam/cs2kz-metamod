@@ -42,17 +42,23 @@ jobs:
         run: |
           cd /home/runner/artifacts/cs2kz-linux
           tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz  .
+          rm ./cfg/cs2kz-server-config.txt
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}-upgrade.tar.gz  .
 
       - name: Archive Windows build
         run: |
           cd /home/runner/artifacts/cs2kz-windows
           zip -r /home/runner/releases/cs2kz-windows-${{ github.ref_name }}.zip *
+          rm ./cfg/cs2kz-server-config.txt
+          zip -r /home/runner/releases/cs2kz-windows-${{ github.ref_name }}-upgrade.zip *
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz
+            /home/runner/releases/cs2kz-linux-${{ github.ref_name }}-upgrade.tar.gz
             /home/runner/releases/cs2kz-windows-${{ github.ref_name }}.zip
+            /home/runner/releases/cs2kz-windows-${{ github.ref_name }}-upgrade.zip
           generate_release_notes: true
           prerelease: false
