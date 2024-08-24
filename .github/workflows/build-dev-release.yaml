@@ -74,14 +74,14 @@ jobs:
         run: |
           cd /home/runner/artifacts/cs2kz-linux
           tar -czvf /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}.tar.gz  .
-          rm ./addons/cfg/cs2kz-server-config.txt
+          rm ./cfg/cs2kz-server-config.txt
           tar -czvf /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}-upgrade.tar.gz  .
 
       - name: Archive Windows build
         run: |
           cd /home/runner/artifacts/cs2kz-windows
           zip -r /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}.zip *
-          rm ./addons/cfg/cs2kz-server-config.txt
+          rm ./cfg/cs2kz-server-config.txt
           zip -r /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}-upgrade.zip *
 
       - name: Tag the repository
