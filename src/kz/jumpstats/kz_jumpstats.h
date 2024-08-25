@@ -398,7 +398,8 @@ private:
 
 public:
 	static void RegisterCommands();
-
+	static void StartDemoRecording(CUtlString playerName);
+	static void OnServerActivate();
 	static DistanceTier GetDistTierFromString(const char *tierString);
 
 	void SetBroadcastMinTier(const char *tierString);

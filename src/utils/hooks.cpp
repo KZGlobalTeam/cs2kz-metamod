@@ -773,6 +773,7 @@ static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawn
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
+	KZJumpstatsService::OnServerActivate();
 	KZ::timer::ClearAnnounceQueue();
 	KZ::timer::SetupCourses();
 	KZ::misc::OnServerActivate();

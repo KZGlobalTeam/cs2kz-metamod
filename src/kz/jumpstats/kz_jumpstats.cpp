@@ -761,9 +761,44 @@ void KZJumpstatsService::EndJump()
 			{
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			}
+			DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+			if (tier >= DistanceTier_Wrecker && !jump->GetJumpPlayer()->jumpstatsService->jsAlways)
+			{
+				KZJumpstatsService::StartDemoRecording(jump->GetJumpPlayer()->GetName());
+			}
 			KZJumpstatsService::BroadcastJumpToChat(jump);
-			KZJumpstatsService::PlayJumpstatSound(this->player, jump);
-			KZJumpstatsService::PrintJumpToConsole(this->player, jump);
+			for (u32 i = 1; i < MAXPLAYERS + 1; i++)
+			{
+				KZPlayer *pl = g_pKZPlayerManager->ToPlayer(i);
+				if (!pl || !pl->IsInGame())
+				{
+					continue;
+				}
+				if (pl != this->player && pl->IsAlive())
+				{
+					continue;
+				}
+				if (pl == this->player)
+				{
+					KZJumpstatsService::PlayJumpstatSound(pl, jump);
+					KZJumpstatsService::PrintJumpToConsole(pl, jump);
+					continue;
+				}
+				if (pl->IsFakeClient())
+				{
+					if (pl->IsCSTV())
+					{
+						KZJumpstatsService::PrintJumpToConsole(pl, jump);
+					}
+					continue;
+				}
+				if (pl->GetObserverPawn() && pl->GetObserverPawn()->m_pObserverServices()
+					&& pl->GetObserverPawn()->m_pObserverServices()->m_hObserverTarget().Get() == this->player->GetPlayerPawn())
+				{
+					KZJumpstatsService::PlayJumpstatSound(pl, jump);
+					KZJumpstatsService::PrintJumpToConsole(pl, jump);
+				}
+			}
 		}
 	}
 }
