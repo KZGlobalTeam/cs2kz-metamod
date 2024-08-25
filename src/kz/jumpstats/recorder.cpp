@@ -35,7 +35,7 @@ void KZJumpstatsService::StartDemoRecording(CUtlString playerName)
 
 	CUtlString command;
 	playerName = playerName.Remove("\\").Remove("/");
-	command.Format("tv_record kzdemos/%s_%s_%lli", currentMap.Get(), playerName.Get(), ltime);
+	command.Format("tv_record kzdemos/%s_%s_%li", currentMap.Get(), playerName.Get(), ltime);
 	interfaces::pEngine->ServerCommand("tv_record_immediate 1");
 	interfaces::pEngine->ServerCommand(command.Get());
 
