@@ -331,11 +331,11 @@ bool KZTimerService::CanPause(bool showError)
 			}
 			return false;
 		}
-		else if (!this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && !(velocity.Length2D() == 0.0f && velocity.z == 0.0f))
+		else if (!this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND || velocity.Length2D() != 0.0f || velocity.z != 0.0f)
 		{
 			if (showError)
 			{
-				this->player->languageService->PrintChat(true, false, "Can't Pause (Just Resumed)");
+				this->player->languageService->PrintChat(true, false, "Can't Pause (Midair)");
 				this->player->PlayErrorSound();
 			}
 			return false;
