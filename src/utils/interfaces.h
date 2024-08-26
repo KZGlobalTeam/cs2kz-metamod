@@ -121,6 +121,7 @@ public:
 		return (GetClientList() && GetController(slot)) ? GetClientList()->Element(slot.Get()) : nullptr;
 	}
 
+	virtual CUtlString GetCurrentMapName(bool *success = NULL);
 	virtual u64 GetCurrentMapWorkshopID();
 	virtual CUtlString GetCurrentMapVPK();
 	virtual CUtlString GetCurrentMapDirectory();

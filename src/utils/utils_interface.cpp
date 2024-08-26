@@ -124,6 +124,24 @@ CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
 	return (CUtlVector<CServerSideClient *> *)((char *)g_pNetworkServerService->GetIGameServer() + offset);
 }
 
+CUtlString KZUtils::GetCurrentMapName(bool *result)
+{
+	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
+	if (!networkGameServer)
+	{
+		if (result)
+		{
+			*result = false;
+		}
+		return "";
+	}
+	if (result)
+	{
+		*result = true;
+	}
+	return networkGameServer->GetMapName();
+}
+
 u64 KZUtils::GetCurrentMapWorkshopID()
 {
 	CUtlString directory = this->GetCurrentMapDirectory();

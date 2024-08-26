@@ -26,11 +26,11 @@ void KZJumpstatsService::StartDemoRecording(CUtlString playerName)
 	time_t ltime;
 	time(&ltime);
 
-	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
-	CUtlString currentMap;
-	if (networkGameServer)
+	bool gotCurrentMap = false;
+	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&gotCurrentMap);
+	if (!gotCurrentMap) // Shouldn't happen.
 	{
-		currentMap = networkGameServer->GetMapName();
+		return;
 	}
 
 	CUtlString command;

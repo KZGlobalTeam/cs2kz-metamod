@@ -492,13 +492,9 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 		return;
 	}
 
-	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
-	CUtlString currentMap;
-	if (networkGameServer)
-	{
-		currentMap = networkGameServer->GetMapName();
-	}
-	else // Shouldn't happen.
+	bool gotCurrentMap = false;
+	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&gotCurrentMap);
+	if (!gotCurrentMap) // Shouldn't happen.
 	{
 		pbReqQueueManager.InvalidLocal(this->uid);
 		return;
