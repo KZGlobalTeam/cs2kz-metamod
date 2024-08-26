@@ -93,6 +93,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'kz_misc.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'block_radio.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),

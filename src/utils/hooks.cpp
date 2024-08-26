@@ -681,6 +681,10 @@ static_function void Hook_ClientVoice(CPlayerSlot slot)
 
 static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 {
+	if (META_RES result = KZ::misc::CheckBlockedRadioCommands(args[0]))
+	{
+		RETURN_META(result);
+	}
 	if (META_RES result = scmd::OnClientCommand(slot, args))
 	{
 		RETURN_META(result);
@@ -740,6 +744,10 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 // ICvar
 static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
+	if (META_RES result = KZ::misc::CheckBlockedRadioCommands(args[0]))
+	{
+		RETURN_META(result);
+	}
 	if (KZOptionService::GetOptionInt("overridePlayerChat", true))
 	{
 		KZ::misc::ProcessConCommand(cmd, ctx, args);
