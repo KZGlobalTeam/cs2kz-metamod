@@ -9,6 +9,7 @@ public:
 		this->checkpoints = CUtlVector<Checkpoint>(1, 0);
 	}
 
+	static void Init();
 	virtual void Reset() override;
 
 	// Checkpoint stuff
@@ -46,6 +47,7 @@ private:
 	Checkpoint lastTeleportedCheckpoint {};
 
 public:
+	void OnPlayerPreferencesLoaded();
 	void ResetCheckpoints();
 	void SetCheckpoint();
 

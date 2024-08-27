@@ -71,8 +71,12 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 		return;
 	}
 	this->initState = LOCAL;
-
-	CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+	// Calling this before the player is ingame will create unwanted race conditions.
+	// We need to make sure the player is both authenticated and ingame.
+	if (this->player->IsInGame())
+	{
+		CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+	}
 }
 
 void KZOptionService::SaveLocalPrefs()
@@ -85,4 +89,12 @@ void KZOptionService::SaveLocalPrefs()
 		return;
 	}
 	this->player->databaseService->SavePrefs(output);
+}
+
+void KZOptionService::OnPlayerActive()
+{
+	if (this->IsInitialized())
+	{
+		CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+	}
 }

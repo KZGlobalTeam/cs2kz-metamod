@@ -60,6 +60,8 @@ public:
 
 	void SaveGlobalPrefs() {}
 
+	void OnPlayerActive();
+
 	void OnClientDisconnect()
 	{
 		SaveLocalPrefs();

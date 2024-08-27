@@ -1,18 +1,60 @@
 #include "../kz.h"
 #include "kz_checkpoint.h"
+#include "../option/kz_option.h"
 #include "../timer/kz_timer.h"
 #include "../noclip/kz_noclip.h"
 #include "../language/kz_language.h"
 #include "utils/utils.h"
 
-// TODO: replace printchat with HUD service's printchat
+static_global class KZOptionServiceEventListener_Checkpoint : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		player->checkpointService->OnPlayerPreferencesLoaded();
+	}
+} optionEventListener;
 
 static_global const Vector NULL_VECTOR = Vector(0, 0, 0);
+
+void KZCheckpointService::Init()
+{
+	KZOptionService::RegisterEventListener(&optionEventListener);
+}
 
 void KZCheckpointService::Reset()
 {
 	this->ResetCheckpoints();
 	this->hasCustomStartPosition = false;
+}
+
+void KZCheckpointService::OnPlayerPreferencesLoaded()
+{
+	KeyValues3 ssps;
+	player->optionService->GetPreferenceTable("startPositions", ssps);
+
+	bool hasMapName = false;
+	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+	if (!hasMapName)
+	{
+		return;
+	}
+	if (KeyValues3 *startPos = ssps.FindMember(currentMap.Get()))
+	{
+		if (!startPos->FindMember("origin") || !startPos->FindMember("angles") || !startPos->FindMember("ladderNormal")
+			|| !startPos->FindMember("onLadder") || !startPos->FindMember("groundEnt") || !startPos->FindMember("slopeDropOffset")
+			|| !startPos->FindMember("slopeDropHeight"))
+		{
+			return;
+		}
+		this->customStartPosition.origin = startPos->FindMember("origin")->GetVector();
+		this->customStartPosition.angles = startPos->FindMember("angles")->GetQAngle();
+		this->customStartPosition.ladderNormal = startPos->FindMember("ladderNormal")->GetVector();
+		this->customStartPosition.onLadder = startPos->FindMember("onLadder")->GetBool();
+		this->customStartPosition.groundEnt = CEntityHandle(startPos->FindMember("groundEnt")->GetUInt());
+		this->customStartPosition.slopeDropOffset = startPos->FindMember("slopeDropOffset")->GetFloat();
+		this->customStartPosition.slopeDropHeight = startPos->FindMember("slopeDropHeight")->GetFloat();
+		this->hasCustomStartPosition = true;
+	}
 }
 
 void KZCheckpointService::ResetCheckpoints()
@@ -275,12 +317,47 @@ void KZCheckpointService::SetStartPosition()
 	this->customStartPosition.slopeDropHeight = pawn->m_flSlopeDropHeight();
 	this->customStartPosition.slopeDropOffset = pawn->m_flSlopeDropOffset();
 	this->customStartPosition.groundEnt = pawn->m_hGroundEntity();
+	if (player->optionService->IsInitialized())
+	{
+		bool hasMapName = false;
+		CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+		if (hasMapName)
+		{
+			KeyValues3 ssps;
+			player->optionService->GetPreferenceTable("startPositions", ssps);
+			KeyValues3 *startPos = ssps.FindOrCreateMember(currentMap.Get());
+
+			startPos->FindOrCreateMember("origin")->SetVector(this->customStartPosition.origin);
+			startPos->FindOrCreateMember("angles")->SetQAngle(this->customStartPosition.angles);
+			startPos->FindOrCreateMember("ladderNormal")->SetVector(this->customStartPosition.ladderNormal);
+			startPos->FindOrCreateMember("onLadder")->SetBool(this->customStartPosition.onLadder);
+			startPos->FindOrCreateMember("groundEnt")->SetUInt(this->customStartPosition.groundEnt.ToInt());
+			startPos->FindOrCreateMember("slopeDropOffset")->SetFloat(this->customStartPosition.slopeDropOffset);
+			startPos->FindOrCreateMember("slopeDropHeight")->SetFloat(this->customStartPosition.slopeDropHeight);
+
+			player->optionService->SetPreferenceTable("startPositions", ssps);
+		}
+	}
 	this->player->languageService->PrintChat(true, false, "Set Custom Start Position");
 }
 
 void KZCheckpointService::ClearStartPosition()
 {
 	this->hasCustomStartPosition = false;
+
+	if (player->optionService->IsInitialized())
+	{
+		bool hasMapName = false;
+		CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+		if (hasMapName)
+		{
+			KeyValues3 ssps;
+			player->optionService->GetPreferenceTable("startPositions", ssps);
+			ssps.RemoveMember(currentMap.Get());
+			player->optionService->SetPreferenceTable("startPositions", ssps);
+		}
+	}
+
 	this->player->languageService->PrintChat(true, false, "Cleared Custom Start Position");
 }
 
