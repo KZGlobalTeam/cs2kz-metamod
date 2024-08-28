@@ -574,6 +574,10 @@ JumpType KZJumpstatsService::DetermineJumpType()
 		}
 		if (this->player->jumped)
 		{
+			if (this->player->GetMoveServices()->m_vecLadderNormal().z > EPSILON)
+			{
+				return JumpType_Invalid;
+			}
 			return JumpType_Ladderhop;
 		}
 		else
