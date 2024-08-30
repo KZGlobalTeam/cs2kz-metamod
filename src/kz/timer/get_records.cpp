@@ -3,10 +3,13 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/timer/kz_timer.h"
+#include "utils/argparse.h"
 #include "utils/simplecmds.h"
 #include "iserver.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
+
+static_global const char *paramKeys[] = {"c", "course", "mode", "map"};
 
 struct RecordData
 {
@@ -403,37 +406,32 @@ void RecordRequest::ExecuteLocalRequest()
 void QueryRecords(CCSPlayerController *controller, const CCommand *args, bool serverOnly = false)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	KeyValues3 params;
+
+	if (!utils::ParseArgsToKV3(args->ArgS(), params, paramKeys, sizeof(paramKeys) / sizeof(paramKeys[0])))
+	{
+		player->languageService->PrintChat(true, false, "WR/SR Command Usage");
+		player->languageService->PrintConsole(false, false, "WR/SR Command Usage - Console");
+		return;
+	}
+
+	KeyValues3 *kv;
 
 	CUtlString mapName;
 	CUtlString courseName;
 	CUtlString modeName;
 
-	for (int i = 1; i < args->ArgC(); i++)
+	if (kv = params.FindMember("map"))
 	{
-		CUtlString arg = args->Arg(i);
-		arg.ToLowerFast();
-		if (arg.MatchesPattern("c=*"))
-		{
-			courseName = arg.Get() + 2;
-		}
-		else if (arg.MatchesPattern("course=*"))
-		{
-			courseName = arg.Get() + 7;
-		}
-		else if (arg.MatchesPattern("mode=*"))
-		{
-			modeName = arg.Get() + 5;
-		}
-		else if (arg.MatchesPattern("map=*"))
-		{
-			mapName = arg.Get() + 4;
-		}
-		else
-		{
-			player->languageService->PrintChat(true, false, "WR/SR Command Usage");
-			player->languageService->PrintConsole(false, false, "WR/SR Command Usage - Console");
-			return;
-		}
+		mapName = kv->GetString();
+	}
+	if ((kv = params.FindMember("course")) || (kv = params.FindMember("c")))
+	{
+		courseName = kv->GetString();
+	}
+	if (kv = params.FindMember("mode"))
+	{
+		modeName = kv->GetString();
 	}
 
 	recReqQueueManager.AddRequest(player, mapName, courseName, modeName, serverOnly);

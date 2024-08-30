@@ -3,10 +3,13 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/timer/kz_timer.h"
+#include "utils/argparse.h"
 #include "utils/simplecmds.h"
 #include "iserver.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
+
+static_global const char *paramKeys[] = {"c", "course", "mode", "map", "p", "player", "s", "style"};
 
 struct PBData
 {
@@ -663,6 +666,16 @@ void PBRequest::ExecuteRanklessLocalQuery()
 SCMD_CALLBACK(CommandKZPB)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	KeyValues3 params;
+
+	if (!utils::ParseArgsToKV3(args->ArgS(), params, paramKeys, sizeof(paramKeys) / sizeof(paramKeys[0])))
+	{
+		player->languageService->PrintChat(true, false, "PB Command Usage");
+		player->languageService->PrintConsole(false, false, "PB Command Usage - Console");
+		return MRES_SUPERCEDE;
+	}
+
+	KeyValues3 *kv;
 
 	CUtlString playerName;
 	CUtlString mapName;
@@ -670,48 +683,25 @@ SCMD_CALLBACK(CommandKZPB)
 	CUtlString modeName;
 	CUtlString styleNames;
 
-	for (int i = 1; i < args->ArgC(); i++)
+	if ((kv = params.FindMember("player")) || (kv = params.FindMember("p")))
 	{
-		CUtlString arg = args->Arg(i);
-		arg.ToLowerFast();
-		if (arg.MatchesPattern("c=*"))
-		{
-			courseName = arg.Get() + 2;
-		}
-		else if (arg.MatchesPattern("course=*"))
-		{
-			courseName = arg.Get() + 7;
-		}
-		else if (arg.MatchesPattern("mode=*"))
-		{
-			modeName = arg.Get() + 5;
-		}
-		else if (arg.MatchesPattern("map=*"))
-		{
-			mapName = arg.Get() + 4;
-		}
-		else if (arg.MatchesPattern("p=*"))
-		{
-			playerName = arg.Get() + 2;
-		}
-		else if (arg.MatchesPattern("player=*"))
-		{
-			playerName = arg.Get() + 7;
-		}
-		else if (arg.MatchesPattern("s=*"))
-		{
-			styleNames = arg.Get() + 2;
-		}
-		else if (arg.MatchesPattern("style=*"))
-		{
-			styleNames = arg.Get() + 6;
-		}
-		else
-		{
-			player->languageService->PrintChat(true, false, "PB Command Usage");
-			player->languageService->PrintConsole(false, false, "PB Command Usage - Console");
-			return MRES_SUPERCEDE;
-		}
+		playerName = kv->GetString();
+	}
+	if (kv = params.FindMember("map"))
+	{
+		mapName = kv->GetString();
+	}
+	if ((kv = params.FindMember("course")) || (kv = params.FindMember("c")))
+	{
+		courseName = kv->GetString();
+	}
+	if (kv = params.FindMember("mode"))
+	{
+		modeName = kv->GetString();
+	}
+	if ((kv = params.FindMember("style")) || (kv = params.FindMember("s")))
+	{
+		styleNames = kv->GetString();
 	}
 
 	pbReqQueueManager.AddRequest(player, playerName, mapName, courseName, modeName, styleNames);
