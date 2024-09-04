@@ -415,7 +415,7 @@ void QueryRecords(CCSPlayerController *controller, const CCommand *args, bool se
 		return;
 	}
 
-	KeyValues3 *kv;
+	KeyValues3 *kv = NULL;
 
 	CUtlString mapName;
 	CUtlString courseName;

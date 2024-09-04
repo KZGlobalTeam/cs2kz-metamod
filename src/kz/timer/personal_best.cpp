@@ -675,7 +675,7 @@ SCMD_CALLBACK(CommandKZPB)
 		return MRES_SUPERCEDE;
 	}
 
-	KeyValues3 *kv;
+	KeyValues3 *kv = NULL;
 
 	CUtlString playerName;
 	CUtlString mapName;
