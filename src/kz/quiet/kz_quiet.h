@@ -32,11 +32,19 @@ public:
 
 	bool ShouldHideWeapon()
 	{
+		if (!this->player->IsAlive())
+		{
+			return false;
+		}
 		return this->hideWeapon;
 	}
 
 	bool ShouldHideWeapon(u32 slot)
 	{
+		if (!this->player->IsAlive())
+		{
+			return false;
+		}
 		if (!this->weaponShownAtLeastOnce[slot])
 		{
 			this->weaponShownAtLeastOnce[slot] = true;
