@@ -16,7 +16,7 @@ class KZQuietService : public KZBaseService
 	u8 lastObserverMode;
 	CHandle<CBaseEntity> lastObserverTarget;
 	bool hideWeapon {};
-	bool weaponShownAtLeastOnce[3] {};
+	u32 weaponShownCount[3] {};
 
 public:
 	bool hideOtherPlayers {};
@@ -45,9 +45,10 @@ public:
 		{
 			return false;
 		}
-		if (!this->weaponShownAtLeastOnce[slot])
+		// Arbitrary number to not crash the client
+		if (this->weaponShownCount[slot] < 16)
 		{
-			this->weaponShownAtLeastOnce[slot] = true;
+			this->weaponShownCount[slot]++;
 			return false;
 		}
 		return this->hideWeapon;

@@ -72,6 +72,7 @@ public:
 	static void RegisterCommands();
 	static void RegisterPBCommand();
 	static void RegisterRecordCommands();
+	static void RegisterCourseTopCommands();
 	static bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
 	static bool UnregisterEventListener(KZTimerServiceEventListener *eventListener);
 
@@ -306,5 +307,8 @@ namespace KZ
 
 		// Record requests
 		void CheckRecordRequests();
+
+		// CourseTop requests
+		void CheckCourseTopRequests();
 	} // namespace timer
 } // namespace KZ
