@@ -194,7 +194,7 @@ void KZQuietService::Reset()
 {
 	this->hideOtherPlayers = this->player->optionService->GetPreferenceBool("hideOtherPlayers", false);
 	this->hideWeapon = this->player->optionService->GetPreferenceBool("hideWeapon", false);
-	for (u32 i = 0; i < sizeof(this->weaponShownCount); i++)
+	for (u32 i = 0; i < sizeof(this->weaponShownCount) / sizeof(this->weaponShownCount[0]); i++)
 	{
 		this->weaponShownCount[i] = 0;
 	}
