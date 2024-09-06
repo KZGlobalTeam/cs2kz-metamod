@@ -5,6 +5,7 @@
 #include "interfaces/interfaces.h"
 #include "filesystem.h"
 #include "utils/ctimer.h"
+#include "kz/option/kz_option.h"
 
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
@@ -80,7 +81,7 @@ const char *KZLanguageService::GetLanguage()
 	{
 		return (languagesKV->GetString(lang), lang);
 	}
-	return KZ_DEFAULT_LANGUAGE;
+	return KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE);
 }
 
 const char *KZLanguageService::GetTranslatedFormat(const char *language, const char *phrase)
