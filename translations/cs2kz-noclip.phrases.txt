@@ -9,6 +9,7 @@
 		"sv"		"{grey}Noclip aktiverat."
 		"ua"		"{grey}Noclip активовано."
 		"tr"		"{grey}Noclip açıldı."
+		"it"		"{grey}Noclip abilitato."
 	}
 	"Noclip - Disable"
 	{
@@ -19,5 +20,6 @@
 		"sv"		"{grey}Noclip inaktiverat."
 		"ua"		"{grey}Noclip вимкнено."
 		"tr"		"{grey}Noclip kapatıldı."
+		"it"		"{grey}Noclip disabilitato."
 	}
 }

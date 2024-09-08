@@ -12,6 +12,7 @@
 		"sv"		"{grey}Du har skapat en checkpoint (#{default}{checkpoint_count}{grey})."
 		"ua"		"{grey}Ви поставили чекпоінт (#{default}{checkpoint_count}{grey})."
 		"tr"		"{grey}Kontrol noktası oluşturdun (#{default}{checkpoint_count}{grey})."
+		"it"		"{grey}Hai creato un checkpoint (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
 	{
@@ -22,6 +23,7 @@
 		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på otillåtet område."
 		"ua"		"{yellow}Увага{grey}: Чекпоінт був зроблений у забороненій зоні."
 		"tr"		"{yellow}Dikkat{grey}: Kontrol noktası yasak olan yerde oluşturuldu."
+		"it"		"{yellow}Attenzione{grey}: Checkpoint creato in una zona anti-checkpoint."
 	}
 	"Can't Checkpoint (Midair)"
 	{
@@ -33,6 +35,7 @@
 		"sv"		"{darkred}Kan inte skapa checkpoint i luften."
 		"ua"		"{darkred}Ви не можете поставити чекпоінт у повітрі."
 		"tr"		"{darkred}Havada kontrol noktası oluşturamazsın."
+		"it"		"{darkred}Non puoi creare un checkpoint in volo."
 	}
 	"Can't Checkpoint (Just Landed)"
 	{
@@ -44,6 +47,7 @@
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom du landade nyligen."
 		"ua"		"{darkred}Ви не можете поставити чекпоінт одразу після приземлення."
 		"tr"		"{darkred}Yeni indiğin için kontrol noktası oluşturamazsın."
+		"it"		"{darkred}Non puoi creare un checkpoint quando sei appena atterrato."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{
@@ -54,6 +58,7 @@
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom checkpoints är otillåtna på detta området."
 		"ua"		"{darkred}Ви не можете поставити чекпоінт, так як вони вимкнені у цій зоні."
 		"tr"		"{darkred}Yasaklı bölge olduğu için burada kontrol noktası oluşturamazsın."
+		"it"		"{darkred}La creazione di checkpoint è disabilitata in questa zona."
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
@@ -65,6 +70,7 @@
 		"sv"		"{darkred}Du kan inte teleportera eftersom du har inga checkpoints."
 		"ua"		"{darkred}Ви не можете телепортуватися, тому що у вас відсутні чекпоінти."
 		"tr"		"{darkred}Kontrol noktası oluşturmadığın için ışınlamazsın."
+		"it"		"{darkred}Non puoi teleportarti senza prima aver creato un checkpoint."
 	}
 	"Can't Teleport (Map)"
 	{
@@ -76,6 +82,7 @@
 		"sv"		"{darkred}Du kan inte teleportera till checkpoints på detta området."
 		"ua"		"{darkred}Ви не можете телепортуватися на свої чекпоінти тут."
 		"tr"		"{darkred}Bu bölgede kontrol noktalarına ışınlamazsın."
+		"it"		"{darkred}Da qui non puoi teleportarti ai tuoi checkpoint."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
@@ -87,6 +94,7 @@
 		"sv"		"{darkred}Du har inga checkpoints att teleportera till."
 		"ua"		"{darkred}У вас немає чекпоінтів до яких можна повернутися."
 		"tr"		"{darkred}Geri dönecek bir kontrol noktanız yok."
+		"it"		"{darkred}Non ci sono checkpoint ai quali tornare indietro."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
@@ -98,6 +106,7 @@
 		"sv"		"{darkred}Du har inga checkpoints att teleportera framåt till."
 		"ua"		"{darkred}У вас немає чекпоінтів до яких можна телепортуватися."
 		"tr"		"{darkred}İleri gidecek bir kontrol noktanız yok."
+		"it"		"{darkred}Non ci sono checkpoint ai quali andare avanti."
 	}
 	"Can't Undo (No Teleports)"
 	{
@@ -109,6 +118,7 @@
 		"sv"		"{darkred}Du kan inte ångra din teleportering eftersom du har ingen föregående teleport."
 		"ua"		"{darkred}У вас немає телепортів, які можна скасувати."
 		"tr"		"{darkred}Geri alamazsın çünkü geri alınabilecek ışınlanma noktası yok."
+		"it"		"{darkred}Non ci sono teleport da annullare."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
@@ -120,6 +130,7 @@
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade i luften."
 		"ua"		"{darkred}Ви не можете скасувати телепорт, тому що зробили його у повітрі."
 		"tr"		"{darkred}Havada ışınlandığın için geri alamazsın."
+		"it"		"{darkred}Non puoi annullare un teleport fatto in volo."
 	}
 	"Can't Undo (Just Landed)"
 	{
@@ -131,6 +142,7 @@
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du hade precis landat."
 		"ua"		"{darkred}Ви не можете скасувати свій телепорт одразу після приземлення."
 		"tr"		"{darkred}Yeni indiğin için geri alamazsın."
+		"it"		"{darkred}Non puoi annullare un teleport quando sei appena atterrato."
 	}
 	"Can't Undo (AntiCp)"
 	{
@@ -140,7 +152,8 @@
 		"fi"		"{darkred}Et voi palata takaisin, sillä teleporttasit tallennuspiste-kieltoalueella."
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade på ett otillåtet område."
 		"ua"		"{darkred}Ви не можете скасувати свій телепорт, так як телепортувалися будучи в античекпоінт зоні."
-		"tr"            "{darkred}Geri alamazsın çünkü anti-kontrol noktasındayken ışınlandın."
+		"tr"		"{darkred}Geri alamazsın çünkü anti-kontrol noktasındayken ışınlandın."
+		"it"		"{darkred}Non puoi annullare un teleport fatto da una zona anti-checkpoint."
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
@@ -151,6 +164,7 @@
 		"sv"		"{grey}Misslyckades med att skapa din startposition!"
 		"ua"		"{grey}Не вдалося встановити власну стартову позицію!"
 		"tr"		"{grey}Başlangıç noktası oluşturulamadı!"
+		"it"		"{grey}Impossibile creare la zona di partenza custom!"
 	}
 	"Set Custom Start Position"
 	{
@@ -162,6 +176,7 @@
 		"sv"		"{grey}Du har skapat din startposition."
 		"ua"		"{grey}Ви встановили власну стартову позицію."
 		"tr"		"{grey}Başlangıç noktası oluşturuldu."
+		"it"		"{grey}Zona di partenza custom creata."
 	}
 	"Cleared Custom Start Position"
 	{
@@ -173,5 +188,6 @@
 		"sv"		"{grey}Du har rensat din startposition."
 		"ua"		"{grey}Ви очистили власну стартову позицію."
 		"tr"		"{grey}Başlangıç noktası temizlendi."
+		"it"		"{grey}Zona di partenza custom eliminata."
 	}
 }

@@ -9,6 +9,7 @@
 		"sv"		"{grey}Kolla i konsolen för en lista av kommandon!"
 		"ua"		"{grey}Перегляньте список доступних команд у консолі!"
 		"tr"		"{grey}Komutların listesi için konsola bak!"
+		"it"		"{grey}Apri la console per la lista dei comandi!"
 	}
 	"Command Help Response (Console)"
 	{
@@ -19,6 +20,7 @@
 		"sv"		"För att använda dessa kommandon, kan du skriva \"bind <knapp> kz_<kommandos namn>\" i din konsol, eller skriv !<kommandos namn> eller /<kommandos namn> i chatten.\nTill exempel: \"bind 1 kz_cp\" eller \"!cp\" eller \"/cp\""
 		"ua"		"Щоб використати ці команди напишіть \"bind <key> kz_<назва команди>\" у вашій консолі, або напишіть !<назва команди> чи /<назва команди> в чаті.\nНаприклад: \"bind 1 kz_cp\" або \"!cp\" чи \"/cp\""
 		"tr"		"Bu komutları kullanmak için konsola \"bind <tuş> kz_<komut ismi>\"veya konuşma satırına !<komut ismi> ya da /<komut ismi> yazabilirsin. Örnek olarak: \"bind 1 kz_cp\" veya \"!cp\" or \"/cp\""
+		"it"		"Per usare questi comandi scrivi \"bind <tasto> kz_<nome comando>\" nella console, oppure !<nome comando> o /<nome comando> in chat.\nEsempio: \"bind 1 kz_cp\" o \"!cp\" o \"/cp\""
 	}
 	"Switch Language"
 	{
@@ -31,6 +33,7 @@
 		"sv"		"{grey}Du har bytt språket till {default}{language}{grey}."
 		"ua"		"{grey}Ви змінили мову на {default}{language}{grey}."
 		"tr"		"{grey}Dili şununla değiştirdiniz: {default}{language}{grey}."
+		"it"		"{grey}Hai cambiato la lingua a {default}{language}{grey}."
 	}
 
 	// Commands
@@ -43,6 +46,7 @@
 		"sv"		"Ångra teleport."
 		"ua"		"Скасувати телепорт."
 		"tr"		"Geri al."
+		"it"		"Annulla teleport."
 	}
 	"Command Description - kz_checkpoint"
 	{
@@ -53,6 +57,7 @@
 		"sv"		"Skapa en checkpoint på mark eller stege."
 		"ua"		"Поставити чекпоінт на землі або на драбині."
 		"tr"		"Yerde veya merdivende kontrol noktası oluştur."
+		"it"		"Crea un checkpoint da terra o su una scala."
 	}
 	"Command Description - kz_cp"
 	{
@@ -63,6 +68,7 @@
 		"sv"		"Skapa en checkpoint på mark eller stege."
 		"ua"		"Поставити чекпоінт на землі або на драбині."
 		"tr"		"Yerde veya merdivende kontrol noktası oluştur."
+		"it"		"Crea un checkpoint da terra o su una scala."
 	}
 	"Command Description - kz_teleport"
 	{
@@ -73,6 +79,7 @@
 		"sv"		"Teleportera till nuvarande checkpoint."
 		"ua"		"Телепортуватися до поточного чекпоінту."
 		"tr"		"Kontrol noktasına ışınlan."
+		"it"		"Teleportati all'ultimo checkpoint."
 	}
 	"Command Description - kz_tp"
 	{
@@ -83,6 +90,7 @@
 		"sv"		"Teleportera till nuvarande checkpoint."
 		"ua"		"Телепортуватися до поточного чекпоінту."
 		"tr"		"Kontrol noktasına ışınlan."
+		"it"		"Teleportati all'ultimo checkpoint."
 	}
 	"Command Description - kz_prevcp"
 	{
@@ -93,6 +101,7 @@
 		"sv"		"Teleportera till föregående checkpoint."
 		"ua"		"Телепортуватися до попереднього чекпоінту."
 		"tr"		"Önceki kontrol noktasına dön."
+		"it"		"Teleportati al penultimo checkpoint."
 	}
 	"Command Description - kz_pcp"
 	{
@@ -103,6 +112,7 @@
 		"sv"		"Teleportera till föregående checkpoint."
 		"ua"		"Телепортуватися до попереднього чекпоінту."
 		"tr"		"Önceki kontrol noktasına dön."
+		"it"		"Teleportati al penultimo checkpoint."
 	}
 	"Command Description - kz_nextcp"
 	{
@@ -113,6 +123,7 @@
 		"sv"		"Teleportera till nästa checkpoint."
 		"ua"		"Телепортуватися до наступного чекпоінту."
 		"tr"		"Sonraki kontrol noktasına ilerle."
+		"it"		"Teleportati al prossimo checkpoint."
 	}
 	"Command Description - kz_ncp"
 	{
@@ -123,6 +134,7 @@
 		"sv"		"Teleportera till nästa checkpoint."
 		"ua"		"Телепортуватися до наступного чекпоінту."
 		"tr"		"Sonraki kontrol noktasına ilerle."
+		"it"		"Teleportati al prossimo checkpoint."
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -133,6 +145,7 @@
 		"sv"		"Skapa ny startposition på nuvarande position."
 		"ua"		"Встановити поточну позицію як стартову."
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
+		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
 	}
 	"Command Description - kz_ssp"
 	{
@@ -143,6 +156,7 @@
 		"sv"		"Skapa ny startposition på nuvarande position."
 		"ua"		"Встановити поточну позицію як стартову."
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
+		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -153,6 +167,7 @@
 		"sv"		"Rensa justerad startposition."
 		"ua"		"Очистити власну стартову позицію."
 		"tr"		"Başlangıç noktasını temizle."
+		"it"		"Elimina la zona di partenza custom."
 	}
 	"Command Description - kz_csp"
 	{
@@ -163,6 +178,7 @@
 		"sv"		"Rensa justerad startposition."
 		"ua"		"Очистити власну стартову позицію."
 		"tr"		"Başlangıç noktasını temizle."
+		"it"		"Elimina la zona di partenza custom."
 	}
 	"Command Description - kz_panel"
 	{
@@ -173,6 +189,7 @@
 		"sv"		"Toggla mittpanelen."
 		"ua"		"Перемикання відображення центральної панелі."
 		"tr"		"Orta panel görüntüsünü aç/kapat."
+		"it"		"Cambia la visibilità del pannello centrale."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
@@ -183,6 +200,7 @@
 		"sv"		"Ändra minimigräns för sändning av andra spelares jumpstat."
 		"ua"		"Змінити мінімальний поріг стрибків інших гравців для відображення в чаті."
 		"tr"		"Sohbet için zıplama istatistiklerinin minimum değerini değiştir."
+		"it"		"Cambia la soglia minima per mostrare le statistiche dei salti."
 	}
 	"Command Description - kz_jssound"
 	{
@@ -193,6 +211,7 @@
 		"sv"		"Ändra minimigräns för ljudeffekter av jumpstats."
 		"ua"		"Змінити мінімальний поріг для звукових ефектів під час стрибків."
 		"tr"		"Zıplama istatistiklerinin minimum ses efekti değerini değiştir."
+		"it"		"Cambia la soglia minima per gli effetti sonori dei salti."
 	}
 	"Command Description - kz_togglestats"
 	{
@@ -203,6 +222,7 @@
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
 		"tr"		"Zıplama istatistiklerinin sohbette gözükmesini aç."
+		"it"		"Cambia la visibilità delle statistiche dei salti."
 	}
 	"Command Description - kz_togglejs"
 	{
@@ -213,6 +233,7 @@
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
 		"tr"		"Zıplama istatistiklerinin sohbette gözükmesini aç."
+		"it"		"Cambia la visibilità delle statistiche dei salti."
 	}
 	"Command Description - kz_jsalways"
 	{
@@ -223,6 +244,7 @@
 		"sv"		"Toggla alla (egna) jumpstats i chatten."
 		"ua"		"Перемикання відображення статистики для будь-яких стрибків."
 		"tr"		"Zıplama istatistiklerinin devamlı sohbette gözükmesini aç."
+		"it"		"Mostra sempre le statistiche dei salti."
 	}
 	"Command Description - kz_mode"
 	{
@@ -233,6 +255,7 @@
 		"sv"		"Lista eller ändra KZ mode."
 		"ua"		"Відобразити чи змінити KZ режим."
 		"tr"		"Modları listele veya değiştir"
+		"it"		"Elenca o cambia modalità."
 	}
 	"Command Description - kz_noclip"
 	{
@@ -243,6 +266,7 @@
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
 		"tr"		"Noclip aç."
+		"it"		"Abilita il noclip."
 	}
 	"Command Description - kz_nc"
 	{
@@ -253,6 +277,7 @@
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
 		"tr"		"Noclip aç."
+		"it"		"Abilita il noclip."
 	}
 	"Command Description - noclip"
 	{
@@ -263,6 +288,7 @@
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
 		"tr"		"Noclip aç."
+		"it"		"Abilita il noclip."
 	}
 	"Command Description - kz_spec"
 	{
@@ -273,6 +299,7 @@
 		"sv"		"Åskåda en spelare."
 		"ua"		"Спостерігати за гравцем."
 		"tr"		"Bir oyuncuyu izle."
+		"it"		"Guarda un altro giocatore."
 	}
 	"Command Description - kz_goto"
 	{
@@ -283,6 +310,7 @@
 		"sv"		"Gå till en spelare."
 		"ua"		"Телепортуватися до гравця."
 		"tr"		"Bir oyuncuya ışınlan."
+		"it"		"Vai ad un altro giocatore."
 	}
 	"Command Description - kz_style"
 	{
@@ -293,6 +321,7 @@
 		"sv"		"Lista, lägg till, ta bort eller toggla style."
 		"ua"		"Показати, додати, прибрати або перемикнути стиль."
 		"tr"		"Listele, ekle, kaldır veya bir stili aktif et."
+		"it"		"Elenca, aggiungi, rimuovi or cambia stile."
 	}
 	"Command Description - kz_addstyle"
 	{
@@ -303,6 +332,7 @@
 		"sv"		"Lista eller lägg till style."
 		"ua"		"Показати або додати стиль."
 		"tr"		"Listele veya stil ekle."
+		"it"		"Elenca o aggiungi stile."
 	}
 	"Command Description - kz_removestyle"
 	{
@@ -313,6 +343,7 @@
 		"sv"		"Lista aktiva styles eller ta bort style."
 		"ua"		"Показати активні стилі або видалити стиль."
 		"tr"		"Aktif stilleri listele veya sil."
+		"it"		"Elenca stili attivi o rimuovi stile."
 	}
 	"Command Description - kz_togglestyle"
 	{
@@ -323,6 +354,7 @@
 		"sv"		"Lista eller toggla style."
 		"ua"		"Показати або перемикнути стиль."
 		"tr"		"Stilleri listele veya aktif et."
+		"it"		"Elenca o cambia stile."
 	}
 	"Command Description - kz_clearstyles"
 	{
@@ -333,6 +365,7 @@
 		"sv"		"Rensa alla styles."
 		"ua"		"Очистити всі стилі."
 		"tr"		"Tüm stilleri temizle."
+		"it"		"Elimina tutti gli stili."
 	}
 	"Command Description - kz_stop"
 	{
@@ -343,6 +376,7 @@
 		"sv"		"Stoppa timer."
 		"ua"		"Зупинити таймер."
 		"tr"		"Süreyi durdur."
+		"it"		"Reimposta il cronometro."
 	}
 	"Command Description - kz_pause"
 	{
@@ -353,6 +387,7 @@
 		"sv"		"Pausa timer."
 		"ua"		"Перемикання таймера на паузу."
 		"tr"		"Süreyi duraklat."
+		"it"		"Pausa/Riprendi."
 	}
 	"Command Description - kz_tips"
 	{
@@ -363,6 +398,7 @@
 		"sv"		"Toggla tips."
 		"ua"		"Перемикання відображення підказок."
 		"tr"		"İpuçlarını aç."
+		"it"		"Cambia la visibilità dei consigli."
 	}
 	"Command Description - kz_hidelegs"
 	{
@@ -373,6 +409,7 @@
 		"sv"		"Toggla egna bens synlighet i första person."
 		"ua"		"Приховати свої ноги від першої особи."
 		"tr"		"Birinci şahıs modunda ayakları göstermeyi kapat."
+		"it"		"Nascondi le gambe in prima persona."
 	}
 	"Command Description - kz_hide"
 	{
@@ -383,6 +420,7 @@
 		"sv"		"Dölj/visa andra spelare."
 		"ua"		"Приховати інших гравців."
 		"tr"		"Diğer oyuncuları gizle."
+		"it"		"Nascondi gli altri giocatori."
 	}
 	"Command Description - kz_restart"
 	{
@@ -393,6 +431,7 @@
 		"sv"		"Starta om."
 		"ua"		"Рестарт."
 		"tr"		"Yeniden Başla"
+		"it"		"Ricomincia."
 	}
 	"Command Description - kz_r"
 	{
@@ -403,6 +442,7 @@
 		"sv"		"Starta om."
 		"ua"		"Рестарт."
 		"tr"		"Yeniden Başla"
+		"it"		"Ricomincia."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -413,6 +453,7 @@
 		"sv"		"Dölj vapen."
 		"ua"		"Приховати зброю."
 		"tr"		"Silahı gizle."
+		"it"		"Nascondi l'arma."
 	}
 	"Command Description - jointeam"
 	{
@@ -421,6 +462,7 @@
 		"chi"		"Jointeam interceptor."
 		"fi"		"Jointeam interceptor."
 		"sv"		"Jointeam interceptor."
+		"it"		"Jointeam interceptor."
 	}
 	"Command Description - kz_help"
 	{
@@ -431,6 +473,7 @@
 		"sv"		"Visa detta hjälpmeddelandet."
 		"ua"		"Показати це довідкове повідомлення."
 		"tr"		"Bu yardım mesajını göster."
+		"it"		"Mostra questo messaggio di aiuto."
 	}
 	"Command Description - kz_language"
 	{
@@ -441,6 +484,7 @@
 		"sv"		"Byt nuvarande språk."
 		"ua"		"Змінити мову."
 		"tr"		"Dili değiştir."
+		"it"		"Cambia la lingua."
 	}
 	"Command Description - kz_vnl"
 	{
@@ -451,6 +495,7 @@
 		"sv"		"Byt till Vanilla mode."
 		"ua"		"Переключитися на режим Vanilla."
 		"tr"		"Vanilla moduna geç."
+		"it"		"Cambia a modalità Vanilla."
 	}
 	"Command Description - kz_ckz"
 	{
@@ -461,6 +506,7 @@
 		"sv"		"Byt till Classic mode."
 		"ua"		"Переключитися на режим Classic."
 		"tr"		"Classic moduna geç."
+		"it"		"Cambia a modalità Classic."
 	}
 	"Command Description - kz_pb"
 	{
@@ -471,6 +517,7 @@
 		"sv"		"Hämta personlig bästa statistik."
 		"ua"		"Показати персональний найкращий час."
 		"tr"		"Kişisel rekor istatistiklerini gösterir."
+		"it"		"Mostra le statistiche dei record personali."
 	}
 	"Command Description - kz_wr"
 	{
@@ -480,6 +527,7 @@
 		"fi"		"Hae palvelimen ja maailman ennätykset."
 		"ua"		"Показати рекорд сервера та світовий рекорд."
 		"tr"		"Dünya ve sunucu rekorlarını gösterir."
+		"it"		"Mostra i record del server e globali."
 	}
 	"Command Description - kz_sr"
 	{
@@ -489,5 +537,6 @@
 		"fi"		"Hae palvelimen ennätykset."
 		"ua"		"Показати рекорди сервера."
 		"tr"		"Sunucu rekorlarını gösterir."
+		"it"		"Mostra i record del server."
 	}
 }

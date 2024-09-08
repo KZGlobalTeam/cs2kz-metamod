@@ -9,6 +9,7 @@
 		"sv"		"{grey}Nu är dina ben synliga."
 		"ua"		"{grey}Ваші ноги тепер видно."
 		"tr"		"{grey}Oyuncu ayakları şuan görünür durumda."
+		"it"		"{grey}Le gambe ora sono visibili."
 	}
 	"Quiet Option - Show Player Legs - Disable"
 	{
@@ -19,6 +20,7 @@
 		"sv"		"{grey}Nu är dina ben osynliga."
 		"ua"		"{grey}Ви приховали свої ноги."
 		"tr"		"{grey}Oyuncu ayakları şuan görünmez durumda."
+		"it"		"{grey}Le gambe ora sono nascoste."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
@@ -30,6 +32,7 @@
 		"sv"		"{grey}Nu kan du se andra spelare."
 		"ua"		"{grey}Ви тепер можете бачити інших гравців."
 		"tr"		"{grey}Diğer oyuncuları görmeyi açtınız."
+		"it"		"{grey}Stai mostrando gli altri giocatori."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
@@ -41,6 +44,7 @@
 		"sv"		"{grey}Nu kan du inte se andra spelare."
 		"ua"		"{grey}Ви приховали інших гравців."
 		"tr"		"{grey}Diğer oyuncuları görmeyi kapattınız."
+		"it"		"{grey}Stai nascondendo gli altri giocatori."
 	}
 	"Quiet Option - Show Weapon - Enable"
 	{
@@ -52,6 +56,7 @@
 		"sv"		"{grey}Nu kan du se ditt vapen."
 		"ua"		"{grey}Ви тепер бачите свою зброю."
 		"tr"		"{grey}Silahı görmeyi açtınız."
+		"it"		"{grey}Stai mostrando l'arma."
 	}
 	"Quiet Option - Show Weapon - Disable"
 	{
@@ -63,5 +68,6 @@
 		"sv"		"{grey}Nu kan du inte se ditt vapen."
 		"ua"		"{grey}Ви приховали свою зброю."
 		"tr"		"{grey}Silahı görmeyi kapattınız."
+		"it"		"{grey}Stai nascondendo l'arma."
 	}
 }
