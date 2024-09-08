@@ -1,4 +1,5 @@
 #include "cs_usercmd.pb.h"
+#include "cs2kz.h"
 #include "movement.h"
 #include "utils/detours.h"
 #include "utils/gameconfig.h"
