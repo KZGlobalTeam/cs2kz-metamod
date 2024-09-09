@@ -5,7 +5,7 @@
 
 #include "sdk/entity/ccsplayerpawn.h"
 #include "movement/movement.h"
-
+#include "fmtstr.h"
 #include "tier0/memdbgon.h"
 
 CUtlVector<CDetourBase *> g_vecDetours;
@@ -13,7 +13,7 @@ extern CGameConfig *g_pGameConfig;
 
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket);
 // Unused
-DECLARE_DETOUR(TracePlayerBBox, Detour_TracePlayerBBox);
+DECLARE_DETOUR(TraceShape, Detour_TraceShape);
 
 DECLARE_MOVEMENT_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
@@ -69,7 +69,50 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)
 	return retValue;
 }
 
-void Detour_TracePlayerBBox(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilter *filter, trace_t &pm)
+bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
+					   trace_t *pm)
 {
-	TracePlayerBBox(start, end, bounds, filter, pm);
+	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
+
+	META_CONPRINTF("Trace %s -> %s, ", VecToString(start), VecToString(end));
+	switch (ray.m_eType)
+	{
+		case RAY_TYPE_LINE:
+		{
+			META_CONPRINTF("RAY_TYPE_LINE offset %s radius %f, ", VecToString(ray.m_Line.m_vStartOffset), ray.m_Line.m_flRadius);
+			break;
+		}
+		case RAY_TYPE_SPHERE:
+		{
+			META_CONPRINTF("RAY_TYPE_SPHERE radius %f, center %s, ", ray.m_Sphere.m_flRadius, VecToString(ray.m_Sphere.m_vCenter));
+			break;
+		}
+		case RAY_TYPE_HULL:
+		{
+			META_CONPRINTF("RAY_TYPE_HULL mins = %s, maxs = %s, ", VecToString(ray.m_Hull.m_vMins), VecToString(ray.m_Hull.m_vMaxs));
+			break;
+		}
+		case RAY_TYPE_CAPSULE:
+		{
+			META_CONPRINTF("RAY_TYPE_CAPSULE radius %f, center %s %s, ", ray.m_Capsule.m_flRadius, VecToString(ray.m_Capsule.m_vCenter[0]),
+						   VecToString(ray.m_Capsule.m_vCenter[1]));
+			break;
+		}
+		case RAY_TYPE_MESH:
+		{
+			META_CONPRINTF("RAY_TYPE_MESH mins = %s, maxs = %s, numVertice = %i, pVertices = %p, ", VecToString(ray.m_Mesh.m_vMins),
+						   VecToString(ray.m_Mesh.m_vMaxs), ray.m_Mesh.m_nNumVertices, ray.m_Mesh.m_pVertices);
+			break;
+		}
+	}
+	if (pm->DidHit())
+	{
+		META_CONPRINTF("hit %s (normal %s, triangle %i, body %p, shape %p)\n", VecToString(pm->m_vEndPos), VecToString(pm->m_vHitNormal),
+					   pm->m_nTriangle, pm->m_hBody, pm->m_hShape);
+	}
+	else
+	{
+		META_CONPRINT("missed\n");
+	}
+	return ret;
 }
