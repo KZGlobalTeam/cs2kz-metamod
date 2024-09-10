@@ -9,6 +9,7 @@
 		"sv"		"{yellow}1{grey} TP"
 		"ua"		"{yellow}1{grey} TP"
 		"tr"		"{yellow}1{grey} TP"
+		"it"		"{yellow}1{grey} TP"
 	}
 	"2+ Teleports Text"
 	{
@@ -20,6 +21,7 @@
 		"sv"		"{yellow}{tp_count}{grey} TPs"
 		"ua"		"{yellow}{tp_count}{grey} TPs"
 		"tr"		"{yellow}{tp_count}{grey} TPs"
+		"it"		"{yellow}{tp_count}{grey} TPs"
 	}
 	
 	"Personal Best Difference"
@@ -34,6 +36,7 @@
 		"sv"		" ({color}{diff_text}{grey})"
 		"ua"		" ({color}{diff_text}{grey})"
 		"tr"		" ({color}{diff_text}{grey})"
+		"it"		" ({color}{diff_text}{grey})"
 	}
 
 	"Beat Course Info - Basic"
@@ -47,6 +50,7 @@
 		"sv"		"{lime}{player_name} {grey}klarade {default}{course_name}{grey} på {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"ua"		"{lime}{player_name} {grey}завершив {default}{course_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"tr"		"{lime}{player_name} {grey}bitirdi {default}{course_name}{grey} süre {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
+		"it"		"{lime}{player_name} {grey}ha completato {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 	}
 	
 	"Beat Course Info - Local (TP)"
@@ -60,6 +64,7 @@
 		"sv"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text}"
 		"ua"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text}"
 		"tr"		"{grey}Sunucu: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text}"
+		"it"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Local (PRO)"
 	{
@@ -72,6 +77,7 @@
 		"sv"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"ua"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"tr"		"{grey}Sunucu: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"it"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global (TP)"
@@ -84,6 +90,7 @@
 		"sv"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text}"
 		"ua"		"{grey}Глобальний: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text}"
 		"tr"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text}"
+		"it"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Global (PRO)"
 	{
@@ -95,6 +102,7 @@
 		"sv"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"ua"		"{grey}Глобальний: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"tr"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"it"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global Points"
@@ -107,6 +115,7 @@
 		"sv"		"{grey}Map Poäng: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Spelarens Rating: {purple}{player_rating}{grey}"
 		"ua"		"{grey}Очки за мапу: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
 		"tr"		"{grey}Harita puanları: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Oyuncu değeri: {purple}{player_rating}{grey}"
+		"it"		"{grey}Punti mappa: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Valutazione Giocatore: {purple}{player_rating}{grey}"
 	}
 	
 	"PB Header"
@@ -119,6 +128,7 @@
 		"sv"		"{lime}{player_name}{grey} på {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"ua"		"{lime}{player_name}{grey} на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"tr"		"{lime}{player_name}{grey} adlı oyuncu {default}{map_name}{grey} haritasında ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
+		"it"		"{lime}{player_name}{grey} su {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 	}
 	"PB Time - No Times"
 	{
@@ -128,6 +138,7 @@
 		"sv"		"{grey}Du har inte satt en tid... än så länge."
 		"ua"		"{grey}У вас ще не має встановленого часу."
 		"tr"		"{grey}Bir süreniz yok... henüz."
+		"it"		"{grey}Non hai ancora fatto un tempo."
 	}
 	"PB Time - Overall (Server)"
 	{
@@ -139,6 +150,7 @@
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}]"
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}]"
+		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}]"
 	}
 	"PB Time - Combined (Server)"
 	{
@@ -150,6 +162,7 @@
 		"sv"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"tr"		"{grey}Sunucu: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"it"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Split (Server)"
 	{
@@ -161,6 +174,7 @@
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Overall Rankless (Server)"
 	{
@@ -172,6 +186,7 @@
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Total{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}]"
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Tümünde{grey}]"
+		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Complessivamente{grey}]"
 	}
 	"PB Time - Combined Rankless (Server)"
 	{
@@ -183,6 +198,7 @@
 		"sv"		"{grey}Server: {default}{time}{grey} [{yellow}Total{grey}/{blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} [{yellow}Загальний{grey}/{blue}PRO{grey}]"
 		"tr"		"{grey}Sunucu: {default}{time}{grey} [{yellow}Tümünde{grey}/{blue}PRO{grey}]"
+		"it"		"{grey}Server: {default}{time}{grey} [{yellow}Complessivamente{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Server)"
 	{
@@ -194,6 +210,7 @@
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Total{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Tümünde{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Complessivamente{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)" 
 	{
@@ -203,6 +220,7 @@
 		"sv"		"{darkred}Det gick inte att hämta personlig bästa statistik."
 		"ua"		"{darkred}Не вдалося отримати особистий найкращий результат."
 		"tr"		"{darkred}Kişisel rekor bilgilerine erişilemedi."
+		"it"		"{darkred}Impossibile recuperare le statistiche dei record personali."
 	}
 	"PB Request - Invalid Course Name"
 	{
@@ -213,6 +231,7 @@
 		"sv"		"{darkred}Det gick inte att hämta personlig bästa statistik. {grey}(Ogiltigt namn {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати особистий найкращий результат. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 		"tr"		"{grey}(Invalid course name {default}{course_name}{grey}){darkred} Haritasında kişisel rekor bilgilerine erişilemedi. "
+		"it"		"{darkred}Impossibile recuperare le statistiche dei record personali. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
 	}
 	"PB Command Usage"
 	{
@@ -222,6 +241,7 @@
 		"sv"		"{grey}Användande: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Kolla konsolen för detaljer!"
 		"ua"		"{grey}Використання: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Деталі дивіться в консолі!"
 		"tr"		"{grey}Kullanım: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detaylar için konsol çıktısına bakın!"
+		"it"		"{grey}Utilizzo: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Controlla la console per ulteriori dettagli!"
 	}
 	"PB Command Usage - Console"
 	{
@@ -231,6 +251,7 @@
 		"sv"		"Användande: kz_pb <c/course/map/mode/p/player/s/style=...>\nExempel: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nFör att ange ingen style, använd \"style=none\"."
 		"ua"		"Використання: kz_pb <c/course/map/mode/p/player/s/style=...>\nНаприклад: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nЩоб не задавати жодного стилю, введіть \"style=none\"."
 		"tr"		"Kullanım: kz_pb <c/course/map/mode/p/player/s/style=...>\nÖrnek: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nTo specify no style, use \"style=none\"."
+		"it"		"Utilizzo: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsempio: \"kz_pb map=kz_mappa p=Giocatore c=Main style=ABH\"\nPer non includere lo stile usa \"style=none\"."
 	}
 	
 	"SR Header"
@@ -242,6 +263,7 @@
 		"fi"		"{grey}Palvelimen ennätykset kentällä {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ua"		"{grey}Рекорди сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"tr"		"{default}{map_name}{grey} haritasındaki sunucu rekorları ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"it"		"{grey}Record del Server su {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"SR - No Times"
 	{
@@ -250,6 +272,7 @@
 		"fi"		"{grey}Aikoja ei löytynyt!"
 		"ua"		"{grey}Не знайдено жодного часу!"
 		"tr"		"{grey}Süre bulunamadı!"
+		"it"		"{grey}Nessun tempo è stato trovato!"
 	}
 	"SR - Overall"
 	{
@@ -260,6 +283,7 @@
 		"fi"		"{yellow}Kokonaisuus{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey} ({yellow}{tp_count_text}{grey})"
 		"ua"		"{yellow}Загальний{grey}: {default}{time}{grey} від {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"tr"		"{yellow}Tümünde{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"it"		"{yellow}Complessivamente{grey}: {default}{time}{grey} da {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 	}
 	"SR - Combined"
 	{
@@ -270,6 +294,7 @@
 		"fi"		"{yellow}Kokonaisuus/{blue}PRO{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey}"
 		"ua"		"{yellow}Загальний/{blue}PRO{grey}: {default}{time}{grey} від {lime}{player_name}{grey}"
 		"tr"		"{yellow}Tümünde/{blue}PRO{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey}"
+		"it"		"{yellow}Complessivamente/{blue}PRO{grey}: {default}{time}{grey} da {lime}{player_name}{grey}"
 	}
 	"SR - PRO"
 	{
@@ -280,6 +305,7 @@
 		"fi"		"{blue}PRO{grey}: {lime}{player_name_pro}{grey} ajassa {default}{time_pro}{grey}"
 		"ua"		"{blue}PRO{grey}: {default}{time_pro}{grey} від {lime}{player_name_pro}{grey}"
 		"tr"		"{blue}PRO{grey}: {default}{time_pro}{grey} tarafından {lime}{player_name_pro}{grey}"
+		"it"		"{blue}PRO{grey}: {default}{time_pro}{grey} da {lime}{player_name_pro}{grey}"
 	}
 
 	"Record Request - Failed (Generic)" 
@@ -289,6 +315,7 @@
 		"fi"		"{darkred}Ennätysten haku epäonnistui."
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд."
 		"tr"		"{darkred}Rekor bilgisi alınamadı."
+		"it"		"{darkred}Impossibile recuperare informazioni sui record."
 	}
 	"Record Request - Invalid Course Name"
 	{
@@ -298,6 +325,7 @@
 		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 		"tr"		"{darkred}Rekor bilgisi alınamadı. {grey}(Hatalı harita ismi {default}{course_name}{grey})"
+		"it"		"{darkred}Impossibile recuperare informazioni sui record. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
 	}
 	"WR/SR Command Usage"
 	{
@@ -307,6 +335,7 @@
 		"sv"		"{grey}Användande: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Kolla konsolen för detaljer!"
 		"ua"		"{grey}Використання: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Деталі дивіться в консолі!"
 		"tr"		"{grey}Kullanım: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detaylar için konsol çıktısına bakın!"
+		"it"		"{grey}Utilizzo: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Controlla la console per ulteriori dettagli!"
 	}
 	"WR/SR Command Usage - Console"
 	{
@@ -316,6 +345,7 @@
 		"sv"		"Användande: kz_wr/kz_sr <c/course/map/mode=...>\nExempel: \"kz_wr map=kz_map c=Main\"."
 		"ua"		"Використання: kz_wr/kz_sr <c/course/map/mode=...>\nНаприклад: \"kz_wr map=kz_map c=Main\"."
 		"tr"		"Kullanım: kz_wr/kz_sr <c/course/map/mode=...>\nÖrnek: \"kz_wr map=kz_map c=Main\"."
+		"it"		"Utilizzo: kz_wr/kz_sr <c/course/map/mode=...>\nEsempio: \"kz_wr map=kz_mappa c=Main\"."
 	}
 	
 	"Can't Pause (Generic)"
@@ -327,6 +357,7 @@
 		"sv"		"{darkred}Du kan inte pausa just nu."
 		"ua"		"{darkred}Ви не можете поставити на паузу прямо зараз."
 		"tr"		"{darkred}Şuan duraklatamazsın."
+		"it"		"{darkred}Non puoi mettere in pausa ora."
 	}
 	"Can't Pause (Just Resumed)"
 	{
@@ -338,6 +369,7 @@
 		"sv"		"{darkred}Du kan inte pausa eftersom du fortsatte nyligen."
 		"ua"		"{darkred}Ви не можете поставити на паузу, тому що ви щойно відновили."
 		"tr"		"{darkred}Henüz duraklatmayı kaldırdığın için duraklayamazsın."
+		"it"		"{darkred}Non puoi mettere in pausa quando hai appena ripreso."
 	}
 	"Can't Pause (Midair)"
 	{
@@ -349,6 +381,7 @@
 		"sv"		"{darkred}Du kan inte pausa i luften."
 		"ua"		"{darkred}Ви не можете поставити на паузу у повітрі."
 		"tr"		"{darkred}Havada duraklatamazsın."
+		"it"		"{darkred}Non puoi mettere in pausa in volo."
 	}
 	"Can't Pause (Just Landed)"
 	{
@@ -360,6 +393,7 @@
 		"sv"		"{darkred}Du kan inte pausa eftersom du landade nyligen."
 		"ua"		"{darkred}Ви не можете поставити на паузу, ви щойно приземлилися."
 		"tr"		"{darkred}Henüz yere indiğin için duraklatamazsın."
+		"it"		"{darkred}Non puoi mettere in pausa quando sei appena atterrato."
 	}
 	"Can't Pause (Anti Pause Area)"
 	{
@@ -370,6 +404,7 @@
 		"sv"		"{darkred}Du kan inte pausa eftersom det är inaktiverat på detta området."
 		"ua"		"{darkred}Ви не можете поставити на паузу, тому що в цій області паузу вимкнено."
 		"tr"		"{darkred}Bu alanda duraklatmak yasak olduğu için duraklatamazsın."
+		"it"		"{darkred}La pausa è disabilitata in questa zona."
 	}
 	"Can't Resume (Generic)"
 	{
@@ -380,6 +415,7 @@
 		"sv"		"{darkred}Du kan inte fortsätta just nu."
 		"ua"		"{darkred}Ви не можете продовжити прямо зараз."
 		"tr"		"{darkred}Şuan duraklatmayı kapatamazsın."
+		"it"		"{darkred}Non puoi riprendere in questo momento."
 	}
 	"Can't Resume (Just Paused)"
 	{
@@ -391,5 +427,6 @@
 		"sv"		"{darkred}Du kan inte fortsätta eftersom du pausade nyligen."
 		"ua"		"{darkred}Ви не можете продовжити, тому що ви щойно ставили на паузу."
 		"tr"		"{darkred}Henüz duraklattığın için duraklatmayı kaldıramazsın."
+		"it"		"{darkred}Non puoi riprendere quando hai appena messo in pausa."
 	}
 }

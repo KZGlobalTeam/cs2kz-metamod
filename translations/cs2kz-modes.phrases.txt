@@ -9,6 +9,7 @@
 		"sv"		"{grey}Användning: {default}kz_mode <mode>.{grey} Kolla konsolen för möjliga modes av KZ!"
 		"ua"		"{grey}Використання: {default}kz_mode <mode>.{grey} Перевірте консоль, щоб побачити список доступних KZ режимів!"
 		"tr"		"{grey}Kullanım: {default}kz_mode <mode>.{grey} Modlar için konsol çıktısına bak!"
+		"it"		"{grey}Utilizzo: {default}kz_mode <modalità>.{grey} Controlla la console per le modalità disponibili!"
 	}
 	"Possible & Current Modes"
 	{
@@ -20,6 +21,7 @@
 		"sv"		"Möjliga modes: (Nuvarande mode är{mode})"
 		"ua"		"Доступні режими: (Поточний режим — {mode})"
 		"tr"		"Kullanılabilir modlar: (Şuanki mod {mode})"
+		"it"		"Modalità disponibili: (Al momento {mode})"
 	}
 	"Mode Not Available"
 	{
@@ -33,6 +35,7 @@
 		"sv"		"{purple}{mode} {grey}mode är inte tillgänglig nu."
 		"ua"		"{grey}Режим {purple}{mode} {grey}наразі недоступний."
 		"tr"		"{grey}{purple}{mode} {grey} modu şuan için mevcut değil."
+		"it"		"{grey}La modalità {purple}{mode} {grey}non è al momento disponibile."
 	}
 	"Switched Mode"
 	{
@@ -46,5 +49,6 @@
 		"sv"		"{grey}Du har valt {purple}{mode} {grey}mode."
 		"ua"		"{grey}Ви переключилися на {purple}{mode} {grey}режим."
 		"tr"		"{grey}{purple}{mode} {grey} moduna geçtin."
+		"it"		"{grey}Hai cambiato la modalità in {purple}{mode}{grey}."
 	}
 }
