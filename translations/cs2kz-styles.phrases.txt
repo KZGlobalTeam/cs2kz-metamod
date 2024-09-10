@@ -9,6 +9,7 @@
 		"sv"		"{grey}Användande: {default}kz_style <style>/+<style>/-<style>{grey}. Kolla konsolen för möjliga styles!"
 		"ua"		"{grey}Використання: {default}kz_style <style>/+<style>/-<style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_style <style>/+<style>/-<style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
+		"it"		"{grey}Utilizzo: {default}kz_style <stile>/+<stile>/-<stile>{grey}. Controlla la console per gli stili disponibili!"
 	}
 	"Add Style Command Usage"
 	{
@@ -19,6 +20,7 @@
 		"sv"		"{grey}Användande: {default}kz_addstyle <style>{grey}. Kolla konsolen för möjliga styles!"
 		"ua"		"{grey}Використання: {default}kz_addstyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_addstyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
+		"it"		"{grey}Utilizzo: {default}kz_addstyle <stile>{grey}. Controlla la console per gli stili disponibili!"
 	}
 	"Remove Style Command Usage"
 	{
@@ -29,6 +31,7 @@
 		"sv"		"{grey}Användande: {default}kz_removestyle <style>{grey}. Kolla konsolen för möjliga styles!"
 		"ua"		"{grey}Використання: {default}kz_removestyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_removestyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
+		"it"		"{grey}Utilizzo: {default}kz_removestyle <stile>{grey}. Controlla la console per gli stili disponibili!"
 	}
 	"Toggle Style Command Usage"
 	{
@@ -39,6 +42,7 @@
 		"sv"		"{grey}Användande: {default}kz_togglestyle <style>{grey}. Kolla konsolen för möjliga styles!"
 		"ua"		"{grey}Використання: {default}kz_togglestyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_togglestyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
+		"it"		"{grey}Utilizzo: {default}kz_togglestyle <stile>{grey}. Controlla la console per gli stili disponibili!"
 	}
 	"Current Styles"
 	{
@@ -49,6 +53,7 @@
 		"sv"		"Nuvarande aktiva styles:"
 		"ua"		"Поточні активні стилі:"
 		"tr"		"Şuanki aktif stiller:"
+		"it"		"Stili attivi:"
 	}
 	"Possible Styles"
 	{
@@ -59,6 +64,7 @@
 		"sv"		"Möjliga KZ styles:"
 		"ua"		"Доступні стилі:"
 		"tr"		"Mevcut stiller:"
+		"it"		"Stili disponibili:"
 	}
 	"Style Not Available"
 	{
@@ -71,6 +77,7 @@
 		"sv"		"{grey}Användning av {purple}{style} {grey}style är inte tillgängligt nu."
 		"ua"		"{grey}Стиль {purple}{style} {grey}наразі недоступний."
 		"tr"		"{grey}Seçtiğiniz {purple}{style} {grey} stili şu an mevcut değil."
+		"it"		"{grey}Lo stile {purple}{style} {grey}non è al momento disponibile."
 	}
 	"Styles Cleared"
 	{
@@ -81,6 +88,7 @@
 		"sv"		"{grey}Du har rensat dina styles."
 		"ua"		"{grey}Ви очистили свої стилі."
 		"tr"		"{grey}Stillerinizi temizlediniz."
+		"it"		"{grey}Hai eliminato gli stili."
 	}
 	"Style Removed"
 	{
@@ -92,6 +100,7 @@
 		"sv"		"{grey}Du har tagit bort {purple}{style}{grey} style."
 		"ua"		"{grey}Ви видалили {purple}{style}{grey} стиль."
 		"tr"		"{grey}Seçtiğiniz {purple}{style}{grey} stilini kaldırdınız."
+		"it"		"{grey}Hai rimosso lo stile {purple}{style}{grey}."
 	}
 	"Style Added"
 	{
@@ -103,6 +112,7 @@
 		"sv"		"{grey}Du har lagt till {purple}{style}{grey} style."
 		"ua"		"{grey}Ви додали {purple}{style}{grey} стиль."
 		"tr"		"{grey}Seçtiğiniz {purple}{style}{grey} stilini eklediniz."
+		"it"		"{grey}Hai aggiunto lo stile {purple}{style}{grey}."
 	}
 	"Style Already Active"
 	{
@@ -114,6 +124,7 @@
 		"sv"		"{purple}{style}{darkred} style är redan aktiv."
 		"ua"		"{darkred}{purple}{style}{darkred} стиль вже активний."
 		"tr"		"{darkred}Seçtiğiniz {purple}{style}{darkred} stili zaten aktif."
+		"it"		"{darkred}Lo stile {purple}{style}{darkred} è già attivo."
 	}
 	"Style Not Active"
 	{
@@ -126,6 +137,7 @@
 		"sv"		"{purple}{style}{darkred} style är inte aktiv."
 		"ua"		"{darkred}{purple}{style}{darkred} стиль не активовано."
 		"tr"		"{darkred}Seçtiğiniz {purple}{style}{darkred} stili aktif değil."
+		"it"		"{darkred}Lo stile {purple}{style}{darkred} non è attivo."
 	}
 	"Style Conflict"
 	{
@@ -137,5 +149,6 @@
 		"sv"		"{darkred}Det gick inte att lägga till style {purple}{style}{darkred} eftersom den konflikterande style {purple}{conflict_style}{darkred} är aktiv."
 		"ua"		"{darkred}Неможливо додати стиль {purple}{style}{darkred}, оскільки конфліктний стиль {purple}{conflict_style}{darkred} наразі активний."
 		"tr"		"{darkred}Seçtiğiniz {purple}{style}{darkred} stili eklenemedi çünkü {purple}{conflict_style}{darkred} stili ile çakışıyor."
+		"it"		"{darkred}Impossibile aggiungere lo stile {purple}{style}{darkred} in quanto va in conflitto con {purple}{conflict_style}{darkred}."
 	}
 }
