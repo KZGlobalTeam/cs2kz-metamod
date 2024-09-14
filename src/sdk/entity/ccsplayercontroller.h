@@ -2,12 +2,24 @@
 #include "cbaseplayercontroller.h"
 #include "random.h"
 
-struct SnapTapStats
+enum OverlapState : uint8
 {
-	uint32 perfect;
+	PERFECT = 0x1,
+	OVERLAP = 0x2,
+	UNDERLAP = 0x3,
+};
+
+struct OverlapBuffer
+{
+	CUtlVector<OverlapState> sequences;
+	uint32 current;
+};
+
+struct CStrafeStats
+{
+	OverlapBuffer buffer;
 	uint32 overlaps[16];
 	uint32 underlaps[16];
-	uint32 max_success_in_20;
 };
 
 class CCSPlayerController : public CBasePlayerController
@@ -16,10 +28,9 @@ public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerController);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPlayerPawn);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hObserverPawn);
-	SCHEMA_FIELD_OFFSET(SnapTapStats, m_nNonSuspiciousHitStreak, 4);
+	SCHEMA_FIELD_POINTER_OFFSET(CStrafeStats, m_nNonSuspiciousHitStreak, 4);
 
-	// Update gamerules' roundendcount to request an update from the client.
-	SnapTapStats GetSnapTapStats()
+	CStrafeStats *GetCStrafeStats()
 	{
 		return m_nNonSuspiciousHitStreak();
 	}
