@@ -50,10 +50,6 @@ void KZDatabaseService::SetupClient()
 
 	V_snprintf(query, sizeof(query), sql_players_get_infos, steamID64);
 	txn.queries.push_back(query);
-	for (u32 i = 0; i < txn.queries.size(); i++)
-	{
-		auto queryStr = txn.queries[i];
-	}
 	CPlayerUserId userID = this->player->GetClient()->GetUserID();
 
 	GetDatabaseConnection()->ExecuteTransaction(
