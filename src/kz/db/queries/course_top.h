@@ -1,5 +1,5 @@
 
-constexpr char sql_getmaptop[] = R"(
+constexpr char sql_getcoursetop[] = R"(
     SELECT t.ID, t.SteamID64, p.Alias, t.RunTime AS PBTime, t.Teleports 
         FROM Times t 
         INNER JOIN MapCourses mc ON mc.ID = t.MapCourseID 
@@ -9,11 +9,12 @@ constexpr char sql_getmaptop[] = R"(
         AND t2.MapCourseID=t.MapCourseID AND t2.ModeID=t.ModeID
         AND t2.StyleIDFlags=t.StyleIDFlags AND t2.RunTime<t.RunTime 
         WHERE t2.ID IS NULL AND p.Cheater=0 AND Maps.Name='%s' AND mc.Name='%s' AND t.ModeID=%d AND t.StyleIDFlags=0
-        ORDER BY PBTime 
+        ORDER BY PBTime ASC
         LIMIT %d
+        OFFSET %d
 )";
 
-constexpr char sql_getmaptoppro[] = R"(
+constexpr char sql_getcoursetoppro[] = R"(
     SELECT t.ID, t.SteamID64, p.Alias, t.RunTime AS PBTime, t.Teleports 
         FROM Times t 
         INNER JOIN MapCourses mc ON mc.ID=t.MapCourseID 
@@ -24,6 +25,7 @@ constexpr char sql_getmaptoppro[] = R"(
         AND t2.RunTime<t.RunTime AND t.Teleports=0 AND t2.Teleports=0 
         WHERE t2.ID IS NULL AND p.Cheater=0 AND Maps.Name='%s'
         AND mc.Name='%s' AND t.ModeID=%d AND t.Teleports=0 AND t.StyleIDFlags=0 
-        ORDER BY PBTime 
+        ORDER BY PBTime ASC
         LIMIT %d
+        OFFSET %d
 )";

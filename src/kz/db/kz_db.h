@@ -145,6 +145,6 @@ public:
 						TransactionFailureCallbackFunc onFailure);
 	static void QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, u64 styleIDFlags,
 								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
-	static void QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, TransactionSuccessCallbackFunc onSuccess,
+	static void QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, u32 count, u32 offset, TransactionSuccessCallbackFunc onSuccess,
 							 TransactionFailureCallbackFunc onFailure);
 };

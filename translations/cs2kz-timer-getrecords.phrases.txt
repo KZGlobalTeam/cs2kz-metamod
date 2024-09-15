@@ -1,0 +1,95 @@
+"Phrases"
+{
+	"SR Header"
+	{
+		// Server Records on kz_map (Main) [VNL]
+		"#format"	"map_name:s,course_name:s,mode_name:s"
+		"en"		"{grey}Server Records on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"ru"		"{grey}Рекорды сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"fi"		"{grey}Palvelimen ennätykset kentällä {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"ua"		"{grey}Рекорди сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"tr"		"{default}{map_name}{grey} haritasındaki sunucu rekorları ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"it"		"{grey}Record del Server su {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+	}
+	"SR - No Times"
+	{
+		"en"		"{grey}No times were found!"
+		"ru"		"{grey}Рекордов не найдено!"
+		"fi"		"{grey}Aikoja ei löytynyt!"
+		"ua"		"{grey}Не знайдено жодного часу!"
+		"tr"		"{grey}Süre bulunamadı!"
+		"it"		"{grey}Nessun tempo è stato trovato!"
+	}
+	"SR - Overall"
+	{
+		// KZ | Overall Record: 01:23.45 (5 TP) by Bill
+		"#format"	"time:s,player_name:s,tp_count_text:s"
+		"en"		"{yellow}Overall{grey}: {default}{time}{grey} by {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"ru"		"{yellow}Абсолютный{grey}: {default}{time}{grey} от {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"fi"		"{yellow}Kokonaisuus{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey} ({yellow}{tp_count_text}{grey})"
+		"ua"		"{yellow}Загальний{grey}: {default}{time}{grey} від {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"tr"		"{yellow}Tümünde{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"it"		"{yellow}Complessivamente{grey}: {default}{time}{grey} da {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+	}
+	"SR - Combined"
+	{
+		// KZ | Overall/PRO Record: 01:23.45 by Bill
+		"#format"	"time:s,player_name:s"
+		"en"		"{yellow}Overall/{blue}PRO{grey}: {default}{time}{grey} by {lime}{player_name}{grey}"
+		"ru"		"{yellow}Абсолютный/{blue}PRO{grey}: {default}{time}{grey} от {lime}{player_name}{grey}"
+		"fi"		"{yellow}Kokonaisuus/{blue}PRO{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey}"
+		"ua"		"{yellow}Загальний/{blue}PRO{grey}: {default}{time}{grey} від {lime}{player_name}{grey}"
+		"tr"		"{yellow}Tümünde/{blue}PRO{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey}"
+		"it"		"{yellow}Complessivamente/{blue}PRO{grey}: {default}{time}{grey} da {lime}{player_name}{grey}"
+	}
+	"SR - PRO"
+	{
+		// KZ | PRO Record: 23.45 by Player
+		"#format"	"time_pro:s,player_name_pro:s"
+		"en"		"{blue}PRO{grey}: {default}{time_pro}{grey} by {lime}{player_name_pro}{grey}"
+		"ru"		"{blue}PRO{grey}: {default}{time_pro}{grey} от {lime}{player_name_pro}{grey}"
+		"fi"		"{blue}PRO{grey}: {lime}{player_name_pro}{grey} ajassa {default}{time_pro}{grey}"
+		"ua"		"{blue}PRO{grey}: {default}{time_pro}{grey} від {lime}{player_name_pro}{grey}"
+		"tr"		"{blue}PRO{grey}: {default}{time_pro}{grey} tarafından {lime}{player_name_pro}{grey}"
+		"it"		"{blue}PRO{grey}: {default}{time_pro}{grey} da {lime}{player_name_pro}{grey}"
+	}
+	"Record Request - Failed (Generic)" 
+	{
+		"en"		"{darkred}Failed to retrieve record information."
+		"ru"		"{darkred}Не удалось получить информацию о рекорде."
+		"fi"		"{darkred}Ennätysten haku epäonnistui."
+		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд."
+		"tr"		"{darkred}Rekor bilgisi alınamadı."
+		"it"		"{darkred}Impossibile recuperare informazioni sui record."
+	}
+	"Record Request - Invalid Course Name"
+	{
+		"#format"	"course_name:s"
+		"en"		"{darkred}Failed to retrieve record information. {grey}(Invalid course name {default}{course_name}{grey})"
+		"ru"		"{darkred}Не удалось получить информацию о рекорде. {grey}(Неверное название курса {default}{course_name}{grey})"
+		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
+		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
+		"tr"		"{darkred}Rekor bilgisi alınamadı. {grey}(Hatalı harita ismi {default}{course_name}{grey})"
+		"it"		"{darkred}Impossibile recuperare informazioni sui record. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
+	}
+	"WR/SR Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Check console for details!"
+		"chi"		"{grey}用法: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 打开控制台查看详情!"
+		"fi"		"{grey}Käyttö: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Tarkista konsolista yksityiskohdat!"
+		"sv"		"{grey}Användande: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Kolla konsolen för detaljer!"
+		"ua"		"{grey}Використання: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Деталі дивіться в консолі!"
+		"tr"		"{grey}Kullanım: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detaylar için konsol çıktısına bakın!"
+		"it"		"{grey}Utilizzo: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Controlla la console per ulteriori dettagli!"
+	}
+	"WR/SR Command Usage - Console"
+	{
+		"en"		"Usage: kz_wr/kz_sr <c/course/map/mode=...>\nExample: \"kz_wr map=kz_map c=Main\"."
+		"chi"		"用法: kz_wr/kz_sr <c/course/map/mode=...>\n例如: \"kz_wr map=kz_map c=Main\"."
+		"fi"		"Käyttö: kz_wr/kz_sr <c/course/map/mode=...>\nEsimerkki: \"kz_wr map=kz_map c=Main\"."
+		"sv"		"Användande: kz_wr/kz_sr <c/course/map/mode=...>\nExempel: \"kz_wr map=kz_map c=Main\"."
+		"ua"		"Використання: kz_wr/kz_sr <c/course/map/mode=...>\nНаприклад: \"kz_wr map=kz_map c=Main\"."
+		"tr"		"Kullanım: kz_wr/kz_sr <c/course/map/mode=...>\nÖrnek: \"kz_wr map=kz_map c=Main\"."
+		"it"		"Utilizzo: kz_wr/kz_sr <c/course/map/mode=...>\nEsempio: \"kz_wr map=kz_mappa c=Main\"."
+	}
+}

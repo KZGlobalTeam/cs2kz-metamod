@@ -539,4 +539,40 @@
 		"tr"		"Sunucu rekorlarını gösterir."
 		"it"		"Mostra i record del server."
 	}
+	"Command Description - kz_ctop"
+	{
+		"en"		"Retrive top course times of a map."
+	}
+	"Command Description - kz_coursetop"
+	{
+		"en"		"Retrive top course times of a map."
+	}
+	"Command Description - kz_maptop"
+	{
+		"en"		"Retrive top course times of a map."
+	}
+	"Command Description - kz_gctop"
+	{
+		"en"		"Retrive global top course times of a map."
+	}
+	"Command Description - kz_gcoursetop"
+	{
+		"en"		"Retrive global top course times of a map."
+	}
+	"Command Description - kz_gmaptop"
+	{
+		"en"		"Retrive global top course times of a map."
+	}
+	"Command Description - kz_sctop"
+	{
+		"en"		"Retrive server top course times of a map."
+	}
+	"Command Description - kz_scoursetop"
+	{
+		"en"		"Retrive server top course times of a map."
+	}
+	"Command Description - kz_smaptop"
+	{
+		"en"		"Retrive server top course times of a map."
+	}
 }

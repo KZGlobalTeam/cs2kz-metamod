@@ -1,0 +1,53 @@
+"Phrases"
+{
+	"Course Top - Table Name (Overall)"
+	{
+		"#format"	"map_name:s,course_name:s,mode_name:s"
+		"en"		"{map_name} Course {course_name} {mode_name} Overall Top"
+	}
+	"Course Top - Table Name (Pro)"
+	{
+		"#format"	"map_name:s,course_name:s,mode_name:s"
+		"en"		"{map_name} Course {course_name} {mode_name} PRO Top"
+	}
+	"Course Top Header - Player Alias"
+	{
+		"en"		"Alias"
+	}
+	"Course Top Header - Time"
+	{
+		"en"		"Time"
+	}
+	"Course Top Header - Teleports"
+	{
+		"en"		"Teleports"
+	}
+	"Course Top Header - SteamID64"
+	{
+		"en"		"SteamID64"
+	}
+	"Course Top Header - Run ID"
+	{
+		"en"		"Run ID"
+	}
+	"Course Top Request - Failed (Generic)"
+	{
+		"en"		"{darkred}Failed to retrieve course top information."
+	}
+	"Course Top Request - Invalid Course Name"
+	{
+		"en"		"{darkred}Failed to retrieve course top information. {grey}(Invalid course name {default}{course_name}{grey})"
+	}
+	"Course Top - Check Console"
+	{
+		"en"		"{grey}Course top data retrived. Check console for details!"
+	}
+	"Course Top Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Check console for details!"
+	}
+	"Course Top Command Usage - Console"
+	{
+		"en"		"Usage: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nExample: \"kz_ctop map=kz_map c=Main o=10 l=20\". Add 'g' or 's' to the start before the 'top' suffix to specify global/server only (eg. kz_gctop)."
+	}
+}

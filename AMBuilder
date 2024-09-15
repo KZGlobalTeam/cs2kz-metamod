@@ -142,6 +142,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'announce_queue.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'course_top.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'get_records.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'personal_best.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'courses.cpp'),

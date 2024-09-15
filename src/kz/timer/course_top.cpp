@@ -5,20 +5,60 @@
 #include "kz/timer/kz_timer.h"
 #include "utils/simplecmds.h"
 #include "utils/argparse.h"
+#include "utils/tables.h"
 #include "iserver.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
+#define COURSE_TOP_TABLE_KEY "Course Top - Table Name (Overall)"
+static_global const char *columnKeys[] = {"#",
+										  "Course Top Header - Player Alias",
+										  "Course Top Header - Time",
+										  "Course Top Header - Teleports",
+										  "Course Top Header - SteamID64",
+										  "Course Top Header - Run ID"};
+
+#define COURSE_TOP_PRO_TABLE_KEY "Course Top - Table Name (Pro)"
+static_global const char *columnKeysPro[] = {"#", "Course Top Header - Player Alias", "Course Top Header - Time", "Course Top Header - SteamID64",
+											 "Course Top Header - Run ID"};
+
 static_global const char *paramKeys[] = {"c", "course", "mode", "map", "o", "offset", "l", "limit"};
 
-// Worst case scenario: "#123453 123:45:64.752 123456 TPs 01234567890123456789012345678912 <76561197972581267>"
+#define CTOP_WAIT_THRESHOLD 3.0f
+
 struct RunStats
 {
-	u64 rank;
-	u64 steamid64;
+	u64 runID;
 	CUtlString name;
 	u64 teleportsUsed;
 	f64 time;
+	u64 steamid64;
+
+	CUtlString GetRunID()
+	{
+		CUtlString fmt;
+		fmt.Format("%llu", runID);
+		return fmt;
+	}
+
+	CUtlString GetTeleportCount()
+	{
+		CUtlString fmt;
+		fmt.Format("%llu", teleportsUsed);
+		return fmt;
+	}
+
+	CUtlString GetTime()
+	{
+		return KZTimerService::FormatTime(time);
+	}
+
+	CUtlString GetSteamID64()
+	{
+		CUtlString fmt;
+		fmt.Format("%llu", steamid64);
+		return fmt;
+	}
 };
 
 struct CourseTopData
@@ -33,9 +73,10 @@ struct CourseTopRequest
 {
 	CourseTopRequest() : userID(0) {}
 
-	CourseTopRequest(u64 uid, KZPlayer *callingPlayer, CUtlString mapName, CUtlString courseName, CUtlString modeName, u64 offset, bool queryLocal,
-					 bool queryGlobal)
-		: uid(uid), userID(callingPlayer->GetClient()->GetUserID()), mapName(mapName), courseName(courseName), modeName(modeName)
+	CourseTopRequest(u64 uid, KZPlayer *callingPlayer, CUtlString mapName, CUtlString courseName, CUtlString modeName, u64 limit, u64 offset,
+					 bool queryLocal, bool queryGlobal)
+		: uid(uid), userID(callingPlayer->GetClient()->GetUserID()), mapName(mapName), courseName(courseName), modeName(modeName), limit(limit),
+		  offset(offset)
 	{
 		timestamp = g_pKZUtils->GetServerGlobals()->realtime;
 		localRequestState = queryLocal && KZDatabaseService::IsReady() ? LocalRequestState::ENABLED : LocalRequestState::DISABLED;
@@ -55,6 +96,9 @@ struct CourseTopRequest
 	CUtlString courseName;
 
 	CUtlString modeName;
+
+	u64 limit;
+	u64 offset;
 
 	// Local exclusive stuff.
 	enum struct LocalRequestState
@@ -96,9 +140,8 @@ struct CourseTopRequest
 	// Execute queries to get pb in the local db.
 	void ExecuteLocalRequest();
 
-	void UpdateSRData(CourseTopData data)
+	void MarkLocalDataReceived()
 	{
-		srData = data;
 		if (localRequestState == LocalRequestState::RUNNING)
 		{
 			localRequestState = LocalRequestState::FINISHED;
@@ -134,61 +177,58 @@ struct CourseTopRequest
 			// If the request failed, then the error message is already sent in InvalidLocal.
 			if (localRequestState != LocalRequestState::FAILED)
 			{
-				player->languageService->PrintChat(true, false, "Record Request - Failed (Generic)");
+				player->languageService->PrintChat(true, false, "Course Top Request - Failed (Generic)");
 			}
 			return;
 		}
 
-		// Local stuff
-		std::string localTPText;
-		if (srData.teleportsUsed > 0)
+		CUtlString headers[Q_ARRAYSIZE(columnKeys)];
+		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeys); i++)
 		{
-			localTPText = srData.teleportsUsed == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
-													: player->languageService->PrepareMessage("2+ Teleports Text", srData.teleportsUsed);
+			headers[i] = player->languageService->PrepareMessage(columnKeys[i]).c_str();
 		}
-
-		char localStandardTime[32];
-		KZTimerService::FormatTime(srData.runTime, localStandardTime, sizeof(localStandardTime));
-		char localProTime[32];
-		KZTimerService::FormatTime(srData.runTimePro, localProTime, sizeof(localProTime));
-
-		// Records on kz_map (Main) [VNL]
-		player->languageService->PrintChat(true, false, "SR Header", mapName.Get(), courseName.Get(), modeName.Get());
-		if (!srData.hasRecord)
+		CUtlString headersPro[Q_ARRAYSIZE(columnKeysPro)];
+		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysPro); i++)
 		{
-			player->languageService->PrintChat(true, false, "SR - No Times");
+			headersPro[i] = player->languageService->PrepareMessage(columnKeysPro[i]).c_str();
 		}
-		else if (!srData.hasRecordPro)
+		utils::DualTable<Q_ARRAYSIZE(columnKeys), Q_ARRAYSIZE(columnKeysPro)> dualTable(
+			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers,
+			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headersPro);
+		CUtlString rank;
+		FOR_EACH_VEC(srData.overallData, i)
 		{
-			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "SR - Overall", localStandardTime, srData.holder.Get(), localTPText);
+			rank.Format("%llu", i + 1);
+			RunStats stats = srData.overallData[i];
+			dualTable.left.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetRunID());
 		}
-		// Their MAP PB has 0 teleports, and is therefore also their PRO PB
-		else if (srData.teleportsUsed == 0)
+		FOR_EACH_VEC(srData.proData, i)
 		{
-			// KZ | Overall/PRO Record: 01:23.45 by Bill
-			player->languageService->PrintChat(true, false, "SR - Combined", localStandardTime, srData.holder.Get());
+			rank.Format("%llu", i + 1);
+			RunStats stats = srData.proData[i];
+			dualTable.right.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetSteamID64(), stats.GetRunID());
 		}
-		else
+		player->languageService->PrintChat(false, false, "Course Top - Check Console");
+		player->PrintConsole(false, false, dualTable.GetTitle());
+		player->PrintConsole(false, false, dualTable.GetHeader());
+		player->PrintConsole(false, false, dualTable.GetSeparator());
+		for (u32 i = 0; i < dualTable.GetNumEntries(); i++)
 		{
-			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "SR - Overall", localStandardTime, srData.holder.Get(), localTPText);
-			// KZ | PRO Record: 23.45 by Player
-			player->languageService->PrintChat(true, false, "SR - PRO", localProTime, srData.holderPro.Get());
+			player->PrintConsole(false, false, dualTable.GetLine(i));
 		}
 	}
 };
 
 static_global struct
 {
-	CUtlVector<CourseTopRequest> CourseTopRequests;
+	CUtlVector<CourseTopRequest> courseTopRequests;
 	u32 ctopReqCount = 0;
 
-	void AddRequest(KZPlayer *callingPlayer, CUtlString mapName, CUtlString courseName, CUtlString modeName, u64 offset, bool queryLocal,
+	void AddRequest(KZPlayer *callingPlayer, CUtlString mapName, CUtlString courseName, CUtlString modeName, u64 limit, u64 offset, bool queryLocal,
 					bool queryGlobal)
 	{
-		CourseTopRequest *req = CourseTopRequests.AddToTailGetPtr();
-		*req = CourseTopRequest(ctopReqCount, callingPlayer, mapName, courseName, modeName, offset, queryLocal, queryGlobal);
+		CourseTopRequest *req = courseTopRequests.AddToTailGetPtr();
+		*req = CourseTopRequest(ctopReqCount, callingPlayer, mapName, courseName, modeName, limit, offset, queryLocal, queryGlobal);
 		req->SetupCourse(callingPlayer);
 		req->SetupMode(callingPlayer);
 		ctopReqCount++;
@@ -197,13 +237,13 @@ static_global struct
 	template<typename... Args>
 	void InvalidLocal(u64 uid, CUtlString reason = "", Args &&...args)
 	{
-		FOR_EACH_VEC(CourseTopRequests, i)
+		FOR_EACH_VEC(courseTopRequests, i)
 		{
-			if (CourseTopRequests[i].uid == uid)
+			if (courseTopRequests[i].uid == uid)
 			{
-				CourseTopRequests[i].localRequestState = CourseTopRequest::LocalRequestState::FAILED;
+				courseTopRequests[i].localRequestState = CourseTopRequest::LocalRequestState::FAILED;
 				// TODO: check for global.
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(CourseTopRequests[i].userID);
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(courseTopRequests[i].userID);
 				if (player && player->IsInGame())
 				{
 					player->languageService->PrintChat(true, false, reason.IsEmpty() ? "Course Top Request - Failed (Generic)" : reason.Get(),
@@ -216,47 +256,58 @@ static_global struct
 
 	void UpdateCourseName(u64 uid, CUtlString name)
 	{
-		FOR_EACH_VEC(CourseTopRequests, i)
+		FOR_EACH_VEC(courseTopRequests, i)
 		{
-			if (CourseTopRequests[i].uid == uid)
+			if (courseTopRequests[i].uid == uid)
 			{
-				CourseTopRequests[i].courseName = name;
-				CourseTopRequests[i].hasValidCourseName = true;
+				courseTopRequests[i].courseName = name;
+				courseTopRequests[i].hasValidCourseName = true;
 				return;
 			}
 		}
 	}
 
-	void UpdateSRData(u64 uid, CourseTopData data)
+	CourseTopData *GetRecordData(u64 uid)
 	{
-		FOR_EACH_VEC(CourseTopRequests, i)
+		FOR_EACH_VEC(courseTopRequests, i)
 		{
-			if (CourseTopRequests[i].uid == uid)
+			if (courseTopRequests[i].uid == uid)
 			{
-				CourseTopRequests[i].UpdateSRData(data);
-				return;
+				return &courseTopRequests[i].srData;
+			}
+		}
+		return nullptr;
+	}
+
+	void MarkLocalDataReceived(u64 uid)
+	{
+		FOR_EACH_VEC(courseTopRequests, i)
+		{
+			if (courseTopRequests[i].uid == uid)
+			{
+				courseTopRequests[i].MarkLocalDataReceived();
 			}
 		}
 	}
 
 	void CheckRequests()
 	{
-		FOR_EACH_VEC(CourseTopRequests, i)
+		FOR_EACH_VEC(courseTopRequests, i)
 		{
-			if (CourseTopRequests[i].ShouldQueryLocal())
+			if (courseTopRequests[i].ShouldQueryLocal())
 			{
-				CourseTopRequests[i].ExecuteLocalRequest();
+				courseTopRequests[i].ExecuteLocalRequest();
 			}
-			if (CourseTopRequests[i].ShouldReply())
+			if (courseTopRequests[i].ShouldReply())
 			{
-				CourseTopRequests[i].Reply();
-				CourseTopRequests.Remove(i);
+				courseTopRequests[i].Reply();
+				courseTopRequests.Remove(i);
 				i--;
 				continue;
 			}
-			if (!CourseTopRequests[i].IsValid())
+			if (!courseTopRequests[i].IsValid())
 			{
-				CourseTopRequests.Remove(i);
+				courseTopRequests.Remove(i);
 				i--;
 				continue;
 			}
@@ -325,7 +376,7 @@ void CourseTopRequest::SetupCourse(KZPlayer *callingPlayer)
 				KZ::timer::CourseInfo info;
 				if (!KZ::timer::GetFirstCourseInformation(info))
 				{
-					ctopReqQueueManager.InvalidLocal(this->uid, "Record Request - Invalid Course Name", course);
+					ctopReqQueueManager.InvalidLocal(this->uid, "Course Top Request - Invalid Course Name", course);
 					return;
 				}
 				courseName = info.courseName;
@@ -375,33 +426,34 @@ void CourseTopRequest::ExecuteLocalRequest()
 
 	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 	{
-		CourseTopData data {};
+		CourseTopData *data = ctopReqQueueManager.GetRecordData(uid);
+		if (!data)
+		{
+			return;
+		}
 		ISQLResult *result = queries[0]->GetResultSet();
 		if (result && result->GetRowCount() > 0)
 		{
-			data.hasRecord = true;
-			if (result->FetchRow())
+			while (result->FetchRow())
 			{
-				data.holder = result->GetString(2);
-				data.runTime = result->GetFloat(3);
-				data.teleportsUsed = result->GetInt(4);
+				data->overallData.AddToTail(
+					{(u64)result->GetInt64(0), result->GetString(2), (u64)result->GetInt64(4), result->GetFloat(3), (u64)result->GetInt64(1)});
 			}
 		}
+
 		if ((result = queries[1]->GetResultSet()) && result->GetRowCount() > 0)
 		{
-			data.hasRecordPro = true;
-			if (result->FetchRow())
+			while (result->FetchRow())
 			{
-				data.holderPro = result->GetString(2);
-				data.runTimePro = result->GetFloat(3);
+				data->proData.AddToTail({(u64)result->GetInt64(0), result->GetString(2), 0, result->GetFloat(3), (u64)result->GetInt64(1)});
 			}
 		}
-		ctopReqQueueManager.UpdateSRData(uid, data);
+		ctopReqQueueManager.MarkLocalDataReceived(uid);
 	};
 
 	auto onQueryFailure = [uid](std::string, int) { ctopReqQueueManager.InvalidLocal(uid); };
 
-	KZDatabaseService::QueryRecords(mapName, courseName, localDBRequestParams.modeID, onQuerySuccess, onQueryFailure);
+	KZDatabaseService::QueryRecords(mapName, courseName, localDBRequestParams.modeID, limit, offset, onQuerySuccess, onQueryFailure);
 }
 
 void QueryCourseTop(CCSPlayerController *controller, const CCommand *args, bool queryLocal = true, bool queryGlobal = true)
@@ -421,7 +473,8 @@ void QueryCourseTop(CCSPlayerController *controller, const CCommand *args, bool 
 	CUtlString mapName;
 	CUtlString courseName;
 	CUtlString modeName;
-	u64 offset;
+	u64 limit = 20;
+	u64 offset = 0;
 
 	if (kv = params.FindMember("map"))
 	{
@@ -439,8 +492,12 @@ void QueryCourseTop(CCSPlayerController *controller, const CCommand *args, bool 
 	{
 		offset = atoll(kv->GetString());
 	}
+	if ((kv = params.FindMember("limit")) || (kv = params.FindMember("l")))
+	{
+		limit = atoll(kv->GetString());
+	}
 
-	ctopReqQueueManager.AddRequest(player, mapName, courseName, modeName, offset, queryLocal, queryGlobal);
+	ctopReqQueueManager.AddRequest(player, mapName, courseName, modeName, limit, offset, queryLocal, queryGlobal);
 	return;
 }
 

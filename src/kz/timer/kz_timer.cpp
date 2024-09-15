@@ -590,6 +590,7 @@ void KZTimerService::RegisterCommands()
 	scmd::RegisterCmd("kz_pause", Command_KzPauseTimer);
 	KZTimerService::RegisterPBCommand();
 	KZTimerService::RegisterRecordCommands();
+	KZTimerService::RegisterCourseTopCommands();
 }
 
 void KZDatabaseServiceEventListener_Timer::OnMapSetup()

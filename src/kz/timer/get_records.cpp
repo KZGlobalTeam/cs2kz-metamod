@@ -400,7 +400,7 @@ void RecordRequest::ExecuteLocalRequest()
 
 	auto onQueryFailure = [uid](std::string, int) { recReqQueueManager.InvalidLocal(uid); };
 
-	KZDatabaseService::QueryRecords(mapName, courseName, localDBRequestParams.modeID, onQuerySuccess, onQueryFailure);
+	KZDatabaseService::QueryRecords(mapName, courseName, localDBRequestParams.modeID, 1, 0, onQuerySuccess, onQueryFailure);
 }
 
 void QueryRecords(CCSPlayerController *controller, const CCommand *args, bool serverOnly = false)
