@@ -543,45 +543,54 @@
 	{
 		"en"		"Retrive top course times of a map."
 		"tr"		"Haritadaki en iyi süreyi göster."
+		"ua"		"Показати топ проходжень курсу на мапі."
 	}
 	"Command Description - kz_coursetop"
 	{
 		"en"		"Retrive top course times of a map."
 		"tr"		"Haritadaki en iyi süreyi göster."
+		"ua"		"Показати топ проходжень курсу на мапі."
 	}
 	"Command Description - kz_maptop"
 	{
 		"en"		"Retrive top course times of a map."
 		"tr"		"Haritadaki en iyi süreyi göster."
+		"ua"		"Показати топ проходжень курсу на мапі."
 	}
 	"Command Description - kz_gctop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"tr"		"Haritadaki en iyi global süreyi göster."
+		"ua"		"Показати світовий топ проходжень курсу на мапі."
 	}
 	"Command Description - kz_gcoursetop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"tr"		"Haritadaki en iyi global süreyi göster."
+		"ua"		"Показати світовий топ проходжень курсу на мапі."
 	}
 	"Command Description - kz_gmaptop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"tr"		"Haritadaki en iyi global süreyi göster."
+		"ua"		"Показати світовий топ проходжень курсу на мапі."
 	}
 	"Command Description - kz_sctop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
+		"ua"		"Показати топ сервера проходжень курсу на мапі."
 	}
 	"Command Description - kz_scoursetop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
+		"ua"		"Показати топ сервера проходжень курсу на мапі."
 	}
 	"Command Description - kz_smaptop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
+		"ua"		"Показати топ сервера проходжень курсу на мапі."
 	}
 }
