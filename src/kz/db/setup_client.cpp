@@ -23,7 +23,7 @@ void KZDatabaseService::SetupClient()
 	const char *clientName = this->player->GetName();
 	std::string escapedName = GetDatabaseConnection()->Escape(clientName);
 	u64 steamID64 = this->player->GetClient()->GetClientSteamID()->ConvertToUint64();
-	const char *clientIP = this->player->GetClient()->GetRemoteAddress()->ToString(true);
+	const char *clientIP = this->player->GetIpAddress();
 
 	Transaction txn;
 
