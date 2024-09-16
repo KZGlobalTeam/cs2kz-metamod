@@ -10,6 +10,7 @@
 		"ua"	"Швидкість"
 		"tr"	"Hız"
 		"it"	"Vel"
+		"es"	"Velocidad"
 	}
 	"HUD - Stopped Text"
 	{
@@ -22,6 +23,7 @@
 		"ua"		" (ЗУПИНЕНО)"
 		"tr"		" (DURDURULDU)"
 		"it"		" (FERMO)"
+		"es"		" (DETENIDO)"
 	}
 	"HUD - Paused Text"
 	{
@@ -34,6 +36,7 @@
 		"ua"		" (НА ПАУЗІ)"
 		"tr"		" (DURAKLATILDI)"
 		"it"		" (PAUSA)"
+		"es"		" (PAUSADO)"
 	}
 	"HUD - Speed Text"
 	{
@@ -47,6 +50,7 @@
 		"ua"		"Швидкість: {speed}"
 		"tr"		"Hız: {speed}"
 		"it"		"Vel: {speed}"
+		"es"		"Velocidad: {speed}"
 	}
 	"HUD - Speed Text (Takeoff)"
 	{
@@ -60,6 +64,7 @@
 		"ua"		"Швидкість: {speed} ({takeoff_speed})"
 		"tr"		"Hız: {speed} ({takeoff_speed})"
 		"it"		"Vel: {speed} ({takeoff_speed})"
+		"es"		"Velocidad: {speed} ({takeoff_speed})"
 	}
 	"HUD - Key Text"
 	{
@@ -73,6 +78,7 @@
 		"ua"		"Кнопки: {left} {forward} {back} {right} {duck} {jump}"
 		"tr"		"Tuşlar: {left} {forward} {back} {right} {duck} {jump}"
 		"it"		"Tasti: {left} {forward} {back} {right} {duck} {jump}"
+		"es"		"Teclas: {left} {forward} {back} {right} {duck} {jump}"
 	}
 	"HUD - Checkpoint Text"
 	{
@@ -86,6 +92,7 @@
 		"ua"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"tr"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"it"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
+		"es"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
@@ -99,6 +106,7 @@
 		"ua"		"{time}{stop_text}{pause_text}"
 		"tr"		"{time}{stop_text}{pause_text}"
 		"it"		"{time}{stop_text}{pause_text}"
+		"es"		"{time}{stop_text}{pause_text}"
 	}
 	"HUD - Center Text"
 	{
@@ -113,6 +121,7 @@
 		"ua"		"{checkpoint_text}\n{timer_text}"
 		"tr"		"{checkpoint_text}\n{timer_text}"
 		"it"		"{checkpoint_text}\n{timer_text}"
+		"es"		"{checkpoint_text}\n{timer_text}"
 	}
 	// This text is actually "more" center.
 	"HUD - Alert Text"
@@ -127,6 +136,7 @@
 		"ua"		""
 		"tr"		""
 		"it"		""
+		"es"		""
 	}
 	"HUD - HTML Center Text"
 	{
@@ -141,6 +151,7 @@
 		"ua"		"{speed_text}<br>{key_text}"
 		"tr"		"{speed_text}<br>{key_text}"
 		"it"		"{speed_text}<br>{key_text}"
+		"es"		"{speed_text}<br>{key_text}"
 	}
 	
 	"HUD - HTML Panel Disabled"
@@ -153,6 +164,7 @@
 		"ua"		"Панель вимкнено."
 		"tr"		"Panel kapatıldı."
 		"it"		"Pannello disabilitato."
+		"es"		"Panel deshabilitado."
 	}
 
 	"HUD Option - Info Panel - Enable"
@@ -166,6 +178,7 @@
 		"ua"		"{grey}Ви увімкнули відображення центральної панелі."
 		"tr"		"{grey}Orta bilgi paneli açıldı."
 		"it"		"{grey}Il pannello centrale è stato abilitato."
+		"es"		"{grey}Su panel de información central ha sido habilitado."
 	}
 	"HUD Option - Info Panel - Disable"
 	{
@@ -178,5 +191,6 @@
 		"ua"		"{grey}Ви вимкнули відображення центральної панелі."
 		"tr"		"{grey}Orta bilgi paneli kapatıldı."
 		"it"		"{grey}Il pannello centrale è stato disabilitato."
+		"es"		"{grey}Su panel de información central ha sido deshabilitado."
 	}
 }
