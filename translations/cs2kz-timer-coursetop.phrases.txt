@@ -5,61 +5,74 @@
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} Course {course_name} {mode_name} Overall Top"
 		"tr"		"{map_name} haritasında {course_name} {mode_name} Genel Sıralamada"
+		"ua"		"{map_name} Курс {course_name} {mode_name} Загальний Топ"
 	}
 	"Course Top - Table Name (Pro)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} Course {course_name} {mode_name} PRO Top"
 		"tr"		"{map_name} haritasında {course_name} {mode_name} Pro Sıralamasında"
+		"ua"		"{map_name} Курс {course_name} {mode_name} PRO Топ"
 	}
 	"Course Top Header - Player Alias"
 	{
 		"en"		"Alias"
 		"tr"		"İsim"
+		"ua"		"Ім'я"
 	}
 	"Course Top Header - Time"
 	{
 		"en"		"Time"
 		"tr"		"Süre"
+		"ua"		"Час"
 	}
 	"Course Top Header - Teleports"
 	{
 		"en"		"Teleports"
 		"tr"		"Işınlanmalar"
+		"ua"		"Телепорти"
 	}
 	"Course Top Header - SteamID64"
 	{
 		"en"		"SteamID64"
 		"tr"		"SteamID64"
+		"ua"		"SteamID64"
 	}
 	"Course Top Header - Run ID"
 	{
 		"en"		"Run ID"
 		"tr"		"Süre ID'si"
+		"ua"		"ID Проходження"
 	}
 	"Course Top Request - Failed (Generic)"
 	{
 		"en"		"{darkred}Failed to retrieve course top information."
 		"tr"		"{darkred}Süre bilgisi alınırken hata."
+		"ua"		"{darkred}Не вдалося отримати інформацію про таблицю лідерів курсу."
+
 	}
 	"Course Top Request - Invalid Course Name"
 	{
 		"en"		"{darkred}Failed to retrieve course top information. {grey}(Invalid course name {default}{course_name}{grey})"
 		"tr"		"{darkred}Süre bilgisi alınırken hata. {grey}(Bilinmeyen harita ismi {default}{course_name}{grey})"
+		"ua"		"{darkred}Не вдалося отримати інформацію про таблицю лідерів курсу. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 	}
 	"Course Top - Check Console"
 	{
 		"en"		"{grey}Course top data retrived. Check console for details!"
 		"tr"		"{grey}Sıralama bilgileri alındı. Detaylar için konsola bak!"
+		"ua"		"{grey}Дані про таблицю лідерів курсу отримано. Детальніше дивіться в консолі!"
 	}
 	"Course Top Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Check console for details!"
 		"tr"		"{grey}Kullanım: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Detaylar için konsola bak!!"
+		"ua"		"{grey}Використання: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Перевірте консоль щодо деталей!"
 	}
 	"Course Top Command Usage - Console"
 	{
 		"en"		"Usage: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nExample: \"kz_ctop map=kz_map c=Main o=10 l=20\". Add 'g' or 's' to the start before the 'top' suffix to specify global/server only (eg. kz_gctop)."
 		"tr"		"Kullanım: kz_ctop/kz_coursetop/kz_maptop/ <c/course/harita/mod=...>\nÖrnek: \"kz_ctop harita=kz_map c=Main o=10 l=20\". Ctop'un başına 'g' veya 's' ekleyerek sunucu ve global olarak belirtebilirsin.(örn. kz_gctop)."
+		"ua"		"Використання: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nНаприклад: \"kz_ctop map=kz_map c=Main o=10 l=20\". Додайте 'g' або 's' напочатку перед суфіксом 'top' щоб отримати лише світову(g)/сервера(s) таблицю лідерів курсу (напр. kz_gctop)."
 	}
 }
