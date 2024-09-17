@@ -10,6 +10,7 @@
 		"ua"	"{grey}Ви можете увімк./вимк. статистику стрибків написавши в чат {default}/togglejs{grey}."
 		"tr"	"{grey}Zıplama istatistiklerinin sohbette gözükmesi için {default}/togglejs{grey}."
 		"it"	"{grey}Puoi cambiare la visibilità delle statistiche dei salti con {default}/togglejs{grey}."
+		"es"	"{grey}Puede alternar las estadísticas de salto escribiendo {default}/togglejs{grey}."
 	}
 	"Tip - kz_jsalways"
 	{
@@ -21,5 +22,6 @@
 		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}щоб увімк./вимк. постійне відображення статистики стрибків."
 		"tr"	"{grey}{default}/jsalways {grey}kullanarak tüm zıplama istatistiklerinin sohbette gözükmesini açabilirsin."
 		"it"	"{grey}Scrivi {default}/jsalways {grey}per mostrare sempre le statistiche dei salti."
+		"es"	"{grey}Use {default}/jsalways {grey}para alternar el modo de estadísticas de salto siempre activas."
 	}
 }

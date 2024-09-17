@@ -10,6 +10,7 @@
 		"ua"		"{grey}Перегляньте список доступних команд у консолі!"
 		"tr"		"{grey}Komutların listesi için konsola bak!"
 		"it"		"{grey}Apri la console per la lista dei comandi!"
+		"es"		"{grey}¡Mire su consola para la lista de comandos!"
 	}
 	"Command Help Response (Console)"
 	{
@@ -21,6 +22,7 @@
 		"ua"		"Щоб використати ці команди напишіть \"bind <key> kz_<назва команди>\" у вашій консолі, або напишіть !<назва команди> чи /<назва команди> в чаті.\nНаприклад: \"bind 1 kz_cp\" або \"!cp\" чи \"/cp\""
 		"tr"		"Bu komutları kullanmak için konsola \"bind <tuş> kz_<komut ismi>\"veya konuşma satırına !<komut ismi> ya da /<komut ismi> yazabilirsin. Örnek olarak: \"bind 1 kz_cp\" veya \"!cp\" or \"/cp\""
 		"it"		"Per usare questi comandi scrivi \"bind <tasto> kz_<nome comando>\" nella console, oppure !<nome comando> o /<nome comando> in chat.\nEsempio: \"bind 1 kz_cp\" o \"!cp\" o \"/cp\""
+		"es"		"Para usar estos comandos, puede escribir \"bind <key> kz_<command name>\" en su consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 	}
 	"Switch Language"
 	{
@@ -34,6 +36,7 @@
 		"ua"		"{grey}Ви змінили мову на {default}{language}{grey}."
 		"tr"		"{grey}Dili şununla değiştirdiniz: {default}{language}{grey}."
 		"it"		"{grey}Hai cambiato la lingua a {default}{language}{grey}."
+		"es"		"{grey}Ha cambiado su idioma a {default}{language}{grey}."
 	}
 
 	// Commands
@@ -47,6 +50,7 @@
 		"ua"		"Скасувати телепорт."
 		"tr"		"Geri al."
 		"it"		"Annulla teleport."
+		"es"		"Deshacer teleporte."
 	}
 	"Command Description - kz_checkpoint"
 	{
@@ -58,6 +62,7 @@
 		"ua"		"Поставити чекпоінт на землі або на драбині."
 		"tr"		"Yerde veya merdivende kontrol noktası oluştur."
 		"it"		"Crea un checkpoint da terra o su una scala."
+		"es"		"Crear un checkpoint en el suelo o en una escalera."
 	}
 	"Command Description - kz_cp"
 	{
@@ -69,6 +74,7 @@
 		"ua"		"Поставити чекпоінт на землі або на драбині."
 		"tr"		"Yerde veya merdivende kontrol noktası oluştur."
 		"it"		"Crea un checkpoint da terra o su una scala."
+		"es"		"Crear un checkpoint en el suelo o en una escalera."
 	}
 	"Command Description - kz_teleport"
 	{
@@ -80,6 +86,7 @@
 		"ua"		"Телепортуватися до поточного чекпоінту."
 		"tr"		"Kontrol noktasına ışınlan."
 		"it"		"Teleportati all'ultimo checkpoint."
+		"es"		"Teleportar al checkpoint actual."
 	}
 	"Command Description - kz_tp"
 	{
@@ -91,6 +98,7 @@
 		"ua"		"Телепортуватися до поточного чекпоінту."
 		"tr"		"Kontrol noktasına ışınlan."
 		"it"		"Teleportati all'ultimo checkpoint."
+		"es"		"Teleportar al checkpoint actual."
 	}
 	"Command Description - kz_prevcp"
 	{
@@ -102,6 +110,7 @@
 		"ua"		"Телепортуватися до попереднього чекпоінту."
 		"tr"		"Önceki kontrol noktasına dön."
 		"it"		"Teleportati al penultimo checkpoint."
+		"es"		"Teleportar al checkpoint anterior."
 	}
 	"Command Description - kz_pcp"
 	{
@@ -113,6 +122,7 @@
 		"ua"		"Телепортуватися до попереднього чекпоінту."
 		"tr"		"Önceki kontrol noktasına dön."
 		"it"		"Teleportati al penultimo checkpoint."
+		"es"		"Teleportar al checkpoint anterior."
 	}
 	"Command Description - kz_nextcp"
 	{
@@ -124,6 +134,7 @@
 		"ua"		"Телепортуватися до наступного чекпоінту."
 		"tr"		"Sonraki kontrol noktasına ilerle."
 		"it"		"Teleportati al prossimo checkpoint."
+		"es"		"Teleportar al próximo checkpoint."
 	}
 	"Command Description - kz_ncp"
 	{
@@ -135,6 +146,7 @@
 		"ua"		"Телепортуватися до наступного чекпоінту."
 		"tr"		"Sonraki kontrol noktasına ilerle."
 		"it"		"Teleportati al prossimo checkpoint."
+		"es"		"Teleportar al próximo checkpoint."
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -146,6 +158,7 @@
 		"ua"		"Встановити поточну позицію як стартову."
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
 		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
+		"es"		"Establecer su posición de inicio personalizada a su posición actual."
 	}
 	"Command Description - kz_ssp"
 	{
@@ -157,6 +170,7 @@
 		"ua"		"Встановити поточну позицію як стартову."
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
 		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
+		"es"		"Establecer su posición de inicio personalizada a su posición actual."
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -168,6 +182,7 @@
 		"ua"		"Очистити власну стартову позицію."
 		"tr"		"Başlangıç noktasını temizle."
 		"it"		"Elimina la zona di partenza custom."
+		"es"		"Eliminar su posición de inicio personalizada."
 	}
 	"Command Description - kz_csp"
 	{
@@ -179,6 +194,7 @@
 		"ua"		"Очистити власну стартову позицію."
 		"tr"		"Başlangıç noktasını temizle."
 		"it"		"Elimina la zona di partenza custom."
+		"es"		"Eliminar su posición de inicio personalizada."
 	}
 	"Command Description - kz_panel"
 	{
@@ -190,6 +206,7 @@
 		"ua"		"Перемикання відображення центральної панелі."
 		"tr"		"Orta panel görüntüsünü aç/kapat."
 		"it"		"Cambia la visibilità del pannello centrale."
+		"es"		"Alternar visualización del panel central."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
@@ -201,6 +218,7 @@
 		"ua"		"Змінити мінімальний поріг стрибків інших гравців для відображення в чаті."
 		"tr"		"Sohbet için zıplama istatistiklerinin minimum değerini değiştir."
 		"it"		"Cambia la soglia minima per mostrare le statistiche dei salti."
+		"es"		"Cambiar valor mínimo de estadísticas de salto para difusión."
 	}
 	"Command Description - kz_jssound"
 	{
@@ -212,6 +230,7 @@
 		"ua"		"Змінити мінімальний поріг для звукових ефектів під час стрибків."
 		"tr"		"Zıplama istatistiklerinin minimum ses efekti değerini değiştir."
 		"it"		"Cambia la soglia minima per gli effetti sonori dei salti."
+		"es"		"Cambiar valor mínimo de estadísticas de salto para efectos de sonido."
 	}
 	"Command Description - kz_togglestats"
 	{
@@ -223,6 +242,7 @@
 		"ua"		"Перемикання відображення статистики стрибків."
 		"tr"		"Zıplama istatistiklerinin sohbette gözükmesini aç."
 		"it"		"Cambia la visibilità delle statistiche dei salti."
+		"es"		"Alternar reportes de estadísticas de salto."
 	}
 	"Command Description - kz_togglejs"
 	{
@@ -234,6 +254,7 @@
 		"ua"		"Перемикання відображення статистики стрибків."
 		"tr"		"Zıplama istatistiklerinin sohbette gözükmesini aç."
 		"it"		"Cambia la visibilità delle statistiche dei salti."
+		"es"		"Alternar reportes de estadísticas de salto."
 	}
 	"Command Description - kz_jsalways"
 	{
@@ -245,6 +266,7 @@
 		"ua"		"Перемикання відображення статистики для будь-яких стрибків."
 		"tr"		"Zıplama istatistiklerinin devamlı sohbette gözükmesini aç."
 		"it"		"Mostra sempre le statistiche dei salti."
+		"es"		"Alternar estadísticas de salto siempre activas."
 	}
 	"Command Description - kz_mode"
 	{
@@ -256,6 +278,7 @@
 		"ua"		"Відобразити чи змінити KZ режим."
 		"tr"		"Modları listele veya değiştir"
 		"it"		"Elenca o cambia modalità."
+		"es"		"Listar o cambiar modo."
 	}
 	"Command Description - kz_noclip"
 	{
@@ -267,6 +290,7 @@
 		"ua"		"Перемикання noclip."
 		"tr"		"Noclip aç."
 		"it"		"Abilita il noclip."
+		"es"		"Alternar noclip."
 	}
 	"Command Description - kz_nc"
 	{
@@ -278,6 +302,7 @@
 		"ua"		"Перемикання noclip."
 		"tr"		"Noclip aç."
 		"it"		"Abilita il noclip."
+		"es"		"Alternar noclip."
 	}
 	"Command Description - noclip"
 	{
@@ -289,6 +314,7 @@
 		"ua"		"Перемикання noclip."
 		"tr"		"Noclip aç."
 		"it"		"Abilita il noclip."
+		"es"		"Alternar noclip."
 	}
 	"Command Description - kz_spec"
 	{
@@ -300,6 +326,7 @@
 		"ua"		"Спостерігати за гравцем."
 		"tr"		"Bir oyuncuyu izle."
 		"it"		"Guarda un altro giocatore."
+		"es"		"Espectar a un jugador."
 	}
 	"Command Description - kz_goto"
 	{
@@ -311,6 +338,7 @@
 		"ua"		"Телепортуватися до гравця."
 		"tr"		"Bir oyuncuya ışınlan."
 		"it"		"Vai ad un altro giocatore."
+		"es"		"Ir hacia un jugador."
 	}
 	"Command Description - kz_style"
 	{
@@ -322,6 +350,7 @@
 		"ua"		"Показати, додати, прибрати або перемикнути стиль."
 		"tr"		"Listele, ekle, kaldır veya bir stili aktif et."
 		"it"		"Elenca, aggiungi, rimuovi or cambia stile."
+		"es"		"Listar, añadir, remover o alternar estilo."
 	}
 	"Command Description - kz_addstyle"
 	{
@@ -333,6 +362,7 @@
 		"ua"		"Показати або додати стиль."
 		"tr"		"Listele veya stil ekle."
 		"it"		"Elenca o aggiungi stile."
+		"es"		"Listar o añadir estilo."
 	}
 	"Command Description - kz_removestyle"
 	{
@@ -344,6 +374,7 @@
 		"ua"		"Показати активні стилі або видалити стиль."
 		"tr"		"Aktif stilleri listele veya sil."
 		"it"		"Elenca stili attivi o rimuovi stile."
+		"es"		"Listar estilos activos o remover estilo."
 	}
 	"Command Description - kz_togglestyle"
 	{
@@ -355,6 +386,7 @@
 		"ua"		"Показати або перемикнути стиль."
 		"tr"		"Stilleri listele veya aktif et."
 		"it"		"Elenca o cambia stile."
+		"es"		"Listar o alternar estilo."
 	}
 	"Command Description - kz_clearstyles"
 	{
@@ -366,6 +398,7 @@
 		"ua"		"Очистити всі стилі."
 		"tr"		"Tüm stilleri temizle."
 		"it"		"Elimina tutti gli stili."
+		"es"		"Eliminar todos los estilos."
 	}
 	"Command Description - kz_stop"
 	{
@@ -377,6 +410,7 @@
 		"ua"		"Зупинити таймер."
 		"tr"		"Süreyi durdur."
 		"it"		"Reimposta il cronometro."
+		"es"		"Detener temporizador."
 	}
 	"Command Description - kz_pause"
 	{
@@ -388,6 +422,7 @@
 		"ua"		"Перемикання таймера на паузу."
 		"tr"		"Süreyi duraklat."
 		"it"		"Pausa/Riprendi."
+		"es"		"Alternar pausa del temporizador."
 	}
 	"Command Description - kz_tips"
 	{
@@ -399,6 +434,7 @@
 		"ua"		"Перемикання відображення підказок."
 		"tr"		"İpuçlarını aç."
 		"it"		"Cambia la visibilità dei consigli."
+		"es"		"Alternar visibilidad de consejos."
 	}
 	"Command Description - kz_hidelegs"
 	{
@@ -410,6 +446,7 @@
 		"ua"		"Приховати свої ноги від першої особи."
 		"tr"		"Birinci şahıs modunda ayakları göstermeyi kapat."
 		"it"		"Nascondi le gambe in prima persona."
+		"es"		"Ocultar sus piernas en primera persona."
 	}
 	"Command Description - kz_hide"
 	{
@@ -421,6 +458,7 @@
 		"ua"		"Приховати інших гравців."
 		"tr"		"Diğer oyuncuları gizle."
 		"it"		"Nascondi gli altri giocatori."
+		"es"		"Ocultar otros jugadores."
 	}
 	"Command Description - kz_restart"
 	{
@@ -432,6 +470,7 @@
 		"ua"		"Рестарт."
 		"tr"		"Yeniden Başla"
 		"it"		"Ricomincia."
+		"es"		"Reiniciar."
 	}
 	"Command Description - kz_r"
 	{
@@ -443,6 +482,7 @@
 		"ua"		"Рестарт."
 		"tr"		"Yeniden Başla"
 		"it"		"Ricomincia."
+		"es"		"Reiniciar."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -454,6 +494,7 @@
 		"ua"		"Приховати зброю."
 		"tr"		"Silahı gizle."
 		"it"		"Nascondi l'arma."
+		"es"		"Ocultar arma."
 	}
 	"Command Description - jointeam"
 	{
@@ -474,6 +515,7 @@
 		"ua"		"Показати це довідкове повідомлення."
 		"tr"		"Bu yardım mesajını göster."
 		"it"		"Mostra questo messaggio di aiuto."
+		"es"		"Mostrar este mensaje de ayuda."
 	}
 	"Command Description - kz_language"
 	{
@@ -485,6 +527,7 @@
 		"ua"		"Змінити мову."
 		"tr"		"Dili değiştir."
 		"it"		"Cambia la lingua."
+		"es"		"Cambiar idioma."
 	}
 	"Command Description - kz_vnl"
 	{
@@ -496,6 +539,7 @@
 		"ua"		"Переключитися на режим Vanilla."
 		"tr"		"Vanilla moduna geç."
 		"it"		"Cambia a modalità Vanilla."
+		"es"		"Cambiar a modo Vanilla."
 	}
 	"Command Description - kz_ckz"
 	{
@@ -507,6 +551,7 @@
 		"ua"		"Переключитися на режим Classic."
 		"tr"		"Classic moduna geç."
 		"it"		"Cambia a modalità Classic."
+		"es"		"Cambiar a modo Clásico."
 	}
 	"Command Description - kz_pb"
 	{
@@ -518,6 +563,7 @@
 		"ua"		"Показати персональний найкращий час."
 		"tr"		"Kişisel rekor istatistiklerini gösterir."
 		"it"		"Mostra le statistiche dei record personali."
+		"es"		"Mostrar estadísticas de mejores marcas personales."
 	}
 	"Command Description - kz_wr"
 	{
@@ -528,6 +574,7 @@
 		"ua"		"Показати рекорд сервера та світовий рекорд."
 		"tr"		"Dünya ve sunucu rekorlarını gösterir."
 		"it"		"Mostra i record del server e globali."
+		"es"		"Mostrar récords del servidor y del mundo."
 	}
 	"Command Description - kz_sr"
 	{
@@ -538,59 +585,69 @@
 		"ua"		"Показати рекорди сервера."
 		"tr"		"Sunucu rekorlarını gösterir."
 		"it"		"Mostra i record del server."
+		"es"		"Mostrar récords del servidor."
 	}
 	"Command Description - kz_ctop"
 	{
 		"en"		"Retrive top course times of a map."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos del curso de un mapa."
 	}
 	"Command Description - kz_coursetop"
 	{
 		"en"		"Retrive top course times of a map."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos del curso de un mapa."
 	}
 	"Command Description - kz_maptop"
 	{
 		"en"		"Retrive top course times of a map."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos del curso de un mapa."
 	}
 	"Command Description - kz_gctop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 	}
 	"Command Description - kz_gcoursetop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 	}
 	"Command Description - kz_gmaptop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 	}
 	"Command Description - kz_sctop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 	}
 	"Command Description - kz_scoursetop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 	}
 	"Command Description - kz_smaptop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
+		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 	}
 }

@@ -12,6 +12,7 @@
 		"ua"		"Зсув"
 		"tr"		"Offset"
 		"it"		"Offset"
+		"es"		"Desplazamiento"
 	}
 	"Height"
 	{
@@ -24,6 +25,7 @@
 		"ua"		"Висота"
 		"tr"		"Yükseklik"
 		"it"		"Altezza"
+		"es"		"Altura"
 	}
 	"Pre"
 	{
@@ -36,6 +38,7 @@
 		"ua"		"Pre"
 		"tr"		"Pre"
 		"it"		"Pre"
+		"es"		"Pre"
 	}
 	"Max"
 	{
@@ -48,6 +51,7 @@
 		"ua"		"Макс."
 		"tr"		"Maks."
 		"it"		"Max"
+		"es"		"Máx"
 	}
 	"Strafes" // Plural
 	{
@@ -60,6 +64,7 @@
 		"ua"		"Стрейфи"
 		"tr"		"Strafeler"
 		"it"		"Strafes"
+		"es"		"Strafes"
 	}
 	"Strafe" // Singular
 	{
