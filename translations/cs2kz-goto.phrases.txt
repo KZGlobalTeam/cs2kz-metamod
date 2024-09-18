@@ -10,6 +10,7 @@
 		"ua"		"{darkred}Зупиніть таймер перед тим як телепортуватися."
 		"tr"		"{darkred}Bir oyuncuya ışınlanmadan önce süreyi durdur."
 		"it"		"{darkred}Ferma il cronometro prima di teleportarti."
+		"es"		"{darkred}Detenga su temporizador antes de intentar teleportarse."
 	}
 	"Goto - Error Message (Player In Spec)"
 	{
@@ -22,6 +23,7 @@
 		"ua"		"{darkred}Неможливо телепортуватися. {player} знаходиться в спостерігачах."
 		"tr"		"{darkred}Işınlanamazsın. {player} izleyici takımında."
 		"it"		"{darkred}Impossibile teleportarsi. {player} sta guardando gli altri."
+		"es"		"{darkred}Imposible teleportar. {player} es un espectador."
 	}
 	"Goto - Error Message (Player Not Found)"
 	{
@@ -34,6 +36,7 @@
 		"ua"		"{darkred}Неможливо знайти гравця \"{player}\"."
 		"tr"		"{darkred}\"{player}\" isminde bir oyuncu bulunamadı."
 		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
+		"es"		"{darkred}No se puede encontrar un jugador llamado \"{player}\"."
 	}
 	"Goto - Teleported"
 	{
@@ -46,6 +49,7 @@
 		"ua"		"{grey}Ви телепортувалися до {player}."
 		"tr"		"{grey}{player} isimli oyuncuya ışınlandın."
 		"it"		"{grey}Teleportato da {player}."
+		"es"		"{grey}Teleportado a {player}."
 	}
 	"Goto - Command Usage"
 	{
@@ -57,5 +61,6 @@
 		"ua"		"{grey}Використання: {default}kz_goto <нікнейм гравця>"
 		"tr"		"{grey}Kullanım: {default}kz_goto <oyuncu ismi>"
 		"it"		"{grey}Utilizzo: {default}kz_goto <nome giocatore>"
+		"es"		"{grey}Use: {default}kz_goto <player name>"
 	}
 }

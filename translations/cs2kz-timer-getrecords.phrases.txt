@@ -10,6 +10,7 @@
 		"ua"		"{grey}Рекорди сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"tr"		"{default}{map_name}{grey} haritasındaki sunucu rekorları ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"it"		"{grey}Record del Server su {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"es"		"{grey}Récords del servidor en {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"SR - No Times"
 	{
@@ -19,6 +20,7 @@
 		"ua"		"{grey}Не знайдено жодного часу!"
 		"tr"		"{grey}Süre bulunamadı!"
 		"it"		"{grey}Nessun tempo è stato trovato!"
+		"es"		"{grey}¡No se encontraron tiempos!"
 	}
 	"SR - Overall"
 	{
@@ -30,6 +32,7 @@
 		"ua"		"{yellow}Загальний{grey}: {default}{time}{grey} від {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"tr"		"{yellow}Tümünde{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"it"		"{yellow}Complessivamente{grey}: {default}{time}{grey} da {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"es"		"{yellow}General{grey}: {default}{time}{grey} por {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 	}
 	"SR - Combined"
 	{
@@ -41,6 +44,7 @@
 		"ua"		"{yellow}Загальний/{blue}PRO{grey}: {default}{time}{grey} від {lime}{player_name}{grey}"
 		"tr"		"{yellow}Tümünde/{blue}PRO{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey}"
 		"it"		"{yellow}Complessivamente/{blue}PRO{grey}: {default}{time}{grey} da {lime}{player_name}{grey}"
+		"es"		"{yellow}General/{blue}PRO{grey}: {default}{time}{grey} por {lime}{player_name}{grey}"
 	}
 	"SR - PRO"
 	{
@@ -52,6 +56,7 @@
 		"ua"		"{blue}PRO{grey}: {default}{time_pro}{grey} від {lime}{player_name_pro}{grey}"
 		"tr"		"{blue}PRO{grey}: {default}{time_pro}{grey} tarafından {lime}{player_name_pro}{grey}"
 		"it"		"{blue}PRO{grey}: {default}{time_pro}{grey} da {lime}{player_name_pro}{grey}"
+		"es"		"{blue}PRO{grey}: {default}{time_pro}{grey} por {lime}{player_name_pro}{grey}"
 	}
 	"Record Request - Failed (Generic)" 
 	{
@@ -61,6 +66,7 @@
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд."
 		"tr"		"{darkred}Rekor bilgisi alınamadı."
 		"it"		"{darkred}Impossibile recuperare informazioni sui record."
+		"es"		"{darkred}Fallo al recuperar la información del récord."
 	}
 	"Record Request - Invalid Course Name"
 	{
@@ -71,6 +77,7 @@
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 		"tr"		"{darkred}Rekor bilgisi alınamadı. {grey}(Hatalı harita ismi {default}{course_name}{grey})"
 		"it"		"{darkred}Impossibile recuperare informazioni sui record. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
+		"es"		"{darkred}Fallo al recuperar la información del récord. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
 	}
 	"WR/SR Command Usage"
 	{
@@ -81,6 +88,7 @@
 		"ua"		"{grey}Використання: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Деталі дивіться в консолі!"
 		"tr"		"{grey}Kullanım: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detaylar için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Controlla la console per ulteriori dettagli!"
+		"es"		"{grey}Uso: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. ¡Mire la consola para más detalles!"
 	}
 	"WR/SR Command Usage - Console"
 	{
@@ -91,5 +99,6 @@
 		"ua"		"Використання: kz_wr/kz_sr <c/course/map/mode=...>\nНаприклад: \"kz_wr map=kz_map c=Main\"."
 		"tr"		"Kullanım: kz_wr/kz_sr <c/course/map/mode=...>\nÖrnek: \"kz_wr map=kz_map c=Main\"."
 		"it"		"Utilizzo: kz_wr/kz_sr <c/course/map/mode=...>\nEsempio: \"kz_wr map=kz_mappa c=Main\"."
+		"es"		"Uso: kz_wr/kz_sr <c/course/map/mode=...>\nEjemplo: \"kz_wr map=kz_map c=Main\"."
 	}
 }

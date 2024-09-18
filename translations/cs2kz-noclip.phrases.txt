@@ -10,6 +10,7 @@
 		"ua"		"{grey}Noclip активовано."
 		"tr"		"{grey}Noclip açıldı."
 		"it"		"{grey}Noclip abilitato."
+		"es"		"{grey}Noclip habilitado."
 	}
 	"Noclip - Disable"
 	{
@@ -21,5 +22,6 @@
 		"ua"		"{grey}Noclip вимкнено."
 		"tr"		"{grey}Noclip kapatıldı."
 		"it"		"{grey}Noclip disabilitato."
+		"es"		"{grey}Noclip deshabilitado."
 	}
 }

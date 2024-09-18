@@ -12,6 +12,7 @@
 		"ua"		"{grey}Тепер ви періодично будете бачити випадкові поради та підказки в чаті."
 		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler göreceksin."
 		"it"		"{grey}Ogni tanto riceverai dei consigli casuali."
+		"es"		"{grey}Usted ahora verá consejos aleatorios en el chat periódicamente."
 	}
 	"Option - Tips - Disable"
 	{
@@ -24,5 +25,6 @@
 		"ua"		"{grey}Ви більше не будете бачити підказок в чаті."
 		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler görmeyeceksin."
 		"it"		"{grey}Non riceverai più i consigli casuali."
+		"es"		"{grey}Usted no verá más consejos aleatorios en el chat periódicamente."
 	}
 }
