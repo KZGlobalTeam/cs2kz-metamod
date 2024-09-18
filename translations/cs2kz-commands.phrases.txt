@@ -593,7 +593,7 @@
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica di una mappa."
-    "es"		"Mostrar mejores tiempos del curso de un mapa."
+   		"es"		"Mostrar mejores tiempos del curso de un mapa."
 	}
 	"Command Description - kz_coursetop"
 	{
@@ -601,7 +601,7 @@
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica di una mappa."
-    "es"		"Mostrar mejores tiempos del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos del curso de un mapa."
 	}
 	"Command Description - kz_maptop"
 	{
@@ -609,7 +609,7 @@
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica di una mappa."
-    "es"		"Mostrar mejores tiempos del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos del curso de un mapa."
 	}
 	"Command Description - kz_gctop"
 	{
@@ -617,7 +617,7 @@
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica globale di una mappa."
-    "es"		"Mostrar mejores tiempos globales del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 	}
 	"Command Description - kz_gcoursetop"
 	{
@@ -625,7 +625,7 @@
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica globale di una mappa."
-    "es"		"Mostrar mejores tiempos globales del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 	}
 	"Command Description - kz_gmaptop"
 	{
@@ -633,7 +633,7 @@
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica globale di una mappa."
-    "es"		"Mostrar mejores tiempos globales del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 	}
 	"Command Description - kz_sctop"
 	{
@@ -641,7 +641,7 @@
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
 		"it"		"Mostra la classifica del server di una mappa."
-    "es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 	}
 	"Command Description - kz_scoursetop"
 	{
@@ -649,7 +649,7 @@
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
 		"it"		"Mostra la classifica del server di una mappa."
-    "es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 	}
 	"Command Description - kz_smaptop"
 	{
@@ -657,6 +657,6 @@
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
 		"it"		"Mostra la classifica del server di una mappa."
-    "es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+    		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 	}
 }
