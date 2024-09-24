@@ -4,6 +4,14 @@
 #include "utils/schema.h"
 #include "ehandle.h"
 
+struct GameTime_t
+{
+public:
+	DECLARE_SCHEMA_CLASS_INLINE(GameTime_t)
+
+	SCHEMA_FIELD(float, m_Value)
+};
+
 extern CGameConfig *g_pGameConfig;
 
 class CCollisionProperty;

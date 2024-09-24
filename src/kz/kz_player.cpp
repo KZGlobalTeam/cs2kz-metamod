@@ -69,6 +69,11 @@ void KZPlayer::Reset()
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
+	CSplitString styles(KZOptionService::GetOptionStr("defaultStyles"), ",");
+	FOR_EACH_VEC(styles, i)
+	{
+		g_pKZStyleManager->AddStyle(this, styles[i]);
+	}
 }
 
 void KZPlayer::OnPlayerActive()

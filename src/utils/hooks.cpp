@@ -604,6 +604,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	KZ::timer::CheckPBRequests();
 	KZ::timer::CheckRecordRequests();
 	KZ::timer::CheckCourseTopRequests();
+	KZ::misc::EnforceTimeLimit();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -662,6 +663,11 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 {
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
+	// Immediately remove the player off the list. We don't need to keep them around.
+	if (player->GetController())
+	{
+		player->GetController()->m_LastTimePlayerWasDisconnectedForPawnsRemove().m_Value(0.01f);
+	}
 	if (player->GetPlayerPawn())
 	{
 		RemoveEntityHooks(player->GetPlayerPawn());

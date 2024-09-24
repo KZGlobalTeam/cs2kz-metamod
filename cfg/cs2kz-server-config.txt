@@ -1,16 +1,39 @@
 "ServerCfg"
 {
+	// Default mode for players.
 	"defaultMode"				"Classic"
-	"defaultStyle"				"Normal"
+	
+	// Default style for players.
+	"defaultStyles"				""
+	
+	// How long should a map run for before it must be reloaded in minutes (maximum 24 hours)
+	"defaultTimeLimit"			"60.0"
+	
+	// Default language to be used if client does not set a language/language is not supported
 	"defaultLanguage"			"en"
+	
+	// Interval between tips.
 	"tipInterval"				"75"
+	
+	// Minimum jumpstat tier for broadcasting.
 	"defaultJSBroadcastMinTier"	"4"
+	
+	// Minimum jumpstat tier for sound effect.
 	"defaultJSSoundMinTier"		"4"
+	
+	// Whether jumpstats should be enabled by default.
 	"defaultShowJS"				"true"
+	
+	// Enable this to automatically record a one minute long demo of players when someone hits a wrecker jumpstat.
 	"autoDemoRecording"			"false"
 	
+	// Default chat prefix.
 	"chatPrefix"				"{lime}KZ {grey}|{default}"
+	
+	// Whether we override chat processing or not.
 	"overridePlayerChat"		"true"
+	
+	// Local database configurations.
 	"db"
 	{
 		"driver"	"sqlite"

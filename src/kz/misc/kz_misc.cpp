@@ -110,6 +110,7 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 void KZ::misc::Init()
 {
 	KZOptionService::RegisterEventListener(&optionEventListener);
+	KZ::misc::EnforceTimeLimit();
 }
 
 void KZ::misc::OnServerActivate()
@@ -138,7 +139,12 @@ void KZ::misc::OnServerActivate()
 		}
 	}
 	g_pKZUtils->UpdateCurrentMapMD5();
+
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	KZ::misc::InitTimeLimit();
+
+	// Restart round to ensure settings (e.g. mp_weapons_allow_map_placed) are applied
+	interfaces::pEngine->ServerCommand("mp_restartgame 1");
 }
 
 // TODO: move command registration to the service class?
@@ -303,5 +309,8 @@ void KZ::misc::OnRoundStart()
 	if (gameRules)
 	{
 		gameRules->m_bGameRestart(true);
+		// Make sure that the round time is synchronized with the global time.
+		gameRules->m_fRoundStartTime().m_Value(0.0f);
+		gameRules->m_flGameStartTime().m_Value(0.0f);
 	}
 }
