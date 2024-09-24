@@ -18,7 +18,7 @@ void KZ::misc::EnforceTimeLimit()
 	}
 	if (mp_roundtime)
 	{
-		mp_roundtime->m_cvvMaxValue->m_flValue = 2880.0f;
+		mp_roundtime->m_cvvMaxValue->m_flValue = 1440.0f;
 	}
 	if (mp_timelimit)
 	{
