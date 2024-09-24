@@ -6,6 +6,9 @@
 #include "sdk/entity/ccsplayercontroller.h"
 #include "utils/utils.h"
 
+class ns_address;
+class CCLCMsg_SplitPlayerConnect_t;
+
 // The index is the entity index associated with the player's controller's entity index.
 // The player slot should always be this index minus 1.
 class Player
@@ -166,11 +169,15 @@ public:
 
 	void OnSteamAPIActivated();
 
-	void OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1, CBufferString *pRejectReason);
+	// The connect events actually happen in this order...
+	void OnConnectClient(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
+						 const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence);
 	void OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress, bool bFakePlayer);
+	void OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1, CBufferString *pRejectReason);
 	void OnClientFullyConnect(CPlayerSlot slot);
 	void OnClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
 	void OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
+
 	void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 	void OnClientVoice(CPlayerSlot slot);
 	void OnClientSettingsChanged(CPlayerSlot slot);

@@ -7,9 +7,11 @@
 #include "keyvalues3.h"
 #include <filesystem.h>
 #include "checksum_md5.h"
+#include "sdk/serversideclient.h"
+#include "sdk/gamerules.h"
 
 #include "memdbgon.h"
-#include "sdk/gamerules.h"
+
 static_global char currentMapMD5[33];
 static_global bool md5NeedsUpdating {};
 
@@ -265,4 +267,23 @@ CCSGameRules *KZUtils::GetGameRules()
 		return proxy->m_pGameRules();
 	}
 	return nullptr;
+}
+
+u32 KZUtils::GetPlayerCount()
+{
+	u32 count = 0;
+	auto clients = this->GetClientList();
+	if (clients)
+	{
+		FOR_EACH_VEC(*clients, i)
+		{
+			CServerSideClient *client = clients->Element(i);
+
+			if (client && client->IsConnected() && !client->IsFakePlayer() && !client->IsHLTV())
+			{
+				count++;
+			}
+		}
+	}
+	return count;
 }

@@ -134,6 +134,9 @@ public:
 
 	// Getting the entity could be expensive, do not spam this function!
 	virtual CCSGameRules *GetGameRules();
+
+	// Get the real and connected player count.
+	virtual u32 GetPlayerCount();
 };
 
 extern KZUtils *g_pKZUtils;

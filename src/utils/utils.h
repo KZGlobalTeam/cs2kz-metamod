@@ -58,4 +58,6 @@ namespace utils
 	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles);
+
+	void ResetMapIfEmpty();
 } // namespace utils

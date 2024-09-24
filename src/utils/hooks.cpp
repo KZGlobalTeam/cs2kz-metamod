@@ -122,6 +122,12 @@ static_global int activateServerHook {};
 SH_DECL_HOOK0(CNetworkGameServerBase, ActivateServer, SH_NOATTRIB, false, bool);
 static_function bool Hook_ActivateServer();
 
+static_global int clientConnectHook {};
+SH_DECL_HOOK8(CNetworkGameServerBase, ConnectClient, SH_NOATTRIB, false, CServerSideClientBase *, const char *, ns_address *, int,
+			  CCLCMsg_SplitPlayerConnect_t *, const char *, const byte *, int, bool);
+static_function CServerSideClientBase *Hook_ConnectClient(const char *, ns_address *, int, CCLCMsg_SplitPlayerConnect_t *, const char *, const byte *,
+														  int, bool);
+
 // IGameSystem
 static_global int serverGamePostSimulateHook {};
 SH_DECL_HOOK1_void(IGameSystem, ServerGamePostSimulate, SH_NOATTRIB, false, const EventServerGamePostSimulate_t *);
@@ -172,6 +178,15 @@ void hooks::Initialize()
 		SH_STATIC(Hook_ActivateServer), 
 		true
 	);
+	
+	// Warning: This is a pre hook!
+	clientConnectHook = SH_ADD_DVPHOOK(
+		CNetworkGameServerBase, 
+		ConnectClient,
+		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
+		SH_STATIC(Hook_ConnectClient), 
+		false
+	);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
 		IGameSystem, 
 		ServerGamePostSimulate, 
@@ -217,6 +232,8 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
 
 	SH_REMOVE_HOOK_ID(activateServerHook);
+
+	SH_REMOVE_HOOK_ID(clientConnectHook);
 
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 
@@ -800,6 +817,15 @@ static_function bool Hook_ActivateServer()
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
 	KZDatabaseService::SetupMap();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
+}
+
+static_function CServerSideClientBase *Hook_ConnectClient(const char *pszName, ns_address *pAddr, int socket,
+														  CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
+														  const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
+{
+	utils::ResetMapIfEmpty();
+	g_pKZPlayerManager->OnConnectClient(pszName, pAddr, socket, pSplitPlayer, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
+	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
 // IGameSystem

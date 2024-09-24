@@ -356,3 +356,36 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
 	}
 	return foundValidSpawn;
 }
+
+void utils::ResetMapIfEmpty()
+{
+	// There are players in the server already, do not restart
+	if (g_pKZUtils->GetPlayerCount() > 1)
+	{
+		return;
+	}
+
+	// Don't restart if the server is just up to map reload loops.
+	if (g_pKZUtils->GetGlobals() && g_pKZUtils->GetGlobals()->curtime < 30.0f)
+	{
+		return;
+	}
+
+	// Another way the map reload can loop forever...
+	if (CommandLine()->HasParm("-servertime"))
+	{
+		return;
+	}
+
+	char cmd[MAX_PATH + 12]; // "changelevel " takes 12 characters
+	if (g_pKZUtils->GetCurrentMapWorkshopID() == 0)
+	{
+		V_snprintf(cmd, sizeof(cmd), "changelevel %s", g_pKZUtils->GetGlobals()->mapname.ToCStr());
+	}
+	else
+	{
+		V_snprintf(cmd, sizeof(cmd), "host_workshop_map %llu", g_pKZUtils->GetCurrentMapWorkshopID());
+	}
+
+	interfaces::pEngine->ServerCommand(cmd);
+}

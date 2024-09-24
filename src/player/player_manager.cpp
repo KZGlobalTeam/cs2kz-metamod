@@ -74,6 +74,11 @@ Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 	return nullptr;
 }
 
+void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer,
+									const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
+{
+}
+
 void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1,
 									CBufferString *pRejectReason)
 {
