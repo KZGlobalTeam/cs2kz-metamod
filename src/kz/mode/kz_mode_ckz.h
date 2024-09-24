@@ -68,33 +68,33 @@ class KZClassicModeService : public KZModeService
 	};
 
 	const char *modeCvarValues[KZ::mode::numCvar] = {
-		"false",     // slope_drop_enable
-		"6.5",       // sv_accelerate
-		"false",     // sv_accelerate_use_weapon_speed
-		"100",       // sv_airaccelerate
-		"30",        // sv_air_max_wishspeed
-		"false",     // sv_autobunnyhopping
-		"true",      // sv_enablebunnyhopping
-		"5.2",       // sv_friction
-		"800",       // sv_gravity
-		"302.0",     // sv_jump_impulse
-		"0.0078125", // sv_jump_spam_penalty_time
-		"-0.707",    // sv_ladder_angle
-		"1",         // sv_ladder_dampen
-		"1",         // sv_ladder_scale_speed
-		"320",       // sv_maxspeed
-		"3500",      // sv_maxvelocity
-		"0",         // sv_staminajumpcost
-		"0",         // sv_staminalandcost
-		"0",         // sv_staminamax
-		"9999",      // sv_staminarecoveryrate
-		"0.7",       // sv_standable_normal
-		"64.0",      // sv_step_move_vel_min
-		"0",         // sv_timebetweenducks
-		"0.7",       // sv_walkable_normal
-		"10",        // sv_wateraccelerate
-		"1",         // sv_waterfriction
-		"0.9"        // sv_water_slow_amount
+		"false",  // slope_drop_enable
+		"6.5",    // sv_accelerate
+		"false",  // sv_accelerate_use_weapon_speed
+		"100",    // sv_airaccelerate
+		"30",     // sv_air_max_wishspeed
+		"false",  // sv_autobunnyhopping
+		"true",   // sv_enablebunnyhopping
+		"5.2",    // sv_friction
+		"800",    // sv_gravity
+		"302.0",  // sv_jump_impulse
+		"0.0",    // sv_jump_spam_penalty_time
+		"-0.707", // sv_ladder_angle
+		"1",      // sv_ladder_dampen
+		"1",      // sv_ladder_scale_speed
+		"320",    // sv_maxspeed
+		"3500",   // sv_maxvelocity
+		"0",      // sv_staminajumpcost
+		"0",      // sv_staminalandcost
+		"0",      // sv_staminamax
+		"9999",   // sv_staminarecoveryrate
+		"0.7",    // sv_standable_normal
+		"64.0",   // sv_step_move_vel_min
+		"0",      // sv_timebetweenducks
+		"0.7",    // sv_walkable_normal
+		"10",     // sv_wateraccelerate
+		"1",      // sv_waterfriction
+		"0.9"     // sv_water_slow_amount
 	};
 
 	bool revertJumpTweak {};
