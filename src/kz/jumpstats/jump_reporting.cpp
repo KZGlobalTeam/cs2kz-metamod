@@ -24,7 +24,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump)
 	const char *language = target->languageService->GetLanguage();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[color];
-	if (jump->GetJumpPlayer()->styleServices.Count() > 0 || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	if (jump->GetOffset() <= -JS_EPSILON || !jump->IsValid())
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
@@ -159,7 +159,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 
 void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 {
-	if (jump->GetJumpPlayer()->styleServices.Count() > 0 || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	if (jump->GetOffset() <= -JS_EPSILON || !jump->IsValid())
 	{
 		return;
 	}
@@ -192,7 +192,7 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump)
 {
-	if (jump->GetJumpPlayer()->styleServices.Count() > 0 || !(jump->GetOffset() > -JS_EPSILON && jump->IsValid()))
+	if (jump->GetOffset() <= -JS_EPSILON || !jump->IsValid())
 	{
 		return;
 	}

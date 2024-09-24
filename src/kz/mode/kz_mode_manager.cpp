@@ -302,6 +302,8 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	}
 
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), KZ::mode::numCvar);
+	player->SetVelocity({0, 0, 0});
+	player->jumpstatsService->InvalidateJumpstats("Externally modified");
 	return true;
 }
 

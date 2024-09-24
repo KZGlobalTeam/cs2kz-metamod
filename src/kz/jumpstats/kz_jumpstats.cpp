@@ -367,6 +367,8 @@ void Jump::Init()
 	this->adjustedTakeoffOrigin = this->player->takeoffGroundOrigin;
 	this->takeoffVelocity = this->player->takeoffVelocity;
 	this->jumpType = this->player->jumpstatsService->DetermineJumpType();
+
+	this->valid = this->GetJumpPlayer()->styleServices.Count() == 0;
 }
 
 void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
@@ -398,6 +400,8 @@ void Jump::Update()
 	this->totalDistance += (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
 	this->currentMaxSpeed = MAX(this->player->currentMoveData->m_vecVelocity.Length2D(), this->currentMaxSpeed);
 	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z, this->currentMaxHeight);
+
+	this->valid = this->valid && this->GetJumpPlayer()->styleServices.Count() == 0;
 }
 
 void Jump::End()
