@@ -1,13 +1,13 @@
 #pragma once
 #include "common.h"
 #include "cs_usercmd.pb.h"
-#include "cinbuttonstate.h"
 class CSGOUserCmdPB;
 
 class CUserCmdBase
 {
 public:
-	uint64_t unk;
+	int cmdNum;
+	uint8_t unk[4];
 
 	virtual ~CUserCmdBase();
 
@@ -30,11 +30,17 @@ class CUserCmd : public CUserCmdBaseHost<CSGOUserCmdPB>
 {
 };
 
-class PlayerCommand : public CUserCmd, public CInButtonState
+class PlayerCommand : public CUserCmd
 {
 public:
-	uint8_t unknown[8];
-	uint64_t flags;
-	PlayerCommand *prevCmd;
-	PlayerCommand *nextCmd;
+	struct
+	{
+		void **vtable;
+		uint64 buttons[3];
+	} buttonstates;
+
+	// Not part of the player message
+	uint32_t unknown[4];
+	PlayerCommand *unknowncmd;
+	PlayerCommand *unknowncmd2;
 };

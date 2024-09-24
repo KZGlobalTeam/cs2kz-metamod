@@ -40,9 +40,9 @@ public:
 
 	virtual void OnProcessUsercmdsPost(void *, int) {}
 
-	virtual void OnSetupMove(CUserCmd *) {}
+	virtual void OnSetupMove(PlayerCommand *) {}
 
-	virtual void OnSetupMovePost(CUserCmd *) {}
+	virtual void OnSetupMovePost(PlayerCommand *) {}
 
 	virtual void OnProcessMovement() {}
 

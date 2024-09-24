@@ -77,7 +77,7 @@ i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, v
 	return retValue;
 }
 
-void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, CUserCmd *pb, CMoveData *mv)
+void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerCommand *pb, CMoveData *mv)
 {
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	CBasePlayerController *controller = player->GetController();

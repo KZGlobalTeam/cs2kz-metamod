@@ -1,6 +1,6 @@
 #include "kz_mode_vnl.h"
 #include "utils/interfaces.h"
-
+#include "sdk/usercmd.h"
 #include "sdk/entity/cbasetrigger.h"
 
 const char *KZVanillaModeService::GetModeName()
@@ -322,6 +322,22 @@ bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 		return true;
 	}
 	return false;
+}
+
+void KZVanillaModeService::OnSetupMove(PlayerCommand *pc)
+{
+	// We make subtick inputs "less subticky" so that float precision error doesn't impact jump height (or at least minimalize it)
+	auto subtickMoves = pc->mutable_base()->mutable_subtick_moves();
+	f64 frameTime = 0;
+	for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
+	{
+		CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
+		frameTime = subtickMove->when() * ENGINE_FIXED_TICK_INTERVAL;
+		f32 approxOffsetCurtime = g_pKZUtils->GetGlobals()->curtime - frameTime + ENGINE_FIXED_TICK_INTERVAL;
+		f64 exactCurtime = g_pKZUtils->GetGlobals()->curtime - frameTime + ENGINE_FIXED_TICK_INTERVAL;
+		f64 precisionLoss = approxOffsetCurtime - exactCurtime;
+		subtickMove->set_when(subtickMove->when() - precisionLoss / ENGINE_FIXED_TICK_INTERVAL);
+	}
 }
 
 void KZVanillaModeService::OnProcessMovementPost()
