@@ -975,7 +975,6 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			}
 		}
 	}
-	META_CONPRINTF("tpmOrigin set to %f %f %f\n", pm.m_vEndPos.x, pm.m_vEndPos.y, pm.m_vEndPos.z);
 	this->tpmOrigin = pm.m_vEndPos;
 	this->tpmVelocity = velocity;
 }
