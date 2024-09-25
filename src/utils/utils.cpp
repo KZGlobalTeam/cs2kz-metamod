@@ -360,7 +360,7 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
 void utils::ResetMapIfEmpty()
 {
 	// There are players in the server already, do not restart
-	if (g_pKZUtils->GetPlayerCount() > 1)
+	if (g_pKZUtils->GetPlayerCount() > 0)
 	{
 		return;
 	}
