@@ -296,11 +296,11 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL);
 }
 
-void KZClassicModeService::OnSetupMove(PlayerCommand *pb)
+void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
 {
-	for (i32 j = 0; j < pb->mutable_base()->subtick_moves_size(); j++)
+	for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
 	{
-		CSubtickMoveStep *subtickMove = pb->mutable_base()->mutable_subtick_moves(j);
+		CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
 		float when = subtickMove->when();
 		if (subtickMove->button() == IN_JUMP)
 		{
@@ -975,6 +975,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			}
 		}
 	}
+	META_CONPRINTF("tpmOrigin set to %f %f %f\n", pm.m_vEndPos.x, pm.m_vEndPos.y, pm.m_vEndPos.z);
 	this->tpmOrigin = pm.m_vEndPos;
 	this->tpmVelocity = velocity;
 }
@@ -986,7 +987,7 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 	bool velocityHeavilyModified =
 		this->tpmVelocity.Normalized().Dot(velocity.Normalized()) < RAMP_BUG_THRESHOLD
 		|| (this->tpmVelocity.Length() > 50.0f && velocity.Length() / this->tpmVelocity.Length() < RAMP_BUG_VELOCITY_THRESHOLD);
-	if (this->overrideTPM && velocityHeavilyModified)
+	if (this->overrideTPM && velocityHeavilyModified && this->tpmOrigin != vec3_invalid && this->tpmVelocity != vec3_invalid)
 	{
 		this->player->SetOrigin(this->tpmOrigin);
 		this->player->SetVelocity(this->tpmVelocity);

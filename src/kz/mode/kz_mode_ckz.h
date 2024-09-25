@@ -125,8 +125,8 @@ class KZClassicModeService : public KZModeService
 
 	bool didTPM {};
 	bool overrideTPM {};
-	Vector tpmVelocity;
-	Vector tpmOrigin;
+	Vector tpmVelocity = vec3_invalid;
+	Vector tpmOrigin = vec3_invalid;
 	Vector lastValidPlane;
 
 	// Keep track of TryPlayerMove path for triggerfixing.
@@ -147,7 +147,7 @@ public:
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
-	virtual void OnSetupMove(PlayerCommand *pb) override;
+	virtual void OnSetupMove(PlayerCommand *pc) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnCategorizePosition(bool bStayOnGround) override;

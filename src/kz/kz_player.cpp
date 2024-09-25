@@ -147,21 +147,21 @@ void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 	}
 }
 
-void KZPlayer::OnSetupMove(PlayerCommand *pb)
+void KZPlayer::OnSetupMove(PlayerCommand *pc)
 {
-	this->modeService->OnSetupMove(pb);
+	this->modeService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnSetupMove(pb);
+		this->styleServices[i]->OnSetupMove(pc);
 	}
 }
 
-void KZPlayer::OnSetupMovePost(PlayerCommand *pb)
+void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 {
-	this->modeService->OnSetupMovePost(pb);
+	this->modeService->OnSetupMovePost(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnSetupMovePost(pb);
+		this->styleServices[i]->OnSetupMovePost(pc);
 	}
 }
 

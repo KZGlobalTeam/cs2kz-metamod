@@ -77,13 +77,13 @@ i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, v
 	return retValue;
 }
 
-void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerCommand *pb, CMoveData *mv)
+void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerCommand *pc, CMoveData *mv)
 {
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	CBasePlayerController *controller = player->GetController();
-	player->OnSetupMove(pb);
-	SetupMove(ms, pb, mv);
-	player->OnSetupMovePost(pb);
+	player->OnSetupMove(pc);
+	SetupMove(ms, pc, mv);
+	player->OnSetupMovePost(pc);
 }
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
