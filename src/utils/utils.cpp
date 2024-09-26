@@ -378,6 +378,7 @@ void utils::ResetMapIfEmpty()
 	}
 
 	char cmd[MAX_PATH + 12]; // "changelevel " takes 12 characters
+	META_CONPRINTF("[KZ] Server is empty, triggering map reload...\n");
 	if (g_pKZUtils->GetCurrentMapWorkshopID() == 0)
 	{
 		V_snprintf(cmd, sizeof(cmd), "changelevel %s", g_pKZUtils->GetGlobals()->mapname.ToCStr());

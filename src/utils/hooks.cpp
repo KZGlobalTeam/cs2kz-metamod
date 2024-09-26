@@ -823,7 +823,6 @@ static_function CServerSideClientBase *Hook_ConnectClient(const char *pszName, n
 														  CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
 														  const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
-	utils::ResetMapIfEmpty();
 	g_pKZPlayerManager->OnConnectClient(pszName, pAddr, socket, pSplitPlayer, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }

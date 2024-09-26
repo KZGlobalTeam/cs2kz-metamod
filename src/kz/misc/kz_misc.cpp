@@ -1,5 +1,6 @@
 #include "common.h"
 #include "utils/utils.h"
+#include "utils/ctimer.h"
 #include "kz/kz.h"
 #include "utils/simplecmds.h"
 
@@ -18,6 +19,9 @@
 #include "kz/tip/kz_tip.h"
 
 #include "sdk/gamerules.h"
+
+#define RESTART_CHECK_INTERVAL 1800.0f
+static_global CTimer<> *mapRestartTimer;
 
 static_global class KZOptionServiceEventListener_Misc : public KZOptionServiceEventListener
 {
@@ -107,10 +111,17 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
+static_function f64 CheckRestart()
+{
+	utils::ResetMapIfEmpty();
+	return RESTART_CHECK_INTERVAL;
+}
+
 void KZ::misc::Init()
 {
 	KZOptionService::RegisterEventListener(&optionEventListener);
 	KZ::misc::EnforceTimeLimit();
+	mapRestartTimer = StartTimer(CheckRestart, RESTART_CHECK_INTERVAL, true, false);
 }
 
 void KZ::misc::OnServerActivate()
