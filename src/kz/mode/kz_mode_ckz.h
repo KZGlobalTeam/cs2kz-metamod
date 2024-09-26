@@ -127,7 +127,7 @@ class KZClassicModeService : public KZModeService
 	bool overrideTPM {};
 	Vector tpmVelocity = vec3_invalid;
 	Vector tpmOrigin = vec3_invalid;
-	Vector lastValidPlane;
+	Vector lastValidPlane = vec3_origin;
 
 	// Keep track of TryPlayerMove path for triggerfixing.
 	bool airMoving {};
