@@ -81,6 +81,10 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 
 void KZOptionService::SaveLocalPrefs()
 {
+	if (this->player->IsFakeClient())
+	{
+		return;
+	}
 	CUtlString error, output;
 	SaveKV3AsJSON(&this->prefKV, &error, &output);
 	if (!error.IsEmpty())

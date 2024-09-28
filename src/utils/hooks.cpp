@@ -189,7 +189,7 @@ void hooks::Initialize()
 		ConnectClient,
 		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
 		SH_STATIC(Hook_ConnectClient), 
-		true
+		false
 	);
 	clientConnectPostHook = SH_ADD_DVPHOOK(
 		CNetworkGameServerBase, 
