@@ -169,18 +169,26 @@ public:
 
 	void OnSteamAPIActivated();
 
-	// The connect events actually happen in this order...
+	/*
+		The connect events actually happen in this order.
+		Only these functions are called for bots: OnClientConnected, OnClientPutInServer, OnClientActive, OnClientDisconnect
+	*/
+
+	// These following functions are NOT called upon map change.
+	// Note: ConnectClient can be triggered multiple times with MultiAddonsManager.
 	void OnConnectClient(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
 						 const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence);
 	void OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress, bool bFakePlayer);
 	void OnConnectClientPost(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
 							 const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence);
+
+	// These following functions are called upon map change.
 	void OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1, CBufferString *pRejectReason);
 	void OnClientFullyConnect(CPlayerSlot slot);
 	void OnClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
 	void OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
-
 	void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
+
 	void OnClientVoice(CPlayerSlot slot);
 	void OnClientSettingsChanged(CPlayerSlot slot);
 
