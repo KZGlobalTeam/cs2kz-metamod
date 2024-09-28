@@ -249,7 +249,6 @@ void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, C
 		{
 			ms->m_nButtons()->m_pButtonStates[1] |= IN_JUMP;
 		}
-		movement::Detour_Duck(ms, mv);
 	}
 #endif
 	player->OnCheckJumpButton();
