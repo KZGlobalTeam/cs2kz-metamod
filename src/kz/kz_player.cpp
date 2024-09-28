@@ -70,6 +70,13 @@ void KZPlayer::Reset()
 	this->tipService->Reset();
 	this->modeService->Reset();
 	this->optionService->Reset();
+	this->checkpointService->Reset();
+	this->noclipService->Reset();
+	this->quietService->Reset();
+	this->jumpstatsService->Reset();
+	this->hudService->Reset();
+	this->timerService->Reset();
+	this->specService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
@@ -82,20 +89,10 @@ void KZPlayer::Reset()
 
 void KZPlayer::OnPlayerActive()
 {
-	// Reset services that should not persist across map changes.
-	this->checkpointService->Reset();
-	this->noclipService->Reset();
-	this->quietService->Reset();
-	this->jumpstatsService->Reset();
-	this->hudService->Reset();
-	this->timerService->Reset();
-	this->specService->Reset();
-
 	// Refresh the convars because they couldn't receive the message when connecting.
 	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true);
 	g_pKZStyleManager->RefreshStyles(this);
 
-	// This should always be called last, after every service reset is done.
 	this->optionService->OnPlayerActive();
 }
 

@@ -16,7 +16,7 @@ void KZSpecService::Init()
 
 bool KZSpecService::HasSavedPosition()
 {
-	return false;
+	return this->savedPosition;
 }
 
 void KZSpecService::SavePosition()
