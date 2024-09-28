@@ -140,6 +140,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'spec', 'kz_spec.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'goto', 'kz_goto.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_manager.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'telemetry', 'kz_telemetry.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'announce_queue.cpp'),

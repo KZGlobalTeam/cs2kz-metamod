@@ -40,6 +40,7 @@ class KZSavelocService;
 class KZSpecService;
 class KZGotoService;
 class KZStyleService;
+class KZTelemetryService;
 class KZTimerService;
 class KZTipService;
 
@@ -156,8 +157,8 @@ public:
 	KZSavelocService *savelocService {};
 	KZSpecService *specService {};
 	KZGotoService *gotoService {};
-	KZStyleService *styleService {};
 	CUtlVector<KZStyleService *> styleServices {};
+	KZTelemetryService *telemetryService {};
 	KZTimerService *timerService {};
 	KZTipService *tipService {};
 

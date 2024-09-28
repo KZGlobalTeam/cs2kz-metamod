@@ -15,6 +15,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
+#include "kz/telemetry/kz_telemetry.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/tip/kz_tip.h"
 
@@ -175,6 +176,7 @@ void KZ::misc::RegisterCommands()
 	KZNoclipService::RegisterCommands();
 	KZHUDService::RegisterCommands();
 	KZLanguageService::RegisterCommands();
+	KZTelemetryService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 	KZ::style::RegisterCommands();
 }

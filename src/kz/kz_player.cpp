@@ -13,6 +13,7 @@
 #include "spec/kz_spec.h"
 #include "goto/kz_goto.h"
 #include "style/kz_style.h"
+#include "telemetry/kz_telemetry.h"
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
 
@@ -40,6 +41,7 @@ void KZPlayer::Init()
 	delete this->optionService;
 	delete this->noclipService;
 	delete this->tipService;
+	delete this->telemetryService;
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -53,6 +55,8 @@ void KZPlayer::Init()
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
+	this->telemetryService = new KZTelemetryService(this);
+
 	KZ::mode::InitModeService(this);
 	KZ::style::InitStyleService(this);
 }
@@ -93,8 +97,6 @@ void KZPlayer::OnPlayerActive()
 
 	// This should always be called last, after every service reset is done.
 	this->optionService->OnPlayerActive();
-
-	this->hideLegs = this->optionService->GetPreferenceBool("hideLegs", false);
 }
 
 void KZPlayer::OnAuthorized()
@@ -121,6 +123,7 @@ void KZPlayer::OnPhysicsSimulate()
 void KZPlayer::OnPhysicsSimulatePost()
 {
 	MovementPlayer::OnPhysicsSimulatePost();
+	this->telemetryService->OnPhysicsSimulatePost();
 	this->modeService->OnPhysicsSimulatePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{

@@ -84,6 +84,11 @@ void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint6
 {
 }
 
+void PlayerManager::OnConnectClientPost(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer,
+										const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
+{
+}
+
 void PlayerManager::OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress,
 									  bool bFakePlayer)
 {

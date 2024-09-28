@@ -173,6 +173,8 @@ public:
 	void OnConnectClient(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
 						 const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence);
 	void OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress, bool bFakePlayer);
+	void OnConnectClientPost(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
+							 const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence);
 	void OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1, CBufferString *pRejectReason);
 	void OnClientFullyConnect(CPlayerSlot slot);
 	void OnClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
