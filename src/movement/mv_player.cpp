@@ -17,6 +17,7 @@ void MovementPlayer::OnProcessMovementPost()
 	// On ground or a ladder, definitely not in a perf.
 	if (this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND || this->GetMoveType() != MOVETYPE_WALK)
 	{
+		this->inRealPerf = false;
 		this->inPerf = false;
 	}
 	this->processingMovement = false;
@@ -230,6 +231,7 @@ void MovementPlayer::RegisterTakeoff(bool jumped)
 	this->takeoffVelocity = mv->m_vecVelocity;
 	this->takeoffGroundOrigin = mv->m_vecAbsOrigin;
 	this->takeoffGroundOrigin.z = this->GetGroundPosition();
+	this->inRealPerf = this->inPerf;
 	this->jumped = jumped;
 }
 
@@ -241,6 +243,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 		mv = &this->moveDataPost;
 	}
 	this->inPerf = false;
+	this->inRealPerf = false;
 	this->landingOrigin = mv->m_vecAbsOrigin;
 	this->landingTime = g_pKZUtils->GetGlobals()->curtime;
 	this->landingVelocity = landingVelocity;
@@ -300,6 +303,11 @@ void MovementPlayer::SetMoveType(MoveType_t newMoveType, bool fireCallback)
 	}
 }
 
+bool MovementPlayer::IsPerfing(bool framePerfect)
+{
+	return framePerfect ? this->inRealPerf : this->inPerf;
+}
+
 void MovementPlayer::Reset()
 {
 	Player::Reset();
@@ -307,6 +315,7 @@ void MovementPlayer::Reset()
 	this->duckBugged = false;
 	this->walkMoved = false;
 	this->oldWalkMoved = false;
+	this->inRealPerf = false;
 	this->inPerf = false;
 	this->jumped = false;
 	this->takeoffFromLadder = false;

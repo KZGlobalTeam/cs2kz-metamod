@@ -257,7 +257,14 @@ public:
 	bool duckBugged {};
 	bool walkMoved {};
 	bool oldWalkMoved {};
+
+private:
+	bool inRealPerf {};
+
+public:
 	bool inPerf {};
+	bool IsPerfing(bool framePerfect = false);
+
 	bool jumped {};
 	bool takeoffFromLadder {};
 	Vector lastValidLadderOrigin;
