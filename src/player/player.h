@@ -184,9 +184,9 @@ public:
 
 	// These following functions are called upon map change.
 	void OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1, CBufferString *pRejectReason);
-	void OnClientFullyConnect(CPlayerSlot slot);
 	void OnClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid);
 	void OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid);
+	void OnClientFullyConnect(CPlayerSlot slot);
 	void OnClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid, const char *pszNetworkID);
 
 	void OnClientVoice(CPlayerSlot slot);

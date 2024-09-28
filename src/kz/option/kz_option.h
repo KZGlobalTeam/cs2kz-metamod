@@ -71,6 +71,10 @@ public:
 	// Due to the way keyvalues3.h is written, we can't template these functions.
 	void SetPreferenceBool(const char *optionName, bool value)
 	{
+		if (!IsInitialized())
+		{
+			return;
+		}
 		prefKV.FindOrCreateMember(optionName)->SetBool(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -92,6 +96,10 @@ public:
 
 	void SetPreferenceFloat(const char *optionName, f64 value)
 	{
+		if (!IsInitialized())
+		{
+			return;
+		}
 		prefKV.FindOrCreateMember(optionName)->SetDouble(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -113,6 +121,10 @@ public:
 
 	void SetPreferenceInt(const char *optionName, i64 value)
 	{
+		if (!IsInitialized())
+		{
+			return;
+		}
 		prefKV.FindOrCreateMember(optionName)->SetInt64(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -134,6 +146,10 @@ public:
 
 	void SetPreferenceStr(const char *optionName, const char *value)
 	{
+		if (!IsInitialized())
+		{
+			return;
+		}
 		prefKV.FindOrCreateMember(optionName)->SetString(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -155,6 +171,10 @@ public:
 
 	void SetPreferenceVector(const char *optionName, const Vector &value)
 	{
+		if (!IsInitialized())
+		{
+			return;
+		}
 		prefKV.FindOrCreateMember(optionName)->SetVector(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -176,6 +196,10 @@ public:
 
 	void SetPreferenceTable(const char *optionName, const KeyValues3 &value)
 	{
+		if (!IsInitialized())
+		{
+			return;
+		}
 		KeyValues3 *option = prefKV.FindOrCreateMember(optionName);
 		option->SetToEmptyTable();
 		*option = value;

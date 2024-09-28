@@ -9,6 +9,9 @@
 #include "../db/kz_db.h"
 #include "../timer/kz_timer.h"
 #include "../language/kz_language.h"
+#include "../option/kz_option.h"
+#include "../telemetry/kz_telemetry.h"
+
 #include "utils/plat.h"
 
 static_global KZStyleManager styleManager;
@@ -21,6 +24,11 @@ public:
 	virtual void OnDatabaseSetup() override;
 } databaseEventListener;
 
+static_global class KZOptionServiceEventListener_Styles : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player) override;
+} optionEventListener;
+
 void KZ::style::InitStyleManager()
 {
 	static_persist bool initialized = false;
@@ -29,6 +37,7 @@ void KZ::style::InitStyleManager()
 		return;
 	}
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
+	KZOptionService::RegisterEventListener(&optionEventListener);
 	initialized = true;
 }
 
@@ -260,6 +269,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 	player->timerService->TimerStop();
 	player->styleServices.Tail()->Init();
 
+	player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
 	if (!silent)
 	{
 		player->languageService->PrintChat(true, false, "Style Added", info.longName);
@@ -286,6 +296,7 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 			}
 			player->styleServices.Remove(i);
 			delete style;
+			player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
 			return;
 		}
 	}
@@ -318,6 +329,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 			}
 			player->styleServices.Remove(i);
 			delete style;
+			player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
 			return;
 		}
 	}
@@ -356,7 +368,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	player->styleServices.AddToTail(info.factory(player));
 	player->timerService->TimerStop();
 	player->styleServices.Tail()->Init();
-
+	player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
 	if (!silent)
 	{
 		player->languageService->PrintChat(true, false, "Style Added", info.longName);
@@ -370,6 +382,7 @@ void KZStyleManager::ClearStyles(KZPlayer *player, bool silent)
 		player->styleServices[i]->Cleanup();
 	}
 	player->styleServices.PurgeAndDeleteElements();
+	player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
 	if (!silent)
 	{
 		player->languageService->PrintChat(true, false, "Styles Cleared");
@@ -388,6 +401,18 @@ void KZStyleManager::RefreshStyles(KZPlayer *player)
 	{
 		KZStyleManager::AddStyle(player, styles[i].longName, true);
 	}
+}
+
+CUtlString KZStyleManager::GetStylesString(KZPlayer *player)
+{
+	CUtlString result;
+	FOR_EACH_VEC(player->styleServices, i)
+	{
+		result.Append(player->styleServices[i]->GetStyleName());
+		result.Append(",");
+	}
+	result.TrimRight(',');
+	return result;
 }
 
 void KZStyleManager::PrintActiveStyles(KZPlayer *player)
@@ -423,8 +448,6 @@ void KZStyleManager::PrintAllStyles(KZPlayer *player)
 		// clang-format on
 	}
 }
-
-void KZ::style::InitStyleService(KZPlayer *player) {}
 
 void KZDatabaseServiceEventListener_Styles::OnDatabaseSetup()
 {
@@ -496,4 +519,19 @@ void KZ::style::RegisterCommands()
 	scmd::RegisterCmd("kz_addstyle", Command_KzAddStyle);
 	scmd::RegisterCmd("kz_removestyle", Command_KzRemoveStyle);
 	scmd::RegisterCmd("kz_clearstyles", Command_KzClearStyles);
+}
+
+void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *player)
+{
+	const char *styles = player->optionService->GetPreferenceStr("preferredStyles", KZOptionService::GetOptionStr("defaultStyles"));
+	// Give up changing styles if the player is already in the server for a while.
+	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
+	{
+		styleManager.ClearStyles(player, true);
+		CSplitString splitStyles(styles, ",");
+		FOR_EACH_VEC(splitStyles, i)
+		{
+			styleManager.AddStyle(player, splitStyles[i]);
+		}
+	}
 }

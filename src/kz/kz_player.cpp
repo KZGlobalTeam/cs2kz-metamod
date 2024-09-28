@@ -58,7 +58,6 @@ void KZPlayer::Init()
 	this->telemetryService = new KZTelemetryService(this);
 
 	KZ::mode::InitModeService(this);
-	KZ::style::InitStyleService(this);
 }
 
 void KZPlayer::Reset()
@@ -89,7 +88,7 @@ void KZPlayer::Reset()
 
 void KZPlayer::OnPlayerActive()
 {
-	// Refresh the convars because they couldn't receive the message when connecting.
+	// Mode/Styles stuff must be here for convars to be properly replicated.
 	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true);
 	g_pKZStyleManager->RefreshStyles(this);
 

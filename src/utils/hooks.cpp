@@ -691,7 +691,6 @@ static_function void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const c
 static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid,
 										   const char *pszNetworkID)
 {
-	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 	// Immediately remove the player off the list. We don't need to keep them around.
 	if (player->GetController())
@@ -708,6 +707,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	}
 	player->timerService->OnClientDisconnect();
 	player->optionService->OnClientDisconnect();
+	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
 

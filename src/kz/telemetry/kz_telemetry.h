@@ -37,5 +37,10 @@ public:
 		return activeStats.timeSpentInServer - activeStats.activeTime - activeStats.afkDuration;
 	}
 
+	f64 GetTimeInServer() const
+	{
+		return activeStats.timeSpentInServer;
+	}
+
 	void OnPhysicsSimulatePost();
 };

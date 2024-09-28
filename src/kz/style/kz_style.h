@@ -188,6 +188,7 @@ public:
 	void ToggleStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void ClearStyles(KZPlayer *player, bool silent = false);
 	void RefreshStyles(KZPlayer *player);
+	CUtlString GetStylesString(KZPlayer *player);
 	void PrintActiveStyles(KZPlayer *player);
 	void PrintAllStyles(KZPlayer *player);
 
@@ -198,7 +199,6 @@ extern KZStyleManager *g_pKZStyleManager;
 
 namespace KZ::style
 {
-	void InitStyleService(KZPlayer *player);
 	void InitStyleManager();
 	void LoadStylePlugins();
 	void UpdateStyleDatabaseID(CUtlString name, i32 id);

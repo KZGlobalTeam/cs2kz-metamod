@@ -79,7 +79,6 @@ void KZDatabaseService::SetupClient()
 			{
 				bool isCheater = (result->FetchRow() && result->GetInt(0) == 1);
 				const char *prefs = result->GetString(1);
-				META_CONPRINTF("SetupClient done, steamID %lld\n", steamID64);
 				this->isSetUp = true;
 				pl->optionService->InitializeLocalPrefs(prefs);
 				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isCheater);

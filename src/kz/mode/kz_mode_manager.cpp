@@ -9,6 +9,9 @@
 #include "../timer/kz_timer.h"
 #include "../language/kz_language.h"
 #include "../db/kz_db.h"
+#include "../option/kz_option.h"
+#include "../telemetry/kz_telemetry.h"
+
 #include "utils/simplecmds.h"
 #include "utils/plat.h"
 
@@ -25,6 +28,11 @@ static_global class KZDatabaseServiceEventListener_Modes : public KZDatabaseServ
 public:
 	virtual void OnDatabaseSetup() override;
 } databaseEventListener;
+
+static_global class KZOptionServiceEventListener_Modes : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player) override;
+} optionEventListener;
 
 bool KZ::mode::InitModeCvars()
 {
@@ -53,6 +61,7 @@ void KZ::mode::InitModeManager()
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService * { return new KZVanillaModeService(player); };
 	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
+	KZOptionService::RegisterEventListener(&optionEventListener);
 	initialized = true;
 }
 
@@ -302,8 +311,11 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	}
 
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), KZ::mode::numCvar);
+
 	player->SetVelocity({0, 0, 0});
 	player->jumpstatsService->InvalidateJumpstats("Externally modified");
+
+	player->optionService->SetPreferenceStr("preferredMode", modeName);
 	return true;
 }
 
@@ -423,4 +435,14 @@ void KZDatabaseServiceEventListener_Modes::OnDatabaseSetup()
 		}
 	}
 	KZDatabaseService::UpdateModeIDs();
+}
+
+void KZOptionServiceEventListener_Modes::OnPlayerPreferencesLoaded(KZPlayer *player)
+{
+	const char *mode = player->optionService->GetPreferenceStr("preferredMode", KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE));
+	// Give up changing modes if the player is already in the server for a while.
+	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
+	{
+		modeManager.SwitchToMode(player, mode, false, false);
+	}
 }
