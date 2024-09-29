@@ -1,12 +1,28 @@
 #include "../kz.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
+#include "utils/tables.h"
 
 #include "kz_jumpstats.h"
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
 #include "../option/kz_option.h"
 #include "../language/kz_language.h"
+
+static_global const char *columnKeys[] = {"#.",
+										  "Sync",
+										  "Gain",
+										  "",
+										  "Loss",
+										  "",
+										  "Max",
+										  "Air Time",
+										  "Bad Angles (Short)",
+										  "Overlap (Short)",
+										  "Dead Air (Short)",
+										  "Average Gain (Short)",
+										  "Gain Efficiency (Short)",
+										  "Angle Ratio"};
 
 std::string Jump::GetInvalidationReasonString(const char *reason, const char *language)
 {
@@ -90,25 +106,20 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetDuckTime(false)
 	);
 	
-	target->languageService->PrintConsole(false, true, "Jumpstats Report - Strafe Report Header",
-		KZLanguageService::PrepareMessageWithLang(language, "Sync").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Gain").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Loss").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Max").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Air Time").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Bad Angles (Short)").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Overlap (Short)").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Dead Air (Short)").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Average Gain (Short)").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Gain Efficiency (Short)").c_str(),
-		KZLanguageService::PrepareMessageWithLang(language, "Angle Ratio").c_str()
-	);
-
+	CUtlString headers[Q_ARRAYSIZE(columnKeys)];
+	for (u32 i = 0; i < Q_ARRAYSIZE(columnKeys); i++)
+	{
+		headers[i] = target->languageService->PrepareMessage(columnKeys[i]).c_str();
+	}
+	utils::Table<Q_ARRAYSIZE(columnKeys)> table("", headers);
+	
 	FOR_EACH_VEC(jump->strafes, i)
 	{
+		char strafeNumberString[5];
 		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
 		char badAngleString[16], overlapString[16], deadAirString[16], avgGainString[16], gainEffString[16];
 		char angRatioString[32];
+		V_snprintf(strafeNumberString, sizeof(strafeNumberString), "%i.", i+1);
 		V_snprintf(syncString, sizeof(syncString), "%.0f%%%%", jump->strafes[i].GetSync() * 100.0f);
 		V_snprintf(gainString, sizeof(gainString), "%.2f", jump->strafes[i].GetGain());
 		V_snprintf(externalGainString, sizeof(externalGainString), "(+%.2f)", fabs(jump->strafes[i].GetGain(true)));
@@ -116,9 +127,9 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		V_snprintf(externalLossString, sizeof(externalLossString), "(-%.2f)", fabs(jump->strafes[i].GetLoss(true)));
 		V_snprintf(maxString, sizeof(maxString), "%.2f", jump->strafes[i].GetStrafeMaxSpeed());
 		V_snprintf(durationString, sizeof(durationString), "%.3f", jump->strafes[i].GetStrafeDuration());
-		V_snprintf(badAngleString, sizeof(badAngleString), "%.0f%%%%", jump->strafes[i].GetBadAngleDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
-		V_snprintf(overlapString, sizeof(overlapString), "%.0f%%%%", jump->strafes[i].GetOverlapDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
-		V_snprintf(deadAirString, sizeof(deadAirString), "%.0f%%%%", jump->strafes[i].GetDeadAirDuration() / jump->strafes[i].GetStrafeDuration() * 100.0f);
+		V_snprintf(badAngleString, sizeof(badAngleString), "%.1f", jump->strafes[i].GetBadAngleDuration() * ENGINE_FIXED_TICK_RATE);
+		V_snprintf(overlapString, sizeof(overlapString), "%.1f", jump->strafes[i].GetOverlapDuration() * ENGINE_FIXED_TICK_RATE);
+		V_snprintf(deadAirString, sizeof(deadAirString), "%.1f", jump->strafes[i].GetDeadAirDuration() * ENGINE_FIXED_TICK_RATE);
 		V_snprintf(avgGainString, sizeof(avgGainString), "%.2f", jump->strafes[i].GetGain() / jump->strafes[i].GetStrafeDuration() * ENGINE_FIXED_TICK_INTERVAL);
 		V_snprintf(gainEffString, sizeof(gainEffString), "%.0f%%%%", jump->strafes[i].GetGain() / jump->strafes[i].GetMaxGain() * 100.0f);
 
@@ -136,8 +147,8 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
 		}
 
-		target->languageService->PrintConsole(false, true, "Jumpstats Report - Strafe Report",
-			i + 1,
+		table.SetRow(i,
+			strafeNumberString,
 			syncString,
 			gainString,
 			externalGainString,
@@ -153,8 +164,16 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 			angRatioString
 		);
 	}
-
 	// clang-format on
+
+	if (jump->strafes.Count() > 0)
+	{
+		target->PrintConsole(false, false, table.GetHeader());
+		for (u32 i = 0; i < table.GetNumEntries(); i++)
+		{
+			target->PrintConsole(false, false, table.GetLine(i));
+		}
+	}
 }
 
 void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)

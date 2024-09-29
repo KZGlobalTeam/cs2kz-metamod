@@ -102,6 +102,14 @@ namespace utils
 			{
 				CUtlString value;
 				value.Format("%-*s%s", columnLengths[i], headers[i].Get(), i == columnCount - 1 ? "" : "  ");
+				for (i32 i = 0; i < value.Length() - 1; i++)
+				{
+					if (value[i] == '%' && value[i + 1] == '%')
+					{
+						value.Append(" ");
+						i++;
+					}
+				}
 				result.Append(value.Get());
 			}
 			return result;
@@ -118,6 +126,14 @@ namespace utils
 			{
 				CUtlString value;
 				value.Format("%-*s%s", columnLengths[i], entries[row].data[i].Get(), i == columnCount - 1 ? "" : "  ");
+				for (i32 i = 0; i < value.Length() - 1; i++)
+				{
+					if (value[i] == '%' && value[i + 1] == '%')
+					{
+						value.Append(" ");
+						i++;
+					}
+				}
 				result.Append(value.Get());
 			}
 			return result;
