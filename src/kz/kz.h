@@ -43,6 +43,7 @@ class KZStyleService;
 class KZTelemetryService;
 class KZTimerService;
 class KZTipService;
+class KZTriggerService;
 
 class KZPlayer : public MovementPlayer
 {
@@ -125,15 +126,6 @@ public:
 	virtual void OnChangeTeamPost(i32 team) override;
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
-	// Timer events
-	void StartZoneStartTouch();
-	void StartZoneEndTouch();
-	void EndZoneStartTouch();
-
-	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
-	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
-	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
-
 	void PlayErrorSound();
 
 private:
@@ -161,6 +153,7 @@ public:
 	KZTelemetryService *telemetryService {};
 	KZTimerService *timerService {};
 	KZTipService *tipService {};
+	KZTriggerService *triggerService {};
 
 	void EnableGodMode();
 

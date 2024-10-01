@@ -16,6 +16,7 @@
 #include "telemetry/kz_telemetry.h"
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
+#include "trigger/kz_trigger.h"
 
 #include "sdk/entity/cbasetrigger.h"
 
@@ -42,6 +43,7 @@ void KZPlayer::Init()
 	delete this->noclipService;
 	delete this->tipService;
 	delete this->telemetryService;
+	delete this->triggerService;
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -56,6 +58,7 @@ void KZPlayer::Init()
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
 	this->telemetryService = new KZTelemetryService(this);
+	this->triggerService = new KZTriggerService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -76,6 +79,7 @@ void KZPlayer::Reset()
 	this->hudService->Reset();
 	this->timerService->Reset();
 	this->specService->Reset();
+	this->triggerService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
@@ -109,6 +113,7 @@ META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
 void KZPlayer::OnPhysicsSimulate()
 {
 	MovementPlayer::OnPhysicsSimulate();
+	this->triggerService->OnPhysicsSimulate();
 	this->modeService->OnPhysicsSimulate();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -119,6 +124,7 @@ void KZPlayer::OnPhysicsSimulate()
 void KZPlayer::OnPhysicsSimulatePost()
 {
 	MovementPlayer::OnPhysicsSimulatePost();
+	this->triggerService->OnPhysicsSimulatePost();
 	this->telemetryService->OnPhysicsSimulatePost();
 	this->modeService->OnPhysicsSimulatePost();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -673,27 +679,6 @@ void KZPlayer::EnableGodMode()
 	}
 }
 
-void KZPlayer::StartZoneStartTouch()
-{
-	this->checkpointService->ResetCheckpoints();
-	this->timerService->StartZoneStartTouch();
-}
-
-void KZPlayer::StartZoneEndTouch()
-{
-	if (!this->noclipService->IsNoclipping())
-	{
-		this->checkpointService->ResetCheckpoints();
-		this->timerService->StartZoneEndTouch();
-	}
-}
-
-void KZPlayer::EndZoneStartTouch()
-{
-	// TODO: get course name
-	this->timerService->TimerEnd("Main");
-}
-
 void KZPlayer::UpdatePlayerModelAlpha()
 {
 	CCSPlayerPawn *pawn = this->GetPlayerPawn();
@@ -730,113 +715,12 @@ void KZPlayer::PlayErrorSound()
 
 void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, const bbox_t &bounds)
 {
-	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
-	{
-		return;
-	}
-	CTraceFilterHitAllTriggers filter;
-	trace_t tr;
-	g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, tr);
-	FOR_EACH_VEC(filter.hitTriggerHandles, i)
-	{
-		CEntityHandle handle = filter.hitTriggerHandles[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
-		{
-			continue;
-		}
-		if (!this->touchedTriggers.HasElement(handle))
-		{
-			this->GetPlayerPawn()->StartTouch(trigger);
-			trigger->StartTouch(this->GetPlayerPawn());
-			this->GetPlayerPawn()->Touch(trigger);
-			trigger->Touch(this->GetPlayerPawn());
-		}
-	}
+	this->triggerService->TouchTriggersAlongPath(start, end, bounds);
 }
 
 void KZPlayer::UpdateTriggerTouchList()
 {
-	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
-	{
-		FOR_EACH_VEC(this->touchedTriggers, i)
-		{
-			CBaseTrigger *trigger = static_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(this->touchedTriggers[i]));
-			trigger->EndTouch(this->GetPlayerPawn());
-			this->GetPlayerPawn()->EndTouch(trigger);
-		}
-		return;
-	}
-	Vector origin;
-	this->GetOrigin(&origin);
-	bbox_t bounds;
-	this->GetBBoxBounds(&bounds);
-	CTraceFilterHitAllTriggers filter;
-	trace_t tr;
-	g_pKZUtils->TracePlayerBBox(origin, origin, bounds, &filter, tr);
-
-	FOR_EACH_VEC(this->touchedTriggers, i)
-	{
-		CEntityHandle handle = this->touchedTriggers[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger)
-		{
-			this->touchedTriggers.Remove(i);
-			continue;
-		}
-		if (!filter.hitTriggerHandles.HasElement(handle))
-		{
-			this->GetPlayerPawn()->EndTouch(trigger);
-			trigger->EndTouch(this->GetPlayerPawn());
-		}
-	}
-
-	FOR_EACH_VEC(filter.hitTriggerHandles, i)
-	{
-		CEntityHandle handle = filter.hitTriggerHandles[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
-		{
-			continue;
-		}
-		if (!this->touchedTriggers.HasElement(handle))
-		{
-			trigger->StartTouch(this->GetPlayerPawn());
-			trigger->Touch(this->GetPlayerPawn());
-			this->GetPlayerPawn()->StartTouch(trigger);
-			this->GetPlayerPawn()->Touch(trigger);
-		}
-	}
-}
-
-bool KZPlayer::OnTriggerStartTouch(CBaseTrigger *trigger)
-{
-	bool retValue = this->modeService->OnTriggerStartTouch(trigger);
-	FOR_EACH_VEC(this->styleServices, i)
-	{
-		retValue &= this->styleServices[i]->OnTriggerStartTouch(trigger);
-	}
-	return retValue;
-}
-
-bool KZPlayer::OnTriggerTouch(CBaseTrigger *trigger)
-{
-	bool retValue = this->modeService->OnTriggerTouch(trigger);
-	FOR_EACH_VEC(this->styleServices, i)
-	{
-		retValue &= this->styleServices[i]->OnTriggerTouch(trigger);
-	}
-	return retValue;
-}
-
-bool KZPlayer::OnTriggerEndTouch(CBaseTrigger *trigger)
-{
-	bool retValue = this->modeService->OnTriggerEndTouch(trigger);
-	FOR_EACH_VEC(this->styleServices, i)
-	{
-		retValue &= this->styleServices[i]->OnTriggerEndTouch(trigger);
-	}
-	return retValue;
+	this->triggerService->UpdateTriggerTouchList();
 }
 
 void KZPlayer::OnChangeTeamPost(i32 team)
