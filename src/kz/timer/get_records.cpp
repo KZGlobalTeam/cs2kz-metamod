@@ -313,18 +313,18 @@ void RecordRequest::SetupCourse(KZPlayer *callingPlayer)
 		if (this->mapName == currentMap)
 		{
 			// Try to get the player's current course.
-			char course[KZ_MAX_COURSE_NAME_LENGTH];
-			callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
-			if (course[0])
+			const KzCourseDescriptor *courseDescriptor = callingPlayer->timerService->GetCourse();
+			if (courseDescriptor)
 			{
-				courseName = course;
+				courseName = courseDescriptor->name;
 			}
 			else // No course? Take the map's first course.
 			{
 				KZ::timer::CourseInfo info;
 				if (!KZ::timer::GetFirstCourseInformation(info))
 				{
-					recReqQueueManager.InvalidLocal(this->uid, "Record Request - Invalid Course Name", course);
+					// TODO: use a better message
+					recReqQueueManager.InvalidLocal(this->uid, "Record Request - Invalid Course Name", "");
 					return;
 				}
 				courseName = info.courseName;

@@ -515,18 +515,18 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 		if (mapName == currentMap)
 		{
 			// Try to get the player's current course.
-			char course[KZ_MAX_COURSE_NAME_LENGTH];
-			callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
-			if (course[0])
+			const KzCourseDescriptor *courseDescriptor = callingPlayer->timerService->GetCourse();
+			if (courseDescriptor)
 			{
-				courseName = course;
+				courseName = courseDescriptor->name;
 			}
 			else // No course? Take the map's first course.
 			{
 				KZ::timer::CourseInfo info;
 				if (!KZ::timer::GetFirstCourseInformation(info))
 				{
-					pbReqQueueManager.InvalidLocal(this->uid, "PB Request - Invalid Course Name", course);
+					// TODO: use a better message
+					pbReqQueueManager.InvalidLocal(this->uid, "PB Request - Invalid Course Name", "");
 					return;
 				}
 				courseName = info.courseName;

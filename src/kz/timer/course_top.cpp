@@ -365,18 +365,18 @@ void CourseTopRequest::SetupCourse(KZPlayer *callingPlayer)
 		if (this->mapName == currentMap)
 		{
 			// Try to get the player's current course.
-			char course[KZ_MAX_COURSE_NAME_LENGTH];
-			callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
-			if (course[0])
+			const KzCourseDescriptor *courseDescriptor = callingPlayer->timerService->GetCourse();
+			if (courseDescriptor)
 			{
-				courseName = course;
+				courseName = courseDescriptor->name;
 			}
 			else // No course? Take the map's first course.
 			{
 				KZ::timer::CourseInfo info;
 				if (!KZ::timer::GetFirstCourseInformation(info))
 				{
-					ctopReqQueueManager.InvalidLocal(this->uid, "Course Top Request - Invalid Course Name", course);
+					// TODO: use a better message
+					ctopReqQueueManager.InvalidLocal(this->uid, "Course Top Request - Invalid Course Name", "");
 					return;
 				}
 				courseName = info.courseName;
