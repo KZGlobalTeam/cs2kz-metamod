@@ -4,6 +4,7 @@
 #include "../timer/kz_timer.h"
 #include "../noclip/kz_noclip.h"
 #include "../language/kz_language.h"
+#include "kz/trigger/kz_trigger.h"
 #include "utils/utils.h"
 
 static_global class KZOptionServiceEventListener_Checkpoint : public KZOptionServiceEventListener
@@ -82,9 +83,10 @@ void KZCheckpointService::SetCheckpoint()
 		return;
 	}
 
-	if (this->player->modifiers.disableCheckpointsCount > 0)
+	if (!this->player->triggerService->CanPlaceCheckpoints())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Anti Checkpoint Area)");
+		this->player->PlayErrorSound();
 		return;
 	}
 
@@ -92,6 +94,7 @@ void KZCheckpointService::SetCheckpoint()
 	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Midair)");
+		this->player->PlayErrorSound();
 		return;
 	}
 
@@ -124,16 +127,19 @@ void KZCheckpointService::UndoTeleport()
 	if (this->checkpoints.Count() <= 0 || this->undoTeleportData.origin.IsZero() || this->tpCount <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (No Teleports)");
+		this->player->PlayErrorSound();
 		return;
 	}
 	if (!this->undoTeleportData.teleportOnGround)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (TP Was Midair)");
+		this->player->PlayErrorSound();
 		return;
 	}
 	if (this->undoTeleportData.teleportInAntiCpTrigger)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (AntiCp)");
+		this->player->PlayErrorSound();
 		return;
 	}
 
@@ -145,6 +151,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 	if (this->checkpoints.Count() <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
+		this->player->PlayErrorSound();
 		return;
 	}
 	this->DoTeleport(this->checkpoints[this->currentCpIndex]);
@@ -158,9 +165,10 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp)
 		return;
 	}
 
-	if (this->player->modifiers.disableTeleportsCount > 0)
+	if (!this->player->triggerService->CanTeleportToCheckpoints())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (Map)");
+		this->player->PlayErrorSound();
 		return;
 	}
 
@@ -252,6 +260,7 @@ void KZCheckpointService::TpToPrevCp()
 	if (this->checkpoints.Count() <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
+		this->player->PlayErrorSound();
 		return;
 	}
 	this->currentCpIndex = MAX(0, this->currentCpIndex - 1);
@@ -263,6 +272,7 @@ void KZCheckpointService::TpToNextCp()
 	if (this->checkpoints.Count() <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
+		this->player->PlayErrorSound();
 		return;
 	}
 	this->currentCpIndex = MIN(this->currentCpIndex + 1, this->checkpoints.Count() - 1);
@@ -329,6 +339,7 @@ void KZCheckpointService::SetStartPosition()
 	if (!pawn)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Set Custom Start Position (Generic)");
+		this->player->PlayErrorSound();
 		return;
 	}
 	this->hasCustomStartPosition = true;

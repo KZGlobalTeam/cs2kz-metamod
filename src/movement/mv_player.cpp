@@ -246,6 +246,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	this->inRealPerf = false;
 	this->landingOrigin = mv->m_vecAbsOrigin;
 	this->landingTime = g_pKZUtils->GetGlobals()->curtime;
+	this->landingTimeServer = g_pKZUtils->GetServerGlobals()->curtime;
 	this->landingVelocity = landingVelocity;
 	if (!distbugFix)
 	{
@@ -327,6 +328,7 @@ void MovementPlayer::Reset()
 	this->landingOrigin.Init();
 	this->landingVelocity.Init();
 	this->landingTime = 0.0f;
+	this->landingTimeServer = 0.0f;
 	this->landingOriginActual.Init();
 	this->landingTimeActual = 0.0f;
 	this->collidingWithWorld = false;

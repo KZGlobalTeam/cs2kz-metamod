@@ -5,6 +5,7 @@
 #include "kz/kz.h"
 #include "kz/course/kz_course.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/trigger/kz_trigger.h"
 #include "movement/movement.h"
 #include "kz_mappingapi.h"
 #include "entity2/entitykeyvalues.h"
@@ -293,7 +294,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			V_snprintf(trigger.teleport.destination, sizeof(trigger.teleport.destination), "%s", destination);
 			trigger.teleport.delay = ekv->GetFloat("timer_teleport_delay", 0);
 			trigger.teleport.delay = MAX(trigger.teleport.delay, 0);
-			if (g_mappingInterface.IsBhopTrigger(type))
+			if (KZ::mapapi::IsBhopTrigger(type))
 			{
 				trigger.teleport.delay = MAX(trigger.teleport.delay, 0.1);
 			}
@@ -344,7 +345,7 @@ static_function void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
 	const char *courseName = ekv->GetString("timer_course_name");
 	const char *targetName = ekv->GetString("targetname");
 	constexpr static_persist const char *targetNamePrefix = "[PR#]";
-	if (V_strncmp(targetName, targetNamePrefix, sizeof(targetNamePrefix)))
+	if (!V_strncmp(targetName, targetNamePrefix, strlen(targetNamePrefix)))
 	{
 		targetName = targetName + strlen(targetNamePrefix);
 	}
@@ -375,28 +376,26 @@ static_function void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
 
 static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 {
-	KzTrigger *result = nullptr;
 	if (!trigger->m_pEntity)
 	{
-		return result;
+		return nullptr;
 	}
 
 	CEntityHandle triggerHandle = trigger->GetRefEHandle();
 	if (!trigger || !triggerHandle.IsValid() || trigger->m_pEntity->m_flags & EF_IS_INVALID_EHANDLE)
 	{
-		return result;
+		return nullptr;
 	}
 
 	FOR_EACH_VEC(g_mappingApi.triggers, i)
 	{
 		if (triggerHandle == g_mappingApi.triggers[i].entity)
 		{
-			result = &g_mappingApi.triggers[i];
-			break;
+			return &g_mappingApi.triggers[i];
 		}
 	}
 
-	return result;
+	return nullptr;
 }
 
 static_function KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
@@ -672,65 +671,25 @@ void KZ::mapapi::OnRoundStart()
 	}
 }
 
-void KZ::mapapi::OnProcessMovement(KZPlayer *player)
+const KzTrigger *KZ::mapapi::GetKzTrigger(CBaseTrigger *trigger)
 {
-	// TODO: Move this to trigger service
-	/*
-		NOTE:
-		1. To prevent multiplayer bugs, make sure that all of these cvars are part of the mode convars.
-		2. Maybe this should apply directly during movement processing for the sake of accuracy?
-	*/
-
-	// apply slide
-	if (player->modifiers.enableSlideCount > 0)
-	{
-		bool replicate = !player->lastModifiers.enableSlideCount;
-		CUtlString aaValue = player->ComputeCvarValueFromModeStyles("sv_airaccelerate");
-		aaValue.Format("%f", atof(aaValue.Get()) * 4.0);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", "2", replicate);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", "2", replicate);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue.Get(), replicate);
-	}
-	else if (player->lastModifiers.enableSlideCount > 0)
-	{
-		CUtlString standableValue = player->ComputeCvarValueFromModeStyles("sv_standable_normal");
-		CUtlString walkableValue = player->ComputeCvarValueFromModeStyles("sv_walkable_normal");
-		CUtlString aaValue = player->ComputeCvarValueFromModeStyles("sv_airaccelerate");
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue.Get(), true);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableValue.Get(), true);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableValue.Get(), true);
-	}
-
-	// apply antibhop
-	if (player->antiBhopActive)
-	{
-		bool replicate = !player->lastAntiBhopActive;
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", "0.0", replicate);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", "false", replicate);
-		player->GetMoveServices()->m_bOldJumpPressed() = true;
-	}
-	else if (player->lastAntiBhopActive)
-	{
-		CUtlString impulseModeValue = player->ComputeCvarValueFromModeStyles("sv_jump_impulse");
-		CUtlString spamModeValue = player->ComputeCvarValueFromModeStyles("sv_jump_spam_penalty_time");
-		CUtlString autoBhopValue = player->ComputeCvarValueFromModeStyles("sv_autobunnyhopping");
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", impulseModeValue.Get(), true);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue.Get(), true);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue.Get(), true);
-	}
+	return Mapi_FindKzTrigger(trigger);
 }
 
-void KZ::mapapi::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
+const KZCourseDescriptor *KZ::mapapi::GetCourseDescriptorFromTrigger(CBaseTrigger *trigger)
 {
-	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
-	if (!touched)
+	KzTrigger *kzTrigger = Mapi_FindKzTrigger(trigger);
+	if (!kzTrigger)
 	{
-		return;
+		return nullptr;
 	}
+	return KZ::mapapi::GetCourseDescriptorFromTrigger(kzTrigger);
+}
 
+const KZCourseDescriptor *KZ::mapapi::GetCourseDescriptorFromTrigger(const KzTrigger *trigger)
+{
 	const KZCourseDescriptor *course = nullptr;
-	switch (touched->type)
+	switch (trigger->type)
 	{
 		case KZTRIGGER_ZONE_START:
 		case KZTRIGGER_ZONE_END:
@@ -738,59 +697,24 @@ void KZ::mapapi::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger 
 		case KZTRIGGER_ZONE_CHECKPOINT:
 		case KZTRIGGER_ZONE_STAGE:
 		{
-			course = Mapi_FindCourse(touched->zone.courseDescriptor);
+			course = Mapi_FindCourse(trigger->zone.courseDescriptor);
 			if (!course)
 			{
-				utils::CPrintChatAll("%strigger_multiple StartTouch: Couldn't find course descriptor from name \"%s\"! Trigger's Hammer Id: %i",
-									 g_errorPrefix, touched->zone.courseDescriptor, touched->hammerId);
-				return;
+				Mapi_Error("%s: Couldn't find course descriptor from name \"%s\"! Trigger's Hammer Id: %i", g_errorPrefix,
+						   trigger->zone.courseDescriptor, trigger->hammerId);
 			}
 		}
 		break;
 	}
-
-	player->MappingApiTriggerStartTouch(touched, course);
-}
-
-void KZ::mapapi::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger)
-{
-	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
-	if (!touched)
-	{
-		return;
-	}
-
-	const KZCourseDescriptor *course = nullptr;
-	switch (touched->type)
-	{
-		case KZTRIGGER_ZONE_START:
-		case KZTRIGGER_ZONE_END:
-		case KZTRIGGER_ZONE_SPLIT:
-		case KZTRIGGER_ZONE_CHECKPOINT:
-		case KZTRIGGER_ZONE_STAGE:
-		{
-			course = Mapi_FindCourse(touched->zone.courseDescriptor);
-			if (!course)
-			{
-				utils::CPrintChatAll("%strigger_multiple EndTouch: Couldn't find course descriptor from name \"%s\"! Trigger's Hammer Id: %i",
-									 g_errorPrefix, touched->zone.courseDescriptor, touched->hammerId);
-				return;
-			}
-		}
-		break;
-	}
-
-	player->MappingApiTriggerEndTouch(touched, course);
+	return course;
 }
 
 bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
 {
-	KzTrigger *mvTrigger = Mapi_FindKzTrigger(trigger);
-	if (!mvTrigger)
+	KzTrigger *kzTrigger = Mapi_FindKzTrigger(trigger);
+	if (!kzTrigger)
 	{
 		return false;
 	}
-	static_assert(KZTRIGGER_ZONE_START == 5 && KZTRIGGER_ZONE_STAGE == 9,
-				  "Don't forget to change this function when changing the KzTriggerType enum!!!");
-	return mvTrigger->type >= KZTRIGGER_ZONE_START && mvTrigger->type <= KZTRIGGER_ZONE_STAGE;
+	return KZ::mapapi::IsTimerTrigger(kzTrigger->type);
 }

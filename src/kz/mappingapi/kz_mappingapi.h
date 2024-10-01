@@ -122,13 +122,6 @@ struct KzTrigger
 	};
 };
 
-struct KzTouchingTrigger
-{
-	const KzTrigger *trigger;
-	f32 startTouchTime {};
-	f32 groundTouchTime {};
-};
-
 namespace KZ::mapapi
 {
 	// These namespace'd functions are called when relevant game events happen, and are somewhat in order.
@@ -137,9 +130,24 @@ namespace KZ::mapapi
 	void OnRoundPrestart();
 	void OnSpawn(int count, const EntitySpawnInfo_t *info);
 	void OnRoundStart();
-	void OnProcessMovement(KZPlayer *player);
-	void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
-	void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
+
+	// This is const, unlike the trigger returned from Mapi_FindKzTrigger.
+	const KzTrigger *GetKzTrigger(CBaseTrigger *trigger);
+
+	const KZCourseDescriptor *GetCourseDescriptorFromTrigger(CBaseTrigger *trigger);
+	const KZCourseDescriptor *GetCourseDescriptorFromTrigger(const KzTrigger *trigger);
+
+	inline bool IsBhopTrigger(KzTriggerType triggerType)
+	{
+		return triggerType == KZTRIGGER_MULTI_BHOP || triggerType == KZTRIGGER_SINGLE_BHOP || triggerType == KZTRIGGER_SEQUENTIAL_BHOP;
+	}
+
+	inline bool IsTimerTrigger(KzTriggerType triggerType)
+	{
+		static_assert(KZTRIGGER_ZONE_START == 5 && KZTRIGGER_ZONE_STAGE == 9,
+					  "Don't forget to change this function when changing the KzTriggerType enum!!!");
+		return triggerType >= KZTRIGGER_ZONE_START && triggerType <= KZTRIGGER_ZONE_STAGE;
+	}
 } // namespace KZ::mapapi
 
 // Exposed interface to modes.
@@ -147,11 +155,6 @@ class MappingInterface
 {
 public:
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
-
-	virtual bool IsBhopTrigger(KzTriggerType triggerType)
-	{
-		return triggerType == KZTRIGGER_MULTI_BHOP || triggerType == KZTRIGGER_SINGLE_BHOP || triggerType == KZTRIGGER_SEQUENTIAL_BHOP;
-	}
 };
 
 extern MappingInterface *g_pMappingApi;

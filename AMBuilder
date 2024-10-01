@@ -154,6 +154,10 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'personal_best.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
+    
+    os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'callbacks.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'kz_trigger.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'mapping_api.cpp'),
   ]
 
   binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = PROTOS)]

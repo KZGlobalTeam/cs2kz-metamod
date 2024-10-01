@@ -43,12 +43,12 @@ MovementPlayerManager *playerManager = static_cast<MovementPlayerManager *>(g_pP
 
 void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 {
-	g_KZPlugin.simulatingPhysics = true;
-	MovementPlayer *player = playerManager->ToPlayer(controller);
 	if (controller->m_bIsHLTV)
 	{
 		return;
 	}
+	g_KZPlugin.simulatingPhysics = true;
+	MovementPlayer *player = playerManager->ToPlayer(controller);
 	player->OnPhysicsSimulate();
 	PhysicsSimulate(controller);
 	player->OnPhysicsSimulatePost();

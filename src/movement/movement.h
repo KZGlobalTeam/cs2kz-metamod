@@ -276,6 +276,7 @@ public:
 
 	Vector landingOrigin;
 	Vector landingVelocity;
+	f32 landingTimeServer {};
 	f32 landingTime {};
 	Vector landingOriginActual;
 	f32 landingTimeActual {};
