@@ -23,8 +23,6 @@ static_global struct
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
 	CUtlVectorFixed<KzCourseDescriptor, 512> courses;
 
-	i32 mapApiVersion;
-
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
@@ -40,6 +38,7 @@ static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset
 											  "Teleport",   "Multi bhop", "Single bhop",       "Sequential bhop"};
 
 static_function MappingInterface g_mappingInterface;
+static_global i32 mapApiVersion = KZ_NO_MAPAPI_VERSION;
 MappingInterface *g_pMappingApi = nullptr;
 
 // TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
@@ -81,6 +80,35 @@ static_function f64 Mapi_PrintErrors()
 	}
 
 	return 60.0;
+}
+
+static_function void Mapi_CreateCourse(KzCourseDescriptor &descriptor)
+{
+	auto currentCourses = g_mappingApi.courses;
+	FOR_EACH_VEC(currentCourses, i)
+	{
+		if (currentCourses[i].hammerId == descriptor.hammerId)
+		{
+			// This should only happen during start/end zone backwards compat where hammer IDs are KZ_NO_MAPAPI_VERSION, so this is not an error.
+			return;
+		}
+		if (!V_stricmp(descriptor.name, currentCourses[i].name))
+		{
+			Mapi_Error("Course descriptor name '%s' already existed! (registered by Hammer ID %i)", descriptor.name, currentCourses[i].hammerId);
+			return;
+		}
+		if (descriptor.number == currentCourses[i].number)
+		{
+			Mapi_Error("Course descriptor number %i already existed! (registered by Hammer ID %i)", descriptor.number, currentCourses[i].hammerId);
+			return;
+		}
+		if (!V_stricmp(descriptor.entityTargetname, currentCourses[i].entityTargetname))
+		{
+			Mapi_Error("Course name '%s' already existed! (registered by Hammer ID %i)", descriptor.entityTargetname, currentCourses[i].hammerId);
+			return;
+		}
+	}
+	g_mappingApi.courses.AddToTail(descriptor);
 }
 
 // Example keyvalues:
@@ -239,6 +267,27 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		break;
 
+		case KZTRIGGER_DISABLED:
+		{
+			// This behavior depends on the fact that worldent is the first thing to spawn.
+			// Check for pre-mapping api triggers for backwards compatibility.
+			if (mapApiVersion == -1)
+			{
+				if (info->m_pEntity->NameMatches("timer_startzone") || info->m_pEntity->NameMatches("timer_endzone"))
+				{
+					snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), "Default");
+					trigger.type = info->m_pEntity->NameMatches("timer_startzone") ? KZTRIGGER_ZONE_START : KZTRIGGER_ZONE_END;
+					// Manually create a "Main" course here because there shouldn't be any info_target_server_only around.
+					KzCourseDescriptor course;
+					course.number = 1;
+					snprintf(course.entityTargetname, sizeof(course.entityTargetname), "Default");
+					snprintf(course.name, sizeof(course.name), "Main");
+					Mapi_CreateCourse(course);
+				}
+			}
+			break;
+			// Otherwise these are just regular trigger_multiple.
+		}
 		default:
 		{
 			// technically impossible to happen, leave an assert here anyway for debug builds.
@@ -302,7 +351,7 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 
 	course.disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
 
-	g_mappingApi.courses.AddToTail(course);
+	Mapi_CreateCourse(course);
 }
 
 static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
@@ -556,7 +605,44 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 	player->MappingApiTriggerEndTouch(touched, course);
 }
 
-void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
+void MappingInterface::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues)
+{
+	if (!pKeyValues)
+	{
+		return;
+	}
+	g_mappingApi = {};
+	for (i32 i = 0; i < pKeyValues->Count(); i++)
+	{
+		auto ekv = (*pKeyValues)[i];
+
+		if (!ekv)
+		{
+			continue;
+		}
+		const char *classname = ekv->GetString("classname");
+		if (V_stricmp(classname, "worldspawn") == 0)
+		{
+			mapApiVersion = ekv->GetInt("timer_mapping_api_version", KZ_NO_MAPAPI_VERSION);
+			// NOTE(GameChaos): When a new mapping api version comes out, this will change
+			//  for backwards compatibility.
+			if (mapApiVersion == KZ_NO_MAPAPI_VERSION)
+			{
+				META_CONPRINTF("Warning: Map is not compiled with Mapping API. Reverting to default behavior.\n");
+				g_mappingApi.fatalFailure = true;
+				break;
+			}
+			if (mapApiVersion != KZ_MAPAPI_VERSION)
+			{
+				Mapi_Error("FATAL. Mapping API version %i is invalid!", mapApiVersion);
+				g_mappingApi.fatalFailure = true;
+				break;
+			}
+		}
+	}
+}
+
+void MappingInterface::OnSpawn(int count, const EntitySpawnInfo_t *info)
 {
 	if (!info || g_mappingApi.fatalFailure)
 	{
@@ -595,18 +681,6 @@ void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 		{
 			Mapi_OnInfoTargetSpawn(&info[i]);
 		}
-		else if (V_stricmp(classname, "worldent") == 0)
-		{
-			g_mappingApi.mapApiVersion = ekv->GetInt("timer_mapping_api_version", -1);
-			// NOTE(GameChaos): When a new mapping api version comes out, this will change
-			//  for backwards compatibility.
-			if (g_mappingApi.mapApiVersion != KZ_MAPAPI_VERSION)
-			{
-				Mapi_Error("FATAL. Mapping API version %i is invalid!", g_mappingApi.mapApiVersion);
-				g_mappingApi.fatalFailure = true;
-				break;
-			}
-		}
 	}
 
 	if (g_mappingApi.fatalFailure)
@@ -614,4 +688,9 @@ void MappingInterface::OnSpawnPost(int count, const EntitySpawnInfo_t *info)
 		g_mappingApi.triggers.RemoveAll();
 		g_mappingApi.courses.RemoveAll();
 	}
+}
+
+i32 MappingInterface::GetCurrentMapAPIVersion()
+{
+	return mapApiVersion;
 }

@@ -3,6 +3,8 @@
 #include "bufferstring.h"
 #include "igameeventsystem.h"
 #include "igamesystem.h"
+#include "entityclass.h"
+#include "gamesystems/spawngroup_manager.h"
 #include "utils/simplecmds.h"
 #include "utils/gamesystem.h"
 #include "steam/steam_gameserver.h"
@@ -18,7 +20,6 @@
 #include "kz/db/kz_db.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "utils/utils.h"
-#include "entityclass.h"
 
 #include "sdk/entity/cbasetrigger.h"
 
@@ -116,9 +117,17 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 									const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType);
 
 // CEntitySystem
+static_global int entitySystemHook {};
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
 static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
 
+// CSpawnGroupMgrGameSystem
+static_global int createLoadingSpawnGroupHook {};
+SH_DECL_HOOK4(CSpawnGroupMgrGameSystem, CreateLoadingSpawnGroup, SH_NOATTRIB, 0, ILoadingSpawnGroup *, SpawnGroupHandle_t, bool, bool,
+			  const CUtlVector<const CEntityKeyValues *> *);
+static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,
+																	   bool bConfirmResourcesLoaded,
+																	   const CUtlVector<const CEntityKeyValues *> *pKeyValues);
 // INetworkGameServer
 static_global int activateServerHook {};
 SH_DECL_HOOK0(CNetworkGameServerBase, ActivateServer, SH_NOATTRIB, false, bool);
@@ -213,6 +222,23 @@ void hooks::Initialize()
 		SH_STATIC(Hook_BuildGameSessionManifest), 
 		true
 	);
+	
+	entitySystemHook = SH_ADD_DVPHOOK(
+		CEntitySystem, 
+		Spawn, 
+		(CEntitySystem *)modules::server->FindVirtualTable("CGameEntitySystem"), 
+		SH_STATIC(Hook_CEntitySystem_Spawn_Post), 
+		false
+	);
+	
+	createLoadingSpawnGroupHook = SH_ADD_DVPHOOK(
+		CSpawnGroupMgrGameSystem, 
+		CreateLoadingSpawnGroup, 
+		(CSpawnGroupMgrGameSystem *)modules::server->FindVirtualTable("CSpawnGroupMgrGameSystem"), 
+		SH_STATIC(Hook_OnCreateLoadingSpawnGroupHook), 
+		false
+	);
+
 	// clang-format on
 }
 
@@ -241,8 +267,6 @@ void hooks::Cleanup()
 
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 
-	SH_REMOVE_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
-
 	SH_REMOVE_HOOK_ID(activateServerHook);
 
 	SH_REMOVE_HOOK_ID(clientConnectHook);
@@ -251,6 +275,10 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 
 	SH_REMOVE_HOOK_ID(buildGameSessionManifestHookID);
+
+	SH_REMOVE_HOOK_ID(entitySystemHook);
+
+	SH_REMOVE_HOOK_ID(createLoadingSpawnGroupHook);
 
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
@@ -620,11 +648,6 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCoun
 static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
-	static_persist int entitySystemHook {};
-	if (GameEntitySystem() && !entitySystemHook)
-	{
-		entitySystemHook = SH_ADD_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), false);
-	}
 	KZ::timer::CheckAnnounceQueue();
 	KZ::timer::CheckPBRequests();
 	KZ::timer::CheckRecordRequests();
@@ -806,7 +829,7 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 // CEntitySystem
 static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo)
 {
-	g_pMappingApi->OnSpawnPost(nCount, pInfo);
+	g_pMappingApi->OnSpawn(nCount, pInfo);
 }
 
 // INetworkGameServer
@@ -859,4 +882,12 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 		Warning("[CS2KZ] Precache kz soundevents \n");
 		pResourceManifest->AddResource(KZ_WORKSHOP_ADDONS_SNDEVENT_FILE);
 	}
+}
+
+static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,
+																	   bool bConfirmResourcesLoaded,
+																	   const CUtlVector<const CEntityKeyValues *> *pKeyValues)
+{
+	g_pMappingApi->OnCreateLoadingSpawnGroupHook(pKeyValues);
+	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
