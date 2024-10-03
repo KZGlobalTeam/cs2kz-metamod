@@ -60,5 +60,6 @@ namespace utils
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles);
 
+	void ResetMap();
 	void ResetMapIfEmpty();
 } // namespace utils

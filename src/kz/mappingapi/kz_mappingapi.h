@@ -3,7 +3,8 @@
 
 #define KZ_MAPPING_INTERFACE "KZMappingInterface"
 
-#define KZ_MAPAPI_VERSION 2
+#define KZ_NO_MAPAPI_VERSION -1
+#define KZ_MAPAPI_VERSION    2
 
 #define KZ_MAX_COURSE_NAME_LENGTH 65
 #define KZ_MAX_SPLIT_ZONES        100
@@ -72,15 +73,15 @@ struct KzMapTeleport
 
 struct KzCourseDescriptor
 {
-	char entityTargetname[128];
-	char name[KZ_MAX_COURSE_NAME_LENGTH];
-	i32 number;
-	i32 hammerId;
-	bool disableCheckpoints;
+	char entityTargetname[128] {};
+	char name[KZ_MAX_COURSE_NAME_LENGTH] {};
+	i32 number = INVALID_COURSE_NUMBER;
+	i32 hammerId = -1;
+	bool disableCheckpoints = false;
 
-	i32 splitCount;
-	i32 checkpointCount;
-	i32 stageCount;
+	i32 splitCount {};
+	i32 checkpointCount {};
+	i32 stageCount {};
 };
 
 struct KzTrigger
@@ -110,11 +111,13 @@ class KZPlayer;
 class MappingInterface
 {
 public:
+	virtual i32 GetCurrentMapAPIVersion();
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
 	virtual bool IsBhopTrigger(KzTriggerType triggerType);
 
 	virtual void OnProcessMovement(KZPlayer *player);
-	virtual void OnSpawnPost(int count, const EntitySpawnInfo_t *info);
+	virtual void OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues);
+	virtual void OnSpawn(int count, const EntitySpawnInfo_t *info);
 	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 };
