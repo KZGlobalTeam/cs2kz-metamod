@@ -16,7 +16,7 @@
 			{
 				"library" 	"server"
 				"windows"	"\x48\x89\x74\x24\x2A\x55\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x4C\x8B\xF9"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
+				"linux"		"\x55\x48\x89\xE5\x41\x57\x49\x89\xFF\x41\x56\x48\x8D\x3D\x2A\x2A\x2A\x2A\x41\x89\xCE"
 			}
 			// CSource2GameClients::StartHLTVServer: game event %s not found.
 			// Function right before the first virtual function call
@@ -83,7 +83,7 @@
 			"GetMaxSpeed"
 			{
 				"library"	"server"
-				"windows"	"\x48\x89\x5C\x24\x18\x57\x48\x83\xEC\x30\x48\x8B\xD9\xE8\x2A\x2A\x2A\x2A\x84\xC0"
+				"windows"	"\x48\x89\x5C\x24\x2A\x57\x48\x83\xEC\x2A\x48\x8B\xD9\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x84\x2A\x2A\x2A\x2A\x48\x8B\x0D"
 				"linux"		"\x55\x48\x89\xE5\x41\x55\x41\x54\x53\x48\x89\xFB\x48\x83\xEC\x2A\x4C\x8D\x25\x2A\x2A\x2A\x2A\x49\x8B\x3C\x24\xE8"
 			}
 			// dev_create_move_report
@@ -97,7 +97,7 @@
 			"ProcessMovement"
 			{
 				"library"	"server"
-				"windows"	"\x40\x56\x57\x48\x81\xEC\x2A\x00\x00\x00\x4C\x8B\x49\x30"
+				"windows"	"\x40\x56\x57\x48\x81\xEC\x2A\x2A\x2A\x2A\x4C\x8B\x49"
 				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x83\xEC\x38\x48\x8B\x7F"
 			}
 			// called in ProcessMovement in between the strings "pa start %f" and "pa end %f", contains the string "Can't move"
@@ -309,14 +309,14 @@
 			}
 			"Teleport"
 			{
-				"windows"		"155"
-				"linux"			"154"
+				"windows"		"157"
+				"linux"			"156"
 			}
 			// 2 functions after one with "targethealthfrac"
 			"CollisionRulesChanged"
 			{
-				"windows"		"178"
-				"linux"			"177"
+				"windows"		"179"
+				"linux"			"178"
 			}
 			// 9 functions after one with "CBasePlayerPawn::PhysicsSimulate"
 			"IsEntityPawn"
@@ -333,21 +333,21 @@
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"ControllerChangeTeam"
 			{
-				"windows"		"98"
-				"linux"			"97"
+				"windows"		"100"
+				"linux"			"99"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2832LL))(v9, v27, 0LL);
 			// 2832 (354 * 8) is the offset
 			"CommitSuicide"
 			{
-				"windows"		"372"
-				"linux"			"372"
+				"windows"		"377"
+				"linux"			"377"
 			}
 			"ControllerRespawn"
 			{
-				"windows"		"254"
-				"linux"			"256"
+				"windows"		"257"
+				"linux"			"259"
 			}
 			// "Player.Respawn"
 			"Respawn"
