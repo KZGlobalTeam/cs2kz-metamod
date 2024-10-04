@@ -3,8 +3,11 @@
 
 #define KZ_MAPPING_INTERFACE "KZMappingInterface"
 
-#define KZ_NO_MAPAPI_VERSION -1
-#define KZ_MAPAPI_VERSION    2
+#define KZ_NO_MAPAPI_VERSION           -1
+#define KZ_NO_MAPAPI_COURSE_DESCRIPTOR "Default"
+#define KZ_NO_MAPAPI_COURSE_NAME       "Main"
+
+#define KZ_MAPAPI_VERSION 2
 
 #define KZ_MAX_COURSE_NAME_LENGTH 65
 #define KZ_MAX_SPLIT_ZONES        100
@@ -79,6 +82,17 @@ struct KzCourseDescriptor
 	i32 hammerId = -1;
 	bool disableCheckpoints = false;
 
+	bool hasStartPosition = false;
+	Vector startPosition;
+	QAngle startAngles;
+
+	void SetStartPosition(Vector origin, QAngle angles)
+	{
+		hasStartPosition = true;
+		startPosition = origin;
+		startAngles = angles;
+	}
+
 	i32 splitCount {};
 	i32 checkpointCount {};
 	i32 stageCount {};
@@ -112,6 +126,9 @@ class MappingInterface
 {
 public:
 	virtual i32 GetCurrentMapAPIVersion();
+	virtual u32 GetCourseDescriptorCount();
+	virtual const KzCourseDescriptor *GetFirstCourseDescriptor();
+
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
 	virtual bool IsBhopTrigger(KzTriggerType triggerType);
 
@@ -120,6 +137,8 @@ public:
 	virtual void OnSpawn(int count, const EntitySpawnInfo_t *info);
 	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
+
+	virtual const KzCourseDescriptor *GetCourseDescriptorByCourseName(const char *courseName);
 };
 
 void Mappingapi_RoundPrestart();

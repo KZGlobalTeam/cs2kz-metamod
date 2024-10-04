@@ -84,9 +84,40 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	{
 		KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
 	}
+	// If the player specify a course name, we try to go to it instead.
+	if (V_strlen(args->ArgS()) > 0)
+	{
+		if (const KzCourseDescriptor *desc = g_pMappingApi->GetCourseDescriptorByCourseName(args->ArgS()))
+		{
+			if (!desc->hasStartPosition)
+			{
+				player->languageService->PrintChat(true, false, "No Start Position For Course", args->ArgS());
+				return MRES_SUPERCEDE;
+			}
+			player->Teleport(&desc->startPosition, &desc->startAngles, &vec3_origin);
+		}
+	}
+	// Then prioritize custom start position.
 	if (player->checkpointService->HasCustomStartPosition())
 	{
 		player->checkpointService->TpToStartPosition();
+		return MRES_SUPERCEDE;
+	}
+	// If we have no custom start position, we try to get the start position of the current course.
+	if (player->timerService->GetCourse())
+	{
+		if (player->timerService->GetCourse()->hasStartPosition)
+		{
+			player->Teleport(&player->timerService->GetCourse()->startPosition, &player->timerService->GetCourse()->startAngles, &vec3_origin);
+		}
+		return MRES_SUPERCEDE;
+	}
+	// If we have no active course the map only has one course, !r should send the player to that course.
+	if (g_pMappingApi->GetCourseDescriptorCount() == 1 && g_pMappingApi->GetFirstCourseDescriptor()->hasStartPosition)
+	{
+		player->Teleport(&g_pMappingApi->GetFirstCourseDescriptor()->startPosition, &g_pMappingApi->GetFirstCourseDescriptor()->startAngles,
+						 &vec3_origin);
+		return MRES_SUPERCEDE;
 	}
 	return MRES_SUPERCEDE;
 }
