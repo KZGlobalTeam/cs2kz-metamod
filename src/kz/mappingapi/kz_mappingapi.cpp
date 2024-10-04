@@ -275,13 +275,13 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			{
 				if (info->m_pEntity->NameMatches("timer_startzone") || info->m_pEntity->NameMatches("timer_endzone"))
 				{
-					snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), "Default");
+					snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), KZ_NO_MAPAPI_COURSE_DESCRIPTOR);
 					trigger.type = info->m_pEntity->NameMatches("timer_startzone") ? KZTRIGGER_ZONE_START : KZTRIGGER_ZONE_END;
-					// Manually create a "Main" course here because there shouldn't be any info_target_server_only around.
+					// Manually create a KZ_NO_MAPAPI_COURSE_NAME course here because there shouldn't be any info_target_server_only around.
 					KzCourseDescriptor course;
 					course.number = 1;
-					snprintf(course.entityTargetname, sizeof(course.entityTargetname), "Default");
-					snprintf(course.name, sizeof(course.name), "Main");
+					snprintf(course.entityTargetname, sizeof(course.entityTargetname), KZ_NO_MAPAPI_COURSE_DESCRIPTOR);
+					snprintf(course.name, sizeof(course.name), KZ_NO_MAPAPI_COURSE_NAME);
 					Mapi_CreateCourse(course);
 				}
 			}
@@ -399,6 +399,55 @@ static_function const KzCourseDescriptor *Mapi_FindCourse(const char *targetname
 
 	return result;
 }
+
+static_function bool Mapi_SetStartPosition(const char *descriptorName, Vector origin, QAngle angles)
+{
+	KzCourseDescriptor *desc = nullptr;
+
+	FOR_EACH_VEC(g_mappingApi.courses, i)
+	{
+		if (V_stricmp(g_mappingApi.courses[i].entityTargetname, descriptorName) == 0)
+		{
+			desc = &g_mappingApi.courses[i];
+			break;
+		}
+	}
+
+	if (!desc)
+	{
+		return false;
+	}
+	desc->SetStartPosition(origin, angles);
+	return true;
+}
+
+static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t *info)
+{
+	const CEntityKeyValues *ekv = info->m_pKeyValues;
+	const char *targetname = ekv->GetString("targetname", "");
+	if (V_stricmp(targetname, "timer_start"))
+	{
+		return;
+	}
+	if (mapApiVersion == KZ_NO_MAPAPI_VERSION)
+	{
+		Mapi_SetStartPosition(KZ_NO_MAPAPI_COURSE_DESCRIPTOR, ekv->GetVector("origin"), ekv->GetQAngle("angles"));
+	}
+	else if (mapApiVersion == KZ_MAPAPI_VERSION) // TODO do better check
+	{
+		const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
+		i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
+		Vector origin = ekv->GetVector("origin");
+		if (!courseDescriptor || !courseDescriptor[0])
+		{
+			Mapi_Error("Course descriptor targetname of timer_start info_teleport_destination is empty! Hammer ID %i, origin (%.0f %.0f %.0f)",
+					   hammerId, origin.x, origin.y, origin.z);
+			assert(0);
+			return;
+		}
+		Mapi_SetStartPosition(courseDescriptor, origin, ekv->GetQAngle("angles"));
+	}
+};
 
 bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
 {
@@ -629,7 +678,6 @@ void MappingInterface::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEnt
 			if (mapApiVersion == KZ_NO_MAPAPI_VERSION)
 			{
 				META_CONPRINTF("Warning: Map is not compiled with Mapping API. Reverting to default behavior.\n");
-				g_mappingApi.fatalFailure = true;
 				break;
 			}
 			if (mapApiVersion != KZ_MAPAPI_VERSION)
@@ -683,6 +731,23 @@ void MappingInterface::OnSpawn(int count, const EntitySpawnInfo_t *info)
 		}
 	}
 
+	// We need to pass the second time for the spawn points of courses.
+
+	for (i32 i = 0; i < count; i++)
+	{
+		auto ekv = info[i].m_pKeyValues;
+
+		if (!info[i].m_pEntity || !ekv || !info[i].m_pEntity->GetClassname())
+		{
+			continue;
+		}
+		const char *classname = info[i].m_pEntity->GetClassname();
+		if (V_stricmp(classname, "info_teleport_destination") == 0)
+		{
+			Mapi_OnInfoTeleportDestinationSpawn(&info[i]);
+		}
+	}
+
 	if (g_mappingApi.fatalFailure)
 	{
 		g_mappingApi.triggers.RemoveAll();
@@ -693,4 +758,31 @@ void MappingInterface::OnSpawn(int count, const EntitySpawnInfo_t *info)
 i32 MappingInterface::GetCurrentMapAPIVersion()
 {
 	return mapApiVersion;
+}
+
+u32 MappingInterface::GetCourseDescriptorCount()
+{
+	return g_mappingApi.courses.Count();
+}
+
+const KzCourseDescriptor *MappingInterface::GetFirstCourseDescriptor()
+{
+	FOR_EACH_VEC(g_mappingApi.courses, i)
+	{
+		return &g_mappingApi.courses[i];
+	}
+	return nullptr;
+}
+
+const KzCourseDescriptor *MappingInterface::GetCourseDescriptorByCourseName(const char *courseName)
+{
+	FOR_EACH_VEC(g_mappingApi.courses, i)
+	{
+		if (V_stricmp(g_mappingApi.courses[i].name, courseName) == 0)
+		{
+			return &g_mappingApi.courses[i];
+			break;
+		}
+	}
+	return nullptr;
 }

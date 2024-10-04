@@ -251,5 +251,9 @@
 		"#format"	"stage_number:i"
 		"en"		"{darkred}You missed stage zone {stage_number}!"
 	}
-	
+	"No Start Position For Course"
+	{
+		"#format"	"course_name:s"
+		"en"		"{darkred}Start position not found for course {default}{course_name}{darkred}!"
+	}
 }
