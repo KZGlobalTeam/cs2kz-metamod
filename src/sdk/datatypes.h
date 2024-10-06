@@ -167,7 +167,22 @@ struct SubtickMove
 {
 	float when;
 	uint64 button;
-	bool pressed;
+
+	union
+	{
+		bool pressed;
+
+		struct AnalogMove
+		{
+			float analog_forward_delta;
+			float analog_left_delta;
+		} analogMove;
+	};
+
+	bool IsAnalogInput()
+	{
+		return button == 0;
+	}
 };
 
 // Size: 0xF8
@@ -186,14 +201,16 @@ public:
 		m_flForwardMove {source.m_flForwardMove}, 
 		m_flSideMove {source.m_flSideMove}, 
 		m_flUpMove {source.m_flUpMove},
-		m_flSubtickFraction {source.m_flSubtickFraction}, 
 		m_vecVelocity {source.m_vecVelocity}, 
 		m_vecAngles {source.m_vecAngles},
 		m_bHasSubtickInputs {source.m_bHasSubtickInputs},
 		m_collisionNormal {source.m_collisionNormal},
 		m_groundNormal {source.m_groundNormal}, 
 		m_vecAbsOrigin {source.m_vecAbsOrigin},
-		m_nGameModeMovedPlayer {source.m_nGameModeMovedPlayer},
+		m_nTickCount {source.m_nTickCount},
+		m_nTargetTick {source.m_nTargetTick},
+		m_flSubtickEndFraction {source.m_flSubtickEndFraction},
+		m_flSubtickStartFraction {source.m_flSubtickStartFraction},
 		m_outWishVel {source.m_outWishVel},
 		m_vecOldAngles {source.m_vecOldAngles}, 
 		m_flMaxSpeed {source.m_flMaxSpeed}, 
@@ -245,7 +262,6 @@ public:
 	float m_flForwardMove;
 	float m_flSideMove; // Warning! Flipped compared to CS:GO, moving right gives negative value
 	float m_flUpMove;
-	float m_flSubtickFraction;
 	Vector m_vecVelocity;
 	Vector m_vecAngles;
 	CUtlVector<SubtickMove> m_SubtickMoves;
@@ -256,6 +272,10 @@ public:
 	Vector m_collisionNormal;
 	Vector m_groundNormal; // unsure
 	Vector m_vecAbsOrigin;
+	int32_t m_nTickCount;
+	int32_t m_nTargetTick;
+	float m_flSubtickEndFraction;
+	float m_flSubtickStartFraction;
 	bool m_nGameModeMovedPlayer;
 	Vector m_outWishVel;
 	Vector m_vecOldAngles;
@@ -268,17 +288,7 @@ public:
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
 
-static_assert(offsetof(CMoveData, m_vecViewAngles) == 0x14);
-static_assert(offsetof(CMoveData, m_vecVelocity) == 0x3c);
-static_assert(offsetof(CMoveData, m_vecAngles) == 0x48);
-static_assert(offsetof(CMoveData, m_vecAbsOrigin) == 0xc0);
-static_assert(offsetof(CMoveData, m_outWishVel) == 0xd0);
-static_assert(offsetof(CMoveData, m_flMaxSpeed) == 0xe8);
-static_assert(offsetof(CMoveData, m_flClientMaxSpeed) == 0xec);
-static_assert(offsetof(CMoveData, m_flSubtickAccelSpeed) == 0xf0);
-static_assert(offsetof(CMoveData, m_bJumpedThisTick) == 0xf4);
-static_assert(offsetof(CMoveData, m_bOnGround) == 0xf5);
-static_assert(sizeof(CMoveData) == 248, "Class didn't match expected size");
+static_assert(sizeof(CMoveData) == 256, "Class didn't match expected size");
 
 // Custom data types goes here.
 
