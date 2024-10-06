@@ -39,17 +39,13 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 {
 	PLUGIN_SAVEVARS();
 
-	CSplitString test("test", ",");
 	if (!utils::Initialize(ismm, error, maxlen))
 	{
 		return false;
 	}
 
-	CSplitString test2("test2", ",");
 	hooks::Initialize();
-	CSplitString test3("test3", ",");
 	movement::InitDetours();
-	CSplitString test4("test4", ",");
 	KZ::mode::InitModeManager();
 	KZ::style::InitStyleManager();
 	KZCheckpointService::Init();

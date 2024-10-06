@@ -172,7 +172,7 @@ struct SubtickMove
 	{
 		bool pressed;
 
-		struct AnalogMove
+		struct
 		{
 			float analog_forward_delta;
 			float analog_left_delta;
