@@ -14,7 +14,7 @@ void movement::InitDetours()
 	INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
 	INIT_DETOUR(g_pGameConfig, SetupMove);
 	INIT_DETOUR(g_pGameConfig, ProcessMovement);
-	INIT_DETOUR(g_pGameConfig, PlayerMoveNew);
+	INIT_DETOUR(g_pGameConfig, PlayerMove);
 	INIT_DETOUR(g_pGameConfig, CheckParameters);
 	INIT_DETOUR(g_pGameConfig, CanMove);
 	INIT_DETOUR(g_pGameConfig, FullWalkMove);
@@ -97,11 +97,11 @@ void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, C
 	player->OnProcessMovementPost();
 }
 
-bool FASTCALL movement::Detour_PlayerMoveNew(CCSPlayer_MovementServices *ms, CMoveData *mv)
+bool FASTCALL movement::Detour_PlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnPlayerMove();
-	auto retValue = PlayerMoveNew(ms, mv);
+	auto retValue = PlayerMove(ms, mv);
 	player->OnPlayerMovePost();
 	return retValue;
 }

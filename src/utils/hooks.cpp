@@ -189,7 +189,7 @@ void hooks::Initialize()
 		ConnectClient,
 		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
 		SH_STATIC(Hook_ConnectClient), 
-		false
+		true
 	);
 	clientConnectPostHook = SH_ADD_DVPHOOK(
 		CNetworkGameServerBase, 
@@ -695,7 +695,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	// Immediately remove the player off the list. We don't need to keep them around.
 	if (player->GetController())
 	{
-		player->GetController()->m_LastTimePlayerWasDisconnectedForPawnsRemove().m_Value(0.01f);
+		player->GetController()->m_LastTimePlayerWasDisconnectedForPawnsRemove().SetTime(0.01f);
 	}
 	if (player->GetPlayerPawn())
 	{
