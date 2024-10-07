@@ -16,7 +16,7 @@
 			{
 				"library" 	"server"
 				"windows"	"\x48\x89\x74\x24\x2A\x55\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x4C\x8B\xF9"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x49\x89\xFF\x41\x56\x48\x8D\x3D\x2A\x2A\x2A\x2A\x41\x89\xCE"
+				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
 			}
 			// CSource2GameClients::StartHLTVServer: game event %s not found.
 			// Function right before the first virtual function call
@@ -321,14 +321,14 @@
 			// 9 functions after one with "CBasePlayerPawn::PhysicsSimulate"
 			"IsEntityPawn"
 			{
-				"windows"		"160"
-				"linux"			"159"
+				"windows"		"161"
+				"linux"			"160"
 			}
 			// Right after IsEntityPawn
 			"IsEntityController"
 			{
-				"windows"		"161"
-				"linux"			"160"
+				"windows"		"162"
+				"linux"			"161"
 			}
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"ControllerChangeTeam"
@@ -352,8 +352,8 @@
 			// "Player.Respawn"
 			"Respawn"
 			{
-				"windows"		"340"
-				"linux"			"341"
+				"windows"		"345"
+				"linux"			"346"
 			}
 			// Check sv_fullupdate
 			"ClientOffset"
@@ -361,28 +361,21 @@
 				"windows"		"624"
 				"linux"			"640"
 			}
-			// Check ProcessUsercmds
-			// Note: the pointer points to an array of 150 usercmds, but I don't know why there are 64 bytes after the usercmd struct itself.
-			"UsercmdOffset"
-			{
-				"windows"		"64"
-				"linux"			"56"
-			}
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
-				"windows"		"141"
-				"linux"			"140"
+				"windows"		"143"
+				"linux"			"142"
 			}
 			"Touch"
 			{
-				"windows"		"142"
-				"linux"			"141"
+				"windows"		"144"
+				"linux"			"143"
 			}
 			"EndTouch"
 			{
-				"windows"		"143"
-				"linux"			"142"
+				"windows"		"145"
+				"linux"			"144"
 			}
 		}
 	}
