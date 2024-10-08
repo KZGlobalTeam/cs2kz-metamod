@@ -4,6 +4,7 @@
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} Course {course_name} {mode_name} Overall Top"
+		"chi"		"地图 {map_name} 关卡 {course_name} 模式 {mode_name} 总排名"
 		"tr"		"{map_name} haritasında {course_name} {mode_name} Genel Sıralamada"
 		"ua"		"{map_name} Курс {course_name} {mode_name} Загальний Топ"
 		"it"		"{map_name} Migliori tempi assoluti del percorso {course_name} {mode_name}"
@@ -13,6 +14,7 @@
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} Course {course_name} {mode_name} PRO Top"
+		"chi"		"地图 {map_name} 关卡 {course_name} 模式 {mode_name} 裸跳排名"
 		"tr"		"{map_name} haritasında {course_name} {mode_name} Pro Sıralamasında"
 		"ua"		"{map_name} Курс {course_name} {mode_name} PRO Топ"
 		"it"		"{map_name} Migliori tempi PRO del percorso {course_name} {mode_name}"
@@ -21,6 +23,7 @@
 	"Course Top Header - Player Alias"
 	{
 		"en"		"Alias"
+		"chi"		"玩家名称"
 		"tr"		"İsim"
 		"ua"		"Ім'я"
 		"it"		"Alias"
@@ -29,6 +32,7 @@
 	"Course Top Header - Time"
 	{
 		"en"		"Time"
+		"chi"		"时间"
 		"tr"		"Süre"
 		"ua"		"Час"
 		"it"		"Tempo"
@@ -37,6 +41,7 @@
 	"Course Top Header - Teleports"
 	{
 		"en"		"Teleports"
+		"chi"		"存点数量"
 		"tr"		"Işınlanmalar"
 		"ua"		"Телепорти"
 		"it"		"Teleport"
@@ -45,6 +50,7 @@
 	"Course Top Header - SteamID64"
 	{
 		"en"		"SteamID64"
+		"chi"		"SteamID64"
 		"tr"		"SteamID64"
 		"ua"		"SteamID64"
 		"it"		"SteamID64"
@@ -53,6 +59,7 @@
 	"Course Top Header - Run ID"
 	{
 		"en"		"Run ID"
+		"chi"		"ID"
 		"tr"		"Süre ID'si"
 		"ua"		"ID Проходження"
 		"it"		"ID Run"
@@ -61,6 +68,7 @@
 	"Course Top Request - Failed (Generic)"
 	{
 		"en"		"{darkred}Failed to retrieve course top information."
+		"chi"		"{darkred}无法找到地图排行信息."
 		"tr"		"{darkred}Süre bilgisi alınırken hata."
 		"ua"		"{darkred}Не вдалося отримати інформацію про таблицю лідерів курсу."
 		"it"		"{darkred}Impossibile recuperare informazioni sulla classifica."
@@ -69,6 +77,7 @@
 	"Course Top Request - Invalid Course Name"
 	{
 		"en"		"{darkred}Failed to retrieve course top information. {grey}(Invalid course name {default}{course_name}{grey})"
+		"chi"		"{darkred}无法找到地图排行信息.{grey}(不存在的关卡 {default}{course_name}{grey})"
 		"tr"		"{darkred}Süre bilgisi alınırken hata. {grey}(Bilinmeyen harita ismi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про таблицю лідерів курсу. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 		"it"		"{darkred}Impossibile recuperare informazioni sulla classifica. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
@@ -77,6 +86,7 @@
 	"Course Top - Check Console"
 	{
 		"en"		"{grey}Course top data retrived. Check console for details!"
+		"chi"		"{grey}地图排行榜已获取. 打开控制台查看详细数据!"
 		"tr"		"{grey}Sıralama bilgileri alındı. Detaylar için konsola bak!"
 		"ua"		"{grey}Дані про таблицю лідерів курсу отримано. Детальніше дивіться в консолі!"
 		"it"		"{grey}Recuperate le informazioni sulla classifica. Controlla la console per ulteriori dettagli!"
@@ -85,6 +95,7 @@
 	"Course Top Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Check console for details!"
+		"chi"		"{grey}用法: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. 打开控制台查看详细数据!"
 		"tr"		"{grey}Kullanım: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Detaylar için konsola bak!!"
 		"ua"		"{grey}Використання: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Перевірте консоль щодо деталей!"
 		"it"		"{grey}Utilizzo: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Controlla la console per ulteriori dettagli!"
@@ -93,6 +104,7 @@
 	"Course Top Command Usage - Console"
 	{
 		"en"		"Usage: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nExample: \"kz_ctop map=kz_map c=Main o=10 l=20\". Add 'g' or 's' to the start before the 'top' suffix to specify global/server only (eg. kz_gctop)."
+		"chi"		"用法: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\n 例子: \"kz_ctop map=kz_map c=Main o=10 l=20\". 在'top'后缀前添加'g'或's', 以指定全局/仅服务器记录 (eg. kz_gctop)."
 		"tr"		"Kullanım: kz_ctop/kz_coursetop/kz_maptop/ <c/course/harita/mod=...>\nÖrnek: \"kz_ctop harita=kz_map c=Main o=10 l=20\". Ctop'un başına 'g' veya 's' ekleyerek sunucu ve global olarak belirtebilirsin.(örn. kz_gctop)."
 		"ua"		"Використання: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nНаприклад: \"kz_ctop map=kz_map c=Main o=10 l=20\". Додайте 'g' або 's' напочатку перед суфіксом 'top' щоб отримати лише світову(g)/сервера(s) таблицю лідерів курсу (напр. kz_gctop)."
 		"it"		"Utilizzo: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nEsempio: \"kz_ctop map=kz_mappa c=Main o=10 l=20\". Aggiungi 'g' o 's' all'inizio prima di 'top' per specificare globale/server (es. kz_gctop)."
