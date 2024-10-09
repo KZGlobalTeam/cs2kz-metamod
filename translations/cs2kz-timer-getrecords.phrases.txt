@@ -5,6 +5,7 @@
 		// Server Records on kz_map (Main) [VNL]
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{grey}Server Records on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"chi"		"{grey}地图 {default}{map_name}{grey} 服务器记录 ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ru"		"{grey}Рекорды сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"fi"		"{grey}Palvelimen ennätykset kentällä {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ua"		"{grey}Рекорди сервера на {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
@@ -15,6 +16,7 @@
 	"SR - No Times"
 	{
 		"en"		"{grey}No times were found!"
+		"chi"		"{grey}未找到任何记录!"
 		"ru"		"{grey}Рекордов не найдено!"
 		"fi"		"{grey}Aikoja ei löytynyt!"
 		"ua"		"{grey}Не знайдено жодного часу!"
@@ -27,6 +29,7 @@
 		// KZ | Overall Record: 01:23.45 (5 TP) by Bill
 		"#format"	"time:s,player_name:s,tp_count_text:s"
 		"en"		"{yellow}Overall{grey}: {default}{time}{grey} by {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"chi"		"{yellow}总排名{grey}: {default}{time}{grey} 由 {lime}{player_name}{grey} 完成 ({yellow}{tp_count_text}{grey})"
 		"ru"		"{yellow}Абсолютный{grey}: {default}{time}{grey} от {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"fi"		"{yellow}Kokonaisuus{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey} ({yellow}{tp_count_text}{grey})"
 		"ua"		"{yellow}Загальний{grey}: {default}{time}{grey} від {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
@@ -39,6 +42,7 @@
 		// KZ | Overall/PRO Record: 01:23.45 by Bill
 		"#format"	"time:s,player_name:s"
 		"en"		"{yellow}Overall/{blue}PRO{grey}: {default}{time}{grey} by {lime}{player_name}{grey}"
+		"chi"		"{yellow}总排名/{blue}裸跳{grey}: {default}{time}{grey} 由 {lime}{player_name}{grey} 完成"
 		"ru"		"{yellow}Абсолютный/{blue}PRO{grey}: {default}{time}{grey} от {lime}{player_name}{grey}"
 		"fi"		"{yellow}Kokonaisuus/{blue}PRO{grey}: {lime}{player_name}{grey} ajassa {default}{time}{grey}"
 		"ua"		"{yellow}Загальний/{blue}PRO{grey}: {default}{time}{grey} від {lime}{player_name}{grey}"
@@ -51,6 +55,7 @@
 		// KZ | PRO Record: 23.45 by Player
 		"#format"	"time_pro:s,player_name_pro:s"
 		"en"		"{blue}PRO{grey}: {default}{time_pro}{grey} by {lime}{player_name_pro}{grey}"
+		"chi"		"{blue}裸跳{grey}: {default}{time_pro}{grey} 由 {lime}{player_name_pro}{grey} 完成"
 		"ru"		"{blue}PRO{grey}: {default}{time_pro}{grey} от {lime}{player_name_pro}{grey}"
 		"fi"		"{blue}PRO{grey}: {lime}{player_name_pro}{grey} ajassa {default}{time_pro}{grey}"
 		"ua"		"{blue}PRO{grey}: {default}{time_pro}{grey} від {lime}{player_name_pro}{grey}"
@@ -61,6 +66,7 @@
 	"Record Request - Failed (Generic)" 
 	{
 		"en"		"{darkred}Failed to retrieve record information."
+		"chi"		"{darkred}无法找到地图记录信息."
 		"ru"		"{darkred}Не удалось получить информацию о рекорде."
 		"fi"		"{darkred}Ennätysten haku epäonnistui."
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд."
@@ -72,6 +78,7 @@
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Failed to retrieve record information. {grey}(Invalid course name {default}{course_name}{grey})"
+		"chi"		"{darkred}无法找到地图记录信息. {grey}(无效的关卡名称 {default}{course_name}{grey})"
 		"ru"		"{darkred}Не удалось получить информацию о рекорде. {grey}(Неверное название курса {default}{course_name}{grey})"
 		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
