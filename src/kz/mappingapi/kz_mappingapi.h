@@ -9,15 +9,16 @@
 
 #define KZ_MAPAPI_VERSION 2
 
-#define KZ_MAX_COURSE_NAME_LENGTH 65
-#define KZ_MAX_SPLIT_ZONES        100
-#define KZ_MAX_CHECKPOINT_ZONES   100
-#define KZ_MAX_STAGE_ZONES        100
+#define KZ_MAX_SPLIT_ZONES      100
+#define KZ_MAX_CHECKPOINT_ZONES 100
+#define KZ_MAX_STAGE_ZONES      100
 
 #define INVALID_SPLIT_NUMBER      0
 #define INVALID_CHECKPOINT_NUMBER 0
 #define INVALID_STAGE_NUMBER      0
 #define INVALID_COURSE_NUMBER     0
+
+struct KZCourse;
 
 enum KzTriggerType
 {
@@ -74,11 +75,18 @@ struct KzMapTeleport
 	bool relative;
 };
 
-struct KzCourseDescriptor
+struct KZCourseDescriptor
 {
+	KZCourseDescriptor(KZCourse *course, i32 hammerId = -1, const char *targetName = "", bool disableCheckpoints = false)
+		: course(course), hammerId(hammerId), disableCheckpoints(disableCheckpoints)
+	{
+		V_snprintf(entityTargetname, sizeof(entityTargetname), "%s", targetName);
+	}
+
+	KZCourseDescriptor() = default;
+
+	KZCourse *course = nullptr;
 	char entityTargetname[128] {};
-	char name[KZ_MAX_COURSE_NAME_LENGTH] {};
-	i32 number = INVALID_COURSE_NUMBER;
 	i32 hammerId = -1;
 	bool disableCheckpoints = false;
 
@@ -127,7 +135,6 @@ class MappingInterface
 public:
 	virtual i32 GetCurrentMapAPIVersion();
 	virtual u32 GetCourseDescriptorCount();
-	virtual const KzCourseDescriptor *GetFirstCourseDescriptor();
 
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
 	virtual bool IsBhopTrigger(KzTriggerType triggerType);
@@ -137,8 +144,6 @@ public:
 	virtual void OnSpawn(int count, const EntitySpawnInfo_t *info);
 	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
-
-	virtual const KzCourseDescriptor *GetCourseDescriptorByCourseName(const char *courseName);
 };
 
 void Mappingapi_RoundPrestart();

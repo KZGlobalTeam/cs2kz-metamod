@@ -119,7 +119,7 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 // CEntitySystem
 static_global int entitySystemHook {};
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
-static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
+static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_t *pInfo);
 
 // CSpawnGroupMgrGameSystem
 static_global int createLoadingSpawnGroupHook {};
@@ -227,7 +227,7 @@ void hooks::Initialize()
 		CEntitySystem, 
 		Spawn, 
 		(CEntitySystem *)modules::server->FindVirtualTable("CGameEntitySystem"), 
-		SH_STATIC(Hook_CEntitySystem_Spawn_Post), 
+		SH_STATIC(Hook_CEntitySystem_Spawn), 
 		false
 	);
 	
@@ -781,6 +781,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		}
 		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
 		{
+			KZ::course::ClearCourses();
 			Mappingapi_RoundPrestart();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)
@@ -827,7 +828,7 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 }
 
 // CEntitySystem
-static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo)
+static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_t *pInfo)
 {
 	g_pMappingApi->OnSpawn(nCount, pInfo);
 }
@@ -837,7 +838,7 @@ static_function bool Hook_ActivateServer()
 {
 	KZJumpstatsService::OnServerActivate();
 	KZ::timer::ClearAnnounceQueue();
-	KZ::timer::SetupCourses();
+	KZ::course::SetupLocalCourses();
 	KZ::misc::OnServerActivate();
 	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();

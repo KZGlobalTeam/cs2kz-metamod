@@ -83,12 +83,12 @@ public:
 
 	static void OnGenericTxnSuccess(std::vector<ISQLQuery *> queries)
 	{
-		ConMsg("[KZDB] Transaction successful.\n");
+		ConMsg("[KZ::DB] Transaction successful.\n");
 	}
 
 	static void OnGenericTxnFailure(std::string error, int failIndex)
 	{
-		ConMsg("[KZDB] Transaction failed at %i (%s).\n", failIndex, error.c_str());
+		ConMsg("[KZ::DB] Transaction failed at %i (%s).\n", failIndex, error.c_str());
 	}
 
 	static void OnGenericQuerySuccess(ISQLQuery *query) {}
@@ -112,7 +112,7 @@ public:
 
 	// Course
 	static bool AreCoursesSetUp();
-	static void SetupCourses(CUtlVector<KZ::timer::CourseInfo> &courseInfos);
+	static void SetupCourses(CUtlVector<KZCourse> &courses);
 	static void FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Client/Player

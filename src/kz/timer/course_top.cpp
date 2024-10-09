@@ -1,3 +1,4 @@
+#include "kz/course/kz_course.h"
 #include "kz/db/kz_db.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
@@ -365,22 +366,19 @@ void CourseTopRequest::SetupCourse(KZPlayer *callingPlayer)
 		if (this->mapName == currentMap)
 		{
 			// Try to get the player's current course.
-			const KzCourseDescriptor *courseDescriptor = callingPlayer->timerService->GetCourse();
-			if (courseDescriptor)
+			const KZCourse *course = callingPlayer->timerService->GetCourse();
+			if (!course)
 			{
-				courseName = courseDescriptor->name;
-			}
-			else // No course? Take the map's first course.
-			{
-				KZ::timer::CourseInfo info;
-				if (!KZ::timer::GetFirstCourseInformation(info))
+				// No course? Take the map's first course.
+				const KZCourse *course = KZ::course::GetFirstCourse();
+				if (!course)
 				{
 					// TODO: use a better message
 					ctopReqQueueManager.InvalidLocal(this->uid, "Course Top Request - Invalid Course Name", "");
 					return;
 				}
-				courseName = info.courseName;
 			}
+			courseName = course->GetName();
 			hasValidCourseName = true;
 		}
 		else

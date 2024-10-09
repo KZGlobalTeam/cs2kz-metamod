@@ -31,13 +31,13 @@ bool KZTimerService::UnregisterEventListener(KZTimerServiceEventListener *eventL
 	return eventListeners.FindAndRemove(eventListener);
 }
 
-void KZTimerService::StartZoneStartTouch(const KzCourseDescriptor *course)
+void KZTimerService::StartZoneStartTouch(const KZCourseDescriptor *course)
 {
 	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND);
 	this->TimerStop(false);
 }
 
-void KZTimerService::StartZoneEndTouch(const KzCourseDescriptor *course)
+void KZTimerService::StartZoneEndTouch(const KZCourseDescriptor *course)
 {
 	if (this->touchedGroundSinceTouchingStartZone)
 	{
@@ -45,7 +45,7 @@ void KZTimerService::StartZoneEndTouch(const KzCourseDescriptor *course)
 	}
 }
 
-void KZTimerService::SplitZoneStartTouch(const KzCourseDescriptor *course, i32 splitNumber)
+void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 splitNumber)
 {
 	if (!this->GetTimerRunning())
 	{
@@ -61,7 +61,7 @@ void KZTimerService::SplitZoneStartTouch(const KzCourseDescriptor *course, i32 s
 	}
 }
 
-void KZTimerService::CheckpointZoneStartTouch(const KzCourseDescriptor *course, i32 cpNumber)
+void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, i32 cpNumber)
 {
 	if (!this->GetTimerRunning())
 	{
@@ -83,7 +83,7 @@ void KZTimerService::CheckpointZoneStartTouch(const KzCourseDescriptor *course, 
 	}
 }
 
-void KZTimerService::StageZoneStartTouch(const KzCourseDescriptor *course, i32 stageNumber)
+void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 stageNumber)
 {
 	if (!this->GetTimerRunning())
 	{
@@ -107,7 +107,7 @@ void KZTimerService::StageZoneStartTouch(const KzCourseDescriptor *course, i32 s
 	}
 }
 
-bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound)
+bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playSound)
 {
 	// clang-format off
 	if (!this->player->GetPlayerPawn()->IsAlive()
@@ -117,7 +117,7 @@ bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound
 		|| this->player->noclipService->JustNoclipped()
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
-		|| (this->GetTimerRunning() && !V_stricmp(course->name, this->currentCourse->name))
+		|| (this->GetTimerRunning() && courseDesc->course->guid == this->currentCourseGUID)
 		|| (!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) && !this->GetValidJump()))
 	// clang-format on
 	{
@@ -132,7 +132,7 @@ bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound
 	bool allowStart = true;
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		allowStart &= eventListeners[i]->OnTimerStart(this->player, course);
+		allowStart &= eventListeners[i]->OnTimerStart(this->player, courseDesc->course->guid);
 	}
 	if (!allowStart)
 	{
@@ -145,15 +145,15 @@ bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound
 	this->reachedCheckpoints = 0;
 
 	f64 invalidTime = -1;
-	this->splitZoneTimes.SetSize(course->splitCount);
-	this->cpZoneTimes.SetSize(course->checkpointCount);
-	this->stageZoneTimes.SetSize(course->checkpointCount);
+	this->splitZoneTimes.SetSize(courseDesc->splitCount);
+	this->cpZoneTimes.SetSize(courseDesc->checkpointCount);
+	this->stageZoneTimes.SetSize(courseDesc->checkpointCount);
 
 	this->splitZoneTimes.FillWithValue(invalidTime);
 	this->cpZoneTimes.FillWithValue(invalidTime);
 	this->stageZoneTimes.FillWithValue(invalidTime);
 
-	SetCourse(course);
+	SetCourse(courseDesc->course->guid);
 	V_strncpy(this->lastStartMode, this->player->modeService->GetModeName(), KZ_MAX_MODE_NAME_LENGTH);
 	validTime = true;
 	if (playSound)
@@ -163,36 +163,36 @@ bool KZTimerService::TimerStart(const KzCourseDescriptor *course, bool playSound
 
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		eventListeners[i]->OnTimerStartPost(this->player, course);
+		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->course->guid);
 	}
 	return true;
 }
 
-bool KZTimerService::TimerEnd(const KzCourseDescriptor *course)
+bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 {
 	if (!this->player->IsAlive())
 	{
 		return false;
 	}
 
-	if (!this->timerRunning || V_stricmp(this->currentCourse->name, course->name) != 0)
+	if (!this->timerRunning || courseDesc->course->guid != this->currentCourseGUID)
 	{
 		this->PlayTimerFalseEndSound();
 		this->lastFalseEndTime = g_pKZUtils->GetServerGlobals()->curtime;
 		return false;
 	}
 
-	if (this->currentStage != course->stageCount)
+	if (this->currentStage != courseDesc->stageCount)
 	{
 		this->PlayMissedZoneSound();
 		this->player->languageService->PrintChat(true, false, "Can't finish run (Missed stage)", this->currentStage + 1);
 		return false;
 	}
 
-	if (this->reachedCheckpoints != course->checkpointCount)
+	if (this->reachedCheckpoints != courseDesc->checkpointCount)
 	{
 		this->PlayMissedZoneSound();
-		i32 missCount = course->checkpointCount - this->reachedCheckpoints;
+		i32 missCount = courseDesc->checkpointCount - this->reachedCheckpoints;
 		if (missCount == 1)
 		{
 			this->player->languageService->PrintChat(true, false, "Can't finish run (Missed a checkpoint zone)");
@@ -210,7 +210,7 @@ bool KZTimerService::TimerEnd(const KzCourseDescriptor *course)
 	bool allowEnd = true;
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		allowEnd &= eventListeners[i]->OnTimerEnd(this->player, course, time, teleportsUsed);
+		allowEnd &= eventListeners[i]->OnTimerEnd(this->player, this->currentCourseGUID, time, teleportsUsed);
 	}
 	if (!allowEnd)
 	{
@@ -225,12 +225,12 @@ bool KZTimerService::TimerEnd(const KzCourseDescriptor *course)
 
 	if (!this->player->GetPlayerPawn()->IsBot())
 	{
-		KZ::timer::AddRunToAnnounceQueue(player, course->name, time, teleportsUsed);
+		KZ::timer::AddRunToAnnounceQueue(player, this->GetCourse()->GetName(), time, teleportsUsed);
 	}
 
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		eventListeners[i]->OnTimerEndPost(this->player, course, time, teleportsUsed);
+		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed);
 	}
 
 	return true;
@@ -250,7 +250,7 @@ bool KZTimerService::TimerStop(bool playSound)
 
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		eventListeners[i]->OnTimerStopped(this->player, this->currentCourse);
+		eventListeners[i]->OnTimerStopped(this->player, this->currentCourseGUID);
 	}
 
 	return true;
@@ -538,7 +538,7 @@ void KZTimerService::Reset()
 {
 	this->timerRunning = {};
 	this->currentTime = {};
-	this->currentCourse = nullptr;
+	this->currentCourseGUID = 0;
 	this->lastEndTime = {};
 	this->lastFalseEndTime = {};
 	this->lastStartSoundTime = {};
@@ -719,5 +719,5 @@ void KZTimerService::RegisterCommands()
 
 void KZDatabaseServiceEventListener_Timer::OnMapSetup()
 {
-	KZ::timer::SetupCourses();
+	KZ::course::SetupLocalCourses();
 }

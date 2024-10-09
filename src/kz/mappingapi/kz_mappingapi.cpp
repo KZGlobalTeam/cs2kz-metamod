@@ -1,5 +1,6 @@
 
 #include "kz/kz.h"
+#include "kz/course/kz_course.h"
 #include "kz/mode/kz_mode.h"
 #include "movement/movement.h"
 #include "kz_mappingapi.h"
@@ -21,14 +22,13 @@ enum
 static_global struct
 {
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
-	CUtlVectorFixed<KzCourseDescriptor, 512> courses;
+	CUtlVectorFixed<KZCourseDescriptor, 512> courseDescriptors;
 
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
 
-	bool fatalFailure;
 } g_mappingApi;
 
 static_global CTimer<> *g_errorTimer;
@@ -39,6 +39,7 @@ static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset
 
 static_function MappingInterface g_mappingInterface;
 static_global i32 mapApiVersion = KZ_NO_MAPAPI_VERSION;
+static_global bool fatalFailure;
 MappingInterface *g_pMappingApi = nullptr;
 
 // TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
@@ -72,7 +73,7 @@ static_function f64 Mapi_PrintErrors()
 	}
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_COURSES)
 	{
-		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, g_mappingApi.courses.Count());
+		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, g_mappingApi.courseDescriptors.Count());
 	}
 	for (i32 i = 0; i < g_mappingApi.errorCount; i++)
 	{
@@ -82,33 +83,55 @@ static_function f64 Mapi_PrintErrors()
 	return 60.0;
 }
 
-static_function void Mapi_CreateCourse(KzCourseDescriptor &descriptor)
+static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseName = "Main", i32 hammerId = -1, const char *targetName = "Default",
+									   bool disableCheckpoints = false)
 {
-	auto currentCourses = g_mappingApi.courses;
+	// Make sure we don't exceed this ridiculous value.
+	// If we do, it is most likely that something went wrong, or it is caused by the mapper.
+	if (g_mappingApi.courseDescriptors.Count() >= 512)
+	{
+		assert(0);
+		Mapi_Error("Failed to register course name '%s' (hammerId %i): Too many courses!", courseName, hammerId);
+		return false;
+	}
+
+	auto currentCourses = g_mappingApi.courseDescriptors;
 	FOR_EACH_VEC(currentCourses, i)
 	{
-		if (currentCourses[i].hammerId == descriptor.hammerId)
+		if (currentCourses[i].hammerId == hammerId)
 		{
 			// This should only happen during start/end zone backwards compat where hammer IDs are KZ_NO_MAPAPI_VERSION, so this is not an error.
-			return;
+			return false;
 		}
-		if (!V_stricmp(descriptor.name, currentCourses[i].name))
+		if (!V_stricmp(targetName, currentCourses[i].entityTargetname))
 		{
-			Mapi_Error("Course descriptor name '%s' already existed! (registered by Hammer ID %i)", descriptor.name, currentCourses[i].hammerId);
-			return;
-		}
-		if (descriptor.number == currentCourses[i].number)
-		{
-			Mapi_Error("Course descriptor number %i already existed! (registered by Hammer ID %i)", descriptor.number, currentCourses[i].hammerId);
-			return;
-		}
-		if (!V_stricmp(descriptor.entityTargetname, currentCourses[i].entityTargetname))
-		{
-			Mapi_Error("Course name '%s' already existed! (registered by Hammer ID %i)", descriptor.entityTargetname, currentCourses[i].hammerId);
-			return;
+			Mapi_Error("Course descriptor '%s' already existed! (registered by Hammer ID %i)", targetName, currentCourses[i].hammerId);
+			return false;
 		}
 	}
-	g_mappingApi.courses.AddToTail(descriptor);
+
+	// Attempt to register a new course using course number and name.
+	KZCourse *course = KZ::course::InsertCourse(courseNumber, courseName);
+	if (!course)
+	{
+		Mapi_Error("Failed to register course name '%s' (hammerId %i)", courseName, hammerId);
+		return false;
+	}
+	// Check if the course already has a descriptor. This should not happen.
+	if (course->descriptor)
+	{
+		// Courses made with hammerId -1 is from pre-mapping API, which is fine.
+		if (course->descriptor->hammerId == -1)
+		{
+			return false;
+		}
+		assert(0);
+		Mapi_Error("Course name '%s' already had a descriptor!", courseName);
+		return false;
+	}
+	i32 index = g_mappingApi.courseDescriptors.AddToTail({course, hammerId, targetName, disableCheckpoints});
+	course->descriptor = &g_mappingApi.courseDescriptors[index];
+	return true;
 }
 
 // Example keyvalues:
@@ -278,11 +301,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 					snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), KZ_NO_MAPAPI_COURSE_DESCRIPTOR);
 					trigger.type = info->m_pEntity->NameMatches("timer_startzone") ? KZTRIGGER_ZONE_START : KZTRIGGER_ZONE_END;
 					// Manually create a KZ_NO_MAPAPI_COURSE_NAME course here because there shouldn't be any info_target_server_only around.
-					KzCourseDescriptor course;
-					course.number = 1;
-					snprintf(course.entityTargetname, sizeof(course.entityTargetname), KZ_NO_MAPAPI_COURSE_DESCRIPTOR);
-					snprintf(course.name, sizeof(course.name), KZ_NO_MAPAPI_COURSE_NAME);
-					Mapi_CreateCourse(course);
+					Mapi_CreateCourse();
 				}
 			}
 			break;
@@ -319,39 +338,32 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 		return;
 	}
 
-	KzCourseDescriptor course = {};
-	course.number = ekv->GetInt("timer_course_number", INVALID_COURSE_NUMBER);
-	course.hammerId = hammerId;
+	i32 courseNumber = ekv->GetInt("timer_course_number", INVALID_COURSE_NUMBER);
+	const char *courseName = ekv->GetString("timer_course_name");
+	const char *targetName = ekv->GetString("targetname");
 
-	// TODO: make sure course descriptor names are unique!
-	// TODO: make sure course descriptor numbers are unique!
-
-	if (course.number <= INVALID_COURSE_NUMBER)
+	if (courseNumber <= INVALID_COURSE_NUMBER)
 	{
-		Mapi_Error("Course number must be bigger than %i! Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", INVALID_COURSE_NUMBER,
-				   course.hammerId, origin.x, origin.y, origin.z);
-		return;
-	}
-
-	V_snprintf(course.name, sizeof(course.name), "%s", ekv->GetString("timer_course_name"));
-	if (!course.name[0])
-	{
-		Mapi_Error("Course name is empty! Course number %i. Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", course.number, course.hammerId,
+		Mapi_Error("Course number must be bigger than %i! Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", INVALID_COURSE_NUMBER, hammerId,
 				   origin.x, origin.y, origin.z);
 		return;
 	}
 
-	V_snprintf(course.entityTargetname, sizeof(course.entityTargetname), "%s", ekv->GetString("targetname"));
-	if (!course.entityTargetname[0])
+	if (!courseName[0])
 	{
-		Mapi_Error("Course targetname is empty! Course name \"%s\". Course number %i. Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)",
-				   course.name, course.number, course.hammerId, origin.x, origin.y, origin.z);
+		Mapi_Error("Course name is empty! Course number %i. Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)", courseNumber, hammerId,
+				   origin.x, origin.y, origin.z);
 		return;
 	}
 
-	course.disableCheckpoints = ekv->GetBool("timer_course_disable_checkpoint");
+	if (!targetName[0])
+	{
+		Mapi_Error("Course targetname is empty! Course name \"%s\". Course number %i. Course descriptor Hammer ID %i, origin (%.0f %.0f %.0f)",
+				   courseName, courseNumber, hammerId, origin.x, origin.y, origin.z);
+		return;
+	}
 
-	Mapi_CreateCourse(course);
+	Mapi_CreateCourse(courseNumber, courseName, hammerId, targetName, ekv->GetBool("timer_course_disable_checkpoint"));
 }
 
 static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
@@ -380,19 +392,19 @@ static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 	return result;
 }
 
-static_function const KzCourseDescriptor *Mapi_FindCourse(const char *targetname)
+static_function const KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
 {
-	KzCourseDescriptor *result = nullptr;
+	KZCourseDescriptor *result = nullptr;
 	if (!targetname)
 	{
 		return result;
 	}
 
-	FOR_EACH_VEC(g_mappingApi.courses, i)
+	FOR_EACH_VEC(g_mappingApi.courseDescriptors, i)
 	{
-		if (V_stricmp(g_mappingApi.courses[i].entityTargetname, targetname) == 0)
+		if (V_stricmp(g_mappingApi.courseDescriptors[i].entityTargetname, targetname) == 0)
 		{
-			result = &g_mappingApi.courses[i];
+			result = &g_mappingApi.courseDescriptors[i];
 			break;
 		}
 	}
@@ -402,13 +414,13 @@ static_function const KzCourseDescriptor *Mapi_FindCourse(const char *targetname
 
 static_function bool Mapi_SetStartPosition(const char *descriptorName, Vector origin, QAngle angles)
 {
-	KzCourseDescriptor *desc = nullptr;
+	KZCourseDescriptor *desc = nullptr;
 
-	FOR_EACH_VEC(g_mappingApi.courses, i)
+	FOR_EACH_VEC(g_mappingApi.courseDescriptors, i)
 	{
-		if (V_stricmp(g_mappingApi.courses[i].entityTargetname, descriptorName) == 0)
+		if (V_stricmp(g_mappingApi.courseDescriptors[i].entityTargetname, descriptorName) == 0)
 		{
-			desc = &g_mappingApi.courses[i];
+			desc = &g_mappingApi.courseDescriptors[i];
 			break;
 		}
 	}
@@ -479,7 +491,7 @@ void Mappingapi_RoundPrestart()
 void Mappingapi_RoundStart()
 {
 	g_mappingApi.roundIsStarting = false;
-	FOR_EACH_VEC(g_mappingApi.courses, courseInd)
+	FOR_EACH_VEC(g_mappingApi.courseDescriptors, courseInd)
 	{
 		// Find the number of split/checkpoint/stage zones that a course has
 		//  and make sure that they all start from 1 and are consecutive by
@@ -491,7 +503,7 @@ void Mappingapi_RoundStart()
 		i32 splitCount = 0;
 		i32 cpCount = 0;
 		i32 stageCount = 0;
-		KzCourseDescriptor *course = &g_mappingApi.courses[courseInd];
+		KZCourseDescriptor *courseDescriptor = &g_mappingApi.courseDescriptors[courseInd];
 		FOR_EACH_VEC(g_mappingApi.triggers, i)
 		{
 			KzTrigger *trigger = &g_mappingApi.triggers[i];
@@ -512,49 +524,49 @@ void Mappingapi_RoundStart()
 		bool invalid = false;
 		if (splitXor != 0)
 		{
-			Mapi_Error("Course \"%s\" Split zones aren't consecutive or don't start at 1!", course->name);
+			Mapi_Error("Course \"%s\" Split zones aren't consecutive or don't start at 1!", courseDescriptor->course->name);
 			invalid = true;
 		}
 
 		if (cpXor != 0)
 		{
-			Mapi_Error("Course \"%s\" Checkpoint zones aren't consecutive or don't start at 1!", course->name);
+			Mapi_Error("Course \"%s\" Checkpoint zones aren't consecutive or don't start at 1!", courseDescriptor->course->name);
 			invalid = true;
 		}
 
 		if (stageXor != 0)
 		{
-			Mapi_Error("Course \"%s\" Stage zones aren't consecutive or don't start at 1!", course->name);
+			Mapi_Error("Course \"%s\" Stage zones aren't consecutive or don't start at 1!", courseDescriptor->course->name);
 			invalid = true;
 		}
 
 		if (splitCount > KZ_MAX_SPLIT_ZONES)
 		{
-			Mapi_Error("Course \"%s\" Too many split zones! Maximum is %i.", course->name, KZ_MAX_SPLIT_ZONES);
+			Mapi_Error("Course \"%s\" Too many split zones! Maximum is %i.", courseDescriptor->course->name, KZ_MAX_SPLIT_ZONES);
 			invalid = true;
 		}
 
 		if (cpCount > KZ_MAX_CHECKPOINT_ZONES)
 		{
-			Mapi_Error("Course \"%s\" Too many checkpoint zones! Maximum is %i.", course->name, KZ_MAX_CHECKPOINT_ZONES);
+			Mapi_Error("Course \"%s\" Too many checkpoint zones! Maximum is %i.", courseDescriptor->course->name, KZ_MAX_CHECKPOINT_ZONES);
 			invalid = true;
 		}
 
 		if (stageCount > KZ_MAX_STAGE_ZONES)
 		{
-			Mapi_Error("Course \"%s\" Too many stage zones! Maximum is %i.", course->name, KZ_MAX_STAGE_ZONES);
+			Mapi_Error("Course \"%s\" Too many stage zones! Maximum is %i.", courseDescriptor->course->name, KZ_MAX_STAGE_ZONES);
 			invalid = true;
 		}
 
 		if (invalid)
 		{
-			g_mappingApi.courses.FastRemove(courseInd);
+			g_mappingApi.courseDescriptors.FastRemove(courseInd);
 			courseInd--;
 			break;
 		}
-		course->splitCount = splitCount;
-		course->checkpointCount = cpCount;
-		course->stageCount = stageCount;
+		courseDescriptor->splitCount = splitCount;
+		courseDescriptor->checkpointCount = cpCount;
+		courseDescriptor->stageCount = stageCount;
 	}
 }
 
@@ -600,7 +612,7 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 		return;
 	}
 
-	const KzCourseDescriptor *course = nullptr;
+	const KZCourseDescriptor *course = nullptr;
 	switch (touched->type)
 	{
 		case KZTRIGGER_ZONE_START:
@@ -631,7 +643,7 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 		return;
 	}
 
-	const KzCourseDescriptor *course = nullptr;
+	const KZCourseDescriptor *course = nullptr;
 	switch (touched->type)
 	{
 		case KZTRIGGER_ZONE_START:
@@ -660,7 +672,7 @@ void MappingInterface::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEnt
 	{
 		return;
 	}
-	g_mappingApi = {};
+	fatalFailure = false;
 	for (i32 i = 0; i < pKeyValues->Count(); i++)
 	{
 		auto ekv = (*pKeyValues)[i];
@@ -683,7 +695,7 @@ void MappingInterface::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEnt
 			if (mapApiVersion != KZ_MAPAPI_VERSION)
 			{
 				Mapi_Error("FATAL. Mapping API version %i is invalid!", mapApiVersion);
-				g_mappingApi.fatalFailure = true;
+				fatalFailure = true;
 				break;
 			}
 		}
@@ -692,7 +704,7 @@ void MappingInterface::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEnt
 
 void MappingInterface::OnSpawn(int count, const EntitySpawnInfo_t *info)
 {
-	if (!info || g_mappingApi.fatalFailure)
+	if (!info || fatalFailure)
 	{
 		return;
 	}
@@ -748,10 +760,10 @@ void MappingInterface::OnSpawn(int count, const EntitySpawnInfo_t *info)
 		}
 	}
 
-	if (g_mappingApi.fatalFailure)
+	if (fatalFailure)
 	{
 		g_mappingApi.triggers.RemoveAll();
-		g_mappingApi.courses.RemoveAll();
+		g_mappingApi.courseDescriptors.RemoveAll();
 	}
 }
 
@@ -762,27 +774,5 @@ i32 MappingInterface::GetCurrentMapAPIVersion()
 
 u32 MappingInterface::GetCourseDescriptorCount()
 {
-	return g_mappingApi.courses.Count();
-}
-
-const KzCourseDescriptor *MappingInterface::GetFirstCourseDescriptor()
-{
-	FOR_EACH_VEC(g_mappingApi.courses, i)
-	{
-		return &g_mappingApi.courses[i];
-	}
-	return nullptr;
-}
-
-const KzCourseDescriptor *MappingInterface::GetCourseDescriptorByCourseName(const char *courseName)
-{
-	FOR_EACH_VEC(g_mappingApi.courses, i)
-	{
-		if (V_stricmp(g_mappingApi.courses[i].name, courseName) == 0)
-		{
-			return &g_mappingApi.courses[i];
-			break;
-		}
-	}
-	return nullptr;
+	return g_mappingApi.courseDescriptors.Count();
 }

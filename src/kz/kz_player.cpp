@@ -908,7 +908,7 @@ void KZPlayer::RemoveKzTriggerFromTouchList(const KzTrigger *trigger)
 	}
 }
 
-void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KzCourseDescriptor *course)
+void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KZCourseDescriptor *course)
 {
 	switch (touched->type)
 	{
@@ -992,7 +992,7 @@ void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KzCou
 	}
 }
 
-void KZPlayer::MappingApiTriggerEndTouch(const KzTrigger *touched, const KzCourseDescriptor *course)
+void KZPlayer::MappingApiTriggerEndTouch(const KzTrigger *touched, const KZCourseDescriptor *course)
 {
 	switch (touched->type)
 	{
