@@ -53,6 +53,7 @@ void KZNoclipService::HandleNoclip()
 	}
 }
 
+
 // Commands
 
 static_function SCMD_CALLBACK(Command_KzNoclip)
