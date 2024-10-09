@@ -133,10 +133,6 @@ static_global int activateServerHook {};
 SH_DECL_HOOK0(CNetworkGameServerBase, ActivateServer, SH_NOATTRIB, false, bool);
 static_function bool Hook_ActivateServer();
 
-static_global int spawnServerHook {};
-SH_DECL_HOOK1_void(CNetworkGameServerBase, SpawnServer, SH_NOATTRIB, false, const char *);
-static_function void Hook_SpawnServer(const char *);
-
 static_global int clientConnectHook {};
 static_global int clientConnectPostHook {};
 SH_DECL_HOOK8(CNetworkGameServerBase, ConnectClient, SH_NOATTRIB, false, CServerSideClientBase *, const char *, ns_address *, int,
@@ -196,14 +192,7 @@ void hooks::Initialize()
 		SH_STATIC(Hook_ActivateServer), 
 		true
 	);
-	spawnServerHook = SH_ADD_DVPHOOK(
-		CNetworkGameServerBase, 
-		SpawnServer,
-		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
-		SH_STATIC(Hook_SpawnServer), 
-		true
-	);
-	// Warning: This is a pre hook!
+
 	clientConnectHook = SH_ADD_DVPHOOK(
 		CNetworkGameServerBase, 
 		ConnectClient,
@@ -278,8 +267,6 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 
 	SH_REMOVE_HOOK_ID(activateServerHook);
-
-	SH_REMOVE_HOOK_ID(spawnServerHook);
 
 	SH_REMOVE_HOOK_ID(clientConnectHook);
 	SH_REMOVE_HOOK_ID(clientConnectPostHook);

@@ -225,6 +225,8 @@ public:
 	virtual void PrintCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
 	virtual void PrintAlert(bool addPrefix, bool includeSpectators, const char *format, ...);
 	virtual void PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
+
+	CUtlString ComputeCvarValueFromModeStyles(const char *name);
 };
 
 class KZBaseService

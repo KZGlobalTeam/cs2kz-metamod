@@ -168,14 +168,9 @@ void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 
 void KZPlayer::TouchAntibhopTrigger(KzTouchingTrigger touching)
 {
-	if (touching.groundTouchTime <= 0)
-	{
-		return;
-	}
-
 	float touchingTime = g_pKZUtils->GetServerGlobals()->curtime - touching.groundTouchTime;
 	const KzTrigger *trigger = touching.trigger;
-	if (trigger->antibhop.time == 0 || touchingTime <= trigger->antibhop.time)
+	if (trigger->antibhop.time == 0 || touchingTime <= trigger->antibhop.time || touching.groundTouchTime == 0)
 	{
 		this->antiBhopActive = true;
 	}
@@ -1186,4 +1181,105 @@ bool KZPlayer::OnTriggerEndTouch(CBaseTrigger *trigger)
 void KZPlayer::OnChangeTeamPost(i32 team)
 {
 	this->timerService->OnPlayerJoinTeam(team);
+}
+
+CUtlString KZPlayer::ComputeCvarValueFromModeStyles(const char *name)
+{
+	ConVarHandle cvarHandle = g_pCVar->FindConVar(name);
+	if (!cvarHandle.IsValid())
+	{
+		assert(0);
+		META_CONPRINTF("Failed to find %s!\n", name);
+		return "";
+	}
+
+	if (!name)
+	{
+		assert(0);
+		return "";
+	}
+
+	ConVar *cvar = g_pCVar->GetConVar(cvarHandle);
+	assert(cvar);
+	CVValue_t *cvarValue = cvar->m_cvvDefaultValue;
+	CUtlString valueStr;
+
+	switch (cvar->m_eVarType)
+	{
+		case EConVarType_Bool:
+		{
+			valueStr.Format("%s", cvarValue->m_bValue ? "true" : "false");
+			break;
+		}
+		case EConVarType_Int16:
+		{
+			valueStr.Format("%i", cvarValue->m_i16Value);
+			break;
+		}
+		case EConVarType_Int32:
+		{
+			valueStr.Format("%i", cvarValue->m_i32Value);
+			break;
+		}
+		case EConVarType_Int64:
+		{
+			valueStr.Format("%lli", cvarValue->m_i64Value);
+			break;
+		}
+		case EConVarType_UInt16:
+		{
+			valueStr.Format("%u", cvarValue->m_u16Value);
+			break;
+		}
+		case EConVarType_UInt32:
+		{
+			valueStr.Format("%u", cvarValue->m_u32Value);
+			break;
+		}
+		case EConVarType_UInt64:
+		{
+			valueStr.Format("%llu", cvarValue->m_u64Value);
+			break;
+		}
+
+		case EConVarType_Float32:
+		{
+			valueStr.Format("%f", cvarValue->m_flValue);
+			break;
+		}
+
+		case EConVarType_Float64:
+		{
+			valueStr.Format("%lf", cvarValue->m_dbValue);
+			break;
+		}
+
+		case EConVarType_String:
+		{
+			valueStr.Format("%s", cvarValue->m_szValue);
+			break;
+		}
+
+		default:
+			assert(0);
+			break;
+	}
+
+	for (int i = 0; i < MODECVAR_COUNT; i++)
+	{
+		if (!V_stricmp(KZ::mode::modeCvarNames[i], name))
+		{
+			valueStr.Format("%s", this->modeService->GetModeConVarValues()[i]);
+			break;
+		}
+	}
+
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		if (this->styleServices[i]->GetTweakedConvarValue(name))
+		{
+			valueStr.Format("%s", this->styleServices[i]->GetTweakedConvarValue(name));
+		}
+	}
+	return valueStr;
 }
