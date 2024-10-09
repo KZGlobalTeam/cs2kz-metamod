@@ -29,7 +29,7 @@ static_global struct
 	i32 errorCount;
 	char errors[32][256];
 
-} g_mappingApi;
+} g_mappingApi {};
 
 static_global CTimer<> *g_errorTimer;
 static_global const char *g_errorPrefix = "{darkred} ERROR: ";
@@ -83,8 +83,8 @@ static_function f64 Mapi_PrintErrors()
 	return 60.0;
 }
 
-static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseName = "Main", i32 hammerId = -1, const char *targetName = "Default",
-									   bool disableCheckpoints = false)
+static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseName = KZ_NO_MAPAPI_COURSE_NAME, i32 hammerId = -1,
+									   const char *targetName = KZ_NO_MAPAPI_COURSE_DESCRIPTOR, bool disableCheckpoints = false)
 {
 	// Make sure we don't exceed this ridiculous value.
 	// If we do, it is most likely that something went wrong, or it is caused by the mapper.
@@ -95,7 +95,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 		return false;
 	}
 
-	auto currentCourses = g_mappingApi.courseDescriptors;
+	auto &currentCourses = g_mappingApi.courseDescriptors;
 	FOR_EACH_VEC(currentCourses, i)
 	{
 		if (currentCourses[i].hammerId == hammerId)
@@ -479,13 +479,13 @@ bool MappingInterface::IsBhopTrigger(KzTriggerType triggerType)
 	return result;
 }
 
-void Mappingapi_RoundPrestart()
+void Mappingapi_Init()
 {
 	g_mappingApi = {};
 	g_pMappingApi = &g_mappingInterface;
 	g_mappingApi.roundIsStarting = true;
 
-	g_errorTimer = StartTimer(Mapi_PrintErrors, true);
+	g_errorTimer = g_errorTimer ? g_errorTimer : StartTimer(Mapi_PrintErrors, true);
 }
 
 void Mappingapi_RoundStart()

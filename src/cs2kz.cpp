@@ -47,8 +47,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	hooks::Initialize();
 	movement::InitDetours();
-	KZ::mode::InitModeManager();
-	KZ::style::InitStyleManager();
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();
@@ -64,9 +62,11 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	}
 
 	ismm->AddListener(this, this);
+	Mappingapi_Init();
+	KZ::mode::InitModeManager();
+	KZ::style::InitStyleManager();
 
 	KZ::mode::DisableReplicatedModeCvars();
-	Mappingapi_RoundPrestart();
 
 	KZOptionService::InitOptions();
 	KZTipService::InitTips();
