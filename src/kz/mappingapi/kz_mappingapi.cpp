@@ -576,15 +576,20 @@ void MappingInterface::OnProcessMovement(KZPlayer *player)
 	if (player->modifiers.enableSlideCount > 0)
 	{
 		bool replicate = !player->lastModifiers.enableSlideCount;
+		CUtlString aaValue = player->ComputeCvarValueFromModeStyles("sv_airaccelerate");
+		aaValue.Format("%f", atof(aaValue.Get()) * 4.0);
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", "2", replicate);
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", "2", replicate);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue.Get(), replicate);
 	}
 	else if (player->lastModifiers.enableSlideCount > 0)
 	{
-		CUtlString standableModeValue = player->ComputeCvarValueFromModeStyles("sv_standable_normal");
-		CUtlString walkableModeValue = player->ComputeCvarValueFromModeStyles("sv_walkable_normal");
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableModeValue.Get(), true);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableModeValue.Get(), true);
+		CUtlString standableValue = player->ComputeCvarValueFromModeStyles("sv_standable_normal");
+		CUtlString walkableValue = player->ComputeCvarValueFromModeStyles("sv_walkable_normal");
+		CUtlString aaValue = player->ComputeCvarValueFromModeStyles("sv_airaccelerate");
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue.Get(), true);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableValue.Get(), true);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableValue.Get(), true);
 	}
 
 	// apply antibhop
