@@ -133,6 +133,10 @@ static_global int activateServerHook {};
 SH_DECL_HOOK0(CNetworkGameServerBase, ActivateServer, SH_NOATTRIB, false, bool);
 static_function bool Hook_ActivateServer();
 
+static_global int spawnServerHook {};
+SH_DECL_HOOK1_void(CNetworkGameServerBase, SpawnServer, SH_NOATTRIB, false, const char *);
+static_function void Hook_SpawnServer(const char *);
+
 static_global int clientConnectHook {};
 static_global int clientConnectPostHook {};
 SH_DECL_HOOK8(CNetworkGameServerBase, ConnectClient, SH_NOATTRIB, false, CServerSideClientBase *, const char *, ns_address *, int,
@@ -192,7 +196,13 @@ void hooks::Initialize()
 		SH_STATIC(Hook_ActivateServer), 
 		true
 	);
-	
+	spawnServerHook = SH_ADD_DVPHOOK(
+		CNetworkGameServerBase, 
+		SpawnServer,
+		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
+		SH_STATIC(Hook_SpawnServer), 
+		true
+	);
 	// Warning: This is a pre hook!
 	clientConnectHook = SH_ADD_DVPHOOK(
 		CNetworkGameServerBase, 
@@ -268,6 +278,8 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 
 	SH_REMOVE_HOOK_ID(activateServerHook);
+
+	SH_REMOVE_HOOK_ID(spawnServerHook);
 
 	SH_REMOVE_HOOK_ID(clientConnectHook);
 	SH_REMOVE_HOOK_ID(clientConnectPostHook);
@@ -753,6 +765,8 @@ static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 static_function void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	g_KZPlugin.AddonInit();
+	KZ::course::ClearCourses();
+	Mappingapi_Init();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -782,7 +796,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
 		{
 			KZ::course::ClearCourses();
-			Mappingapi_RoundPrestart();
+			Mappingapi_Init();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)
 		{
@@ -838,7 +852,6 @@ static_function bool Hook_ActivateServer()
 {
 	KZJumpstatsService::OnServerActivate();
 	KZ::timer::ClearAnnounceQueue();
-	KZ::course::SetupLocalCourses();
 	KZ::misc::OnServerActivate();
 	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();

@@ -146,7 +146,7 @@ public:
 	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
 };
 
-void Mappingapi_RoundPrestart();
+void Mappingapi_Init();
 void Mappingapi_RoundStart();
 
 extern MappingInterface *g_pMappingApi;
