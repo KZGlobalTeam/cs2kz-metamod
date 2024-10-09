@@ -124,8 +124,8 @@ struct KzTrigger
 struct KzTouchingTrigger
 {
 	const KzTrigger *trigger;
-	f32 startTouchTime;
-	f32 groundTouchTime;
+	f32 startTouchTime {};
+	f32 groundTouchTime {};
 };
 
 class KZPlayer;

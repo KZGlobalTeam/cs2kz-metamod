@@ -345,12 +345,12 @@ bool utils::SetConvarValue(CPlayerSlot slot, const char *name, const char *value
 			}
 		}
 		break;
-
-		case EConVarType_String:
-		{
-			cvarValue->m_szValue = value;
-		}
-		break;
+			// Do not support string.
+			// case EConVarType_String:
+			// {
+			// 	cvarValue->m_szValue = value;
+			// }
+			// break;
 
 		default:
 			assert(0);

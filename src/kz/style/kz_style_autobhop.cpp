@@ -131,12 +131,21 @@ void KZAutoBhopStyleService::Init()
 	g_pKZUtils->SendConVarValue(this->player->GetPlayerSlot(), sv_autobunnyhopping, "true");
 }
 
+const char *KZAutoBhopStyleService::GetTweakedConvarValue(const char *name)
+{
+	if (!V_stricmp(name, "sv_autobunnyhopping"))
+	{
+		return "true";
+	}
+	return nullptr;
+}
+
 void KZAutoBhopStyleService::Cleanup()
 {
 	g_pKZUtils->SendConVarValue(this->player->GetPlayerSlot(), sv_autobunnyhopping, "false");
 }
 
-void KZAutoBhopStyleService::OnCheckJumpButton()
+void KZAutoBhopStyleService::OnProcessMovement()
 {
 	u32 newValue = 1;
 	V_memcpy(&(sv_autobunnyhopping->values), &newValue, 16);

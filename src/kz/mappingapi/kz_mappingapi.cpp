@@ -581,10 +581,10 @@ void MappingInterface::OnProcessMovement(KZPlayer *player)
 	}
 	else if (player->lastModifiers.enableSlideCount > 0)
 	{
-		const char *standableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_STANDABLE_NORMAL];
-		const char *walkableModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_WALKABLE_NORMAL];
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableModeValue, true);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableModeValue, true);
+		CUtlString standableModeValue = player->ComputeCvarValueFromModeStyles("sv_standable_normal");
+		CUtlString walkableModeValue = player->ComputeCvarValueFromModeStyles("sv_walkable_normal");
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableModeValue.Get(), true);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableModeValue.Get(), true);
 	}
 
 	// apply antibhop
@@ -593,14 +593,17 @@ void MappingInterface::OnProcessMovement(KZPlayer *player)
 		bool replicate = !player->lastAntiBhopActive;
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", "0.0", replicate);
 		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", "false", replicate);
 		player->GetMoveServices()->m_bOldJumpPressed() = true;
 	}
 	else if (player->lastAntiBhopActive)
 	{
-		const char *impulseModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_IMPULSE];
-		const char *spamModeValue = player->modeService->GetModeConVarValues()[MODECVAR_SV_JUMP_SPAM_PENALTY_TIME];
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", impulseModeValue, true);
-		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue, true);
+		CUtlString impulseModeValue = player->ComputeCvarValueFromModeStyles("sv_jump_impulse");
+		CUtlString spamModeValue = player->ComputeCvarValueFromModeStyles("sv_jump_spam_penalty_time");
+		CUtlString autoBhopValue = player->ComputeCvarValueFromModeStyles("sv_autobunnyhopping");
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", impulseModeValue.Get(), true);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue.Get(), true);
+		utils::SetConvarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue.Get(), true);
 	}
 }
 
