@@ -914,6 +914,8 @@ void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KZCou
 			this->modifiers.disableCheckpointsCount += modifier.disableCheckpoints ? 1 : 0;
 			this->modifiers.disableTeleportsCount += modifier.disableTeleports ? 1 : 0;
 			this->modifiers.disableJumpstatsCount += modifier.disableJumpstats ? 1 : 0;
+			// Enabling slide will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount += modifier.enableSlide ? 1 : 0;
 			this->modifiers.enableSlideCount += modifier.enableSlide ? 1 : 0;
 		}
 		break;
@@ -998,6 +1000,8 @@ void KZPlayer::MappingApiTriggerEndTouch(const KzTrigger *touched, const KZCours
 			this->modifiers.disableCheckpointsCount -= modifier.disableCheckpoints ? 1 : 0;
 			this->modifiers.disableTeleportsCount -= modifier.disableTeleports ? 1 : 0;
 			this->modifiers.disableJumpstatsCount -= modifier.disableJumpstats ? 1 : 0;
+			// Enabling slide will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount -= modifier.enableSlide ? 1 : 0;
 			this->modifiers.enableSlideCount -= modifier.enableSlide ? 1 : 0;
 			assert(this->modifiers.disablePausingCount >= 0);
 			assert(this->modifiers.disableCheckpointsCount >= 0);
