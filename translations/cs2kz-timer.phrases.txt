@@ -215,4 +215,28 @@
 		"it"		"{darkred}Non puoi riprendere quando hai appena messo in pausa."
 		"es"		"{darkred}No puede reanudar porque acaba de pausar."
 	}
+	"Can't finish run (Missed a checkpoint zone)"
+	{
+		"en"		"{darkred}You can't finish your run, because you missed a checkpoint zone."
+	}
+	"Can't finish run (Missed checkpoint zones)"
+	{
+		"#format"	"missed_count:i"
+		"en"		"{darkred}You can't finish your run, because you missed {missed_count} checkpoint zones."
+	}
+	"Can't finish run (Missed stage)"
+	{
+		"#format"	"stage_number:i"
+		"en"		"{darkred}You can't finish your run, because you missed stage zone {stage_number}."
+	}
+	"Touched too high stage number (Missed stage)"
+	{
+		"#format"	"stage_number:i"
+		"en"		"{darkred}You missed stage zone {stage_number}!"
+	}
+	"No Start Position For Course"
+	{
+		"#format"	"course_name:s"
+		"en"		"{darkred}Start position not found for course {default}{course_name}{darkred}!"
+	}
 }

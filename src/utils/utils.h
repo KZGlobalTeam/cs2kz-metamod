@@ -15,6 +15,7 @@ namespace utils
 	// ConVars
 	void UnlockConVars();
 	void UnlockConCommands();
+	bool SetConvarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate);
 	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
 	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
 
@@ -59,5 +60,6 @@ namespace utils
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles);
 
+	void ResetMap();
 	void ResetMapIfEmpty();
 } // namespace utils

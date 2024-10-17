@@ -1,8 +1,12 @@
 #include "kz_spec.h"
+#include "../timer/kz_timer.h"
 
 #include "utils/simplecmds.h"
 
-static_global KZTimerServiceEventListener_Spec timerEventListener;
+static_global class KZTimerServiceEventListener_Spec : public KZTimerServiceEventListener
+{
+	virtual void OnTimerStartPost(KZPlayer *player, u32 courseGUID) override;
+} timerEventListener;
 
 void KZSpecService::Reset()
 {
@@ -101,7 +105,7 @@ KZPlayer *KZSpecService::GetNextSpectator(KZPlayer *current)
 	return nullptr;
 }
 
-void KZTimerServiceEventListener_Spec::OnTimerStartPost(KZPlayer *player, const char *courseName)
+void KZTimerServiceEventListener_Spec::OnTimerStartPost(KZPlayer *player, u32 courseGUID)
 {
 	player->specService->Reset();
 }

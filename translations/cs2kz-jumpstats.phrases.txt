@@ -387,6 +387,10 @@
 		"tr"		"Işınlandı"
 		"it"		"Teleported"
 	}
+	"Disabled by map"
+	{
+		"en"		"Disabled by map"
+	}
 
 	// =====[OPTIONS]=====
 	"Jumpstats Option - Master Switch - Enable"

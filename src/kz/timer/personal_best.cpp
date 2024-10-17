@@ -1,3 +1,4 @@
+#include "kz/course/kz_course.h"
 #include "kz/db/kz_db.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
@@ -515,22 +516,19 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 		if (mapName == currentMap)
 		{
 			// Try to get the player's current course.
-			char course[KZ_MAX_COURSE_NAME_LENGTH];
-			callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
-			if (course[0])
+			const KZCourse *course = callingPlayer->timerService->GetCourse();
+			if (!course)
 			{
-				courseName = course;
-			}
-			else // No course? Take the map's first course.
-			{
-				KZ::timer::CourseInfo info;
-				if (!KZ::timer::GetFirstCourseInformation(info))
+				// No course? Take the map's first course.
+				const KZCourse *course = KZ::course::GetFirstCourse();
+				if (!course)
 				{
-					pbReqQueueManager.InvalidLocal(this->uid, "PB Request - Invalid Course Name", course);
+					// TODO: use a better message
+					pbReqQueueManager.InvalidLocal(this->uid, "PB Request - Invalid Course Name", "");
 					return;
 				}
-				courseName = info.courseName;
 			}
+			courseName = course->GetName();
 			hasValidCourseName = true;
 		}
 		else
