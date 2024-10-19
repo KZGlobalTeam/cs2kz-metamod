@@ -76,8 +76,8 @@
 		"ua"		"ID Проходження"
 		"it"		"ID Run"
 		"es"		"ID del Run"
-		"de"		"Lauf-ID"
-		"pl"		"ID Biegu"
+		"de"		"ID des Runs"
+		"pl"		"ID Runu"
 	}
 	"Course Top Request - Failed (Generic)"
 	{
