@@ -1,5 +1,6 @@
 #pragma once
 
+class CCSPlayer_WaterServices;
 class CPlayer_MovementServices;
 class CPlayer_ObserverServices;
 class CCSPlayer_ItemServices;
@@ -15,6 +16,7 @@ public:
 	SCHEMA_FIELD(CHandle<CBasePlayerController>, m_hController)
 	SCHEMA_FIELD(CCSPlayer_ItemServices *, m_pItemServices)
 	SCHEMA_FIELD(CPlayer_ObserverServices *, m_pObserverServices)
+	SCHEMA_FIELD(CCSPlayer_WaterServices *, m_pWaterServices)
 
 	void CommitSuicide(bool bExplode, bool bForce)
 	{

@@ -334,7 +334,7 @@
 			"ControllerChangeTeam"
 			{
 				"windows"		"100"
-				"linux"			"101"
+				"linux"			"99"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2832LL))(v9, v27, 0LL);
@@ -352,7 +352,7 @@
 			// "Player.Respawn"
 			"Respawn"
 			{
-				"windows"		"345"
+				"windows"		"348"
 				"linux"			"349"
 			}
 			// Check sv_fullupdate

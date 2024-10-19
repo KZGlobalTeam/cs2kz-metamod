@@ -696,6 +696,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	if (player->GetController())
 	{
 		player->GetController()->m_LastTimePlayerWasDisconnectedForPawnsRemove().SetTime(0.01f);
+		player->GetController()->SwitchTeam(0);
 	}
 	if (player->GetPlayerPawn())
 	{

@@ -58,7 +58,7 @@ public:
 			return;
 		}
 
-		if (iTeam == CS_TEAM_SPECTATOR)
+		if (iTeam <= CS_TEAM_SPECTATOR)
 		{
 			ChangeTeam(iTeam);
 		}

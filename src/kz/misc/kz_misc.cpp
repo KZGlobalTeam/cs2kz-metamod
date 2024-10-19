@@ -220,10 +220,17 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 			player->timerService->TimerStop();
 			// Just joining a team alone can put you into weird invalid spawns.
 			// Need to teleport the player to a valid one.
-			Vector spawnOrigin;
-			QAngle spawnAngles;
-			utils::FindValidSpawn(spawnOrigin, spawnAngles);
-			player->GetPlayerPawn()->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
+			Vector spawnOrigin {};
+			QAngle spawnAngles {};
+			if (utils::FindValidSpawn(spawnOrigin, spawnAngles))
+			{
+				auto pawn = player->GetPlayerPawn();
+				pawn->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
+				// CS2 bug: m_flWaterJumpTime is not properly initialized upon player spawn.
+				// If the player is teleported on the very first tick of movement and lose the ground flag,
+				// the player might get teleported to a random place.
+				pawn->m_pWaterServices()->m_flWaterJumpTime(0.0f);
+			}
 		}
 		player->specService->ResetSavedPosition();
 	}

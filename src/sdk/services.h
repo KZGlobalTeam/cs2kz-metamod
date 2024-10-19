@@ -13,11 +13,12 @@ class CPlayerPawnComponent
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayerPawnComponent);
+
 public:
 	uint8 vtable[0x8];
 	uint8 chainEntity[0x28]; // Unused
-	CBasePlayerPawn *pawn; // 0x16
-	uint8 __pad0030[0x6]; // 0x0
+	CBasePlayerPawn *pawn;   // 0x16
+	uint8 __pad0030[0x6];    // 0x0
 };
 
 class CCSPlayer_ViewModelServices : public CPlayerPawnComponent
@@ -65,12 +66,22 @@ public:
 	SCHEMA_FIELD(float, m_flStamina)
 };
 
+class CCSPlayer_WaterServices : public CPlayerPawnComponent
+{
+public:
+	DECLARE_SCHEMA_CLASS(CCSPlayer_WaterServices);
+	SCHEMA_FIELD(float, m_flWaterJumpTime)
+	SCHEMA_FIELD(Vector, m_vecWaterJumpVel)
+};
+
 class CCSPlayer_ItemServices
+
 {
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayer_ItemServices);
 
 	virtual ~CCSPlayer_ItemServices() = 0;
+
 private:
 	virtual void unk_01() = 0;
 	virtual void unk_02() = 0;
@@ -87,6 +98,7 @@ private:
 	virtual void unk_13() = 0;
 	virtual void unk_14() = 0;
 	virtual CBaseEntity *_GiveNamedItem(const char *pchName) = 0;
+
 public:
 	virtual bool GiveNamedItemBool(const char *pchName) = 0;
 	virtual CBaseEntity *GiveNamedItem(const char *pchName) = 0;
