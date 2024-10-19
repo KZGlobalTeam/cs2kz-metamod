@@ -11,17 +11,19 @@
 		"tr"	"{grey}Zıplama istatistiklerinin sohbette gözükmesi için {default}/togglejs{grey}."
 		"it"	"{grey}Puoi cambiare la visibilità delle statistiche dei salti con {default}/togglejs{grey}."
 		"es"	"{grey}Puede alternar las estadísticas de salto escribiendo {default}/togglejs{grey}."
+		"de"	"{grey}Sie können die Berichterstattung über Jumpstats aktivieren oder deaktivieren, indem Sie {default}/togglejs{grey} eingeben."
 	}
 	"Tip - kz_jsalways"
 	{
 		"en"	"{grey}Use {default}/jsalways {grey}to toggle always-on jumpstats mode."
 		"chi"	"{grey}使用 {default}/jsalways {grey}可以显示全部的跳跃提示，包括无效跳跃."
-		"pl"	"{grey}Użyj {default}/togglejs{grey} aby włączyć lub wyłączyć wyświetlanie dystansu dla każdego skoku."
+		"pl"	"{grey}Użyj {default}/jsalways {grey} aby włączyć lub wyłączyć wyświetlanie dystansu dla każdego skoku."
 		"fi"	"{grey}Käytä {default}/jsalways {grey}komentoa vaihtaaksesi \"aina-päällä\" jumpstattien asetuksen tilaa."
 		"sv"	"{grey}Använd {default}/jsalways {grey}för att toggla alla egna jumpstats."
 		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}щоб увімк./вимк. постійне відображення статистики стрибків."
 		"tr"	"{grey}{default}/jsalways {grey}kullanarak tüm zıplama istatistiklerinin sohbette gözükmesini açabilirsin."
 		"it"	"{grey}Scrivi {default}/jsalways {grey}per mostrare sempre le statistiche dei salti."
 		"es"	"{grey}Use {default}/jsalways {grey}para alternar el modo de estadísticas de salto siempre activas."
+		"de"	"{grey}Verwende {default}/jsalways {grey}, um den Modus für immer aktive Jumpstats umzuschalten."
 	}
 }

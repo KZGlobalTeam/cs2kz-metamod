@@ -11,6 +11,7 @@
 		"tr"		"{grey}Komutların listesi için konsola bak!"
 		"it"		"{grey}Apri la console per la lista dei comandi!"
 		"es"		"{grey}¡Mire su consola para la lista de comandos!"
+		"de"		"{grey}Schau in deine Konsole um die Befehl liste zu sehen!"
 	}
 	"Command Help Response (Console)"
 	{
@@ -23,6 +24,7 @@
 		"tr"		"Bu komutları kullanmak için konsola \"bind <tuş> kz_<komut ismi>\"veya konuşma satırına !<komut ismi> ya da /<komut ismi> yazabilirsin. Örnek olarak: \"bind 1 kz_cp\" veya \"!cp\" or \"/cp\""
 		"it"		"Per usare questi comandi scrivi \"bind <tasto> kz_<nome comando>\" nella console, oppure !<nome comando> o /<nome comando> in chat.\nEsempio: \"bind 1 kz_cp\" o \"!cp\" o \"/cp\""
 		"es"		"Para usar estos comandos, puede escribir \"bind <key> kz_<command name>\" en su consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
+		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: \„bind 1 kz_cp\" oder \„!cp\" oder \„/cp\""
 	}
 	"Switch Language"
 	{
@@ -37,6 +39,7 @@
 		"tr"		"{grey}Dili şununla değiştirdiniz: {default}{language}{grey}."
 		"it"		"{grey}Hai cambiato la lingua a {default}{language}{grey}."
 		"es"		"{grey}Ha cambiado su idioma a {default}{language}{grey}."
+		"de"		"{grey}Du hast Deine Sprache auf {default}{language}{grey} umgestellt."
 	}
 
 	// Commands
@@ -51,6 +54,7 @@
 		"tr"		"Geri al."
 		"it"		"Annulla teleport."
 		"es"		"Deshacer teleporte."
+		"de"		"Teleport rückgängig machen."
 	}
 	"Command Description - kz_checkpoint"
 	{
@@ -63,6 +67,7 @@
 		"tr"		"Yerde veya merdivende kontrol noktası oluştur."
 		"it"		"Crea un checkpoint da terra o su una scala."
 		"es"		"Crear un checkpoint en el suelo o en una escalera."
+		"de"		"Setze ein Checkpoint auf dem Boden oder Leiter."
 	}
 	"Command Description - kz_cp"
 	{
@@ -75,6 +80,7 @@
 		"tr"		"Yerde veya merdivende kontrol noktası oluştur."
 		"it"		"Crea un checkpoint da terra o su una scala."
 		"es"		"Crear un checkpoint en el suelo o en una escalera."
+		"de"		"Setze ein Checkpoint auf dem Boden oder Leiter."
 	}
 	"Command Description - kz_teleport"
 	{
@@ -87,6 +93,7 @@
 		"tr"		"Kontrol noktasına ışınlan."
 		"it"		"Teleportati all'ultimo checkpoint."
 		"es"		"Teleportar al checkpoint actual."
+		"de"		"Zum aktuellen Checkpoint teleportieren."
 	}
 	"Command Description - kz_tp"
 	{
@@ -99,6 +106,7 @@
 		"tr"		"Kontrol noktasına ışınlan."
 		"it"		"Teleportati all'ultimo checkpoint."
 		"es"		"Teleportar al checkpoint actual."
+		"de"		"Zum aktuellen Checkpoint teleportieren."
 	}
 	"Command Description - kz_prevcp"
 	{
@@ -111,6 +119,7 @@
 		"tr"		"Önceki kontrol noktasına dön."
 		"it"		"Teleportati al penultimo checkpoint."
 		"es"		"Teleportar al checkpoint anterior."
+		"de"		"Zum letzten Checkpoint teleportieren."
 	}
 	"Command Description - kz_pcp"
 	{
@@ -123,6 +132,7 @@
 		"tr"		"Önceki kontrol noktasına dön."
 		"it"		"Teleportati al penultimo checkpoint."
 		"es"		"Teleportar al checkpoint anterior."
+		"de"		"Zum letzten Checkpoint teleportieren."
 	}
 	"Command Description - kz_nextcp"
 	{
@@ -135,6 +145,7 @@
 		"tr"		"Sonraki kontrol noktasına ilerle."
 		"it"		"Teleportati al prossimo checkpoint."
 		"es"		"Teleportar al próximo checkpoint."
+		"de"		"Zum nächsten Checkpoint teleportieren."
 	}
 	"Command Description - kz_ncp"
 	{
@@ -147,6 +158,7 @@
 		"tr"		"Sonraki kontrol noktasına ilerle."
 		"it"		"Teleportati al prossimo checkpoint."
 		"es"		"Teleportar al próximo checkpoint."
+		"de"		"Zum nächsten Checkpoint teleportieren."
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -159,6 +171,7 @@
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
 		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
 		"es"		"Establecer su posición de inicio personalizada a su posición actual."
+		"de"		"Setze deine benutzerdefinierte Startposition auf deiner aktuellen Position."
 	}
 	"Command Description - kz_ssp"
 	{
@@ -171,6 +184,7 @@
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
 		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
 		"es"		"Establecer su posición de inicio personalizada a su posición actual."
+		"de"		"Setze deine benutzerdefinierte Startposition auf deiner aktuellen Position."
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -183,6 +197,7 @@
 		"tr"		"Başlangıç noktasını temizle."
 		"it"		"Elimina la zona di partenza custom."
 		"es"		"Eliminar su posición de inicio personalizada."
+		"de"		"Lösche deine benutzerdefinierte Startposition."
 	}
 	"Command Description - kz_csp"
 	{
@@ -195,6 +210,7 @@
 		"tr"		"Başlangıç noktasını temizle."
 		"it"		"Elimina la zona di partenza custom."
 		"es"		"Eliminar su posición de inicio personalizada."
+		"de"		"Lösche deine benutzerdefinierte Startposition."
 	}
 	"Command Description - kz_panel"
 	{
@@ -207,6 +223,7 @@
 		"tr"		"Orta panel görüntüsünü aç/kapat."
 		"it"		"Cambia la visibilità del pannello centrale."
 		"es"		"Alternar visualización del panel central."
+		"de"		"Anzeigen des mittleren Penels umschalten."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
@@ -219,6 +236,7 @@
 		"tr"		"Sohbet için zıplama istatistiklerinin minimum değerini değiştir."
 		"it"		"Cambia la soglia minima per mostrare le statistiche dei salti."
 		"es"		"Cambiar valor mínimo de estadísticas de salto para difusión."
+		"de"		"Ändern des Mindestwert für die Übertragung von Jumpstats."
 	}
 	"Command Description - kz_jssound"
 	{
@@ -231,6 +249,7 @@
 		"tr"		"Zıplama istatistiklerinin minimum ses efekti değerini değiştir."
 		"it"		"Cambia la soglia minima per gli effetti sonori dei salti."
 		"es"		"Cambiar valor mínimo de estadísticas de salto para efectos de sonido."
+		"de"		"Ändern des Mindestwert für die Jumpstats Sounds."
 	}
 	"Command Description - kz_togglestats"
 	{
@@ -243,6 +262,7 @@
 		"tr"		"Zıplama istatistiklerinin sohbette gözükmesini aç."
 		"it"		"Cambia la visibilità delle statistiche dei salti."
 		"es"		"Alternar reportes de estadísticas de salto."
+		"de"		"Jumpstats-Berichte umschalten."
 	}
 	"Command Description - kz_togglejs"
 	{
@@ -255,6 +275,7 @@
 		"tr"		"Zıplama istatistiklerinin sohbette gözükmesini aç."
 		"it"		"Cambia la visibilità delle statistiche dei salti."
 		"es"		"Alternar reportes de estadísticas de salto."
+		"de"		"Jumpstats-Berichte umschalten."
 	}
 	"Command Description - kz_jsalways"
 	{
@@ -267,6 +288,7 @@
 		"tr"		"Zıplama istatistiklerinin devamlı sohbette gözükmesini aç."
 		"it"		"Mostra sempre le statistiche dei salti."
 		"es"		"Alternar estadísticas de salto siempre activas."
+		"de"		"Jumpstats immer ein umschalten."
 	}
 	"Command Description - kz_mode"
 	{
@@ -279,6 +301,7 @@
 		"tr"		"Modları listele veya değiştir"
 		"it"		"Elenca o cambia modalità."
 		"es"		"Listar o cambiar modo."
+		"de"		"Modi ändern oder auflisten."
 	}
 	"Command Description - kz_noclip"
 	{
@@ -291,6 +314,7 @@
 		"tr"		"Noclip aç."
 		"it"		"Abilita il noclip."
 		"es"		"Alternar noclip."
+		"de"		"Noclip umschalten."
 	}
 	"Command Description - kz_nc"
 	{
@@ -303,6 +327,7 @@
 		"tr"		"Noclip aç."
 		"it"		"Abilita il noclip."
 		"es"		"Alternar noclip."
+		"de"		"Noclip umschalten."
 	}
 	"Command Description - noclip"
 	{
@@ -315,6 +340,7 @@
 		"tr"		"Noclip aç."
 		"it"		"Abilita il noclip."
 		"es"		"Alternar noclip."
+		"de"		"Noclip umschalten."
 	}
 	"Command Description - kz_spec"
 	{
@@ -327,11 +353,13 @@
 		"tr"		"Bir oyuncuyu izle."
 		"it"		"Guarda un altro giocatore."
 		"es"		"Espectar a un jugador."
+		"de"		"Ein Spieler Spectaten."
 	}
 	"Command Description - kz_goto"
 	{
 		"en"		"Go to a player."
 		"chi"		"传送到一个玩家身边."
+		"pl"		"Przejdź do gracza."
 		"ru"		"Телепортироваться к игроку."
 		"fi"		"Mene pelaajan luokse."
 		"sv"		"Gå till en spelare."
@@ -339,11 +367,13 @@
 		"tr"		"Bir oyuncuya ışınlan."
 		"it"		"Vai ad un altro giocatore."
 		"es"		"Ir hacia un jugador."
+		"de"		"Zum Spieler gehen."
 	}
 	"Command Description - kz_style"
 	{
 		"en"		"List, add, remove or toggle style."
 		"chi"		"列出, 添加, 移除或切换风格."
+		"pl"		"Wyświetl, dodaj, usuń lub przełącz styl.
 		"ru"		"Показать, добавить, удалить или переключить стиль."
 		"fi"		"Listaa, lisää, poista tai vaihda tyyliä."
 		"sv"		"Lista, lägg till, ta bort eller toggla style."
@@ -351,11 +381,13 @@
 		"tr"		"Listele, ekle, kaldır veya bir stili aktif et."
 		"it"		"Elenca, aggiungi, rimuovi or cambia stile."
 		"es"		"Listar, añadir, remover o alternar estilo."
+		"de"		"Stil Auflisten, hinzufügen, entfernen oder umschalten."
 	}
 	"Command Description - kz_addstyle"
 	{
 		"en"		"List or add style."
 		"chi"		"列出或添加风格."
+		"pl"		"Dodaj styl."
 		"ru"		"Показать или добавить стиль"
 		"fi"		"Listaa tai lisää tyyli."
 		"sv"		"Lista eller lägg till style."
@@ -363,11 +395,13 @@
 		"tr"		"Listele veya stil ekle."
 		"it"		"Elenca o aggiungi stile."
 		"es"		"Listar o añadir estilo."
+		"de"		"Stil hinzufügen."
 	}
 	"Command Description - kz_removestyle"
 	{
 		"en"		"List active styles or remove style."
 		"chi"		"列出已激活风格或移除风格."
+		"pl"		"Usuń styl."
 		"ru"		"Показать активные стили или удалить стиль."
 		"fi"		"Listaa aktiiviset tyylit tai poista tyyli."
 		"sv"		"Lista aktiva styles eller ta bort style."
@@ -375,11 +409,13 @@
 		"tr"		"Aktif stilleri listele veya sil."
 		"it"		"Elenca stili attivi o rimuovi stile."
 		"es"		"Listar estilos activos o remover estilo."
+		"de"		"Stil entfernen."
 	}
 	"Command Description - kz_togglestyle"
 	{
 		"en"		"List or toggle style."
 		"chi"		"列出或切换风格."
+		"pl"		"Wyświetl lub przełącz styl."
 		"ru"		"Показать или переключить стиль."
 		"fi"		"Listaa tai vaihda tyyliä."
 		"sv"		"Lista eller toggla style."
@@ -387,11 +423,13 @@
 		"tr"		"Stilleri listele veya aktif et."
 		"it"		"Elenca o cambia stile."
 		"es"		"Listar o alternar estilo."
+		"de"		"Stil auflisten oder umschalten.
 	}
 	"Command Description - kz_clearstyles"
 	{
 		"en"		"Clear all styles."
 		"chi"		"清除所有风格."
+		"pl"		"Usuń style."
 		"ru"		"Очистить все стили."
 		"fi"		"Tyhjennä kaikki tyylit."
 		"sv"		"Rensa alla styles."
@@ -399,6 +437,7 @@
 		"tr"		"Tüm stilleri temizle."
 		"it"		"Elimina tutti gli stili."
 		"es"		"Eliminar todos los estilos."
+		"de"		"Alle Stile löschen."
 	}
 	"Command Description - kz_stop"
 	{
@@ -411,6 +450,7 @@
 		"tr"		"Süreyi durdur."
 		"it"		"Reimposta il cronometro."
 		"es"		"Detener temporizador."
+		"de"		"Timer stoppen."
 	}
 	"Command Description - kz_pause"
 	{
@@ -423,6 +463,7 @@
 		"tr"		"Süreyi duraklat."
 		"it"		"Pausa/Riprendi."
 		"es"		"Alternar pausa del temporizador."
+		"de"		"Timer pausieren"
 	}
 	"Command Description - kz_tips"
 	{
@@ -435,6 +476,7 @@
 		"tr"		"İpuçlarını aç."
 		"it"		"Cambia la visibilità dei consigli."
 		"es"		"Alternar visibilidad de consejos."
+		"de"		"Tipps umschalten."
 	}
 	"Command Description - kz_hidelegs"
 	{
@@ -447,6 +489,7 @@
 		"tr"		"Birinci şahıs modunda ayakları göstermeyi kapat."
 		"it"		"Nascondi le gambe in prima persona."
 		"es"		"Ocultar sus piernas en primera persona."
+		"de"		"Verstecke deine Beine in der First-person Perspektive."
 	}
 	"Command Description - kz_hide"
 	{
@@ -459,6 +502,7 @@
 		"tr"		"Diğer oyuncuları gizle."
 		"it"		"Nascondi gli altri giocatori."
 		"es"		"Ocultar otros jugadores."
+		"de"		"Andere Spieler verstecken."
 	}
 	"Command Description - kz_restart"
 	{
@@ -471,6 +515,7 @@
 		"tr"		"Yeniden Başla"
 		"it"		"Ricomincia."
 		"es"		"Reiniciar."
+		"de"		"Neustart."
 	}
 	"Command Description - kz_r"
 	{
@@ -483,6 +528,7 @@
 		"tr"		"Yeniden Başla"
 		"it"		"Ricomincia."
 		"es"		"Reiniciar."
+		"de"		"Neustart."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -495,15 +541,18 @@
 		"tr"		"Silahı gizle."
 		"it"		"Nascondi l'arma."
 		"es"		"Ocultar arma."
+		"de"		"Deine Waffe verstecken."
 	}
 	"Command Description - jointeam"
 	{
 		// Hidden to users.
 		"en"		"Jointeam interceptor."
 		"chi"		"Jointeam interceptor."
+		"pl"		"Jointeam interceptor."
 		"fi"		"Jointeam interceptor."
 		"sv"		"Jointeam interceptor."
 		"it"		"Jointeam interceptor."
+		"de"		"Jointeam interceptor."
 	}
 	"Command Description - kz_help"
 	{
@@ -516,6 +565,7 @@
 		"tr"		"Bu yardım mesajını göster."
 		"it"		"Mostra questo messaggio di aiuto."
 		"es"		"Mostrar este mensaje de ayuda."
+		"de"		"Diese Nachricht anzeigen."
 	}
 	"Command Description - kz_language"
 	{
@@ -528,6 +578,7 @@
 		"tr"		"Dili değiştir."
 		"it"		"Cambia la lingua."
 		"es"		"Cambiar idioma."
+		"de"		"Deine Sprache ändern."
 	}
 	"Command Description - kz_vnl"
 	{
@@ -540,6 +591,7 @@
 		"tr"		"Vanilla moduna geç."
 		"it"		"Cambia a modalità Vanilla."
 		"es"		"Cambiar a modo Vanilla."
+		"de"		"Zum Vanilla Modus wechseln."
 	}
 	"Command Description - kz_ckz"
 	{
@@ -552,11 +604,13 @@
 		"tr"		"Classic moduna geç."
 		"it"		"Cambia a modalità Classic."
 		"es"		"Cambiar a modo Clásico."
+		"de"		"Zum Classic Modus wechseln."
 	}
 	"Command Description - kz_pb"
 	{
 		"en"		"Retrieve personal best statistics."
 		"chi"		"查询个人最佳数据."
+		"pl"		"Uzyskaj statystyki najlepszych wyników."
 		"ru"		"Показать личный рекорд."
 		"fi"		"Hae henkilökohtaiset parhaat statistiikat."
 		"sv"		"Hämta personlig bästa statistik."
@@ -564,108 +618,131 @@
 		"tr"		"Kişisel rekor istatistiklerini gösterir."
 		"it"		"Mostra le statistiche dei record personali."
 		"es"		"Mostrar estadísticas de mejores marcas personales."
+		"de"		"Persönliche Bestleistungen abrufen."
 	}
 	"Command Description - kz_wr"
 	{
 		"en"		"Retrieve server and world records."
 		"chi"		"查询服务器记录和世界记录."
+		"pl"		"Uzyskaj rekordy serwera i świata."
 		"ru"		"Показать рекорд сервера и мировой рекорд."
 		"fi"		"Hae palvelimen ja maailman ennätykset."
 		"ua"		"Показати рекорд сервера та світовий рекорд."
 		"tr"		"Dünya ve sunucu rekorlarını gösterir."
 		"it"		"Mostra i record del server e globali."
 		"es"		"Mostrar récords del servidor y del mundo."
+		"de"		"Server- und Weltrekorde abrufen."
 	}
 	"Command Description - kz_sr"
 	{
 		"en"		"Retrieve server records."
 		"chi"		"查询服务器记录."
+		"pl"		"Uzyskaj rekordy serwera.
 		"ru"		"Показать рекорд сервера."
 		"fi"		"Hae palvelimen ennätykset."
 		"ua"		"Показати рекорди сервера."
 		"tr"		"Sunucu rekorlarını gösterir."
 		"it"		"Mostra i record del server."
 		"es"		"Mostrar récords del servidor."
+		"de"		"Serverrekorde abrufen."
 	}
 	"Command Description - kz_ctop"
 	{
 		"en"		"Retrive top course times of a map."
 		"chi"		"查询地图排行榜前列."
+		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica di una mappa."
    		"es"		"Mostrar mejores tiempos del curso de un mapa."
+		"de"		"Top-Zeiten der Strecken einer Map abrufen."
 	}
 	"Command Description - kz_coursetop"
 	{
 		"en"		"Retrive top course times of a map."
 		"chi"		"查询地图排行榜前列."
+		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica di una mappa."
-    		"es"		"Mostrar mejores tiempos del curso de un mapa."
+   		"es"		"Mostrar mejores tiempos del curso de un mapa."
+		"de"		"Top-Zeiten der Strecken einer Map abrufen."
 	}
 	"Command Description - kz_maptop"
 	{
 		"en"		"Retrive top course times of a map."
 		"chi"		"查询地图排行榜前列."
+		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica di una mappa."
-    		"es"		"Mostrar mejores tiempos del curso de un mapa."
+   		"es"		"Mostrar mejores tiempos del curso de un mapa."
+		"de"		"Top-Zeiten der Strecken einer Map abrufen."
 	}
 	"Command Description - kz_gctop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"chi"		"查询地图全球排行榜前列."
+		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica globale di una mappa."
-    		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
+    	"es"		"Mostrar mejores tiempos globales del curso de un mapa."
+		"de"		"Globale Top-Zeiten der Strecken einer Map abrufen."
 	}
 	"Command Description - kz_gcoursetop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"chi"		"查询地图全球排行榜前列."
+		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica globale di una mappa."
-    		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
+    	"es"		"Mostrar mejores tiempos globales del curso de un mapa."
+		"de"		"Globale Top-Zeiten der Strecken einer Map abrufen."
 	}
 	"Command Description - kz_gmaptop"
 	{
 		"en"		"Retrive global top course times of a map."
 		"chi"		"查询地图全球排行榜前列."
+		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica globale di una mappa."
-    		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
+    	"es"		"Mostrar mejores tiempos globales del curso de un mapa."
+		"de"		"Globale Top-Zeiten der Strecken einer Map abrufen."
 	}
 	"Command Description - kz_sctop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"chi"		"查询地图服务器排行榜前列."
+		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
 		"it"		"Mostra la classifica del server di una mappa."
-    		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+    	"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+		"de"		"Top-Zeiten der Strecken eines Servers für eine Map abrufen."
 	}
 	"Command Description - kz_scoursetop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"chi"		"查询地图服务器排行榜前列."
+		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
 		"it"		"Mostra la classifica del server di una mappa."
-    		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+    	"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+		"de"		"Top-Zeiten der Strecken eines Servers für eine Map abrufen."
 	}
 	"Command Description - kz_smaptop"
 	{
 		"en"		"Retrive server top course times of a map."
 		"chi"		"查询地图服务器排行榜前列."
+		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
 		"it"		"Mostra la classifica del server di una mappa."
-    		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+    	"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
+		"de"		"Top-Zeiten der Strecken eines Servers für eine Map abrufen."
 	}
 }

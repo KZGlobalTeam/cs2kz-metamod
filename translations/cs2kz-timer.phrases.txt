@@ -11,6 +11,7 @@
 		"tr"		"{yellow}1{grey} TP"
 		"it"		"{yellow}1{grey} TP"
 		"es"		"{yellow}1{grey} TP"
+		"de"		"{yellow}1{grey} TP"
 	}
 	"2+ Teleports Text"
 	{
@@ -24,6 +25,7 @@
 		"tr"		"{yellow}{tp_count}{grey} TPs"
 		"it"		"{yellow}{tp_count}{grey} TPs"
 		"es"		"{yellow}{tp_count}{grey} TPs"
+		"de"		"{yellow}{tp_count}{grey} TPs"
 	}
 	
 	"Personal Best Difference"
@@ -40,6 +42,7 @@
 		"tr"		" ({color}{diff_text}{grey})"
 		"it"		" ({color}{diff_text}{grey})"
 		"es"		" ({color}{diff_text}{grey})"
+		"de"		" ({color}{diff_text}{grey})"
 	}
 
 	"Beat Course Info - Basic"
@@ -55,6 +58,7 @@
 		"tr"		"{lime}{player_name} {grey}bitirdi {default}{course_name}{grey} süre {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"it"		"{lime}{player_name} {grey}ha completato {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"es"		"{lime}{player_name} {grey}finalizó {default}{course_name}{grey} en {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
+		"de"		"{lime}{player_name} {grey}hat {default}{course_name}{grey} in {default}{time}{grey} beendet | {mode_style_text} | {tp_count_text}"
 	}
 	
 	"Beat Course Info - Local (TP)"
@@ -70,6 +74,7 @@
 		"tr"		"{grey}Sunucu: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text}"
 		"it"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text}"
 		"es"		"{grey}Servidor: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text}"
+		"de"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Local (PRO)"
 	{
@@ -84,6 +89,7 @@
 		"tr"		"{grey}Sunucu: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"it"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"es"		"{grey}Servidor: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"de"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global (TP)"
@@ -98,6 +104,7 @@
 		"tr"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text}"
 		"it"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text}"
 		"es"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text}"
+		"de"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Global (PRO)"
 	{
@@ -111,6 +118,7 @@
 		"tr"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"it"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"es"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"de"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global Points"
@@ -119,12 +127,14 @@
 		"#format"	"total_map_points:d,map_points_gained:d,player_rating:d"
 		"en"		"{grey}Map Points: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
 		"chi"		"{grey}地图积分: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | 玩家 Rating: {purple}{player_rating}{grey}"
+		"pl"		"{grey}Punkty mapy: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Ocena gracza: {purple}{player_rating}{grey}"
 		"fi"		"{grey}Kenttä Pisteet: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Pelaajan Pisteet: {purple}{player_rating}{grey}"
 		"sv"		"{grey}Map Poäng: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Spelarens Rating: {purple}{player_rating}{grey}"
 		"ua"		"{grey}Очки за мапу: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
 		"tr"		"{grey}Harita puanları: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Oyuncu değeri: {purple}{player_rating}{grey}"
 		"it"		"{grey}Punti mappa: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Valutazione Giocatore: {purple}{player_rating}{grey}"
 		"es"		"{grey}Puntos de mapa: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Clasificación del jugador: {purple}{player_rating}{grey}"
+		"de"		"{grey}Kartenpunkte: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Spielerwertung: {purple}{player_rating}{grey}"
 	}
 	
 	"Can't Pause (Generic)"
@@ -138,6 +148,7 @@
 		"tr"		"{darkred}Şuan duraklatamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa ora."
 		"es"		"{darkred}No puede pausar ahora."
+		"de"		"{darkred}Du kannst jetzt nicht pausieren."
 	}
 	"Can't Pause (Just Resumed)"
 	{
@@ -151,6 +162,7 @@
 		"tr"		"{darkred}Henüz duraklatmayı kaldırdığın için duraklayamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa quando hai appena ripreso."
 		"es"		"{darkred}No puede pausar porque acaba de reanudar."
+		"de"		"{darkred}Du kannst nicht pausieren, weil du gerade fortgesetzt hast."
 	}
 	"Can't Pause (Midair)"
 	{
@@ -164,6 +176,7 @@
 		"tr"		"{darkred}Havada duraklatamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa in volo."
 		"es"		"{darkred}No puede pausar en el aire."
+		"de"		"{darkred}Du kannst in der Luft nicht pausieren."
 	}
 	"Can't Pause (Just Landed)"
 	{
@@ -177,6 +190,7 @@
 		"tr"		"{darkred}Henüz yere indiğin için duraklatamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa quando sei appena atterrato."
 		"es"		"{darkred}No puede pausar porque acaba de aterrizar."
+		"de"		"{darkred}Du kannst nicht pausieren, weil du gerade gelandet bist."
 	}
 	"Can't Pause (Anti Pause Area)"
 	{
@@ -189,6 +203,7 @@
 		"tr"		"{darkred}Bu alanda duraklatmak yasak olduğu için duraklatamazsın."
 		"it"		"{darkred}La pausa è disabilitata in questa zona."
 		"es"		"{darkred}No puede pausar porque las pausas están deshabilitadas en esta zona."
+		"de"		"{darkred}Du kannst nicht pausieren, weil das Pausieren in diesem Bereich deaktiviert ist."
 	}
 	"Can't Resume (Generic)"
 	{
@@ -201,6 +216,7 @@
 		"tr"		"{darkred}Şuan duraklatmayı kapatamazsın."
 		"it"		"{darkred}Non puoi riprendere in questo momento."
 		"es"		"{darkred}No puede reanudar ahora."
+		"de"		"{darkred}Du kannst jetzt nicht fortfahren."
 	}
 	"Can't Resume (Just Paused)"
 	{
@@ -214,5 +230,6 @@
 		"tr"		"{darkred}Henüz duraklattığın için duraklatmayı kaldıramazsın."
 		"it"		"{darkred}Non puoi riprendere quando hai appena messo in pausa."
 		"es"		"{darkred}No puede reanudar porque acaba de pausar."
+		"de"		"{darkred}Du kannst nicht fortfahren, weil du gerade pausiert hast."
 	}
 }

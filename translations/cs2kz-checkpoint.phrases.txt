@@ -14,6 +14,7 @@
 		"tr"		"{grey}Kontrol noktası oluşturdun (#{default}{checkpoint_count}{grey})."
 		"it"		"{grey}Hai creato un checkpoint (#{default}{checkpoint_count}{grey})."
 		"es"		"{grey}Ha creado un checkpoint (#{default}{checkpoint_count}{grey})."
+		"de"		"{grey}Du hast ein Checkpoint gesetzt (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
 	{
@@ -26,6 +27,7 @@
 		"tr"		"{yellow}Dikkat{grey}: Kontrol noktası yasak olan yerde oluşturuldu."
 		"it"		"{yellow}Attenzione{grey}: Checkpoint creato in una zona anti-checkpoint."
 		"es"		"{yellow}Atención{grey}: Checkpoint creado en zona de checkpoints desactivados."
+		"de"		"{yellow}Achtung{grey}: Checkpoint wurde in einem nicht-Checkpoint Bereich gesetzt."
 	}
 	"Can't Checkpoint (Midair)"
 	{
@@ -39,6 +41,7 @@
 		"tr"		"{darkred}Havada kontrol noktası oluşturamazsın."
 		"it"		"{darkred}Non puoi creare un checkpoint in volo."
 		"es"		"{darkred}No puede crear un checkpoint en el aire."
+		"de"		"{darkred}Du kannst kein Checkpoint in der Luft machen."
 	}
 	"Can't Checkpoint (Just Landed)"
 	{
@@ -52,6 +55,7 @@
 		"tr"		"{darkred}Yeni indiğin için kontrol noktası oluşturamazsın."
 		"it"		"{darkred}Non puoi creare un checkpoint quando sei appena atterrato."
 		"es"		"{darkred}No puede crear un checkpoint porque acaba de aterrizar."
+		"de"		"{darkred}Du kannst kein Checkpoint setzen weil du gerade gelanded bist."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{
@@ -64,6 +68,7 @@
 		"tr"		"{darkred}Yasaklı bölge olduğu için burada kontrol noktası oluşturamazsın."
 		"it"		"{darkred}La creazione di checkpoint è disabilitata in questa zona."
 		"es"		"{darkred}No puede usar checkpoint porque los checkpoints están desactivados en esta zona."
+		"de"		"{darkred}Du kannst in diesen Bereich kein Checkpoint setzen."
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
@@ -77,6 +82,7 @@
 		"tr"		"{darkred}Kontrol noktası oluşturmadığın için ışınlamazsın."
 		"it"		"{darkred}Non puoi teleportarti senza prima aver creato un checkpoint."
 		"es"		"{darkred}No puede teleportarse porque no ha creado un checkpoint."
+		"de"		"{darkred}Du kannst dich nicht teleportieren, da Du keinen Checkpoint festgelegt hast."
 	}
 	"Can't Teleport (Map)"
 	{
@@ -90,6 +96,7 @@
 		"tr"		"{darkred}Bu bölgede kontrol noktalarına ışınlamazsın."
 		"it"		"{darkred}Da qui non puoi teleportarti ai tuoi checkpoint."
 		"es"		"{darkred}No puede teleportarse a sus checkpoints en esta zona."
+		"de"		"{darkred}Du kannst dich in diesem Bereich nicht zu Deinem Checkpoint teleportieren."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
@@ -103,6 +110,7 @@
 		"tr"		"{darkred}Geri dönecek bir kontrol noktanız yok."
 		"it"		"{darkred}Non ci sono checkpoint ai quali tornare indietro."
 		"es"		"{darkred}No tiene checkpoints a los que volver."
+		"de"		"{darkred}Du hast keine Checkpoints, zu denen Du zurückkehren kannst."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
@@ -116,6 +124,7 @@
 		"tr"		"{darkred}İleri gidecek bir kontrol noktanız yok."
 		"it"		"{darkred}Non ci sono checkpoint ai quali andare avanti."
 		"es"		"{darkred}No tiene checkpoints a los que avanzar."
+		"de"		"{darkred}Es gibt keine Checkpoints, zu denen Du weitergehen kannst."
 	}
 	"Can't Undo (No Teleports)"
 	{
@@ -129,6 +138,7 @@
 		"tr"		"{darkred}Geri alamazsın çünkü geri alınabilecek ışınlanma noktası yok."
 		"it"		"{darkred}Non ci sono teleport da annullare."
 		"es"		"{darkred}No puede deshacer porque no hay teleportes para deshacer."
+		"de"		"{darkred}Du kannst nicht zurückkehren, da es keine Teleports gibt zum zurückkehren."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
@@ -142,6 +152,7 @@
 		"tr"		"{darkred}Havada ışınlandığın için geri alamazsın."
 		"it"		"{darkred}Non puoi annullare un teleport fatto in volo."
 		"es"		"{darkred}No puede deshacer porque se ha teleportado en el aire."
+		"de"		"{darkred}Du kannst nicht zurückkehren, weil du dich mitten in der Luft teleportiert hast."
 	}
 	"Can't Undo (Just Landed)"
 	{
@@ -155,6 +166,7 @@
 		"tr"		"{darkred}Yeni indiğin için geri alamazsın."
 		"it"		"{darkred}Non puoi annullare un teleport quando sei appena atterrato."
 		"es"		"{darkred}No puede deshacer porque acaba de aterrizar."
+		"de"		"{darkred}Du kannst nicht zurückkehren, da Du gerade gelandet sind."
 	}
 	"Can't Undo (AntiCp)"
 	{
@@ -167,6 +179,7 @@
 		"tr"		"{darkred}Geri alamazsın çünkü anti-kontrol noktasındayken ışınlandın."
 		"it"		"{darkred}Non puoi annullare un teleport fatto da una zona anti-checkpoint."
 		"es"		"{darkred}No puede deshacer porque se ha teleportado mientras estaba en una zona anti-checkpoint."
+		"de"		"{darkred}Du kannst nicht zurückkehren, da Du sich in einer Anti-Checkpoint-Zone teleportiert hast."
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
@@ -179,6 +192,7 @@
 		"tr"		"{grey}Başlangıç noktası oluşturulamadı!"
 		"it"		"{grey}Impossibile creare la zona di partenza custom!"
 		"es"		"{grey}¡No se ha podido establecer su posición de inicio personalizada!"
+		"de"		"{grey}Deine custom Startposition konnte nicht festgelegt werden!"
 	}
 	"Set Custom Start Position"
 	{
@@ -192,6 +206,7 @@
 		"tr"		"{grey}Başlangıç noktası oluşturuldu."
 		"it"		"{grey}Zona di partenza custom creata."
 		"es"		"{grey}Ha establecido su posición de inicio personalizada."
+		"de"		"{grey}Du hast deine custom Startposition festgelegt."
 	}
 	"Cleared Custom Start Position"
 	{
@@ -205,5 +220,6 @@
 		"tr"		"{grey}Başlangıç noktası temizlendi."
 		"it"		"{grey}Zona di partenza custom eliminata."
 		"es"		"{grey}Ha eliminado su posición de inicio personalizada."
+		"de"		"{grey}Du hast deine Startposition gelöscht."
 	}
 }

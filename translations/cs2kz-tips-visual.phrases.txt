@@ -11,6 +11,7 @@
 		"tr"	"{grey}{default}/panel {grey}yazarak ekranın ortasındaki bilgi panelini açabilirsin."
 		"it"	"{grey}Scrivi {default}/panel {grey} per cambiare la visibilità del pannello centrale."
 		"es"	"{grey}Use {default}/panel {grey} para alternar el panel en el medio de su pantalla."
+		"de"	"{grey}Verwende {default}/panel {grey}, um den Panel in der Mitte deines Bildschirms ein- oder auszuschalten."
 	}
 	"Tip - kz_hidelegs"
 	{
@@ -23,6 +24,7 @@
 		"tr"	"{grey}Ayaklarının gözükme ayarı için {default} /hidelegs{grey} yazabilirsin."
 		"it"	"{grey}Puoi cambiare la visibilità delle gambe con{default} /hidelegs{grey}."
 		"es"	"{grey}Puede alternar la visibilidad de sus piernas escribiendo{default} /hidelegs{grey}."
+		"de"	"{grey}Du kannst die Sichtbarkeit deiner Beine umschalten, indem du{default} /hidelegs{grey} eingibst."
 	}
 	"Tip - kz_hide"
 	{
@@ -35,6 +37,7 @@
 		"tr"	"{grey}Diğer oyuncuları görmek istemiyorsan {default}/hide{grey} kullanabilirsin."
 		"it"	"{grey}No vuoi vedere gli altri giocatori? Scrivi {default}/hide{grey}."
 		"es"	"{grey}¿No quiere ver a otros jugadores? Use {default}/hide{grey}."
+		"de"	"{grey}Möchtest du andere Spieler nicht sehen? Verwende {default}/hide{grey}."
 	}
 	"Tip - kz_hideweapon"
 	{
@@ -47,5 +50,6 @@
 		"tr"	"{grey}{default}/hideweapon {grey}yazarak silahını gizleyebilirsin."
 		"it"	"{grey}Scrivi {default}/hideweapon {grey}per cambiare la visibilità dell'arma."
 		"es"	"{grey}Escriba {default}/hideweapon {grey}para alternar la visibilidad de su arma."
+		"de"	"{grey}Gib {default}/hideweapon {grey} ein, um die Sichtbarkeit deiner Waffe umzuschalten."
 	}
 }

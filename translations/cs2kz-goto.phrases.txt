@@ -4,6 +4,7 @@
 	{
 		"en"		"{darkred}Stop your timer before trying to teleport."
 		"chi"		"{darkred}请在传送前停止你的计时器."
+		"pl"		"{darkred}Zatrzymaj swój timer przed próbą teleportacji."
 		"ru"		"{darkred}Остановите свой таймер перед попыткой телепортации."
 		"fi"		"{darkred}Pysäytä ajastimesi ennen, kuin koitat teleportata."
 		"sv"		"{darkred}Stäng av din timer innan du försöker teleportera."
@@ -11,12 +12,14 @@
 		"tr"		"{darkred}Bir oyuncuya ışınlanmadan önce süreyi durdur."
 		"it"		"{darkred}Ferma il cronometro prima di teleportarti."
 		"es"		"{darkred}Detenga su temporizador antes de intentar teleportarse."
+		"de"		"{darkred}Stoppe deinen Timer, bevor du versuchst dich zu teleportieren."
 	}
 	"Goto - Error Message (Player In Spec)"
 	{
 		"#format"	"player:s"
 		"en"		"{darkred}Cannot teleport. {player} is a spectator."
 		"chi"		"{darkred}传送失败. {player} 处于观察状态."
+		"pl"		"{darkred}Nie możesz się teleportować. {player} jest widzem."
 		"ru"		"{darkred}Невозможно телепортироваться. {player} находится наблюдателях."
 		"fi"		"{darkred}Ei voida teleportata. {player} on katselija."
 		"sv"		"{darkred}Kan inte teleportra. {player} är en åskådare."
@@ -24,12 +27,14 @@
 		"tr"		"{darkred}Işınlanamazsın. {player} izleyici takımında."
 		"it"		"{darkred}Impossibile teleportarsi. {player} sta guardando gli altri."
 		"es"		"{darkred}Imposible teleportar. {player} es un espectador."
+		"de"		"{darkred}Du kannst dich nicht teleportieren. {player} ist ein Zuschauer."
 	}
 	"Goto - Error Message (Player Not Found)"
 	{
 		"#format"	"player:s"
 		"en"		"{darkred}Could not find a player going by \"{player}\"."
 		"chi"		"{darkred}找不到玩家 \"{player}\"."
+		"pl"		"{darkred}Nie można znaleźć gracza o nazwie \"{player}\"."
 		"ru"		"{darkred}Невозможно найти игрока \"{player}\"."
 		"fi"		"{darkred}Pelaajaa nimeltä \"{player}\" ei löytynyt."
 		"sv"		"{darkred}Kunde inte hitta någon som heter något med \"{player}\"."
@@ -37,12 +42,14 @@
 		"tr"		"{darkred}\"{player}\" isminde bir oyuncu bulunamadı."
 		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
 		"es"		"{darkred}No se puede encontrar un jugador llamado \"{player}\"."
+		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\"."
 	}
 	"Goto - Teleported"
 	{
 		"#format"	"player:s"
 		"en"		"{grey}Teleported to {player}."
 		"chi"		"{grey}传送到 {player}."
+		"pl"		"{grey}Teleportowano do {player}."
 		"ru"		"{grey}Телепортация к {player}."
 		"fi"		"{grey}Teleporttasit pelaajan {player} luokse."
 		"sv"		"{grey}Teleporterade till {player}."
@@ -50,11 +57,13 @@
 		"tr"		"{grey}{player} isimli oyuncuya ışınlandın."
 		"it"		"{grey}Teleportato da {player}."
 		"es"		"{grey}Teleportado a {player}."
+		"de"		"{grey}Zu {player} teleportiert."
 	}
 	"Goto - Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_goto <player name>"
 		"chi"		"{grey}用法: {default}kz_goto <玩家名字>"
+		"pl"		"{grey}Użycie: {default}kz_goto <nazwa gracza>"
 		"ru"		"{grey}Использование: {default}kz_goto <никнейм игрока>"
 		"fi"		"{grey}Käyttö: {default}kz_goto <pelaajan nimi>"
 		"sv"		"{grey}Användning: {default}kz_goto <spelares namn>"
@@ -62,5 +71,6 @@
 		"tr"		"{grey}Kullanım: {default}kz_goto <oyuncu ismi>"
 		"it"		"{grey}Utilizzo: {default}kz_goto <nome giocatore>"
 		"es"		"{grey}Use: {default}kz_goto <player name>"
+		"de"		"{grey}Verwendung: {default}kz_goto <Spielername>"
 	}
 }
