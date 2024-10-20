@@ -366,6 +366,33 @@ bool utils::SetConvarValue(CPlayerSlot slot, const char *name, const char *value
 	return result;
 }
 
+void utils::SendConVarValue(CPlayerSlot slot, const char *conVar, const char *value)
+{
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
+	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+	cvar->set_name(conVar);
+	cvar->set_value(value);
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	delete msg;
+}
+
+void utils::SendMultipleConVarValues(CPlayerSlot slot, const char **cvars, const char **values, u32 size)
+{
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
+	for (u32 i = 0; i < size; i++)
+	{
+		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+		cvar->set_name(cvars[i]);
+		cvar->set_value(values[i]);
+	}
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	delete msg;
+}
+
 void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 {
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
@@ -378,7 +405,7 @@ void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 	delete msg;
 }
 
-void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, u32 size)
+void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **values, u32 size)
 {
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
 	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
@@ -386,7 +413,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	{
 		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
 		cvar->set_name(conVar[i]->m_pszName);
-		cvar->set_value(value[i]);
+		cvar->set_value(values[i]);
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
