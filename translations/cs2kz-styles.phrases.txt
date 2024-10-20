@@ -11,6 +11,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_style <style>/+<style>/-<style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_style <stile>/+<stile>/-<stile>{grey}. Controlla la console per gli stili disponibili!"
 		"es"		"{grey}Uso: {default}kz_style <style>/+<style>/-<style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"de"		"{grey}Verwendung: {default}kz_style <style>/+<style>/-<style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 	}
 	"Add Style Command Usage"
 	{
@@ -23,6 +24,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_addstyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_addstyle <stile>{grey}. Controlla la console per gli stili disponibili!"
 		"es"		"{grey}Uso: {default}kz_addstyle <style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"de"		"{grey}Verwendung: {default}kz_addstyle <style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 	}
 	"Remove Style Command Usage"
 	{
@@ -35,6 +37,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_removestyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_removestyle <stile>{grey}. Controlla la console per gli stili disponibili!"
 		"es"		"{grey}Uso: {default}kz_removestyle <style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"de"		"{grey}Verwendung: {default}kz_removestyle <style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 	}
 	"Toggle Style Command Usage"
 	{
@@ -47,6 +50,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_togglestyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_togglestyle <stile>{grey}. Controlla la console per gli stili disponibili!"
 		"es"		"{grey}Uso: {default}kz_togglestyle <style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"de"		"{grey}Verwendung: {default}kz_togglestyle <style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 	}
 	"Current Styles"
 	{
@@ -59,6 +63,7 @@
 		"tr"		"Şuanki aktif stiller:"
 		"it"		"Stili attivi:"
 		"es"		"Estilos actualmente activos:"
+		"de"		"Aktivierte Stile:"
 	}
 	"Possible Styles"
 	{
@@ -71,6 +76,7 @@
 		"tr"		"Mevcut stiller:"
 		"it"		"Stili disponibili:"
 		"es"		"Estilos posibles:"
+		"de"		"Mögliche Stile:"
 	}
 	"Style Not Available"
 	{
@@ -85,6 +91,7 @@
 		"tr"		"{grey}Seçtiğiniz {purple}{style} {grey} stili şu an mevcut değil."
 		"it"		"{grey}Lo stile {purple}{style} {grey}non è al momento disponibile."
 		"es"		"{grey}El estilo {purple}{style} {grey}no está ahora disponible."
+		"de"		"{grey}Der Stil {purple}{style} {grey}ist derzeit nicht verfügbar."
 	}
 	"Styles Cleared"
 	{
@@ -97,6 +104,7 @@
 		"tr"		"{grey}Stillerinizi temizlediniz."
 		"it"		"{grey}Hai eliminato gli stili."
 		"es"		"{grey}Ha eliminado sus estilos."
+		"de"		"{grey}Du hast deine Stile gelöscht."
 	}
 	"Style Removed"
 	{
@@ -110,6 +118,7 @@
 		"tr"		"{grey}Seçtiğiniz {purple}{style}{grey} stilini kaldırdınız."
 		"it"		"{grey}Hai rimosso lo stile {purple}{style}{grey}."
 		"es"		"{grey}Ha eliminado el estilo {purple}{style}{grey}."
+		"de"		"{grey}Du hast den Stil {purple}{style}{grey} entfernt."
 	}
 	"Style Added"
 	{
@@ -123,33 +132,36 @@
 		"tr"		"{grey}Seçtiğiniz {purple}{style}{grey} stilini eklediniz."
 		"it"		"{grey}Hai aggiunto lo stile {purple}{style}{grey}."
 		"es"		"{grey}Ha añadido el estilo {purple}{style}{grey}."
+		"de"		"{grey}Du hast den Stil {purple}{style}{grey} hinzugefügt."
 	}
 	"Style Already Active"
 	{
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is already active."
-		"chi"		"{darkred}{purple}{style}{darkred} 风格已激活."
+		"chi"		"{purple}{style}{darkred} 风格已激活."
 		"ru"		"{darkred}Стиль {purple}{style}{darkred} уже активен."
 		"fi"		"{darkred}Tyyli {purple}{style}{darkred} on jo käytössä."
 		"sv"		"{purple}{style}{darkred} style är redan aktiv."
-		"ua"		"{darkred}{purple}{style}{darkred} стиль вже активний."
+		"ua"		"{purple}{style}{darkred} стиль вже активний."
 		"tr"		"{darkred}Seçtiğiniz {purple}{style}{darkred} stili zaten aktif."
 		"it"		"{darkred}Lo stile {purple}{style}{darkred} è già attivo."
 		"es"		"{darkred}El estilo {purple}{style}{darkred} ya está activo."
+		"de"		"{darkred}Der Stil {purple}{style}{darkred} ist bereits aktiv."
 	}
 	"Style Not Active"
 	{
 		// The AutoBhop style is currently not available.
 		"#format"	"style:s"
 		"en"		"{darkred}The {purple}{style}{darkred} style is not active."
-		"chi"		"{darkred}{purple}{style}{darkred} 风格未激活."
+		"chi"		"{purple}{style}{darkred} 风格未激活."
 		"ru"		"{darkred}Стиль {purple}{style}{darkred} не активен."
 		"fi"		"{darkred}Tyyli {purple}{style}{darkred} ei ole käytössä."
 		"sv"		"{purple}{style}{darkred} style är inte aktiv."
-		"ua"		"{darkred}{purple}{style}{darkred} стиль не активовано."
+		"ua"		"{purple}{style}{darkred} стиль не активовано."
 		"tr"		"{darkred}Seçtiğiniz {purple}{style}{darkred} stili aktif değil."
 		"it"		"{darkred}Lo stile {purple}{style}{darkred} non è attivo."
 		"es"		"{darkred}El estilo {purple}{style}{darkred} no está activo."
+		"de"		"{darkred}Der Stil {purple}{style}{darkred} ist nicht aktiv."
 	}
 	"Style Conflict"
 	{
@@ -163,5 +175,6 @@
 		"tr"		"{darkred}Seçtiğiniz {purple}{style}{darkred} stili eklenemedi çünkü {purple}{conflict_style}{darkred} stili ile çakışıyor."
 		"it"		"{darkred}Impossibile aggiungere lo stile {purple}{style}{darkred} in quanto va in conflitto con {purple}{conflict_style}{darkred}."
 		"es"		"{darkred}Imposible añadir el estilo {purple}{style}{darkred} ya que el estilo en conflicto {purple}{conflict_style}{darkred} está activo."
+		"de"		"{darkred}Stil {purple}{style}{darkred} kann nicht hinzugefügt werden, da der Konfliktstil {purple}{conflict_style}{darkred} aktiv ist."
 	}
 }

@@ -11,6 +11,7 @@
 		"tr"	"{grey}Kullan: {default}/help {grey}tüm KZ komutlarını görmek için."
 		"it"	"{grey}Scrivi {default}/help {grey}per vedere tutti i comandi disponibili per il KZ."
 		"es"	"{grey}Use {default}/help {grey}para ver todos los comandos de KZ disponibles."
+		"de"	"{grey}Verwende {default}/help {grey}, um alle verfügbaren KZ-Befehle anzuzeigen."
 	}
 	"Tip - kz_mode"
 	{
@@ -23,6 +24,7 @@
 		"tr"	"{grey}Kısaltmasını kullanarak aktif modu değiştirebilirsin. Örnek olarak {default}/ckz{grey} yazarsan {purple}Classic  {grey}moda veya {default}/vnl {grey}yazarsan {purple}Vanilla {grey}moduna geçebilirsin."
 		"it"	"{grey}Puoi cambiare modalità scrivendone l'abbreviazione. Ad esempio scrivi {default}/ckz{grey} per cambiare alla modalità {purple}Classic {grey}oppure {default}/vnl {grey}per cambiare alla modalità {purple}Vanilla{grey}."
 		"es"	"{grey}Puede cambiar a un modo escribiendo su abreviación. Por ejemplo, escriba {default}/ckz{grey} para cambiar al modo {purple}Clásico {grey} o {default}/vnl {grey}para cambiar al modo {purple}Vanilla {grey}."
+		"de"	"{grey}Du kannst zu einem Modus wechseln, indem du seine Abkürzung eingibst. Zum Beispiel, tippe {default}/ckz{grey}, um in den {purple}Classic {grey}Modus zu wechseln, oder {default}/vnl {grey}, um in den {purple}Vanilla {grey}Modus zu wechseln."
 	}
 	"Tip - kz_restart"
 	{
@@ -35,6 +37,7 @@
 		"tr"	"{grey}Başlangıç noktasına yazarak gidebilirsin: {default}/restart{grey}."
 		"it"	"{grey}Puoi teleportarti all'inizio della mappa con {default}/restart{grey}."
 		"es"	"{grey}Puede teleportarse a su posición inicial usando {default}/restart{grey}."
+		"de"	"{grey}Du kannst mit {default}/restart{grey} zu deiner Startposition teleportieren."
 	}
 	"Tip - kz_ssp"
 	{
@@ -47,6 +50,7 @@
 		"tr"	"{grey}{default}/setstartpos {grey} ve {default}/clearstartpos {grey}kullanarak başlangıç noktanı kontrol edebilirsin."
 		"it"	"{grey}Puoi scrivere {default}/setstartpos {grey}e {default}/clearstartpos {grey}per modificare la posizione del teleport di inizio mappa."
 		"es"	"{grey}Puede sar {default}/setstartpos {grey}y {default}/clearstartpos {grey}para controlar la posición de su teleporte de inicio."
+		"de"	"{grey}Du kannst {default}/setstartpos {grey}und {default}/clearstartpos {grey}verwenden, um deine Startteleport-Position zu steuern."
 	}
 	"Tip - stretch"
 	{
@@ -59,6 +63,7 @@
 		"tr"	"{grey}Kendine iyi bak. Ara ver gerinmeyi ve su içmeyi unutma"
 		"it"	"{grey}Prenditi cura di te stesso. Fai pause regolari per sgranchirti, riposare gli occhi e bere acqua."
 		"es"	"{grey}Cuídese. Tome pausas regulares para estirarse y manténgase hidratado."
+		"de"	"{grey}Pass auf dich auf. Mach regelmäßige Pausen, um dich zu dehnen und genug zu trinken."
 	}
 	"Tip - kz_tips"
 	{
@@ -71,6 +76,7 @@
 		"tr"	"{grey}Sohbetteki önerilerin çıkmasını istemiyorsan veya ihtiyacın yoksa bu komutla kapatabilirsin {default}/tips{grey}."
 		"it"	"{grey}Non vuoi suggerimenti in chat? Puoi cambiarne la visibilità con {default}/tips{grey}."
 		"es"	"{grey}¿No necesita consejos como estos apareciendo en su chat? Puede alternarlos con {default}/tips{grey}."
+		"de"	"{grey}Brauchst du solche Tipps nicht, die im Chat angezeigt werden? Du kannst sie mit {default}/tips{grey} ein- oder ausschalten."
 	}
 	"Tip - bind"
 	{
@@ -83,6 +89,7 @@
 		"tr"	"{grey}Komutları kolaylık açısından farklı tuşlara atayabilirsin örnek olarak: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"it"	"{grey}Puoi assegnare diverse funzioni ai tasti, ad esempio: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"es"	"{grey}Puede asignar comandos a teclas para un acceso fácil, por ejemplo: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
+		"de"	"{grey}Du kannst Befehle Tasten zuweisen, um einfachen Zugriff zu haben, zum Beispiel: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 	}
 	"Tip - kz_prevcp"
 	{
@@ -95,6 +102,7 @@
 		"tr"	"{grey}Önceki kontrol noktasına ışınlanmak için {default}/prevcp{grey}."
 		"it"	"{grey}Teleportati al penultimo checpoint con {default}/prevcp{grey}."
 		"es"	"{grey}Teleportar al checkpoint anterior con {default}/prevcp{grey}."
+		"de"	"{grey}Teleportiere zum vorherigen Kontrollpunkt mit {default}/prevcp{grey}."
 	}
 	"Tip - kz_nextcp"
 	{
@@ -107,6 +115,7 @@
 		"tr"	"{grey}Sonraki kontrol noktasına ışınlanmak için {default}/nextcp{grey}."
 		"it"	"{grey}Teleportati al prossimo checkpoint con {default}/nextcp{grey}."
 		"es"	"{grey}Teleportar al checkpoint siguiente con {default}/nextcp{grey}."
+		"de"	"{grey}Teleportiere zum nächsten Kontrollpunkt mit {default}/nextcp{grey}."
 	}
 	"Tip - bugs"
 	{
@@ -119,6 +128,7 @@
 		"tr"	"{grey}CS2KZ ile ilgili sıkıntıları Github sayfamıza bildirin: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"it"	"{grey}Segnala i problemi che incontri con CS2KZ sul nostro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"es"	"{grey}Reporte problemas relacionados al CS2KZ en nuestro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"de"	"{grey}Melde Probleme im Zusammenhang mit CS2KZ auf unserem GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
 	"Tip - kz_jssound"
 	{
@@ -131,6 +141,7 @@
 		"tr"	"{grey}Hangi zıplama istatistiklerinin ses efekti çalmasını istediğinizi değiştirmek için {default}/jssound{grey}."
 		"it"	"{grey}Puoi cambiare quali salti riproducono un suono {default}/jssound{grey}."
 		"es"	"{grey}Puede controlar qué estadísticas de salto reproducen un sonido usando {default}/jssound{grey}."
+		"de"	"{grey}Du kannst festlegen, welche Jumpstats einen Sound abspielen, indem du {default}/jssound{grey} verwendest."
 	}
 	"Tip - kz_jsbroadcast"
 	{
@@ -143,5 +154,6 @@
 		"tr"	"{grey} {default}/jsbroadcast {grey}kullanarak diğer oyuncuların zıplama istatistiklerinin hangilerinin senin sohbetinde yazmasını istediğini seçebilirsin."
 		"it"	"{grey}Scrivi {default}/jsbroadcast {grey}per cambiare quali salti di altri giocatori ti vengono mostrati."
 		"es"	"{grey}Use {default}/jsbroadcast {grey}para cambiar qué estadísticas de salto de otros jugadores se le muestran a usted."
+		"de"	"{grey}Verwende {default}/jsbroadcast {grey}, um zu ändern, welche Jumpstats von anderen Spielern dir angezeigt werden."
 	}
 }

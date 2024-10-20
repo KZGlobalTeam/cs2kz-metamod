@@ -11,6 +11,7 @@
 		"tr"		"{grey}Oyuncu ayakları şuan görünür durumda."
 		"it"		"{grey}Le gambe ora sono visibili."
 		"es"		"{grey}Las piernas de su personaje ahora son visibles."
+		"de"		"{grey}Die Beine deines Spielers sind jetzt sichtbar."
 	}
 	"Quiet Option - Show Player Legs - Disable"
 	{
@@ -23,6 +24,7 @@
 		"tr"		"{grey}Oyuncu ayakları şuan görünmez durumda."
 		"it"		"{grey}Le gambe ora sono nascoste."
 		"es"		"{grey}Las piernas de su personaje ahora están ocultas."
+		"de"		"{grey}Die Beine deines Spielers sind jetzt versteckt."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
@@ -36,6 +38,7 @@
 		"tr"		"{grey}Diğer oyuncuları görmeyi açtınız."
 		"it"		"{grey}Stai mostrando gli altri giocatori."
 		"es"		"{grey}Ahora está viendo a otros jugadores."
+		"de"		"{grey}Du zeigst jetzt andere Spieler."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
@@ -49,6 +52,7 @@
 		"tr"		"{grey}Diğer oyuncuları görmeyi kapattınız."
 		"it"		"{grey}Stai nascondendo gli altri giocatori."
 		"es"		"{grey}Ahora está ocultando a otros jugadores."
+		"de"		"{grey}Du versteckst jetzt andere Spieler."
 	}
 	"Quiet Option - Show Weapon - Enable"
 	{
@@ -62,6 +66,7 @@
 		"tr"		"{grey}Silahı görmeyi açtınız."
 		"it"		"{grey}Stai mostrando l'arma."
 		"es"		"{grey}Ahora está mostrando su arma."
+		"de"		"{grey}Du zeigst jetzt deine Waffe."
 	}
 	"Quiet Option - Show Weapon - Disable"
 	{
@@ -75,5 +80,6 @@
 		"tr"		"{grey}Silahı görmeyi kapattınız."
 		"it"		"{grey}Stai nascondendo l'arma."
 		"es"		"{grey}Ahora está escondiendo su arma."
+		"de"		"{grey}Du versteckst jetzt deine Waffe."
 	}
 }

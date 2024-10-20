@@ -12,6 +12,8 @@
 		"tr"		"{default}{map_name}{grey} haritasındaki sunucu rekorları ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"it"		"{grey}Record del Server su {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"es"		"{grey}Récords del servidor en {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"pl"		"{grey}Rekordy serwera na {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"de"		"{grey}Serverrekorde auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"SR - No Times"
 	{
@@ -23,6 +25,8 @@
 		"tr"		"{grey}Süre bulunamadı!"
 		"it"		"{grey}Nessun tempo è stato trovato!"
 		"es"		"{grey}¡No se encontraron tiempos!"
+		"pl"		"{grey}Nie znaleziono żadnych czasów!"
+		"de"		"{grey}Es wurden keine Zeiten gefunden!"
 	}
 	"SR - Overall"
 	{
@@ -36,6 +40,8 @@
 		"tr"		"{yellow}Tümünde{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"it"		"{yellow}Complessivamente{grey}: {default}{time}{grey} da {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"es"		"{yellow}General{grey}: {default}{time}{grey} por {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"pl"		"{yellow}Ogólny{grey}: {default}{time}{grey} od {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"de"		"{yellow}Gesamt{grey}: {default}{time}{grey} von {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 	}
 	"SR - Combined"
 	{
@@ -49,6 +55,8 @@
 		"tr"		"{yellow}Tümünde/{blue}PRO{grey}: {default}{time}{grey} tarafından {lime}{player_name}{grey}"
 		"it"		"{yellow}Complessivamente/{blue}PRO{grey}: {default}{time}{grey} da {lime}{player_name}{grey}"
 		"es"		"{yellow}General/{blue}PRO{grey}: {default}{time}{grey} por {lime}{player_name}{grey}"
+		"pl"		"{yellow}Ogólny/{blue}PRO{grey}: {default}{time}{grey} od {lime}{player_name}{grey}"
+		"de"		"{yellow}Gesamt/{blue}PRO{grey}: {default}{time}{grey} von {lime}{player_name}{grey}"
 	}
 	"SR - PRO"
 	{
@@ -62,6 +70,8 @@
 		"tr"		"{blue}PRO{grey}: {default}{time_pro}{grey} tarafından {lime}{player_name_pro}{grey}"
 		"it"		"{blue}PRO{grey}: {default}{time_pro}{grey} da {lime}{player_name_pro}{grey}"
 		"es"		"{blue}PRO{grey}: {default}{time_pro}{grey} por {lime}{player_name_pro}{grey}"
+		"pl"		"{blue}PRO{grey}: {default}{time_pro}{grey} od {lime}{player_name_pro}{grey}"
+		"de"		"{blue}PRO{grey}: {default}{time_pro}{grey} von {lime}{player_name_pro}{grey}"
 	}
 	"Record Request - Failed (Generic)" 
 	{
@@ -73,6 +83,8 @@
 		"tr"		"{darkred}Rekor bilgisi alınamadı."
 		"it"		"{darkred}Impossibile recuperare informazioni sui record."
 		"es"		"{darkred}Fallo al recuperar la información del récord."
+		"pl"		"{darkred}Nie udało się pobrać informacji o rekordzie."
+		"de"		"{darkred}Fehler beim Abrufen der Rekordinformationen."
 	}
 	"Record Request - Invalid Course Name"
 	{
@@ -85,6 +97,8 @@
 		"tr"		"{darkred}Rekor bilgisi alınamadı. {grey}(Hatalı harita ismi {default}{course_name}{grey})"
 		"it"		"{darkred}Impossibile recuperare informazioni sui record. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
 		"es"		"{darkred}Fallo al recuperar la información del récord. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
+		"pl"		"{darkred}Nie udało się pobrać informacji o rekordzie. {grey}(Nieprawidłowa nazwa kursu {default}{course_name}{grey})"
+		"de"		"{darkred}Abruf von Rekordinformationen fehlgeschlagen. {grey}(Ungültiger Kursname {default}{course_name}{grey})"
 	}
 	"WR/SR Command Usage"
 	{
@@ -96,6 +110,8 @@
 		"tr"		"{grey}Kullanım: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detaylar için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Controlla la console per ulteriori dettagli!"
 		"es"		"{grey}Uso: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. ¡Mire la consola para más detalles!"
+		"pl"		"{grey}Użycie: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Sprawdź konsolę, aby uzyskać więcej informacji!"
+		"de"		"{grey}Verwendung: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Siehe Konsole für Details!"
 	}
 	"WR/SR Command Usage - Console"
 	{
@@ -107,5 +123,7 @@
 		"tr"		"Kullanım: kz_wr/kz_sr <c/course/map/mode=...>\nÖrnek: \"kz_wr map=kz_map c=Main\"."
 		"it"		"Utilizzo: kz_wr/kz_sr <c/course/map/mode=...>\nEsempio: \"kz_wr map=kz_mappa c=Main\"."
 		"es"		"Uso: kz_wr/kz_sr <c/course/map/mode=...>\nEjemplo: \"kz_wr map=kz_map c=Main\"."
+		"pl"		"Użycie: kz_wr/kz_sr <c/course/map/mode=...>\nPrzykład: \"kz_wr map=kz_map c=Main\"."
+		"de"		"Verwendung: kz_wr/kz_sr <c/course/map/mode=...>\nBeispiel: \"kz_wr map=kz_map c=Main\"."
 	}
 }

@@ -13,6 +13,7 @@
 		"tr"		"Offset"
 		"it"		"Offset"
 		"es"		"Desplazamiento"
+		"de"		"Offset"
 	}
 	"Height"
 	{
@@ -26,6 +27,7 @@
 		"tr"		"Yükseklik"
 		"it"		"Altezza"
 		"es"		"Altura"
+		"de"		"Höhe"
 	}
 	"Pre"
 	{
@@ -39,6 +41,7 @@
 		"tr"		"Pre"
 		"it"		"Pre"
 		"es"		"Pre"
+		"de"		"Pre"
 	}
 	"Max"
 	{
@@ -52,6 +55,7 @@
 		"tr"		"Maks."
 		"it"		"Max"
 		"es"		"Máx"
+		"de"		"Max"
 	}
 	"Strafes" // Plural
 	{
@@ -65,6 +69,7 @@
 		"tr"		"Strafeler"
 		"it"		"Strafes"
 		"es"		"Strafes"
+		"de"		"Strafes"
 	}
 	"Strafe" // Singular
 	{
@@ -77,6 +82,7 @@
 		"ua"		"Стрейф"
 		"tr"		"Strafe"
 		"it"		"Strafe"
+		"de"		"Strafe"
 	}
 	"Sync"
 	{
@@ -89,6 +95,7 @@
 		"ua"		"Синхр."
 		"tr"		"Senkron"
 		"it"		"Sync"
+		"de"		"Sync"
 	}
 	"Air"
 	{
@@ -101,6 +108,7 @@
 		"ua"		"Air"
 		"tr"		"Hava"
 		"it"		"Air"
+		"de"		"Air"
 	}
 	"Air Time"
 	{
@@ -113,6 +121,7 @@
 		"ua"		"Airtime"
 		"tr"		"Hava süresi"
 		"it"		"Airtime"
+		"de"		"Air-Zeit"
 	}
 	"Block"
 	{
@@ -125,6 +134,7 @@
 		"ua"		"Блок"
 		"tr"		"Blok"
 		"it"		"Block"
+		"de"		"Block"
 	}
 	"Bad Angles (Short)"
 	{
@@ -136,6 +146,7 @@
 		"ua"		"BA"
 		"tr"		"BA"
 		"it"		"BA"
+		"de"		"BA"
 	}
 	"Overlap (Short)"
 	{
@@ -148,6 +159,7 @@
 		"ua"		"OL"
 		"tr"		"OL"
 		"it"		"OL"
+		"de"		"OL"
 	}
 	"Dead Air (Short)"
 	{
@@ -160,6 +172,7 @@
 		"ua"		"DA"
 		"tr"		"DA"
 		"it"		"DA"
+		"de"		"DA"
 	}
 	"Edge"
 	{
@@ -172,6 +185,7 @@
 		"ua"		"Край"
 		"tr"		"Kenar"
 		"it"		"Edge"
+		"de"		"Kante"
 	}
 	"Deviation"
 	{
@@ -184,6 +198,7 @@
 		"ua"		"Відхилення"
 		"tr"		"Sapma açısı"
 		"it"		"Deviation"
+		"de"		"Abweichung"
 	}
 	"Width"
 	{
@@ -196,6 +211,7 @@
 		"ua"		"Ширина"
 		"tr"		"Genişlik"
 		"it"		"Width"
+		"de"		"Breite"
 	}
 	"Duck Time"
 	{
@@ -208,6 +224,7 @@
 		"ua"		"Присівши"
 		"tr"		"Eğilmiş"
 		"it"		"Crouched"
+		"de"		"Geduckt"
 	}
 	"Gain Efficiency (Short)"
 	{
@@ -219,6 +236,7 @@
 		"ua"		"GainEff"
 		"tr"		"GainEff"
 		"it"		"GainEff"
+		"de"		"GainEff"
 	}
 	"Air Path"
 	{
@@ -230,6 +248,7 @@
 		"ua"		"Airpath"
 		"tr"		"Airpath"
 		"it"		"Airpath"
+		"de"		"Airpath"
 	}
 	"Angle Ratio"
 	{
@@ -241,6 +260,7 @@
 		"ua"		"AngRatio(Avg/Med/Max)"
 		"tr"		"AngRatio(Avg/Med/Max)"
 		"it"		"AngRatio(Avg/Med/Max)"
+		"de"		"AngRatio(Avg/Med/Max)"
 	}
 	"Gain"
 	{
@@ -252,6 +272,7 @@
 		"ua"		"Приріст"
 		"tr"		"Kazanç"
 		"it"		"Gain"
+		"de"		"Gain"
 	}
 	"Loss"
 	{
@@ -263,6 +284,7 @@
 		"ua"		"Втрати"
 		"tr"		"Kayıp"
 		"it"		"Loss"
+		"de"		"Verlust"
 	}
 	"Average Gain (Short)"
 	{
@@ -274,6 +296,7 @@
 		"ua"		"Ср.Приріст"
 		"tr"		"OrtKazanç"
 		"it"		"AvgGain"
+		"de"		"AvgGain"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -287,6 +310,7 @@
 		"ua"		"Перший стрибок"
 		"tr"		"İlk zıplama"
 		"it"		"First jump"
+		"de"		"Erster Sprung"
 	}
 	"Invalid movetype change"
 	{
@@ -298,6 +322,7 @@
 		"ua"		"Невірна зміна типу руху"
 		"tr"		"Geçersiz hareket türü değişikliği"
 		"it"		"Invalid movetype change"
+		"de"		"Ungültige Änderung des Bewegungstyps"
 	}
 	"Invalid movetype"
 	{
@@ -309,6 +334,7 @@
 		"ua"		"Невірний тип руху"
 		"tr"		"Geçersiz hareket türü."
 		"it"		"Invalid movetype"
+		"de"		"Ungültigr Bewegungstyp"
 	}
 	"Just noclipped"
 	{
@@ -320,6 +346,7 @@
 		"ua"		"Використано noclip"
 		"tr"		"Noclipplendi"
 		"it"		"Just noclipped"
+		"de"		"Gerade genoclipped"
 	}
 	"Invalid collisions"
 	{
@@ -331,17 +358,19 @@
 		"ua"		"Невірні колізії"
 		"tr"		"Geçersiz çarpışmalar"
 		"it"		"Invalid collisions"
+		"de"		"Ungültige collisions"
 	}
 	"Base velocity detected"
 	{
 		"en"		"Base velocity detected"
 		"chi"		"检测为最低速度"
-		"pl"		"Base velocity detected"
+		"pl"		"Wykryto podstawową prędkość"
 		"fi"		"Perusnopeus havaittu"
 		"sv"		"Bashastigheten upptäckt"
 		"ua"		"Визначено базову швидкість"
 		"tr"		"Temel hız algılandı"
 		"it"		"Base velocity detected"
+		"de"		"Basisgeschwindigkeit erkannt"
 	}
 	"Invalid gains"
 	{
@@ -353,17 +382,19 @@
 		"ua"		"Невірні прирости"
 		"tr"		"Geçersiz kazançlar"
 		"it"		"Invalid gains"
+		"de"		"Ungültige gains"
 	}
 	"Externally modified"
 	{
 		"en"		"Externally modified"
 		"chi"		"已从外部修改"
-		"pl"		"Externally modified"
 		"fi"		"Ulkoisesti modifoidut"
 		"sv"		"Externt modifierat"
 		"ua"		"Зовнішньо модифіковані"
 		"tr"		"Dışarıdan değiştirilmiş"
 		"it"		"Externally modified"
+		"pl"		"Zmodyfikowane zewnętrznie"
+		"de"		"Extern modifiziert"
 	}
 	"Edgebugged"
 	{
@@ -375,6 +406,7 @@
 		"ua"		"Edgebugged"
 		"tr"		"Edgebugged"
 		"it"		"Edgebugged"
+		"de"		"Geedgebugged"
 	}
 	"Teleported"
 	{
@@ -386,6 +418,7 @@
 		"ua"		"Телепортований"
 		"tr"		"Işınlandı"
 		"it"		"Teleported"
+		"de"		"Teleportiert"
 	}
 
 	// =====[OPTIONS]=====
@@ -400,6 +433,7 @@
 		"ua"		"{grey}Ви увімкнули статистику щодо стрибків."
 		"tr"		"{grey}Zıplama istatistiklerini raporlamayı açtın."
 		"it"		"{grey}Hai abilitato le statistiche dei salti."
+		"de"		"{grey}Du hast das Jumpstats-Berichte aktiviert."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
@@ -412,6 +446,7 @@
 		"ua"		"{grey}Ви вимкнули статистику по стрибкам."
 		"tr"		"{grey}Zıplama istatistiklerini raporlamayı kapattın."
 		"it"		"{grey}Hai disabilitato le statistiche dei salti."
+		"de"		"{grey}Du hast alle Jumpstats-Berichte deaktiviert."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -424,6 +459,7 @@
 		"ua"		"{grey}Ви увімкнули постійне відображення статистики стрибків."
 		"tr"		"{grey}Her zaman açık zıplama istatistiklerini raporlamayı açtın."
 		"it"		"{grey}Hai abilitato le statistiche dei salti forzate."
+		"de"		"{grey}Du hast die immer aktiven Jumpstats aktiviert."
 	}
 	"Jumpstats Option - Jumpstats Always - Disable"
 	{
@@ -436,6 +472,7 @@
 		"ua"		"{grey}Ви вимкнули постійне відображення статистики стрибків."
 		"tr"		"{grey}Her zaman açık zıplama istatistiklerini raporlamayı kapattın."
 		"it"		"{grey}Hai disabilitato le statistiche dei salti forzate."
+		"de"		"{grey}Du hast die immer aktiven Jumpstats deaktiviert."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -447,6 +484,7 @@
 		"ua"		"{grey}Використання: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"tr"		"{grey}Kullanım: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"it"		"{grey}Utilizzo: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"de"		"{grey}Verwendung: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
 	{
@@ -458,6 +496,7 @@
 		"ua"		"{grey}Ви вимкнули трансляцію статистики стрибків."
 		"tr"		"{grey}Zıplama istatiklerinin paylaşımını kapattın."
 		"it"		"{grey}Statistiche dei salti nascoste."
+		"de"		"{grey}Jumpstats-Übertragung deaktiviert."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
@@ -470,6 +509,7 @@
 		"ua"		"{grey}Мінмальний поріг трансляції статистики стрибків — {default}{tier}."
 		"tr"		"{grey}Paylaşılan zıplama istatistiklerinin minimum eşiği {default}{tier}."
 		"it"		"{grey}La soglia minima per mostrare le statistiche dei salti ora è {default}{tier}."
+		"de"		"{grey}Der Broadcast-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -481,6 +521,7 @@
 		"ua"		"{grey}Використання: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"tr"		"{grey}Kullanım: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"it"		"{grey}Utilizzo: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"de"		"{grey}Verwendung: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
 	{
@@ -492,6 +533,7 @@
 		"ua"		"{grey}Звукові ефекти для стрибків вимкнено."
 		"tr"		"{grey}Zıplama istatistikleri ses efektleri kapatıldı."
 		"it"		"{grey}Effetti sonori dei salti disabilitati."
+		"de"		"{grey}Jumpstats-Soundeffekt deaktiviert."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
@@ -504,6 +546,7 @@
 		"ua"		"{grey}Мінімальний стрибок для котрого увімкнені звукові ефекти — {default}{tier}."
 		"tr"		"{grey}Minimum zıplama istatistikleri ses efekti {default}{tier}."
 		"it"		"{grey}La soglia minima per gli effetti sonori dei salti ora è {default}{tier}."
+		"de"		"{grey}Der Soundeffekt-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"
@@ -517,6 +560,7 @@
 		"sv"		"{default}{player} {grey}hoppade {color}{distance} {grey}units med {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"ua"		"{default}{player} {grey}стрибнув {color}{distance} {grey}units з {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"tr"		"{default}{player} {grey}zıpladı {color}{distance} {grey} birim {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+		"de"		"{default}{player} {grey}sprang {color}{distance} {grey}Einheiten mit einem {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"it"		"{default}{player} {grey}ha saltato {color}{distance} {grey}unità con un {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 	}
 	

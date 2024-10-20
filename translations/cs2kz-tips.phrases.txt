@@ -13,6 +13,7 @@
 		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler göreceksin."
 		"it"		"{grey}Ogni tanto riceverai dei consigli casuali."
 		"es"		"{grey}Usted ahora verá consejos aleatorios en el chat periódicamente."
+		"de"		"{grey}Du wirst jetzt regelmäßig zufällige Tipps im Chat sehen."
 	}
 	"Option - Tips - Disable"
 	{
@@ -26,5 +27,6 @@
 		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler görmeyeceksin."
 		"it"		"{grey}Non riceverai più i consigli casuali."
 		"es"		"{grey}Usted no verá más consejos aleatorios en el chat periódicamente."
+		"de"		"{grey}Du wirst jetzt keine zufälligen Tipps mehr im Chat sehen."
 	}
 }

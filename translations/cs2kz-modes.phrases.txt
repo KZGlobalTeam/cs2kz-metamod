@@ -11,6 +11,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_mode <mode>.{grey} Modlar için konsol çıktısına bak!"
 		"it"		"{grey}Utilizzo: {default}kz_mode <modalità>.{grey} Controlla la console per le modalità disponibili!"
 		"es"		"{grey}Uso: {default}kz_mode <mode>.{grey} ¡Mire la consola para ver los modos posibles!"
+		"de"		"{grey}Verwendung: {default}kz_mode <mode>.{grey} Siehe Konsole für mögliche Modi!"
 	}
 	"Possible & Current Modes"
 	{
@@ -24,6 +25,7 @@
 		"tr"		"Kullanılabilir modlar: (Şuanki mod {mode})"
 		"it"		"Modalità disponibili: (Al momento {mode})"
 		"es"		"Modos posibles: (El modo actual es {mode})"
+		"de"		"Verfügbare Modi: (Der aktuelle Modus ist {mode})"
 	}
 	"Mode Not Available"
 	{
@@ -39,6 +41,7 @@
 		"tr"		"{grey}{purple}{mode} {grey} modu şuan için mevcut değil."
 		"it"		"{grey}La modalità {purple}{mode} {grey}non è al momento disponibile."
 		"es"		"{grey}El modo {purple}{mode} {grey}no está disponible ahora."
+		"de"		"{grey}Der {purple}{mode} {grey}Modus ist derzeit nicht verfügbar."
 	}
 	"Switched Mode"
 	{
@@ -54,5 +57,6 @@
 		"tr"		"{grey}{purple}{mode} {grey} moduna geçtin."
 		"it"		"{grey}Hai cambiato la modalità in {purple}{mode}{grey}."
 		"es"		"{grey}Usted ha cambiado al modo {purple}{mode} {grey}."
+		"de"		"{grey}Du hast den Modus auf {purple}{mode} {grey}wechseln."
 	}
 }

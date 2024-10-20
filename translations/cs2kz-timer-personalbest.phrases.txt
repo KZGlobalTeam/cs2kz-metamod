@@ -12,6 +12,8 @@
 		"tr"		"{lime}{player_name}{grey} adlı oyuncu {default}{map_name}{grey} haritasında ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"it"		"{lime}{player_name}{grey} su {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"es"		"{lime}{player_name}{grey} en {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
+		"de"		"{lime}{player_name}{grey} auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
+		"pl"		"{lime}{player_name}{grey} na {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 	}
 	"PB Time - No Times"
 	{
@@ -23,6 +25,8 @@
 		"tr"		"{grey}Bir süreniz yok... henüz."
 		"it"		"{grey}Non hai ancora fatto un tempo."
 		"es"		"{grey}No tiene un tiempo... aún."
+		"de"		"{grey}Du hast noch keine Zeit festgelegt... bisher."
+		"pl"		"{grey}Nie ustawiłeś czasu... jeszcze."
 	}
 	"PB Time - Overall (Server)"
 	{
@@ -36,6 +40,8 @@
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}]"
 		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}]"
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}]"
+		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}]"
+		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Ogółem{grey}]"
 	}
 	"PB Time - Combined (Server)"
 	{
@@ -49,6 +55,8 @@
 		"tr"		"{grey}Sunucu: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Tümünde{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"it"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"es"		"{grey}Servidor: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"de"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"pl"		"{grey}Serwer: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Ogółem{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Split (Server)"
 	{
@@ -62,6 +70,8 @@
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Overall Rankless (Server)"
 	{
@@ -75,6 +85,8 @@
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Tümünde{grey}]"
 		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Complessivamente{grey}]"
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}]"
+		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Insgesamt{grey}]"
+		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Ogółem{grey}]"
 	}
 	"PB Time - Combined Rankless (Server)"
 	{
@@ -88,6 +100,8 @@
 		"tr"		"{grey}Sunucu: {default}{time}{grey} [{yellow}Tümünde{grey}/{blue}PRO{grey}]"
 		"it"		"{grey}Server: {default}{time}{grey} [{yellow}Complessivamente{grey}/{blue}PRO{grey}]"
 		"es"		"{grey}Servidor: {default}{time}{grey} [{yellow}General{grey}/{blue}PRO{grey}]"
+		"de"		"{grey}Server: {default}{time}{grey} [{yellow}Insgesamt{grey}/{blue}PRO{grey}]"
+		"pl"		"{grey}Serwer: {default}{time}{grey} [{yellow}Ogółem{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Server)"
 	{
@@ -101,6 +115,8 @@
 		"tr"		"{grey}Sunucu: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Tümünde{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"it"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Complessivamente{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Insgesamt{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Ogółem{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)" 
 	{
@@ -112,6 +128,8 @@
 		"tr"		"{darkred}Kişisel rekor bilgilerine erişilemedi."
 		"it"		"{darkred}Impossibile recuperare le statistiche dei record personali."
 		"es"		"{darkred}Fallo al recuperar las mejores estadísticas personales."
+		"de"		"{darkred}Persönliche PBs konnten nicht abgerufen werden."
+		"pl"		"{darkred}Fallo al recuperar las mejores estadísticas personales."
 	}
 	"PB Request - Invalid Course Name"
 	{
@@ -124,6 +142,8 @@
 		"tr"		"{grey}(Invalid course name {default}{course_name}{grey}){darkred} Haritasında kişisel rekor bilgilerine erişilemedi. "
 		"it"		"{darkred}Impossibile recuperare le statistiche dei record personali. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
 		"es"		"{darkred}Fallo al recuperar las mejores estadísticas personales. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
+		"de"		"{darkred}Persönliche PBs konnten nicht abgerufen werden. {grey} (Ungültiger Kursname {default}{course_name}{grey})"
+		"pl"		"{darkred}Fallo al recuperar las mejores estadísticas personales. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
 	}
 	"PB Command Usage"
 	{
@@ -135,6 +155,8 @@
 		"tr"		"{grey}Kullanım: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detaylar için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Controlla la console per ulteriori dettagli!"
 		"es"		"{grey}Uso: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. ¡Mire la consola para más detalles!"
+		"de"		"{grey}Verwendung: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Weitere Einzelheiten finden Sie in der Konsole!"
+		"pl"		"{grey}Użycie: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Sprawdź konsolę, aby uzyskać szczegóły!"
 	}
 	"PB Command Usage - Console"
 	{
@@ -146,5 +168,7 @@
 		"tr"		"Kullanım: kz_pb <c/course/map/mode/p/player/s/style=...>\nÖrnek: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nTo specify no style, use \"style=none\"."
 		"it"		"Utilizzo: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsempio: \"kz_pb map=kz_mappa p=Giocatore c=Main style=ABH\"\nPer non includere lo stile usa \"style=none\"."
 		"es"		"Uso: kz_pb <c/course/map/mode/p/player/s/style=...>\nEjemplo: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nPara no especificar un estilo, use \"style=none\"."
+		"de"		"Verwendung: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsempio: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nUm keinen Stil anzugeben, verwende \"style=none\"."
+		"pl"		"Użycie: kz_pb <c/course/map/mode/p/player/s/style=...>\nPrzykład: \"kz_pb map=kz_map p=Gracz c=Main style=ABH\"\nAby nie podawać stylu, użyj \"style=none\"."
 	}
 }

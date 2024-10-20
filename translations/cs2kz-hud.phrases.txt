@@ -11,6 +11,7 @@
 		"tr"	"Hız"
 		"it"	"Vel"
 		"es"	"Velocidad"
+		"de"	"Geschwindigkeit"
 	}
 	"HUD - Stopped Text"
 	{
@@ -24,6 +25,7 @@
 		"tr"		" (DURDURULDU)"
 		"it"		" (FERMO)"
 		"es"		" (DETENIDO)"
+		"de"		" (GESTOPPT)"
 	}
 	"HUD - Paused Text"
 	{
@@ -37,6 +39,7 @@
 		"tr"		" (DURAKLATILDI)"
 		"it"		" (PAUSA)"
 		"es"		" (PAUSADO)"
+		"de"		" (PAUSIERT)"
 	}
 	"HUD - Speed Text"
 	{
@@ -51,6 +54,7 @@
 		"tr"		"Hız: {speed}"
 		"it"		"Vel: {speed}"
 		"es"		"Velocidad: {speed}"
+		"de"		"Geschwindigkeit: {speed}"
 	}
 	"HUD - Speed Text (Takeoff)"
 	{
@@ -65,6 +69,7 @@
 		"tr"		"Hız: {speed} ({takeoff_speed})"
 		"it"		"Vel: {speed} ({takeoff_speed})"
 		"es"		"Velocidad: {speed} ({takeoff_speed})"
+		"de"		"Geschwindigkeit: {speed} ({takeoff_speed})"
 	}
 	"HUD - Key Text"
 	{
@@ -79,6 +84,7 @@
 		"tr"		"Tuşlar: {left} {forward} {back} {right} {duck} {jump}"
 		"it"		"Tasti: {left} {forward} {back} {right} {duck} {jump}"
 		"es"		"Teclas: {left} {forward} {back} {right} {duck} {jump}"
+		"de"		"Tasten: {left} {forward} {back} {right} {duck} {jump}"
 	}
 	"HUD - Checkpoint Text"
 	{
@@ -93,6 +99,7 @@
 		"tr"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"it"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"es"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
+		"de"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
@@ -107,6 +114,7 @@
 		"tr"		"{time}{stop_text}{pause_text}"
 		"it"		"{time}{stop_text}{pause_text}"
 		"es"		"{time}{stop_text}{pause_text}"
+		"de"		"{time}{stop_text}{pause_text}"
 	}
 	"HUD - Center Text"
 	{
@@ -122,6 +130,7 @@
 		"tr"		"{checkpoint_text}\n{timer_text}"
 		"it"		"{checkpoint_text}\n{timer_text}"
 		"es"		"{checkpoint_text}\n{timer_text}"
+		"de"		"{checkpoint_text}\n{timer_text}"
 	}
 	// This text is actually "more" center.
 	"HUD - Alert Text"
@@ -137,6 +146,7 @@
 		"tr"		""
 		"it"		""
 		"es"		""
+		"de"		""
 	}
 	"HUD - HTML Center Text"
 	{
@@ -152,6 +162,7 @@
 		"tr"		"{speed_text}<br>{key_text}"
 		"it"		"{speed_text}<br>{key_text}"
 		"es"		"{speed_text}<br>{key_text}"
+		"de"		"{speed_text}<br>{key_text}"
 	}
 	
 	"HUD - HTML Panel Disabled"
@@ -165,6 +176,8 @@
 		"tr"		"Panel kapatıldı."
 		"it"		"Pannello disabilitato."
 		"es"		"Panel deshabilitado."
+		"pl"		"Panel wyłączony"
+		"de"		"Panel deaktiviert"
 	}
 
 	"HUD Option - Info Panel - Enable"
@@ -179,6 +192,7 @@
 		"tr"		"{grey}Orta bilgi paneli açıldı."
 		"it"		"{grey}Il pannello centrale è stato abilitato."
 		"es"		"{grey}Su panel de información central ha sido habilitado."
+		"de"		"{grey}Dein zentrales Informationspanel wurde aktiviert."
 	}
 	"HUD Option - Info Panel - Disable"
 	{
@@ -192,5 +206,6 @@
 		"tr"		"{grey}Orta bilgi paneli kapatıldı."
 		"it"		"{grey}Il pannello centrale è stato disabilitato."
 		"es"		"{grey}Su panel de información central ha sido deshabilitado."
+		"de"		"{grey}Dein zentrales Informationspanel wurde deaktiviert."
 	}
 }
