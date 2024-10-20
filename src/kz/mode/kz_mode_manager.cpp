@@ -420,6 +420,18 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 	return emptyInfo;
 }
 
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfoFromDatabaseID(i32 id)
+{
+	FOR_EACH_VEC(modeInfos, i)
+	{
+		if (modeInfos[i].databaseID == id)
+		{
+			return modeInfos[i];
+		}
+	}
+	return KZModeManager::ModePluginInfo();
+}
+
 void KZ::mode::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_mode", Command_KzMode);
