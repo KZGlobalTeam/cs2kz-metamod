@@ -168,9 +168,11 @@ void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 
 void KZPlayer::TouchAntibhopTrigger(KzTouchingTrigger touching)
 {
-	float touchingTime = g_pKZUtils->GetServerGlobals()->curtime - touching.groundTouchTime;
+	float timeOnGround = g_pKZUtils->GetServerGlobals()->curtime - this->landingTime;
 	const KzTrigger *trigger = touching.trigger;
-	if (trigger->antibhop.time == 0 || touchingTime <= trigger->antibhop.time || touching.groundTouchTime == 0)
+	if (trigger->antibhop.time == 0                              // No jump trigger
+		|| timeOnGround <= trigger->antibhop.time                // Haven't touched the trigger for long enough
+		|| (this->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0) // Not on the ground (for prediction)
 	{
 		this->antiBhopActive = true;
 	}
@@ -929,7 +931,7 @@ void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KZCou
 				{
 					this->languageService->PrintChat(true, false, "Checkpoints Cleared By Map");
 				}
-				this->checkpointService->ResetCheckpoints(true);
+				this->checkpointService->ResetCheckpoints(true, false);
 			}
 		};
 		break;
