@@ -248,7 +248,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	if (this->currentStage != courseDesc->stageCount)
 	{
 		this->PlayMissedZoneSound();
-		this->player->languageService->PrintChat(true, false, "Can't finish run (Missed stage)", this->currentStage + 1);
+		this->player->languageService->PrintChat(true, false, "Can't Finish Run (Missed Stage)", this->currentStage + 1);
 		return false;
 	}
 
@@ -258,11 +258,11 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 		i32 missCount = courseDesc->checkpointCount - this->reachedCheckpoints;
 		if (missCount == 1)
 		{
-			this->player->languageService->PrintChat(true, false, "Can't finish run (Missed a checkpoint zone)");
+			this->player->languageService->PrintChat(true, false, "Can't Finish Run (Missed a Checkpoint Zone)");
 		}
 		else
 		{
-			this->player->languageService->PrintChat(true, false, "Can't finish run (Missed checkpoint zones)", missCount);
+			this->player->languageService->PrintChat(true, false, "Can't Finish Run (Missed Checkpoint Zones)", missCount);
 		}
 		return false;
 	}

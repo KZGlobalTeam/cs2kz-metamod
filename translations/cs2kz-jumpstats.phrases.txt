@@ -420,7 +420,7 @@
 		"it"		"Teleported"
 		"de"		"Teleportiert"
 	}
-	"Disabled by map"
+	"Disabled By Map"
 	{
 		"en"		"Disabled by map"
 	}

@@ -668,7 +668,7 @@ void KZJumpstatsService::OnProcessMovement()
 	}
 	if (this->player->modifiers.disableJumpstatsCount > 0)
 	{
-		this->InvalidateJumpstats("Disabled by map");
+		this->InvalidateJumpstats("Disabled By Map");
 	}
 	this->CheckValidMoveType();
 	this->DetectExternalModifications();
