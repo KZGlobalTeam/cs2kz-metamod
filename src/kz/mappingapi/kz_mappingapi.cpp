@@ -27,16 +27,15 @@ static_global struct
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
 	CUtlVectorFixed<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
 	i32 mapApiVersion = KZ_NO_MAPAPI_VERSION;
-	bool fatalFailure;
+	bool fatalFailure = false;
 	bool roundIsStarting = true;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
 
-	void Reset(bool full = false)
+	void OnRoundPrestart()
 	{
 		triggers.RemoveAll();
-		roundIsStarting = false;
 		errorFlags = 0;
 		errorCount = 0;
 		roundIsStarting = true;
@@ -44,14 +43,8 @@ static_global struct
 		{
 			error[0] = 0;
 		}
-		if (full)
-		{
-			courseDescriptors.RemoveAll();
-			fatalFailure = false;
-			mapApiVersion = KZ_NO_MAPAPI_VERSION;
-		}
 	}
-} g_mappingApi {};
+} g_mappingApi;
 
 static_global CTimer<> *g_errorTimer;
 static_global const char *g_errorPrefix = "{darkred} ERROR: ";
@@ -313,7 +306,6 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 		case KZTRIGGER_DISABLED:
 		{
-			// This behavior depends on the fact that worldent is the first thing to spawn.
 			// Check for pre-mapping api triggers for backwards compatibility.
 			if (g_mappingApi.mapApiVersion == -1)
 			{
@@ -407,7 +399,7 @@ static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 	return result;
 }
 
-static_function const KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
+static_function KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
 {
 	KZCourseDescriptor *result = nullptr;
 	if (!targetname)
@@ -429,16 +421,7 @@ static_function const KZCourseDescriptor *Mapi_FindCourse(const char *targetname
 
 static_function bool Mapi_SetStartPosition(const char *descriptorName, Vector origin, QAngle angles)
 {
-	KZCourseDescriptor *desc = nullptr;
-
-	FOR_EACH_VEC(g_mappingApi.courseDescriptors, i)
-	{
-		if (V_stricmp(g_mappingApi.courseDescriptors[i].entityTargetname, descriptorName) == 0)
-		{
-			desc = &g_mappingApi.courseDescriptors[i];
-			break;
-		}
-	}
+	KZCourseDescriptor *desc = Mapi_FindCourse(descriptorName);
 
 	if (!desc)
 	{
@@ -478,7 +461,7 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 
 void KZ::mapapi::Init()
 {
-	g_mappingApi.Reset(true);
+	g_mappingApi = {};
 
 	g_errorTimer = g_errorTimer ? g_errorTimer : StartTimer(Mapi_PrintErrors, true);
 }
@@ -543,7 +526,7 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 
 void KZ::mapapi::OnRoundPrestart()
 {
-	g_mappingApi.Reset();
+	g_mappingApi.OnRoundPrestart();
 }
 
 void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
