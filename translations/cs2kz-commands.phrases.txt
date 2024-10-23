@@ -748,5 +748,6 @@
 	"Command Description - kz_comparelevel"
 	{
 		"en"		"Set the maximum preferred level of run comparison."
+		"ua"		"Встановіть максимальний бажаний рівень порівняння проходжень."
 	}
 }
