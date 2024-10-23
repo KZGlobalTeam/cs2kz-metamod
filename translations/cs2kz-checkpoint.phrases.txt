@@ -222,4 +222,8 @@
 		"es"		"{grey}Ha eliminado su posición de inicio personalizada."
 		"de"		"{grey}Du hast deine Startposition gelöscht."
 	}
+	"Checkpoints Cleared By Map"
+	{
+		"en"		"{darkred}The map has cleared your checkpoints."
+	}
 }

@@ -77,6 +77,7 @@ public:
 	SCHEMA_FIELD(int, m_iHealth)
 	SCHEMA_FIELD(uint8, m_lifeState)
 	SCHEMA_FIELD(int, m_iTeamNum)
+	SCHEMA_FIELD(CUtlString, m_sUniqueHammerID)
 	SCHEMA_FIELD(bool, m_bTakesDamage)
 	SCHEMA_FIELD(MoveType_t, m_MoveType)
 	SCHEMA_FIELD(MoveType_t, m_nActualMoveType)

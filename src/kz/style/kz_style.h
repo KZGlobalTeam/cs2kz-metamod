@@ -24,6 +24,12 @@ public:
 		return true;
 	}
 
+	// Return the tweaked value, null if this convar name is not tweaked.
+	virtual const char *GetTweakedConvarValue(const char *name)
+	{
+		return nullptr;
+	}
+
 	// Movement hooks
 	// These functions are always called after the mode service's functions.
 	virtual void OnPhysicsSimulate() {}

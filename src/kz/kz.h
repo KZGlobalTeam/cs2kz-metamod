@@ -3,12 +3,15 @@
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
+#include "mappingapi/kz_mappingapi.h"
+#include "circularbuffer.h"
 
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
 
-#define KZ_SND_SET_CP "UIPanorama.round_report_odds_none"
-#define KZ_SND_DO_TP  "UIPanorama.round_report_odds_none"
+#define KZ_SND_SET_CP    "UIPanorama.round_report_odds_none"
+#define KZ_SND_DO_TP     "UIPanorama.round_report_odds_none"
+#define KZ_SND_RESET_CPS "UIPanorama.round_report_odds_dn"
 
 #define KZ_WORKSHOP_ADDONS_ID            "3171124941"
 #define KZ_WORKSHOP_ADDONS_SNDEVENT_FILE "soundevents/soundevents_kz.vsndevts"
@@ -43,6 +46,8 @@ class KZStyleService;
 class KZTelemetryService;
 class KZTimerService;
 class KZTipService;
+struct KZCourseDescriptor;
+struct Modifier;
 
 class KZPlayer : public MovementPlayer
 {
@@ -126,9 +131,8 @@ public:
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
 	// Timer events
-	void StartZoneStartTouch();
-	void StartZoneEndTouch();
-	void EndZoneStartTouch();
+	void MappingApiTriggerStartTouch(const KzTrigger *touched, const KZCourseDescriptor *course);
+	void MappingApiTriggerEndTouch(const KzTrigger *touched, const KZCourseDescriptor *course);
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
@@ -139,6 +143,23 @@ public:
 private:
 	bool hideLegs {};
 	f64 lastTeleportTime {};
+	CEntityHandle lastTouchedSingleBhop {};
+	i32 bhopTouchCount {};
+
+	class CSequentialBhopBuffer : public CFixedSizeCircularBuffer<CEntityHandle, 64>
+	{
+		virtual void ElementAlloc(CEntityHandle &element) {};
+		virtual void ElementRelease(CEntityHandle &element) {};
+	};
+
+	CSequentialBhopBuffer lastTouchedSequentialBhops {};
+	CUtlVectorFixed<KzTouchingTrigger, 64> kzTriggerTouchList {};
+
+	void AddKzTriggerToTouchList(const KzTrigger *trigger);
+	void RemoveKzTriggerFromTouchList(const KzTrigger *trigger);
+	void TouchAntibhopTrigger(KzTouchingTrigger touching);
+	bool TouchTeleportTrigger(KzTouchingTrigger touching);
+	void ResetBhopState();
 
 public:
 	KZAnticheatService *anticheatService {};
@@ -161,6 +182,20 @@ public:
 	KZTelemetryService *telemetryService {};
 	KZTimerService *timerService {};
 	KZTipService *tipService {};
+
+	struct Modifiers
+	{
+		i32 disablePausingCount;
+		i32 disableCheckpointsCount;
+		i32 disableTeleportsCount;
+		i32 disableJumpstatsCount;
+		i32 enableSlideCount;
+	};
+
+	Modifiers modifiers {};
+	Modifiers lastModifiers {};
+	bool antiBhopActive;
+	bool lastAntiBhopActive;
 
 	void EnableGodMode();
 
@@ -190,6 +225,8 @@ public:
 	virtual void PrintCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
 	virtual void PrintAlert(bool addPrefix, bool includeSpectators, const char *format, ...);
 	virtual void PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
+
+	CUtlString ComputeCvarValueFromModeStyles(const char *name);
 };
 
 class KZBaseService
@@ -228,6 +265,11 @@ public:
 	KZPlayer *ToPlayer(u32 index);
 
 	KZPlayer *ToKZPlayer(MovementPlayer *player)
+	{
+		return static_cast<KZPlayer *>(player);
+	}
+
+	KZPlayer *ToKZPlayer(Player *player)
 	{
 		return static_cast<KZPlayer *>(player);
 	}

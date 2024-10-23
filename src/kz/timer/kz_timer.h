@@ -1,37 +1,44 @@
 #pragma once
 #include "../kz.h"
 #include "../checkpoint/kz_checkpoint.h"
+#include "kz/course/kz_course.h"
+#include "kz/mappingapi/kz_mappingapi.h"
 
-#define KZ_MAX_COURSE_NAME_LENGTH 128
-#define KZ_MAX_MODE_NAME_LENGTH   128
+#define KZ_MAX_MODE_NAME_LENGTH 128
 
 #define KZ_TIMER_MIN_GROUND_TIME 0.05f
-#define KZ_TIMER_SOUND_COOLDOWN  0.15f
-#define KZ_TIMER_SND_START       "Buttons.snd9"
-#define KZ_TIMER_SND_END         "tr.ScoreRegular"
-#define KZ_TIMER_SND_FALSE_END   "UIPanorama.buymenu_failure"
-#define KZ_TIMER_SND_STOP        "tr.PuckFail"
+
+#define KZ_TIMER_SOUND_COOLDOWN       0.15f
+#define KZ_TIMER_SND_START            "Buttons.snd9"
+#define KZ_TIMER_SND_END              "tr.ScoreRegular"
+#define KZ_TIMER_SND_FALSE_END        "UIPanorama.buymenu_failure"
+#define KZ_TIMER_SND_MISSED_ZONE      "UIPanorama.buymenu_failure"
+#define KZ_TIMER_SND_REACH_SPLIT      "tr.Popup"
+#define KZ_TIMER_SND_REACH_CHECKPOINT "tr.Popup"
+#define KZ_TIMER_SND_REACH_STAGE      "UIPanorama.round_report_odds_up"
+#define KZ_TIMER_SND_STOP             "tr.PuckFail"
+#define KZ_TIMER_SND_MISSED_TIME      "UI.RankDown"
 
 #define KZ_PAUSE_COOLDOWN 1.0f
 
 class KZTimerServiceEventListener
 {
 public:
-	virtual bool OnTimerStart(KZPlayer *player, const char *courseName)
+	virtual bool OnTimerStart(KZPlayer *player, u32 courseGUID)
 	{
 		return true;
 	}
 
-	virtual void OnTimerStartPost(KZPlayer *player, const char *courseName) {}
+	virtual void OnTimerStartPost(KZPlayer *player, u32 courseGUID) {}
 
-	virtual bool OnTimerEnd(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed)
+	virtual bool OnTimerEnd(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed)
 	{
 		return true;
 	}
 
-	virtual void OnTimerEndPost(KZPlayer *player, const char *courseName, f32 time, u32 teleportsUsed) {}
+	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed) {}
 
-	virtual void OnTimerStopped(KZPlayer *player) {}
+	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID) {}
 
 	virtual void OnTimerInvalidated(KZPlayer *player) {}
 
@@ -57,13 +64,79 @@ class KZTimerService : public KZBaseService
 private:
 	bool timerRunning {};
 	f64 currentTime {};
-	char currentCourse[KZ_MAX_COURSE_NAME_LENGTH] {};
+	u32 currentCourseGUID {};
 	f64 lastEndTime {};
 	f64 lastFalseEndTime {};
 	f64 lastStartSoundTime {};
-	char lastStartMode[128] {};
+	f64 lastMissedTimeSoundTime {};
 	bool validTime {};
 
+	u32 lastSplit {};
+	CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> splitZoneTimes {};
+
+	u32 lastCheckpoint {};
+	i32 reachedCheckpoints {};
+	CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> cpZoneTimes {};
+
+	i32 currentStage {};
+	CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> stageZoneTimes {};
+
+	// PB cache per mode and per course.
+	std::unordered_map<PBDataKey, PBData> localPBCache;
+	std::unordered_map<PBDataKey, PBData> globalPBCache;
+
+	// SR cache should be loaded upon map start, every time !wr is queried and every time a run beats the server record.
+	static std::unordered_map<PBDataKey, PBData> srCache;
+
+	static std::unordered_map<PBDataKey, PBData> wrCache;
+
+public:
+	enum CompareType : u8
+	{
+		COMPARE_NONE = 0,
+		COMPARE_SPB, // Local PB
+		COMPARE_GPB, // Global PB
+		COMPARE_SR,  // Server Record
+		COMPARE_WR,  // Global Record
+		COMPARETYPE_COUNT
+	};
+
+private:
+	// The maximum level that we should compare our current time with.
+	// For example, if the value is set to COMPARE_GPB, the player will not attempt to compare their splits with SR/WR,
+	// but only global PB, and local PB if global data is not available.
+	CompareType preferredCompareType = COMPARE_GPB;
+
+	// What we are currently comparing our run against in this current run.
+	// This stays the same from the start of the run (unless preferredCompareType changes) to have a consistent comparison across the run.
+	CompareType currentCompareType = COMPARE_GPB;
+
+	void UpdateCurrentCompareType(PBDataKey key);
+	const PBData *GetCompareTargetForType(CompareType type, PBDataKey key);
+	const PBData *GetCompareTarget(PBDataKey key);
+
+	bool shouldAnnounceMissedTime = true;
+	bool shouldAnnounceMissedProTime = true;
+
+public:
+	static void ClearRecordCache();
+	static void UpdateLocalRecordCache();
+	static void InsertRecordToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool hasTeleports, bool global, CUtlString metadata = "");
+
+	void ClearPBCache();
+	void UpdateLocalPBCache();
+	void InsertPBToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool hasTeleports, bool global, CUtlString metadata = "");
+	void SetCompareTarget(const char *typeString);
+
+	void CheckMissedTime();
+
+	void ShowSplitText(u32 currentSplit);
+	void ShowCheckpointText(u32 currentCheckpoint);
+	void ShowStageText();
+
+	CUtlString GetCurrentRunMetadata();
+
+private:
 	bool validJump {};
 	f64 lastInvalidateTime {};
 
@@ -128,14 +201,19 @@ public:
 		timerRunning = time > 0.0f;
 	}
 
-	void GetCourse(char *buffer, u32 size)
+	const KZCourse *GetCourse()
 	{
-		V_snprintf(buffer, size, "%s", currentCourse);
+		return KZ::course::GetCourse(currentCourseGUID);
 	}
 
-	void SetCourse(const char *name)
+	const KZCourseDescriptor *GetCourseDescriptor()
 	{
-		V_strncpy(currentCourse, name, KZ_MAX_COURSE_NAME_LENGTH);
+		return GetCourse() ? GetCourse()->descriptor : nullptr;
+	}
+
+	void SetCourse(u32 courseGUID)
+	{
+		currentCourseGUID = courseGUID;
 	}
 
 	enum TimeType_t
@@ -149,10 +227,13 @@ public:
 		return this->player->checkpointService->GetTeleportCount() > 0 ? TimeType_Standard : TimeType_Pro;
 	}
 
-	void StartZoneStartTouch();
-	void StartZoneEndTouch();
-	bool TimerStart(const char *courseName, bool playSound = true);
-	bool TimerEnd(const char *courseName);
+	void StartZoneStartTouch(const KZCourseDescriptor *course);
+	void StartZoneEndTouch(const KZCourseDescriptor *course);
+	void SplitZoneStartTouch(const KZCourseDescriptor *course, i32 splitNumber);
+	void CheckpointZoneStartTouch(const KZCourseDescriptor *course, i32 cpNumber);
+	void StageZoneStartTouch(const KZCourseDescriptor *course, i32 stageNumber);
+	bool TimerStart(const KZCourseDescriptor *course, bool playSound = true);
+	bool TimerEnd(const KZCourseDescriptor *course);
 	bool TimerStop(bool playSound = true);
 	static void TimerStopAll(bool playSound = true);
 
@@ -189,7 +270,12 @@ private:
 
 	void PlayTimerEndSound();
 	void PlayTimerFalseEndSound();
+	void PlayMissedZoneSound();
+	void PlayReachedSplitSound();
+	void PlayReachedCheckpointSound();
+	void PlayReachedStageSound();
 	void PlayTimerStopSound();
+	void PlayMissedTimeSound();
 
 	/*
 	 * Pause stuff also goes here.
@@ -243,6 +329,8 @@ public:
 	void OnOptionsChanged();
 	static void OnRoundStart();
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
+
+	void OnPlayerPreferencesLoaded();
 };
 
 namespace KZ
@@ -280,27 +368,11 @@ namespace KZ
 			u32 maxRankPro {};
 		};
 
-		void AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
+		void AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, const char *metadata);
 		void ClearAnnounceQueue();
 		void CheckAnnounceQueue();
 		void UpdateLocalRankData(u32 id, LocalRankData data);
 		void UpdateGlobalRankData(u32 id, GlobalRankData data);
-
-		// Courses
-		struct CourseInfo
-		{
-			u32 uid {};
-			CUtlString courseName;
-			i32 stageID = -1;
-			i32 databaseID {};
-		};
-
-		void ClearCourses();
-		void InsertCourse(const char *courseName, i32 stageID);
-		void SetupCourses();
-		void UpdateCourseDatabaseID(u32 uid, i32 databaseID);
-		bool GetCourseInformation(const char *courseName, CourseInfo &info);
-		bool GetFirstCourseInformation(CourseInfo &info);
 
 		// PB Requests
 		void CheckPBRequests();

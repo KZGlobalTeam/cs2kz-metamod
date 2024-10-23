@@ -88,7 +88,7 @@ void KZDatabaseService::SetupMap()
 				}
 			}
 			mapSetUp = true;
-			META_CONPRINTF("[KZDB] Map setup successful, current map ID: %i\n", KZDatabaseService::currentMapID);
+			META_CONPRINTF("[KZ::DB] Map setup successful, current map ID: %i\n", KZDatabaseService::currentMapID);
 			CALL_FORWARD(eventListeners, OnMapSetup);
 		},
 		OnGenericTxnFailure);

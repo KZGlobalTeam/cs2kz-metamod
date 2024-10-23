@@ -3,6 +3,8 @@
 #include "bufferstring.h"
 #include "igameeventsystem.h"
 #include "igamesystem.h"
+#include "entityclass.h"
+#include "gamesystems/spawngroup_manager.h"
 #include "utils/simplecmds.h"
 #include "utils/gamesystem.h"
 #include "steam/steam_gameserver.h"
@@ -16,8 +18,8 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/telemetry/kz_telemetry.h"
 #include "kz/db/kz_db.h"
+#include "kz/mappingapi/kz_mappingapi.h"
 #include "utils/utils.h"
-#include "entityclass.h"
 
 #include "sdk/entity/cbasetrigger.h"
 
@@ -115,9 +117,17 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 									const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType);
 
 // CEntitySystem
+static_global int entitySystemHook {};
 SH_DECL_HOOK2_void(CEntitySystem, Spawn, SH_NOATTRIB, false, int, const EntitySpawnInfo_t *);
-static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo);
+static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_t *pInfo);
 
+// CSpawnGroupMgrGameSystem
+static_global int createLoadingSpawnGroupHook {};
+SH_DECL_HOOK4(CSpawnGroupMgrGameSystem, CreateLoadingSpawnGroup, SH_NOATTRIB, 0, ILoadingSpawnGroup *, SpawnGroupHandle_t, bool, bool,
+			  const CUtlVector<const CEntityKeyValues *> *);
+static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,
+																	   bool bConfirmResourcesLoaded,
+																	   const CUtlVector<const CEntityKeyValues *> *pKeyValues);
 // INetworkGameServer
 static_global int activateServerHook {};
 SH_DECL_HOOK0(CNetworkGameServerBase, ActivateServer, SH_NOATTRIB, false, bool);
@@ -182,8 +192,7 @@ void hooks::Initialize()
 		SH_STATIC(Hook_ActivateServer), 
 		true
 	);
-	
-	// Warning: This is a pre hook!
+
 	clientConnectHook = SH_ADD_DVPHOOK(
 		CNetworkGameServerBase, 
 		ConnectClient,
@@ -212,6 +221,23 @@ void hooks::Initialize()
 		SH_STATIC(Hook_BuildGameSessionManifest), 
 		true
 	);
+	
+	entitySystemHook = SH_ADD_DVPHOOK(
+		CEntitySystem, 
+		Spawn, 
+		(CEntitySystem *)modules::server->FindVirtualTable("CGameEntitySystem"), 
+		SH_STATIC(Hook_CEntitySystem_Spawn), 
+		false
+	);
+	
+	createLoadingSpawnGroupHook = SH_ADD_DVPHOOK(
+		CSpawnGroupMgrGameSystem, 
+		CreateLoadingSpawnGroup, 
+		(CSpawnGroupMgrGameSystem *)modules::server->FindVirtualTable("CSpawnGroupMgrGameSystem"), 
+		SH_STATIC(Hook_OnCreateLoadingSpawnGroupHook), 
+		false
+	);
+
 	// clang-format on
 }
 
@@ -240,8 +266,6 @@ void hooks::Cleanup()
 
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 
-	SH_REMOVE_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
-
 	SH_REMOVE_HOOK_ID(activateServerHook);
 
 	SH_REMOVE_HOOK_ID(clientConnectHook);
@@ -250,6 +274,10 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 
 	SH_REMOVE_HOOK_ID(buildGameSessionManifestHookID);
+
+	SH_REMOVE_HOOK_ID(entitySystemHook);
+
+	SH_REMOVE_HOOK_ID(createLoadingSpawnGroupHook);
 
 	GameEntitySystem()->RemoveListenerEntity(&entityListener);
 }
@@ -413,14 +441,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 	if (!V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
-		if (trigger->IsEndZone())
-		{
-			player->EndZoneStartTouch();
-		}
-		else if (trigger->IsStartZone())
-		{
-			player->StartZoneStartTouch();
-		}
+		KZ::mapapi::OnTriggerMultipleStartTouchPost(player, trigger);
 	}
 
 	// Player has a modified velocity through trigger touching, take this into account.
@@ -582,9 +603,11 @@ static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 	{
 		RETURN_META(MRES_IGNORED);
 	}
-	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple") && static_cast<CBaseTrigger *>(pThis)->IsStartZone())
+
+	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
-		player->StartZoneEndTouch();
+		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
+		KZ::mapapi::OnTriggerMultipleEndTouchPost(player, trigger);
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -624,11 +647,6 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCoun
 static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
-	static_persist int entitySystemHook {};
-	if (GameEntitySystem() && !entitySystemHook)
-	{
-		entitySystemHook = SH_ADD_HOOK(CEntitySystem, Spawn, GameEntitySystem(), SH_STATIC(Hook_CEntitySystem_Spawn_Post), true);
-	}
 	KZ::timer::CheckAnnounceQueue();
 	KZ::timer::CheckPBRequests();
 	KZ::timer::CheckRecordRequests();
@@ -734,6 +752,8 @@ static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 static_function void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	g_KZPlugin.AddonInit();
+	KZ::course::ClearCourses();
+	KZ::mapapi::Init();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -758,6 +778,11 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			KZTimerService::OnRoundStart();
 			KZ::misc::OnRoundStart();
 			hooks::HookEntities();
+			KZ::mapapi::OnRoundStart();
+		}
+		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
+		{
+			KZ::mapapi::OnRoundPrestart();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)
 		{
@@ -803,17 +828,9 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 }
 
 // CEntitySystem
-static_function void Hook_CEntitySystem_Spawn_Post(int nCount, const EntitySpawnInfo_t *pInfo_DontUse)
+static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_t *pInfo)
 {
-	EntitySpawnInfo_t *pInfo = (EntitySpawnInfo_t *)pInfo_DontUse;
-
-	for (i32 i = 0; i < nCount; i++)
-	{
-		if (pInfo && pInfo[i].m_pEntity)
-		{
-			// do stuff with spawning entities!
-		}
-	}
+	KZ::mapapi::OnSpawn(nCount, pInfo);
 }
 
 // INetworkGameServer
@@ -821,7 +838,6 @@ static_function bool Hook_ActivateServer()
 {
 	KZJumpstatsService::OnServerActivate();
 	KZ::timer::ClearAnnounceQueue();
-	KZ::timer::SetupCourses();
 	KZ::misc::OnServerActivate();
 	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
@@ -866,4 +882,12 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 		Warning("[CS2KZ] Precache kz soundevents \n");
 		pResourceManifest->AddResource(KZ_WORKSHOP_ADDONS_SNDEVENT_FILE);
 	}
+}
+
+static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,
+																	   bool bConfirmResourcesLoaded,
+																	   const CUtlVector<const CEntityKeyValues *> *pKeyValues)
+{
+	KZ::mapapi::OnCreateLoadingSpawnGroupHook(pKeyValues);
+	RETURN_META_VALUE(MRES_IGNORED, 0);
 }

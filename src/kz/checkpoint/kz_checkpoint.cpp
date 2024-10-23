@@ -57,8 +57,12 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 	}
 }
 
-void KZCheckpointService::ResetCheckpoints()
+void KZCheckpointService::ResetCheckpoints(bool playSound)
 {
+	if (playSound && this->GetCheckpointCount())
+	{
+		this->PlayCheckpointResetSound();
+	}
 	this->undoTeleportData = {};
 	this->currentCpIndex = 0;
 	this->tpCount = 0;
@@ -74,6 +78,13 @@ void KZCheckpointService::SetCheckpoint()
 	{
 		return;
 	}
+
+	if (this->player->modifiers.disableCheckpointsCount > 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Anti Checkpoint Area)");
+		return;
+	}
+
 	u32 flags = pawn->m_fFlags();
 	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
 	{
@@ -141,6 +152,12 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp)
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn || !pawn->IsAlive())
 	{
+		return;
+	}
+
+	if (this->player->modifiers.disableTeleportsCount > 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Teleport (Map)");
 		return;
 	}
 
@@ -374,4 +391,9 @@ void KZCheckpointService::PlayCheckpointSound()
 void KZCheckpointService::PlayTeleportSound()
 {
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_DO_TP);
+}
+
+void KZCheckpointService::PlayCheckpointResetSound()
+{
+	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_RESET_CPS);
 }

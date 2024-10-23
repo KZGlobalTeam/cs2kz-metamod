@@ -20,6 +20,7 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
+#include "kz/mappingapi/kz_mappingapi.h"
 
 #include "version.h"
 
@@ -46,8 +47,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	hooks::Initialize();
 	movement::InitDetours();
-	KZ::mode::InitModeManager();
-	KZ::style::InitStyleManager();
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();
@@ -63,6 +62,9 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	}
 
 	ismm->AddListener(this, this);
+	KZ::mapapi::Init();
+	KZ::mode::InitModeManager();
+	KZ::style::InitStyleManager();
 
 	KZ::mode::DisableReplicatedModeCvars();
 
@@ -70,9 +72,10 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZTipService::InitTips();
 	if (late)
 	{
-		KZ::misc::OnServerActivate();
 		g_steamAPI.Init();
 		g_pKZPlayerManager->OnLateLoad();
+		// We need to reset the map for mapping api to properly load in.
+		utils::ResetMap();
 	}
 	return true;
 }
@@ -187,6 +190,11 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	{
 		*ret = META_IFACE_OK;
 		return g_pKZUtils;
+	}
+	else if (strcmp(iface, KZ_MAPPING_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return g_pMappingApi;
 	}
 	*ret = META_IFACE_FAILED;
 

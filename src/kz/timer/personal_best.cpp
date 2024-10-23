@@ -1,3 +1,4 @@
+#include "kz/course/kz_course.h"
 #include "kz/db/kz_db.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
@@ -11,7 +12,7 @@
 
 static_global const char *paramKeys[] = {"c", "course", "mode", "map", "p", "player", "s", "style"};
 
-struct PBData
+struct PBRequestData
 {
 	bool hasPB {};
 	f32 runTime {};
@@ -95,7 +96,7 @@ struct PBRequest
 		}
 	} localDBRequestParams;
 
-	PBData localPBData, globalPBData;
+	PBRequestData localPBRequestData, globalPBRequestData;
 
 	/*
 		Get the player's steamID64 for querying.
@@ -142,9 +143,9 @@ struct PBRequest
 	// For styled runs.
 	void ExecuteRanklessLocalQuery();
 
-	void UpdateLocalData(PBData data)
+	void UpdateLocalData(PBRequestData data)
 	{
-		localPBData = data;
+		localPBRequestData = data;
 		if (localRequestState == LocalRequestState::RUNNING)
 		{
 			localRequestState = LocalRequestState::FINISHED;
@@ -195,59 +196,61 @@ struct PBRequest
 
 		// Local stuff
 		std::string localTPText;
-		if (localPBData.teleportsUsed > 0)
+		if (localPBRequestData.teleportsUsed > 0)
 		{
-			localTPText = localPBData.teleportsUsed == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
-														 : player->languageService->PrepareMessage("2+ Teleports Text", localPBData.teleportsUsed);
+			localTPText = localPBRequestData.teleportsUsed == 1
+							  ? player->languageService->PrepareMessage("1 Teleport Text")
+							  : player->languageService->PrepareMessage("2+ Teleports Text", localPBRequestData.teleportsUsed);
 		}
 
 		char localOverallTime[32];
-		KZTimerService::FormatTime(localPBData.runTime, localOverallTime, sizeof(localOverallTime));
+		KZTimerService::FormatTime(localPBRequestData.runTime, localOverallTime, sizeof(localOverallTime));
 		char localProTime[32];
-		KZTimerService::FormatTime(localPBData.runTimePro, localProTime, sizeof(localProTime));
+		KZTimerService::FormatTime(localPBRequestData.runTimePro, localProTime, sizeof(localProTime));
 
 		// Player on kz_map (Main) [VNL]
 		player->languageService->PrintChat(true, false, "PB Header", targetPlayerName.Get(), mapName.Get(), courseName.Get(),
 										   combinedModeStyleText.Get());
 		if (queryRanking)
 		{
-			if (!localPBData.hasPB)
+			if (!localPBRequestData.hasPB)
 			{
 				player->languageService->PrintChat(true, false, "PB Time - No Times");
 			}
-			else if (!localPBData.hasPBPro)
+			else if (!localPBRequestData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Overall]
-				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", localOverallTime, localTPText, localPBData.rank,
-												   localPBData.maxRank);
+				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", localOverallTime, localTPText, localPBRequestData.rank,
+												   localPBRequestData.maxRank);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
-			else if (localPBData.teleportsUsed == 0)
+			else if (localPBRequestData.teleportsUsed == 0)
 			{
 				// KZ | Server: 12.34 [#1/24 Overall] [#1/2 PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Combined (Server)", localOverallTime, localPBData.rank,
-												   localPBData.maxRank, localPBData.rankPro, localPBData.maxRankPro);
+				player->languageService->PrintChat(true, false, "PB Time - Combined (Server)", localOverallTime, localPBRequestData.rank,
+												   localPBRequestData.maxRank, localPBRequestData.rankPro, localPBRequestData.maxRankPro);
 			}
 			else
 			{
 				// KZ | Server: 12.34 (5 TPs) [#1/24 Overall] | 23.45 [#1/2 PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localOverallTime, localTPText, localPBData.rank,
-												   localPBData.maxRank, localProTime, localPBData.rankPro, localPBData.maxRankPro);
+				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localOverallTime, localTPText, localPBRequestData.rank,
+												   localPBRequestData.maxRank, localProTime, localPBRequestData.rankPro,
+												   localPBRequestData.maxRankPro);
 			}
 		}
 		else
 		{
-			if (!localPBData.hasPB)
+			if (!localPBRequestData.hasPB)
 			{
 				player->languageService->PrintChat(true, false, "PB Time - No Times");
 			}
-			else if (!localPBData.hasPBPro)
+			else if (!localPBRequestData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Overall]
 				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", localOverallTime, localTPText);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
-			else if (localPBData.teleportsUsed == 0)
+			else if (localPBRequestData.teleportsUsed == 0)
 			{
 				// KZ | Server: 12.34 [Overall/PRO]
 				player->languageService->PrintChat(true, false, "PB Time - Combined Rankless (Server)", localOverallTime);
@@ -324,7 +327,7 @@ static_global struct
 		}
 	}
 
-	void UpdateLocalPBData(u64 uid, PBData data)
+	void UpdateLocalPBRequestData(u64 uid, PBRequestData data)
 	{
 		FOR_EACH_VEC(pbRequests, i)
 		{
@@ -515,22 +518,19 @@ void PBRequest::SetupCourse(KZPlayer *callingPlayer)
 		if (mapName == currentMap)
 		{
 			// Try to get the player's current course.
-			char course[KZ_MAX_COURSE_NAME_LENGTH];
-			callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
-			if (course[0])
+			const KZCourse *course = callingPlayer->timerService->GetCourse();
+			if (!course)
 			{
-				courseName = course;
-			}
-			else // No course? Take the map's first course.
-			{
-				KZ::timer::CourseInfo info;
-				if (!KZ::timer::GetFirstCourseInformation(info))
+				// No course? Take the map's first course.
+				const KZCourse *course = KZ::course::GetFirstCourse();
+				if (!course)
 				{
-					pbReqQueueManager.InvalidLocal(this->uid, "PB Request - Invalid Course Name", course);
+					// TODO: use a better message
+					pbReqQueueManager.InvalidLocal(this->uid, "PB Request - Invalid Course Name", "");
 					return;
 				}
-				courseName = info.courseName;
 			}
+			courseName = course->GetName();
 			hasValidCourseName = true;
 		}
 		else
@@ -587,7 +587,7 @@ void PBRequest::ExecuteStandardLocalQuery()
 
 	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 	{
-		PBData data {};
+		PBRequestData data {};
 		ISQLResult *result = queries[0]->GetResultSet();
 		if (result && result->GetRowCount() > 0)
 		{
@@ -622,7 +622,7 @@ void PBRequest::ExecuteStandardLocalQuery()
 				data.maxRankPro = result->GetInt(0);
 			}
 		}
-		pbReqQueueManager.UpdateLocalPBData(uid, data);
+		pbReqQueueManager.UpdateLocalPBRequestData(uid, data);
 	};
 
 	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };
@@ -635,7 +635,7 @@ void PBRequest::ExecuteRanklessLocalQuery()
 	u64 uid = this->uid;
 	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
 	{
-		PBData data;
+		PBRequestData data;
 		ISQLResult *result = queries[0]->GetResultSet();
 		if (result && result->GetRowCount() > 0)
 		{
@@ -654,7 +654,7 @@ void PBRequest::ExecuteRanklessLocalQuery()
 				data.runTimePro = result->GetFloat(0);
 			}
 		}
-		pbReqQueueManager.UpdateLocalPBData(uid, data);
+		pbReqQueueManager.UpdateLocalPBRequestData(uid, data);
 	};
 
 	auto onQueryFailure = [uid](std::string, int) { pbReqQueueManager.InvalidLocal(uid); };

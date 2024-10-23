@@ -420,6 +420,10 @@
 		"it"		"Teleported"
 		"de"		"Teleportiert"
 	}
+	"Disabled By Map"
+	{
+		"en"		"Disabled by map"
+	}
 
 	// =====[OPTIONS]=====
 	"Jumpstats Option - Master Switch - Enable"

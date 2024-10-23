@@ -1,15 +1,6 @@
 #pragma once
 #include "../kz.h"
 
-class KZTimerServiceEventListener;
-
-#include "../timer/kz_timer.h"
-
-class KZTimerServiceEventListener_Spec : public KZTimerServiceEventListener
-{
-	virtual void OnTimerStartPost(KZPlayer *player, const char *courseName) override;
-};
-
 class KZSpecService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;

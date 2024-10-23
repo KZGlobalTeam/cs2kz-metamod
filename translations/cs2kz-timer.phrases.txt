@@ -232,4 +232,175 @@
 		"es"		"{darkred}No puede reanudar porque acaba de pausar."
 		"de"		"{darkred}Du kannst nicht fortfahren, weil du gerade pausiert hast."
 	}
+	"Can't Finish Run (Missed a Checkpoint Zone)"
+	{
+		"en"		"{darkred}You can't finish your run, because you missed a checkpoint zone."
+	}
+	"Can't Finish Run (Missed Checkpoint Zones)"
+	{
+		"#format"	"missed_count:i"
+		"en"		"{darkred}You can't finish your run, because you missed {missed_count} checkpoint zones."
+	}
+	"Can't Finish Run (Missed Stage)"
+	{
+		"#format"	"stage_number:i"
+		"en"		"{darkred}You can't finish your run, because you missed stage zone {stage_number}."
+	}
+	"Touched too high stage number (Missed stage)"
+	{
+		"#format"	"stage_number:i"
+		"en"		"{darkred}You missed stage zone {stage_number}!"
+	}
+	"No Start Position For Course"
+	{
+		"#format"	"course_name:s"
+		"en"		"{darkred}Start position not found for course {default}{course_name}{darkred}!"
+	}
+	
+	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
+	"Course Split Reached"
+	{
+		"#format"	"number:d,time_text:s,diff_text:s,diff_text_pro:s"
+		"en"		"{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+	}
+	"Course Checkpoint Reached"
+	{
+		"#format"	"number:d,time_text:s,diff_text:s,diff_text_pro:s"
+		"en"		"{grey}Checkpoint {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+	}
+	"Course Stage Reached"
+	{
+		"#format"	"number:d,time_text:s,diff_text:s,diff_text_pro:s"
+		"en"		"{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+	}
+	
+	// The spaces are intentional.
+	"Server PB Diff (Overall)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | SPB {diff_time}"
+	}
+	"Global PB Diff (Overall)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | GPB {diff_time}"
+	}
+	"SR Diff (Overall)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | SR {diff_time}"
+	}
+	"WR Diff (Overall)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | WR {diff_time}"
+	}
+	"Server PB Diff (Pro)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | PRO SPB {diff_time}"
+	}
+	"Global PB Diff (Pro)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | PRO GPB {diff_time}"
+	}
+	"SR Diff (Pro)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | PRO SR {diff_time}"
+	}
+	"WR Diff (Pro)"
+	{
+		"#format"	"diff_time:s"
+		"en"		" | PRO WR {diff_time}"
+	}
+	
+	// You missed your best Overall time (01:23.45)
+	"Missed Server PB (Overall)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed your best {yellow}Overall{grey} time ({lightred}{time}{grey})."
+	}
+	"Missed Global PB (Overall)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed your global best {yellow}Overall{grey} time ({lightred}{time}{grey})."
+	}
+	"Missed SR (Overall)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
+	}
+	"Missed WR (Overall)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
+	}
+	"Missed Server PB (Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed your best {blue}PRO{grey} time ({lightred}{time}{grey})."
+	}
+	"Missed Global PB (Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed your global best {blue}PRO{grey} time ({lightred}{time}{grey})."
+	}
+	"Missed SR (Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
+	}
+	"Missed WR (Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
+	}
+	"Missed Server PB (Overall+Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed your best {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
+	}
+	"Missed Global PB (Overall+Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed your global best {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
+	}
+	"Missed SR (Overall+Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
+	}
+	"Missed WR (Overall+Pro)"
+	{
+		"#format"	"time:s"
+		"en"		"{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
+	}
+	
+	"Compare Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_compare <none/off/spb/pb/gpb/sr/wr>{grey}."
+	}
+	"Compare Disabled"
+	{
+		"en"		"{grey}Run comparison disabled."
+	}
+	"Compare Server PB"
+	{
+		"en"		"{grey}You will now compare your run to your server personal best."
+	}
+	"Compare Global PB"
+	{
+		"en"		"{grey}You will now compare your run to up to your global personal best."
+	}
+	"Compare Server Record"
+	{
+		"en"		"{grey}You will now compare your run to up to the server record."
+	}
+	"Compare World Record"
+	{
+		"en"		"{grey}You will now compare your run to up to the world record."
+	}
+	
 }

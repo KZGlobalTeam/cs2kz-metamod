@@ -2,12 +2,12 @@
 {
 	"Tip - kz_panel"
 	{
-		"en"	"{grey}Use {default}/panel {grey} to toggle the panel in the middle of your screen."
-		"chi"	"{grey}使用 {default}/panel {grey} 可以切换屏幕中心面板的显示."
-		"pl"	"{grey}Użyj {default}/panel {grey} aby włączyć lub wyłączyć panel na środku ekranu."
+		"en"	"{grey}Use {default}/panel {grey}to toggle the panel in the middle of your screen."
+		"chi"	"{grey}使用 {default}/panel {grey}可以切换屏幕中心面板的显示."
+		"pl"	"{grey}Użyj {default}/panel {grey}aby włączyć lub wyłączyć panel na środku ekranu."
 		"fi"	"{grey}Käytä {default}/panel {grey}komentoa vaihtaaksesi keskipaneelin näyttämisen asetusta."
-		"sv"	"{grey}Använd {default}/panel {grey} för att ändra synligheten av rutan i mitten av skärmen."
-		"ua"	"{grey}Напишіть в чат{default}/panel {grey} щоб увімк./вимк. центральну панель на екрані."
+		"sv"	"{grey}Använd {default}/panel {grey}för att ändra synligheten av rutan i mitten av skärmen."
+		"ua"	"{grey}Напишіть в чат{default}/panel{grey} щоб увімк./вимк. центральну панель на екрані."
 		"tr"	"{grey}{default}/panel {grey}yazarak ekranın ortasındaki bilgi panelini açabilirsin."
 		"it"	"{grey}Scrivi {default}/panel {grey} per cambiare la visibilità del pannello centrale."
 		"es"	"{grey}Use {default}/panel {grey} para alternar el panel en el medio de su pantalla."

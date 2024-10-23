@@ -1,3 +1,4 @@
+#include "kz/course/kz_course.h"
 #include "kz/db/kz_db.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
@@ -208,7 +209,7 @@ struct CourseTopRequest
 			RunStats stats = srData.proData[i];
 			dualTable.right.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetSteamID64(), stats.GetRunID());
 		}
-		player->languageService->PrintChat(false, false, "Course Top - Check Console");
+		player->languageService->PrintChat(true, false, "Course Top - Check Console");
 		player->PrintConsole(false, false, dualTable.GetTitle());
 		player->PrintConsole(false, false, dualTable.GetHeader());
 		player->PrintConsole(false, false, dualTable.GetSeparator());
@@ -365,22 +366,19 @@ void CourseTopRequest::SetupCourse(KZPlayer *callingPlayer)
 		if (this->mapName == currentMap)
 		{
 			// Try to get the player's current course.
-			char course[KZ_MAX_COURSE_NAME_LENGTH];
-			callingPlayer->timerService->GetCourse(course, KZ_MAX_COURSE_NAME_LENGTH);
-			if (course[0])
+			const KZCourse *course = callingPlayer->timerService->GetCourse();
+			if (!course)
 			{
-				courseName = course;
-			}
-			else // No course? Take the map's first course.
-			{
-				KZ::timer::CourseInfo info;
-				if (!KZ::timer::GetFirstCourseInformation(info))
+				// No course? Take the map's first course.
+				const KZCourse *course = KZ::course::GetFirstCourse();
+				if (!course)
 				{
-					ctopReqQueueManager.InvalidLocal(this->uid, "Course Top Request - Invalid Course Name", course);
+					// TODO: use a better message
+					ctopReqQueueManager.InvalidLocal(this->uid, "Course Top Request - Invalid Course Name", "");
 					return;
 				}
-				courseName = info.courseName;
 			}
+			courseName = course->GetName();
 			hasValidCourseName = true;
 		}
 		else

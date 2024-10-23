@@ -268,6 +268,131 @@ f32 utils::GetAngleDifference(const f32 source, const f32 target, const f32 c, b
 	return fmod(fabs(target - source) + c, 2 * c) - c;
 }
 
+bool utils::SetConvarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate)
+{
+	ConVarHandle cvarHandle = g_pCVar->FindConVar(name);
+	if (!cvarHandle.IsValid())
+	{
+		assert(0);
+		META_CONPRINTF("Failed to find %s!\n", name);
+		return false;
+	}
+
+	if (!name || !value)
+	{
+		assert(0);
+		return false;
+	}
+
+	ConVar *cvar = g_pCVar->GetConVar(cvarHandle);
+	assert(cvar);
+	auto cvarValue = reinterpret_cast<CVValue_t *>(&(cvar->values));
+	bool result = true;
+	switch (cvar->m_eVarType)
+	{
+		case EConVarType_Bool:
+		{
+			cvarValue->m_bValue = !(value[0] == 'f' || value[0] == '0');
+		}
+		break;
+
+		case EConVarType_Int16:
+		case EConVarType_UInt16:
+		case EConVarType_Int32:
+		case EConVarType_UInt32:
+		case EConVarType_Int64:
+		case EConVarType_UInt64:
+		{
+			char *end = nullptr;
+			i64 integer = strtol(value, &end, 10);
+			if (value != end && value != nullptr)
+			{
+				cvarValue->m_i64Value = integer;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		break;
+
+		case EConVarType_Float32:
+		{
+			char *end = nullptr;
+			f32 floatValue = strtof(value, &end);
+			if (value != end && value != nullptr)
+			{
+				cvarValue->m_flValue = floatValue;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		break;
+
+		case EConVarType_Float64:
+		{
+			char *end = nullptr;
+			f64 floatValue = strtod(value, &end);
+			if (value != end && value != nullptr)
+			{
+				cvarValue->m_dbValue = floatValue;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		break;
+			// Do not support string.
+			// case EConVarType_String:
+			// {
+			// 	cvarValue->m_szValue = value;
+			// }
+			// break;
+
+		default:
+			assert(0);
+			break;
+	}
+
+	if (result && replicate)
+	{
+		SendConVarValue(slot, cvar, value);
+	}
+	assert(result);
+
+	return result;
+}
+
+void utils::SendConVarValue(CPlayerSlot slot, const char *conVar, const char *value)
+{
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
+	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+	cvar->set_name(conVar);
+	cvar->set_value(value);
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	delete msg;
+}
+
+void utils::SendMultipleConVarValues(CPlayerSlot slot, const char **cvars, const char **values, u32 size)
+{
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
+	for (u32 i = 0; i < size; i++)
+	{
+		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+		cvar->set_name(cvars[i]);
+		cvar->set_value(values[i]);
+	}
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	delete msg;
+}
+
 void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 {
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
@@ -280,7 +405,7 @@ void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
 	delete msg;
 }
 
-void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **value, u32 size)
+void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **values, u32 size)
 {
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
 	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
@@ -288,7 +413,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const ch
 	{
 		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
 		cvar->set_name(conVar[i]->m_pszName);
-		cvar->set_value(value[i]);
+		cvar->set_value(values[i]);
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
@@ -377,8 +502,13 @@ void utils::ResetMapIfEmpty()
 		return;
 	}
 
-	char cmd[MAX_PATH + 12]; // "changelevel " takes 12 characters
 	META_CONPRINTF("[KZ] Server is empty, triggering map reload...\n");
+	utils::ResetMap();
+}
+
+void utils::ResetMap()
+{
+	char cmd[MAX_PATH + 12]; // "changelevel " takes 12 characters
 	if (g_pKZUtils->GetCurrentMapWorkshopID() == 0)
 	{
 		V_snprintf(cmd, sizeof(cmd), "changelevel %s", g_pKZUtils->GetGlobals()->mapname.ToCStr());

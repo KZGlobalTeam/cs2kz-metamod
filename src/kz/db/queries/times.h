@@ -9,6 +9,7 @@ constexpr char sqlite_times_create[] = R"(
         StyleIDFlags INTEGER NOT NULL, 
         RunTime REAL NOT NULL, 
         Teleports INTEGER NOT NULL, 
+        Metadata TEXT,
         Created INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, 
         CONSTRAINT PK_Times PRIMARY KEY (ID), 
         CONSTRAINT FK_Times_SteamID64 FOREIGN KEY (SteamID64) REFERENCES Players(SteamID64) 
@@ -29,6 +30,7 @@ constexpr char mysql_times_create[] = R"(
         StyleIDFlags INTEGER UNSIGNED NOT NULL, 
         RunTime DOUBLE UNSIGNED NOT NULL, 
         Teleports SMALLINT UNSIGNED NOT NULL, 
+        Metadata TEXT,
         Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
         CONSTRAINT PK_Times PRIMARY KEY (ID), 
         CONSTRAINT FK_Times_SteamID64 FOREIGN KEY (SteamID64) REFERENCES Players(SteamID64) 
@@ -40,10 +42,8 @@ constexpr char mysql_times_create[] = R"(
 )";
 
 constexpr char sql_times_insert[] = R"(
-    INSERT INTO Times (SteamID64, MapCourseID, ModeID, StyleIDFlags, RunTime, Teleports) 
-        SELECT %llu, ID, %d, %llu, %.7f, %llu 
-        FROM MapCourses 
-        WHERE MapID=%d AND Name='%s'
+    INSERT INTO Times (SteamID64, MapCourseID, ModeID, StyleIDFlags, RunTime, Teleports, Metadata) 
+        VALUES (%llu, %d, %d, %llu, %.7f, %llu, '%s')
 )";
 
 constexpr char sql_times_delete[] = R"(

@@ -69,6 +69,7 @@ for sdk_target in MMSPlugin.sdk_targets:
   binary.sources += [
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+    os.path.join(sdk['path'], 'entity2', 'entitykeyvalues.cpp'),
     os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
     os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'),
     
@@ -96,6 +97,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'block_radio.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'time_limit.cpp'),
     
+
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player_print.cpp'),
@@ -103,6 +105,8 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'commands.cpp'),
+    
+    os.path.join(builder.sourcePath, 'src', 'kz', 'course', 'kz_course.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'kz_db.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_courses.cpp'),
@@ -121,6 +125,7 @@ for sdk_target in MMSPlugin.sdk_targets:
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'jump_reporting.cpp'),
@@ -147,7 +152,6 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'course_top.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'get_records.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'personal_best.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'courses.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
   ]

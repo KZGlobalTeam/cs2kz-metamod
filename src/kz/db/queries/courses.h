@@ -5,7 +5,7 @@ constexpr char sqlite_mapcourses_create[] = R"(
     CREATE TABLE IF NOT EXISTS MapCourses ( 
         ID INTEGER NOT NULL, 
         MapID INTEGER NOT NULL, 
-        Name VARCHAR(32) NOT NULL, 
+        Name VARCHAR(64) NOT NULL, 
         StageID INTEGER NOT NULL,
         Created INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, 
         CONSTRAINT PK_MapCourses PRIMARY KEY (ID), 
@@ -19,7 +19,7 @@ constexpr char mysql_mapcourses_create[] = R"(
     CREATE TABLE IF NOT EXISTS MapCourses ( 
         ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, 
         MapID INTEGER UNSIGNED NOT NULL, 
-        Name VARCHAR(32) NOT NULL, 
+        Name VARCHAR(64) NOT NULL, 
         StageID INTEGER NOT NULL,
         Created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
         CONSTRAINT PK_MapCourses PRIMARY KEY (ID), 

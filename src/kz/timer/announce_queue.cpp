@@ -9,8 +9,8 @@ using namespace KZ::timer;
 struct AnnounceData
 {
 public:
-	AnnounceData(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed)
-		: id(id), courseName(courseName), time(time), teleportsUsed(teleportsUsed)
+	AnnounceData(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, CUtlString metadata)
+		: id(id), courseName(courseName), time(time), teleportsUsed(teleportsUsed), metadata(metadata)
 	{
 		timestamp = g_pKZUtils->GetServerGlobals()->realtime;
 		playerName = player->GetName();
@@ -23,7 +23,7 @@ public:
 		}
 		if (KZDatabaseService::IsReady())
 		{
-			KZDatabaseService::SaveTime(id, player, courseName, time, teleportsUsed);
+			KZDatabaseService::SaveTime(id, player, courseName, time, teleportsUsed, metadata);
 		}
 	}
 
@@ -59,6 +59,7 @@ public:
 	CCopyableUtlVector<CUtlString> styleNames;
 	f64 time;
 	u64 teleportsUsed;
+	CUtlString metadata;
 
 	// Local ranking variables
 	bool hasLocalRank {};
@@ -181,9 +182,9 @@ public:
 static_global CUtlVector<AnnounceData> announceQueue;
 static_global u32 announceCount = 0;
 
-void KZ::timer::AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed)
+void KZ::timer::AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, const char *metadata)
 {
-	announceQueue.AddToTail({announceCount++, player, courseName, time, teleportsUsed});
+	announceQueue.AddToTail({announceCount++, player, courseName, time, teleportsUsed, metadata});
 }
 
 void KZ::timer::UpdateLocalRankData(u32 id, LocalRankData data)

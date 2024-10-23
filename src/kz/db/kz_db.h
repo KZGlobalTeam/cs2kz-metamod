@@ -83,12 +83,12 @@ public:
 
 	static void OnGenericTxnSuccess(std::vector<ISQLQuery *> queries)
 	{
-		ConMsg("[KZDB] Transaction successful.\n");
+		ConMsg("[KZ::DB] Transaction successful.\n");
 	}
 
 	static void OnGenericTxnFailure(std::string error, int failIndex)
 	{
-		ConMsg("[KZDB] Transaction failed at %i (%s).\n", failIndex, error.c_str());
+		ConMsg("[KZ::DB] Transaction failed at %i (%s).\n", failIndex, error.c_str());
 	}
 
 	static void OnGenericQuerySuccess(ISQLQuery *query) {}
@@ -112,7 +112,7 @@ public:
 
 	// Course
 	static bool AreCoursesSetUp();
-	static void SetupCourses(CUtlVector<KZ::timer::CourseInfo> &courseInfos);
+	static void SetupCourses(CUtlVector<KZCourse> &courses);
 	static void FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Client/Player
@@ -140,11 +140,14 @@ public:
 	static void InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString shortName);
 
 	// Times
-	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
+	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, CUtlString metadata);
+	static void QueryAllPBs(u64 steamID64, CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	static void QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, TransactionSuccessCallbackFunc onSuccess,
 						TransactionFailureCallbackFunc onFailure);
 	static void QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, u64 styleIDFlags,
 								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+
+	static void QueryAllRecords(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	static void QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, u32 count, u32 offset, TransactionSuccessCallbackFunc onSuccess,
 							 TransactionFailureCallbackFunc onFailure);
 };

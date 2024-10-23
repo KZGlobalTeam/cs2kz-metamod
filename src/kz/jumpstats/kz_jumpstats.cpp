@@ -559,7 +559,7 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
-	if (this->jumps.Count() <= 0 || this->player->JustTeleported())
+	if (this->jumps.Count() <= 0 || this->player->JustTeleported() || this->player->modifiers.disableJumpstatsCount)
 	{
 		return JumpType_Invalid;
 	}
@@ -665,6 +665,10 @@ void KZJumpstatsService::OnProcessMovement()
 		this->AddJump();
 		this->InvalidateJumpstats("First jump");
 		return;
+	}
+	if (this->player->modifiers.disableJumpstatsCount > 0)
+	{
+		this->InvalidateJumpstats("Disabled By Map");
 	}
 	this->CheckValidMoveType();
 	this->DetectExternalModifications();
