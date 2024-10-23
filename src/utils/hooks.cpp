@@ -441,7 +441,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 	if (!V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
-		g_pMappingApi->OnTriggerMultipleStartTouchPost(player, trigger);
+		KZ::mapapi::OnTriggerMultipleStartTouchPost(player, trigger);
 	}
 
 	// Player has a modified velocity through trigger touching, take this into account.
@@ -607,7 +607,7 @@ static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
-		g_pMappingApi->OnTriggerMultipleEndTouchPost(player, trigger);
+		KZ::mapapi::OnTriggerMultipleEndTouchPost(player, trigger);
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -753,7 +753,7 @@ static_function void Hook_StartupServer(const GameSessionConfiguration_t &config
 {
 	g_KZPlugin.AddonInit();
 	KZ::course::ClearCourses();
-	Mappingapi_Init();
+	KZ::mapapi::Init();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -778,12 +778,11 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			KZTimerService::OnRoundStart();
 			KZ::misc::OnRoundStart();
 			hooks::HookEntities();
-			Mappingapi_RoundStart();
+			KZ::mapapi::OnRoundStart();
 		}
 		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
 		{
-			KZ::course::ClearCourses();
-			Mappingapi_Init();
+			KZ::mapapi::OnRoundPrestart();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)
 		{
@@ -831,7 +830,7 @@ static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int
 // CEntitySystem
 static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_t *pInfo)
 {
-	g_pMappingApi->OnSpawn(nCount, pInfo);
+	KZ::mapapi::OnSpawn(nCount, pInfo);
 }
 
 // INetworkGameServer
@@ -889,6 +888,6 @@ static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGrou
 																	   bool bConfirmResourcesLoaded,
 																	   const CUtlVector<const CEntityKeyValues *> *pKeyValues)
 {
-	g_pMappingApi->OnCreateLoadingSpawnGroupHook(pKeyValues);
+	KZ::mapapi::OnCreateLoadingSpawnGroupHook(pKeyValues);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }

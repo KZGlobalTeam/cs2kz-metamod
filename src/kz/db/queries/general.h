@@ -20,26 +20,6 @@ constexpr char sql_getwrspro[] = R"(
         GROUP BY MapCourses.Name, Times.ModeID
 )";
 
-// Caching PBs
-
-constexpr char sql_getpbs[] = R"(
-    SELECT MIN(Times.RunTime), MapCourses.Name, Times.ModeID 
-        FROM Times 
-        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
-        WHERE Times.SteamID64=%llu AND Maps.Name='%s'
-        GROUP BY MapCourses.Name, Times.ModeID
-)";
-
-constexpr char sql_getpbspro[] = R"(
-    SELECT MIN(Times.RunTime), MapCourses.Name, Times.ModeID 
-        FROM Times 
-        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
-        WHERE Times.SteamID64=%llu AND Maps.Name='%s' AND Times.Teleports=0 
-        GROUP BY MapCourses.Name, Times.ModeID
-)";
-
 constexpr char sql_getcount_courses[] = R"(
     SELECT COUNT(*) 
         FROM MapCourses 

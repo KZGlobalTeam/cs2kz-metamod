@@ -1,3 +1,6 @@
+/*
+	Keeps track of course descriptors along with various types of triggers, applying effects to player when necessary.
+*/
 
 #include "kz/kz.h"
 #include "kz/course/kz_course.h"
@@ -22,13 +25,32 @@ enum
 static_global struct
 {
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
-	CUtlVectorFixed<KZCourseDescriptor, 512> courseDescriptors;
-
-	bool roundIsStarting;
+	CUtlVectorFixed<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
+	i32 mapApiVersion = KZ_NO_MAPAPI_VERSION;
+	bool fatalFailure;
+	bool roundIsStarting = true;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
 
+	void Reset(bool full = false)
+	{
+		triggers.RemoveAll();
+		roundIsStarting = false;
+		errorFlags = 0;
+		errorCount = 0;
+		roundIsStarting = true;
+		for (auto error : errors)
+		{
+			error[0] = 0;
+		}
+		if (full)
+		{
+			courseDescriptors.RemoveAll();
+			fatalFailure = false;
+			mapApiVersion = KZ_NO_MAPAPI_VERSION;
+		}
+	}
 } g_mappingApi {};
 
 static_global CTimer<> *g_errorTimer;
@@ -38,9 +60,8 @@ static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset
 											  "Teleport",   "Multi bhop", "Single bhop",       "Sequential bhop"};
 
 static_function MappingInterface g_mappingInterface;
-static_global i32 mapApiVersion = KZ_NO_MAPAPI_VERSION;
-static_global bool fatalFailure;
-MappingInterface *g_pMappingApi = nullptr;
+
+MappingInterface *g_pMappingApi = &g_mappingInterface;
 
 // TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
 
@@ -169,19 +190,19 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 	KzTriggerType type = (KzTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, KZTRIGGER_DISABLED);
 
-	if (type < KZTRIGGER_DISABLED || type >= KZTRIGGER_COUNT)
-	{
-		assert(0);
-		Mapi_Error("Trigger type %i is invalid and out of range (%i-%i) for trigger with Hammer ID %i, origin (%.0f %.0f %.0f)!", type,
-				   KZTRIGGER_DISABLED, KZTRIGGER_COUNT - 1, hammerId, origin.x, origin.y, origin.z);
-		return;
-	}
-
 	if (!g_mappingApi.roundIsStarting)
 	{
 		// Only allow triggers and zones that were spawned during the round start phase.
 		Mapi_Error("Trigger %s spawned after the map was loaded, the trigger won't be loaded! Hammer ID %i, origin (%.0f %.0f %.0f)",
 				   g_triggerNames[type], hammerId, origin.x, origin.y, origin.z);
+		return;
+	}
+
+	if (type < KZTRIGGER_DISABLED || type >= KZTRIGGER_COUNT)
+	{
+		assert(0);
+		Mapi_Error("Trigger type %i is invalid and out of range (%i-%i) for trigger with Hammer ID %i, origin (%.0f %.0f %.0f)!", type,
+				   KZTRIGGER_DISABLED, KZTRIGGER_COUNT - 1, hammerId, origin.x, origin.y, origin.z);
 		return;
 	}
 
@@ -294,14 +315,12 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		{
 			// This behavior depends on the fact that worldent is the first thing to spawn.
 			// Check for pre-mapping api triggers for backwards compatibility.
-			if (mapApiVersion == -1)
+			if (g_mappingApi.mapApiVersion == -1)
 			{
 				if (info->m_pEntity->NameMatches("timer_startzone") || info->m_pEntity->NameMatches("timer_endzone"))
 				{
 					snprintf(trigger.zone.courseDescriptor, sizeof(trigger.zone.courseDescriptor), KZ_NO_MAPAPI_COURSE_DESCRIPTOR);
 					trigger.type = info->m_pEntity->NameMatches("timer_startzone") ? KZTRIGGER_ZONE_START : KZTRIGGER_ZONE_END;
-					// Manually create a KZ_NO_MAPAPI_COURSE_NAME course here because there shouldn't be any info_target_server_only around.
-					Mapi_CreateCourse();
 				}
 			}
 			break;
@@ -319,10 +338,8 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 	g_mappingApi.triggers.AddToTail(trigger);
 }
 
-static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
+static_function void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
 {
-	const CEntityKeyValues *ekv = info->m_pKeyValues;
-
 	if (!ekv->GetBool(KEY_IS_COURSE_DESCRIPTOR))
 	{
 		return;
@@ -330,17 +347,15 @@ static_function void Mapi_OnInfoTargetSpawn(const EntitySpawnInfo_t *info)
 
 	i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
 	Vector origin = ekv->GetVector("origin");
-	if (!g_mappingApi.roundIsStarting)
-	{
-		// Only allow courses that were spawned during the round start phase.
-		Mapi_Error("Course spawned after the map was loaded, the course will be ignored! Hammer ID %i, origin (%.0f %.0f %.0f)", hammerId, origin.x,
-				   origin.y, origin.z);
-		return;
-	}
 
 	i32 courseNumber = ekv->GetInt("timer_course_number", INVALID_COURSE_NUMBER);
 	const char *courseName = ekv->GetString("timer_course_name");
 	const char *targetName = ekv->GetString("targetname");
+	constexpr static_persist const char *targetNamePrefix = "[PR#]";
+	if (V_strncmp(targetName, targetNamePrefix, sizeof(targetNamePrefix)))
+	{
+		targetName = targetName + strlen(targetNamePrefix);
+	}
 
 	if (courseNumber <= INVALID_COURSE_NUMBER)
 	{
@@ -436,16 +451,16 @@ static_function bool Mapi_SetStartPosition(const char *descriptorName, Vector or
 static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t *info)
 {
 	const CEntityKeyValues *ekv = info->m_pKeyValues;
-	const char *targetname = ekv->GetString("targetname", "");
+	const char *targetname = ekv->GetString("targetname");
 	if (V_stricmp(targetname, "timer_start"))
 	{
 		return;
 	}
-	if (mapApiVersion == KZ_NO_MAPAPI_VERSION)
+	if (g_mappingApi.mapApiVersion == KZ_NO_MAPAPI_VERSION)
 	{
 		Mapi_SetStartPosition(KZ_NO_MAPAPI_COURSE_DESCRIPTOR, ekv->GetVector("origin"), ekv->GetQAngle("angles"));
 	}
-	else if (mapApiVersion == KZ_MAPAPI_VERSION) // TODO do better check
+	else if (g_mappingApi.mapApiVersion == KZ_MAPAPI_VERSION) // TODO do better check
 	{
 		const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
 		i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
@@ -461,34 +476,138 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 	}
 };
 
-bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
+void KZ::mapapi::Init()
 {
-	KzTrigger *mvTrigger = Mapi_FindKzTrigger(trigger);
-	if (!mvTrigger)
-	{
-		return false;
-	}
-	static_assert(KZTRIGGER_ZONE_START == 5 && KZTRIGGER_ZONE_STAGE == 9,
-				  "Don't forget to change this function when changing the KzTriggerType enum!!!");
-	return mvTrigger->type >= KZTRIGGER_ZONE_START && mvTrigger->type <= KZTRIGGER_ZONE_STAGE;
-}
-
-bool MappingInterface::IsBhopTrigger(KzTriggerType triggerType)
-{
-	bool result = triggerType == KZTRIGGER_MULTI_BHOP || triggerType == KZTRIGGER_SINGLE_BHOP || triggerType == KZTRIGGER_SEQUENTIAL_BHOP;
-	return result;
-}
-
-void Mappingapi_Init()
-{
-	g_mappingApi = {};
-	g_pMappingApi = &g_mappingInterface;
-	g_mappingApi.roundIsStarting = true;
+	g_mappingApi.Reset(true);
 
 	g_errorTimer = g_errorTimer ? g_errorTimer : StartTimer(Mapi_PrintErrors, true);
 }
 
-void Mappingapi_RoundStart()
+void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues)
+{
+	if (!pKeyValues)
+	{
+		return;
+	}
+	g_mappingApi.fatalFailure = false;
+	for (i32 i = 0; i < pKeyValues->Count(); i++)
+	{
+		auto ekv = (*pKeyValues)[i];
+
+		if (!ekv)
+		{
+			continue;
+		}
+		const char *classname = ekv->GetString("classname");
+		if (V_stricmp(classname, "worldspawn") == 0)
+		{
+			g_mappingApi.mapApiVersion = ekv->GetInt("timer_mapping_api_version", KZ_NO_MAPAPI_VERSION);
+			// NOTE(GameChaos): When a new mapping api version comes out, this will change
+			//  for backwards compatibility.
+			if (g_mappingApi.mapApiVersion == KZ_NO_MAPAPI_VERSION)
+			{
+				META_CONPRINTF("Warning: Map is not compiled with Mapping API. Reverting to default behavior.\n");
+
+				// Manually create a KZ_NO_MAPAPI_COURSE_NAME course here because there shouldn't be any info_target_server_only around.
+				Mapi_CreateCourse();
+				break;
+			}
+			if (g_mappingApi.mapApiVersion != KZ_MAPAPI_VERSION)
+			{
+				Mapi_Error("FATAL. Mapping API version %i is invalid!", g_mappingApi.mapApiVersion);
+				g_mappingApi.fatalFailure = true;
+				return;
+			}
+			break;
+		}
+	}
+	// Do a second pass for course descriptors.
+	if (g_mappingApi.mapApiVersion != KZ_NO_MAPAPI_VERSION)
+	{
+		for (i32 i = 0; i < pKeyValues->Count(); i++)
+		{
+			auto ekv = (*pKeyValues)[i];
+
+			if (!ekv)
+			{
+				continue;
+			}
+			const char *classname = ekv->GetString("classname");
+			if (!V_stricmp(classname, "info_target_server_only"))
+			{
+				Mapi_OnInfoTargetSpawn(ekv);
+			}
+		}
+	}
+}
+
+void KZ::mapapi::OnRoundPrestart()
+{
+	g_mappingApi.Reset();
+}
+
+void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
+{
+	if (!info || g_mappingApi.fatalFailure)
+	{
+		return;
+	}
+
+	for (i32 i = 0; i < count; i++)
+	{
+		auto ekv = info[i].m_pKeyValues;
+#if 0
+		// Debug print for all keyvalues
+		FOR_EACH_ENTITYKEY(ekv, iter)
+		{
+			auto kv = ekv->GetKeyValue(iter);
+			if (!kv)
+			{
+				continue;
+			}
+			CBufferStringGrowable<128> bufferStr;
+			const char *key = ekv->GetEntityKeyId(iter).GetString();
+			const char *value = kv->ToString(bufferStr);
+			Msg("\t%s: %s\n", key, value);
+		}
+#endif
+
+		if (!info[i].m_pEntity || !ekv || !info[i].m_pEntity->GetClassname())
+		{
+			continue;
+		}
+		const char *classname = info[i].m_pEntity->GetClassname();
+		if (V_stricmp(classname, "trigger_multiple") == 0)
+		{
+			Mapi_OnTriggerMultipleSpawn(&info[i]);
+		}
+	}
+
+	// We need to pass the second time for the spawn points of courses.
+
+	for (i32 i = 0; i < count; i++)
+	{
+		auto ekv = info[i].m_pKeyValues;
+
+		if (!info[i].m_pEntity || !ekv || !info[i].m_pEntity->GetClassname())
+		{
+			continue;
+		}
+		const char *classname = info[i].m_pEntity->GetClassname();
+		if (V_stricmp(classname, "info_teleport_destination") == 0)
+		{
+			Mapi_OnInfoTeleportDestinationSpawn(&info[i]);
+		}
+	}
+
+	if (g_mappingApi.fatalFailure)
+	{
+		g_mappingApi.triggers.RemoveAll();
+		g_mappingApi.courseDescriptors.RemoveAll();
+	}
+}
+
+void KZ::mapapi::OnRoundStart()
 {
 	g_mappingApi.roundIsStarting = false;
 	FOR_EACH_VEC(g_mappingApi.courseDescriptors, courseInd)
@@ -570,8 +689,15 @@ void Mappingapi_RoundStart()
 	}
 }
 
-void MappingInterface::OnProcessMovement(KZPlayer *player)
+void KZ::mapapi::OnProcessMovement(KZPlayer *player)
 {
+	// TODO: Move this to trigger service
+	/*
+		NOTE:
+		1. To prevent multiplayer bugs, make sure that all of these cvars are part of the mode convars.
+		2. Maybe this should apply directly during movement processing for the sake of accuracy?
+	*/
+
 	// apply slide
 	if (player->modifiers.enableSlideCount > 0)
 	{
@@ -612,7 +738,7 @@ void MappingInterface::OnProcessMovement(KZPlayer *player)
 	}
 }
 
-void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
+void KZ::mapapi::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger)
 {
 	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
 	if (!touched)
@@ -643,7 +769,7 @@ void MappingInterface::OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTr
 	player->MappingApiTriggerStartTouch(touched, course);
 }
 
-void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger)
+void KZ::mapapi::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger)
 {
 	KzTrigger *touched = Mapi_FindKzTrigger(trigger);
 	if (!touched)
@@ -674,113 +800,14 @@ void MappingInterface::OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrig
 	player->MappingApiTriggerEndTouch(touched, course);
 }
 
-void MappingInterface::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues)
+bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
 {
-	if (!pKeyValues)
+	KzTrigger *mvTrigger = Mapi_FindKzTrigger(trigger);
+	if (!mvTrigger)
 	{
-		return;
+		return false;
 	}
-	fatalFailure = false;
-	for (i32 i = 0; i < pKeyValues->Count(); i++)
-	{
-		auto ekv = (*pKeyValues)[i];
-
-		if (!ekv)
-		{
-			continue;
-		}
-		const char *classname = ekv->GetString("classname");
-		if (V_stricmp(classname, "worldspawn") == 0)
-		{
-			mapApiVersion = ekv->GetInt("timer_mapping_api_version", KZ_NO_MAPAPI_VERSION);
-			// NOTE(GameChaos): When a new mapping api version comes out, this will change
-			//  for backwards compatibility.
-			if (mapApiVersion == KZ_NO_MAPAPI_VERSION)
-			{
-				META_CONPRINTF("Warning: Map is not compiled with Mapping API. Reverting to default behavior.\n");
-				break;
-			}
-			if (mapApiVersion != KZ_MAPAPI_VERSION)
-			{
-				Mapi_Error("FATAL. Mapping API version %i is invalid!", mapApiVersion);
-				fatalFailure = true;
-				break;
-			}
-		}
-	}
-}
-
-void MappingInterface::OnSpawn(int count, const EntitySpawnInfo_t *info)
-{
-	if (!info || fatalFailure)
-	{
-		return;
-	}
-
-	for (i32 i = 0; i < count; i++)
-	{
-		auto ekv = info[i].m_pKeyValues;
-#if 0
-		// Debug print for all keyvalues
-		FOR_EACH_ENTITYKEY(ekv, iter)
-		{
-			auto kv = ekv->GetKeyValue(iter);
-			if (!kv)
-			{
-				continue;
-			}
-			CBufferStringGrowable<128> bufferStr;
-			const char *key = ekv->GetEntityKeyId(iter).GetString();
-			const char *value = kv->ToString(bufferStr);
-			Msg("\t%s: %s\n", key, value);
-		}
-#endif
-
-		if (!info[i].m_pEntity || !ekv || !info[i].m_pEntity->GetClassname())
-		{
-			continue;
-		}
-		const char *classname = info[i].m_pEntity->GetClassname();
-		if (V_stricmp(classname, "trigger_multiple") == 0)
-		{
-			Mapi_OnTriggerMultipleSpawn(&info[i]);
-		}
-		else if (V_stricmp(classname, "info_target_server_only") == 0)
-		{
-			Mapi_OnInfoTargetSpawn(&info[i]);
-		}
-	}
-
-	// We need to pass the second time for the spawn points of courses.
-
-	for (i32 i = 0; i < count; i++)
-	{
-		auto ekv = info[i].m_pKeyValues;
-
-		if (!info[i].m_pEntity || !ekv || !info[i].m_pEntity->GetClassname())
-		{
-			continue;
-		}
-		const char *classname = info[i].m_pEntity->GetClassname();
-		if (V_stricmp(classname, "info_teleport_destination") == 0)
-		{
-			Mapi_OnInfoTeleportDestinationSpawn(&info[i]);
-		}
-	}
-
-	if (fatalFailure)
-	{
-		g_mappingApi.triggers.RemoveAll();
-		g_mappingApi.courseDescriptors.RemoveAll();
-	}
-}
-
-i32 MappingInterface::GetCurrentMapAPIVersion()
-{
-	return mapApiVersion;
-}
-
-u32 MappingInterface::GetCourseDescriptorCount()
-{
-	return g_mappingApi.courseDescriptors.Count();
+	static_assert(KZTRIGGER_ZONE_START == 5 && KZTRIGGER_ZONE_STAGE == 9,
+				  "Don't forget to change this function when changing the KzTriggerType enum!!!");
+	return mvTrigger->type >= KZTRIGGER_ZONE_START && mvTrigger->type <= KZTRIGGER_ZONE_STAGE;
 }

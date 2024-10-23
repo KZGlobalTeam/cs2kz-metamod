@@ -62,7 +62,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	}
 
 	ismm->AddListener(this, this);
-	Mappingapi_Init();
+	KZ::mapapi::Init();
 	KZ::mode::InitModeManager();
 	KZ::style::InitStyleManager();
 

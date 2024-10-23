@@ -140,11 +140,14 @@ public:
 	static void InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString shortName);
 
 	// Times
-	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
+	static void SaveTime(u32 id, KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, CUtlString metadata);
+	static void QueryAllPBs(u64 steamID64, CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	static void QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, TransactionSuccessCallbackFunc onSuccess,
 						TransactionFailureCallbackFunc onFailure);
 	static void QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, u64 styleIDFlags,
 								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+
+	static void QueryAllRecords(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	static void QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, u32 count, u32 offset, TransactionSuccessCallbackFunc onSuccess,
 							 TransactionFailureCallbackFunc onFailure);
 };

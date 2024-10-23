@@ -309,7 +309,7 @@ void KZPlayer::OnProcessMovement()
 		this->styleServices[i]->OnProcessMovement();
 	}
 
-	g_pMappingApi->OnProcessMovement(this);
+	KZ::mapapi::OnProcessMovement(this);
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 	this->noclipService->HandleMoveCollision();
@@ -340,6 +340,7 @@ void KZPlayer::OnProcessMovementPost()
 	// Check if we're touching any triggers and act accordingly.
 	// NOTE: Read through the touch list in reverse order, so
 	//  that we resolve most recently touched triggers first.
+	// TODO: Move this to trigger service
 	FOR_EACH_VEC_BACK(this->kzTriggerTouchList, i)
 	{
 		const KzTouchingTrigger touching = this->kzTriggerTouchList[i];

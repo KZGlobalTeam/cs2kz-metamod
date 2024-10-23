@@ -1,0 +1,7 @@
+"Tips"
+{
+	"Tip - kz_comparelevel"
+	{
+		"en"	"{grey}You can select different benchmarks to compare your run against by using {default}/comparelevel{grey}."
+	}
+}

@@ -1,18 +1,75 @@
 #include "kz_timer.h"
 #include "kz/db/kz_db.h"
-#include "../mode/kz_mode.h"
-#include "../style/kz_style.h"
-#include "../noclip/kz_noclip.h"
-#include "../option/kz_option.h"
-#include "../language/kz_language.h"
+#include "kz/language/kz_language.h"
+#include "kz/mode/kz_mode.h"
+#include "kz/style/kz_style.h"
+#include "kz/noclip/kz_noclip.h"
+#include "kz/option/kz_option.h"
+#include "kz/language/kz_language.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
+#include "vendor/sql_mm/src/public/sql_mm.h"
+
+// clang-format off
+constexpr const char *diffTextKeys[KZTimerService::CompareType::COMPARETYPE_COUNT] = {
+	"",
+	"Server PB Diff (Overall)",
+	"Global PB Diff (Overall)",
+	"SR Diff (Overall)",
+	"WR Diff (Overall)"
+};
+
+constexpr const char *diffTextKeysPro[KZTimerService::CompareType::COMPARETYPE_COUNT] = {
+	"",
+	"Server PB Diff (Pro)",
+	"Global PB Diff (Pro)",
+	"SR Diff (Pro)",
+	"WR Diff (Pro)"
+};
+
+constexpr const char *missedTimeKeys[KZTimerService::CompareType::COMPARETYPE_COUNT] = {
+	"",
+	"Missed Server PB (Overall)",
+	"Missed Global PB (Overall)",
+	"Missed SR (Overall)",
+	"Missed WR (Overall)"
+};
+
+constexpr const char *missedTimeKeysPro[KZTimerService::CompareType::COMPARETYPE_COUNT] = {
+	"",
+	"Missed Server PB (Pro)",
+	"Missed Global PB (Pro)",
+	"Missed SR (Pro)",
+	"Missed WR (Pro)"
+};
+
+constexpr const char *missedTimeKeysBoth[KZTimerService::CompareType::COMPARETYPE_COUNT] = {
+	"",
+	"Missed Server PB (Overall+Pro)",
+	"Missed Global PB (Overall+Pro)",
+	"Missed SR (Overall+Pro)",
+	"Missed WR (Overall+Pro)"
+};
+
+// clang-format on
 
 static_global class KZDatabaseServiceEventListener_Timer : public KZDatabaseServiceEventListener
 {
 public:
 	virtual void OnMapSetup() override;
+	virtual void OnClientSetup(Player *player, u64 steamID64, bool isCheater) override;
 } databaseEventListener;
+
+static_global class KZOptionServiceEventListener_Timer : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		player->timerService->OnPlayerPreferencesLoaded();
+	}
+} optionEventListener;
+
+std::unordered_map<PBDataKey, PBData> KZTimerService::srCache;
+std::unordered_map<PBDataKey, PBData> KZTimerService::wrCache;
 
 static_global CUtlVector<KZTimerServiceEventListener *> eventListeners;
 
@@ -58,6 +115,8 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 	{
 		this->PlayReachedSplitSound();
 		this->splitZoneTimes[splitNumber - 1] = this->GetTime();
+		this->ShowSplitText(splitNumber);
+		this->lastSplit = splitNumber;
 	}
 }
 
@@ -72,14 +131,11 @@ void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, 
 
 	if (this->cpZoneTimes[cpNumber - 1] < 0)
 	{
-		Msg("reached checkpoint %i\n", cpNumber);
 		this->PlayReachedCheckpointSound();
 		this->cpZoneTimes[cpNumber - 1] = this->GetTime();
+		this->ShowCheckpointText(cpNumber);
+		this->lastCheckpoint = cpNumber;
 		this->reachedCheckpoints++;
-	}
-	else
-	{
-		Msg("already reached checkpoint %i, time %f\n", cpNumber, this->cpZoneTimes[cpNumber - 1]);
 	}
 }
 
@@ -103,6 +159,7 @@ void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 s
 	{
 		this->stageZoneTimes[this->currentStage] = this->GetTime();
 		this->PlayReachedStageSound();
+		this->ShowStageText();
 		this->currentStage++;
 	}
 }
@@ -143,6 +200,8 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	this->timerRunning = true;
 	this->currentStage = 0;
 	this->reachedCheckpoints = 0;
+	this->lastCheckpoint = 0;
+	this->lastSplit = 0;
 
 	f64 invalidTime = -1;
 	this->splitZoneTimes.SetSize(courseDesc->splitCount);
@@ -154,8 +213,12 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	this->stageZoneTimes.FillWithValue(invalidTime);
 
 	SetCourse(courseDesc->course->guid);
-	V_strncpy(this->lastStartMode, this->player->modeService->GetModeName(), KZ_MAX_MODE_NAME_LENGTH);
-	validTime = true;
+	this->validTime = true;
+	this->shouldAnnounceMissedTime = true;
+	this->shouldAnnounceMissedProTime = true;
+
+	this->UpdateCurrentCompareType(ToPBDataKey(KZ::mode::GetModeInfo(this->player->modeService).id, courseDesc->course->guid));
+
 	if (playSound)
 	{
 		this->PlayTimerStartSound();
@@ -225,7 +288,8 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 
 	if (!this->player->GetPlayerPawn()->IsBot())
 	{
-		KZ::timer::AddRunToAnnounceQueue(player, this->GetCourse()->GetName(), time, teleportsUsed);
+		CUtlString metadata = this->GetCurrentRunMetadata();
+		KZ::timer::AddRunToAnnounceQueue(player, this->GetCourse()->GetName(), time, teleportsUsed, metadata.Get());
 	}
 
 	FOR_EACH_VEC(eventListeners, i)
@@ -298,8 +362,6 @@ void KZTimerService::InvalidateRun()
 	}
 }
 
-// =====[ PRIVATE ]=====
-
 bool KZTimerService::HasValidMoveType()
 {
 	return KZTimerService::IsValidMoveType(this->player->GetMoveType());
@@ -343,6 +405,15 @@ void KZTimerService::PlayReachedStageSound()
 void KZTimerService::PlayTimerStopSound()
 {
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_STOP);
+}
+
+void KZTimerService::PlayMissedTimeSound()
+{
+	if (g_pKZUtils->GetServerGlobals()->curtime - this->lastMissedTimeSoundTime > KZ_TIMER_SOUND_COOLDOWN)
+	{
+		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_MISSED_TIME);
+		this->lastMissedTimeSoundTime = g_pKZUtils->GetServerGlobals()->curtime;
+	}
 }
 
 void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise)
@@ -542,7 +613,7 @@ void KZTimerService::Reset()
 	this->lastEndTime = {};
 	this->lastFalseEndTime = {};
 	this->lastStartSoundTime = {};
-	this->lastStartMode[0] = 0;
+	this->lastMissedTimeSoundTime = {};
 	this->validTime = {};
 	this->paused = {};
 	this->pausedOnLadder = {};
@@ -562,6 +633,7 @@ void KZTimerService::OnPhysicsSimulatePost()
 	if (this->player->IsAlive() && this->GetTimerRunning() && !this->GetPaused())
 	{
 		this->currentTime += ENGINE_FIXED_TICK_INTERVAL;
+		this->CheckMissedTime();
 	}
 }
 
@@ -703,21 +775,695 @@ static_function SCMD_CALLBACK(Command_KzPauseTimer)
 	return MRES_SUPERCEDE;
 }
 
+static_function SCMD_CALLBACK(Command_KzSetCompareLevel)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->timerService->SetCompareTarget(args->Arg(1));
+	return MRES_SUPERCEDE;
+}
+
+static_function KZTimerService::CompareType GetCompareTypeFromString(const char *typeString)
+{
+	if (V_stricmp("off", typeString) == 0 || V_stricmp("none", typeString) == 0)
+	{
+		return KZTimerService::CompareType::COMPARE_NONE;
+	}
+	if (V_stricmp("spb", typeString) == 0)
+	{
+		return KZTimerService::CompareType::COMPARE_SPB;
+	}
+	if (V_stricmp("gpb", typeString) == 0 || V_stricmp("pb", typeString) == 0)
+	{
+		return KZTimerService::CompareType::COMPARE_GPB;
+	}
+	if (V_stricmp("sr", typeString) == 0)
+	{
+		return KZTimerService::CompareType::COMPARE_SR;
+	}
+	if (V_stricmp("wr", typeString) == 0)
+	{
+		return KZTimerService::CompareType::COMPARE_WR;
+	}
+	return KZTimerService::CompareType::COMPARETYPE_COUNT;
+}
+
+void KZTimerService::SetCompareTarget(const char *typeString)
+{
+	if (!typeString || !V_stricmp("", typeString))
+	{
+		this->player->languageService->PrintChat(true, false, "Compare Command Usage");
+		return;
+	}
+
+	CompareType type = GetCompareTypeFromString(typeString);
+	if (type == COMPARETYPE_COUNT)
+	{
+		this->player->languageService->PrintChat(true, false, "Compare Command Usage");
+		return;
+	}
+
+	assert(type < COMPARETYPE_COUNT && type >= COMPARE_NONE);
+	switch (type)
+	{
+		case COMPARE_NONE:
+		{
+			this->player->languageService->PrintChat(true, false, "Compare Disabled");
+			break;
+		}
+		case COMPARE_SPB:
+		{
+			this->player->languageService->PrintChat(true, false, "Compare Server PB");
+			break;
+		}
+		case COMPARE_GPB:
+		{
+			this->player->languageService->PrintChat(true, false, "Compare Global PB");
+			break;
+		}
+		case COMPARE_SR:
+		{
+			this->player->languageService->PrintChat(true, false, "Compare Server Record");
+			break;
+		}
+		case COMPARE_WR:
+		{
+			this->player->languageService->PrintChat(true, false, "Compare World Record");
+			break;
+		}
+	}
+	this->preferredCompareType = type;
+	this->player->optionService->SetPreferenceInt("preferredCompareType", this->preferredCompareType);
+	if (this->GetCourse())
+	{
+		this->UpdateCurrentCompareType(ToPBDataKey(KZ::mode::GetModeInfo(this->player->modeService).id, this->GetCourse()->guid));
+	}
+}
+
+void KZTimerService::UpdateCurrentCompareType(PBDataKey key)
+{
+	for (u8 type = this->preferredCompareType; type > COMPARE_NONE; type--)
+	{
+		if (this->GetCompareTargetForType((CompareType)type, key))
+		{
+			this->currentCompareType = (CompareType)type;
+			return;
+		}
+	}
+	this->currentCompareType = COMPARE_NONE;
+}
+
+const PBData *KZTimerService::GetCompareTargetForType(CompareType type, PBDataKey key)
+{
+	switch (type)
+	{
+		case COMPARE_WR:
+		{
+			if (KZTimerService::wrCache.find(key) != KZTimerService::wrCache.end())
+			{
+				return &KZTimerService::wrCache[key];
+			}
+			break;
+		}
+		case COMPARE_SR:
+		{
+			if (KZTimerService::srCache.find(key) != KZTimerService::srCache.end())
+			{
+				return &KZTimerService::srCache[key];
+			}
+			break;
+		}
+		case COMPARE_GPB:
+		{
+			if (KZTimerService::globalPBCache.find(key) != KZTimerService::globalPBCache.end())
+			{
+				return &this->globalPBCache[key];
+			}
+			break;
+		}
+		case COMPARE_SPB:
+		{
+			if (KZTimerService::localPBCache.find(key) != KZTimerService::localPBCache.end())
+			{
+				return &this->localPBCache[key];
+			}
+			break;
+		}
+	}
+	return nullptr;
+}
+
+const PBData *KZTimerService::GetCompareTarget(PBDataKey key)
+{
+	switch (this->currentCompareType)
+	{
+		case COMPARE_WR:
+		{
+			if (KZTimerService::wrCache.find(key) != KZTimerService::wrCache.end())
+			{
+				return &KZTimerService::wrCache[key];
+			}
+			break;
+		}
+		case COMPARE_SR:
+		{
+			if (KZTimerService::srCache.find(key) != KZTimerService::srCache.end())
+			{
+				return &KZTimerService::srCache[key];
+			}
+			break;
+		}
+		case COMPARE_GPB:
+		{
+			if (KZTimerService::globalPBCache.find(key) != KZTimerService::globalPBCache.end())
+			{
+				return &this->globalPBCache[key];
+			}
+			break;
+		}
+		case COMPARE_SPB:
+		{
+			if (KZTimerService::localPBCache.find(key) != KZTimerService::localPBCache.end())
+			{
+				return &this->localPBCache[key];
+			}
+			break;
+		}
+	}
+	return nullptr;
+}
+
+void KZTimerService::ClearRecordCache()
+{
+	KZTimerService::srCache.clear();
+	KZTimerService::wrCache.clear();
+}
+
+void KZTimerService::UpdateLocalRecordCache()
+{
+	auto onQuerySuccess = [](std::vector<ISQLQuery *> queries)
+	{
+		ISQLResult *result = queries[0]->GetResultSet();
+		if (result && result->GetRowCount() > 0)
+		{
+			while (result->FetchRow())
+			{
+				auto modeInfo = KZ::mode::GetModeInfoFromDatabaseID(result->GetInt(2));
+				if (modeInfo.databaseID < 0)
+				{
+					continue;
+				}
+				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				if (!course)
+				{
+					continue;
+				}
+				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3));
+			}
+		}
+		result = queries[1]->GetResultSet();
+		if (result && result->GetRowCount() > 0)
+		{
+			while (result->FetchRow())
+			{
+				auto modeInfo = KZ::mode::GetModeInfoFromDatabaseID(result->GetInt(2));
+				if (modeInfo.databaseID < 0)
+				{
+					continue;
+				}
+				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				if (!course)
+				{
+					continue;
+				}
+				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, false, false, result->GetString(3));
+			}
+		}
+	};
+	KZDatabaseService::QueryAllRecords(g_pKZUtils->GetCurrentMapName(), onQuerySuccess, KZDatabaseService::OnGenericTxnFailure);
+}
+
+void KZTimerService::InsertRecordToCache(f64 time, const KZCourse *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
+{
+	PBData &pb = global ? KZTimerService::wrCache[ToPBDataKey(modeID, course->guid)] : KZTimerService::srCache[ToPBDataKey(modeID, course->guid)];
+
+	overall ? pb.overall.pbTime = time : pb.pro.pbTime = time;
+	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
+	CUtlString error = "";
+	LoadKV3FromJSON(&kv, &error, metadata.Get(), "");
+	if (!error.IsEmpty())
+	{
+		META_CONPRINTF("[KZ::Timer] Failed to insert PB to cache due to metadata error: %s\n", error.Get());
+		return;
+	}
+
+	KeyValues3 *data = kv.FindMember("splitZoneTimes");
+	if (data && data->GetType() == KV3_TYPE_ARRAY)
+	{
+		for (i32 i = 0; i < course->descriptor->splitCount; i++)
+		{
+			f64 time = -1.0f;
+			KeyValues3 *element = data->GetArrayElement(i);
+			if (element)
+			{
+				time = element->GetDouble(-1.0);
+			}
+			overall ? pb.overall.pbSplitZoneTimes[i] = time : pb.pro.pbSplitZoneTimes[i] = time;
+		}
+	}
+
+	data = kv.FindMember("cpZoneTimes");
+	if (data && data->GetType() == KV3_TYPE_ARRAY)
+	{
+		for (i32 i = 0; i < course->descriptor->checkpointCount; i++)
+		{
+			f64 time = -1.0f;
+			KeyValues3 *element = data->GetArrayElement(i);
+			if (element)
+			{
+				time = element->GetDouble(-1.0);
+			}
+			overall ? pb.overall.pbCpZoneTimes[i] = time : pb.pro.pbCpZoneTimes[i] = time;
+		}
+	}
+
+	data = kv.FindMember("stageZoneTimes");
+	if (data && data->GetType() == KV3_TYPE_ARRAY)
+	{
+		for (i32 i = 0; i < course->descriptor->stageCount; i++)
+		{
+			f64 time = -1.0f;
+			KeyValues3 *element = data->GetArrayElement(i);
+			if (element)
+			{
+				time = element->GetDouble(-1.0);
+			}
+			overall ? pb.overall.pbStageZoneTimes[i] = time : pb.pro.pbStageZoneTimes[i] = time;
+		}
+	}
+}
+
+void KZTimerService::ClearPBCache()
+{
+	this->localPBCache.clear();
+}
+
+void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
+{
+	PBData &pb = global ? this->globalPBCache[ToPBDataKey(modeID, course->guid)] : this->localPBCache[ToPBDataKey(modeID, course->guid)];
+
+	overall ? pb.overall.pbTime = time : pb.pro.pbTime = time;
+	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
+	CUtlString error = "";
+	LoadKV3FromJSON(&kv, &error, metadata.Get(), "");
+	if (!error.IsEmpty())
+	{
+		META_CONPRINTF("[KZ::Timer] Failed to insert server record to cache due to metadata error: %s\n", error.Get());
+		return;
+	}
+
+	KeyValues3 *data = kv.FindMember("splitZoneTimes");
+	if (data && data->GetType() == KV3_TYPE_ARRAY)
+	{
+		for (i32 i = 0; i < course->descriptor->splitCount; i++)
+		{
+			f64 time = -1.0f;
+			KeyValues3 *element = data->GetArrayElement(i);
+			if (element)
+			{
+				time = element->GetDouble(-1.0);
+			}
+			overall ? pb.overall.pbSplitZoneTimes[i] = time : pb.pro.pbSplitZoneTimes[i] = time;
+		}
+	}
+
+	data = kv.FindMember("cpZoneTimes");
+	if (data && data->GetType() == KV3_TYPE_ARRAY)
+	{
+		for (i32 i = 0; i < course->descriptor->checkpointCount; i++)
+		{
+			f64 time = -1.0f;
+			KeyValues3 *element = data->GetArrayElement(i);
+			if (element)
+			{
+				time = element->GetDouble(-1.0);
+			}
+			overall ? pb.overall.pbCpZoneTimes[i] = time : pb.pro.pbCpZoneTimes[i] = time;
+		}
+	}
+
+	data = kv.FindMember("stageZoneTimes");
+	if (data && data->GetType() == KV3_TYPE_ARRAY)
+	{
+		for (i32 i = 0; i < course->descriptor->stageCount; i++)
+		{
+			f64 time = -1.0f;
+			KeyValues3 *element = data->GetArrayElement(i);
+			if (element)
+			{
+				time = element->GetDouble(-1.0);
+			}
+			overall ? pb.overall.pbStageZoneTimes[i] = time : pb.pro.pbStageZoneTimes[i] = time;
+		}
+	}
+}
+
+void KZTimerService::CheckMissedTime()
+{
+	const KZCourse *course = this->GetCourse();
+	// No active course, the timer is not running or if we already announce late PBs.
+	if (!course || !this->GetTimerRunning() || (!this->shouldAnnounceMissedTime && !this->shouldAnnounceMissedProTime))
+	{
+		return;
+	}
+	// No comparison available for styled runs.
+	if (this->player->styleServices.Count() > 0)
+	{
+		return;
+	}
+	if (this->player->checkpointService->GetCheckpointCount() > 0)
+	{
+		this->shouldAnnounceMissedProTime = false;
+	}
+	auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService->GetModeName());
+
+	PBDataKey key = ToPBDataKey(modeInfo.id, course->guid);
+
+	// Check if there is personal best data for this mode and course.
+	auto pb = this->GetCompareTarget(key);
+	if (!pb)
+	{
+		return;
+	}
+	if (this->shouldAnnounceMissedProTime && pb->pro.pbTime > 0 && this->GetTime() > pb->pro.pbTime)
+	{
+		// Check if they share the same time.
+		if (this->shouldAnnounceMissedTime && pb->overall.pbTime == pb->pro.pbTime)
+		{
+			CUtlString timeText = KZTimerService::FormatTime(pb->overall.pbTime);
+			this->player->languageService->PrintChat(true, false, missedTimeKeysBoth[this->currentCompareType], timeText.Get());
+			this->shouldAnnounceMissedTime = false;
+		}
+		else
+		{
+			CUtlString timeText = KZTimerService::FormatTime(pb->pro.pbTime);
+			this->player->languageService->PrintChat(true, false, missedTimeKeysPro[this->currentCompareType], timeText.Get());
+		}
+		this->shouldAnnounceMissedProTime = false;
+		this->PlayMissedTimeSound();
+	}
+
+	if (this->shouldAnnounceMissedTime && pb->overall.pbTime > 0 && this->GetTime() > pb->overall.pbTime)
+	{
+		CUtlString timeText = KZTimerService::FormatTime(pb->overall.pbTime);
+		this->player->languageService->PrintChat(true, false, missedTimeKeys[this->currentCompareType], timeText.Get());
+		this->shouldAnnounceMissedTime = false;
+		this->PlayMissedTimeSound();
+	}
+}
+
+void KZTimerService::ShowSplitText(u32 currentSplit)
+{
+	const KZCourse *course = this->GetCourse();
+	// No active course so we can't compare anything.
+	if (!course)
+	{
+		return;
+	}
+	// No comparison available for styled runs.
+	if (this->player->styleServices.Count() > 0)
+	{
+		return;
+	}
+
+	CUtlString time;
+	std::string pbDiff, pbDiffPro = "";
+
+	time = KZTimerService::FormatTime(this->splitZoneTimes[currentSplit - 1]);
+	if (this->lastSplit != 0)
+	{
+		f64 diff = this->splitZoneTimes[currentSplit - 1] - this->splitZoneTimes[this->lastSplit - 1];
+		CUtlString splitTime = KZTimerService::FormatDiffTime(diff);
+		splitTime.Format(" {grey}({default}%s{grey})", splitTime.Get());
+		time.Append(splitTime.Get());
+	}
+
+	auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService->GetModeName());
+	PBDataKey key = ToPBDataKey(modeInfo.id, course->guid);
+
+	// Check if there is personal best data for this mode and course.
+	const PBData *pb = this->GetCompareTarget(key);
+	if (pb)
+	{
+		if (pb->overall.pbSplitZoneTimes[currentSplit - 1] > 0)
+		{
+			META_CONPRINTF("pb->overall.pbSplitZoneTimes[currentSplit - 1] = %lf\n", pb->overall.pbSplitZoneTimes[currentSplit - 1]);
+			f64 diff = this->splitZoneTimes[currentSplit - 1] - pb->overall.pbSplitZoneTimes[currentSplit - 1];
+			CUtlString diffText = KZTimerService::FormatDiffTime(diff);
+			diffText.Format("{grey}%s%s{grey}", diff < 0 ? "{green}" : "{lightred}", diffText.Get());
+			pbDiff = this->player->languageService->PrepareMessage(diffTextKeys[this->currentCompareType], diffText.Get());
+		}
+		if (this->player->checkpointService->GetTeleportCount() == 0 && pb->pro.pbTime > 0 && pb->pro.pbSplitZoneTimes[currentSplit - 1] > 0)
+		{
+			f64 diff = this->splitZoneTimes[currentSplit - 1] - pb->pro.pbSplitZoneTimes[currentSplit - 1];
+			CUtlString diffText = KZTimerService::FormatDiffTime(diff);
+			diffText.Format("{grey}%s%s{grey}", diff < 0 ? "{green}" : "{lightred}", diffText.Get());
+			pbDiffPro = this->player->languageService->PrepareMessage(diffTextKeysPro[this->currentCompareType], diffText.Get());
+		}
+	}
+
+	this->player->languageService->PrintChat(true, false, "Course Split Reached", currentSplit, time.Get(), pbDiff.c_str(), pbDiffPro.c_str());
+}
+
+void KZTimerService::ShowCheckpointText(u32 currentCheckpoint)
+{
+	const KZCourse *course = this->GetCourse();
+	// No active course so we can't compare anything.
+	if (!course)
+	{
+		return;
+	}
+	// No comparison available for styled runs.
+	if (this->player->styleServices.Count() > 0)
+	{
+		return;
+	}
+
+	CUtlString time;
+	std::string pbDiff, pbDiffPro = "";
+
+	time = KZTimerService::FormatTime(this->cpZoneTimes[currentCheckpoint - 1]);
+	if (this->lastCheckpoint != 0)
+	{
+		f64 diff = this->cpZoneTimes[currentCheckpoint - 1] - this->cpZoneTimes[this->lastCheckpoint - 1];
+		CUtlString splitTime = KZTimerService::FormatDiffTime(diff);
+		splitTime.Format(" {grey}({default}%s{grey})", splitTime.Get());
+		time.Append(splitTime.Get());
+	}
+
+	auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService->GetModeName());
+	PBDataKey key = ToPBDataKey(modeInfo.id, course->guid);
+
+	// Check if there is personal best data for this mode and course.
+	const PBData *pb = this->GetCompareTarget(key);
+	if (pb)
+	{
+		if (pb->overall.pbCpZoneTimes[currentCheckpoint - 1] > 0)
+		{
+			f64 diff = this->cpZoneTimes[currentCheckpoint - 1] - pb->overall.pbCpZoneTimes[currentCheckpoint - 1];
+			CUtlString diffText = KZTimerService::FormatDiffTime(diff);
+			diffText.Format("{grey}%s%s{grey}", diff < 0 ? "{green}" : "{lightred}", diffText.Get());
+			pbDiff = this->player->languageService->PrepareMessage(diffTextKeys[this->currentCompareType], diffText.Get());
+		}
+		if (this->player->checkpointService->GetTeleportCount() == 0 && pb->pro.pbTime > 0 && pb->pro.pbCpZoneTimes[currentCheckpoint - 1] > 0)
+		{
+			f64 diff = this->cpZoneTimes[currentCheckpoint - 1] - pb->pro.pbCpZoneTimes[currentCheckpoint - 1];
+			CUtlString diffText = KZTimerService::FormatDiffTime(diff);
+			diffText.Format("{grey}%s%s{grey}", diff < 0 ? "{green}" : "{lightred}", diffText.Get());
+			pbDiffPro = this->player->languageService->PrepareMessage(diffTextKeysPro[this->currentCompareType], diffText.Get());
+		}
+	}
+
+	this->player->languageService->PrintChat(true, false, "Course Checkpoint Reached", currentCheckpoint, time.Get(), pbDiff.c_str(),
+											 pbDiffPro.c_str());
+}
+
+void KZTimerService::ShowStageText()
+{
+	const KZCourse *course = this->GetCourse();
+	// No active course so we can't compare anything.
+	if (!course)
+	{
+		return;
+	}
+	// No comparison available for styled runs.
+	if (this->player->styleServices.Count() > 0)
+	{
+		return;
+	}
+
+	CUtlString time;
+	std::string pbDiff, pbDiffPro = "";
+
+	time = KZTimerService::FormatTime(this->stageZoneTimes[this->currentStage]);
+	if (this->currentStage > 0)
+	{
+		f64 diff = this->stageZoneTimes[this->currentStage] - this->stageZoneTimes[this->currentStage - 1];
+		CUtlString splitTime = KZTimerService::FormatDiffTime(diff);
+		splitTime.Format(" {grey}({default}%s{grey})", splitTime.Get());
+		time.Append(splitTime.Get());
+	}
+
+	auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService->GetModeName());
+	PBDataKey key = ToPBDataKey(modeInfo.id, course->guid);
+
+	// Check if there is personal best data for this mode and course.
+	const PBData *pb = this->GetCompareTarget(key);
+	if (pb)
+	{
+		if (pb->overall.pbStageZoneTimes[this->currentStage] > 0)
+		{
+			f64 diff = this->stageZoneTimes[this->currentStage] - pb->overall.pbStageZoneTimes[this->currentStage];
+			CUtlString diffText = KZTimerService::FormatDiffTime(diff);
+			diffText.Format("{grey}%s%s{grey}", diff < 0 ? "{green}" : "{lightred}", diffText.Get());
+			pbDiff = this->player->languageService->PrepareMessage(diffTextKeys[this->currentCompareType], diffText.Get());
+		}
+		if (this->player->checkpointService->GetTeleportCount() == 0 && pb->pro.pbTime > 0 && pb->pro.pbStageZoneTimes[this->currentStage] > 0)
+		{
+			f64 diff = this->stageZoneTimes[this->currentStage] - pb->pro.pbStageZoneTimes[this->currentStage];
+			CUtlString diffText = KZTimerService::FormatDiffTime(diff);
+			diffText.Format("{grey}%s%s{grey}", diff < 0 ? "{green}" : "{lightred}", diffText.Get());
+			pbDiffPro = this->player->languageService->PrepareMessage(diffTextKeysPro[this->currentCompareType], diffText.Get());
+		}
+	}
+
+	this->player->languageService->PrintChat(true, false, "Course Stage Reached", this->currentStage + 1, time.Get(), pbDiff.c_str(),
+											 pbDiffPro.c_str());
+}
+
+CUtlString KZTimerService::GetCurrentRunMetadata()
+{
+	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
+
+	KeyValues3 *splitZoneTimesKV = kv.FindOrCreateMember("splitZoneTimes");
+
+	splitZoneTimesKV->SetToEmptyArray();
+	FOR_EACH_VEC(this->splitZoneTimes, i)
+	{
+		KeyValues3 *time = splitZoneTimesKV->AddArrayElementToTail();
+		time->SetDouble(this->splitZoneTimes[i]);
+	}
+
+	KeyValues3 *cpZoneTimesKV = kv.FindOrCreateMember("cpZoneTimes");
+	cpZoneTimesKV->SetToEmptyArray();
+	FOR_EACH_VEC(this->cpZoneTimes, i)
+	{
+		KeyValues3 *time = cpZoneTimesKV->AddArrayElementToTail();
+		time->SetDouble(this->cpZoneTimes[i]);
+	}
+
+	splitZoneTimesKV->SetToEmptyArray();
+
+	KeyValues3 *stageZoneTimesKV = kv.FindOrCreateMember("stageZoneTimes");
+	FOR_EACH_VEC(this->stageZoneTimes, i)
+	{
+		KeyValues3 *time = stageZoneTimesKV->AddArrayElementToTail();
+		time->SetDouble(this->stageZoneTimes[i]);
+	}
+
+	CUtlString result, error;
+	if (SaveKV3AsJSON(&kv, &error, &result))
+	{
+		return result;
+	}
+	META_CONPRINTF("[KZ::Timer] Failed to obtain current run's metadata! (%s)\n", error.Get());
+	return "";
+}
+
+void KZTimerService::UpdateLocalPBCache()
+{
+	CPlayerUserId uid = player->GetClient()->GetUserID();
+
+	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
+	{
+		KZPlayer *pl = g_pKZPlayerManager->ToPlayer(uid);
+		if (!pl)
+		{
+			return;
+		}
+		ISQLResult *result = queries[0]->GetResultSet();
+		if (result && result->GetRowCount() > 0)
+		{
+			while (result->FetchRow())
+			{
+				auto modeInfo = KZ::mode::GetModeInfoFromDatabaseID(result->GetInt(2));
+				if (modeInfo.databaseID < 0)
+				{
+					continue;
+				}
+				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				if (!course)
+				{
+					continue;
+				}
+				pl->timerService->InsertPBToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3));
+			}
+		}
+		result = queries[1]->GetResultSet();
+		if (result && result->GetRowCount() > 0)
+		{
+			while (result->FetchRow())
+			{
+				auto modeInfo = KZ::mode::GetModeInfoFromDatabaseID(result->GetInt(2));
+				if (modeInfo.databaseID < 0)
+				{
+					continue;
+				}
+				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				if (!course)
+				{
+					continue;
+				}
+				pl->timerService->InsertPBToCache(result->GetFloat(0), course, modeInfo.id, false, false, result->GetString(3));
+			}
+		}
+	};
+	KZDatabaseService::QueryAllPBs(player->GetSteamId64(), g_pKZUtils->GetCurrentMapName(), onQuerySuccess, KZDatabaseService::OnGenericTxnFailure);
+}
+
 void KZTimerService::Init()
 {
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
+	KZOptionService::RegisterEventListener(&optionEventListener);
 }
 
 void KZTimerService::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_stop", Command_KzStopTimer);
 	scmd::RegisterCmd("kz_pause", Command_KzPauseTimer);
+	scmd::RegisterCmd("kz_comparelevel", Command_KzSetCompareLevel);
 	KZTimerService::RegisterPBCommand();
 	KZTimerService::RegisterRecordCommands();
 	KZTimerService::RegisterCourseTopCommands();
 }
 
+void KZTimerService::OnPlayerPreferencesLoaded()
+{
+	if (this->player->optionService->GetPreferenceInt("preferredCompareType", COMPARE_GPB) > COMPARETYPE_COUNT)
+	{
+		this->preferredCompareType = COMPARE_GPB;
+		return;
+	}
+	this->preferredCompareType = (CompareType)this->player->optionService->GetPreferenceInt("preferredCompareType", COMPARE_GPB);
+}
+
 void KZDatabaseServiceEventListener_Timer::OnMapSetup()
 {
 	KZ::course::SetupLocalCourses();
+	KZTimerService::UpdateLocalRecordCache();
+}
+
+void KZDatabaseServiceEventListener_Timer::OnClientSetup(Player *player, u64 steamID64, bool isCheater)
+{
+	KZPlayer *kzPlayer = g_pKZPlayerManager->ToKZPlayer(player);
+	kzPlayer->timerService->UpdateLocalPBCache();
 }

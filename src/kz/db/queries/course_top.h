@@ -1,4 +1,3 @@
-
 constexpr char sql_getcoursetop[] = R"(
     SELECT t.ID, t.SteamID64, p.Alias, t.RunTime AS PBTime, t.Teleports 
         FROM Times t 
@@ -28,4 +27,24 @@ constexpr char sql_getcoursetoppro[] = R"(
         ORDER BY PBTime ASC
         LIMIT %d
         OFFSET %d
+)";
+
+// Caching PBs
+
+constexpr char sql_getsrs[] = R"(
+    SELECT MIN(Times.RunTime), Times.MapCourseID, Times.ModeID, Times.Metadata
+        FROM Times 
+        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
+        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
+        WHERE Maps.Name='%s'
+        GROUP BY MapCourses.Name, Times.ModeID
+)";
+
+constexpr char sql_getsrspro[] = R"(
+    SELECT MIN(Times.RunTime), Times.MapCourseID, Times.ModeID, Times.Metadata
+        FROM Times 
+        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
+        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
+        WHERE Maps.Name='%s' AND Times.Teleports=0 
+        GROUP BY MapCourses.Name, Times.ModeID
 )";

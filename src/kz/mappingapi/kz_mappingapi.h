@@ -19,6 +19,7 @@
 #define INVALID_COURSE_NUMBER     0
 
 struct KZCourse;
+class KZPlayer;
 
 enum KzTriggerType
 {
@@ -128,25 +129,29 @@ struct KzTouchingTrigger
 	f32 groundTouchTime {};
 };
 
-class KZPlayer;
+namespace KZ::mapapi
+{
+	// These namespace'd functions are called when relevant game events happen, and are somewhat in order.
+	void Init();
+	void OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues);
+	void OnRoundPrestart();
+	void OnSpawn(int count, const EntitySpawnInfo_t *info);
+	void OnRoundStart();
+	void OnProcessMovement(KZPlayer *player);
+	void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
+	void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
+} // namespace KZ::mapapi
 
+// Exposed interface to modes.
 class MappingInterface
 {
 public:
-	virtual i32 GetCurrentMapAPIVersion();
-	virtual u32 GetCourseDescriptorCount();
-
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
-	virtual bool IsBhopTrigger(KzTriggerType triggerType);
 
-	virtual void OnProcessMovement(KZPlayer *player);
-	virtual void OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues);
-	virtual void OnSpawn(int count, const EntitySpawnInfo_t *info);
-	virtual void OnTriggerMultipleStartTouchPost(KZPlayer *player, CBaseTrigger *trigger);
-	virtual void OnTriggerMultipleEndTouchPost(KZPlayer *player, CBaseTrigger *trigger);
+	virtual bool IsBhopTrigger(KzTriggerType triggerType)
+	{
+		return triggerType == KZTRIGGER_MULTI_BHOP || triggerType == KZTRIGGER_SINGLE_BHOP || triggerType == KZTRIGGER_SEQUENTIAL_BHOP;
+	}
 };
-
-void Mappingapi_Init();
-void Mappingapi_RoundStart();
 
 extern MappingInterface *g_pMappingApi;

@@ -1,9 +1,58 @@
-// Middleman for managing courses related functions.
+// Middleman for managing courses related stuff.
 
 #pragma once
 #include "kz/kz.h"
 
+#define KZ_MAX_COURSE_COUNT       128
 #define KZ_MAX_COURSE_NAME_LENGTH 65
+
+struct PBData
+{
+	PBData()
+	{
+		Reset();
+	}
+
+	void Reset()
+	{
+		overall.pbTime = {};
+		overall.pbSplitZoneTimes.FillWithValue(-1.0);
+		overall.pbCpZoneTimes.FillWithValue(-1.0);
+		overall.pbStageZoneTimes.FillWithValue(-1.0);
+		pro.pbTime = {};
+		pro.pbSplitZoneTimes.FillWithValue(-1.0);
+		pro.pbCpZoneTimes.FillWithValue(-1.0);
+		pro.pbStageZoneTimes.FillWithValue(-1.0);
+	}
+
+	struct
+	{
+		f64 pbTime {};
+		CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
+		CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
+		CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> pbStageZoneTimes;
+	} overall, pro;
+};
+
+// Convert mode and course ID to one single value.
+typedef u64 PBDataKey;
+
+inline PBDataKey ToPBDataKey(u32 modeID, u32 courseID)
+{
+	return modeID | ((u64)courseID << 32);
+}
+
+inline void ConvertFromPBDataKey(PBDataKey key, uint32_t *modeID, uint32_t *courseID)
+{
+	if (modeID)
+	{
+		*modeID = (uint32_t)key;
+	}
+	if (courseID)
+	{
+		*courseID = (uint32_t)(key >> 32);
+	}
+}
 
 struct KZCourseDescriptor;
 
@@ -61,6 +110,9 @@ namespace KZ
 		// Get a course's information given its map-defined course id.
 		const KZCourse *GetCourseByCourseID(i32 id);
 
+		// Get a course's information given its local course id.
+		const KZCourse *GetCourseByLocalCourseID(i32 id);
+
 		// Get a course's information given its name.
 		const KZCourse *GetCourse(const char *courseName);
 
@@ -79,4 +131,4 @@ namespace KZ
 		// Update the course's global ID given its map-defined name and ID.
 		bool UpdateCourseGlobalID(const char *courseName, i32 courseID, u32 globalID);
 	} // namespace course
-};    // namespace KZ
+}; // namespace KZ

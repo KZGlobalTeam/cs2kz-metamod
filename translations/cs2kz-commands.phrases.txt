@@ -648,7 +648,7 @@
 	}
 	"Command Description - kz_ctop"
 	{
-		"en"		"Retrive top course times of a map."
+		"en"		"Retrieve top course times of a map."
 		"chi"		"查询地图排行榜前列."
 		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi süreyi göster."
@@ -659,7 +659,7 @@
 	}
 	"Command Description - kz_coursetop"
 	{
-		"en"		"Retrive top course times of a map."
+		"en"		"Retrieve top course times of a map."
 		"chi"		"查询地图排行榜前列."
 		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi süreyi göster."
@@ -670,7 +670,7 @@
 	}
 	"Command Description - kz_maptop"
 	{
-		"en"		"Retrive top course times of a map."
+		"en"		"Retrieve top course times of a map."
 		"chi"		"查询地图排行榜前列."
 		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi süreyi göster."
@@ -681,7 +681,7 @@
 	}
 	"Command Description - kz_gctop"
 	{
-		"en"		"Retrive global top course times of a map."
+		"en"		"Retrieve global top course times of a map."
 		"chi"		"查询地图全球排行榜前列."
 		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi global süreyi göster."
@@ -692,7 +692,7 @@
 	}
 	"Command Description - kz_gcoursetop"
 	{
-		"en"		"Retrive global top course times of a map."
+		"en"		"Retrieve global top course times of a map."
 		"chi"		"查询地图全球排行榜前列."
 		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi global süreyi göster."
@@ -703,7 +703,7 @@
 	}
 	"Command Description - kz_gmaptop"
 	{
-		"en"		"Retrive global top course times of a map."
+		"en"		"Retrieve global top course times of a map."
 		"chi"		"查询地图全球排行榜前列."
 		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
 		"tr"		"Haritadaki en iyi global süreyi göster."
@@ -714,7 +714,7 @@
 	}
 	"Command Description - kz_sctop"
 	{
-		"en"		"Retrive server top course times of a map."
+		"en"		"Retrieve server top course times of a map."
 		"chi"		"查询地图服务器排行榜前列."
 		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
@@ -725,7 +725,7 @@
 	}
 	"Command Description - kz_scoursetop"
 	{
-		"en"		"Retrive server top course times of a map."
+		"en"		"Retrieve server top course times of a map."
 		"chi"		"查询地图服务器排行榜前列."
 		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
@@ -736,7 +736,7 @@
 	}
 	"Command Description - kz_smaptop"
 	{
-		"en"		"Retrive server top course times of a map."
+		"en"		"Retrieve server top course times of a map."
 		"chi"		"查询地图服务器排行榜前列."
 		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
@@ -744,5 +744,9 @@
 		"it"		"Mostra la classifica del server di una mappa."
     	"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 		"de"		"Top-Zeiten der Strecken eines Servers für eine Map abrufen."
+	}
+	"Command Description - kz_comparelevel"
+	{
+		"en"		"Set the maximum preferred level of run comparison."
 	}
 }

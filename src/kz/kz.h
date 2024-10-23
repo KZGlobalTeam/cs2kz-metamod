@@ -268,6 +268,11 @@ public:
 	{
 		return static_cast<KZPlayer *>(player);
 	}
+
+	KZPlayer *ToKZPlayer(Player *player)
+	{
+		return static_cast<KZPlayer *>(player);
+	}
 };
 
 extern KZPlayerManager *g_pKZPlayerManager;

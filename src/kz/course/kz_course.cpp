@@ -20,6 +20,7 @@ static_global CUtlSortVector<KZCourse, CourseLessFunc> courseList;
 void KZ::course::ClearCourses()
 {
 	courseList.RemoveAll();
+	KZTimerService::ClearRecordCache();
 }
 
 u32 KZ::course::GetCourseCount()
@@ -55,6 +56,18 @@ const KZCourse *KZ::course::GetCourseByCourseID(i32 id)
 	FOR_EACH_VEC(courseList, i)
 	{
 		if (courseList[i].id == id)
+		{
+			return &courseList[i];
+		}
+	}
+	return nullptr;
+}
+
+const KZCourse *KZ::course::GetCourseByLocalCourseID(i32 id)
+{
+	FOR_EACH_VEC(courseList, i)
+	{
+		if (courseList[i].localDatabaseID == id)
 		{
 			return &courseList[i];
 		}

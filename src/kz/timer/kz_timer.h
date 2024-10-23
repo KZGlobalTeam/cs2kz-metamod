@@ -6,7 +6,8 @@
 
 #define KZ_MAX_MODE_NAME_LENGTH 128
 
-#define KZ_TIMER_MIN_GROUND_TIME      0.05f
+#define KZ_TIMER_MIN_GROUND_TIME 0.05f
+
 #define KZ_TIMER_SOUND_COOLDOWN       0.15f
 #define KZ_TIMER_SND_START            "Buttons.snd9"
 #define KZ_TIMER_SND_END              "tr.ScoreRegular"
@@ -16,6 +17,7 @@
 #define KZ_TIMER_SND_REACH_CHECKPOINT "tr.Popup"
 #define KZ_TIMER_SND_REACH_STAGE      "UIPanorama.round_report_odds_up"
 #define KZ_TIMER_SND_STOP             "tr.PuckFail"
+#define KZ_TIMER_SND_MISSED_TIME      "UI.RankDown"
 
 #define KZ_PAUSE_COOLDOWN 1.0f
 
@@ -66,14 +68,75 @@ private:
 	f64 lastEndTime {};
 	f64 lastFalseEndTime {};
 	f64 lastStartSoundTime {};
-	char lastStartMode[128] {};
+	f64 lastMissedTimeSoundTime {};
 	bool validTime {};
-	i32 currentStage {};
-	i32 reachedCheckpoints {};
+
+	u32 lastSplit {};
 	CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> splitZoneTimes {};
+
+	u32 lastCheckpoint {};
+	i32 reachedCheckpoints {};
 	CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> cpZoneTimes {};
+
+	i32 currentStage {};
 	CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> stageZoneTimes {};
 
+	// PB cache per mode and per course.
+	std::unordered_map<PBDataKey, PBData> localPBCache;
+	std::unordered_map<PBDataKey, PBData> globalPBCache;
+
+	// SR cache should be loaded upon map start, every time !wr is queried and every time a run beats the server record.
+	static std::unordered_map<PBDataKey, PBData> srCache;
+
+	static std::unordered_map<PBDataKey, PBData> wrCache;
+
+public:
+	enum CompareType : u8
+	{
+		COMPARE_NONE = 0,
+		COMPARE_SPB, // Local PB
+		COMPARE_GPB, // Global PB
+		COMPARE_SR,  // Server Record
+		COMPARE_WR,  // Global Record
+		COMPARETYPE_COUNT
+	};
+
+private:
+	// The maximum level that we should compare our current time with.
+	// For example, if the value is set to COMPARE_GPB, the player will not attempt to compare their splits with SR/WR,
+	// but only global PB, and local PB if global data is not available.
+	CompareType preferredCompareType = COMPARE_GPB;
+
+	// What we are currently comparing our run against in this current run.
+	// This stays the same from the start of the run (unless preferredCompareType changes) to have a consistent comparison across the run.
+	CompareType currentCompareType = COMPARE_GPB;
+
+	void UpdateCurrentCompareType(PBDataKey key);
+	const PBData *GetCompareTargetForType(CompareType type, PBDataKey key);
+	const PBData *GetCompareTarget(PBDataKey key);
+
+	bool shouldAnnounceMissedTime = true;
+	bool shouldAnnounceMissedProTime = true;
+
+public:
+	static void ClearRecordCache();
+	static void UpdateLocalRecordCache();
+	static void InsertRecordToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool hasTeleports, bool global, CUtlString metadata = "");
+
+	void ClearPBCache();
+	void UpdateLocalPBCache();
+	void InsertPBToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool hasTeleports, bool global, CUtlString metadata = "");
+	void SetCompareTarget(const char *typeString);
+
+	void CheckMissedTime();
+
+	void ShowSplitText(u32 currentSplit);
+	void ShowCheckpointText(u32 currentCheckpoint);
+	void ShowStageText();
+
+	CUtlString GetCurrentRunMetadata();
+
+private:
 	bool validJump {};
 	f64 lastInvalidateTime {};
 
@@ -212,6 +275,7 @@ private:
 	void PlayReachedCheckpointSound();
 	void PlayReachedStageSound();
 	void PlayTimerStopSound();
+	void PlayMissedTimeSound();
 
 	/*
 	 * Pause stuff also goes here.
@@ -265,6 +329,8 @@ public:
 	void OnOptionsChanged();
 	static void OnRoundStart();
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
+
+	void OnPlayerPreferencesLoaded();
 };
 
 namespace KZ
@@ -302,7 +368,7 @@ namespace KZ
 			u32 maxRankPro {};
 		};
 
-		void AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed);
+		void AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, const char *metadata);
 		void ClearAnnounceQueue();
 		void CheckAnnounceQueue();
 		void UpdateLocalRankData(u32 id, LocalRankData data);

@@ -209,7 +209,7 @@ struct CourseTopRequest
 			RunStats stats = srData.proData[i];
 			dualTable.right.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetSteamID64(), stats.GetRunID());
 		}
-		player->languageService->PrintChat(false, false, "Course Top - Check Console");
+		player->languageService->PrintChat(true, false, "Course Top - Check Console");
 		player->PrintConsole(false, false, dualTable.GetTitle());
 		player->PrintConsole(false, false, dualTable.GetHeader());
 		player->PrintConsole(false, false, dualTable.GetSeparator());
