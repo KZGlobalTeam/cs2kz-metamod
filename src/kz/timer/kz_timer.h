@@ -178,12 +178,12 @@ public:
 		char temp[32];
 		if (time > 0)
 		{
-			FormatTime(time, temp, sizeof(temp));
+			FormatTime(time, temp, sizeof(temp), precise);
 			V_snprintf(output, length, "+%s", temp);
 		}
 		else
 		{
-			FormatTime(-time, temp, sizeof(temp));
+			FormatTime(-time, temp, sizeof(temp), precise);
 			V_snprintf(output, length, "-%s", temp);
 		}
 	}

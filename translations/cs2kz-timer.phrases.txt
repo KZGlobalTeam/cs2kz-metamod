@@ -266,7 +266,7 @@
 	"Course Checkpoint Reached"
 	{
 		"#format"	"number:d,time_text:s,diff_text:s,diff_text_pro:s"
-		"en"		"{grey}Checkpoint {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"en"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	"Course Stage Reached"
 	{
