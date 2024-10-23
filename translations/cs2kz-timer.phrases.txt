@@ -235,26 +235,31 @@
 	"Can't Finish Run (Missed a Checkpoint Zone)"
 	{
 		"en"		"{darkred}You can't finish your run, because you missed a checkpoint zone."
+		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили чекпоінт зону."
 	}
 	"Can't Finish Run (Missed Checkpoint Zones)"
 	{
 		"#format"	"missed_count:i"
 		"en"		"{darkred}You can't finish your run, because you missed {missed_count} checkpoint zones."
+		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили {missed_count} чекпоніт зони."
 	}
 	"Can't Finish Run (Missed Stage)"
 	{
 		"#format"	"stage_number:i"
 		"en"		"{darkred}You can't finish your run, because you missed stage zone {stage_number}."
+		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили зону стадії {stage_number}."
 	}
 	"Touched too high stage number (Missed stage)"
 	{
 		"#format"	"stage_number:i"
 		"en"		"{darkred}You missed stage zone {stage_number}!"
+		"ua"		"{darkred}Ви пропустили зону стадії {stage_number}!"
 	}
 	"No Start Position For Course"
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Start position not found for course {default}{course_name}{darkred}!"
+		"ua"		"{darkred}Не знайдено стартову позицію для курсу {default}{course_name}{darkred}!"
 	}
 	
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
@@ -262,16 +267,19 @@
 	{
 		"#format"	"number:d,time_text:s,diff_text:s,diff_text_pro:s"
 		"en"		"{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"ua"		"{grey}Спліт {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	"Course Checkpoint Reached"
 	{
 		"#format"	"number:d,time_text:s,diff_text:s,diff_text_pro:s"
 		"en"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"ua"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	"Course Stage Reached"
 	{
 		"#format"	"number:d,time_text:s,diff_text:s,diff_text_pro:s"
 		"en"		"{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"ua"		"{grey}Стадія {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	
 	// The spaces are intentional.
@@ -279,41 +287,49 @@
 	{
 		"#format"	"diff_time:s"
 		"en"		" | SPB {diff_time}"
+		"ua"		" | SPB {diff_time}"
 	}
 	"Global PB Diff (Overall)"
 	{
 		"#format"	"diff_time:s"
 		"en"		" | GPB {diff_time}"
+		"ua"		" | GPB {diff_time}"
 	}
 	"SR Diff (Overall)"
 	{
 		"#format"	"diff_time:s"
 		"en"		" | SR {diff_time}"
+		"ua"		" | SR {diff_time}"
 	}
 	"WR Diff (Overall)"
 	{
 		"#format"	"diff_time:s"
 		"en"		" | WR {diff_time}"
+		"ua"		" | WR {diff_time}"
 	}
 	"Server PB Diff (Pro)"
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO SPB {diff_time}"
+		"ua"		" | PRO SPB {diff_time}"
 	}
 	"Global PB Diff (Pro)"
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO GPB {diff_time}"
+		"ua"		" | PRO GPB {diff_time}"
 	}
 	"SR Diff (Pro)"
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO SR {diff_time}"
+		"ua"		" | PRO SR {diff_time}"
 	}
 	"WR Diff (Pro)"
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO WR {diff_time}"
+		"ua"		" | PRO WR {diff_time}"
 	}
 	
 	// You missed your best Overall time (01:23.45)
@@ -321,86 +337,104 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your best {yellow}Overall{grey} time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Overall)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your global best {yellow}Overall{grey} time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий світовий {yellow}Загальний{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey} час рекорду серевера ({lightred}{time}{grey})."
 	}
 	"Missed WR (Overall)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey} час світового рекорду ({lightred}{time}{grey})."
 	}
 	"Missed Server PB (Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your best {blue}PRO{grey} time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий {blue}PRO{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your global best {blue}PRO{grey} time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий світовий {blue}PRO{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed SR (Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час рекорду сервера({lightred}{time}{grey})."
 	}
 	"Missed WR (Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 	}
 	"Missed Server PB (Overall+Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your best {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Overall+Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your global best {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий світовий {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall+Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час рекорду сервера ({lightred}{time}{grey})."
 	}
 	"Missed WR (Overall+Pro)"
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 	}
 	
 	"Compare Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_compare <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"ua"		"{grey}Використання: {default}kz_compare <none/off/spb/pb/gpb/sr/wr>{grey}."
 	}
 	"Compare Disabled"
 	{
 		"en"		"{grey}Run comparison disabled."
+		"ua"		"{grey}Порівняння проходжень вимкнено."
 	}
 	"Compare Server PB"
 	{
 		"en"		"{grey}You will now compare your run to your server personal best."
+		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим рекордом сервера."
 	}
 	"Compare Global PB"
 	{
 		"en"		"{grey}You will now compare your run to up to your global personal best."
+		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим світовим найкращим часом."
 	}
 	"Compare Server Record"
 	{
 		"en"		"{grey}You will now compare your run to up to the server record."
+		"ua"		"{grey}Зараз Ви порівняєте своє проходження з рекордом сервера."
 	}
 	"Compare World Record"
 	{
 		"en"		"{grey}You will now compare your run to up to the world record."
+		"ua"		"{grey}Зараз Ви порівняєте своє проходження зі світовим рекордом."
 	}
 	
 }
