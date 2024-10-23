@@ -225,6 +225,7 @@
 	"Checkpoints Cleared By Map"
 	{
 		"en"		"{darkred}The map has cleared your checkpoints."
+		"sv"		"{darkred}Kartan har rensat dina checkpoints."
 		"ua"		"{darkred}Ваші чекпоінти були стерті мапою."
 	}
 }
