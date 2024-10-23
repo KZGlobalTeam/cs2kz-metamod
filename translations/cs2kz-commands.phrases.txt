@@ -760,5 +760,6 @@
 	{
 		"en"		"Set the maximum preferred level of run comparison."
 		"sv"		"Ställ in den högsta önskade nivån för run jämförelse."
+		"ua"		"Встановіть максимальний бажаний рівень порівняння проходжень."
 	}
 }

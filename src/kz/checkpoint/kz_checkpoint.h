@@ -48,7 +48,7 @@ private:
 
 public:
 	void OnPlayerPreferencesLoaded();
-	void ResetCheckpoints(bool playSound = false);
+	void ResetCheckpoints(bool playSound = false, bool resetTeleports = true);
 	void SetCheckpoint();
 
 	void UndoTeleport();

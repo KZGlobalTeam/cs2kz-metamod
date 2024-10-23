@@ -423,6 +423,7 @@
 	"Disabled By Map"
 	{
 		"en"		"Disabled by map"
+		"ua"		"Вимкнено налаштуваннями мапи."
 	}
 
 	// =====[OPTIONS]=====

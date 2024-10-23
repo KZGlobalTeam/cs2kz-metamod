@@ -57,7 +57,7 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 	}
 }
 
-void KZCheckpointService::ResetCheckpoints(bool playSound)
+void KZCheckpointService::ResetCheckpoints(bool playSound, bool resetTeleports)
 {
 	if (playSound && this->GetCheckpointCount())
 	{
@@ -65,9 +65,12 @@ void KZCheckpointService::ResetCheckpoints(bool playSound)
 	}
 	this->undoTeleportData = {};
 	this->currentCpIndex = 0;
-	this->tpCount = 0;
-	this->holdingStill = false;
-	this->teleportTime = 0.0f;
+	if (resetTeleports)
+	{
+		this->tpCount = 0;
+		this->holdingStill = false;
+		this->teleportTime = 0.0f;
+	}
 	this->checkpoints.Purge();
 }
 
