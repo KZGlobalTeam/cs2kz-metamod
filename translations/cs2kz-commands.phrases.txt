@@ -689,7 +689,7 @@
 		"en"		"Retrieve global top course times of a map."
 		"chi"		"查询地图全球排行榜前列."
 		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
-		"sv"		Hämta globala topptider av en karta."
+		"sv"		"Hämta globala topptider av en karta."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
 		"it"		"Mostra la classifica globale di una mappa."
