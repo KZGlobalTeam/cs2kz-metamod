@@ -436,9 +436,9 @@
 	
 	"Compare Command Usage"
 	{
-		"en"		"{grey}Usage: {default}kz_compare <none/off/spb/pb/gpb/sr/wr>{grey}."
-		"sv"		"{grey}Användning: {default}kz_compare <none/off/spb/pb/gpb/sr/wr>{grey}."
-		"ua"		"{grey}Використання: {default}kz_compare <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"en"		"{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"sv"		"{grey}Användning: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"ua"		"{grey}Використання: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 	}
 	"Compare Disabled"
 	{
