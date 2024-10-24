@@ -158,7 +158,7 @@
 		"pl"		"{darkred}Próbujesz wstrzymać czas zbyt szybko, zaczekaj chwilę."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä jatkoit juuri ajastintasi."
 		"sv"		"{darkred}Du kan inte pausa eftersom du fortsatte nyligen."
-		"ua"		"{darkred}Ви не можете поставити на паузу, тому що ви щойно відновили."
+		"ua"		"{darkred}Ви не можете поставити на паузу, тому що ви щойно відновили таймер."
 		"tr"		"{darkred}Henüz duraklatmayı kaldırdığın için duraklayamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa quando hai appena ripreso."
 		"es"		"{darkred}No puede pausar porque acaba de reanudar."
@@ -243,7 +243,7 @@
 		"#format"	"missed_count:i"
 		"en"		"{darkred}You can't finish your run, because you missed {missed_count} checkpoint zones."
 		"sv"		"{darkred}Du kan inte avsluta din tid, eftersom du missade {missed_count} checkpoint zoner."
-		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили {missed_count} чекпоніт зони."
+		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили {missed_count} чекпоінт зони."
 	}
 	"Can't Finish Run (Missed Stage)"
 	{
@@ -361,7 +361,7 @@
 		"#format"	"time:s"
 		"en"		"{grey}You missed your global best {yellow}Overall{grey} time ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa globala {yellow}Allmänna{grey} tid ({lightred}{time}{grey})."
-		"ua"		"{grey}Ви пропустили свій найкращий світовий {yellow}Загальний{grey} час ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall)"
 	{
@@ -389,7 +389,7 @@
 		"#format"	"time:s"
 		"en"		"{grey}You missed your global best {blue}PRO{grey} time ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din globala bästa {blue}PRO{grey} tiden ({lightred}{time}{grey})."
-		"ua"		"{grey}Ви пропустили свій найкращий світовий {blue}PRO{grey} час ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий глобальний {blue}PRO{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed SR (Pro)"
 	{
@@ -417,7 +417,7 @@
 		"#format"	"time:s"
 		"en"		"{grey}You missed your global best {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa globala {yellow}Allmänna{grey}/{blue}PRO{grey} tid ({lightred}{time}{grey})."
-		"ua"		"{grey}Ви пропустили свій найкращий світовий {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
+		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall+Pro)"
 	{
@@ -456,7 +456,7 @@
 	{
 		"en"		"{grey}You will now compare your run to up to your global personal best."
 		"sv"		"{grey}Du kommer nu att jämföra din tid med din bästa globala tid."
-		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим світовим найкращим часом."
+		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим глобальним найкращим часом."
 	}
 	"Compare Server Record"
 	{
