@@ -597,10 +597,10 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			KZ::misc::OnRoundStart();
 			KZ::mapapi::OnRoundStart();
 		}
-		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
+		else if (V_stricmp(event->GetName(), "round_end") == 0)
 		{
 			hooks::HookEntities();
-			KZ::mapapi::OnRoundPrestart();
+			KZ::mapapi::OnRoundEnd();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)
 		{

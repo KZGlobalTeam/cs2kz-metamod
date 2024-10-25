@@ -3,7 +3,7 @@
 
 #define KZ_MAPPING_INTERFACE "KZMappingInterface"
 
-#define KZ_NO_MAPAPI_VERSION           -1
+#define KZ_NO_MAPAPI_VERSION           0
 #define KZ_NO_MAPAPI_COURSE_DESCRIPTOR "Default"
 #define KZ_NO_MAPAPI_COURSE_NAME       "Main"
 
@@ -131,9 +131,9 @@ namespace KZ::mapapi
 	// These namespace'd functions are called when relevant game events happen, and are somewhat in order.
 	void Init();
 	void OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues);
-	void OnRoundPrestart();
 	void OnSpawn(int count, const EntitySpawnInfo_t *info);
 	void OnRoundStart();
+	void OnRoundEnd();
 
 	void CheckEndTimerTrigger(CBaseTrigger *trigger);
 	// This is const, unlike the trigger returned from Mapi_FindKzTrigger.
@@ -160,6 +160,7 @@ class MappingInterface
 {
 public:
 	virtual bool IsTriggerATimerZone(CBaseTrigger *trigger);
+	bool GetJumpstatArea(Vector &pos, QAngle &angles);
 };
 
 extern MappingInterface *g_pMappingApi;

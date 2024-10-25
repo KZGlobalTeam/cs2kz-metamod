@@ -266,6 +266,10 @@
 		"sv"		"{darkred}Startpositionen hittades inte för kartan {default}{course_name}{darkred}!"
 		"ua"		"{darkred}Не знайдено стартову позицію для курсу {default}{course_name}{darkred}!"
 	}
+	"No Jumpstat Area Found"
+	{
+		"en"		"{darkred}Jumpstat area not found on this map!"
+	}
 	
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
 	"Course Split Reached"
