@@ -83,6 +83,8 @@ void KZTriggerService::OnProcessMovementPost()
 		this->ResetBhopState();
 	}
 
+	// reset gravity before touching triggers
+	this->player->GetPlayerPawn()->m_flGravityScale(1);
 	this->antiBhopActive = false;
 }
 

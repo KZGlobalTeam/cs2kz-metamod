@@ -110,6 +110,7 @@ private:
 
 	CSequentialBhopBuffer lastTouchedSequentialBhops {};
 
+	void TouchModifierTrigger(TriggerTouchTracker tracker);
 	void TouchAntibhopTrigger(TriggerTouchTracker tracker);
 	bool TouchTeleportTrigger(TriggerTouchTracker tracker);
 	void ResetBhopState();

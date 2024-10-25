@@ -205,6 +205,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			trigger.modifier.disableTeleports = ekv->GetBool("timer_modifier_disable_teleports");
 			trigger.modifier.disableJumpstats = ekv->GetBool("timer_modifier_disable_jumpstats");
 			trigger.modifier.enableSlide = ekv->GetBool("timer_modifier_enable_slide");
+			trigger.modifier.gravity = ekv->GetFloat("timer_modifier_gravity", 1);
 		}
 		break;
 

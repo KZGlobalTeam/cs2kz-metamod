@@ -166,6 +166,12 @@ void KZTriggerService::OnMappingApiTriggerTouchPost(TriggerTouchTracker tracker)
 	bool shouldRecheckTriggers = false;
 	switch (tracker.kzTrigger->type)
 	{
+		case KZTRIGGER_MODIFIER:
+		{
+			this->TouchModifierTrigger(tracker);
+		}
+		break;
+
 		case KZTRIGGER_ANTI_BHOP:
 		{
 			this->TouchAntibhopTrigger(tracker);
