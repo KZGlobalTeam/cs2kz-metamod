@@ -318,7 +318,7 @@ void RecordRequest::SetupCourse(KZPlayer *callingPlayer)
 			if (!course)
 			{
 				// No course? Take the map's first course.
-				const KZCourse *course = KZ::course::GetFirstCourse();
+				course = KZ::course::GetFirstCourse();
 				if (!course)
 				{
 					// TODO: use a better message
