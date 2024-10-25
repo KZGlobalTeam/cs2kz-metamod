@@ -132,8 +132,8 @@ namespace KZ::mapapi
 	void Init();
 	void OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues);
 	void OnSpawn(int count, const EntitySpawnInfo_t *info);
+	void OnRoundPreStart();
 	void OnRoundStart();
-	void OnRoundEnd();
 
 	void CheckEndTimerTrigger(CBaseTrigger *trigger);
 	// This is const, unlike the trigger returned from Mapi_FindKzTrigger.

@@ -590,6 +590,10 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 				player->quietService->SendFullUpdate();
 			}
 		}
+		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
+		{ 
+			KZ::mapapi::OnRoundPreStart();
+		}
 		else if (V_stricmp(event->GetName(), "round_start") == 0)
 		{
 			interfaces::pEngine->ServerCommand("sv_full_alltalk 1");
@@ -600,7 +604,6 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		else if (V_stricmp(event->GetName(), "round_end") == 0)
 		{
 			hooks::HookEntities();
-			KZ::mapapi::OnRoundEnd();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)
 		{

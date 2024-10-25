@@ -30,7 +30,7 @@ static_global struct
 	bool fatalFailure;
 	
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
-	bool roundHasStarted;
+	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
@@ -177,11 +177,9 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 
 	KzTriggerType type = (KzTriggerType)ekv->GetInt(KEY_TRIGGER_TYPE, KZTRIGGER_DISABLED);
 
-	if (g_mappingApi.roundHasStarted)
+	if (!g_mappingApi.roundIsStarting)
 	{
 		// Only allow triggers and zones that were spawned during the round start phase.
-		Mapi_Error("Trigger %s spawned after the map was loaded, the trigger won't be loaded! Hammer ID %i, origin (%.0f %.0f %.0f)",
-				   g_triggerNames[type], hammerId, origin.x, origin.y, origin.z);
 		return;
 	}
 
@@ -461,7 +459,7 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 			Mapi_SetStartPosition(courseDescriptor, origin, ekv->GetQAngle("angles"));
 		}
 	}
-	else if (V_stricmp(targetname, "timer_jumpstat_area"))
+	else if (V_stricmp(targetname, "timer_jumpstat_area") == 0)
 	{
 		g_mappingApi.hasJumpstatArea = true;
 		g_mappingApi.jumpstatAreaPos = ekv->GetVector("origin");
@@ -541,7 +539,7 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 	{
 		return;
 	}
-
+	
 	for (i32 i = 0; i < count; i++)
 	{
 		auto ekv = info[i].m_pKeyValues;
@@ -596,9 +594,15 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 	}
 }
 
+void KZ::mapapi::OnRoundPreStart()
+{
+	g_mappingApi.triggers.RemoveAll();
+	g_mappingApi.roundIsStarting = true;
+}
+
 void KZ::mapapi::OnRoundStart()
 {
-	g_mappingApi.roundHasStarted = true;
+	g_mappingApi.roundIsStarting = false;
 	FOR_EACH_VEC(g_mappingApi.courseDescriptors, courseInd)
 	{
 		// Find the number of split/checkpoint/stage zones that a course has
