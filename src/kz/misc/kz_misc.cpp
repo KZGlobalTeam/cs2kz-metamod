@@ -206,7 +206,7 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 static_function SCMD_CALLBACK(Command_KzLj)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	
+
 	Vector destPos;
 	QAngle destAngles;
 	if (g_pMappingApi->GetJumpstatArea(destPos, destAngles))
@@ -217,7 +217,7 @@ static_function SCMD_CALLBACK(Command_KzLj)
 	{
 		player->languageService->PrintChat(true, false, "No Jumpstat Area Found", args->ArgS());
 	}
-	
+
 	return MRES_SUPERCEDE;
 }
 

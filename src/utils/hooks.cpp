@@ -591,7 +591,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			}
 		}
 		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
-		{ 
+		{
 			KZ::mapapi::OnRoundPreStart();
 		}
 		else if (V_stricmp(event->GetName(), "round_start") == 0)

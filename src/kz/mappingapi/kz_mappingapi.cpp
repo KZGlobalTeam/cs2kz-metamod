@@ -28,13 +28,13 @@ static_global struct
 	CUtlVectorFixed<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
 	i32 mapApiVersion;
 	bool fatalFailure;
-	
+
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
-	
+
 	bool hasJumpstatArea;
 	Vector jumpstatAreaPos;
 	QAngle jumpstatAreaAngles;
@@ -539,7 +539,7 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 	{
 		return;
 	}
-	
+
 	for (i32 i = 0; i < count; i++)
 	{
 		auto ekv = info[i].m_pKeyValues;
@@ -757,6 +757,6 @@ bool MappingInterface::GetJumpstatArea(Vector &pos, QAngle &angles)
 		pos = g_mappingApi.jumpstatAreaPos;
 		angles = g_mappingApi.jumpstatAreaAngles;
 	}
-	
+
 	return g_mappingApi.hasJumpstatArea;
 }
