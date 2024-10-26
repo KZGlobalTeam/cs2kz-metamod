@@ -6,6 +6,7 @@
 #include "kz/noclip/kz_noclip.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
+#include "kz/trigger/kz_trigger.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
@@ -503,11 +504,12 @@ bool KZTimerService::CanPause(bool showError)
 		return false;
 	}
 
-	if (this->player->modifiers.disablePausingCount > 0)
+	if (this->player->triggerService->InAntiPauseArea())
 	{
 		if (showError)
 		{
 			this->player->languageService->PrintChat(true, false, "Can't Pause (Anti Pause Area)");
+			this->player->PlayErrorSound();
 		}
 		return false;
 	}

@@ -17,6 +17,7 @@
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/telemetry/kz_telemetry.h"
+#include "kz/trigger/kz_trigger.h"
 #include "kz/db/kz_db.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "utils/utils.h"
@@ -370,171 +371,40 @@ void hooks::HookEntities()
 static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	CCSPlayerPawn *pawn = NULL;
-	CBaseTrigger *trigger = NULL;
-	if (!V_stricmp(pThis->GetClassname(), "player"))
+	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
-		pawn = static_cast<CCSPlayerPawn *>(pThis);
-		trigger = static_cast<CBaseTrigger *>(pOther);
-	}
-	else
-	{
-		pawn = static_cast<CCSPlayerPawn *>(pOther);
-		trigger = static_cast<CBaseTrigger *>(pThis);
-	}
-	if (V_stricmp(pawn->GetClassname(), "player") != 0 || !V_strstr(trigger->GetClassname(), "trigger_"))
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(pawn);
-
-	player->velocityBeforeTriggerTouch = pawn->m_vecAbsVelocity();
-	player->originBeforeTriggerTouch = player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
-
-	if (!player->OnTriggerStartTouch(trigger))
-	{
-		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
 
-	// Don't start touch this trigger twice.
-	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()))
-	{
-		ignoreTouchEvent = true;
-		RETURN_META(MRES_SUPERCEDE);
-	}
-
-	// StartTouch is a two way interaction. Are we waiting for this trigger?
-	if (player->pendingStartTouchTriggers.HasElement(trigger->GetRefEHandle()))
-	{
-		player->touchedTriggers.AddToTail(trigger->GetRefEHandle());
-		player->pendingStartTouchTriggers.FindAndRemove(trigger->GetRefEHandle());
-		RETURN_META(MRES_IGNORED);
-	}
-
-	// Must be a new interaction!
-	player->pendingStartTouchTriggers.AddToTail(trigger->GetRefEHandle());
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (ignoreTouchEvent)
+	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
-		ignoreTouchEvent = false;
 		RETURN_META(MRES_SUPERCEDE);
 	}
-
-	ignoreTouchEvent = false;
-	if (V_stricmp(pOther->GetClassname(), "player"))
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
-	// This pawn have no controller attached to it. Ignore.
-	if (!player)
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-
-	if (!V_stricmp(pThis->GetClassname(), "trigger_multiple"))
-	{
-		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
-		KZ::mapapi::OnTriggerMultipleStartTouchPost(player, trigger);
-	}
-
-	// Player has a modified velocity through trigger touching, take this into account.
-	bool modifiedVelocity = player->velocityBeforeTriggerTouch != player->GetPlayerPawn()->m_vecAbsVelocity();
-	if (player->processingMovement && modifiedVelocity)
-	{
-		player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity + player->GetPlayerPawn()->m_vecAbsVelocity());
-		player->jumpstatsService->InvalidateJumpstats("Externally modified");
-	}
-
-	bool modifiedOrigin = player->originBeforeTriggerTouch != player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
-	if (player->processingMovement && modifiedOrigin)
-	{
-		player->SetOrigin(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin());
-		player->jumpstatsService->InvalidateJumpstats("Externally modified");
-	}
-
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnTouch(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	CCSPlayerPawn *pawn = NULL;
-	CBaseTrigger *trigger = NULL;
-	if (!V_stricmp(pThis->GetClassname(), "player"))
+	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
-		pawn = static_cast<CCSPlayerPawn *>(pThis);
-		trigger = static_cast<CBaseTrigger *>(pOther);
-	}
-	else
-	{
-		pawn = static_cast<CCSPlayerPawn *>(pOther);
-		trigger = static_cast<CBaseTrigger *>(pThis);
-	}
-
-	if (V_stricmp(pawn->GetClassname(), "player") != 0 || !V_strstr(trigger->GetClassname(), "trigger_"))
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-
-	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(pawn);
-
-	player->velocityBeforeTriggerTouch = pawn->m_vecAbsVelocity();
-	player->originBeforeTriggerTouch = player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
-
-	// This pawn have no controller attached to it. Ignore.
-	if (!player)
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-
-	if (!player->OnTriggerTouch(trigger))
-	{
-		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
-
-	if (player->touchedTriggers.HasElement(trigger->GetRefEHandle()) || player->pendingStartTouchTriggers.HasElement(trigger->GetRefEHandle()))
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-	// Can't "touch" what isn't in the touch list.
-	ignoreTouchEvent = true;
-	RETURN_META(MRES_SUPERCEDE);
+	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 {
-	if (ignoreTouchEvent)
+	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
+	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
-		ignoreTouchEvent = false;
 		RETURN_META(MRES_SUPERCEDE);
-	}
-	ignoreTouchEvent = false;
-
-	// Player has a modified velocity through trigger touching, take this into account.
-	if (!V_stricmp(pOther->GetClassname(), "player"))
-	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
-		bool modifiedVelocity = player->velocityBeforeTriggerTouch != player->GetPlayerPawn()->m_vecAbsVelocity();
-		if (player->processingMovement && modifiedVelocity)
-		{
-			player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity
-								+ player->GetPlayerPawn()->m_vecAbsVelocity());
-			player->jumpstatsService->InvalidateJumpstats("Externally modified");
-		}
-		bool modifiedOrigin = player->originBeforeTriggerTouch != player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
-		if (player->processingMovement && modifiedOrigin)
-		{
-			player->SetOrigin(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin());
-			player->jumpstatsService->InvalidateJumpstats("Externally modified");
-		}
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -542,72 +412,19 @@ static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 static_function void Hook_OnEndTouch(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	CCSPlayerPawn *pawn = NULL;
-	CBaseTrigger *trigger = NULL;
-	if (!V_stricmp(pThis->GetClassname(), "player"))
+	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
-		pawn = static_cast<CCSPlayerPawn *>(pThis);
-		trigger = static_cast<CBaseTrigger *>(pOther);
-	}
-	else
-	{
-		pawn = static_cast<CCSPlayerPawn *>(pOther);
-		trigger = static_cast<CBaseTrigger *>(pThis);
-	}
-	if (V_stricmp(pawn->GetClassname(), "player") != 0 || !V_strstr(trigger->GetClassname(), "trigger_"))
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(pawn);
-	// This pawn have no controller attached to it. Ignore.
-	if (!player)
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-	if (!player->OnTriggerEndTouch(trigger))
-	{
-		ignoreTouchEvent = true;
 		RETURN_META(MRES_SUPERCEDE);
 	}
-	if (player->touchedTriggers.FindAndRemove(trigger->GetRefEHandle()))
-	{
-		player->pendingEndTouchTriggers.AddToTail(trigger->GetRefEHandle());
-		RETURN_META(MRES_IGNORED);
-	}
-	if (player->pendingEndTouchTriggers.FindAndRemove(trigger->GetRefEHandle()))
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-	// Can't end touch on something we never touched in the first place.
-	ignoreTouchEvent = true;
-	RETURN_META(MRES_SUPERCEDE);
+	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (ignoreTouchEvent)
+	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
-		ignoreTouchEvent = false;
 		RETURN_META(MRES_SUPERCEDE);
-	}
-
-	ignoreTouchEvent = false;
-	if (V_stricmp(pOther->GetClassname(), "player"))
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(pOther));
-	// This pawn have no controller attached to it. Ignore.
-	if (!player)
-	{
-		RETURN_META(MRES_IGNORED);
-	}
-
-	if (player && !V_stricmp(pThis->GetClassname(), "trigger_multiple"))
-	{
-		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pThis);
-		KZ::mapapi::OnTriggerMultipleEndTouchPost(player, trigger);
 	}
 	RETURN_META(MRES_IGNORED);
 }

@@ -46,8 +46,7 @@ class KZStyleService;
 class KZTelemetryService;
 class KZTimerService;
 class KZTipService;
-struct KZCourseDescriptor;
-struct Modifier;
+class KZTriggerService;
 
 class KZPlayer : public MovementPlayer
 {
@@ -130,36 +129,11 @@ public:
 	virtual void OnChangeTeamPost(i32 team) override;
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
 
-	// Timer events
-	void MappingApiTriggerStartTouch(const KzTrigger *touched, const KZCourseDescriptor *course);
-	void MappingApiTriggerEndTouch(const KzTrigger *touched, const KZCourseDescriptor *course);
-
-	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
-	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
-	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
-
 	void PlayErrorSound();
 
 private:
 	bool hideLegs {};
 	f64 lastTeleportTime {};
-	CEntityHandle lastTouchedSingleBhop {};
-	i32 bhopTouchCount {};
-
-	class CSequentialBhopBuffer : public CFixedSizeCircularBuffer<CEntityHandle, 64>
-	{
-		virtual void ElementAlloc(CEntityHandle &element) {};
-		virtual void ElementRelease(CEntityHandle &element) {};
-	};
-
-	CSequentialBhopBuffer lastTouchedSequentialBhops {};
-	CUtlVectorFixed<KzTouchingTrigger, 64> kzTriggerTouchList {};
-
-	void AddKzTriggerToTouchList(const KzTrigger *trigger);
-	void RemoveKzTriggerFromTouchList(const KzTrigger *trigger);
-	void TouchAntibhopTrigger(KzTouchingTrigger touching);
-	bool TouchTeleportTrigger(KzTouchingTrigger touching);
-	void ResetBhopState();
 
 public:
 	KZAnticheatService *anticheatService {};
@@ -182,20 +156,7 @@ public:
 	KZTelemetryService *telemetryService {};
 	KZTimerService *timerService {};
 	KZTipService *tipService {};
-
-	struct Modifiers
-	{
-		i32 disablePausingCount;
-		i32 disableCheckpointsCount;
-		i32 disableTeleportsCount;
-		i32 disableJumpstatsCount;
-		i32 enableSlideCount;
-	};
-
-	Modifiers modifiers {};
-	Modifiers lastModifiers {};
-	bool antiBhopActive;
-	bool lastAntiBhopActive;
+	KZTriggerService *triggerService {};
 
 	void EnableGodMode();
 

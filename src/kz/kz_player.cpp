@@ -16,6 +16,7 @@
 #include "telemetry/kz_telemetry.h"
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
+#include "trigger/kz_trigger.h"
 
 #include "sdk/entity/cbasetrigger.h"
 
@@ -44,6 +45,7 @@ void KZPlayer::Init()
 	delete this->noclipService;
 	delete this->tipService;
 	delete this->telemetryService;
+	delete this->triggerService;
 
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -58,6 +60,7 @@ void KZPlayer::Init()
 	this->optionService = new KZOptionService(this);
 	this->tipService = new KZTipService(this);
 	this->telemetryService = new KZTelemetryService(this);
+	this->triggerService = new KZTriggerService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -78,6 +81,7 @@ void KZPlayer::Reset()
 	this->hudService->Reset();
 	this->timerService->Reset();
 	this->specService->Reset();
+	this->triggerService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
@@ -111,6 +115,7 @@ META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
 void KZPlayer::OnPhysicsSimulate()
 {
 	MovementPlayer::OnPhysicsSimulate();
+	this->triggerService->OnPhysicsSimulate();
 	this->modeService->OnPhysicsSimulate();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -121,6 +126,7 @@ void KZPlayer::OnPhysicsSimulate()
 void KZPlayer::OnPhysicsSimulatePost()
 {
 	MovementPlayer::OnPhysicsSimulatePost();
+	this->triggerService->OnPhysicsSimulatePost();
 	this->telemetryService->OnPhysicsSimulatePost();
 	this->modeService->OnPhysicsSimulatePost();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -166,140 +172,6 @@ void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 	}
 }
 
-void KZPlayer::TouchAntibhopTrigger(KzTouchingTrigger touching)
-{
-	float timeOnGround = g_pKZUtils->GetServerGlobals()->curtime - this->landingTime;
-	const KzTrigger *trigger = touching.trigger;
-	if (trigger->antibhop.time == 0                              // No jump trigger
-		|| timeOnGround <= trigger->antibhop.time                // Haven't touched the trigger for long enough
-		|| (this->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0) // Not on the ground (for prediction)
-	{
-		this->antiBhopActive = true;
-	}
-}
-
-bool KZPlayer::TouchTeleportTrigger(KzTouchingTrigger touching)
-{
-	bool shouldTeleport = false;
-	assert(touching.trigger);
-
-	bool isBhopTrigger = g_pMappingApi->IsBhopTrigger(touching.trigger->type);
-
-	if (isBhopTrigger && touching.groundTouchTime <= 0)
-	{
-		return shouldTeleport;
-	}
-
-	CEntityHandle destinationHandle = GameEntitySystem()->FindFirstEntityHandleByName(touching.trigger->teleport.destination);
-	CBaseEntity *destination = dynamic_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(destinationHandle));
-	if (!destinationHandle.IsValid() || !destination)
-	{
-		this->PrintConsole(true, "Invalid teleport destination \"%s\" on trigger with hammerID %i.", touching.trigger->teleport.destination,
-						   touching.trigger->hammerId);
-		return shouldTeleport;
-	}
-
-	Vector destOrigin = destination->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
-	QAngle destAngles = destination->m_CBodyComponent()->m_pSceneNode()->m_angRotation();
-	CBaseEntity *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(touching.trigger->entity));
-	Vector triggerOrigin = Vector(0, 0, 0);
-	if (trigger)
-	{
-		triggerOrigin = trigger->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
-	}
-
-	// NOTE: We only use the trigger's origin if we're using a relative destination, so if
-	// we're not using a relative destination and don't have it, then it's fine.
-	if (!trigger && touching.trigger->teleport.relative)
-	{
-		return shouldTeleport;
-	}
-
-	if (isBhopTrigger && (this->GetPlayerPawn()->m_fFlags & FL_ONGROUND))
-	{
-		float touchingTime = g_pKZUtils->GetServerGlobals()->curtime - touching.groundTouchTime;
-		if (touchingTime > touching.trigger->teleport.delay)
-		{
-			shouldTeleport = true;
-		}
-		else if (touching.trigger->type == KZTRIGGER_SINGLE_BHOP)
-		{
-			shouldTeleport = this->lastTouchedSingleBhop == touching.trigger->entity;
-		}
-		else if (touching.trigger->type == KZTRIGGER_SEQUENTIAL_BHOP)
-		{
-			for (i32 i = 0; i < this->lastTouchedSequentialBhops.GetReadAvailable(); i++)
-			{
-				CEntityHandle handle = CEntityHandle();
-				if (!this->lastTouchedSequentialBhops.Peek(&handle, i))
-				{
-					assert(0);
-					break;
-				}
-				if (handle == touching.trigger->entity)
-				{
-					shouldTeleport = true;
-					break;
-				}
-			}
-		}
-	}
-	else if (touching.trigger->type == KZTRIGGER_TELEPORT)
-	{
-		float touchingTime = g_pKZUtils->GetServerGlobals()->curtime - touching.startTouchTime;
-		shouldTeleport = touchingTime > touching.trigger->teleport.delay || touching.trigger->teleport.delay <= 0;
-	}
-
-	if (!shouldTeleport)
-	{
-		return shouldTeleport;
-	}
-
-	bool shouldReorientPlayer = touching.trigger->teleport.reorientPlayer && destAngles[YAW] != 0;
-	Vector up = Vector(0, 0, 1);
-	Vector finalOrigin = destOrigin;
-
-	if (touching.trigger->teleport.relative)
-	{
-		Vector playerOrigin;
-		this->GetOrigin(&playerOrigin);
-		Vector playerOffsetFromTrigger = playerOrigin - triggerOrigin;
-
-		if (shouldReorientPlayer)
-		{
-			VectorRotate(playerOffsetFromTrigger, QAngle(0, destAngles[YAW], 0), playerOffsetFromTrigger);
-		}
-
-		finalOrigin = destOrigin + playerOffsetFromTrigger;
-	}
-	QAngle finalPlayerAngles;
-	this->GetAngles(&finalPlayerAngles);
-	Vector finalVelocity;
-	this->GetVelocity(&finalVelocity);
-	if (shouldReorientPlayer)
-	{
-		// TODO: BUG: sometimes when getting reoriented and holding a movement key
-		//  the player's speed will get reduced, almost like velocity rotation
-		//  and angle rotation is out of sync leading to counterstrafing.
-		VectorRotate(finalVelocity, QAngle(0, destAngles[YAW], 0), finalVelocity);
-		finalPlayerAngles[YAW] -= destAngles[YAW];
-		this->SetAngles(finalPlayerAngles);
-	}
-
-	if (touching.trigger->teleport.resetSpeed)
-	{
-		this->SetVelocity(vec3_origin);
-	}
-	else
-	{
-		this->SetVelocity(finalVelocity);
-	}
-
-	this->SetOrigin(finalOrigin);
-
-	return shouldTeleport;
-}
-
 void KZPlayer::OnProcessMovement()
 {
 	MovementPlayer::OnProcessMovement();
@@ -311,63 +183,17 @@ void KZPlayer::OnProcessMovement()
 		this->styleServices[i]->OnProcessMovement();
 	}
 
-	KZ::mapapi::OnProcessMovement(this);
+	this->triggerService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 	this->noclipService->HandleMoveCollision();
 	this->EnableGodMode();
 	this->UpdatePlayerModelAlpha();
-
-	this->lastModifiers = this->modifiers;
-	this->lastAntiBhopActive = this->antiBhopActive;
-}
-
-void KZPlayer::ResetBhopState()
-{
-	this->lastTouchedSingleBhop = CEntityHandle();
-	// all hail fixed buffers
-	this->lastTouchedSequentialBhops = CSequentialBhopBuffer();
 }
 
 void KZPlayer::OnProcessMovementPost()
 {
-	// if the player isn't touching any bhop triggers on ground/a ladder, then
-	// reset the singlebhop and sequential bhop state.
-	if ((this->GetPlayerPawn()->m_fFlags & FL_ONGROUND || this->GetMoveType() == MOVETYPE_LADDER) && this->bhopTouchCount == 0)
-	{
-		this->ResetBhopState();
-	}
-
-	this->antiBhopActive = false;
-	// Check if we're touching any triggers and act accordingly.
-	// NOTE: Read through the touch list in reverse order, so
-	//  that we resolve most recently touched triggers first.
-	// TODO: Move this to trigger service
-	FOR_EACH_VEC_BACK(this->kzTriggerTouchList, i)
-	{
-		const KzTouchingTrigger touching = this->kzTriggerTouchList[i];
-		switch (touching.trigger->type)
-		{
-			case KZTRIGGER_ANTI_BHOP:
-			{
-				TouchAntibhopTrigger(touching);
-			}
-			break;
-
-			case KZTRIGGER_TELEPORT:
-			case KZTRIGGER_MULTI_BHOP:
-			case KZTRIGGER_SINGLE_BHOP:
-			case KZTRIGGER_SEQUENTIAL_BHOP:
-			{
-				if (TouchTeleportTrigger(touching))
-				{
-					RemoveKzTriggerFromTouchList(touching.trigger);
-				}
-			}
-			break;
-		}
-	}
-
+	this->triggerService->OnProcessMovementPost();
 	if (this->specService->GetSpectatedPlayer())
 	{
 		this->specService->GetSpectatedPlayer()->hudService->DrawPanels(this);
@@ -815,35 +641,11 @@ void KZPlayer::OnStartTouchGround()
 	{
 		this->styleServices[i]->OnStartTouchGround();
 	}
-	FOR_EACH_VEC(this->kzTriggerTouchList, i)
-	{
-		this->kzTriggerTouchList[i].groundTouchTime = g_pKZUtils->GetServerGlobals()->curtime;
-	}
 }
 
 void KZPlayer::OnStopTouchGround()
 {
-	FOR_EACH_VEC(this->kzTriggerTouchList, i)
-	{
-		KzTouchingTrigger touching = this->kzTriggerTouchList[i];
-		if (g_pMappingApi->IsBhopTrigger(touching.trigger->type))
-		{
-			// set last touched triggers for single and sequential bhop.
-			if (touching.trigger->type == KZTRIGGER_SEQUENTIAL_BHOP)
-			{
-				CEntityHandle handle = touching.trigger->entity;
-				this->lastTouchedSequentialBhops.Write(handle);
-			}
-
-			// NOTE: For singlebhops, we don't care which type of bhop we last touched, because
-			//  otherwise jumping back and forth between a multibhop and a singlebhop wouldn't work.
-			// We only care about the most recently touched trigger!
-			if (i == 0 && g_pMappingApi->IsBhopTrigger(touching.trigger->type))
-			{
-				this->lastTouchedSingleBhop = touching.trigger->entity;
-			}
-		}
-	}
+	this->triggerService->OnStopTouchGround();
 	this->jumpstatsService->AddJump();
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
@@ -885,161 +687,6 @@ void KZPlayer::EnableGodMode()
 	}
 }
 
-void KZPlayer::AddKzTriggerToTouchList(const KzTrigger *trigger)
-{
-	KzTouchingTrigger touchingTrigger = {};
-	touchingTrigger.trigger = trigger;
-	touchingTrigger.startTouchTime = g_pKZUtils->GetServerGlobals()->curtime;
-
-	this->kzTriggerTouchList.AddToTail(touchingTrigger);
-}
-
-void KZPlayer::RemoveKzTriggerFromTouchList(const KzTrigger *trigger)
-{
-	FOR_EACH_VEC(this->kzTriggerTouchList, i)
-	{
-		if (this->kzTriggerTouchList[i].trigger == trigger)
-		{
-			this->kzTriggerTouchList.Remove(i);
-			break;
-		}
-	}
-}
-
-void KZPlayer::MappingApiTriggerStartTouch(const KzTrigger *touched, const KZCourseDescriptor *course)
-{
-	switch (touched->type)
-	{
-		case KZTRIGGER_MODIFIER:
-		{
-			KzMapModifier modifier = touched->modifier;
-			this->modifiers.disablePausingCount += modifier.disablePausing ? 1 : 0;
-			this->modifiers.disableCheckpointsCount += modifier.disableCheckpoints ? 1 : 0;
-			this->modifiers.disableTeleportsCount += modifier.disableTeleports ? 1 : 0;
-			this->modifiers.disableJumpstatsCount += modifier.disableJumpstats ? 1 : 0;
-			// Enabling slide will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount += modifier.enableSlide ? 1 : 0;
-			this->modifiers.enableSlideCount += modifier.enableSlide ? 1 : 0;
-		}
-		break;
-
-		case KZTRIGGER_RESET_CHECKPOINTS:
-		{
-			if (this->timerService->GetTimerRunning())
-			{
-				if (this->checkpointService->GetCheckpointCount())
-				{
-					this->languageService->PrintChat(true, false, "Checkpoints Cleared By Map");
-				}
-				this->checkpointService->ResetCheckpoints(true, false);
-			}
-		};
-		break;
-
-		case KZTRIGGER_SINGLE_BHOP_RESET:
-		{
-			this->ResetBhopState();
-		}
-		break;
-
-		case KZTRIGGER_ZONE_START:
-		{
-			this->checkpointService->ResetCheckpoints();
-			this->timerService->StartZoneStartTouch(course);
-		}
-		break;
-
-		case KZTRIGGER_ZONE_END:
-		{
-			this->timerService->TimerEnd(course);
-		}
-		break;
-
-		case KZTRIGGER_ZONE_SPLIT:
-		{
-			this->timerService->SplitZoneStartTouch(course, touched->zone.number);
-		}
-		break;
-
-		case KZTRIGGER_ZONE_CHECKPOINT:
-		{
-			this->timerService->CheckpointZoneStartTouch(course, touched->zone.number);
-		}
-		break;
-
-		case KZTRIGGER_ZONE_STAGE:
-		{
-			this->timerService->StageZoneStartTouch(course, touched->zone.number);
-		}
-		break;
-
-		case KZTRIGGER_TELEPORT:
-		case KZTRIGGER_ANTI_BHOP:
-		case KZTRIGGER_MULTI_BHOP:
-		case KZTRIGGER_SINGLE_BHOP:
-		case KZTRIGGER_SEQUENTIAL_BHOP:
-		{
-			AddKzTriggerToTouchList(touched);
-			if (g_pMappingApi->IsBhopTrigger(touched->type))
-			{
-				this->bhopTouchCount++;
-			}
-		}
-		break;
-
-		default:
-			break;
-	}
-}
-
-void KZPlayer::MappingApiTriggerEndTouch(const KzTrigger *touched, const KZCourseDescriptor *course)
-{
-	switch (touched->type)
-	{
-		case KZTRIGGER_MODIFIER:
-		{
-			KzMapModifier modifier = touched->modifier;
-			this->modifiers.disablePausingCount -= modifier.disablePausing ? 1 : 0;
-			this->modifiers.disableCheckpointsCount -= modifier.disableCheckpoints ? 1 : 0;
-			this->modifiers.disableTeleportsCount -= modifier.disableTeleports ? 1 : 0;
-			this->modifiers.disableJumpstatsCount -= modifier.disableJumpstats ? 1 : 0;
-			// Enabling slide will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount -= modifier.enableSlide ? 1 : 0;
-			this->modifiers.enableSlideCount -= modifier.enableSlide ? 1 : 0;
-			assert(this->modifiers.disablePausingCount >= 0);
-			assert(this->modifiers.disableCheckpointsCount >= 0);
-			assert(this->modifiers.disableTeleportsCount >= 0);
-			assert(this->modifiers.disableJumpstatsCount >= 0);
-			assert(this->modifiers.enableSlideCount >= 0);
-		}
-		break;
-
-		case KZTRIGGER_ZONE_START:
-		{
-			this->checkpointService->ResetCheckpoints();
-			this->timerService->StartZoneEndTouch(course);
-		}
-		break;
-
-		case KZTRIGGER_TELEPORT:
-		case KZTRIGGER_ANTI_BHOP:
-		case KZTRIGGER_MULTI_BHOP:
-		case KZTRIGGER_SINGLE_BHOP:
-		case KZTRIGGER_SEQUENTIAL_BHOP:
-		{
-			RemoveKzTriggerFromTouchList(touched);
-			if (g_pMappingApi->IsBhopTrigger(touched->type))
-			{
-				this->bhopTouchCount--;
-			}
-		}
-		break;
-
-		default:
-			break;
-	}
-}
-
 void KZPlayer::UpdatePlayerModelAlpha()
 {
 	CCSPlayerPawn *pawn = this->GetPlayerPawn();
@@ -1076,113 +723,12 @@ void KZPlayer::PlayErrorSound()
 
 void KZPlayer::TouchTriggersAlongPath(const Vector &start, const Vector &end, const bbox_t &bounds)
 {
-	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
-	{
-		return;
-	}
-	CTraceFilterHitAllTriggers filter;
-	trace_t tr;
-	g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, tr);
-	FOR_EACH_VEC(filter.hitTriggerHandles, i)
-	{
-		CEntityHandle handle = filter.hitTriggerHandles[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
-		{
-			continue;
-		}
-		if (!this->touchedTriggers.HasElement(handle))
-		{
-			this->GetPlayerPawn()->StartTouch(trigger);
-			trigger->StartTouch(this->GetPlayerPawn());
-			this->GetPlayerPawn()->Touch(trigger);
-			trigger->Touch(this->GetPlayerPawn());
-		}
-	}
+	this->triggerService->TouchTriggersAlongPath(start, end, bounds);
 }
 
 void KZPlayer::UpdateTriggerTouchList()
 {
-	if (!this->IsAlive() || this->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
-	{
-		FOR_EACH_VEC(this->touchedTriggers, i)
-		{
-			CBaseTrigger *trigger = static_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(this->touchedTriggers[i]));
-			trigger->EndTouch(this->GetPlayerPawn());
-			this->GetPlayerPawn()->EndTouch(trigger);
-		}
-		return;
-	}
-	Vector origin;
-	this->GetOrigin(&origin);
-	bbox_t bounds;
-	this->GetBBoxBounds(&bounds);
-	CTraceFilterHitAllTriggers filter;
-	trace_t tr;
-	g_pKZUtils->TracePlayerBBox(origin, origin, bounds, &filter, tr);
-
-	FOR_EACH_VEC(this->touchedTriggers, i)
-	{
-		CEntityHandle handle = this->touchedTriggers[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger)
-		{
-			this->touchedTriggers.Remove(i);
-			continue;
-		}
-		if (!filter.hitTriggerHandles.HasElement(handle))
-		{
-			this->GetPlayerPawn()->EndTouch(trigger);
-			trigger->EndTouch(this->GetPlayerPawn());
-		}
-	}
-
-	FOR_EACH_VEC(filter.hitTriggerHandles, i)
-	{
-		CEntityHandle handle = filter.hitTriggerHandles[i];
-		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
-		{
-			continue;
-		}
-		if (!this->touchedTriggers.HasElement(handle))
-		{
-			trigger->StartTouch(this->GetPlayerPawn());
-			trigger->Touch(this->GetPlayerPawn());
-			this->GetPlayerPawn()->StartTouch(trigger);
-			this->GetPlayerPawn()->Touch(trigger);
-		}
-	}
-}
-
-bool KZPlayer::OnTriggerStartTouch(CBaseTrigger *trigger)
-{
-	bool retValue = this->modeService->OnTriggerStartTouch(trigger);
-	FOR_EACH_VEC(this->styleServices, i)
-	{
-		retValue &= this->styleServices[i]->OnTriggerStartTouch(trigger);
-	}
-	return retValue;
-}
-
-bool KZPlayer::OnTriggerTouch(CBaseTrigger *trigger)
-{
-	bool retValue = this->modeService->OnTriggerTouch(trigger);
-	FOR_EACH_VEC(this->styleServices, i)
-	{
-		retValue &= this->styleServices[i]->OnTriggerTouch(trigger);
-	}
-	return retValue;
-}
-
-bool KZPlayer::OnTriggerEndTouch(CBaseTrigger *trigger)
-{
-	bool retValue = this->modeService->OnTriggerEndTouch(trigger);
-	FOR_EACH_VEC(this->styleServices, i)
-	{
-		retValue &= this->styleServices[i]->OnTriggerEndTouch(trigger);
-	}
-	return retValue;
+	this->triggerService->UpdateTriggerTouchList();
 }
 
 void KZPlayer::OnChangeTeamPost(i32 team)

@@ -7,6 +7,7 @@
 #include "../style/kz_style.h"
 #include "../option/kz_option.h"
 #include "../language/kz_language.h"
+#include "kz/trigger/kz_trigger.h"
 
 #include "tier0/memdbgon.h"
 
@@ -559,7 +560,7 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
-	if (this->jumps.Count() <= 0 || this->player->JustTeleported() || this->player->modifiers.disableJumpstatsCount)
+	if (this->jumps.Count() <= 0 || this->player->JustTeleported() || this->player->triggerService->ShouldDisableJumpstats())
 	{
 		return JumpType_Invalid;
 	}
@@ -666,7 +667,7 @@ void KZJumpstatsService::OnProcessMovement()
 		this->InvalidateJumpstats("First jump");
 		return;
 	}
-	if (this->player->modifiers.disableJumpstatsCount > 0)
+	if (this->player->triggerService->ShouldDisableJumpstats())
 	{
 		this->InvalidateJumpstats("Disabled By Map");
 	}

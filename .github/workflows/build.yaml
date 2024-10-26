@@ -71,7 +71,7 @@ jobs:
 
       - name: Configure AMBuild
         working-directory: build
-        run: python3 ../configure.py
+        run: python3 ../configure.py --enable-optimize
 
       - name: Update version header
         shell: bash
