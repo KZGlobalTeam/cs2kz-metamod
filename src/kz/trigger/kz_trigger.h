@@ -163,7 +163,7 @@ public:
 		return true;
 	}
 
-	// Whether Touch should be called on every change in origin and position.
+	// Whether Touch should be called on every possible change in origin.
 	// Usually true for triggers that need to update the player very frequently.
 	static bool HighFrequencyTouchAllowed(TriggerTouchTracker tracker);
 
