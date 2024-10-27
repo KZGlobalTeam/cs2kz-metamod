@@ -160,6 +160,41 @@ static_function SCMD_CALLBACK(Command_JoinTeam)
 	return MRES_SUPERCEDE;
 }
 
+static_function SCMD_CALLBACK(Command_KzPlayerCheck)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	KZPlayer *targetPlayer = nullptr;
+	if (args->ArgC() < 2)
+	{
+		targetPlayer = player;
+	}
+	else
+	{
+		for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+		{
+			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
+
+			if (!controller)
+			{
+				continue;
+			}
+
+			if (V_strstr(V_strlower((char *)controller->GetPlayerName()), V_strlower((char *)args->ArgS())))
+			{
+				targetPlayer = g_pKZPlayerManager->ToPlayer(i);
+				break;
+			}
+		}
+	}
+	if (!targetPlayer)
+	{
+		player->languageService->PrintChat(true, false, "Error Message (Player Not Found)", args->ArgS());
+		return MRES_SUPERCEDE;
+	}
+	player->languageService->PrintChat(
+		true, false, targetPlayer->IsAuthenticated() ? "Player Authenticated (Steam)" : "Player Not Authenticated (Steam)", targetPlayer->GetName());
+}
+
 static_function f64 CheckRestart()
 {
 	utils::ResetMapIfEmpty();
@@ -215,6 +250,8 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_restart", Command_KzRestart);
 	scmd::RegisterCmd("kz_r", Command_KzRestart);
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
+	scmd::RegisterCmd("kz_pc", Command_KzPlayerCheck);
+	scmd::RegisterCmd("kz_playercheck", Command_KzPlayerCheck);
 	scmd::RegisterCmd("jointeam", Command_JoinTeam, true);
 	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 	KZGotoService::RegisterCommands();

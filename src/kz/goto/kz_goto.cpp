@@ -74,14 +74,14 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		}
 	}
 
-	player->languageService->PrintChat(true, false, "Goto - Error Message (Player Not Found)", playerNamePart);
+	player->languageService->PrintChat(true, false, "Error Message (Player Not Found)", playerNamePart);
 	return false;
 }
 
 static_function SCMD_CALLBACK(Command_KzGoto)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	const char *targetNamePart = args->Arg(1);
+	const char *targetNamePart = args->ArgS();
 	player->gotoService->GotoPlayer(targetNamePart);
 	return MRES_SUPERCEDE;
 }

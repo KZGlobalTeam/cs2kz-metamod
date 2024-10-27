@@ -225,6 +225,11 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 		this->PlayTimerStartSound();
 	}
 
+	if (!this->player->IsAuthenticated())
+	{
+		this->player->languageService->PrintChat(true, false, "No Steam Authentication Warning");
+	}
+
 	FOR_EACH_VEC(eventListeners, i)
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->course->guid);

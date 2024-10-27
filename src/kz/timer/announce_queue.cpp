@@ -21,7 +21,7 @@ public:
 		{
 			styleNames.AddToTail(player->styleServices[i]->GetStyleShortName());
 		}
-		if (KZDatabaseService::IsReady())
+		if (KZDatabaseService::IsReady() && player->IsAuthenticated())
 		{
 			KZDatabaseService::SaveTime(id, player, courseName, time, teleportsUsed, metadata);
 		}
@@ -34,6 +34,10 @@ public:
 	{
 		// If it's a styled run we don't care about ranking, just announce it right away.
 		if (styleNames.Count() != 0 || (timestamp + ANNOUNCEMENT_WAIT_THRESHOLD) < g_pKZUtils->GetServerGlobals()->realtime)
+		{
+			return true;
+		}
+		if (steamID64 == 0)
 		{
 			return true;
 		}

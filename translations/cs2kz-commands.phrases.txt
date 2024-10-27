@@ -762,4 +762,12 @@
 		"sv"		"Ställ in den högsta önskade nivån för run jämförelse."
 		"ua"		"Встановіть максимальний бажаний рівень порівняння проходжень."
 	}
+	"Command Description - kz_playercheck"
+	{
+		"en"		"Check the status of the specified player (default to self)."
+	}
+	"Command Description - kz_pc"
+	{
+		"en"		"Check the status of the specified player (default to self)."
+	}
 }

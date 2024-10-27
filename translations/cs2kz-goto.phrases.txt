@@ -29,21 +29,6 @@
 		"es"		"{darkred}Imposible teleportar. {player} es un espectador."
 		"de"		"{darkred}Du kannst dich nicht teleportieren. {player} ist ein Zuschauer."
 	}
-	"Goto - Error Message (Player Not Found)"
-	{
-		"#format"	"player:s"
-		"en"		"{darkred}Could not find a player going by \"{player}\"."
-		"chi"		"{darkred}找不到玩家 \"{player}\"."
-		"pl"		"{darkred}Nie można znaleźć gracza o nazwie \"{player}\"."
-		"ru"		"{darkred}Невозможно найти игрока \"{player}\"."
-		"fi"		"{darkred}Pelaajaa nimeltä \"{player}\" ei löytynyt."
-		"sv"		"{darkred}Kunde inte hitta någon som heter något med \"{player}\"."
-		"ua"		"{darkred}Неможливо знайти гравця \"{player}\"."
-		"tr"		"{darkred}\"{player}\" isminde bir oyuncu bulunamadı."
-		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
-		"es"		"{darkred}No se puede encontrar un jugador llamado \"{player}\"."
-		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\"."
-	}
 	"Goto - Teleported"
 	{
 		"#format"	"player:s"

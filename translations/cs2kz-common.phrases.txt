@@ -1,3 +1,32 @@
 "Phrases"
 {
+	"No Steam Authentication Warning"
+	{
+		"en"	"{darkred}Warning{grey}: You are not currently authenticated with Steam. Your run might not be saved. Type {default}!pc{grey} to check your current authentication status."
+	}
+	"Player Authenticated (Steam)"
+	{
+		"#format"	"player:s"
+		"en"		"{grey}Player {default}{player}{grey} is authenticated with Steam."
+	}
+	"Player Not Authenticated (Steam)"
+	{
+		"#format"	"player:s"
+		"en"		"{grey}Player {default}{player}{grey} is currently {yellow}not{grey} authenticated with Steam."
+	}
+	"Error Message (Player Not Found)"
+	{
+		"#format"	"player:s"
+		"en"		"{darkred}Could not find a player going by \"{player}\"."
+		"chi"		"{darkred}找不到玩家 \"{player}\"."
+		"pl"		"{darkred}Nie można znaleźć gracza o nazwie \"{player}\"."
+		"ru"		"{darkred}Невозможно найти игрока \"{player}\"."
+		"fi"		"{darkred}Pelaajaa nimeltä \"{player}\" ei löytynyt."
+		"sv"		"{darkred}Kunde inte hitta någon som heter något med \"{player}\"."
+		"ua"		"{darkred}Неможливо знайти гравця \"{player}\"."
+		"tr"		"{darkred}\"{player}\" isminde bir oyuncu bulunamadı."
+		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
+		"es"		"{darkred}No se puede encontrar un jugador llamado \"{player}\"."
+		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\"."
+	}
 }
