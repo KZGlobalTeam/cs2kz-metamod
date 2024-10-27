@@ -193,6 +193,7 @@ static_function SCMD_CALLBACK(Command_KzPlayerCheck)
 	}
 	player->languageService->PrintChat(
 		true, false, targetPlayer->IsAuthenticated() ? "Player Authenticated (Steam)" : "Player Not Authenticated (Steam)", targetPlayer->GetName());
+	return MRES_SUPERCEDE;
 }
 
 static_function f64 CheckRestart()
