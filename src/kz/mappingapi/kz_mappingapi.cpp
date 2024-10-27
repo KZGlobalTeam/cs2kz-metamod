@@ -103,7 +103,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 {
 	// Make sure we don't exceed this ridiculous value.
 	// If we do, it is most likely that something went wrong, or it is caused by the mapper.
-	if (g_mappingApi.courseDescriptors.Count() >= 512)
+	if (g_mappingApi.courseDescriptors.Count() >= KZ_MAX_COURSE_COUNT)
 	{
 		assert(0);
 		Mapi_Error("Failed to register course name '%s' (hammerId %i): Too many courses!", courseName, hammerId);

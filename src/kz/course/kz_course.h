@@ -65,8 +65,8 @@ struct KZCourse
 		V_snprintf(name, sizeof(name), "%s", courseName);
 	}
 
-	u32 guid {};
 	// Shared identifiers
+	u32 guid {};
 
 	// Mapper assigned course ID.
 	i32 id;

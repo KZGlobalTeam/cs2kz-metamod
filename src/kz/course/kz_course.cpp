@@ -15,7 +15,7 @@ public:
 };
 
 static_global u32 internalCourseCount = 0;
-static_global CUtlSortVector<KZCourse, CourseLessFunc> courseList;
+static_global CUtlSortVector<KZCourse, CourseLessFunc> courseList(KZ_MAX_COURSE_COUNT, KZ_MAX_COURSE_COUNT);
 
 void KZ::course::ClearCourses()
 {
