@@ -39,9 +39,22 @@ bool KZTriggerService::InAntiPauseArea()
 	return this->modifiers.disablePausingCount > 0;
 }
 
-bool KZTriggerService::CanPlaceCheckpoints()
+bool KZTriggerService::InBhopTriggers()
 {
-	return this->modifiers.disableCheckpointsCount <= 0;
+	FOR_EACH_VEC(this->triggerTrackers, i)
+	{
+		bool justTouched = g_pKZUtils->GetServerGlobals()->curtime - this->triggerTrackers[i].startTouchTime < 0.15f;
+		if (justTouched && this->triggerTrackers[i].isPossibleLegacyBhopTrigger)
+		{
+			return true;
+		}
+	}
+	return this->bhopTouchCount > 0;
+}
+
+bool KZTriggerService::InAntiCpArea()
+{
+	return this->modifiers.disableCheckpointsCount > 0;
 }
 
 bool KZTriggerService::CanTeleportToCheckpoints()

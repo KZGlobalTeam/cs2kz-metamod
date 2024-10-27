@@ -83,9 +83,16 @@ void KZCheckpointService::SetCheckpoint()
 		return;
 	}
 
-	if (!this->player->triggerService->CanPlaceCheckpoints())
+	if (this->player->triggerService->InAntiCpArea())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Anti Checkpoint Area)");
+		this->player->PlayErrorSound();
+		return;
+	}
+
+	if (this->player->triggerService->InBhopTriggers())
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Just Landed)");
 		this->player->PlayErrorSound();
 		return;
 	}
@@ -142,6 +149,12 @@ void KZCheckpointService::UndoTeleport()
 		this->player->PlayErrorSound();
 		return;
 	}
+	if (this->undoTeleportData.teleportInBhopTrigger)
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Undo (Just Landed)");
+		this->player->PlayErrorSound();
+		return;
+	}
 
 	this->DoTeleport(this->undoTeleportData);
 }
@@ -178,6 +191,8 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp)
 	// Update data for undoing teleports
 	u32 flags = pawn->m_fFlags();
 	this->undoTeleportData.teleportOnGround = ((flags & FL_ONGROUND) || (pawn->m_MoveType() == MOVETYPE_LADDER));
+	this->undoTeleportData.teleportInAntiCpTrigger = this->player->triggerService->InAntiCpArea();
+	this->undoTeleportData.teleportInBhopTrigger = this->player->triggerService->InBhopTriggers();
 	this->undoTeleportData.origin = currentOrigin;
 	this->player->GetAngles(&this->undoTeleportData.angles);
 	this->undoTeleportData.slopeDropHeight = pawn->m_flSlopeDropHeight();

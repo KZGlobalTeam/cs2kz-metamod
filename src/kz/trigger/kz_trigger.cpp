@@ -8,7 +8,14 @@
 
 void KZTriggerService::Reset()
 {
-	triggerTrackers.RemoveAll();
+	this->triggerTrackers.RemoveAll();
+	this->modifiers = {};
+	this->lastModifiers = {};
+	this->antiBhopActive = {};
+	this->lastAntiBhopActive = {};
+	this->lastTouchedSingleBhop = {};
+	this->bhopTouchCount = {};
+	this->lastTouchedSequentialBhops = {};
 }
 
 void KZTriggerService::OnPhysicsSimulate()
@@ -214,6 +221,28 @@ void KZTriggerService::EndTouchAll()
 	}
 }
 
+bool KZTriggerService::IsPossibleLegacyBhopTrigger(CTriggerMultiple *trigger)
+{
+	if (!trigger)
+	{
+		return false;
+	}
+	if (trigger->m_iFilterName().String()[0] == 0 && !trigger->m_hFilter().IsValid())
+	{
+		return false;
+	}
+	EntityIOConnection_t *connection = trigger->m_OnTrigger().m_pConnections;
+	while (connection)
+	{
+		if (!V_stricmp(connection->m_targetInput.ToCStr(), "TeleportEntity"))
+		{
+			return true;
+		}
+		connection = connection->m_pNext;
+	}
+	return false;
+}
+
 void KZTriggerService::TouchAll()
 {
 	FOR_EACH_VEC(this->triggerTrackers, i)
@@ -326,6 +355,9 @@ void KZTriggerService::StartTouch(CBaseTrigger *trigger)
 		tracker = triggerTrackers.AddToTailGetPtr();
 		tracker->triggerHandle = trigger->GetRefEHandle();
 		tracker->startTouchTime = g_pKZUtils->GetServerGlobals()->curtime;
+		tracker->isPossibleLegacyBhopTrigger = V_stricmp(trigger->GetClassname(), "trigger_multiple") == 0
+												   ? KZTriggerService::IsPossibleLegacyBhopTrigger((CTriggerMultiple *)trigger)
+												   : false;
 		tracker->kzTrigger = KZ::mapapi::GetKzTrigger(trigger);
 	}
 
