@@ -43,10 +43,11 @@ public:
 	{
 		if (!this->player->IsAlive())
 		{
+			this->weaponShownCount[slot] = 0;
 			return false;
 		}
 		// Arbitrary number to not crash the client
-		if (this->weaponShownCount[slot] < 16)
+		if (this->weaponShownCount[slot] < 8)
 		{
 			this->weaponShownCount[slot]++;
 			return false;
