@@ -638,7 +638,7 @@
 	{
 		"en"		"Retrieve server records."
 		"chi"		"查询服务器记录."
-		"pl"		"Uzyskaj rekordy serwera.
+		"pl"		"Uzyskaj rekordy serwera."
 		"ru"		"Показать рекорд сервера."
 		"fi"		"Hae palvelimen ennätykset."
 		"sv"		"Hämta server rekord."
