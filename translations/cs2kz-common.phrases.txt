@@ -28,7 +28,7 @@
 		"pl"		"{darkred}Nie można znaleźć gracza o nazwie \"{player}\"."
 		"ru"		"{darkred}Невозможно найти игрока \"{player}\"."
 		"fi"		"{darkred}Pelaajaa nimeltä \"{player}\" ei löytynyt."
-		"sv"		"{darkred}Kunde inte hitta någon som heter något med \"{player}\"."
+		"sv"		"{darkred}Kunde inte hitta någon som heter \"{player}\"."
 		"ua"		"{darkred}Неможливо знайти гравця \"{player}\"."
 		"tr"		"{darkred}\"{player}\" isminde bir oyuncu bulunamadı."
 		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
