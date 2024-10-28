@@ -10,14 +10,14 @@
 	{
 		"#format"	"player:s"
 		"en"		"{grey}Player {default}{player}{grey} is authenticated with Steam."
-		"sv"		"{grey}Spelare {default}{player}{grey} Är autentiserad med Steam."
+		"sv"		"{grey}Spelare {default}{player}{grey} är autentiserad med Steam."
 		"ua"		"{grey}Гравець {default}{player}{grey} автентифікований у Steam."
 	}
 	"Player Not Authenticated (Steam)"
 	{
 		"#format"	"player:s"
 		"en"		"{grey}Player {default}{player}{grey} is currently {yellow}not{grey} authenticated with Steam."
-		"sv"		"{grey}Spelare {default}{player}{grey} är {yellow}inte{grey} autentiserad med steam."
+		"sv"		"{grey}Spelare {default}{player}{grey} är {yellow}inte{grey} autentiserad med Steam."
 		"ua"		"{grey}Гравець {default}{player}{grey} наразі {yellow}не{grey} автентифікований у Steam."
 	}
 	"Error Message (Player Not Found)"
