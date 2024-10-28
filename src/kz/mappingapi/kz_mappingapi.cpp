@@ -28,6 +28,7 @@ static_global struct
 	CUtlVectorFixed<KzTrigger, 2048> triggers;
 	CUtlVectorFixed<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
 	i32 mapApiVersion = KZ_NO_MAPAPI_VERSION;
+	bool apiVersionLoaded = false;
 	bool fatalFailure = false;
 	bool roundIsStarting = true;
 	i32 errorFlags;
@@ -472,7 +473,7 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 		return;
 	}
 	g_mappingApi.fatalFailure = false;
-	for (i32 i = 0; i < pKeyValues->Count(); i++)
+	for (i32 i = 0; i < pKeyValues->Count() && !g_mappingApi.apiVersionLoaded; i++)
 	{
 		auto ekv = (*pKeyValues)[i];
 
@@ -483,6 +484,8 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 		const char *classname = ekv->GetString("classname");
 		if (V_stricmp(classname, "worldspawn") == 0)
 		{
+			// We only care about the first spawn group's worldspawn because the rest might use prefabs compiled outside of mapping API.
+			g_mappingApi.apiVersionLoaded = true;
 			g_mappingApi.mapApiVersion = ekv->GetInt("timer_mapping_api_version", KZ_NO_MAPAPI_VERSION);
 			// NOTE(GameChaos): When a new mapping api version comes out, this will change
 			//  for backwards compatibility.
