@@ -765,9 +765,11 @@
 	"Command Description - kz_playercheck"
 	{
 		"en"		"Check the status of the specified player (default to self)."
+		"ua"		"Перевірити статус вибраного гравця (за замовчуванням себе)."
 	}
 	"Command Description - kz_pc"
 	{
 		"en"		"Check the status of the specified player (default to self)."
+		"ua"		"Перевірити статус вибраного гравця (за замовчуванням себе)."
 	}
 }
