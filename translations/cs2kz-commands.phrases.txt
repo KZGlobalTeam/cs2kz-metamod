@@ -530,6 +530,10 @@
 		"es"		"Reiniciar."
 		"de"		"Neustart."
 	}
+	"Command Description - kz_end"
+	{
+		"en"		"Teleport to the end."
+	}
 	"Command Description - kz_hideweapon"
 	{
 		"en"		"Hide weapon viewmodel."

@@ -102,6 +102,10 @@ struct KZCourseDescriptor
 		startAngles = angles;
 	}
 
+	bool hasEndPosition = false;
+	Vector endPosition;
+	QAngle endAngles;
+
 	i32 splitCount {};
 	i32 checkpointCount {};
 	i32 stageCount {};
@@ -131,6 +135,7 @@ namespace KZ::mapapi
 	void OnSpawn(int count, const EntitySpawnInfo_t *info);
 	void OnRoundStart();
 
+	void CheckEndTimerTrigger(CBaseTrigger *trigger);
 	// This is const, unlike the trigger returned from Mapi_FindKzTrigger.
 	const KzTrigger *GetKzTrigger(CBaseTrigger *trigger);
 

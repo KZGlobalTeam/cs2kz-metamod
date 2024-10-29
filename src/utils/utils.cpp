@@ -482,6 +482,114 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
 	return foundValidSpawn;
 }
 
+bool utils::CanSeeBox(Vector origin, Vector mins, Vector maxs)
+{
+	Vector traceDest;
+
+	for (int i = 0; i < 3; i++)
+	{
+		mins[i] += 0.03125;
+		maxs[i] -= 0.03125;
+		traceDest[i] = Clamp(origin[i], mins[i], maxs[i]);
+	}
+	bbox_t bounds {};
+	CTraceFilter filter(MASK_PLAYERSOLID, COLLISION_GROUP_PLAYER_MOVEMENT, false);
+	trace_t trace;
+	g_pKZUtils->TracePlayerBBox(origin, traceDest, bounds, &filter, trace);
+
+	return !trace.DidHit();
+}
+
+bool utils::FindValidPositionAroundCenter(Vector center, Vector distFromCenter, Vector extraOffset, Vector &originDest, QAngle &anglesDest)
+{
+	Vector testOrigin;
+	i32 x, y;
+
+	for (u32 i = 0; i < 3; i++)
+	{
+		x = i == 2 ? -1 : i;
+		for (int j = 0; j < 3; j++)
+		{
+			y = j == 2 ? -1 : j;
+			for (int z = -1; z <= 1; z++)
+			{
+				testOrigin = center;
+				testOrigin[0] = testOrigin[0] + (distFromCenter[0] + extraOffset[0]) * x + 32.0f * x * 0.5;
+				testOrigin[1] = testOrigin[1] + (distFromCenter[1] + extraOffset[1]) * y + 32.0f * y * 0.5;
+				testOrigin[2] = testOrigin[2] + (distFromCenter[2] + extraOffset[2]) * z + 72.0f * z;
+
+				if (utils::IsSpawnValid(testOrigin) && utils::CanSeeBox(testOrigin, center - distFromCenter, center + distFromCenter))
+				{
+					originDest = testOrigin;
+					// Always look towards the center.
+					Vector offsetVector;
+					offsetVector[0] = -(distFromCenter[0] + extraOffset[0]) * x;
+					offsetVector[1] = -(distFromCenter[1] + extraOffset[1]) * y;
+					offsetVector[2] = -(distFromCenter[2] + extraOffset[2]) * z;
+					VectorAngles(offsetVector, anglesDest);
+					anglesDest[2] = 0.0; // Roll should always be 0.0
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDest, QAngle &anglesDest)
+{
+	if (!trigger)
+	{
+		return false;
+	}
+	// Let's just assume this trigger isn't rotated at all...
+	Vector mins = trigger->m_pCollision()->m_vecMins();
+	Vector maxs = trigger->m_pCollision()->m_vecMaxs();
+	Vector origin = trigger->m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin();
+	Vector center = origin + (maxs + mins) / 2;
+	Vector distFromCenter = (maxs - mins) / 2;
+
+	// If the center or the bottom center is valid (which should be the case most of the time), then we can skip all the complicated stuff.
+	Vector bottomCenter = center;
+	bottomCenter.z -= distFromCenter.z - 0.03125;
+	if (utils::IsSpawnValid(bottomCenter))
+	{
+		originDest = bottomCenter;
+		anglesDest = vec3_angle;
+		return true;
+	}
+
+	if (utils::IsSpawnValid(center))
+	{
+		bbox_t bounds = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
+		CTraceFilter filter;
+		filter.m_bHitSolid = true;
+		filter.m_bHitSolidRequiresGenerateContacts = true;
+		filter.m_bShouldIgnoreDisabledPairs = true;
+		filter.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
+		filter.m_nInteractsWith = 0x2c3011;
+		filter.m_bUnknown = true;
+		filter.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
+		filter.m_nInteractsAs = 0x40000;
+		trace_t tr;
+		g_pKZUtils->TracePlayerBBox(center, bottomCenter, bounds, &filter, tr);
+		originDest = tr.m_vEndPos;
+		anglesDest = vec3_angle;
+		return true;
+	}
+
+	// TODO: This is mostly ported from GOKZ with no testing done on these. Might need to test this eventually.
+	Vector extraOffset = {-33.03125f, -33.03125f, -72.03125f}; // Negative because we want to go inwards.
+	if (FindValidPositionAroundCenter(center, distFromCenter, extraOffset, originDest, anglesDest))
+	{
+		return true;
+	}
+	// Test the positions right next to the trigger if the tests above fail.
+	// This can fail when the trigger has a cover brush over it.
+	extraOffset = {0.03125f, 0.03125f, 0.03125f};
+	return FindValidPositionAroundCenter(center, distFromCenter, extraOffset, originDest, anglesDest);
+}
+
 void utils::ResetMapIfEmpty()
 {
 	// There are players in the server already, do not restart

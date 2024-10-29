@@ -341,6 +341,7 @@ void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
 		AddEntityHooks(static_cast<CBaseEntity *>(pEntity));
+		KZ::mapapi::CheckEndTimerTrigger((CBaseTrigger *)pEntity);
 	}
 }
 
@@ -594,11 +595,11 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			interfaces::pEngine->ServerCommand("sv_full_alltalk 1");
 			KZTimerService::OnRoundStart();
 			KZ::misc::OnRoundStart();
-			hooks::HookEntities();
 			KZ::mapapi::OnRoundStart();
 		}
 		else if (V_stricmp(event->GetName(), "round_prestart") == 0)
 		{
+			hooks::HookEntities();
 			KZ::mapapi::OnRoundPrestart();
 		}
 		else if (V_stricmp(event->GetName(), "player_team") == 0)

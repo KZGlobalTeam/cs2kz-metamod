@@ -283,6 +283,19 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 					return;
 				}
 			}
+			else // Start/End zones
+			{
+				// Note: Triggers shouldn't be rotated most of the time anyway. If that ever happens for timer triggers, it's probably unintentional.
+				QAngle angles = ekv->GetQAngle("angles");
+
+				if (angles != vec3_angle)
+				{
+					Mapi_Error(
+						"Warning: Unexpected rotation for timer trigger, some functionalities might not work properly! Hammer ID %i, origin (%.0f "
+						"%.0f %.0f)",
+						hammerId, origin.x, origin.y, origin.z);
+				}
+			}
 		}
 		break;
 
@@ -309,7 +322,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		case KZTRIGGER_DISABLED:
 		{
 			// Check for pre-mapping api triggers for backwards compatibility.
-			if (g_mappingApi.mapApiVersion == -1)
+			if (g_mappingApi.mapApiVersion == KZ_NO_MAPAPI_VERSION)
 			{
 				if (info->m_pEntity->NameMatches("timer_startzone") || info->m_pEntity->NameMatches("timer_endzone"))
 				{
@@ -671,6 +684,20 @@ void KZ::mapapi::OnRoundStart()
 		courseDescriptor->splitCount = splitCount;
 		courseDescriptor->checkpointCount = cpCount;
 		courseDescriptor->stageCount = stageCount;
+	}
+}
+
+void KZ::mapapi::CheckEndTimerTrigger(CBaseTrigger *trigger)
+{
+	KzTrigger *kzTrigger = Mapi_FindKzTrigger(trigger);
+	if (kzTrigger && kzTrigger->type == KZTRIGGER_ZONE_END)
+	{
+		KZCourseDescriptor *desc = Mapi_FindCourse(kzTrigger->zone.courseDescriptor);
+		if (!desc)
+		{
+			return;
+		}
+		desc->hasEndPosition = utils::FindValidPositionForTrigger(trigger, desc->endPosition, desc->endAngles);
 	}
 }
 

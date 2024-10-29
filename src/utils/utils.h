@@ -64,6 +64,13 @@ namespace utils
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles);
 
+	// Return true if there's a direct line of sight from the box with specified bounds.
+	bool CanSeeBox(Vector origin, Vector mins, Vector maxs);
+	bool FindValidPositionAroundCenter(Vector center, Vector distFromCenter, Vector extraOffset, Vector &originDest, QAngle &anglesDest);
+
+	// Return true if there is a valid position for the trigger.
+	bool FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDest, QAngle &anglesDest);
+
 	void ResetMap();
 	void ResetMapIfEmpty();
 } // namespace utils

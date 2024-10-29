@@ -51,6 +51,7 @@ public:
 	SCHEMA_FIELD(CGameSceneNode *, m_pChild)
 	SCHEMA_FIELD(CNetworkOriginCellCoordQuantizedVector, m_vecOrigin)
 	SCHEMA_FIELD(QAngle, m_angRotation)
+	SCHEMA_FIELD(QAngle, m_angAbsRotation)
 	SCHEMA_FIELD(float, m_flScale)
 	SCHEMA_FIELD(float, m_flAbsScale)
 	SCHEMA_FIELD(Vector, m_vecAbsOrigin)

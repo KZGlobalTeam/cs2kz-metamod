@@ -67,6 +67,78 @@ static_function SCMD_CALLBACK(Command_KzHide)
 	return MRES_SUPERCEDE;
 }
 
+static_function SCMD_CALLBACK(Command_KzEnd)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+
+	// If the player specify a course name, we first check if it's valid or not.
+	if (V_strlen(args->ArgS()) > 0)
+	{
+		const KZCourse *course = KZ::course::GetCourse(args->ArgS());
+
+		if (!course || !course->descriptor || !course->descriptor->hasEndPosition)
+		{
+			player->languageService->PrintChat(true, false, "No End Position For Course", args->ArgS());
+			return MRES_SUPERCEDE;
+		}
+	}
+
+	bool shouldTeleport = false;
+	Vector tpOrigin;
+	QAngle tpAngles;
+	if (player->timerService->GetCourseDescriptor())
+	{
+		if (player->timerService->GetCourseDescriptor()->hasEndPosition)
+		{
+			tpOrigin = player->timerService->GetCourseDescriptor()->endPosition;
+			tpAngles = player->timerService->GetCourseDescriptor()->endAngles;
+			shouldTeleport = true;
+		}
+		else
+		{
+			CUtlString courseName = player->timerService->GetCourse()->GetName();
+			player->languageService->PrintChat(true, false, "No End Position For Course", courseName.Get());
+			return MRES_SUPERCEDE;
+		}
+	}
+
+	// If we have no active course the map only has one course, !r should send the player to the end of that course.
+	else if (KZ::course::GetCourseCount() == 1)
+	{
+		const KZCourseDescriptor *descriptor = KZ::course::GetFirstCourse()->descriptor;
+		if (descriptor->hasEndPosition)
+		{
+			tpOrigin = descriptor->endPosition;
+			tpAngles = descriptor->endAngles;
+			shouldTeleport = true;
+		}
+		else
+		{
+			CUtlString courseName = KZ::course::GetFirstCourse()->GetName();
+			player->languageService->PrintChat(true, false, "No End Position For Course", courseName.Get());
+		}
+	}
+
+	if (shouldTeleport)
+	{
+		player->timerService->TimerStop();
+		if (player->GetPlayerPawn()->IsAlive())
+		{
+			if (player->noclipService->IsNoclipping())
+			{
+				player->noclipService->DisableNoclip();
+				player->noclipService->HandleNoclip();
+			}
+		}
+		else
+		{
+			KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
+		}
+		player->Teleport(&tpOrigin, &tpAngles, &vec3_origin);
+	}
+	return MRES_SUPERCEDE;
+}
+
 static_function SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -97,14 +169,6 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	else
 	{
 		KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
-	}
-
-	// If the player specify a course name, we try to go to it instead.
-	if (V_strlen(args->ArgS()) > 0)
-	{
-		const KZCourse *course = KZ::course::GetCourse(args->ArgS());
-		player->Teleport(&course->descriptor->startPosition, &course->descriptor->startAngles, &vec3_origin);
-		return MRES_SUPERCEDE;
 	}
 
 	// Then prioritize custom start position.
@@ -250,6 +314,7 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hide", Command_KzHide);
 	scmd::RegisterCmd("kz_restart", Command_KzRestart);
 	scmd::RegisterCmd("kz_r", Command_KzRestart);
+	scmd::RegisterCmd("kz_end", Command_KzEnd);
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
 	scmd::RegisterCmd("kz_pc", Command_KzPlayerCheck);
 	scmd::RegisterCmd("kz_playercheck", Command_KzPlayerCheck);
