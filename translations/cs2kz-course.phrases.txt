@@ -1,0 +1,16 @@
+"Phrases"
+{
+	"No Current Course"
+	{
+		"en"		"{grey}You have no current course. Check console for list of available courses!"
+	}
+	"Current Course"
+	{
+		"#format"	"course:s"
+		"en"		"{grey}Your current course is {default}{course}{grey}. Check console for list of available courses!"
+	}
+	"Course List Header"
+	{
+		"en"		"List of available courses (use kz_r <course name> to teleport to course):"
+	}
+}

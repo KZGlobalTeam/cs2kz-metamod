@@ -130,5 +130,7 @@ namespace KZ
 
 		// Update the course's global ID given its map-defined name and ID.
 		bool UpdateCourseGlobalID(const char *courseName, i32 courseID, u32 globalID);
+
+		void RegisterCommands();
 	} // namespace course
 };    // namespace KZ

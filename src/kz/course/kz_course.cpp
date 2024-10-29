@@ -1,5 +1,8 @@
 #include "kz_course.h"
 #include "kz/db/kz_db.h"
+#include "kz/language/kz_language.h"
+
+#include "utils/simplecmds.h"
 
 #include "UtlSortVector.h"
 
@@ -140,4 +143,28 @@ bool KZ::course::UpdateCourseGlobalID(const char *courseName, i32 courseID, u32 
 		}
 	}
 	return false;
+}
+
+SCMD_CALLBACK(Command_KzCourse)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (player->timerService->GetCourse())
+	{
+		player->languageService->PrintChat(true, false, "Current Course", player->timerService->GetCourse()->name);
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "No Current Course");
+	}
+	player->languageService->PrintConsole(false, false, "Course List Header");
+	for (u32 i = 0; i < KZ::course::GetCourseCount(); i++)
+	{
+		player->PrintConsole(false, false, "%s", courseList[i].name);
+	}
+	return MRES_SUPERCEDE;
+}
+
+void KZ::course::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_course", Command_KzCourse);
 }

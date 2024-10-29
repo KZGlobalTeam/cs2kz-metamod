@@ -330,6 +330,7 @@ void KZ::misc::RegisterCommands()
 	KZTelemetryService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 	KZ::style::RegisterCommands();
+	KZ::course::RegisterCommands();
 }
 
 void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
