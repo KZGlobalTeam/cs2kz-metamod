@@ -3,7 +3,7 @@
 	"No Current Course"
 	{
 		"en"		"{grey}You have no current course. Check console for list of available courses!"
-		"sv"		"{grey}Du har ingen bana tillfälligt Kolla konsolen för en lista av tillgängliga banor!"
+		"sv"		"{grey}Du har ingen bana tillfälligt. Kolla konsolen för en lista av tillgängliga banor!"
 	}
 	"Current Course"
 	{
