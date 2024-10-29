@@ -3,14 +3,17 @@
 	"No Current Course"
 	{
 		"en"		"{grey}You have no current course. Check console for list of available courses!"
+		"ua"		"{grey}У вас немає поточного курсу. Перевірте в консолі список доступних курсів!"
 	}
 	"Current Course"
 	{
 		"#format"	"course:s"
 		"en"		"{grey}Your current course is {default}{course}{grey}. Check console for list of available courses!"
+		"ua"		"{grey}Ваш поточний курс це {default}{course}{grey}. Перевірте в консолі список доступних курсів!"
 	}
 	"Course List Header"
 	{
 		"en"		"List of available courses (use kz_r <course name> to teleport to course):"
+		"ua"		"Список доступних курсів (використовуйте kz_r <назва курсу> для телепортації до курсу):"
 	}
 }
