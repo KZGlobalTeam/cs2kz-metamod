@@ -61,7 +61,7 @@ typedef double f64;
 // str*cmp considered harmful.
 //  Macros to make sure you don't mess up checking if strings are equal.
 //  The I means case insensitive.
-#define KZ_STREQ(a, b)           (V_strcmp(a, b) == 0)
-#define KZ_STREQI(a, b)          (V_stricmp(a, b) == 0)
+#define KZ_STREQ(a, b)             (V_strcmp(a, b) == 0)
+#define KZ_STREQI(a, b)            (V_stricmp(a, b) == 0)
 #define KZ_STREQLEN(a, b, maxlen)  (V_strncmp(a, b, maxlen) == 0)
 #define KZ_STREQILEN(a, b, maxlen) (V_strnicmp(a, b, maxlen) == 0)

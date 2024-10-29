@@ -482,12 +482,12 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 	{
 		return;
 	}
-	
+
 	if (g_mappingApi.apiVersionLoaded)
 	{
 		return;
 	}
-	
+
 	for (i32 i = 0; i < pKeyValues->Count(); i++)
 	{
 		auto ekv = (*pKeyValues)[i];
