@@ -778,4 +778,8 @@
 		"sv"		"Kolla status av en specifik spelare (förinställt på dig själv)."
 		"ua"		"Перевірити статус вибраного гравця (за замовчуванням себе)."
 	}
+	"Command Description - kz_course"
+	{
+		"en"		"Display the current courses and the list of all courses in the map."
+	}
 }
