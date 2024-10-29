@@ -534,6 +534,7 @@
 	{
 		"en"		"Teleport to the end."
 		"sv"		"Teleportera till slutet."
+		"ua"		"Телепортуватися до кінця."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -783,5 +784,6 @@
 	{
 		"en"		"Display the current course and the list of all courses in the map."
 		"sv"		"Visa tillfälliga banan och lista alla tillgängliga banor på kartan."
+		"ua"		"Показати поточний курс, а також список всіх доступних курсів на мапі."
 	}
 }
