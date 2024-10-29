@@ -533,6 +533,7 @@
 	"Command Description - kz_end"
 	{
 		"en"		"Teleport to the end."
+		"sv"		"Teleportera till slutet."
 	}
 	"Command Description - kz_hideweapon"
 	{
