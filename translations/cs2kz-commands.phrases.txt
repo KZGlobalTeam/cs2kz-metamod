@@ -781,5 +781,6 @@
 	"Command Description - kz_course"
 	{
 		"en"		"Display the current course and the list of all courses in the map."
+		"sv"		"Visa tillfälliga banan och lista alla tillgängliga banor på kartan."
 	}
 }
