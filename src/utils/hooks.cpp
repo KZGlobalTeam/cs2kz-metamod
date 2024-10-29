@@ -580,7 +580,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 {
 	if (event)
 	{
-		if (KZ_STRIEQ(event->GetName(), "player_death"))
+		if (KZ_STREQI(event->GetName(), "player_death"))
 		{
 			CEntityInstance *instance = event->GetPlayerPawn("userid");
 			KZPlayer *player = g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex());
@@ -590,26 +590,26 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 				player->quietService->SendFullUpdate();
 			}
 		}
-		else if (KZ_STRIEQ(event->GetName(), "round_prestart"))
+		else if (KZ_STREQI(event->GetName(), "round_prestart"))
 		{
 			KZ::mapapi::OnRoundPreStart();
 		}
-		else if (KZ_STRIEQ(event->GetName(), "round_start"))
+		else if (KZ_STREQI(event->GetName(), "round_start"))
 		{
 			interfaces::pEngine->ServerCommand("sv_full_alltalk 1");
 			KZTimerService::OnRoundStart();
 			KZ::misc::OnRoundStart();
 			KZ::mapapi::OnRoundStart();
 		}
-		else if (KZ_STRIEQ(event->GetName(), "round_end"))
+		else if (KZ_STREQI(event->GetName(), "round_end"))
 		{
 			hooks::HookEntities();
 		}
-		else if (KZ_STRIEQ(event->GetName(), "player_team"))
+		else if (KZ_STREQI(event->GetName(), "player_team"))
 		{
 			event->SetBool("silent", true);
 		}
-		else if (KZ_STRIEQ(event->GetName(), "player_spawn"))
+		else if (KZ_STREQI(event->GetName(), "player_spawn"))
 		{
 			CEntityInstance *instance = event->GetPlayerPawn("userid");
 			if (instance)
