@@ -40,12 +40,10 @@ namespace movement
 	void FASTCALL Detour_CheckJumpButton(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_OnJump(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_AirMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_AirAccelerate(CCSPlayer_MovementServices *, CMoveData *, Vector &, f32, f32);
 	void FASTCALL Detour_Friction(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_WalkMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_TryPlayerMove(CCSPlayer_MovementServices *, CMoveData *, Vector *, trace_t *);
 	void FASTCALL Detour_CategorizePosition(CCSPlayer_MovementServices *, CMoveData *, bool);
-	void FASTCALL Detour_FinishGravity(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostPlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
@@ -153,10 +151,6 @@ public:
 	virtual void OnAirMove() {}
 
 	virtual void OnAirMovePost() {}
-
-	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) {}
-
-	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) {}
 
 	virtual void OnFriction() {}
 

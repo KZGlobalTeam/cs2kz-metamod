@@ -709,7 +709,7 @@ bool KZJumpstatsService::GroundSpeedCappedRecently()
 	return this->lastGroundSpeedCappedTime == this->lastMovementProcessedTime;
 }
 
-void KZJumpstatsService::OnAirAccelerate()
+void KZJumpstatsService::OnAirMove()
 {
 	if (g_pKZUtils->GetGlobals()->frametime == 0.0f)
 	{
@@ -727,12 +727,50 @@ void KZJumpstatsService::OnAirAccelerate()
 	strafe->aaCalls.AddToTail(call);
 }
 
-void KZJumpstatsService::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
+void KZJumpstatsService::OnAirMovePost()
 {
 	if (g_pKZUtils->GetGlobals()->frametime == 0.0f)
 	{
 		return;
 	}
+	int i;
+	Vector wishvel;
+	float fmove, smove;
+	Vector wishdir;
+	float wishspeed;
+	Vector forward, right, up;
+
+	AngleVectors(this->player->currentMoveData->m_vecViewAngles, &forward, &right, &up); // Determine movement angles
+
+	// Copy movement amounts
+	fmove = this->player->currentMoveData->m_flForwardMove;
+	smove = this->player->currentMoveData->m_flSideMove;
+
+	// Zero out z components of movement vectors
+	forward[2] = 0;
+	right[2] = 0;
+	VectorNormalize(forward); // Normalize remainder of vectors
+	VectorNormalize(right);   //
+
+	for (i = 0; i < 2; i++) // Determine x and y parts of velocity
+	{
+		wishvel[i] = forward[i] * fmove + right[i] * smove;
+	}
+	wishvel[2] = 0; // Zero out z part of velocity
+
+	VectorCopy(wishvel, wishdir); // Determine maginitude of speed of move
+	wishspeed = VectorNormalize(wishdir);
+
+	//
+	// clamp to server defined max speed
+	//
+	if (wishspeed != 0 && (wishspeed > this->player->currentMoveData->m_flMaxSpeed))
+	{
+		VectorScale(wishvel, this->player->currentMoveData->m_flMaxSpeed / wishspeed, wishvel);
+		wishspeed = this->player->currentMoveData->m_flMaxSpeed;
+	}
+	auto accel = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[3]->values))->m_flValue;
+
 	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }
 

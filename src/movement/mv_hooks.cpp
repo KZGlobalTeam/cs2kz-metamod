@@ -28,12 +28,10 @@ void movement::InitDetours()
 	INIT_DETOUR(g_pGameConfig, CheckJumpButton);
 	INIT_DETOUR(g_pGameConfig, OnJump);
 	INIT_DETOUR(g_pGameConfig, AirMove);
-	INIT_DETOUR(g_pGameConfig, AirAccelerate);
 	INIT_DETOUR(g_pGameConfig, Friction);
 	INIT_DETOUR(g_pGameConfig, WalkMove);
 	INIT_DETOUR(g_pGameConfig, TryPlayerMove);
 	INIT_DETOUR(g_pGameConfig, CategorizePosition);
-	INIT_DETOUR(g_pGameConfig, FinishGravity);
 	INIT_DETOUR(g_pGameConfig, CheckFalling);
 	INIT_DETOUR(g_pGameConfig, PostPlayerMove);
 	INIT_DETOUR(g_pGameConfig, PostThink);
@@ -260,10 +258,10 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 {
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnJump();
-	f32 oldJumpUntil = ms->m_flJumpUntil();
+	Vector oldOutWishVel = mv->m_outWishVel;
 	MoveType_t oldMoveType = player->GetPlayerPawn()->m_MoveType();
 	OnJump(ms, mv);
-	if (ms->m_flJumpUntil() != oldJumpUntil)
+	if (mv->m_outWishVel != oldOutWishVel)
 	{
 		player->inPerf = (oldMoveType != MOVETYPE_LADDER && !player->oldWalkMoved);
 		player->RegisterTakeoff(true);
@@ -278,14 +276,6 @@ void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData
 	player->OnAirMove();
 	AirMove(ms, mv);
 	player->OnAirMovePost();
-}
-
-void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)
-{
-	MovementPlayer *player = playerManager->ToPlayer(ms);
-	player->OnAirAccelerate(wishdir, wishspeed, accel);
-	AirAccelerate(ms, mv, wishdir, wishspeed, accel);
-	player->OnAirAcceleratePost(wishdir, wishspeed, accel);
 }
 
 void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveData *mv)
@@ -354,14 +344,6 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 		}
 	}
 	player->OnCategorizePositionPost(bStayOnGround);
-}
-
-void FASTCALL movement::Detour_FinishGravity(CCSPlayer_MovementServices *ms, CMoveData *mv)
-{
-	MovementPlayer *player = playerManager->ToPlayer(ms);
-	player->OnFinishGravity();
-	FinishGravity(ms, mv);
-	player->OnFinishGravityPost();
 }
 
 void FASTCALL movement::Detour_CheckFalling(CCSPlayer_MovementServices *ms, CMoveData *mv)

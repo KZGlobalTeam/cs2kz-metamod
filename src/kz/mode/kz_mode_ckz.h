@@ -98,9 +98,6 @@ class KZClassicModeService : public KZModeService
 	};
 	static_assert(Q_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
 
-	bool revertJumpTweak {};
-	f32 preJumpZSpeed {};
-	f32 tweakedJumpZSpeed {};
 	bool hasValidDesiredViewAngle {};
 	QAngle lastValidDesiredViewAngle;
 	f32 lastJumpReleaseTime {};
@@ -155,8 +152,6 @@ public:
 	virtual void OnDuckPost() override;
 	virtual void OnAirMove() override;
 	virtual void OnAirMovePost() override;
-	virtual void OnJump() override;
-	virtual void OnJumpPost() override;
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace) override;

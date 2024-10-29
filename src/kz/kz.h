@@ -101,8 +101,6 @@ public:
 	virtual void OnJumpPost() override;
 	virtual void OnAirMove() override;
 	virtual void OnAirMovePost() override;
-	virtual void OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel) override;
-	virtual void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel) override;
 	virtual void OnFriction() override;
 	virtual void OnFrictionPost() override;
 	virtual void OnWalkMove() override;

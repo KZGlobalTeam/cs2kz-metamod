@@ -134,9 +134,6 @@ CGameEntitySystem *GameEntitySystem()
 
 void KZClassicModeService::Reset()
 {
-	this->revertJumpTweak = {};
-	this->preJumpZSpeed = {};
-	this->tweakedJumpZSpeed = {};
 	this->hasValidDesiredViewAngle = {};
 	this->lastValidDesiredViewAngle = vec3_angle;
 	this->lastJumpReleaseTime = {};
@@ -215,44 +212,11 @@ const char **KZClassicModeService::GetModeConVarValues()
 	return modeCvarValues;
 }
 
-// Attempt to replicate 128t jump height.
-void KZClassicModeService::OnJump()
-{
-	Vector velocity;
-	this->player->GetVelocity(&velocity);
-	this->preJumpZSpeed = velocity.z;
-	// Emulate the 128t vertical velocity before jumping
-	if (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->GetPlayerPawn()->m_hGroundEntity().IsValid()
-		&& (this->preJumpZSpeed < 0.0f || !this->player->duckBugged))
-	{
-		velocity.z += 0.25 * this->player->GetPlayerPawn()->m_flGravityScale() * 800 * ENGINE_FIXED_TICK_INTERVAL;
-		this->player->SetVelocity(velocity);
-		this->tweakedJumpZSpeed = velocity.z;
-		this->revertJumpTweak = true;
-	}
-}
-
-void KZClassicModeService::OnJumpPost()
-{
-	// If we didn't jump, we revert the jump height tweak.
-	Vector velocity;
-	this->player->GetVelocity(&velocity);
-	if (this->revertJumpTweak && velocity.z == this->tweakedJumpZSpeed)
-	{
-		velocity.z = this->preJumpZSpeed;
-		this->player->SetVelocity(velocity);
-	}
-	this->revertJumpTweak = false;
-}
-
 void KZClassicModeService::OnStopTouchGround()
 {
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	f32 speed = velocity.Length2D();
-
-	// If we are actually taking off, we don't need to revert the change anymore.
-	this->revertJumpTweak = false;
 
 	f32 timeOnGround = this->player->takeoffTime - this->player->landingTime;
 	// Perf
