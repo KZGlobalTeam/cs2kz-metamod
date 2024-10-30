@@ -78,6 +78,7 @@ class KZClassicModeService : public KZModeService
 		"5.2",    // sv_friction
 		"800",    // sv_gravity
 		"302.0",  // sv_jump_impulse
+		"false",  // sv_jump_precision_enable
 		"0.0",    // sv_jump_spam_penalty_time
 		"-0.707", // sv_ladder_angle
 		"1",      // sv_ladder_dampen

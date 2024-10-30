@@ -81,6 +81,8 @@ void MovementPlayer::SetOrigin(const Vector &origin)
 		}
 		pawn->Teleport(&origin, NULL, NULL);
 	}
+	// Origin teleported, remove all errors.
+	this->GetMoveServices()->m_flAccumulatedJumpError() = 0;
 }
 
 void MovementPlayer::GetVelocity(Vector *velocity)

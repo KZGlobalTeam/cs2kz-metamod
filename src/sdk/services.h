@@ -60,6 +60,7 @@ public:
 	SCHEMA_FIELD(Vector, m_vecLadderNormal)
 	SCHEMA_FIELD(bool, m_bOldJumpPressed)
 	SCHEMA_FIELD(float, m_flJumpPressedTime)
+	SCHEMA_FIELD(float, m_flAccumulatedJumpError)
 	SCHEMA_FIELD(float, m_flDuckSpeed)
 	SCHEMA_FIELD(float, m_flDuckAmount)
 	SCHEMA_FIELD(float, m_flStamina)

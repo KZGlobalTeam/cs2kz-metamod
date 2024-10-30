@@ -650,6 +650,8 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
+	// Teleported. Reset the errors.
+	this->GetMoveServices()->m_flAccumulatedJumpError() = 0.0f;
 	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->jumpstatsService->InvalidateJumpstats("Teleported");
 	this->modeService->OnTeleport(origin, angles, velocity);

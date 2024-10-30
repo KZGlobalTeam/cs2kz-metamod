@@ -769,7 +769,7 @@ void KZJumpstatsService::OnAirMovePost()
 		VectorScale(wishvel, this->player->currentMoveData->m_flMaxSpeed / wishspeed, wishvel);
 		wishspeed = this->player->currentMoveData->m_flMaxSpeed;
 	}
-	auto accel = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[3]->values))->m_flValue;
+	auto accel = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIRACCELERATE]->values))->m_flValue;
 
 	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }

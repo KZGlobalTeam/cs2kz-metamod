@@ -875,7 +875,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			potentiallyStuck = pm.m_flFraction == 0.0f;
 		}
 
-		if (pm.m_flFraction * velocity.Length() > 0.03125f)
+		if (pm.m_flFraction * velocity.Length() > 0.03125f || pm.m_flFraction > 0.03125f)
 		{
 			allFraction += pm.m_flFraction;
 			start = pm.m_vEndPos;
