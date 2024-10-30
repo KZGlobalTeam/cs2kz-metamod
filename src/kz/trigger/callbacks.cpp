@@ -143,7 +143,6 @@ void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tra
 		}
 		break;
 
-		case KZTRIGGER_ANTI_BHOP:
 		case KZTRIGGER_TELEPORT:
 		case KZTRIGGER_MULTI_BHOP:
 		case KZTRIGGER_SINGLE_BHOP:
@@ -225,7 +224,6 @@ void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker track
 		break;
 
 		case KZTRIGGER_TELEPORT:
-		case KZTRIGGER_ANTI_BHOP:
 		case KZTRIGGER_MULTI_BHOP:
 		case KZTRIGGER_SINGLE_BHOP:
 		case KZTRIGGER_SEQUENTIAL_BHOP:

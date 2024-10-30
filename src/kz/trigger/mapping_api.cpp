@@ -208,7 +208,7 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 
 	this->player->SetOrigin(finalOrigin);
 
-	return shouldTeleport;
+	return true;
 }
 
 void KZTriggerService::ApplySlide(bool replicate)
