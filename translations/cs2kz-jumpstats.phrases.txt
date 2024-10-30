@@ -372,6 +372,10 @@
 		"it"		"Base velocity detected"
 		"de"		"Basisgeschwindigkeit erkannt"
 	}
+	"Player gravity scale changed"
+	{
+		"en"		"Player gravity scale changed"
+	}
 	"Invalid gains"
 	{
 		"en"		"Invalid gains"
