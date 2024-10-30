@@ -592,6 +592,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		}
 		else if (KZ_STREQI(event->GetName(), "round_prestart"))
 		{
+			hooks::HookEntities();
 			KZ::mapapi::OnRoundPreStart();
 		}
 		else if (KZ_STREQI(event->GetName(), "round_start"))
@@ -600,10 +601,6 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			KZTimerService::OnRoundStart();
 			KZ::misc::OnRoundStart();
 			KZ::mapapi::OnRoundStart();
-		}
-		else if (KZ_STREQI(event->GetName(), "round_end"))
-		{
-			hooks::HookEntities();
 		}
 		else if (KZ_STREQI(event->GetName(), "player_team"))
 		{
