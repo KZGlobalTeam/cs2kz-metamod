@@ -211,6 +211,7 @@ static_function SCMD_CALLBACK(Command_KzLj)
 	QAngle destAngles;
 	if (g_pMappingApi->GetJumpstatArea(destPos, destAngles))
 	{
+		player->timerService->TimerStop();
 		player->Teleport(&destPos, &destAngles, &vec3_origin);
 	}
 	else
