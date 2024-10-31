@@ -138,6 +138,9 @@ void KZTriggerService::TouchTriggersAlongPath(const Vector &start, const Vector 
 
 void KZTriggerService::UpdateTriggerTouchList()
 {
+	// reset gravity before all the Touch() calls
+	this->player->GetPlayerPawn()->m_flGravityScale(1);
+
 	if (!this->player->IsAlive() || this->player->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 	{
 		this->EndTouchAll();
@@ -293,20 +296,7 @@ bool KZTriggerService::IsManagedByTriggerService(CBaseEntity *toucher, CBaseEnti
 
 bool KZTriggerService::HighFrequencyTouchAllowed(TriggerTouchTracker tracker)
 {
-	if (!tracker.kzTrigger)
-	{
-		return false;
-	}
-	switch (tracker.kzTrigger->type)
-	{
-		case KZTRIGGER_ANTI_BHOP:
-		case KZTRIGGER_TELEPORT:
-		case KZTRIGGER_MULTI_BHOP:
-		case KZTRIGGER_SINGLE_BHOP:
-		case KZTRIGGER_SEQUENTIAL_BHOP:
-			return true;
-	}
-	return false;
+	return tracker.kzTrigger;
 }
 
 KZTriggerService::TriggerTouchTracker *KZTriggerService::GetTriggerTracker(CBaseTrigger *trigger)

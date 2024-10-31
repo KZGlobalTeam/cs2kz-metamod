@@ -57,3 +57,11 @@ typedef double f64;
 // Common macro for service event listeners in different parts of the project.
 #define CALL_FORWARD(listeners, func, ...)                FOR_EACH_VEC(listeners, i) listeners[i]->func(__VA_ARGS__);
 #define CALL_FORWARD_BOOL(retValue, listeners, func, ...) FOR_EACH_VEC(listeners, i) retValue &= listeners[i]->func(__VA_ARGS__)
+
+// str*cmp considered harmful.
+//  Macros to make sure you don't mess up checking if strings are equal.
+//  The I means case insensitive.
+#define KZ_STREQ(a, b)             (V_strcmp(a, b) == 0)
+#define KZ_STREQI(a, b)            (V_stricmp(a, b) == 0)
+#define KZ_STREQLEN(a, b, maxlen)  (V_strncmp(a, b, maxlen) == 0)
+#define KZ_STREQILEN(a, b, maxlen) (V_strnicmp(a, b, maxlen) == 0)

@@ -67,6 +67,15 @@ bool KZTriggerService::ShouldDisableJumpstats()
 	return this->modifiers.disableJumpstatsCount > 0;
 }
 
+void KZTriggerService::TouchModifierTrigger(TriggerTouchTracker tracker)
+{
+	const KzTrigger *trigger = tracker.kzTrigger;
+	if (trigger->modifier.gravity != 1)
+	{
+		this->player->GetPlayerPawn()->m_flGravityScale(trigger->modifier.gravity);
+	}
+}
+
 void KZTriggerService::TouchAntibhopTrigger(TriggerTouchTracker tracker)
 {
 	f32 timeOnGround = g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTimeServer;
@@ -199,7 +208,7 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 
 	this->player->SetOrigin(finalOrigin);
 
-	return shouldTeleport;
+	return true;
 }
 
 void KZTriggerService::ApplySlide(bool replicate)

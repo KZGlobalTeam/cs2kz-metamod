@@ -530,6 +530,18 @@
 		"es"		"Reiniciar."
 		"de"		"Neustart."
 	}
+	"Command Description - kz_lj"
+	{
+		"en"		"Teleport to the jumpstat area."
+	}
+	"Command Description - kz_ljarea"
+	{
+		"en"		"Teleport to the jumpstat area."
+	}
+	"Command Description - kz_jsarea"
+	{
+		"en"		"Teleport to the jumpstat area."
+	}
 	"Command Description - kz_end"
 	{
 		"en"		"Teleport to the end."

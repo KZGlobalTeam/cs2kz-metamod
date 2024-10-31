@@ -30,6 +30,7 @@
 	timer_modifier_disable_teleports(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Disable Teleports" : 0 : "Disable teleporting when the player is touching this trigger"
 	timer_modifier_disable_jumpstats(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Disable Jumpstats" : 0 : "Disable jumpstats when the player is touching this trigger"
 	timer_modifier_enable_slide(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Enable Slide" : 0 : "Makes every surface surfable, if the player is touching this trigger."
+	timer_modifier_gravity(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Player Gravity" : "1.0" : "Scales the player's gravity by this amount."
 	
 	// KZ Anti Bhop
 	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
@@ -79,5 +80,5 @@
 
 @OverrideClass = info_teleport_destination 
 [
-	timer_zone_course_descriptor(target_destination) : "KZ | Course Descriptor" : : "info_target_server_only entity that describes which course this teleport destination is connected to. Every zone trigger must be associated with a course. Maximum length is 127 characters."
+	timer_zone_course_descriptor(target_destination) : "KZ | Course Descriptor" : : "info_target_server_only entity that describes which course this teleport destination is connected to."
 ]

@@ -25,27 +25,20 @@ enum
 
 static_global struct
 {
-	CUtlVectorFixed<KzTrigger, 2048> triggers;
 	CUtlVectorFixed<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
-	i32 mapApiVersion = KZ_NO_MAPAPI_VERSION;
-	bool apiVersionLoaded = false;
-	bool fatalFailure = false;
-	bool roundIsStarting = true;
+	i32 mapApiVersion;
+	bool apiVersionLoaded;
+	bool fatalFailure;
+
+	CUtlVectorFixed<KzTrigger, 2048> triggers;
+	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
 	char errors[32][256];
 
-	void OnRoundPrestart()
-	{
-		triggers.RemoveAll();
-		errorFlags = 0;
-		errorCount = 0;
-		roundIsStarting = true;
-		for (auto error : errors)
-		{
-			error[0] = 0;
-		}
-	}
+	bool hasJumpstatArea;
+	Vector jumpstatAreaPos;
+	QAngle jumpstatAreaAngles;
 } g_mappingApi;
 
 static_global CTimer<> *g_errorTimer;
@@ -119,7 +112,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 			// This should only happen during start/end zone backwards compat where hammer IDs are KZ_NO_MAPAPI_VERSION, so this is not an error.
 			return false;
 		}
-		if (!V_stricmp(targetName, currentCourses[i].entityTargetname))
+		if (KZ_STREQI(targetName, currentCourses[i].entityTargetname))
 		{
 			Mapi_Error("Course descriptor '%s' already existed! (registered by Hammer ID %i)", targetName, currentCourses[i].hammerId);
 			return false;
@@ -188,8 +181,6 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 	if (!g_mappingApi.roundIsStarting)
 	{
 		// Only allow triggers and zones that were spawned during the round start phase.
-		Mapi_Error("Trigger %s spawned after the map was loaded, the trigger won't be loaded! Hammer ID %i, origin (%.0f %.0f %.0f)",
-				   g_triggerNames[type], hammerId, origin.x, origin.y, origin.z);
 		return;
 	}
 
@@ -215,6 +206,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			trigger.modifier.disableTeleports = ekv->GetBool("timer_modifier_disable_teleports");
 			trigger.modifier.disableJumpstats = ekv->GetBool("timer_modifier_disable_jumpstats");
 			trigger.modifier.enableSlide = ekv->GetBool("timer_modifier_enable_slide");
+			trigger.modifier.gravity = ekv->GetFloat("timer_modifier_gravity", 1);
 		}
 		break;
 
@@ -359,7 +351,7 @@ static_function void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
 	const char *courseName = ekv->GetString("timer_course_name");
 	const char *targetName = ekv->GetString("targetname");
 	constexpr static_persist const char *targetNamePrefix = "[PR#]";
-	if (!V_strncmp(targetName, targetNamePrefix, strlen(targetNamePrefix)))
+	if (KZ_STREQLEN(targetName, targetNamePrefix, strlen(targetNamePrefix)))
 	{
 		targetName = targetName + strlen(targetNamePrefix);
 	}
@@ -422,7 +414,7 @@ static_function KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
 
 	FOR_EACH_VEC(g_mappingApi.courseDescriptors, i)
 	{
-		if (V_stricmp(g_mappingApi.courseDescriptors[i].entityTargetname, targetname) == 0)
+		if (KZ_STREQI(g_mappingApi.courseDescriptors[i].entityTargetname, targetname))
 		{
 			result = &g_mappingApi.courseDescriptors[i];
 			break;
@@ -448,27 +440,32 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 {
 	const CEntityKeyValues *ekv = info->m_pKeyValues;
 	const char *targetname = ekv->GetString("targetname");
-	if (V_stricmp(targetname, "timer_start"))
+	if (KZ_STREQI(targetname, "timer_start"))
 	{
-		return;
-	}
-	if (g_mappingApi.mapApiVersion == KZ_NO_MAPAPI_VERSION)
-	{
-		Mapi_SetStartPosition(KZ_NO_MAPAPI_COURSE_DESCRIPTOR, ekv->GetVector("origin"), ekv->GetQAngle("angles"));
-	}
-	else if (g_mappingApi.mapApiVersion == KZ_MAPAPI_VERSION) // TODO do better check
-	{
-		const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
-		i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
-		Vector origin = ekv->GetVector("origin");
-		if (!courseDescriptor || !courseDescriptor[0])
+		if (g_mappingApi.mapApiVersion == KZ_NO_MAPAPI_VERSION)
 		{
-			Mapi_Error("Course descriptor targetname of timer_start info_teleport_destination is empty! Hammer ID %i, origin (%.0f %.0f %.0f)",
-					   hammerId, origin.x, origin.y, origin.z);
-			assert(0);
-			return;
+			Mapi_SetStartPosition(KZ_NO_MAPAPI_COURSE_DESCRIPTOR, ekv->GetVector("origin"), ekv->GetQAngle("angles"));
 		}
-		Mapi_SetStartPosition(courseDescriptor, origin, ekv->GetQAngle("angles"));
+		else if (g_mappingApi.mapApiVersion == KZ_MAPAPI_VERSION) // TODO do better check
+		{
+			const char *courseDescriptor = ekv->GetString("timer_zone_course_descriptor");
+			i32 hammerId = ekv->GetInt("hammerUniqueId", -1);
+			Vector origin = ekv->GetVector("origin");
+			if (!courseDescriptor || !courseDescriptor[0])
+			{
+				Mapi_Error("Course descriptor targetname of timer_start info_teleport_destination is empty! Hammer ID %i, origin (%.0f %.0f %.0f)",
+						   hammerId, origin.x, origin.y, origin.z);
+				assert(0);
+				return;
+			}
+			Mapi_SetStartPosition(courseDescriptor, origin, ekv->GetQAngle("angles"));
+		}
+	}
+	else if (KZ_STREQI(targetname, "timer_jumpstat_area"))
+	{
+		g_mappingApi.hasJumpstatArea = true;
+		g_mappingApi.jumpstatAreaPos = ekv->GetVector("origin");
+		g_mappingApi.jumpstatAreaAngles = ekv->GetQAngle("angles");
 	}
 };
 
@@ -485,8 +482,13 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 	{
 		return;
 	}
-	g_mappingApi.fatalFailure = false;
-	for (i32 i = 0; i < pKeyValues->Count() && !g_mappingApi.apiVersionLoaded; i++)
+
+	if (g_mappingApi.apiVersionLoaded)
+	{
+		return;
+	}
+
+	for (i32 i = 0; i < pKeyValues->Count(); i++)
 	{
 		auto ekv = (*pKeyValues)[i];
 
@@ -495,7 +497,7 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 			continue;
 		}
 		const char *classname = ekv->GetString("classname");
-		if (V_stricmp(classname, "worldspawn") == 0)
+		if (KZ_STREQI(classname, "worldspawn"))
 		{
 			// We only care about the first spawn group's worldspawn because the rest might use prefabs compiled outside of mapping API.
 			g_mappingApi.apiVersionLoaded = true;
@@ -531,17 +533,12 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 				continue;
 			}
 			const char *classname = ekv->GetString("classname");
-			if (!V_stricmp(classname, "info_target_server_only"))
+			if (KZ_STREQI(classname, "info_target_server_only"))
 			{
 				Mapi_OnInfoTargetSpawn(ekv);
 			}
 		}
 	}
-}
-
-void KZ::mapapi::OnRoundPrestart()
-{
-	g_mappingApi.OnRoundPrestart();
 }
 
 void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
@@ -575,7 +572,7 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 			continue;
 		}
 		const char *classname = info[i].m_pEntity->GetClassname();
-		if (V_stricmp(classname, "trigger_multiple") == 0)
+		if (KZ_STREQI(classname, "trigger_multiple"))
 		{
 			Mapi_OnTriggerMultipleSpawn(&info[i]);
 		}
@@ -592,7 +589,7 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 			continue;
 		}
 		const char *classname = info[i].m_pEntity->GetClassname();
-		if (V_stricmp(classname, "info_teleport_destination") == 0)
+		if (KZ_STREQI(classname, "info_teleport_destination"))
 		{
 			Mapi_OnInfoTeleportDestinationSpawn(&info[i]);
 		}
@@ -603,6 +600,12 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 		g_mappingApi.triggers.RemoveAll();
 		g_mappingApi.courseDescriptors.RemoveAll();
 	}
+}
+
+void KZ::mapapi::OnRoundPreStart()
+{
+	g_mappingApi.triggers.RemoveAll();
+	g_mappingApi.roundIsStarting = true;
 }
 
 void KZ::mapapi::OnRoundStart()
@@ -747,4 +750,15 @@ bool MappingInterface::IsTriggerATimerZone(CBaseTrigger *trigger)
 		return false;
 	}
 	return KZ::mapapi::IsTimerTrigger(kzTrigger->type);
+}
+
+bool MappingInterface::GetJumpstatArea(Vector &pos, QAngle &angles)
+{
+	if (g_mappingApi.hasJumpstatArea)
+	{
+		pos = g_mappingApi.jumpstatAreaPos;
+		angles = g_mappingApi.jumpstatAreaAngles;
+	}
+
+	return g_mappingApi.hasJumpstatArea;
 }

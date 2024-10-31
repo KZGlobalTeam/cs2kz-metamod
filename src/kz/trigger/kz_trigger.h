@@ -110,6 +110,7 @@ private:
 
 	CSequentialBhopBuffer lastTouchedSequentialBhops {};
 
+	void TouchModifierTrigger(TriggerTouchTracker tracker);
 	void TouchAntibhopTrigger(TriggerTouchTracker tracker);
 	bool TouchTeleportTrigger(TriggerTouchTracker tracker);
 	void ResetBhopState();
@@ -162,7 +163,7 @@ public:
 	static bool ShouldTouchBeforeEndTouch(TriggerTouchTracker tracker)
 	{
 		// TODO: Let mapping API decide whether it is not the case.
-		return true;
+		return !tracker.kzTrigger;
 	}
 
 	// Whether Touch should be called on every possible change in origin.

@@ -203,6 +203,24 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	return MRES_SUPERCEDE;
 }
 
+static_function SCMD_CALLBACK(Command_KzLj)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+
+	Vector destPos;
+	QAngle destAngles;
+	if (g_pMappingApi->GetJumpstatArea(destPos, destAngles))
+	{
+		player->Teleport(&destPos, &destAngles, &vec3_origin);
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "No Jumpstat Area Found", args->ArgS());
+	}
+
+	return MRES_SUPERCEDE;
+}
+
 static_function SCMD_CALLBACK(Command_KzHideWeapon)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -314,6 +332,9 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hide", Command_KzHide);
 	scmd::RegisterCmd("kz_restart", Command_KzRestart);
 	scmd::RegisterCmd("kz_r", Command_KzRestart);
+	scmd::RegisterCmd("kz_lj", Command_KzLj);
+	scmd::RegisterCmd("kz_ljarea", Command_KzLj);
+	scmd::RegisterCmd("kz_jsarea", Command_KzLj);
 	scmd::RegisterCmd("kz_end", Command_KzEnd);
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
 	scmd::RegisterCmd("kz_pc", Command_KzPlayerCheck);
