@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "cdetour.h"
 #include "detours.h"
-
+#include "kz/kz.h"
 #include "sdk/entity/ccsplayerpawn.h"
 #include "movement/movement.h"
 #include "fmtstr.h"
@@ -46,6 +46,10 @@ void InitDetours()
 {
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(g_pGameConfig, RecvServerBrowserPacket);
+#ifdef DEBUG_TPM
+	INIT_DETOUR(g_pGameConfig, TraceShape);
+	TraceShape.DisableDetour();
+#endif
 }
 
 void FlushAllDetours()
@@ -71,7 +75,21 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 					   trace_t *pm)
 {
 	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
-
+#ifdef DEBUG_TPM
+	f32 error;
+	Vector velocity;
+	for (u32 i = 0; i < 2; i++)
+	{
+		if (g_pKZPlayerManager->ToPlayer(i) && g_pKZPlayerManager->ToPlayer(i)->GetMoveServices())
+		{
+			error = g_pKZPlayerManager->ToPlayer(i)->GetMoveServices()->m_flAccumulatedJumpError();
+			velocity = g_pKZPlayerManager->ToPlayer(i)->currentMoveData->m_vecVelocity;
+			break;
+		}
+	}
+	traceHistory.AddToTail({start, end, ray, pm->DidHit(), pm->m_vStartPos, pm->m_vEndPos, pm->m_vHitNormal, pm->m_vHitPoint, pm->m_flHitOffset,
+							pm->m_flFraction, error, velocity});
+	return ret;
 	META_CONPRINTF("Trace %s -> %s, ", VecToString(start), VecToString(end));
 	switch (ray.m_eType)
 	{
@@ -112,5 +130,6 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 	{
 		META_CONPRINT("missed\n");
 	}
+#endif
 	return ret;
 }

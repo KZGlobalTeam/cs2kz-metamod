@@ -654,21 +654,14 @@ void KZClassicModeService::SlopeFix()
 	}
 }
 
+// 1:1 with CS2.
 static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 {
-	// Determine how far along plane to slide based on incoming direction.
-	f32 backoff = DotProduct(in, normal);
-
-	for (i32 i = 0; i < 3; i++)
+	f32 backoff = -((in.x * normal.x) + ((normal.z * in.z) + (in.y * normal.y))) * 1;
+	backoff = fmaxf(backoff, 0.0) + 0.03125;
+	for (int i = 0; i < 3; i++)
 	{
-		f32 change = normal[i] * backoff;
-		out[i] = in[i] - change;
-	}
-	float adjust = DotProduct(out, normal);
-	if (adjust < 0.0f)
-	{
-		adjust = MIN(adjust, -1 / 128);
-		out -= (normal * adjust);
+		out = normal * backoff + in;
 	}
 }
 

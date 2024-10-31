@@ -48,19 +48,15 @@ void KZVanillaModeService::Reset()
 	this->tpmTriggerFixOrigins.RemoveAll();
 }
 
+// 1:1 with CS2.
 static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 {
-	// Determine how far along plane to slide based on incoming direction.
-	f32 backoff = DotProduct(in, normal);
-
-	for (i32 i = 0; i < 3; i++)
+	f32 backoff = -((in.x * normal.x) + ((normal.z * in.z) + (in.y * normal.y))) * 1;
+	backoff = fmaxf(backoff, 0.0) + 0.03125;
+	for (int i = 0; i < 3; i++)
 	{
-		f32 change = normal[i] * backoff;
-		out[i] = in[i] - change;
+		out = normal * backoff + in;
 	}
-
-	float adjust = -0.0078125f;
-	out -= (normal * adjust);
 }
 
 void KZVanillaModeService::OnDuckPost()
@@ -82,7 +78,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 {
 	this->tpmTriggerFixOrigins.RemoveAll();
 
-	Vector velocity, origin;
+	Vector origin, oldVelocity;
 	int bumpcount, numbumps;
 	Vector dir;
 	float d;
@@ -94,14 +90,15 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	trace_t pm;
 	Vector end;
 
-	float time, time_left, allFraction;
+	float time_left, allFraction;
 
 	numbumps = 4; // Bump up to four times
 
 	numplanes = 0; //  and not sliding along any planes
 
 	this->player->GetOrigin(&origin);
-	this->player->GetVelocity(&velocity);
+	Vector &velocity = this->player->currentMoveData->m_vecVelocity;
+	this->player->GetVelocity(&oldVelocity);
 	g_pKZUtils->InitGameTrace(&pm);
 
 	VectorCopy(velocity, original_velocity); // Store original velocity
@@ -119,24 +116,29 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 											  this->player->GetPlayerPawn()->m_pCollision()->m_collisionAttribute().m_nInteractsWith,
 											  COLLISION_GROUP_PLAYER_MOVEMENT);
 
-	f32 error = this->player->GetMoveServices()->m_flAccumulatedJumpError();
+	f32 originalError = this->player->GetMoveServices()->m_flAccumulatedJumpError();
 	for (bumpcount = 0; bumpcount < numbumps; bumpcount++)
 	{
 		if (velocity.Length() == 0.0)
 		{
 			break;
 		}
-		time = time_left;
 		// Assume we can move all the way from the current origin to the
 		//  end point.
-		VectorMA(origin, time, velocity, end);
-		if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0 && time != 0.0f)
+		VectorMA(origin, time_left, velocity, end);
+		if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0 && time_left != 0.0f)
 		{
-			f32 zMoveDistance = time * velocity.z;
-			f32 preciseZMoveDistance = zMoveDistance + error;
+			f32 zMoveDistance = time_left * velocity.z;
+			f32 preciseZMoveDistance = zMoveDistance + this->player->GetMoveServices()->m_flAccumulatedJumpError;
 			f32 quantizedMoveDistance = QuantizeFloat(zMoveDistance);
-			end.z = QuantizeFloat(preciseZMoveDistance + this->player->currentMoveData->m_vecAbsOrigin.z);
-			error = preciseZMoveDistance - (end.z - origin.z);
+			end.z = QuantizeFloat(preciseZMoveDistance + origin.z);
+			f32 zFinal = preciseZMoveDistance - quantizedMoveDistance;
+			quantizedMoveDistance += 199608.0f;
+			zFinal += quantizedMoveDistance;
+			zFinal += origin.z;
+			zFinal -= 199608.0f;
+			end.z = zFinal;
+			this->player->GetMoveServices()->m_flAccumulatedJumpError = preciseZMoveDistance - (end.z - origin.z);
 		}
 		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
 		if (pFirstDest && (end == *pFirstDest))
@@ -149,7 +151,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		}
 		if (allFraction == 0)
 		{
-			if (pm.m_flFraction < 1 && time_left * velocity.Length() >= 0.03125 && pm.m_flFraction * velocity.Length() < 0.03125)
+			if (pm.m_flFraction < 1 && time_left * velocity.Length() >= 0.03125 && pm.m_flFraction * velocity.Length() * time_left < 0.03125)
 			{
 				pm.m_flFraction = 0;
 			}
@@ -158,15 +160,8 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		// If we moved some portion of the total distance, then
 		//  copy the end position into the pmove.origin and
 		//  zero the plane counter.
-		if (pm.m_flFraction * velocity.Length() > 0.03125 || pm.m_flFraction > 0.03125)
+		if (pm.m_flFraction * MAX(1.0, velocity.Length()) > 0.03125)
 		{
-			// There's a precision issue with terrain tracing that can cause a swept box to successfully trace
-			// when the end position is stuck in the triangle.  Re-run the test with an uswept box to catch that
-			// case until the bug is fixed.
-			// If we detect getting stuck, don't allow the movement
-			trace_t stuck;
-			g_pKZUtils->InitGameTrace(&stuck);
-			g_pKZUtils->TracePlayerBBox(pm.m_vEndPos, pm.m_vEndPos, bounds, &filter, stuck);
 			// actually covered some distance
 			origin = (pm.m_vEndPos);
 			VectorCopy(velocity, original_velocity);
@@ -249,6 +244,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 				}
 				CrossProduct(planes[0], planes[1], dir);
 				dir.NormalizeInPlace();
+				dir.NormalizeInPlace();
 				d = dir.Dot(velocity);
 				VectorScale(dir, d, velocity);
 			}
@@ -266,11 +262,12 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			}
 		}
 	}
-
 	if (allFraction == 0)
 	{
 		VectorCopy(vec3_origin, velocity);
 	}
+	this->player->GetMoveServices()->m_flAccumulatedJumpError = originalError;
+	this->player->currentMoveData->m_vecVelocity = oldVelocity;
 }
 
 void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
