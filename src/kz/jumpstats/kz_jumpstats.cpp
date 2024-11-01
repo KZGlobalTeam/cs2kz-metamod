@@ -1031,6 +1031,15 @@ void KZJumpstatsService::OnTryPlayerMovePost()
 	f32 velocity = this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmVelocity.Length2D();
 	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(velocity);
 	this->DetectEdgebug();
+
+	FOR_EACH_VEC(this->player->currentMoveData->m_TouchList, i)
+	{
+		if (fabs(this->player->currentMoveData->m_TouchList[i].trace.m_vHitNormal.x) > JS_EPSILON
+			|| fabs(this->player->currentMoveData->m_TouchList[i].trace.m_vHitNormal.y) > JS_EPSILON)
+		{
+			this->InvalidateJumpstats("Invalid collision");
+		}
+	}
 }
 
 void KZJumpstatsService::OnProcessMovementPost()
