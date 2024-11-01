@@ -375,6 +375,7 @@
 	"Player gravity scale changed"
 	{
 		"en"		"Player gravity scale changed"
+		"sv"		"Spelarens gravitationsskala har ändrats"
 		"ua"		"Змінено шкалу гравітації гравця"
 	}
 	"Invalid gains"
@@ -428,6 +429,7 @@
 	"Disabled By Map"
 	{
 		"en"		"Disabled by map"
+		"sv"		"Inaktiverat av kartan"
 		"ua"		"Вимкнено налаштуваннями мапи."
 	}
 

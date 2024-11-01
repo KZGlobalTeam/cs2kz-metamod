@@ -275,6 +275,7 @@
 	{
 		"en"		"{darkred}Jumpstat area not found on this map!"
 		"tr"		"{darkred}Bu haritada zıplama alanı bulunamadı!"
+		"sv"		"{darkred}Jumpstat-området hittades inte på kartan!"
 		"ua"		"{darkred}Не знайдено зону тренування стрибків на даній мапі!"
 	}
 	
