@@ -5,5 +5,6 @@
 		"en"	"{grey}You can select different benchmarks to compare your run against by using {default}/comparelevel{grey}."
 		"sv"	"{grey}Du kan jämföra din egna tid bland andra utgångslägen med {default}/comparelevel{grey}."
 		"ua"	"{grey}Ви можете обрати різні критерії для порівняння свого проходження, використовуючи команду {default}/comparelevel{grey}."
+		"tr"	"{grey}Bu kodu kullanarak koşunu karşılaştırmak için farklı kıyaslamalar seçebilirsin. {default}/comparelevel{grey}."
 	}
 }

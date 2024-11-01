@@ -5,6 +5,7 @@
 		"en"	"{darkred}Warning{grey}: You are not currently authenticated with Steam. Your run might not be saved. Type {default}!pc{grey} to check your current authentication status."
 		"sv"	"{darkred}Varning{grey}: Du är inte autentiserad med Steam. Din tid sparas kanske inte. Skriv {default}!pc{grey} för att kolla din autentiseringsstatus."
 		"ua"	"{darkred}Увага{grey}: Ви не автентифіковані у Steam. Можливо, ваше проходження не буде зараховано. Напишіть {default}!pc{grey} в чаті, щоб перевірити поточний стан автентифікації."
+		"tr"	"{darkred}Dikkat{grey}: Steam kimliğin doğrulanamadı.{default}!pc{grey} yazarak kimlik doğrulama statünü öğrenebilirsin."
 	}
 	"Player Authenticated (Steam)"
 	{
@@ -12,6 +13,7 @@
 		"en"		"{grey}Player {default}{player}{grey} is authenticated with Steam."
 		"sv"		"{grey}Spelare {default}{player}{grey} är autentiserad med Steam."
 		"ua"		"{grey}Гравець {default}{player}{grey} автентифікований у Steam."
+		"tr"		"{default}{player}{grey} isimli oyuncunun kimliği Steam ile doğrulandı"
 	}
 	"Player Not Authenticated (Steam)"
 	{
@@ -19,6 +21,7 @@
 		"en"		"{grey}Player {default}{player}{grey} is currently {yellow}not{grey} authenticated with Steam."
 		"sv"		"{grey}Spelare {default}{player}{grey} är {yellow}inte{grey} autentiserad med Steam."
 		"ua"		"{grey}Гравець {default}{player}{grey} наразі {yellow}не{grey} автентифікований у Steam."
+		"tr"		"{default}{player}{grey} isimli oyuncunun kimliği Steam ile doğrulanamadı"
 	}
 	"Error Message (Player Not Found)"
 	{

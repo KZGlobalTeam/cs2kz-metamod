@@ -5,6 +5,7 @@
 		"en"		"{grey}You have no current course. Check console for list of available courses!"
 		"sv"		"{grey}Du har inte valt en bana. Kolla konsolen för en lista av tillgängliga banor!"
 		"ua"		"{grey}У вас немає поточного курсу. Перевірте в консолі список доступних курсів!"
+		"tr"		"{grey}Şu an bir rotan yok. Mevcut rotaları görmek için konsola bak!"
 	}
 	"Current Course"
 	{
@@ -12,11 +13,13 @@
 		"en"		"{grey}Your current course is {default}{course}{grey}. Check console for list of available courses!"
 		"sv"		"{grey}Din nuvarande bana är {default}{course}{grey}. Kolla konsolen för en lista av tillgängliga banor!"
 		"ua"		"{grey}Ваш поточний курс це {default}{course}{grey}. Перевірте в консолі список доступних курсів!"
+		"tr"		"{grey}Şuanki rotan {default}{course}{grey}.  Mevcut rotaları görmek için konsola bak!"
 	}
 	"Course List Header"
 	{
 		"en"		"List of available courses (use kz_r <course name> to teleport to course):"
 		"sv"		"Lista av möjliga banor (använd kz_r <banans namn> för att teleportera till banan):"
 		"ua"		"Список доступних курсів (використовуйте kz_r <назва курсу> для телепортації до курсу):"
+		"tr"		"Mevcut rotaların listesi için ( kz_r <course name> yazarak rotaya ışınlanabilirsin):"
 	}
 }
