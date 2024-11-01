@@ -275,6 +275,7 @@
 	{
 		"en"		"{darkred}Jumpstat area not found on this map!"
 		"tr"		"{darkred}Bu haritada zıplama alanı bulunamadı!"
+		"ua"		"{darkred}Не знайдено зону тренування стрибків на даній мапі!"
 	}
 	
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45

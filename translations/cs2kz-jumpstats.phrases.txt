@@ -375,6 +375,7 @@
 	"Player gravity scale changed"
 	{
 		"en"		"Player gravity scale changed"
+		"ua"		"Змінено шкалу гравітації гравця"
 	}
 	"Invalid gains"
 	{
