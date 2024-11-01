@@ -533,16 +533,19 @@
 	"Command Description - kz_lj"
 	{
 		"en"		"Teleport to the jumpstat area."
+		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 	}
 	"Command Description - kz_ljarea"
 	{
 		"en"		"Teleport to the jumpstat area."
+		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 	}
 	"Command Description - kz_jsarea"
 	{
 		"en"		"Teleport to the jumpstat area."
+		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 	}
 	"Command Description - kz_end"
