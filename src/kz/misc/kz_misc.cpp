@@ -142,13 +142,13 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 static_function SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-
+	const KZCourse *startPosCourse = nullptr;
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		const KZCourse *course = KZ::course::GetCourse(args->ArgS());
+		startPosCourse = KZ::course::GetCourse(args->ArgS());
 
-		if (!course || !course->descriptor || !course->descriptor->hasStartPosition)
+		if (!startPosCourse || !startPosCourse->descriptor || !startPosCourse->descriptor->hasStartPosition)
 		{
 			player->languageService->PrintChat(true, false, "No Start Position For Course", args->ArgS());
 			return MRES_SUPERCEDE;
@@ -169,6 +169,12 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	else
 	{
 		KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
+	}
+
+	if (startPosCourse)
+	{
+		player->Teleport(&startPosCourse->descriptor->startPosition, &startPosCourse->descriptor->startAngles, &vec3_origin);
+		return MRES_SUPERCEDE;
 	}
 
 	// Then prioritize custom start position.
