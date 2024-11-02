@@ -78,11 +78,11 @@ const KZCourse *KZ::course::GetCourseByLocalCourseID(i32 id)
 	return nullptr;
 }
 
-const KZCourse *KZ::course::GetCourse(const char *courseName)
+const KZCourse *KZ::course::GetCourse(const char *courseName, bool caseSensitive)
 {
 	FOR_EACH_VEC(courseList, i)
 	{
-		if (courseList[i].GetName() == courseName)
+		if (courseList[i].GetName() == courseName || (!caseSensitive && courseList[i].GetName().IsEqual_CaseSensitive(courseName)))
 		{
 			return &courseList[i];
 		}

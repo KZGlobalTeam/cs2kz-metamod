@@ -114,7 +114,7 @@ namespace KZ
 		const KZCourse *GetCourseByLocalCourseID(i32 id);
 
 		// Get a course's information given its name.
-		const KZCourse *GetCourse(const char *courseName);
+		const KZCourse *GetCourse(const char *courseName, bool caseSensitive = true);
 
 		// Get a course's information given its GUID.
 		const KZCourse *GetCourse(u32 guid);
