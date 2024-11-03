@@ -30,13 +30,17 @@ constexpr char mysql_mapcourses_create[] = R"(
 )";
 
 constexpr char sqlite_mapcourses_insert[] = R"(
-    INSERT OR IGNORE INTO MapCourses (MapID, Name, StageID) 
+    INSERT INTO MapCourses (MapID, Name, StageID)
         VALUES (%d, '%s', %d)
+        ON CONFLICT(MapID, StageID) DO UPDATE SET
+            Name = excluded.Name
 )";
 
 constexpr char mysql_mapcourses_insert[] = R"(
-    INSERT IGNORE INTO MapCourses (MapID, Name, StageID) 
+    INSERT INTO MapCourses (MapID, Name, StageID) 
         VALUES (%d, '%s', %d)
+        ON DUPLICATE KEY UPDATE 
+            Name = VALUES(Name)
 )";
 
 constexpr char sql_mapcourses_findfirst_mapname[] = R"(
