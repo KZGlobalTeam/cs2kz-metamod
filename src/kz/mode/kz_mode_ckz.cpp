@@ -659,10 +659,8 @@ static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out)
 {
 	f32 backoff = -((in.x * normal.x) + ((normal.z * in.z) + (in.y * normal.y))) * 1;
 	backoff = fmaxf(backoff, 0.0) + 0.03125;
-	for (int i = 0; i < 3; i++)
-	{
-		out = normal * backoff + in;
-	}
+
+	out = normal * backoff + in;
 }
 
 static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilterPlayerMovementCS *filter)
@@ -730,6 +728,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		return;
 	}
 	Vector primalVelocity = velocity;
+
 	bool validPlane {};
 
 	f32 allFraction {};
