@@ -44,7 +44,7 @@ bool KZTriggerService::OnTriggerEndTouchPre(CBaseTrigger *trigger, TriggerTouchT
 // Mapping API stuff.
 void KZTriggerService::OnTriggerStartTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker)
 {
-	if (!tracker.kzTrigger)
+	if (!tracker.kzTrigger || !trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
 	{
 		return;
 	}
@@ -53,7 +53,7 @@ void KZTriggerService::OnTriggerStartTouchPost(CBaseTrigger *trigger, TriggerTou
 
 void KZTriggerService::OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker)
 {
-	if (!tracker.kzTrigger)
+	if (!tracker.kzTrigger || !trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
 	{
 		return;
 	}
@@ -62,7 +62,7 @@ void KZTriggerService::OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTra
 
 void KZTriggerService::OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker)
 {
-	if (!tracker.kzTrigger)
+	if (!tracker.kzTrigger || !trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
 	{
 		return;
 	}

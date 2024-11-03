@@ -9,4 +9,9 @@ public:
 
 	SCHEMA_FIELD(CUtlSymbolLarge, m_iFilterName)
 	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hFilter)
+
+	bool PassesTriggerFilters(CBaseEntity *pOther)
+	{
+		return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("PassesTriggerFilters"), this, pOther);
+	}
 };
