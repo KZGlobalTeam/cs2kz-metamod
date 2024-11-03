@@ -162,12 +162,7 @@ bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveD
 	player->OnCheckWater();
 	auto retValue = CheckWater(ms, mv);
 	player->OnCheckWaterPost();
-#ifdef WATER_FIX
-	if (player->enableWaterFix)
-	{
-		return player->GetPlayerPawn()->m_flWaterLevel() > 0.5f;
-	}
-#endif
+
 	return retValue;
 }
 
@@ -265,7 +260,7 @@ void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, C
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 #ifdef WATER_FIX
-	if (player->enableWaterFix && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f)
+	if (player->enableWaterFix && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f && ms->pawn->m_fFlags & FL_ONGROUND)
 	{
 		if (ms->m_nButtons()->m_pButtonStates[0] & IN_JUMP)
 		{

@@ -153,6 +153,8 @@ public:
 	virtual void OnDuckPost() override;
 	virtual void OnAirMove() override;
 	virtual void OnAirMovePost() override;
+	virtual void OnWaterMove() override;
+	virtual void OnWaterMovePost() override;
 	virtual void OnStartTouchGround() override;
 	virtual void OnStopTouchGround() override;
 	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace) override;

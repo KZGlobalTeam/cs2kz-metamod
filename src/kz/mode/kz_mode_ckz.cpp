@@ -1030,11 +1030,23 @@ void KZClassicModeService::OnDuckPost()
 void KZClassicModeService::OnAirMove()
 {
 	this->airMoving = true;
+	this->player->currentMoveData->m_flMaxSpeed = SPEED_NORMAL;
 }
 
 void KZClassicModeService::OnAirMovePost()
 {
 	this->airMoving = false;
+	this->player->currentMoveData->m_flMaxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
+}
+
+void KZClassicModeService::OnWaterMove()
+{
+	this->player->currentMoveData->m_flMaxSpeed = SPEED_NORMAL;
+}
+
+void KZClassicModeService::OnWaterMovePost()
+{
+	this->player->currentMoveData->m_flMaxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
 }
 
 void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
