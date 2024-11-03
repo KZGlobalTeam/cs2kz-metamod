@@ -363,6 +363,11 @@
 				"windows"		"145"
 				"linux"			"144"
 			}
+			"PassesTriggerFilters"
+			{
+				"windows"		"263"
+				"linux"			"264"
+			}
 		}
 	}
 }
