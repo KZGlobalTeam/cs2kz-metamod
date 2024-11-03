@@ -65,3 +65,5 @@ typedef double f64;
 #define KZ_STREQI(a, b)            (V_stricmp(a, b) == 0)
 #define KZ_STREQLEN(a, b, maxlen)  (V_strncmp(a, b, maxlen) == 0)
 #define KZ_STREQILEN(a, b, maxlen) (V_strnicmp(a, b, maxlen) == 0)
+
+#define VPROF_LEVEL 1

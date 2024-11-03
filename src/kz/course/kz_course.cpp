@@ -82,7 +82,8 @@ const KZCourse *KZ::course::GetCourse(const char *courseName, bool caseSensitive
 {
 	FOR_EACH_VEC(courseList, i)
 	{
-		if (courseList[i].GetName() == courseName || (!caseSensitive && courseList[i].GetName().IsEqual_CaseSensitive(courseName)))
+		const char *name = courseList[i].name;
+		if (caseSensitive ? KZ_STREQ(name, courseName) : KZ_STREQI(name, courseName))
 		{
 			return &courseList[i];
 		}

@@ -74,7 +74,7 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		const KZCourse *course = KZ::course::GetCourse(args->ArgS());
+		const KZCourse *course = KZ::course::GetCourse(args->ArgS(), false);
 
 		if (!course || !course->descriptor || !course->descriptor->hasEndPosition)
 		{
@@ -146,7 +146,7 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		startPosCourse = KZ::course::GetCourse(args->ArgS());
+		startPosCourse = KZ::course::GetCourse(args->ArgS(), false);
 
 		if (!startPosCourse || !startPosCourse->descriptor || !startPosCourse->descriptor->hasStartPosition)
 		{

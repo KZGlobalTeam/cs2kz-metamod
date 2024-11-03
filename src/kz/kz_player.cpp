@@ -19,7 +19,7 @@
 #include "trigger/kz_trigger.h"
 
 #include "sdk/entity/cbasetrigger.h"
-
+#include "vprof.h"
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
 
@@ -94,6 +94,7 @@ void KZPlayer::Reset()
 
 void KZPlayer::OnPlayerActive()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	// Mode/Styles stuff must be here for convars to be properly replicated.
 	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true);
 	g_pKZStyleManager->RefreshStyles(this);
@@ -103,17 +104,20 @@ void KZPlayer::OnPlayerActive()
 
 void KZPlayer::OnAuthorized()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnAuthorized();
 	this->databaseService->SetupClient();
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	return this->modeService->GetPlayerMaxSpeed(maxSpeed);
 }
 
 void KZPlayer::OnPhysicsSimulate()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulate();
 	this->triggerService->OnPhysicsSimulate();
 	this->modeService->OnPhysicsSimulate();
@@ -125,6 +129,7 @@ void KZPlayer::OnPhysicsSimulate()
 
 void KZPlayer::OnPhysicsSimulatePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulatePost();
 	this->triggerService->OnPhysicsSimulatePost();
 	this->telemetryService->OnPhysicsSimulatePost();
@@ -138,6 +143,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -147,6 +153,7 @@ void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
 
 void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnProcessUsercmdsPost(cmds, numcmds);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -156,6 +163,7 @@ void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 
 void KZPlayer::OnSetupMove(PlayerCommand *pc)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -165,6 +173,7 @@ void KZPlayer::OnSetupMove(PlayerCommand *pc)
 
 void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnSetupMovePost(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -174,6 +183,7 @@ void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 
 void KZPlayer::OnProcessMovement()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnProcessMovement();
 	KZ::mode::ApplyModeSettings(this);
 
@@ -193,6 +203,7 @@ void KZPlayer::OnProcessMovement()
 
 void KZPlayer::OnProcessMovementPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->triggerService->OnProcessMovementPost();
 	if (this->specService->GetSpectatedPlayer())
 	{
@@ -215,6 +226,7 @@ void KZPlayer::OnProcessMovementPost()
 
 void KZPlayer::OnPlayerMove()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPlayerMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -224,6 +236,7 @@ void KZPlayer::OnPlayerMove()
 
 void KZPlayer::OnPlayerMovePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPlayerMovePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -233,6 +246,7 @@ void KZPlayer::OnPlayerMovePost()
 
 void KZPlayer::OnCheckParameters()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckParameters();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -242,6 +256,7 @@ void KZPlayer::OnCheckParameters()
 
 void KZPlayer::OnCheckParametersPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckParametersPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -251,6 +266,7 @@ void KZPlayer::OnCheckParametersPost()
 
 void KZPlayer::OnCanMove()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCanMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -260,6 +276,7 @@ void KZPlayer::OnCanMove()
 
 void KZPlayer::OnCanMovePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCanMovePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -269,6 +286,7 @@ void KZPlayer::OnCanMovePost()
 
 void KZPlayer::OnFullWalkMove(bool &ground)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnFullWalkMove(ground);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -278,6 +296,7 @@ void KZPlayer::OnFullWalkMove(bool &ground)
 
 void KZPlayer::OnFullWalkMovePost(bool ground)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnFullWalkMovePost(ground);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -287,6 +306,7 @@ void KZPlayer::OnFullWalkMovePost(bool ground)
 
 void KZPlayer::OnMoveInit()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnMoveInit();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -296,6 +316,7 @@ void KZPlayer::OnMoveInit()
 
 void KZPlayer::OnMoveInitPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnMoveInitPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -305,6 +326,7 @@ void KZPlayer::OnMoveInitPost()
 
 void KZPlayer::OnCheckWater()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckWater();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -314,6 +336,7 @@ void KZPlayer::OnCheckWater()
 
 void KZPlayer::OnWaterMove()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnWaterMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -323,6 +346,7 @@ void KZPlayer::OnWaterMove()
 
 void KZPlayer::OnWaterMovePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnWaterMovePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -332,6 +356,7 @@ void KZPlayer::OnWaterMovePost()
 
 void KZPlayer::OnCheckWaterPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckWaterPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -341,6 +366,7 @@ void KZPlayer::OnCheckWaterPost()
 
 void KZPlayer::OnCheckVelocity(const char *a3)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckVelocity(a3);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -350,6 +376,7 @@ void KZPlayer::OnCheckVelocity(const char *a3)
 
 void KZPlayer::OnCheckVelocityPost(const char *a3)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckVelocityPost(a3);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -359,6 +386,7 @@ void KZPlayer::OnCheckVelocityPost(const char *a3)
 
 void KZPlayer::OnDuck()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnDuck();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -368,6 +396,7 @@ void KZPlayer::OnDuck()
 
 void KZPlayer::OnDuckPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnDuckPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -377,6 +406,7 @@ void KZPlayer::OnDuckPost()
 
 void KZPlayer::OnCanUnduck()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCanUnduck();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -386,6 +416,7 @@ void KZPlayer::OnCanUnduck()
 
 void KZPlayer::OnCanUnduckPost(bool &ret)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCanUnduckPost(ret);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -395,6 +426,7 @@ void KZPlayer::OnCanUnduckPost(bool &ret)
 
 void KZPlayer::OnLadderMove()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnLadderMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -404,6 +436,7 @@ void KZPlayer::OnLadderMove()
 
 void KZPlayer::OnLadderMovePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnLadderMovePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -413,6 +446,7 @@ void KZPlayer::OnLadderMovePost()
 
 void KZPlayer::OnCheckJumpButton()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckJumpButton();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -422,6 +456,7 @@ void KZPlayer::OnCheckJumpButton()
 
 void KZPlayer::OnCheckJumpButtonPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckJumpButtonPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -431,6 +466,7 @@ void KZPlayer::OnCheckJumpButtonPost()
 
 void KZPlayer::OnJump()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnJump();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -440,6 +476,7 @@ void KZPlayer::OnJump()
 
 void KZPlayer::OnJumpPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnJumpPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -449,6 +486,7 @@ void KZPlayer::OnJumpPost()
 
 void KZPlayer::OnAirMove()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnAirMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -459,6 +497,7 @@ void KZPlayer::OnAirMove()
 
 void KZPlayer::OnAirMovePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnAirMovePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -469,6 +508,7 @@ void KZPlayer::OnAirMovePost()
 
 void KZPlayer::OnFriction()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnFriction();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -478,6 +518,7 @@ void KZPlayer::OnFriction()
 
 void KZPlayer::OnFrictionPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnFrictionPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -487,6 +528,7 @@ void KZPlayer::OnFrictionPost()
 
 void KZPlayer::OnWalkMove()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnWalkMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -496,6 +538,7 @@ void KZPlayer::OnWalkMove()
 
 void KZPlayer::OnWalkMovePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnWalkMovePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -505,6 +548,7 @@ void KZPlayer::OnWalkMovePost()
 
 void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -515,6 +559,7 @@ void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
 
 void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -525,6 +570,7 @@ void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
 
 void KZPlayer::OnCategorizePosition(bool bStayOnGround)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCategorizePosition(bStayOnGround);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -534,6 +580,7 @@ void KZPlayer::OnCategorizePosition(bool bStayOnGround)
 
 void KZPlayer::OnCategorizePositionPost(bool bStayOnGround)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCategorizePositionPost(bStayOnGround);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -543,6 +590,7 @@ void KZPlayer::OnCategorizePositionPost(bool bStayOnGround)
 
 void KZPlayer::OnFinishGravity()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnFinishGravity();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -552,6 +600,7 @@ void KZPlayer::OnFinishGravity()
 
 void KZPlayer::OnFinishGravityPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnFinishGravityPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -561,6 +610,7 @@ void KZPlayer::OnFinishGravityPost()
 
 void KZPlayer::OnCheckFalling()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckFalling();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -570,6 +620,7 @@ void KZPlayer::OnCheckFalling()
 
 void KZPlayer::OnCheckFallingPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnCheckFallingPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -579,6 +630,7 @@ void KZPlayer::OnCheckFallingPost()
 
 void KZPlayer::OnPostPlayerMove()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPostPlayerMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -588,6 +640,7 @@ void KZPlayer::OnPostPlayerMove()
 
 void KZPlayer::OnPostPlayerMovePost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPostPlayerMovePost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -597,6 +650,7 @@ void KZPlayer::OnPostPlayerMovePost()
 
 void KZPlayer::OnPostThink()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPostThink();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -607,6 +661,7 @@ void KZPlayer::OnPostThink()
 
 void KZPlayer::OnPostThinkPost()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPostThinkPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -616,6 +671,7 @@ void KZPlayer::OnPostThinkPost()
 
 void KZPlayer::OnStartTouchGround()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->jumpstatsService->EndJump();
 	this->timerService->OnStartTouchGround();
 	this->modeService->OnStartTouchGround();
@@ -627,6 +683,7 @@ void KZPlayer::OnStartTouchGround()
 
 void KZPlayer::OnStopTouchGround()
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->triggerService->OnStopTouchGround();
 	this->jumpstatsService->AddJump();
 	this->timerService->OnStopTouchGround();
@@ -639,6 +696,7 @@ void KZPlayer::OnStopTouchGround()
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 	this->timerService->OnChangeMoveType(oldMoveType);
 	this->modeService->OnChangeMoveType(oldMoveType);
@@ -650,6 +708,7 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	// Teleported. Reset the errors.
 	this->GetMoveServices()->m_flAccumulatedJumpError() = 0.0f;
 	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
