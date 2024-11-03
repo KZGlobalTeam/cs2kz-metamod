@@ -167,7 +167,8 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 
 		if (!V_stricmp(g_cmdManager.cmds[i].name, args[0]))
 		{
-			result = g_cmdManager.cmds[i].callback(controller, &args);
+			g_cmdManager.cmds[i].callback(controller, &args);
+			return MRES_SUPERCEDE;
 		}
 	}
 	return result;
