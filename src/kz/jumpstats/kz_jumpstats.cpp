@@ -86,7 +86,7 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 		return 0.0;
 	}
 
-	const f64 wishspeedcapped = 30; // Hardcoding for now.
+	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
 	f64 tmp = wishspeedcapped - accelspeed;
 	if (tmp <= 0.0)
 	{
@@ -104,8 +104,8 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 
 f32 AACall::CalcMinYaw(bool useRadians)
 {
-	// Hardcoding max wishspeed. If your velocity is lower than 30, any direction will get you gain.
-	const f64 wishspeedcapped = 30;
+	// If your velocity is lower than sv_air_max_wishspeed, any direction will get you gain.
+	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
 	if (this->velocityPre.Length2D() <= wishspeedcapped)
 	{
 		return 0.0;
@@ -118,14 +118,15 @@ f32 AACall::CalcMaxYaw(bool useRadians)
 	f32 gamma1, numer, denom;
 	gamma1 = AACall::CalcAccelSpeed(true);
 	f32 speed = this->velocityPre.Length2D();
-	if (gamma1 <= 60)
+	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	if (gamma1 <= 2 * wishspeedcapped)
 	{
 		numer = -gamma1;
 		denom = 2 * speed;
 	}
 	else
 	{
-		numer = -30;
+		numer = -wishspeedcapped;
 		denom = speed;
 	}
 	if (denom < fabs(numer))
@@ -149,11 +150,14 @@ f32 AACall::CalcIdealGain()
 {
 	// sqrt(v^2+a^2+2*v*a*cos(yaw)
 	// clang-format off
+	
+	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	
 	f32 idealSpeed = sqrt(this->velocityPre.Length2DSqr()
-		+ MIN(this->CalcAccelSpeed(true), 30)
-		* MIN(this->CalcAccelSpeed(true), 30)
+		+ MIN(this->CalcAccelSpeed(true), wishspeedcapped)
+		* MIN(this->CalcAccelSpeed(true), wishspeedcapped)
 		+ 2
-		* MIN(this->CalcAccelSpeed(true), 30)
+		* MIN(this->CalcAccelSpeed(true), wishspeedcapped)
 		* this->velocityPre.Length2D()
 		* cos(this->CalcIdealYaw(true))
 	);

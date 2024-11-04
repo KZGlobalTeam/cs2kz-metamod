@@ -350,22 +350,6 @@ public:
 
 	f32 GetDeviation();
 
-	std::string GetStrafeCountString(const char *language = NULL);
-	std::string GetSyncString(const char *language = NULL, bool console = false);
-	std::string GetTakeoffSpeedString(const char *language = NULL);
-	std::string GetMaxSpeedString(const char *language = NULL);
-	std::string GetBadAnglesString(const char *language = NULL);
-	std::string GetOverlapString(const char *language = NULL);
-	std::string GetDeadAirString(const char *language = NULL);
-	std::string GetDeviationString(const char *language = NULL);
-	std::string GetWidthString(const char *language = NULL);
-	std::string GetMaxHeightString(const char *language = NULL);
-	std::string GetGainEfficiencyString(const char *language = NULL);
-	std::string GetAirPathString(const char *language = NULL);
-	std::string GetAirTimeString(const char *language = NULL);
-	std::string GetOffsetString(const char *language = NULL);
-	std::string GetDuckTimeString(const char *language = NULL);
-	std::string GetAngleRatioString(const char *language = NULL);
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
 };
 
