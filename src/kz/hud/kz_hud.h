@@ -17,7 +17,9 @@ public:
 	virtual void Reset() override;
 	static void Init();
 	static void RegisterCommands();
-	void DrawPanels(KZPlayer *target);
+
+	// Draw the panel from a player to a specific target.
+	static void DrawPanels(KZPlayer *player, KZPlayer *target);
 
 	void ResetShowPanel();
 	void TogglePanel();

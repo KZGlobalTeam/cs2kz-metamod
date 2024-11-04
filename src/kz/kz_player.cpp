@@ -139,6 +139,14 @@ void KZPlayer::OnPhysicsSimulatePost()
 		this->styleServices[i]->OnPhysicsSimulatePost();
 	}
 	this->timerService->OnPhysicsSimulatePost();
+	if (this->specService->GetSpectatedPlayer())
+	{
+		KZHUDService::DrawPanels(this->specService->GetSpectatedPlayer(), this);
+	}
+	else if (this->IsAlive())
+	{
+		KZHUDService::DrawPanels(this, this);
+	}
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
@@ -205,14 +213,6 @@ void KZPlayer::OnProcessMovementPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->triggerService->OnProcessMovementPost();
-	if (this->specService->GetSpectatedPlayer())
-	{
-		this->specService->GetSpectatedPlayer()->hudService->DrawPanels(this);
-	}
-	else
-	{
-		this->hudService->DrawPanels(this);
-	}
 
 	this->jumpstatsService->UpdateJump();
 	this->modeService->OnProcessMovementPost();

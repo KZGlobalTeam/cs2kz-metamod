@@ -109,19 +109,18 @@ std::string KZHUDService::GetTimerText(const char *language)
 	return std::string("");
 }
 
-void KZHUDService::DrawPanels(KZPlayer *target)
+void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 {
-	if (!this->IsShowingPanel())
+	if (!target->hudService->IsShowingPanel())
 	{
 		return;
 	}
 	const char *language = target->languageService->GetLanguage();
-	char buffer[1024];
-	buffer[0] = 0;
-	std::string keyText = this->GetKeyText(language);
-	std::string checkpointText = this->GetCheckpointText(language);
-	std::string timerText = this->GetTimerText(language);
-	std::string speedText = this->GetSpeedText(language);
+
+	std::string keyText = player->hudService->GetKeyText(language);
+	std::string checkpointText = player->hudService->GetCheckpointText(language);
+	std::string timerText = player->hudService->GetTimerText(language);
+	std::string speedText = player->hudService->GetSpeedText(language);
 
 	// clang-format off
 	std::string centerText = KZLanguageService::PrepareMessageWithLang(language, "HUD - Center Text", 
