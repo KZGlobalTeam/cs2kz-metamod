@@ -196,7 +196,21 @@ f32 MovementPlayer::GetGroundPosition()
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
 
-	f32 standableZ = 0.7; // TODO: actually use the cvar, preferably the mode cvar
+	f32 standableZ = 0.7;
+
+	static_persist ConVar *sv_standable_normal;
+	if (!sv_standable_normal)
+	{
+		ConVarHandle cvarHandle = g_pCVar->FindConVar("sv_standable_normal");
+		if (cvarHandle.IsValid())
+		{
+			sv_standable_normal = g_pCVar->GetConVar(cvarHandle);
+		}
+	}
+	if (sv_standable_normal)
+	{
+		standableZ = reinterpret_cast<CVValue_t *>(&sv_standable_normal->values)->m_flValue;
+	}
 
 	bbox_t bounds;
 	bounds.mins = {-16.0, -16.0, 0.0};
@@ -259,9 +273,25 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	if (mv->m_TouchList.Count() > 0) // bugged
 	{
 		// The true landing origin from TryPlayerMove, use this whenever you can
+		f32 normal = 0.7;
+
+		static_persist ConVar *sv_walkable_normal;
+		if (!sv_walkable_normal)
+		{
+			ConVarHandle cvarHandle = g_pCVar->FindConVar("sv_walkable_normal");
+			if (cvarHandle.IsValid())
+			{
+				sv_walkable_normal = g_pCVar->GetConVar(cvarHandle);
+			}
+		}
+		if (sv_walkable_normal)
+		{
+			normal = reinterpret_cast<CVValue_t *>(&sv_walkable_normal->values)->m_flValue;
+		}
+
 		FOR_EACH_VEC(mv->m_TouchList, i)
 		{
-			if (mv->m_TouchList[i].trace.m_vHitNormal.z > 0.7)
+			if (mv->m_TouchList[i].trace.m_vHitNormal.z > normal)
 			{
 				this->landingOriginActual = mv->m_TouchList[i].trace.m_vEndPos;
 				this->landingTimeActual =
@@ -282,7 +312,20 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	{
 		// Predicts the landing origin if reverse bug happens
 		// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
-		Vector gravity = {0, 0, -800}; // TODO: Hardcoding 800 gravity right now, waiting for CVar stuff to be done
+		static_persist ConVar *sv_gravity;
+		if (!sv_gravity)
+		{
+			ConVarHandle cvarHandle = g_pCVar->FindConVar("sv_gravity");
+			if (cvarHandle.IsValid())
+			{
+				sv_gravity = g_pCVar->GetConVar(cvarHandle);
+			}
+		}
+		Vector gravity = {0, 0, -800};
+		if (sv_gravity)
+		{
+			gravity.z = reinterpret_cast<CVValue_t *>(&sv_gravity->values)->m_flValue;
+		}
 		// basic x + vt + (0.5a)t^2 = 0;
 		const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
 		const double time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
