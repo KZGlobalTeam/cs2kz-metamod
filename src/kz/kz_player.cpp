@@ -685,13 +685,13 @@ void KZPlayer::OnStopTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->triggerService->OnStopTouchGround();
-	this->jumpstatsService->AddJump();
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnStopTouchGround();
 	}
+	this->jumpstatsService->AddJump();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
