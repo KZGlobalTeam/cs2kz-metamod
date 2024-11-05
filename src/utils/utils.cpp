@@ -17,6 +17,9 @@
 #include "detours.h"
 #include "virtual.h"
 
+#include "steam/steam_gameserver.h"
+#include "filesystem.h"
+
 #include "tier0/memdbgon.h"
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
@@ -31,6 +34,10 @@
 
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
+extern CSteamGameServerAPIContext g_steamAPI;
+
+#define SERVER_VERSION_KEY "ServerVersion="
+static_global u32 serverVersion;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
@@ -75,7 +82,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
-
+	utils::UpdateServerVersion();
 	InitDetours();
 	return true;
 }
@@ -627,4 +634,37 @@ void utils::ResetMap()
 	}
 
 	interfaces::pEngine->ServerCommand(cmd);
+}
+
+bool utils::IsServerSecure()
+{
+	if (!g_steamAPI.SteamGameServer())
+	{
+		return !(CommandLine()->HasParm("-insecure") || CommandLine()->HasParm("-tools"));
+	}
+	return g_steamAPI.SteamGameServer()->BSecure();
+}
+
+void utils::UpdateServerVersion()
+{
+	FileHandle_t fp = g_pFullFileSystem->Open("steam.inf", "r");
+	if (fp)
+	{
+		CUtlString line = g_pFullFileSystem->ReadLine(fp);
+		while (!line.IsEmpty())
+		{
+			if (line.MatchesPattern(CUtlString(SERVER_VERSION_KEY) + "*"))
+			{
+				serverVersion = atoi(line.Get() + strlen(SERVER_VERSION_KEY));
+				break;
+			}
+			line = g_pFullFileSystem->ReadLine(fp);
+		}
+		g_pFullFileSystem->Close(fp);
+	}
+}
+
+u32 utils::GetServerVersion()
+{
+	return serverVersion;
 }

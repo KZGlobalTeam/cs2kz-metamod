@@ -73,4 +73,8 @@ namespace utils
 
 	void ResetMap();
 	void ResetMapIfEmpty();
+
+	bool IsServerSecure();
+	void UpdateServerVersion();
+	u32 GetServerVersion();
 } // namespace utils
