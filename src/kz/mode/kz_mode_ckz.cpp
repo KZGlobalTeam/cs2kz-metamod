@@ -472,7 +472,7 @@ void KZClassicModeService::UpdateAngleHistory()
 	AngleVectors(mv->m_vecViewAngles, &forward, &right, &up);
 
 	f32 fmove = mv->m_flForwardMove;
-	f32 smove = mv->m_flSideMove;
+	f32 smove = -mv->m_flSideMove;
 
 	if (forward[2] != 0)
 	{
