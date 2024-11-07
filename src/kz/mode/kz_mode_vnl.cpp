@@ -180,7 +180,9 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		time_left -= pm.m_flFraction * time_left;
 
 		// Did we run out of planes to clip against?
-		if (numplanes >= MAX_CLIP_PLANES)
+		// 2024-11-07 update also adds a low velocity check... This is only correct as long as you don't collide with other players.
+		f32 standableZ = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_STANDABLE_NORMAL]->values))->m_flValue;
+		if (numplanes >= MAX_CLIP_PLANES || (pm.m_vHitNormal.z >= standableZ && velocity.Length2D() < 1.0f))
 		{
 			// this shouldn't really happen
 			//  Stop our movement if so.

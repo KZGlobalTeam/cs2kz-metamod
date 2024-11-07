@@ -881,8 +881,17 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			break;
 		}
 		timeLeft -= g_pKZUtils->GetGlobals()->frametime * pm.m_flFraction;
+
+		// 2024-11-07 update also adds a low velocity check... This is only correct as long as you don't collide with other players.
+		if (numPlanes >= 5 || (pm.m_vHitNormal.z >= 0.7f && velocity.Length2D() < 1.0f))
+		{
+			VectorCopy(vec3_origin, velocity);
+			break;
+		}
+
 		planes[numPlanes] = pm.m_vHitNormal;
 		numPlanes++;
+
 		if (numPlanes == 1 && pawn->m_MoveType() == MOVETYPE_WALK && pawn->m_hGroundEntity().Get() == nullptr)
 		{
 			ClipVelocity(velocity, planes[0], velocity);
