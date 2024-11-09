@@ -374,6 +374,27 @@ void Jump::Init()
 	this->jumpType = this->player->jumpstatsService->DetermineJumpType();
 
 	this->valid = this->GetJumpPlayer()->styleServices.Count() == 0;
+
+	// W release tracking.
+	f32 lastPressedTime = this->player->jumpstatsService->GetLastWPressedTime();
+	this->release = lastPressedTime - g_pKZUtils->GetGlobals()->curtime;
+	if (this->jumpType != JumpType_Fall)
+	{
+		if (this->jumpType == JumpType_WeirdJump)
+		{
+			this->trackingRelease = false;
+			this->release = this->player->jumpstatsService->GetLastJumpRelease();
+		}
+		else
+		{
+			this->release += g_pKZUtils->GetGlobals()->frametime;
+		}
+	}
+	// We only track release if we are still holding W/S.
+	if (this->release >= 0 && this->trackingRelease)
+	{
+		this->release = 0;
+	}
 }
 
 void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
@@ -394,6 +415,19 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	call->ducking = this->player->GetMoveServices()->m_bDucked;
 	this->player->GetVelocity(&call->velocityPost);
 	strafe->UpdateStrafeMaxSpeed(call->velocityPost.Length2D());
+
+	// Check if we are still tracking release for the strafe.
+	if (strafe->jump->trackingRelease)
+	{
+		if (this->player->currentMoveData->m_flForwardMove > 0)
+		{
+			strafe->jump->release += g_pKZUtils->GetGlobals()->frametime;
+		}
+		else
+		{
+			strafe->jump->trackingRelease = false;
+		}
+	}
 }
 
 void Jump::Update()
@@ -495,9 +529,8 @@ Strafe *Jump::GetCurrentStrafe()
 	// Always start with 1 strafe.
 	if (this->strafes.Count() == 0)
 	{
-		Strafe strafe = Strafe();
-		strafe.turnstate = this->player->GetTurning();
-		this->strafes.AddToTail(strafe);
+		int index = this->strafes.AddToTail({this});
+		this->strafes[index].turnstate = this->player->GetTurning();
 	}
 	// If the player isn't turning, update the turn state until it changes.
 	else if (!this->strafes.Tail().turnstate)
@@ -509,7 +542,7 @@ Strafe *Jump::GetCurrentStrafe()
 	{
 		this->strafes.Tail().End();
 		// Finish the previous strafe before adding a new strafe.
-		Strafe strafe = Strafe();
+		Strafe strafe = Strafe(this);
 		strafe.turnstate = this->player->GetTurning();
 		this->strafes.AddToTail(strafe);
 	}
@@ -645,6 +678,15 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	return JumpType_LongJump;
 }
 
+f32 KZJumpstatsService::GetLastJumpRelease()
+{
+	if (this->jumps.Count() == 0)
+	{
+		return 0.0f;
+	}
+	return this->jumps.Tail().GetRelease();
+}
+
 void KZJumpstatsService::Reset()
 {
 	this->broadcastMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSBroadcastMinTier", DistanceTier_Godlike));
@@ -659,6 +701,7 @@ void KZJumpstatsService::Reset()
 	this->lastMovementProcessedTime = {};
 	this->tpmVelocity = Vector(0, 0, 0);
 	this->possibleEdgebug = {};
+	this->lastWPressedTime = {};
 }
 
 void KZJumpstatsService::OnProcessMovement()
@@ -677,6 +720,11 @@ void KZJumpstatsService::OnProcessMovement()
 	}
 	this->CheckValidMoveType();
 	this->DetectExternalModifications();
+
+	if (this->player->currentMoveData->m_flForwardMove > 0)
+	{
+		this->lastWPressedTime = g_pKZUtils->GetGlobals()->curtime;
+	}
 }
 
 void KZJumpstatsService::OnChangeMoveType(MoveType_t oldMoveType)
@@ -748,7 +796,7 @@ void KZJumpstatsService::OnAirMovePost()
 
 	// Copy movement amounts
 	fmove = this->player->currentMoveData->m_flForwardMove;
-	smove = this->player->currentMoveData->m_flSideMove;
+	smove = -this->player->currentMoveData->m_flSideMove;
 
 	// Zero out z components of movement vectors
 	forward[2] = 0;
@@ -780,7 +828,7 @@ void KZJumpstatsService::OnAirMovePost()
 
 void KZJumpstatsService::AddJump()
 {
-	this->jumps.AddToTail(Jump(this->player));
+	this->jumps.AddToTail({this->player});
 }
 
 void KZJumpstatsService::UpdateJump()

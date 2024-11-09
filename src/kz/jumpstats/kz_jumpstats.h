@@ -51,6 +51,7 @@ extern const char *jumpTypeStr[JUMPTYPE_COUNT];
 extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
 extern const char *distanceTierColors[DISTANCETIER_COUNT];
 extern const char *distanceTierSounds[DISTANCETIER_COUNT];
+class Jump;
 
 class AACall
 {
@@ -78,11 +79,17 @@ public:
 	f32 CalcMaxYaw(bool useRadians = false);
 	f32 CalcAccelSpeed(bool tryMaxSpeed = false);
 	f32 CalcIdealGain();
+	void Dump();
 };
 
 class Strafe
 {
 public:
+	Strafe() {}
+
+	Strafe(Jump *jump) : jump(jump) {}
+
+	Jump *jump;
 	CCopyableUtlVector<AACall> aaCalls;
 	TurnState turnstate;
 
@@ -231,13 +238,19 @@ private:
 	bool valid = true;
 	bool ended {};
 
+	f32 release;
+
 public:
 	CCopyableUtlVector<Strafe> strafes;
 	f32 touchDuration {};
 	char invalidateReason[256] {};
+	bool trackingRelease = true;
 
 public:
-	Jump() {}
+	Jump()
+	{
+		Init();
+	}
 
 	Jump(KZPlayer *player) : player(player)
 	{
@@ -274,7 +287,7 @@ public:
 
 	bool IsValid()
 	{
-		return this->valid && this->jumpType >= JumpType_LongJump && this->jumpType <= JumpType_Jumpbug;
+		return this->valid && this->jumpType >= JumpType_LongJump && this->jumpType <= JumpType_Fall;
 	}
 
 	bool AlreadyEnded()
@@ -350,6 +363,11 @@ public:
 
 	f32 GetDeviation();
 
+	f32 GetRelease()
+	{
+		return this->release;
+	}
+
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
 };
 
@@ -379,6 +397,7 @@ private:
 	f32 lastMovementProcessedTime {};
 	Vector tpmVelocity;
 	bool possibleEdgebug {};
+	f32 lastWPressedTime {};
 
 public:
 	static void RegisterCommands();
@@ -415,6 +434,9 @@ public:
 	void OnTryPlayerMovePost();
 
 	JumpType DetermineJumpType();
+	f32 GetLastJumpRelease();
+	f32 GetLastJumpReleaseDuration();
+
 	bool HitBhop();
 	bool HitDuckbugRecently();
 	bool ValidWeirdJumpDropDistance();
@@ -442,4 +464,9 @@ public:
 	static void PlayJumpstatSound(KZPlayer *target, Jump *jump);
 	static void PrintJumpToChat(KZPlayer *target, Jump *jump);
 	static void PrintJumpToConsole(KZPlayer *target, Jump *jump);
+
+	f32 GetLastWPressedTime()
+	{
+		return lastWPressedTime;
+	}
 };

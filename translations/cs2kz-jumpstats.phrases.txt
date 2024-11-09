@@ -589,6 +589,7 @@
 		"tr"		"({reason})"
 		"it"		"({reason})"
 	}
+	
 	"Jumpstats Report - Chat Summary"
 	{
 		// LJ: 258.1 | 6 Strafes | 79% Sync | 275.81 Pre | 346.98 Max
@@ -620,14 +621,14 @@
 	{
 		// CKZ | NRM | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height
 		"#format"	"mode_style:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f"
-		"en"		"{mode_style} | {strafe_count} {strafe_text} | {sync} Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
-		"chi"		"{mode_style} | {strafe_count} {strafe_text} | {sync} 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效角度 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度"
-		"pl"		"{mode_style} | {strafe_count} {strafe_text} | {sync} Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
-		"fi"		"{mode_style} | {strafe_count} {strafe_text} | {sync} Synkki | {pre} Edeltävä | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Korkeus"
-		"sv"		"{mode_style} | {strafe_count} {strafe_text} | {sync} Synk | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Höjd"
-		"ua"		"{mode_style} | {strafe_count} {strafe_text} | {sync} Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота"
-		"tr"		"{mode_style} | {strafe_count} {strafe_text} | {sync} Senkron | {pre} Pre | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Yükseklik"
-		"it"		"{mode_style} | {strafe_count} {strafe_text} | {sync} Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+		"en"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+		"chi"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效角度 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度"
+		"pl"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+		"fi"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Synkki | {pre} Edeltävä | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Korkeus"
+		"sv"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Synk | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Höjd"
+		"ua"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота"
+		"tr"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Senkron | {pre} Pre | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Yükseklik"
+		"it"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
@@ -641,33 +642,5 @@
 		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зсув | {duck_end_time}/{duck_total_time} Присівши"
 		"tr"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"it"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
-	}
-	"Jumpstats Report - Strafe Report Header"
-	{
-		// #. Sync      Gain              Loss         Max     Air      BA   OL   DA   AvgGain GainEff AngRatio(Avg/Med/Max)
-		// Modify this to line up with the strafe report lines. It's not recommended to use the variables in #format.
-		"#format"	"sync_text:s,gain_text:s,loss_text:s,pre_text:s,max_text:s,air_time_text:s,bad_angles_text:s,overlap_text:s,dead_air_text:s,avg_gain_text:s,gain_eff_text:s,ang_ratio_text:s"
-		"en"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-		"chi"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-		"pl"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-		"fi"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-		"sv"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-		"ua"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-		"tr"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-		"it"		"#.%5s %9s %17s %11s %7s %7s %4s %4s %9s %7s %s"
-	}
-	"Jumpstats Report - Strafe Report"
-	{
-		// 2.  92%   13.67(+0.04)      -0.00(-0.00)    307.85  0.094    0%   0%   8%   2.28    76%     -0.12/-0.01/0.35
-		// Modify this to line up with the header. It's not recommended to use the variables in #format.
-		"#format"	"strafe_num:i,sync:s,gain:s,external_gain:s,loss:s,external_loss:s,max:s,duration:s,bad_angle:s,overlap:s,dead_air:s,avg_gain:s,gain_eff:s,ang_ratio:s"
-		"en"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
-		"chi"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
-		"pl"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
-		"fi"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
-		"sv"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
-		"ua"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
-		"tr"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
-		"it"		"%i.%6s %7s%-10s %7s%-10s %-7s %-8s %-5s %-5s %-5s %-7s %-8s %s"
 	}
 }
