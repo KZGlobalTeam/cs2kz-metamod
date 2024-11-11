@@ -726,7 +726,7 @@ void KZPlayer::DisableTurnbinds()
 	{
 		return;
 	}
-	
+
 	// holding both doesn't do anything. xor(1, 1) == 0
 	bool usingTurnbinds = (this->IsButtonPressed(IN_TURNLEFT) ^ this->IsButtonPressed(IN_TURNRIGHT));
 	QAngle angles;
