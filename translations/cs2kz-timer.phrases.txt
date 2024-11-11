@@ -278,6 +278,10 @@
 		"sv"		"{darkred}Jumpstat-området hittades inte på kartan!"
 		"ua"		"{darkred}Не знайдено зону тренування стрибків на даній мапі!"
 	}
+	"Turnbinds Disabled"
+	{
+		"en"		"{darkred}Turnbinds are disabled."
+	}
 	
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
 	"Course Split Reached"
