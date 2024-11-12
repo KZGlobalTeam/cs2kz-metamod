@@ -132,6 +132,8 @@ public:
 private:
 	bool hideLegs {};
 	f64 lastTeleportTime {};
+	f32 lastValidYaw {};
+	bool oldUsingTurnbinds {};
 
 public:
 	KZAnticheatService *anticheatService {};
@@ -156,6 +158,7 @@ public:
 	KZTipService *tipService {};
 	KZTriggerService *triggerService {};
 
+	void DisableTurnbinds();
 	void EnableGodMode();
 
 	// Leg stuff

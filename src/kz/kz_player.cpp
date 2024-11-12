@@ -18,6 +18,7 @@
 #include "tip/kz_tip.h"
 #include "trigger/kz_trigger.h"
 
+#include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "vprof.h"
 #include "steam/isteamgameserver.h"
@@ -195,6 +196,7 @@ void KZPlayer::OnProcessMovement()
 	MovementPlayer::OnProcessMovement();
 	KZ::mode::ApplyModeSettings(this);
 
+	this->DisableTurnbinds();
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -715,6 +717,35 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	this->jumpstatsService->InvalidateJumpstats("Teleported");
 	this->modeService->OnTeleport(origin, angles, velocity);
 	this->timerService->OnTeleport(origin, angles, velocity);
+}
+
+void KZPlayer::DisableTurnbinds()
+{
+	CCSPlayerPawn *pawn = this->GetPlayerPawn();
+	if (!pawn)
+	{
+		return;
+	}
+
+	// holding both doesn't do anything. xor(1, 1) == 0
+	bool usingTurnbinds = (this->IsButtonPressed(IN_TURNLEFT) ^ this->IsButtonPressed(IN_TURNRIGHT));
+	QAngle angles;
+	this->GetAngles(&angles);
+	if (usingTurnbinds)
+	{
+		angles.y = this->lastValidYaw;
+		// NOTE(GameChaos): Using SetAngles, which uses Teleport makes player movement really weird
+		g_pKZUtils->SnapViewAngles(pawn, angles);
+		if (!this->oldUsingTurnbinds)
+		{
+			this->languageService->PrintChat(true, false, "Turnbinds Disabled");
+		}
+	}
+	else
+	{
+		this->lastValidYaw = angles.y;
+	}
+	this->oldUsingTurnbinds = usingTurnbinds;
 }
 
 void KZPlayer::EnableGodMode()
