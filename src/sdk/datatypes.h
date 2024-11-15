@@ -185,13 +185,11 @@ struct SubtickMove
 	}
 };
 
-// Size: 0xF8
-class CMoveData
+class CMoveDataBase
 {
 public:
-	CMoveData() = default;
-
-	CMoveData(const CMoveData &source)
+	CMoveDataBase() = default;
+	CMoveDataBase(const CMoveDataBase &source)
 		// clang-format off
 		: moveDataFlags {source.moveDataFlags}, 
 		m_nPlayerHandle {source.m_nPlayerHandle},
@@ -210,16 +208,7 @@ public:
 		m_nTickCount {source.m_nTickCount},
 		m_nTargetTick {source.m_nTargetTick},
 		m_flSubtickEndFraction {source.m_flSubtickEndFraction},
-		m_flSubtickStartFraction {source.m_flSubtickStartFraction},
-		m_outWishVel {source.m_outWishVel},
-		m_vecOldAngles {source.m_vecOldAngles}, 
-		m_flMaxSpeed {source.m_flMaxSpeed}, 
-		m_flClientMaxSpeed {source.m_flClientMaxSpeed},
-		m_flSubtickAccelSpeed {source.m_flSubtickAccelSpeed}, 
-		m_bJumpedThisTick {source.m_bJumpedThisTick},
-		m_bOnGround {source.m_bOnGround},
-		m_bShouldApplyGravity {source.m_bShouldApplyGravity}, 
-		m_bGameCodeMovedPlayer {source.m_bGameCodeMovedPlayer}
+		m_flSubtickStartFraction {source.m_flSubtickStartFraction}
 	// clang-format on
 	{
 		for (int i = 0; i < source.m_AttackSubtickMoves.Count(); i++)
@@ -276,15 +265,17 @@ public:
 	int32_t m_nTargetTick;
 	float m_flSubtickEndFraction;
 	float m_flSubtickStartFraction;
-	bool m_nGameModeMovedPlayer;
+};
+
+class CMoveData : public CMoveDataBase
+{
+public:
 	Vector m_outWishVel;
 	Vector m_vecOldAngles;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
-	float m_flSubtickAccelSpeed; // Related to ground acceleration subtick stuff with sv_stopspeed and friction
+	float m_flFrictionDecel;     // Related to ground acceleration subtick stuff with sv_stopspeed and friction
 	bool m_bJumpedThisTick;      // something to do with basevelocity and the tick the player jumps
-	bool m_bOnGround;
-	bool m_bShouldApplyGravity;
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
 
