@@ -41,6 +41,8 @@ typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, b
 typedef CBaseEntity *CreateEntityByName_t(const char *className, int iForceEdictIndex);
 typedef void DispatchSpawn_t(CBaseEntity *pEntity, CEntityKeyValues *pEntityKeyValues);
 typedef void RemoveEntity_t(CEntityInstance *);
+typedef void SetupRayFromTrace_t(Ray_t *pThis, trace_t &pm);
+typedef void DebugDrawRay_t(Ray_t *pThis, CTransform &transform, i32 r, i32 g, i32 b, i32 a, bool ignoreZ, f32 duration);
 
 namespace interfaces
 {
@@ -78,10 +80,11 @@ public:
 	KZUtils(TracePlayerBBox_t *TracePlayerBBox, InitGameTrace_t *InitGameTrace, InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter,
 			GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, EmitSoundFunc_t *EmitSound,
 			SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName, DispatchSpawn_t *DispatchSpawn,
-			RemoveEntity_t *RemoveEntity)
+			RemoveEntity_t *RemoveEntity, SetupRayFromTrace_t *SetupRayFromTrace, DebugDrawRay_t *DebugDrawRay)
 		: TracePlayerBBox(TracePlayerBBox), InitGameTrace(InitGameTrace), InitPlayerMovementTraceFilter(InitPlayerMovementTraceFilter),
 		  GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles), EmitSound(EmitSound), SwitchTeam(SwitchTeam),
-		  SetPawn(SetPawn), CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn), RemoveEntity(RemoveEntity)
+		  SetPawn(SetPawn), CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn), RemoveEntity(RemoveEntity),
+		  SetupRayFromTrace(SetupRayFromTrace), DebugDrawRay(DebugDrawRay)
 	{
 	}
 
@@ -96,6 +99,8 @@ public:
 	CreateEntityByName_t *const CreateEntityByName;
 	DispatchSpawn_t *const DispatchSpawn;
 	RemoveEntity_t *const RemoveEntity;
+	SetupRayFromTrace_t *const SetupRayFromTrace;
+	DebugDrawRay_t *const DebugDrawRay;
 
 	virtual CGameConfig *GetGameConfig();
 	virtual const CGlobalVars *GetServerGlobals();

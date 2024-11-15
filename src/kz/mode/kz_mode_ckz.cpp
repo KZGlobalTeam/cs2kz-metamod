@@ -771,10 +771,26 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 				// Player won't hit anything, nothing to do.
 				break;
 			}
+
 			if (this->lastValidPlane.Length() > FLT_EPSILON
 				&& (!IsValidMovementTrace(pm, bounds, &filter) || pm.m_vHitNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD
 					|| (potentiallyStuck && pm.m_flFraction == 0.0f)))
 			{
+				if (pm.m_hShape)
+				{
+					Ray_t ray;
+					g_pKZUtils->SetupRayFromTrace(&ray, pm);
+					CTransform transform;
+					transform.SetToIdentity();
+					g_pKZUtils->DebugDrawRay(&ray, transform, 255, 0, 0, 0, 0, 10.0);
+					Ray_t playerRay;
+					playerRay.Init(pm.m_vStartPos + bounds.mins, pm.m_vStartPos + bounds.maxs);
+					g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 0, 255, 0, 0, 10.0);
+					playerRay.Init(pm.m_vEndPos + bounds.mins, pm.m_vEndPos + bounds.maxs);
+					g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 128, 128, 0, 0, 10.0);
+					playerRay.Init(end + bounds.mins, end + bounds.maxs);
+					g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 255, 0, 0, 0, 10.0);
+				}
 				// We hit a plane that will significantly change our velocity. Make sure that this plane is significant
 				// enough.
 				Vector direction = velocity.Normalized();
