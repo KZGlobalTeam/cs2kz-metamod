@@ -171,7 +171,7 @@ const char *KZPlugin::GetName()
 
 const char *KZPlugin::GetURL()
 {
-	return "https://github.com/zer0k-z/cs2kz_metamod";
+	return "https://github.com/KZGlobalTeam/cs2kz-metamod";
 }
 
 void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
