@@ -105,7 +105,7 @@ void KZTimerService::StartZoneEndTouch(const KZCourseDescriptor *course)
 
 void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 splitNumber)
 {
-	if (!this->GetTimerRunning())
+	if (!this->timerRunning || course->course->guid != this->currentCourseGUID)
 	{
 		return;
 	}
@@ -123,7 +123,7 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 
 void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, i32 cpNumber)
 {
-	if (!this->GetTimerRunning())
+	if (!this->timerRunning || course->course->guid != this->currentCourseGUID)
 	{
 		return;
 	}
@@ -142,7 +142,7 @@ void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, 
 
 void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 stageNumber)
 {
-	if (!this->GetTimerRunning())
+	if (!this->timerRunning || course->course->guid != this->currentCourseGUID)
 	{
 		return;
 	}

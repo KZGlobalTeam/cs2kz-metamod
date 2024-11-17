@@ -627,6 +627,16 @@ void KZ::mapapi::OnRoundStart()
 		FOR_EACH_VEC(g_mappingApi.triggers, i)
 		{
 			KzTrigger *trigger = &g_mappingApi.triggers[i];
+			if (!KZ::mapapi::IsTimerTrigger(trigger->type))
+			{
+				continue;
+			}
+
+			if (!KZ_STREQ(trigger->zone.courseDescriptor, courseDescriptor->entityTargetname))
+			{
+				continue;
+			}
+
 			switch (trigger->type)
 			{
 				case KZTRIGGER_ZONE_SPLIT:
