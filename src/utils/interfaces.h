@@ -41,7 +41,7 @@ typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, b
 typedef CBaseEntity *CreateEntityByName_t(const char *className, int iForceEdictIndex);
 typedef void DispatchSpawn_t(CBaseEntity *pEntity, CEntityKeyValues *pEntityKeyValues);
 typedef void RemoveEntity_t(CEntityInstance *);
-typedef void SetupRayFromTrace_t(Ray_t *pThis, trace_t &pm);
+typedef void SetupRayFromTrace_t(RayExtended *pThis, trace_t &pm);
 typedef void DebugDrawRay_t(Ray_t *pThis, CTransform &transform, i32 r, i32 g, i32 b, i32 a, bool ignoreZ, f32 duration);
 
 namespace interfaces
@@ -149,6 +149,9 @@ public:
 
 	// Get the real and connected player count.
 	virtual u32 GetPlayerCount();
+
+	virtual void AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, int r, int g, int b, int a, bool noDepthTest,
+									f64 flDuration);
 };
 
 extern KZUtils *g_pKZUtils;

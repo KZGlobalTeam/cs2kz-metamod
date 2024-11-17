@@ -398,6 +398,15 @@
 				"windows"		"263"
 				"linux"			"264"
 			}
+			// Debugoverlay stuff
+			"DebugTriangle"
+			{
+				"windows"		"51"
+			}
+			"GetDebugOverlay"
+			{
+				"windows"		"86"
+			}
 		}
 	}
 }

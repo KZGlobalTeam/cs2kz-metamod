@@ -298,3 +298,12 @@ u32 KZUtils::GetPlayerCount()
 	}
 	return count;
 }
+
+void KZUtils::AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, int r, int g, int b, int a, bool noDepthTest, f64 flDuration)
+{
+	void *debugoverlay = CALL_VIRTUAL(void *, g_pGameConfig->GetOffset("GetDebugOverlay"), interfaces::pServer);
+	if (debugoverlay)
+	{
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("DebugTriangle"), debugoverlay, p1, p2, p3, r, g, b, a, noDepthTest, flDuration);
+	}
+}

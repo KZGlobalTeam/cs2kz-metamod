@@ -711,6 +711,8 @@ static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilt
 	return true;
 }
 
+#include "fmtstr.h"
+
 void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
 {
 	this->tpmTriggerFixOrigins.RemoveAll();
@@ -778,18 +780,50 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			{
 				if (pm.m_hShape)
 				{
-					Ray_t ray;
+					RayExtended ray;
+
 					g_pKZUtils->SetupRayFromTrace(&ray, pm);
-					CTransform transform;
-					transform.SetToIdentity();
-					g_pKZUtils->DebugDrawRay(&ray, transform, 255, 0, 0, 0, 0, 10.0);
-					Ray_t playerRay;
-					playerRay.Init(pm.m_vStartPos + bounds.mins, pm.m_vStartPos + bounds.maxs);
-					g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 0, 255, 0, 0, 10.0);
-					playerRay.Init(pm.m_vEndPos + bounds.mins, pm.m_vEndPos + bounds.maxs);
-					g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 128, 128, 0, 0, 10.0);
-					playerRay.Init(end + bounds.mins, end + bounds.maxs);
-					g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 255, 0, 0, 0, 10.0);
+					switch (ray.ray.m_eType)
+					{
+						case RAY_TYPE_MESH:
+						{
+							QAngle oldAng, newAng;
+							VectorAngles(this->lastValidPlane, oldAng);
+							VectorAngles(pm.m_vHitNormal, newAng);
+							META_CONPRINTF("Rampbug detected for shape %p for angles %s %s -> %s %s", pm.m_hShape, VecToString(this->lastValidPlane),
+										   VecToString(oldAng), VecToString(pm.m_vHitNormal), VecToString(newAng));
+							META_CONPRINTF(", solid type mesh, vertices %i: ", ray.vertices.Count());
+							for (int i = 0; i < ray.ray.m_Mesh.m_nNumVertices; i++)
+							{
+								META_CONPRINTF(" %s", VecToString(ray.ray.m_Mesh.m_pVertices[i]));
+							}
+							if (ray.ray.m_Mesh.m_nNumVertices == 3)
+							{
+								g_pKZUtils->AddTriangleOverlay(ray.ray.m_Mesh.m_pVertices[0], ray.ray.m_Mesh.m_pVertices[1],
+															   ray.ray.m_Mesh.m_pVertices[2], 255, 0, 0, 200, true, 12.0f);
+							}
+							else
+							{
+								CTransform transform;
+								transform.SetToIdentity();
+								g_pKZUtils->DebugDrawRay(&ray.ray, transform, 255, 0, 0, 0, 1, 20.0);
+							}
+							META_CONPRINTF("\n");
+							break;
+						}
+
+						default:
+						{
+							__debugbreak();
+						}
+					}
+					// Ray_t playerRay;
+					// playerRay.Init(pm.m_vStartPos + bounds.mins, pm.m_vStartPos + bounds.maxs);
+					// g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 0, 255, 0, 0, 20.0);
+					// playerRay.Init(pm.m_vEndPos + bounds.mins, pm.m_vEndPos + bounds.maxs);
+					// g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 128, 128, 0, 0, 20.0);
+					// playerRay.Init(end + bounds.mins, end + bounds.maxs);
+					// g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 255, 0, 0, 0, 20.0);
 				}
 				// We hit a plane that will significantly change our velocity. Make sure that this plane is significant
 				// enough.
@@ -871,6 +905,37 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 							}
 						}
 					}
+				}
+			}
+			else
+			{
+				if (pm.m_hShape)
+				{
+					RayExtended ray;
+					g_pKZUtils->SetupRayFromTrace(&ray, pm);
+					if (ray.ray.m_eType == RAY_TYPE_HULL)
+					{
+						__debugbreak();
+					}
+					CTransform transform;
+					transform.SetToIdentity();
+					QAngle angles;
+					VectorAngles(pm.m_vHitNormal, angles);
+					META_CONPRINTF("%s", VecToString(angles));
+					META_CONPRINTF(", solid type mesh, vertices %i: ", ray.vertices.Count());
+					for (int i = 0; i < ray.ray.m_Mesh.m_nNumVertices; i++)
+					{
+						META_CONPRINTF(" %s", VecToString(ray.ray.m_Mesh.m_pVertices[i]));
+					}
+					META_CONPRINTF("\n");
+					// g_pKZUtils->DebugDrawRay(&ray.ray, transform, 0, 255, 0, 0, 1, 20.0);
+					//  Ray_t playerRay;
+					//  playerRay.Init(pm.m_vStartPos + bounds.mins, pm.m_vStartPos + bounds.maxs);
+					//  g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 0, 255, 0, 0, 20.0);
+					//  playerRay.Init(pm.m_vEndPos + bounds.mins, pm.m_vEndPos + bounds.maxs);
+					//  g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 128, 128, 0, 0, 20.0);
+					//  playerRay.Init(end + bounds.mins, end + bounds.maxs);
+					//  g_pKZUtils->DebugDrawRay(&playerRay, transform, 0, 255, 0, 0, 0, 20.0);
 				}
 			}
 			if (pm.m_vHitNormal.Length() > 0.99f)
