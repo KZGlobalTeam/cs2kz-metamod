@@ -800,13 +800,14 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 							if (ray.ray.m_Mesh.m_nNumVertices == 3)
 							{
 								g_pKZUtils->AddTriangleOverlay(ray.ray.m_Mesh.m_pVertices[0], ray.ray.m_Mesh.m_pVertices[1],
-															   ray.ray.m_Mesh.m_pVertices[2], 255, 0, 0, 200, true, 12.0f);
+															   ray.ray.m_Mesh.m_pVertices[2], 255, 0, 0, 200, true, 20.0);
 							}
 							else
 							{
 								CTransform transform;
 								transform.SetToIdentity();
-								g_pKZUtils->DebugDrawRay(&ray.ray, transform, 255, 0, 0, 0, 1, 20.0);
+								g_pKZUtils->DebugDrawMesh(transform, ray.ray, 255, 0, 0, 128, true, true, 20.0f);
+								// g_pKZUtils->DebugDrawRay(&ray.ray, transform, 255, 0, 0, 0, 1, 20.0);
 							}
 							META_CONPRINTF("\n");
 							break;
@@ -909,7 +910,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			}
 			else
 			{
-				if (pm.m_hShape)
+				if (pm.m_hShape && false)
 				{
 					RayExtended ray;
 					g_pKZUtils->SetupRayFromTrace(&ray, pm);
