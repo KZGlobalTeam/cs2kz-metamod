@@ -56,11 +56,11 @@ MappingInterface *g_pMappingApi = &g_mappingInterface;
 static_function void Mapi_Error(const char *format, ...)
 {
 	i32 errorIndex = g_mappingApi.errorCount;
-	if (errorIndex >= Q_ARRAYSIZE(g_mappingApi.errors[0]))
+	if (errorIndex >= Q_ARRAYSIZE(g_mappingApi.errors))
 	{
 		return;
 	}
-	else if (errorIndex == Q_ARRAYSIZE(g_mappingApi.errors[0]) - 1)
+	else if (errorIndex == Q_ARRAYSIZE(g_mappingApi.errors) - 1)
 	{
 		snprintf(g_mappingApi.errors[errorIndex], sizeof(g_mappingApi.errors[errorIndex]), "Too many errors to list!");
 		return;
