@@ -621,14 +621,14 @@
 	{
 		// CKZ | NRM | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height
 		"#format"	"mode_style:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f"
-		"en"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
-		"chi"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效角度 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度"
-		"pl"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
-		"fi"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Synkki | {pre} Edeltävä | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Korkeus"
-		"sv"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Synk | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Höjd"
-		"ua"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота"
-		"tr"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Senkron | {pre} Pre | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Yükseklik"
-		"it"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+		"en"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+		"chi"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效角度 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度"
+		"pl"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+		"fi"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Synkki | {pre} Edeltävä | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Korkeus"
+		"sv"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Synk | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Höjd"
+		"ua"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота"
+		"tr"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Senkron | {pre} Pre | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Yükseklik"
+		"it"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
