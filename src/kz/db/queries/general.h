@@ -67,13 +67,13 @@ constexpr char sql_gettopplayerspro[] = R"(
         FROM Times 
         INNER JOIN 
         (SELECT Times.MapCourseID, Times.ModeID, MIN(Times.RunTime) AS RecordTime 
-        FROM Times 
-        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        INNER JOIN Maps ON Maps.MapID=MapCourses.MapID 
-        INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND 
-        AND Times.ModeID=%d AND Times.Teleports=0 
-        GROUP BY Times.MapCourseID) Records 
+            FROM Times 
+            INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
+            INNER JOIN Maps ON Maps.MapID=MapCourses.MapID 
+            INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
+            WHERE Players.Cheater=0 AND 
+            AND Times.ModeID=%d AND Times.Teleports=0 
+            GROUP BY Times.MapCourseID) Records 
         ON Times.MapCourseID=Records.MapCourseID AND Times.ModeID=Records.ModeID AND Times.RunTime=Records.RecordTime AND Times.Teleports=0 
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
         GROUP BY Players.SteamID64, Players.Alias 
@@ -85,22 +85,22 @@ constexpr char sql_getaverage[] = R"(
     SELECT AVG(PBTime), COUNT(*) 
         FROM 
         (SELECT MIN(Times.RunTime) AS PBTime 
-        FROM Times 
-        INNER JOIN MapCourses ON Times.MapCourseID=MapCourses.ID 
-        INNER JOIN Players ON Times.SteamID64=Players.SteamID64 
-        WHERE Players.Cheater=0 AND MapCourses.MapID=%d 
-        AND MapCourses.Name='%s' AND Times.ModeID=%d 
-        GROUP BY Times.SteamID64) AS PBTimes
+            FROM Times 
+            INNER JOIN MapCourses ON Times.MapCourseID=MapCourses.ID 
+            INNER JOIN Players ON Times.SteamID64=Players.SteamID64 
+            WHERE Players.Cheater=0 AND MapCourses.MapID=%d 
+            AND MapCourses.Name='%s' AND Times.ModeID=%d 
+            GROUP BY Times.SteamID64) AS PBTimes
 )";
 
 constexpr char sql_getaverage_pro[] = R"(
     SELECT AVG(PBTime), COUNT(*) 
         FROM 
         (SELECT MIN(Times.RunTime) AS PBTime 
-        FROM Times 
-        INNER JOIN MapCourses ON Times.MapCourseID=MapCourses.ID 
-        INNER JOIN Players ON Times.SteamID64=Players.SteamID64 
-        WHERE Players.Cheater=0 AND MapCourses.MapID=%d 
-        AND MapCourses.Name='%s' AND Times.ModeID=%d AND Times.Teleports=0 
-        GROUP BY Times.SteamID64) AS PBTimes
+            FROM Times 
+            INNER JOIN MapCourses ON Times.MapCourseID=MapCourses.ID 
+            INNER JOIN Players ON Times.SteamID64=Players.SteamID64 
+            WHERE Players.Cheater=0 AND MapCourses.MapID=%d 
+            AND MapCourses.Name='%s' AND Times.ModeID=%d AND Times.Teleports=0 
+            GROUP BY Times.SteamID64) AS PBTimes
 )";

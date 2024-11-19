@@ -32,19 +32,28 @@ constexpr char sql_getcoursetoppro[] = R"(
 // Caching PBs
 
 constexpr char sql_getsrs[] = R"(
-    SELECT MIN(Times.RunTime), Times.MapCourseID, Times.ModeID, Times.Metadata
-        FROM Times 
-        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
-        WHERE Maps.Name='%s'
-        GROUP BY MapCourses.Name, Times.ModeID
+    SELECT x.RunTime, x.MapCourseID, x.ModeID, t.Metadata
+        FROM Times t
+        INNER JOIN MapCourses mc ON mc.ID = t.MapCourseID
+        INNER JOIN Maps m ON m.ID = mc.MapID
+        INNER JOIN (
+            SELECT MIN(t.RunTime) AS RunTime, t.MapCourseID, t.ModeID
+                FROM Times t
+                GROUP BY t.MapCourseID, t.ModeID
+        ) x ON x.RunTime = t.RunTime AND x.MapCourseID = t.MapCourseID AND x.ModeID = t.ModeID
+        WHERE m.Name = '%s'
 )";
 
 constexpr char sql_getsrspro[] = R"(
-    SELECT MIN(Times.RunTime), Times.MapCourseID, Times.ModeID, Times.Metadata
-        FROM Times 
-        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
-        WHERE Maps.Name='%s' AND Times.Teleports=0 
-        GROUP BY MapCourses.Name, Times.ModeID
+    SELECT x.RunTime, x.MapCourseID, x.ModeID, t.Metadata
+        FROM Times t
+        INNER JOIN MapCourses mc ON mc.ID = t.MapCourseID
+        INNER JOIN Maps m ON m.ID = mc.MapID
+        INNER JOIN (
+            SELECT MIN(t.RunTime) AS RunTime, t.MapCourseID, t.ModeID
+                FROM Times t
+                WHERE t.Teleports=0 
+                GROUP BY t.MapCourseID, t.ModeID
+        ) x ON x.RunTime = t.RunTime AND x.MapCourseID = t.MapCourseID AND x.ModeID = t.ModeID
+        WHERE m.Name = '%s' 
 )";
