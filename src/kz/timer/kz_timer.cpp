@@ -1081,6 +1081,10 @@ void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId 
 	overall ? pb.overall.pbTime = time : pb.pro.pbTime = time;
 	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error = "";
+	if (metadata.IsEmpty())
+	{
+		return;
+	}
 	LoadKV3FromJSON(&kv, &error, metadata.Get(), "");
 	if (!error.IsEmpty())
 	{
