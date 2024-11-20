@@ -152,7 +152,7 @@ public:
 	// Get the real and connected player count.
 	virtual u32 GetPlayerCount();
 
-	virtual void AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, int r, int g, int b, int a, bool noDepthTest,
+	virtual void AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, u8 r, u8 g, u8 b, u8 a, bool noDepthTest,
 									f64 flDuration);
 };
 
