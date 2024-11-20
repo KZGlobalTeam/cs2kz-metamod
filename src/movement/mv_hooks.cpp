@@ -324,9 +324,20 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 #ifdef DEBUG_TPM
+	static bool foundError = false;
+	static Vector errOrigin {};
+	static Vector errVel {};
+	static f32 errAcc {};
+	if (foundError)
+	{
+		ms->m_flAccumulatedJumpError = errAcc;
+		mv->m_vecVelocity = errVel;
+		mv->m_vecAbsOrigin = errOrigin;
+	}
 	traceHistory.RemoveAll();
 	f32 initialError = ms->m_flAccumulatedJumpError();
 	Vector initialVelocity = mv->m_vecVelocity;
+	Vector initialOrigin = mv->m_vecAbsOrigin;
 	f32 &liveError = ms->m_flAccumulatedJumpError();
 	Vector &liveVelocity = mv->m_vecVelocity;
 	TraceShape.EnableDetour();
@@ -340,6 +351,10 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 		{
 			if (traceHistory[i].end != traceHistory[i + count].end)
 			{
+				errAcc = initialError;
+				errVel = initialVelocity;
+				errOrigin = initialOrigin;
+				foundError = true;
 				META_CONPRINTF("Trace not matching! Previous traces (initial error %f, initial velocity %s):\n", initialError,
 							   VecToString(initialVelocity));
 				for (i32 j = 0; j <= i; j++)
@@ -349,8 +364,8 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 								   traceHistory[j].error, VecToString(traceHistory[j].velocity));
 					if (traceHistory[j].didHit)
 					{
-						META_CONPRINTF("hit %s (normal %s, hitpoint %s)\n", VecToString(traceHistory[j].m_vEndPos),
-									   VecToString(traceHistory[j].m_vHitNormal), VecToString(traceHistory[j].m_vHitPoint));
+						META_CONPRINTF("hit %s (normal %s, fraction %f)\n", VecToString(traceHistory[j].m_vEndPos),
+									   VecToString(traceHistory[j].m_vHitNormal), traceHistory[j].m_flFraction);
 					}
 					else
 					{
@@ -362,8 +377,8 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 								   VecToString(traceHistory[j + count].velocity));
 					if (traceHistory[j + count].didHit)
 					{
-						META_CONPRINTF("hit %s (normal %s, hitpoint %s)\n", VecToString(traceHistory[j + count].m_vEndPos),
-									   VecToString(traceHistory[j + count].m_vHitNormal), VecToString(traceHistory[j + count].m_vHitPoint));
+						META_CONPRINTF("hit %s (normal %s, fraction %f)\n", VecToString(traceHistory[j + count].m_vEndPos),
+									   VecToString(traceHistory[j + count].m_vHitNormal), traceHistory[j + count].m_flFraction);
 					}
 					else
 					{

@@ -812,11 +812,6 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 							META_CONPRINTF("\n");
 							break;
 						}
-
-						default:
-						{
-							__debugbreak();
-						}
 					}
 					// Ray_t playerRay;
 					// playerRay.Init(pm.m_vStartPos + bounds.mins, pm.m_vStartPos + bounds.maxs);
@@ -914,10 +909,6 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 				{
 					RayExtended ray;
 					g_pKZUtils->SetupRayFromTrace(&ray, pm);
-					if (ray.ray.m_eType == RAY_TYPE_HULL)
-					{
-						__debugbreak();
-					}
 					CTransform transform;
 					transform.SetToIdentity();
 					QAngle angles;

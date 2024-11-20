@@ -80,7 +80,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "DispatchSpawn", DispatchSpawn_t, DispatchSpawn);
 	RESOLVE_SIG(g_pGameConfig, "RemoveEntity", RemoveEntity_t, RemoveEntity);
 	RESOLVE_SIG(g_pGameConfig, "SetupRayFromTrace", SetupRayFromTrace_t, SetupRayFromTrace);
-	RESOLVE_SIG(g_pGameConfig, "DebugDrawRay", DebugDrawRay_t, DebugDrawRay);
+	// RESOLVE_SIG(g_pGameConfig, "DebugDrawRay", DebugDrawRay_t, DebugDrawRay);
+	DebugDrawRay_t *DebugDrawRay = nullptr;
 	RESOLVE_SIG(g_pGameConfig, "DebugDrawMesh", DebugDrawMesh_t, DebugDrawMesh);
 
 	g_pKZUtils = new KZUtils(TracePlayerBBox, InitGameTrace, InitPlayerMovementTraceFilter, GetLegacyGameEventListener, SnapViewAngles, EmitSound,
