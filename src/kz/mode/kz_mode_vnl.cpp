@@ -157,11 +157,12 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		// If we moved some portion of the total distance, then
 		//  copy the end position into the pmove.origin and
 		//  zero the plane counter.
-		if (pm.m_flFraction * MAX(1.0, velocity.Length()) > 0.03125)
+		if (pm.m_flFraction * MAX(1.0, velocity.Length()) > 0.03125f)
 		{
 			// actually covered some distance
-			origin = (pm.m_vEndPos);
+			origin = pm.m_vEndPos;
 			VectorCopy(velocity, original_velocity);
+			numplanes = 0;
 		}
 
 		allFraction += pm.m_flFraction;
