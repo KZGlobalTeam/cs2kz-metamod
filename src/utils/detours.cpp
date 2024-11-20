@@ -14,6 +14,7 @@ extern CGameConfig *g_pGameConfig;
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket);
 // Unused
 DECLARE_DETOUR(TraceShape, Detour_TraceShape);
+DECLARE_DETOUR(CreateWings, Detour_CreateWings);
 
 DECLARE_MOVEMENT_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
@@ -46,6 +47,7 @@ void InitDetours()
 {
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(g_pGameConfig, RecvServerBrowserPacket);
+	INIT_DETOUR(g_pGameConfig, CreateWings);
 #ifdef DEBUG_TPM
 	INIT_DETOUR(g_pGameConfig, TraceShape);
 	TraceShape.DisableDetour();
@@ -60,6 +62,13 @@ void FlushAllDetours()
 	}
 
 	g_vecDetours.RemoveAll();
+}
+
+void FASTCALL Detour_CreateWings(void *wings, void *vertices, void *meshes)
+{
+	CreateWings(wings, vertices, meshes);
+	static u64 wingscreated = 0;
+	META_CONPRINTF("Detoured!\n", ++wingscreated);
 }
 
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)

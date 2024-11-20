@@ -16,7 +16,7 @@ class CCSPlayerController;
 class MovementPlayer;
 class CCSPlayerPawnBase;
 class PlayerCommand;
-
+// #define DEBUG_TPM
 #ifdef DEBUG_TPM
 struct TraceHistory
 {

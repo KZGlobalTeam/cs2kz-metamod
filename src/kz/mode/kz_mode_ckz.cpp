@@ -764,6 +764,9 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		else
 		{
 			g_pKZUtils->TracePlayerBBox(start, end, bounds, &filter, pm);
+			QAngle normal;
+			VectorAngles(pm.m_vHitNormal, normal);
+			META_CONPRINTF("fraction %f normal %s %s\n", pm.m_flFraction, VecToString(pm.m_vHitNormal), VecToString(normal));
 			if (end == start)
 			{
 				continue;
@@ -787,6 +790,46 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 					{
 						case RAY_TYPE_MESH:
 						{
+							RnMesh_t *mesh = CALL_VIRTUAL(RnMesh_t *, 8, pm.m_hShape);
+							static bool print = true;
+							if (print)
+							{
+								print = false;
+								META_CONPRINT("==================\n");
+								META_CONPRINTF("Mesh %p\n", mesh);
+								META_CONPRINTF("Mins %s Maxs %s, m_vOrthographicAreas %s\n", VecToString(mesh->m_vMin), VecToString(mesh->m_vMax),
+											   VecToString(mesh->m_vOrthographicAreas));
+								META_CONPRINTF("Nodes list:\n");
+								FOR_EACH_VEC(mesh->m_Nodes, i)
+								{
+									META_CONPRINTF("Node %i, mins %s, children %i, maxs %s, triangle offset %i\n", i,
+												   VecToString(mesh->m_Nodes[i].m_vMin), mesh->m_Nodes[i].m_nChildren,
+												   VecToString(mesh->m_Nodes[i].m_vMax), mesh->m_Nodes[i].m_nTriangleOffset);
+								}
+								META_CONPRINTF("Vertices:\n");
+								FOR_EACH_VEC(mesh->m_Vertices, i)
+								{
+									META_CONPRINTF("Vertice %i: %s\n", i, VecToString(mesh->m_Vertices[i]));
+								}
+								META_CONPRINTF("Triangles:\n");
+								FOR_EACH_VEC(mesh->m_Triangles, i)
+								{
+									META_CONPRINTF("Triangle %i: %i %i %i\n", i, mesh->m_Triangles[i].m_nIndex[0], mesh->m_Triangles[i].m_nIndex[1],
+												   mesh->m_Triangles[i].m_nIndex[2]);
+								}
+								META_CONPRINTF("Wings:\n");
+								FOR_EACH_VEC(mesh->m_Vertices, i)
+								{
+									META_CONPRINTF("Wing %i: %i %i %i\n", i, mesh->m_Wings[i].m_nIndex[0], mesh->m_Wings[i].m_nIndex[1],
+												   mesh->m_Wings[i].m_nIndex[2]);
+								}
+								META_CONPRINTF("Materials:\n");
+								FOR_EACH_VEC(mesh->m_Materials, i)
+								{
+									META_CONPRINTF("Material %i: %i\n", i, mesh->m_Materials[i]);
+								}
+								META_CONPRINT("==================\n");
+							}
 							QAngle oldAng, newAng;
 							VectorAngles(this->lastValidPlane, oldAng);
 							VectorAngles(pm.m_vHitNormal, newAng);

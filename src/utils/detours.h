@@ -14,6 +14,9 @@ bool FASTCALL Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, cons
 								trace_t *pm);
 extern CDetour<decltype(Detour_TraceShape)> TraceShape;
 
+void FASTCALL Detour_CreateWings(void *wings, void *vertices, void *meshes);
+extern CDetour<decltype(Detour_CreateWings)> CreateWings;
+
 #define DECLARE_MOVEMENT_DETOUR(name)        DECLARE_DETOUR(name, movement::Detour_##name);
 #define DECLARE_MOVEMENT_EXTERN_DETOUR(name) extern CDetour<decltype(movement::Detour_##name)> name;
 
