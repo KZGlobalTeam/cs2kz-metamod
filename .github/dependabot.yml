@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "dev"
+    schedule:
+      interval: "monthly"
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    target-branch: "dev"
+    allow:
+      - dependency-name: "hl2sdk-cs2"
+      - dependency-name: "metamod-source"
+    schedule:
+      interval: "daily"
