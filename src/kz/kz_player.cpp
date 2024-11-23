@@ -126,6 +126,9 @@ void KZPlayer::OnPhysicsSimulate()
 	{
 		this->styleServices[i]->OnPhysicsSimulate();
 	}
+	this->noclipService->HandleMoveCollision();
+	this->EnableGodMode();
+	this->UpdatePlayerModelAlpha();
 }
 
 void KZPlayer::OnPhysicsSimulatePost()
@@ -206,9 +209,6 @@ void KZPlayer::OnProcessMovement()
 	this->triggerService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
-	this->noclipService->HandleMoveCollision();
-	this->EnableGodMode();
-	this->UpdatePlayerModelAlpha();
 }
 
 void KZPlayer::OnProcessMovementPost()
