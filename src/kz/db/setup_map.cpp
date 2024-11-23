@@ -22,27 +22,28 @@ void KZDatabaseService::SetupMap()
 	mapSetUp = false;
 	if (!KZDatabaseService::IsReady())
 	{
-		META_CONPRINTF("KZDatabaseService::SetupMap() called too early!\n");
+		META_CONPRINTF("[KZ::DB] Warning: SetupMap called too early.\n");
 		return;
 	}
 
 	Transaction txn;
 	char query[1024];
-	auto mapName = KZDatabaseService::GetDatabaseConnection()->Escape(g_pKZUtils->GetServerGlobals()->mapname.ToCStr());
+	CUtlString mapName = g_pKZUtils->GetServerGlobals()->mapname.ToCStr();
+	auto escapedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
 	auto databaseType = KZDatabaseService::GetDatabaseType();
 	switch (databaseType)
 	{
 		case DatabaseType::SQLite:
 		{
-			V_snprintf(query, sizeof(query), sqlite_maps_insert, mapName.c_str());
+			V_snprintf(query, sizeof(query), sqlite_maps_insert, escapedMapName.c_str());
 			txn.queries.push_back(query);
-			V_snprintf(query, sizeof(query), sqlite_maps_update, mapName.c_str());
+			V_snprintf(query, sizeof(query), sqlite_maps_update, escapedMapName.c_str());
 			txn.queries.push_back(query);
 			break;
 		}
 		case DatabaseType::MySQL:
 		{
-			V_snprintf(query, sizeof(query), mysql_maps_upsert, mapName.c_str());
+			V_snprintf(query, sizeof(query), mysql_maps_upsert, escapedMapName.c_str());
 			txn.queries.push_back(query);
 			break;
 		}
@@ -54,13 +55,19 @@ void KZDatabaseService::SetupMap()
 		}
 	}
 
-	V_snprintf(query, sizeof(query), sql_maps_findid, mapName.c_str(), mapName.c_str());
+	V_snprintf(query, sizeof(query), sql_maps_findid, escapedMapName.c_str(), escapedMapName.c_str());
 	txn.queries.push_back(query);
 	// clang-format off
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(
 		txn, 
-		[databaseType](std::vector<ISQLQuery *> queries) 
+		[databaseType, mapName](std::vector<ISQLQuery *> queries) 
 		{
+			auto currentMapName = g_pKZUtils->GetServerGlobals()->mapname.ToCStr();
+			if (!KZ_STREQ(currentMapName, mapName.Get()))
+			{
+				META_CONPRINTF("[KZ::DB] Failed to setup map, current map name %s doesn't match %s!\n", currentMapName, mapName.Get());
+				return;
+			}
 			switch (databaseType)
 			{
 				case DatabaseType::SQLite:
@@ -88,7 +95,7 @@ void KZDatabaseService::SetupMap()
 				}
 			}
 			mapSetUp = true;
-			META_CONPRINTF("[KZ::DB] Map setup successful, current map ID: %i\n", KZDatabaseService::currentMapID);
+			META_CONPRINTF("[KZ::DB] Map setup successful for %s, current map ID: %i\n", currentMapName, KZDatabaseService::currentMapID);
 			CALL_FORWARD(eventListeners, OnMapSetup);
 		},
 		OnGenericTxnFailure);
