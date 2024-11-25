@@ -228,7 +228,9 @@ class MMSPluginConfig(object):
     if builder.options.opt == '1':
       cxx.defines += ['NDEBUG']
       if cxx.behavior == 'gcc':
-        cxx.cflags += ['-O3']
+        cxx.cflags += ['-O3', '-flto']
+        cxx.cxxflags += ['-g1'] # override ambuild's default -g3 flag.
+        cxx.linkflags += ['-flto']
       elif cxx.behavior == 'msvc':
         cxx.cflags += ['/Ox', '/Zo']
         cxx.linkflags += ['/OPT:ICF', '/OPT:REF']
