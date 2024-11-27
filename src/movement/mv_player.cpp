@@ -10,6 +10,21 @@ void MovementPlayer::OnProcessMovement()
 	this->walkMoved = false;
 	this->takeoffFromLadder = false;
 	this->collidingWithWorld = false;
+
+	bool onGround = this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND;
+	if (!this->previousOnGround && onGround)
+	{
+		Vector velocity;
+		this->GetVelocity(&velocity);
+		this->RegisterLanding(velocity, false);
+		this->OnStartTouchGround();
+	}
+	else if (this->previousOnGround && !onGround)
+	{
+		this->RegisterTakeoff(false);
+		this->takeoffFromLadder = false;
+		this->OnStopTouchGround();
+	}
 }
 
 void MovementPlayer::OnProcessMovementPost()
@@ -26,6 +41,7 @@ void MovementPlayer::OnProcessMovementPost()
 		this->oldAngles = this->moveDataPost.m_vecViewAngles;
 	}
 	this->oldWalkMoved = this->walkMoved;
+	this->previousOnGround = this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND;
 }
 
 CCSPlayer_MovementServices *MovementPlayer::GetMoveServices()
@@ -407,24 +423,9 @@ void MovementPlayer::OnPhysicsSimulate()
 	{
 		this->OnChangeMoveType(this->lastKnownMoveType);
 	}
-	bool onGround = this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND;
-	if (!this->previousOnGround && onGround)
-	{
-		Vector velocity;
-		this->GetVelocity(&velocity);
-		this->RegisterLanding(velocity, false);
-		this->OnStartTouchGround();
-	}
-	else if (this->previousOnGround && !onGround)
-	{
-		this->RegisterTakeoff(false);
-		this->takeoffFromLadder = false;
-		this->OnStopTouchGround();
-	}
 }
 
 void MovementPlayer::OnPhysicsSimulatePost()
 {
 	this->lastKnownMoveType = this->GetMoveType();
-	this->previousOnGround = this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND;
 }

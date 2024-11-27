@@ -24,6 +24,8 @@
 
 #include "sdk/entity/cbasetrigger.h"
 
+#include "vprof.h"
+
 #include "memdbgon.h"
 
 extern CSteamGameServerAPIContext g_steamAPI;
@@ -173,7 +175,7 @@ void hooks::Initialize()
 	SH_ADD_HOOK(ISource2GameClients, OnClientConnected, g_pSource2GameClients, SH_STATIC(Hook_OnClientConnected), false);
 	SH_ADD_HOOK(ISource2GameClients, ClientFullyConnect, g_pSource2GameClients, SH_STATIC(Hook_ClientFullyConnect), false);
 	SH_ADD_HOOK(ISource2GameClients, ClientPutInServer, g_pSource2GameClients, SH_STATIC(Hook_ClientPutInServer), false);
-	SH_ADD_HOOK(ISource2GameClients, ClientActive, g_pSource2GameClients, SH_STATIC(Hook_ClientActive), false);
+	SH_ADD_HOOK(ISource2GameClients, ClientActive, g_pSource2GameClients, SH_STATIC(Hook_ClientActive), true);
 	SH_ADD_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), true);
 	SH_ADD_HOOK(ISource2GameClients, ClientVoice, g_pSource2GameClients, SH_STATIC(Hook_ClientVoice), false);
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
@@ -464,6 +466,7 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCoun
 // ISource2Server
 static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	KZ::timer::CheckAnnounceQueue();
 	KZ::timer::CheckPBRequests();
@@ -519,7 +522,7 @@ static_function void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const c
 	}
 	else
 	{
-		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
+		Warning("[KZ] WARNING: Player pawn for slot %i not found!\n", slot.Get());
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -555,6 +558,7 @@ static_function void Hook_ClientVoice(CPlayerSlot slot)
 
 static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	if (META_RES result = KZ::misc::CheckBlockedRadioCommands(args[0]))
 	{
 		RETURN_META(result);
@@ -625,6 +629,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 // ICvar
 static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	if (META_RES result = KZ::misc::CheckBlockedRadioCommands(args[0]))
 	{
 		RETURN_META(result);
