@@ -310,6 +310,7 @@ private:
 	bool collidingWithWorld {};
 	// Movetype changes that occur outside of movement processing
 	MoveType_t lastKnownMoveType {};
+	bool previousOnGround {};
 };
 
 class MovementPlayerManager : public PlayerManager
