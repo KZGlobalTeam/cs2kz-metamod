@@ -383,6 +383,7 @@ void MovementPlayer::Reset()
 	this->pendingEndTouchTriggers.RemoveAll();
 	this->touchedTriggers.RemoveAll();
 	this->collidingWithWorld = false;
+	this->previousOnGround = false;
 }
 
 META_RES MovementPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
@@ -406,9 +407,24 @@ void MovementPlayer::OnPhysicsSimulate()
 	{
 		this->OnChangeMoveType(this->lastKnownMoveType);
 	}
+	bool onGround = this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND;
+	if (!this->previousOnGround && onGround)
+	{
+		Vector velocity;
+		this->GetVelocity(&velocity);
+		this->RegisterLanding(velocity, false);
+		this->OnStartTouchGround();
+	}
+	else if (this->previousOnGround && !onGround)
+	{
+		this->RegisterTakeoff(false);
+		this->takeoffFromLadder = false;
+		this->OnStopTouchGround();
+	}
 }
 
 void MovementPlayer::OnPhysicsSimulatePost()
 {
 	this->lastKnownMoveType = this->GetMoveType();
+	this->previousOnGround = this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND;
 }
