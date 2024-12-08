@@ -340,7 +340,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 		Vector gravity = {0, 0, -800};
 		if (sv_gravity)
 		{
-			gravity.z = reinterpret_cast<CVValue_t *>(&sv_gravity->values)->m_flValue;
+			gravity.z = -reinterpret_cast<CVValue_t *>(&sv_gravity->values)->m_flValue;
 		}
 		// basic x + vt + (0.5a)t^2 = 0;
 		const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
