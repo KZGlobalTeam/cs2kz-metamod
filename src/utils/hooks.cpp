@@ -304,9 +304,6 @@ static_function void AddEntityHooks(CBaseEntity *entity)
 		if (!V_stricmp(entity->GetClassname(), "player") && g_pKZPlayerManager->ToPlayer(pawn))
 		{
 			hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Teleport, pawn, SH_STATIC(Hook_OnTeleport), false));
-			g_pKZPlayerManager->ToPlayer(pawn)->pendingEndTouchTriggers.RemoveAll();
-			g_pKZPlayerManager->ToPlayer(pawn)->pendingStartTouchTriggers.RemoveAll();
-			g_pKZPlayerManager->ToPlayer(pawn)->touchedTriggers.RemoveAll();
 		}
 	}
 }
@@ -321,17 +318,7 @@ static_function void RemoveEntityHooks(CBaseEntity *entity)
 		SH_REMOVE_MANUALHOOK(StartTouch, entity, SH_STATIC(Hook_OnStartTouchPost), true);
 		SH_REMOVE_MANUALHOOK(Touch, entity, SH_STATIC(Hook_OnTouchPost), true);
 		SH_REMOVE_MANUALHOOK(EndTouch, entity, SH_STATIC(Hook_OnEndTouchPost), true);
-		if (V_strstr(entity->GetClassname(), "trigger_"))
-		{
-			for (u32 i = 0; i <= MAXPLAYERS; i++)
-			{
-				KZPlayer *player = static_cast<KZPlayer *>(g_pKZPlayerManager->players[i]);
-				player->pendingEndTouchTriggers.FindAndRemove(entity->GetRefEHandle());
-				player->pendingStartTouchTriggers.FindAndRemove(entity->GetRefEHandle());
-				player->touchedTriggers.FindAndRemove(entity->GetRefEHandle());
-			}
-		}
-		else
+		if (!V_strstr(entity->GetClassname(), "trigger_"))
 		{
 			SH_REMOVE_MANUALHOOK(Teleport, static_cast<CCSPlayerPawn *>(entity), SH_STATIC(Hook_OnTeleport), false);
 		}
