@@ -96,7 +96,7 @@ public:
 
 	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
 
-	virtual void RegisterTakeoff(bool jumped);
+	virtual void RegisterTakeoff(bool jumped, bool fromLadder = false, Vector *overrideOrigin = nullptr);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	virtual f32 GetGroundPosition();
 

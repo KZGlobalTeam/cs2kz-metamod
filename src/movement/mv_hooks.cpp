@@ -224,29 +224,28 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 		// Do the setting part ourselves as well, but do not fire callback because it will be called later with the correct parameters.
 		player->SetMoveType(MOVETYPE_WALK, false);
 	}
+	// Was on ladder before, not anymore
 	if (!result && oldMoveType == MOVETYPE_LADDER)
 	{
-		player->RegisterTakeoff(false);
-		player->takeoffFromLadder = true;
 		// Ladderjump takeoff detection is delayed by one process movement call, we have to use the previous origin.
-		player->takeoffOrigin = player->lastValidLadderOrigin;
-		player->takeoffGroundOrigin = player->lastValidLadderOrigin;
+		player->RegisterTakeoff(false, true, &player->lastValidLadderOrigin);
 		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
+	// Was not on ladder before, now is, and is not on the ground
 	else if (result && oldMoveType != MOVETYPE_LADDER && player->GetPlayerPawn()->m_MoveType() == MOVETYPE_LADDER
 			 && !(player->GetPlayerPawn()->m_fFlags & FL_ONGROUND))
 	{
 		player->RegisterLanding(oldVelocity, false);
 		player->OnChangeMoveType(MOVETYPE_WALK);
 	}
+	// Player is on the ladder, pressing jump pushes them away from the ladder.
 	else if (result && oldMoveType == MOVETYPE_LADDER && player->GetPlayerPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
-		// Player is on the ladder, pressing jump pushes them away from the ladder.
-		player->RegisterTakeoff(player->IsButtonPressed(IN_JUMP));
-		player->takeoffFromLadder = true;
+		player->RegisterTakeoff(player->IsButtonPressed(IN_JUMP), true);
 		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
 
+	// Register the last known ladder position for jumpstats purposes.
 	if (result && player->GetPlayerPawn()->m_MoveType() == MOVETYPE_LADDER)
 	{
 		player->GetOrigin(&player->lastValidLadderOrigin);
@@ -416,7 +415,6 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 		if (ground)
 		{
 			player->RegisterLanding(oldVelocity);
-			player->duckBugged = player->processingDuck;
 			player->OnStartTouchGround();
 		}
 		else

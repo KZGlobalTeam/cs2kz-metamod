@@ -21,8 +21,7 @@ void MovementPlayer::OnProcessMovement()
 	}
 	else if (this->previousOnGround && !onGround)
 	{
-		this->RegisterTakeoff(false);
-		this->takeoffFromLadder = false;
+		this->RegisterTakeoff(false, false);
 		this->OnStopTouchGround();
 	}
 }
@@ -251,18 +250,26 @@ f32 MovementPlayer::GetGroundPosition()
 	return trace.m_vEndPos.z;
 }
 
-void MovementPlayer::RegisterTakeoff(bool jumped)
+void MovementPlayer::RegisterTakeoff(bool jumped, bool fromLadder, Vector *overrideOrigin)
 {
 	CMoveData *mv = this->currentMoveData;
 	if (!this->processingMovement)
 	{
 		mv = &this->moveDataPost;
 	}
-	this->takeoffOrigin = mv->m_vecAbsOrigin;
+	this->takeoffFromLadder = fromLadder;
+	this->takeoffOrigin = overrideOrigin ? *overrideOrigin : mv->m_vecAbsOrigin;
 	this->takeoffTime = g_pKZUtils->GetGlobals()->curtime - g_pKZUtils->GetGlobals()->frametime;
 	this->takeoffVelocity = mv->m_vecVelocity;
-	this->takeoffGroundOrigin = mv->m_vecAbsOrigin;
-	this->takeoffGroundOrigin.z = this->GetGroundPosition();
+	if (overrideOrigin)
+	{
+		this->takeoffGroundOrigin = *overrideOrigin;
+	}
+	else
+	{
+		this->takeoffGroundOrigin = mv->m_vecAbsOrigin;
+		this->takeoffGroundOrigin.z = this->GetGroundPosition();
+	}
 	this->inRealPerf = this->inPerf;
 	this->jumped = jumped;
 }
@@ -274,6 +281,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	{
 		mv = &this->moveDataPost;
 	}
+	this->duckBugged = this->processingDuck;
 	this->inPerf = false;
 	this->inRealPerf = false;
 	this->landingOrigin = mv->m_vecAbsOrigin;
@@ -343,8 +351,8 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 			gravity.z = -reinterpret_cast<CVValue_t *>(&sv_gravity->values)->m_flValue;
 		}
 		// basic x + vt + (0.5a)t^2 = 0;
-		const double delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
-		const double time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
+		const f64 delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
+		const f64 time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);
 		this->landingOriginActual = mv->m_vecAbsOrigin + landingVelocity * time + 0.5 * gravity * time * time;
 		this->landingTimeActual = this->landingTime + time;
 	}
@@ -392,12 +400,8 @@ void MovementPlayer::Reset()
 	this->landingTimeServer = 0.0f;
 	this->landingOriginActual.Init();
 	this->landingTimeActual = 0.0f;
-	this->collidingWithWorld = false;
 	this->enableWaterFix = false;
 	this->ignoreNextCategorizePosition = false;
-	this->pendingStartTouchTriggers.RemoveAll();
-	this->pendingEndTouchTriggers.RemoveAll();
-	this->touchedTriggers.RemoveAll();
 	this->collidingWithWorld = false;
 	this->previousOnGround = false;
 }

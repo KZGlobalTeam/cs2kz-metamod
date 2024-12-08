@@ -542,7 +542,6 @@ bool KZTimerService::CanPause(bool showError)
 			}
 			return false;
 		}
-		// TODO: Bhop/Antipause detection
 	}
 	return true;
 }
