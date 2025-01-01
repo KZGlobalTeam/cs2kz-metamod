@@ -74,7 +74,7 @@ Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 	return nullptr;
 }
 
-void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer,
+void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg,
 									const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
 }
@@ -84,7 +84,7 @@ void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint6
 {
 }
 
-void PlayerManager::OnConnectClientPost(const char *pszName, ns_address *pAddr, int socket, CCLCMsg_SplitPlayerConnect_t *pSplitPlayer,
+void PlayerManager::OnConnectClientPost(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg,
 										const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
 }

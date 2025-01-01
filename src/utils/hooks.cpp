@@ -138,12 +138,12 @@ static_function bool Hook_ActivateServer();
 
 static_global int clientConnectHook {};
 static_global int clientConnectPostHook {};
-SH_DECL_HOOK8(CNetworkGameServerBase, ConnectClient, SH_NOATTRIB, false, CServerSideClientBase *, const char *, ns_address *, int,
-			  CCLCMsg_SplitPlayerConnect_t *, const char *, const byte *, int, bool);
-static_function CServerSideClientBase *Hook_ConnectClient(const char *, ns_address *, int, CCLCMsg_SplitPlayerConnect_t *, const char *, const byte *,
-														  int, bool);
-static_function CServerSideClientBase *Hook_ConnectClientPost(const char *, ns_address *, int, CCLCMsg_SplitPlayerConnect_t *, const char *,
-															  const byte *, int, bool);
+SH_DECL_HOOK8(CNetworkGameServerBase, ConnectClient, SH_NOATTRIB, false, CServerSideClientBase *, const char *, ns_address *, void *,
+			  C2S_CONNECT_Message *, const char *, const byte *, int, bool);
+static_function CServerSideClientBase *Hook_ConnectClient(const char *, ns_address *, void *, C2S_CONNECT_Message *, const char *, const byte *, int,
+														  bool);
+static_function CServerSideClientBase *Hook_ConnectClientPost(const char *, ns_address *, void *, C2S_CONNECT_Message *, const char *, const byte *,
+															  int, bool);
 
 // IGameSystem
 static_global int serverGamePostSimulateHook {};
@@ -661,19 +661,19 @@ static_function bool Hook_ActivateServer()
 
 // CNetworkGameServerBase
 
-static_function CServerSideClientBase *Hook_ConnectClient(const char *pszName, ns_address *pAddr, int socket,
-														  CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
-														  const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
+static_function CServerSideClientBase *Hook_ConnectClient(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg,
+														  const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength,
+														  bool bIsLowViolence)
 {
-	g_pKZPlayerManager->OnConnectClient(pszName, pAddr, socket, pSplitPlayer, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
+	g_pKZPlayerManager->OnConnectClient(pszName, pAddr, pNetInfo, pConnectMsg, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
-static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszName, ns_address *pAddr, int socket,
-															  CCLCMsg_SplitPlayerConnect_t *pSplitPlayer, const char *pszChallenge,
-															  const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
+static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszName, ns_address *pAddr, void *pNetInfo,
+															  C2S_CONNECT_Message *pConnectMsg, const char *pszChallenge, const byte *pAuthTicket,
+															  int nAuthTicketLength, bool bIsLowViolence)
 {
-	g_pKZPlayerManager->OnConnectClientPost(pszName, pAddr, socket, pSplitPlayer, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
+	g_pKZPlayerManager->OnConnectClientPost(pszName, pAddr, pNetInfo, pConnectMsg, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
