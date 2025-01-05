@@ -70,8 +70,15 @@ bool KZTriggerService::ShouldDisableJumpstats()
 void KZTriggerService::TouchModifierTrigger(TriggerTouchTracker tracker)
 {
 	const KzTrigger *trigger = tracker.kzTrigger;
+
 	if (trigger->modifier.gravity != 1)
 	{
+		// No gravity while paused.
+		if (this->player->timerService->GetPaused())
+		{
+			this->player->GetPlayerPawn()->m_flGravityScale(0);
+			return;
+		}
 		this->player->GetPlayerPawn()->m_flGravityScale(trigger->modifier.gravity);
 	}
 }

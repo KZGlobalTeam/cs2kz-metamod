@@ -139,7 +139,15 @@ void KZTriggerService::TouchTriggersAlongPath(const Vector &start, const Vector 
 void KZTriggerService::UpdateTriggerTouchList()
 {
 	// reset gravity before all the Touch() calls
-	this->player->GetPlayerPawn()->m_flGravityScale(1);
+	if (this->player->timerService->GetPaused())
+	{
+		// No gravity while paused.
+		this->player->GetPlayerPawn()->m_flGravityScale(0);
+	}
+	else
+	{
+		this->player->GetPlayerPawn()->m_flGravityScale(1);
+	}
 
 	if (!this->player->IsAlive() || this->player->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 	{
