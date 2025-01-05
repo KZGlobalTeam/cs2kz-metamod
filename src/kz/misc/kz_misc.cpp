@@ -165,6 +165,7 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 			player->noclipService->HandleNoclip();
 		}
 		player->GetPlayerPawn()->Respawn();
+		player->quietService->ResetHideWeapon();
 	}
 	else
 	{
@@ -332,6 +333,13 @@ void KZ::misc::OnServerActivate()
 	interfaces::pEngine->ServerCommand("mp_restartgame 1");
 }
 
+SCMD_CALLBACK(Command_KzSwitchHands)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->quietService->ResetHideWeapon();
+	return MRES_IGNORED;
+}
+
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
@@ -347,6 +355,9 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_pc", Command_KzPlayerCheck);
 	scmd::RegisterCmd("kz_playercheck", Command_KzPlayerCheck);
 	scmd::RegisterCmd("jointeam", Command_JoinTeam, true);
+	scmd::RegisterCmd("switchhands", Command_KzSwitchHands, true);
+	scmd::RegisterCmd("switchhandsleft", Command_KzSwitchHands, true);
+	scmd::RegisterCmd("switchhandsright", Command_KzSwitchHands, true);
 	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 	KZGotoService::RegisterCommands();
 	KZCheckpointService::RegisterCommands();
@@ -391,6 +402,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		player->GetPlayerPawn()->CommitSuicide(false, true);
 		player->GetController()->SwitchTeam(newTeam);
 		player->GetController()->Respawn();
+		player->quietService->ResetHideWeapon();
 		if (restorePos && player->specService->HasSavedPosition())
 		{
 			player->specService->LoadPosition();

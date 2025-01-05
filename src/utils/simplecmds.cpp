@@ -167,8 +167,11 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 
 		if (!V_stricmp(g_cmdManager.cmds[i].name, args[0]))
 		{
-			g_cmdManager.cmds[i].callback(controller, &args);
-			return MRES_SUPERCEDE;
+			result = g_cmdManager.cmds[i].callback(controller, &args);
+			if (result == MRES_SUPERCEDE)
+			{
+				return result;
+			}
 		}
 	}
 	return result;
@@ -234,8 +237,8 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
 			if (!V_stricmp(arg, cmdName))
 			{
-				cmds[i].callback(controller, &cmdArgs);
-				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
+				META_RES result = cmds[i].callback(controller, &cmdArgs);
+				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER || result == MRES_SUPERCEDE)
 				{
 					// don't send chat message
 					return MRES_SUPERCEDE;
@@ -258,8 +261,11 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
 			if (!V_stricmp(commandName, cmdName))
 			{
-				cmds[i].callback(controller, &args);
-				return MRES_SUPERCEDE;
+				META_RES result = g_cmdManager.cmds[i].callback(controller, &args);
+				if (result == MRES_SUPERCEDE)
+				{
+					return result;
+				}
 			}
 		}
 	}

@@ -30,6 +30,14 @@ public:
 	bool ShouldHide();
 	bool ShouldHideIndex(u32 targetIndex);
 
+	void ResetHideWeapon()
+	{
+		for (u32 i = 0; i < sizeof(this->weaponShownCount) / sizeof(this->weaponShownCount[0]); i++)
+		{
+			this->weaponShownCount[i] = 0;
+		}
+	}
+
 	bool ShouldHideWeapon()
 	{
 		if (!this->player->IsAlive())
