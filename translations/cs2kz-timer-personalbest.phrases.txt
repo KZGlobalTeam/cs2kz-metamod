@@ -14,6 +14,7 @@
 		"es"		"{lime}{player_name}{grey} en {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"de"		"{lime}{player_name}{grey} auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"pl"		"{lime}{player_name}{grey} na {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
+		"ko"		"{lime}{player_name}{grey}님이 {default}{map_name}{grey} ({default}{course_name}{grey})에서 [{purple}{mode_style_text}{grey}]로 진행 중입니다."
 	}
 	"PB Time - No Times"
 	{
@@ -27,6 +28,7 @@
 		"es"		"{grey}No tiene un tiempo... aún."
 		"de"		"{grey}Du hast noch keine Zeit festgelegt... bisher."
 		"pl"		"{grey}Nie ustawiłeś czasu... jeszcze."
+		"ko"		"{grey}아직 기록이 없습니다."
 	}
 	"PB Time - Overall (Server)"
 	{
@@ -42,6 +44,7 @@
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}]"
 		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}]"
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Ogółem{grey}]"
+		"ko"		"{grey}서버: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}]"
 	}
 	"PB Time - Combined (Server)"
 	{
@@ -57,6 +60,7 @@
 		"es"		"{grey}Servidor: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"de"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"pl"		"{grey}Serwer: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Ogółem{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"ko"		"{grey}서버: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Split (Server)"
 	{
@@ -72,6 +76,7 @@
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"ko"		"{grey}서버: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Overall Rankless (Server)"
 	{
@@ -87,6 +92,7 @@
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}]"
 		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Insgesamt{grey}]"
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Ogółem{grey}]"
+		"ko"		"{grey}서버: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}]"
 	}
 	"PB Time - Combined Rankless (Server)"
 	{
@@ -102,6 +108,7 @@
 		"es"		"{grey}Servidor: {default}{time}{grey} [{yellow}General{grey}/{blue}PRO{grey}]"
 		"de"		"{grey}Server: {default}{time}{grey} [{yellow}Insgesamt{grey}/{blue}PRO{grey}]"
 		"pl"		"{grey}Serwer: {default}{time}{grey} [{yellow}Ogółem{grey}/{blue}PRO{grey}]"
+		"ko"		"{grey}서버: {default}{time}{grey} [{yellow}전체{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Server)"
 	{
@@ -117,6 +124,7 @@
 		"es"		"{grey}Servidor: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Insgesamt{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Ogółem{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"ko"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)" 
 	{
@@ -130,6 +138,7 @@
 		"es"		"{darkred}Fallo al recuperar las mejores estadísticas personales."
 		"de"		"{darkred}Persönliche PBs konnten nicht abgerufen werden."
 		"pl"		"{darkred}Fallo al recuperar las mejores estadísticas personales."
+		"ko"		"{darkred}개인 최고 기록을을 가져오지 못했습니다."
 	}
 	"PB Request - Invalid Course Name"
 	{
@@ -144,6 +153,7 @@
 		"es"		"{darkred}Fallo al recuperar las mejores estadísticas personales. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
 		"de"		"{darkred}Persönliche PBs konnten nicht abgerufen werden. {grey} (Ungültiger Kursname {default}{course_name}{grey})"
 		"pl"		"{darkred}Fallo al recuperar las mejores estadísticas personales. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
+		"ko"		"{darkred}개인 최고 기록 통계를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
 	}
 	"PB Command Usage"
 	{
@@ -157,6 +167,7 @@
 		"es"		"{grey}Uso: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. ¡Mire la consola para más detalles!"
 		"de"		"{grey}Verwendung: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Weitere Einzelheiten finden Sie in der Konsole!"
 		"pl"		"{grey}Użycie: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Sprawdź konsolę, aby uzyskać szczegóły!"
+		"ko"		"{grey}사용법: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
 	}
 	"PB Command Usage - Console"
 	{
@@ -170,5 +181,6 @@
 		"es"		"Uso: kz_pb <c/course/map/mode/p/player/s/style=...>\nEjemplo: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nPara no especificar un estilo, use \"style=none\"."
 		"de"		"Verwendung: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsempio: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nUm keinen Stil anzugeben, verwende \"style=none\"."
 		"pl"		"Użycie: kz_pb <c/course/map/mode/p/player/s/style=...>\nPrzykład: \"kz_pb map=kz_map p=Gracz c=Main style=ABH\"\nAby nie podawać stylu, użyj \"style=none\"."
+		"ko"		"사용법: kz_pb <c/course/map/mode/p/player/s/style=...>\n예시: "kz_pb map=kz_map p=Player c=Main style=ABH"\n스타일을 지정하지 않으려면 "style=none"을 사용하세요."
 	}
 }

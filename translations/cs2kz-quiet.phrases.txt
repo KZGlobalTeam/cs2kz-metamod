@@ -12,6 +12,7 @@
 		"it"		"{grey}Le gambe ora sono visibili."
 		"es"		"{grey}Las piernas de su personaje ahora son visibles."
 		"de"		"{grey}Die Beine deines Spielers sind jetzt sichtbar."
+		"ko"		"{grey}플레이어의 다리가 이제 표시됩니다."
 	}
 	"Quiet Option - Show Player Legs - Disable"
 	{
@@ -25,6 +26,7 @@
 		"it"		"{grey}Le gambe ora sono nascoste."
 		"es"		"{grey}Las piernas de su personaje ahora están ocultas."
 		"de"		"{grey}Die Beine deines Spielers sind jetzt versteckt."
+		"ko"		"{grey}플레이어의 다리가 이제 숨겨졌습니다."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
@@ -39,6 +41,7 @@
 		"it"		"{grey}Stai mostrando gli altri giocatori."
 		"es"		"{grey}Ahora está viendo a otros jugadores."
 		"de"		"{grey}Du zeigst jetzt andere Spieler."
+		"ko"		"{grey}이제 다른 플레이어가 표시됩니다."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
@@ -53,6 +56,7 @@
 		"it"		"{grey}Stai nascondendo gli altri giocatori."
 		"es"		"{grey}Ahora está ocultando a otros jugadores."
 		"de"		"{grey}Du versteckst jetzt andere Spieler."
+		"ko"		"{grey}이제 다른 플레이어가 숨겨졌습니다."
 	}
 	"Quiet Option - Show Weapon - Enable"
 	{
@@ -67,6 +71,7 @@
 		"it"		"{grey}Stai mostrando l'arma."
 		"es"		"{grey}Ahora está mostrando su arma."
 		"de"		"{grey}Du zeigst jetzt deine Waffe."
+		"ko"		"{grey}이제 무기가 표시됩니다."
 	}
 	"Quiet Option - Show Weapon - Disable"
 	{
@@ -81,5 +86,6 @@
 		"it"		"{grey}Stai nascondendo l'arma."
 		"es"		"{grey}Ahora está escondiendo su arma."
 		"de"		"{grey}Du versteckst jetzt deine Waffe."
+		"ko"		"{grey}이제 무기가 숨겨졌습니다."
 	}
 }

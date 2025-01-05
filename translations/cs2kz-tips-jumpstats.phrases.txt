@@ -12,6 +12,7 @@
 		"it"	"{grey}Puoi cambiare la visibilità delle statistiche dei salti con {default}/togglejs{grey}."
 		"es"	"{grey}Puede alternar las estadísticas de salto escribiendo {default}/togglejs{grey}."
 		"de"	"{grey}Sie können die Berichterstattung über Jumpstats aktivieren oder deaktivieren, indem Sie {default}/togglejs{grey} eingeben."
+		"ko"	"{grey}점프 통계 보고 기능을 전환하려면 {default}/togglejs{grey}를 입력하세요."
 	}
 	"Tip - kz_jsalways"
 	{
@@ -25,5 +26,6 @@
 		"it"	"{grey}Scrivi {default}/jsalways {grey}per mostrare sempre le statistiche dei salti."
 		"es"	"{grey}Use {default}/jsalways {grey}para alternar el modo de estadísticas de salto siempre activas."
 		"de"	"{grey}Verwende {default}/jsalways {grey}, um den Modus für immer aktive Jumpstats umzuschalten."
+		"ko"	"{grey}항상 활성화된 점프 통계 모드를 전환하려면 {default}/jsalways{grey}를 사용하세요."
 	}
 }

@@ -15,6 +15,7 @@
 		"es"		"{grey}Récords del servidor en {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"pl"		"{grey}Rekordy serwera na {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"de"		"{grey}Serverrekorde auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"ko"		"{grey}서버 기록: {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"SR - No Times"
 	{
@@ -29,6 +30,7 @@
 		"es"		"{grey}¡No se encontraron tiempos!"
 		"pl"		"{grey}Nie znaleziono żadnych czasów!"
 		"de"		"{grey}Es wurden keine Zeiten gefunden!"
+		"ko"		"{grey}기록이 없습니다!"
 	}
 	"SR - Overall"
 	{
@@ -45,6 +47,7 @@
 		"es"		"{yellow}General{grey}: {default}{time}{grey} por {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"pl"		"{yellow}Ogólny{grey}: {default}{time}{grey} od {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"de"		"{yellow}Gesamt{grey}: {default}{time}{grey} von {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
+		"ko"		"{yellow}전체{grey}: {default}{time}{grey} {lime}{player_name}{grey}님 ({yellow}{tp_count_text}{grey})"
 	}
 	"SR - Combined"
 	{
@@ -61,6 +64,7 @@
 		"es"		"{yellow}General/{blue}PRO{grey}: {default}{time}{grey} por {lime}{player_name}{grey}"
 		"pl"		"{yellow}Ogólny/{blue}PRO{grey}: {default}{time}{grey} od {lime}{player_name}{grey}"
 		"de"		"{yellow}Gesamt/{blue}PRO{grey}: {default}{time}{grey} von {lime}{player_name}{grey}"
+		"ko"		"{yellow}전체/{blue}PRO{grey}: {default}{time}{grey} {lime}{player_name}{grey}님"
 	}
 	"SR - PRO"
 	{
@@ -77,6 +81,7 @@
 		"es"		"{blue}PRO{grey}: {default}{time_pro}{grey} por {lime}{player_name_pro}{grey}"
 		"pl"		"{blue}PRO{grey}: {default}{time_pro}{grey} od {lime}{player_name_pro}{grey}"
 		"de"		"{blue}PRO{grey}: {default}{time_pro}{grey} von {lime}{player_name_pro}{grey}"
+		"ko"		"{blue}PRO{grey}: {default}{time_pro}{grey} {lime}{player_name_pro}{grey}님"
 	}
 	"Record Request - Failed (Generic)" 
 	{
@@ -91,6 +96,7 @@
 		"es"		"{darkred}Fallo al recuperar la información del récord."
 		"pl"		"{darkred}Nie udało się pobrać informacji o rekordzie."
 		"de"		"{darkred}Fehler beim Abrufen der Rekordinformationen."
+		"ko"		"{darkred}기록 정보를 가져오지 못했습니다."
 	}
 	"Record Request - Invalid Course Name"
 	{
@@ -106,6 +112,7 @@
 		"es"		"{darkred}Fallo al recuperar la información del récord. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
 		"pl"		"{darkred}Nie udało się pobrać informacji o rekordzie. {grey}(Nieprawidłowa nazwa kursu {default}{course_name}{grey})"
 		"de"		"{darkred}Abruf von Rekordinformationen fehlgeschlagen. {grey}(Ungültiger Kursname {default}{course_name}{grey})"
+		"ko"		"{darkred}기록 정보를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
 	}
 	"WR/SR Command Usage"
 	{
@@ -119,6 +126,7 @@
 		"es"		"{grey}Uso: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. ¡Mire la consola para más detalles!"
 		"pl"		"{grey}Użycie: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Sprawdź konsolę, aby uzyskać więcej informacji!"
 		"de"		"{grey}Verwendung: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Siehe Konsole für Details!"
+		"ko"		"{grey}사용법: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
 	}
 	"WR/SR Command Usage - Console"
 	{
@@ -132,5 +140,6 @@
 		"es"		"Uso: kz_wr/kz_sr <c/course/map/mode=...>\nEjemplo: \"kz_wr map=kz_map c=Main\"."
 		"pl"		"Użycie: kz_wr/kz_sr <c/course/map/mode=...>\nPrzykład: \"kz_wr map=kz_map c=Main\"."
 		"de"		"Verwendung: kz_wr/kz_sr <c/course/map/mode=...>\nBeispiel: \"kz_wr map=kz_map c=Main\"."
+		"ko"		"사용법: kz_wr/kz_sr <c/course/map/mode=...>\n예시: "kz_wr map=kz_map c=Main"."
 	}
 }

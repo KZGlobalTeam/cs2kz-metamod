@@ -12,6 +12,7 @@
 		"it"		"{grey}Utilizzo: {default}kz_mode <modalità>.{grey} Controlla la console per le modalità disponibili!"
 		"es"		"{grey}Uso: {default}kz_mode <mode>.{grey} ¡Mire la consola para ver los modos posibles!"
 		"de"		"{grey}Verwendung: {default}kz_mode <mode>.{grey} Siehe Konsole für mögliche Modi!"
+		"ko"		"{grey}사용법: {default}kz_mode <mode>{grey}. 가능한 모드는 콘솔에서 확인하세요!"
 	}
 	"Possible & Current Modes"
 	{
@@ -26,6 +27,7 @@
 		"it"		"Modalità disponibili: (Al momento {mode})"
 		"es"		"Modos posibles: (El modo actual es {mode})"
 		"de"		"Verfügbare Modi: (Der aktuelle Modus ist {mode})"
+		"ko"		"가능한 모드: (현재 모드: {mode})"
 	}
 	"Mode Not Available"
 	{
@@ -42,6 +44,7 @@
 		"it"		"{grey}La modalità {purple}{mode} {grey}non è al momento disponibile."
 		"es"		"{grey}El modo {purple}{mode} {grey}no está disponible ahora."
 		"de"		"{grey}Der {purple}{mode} {grey}Modus ist derzeit nicht verfügbar."
+		"ko"		"{grey}{purple}{mode}{grey} 모드는 현재 사용 불가능합니다."
 	}
 	"Switched Mode"
 	{
@@ -58,5 +61,6 @@
 		"it"		"{grey}Hai cambiato la modalità in {purple}{mode}{grey}."
 		"es"		"{grey}Usted ha cambiado al modo {purple}{mode} {grey}."
 		"de"		"{grey}Du hast den Modus auf {purple}{mode} {grey}wechseln."
+		"ko"		"{grey}이제 {purple}{mode}{grey} 모드로 전환되었습니다."
 	}
 }

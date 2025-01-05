@@ -14,6 +14,7 @@
 		"it"		"Offset"
 		"es"		"Desplazamiento"
 		"de"		"Offset"
+		"ko"		"오프셋"
 	}
 	"Height"
 	{
@@ -28,6 +29,7 @@
 		"it"		"Altezza"
 		"es"		"Altura"
 		"de"		"Höhe"
+		"ko"		"높이"
 	}
 	"Pre"
 	{
@@ -42,6 +44,7 @@
 		"it"		"Pre"
 		"es"		"Pre"
 		"de"		"Pre"
+		"ko"		"프리"
 	}
 	"Max"
 	{
@@ -56,6 +59,7 @@
 		"it"		"Max"
 		"es"		"Máx"
 		"de"		"Max"
+		"ko"		"최대"
 	}
 	"Strafes" // Plural
 	{
@@ -70,6 +74,7 @@
 		"it"		"Strafes"
 		"es"		"Strafes"
 		"de"		"Strafes"
+		"ko"		"스트레이프"
 	}
 	"Strafe" // Singular
 	{
@@ -83,6 +88,7 @@
 		"tr"		"Strafe"
 		"it"		"Strafe"
 		"de"		"Strafe"
+		"ko"		"스트레이프"
 	}
 	"Sync"
 	{
@@ -96,6 +102,7 @@
 		"tr"		"Senkron"
 		"it"		"Sync"
 		"de"		"Sync"
+		"ko"		"싱크"
 	}
 	"Air"
 	{
@@ -109,6 +116,7 @@
 		"tr"		"Hava"
 		"it"		"Air"
 		"de"		"Air"
+		"ko"		"공중"
 	}
 	"Air Time"
 	{
@@ -122,6 +130,7 @@
 		"tr"		"Hava süresi"
 		"it"		"Airtime"
 		"de"		"Air-Zeit"
+		"ko"		"공중 시간"
 	}
 	"Block"
 	{
@@ -135,6 +144,7 @@
 		"tr"		"Blok"
 		"it"		"Block"
 		"de"		"Block"
+		"ko"		"블록"
 	}
 	"Bad Angles (Short)"
 	{
@@ -147,6 +157,7 @@
 		"tr"		"BA"
 		"it"		"BA"
 		"de"		"BA"
+		"ko"		"BA"
 	}
 	"Overlap (Short)"
 	{
@@ -160,6 +171,7 @@
 		"tr"		"OL"
 		"it"		"OL"
 		"de"		"OL"
+		"ko"		"OL"
 	}
 	"Dead Air (Short)"
 	{
@@ -173,6 +185,7 @@
 		"tr"		"DA"
 		"it"		"DA"
 		"de"		"DA"
+		"ko"		"DA"
 	}
 	"Edge"
 	{
@@ -186,6 +199,7 @@
 		"tr"		"Kenar"
 		"it"		"Edge"
 		"de"		"Kante"
+		"ko"		"엣지"
 	}
 	"Deviation"
 	{
@@ -199,6 +213,7 @@
 		"tr"		"Sapma açısı"
 		"it"		"Deviation"
 		"de"		"Abweichung"
+		"ko"		"편차"
 	}
 	"Width"
 	{
@@ -212,6 +227,7 @@
 		"tr"		"Genişlik"
 		"it"		"Width"
 		"de"		"Breite"
+		"ko"		"너비"
 	}
 	"Duck Time"
 	{
@@ -225,6 +241,7 @@
 		"tr"		"Eğilmiş"
 		"it"		"Crouched"
 		"de"		"Geduckt"
+		"ko"		"앉기"
 	}
 	"Gain Efficiency (Short)"
 	{
@@ -237,6 +254,7 @@
 		"tr"		"GainEff"
 		"it"		"GainEff"
 		"de"		"GainEff"
+		"ko"		"GainEff"
 	}
 	"Air Path"
 	{
@@ -249,6 +267,7 @@
 		"tr"		"Airpath"
 		"it"		"Airpath"
 		"de"		"Airpath"
+		"ko"		"공중 경로"
 	}
 	"Angle Ratio"
 	{
@@ -261,6 +280,7 @@
 		"tr"		"AngRatio(Avg/Med/Max)"
 		"it"		"AngRatio(Avg/Med/Max)"
 		"de"		"AngRatio(Avg/Med/Max)"
+		"ko"		"각도 비율(평균/중앙/최대)"
 	}
 	"Gain"
 	{
@@ -273,6 +293,7 @@
 		"tr"		"Kazanç"
 		"it"		"Gain"
 		"de"		"Gain"
+		"ko"		"게인"
 	}
 	"Loss"
 	{
@@ -285,6 +306,7 @@
 		"tr"		"Kayıp"
 		"it"		"Loss"
 		"de"		"Verlust"
+		"ko"		"손실"
 	}
 	"Average Gain (Short)"
 	{
@@ -297,6 +319,7 @@
 		"tr"		"OrtKazanç"
 		"it"		"AvgGain"
 		"de"		"AvgGain"
+		"ko"		"평균 게인"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -311,6 +334,7 @@
 		"tr"		"İlk zıplama"
 		"it"		"First jump"
 		"de"		"Erster Sprung"
+		"ko"		"첫 번째 점프"
 	}
 	"Invalid movetype change"
 	{
@@ -323,6 +347,7 @@
 		"tr"		"Geçersiz hareket türü değişikliği"
 		"it"		"Invalid movetype change"
 		"de"		"Ungültige Änderung des Bewegungstyps"
+		"ko"		"잘못된 이동 유형 변경"
 	}
 	"Invalid movetype"
 	{
@@ -335,6 +360,7 @@
 		"tr"		"Geçersiz hareket türü."
 		"it"		"Invalid movetype"
 		"de"		"Ungültigr Bewegungstyp"
+		"ko"		"잘못된 이동 유형"
 	}
 	"Just noclipped"
 	{
@@ -347,6 +373,7 @@
 		"tr"		"Noclipplendi"
 		"it"		"Just noclipped"
 		"de"		"Gerade genoclipped"
+		"ko"		"방금 노클립 모드로 전환되었습니다."
 	}
 	"Invalid collisions"
 	{
@@ -359,6 +386,7 @@
 		"tr"		"Geçersiz çarpışmalar"
 		"it"		"Invalid collisions"
 		"de"		"Ungültige collisions"
+		"ko"		"잘못된 충돌"
 	}
 	"Base velocity detected"
 	{
@@ -371,12 +399,14 @@
 		"tr"		"Temel hız algılandı"
 		"it"		"Base velocity detected"
 		"de"		"Basisgeschwindigkeit erkannt"
+		"ko"		"기본 속도가 감지되었습니다."
 	}
 	"Player gravity scale changed"
 	{
 		"en"		"Player gravity scale changed"
 		"sv"		"Spelarens gravitationsskala har ändrats"
 		"ua"		"Змінено шкалу гравітації гравця"
+		"ko"		"플레이어 중력 비율이 변경되었습니다."
 	}
 	"Invalid gains"
 	{
@@ -389,6 +419,7 @@
 		"tr"		"Geçersiz kazançlar"
 		"it"		"Invalid gains"
 		"de"		"Ungültige gains"
+		"ko"		"잘못된 게인"
 	}
 	"Externally modified"
 	{
@@ -401,6 +432,7 @@
 		"it"		"Externally modified"
 		"pl"		"Zmodyfikowane zewnętrznie"
 		"de"		"Extern modifiziert"
+		"ko"		"외부에서 수정됨"
 	}
 	"Edgebugged"
 	{
@@ -413,6 +445,7 @@
 		"tr"		"Edgebugged"
 		"it"		"Edgebugged"
 		"de"		"Geedgebugged"
+		"ko"		"엣지 버그"
 	}
 	"Teleported"
 	{
@@ -425,12 +458,14 @@
 		"tr"		"Işınlandı"
 		"it"		"Teleported"
 		"de"		"Teleportiert"
+		"ko"		"텔레포트됨"
 	}
 	"Disabled By Map"
 	{
 		"en"		"Disabled by map"
 		"sv"		"Inaktiverat av kartan"
 		"ua"		"Вимкнено налаштуваннями мапи."
+		"ko"		"맵에 의해 비활성화 됨"
 	}
 
 	// =====[OPTIONS]=====
@@ -446,6 +481,7 @@
 		"tr"		"{grey}Zıplama istatistiklerini raporlamayı açtın."
 		"it"		"{grey}Hai abilitato le statistiche dei salti."
 		"de"		"{grey}Du hast das Jumpstats-Berichte aktiviert."
+		"ko"		"{grey}점프 통계 보고 기능을 활성화했습니다."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
@@ -459,6 +495,7 @@
 		"tr"		"{grey}Zıplama istatistiklerini raporlamayı kapattın."
 		"it"		"{grey}Hai disabilitato le statistiche dei salti."
 		"de"		"{grey}Du hast alle Jumpstats-Berichte deaktiviert."
+		"ko"		"{grey}모든 점프 통계 보고 기능을 비활성화했습니다."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -472,6 +509,7 @@
 		"tr"		"{grey}Her zaman açık zıplama istatistiklerini raporlamayı açtın."
 		"it"		"{grey}Hai abilitato le statistiche dei salti forzate."
 		"de"		"{grey}Du hast die immer aktiven Jumpstats aktiviert."
+		"ko"		"{grey}항상 활성화된 점프 통계 기능을 활성화했습니다."
 	}
 	"Jumpstats Option - Jumpstats Always - Disable"
 	{
@@ -485,6 +523,7 @@
 		"tr"		"{grey}Her zaman açık zıplama istatistiklerini raporlamayı kapattın."
 		"it"		"{grey}Hai disabilitato le statistiche dei salti forzate."
 		"de"		"{grey}Du hast die immer aktiven Jumpstats deaktiviert."
+		"ko"		"{grey}항상 활성화된 점프 통계 기능을 비활성화했습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -497,6 +536,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"it"		"{grey}Utilizzo: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"de"		"{grey}Verwendung: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"ko"		"{grey}사용법: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
 	{
@@ -509,6 +549,7 @@
 		"tr"		"{grey}Zıplama istatiklerinin paylaşımını kapattın."
 		"it"		"{grey}Statistiche dei salti nascoste."
 		"de"		"{grey}Jumpstats-Übertragung deaktiviert."
+		"ko"		"{grey}점프 통계 방송이 비활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
@@ -522,6 +563,7 @@
 		"tr"		"{grey}Paylaşılan zıplama istatistiklerinin minimum eşiği {default}{tier}."
 		"it"		"{grey}La soglia minima per mostrare le statistiche dei salti ora è {default}{tier}."
 		"de"		"{grey}Der Broadcast-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
+		"ko"		"{grey}점프 통계 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -534,6 +576,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"it"		"{grey}Utilizzo: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"de"		"{grey}Verwendung: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"ko"		"{grey}사용법: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
 	{
@@ -546,6 +589,7 @@
 		"tr"		"{grey}Zıplama istatistikleri ses efektleri kapatıldı."
 		"it"		"{grey}Effetti sonori dei salti disabilitati."
 		"de"		"{grey}Jumpstats-Soundeffekt deaktiviert."
+		"ko"		"{grey}점프 통계 사운드 효과가 비활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
@@ -559,6 +603,7 @@
 		"tr"		"{grey}Minimum zıplama istatistikleri ses efekti {default}{tier}."
 		"it"		"{grey}La soglia minima per gli effetti sonori dei salti ora è {default}{tier}."
 		"de"		"{grey}Der Soundeffekt-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
+		"ko"		"{grey}점프 통계 사운드 효과 임계값이 이제 {default}{tier}로 설정되었습니다."
 	}
 
 	"Broadcast Jumpstat Chat Report"
@@ -574,6 +619,7 @@
 		"tr"		"{default}{player} {grey}zıpladı {color}{distance} {grey} birim {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"de"		"{default}{player} {grey}sprang {color}{distance} {grey}Einheiten mit einem {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"it"		"{default}{player} {grey}ha saltato {color}{distance} {grey}unità con un {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+		"ko"		"{default}{player} {grey}님이 {color}{distance} {grey}유닛을 {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]로 점프했습니다."
 	}
 	
 	"Jumpstats Report - Invalidation Reason"
@@ -588,6 +634,7 @@
 		"ua"		"({reason})"
 		"tr"		"({reason})"
 		"it"		"({reason})"
+		"ko"		"({reason})"
 	}
 	
 	"Jumpstats Report - Chat Summary"
@@ -603,6 +650,7 @@
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр. | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс.\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Відхилення | {olive}{width} {grey}Ширина | {olive}{height} {grey}Висота"
 		"tr"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Width | {olive}{height} {grey}Height"
 		"it"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Width | {olive}{height} {grey}Height"
+		"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}편차 | {olive}{width} {grey}폭 | {olive}{height} {grey}높이"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -616,6 +664,7 @@
 		"ua"		"{player_name} стрибнув {distance} units з {jump_type} {invalidation_reason}"
 		"tr"		"{player_name} zıpladı {distance} birim {jump_type} {invalidation_reason}"
 		"it"		"{player_name} ha saltato {distance} unità con un {jump_type} {invalidation_reason}"
+		"ko"		"{player_name}님이 {distance} 유닛을 {jump_type}으로 점프했으며, 이유: {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{
@@ -629,6 +678,7 @@
 		"ua"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота"
 		"tr"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Senkron | {pre} Pre | {max} Maks | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Yükseklik"
 		"it"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
+		"ko"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} 높이"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
@@ -642,5 +692,6 @@
 		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зсув | {duck_end_time}/{duck_total_time} Присівши"
 		"tr"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"it"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+		"ko"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 	}
 }
