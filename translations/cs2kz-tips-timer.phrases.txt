@@ -6,5 +6,6 @@
 		"sv"	"{grey}Du kan jämföra din egna tid bland andra utgångslägen med {default}/comparelevel{grey}."
 		"ua"	"{grey}Ви можете обрати різні критерії для порівняння свого проходження, використовуючи команду {default}/comparelevel{grey}."
 		"tr"	"{grey}Bu kodu kullanarak koşunu karşılaştırmak için farklı kıyaslamalar seçebilirsin. {default}/comparelevel{grey}."
+		"ko"	"{grey}주행 기록을 비교할 다른 벤치마크를 선택하려면 {default}/comparelevel{grey}을 사용하세요."
 	}
 }

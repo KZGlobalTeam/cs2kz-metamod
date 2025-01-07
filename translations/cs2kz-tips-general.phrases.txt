@@ -12,6 +12,7 @@
 		"it"	"{grey}Scrivi {default}/help {grey}per vedere tutti i comandi disponibili per il KZ."
 		"es"	"{grey}Use {default}/help {grey}para ver todos los comandos de KZ disponibles."
 		"de"	"{grey}Verwende {default}/help {grey}, um alle verfügbaren KZ-Befehle anzuzeigen."
+		"ko"	"{grey}모든 사용 가능한 KZ 명령어를 보려면 {default}/help {grey}를 사용하세요."
 	}
 	"Tip - kz_mode"
 	{
@@ -25,6 +26,7 @@
 		"it"	"{grey}Puoi cambiare modalità scrivendone l'abbreviazione. Ad esempio scrivi {default}/ckz{grey} per cambiare alla modalità {purple}Classic {grey}oppure {default}/vnl {grey}per cambiare alla modalità {purple}Vanilla{grey}."
 		"es"	"{grey}Puede cambiar a un modo escribiendo su abreviación. Por ejemplo, escriba {default}/ckz{grey} para cambiar al modo {purple}Clásico {grey} o {default}/vnl {grey}para cambiar al modo {purple}Vanilla {grey}."
 		"de"	"{grey}Du kannst zu einem Modus wechseln, indem du seine Abkürzung eingibst. Zum Beispiel, tippe {default}/ckz{grey}, um in den {purple}Classic {grey}Modus zu wechseln, oder {default}/vnl {grey}, um in den {purple}Vanilla {grey}Modus zu wechseln."
+		"ko"	"{grey}모드의 약어를 입력하여 모드를 전환할 수 있습니다. 예를 들어, {default}/ckz{grey}를 입력하면 {purple}클래식{grey} 모드로 전환되고, {default}/vnl{grey}을 입력하면 {purple}바닐라{grey} 모드로 전환됩니다."
 	}
 	"Tip - kz_restart"
 	{
@@ -38,6 +40,7 @@
 		"it"	"{grey}Puoi teleportarti all'inizio della mappa con {default}/restart{grey}."
 		"es"	"{grey}Puede teleportarse a su posición inicial usando {default}/restart{grey}."
 		"de"	"{grey}Du kannst mit {default}/restart{grey} zu deiner Startposition teleportieren."
+		"ko"	"{grey}시작 위치로 텔레포트하려면 {default}/restart{grey}를 사용하세요."
 	}
 	"Tip - kz_ssp"
 	{
@@ -51,6 +54,7 @@
 		"it"	"{grey}Puoi scrivere {default}/setstartpos {grey}e {default}/clearstartpos {grey}per modificare la posizione del teleport di inizio mappa."
 		"es"	"{grey}Puede sar {default}/setstartpos {grey}y {default}/clearstartpos {grey}para controlar la posición de su teleporte de inicio."
 		"de"	"{grey}Du kannst {default}/setstartpos {grey}und {default}/clearstartpos {grey}verwenden, um deine Startteleport-Position zu steuern."
+		"ko"	"{grey}시작 텔레포트 위치를 제어하려면 {default}/setstartpos{grey}와 {default}/clearstartpos{grey}를 사용하세요."
 	}
 	"Tip - stretch"
 	{
@@ -64,6 +68,7 @@
 		"it"	"{grey}Prenditi cura di te stesso. Fai pause regolari per sgranchirti, riposare gli occhi e bere acqua."
 		"es"	"{grey}Cuídese. Tome pausas regulares para estirarse y manténgase hidratado."
 		"de"	"{grey}Pass auf dich auf. Mach regelmäßige Pausen, um dich zu dehnen und genug zu trinken."
+		"ko"	"{grey}정기적으로 스트레칭하고 수분을 충분히 섭취하세요."
 	}
 	"Tip - kz_tips"
 	{
@@ -77,6 +82,7 @@
 		"it"	"{grey}Non vuoi suggerimenti in chat? Puoi cambiarne la visibilità con {default}/tips{grey}."
 		"es"	"{grey}¿No necesita consejos como estos apareciendo en su chat? Puede alternarlos con {default}/tips{grey}."
 		"de"	"{grey}Brauchst du solche Tipps nicht, die im Chat angezeigt werden? Du kannst sie mit {default}/tips{grey} ein- oder ausschalten."
+		"ko"	"{grey}이런 팁이 채팅에 표시되지 않게 하려면 {default}/tips{grey}로 전환할 수 있습니다."
 	}
 	"Tip - bind"
 	{
@@ -90,6 +96,7 @@
 		"it"	"{grey}Puoi assegnare diverse funzioni ai tasti, ad esempio: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"es"	"{grey}Puede asignar comandos a teclas para un acceso fácil, por ejemplo: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"de"	"{grey}Du kannst Befehle Tasten zuweisen, um einfachen Zugriff zu haben, zum Beispiel: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
+		"ko"	"{grey}명령어를 키에 바인딩하여 쉽게 접근할 수 있습니다. 예를 들어: {default}bind {purple}<key1> {default}"kz_cp"; bind {purple}<key2> {default}"kz_tp"."
 	}
 	"Tip - kz_prevcp"
 	{
@@ -103,6 +110,7 @@
 		"it"	"{grey}Teleportati al penultimo checpoint con {default}/prevcp{grey}."
 		"es"	"{grey}Teleportar al checkpoint anterior con {default}/prevcp{grey}."
 		"de"	"{grey}Teleportiere zum vorherigen Kontrollpunkt mit {default}/prevcp{grey}."
+		"ko"	"{grey}이전 체크포인트로 텔레포트하려면 {default}/prevcp{grey}를 사용하세요."
 	}
 	"Tip - kz_nextcp"
 	{
@@ -116,6 +124,7 @@
 		"it"	"{grey}Teleportati al prossimo checkpoint con {default}/nextcp{grey}."
 		"es"	"{grey}Teleportar al checkpoint siguiente con {default}/nextcp{grey}."
 		"de"	"{grey}Teleportiere zum nächsten Kontrollpunkt mit {default}/nextcp{grey}."
+		"ko"	"{grey}다음 체크포인트로 텔레포트하려면 {default}/nextcp{grey}를 사용하세요."
 	}
 	"Tip - bugs"
 	{
@@ -129,6 +138,7 @@
 		"it"	"{grey}Segnala i problemi che incontri con CS2KZ sul nostro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"es"	"{grey}Reporte problemas relacionados al CS2KZ en nuestro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"de"	"{grey}Melde Probleme im Zusammenhang mit CS2KZ auf unserem GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"ko"	"{grey}CS2KZ 관련 문제를 GitHub에서 신고하세요: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
 	"Tip - kz_jssound"
 	{
@@ -142,6 +152,7 @@
 		"it"	"{grey}Puoi cambiare quali salti riproducono un suono {default}/jssound{grey}."
 		"es"	"{grey}Puede controlar qué estadísticas de salto reproducen un sonido usando {default}/jssound{grey}."
 		"de"	"{grey}Du kannst festlegen, welche Jumpstats einen Sound abspielen, indem du {default}/jssound{grey} verwendest."
+		"ko"	"{grey}어떤 점프 통계 사운드를 제어하려면 {default}/jssound{grey}를 사용하세요."
 	}
 	"Tip - kz_jsbroadcast"
 	{
@@ -155,5 +166,6 @@
 		"it"	"{grey}Scrivi {default}/jsbroadcast {grey}per cambiare quali salti di altri giocatori ti vengono mostrati."
 		"es"	"{grey}Use {default}/jsbroadcast {grey}para cambiar qué estadísticas de salto de otros jugadores se le muestran a usted."
 		"de"	"{grey}Verwende {default}/jsbroadcast {grey}, um zu ändern, welche Jumpstats von anderen Spielern dir angezeigt werden."
+		"ko"	"{grey}다른 플레이어의 점프 통계가 표시되는 방식을 변경하려면 {default}/jsbroadcast{grey}를 사용하세요."
 	}
 }

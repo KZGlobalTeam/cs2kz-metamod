@@ -12,6 +12,7 @@
 		"it"		"{yellow}1{grey} TP"
 		"es"		"{yellow}1{grey} TP"
 		"de"		"{yellow}1{grey} TP"
+		"ko"		"{yellow}1{grey} TP"
 	}
 	"2+ Teleports Text"
 	{
@@ -26,6 +27,7 @@
 		"it"		"{yellow}{tp_count}{grey} TPs"
 		"es"		"{yellow}{tp_count}{grey} TPs"
 		"de"		"{yellow}{tp_count}{grey} TPs"
+		"ko"		"{yellow}{tp_count}{grey} TPs"
 	}
 	
 	"Personal Best Difference"
@@ -43,6 +45,7 @@
 		"it"		" ({color}{diff_text}{grey})"
 		"es"		" ({color}{diff_text}{grey})"
 		"de"		" ({color}{diff_text}{grey})"
+		"ko"		" ({color}{diff_text}{grey})"
 	}
 
 	"Beat Course Info - Basic"
@@ -59,6 +62,7 @@
 		"it"		"{lime}{player_name} {grey}ha completato {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"es"		"{lime}{player_name} {grey}finalizó {default}{course_name}{grey} en {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"de"		"{lime}{player_name} {grey}hat {default}{course_name}{grey} in {default}{time}{grey} beendet | {mode_style_text} | {tp_count_text}"
+		"ko"		{lime}{player_name} {grey}님이 {default}{course_name}{grey} 코스를 {default}{time}{grey} 동안 완료했습니다 | {mode_style_text} | {tp_count_text}"
 	}
 	
 	"Beat Course Info - Local (TP)"
@@ -75,6 +79,7 @@
 		"it"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text}"
 		"es"		"{grey}Servidor: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text}"
 		"de"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text}"
+		"ko"		"{grey}서버 순위: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Local (PRO)"
 	{
@@ -90,6 +95,7 @@
 		"it"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"es"		"{grey}Servidor: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"de"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"ko"		"{grey}서버 순위: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global (TP)"
@@ -105,6 +111,7 @@
 		"it"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text}"
 		"es"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text}"
 		"de"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text}"
+		"ko"		"{grey}글로벌 순위: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}{pb_diff_text}"
 	}
 	"Beat Course Info - Global (PRO)"
 	{
@@ -119,6 +126,7 @@
 		"it"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Complessivamente{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"es"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"de"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Insgesamt{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"ko"		"{grey}글로벌 순위: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
 	"Beat Course Info - Global Points"
@@ -135,6 +143,7 @@
 		"it"		"{grey}Punti mappa: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Valutazione Giocatore: {purple}{player_rating}{grey}"
 		"es"		"{grey}Puntos de mapa: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Clasificación del jugador: {purple}{player_rating}{grey}"
 		"de"		"{grey}Kartenpunkte: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Spielerwertung: {purple}{player_rating}{grey}"
+		"ko"		"{grey}Map Points: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
 	}
 	
 	"Can't Pause (Generic)"
@@ -149,6 +158,7 @@
 		"it"		"{darkred}Non puoi mettere in pausa ora."
 		"es"		"{darkred}No puede pausar ahora."
 		"de"		"{darkred}Du kannst jetzt nicht pausieren."
+		"ko"		"{darkred}지금은 일시 정지를 할 수 없습니다."
 	}
 	"Can't Pause (Just Resumed)"
 	{
@@ -163,6 +173,7 @@
 		"it"		"{darkred}Non puoi mettere in pausa quando hai appena ripreso."
 		"es"		"{darkred}No puede pausar porque acaba de reanudar."
 		"de"		"{darkred}Du kannst nicht pausieren, weil du gerade fortgesetzt hast."
+		"ko"		"{darkred}방금 재개했기 때문에 일시 정지를 할 수 없습니다."
 	}
 	"Can't Pause (Midair)"
 	{
@@ -177,6 +188,7 @@
 		"it"		"{darkred}Non puoi mettere in pausa in volo."
 		"es"		"{darkred}No puede pausar en el aire."
 		"de"		"{darkred}Du kannst in der Luft nicht pausieren."
+		"ko"		"{darkred}공중에서는 일시 정지를 할 수 없습니다."
 	}
 	"Can't Pause (Just Landed)"
 	{
@@ -191,6 +203,7 @@
 		"it"		"{darkred}Non puoi mettere in pausa quando sei appena atterrato."
 		"es"		"{darkred}No puede pausar porque acaba de aterrizar."
 		"de"		"{darkred}Du kannst nicht pausieren, weil du gerade gelandet bist."
+		"ko"		"{darkred}방금 착지했기 때문에 일시 정지를 할 수 없습니다."
 	}
 	"Can't Pause (Anti Pause Area)"
 	{
@@ -204,6 +217,7 @@
 		"it"		"{darkred}La pausa è disabilitata in questa zona."
 		"es"		"{darkred}No puede pausar porque las pausas están deshabilitadas en esta zona."
 		"de"		"{darkred}Du kannst nicht pausieren, weil das Pausieren in diesem Bereich deaktiviert ist."
+		"ko"		"{darkred}이 구역에서는 일시 정지가 비활성화되어 있어 일시 정지를 할 수 없습니다."
 	}
 	"Can't Resume (Generic)"
 	{
@@ -217,6 +231,7 @@
 		"it"		"{darkred}Non puoi riprendere in questo momento."
 		"es"		"{darkred}No puede reanudar ahora."
 		"de"		"{darkred}Du kannst jetzt nicht fortfahren."
+		"ko"		"{darkred}지금은 재개할 수 없습니다."
 	}
 	"Can't Resume (Just Paused)"
 	{
@@ -231,6 +246,7 @@
 		"it"		"{darkred}Non puoi riprendere quando hai appena messo in pausa."
 		"es"		"{darkred}No puede reanudar porque acaba de pausar."
 		"de"		"{darkred}Du kannst nicht fortfahren, weil du gerade pausiert hast."
+		"ko"		"{darkred}방금 일시 정지했기 때문에 재개할 수 없습니다."
 	}
 	"Can't Finish Run (Missed a Checkpoint Zone)"
 	{
@@ -238,6 +254,7 @@
 		"sv"		"{darkred}Du kan inte avsluta din tid, eftersom du missade en checkpoint zon."
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили чекпоінт зону."
 		"tr"		"{darkred}Işınlanma noktası kaçırdığın için koşuyu bitiremezsin."
+		"ko"		"{darkred}체크포인트 구역을 놓쳤기 때문에 주행을 완료할 수 없습니다."
 	}
 	"Can't Finish Run (Missed Checkpoint Zones)"
 	{
@@ -246,6 +263,7 @@
 		"sv"		"{darkred}Du kan inte avsluta din tid, eftersom du missade {missed_count} checkpoint zoner."
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили {missed_count} чекпоінт зони."
 		"tr"		"{darkred} {missed_count} Işınlanma noktası kaçırdığın için koşuyu bitiremezsin."
+		"ko"		"{darkred}{missed_count}개의 체크포인트 구역을 놓쳤기 때문에 주행을 완료할 수 없습니다."
 	}
 	"Can't Finish Run (Missed Stage)"
 	{
@@ -254,6 +272,7 @@
 		"sv"		"{darkred}Du kan inte avsluta din tid, eftersom du missade fas zon {stage_number}."
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили зону стадії {stage_number}."
 		"tr"		"{darkred}{stage_number} aşamasını kaçırdığın için koşuyu bitiremezsin."
+		"ko"		"{darkred}스테이지 구역 {stage_number}를 놓쳤기 때문에 주행을 완료할 수 없습니다."
 	}
 	"Touched too high stage number (Missed stage)"
 	{
@@ -262,6 +281,7 @@
 		"sv"		"{darkred}Du missade fas zonen {stage_number}!"
 		"ua"		"{darkred}Ви пропустили зону стадії {stage_number}!"
 		"tr"		"{darkred}{stage_number} aşamasını kaçırdın!"
+		"ko"		"{darkred}스테이지 구역 {stage_number}를 놓쳤습니다!"
 	}
 	"No Start Position For Course"
 	{
@@ -270,6 +290,7 @@
 		"sv"		"{darkred}Startpositionen hittades inte för kartan {default}{course_name}{darkred}!"
 		"ua"		"{darkred}Не знайдено стартову позицію для курсу {default}{course_name}{darkred}!"
 		"tr"		"{default}Bu rota için başlangıç noktası bulunamadı {course_name}{darkred}!"
+		"ko"		"{darkred}{default}{course_name}{darkred} 코스의 시작 위치를 찾을 수 없습니다!"
 	}
 	"No Jumpstat Area Found"
 	{
@@ -277,10 +298,12 @@
 		"tr"		"{darkred}Bu haritada zıplama alanı bulunamadı!"
 		"sv"		"{darkred}Jumpstat-området hittades inte på kartan!"
 		"ua"		"{darkred}Не знайдено зону тренування стрибків на даній мапі!"
+		"ko"		"{darkred}이 맵에서 롱 점프 구역을 찾을 수 없습니다!
 	}
 	"Turnbinds Disabled"
 	{
 		"en"		"{darkred}Turnbinds are disabled."
+		"ko"		"{darkred}턴 바인딩이 비활성화되었습니다."
 	}
 	
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
@@ -291,6 +314,7 @@
 		"sv"		"{grey}Del {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"ua"		"{grey}Спліт {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"tr"		"{grey}Aralık {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"ko"		"{grey}분할 {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	"Course Checkpoint Reached"
 	{
@@ -298,6 +322,7 @@
 		"en"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"sv"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"ua"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"ko"		"{grey}체크포인트 {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	"Course Stage Reached"
 	{
@@ -306,6 +331,7 @@
 		"sv"		"{grey}Fas {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"ua"		"{grey}Стадія {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"tr"		"{grey}Aşama {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"ko"		"{grey}스테이지 {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	
 	// The spaces are intentional.
@@ -374,6 +400,7 @@
 		"sv"		"{grey}Du missade din bästa {yellow}Allmänna{grey} tiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {yellow}Tümünde {grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Overall)"
 	{
@@ -382,6 +409,7 @@
 		"sv"		"{grey}Du missade din bästa globala {yellow}Allmänna{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi küresel süreni kaçırdın {yellow}Tümünde{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall)"
 	{
@@ -390,6 +418,7 @@
 		"sv"		"{grey}Du missade {yellow}Allmänna{grey} server rekordtiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey} час рекорду серевера ({lightred}{time}{grey})."
 		"tr"		"{grey}Süreyi kaçırdın {yellow}Tümünde{grey} sunucu rekoru ({lightred}{time}{grey})."
+		"ko"		"{grey}서버 최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed WR (Overall)"
 	{
@@ -398,6 +427,7 @@
 		"sv"		"{grey}Du missade {yellow}Allmänna{grey} globala rekordtiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Süreyi kaçırdın {yellow}Tümünde{grey} küresel rekor ({lightred}{time}{grey})."
+		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed Server PB (Pro)"
 	{
@@ -406,6 +436,7 @@
 		"sv"		"{grey}Du missade din bästa {blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {blue}PRO{grey}  ({lightred}{time}{grey})."
+		"ko"		"{grey}최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Pro)"
 	{
@@ -414,6 +445,7 @@
 		"sv"		"{grey}Du missade din globala bästa {blue}PRO{grey} tiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi küresel süreni kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}글로벌 최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed SR (Pro)"
 	{
@@ -422,6 +454,7 @@
 		"sv"		"{grey}Du missade {blue}PRO{grey} server rekordtiden({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час рекорду сервера({lightred}{time}{grey})."
 		"tr"		"{grey}Sunucu rekorunu kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}서버 최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed WR (Pro)"
 	{
@@ -430,6 +463,7 @@
 		"sv"		"{grey}Du missade {blue}PRO{grey} globala rekordtiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Dünya rekorunu kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}글로벌 최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed Server PB (Overall+Pro)"
 	{
@@ -438,6 +472,7 @@
 		"sv"		"{grey}Du missade din bästa {yellow}Allmänna{grey}/{blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Overall+Pro)"
 	{
@@ -446,6 +481,7 @@
 		"sv"		"{grey}Du missade din bästa globala {yellow}Allmänna{grey}/{blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}Küresel en iyi süreni kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall+Pro)"
 	{
@@ -454,6 +490,7 @@
 		"sv"		"{grey}Du missade {yellow}Allmänna{grey}/{blue}PRO{grey} server rekordtid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час рекорду сервера ({lightred}{time}{grey})."
 		"tr"		"{grey}Sunucu rekor süresini kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}서버 최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	"Missed WR (Overall+Pro)"
 	{
@@ -462,6 +499,7 @@
 		"sv"		"{grey}Du missade {yellow}Allmänna{grey}/{blue}PRO{grey} globala rekordtiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Küresel rekoru kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
+		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
 	}
 	
 	"Compare Command Usage"
@@ -470,6 +508,7 @@
 		"sv"		"{grey}Användning: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"ua"		"{grey}Використання: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"tr"		"{grey}Kullanım: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"ko"		"{grey}사용법: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 	}
 	"Compare Disabled"
 	{
@@ -477,6 +516,7 @@
 		"sv"		"{grey}Tidsjämförelse är inaktiverat."
 		"ua"		"{grey}Порівняння проходжень вимкнено."
 		"tr"		"{grey}Koşu karşılaştırılması devre dışı bırakıldı."
+		"ko"		"{grey}주행 비교가 비활성화되었습니다."
 	}
 	"Compare Server PB"
 	{
@@ -484,6 +524,7 @@
 		"sv"		"{grey}Du kommer nu att jämföra din tid med din bästa personliga tid på servern."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим рекордом сервера."
 		"tr"		"{grey}Şimdi kendi koşunu sunucuda yaptığın en iyi koşu ile karşılaştıracaksın."
+		"ko"		"{grey}이제 주행 기록이 서버 개인 최고 기록과 비교됩니다."
 	}
 	"Compare Global PB"
 	{
@@ -491,6 +532,7 @@
 		"sv"		"{grey}Du kommer nu att jämföra din tid med din bästa globala tid."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим глобальним найкращим часом."
 		"tr"		"{grey}Şimdiki koşunu küresel kendi rekorunla karşılaştıracaksın."
+		"ko"		"{grey}이제 주행 기록이 글로벌 개인 최고 기록과 최대 비교됩니다."
 	}
 	"Compare Server Record"
 	{
@@ -498,6 +540,7 @@
 		"sv"		"{grey}Du kommer nu att jämföra din tid med server rekordet."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з рекордом сервера."
 		"tr"		"{grey}Şimdi koşunu sunucu rekoruyla karşılaştıracaksın."
+		"ko"		"{grey}이제 주행 기록이 서버 최고 기록과 최대 비교됩니다."
 	}
 	"Compare World Record"
 	{
@@ -505,6 +548,6 @@
 		"sv"		"{grey}Du kommer nu att jämföra din tid med världsrekordet."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження зі світовим рекордом."
 		"tr"		"{grey}Şimdi koşunu dünya rekoruyla karşılaştıracaksın."
+		"ko"		"{grey}이제 주행 기록이 세계 최고 기록과 최대 비교됩니다."
 	}
-	
 }

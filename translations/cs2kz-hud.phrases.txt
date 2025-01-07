@@ -12,6 +12,7 @@
 		"it"	"Vel"
 		"es"	"Velocidad"
 		"de"	"Geschwindigkeit"
+		"ko"	"속도"
 	}
 	"HUD - Stopped Text"
 	{
@@ -26,6 +27,7 @@
 		"it"		" (FERMO)"
 		"es"		" (DETENIDO)"
 		"de"		" (GESTOPPT)"
+		"ko"		" (중지됨)"
 	}
 	"HUD - Paused Text"
 	{
@@ -40,6 +42,7 @@
 		"it"		" (PAUSA)"
 		"es"		" (PAUSADO)"
 		"de"		" (PAUSIERT)"
+		"ko"		" (일시정지됨)"
 	}
 	"HUD - Speed Text"
 	{
@@ -55,6 +58,7 @@
 		"it"		"Vel: {speed}"
 		"es"		"Velocidad: {speed}"
 		"de"		"Geschwindigkeit: {speed}"
+		"ko"		"속도: {speed}"
 	}
 	"HUD - Speed Text (Takeoff)"
 	{
@@ -70,6 +74,7 @@
 		"it"		"Vel: {speed} ({takeoff_speed})"
 		"es"		"Velocidad: {speed} ({takeoff_speed})"
 		"de"		"Geschwindigkeit: {speed} ({takeoff_speed})"
+		"ko"		"속도: {speed} ({takeoff_speed})"
 	}
 	"HUD - Key Text"
 	{
@@ -85,6 +90,7 @@
 		"it"		"Tasti: {left} {forward} {back} {right} {duck} {jump}"
 		"es"		"Teclas: {left} {forward} {back} {right} {duck} {jump}"
 		"de"		"Tasten: {left} {forward} {back} {right} {duck} {jump}"
+		"ko"		"키 입력: {left} {forward} {back} {right} {duck} {jump}"
 	}
 	"HUD - Checkpoint Text"
 	{
@@ -100,6 +106,7 @@
 		"it"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"es"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"de"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
+		"ko"		"체크포인트: {checkpoint_index}/{checkpoint_count} 텔레포트: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
@@ -115,6 +122,7 @@
 		"it"		"{time}{stop_text}{pause_text}"
 		"es"		"{time}{stop_text}{pause_text}"
 		"de"		"{time}{stop_text}{pause_text}"
+		"ko"		"{time}{stop_text}{pause_text}"
 	}
 	"HUD - Center Text"
 	{
@@ -131,6 +139,7 @@
 		"it"		"{checkpoint_text}\n{timer_text}"
 		"es"		"{checkpoint_text}\n{timer_text}"
 		"de"		"{checkpoint_text}\n{timer_text}"
+		"ko"		"{checkpoint_text}\n{timer_text}"
 	}
 	// This text is actually "more" center.
 	"HUD - Alert Text"
@@ -147,6 +156,7 @@
 		"it"		""
 		"es"		""
 		"de"		""
+		"ko"		""
 	}
 	"HUD - HTML Center Text"
 	{
@@ -163,6 +173,7 @@
 		"it"		"{speed_text}<br>{key_text}"
 		"es"		"{speed_text}<br>{key_text}"
 		"de"		"{speed_text}<br>{key_text}"
+		"ko"		"{speed_text}<br>{key_text}"
 	}
 	
 	"HUD - HTML Panel Disabled"
@@ -178,6 +189,7 @@
 		"es"		"Panel deshabilitado."
 		"pl"		"Panel wyłączony"
 		"de"		"Panel deaktiviert"
+		"ko"		"패널이 비활성화되었습니다."
 	}
 
 	"HUD Option - Info Panel - Enable"
@@ -193,6 +205,7 @@
 		"it"		"{grey}Il pannello centrale è stato abilitato."
 		"es"		"{grey}Su panel de información central ha sido habilitado."
 		"de"		"{grey}Dein zentrales Informationspanel wurde aktiviert."
+		"ko"		"{grey}중앙 정보 패널이 활성화되었습니다."
 	}
 	"HUD Option - Info Panel - Disable"
 	{
@@ -207,5 +220,6 @@
 		"it"		"{grey}Il pannello centrale è stato disabilitato."
 		"es"		"{grey}Su panel de información central ha sido deshabilitado."
 		"de"		"{grey}Dein zentrales Informationspanel wurde deaktiviert."
+		"ko"		"{grey}중앙 정보 패널이 비활성화되었습니다."
 	}
 }
