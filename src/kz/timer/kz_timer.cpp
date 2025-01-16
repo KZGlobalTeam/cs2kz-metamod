@@ -1364,7 +1364,7 @@ CUtlString KZTimerService::GetCurrentRunMetadata()
 	splitZoneTimesKV->SetToEmptyArray();
 	FOR_EACH_VEC(this->splitZoneTimes, i)
 	{
-		KeyValues3 *time = splitZoneTimesKV->AddArrayElementToTail();
+		KeyValues3 *time = splitZoneTimesKV->ArrayAddElementToTail();
 		time->SetDouble(this->splitZoneTimes[i]);
 	}
 
@@ -1372,7 +1372,7 @@ CUtlString KZTimerService::GetCurrentRunMetadata()
 	cpZoneTimesKV->SetToEmptyArray();
 	FOR_EACH_VEC(this->cpZoneTimes, i)
 	{
-		KeyValues3 *time = cpZoneTimesKV->AddArrayElementToTail();
+		KeyValues3 *time = cpZoneTimesKV->ArrayAddElementToTail();
 		time->SetDouble(this->cpZoneTimes[i]);
 	}
 
@@ -1381,7 +1381,7 @@ CUtlString KZTimerService::GetCurrentRunMetadata()
 	KeyValues3 *stageZoneTimesKV = kv.FindOrCreateMember("stageZoneTimes");
 	FOR_EACH_VEC(this->stageZoneTimes, i)
 	{
-		KeyValues3 *time = stageZoneTimesKV->AddArrayElementToTail();
+		KeyValues3 *time = stageZoneTimesKV->ArrayAddElementToTail();
 		time->SetDouble(this->stageZoneTimes[i]);
 	}
 
