@@ -572,7 +572,7 @@
 	"Command Description - kz_lj"
 	{
 		"en"		"Teleport to the jumpstat area."
-		"chi"		"传送到LJ跳跃数据区域."
+		"chi"		"传送到LJ房间."
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
@@ -580,7 +580,7 @@
 	"Command Description - kz_ljarea"
 	{
 		"en"		"Teleport to the jumpstat area."
-		"chi"		"传送到LJ跳跃数据区域."
+		"chi"		"传送到LJ房间."
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
@@ -588,7 +588,7 @@
 	"Command Description - kz_jsarea"
 	{
 		"en"		"Teleport to the jumpstat area."
-		"chi"		"传送到LJ跳跃数据区域."
+		"chi"		"传送到LJ房间."
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
