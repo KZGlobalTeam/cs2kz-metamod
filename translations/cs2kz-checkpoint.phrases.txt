@@ -241,6 +241,7 @@
 	"Checkpoints Cleared By Map"
 	{
 		"en"		"{darkred}The map has cleared your checkpoints."
+		"chi"		"{darkred}该地图清除了你的存点."
 		"sv"		"{darkred}Kartan har rensat dina checkpoints."
 		"ua"		"{darkred}Ваші чекпоінти були стерті мапою."
 		"tr"		"{darkred}Kontrol noktaları harita tarafından temizlendi."
