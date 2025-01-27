@@ -243,6 +243,10 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+		if (!player->IsInGame())
+		{
+			continue;
+		}
 		if (strcmp(player->modeService->GetModeName(), modeName) == 0 || strcmp(player->modeService->GetModeShortName(), modeName) == 0)
 		{
 			this->SwitchToMode(player, "VNL");

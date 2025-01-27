@@ -282,7 +282,10 @@ void hooks::Cleanup()
 
 	SH_REMOVE_HOOK_ID(createLoadingSpawnGroupHook);
 
-	GameEntitySystem()->RemoveListenerEntity(&entityListener);
+	if (GameEntitySystem())
+	{
+		GameEntitySystem()->RemoveListenerEntity(&entityListener);
+	}
 }
 
 // Entity hooks
