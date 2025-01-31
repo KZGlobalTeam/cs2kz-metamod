@@ -373,14 +373,5 @@ namespace KZ
 		void CheckAnnounceQueue();
 		void UpdateLocalRankData(u32 id, LocalRankData data);
 		void UpdateGlobalRankData(u32 id, GlobalRankData data);
-
-		// PB Requests
-		void CheckPBRequests();
-
-		// Record requests
-		void CheckRecordRequests();
-
-		// CourseTop requests
-		void CheckCourseTopRequests();
 	} // namespace timer
 } // namespace KZ

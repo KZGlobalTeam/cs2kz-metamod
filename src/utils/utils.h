@@ -77,4 +77,15 @@ namespace utils
 	bool IsServerSecure();
 	void UpdateServerVersion();
 	u32 GetServerVersion();
+
+	inline bool IsNumeric(const char *str)
+	{
+		if (!str || !*str)
+		{
+			return false;
+		}
+
+		return str[strspn(str, "0123456789")] == 0;
+	}
+
 } // namespace utils

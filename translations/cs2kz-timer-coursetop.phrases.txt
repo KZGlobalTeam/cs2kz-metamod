@@ -1,32 +1,14 @@
 "Phrases"
 {
-	"Course Top - Table Name (Overall)"
+	"Course Top - Table Name (Server Overall)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
-		"en"		"{map_name} Course {course_name} {mode_name} Overall Top"
-		"chi"		"地图 {map_name} 关卡 {course_name} 模式 {mode_name} 总排名"
-		"sv"		"{map_name} Karta {course_name} {mode_name} Allmänt Top"
-		"tr"		"{map_name} haritasında {course_name} {mode_name} Genel Sıralamada"
-		"ua"		"{map_name} Курс {course_name} {mode_name} Загальний Топ"
-		"it"		"{map_name} Migliori tempi assoluti del percorso {course_name} {mode_name}"
-		"es"		"{map_name} Curso {course_name} {mode_name} Top General"
-		"de"		"{map_name} Strecke {course_name} {mode_name} Gesamt Top"
-		"pl"		"{map_name} Kurs {course_name} {mode_name} Ogólny Top"
-		"ko"		"{map_name} 코스 {course_name} {mode_name} 전체 최고 기록"
+		"en"		"{map_name} Course {course_name} {mode_name} Overall Top (Server)"
 	}
-	"Course Top - Table Name (Pro)"
+	"Course Top - Table Name (Server Pro)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
-		"en"		"{map_name} Course {course_name} {mode_name} PRO Top"
-		"chi"		"地图 {map_name} 关卡 {course_name} 模式 {mode_name} 裸跳排名"
-		"sv"		"{map_name} Karta {course_name} {mode_name} PRO Top"
-		"tr"		"{map_name} haritasında {course_name} {mode_name} Pro Sıralamasında"
-		"ua"		"{map_name} Курс {course_name} {mode_name} PRO Топ"
-		"it"		"{map_name} Migliori tempi PRO del percorso {course_name} {mode_name}"
-		"es"		"{map_name} Curso {course_name} {mode_name} Top PRO"
-		"de"		"{map_name} Strecke {course_name} {mode_name} PRO Top"
-		"pl"		"{map_name} Kurs {course_name} {mode_name} PRO Top"
-		"ko"		"{map_name} 코스 {course_name} {mode_name} PRO 최고 기록"
+		"en"		"{map_name} Course {course_name} {mode_name} PRO Top (Server)"
 	}
 	"Course Top Header - Player Alias"
 	{
@@ -92,6 +74,10 @@
 		"de"		"ID des Runs"
 		"pl"		"ID Runu"
 		"ko"		"Run ID"
+	}
+	"Course Top Header - Points"
+	{
+		"en"		"Points"
 	}
 	"Course Top Request - Failed (Generic)"
 	{

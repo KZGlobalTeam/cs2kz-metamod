@@ -62,7 +62,7 @@
 		"it"		"{lime}{player_name} {grey}ha completato {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"es"		"{lime}{player_name} {grey}finalizó {default}{course_name}{grey} en {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"de"		"{lime}{player_name} {grey}hat {default}{course_name}{grey} in {default}{time}{grey} beendet | {mode_style_text} | {tp_count_text}"
-		"ko"		{lime}{player_name} {grey}님이 {default}{course_name}{grey} 코스를 {default}{time}{grey} 동안 완료했습니다 | {mode_style_text} | {tp_count_text}"
+		"ko"		"{lime}{player_name} {grey}님이 {default}{course_name}{grey} 코스를 {default}{time}{grey} 동안 완료했습니다 | {mode_style_text} | {tp_count_text}"
 	}
 	
 	"Beat Course Info - Local (TP)"
@@ -304,7 +304,7 @@
 		"tr"		"{darkred}Bu haritada zıplama alanı bulunamadı!"
 		"sv"		"{darkred}Jumpstat-området hittades inte på kartan!"
 		"ua"		"{darkred}Не знайдено зону тренування стрибків на даній мапі!"
-		"ko"		"{darkred}이 맵에서 롱 점프 구역을 찾을 수 없습니다!
+		"ko"		"{darkred}이 맵에서 롱 점프 구역을 찾을 수 없습니다!"
 	}
 	"Turnbinds Disabled"
 	{
@@ -586,4 +586,19 @@
 		"tr"		"{grey}Şimdi koşunu dünya rekoruyla karşılaştıracaksın."
 		"ko"		"{grey}이제 주행 기록이 세계 최고 기록과 최대 비교됩니다."
 	}
+	
+  	"Request - Failed (Invalid Map)"
+	{
+		"en"		"{darkred}Failed to process current request. (Invalid map)"
+	}
+  	"Request - Failed (Generic)"
+	{
+		"en"		"{darkred}Failed to process current request."
+	}
+  	"Request - Failed (No Course in Current Map)"
+	{
+		"#format"	"map_name:s"
+		"en"		"{darkred}Failed to process current request. (No course exists in map {map_name})"
+	}
+
 }

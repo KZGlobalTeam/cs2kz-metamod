@@ -16,12 +16,12 @@
 #include "kz/option/kz_option.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/timer/queries/base_request.h"
 #include "kz/telemetry/kz_telemetry.h"
 #include "kz/trigger/kz_trigger.h"
 #include "kz/db/kz_db.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "utils/utils.h"
-
 #include "sdk/entity/cbasetrigger.h"
 
 #include "vprof.h"
@@ -459,9 +459,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	KZ::timer::CheckAnnounceQueue();
-	KZ::timer::CheckPBRequests();
-	KZ::timer::CheckRecordRequests();
-	KZ::timer::CheckCourseTopRequests();
+	BaseRequest::CheckRequests();
 	KZ::misc::EnforceTimeLimit();
 	KZTelemetryService::ActiveCheck();
 	RETURN_META(MRES_IGNORED);

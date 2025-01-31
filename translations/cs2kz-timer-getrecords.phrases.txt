@@ -83,7 +83,7 @@
 		"de"		"{blue}PRO{grey}: {default}{time_pro}{grey} von {lime}{player_name_pro}{grey}"
 		"ko"		"{blue}PRO{grey}: {default}{time_pro}{grey} {lime}{player_name_pro}{grey}님"
 	}
-	"Record Request - Failed (Generic)" 
+	"Top Record Request - Failed (Generic)" 
 	{
 		"en"		"{darkred}Failed to retrieve record information."
 		"chi"		"{darkred}无法找到地图记录信息."
@@ -98,7 +98,7 @@
 		"de"		"{darkred}Fehler beim Abrufen der Rekordinformationen."
 		"ko"		"{darkred}기록 정보를 가져오지 못했습니다."
 	}
-	"Record Request - Invalid Course Name"
+	"Top Record Request - Invalid Course Name"
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Failed to retrieve record information. {grey}(Invalid course name {default}{course_name}{grey})"
