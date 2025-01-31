@@ -41,9 +41,9 @@ public:
 
 public:
 	const u64 uid;
-	const f64 timestamp;
 	// UserID for callback.
 	const CPlayerUserId userID;
+	const f64 timestamp;
 
 	bool isValid = true;
 
