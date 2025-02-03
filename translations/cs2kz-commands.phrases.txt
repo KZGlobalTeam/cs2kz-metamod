@@ -26,7 +26,7 @@
 		"it"		"Per usare questi comandi scrivi \"bind <tasto> kz_<nome comando>\" nella console, oppure !<nome comando> o /<nome comando> in chat.\nEsempio: \"bind 1 kz_cp\" o \"!cp\" o \"/cp\""
 		"es"		"Para usar estos comandos, puede escribir \"bind <key> kz_<command name>\" en su consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: \„bind 1 kz_cp\" oder \„!cp\" oder \„/cp\""
-		"ko"		"이 명령어를 사용하려면 콘솔에 "bind <key> kz_<명령어 이름>"을 입력하거나, 채팅창에 !<명령어 이름> 또는 /<명령어 이름>을 입력하세요. 예시: "bind 1 kz_cp" 또는 "!cp" 또는 "/cp""
+		"ko"		"이 명령어를 사용하려면 콘솔에 \"bind <key> kz_<명령어 이름>\"을 입력하거나, 채팅창에 !<명령어 이름> 또는 /<명령어 이름>을 입력하세요. 예시: \"bind 1 kz_cp\" 또는 \"!cp\" 또는 \"/cp\""
 	}
 	"Switch Language"
 	{
@@ -453,7 +453,7 @@
 		"tr"		"Stilleri listele veya aktif et."
 		"it"		"Elenca o cambia stile."
 		"es"		"Listar o alternar estilo."
-		"de"		"Stil auflisten oder umschalten.
+		"de"		"Stil auflisten oder umschalten."
 		"ko"		"스타일을 표시하거나 전환합니다."
 	}
 	"Command Description - kz_clearstyles"
