@@ -400,7 +400,7 @@
 	{
 		"en"		"List, add, remove or toggle style."
 		"chi"		"列出, 添加, 移除或切换风格."
-		"pl"		"Wyświetl, dodaj, usuń lub przełącz styl.
+		"pl"		"Wyświetl, dodaj, usuń lub przełącz styl."
 		"ru"		"Показать, добавить, удалить или переключить стиль."
 		"fi"		"Listaa, lisää, poista tai vaihda tyyliä."
 		"sv"		"Lista, lägg till, ta bort eller toggla style."
