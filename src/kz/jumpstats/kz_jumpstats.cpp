@@ -859,10 +859,6 @@ void KZJumpstatsService::EndJump()
 				KZJumpstatsService::PrintJumpToChat(this->player, jump);
 			}
 			DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-			if (tier >= DistanceTier_Wrecker && !jump->GetJumpPlayer()->jumpstatsService->jsAlways)
-			{
-				KZJumpstatsService::StartDemoRecording(jump->GetJumpPlayer()->GetName());
-			}
 			KZJumpstatsService::BroadcastJumpToChat(jump);
 			for (u32 i = 1; i < MAXPLAYERS + 1; i++)
 			{
