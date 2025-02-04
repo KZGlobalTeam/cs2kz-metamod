@@ -1,4 +1,5 @@
-WIP, not ready for release 
+Stripped version of KZ for HNS server ( https://yappershq.com )
+Removed most modules, plan to bring back LJ thingie back.
 
 # Requirements
 
