@@ -815,56 +815,58 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 
 void KZClassicModeService::OnCategorizePosition(bool bStayOnGround)
 {
-	// Already on the ground?
-	// If we are already colliding on a standable valid plane, we don't want to do the check.
-	if (bStayOnGround || this->lastValidPlane.Length() < EPSILON || this->lastValidPlane.z > 0.7f)
-	{
-		return;
-	}
-	// Only attempt to fix rampbugs while going down significantly enough.
-	if (this->player->currentMoveData->m_vecVelocity.z > -64.0f)
-	{
-		return;
-	}
-	bbox_t bounds;
-	this->player->GetBBoxBounds(&bounds);
+    // Only run if we aren’t already on a valid ground plane.
+    if (bStayOnGround || this->lastValidPlane.Length() < EPSILON || this->lastValidPlane.z > 0.7f)
+    {
+        return;
+    }
+    // Only attempt this fix if the downward velocity is significant.
+    if (this->player->currentMoveData->m_vecVelocity.z > -64.0f)
+    {
+        return;
+    }
+    bbox_t bounds;
+    this->player->GetBBoxBounds(&bounds);
 
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPlayerPawn(),
-											  this->player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
+    CTraceFilterPlayerMovementCS filter;
+    g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPlayerPawn(),
+                                              this->player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
+                                              COLLISION_GROUP_PLAYER_MOVEMENT);
 
-	trace_t trace;
-	g_pKZUtils->InitGameTrace(&trace);
+    trace_t trace;
+    g_pKZUtils->InitGameTrace(&trace);
 
-	Vector origin, groundOrigin;
-	this->player->GetOrigin(&origin);
-	groundOrigin = origin;
-	groundOrigin.z -= 2.0f;
+    Vector origin, groundOrigin;
+    this->player->GetOrigin(&origin);
+    groundOrigin = origin;
+    groundOrigin.z -= 2.0f;
 
-	g_pKZUtils->TracePlayerBBox(origin, groundOrigin, bounds, &filter, trace);
+    g_pKZUtils->TracePlayerBBox(origin, groundOrigin, bounds, &filter, trace);
 
-	if (trace.m_flFraction == 1.0f)
-	{
-		return;
-	}
-	// Is this something that you should be able to actually stand on?
-	if (trace.m_flFraction < 0.95f && trace.m_vHitNormal.z > 0.7f && this->lastValidPlane.Dot(trace.m_vHitNormal) < RAMP_BUG_THRESHOLD)
-	{
-		origin += this->lastValidPlane * 0.0625f;
-		groundOrigin = origin;
-		groundOrigin.z -= 2.0f;
-		g_pKZUtils->TracePlayerBBox(origin, groundOrigin, bounds, &filter, trace);
-		if (trace.m_bStartInSolid)
-		{
-			return;
-		}
-		if (trace.m_flFraction == 1.0f || this->lastValidPlane.Dot(trace.m_vHitNormal) >= RAMP_BUG_THRESHOLD)
-		{
-			this->player->SetOrigin(origin);
-		}
-	}
+    if (trace.m_flFraction == 1.0f)
+    {
+        return;
+    }
+    // Lower threshold for the standable normal: from 0.7 to 0.65.
+    if (trace.m_flFraction < 0.95f && trace.m_vHitNormal.z > 0.65f &&
+        this->lastValidPlane.Dot(trace.m_vHitNormal) < RAMP_BUG_THRESHOLD)
+    {
+        origin += this->lastValidPlane * 0.0625f;
+        groundOrigin = origin;
+        groundOrigin.z -= 2.0f;
+        g_pKZUtils->TracePlayerBBox(origin, groundOrigin, bounds, &filter, trace);
+        if (trace.m_bStartInSolid)
+        {
+            return;
+        }
+        if (trace.m_flFraction == 1.0f ||
+            this->lastValidPlane.Dot(trace.m_vHitNormal) >= RAMP_BUG_THRESHOLD)
+        {
+            this->player->SetOrigin(origin);
+        }
+    }
 }
+
 
 DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distance)
 {
@@ -887,8 +889,25 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 
 void KZClassicModeService::OnDuckPost()
 {
-	this->player->UpdateTriggerTouchList();
+    // Existing trigger updates.
+    this->player->UpdateTriggerTouchList();
+    
+    // Apply crouch jump optimization:
+    if (this->player->IsButtonPressed(IN_DUCK) &&
+        (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND))
+    {
+        Vector velocity;
+        this->player->GetVelocity(&velocity);
+        if (velocity.Length2D() > MIN_CROUCH_JUMP_SPEED)
+        {
+            // Boost only the horizontal components.
+            velocity.x *= CROUCH_JUMP_BOOST;
+            velocity.y *= CROUCH_JUMP_BOOST;
+            this->player->SetVelocity(velocity);
+        }
+    }
 }
+
 
 void KZClassicModeService::OnAirMove()
 {

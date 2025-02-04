@@ -35,6 +35,10 @@
 #define DUCK_SPEED_NORMAL  15.0f
 #define DUCK_SPEED_MINIMUM 6.0234375f // Equal to if you just ducked/unducked for the first time in a while
 
+#define MIN_CROUCH_JUMP_SPEED 50.0f  // Only apply boost if horizontal speed exceeds this.
+#define CROUCH_JUMP_BOOST     1.05f  // Increase horizontal speed by 5%.
+
+
 class KZClassicModeService : public KZModeService
 {
 	using KZModeService::KZModeService;
