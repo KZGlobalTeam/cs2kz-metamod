@@ -5,7 +5,6 @@
 #include "interfaces/interfaces.h"
 #include "filesystem.h"
 #include "utils/ctimer.h"
-#include "kz/option/kz_option.h"
 
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
@@ -67,21 +66,7 @@ void KZLanguageService::LoadTranslations()
 
 const char *KZLanguageService::GetLanguage()
 {
-	const char *lang = "";
-	if (this->hasQueriedLanguage || this->hasSavedLanguage)
-	{
-		lang = this->language;
-	}
-	else if (g_pClientCvarValue)
-	{
-		lang = g_pClientCvarValue->GetClientLanguage(this->player->GetPlayerSlot());
-	}
-
-	if (lang && lang[0] != '\0')
-	{
-		return (languagesKV->GetString(lang), lang);
-	}
-	return KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE);
+	return "en";
 }
 
 const char *KZLanguageService::GetTranslatedFormat(const char *language, const char *phrase)

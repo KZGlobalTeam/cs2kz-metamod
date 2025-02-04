@@ -1,6 +1,5 @@
 #include "kz.h"
 #include "utils/utils.h"
-#include "../kz/option/kz_option.h"
 
 #include "sdk/recipientfilters.h"
 #include "tier0/memdbgon.h"
@@ -9,16 +8,7 @@
 	va_list args; \
 	va_start(args, format); \
 	char buffer[512]; \
-	if (addPrefix) \
-	{ \
-		const char *prefix = KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX); \
-		snprintf(buffer, sizeof(buffer), "%s ", prefix); \
-		vsnprintf(buffer + strlen(prefix) + 1, sizeof(buffer) - (strlen(prefix) + 1), format, args); \
-	} \
-	else \
-	{ \
-		vsnprintf(buffer, sizeof(buffer), format, args); \
-	} \
+	vsnprintf(buffer, sizeof(buffer), format, args); \
 	va_end(args);
 
 static_function CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, bool addSpectators)
@@ -127,12 +117,6 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 	va_list args;
 	va_start(args, format);
 	buffer.FormatV(format, args);
-
-	if (addPrefix)
-	{
-		const char *prefix = KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX);
-		buffer.Format("%s %s", prefix, buffer.Get());
-	}
 
 	if (!includeSpectators)
 	{

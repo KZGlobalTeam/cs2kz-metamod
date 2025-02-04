@@ -2,7 +2,6 @@
 #include "vendor/tinyformat.h"
 
 #include "../kz.h"
-#include "../spec/kz_spec.h"
 
 class KZLanguageService : public KZBaseService
 {
@@ -144,13 +143,6 @@ private:
 	static void PrintSingle(KZPlayer *player, bool addPrefix, bool includeSpectators, MessageType type, const char *message, Args &&...args)
 	{
 		PrintType(player, addPrefix, type, message, args...);
-		if (includeSpectators)
-		{
-			for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
-			{
-				PrintType(spec, addPrefix, type, message, args...);
-			}
-		}
 	}
 
 public:

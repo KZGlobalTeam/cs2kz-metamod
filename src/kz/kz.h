@@ -3,7 +3,6 @@
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
-#include "mappingapi/kz_mappingapi.h"
 #include "circularbuffer.h"
 
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
@@ -25,27 +24,10 @@
 #define KZ_RECENT_TELEPORT_THRESHOLD 0.05f
 
 class KZPlayer;
-class KZAnticheatService;
-class KZCheckpointService;
-class KZDatabaseService;
 class KZGlobalService;
-class KZHUDService;
 class KZJumpstatsService;
 class KZLanguageService;
-class KZMapService;
-class KZMeasureService;
 class KZModeService;
-class KZNoclipService;
-class KZOptionService;
-class KZQuietService;
-class KZRacingService;
-class KZSavelocService;
-class KZSpecService;
-class KZGotoService;
-class KZStyleService;
-class KZTelemetryService;
-class KZTimerService;
-class KZTipService;
 class KZTriggerService;
 
 class KZPlayer : public MovementPlayer
@@ -136,26 +118,10 @@ private:
 	bool oldUsingTurnbinds {};
 
 public:
-	KZAnticheatService *anticheatService {};
-	KZCheckpointService *checkpointService {};
-	KZDatabaseService *databaseService {};
 	KZGlobalService *globalService {};
-	KZHUDService *hudService {};
 	KZJumpstatsService *jumpstatsService {};
 	KZLanguageService *languageService {};
-	KZMeasureService *measureService {};
 	KZModeService *modeService {};
-	KZNoclipService *noclipService {};
-	KZOptionService *optionService {};
-	KZQuietService *quietService {};
-	KZRacingService *racingService {};
-	KZSavelocService *savelocService {};
-	KZSpecService *specService {};
-	KZGotoService *gotoService {};
-	CUtlVector<KZStyleService *> styleServices {};
-	KZTelemetryService *telemetryService {};
-	KZTimerService *timerService {};
-	KZTipService *tipService {};
 	KZTriggerService *triggerService {};
 
 	void DisableTurnbinds();

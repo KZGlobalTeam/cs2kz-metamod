@@ -4,7 +4,6 @@
 #include "simplecmds.h"
 #include "../kz/kz.h"
 #include "../kz/language/kz_language.h"
-#include "../kz/option/kz_option.h"
 
 #include "tier0/memdbgon.h"
 // private structs

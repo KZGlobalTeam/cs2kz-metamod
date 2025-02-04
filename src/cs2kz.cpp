@@ -10,17 +10,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
-#include "kz/db/kz_db.h"
-#include "kz/hud/kz_hud.h"
-#include "kz/mode/kz_mode.h"
-#include "kz/spec/kz_spec.h"
-#include "kz/goto/kz_goto.h"
-#include "kz/style/kz_style.h"
-#include "kz/quiet/kz_quiet.h"
-#include "kz/tip/kz_tip.h"
-#include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
-#include "kz/mappingapi/kz_mappingapi.h"
 
 #include "version.h"
 
@@ -47,29 +37,12 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	hooks::Initialize();
 	movement::InitDetours();
-	KZCheckpointService::Init();
-	KZTimerService::Init();
-	KZSpecService::Init();
-	KZGotoService::Init();
-	KZHUDService::Init();
 	KZLanguageService::Init();
 	KZ::misc::Init();
-	KZQuietService::Init();
 	KZ::misc::RegisterCommands();
-	if (!KZ::mode::InitModeCvars())
-	{
-		return false;
-	}
 
 	ismm->AddListener(this, this);
-	KZ::mapapi::Init();
-	KZ::mode::InitModeManager();
-	KZ::style::InitStyleManager();
 
-	KZ::mode::DisableReplicatedModeCvars();
-
-	KZOptionService::InitOptions();
-	KZTipService::InitTips();
 	if (late)
 	{
 		g_steamAPI.Init();
@@ -84,20 +57,13 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
 	hooks::Cleanup();
-	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
-	g_pKZModeManager->Cleanup();
-	g_pKZStyleManager->Cleanup();
 	g_pPlayerManager->Cleanup();
-	KZDatabaseService::Cleanup();
 	return true;
 }
 
 void KZPlugin::AllPluginsLoaded()
 {
-	KZDatabaseService::Init();
-	KZ::mode::LoadModePlugins();
-	KZ::style::LoadStylePlugins();
 	g_pKZPlayerManager->ResetPlayers();
 	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
@@ -176,25 +142,10 @@ const char *KZPlugin::GetURL()
 
 void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 {
-	if (strcmp(iface, KZ_MODE_MANAGER_INTERFACE) == 0)
-	{
-		*ret = META_IFACE_OK;
-		return g_pKZModeManager;
-	}
-	else if (strcmp(iface, KZ_STYLE_MANAGER_INTERFACE) == 0)
-	{
-		*ret = META_IFACE_OK;
-		return g_pKZStyleManager;
-	}
-	else if (strcmp(iface, KZ_UTILS_INTERFACE) == 0)
+	if (strcmp(iface, KZ_UTILS_INTERFACE) == 0)
 	{
 		*ret = META_IFACE_OK;
 		return g_pKZUtils;
-	}
-	else if (strcmp(iface, KZ_MAPPING_INTERFACE) == 0)
-	{
-		*ret = META_IFACE_OK;
-		return g_pMappingApi;
 	}
 	*ret = META_IFACE_FAILED;
 

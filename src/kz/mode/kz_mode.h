@@ -1,7 +1,5 @@
 #pragma once
 #include "../kz.h"
-#include "kz/mappingapi/kz_mappingapi.h"
-#include "../jumpstats/kz_jumpstats.h"
 #include "UtlStringMap.h"
 
 #define KZ_MODE_MANAGER_INTERFACE "KZModeManagerInterface"
@@ -58,7 +56,6 @@ public:
 	}
 
 	// Jumpstats
-	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 	virtual const char **GetModeConVarValues() = 0;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
@@ -234,7 +231,6 @@ namespace KZ::mode
 	void InitModeService(KZPlayer *player);
 	void InitModeManager();
 	void LoadModePlugins();
-	void UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName = "");
 	// clang-format off
 
 	inline const char *modeCvarNames[] = {

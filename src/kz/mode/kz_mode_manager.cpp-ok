@@ -1,12 +1,16 @@
 #include "kz_mode.h"
-#include "kz_mode_ckz.h"
+#include "kz_mode_vnl.h"
 
 #include "filesystem.h"
 
 #include "utils/utils.h"
 #include "interfaces/interfaces.h"
 
+#include "../timer/kz_timer.h"
 #include "../language/kz_language.h"
+#include "../db/kz_db.h"
+#include "../option/kz_option.h"
+#include "../telemetry/kz_telemetry.h"
 
 #include "utils/simplecmds.h"
 #include "utils/plat.h"
@@ -18,6 +22,17 @@ static_global KZModeManager modeManager;
 KZModeManager *g_pKZModeManager = &modeManager;
 
 CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
+
+static_global class KZDatabaseServiceEventListener_Modes : public KZDatabaseServiceEventListener
+{
+public:
+	virtual void OnDatabaseSetup() override;
+} databaseEventListener;
+
+static_global class KZOptionServiceEventListener_Modes : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player) override;
+} optionEventListener;
 
 bool KZ::mode::InitModeCvars()
 {
@@ -43,8 +58,10 @@ void KZ::mode::InitModeManager()
 	{
 		return;
 	}
-	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService * { return new KZClassicModeService(player); };
-	modeManager.RegisterMode(0, "CKZ", "Classic", vnlFactory);
+	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService * { return new KZVanillaModeService(player); };
+	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
+	KZDatabaseService::RegisterEventListener(&databaseEventListener);
+	KZOptionService::RegisterEventListener(&optionEventListener);
 	initialized = true;
 }
 
@@ -60,7 +77,6 @@ void KZ::mode::LoadModePlugins()
 		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
 		if (ret == META_IFACE_FAILED)
 		{
-			META_CONPRINTF("Failed to get plugin manager interface!\n");
 			return;
 		}
 		char error[256];
@@ -69,33 +85,37 @@ void KZ::mode::LoadModePlugins()
 		{
 			g_SMAPI->PathFormat(fullPath, sizeof(fullPath), "%s/addons/cs2kz/modes/%s", g_SMAPI->GetBaseDir(), output);
 			bool already = false;
-			if (!pluginManager->Load(fullPath, g_PLID, already, error, sizeof(error)))
-			{
-				META_CONPRINTF("Failed to load plugin: %s\nError: %s\n", fullPath, error);
-			}
+			pluginManager->Load(fullPath, g_PLID, already, error, sizeof(error));
 			output = g_pFullFileSystem->FindNext(findHandle);
 		} while (output);
 
 		g_pFullFileSystem->FindClose(findHandle);
 	}
-	else
+}
+
+void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName)
+{
+	// Check if the mode already exists in the list, if yes, we update it.
+	FOR_EACH_VEC(modeInfos, i)
 	{
-		META_CONPRINTF("No mode plugins found in directory: %s\n", buffer);
+		if (!V_stricmp(modeInfos[i].longModeName, name))
+		{
+			modeInfos[i].databaseID = id;
+			if (!shortName.IsEmpty())
+			{
+				modeInfos[i].shortModeName = shortName;
+			}
+			return;
+		}
 	}
+	// If the code reaches here, that means the mode is not in the list yet.
+	modeInfos.AddToTail({-1, name.Get(), shortName.Get()});
 }
 
 void KZ::mode::InitModeService(KZPlayer *player)
 {
-	if (player->modeService)
-	{
-		delete player->modeService;
-		player->modeService = nullptr;
-	}
-	player->modeService = new KZClassicModeService(player);
-	if (!player->modeService)
-	{
-		META_CONPRINTF("Failed to initialize KZClassicModeService for player %d\n", player->GetPlayerSlot());
-	}
+	delete player->modeService;
+	player->modeService = new KZVanillaModeService(player);
 }
 
 void KZ::mode::DisableReplicatedModeCvars()
@@ -177,7 +197,8 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	if (!info)
 	{
 		info = modeInfos.AddToTailGetPtr();
-			// Removed database update code
+		// If there is already information about this mode while the ID is -1, that means it has to come from the database, so no need to update it.
+		KZDatabaseService::InsertAndUpdateModeIDs(longModeName, shortModeName);
 	}
 	*info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
 	if (id)
@@ -198,7 +219,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 	}
 
 	// Cannot unregister VNL.
-	if (V_stricmp("CKZ", modeName) == 0 || V_stricmp("Classic", modeName) == 0)
+	if (V_stricmp("VNL", modeName) == 0 || V_stricmp("Vanilla", modeName) == 0)
 	{
 		return;
 	}
@@ -228,7 +249,7 @@ void KZModeManager::UnregisterMode(const char *modeName)
 		}
 		if (strcmp(player->modeService->GetModeName(), modeName) == 0 || strcmp(player->modeService->GetModeShortName(), modeName) == 0)
 		{
-			this->SwitchToMode(player, "CKZ");
+			this->SwitchToMode(player, "VNL");
 		}
 	}
 }
@@ -285,7 +306,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->modeService->Cleanup();
 	delete player->modeService;
 	player->modeService = factory(player);
-	// Removed timerService code
+	player->timerService->TimerStop();
 	player->modeService->Init();
 
 	if (!silent)
@@ -296,9 +317,9 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), MODECVAR_COUNT);
 
 	player->SetVelocity({0, 0, 0});
-	//player->jumpstatsService->InvalidateJumpstats("Externally modified");
+	player->jumpstatsService->InvalidateJumpstats("Externally modified");
 
-	// Removed optionService code
+	player->optionService->SetPreferenceStr("preferredMode", modeName);
 	return true;
 }
 
@@ -418,4 +439,26 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfoFromDatabaseID(i32 id)
 void KZ::mode::RegisterCommands()
 {
 	scmd::RegisterCmd("kz_mode", Command_KzMode);
+}
+
+void KZDatabaseServiceEventListener_Modes::OnDatabaseSetup()
+{
+	FOR_EACH_VEC(modeInfos, i)
+	{
+		if (modeInfos[i].databaseID == -1)
+		{
+			KZDatabaseService::InsertAndUpdateModeIDs(modeInfos[i].longModeName, modeInfos[i].shortModeName);
+		}
+	}
+	KZDatabaseService::UpdateModeIDs();
+}
+
+void KZOptionServiceEventListener_Modes::OnPlayerPreferencesLoaded(KZPlayer *player)
+{
+	const char *mode = player->optionService->GetPreferenceStr("preferredMode", KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE));
+	// Give up changing modes if the player is already in the server for a while.
+	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
+	{
+		modeManager.SwitchToMode(player, mode, false, false);
+	}
 }

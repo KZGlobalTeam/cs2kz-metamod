@@ -112,17 +112,17 @@
 	{
 		// 01:23:45 (STOPPED) (PAUSED)
 		"#format"	"time:s,stop_text:s,pause_text:s"
-		"en"		"{time}{stop_text}{pause_text}"
-		"chi"		"计时: {time}{stop_text}{pause_text}"
-		"pl"		"{time}{stop_text}{pause_text}"
-		"fi"		"{time}{stop_text}{pause_text}"
-		"sv"		"{time}{stop_text}{pause_text}"
-		"ua"		"{time}{stop_text}{pause_text}"
-		"tr"		"{time}{stop_text}{pause_text}"
-		"it"		"{time}{stop_text}{pause_text}"
-		"es"		"{time}{stop_text}{pause_text}"
-		"de"		"{time}{stop_text}{pause_text}"
-		"ko"		"{time}{stop_text}{pause_text}"
+		"en"		""
+		"chi"		""
+		"pl"		""
+		"fi"		""
+		"sv"		""
+		"ua"		""
+		"tr"		""
+		"it"		""
+		"es"		""
+		"de"		""
+		"ko"		""
 	}
 	"HUD - Center Text"
 	{

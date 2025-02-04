@@ -12,15 +12,6 @@
 #include "cs2kz.h"
 #include "ctimer.h"
 #include "kz/kz.h"
-#include "kz/jumpstats/kz_jumpstats.h"
-#include "kz/option/kz_option.h"
-#include "kz/quiet/kz_quiet.h"
-#include "kz/timer/kz_timer.h"
-#include "kz/timer/queries/base_request.h"
-#include "kz/telemetry/kz_telemetry.h"
-#include "kz/trigger/kz_trigger.h"
-#include "kz/db/kz_db.h"
-#include "kz/mappingapi/kz_mappingapi.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
 
@@ -333,7 +324,6 @@ void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
 		AddEntityHooks(static_cast<CBaseEntity *>(pEntity));
-		KZ::mapapi::CheckEndTimerTrigger((CBaseTrigger *)pEntity);
 	}
 }
 
@@ -364,61 +354,36 @@ void hooks::HookEntities()
 static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
-	{
-		RETURN_META(MRES_SUPERCEDE);
-	}
-
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
-	{
-		RETURN_META(MRES_SUPERCEDE);
-	}
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnTouch(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
-	{
-		RETURN_META(MRES_SUPERCEDE);
-	}
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
-	{
-		RETURN_META(MRES_SUPERCEDE);
-	}
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnEndTouch(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
-	{
-		RETURN_META(MRES_SUPERCEDE);
-	}
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 {
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
-	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
-	{
-		RETURN_META(MRES_SUPERCEDE);
-	}
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -449,7 +414,6 @@ static_function void Hook_OnChangeTeamPost(i32 team)
 static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCount, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
 										const uint16 *pEntityIndicies, int nEntities, bool bEnablePVSBits)
 {
-	KZ::quiet::OnCheckTransmit(pInfo, infoCount);
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -457,11 +421,6 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCoun
 static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
-	KZ::timer::CheckAnnounceQueue();
-	BaseRequest::CheckRequests();
-	KZ::misc::EnforceTimeLimit();
-	KZTelemetryService::ActiveCheck();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -533,8 +492,6 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	{
 		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
 	}
-	player->timerService->OnClientDisconnect();
-	player->optionService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -562,8 +519,6 @@ static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 static_function void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
 	g_KZPlugin.AddonInit();
-	KZ::course::ClearCourses();
-	KZ::mapapi::Init();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -578,21 +533,15 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			KZPlayer *player = g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex());
 			if (player)
 			{
-				player->timerService->OnPlayerDeath();
-				player->quietService->SendFullUpdate();
 			}
 		}
 		else if (KZ_STREQI(event->GetName(), "round_prestart"))
 		{
 			hooks::HookEntities();
-			KZ::mapapi::OnRoundPreStart();
 		}
 		else if (KZ_STREQI(event->GetName(), "round_start"))
 		{
 			interfaces::pEngine->ServerCommand("sv_full_alltalk 1");
-			KZTimerService::OnRoundStart();
-			KZ::misc::OnRoundStart();
-			KZ::mapapi::OnRoundStart();
 		}
 		else if (KZ_STREQI(event->GetName(), "player_team"))
 		{
@@ -606,7 +555,6 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 				KZPlayer *player = g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex());
 				if (player)
 				{
-					player->timerService->OnPlayerSpawn();
 				}
 			}
 		}
@@ -622,11 +570,6 @@ static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CComman
 	{
 		RETURN_META(result);
 	}
-	if (KZOptionService::GetOptionInt("overridePlayerChat", true))
-	{
-		KZ::misc::ProcessConCommand(cmd, ctx, args);
-	}
-
 	META_RES mres = scmd::OnDispatchConCommand(cmd, ctx, args);
 	RETURN_META(mres);
 }
@@ -635,28 +578,16 @@ static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CComman
 static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkMessageInternal *pEvent,
 									const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType)
 {
-	KZ::quiet::OnPostEvent(pEvent, pData, clients);
 }
 
 // CEntitySystem
 static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_t *pInfo)
 {
-	KZ::mapapi::OnSpawn(nCount, pInfo);
 }
 
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
-	KZJumpstatsService::OnServerActivate();
-	KZ::timer::ClearAnnounceQueue();
-	KZ::misc::OnServerActivate();
-	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
-	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
-	u64 size = g_pKZUtils->GetCurrentMapSize();
-	char md5[33];
-	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
-	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
-	KZDatabaseService::SetupMap();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 
@@ -699,6 +630,5 @@ static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGrou
 																	   bool bConfirmResourcesLoaded,
 																	   const CUtlVector<const CEntityKeyValues *> *pKeyValues)
 {
-	KZ::mapapi::OnCreateLoadingSpawnGroupHook(pKeyValues);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
