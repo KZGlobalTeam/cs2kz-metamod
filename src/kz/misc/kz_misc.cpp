@@ -53,7 +53,6 @@ void KZ::misc::OnServerActivate()
 	g_pKZUtils->UpdateCurrentMapMD5();
 
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
-	KZ::misc::InitTimeLimit();
 
 	// Restart round to ensure settings (e.g. mp_weapons_allow_map_placed) are applied
 	interfaces::pEngine->ServerCommand("mp_restartgame 1");

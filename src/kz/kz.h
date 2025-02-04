@@ -221,7 +221,6 @@ namespace KZ
 		void ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
 		META_RES CheckBlockedRadioCommands(const char *cmd);
 		void OnRoundStart();
-		void InitTimeLimit();
 		void EnforceTimeLimit();
 	} // namespace misc
 };    // namespace KZ
