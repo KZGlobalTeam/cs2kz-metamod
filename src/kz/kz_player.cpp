@@ -4,6 +4,8 @@
 #include "mode/kz_mode.h"
 // #include "mode/kz_mode_vnl.h" // Include the header for KZVanillaModeService
 #include "language/kz_language.h"
+#include "hud/kz_hud.h"
+
 //#include "mode/kz_mode_ckz.h" // Include this if using KZClassicModeService
 
 #include "sdk/datatypes.h"
@@ -24,9 +26,10 @@ void KZPlayer::Init()
 	// TODO: initialize every service.
 	delete this->modeService;
 	delete this->languageService;
+	delete this->hudService;
 
-	//this->modeService = new KZClassicModeService(this); // or new KZVanillaModeService(this);
 	this->languageService = new KZLanguageService(this);
+	this->hudService = new KZHUDService(this);
 	KZ::mode::InitModeService(this);
 }
 
@@ -37,6 +40,7 @@ void KZPlayer::Reset()
 	// Reset services that should not persist across player sessions.
 	this->languageService->Reset();
 	this->modeService->Reset();
+	this->hudService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, "defaultMode", true, true);
 }
@@ -68,13 +72,49 @@ void KZPlayer::OnPhysicsSimulate()
 	this->UpdatePlayerModelAlpha();
 }
 
+KZPlayer *KZPlayer::GetSpectatedPlayer()
+{
+    if (!this->IsAlive())
+    {
+        CCSPlayerController* controller = this->GetController();
+        if (!controller)
+        {
+            return nullptr;
+        }
+        
+        CBasePlayerPawn* observerPawn = controller->m_hObserverPawn();
+        if (!observerPawn)
+        {
+            return nullptr;
+        }
+        
+        CPlayer_ObserverServices* obsService = observerPawn->m_pObserverServices;
+        if (!obsService || !obsService->m_hObserverTarget().IsValid())
+        {
+            return nullptr;
+        }
+
+        CCSPlayerPawn* pawn = this->GetPlayerPawn();
+        CBasePlayerPawn* target = (CBasePlayerPawn*)obsService->m_hObserverTarget().Get();
+        
+        // If the player is spectating their own corpse, consider that as not spectating anyone
+        return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);
+    }
+    return nullptr;
+}
+
 void KZPlayer::OnPhysicsSimulatePost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulatePost();
 	this->modeService->OnPhysicsSimulatePost();
-	if (this->IsAlive())
+	if (this->GetSpectatedPlayer())
 	{
+		KZHUDService::DrawPanels(this->GetSpectatedPlayer(), this);
+	}
+	else if (this->IsAlive())
+	{
+		KZHUDService::DrawPanels(this, this);
 	}
 }
 

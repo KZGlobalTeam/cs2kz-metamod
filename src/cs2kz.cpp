@@ -12,6 +12,7 @@
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/language/kz_language.h"
+#include "kz/hud/kz_hud.h"
 
 #include "version.h"
 
@@ -39,6 +40,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	hooks::Initialize();
 	movement::InitDetours();
 	KZLanguageService::Init();
+	KZHUDService::Init();
 	KZ::misc::Init();
 	KZ::misc::RegisterCommands();
 	if (!KZ::mode::InitModeCvars())

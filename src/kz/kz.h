@@ -15,7 +15,7 @@
 #define KZ_WORKSHOP_ADDONS_ID            "3171124941"
 #define KZ_WORKSHOP_ADDONS_SNDEVENT_FILE "soundevents/soundevents_kz.vsndevts"
 
-#define KZ_DEFAULT_CHAT_PREFIX  "{lime}KZ {grey}|{default}"
+#define KZ_DEFAULT_CHAT_PREFIX  "{red}Bymas HNS {grey}|{default}"
 #define KZ_DEFAULT_TIP_INTERVAL 75.0
 #define KZ_DEFAULT_LANGUAGE     "en"
 #define KZ_DEFAULT_STYLE        "Normal"
@@ -28,7 +28,8 @@ class KZGlobalService;
 class KZJumpstatsService;
 class KZLanguageService;
 class KZModeService;
-class KZTriggerService;
+class KZHUDService;
+
 
 class KZPlayer : public MovementPlayer
 {
@@ -122,7 +123,8 @@ public:
 	KZJumpstatsService *jumpstatsService {};
 	KZLanguageService *languageService {};
 	KZModeService *modeService {};
-	KZTriggerService *triggerService {};
+	KZHUDService *hudService {};
+	//KZTriggerService *triggerService {};
 
 	void DisableTurnbinds();
 	void EnableGodMode();
@@ -155,6 +157,9 @@ public:
 	virtual void PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
 
 	CUtlString ComputeCvarValueFromModeStyles(const char *name);
+
+	// Add this declaration
+	KZPlayer* GetSpectatedPlayer();
 };
 
 class KZBaseService

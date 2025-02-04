@@ -1,0 +1,37 @@
+#pragma once
+#include "../kz.h"
+
+#define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
+
+
+class KZHUDService : public KZBaseService
+{
+	using KZBaseService::KZBaseService;
+
+private:
+	bool showPanel {};
+	f64 timerStoppedTime {};
+	f64 currentTimeWhenTimerStopped {};
+
+public:
+	virtual void Reset() override;
+	static void Init();
+	static void RegisterCommands();
+
+	// Draw the panel from a player to a specific target.
+	static void DrawPanels(KZPlayer *player, KZPlayer *target);
+
+	void ResetShowPanel();
+	void TogglePanel();
+
+	bool IsShowingPanel()
+	{
+		return this->showPanel;
+	}
+
+	void OnTimerStopped(f64 currentTimeWhenTimerStopped);
+
+private:
+	std::string GetSpeedText(const char *language = KZ_DEFAULT_LANGUAGE);
+	std::string GetKeyText(const char *language = KZ_DEFAULT_LANGUAGE);
+};

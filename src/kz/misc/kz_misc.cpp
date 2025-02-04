@@ -5,6 +5,8 @@
 #include "utils/simplecmds.h"
 
 #include "kz/mode/kz_mode.h"
+#include "kz/hud/kz_hud.h"
+
 
 #include "sdk/gamerules.h"
 
@@ -61,7 +63,7 @@ void KZ::misc::OnServerActivate()
 void KZ::misc::RegisterCommands()
 {
 	//KZJumpstatsService::RegisterCommands();
-	//KZHUDService::RegisterCommands();
+	KZHUDService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 }
 

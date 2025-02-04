@@ -23,7 +23,8 @@
 #define PS_RATIO_TO_SPEED   0.5f
 // Prestrafe ratio will be not go down after landing for this amount of time - helps with small movements after landing
 // Ideally should be much higher than the perf window!
-#define PS_LANDING_GRACE_PERIOD 0.25f
+//#define PS_LANDING_GRACE_PERIOD 0.25f
+#define PS_LANDING_GRACE_PERIOD 0.01f
 // Bhop related
 #define BH_PERF_WINDOW                  0.02f // Any jump performed after landing will be a perf for this much time
 #define BH_BASE_MULTIPLIER              51.5f // Multiplier for how much speed would a perf gain in ideal scenario
@@ -40,17 +41,17 @@ class KZClassicModeService : public KZModeService
 
 	static inline const char *modeCvarValues[] = {
 		"false",  // slope_drop_enable
-		"6.5",    // sv_accelerate
-		"false",  // sv_accelerate_use_weapon_speed
-		"100",    // sv_airaccelerate
+		"5.5",    // sv_accelerate
+		"true",  // sv_accelerate_use_weapon_speed
+		"300",    // sv_airaccelerate
 		"30",     // sv_air_max_wishspeed
 		"false",  // sv_autobunnyhopping
 		"true",   // sv_enablebunnyhopping
-		"5.2",    // sv_friction
+		"4.05",    // sv_friction
 		"800",    // sv_gravity
-		"302.0",  // sv_jump_impulse
+		"301.99337",  // sv_jump_impulse
 		"false",  // sv_jump_precision_enable
-		"0.0",    // sv_jump_spam_penalty_time
+		"0.015625",    // sv_jump_spam_penalty_time
 		"-0.707", // sv_ladder_angle
 		"1",      // sv_ladder_dampen
 		"1",      // sv_ladder_scale_speed
@@ -59,10 +60,10 @@ class KZClassicModeService : public KZModeService
 		"0",      // sv_staminajumpcost
 		"0",      // sv_staminalandcost
 		"0",      // sv_staminamax
-		"9999",   // sv_staminarecoveryrate
+		"60",   // sv_staminarecoveryrate
 		"0.7",    // sv_standable_normal
 		"64.0",   // sv_step_move_vel_min
-		"0",      // sv_timebetweenducks
+		"0.00250",      // sv_timebetweenducks
 		"0.7",    // sv_walkable_normal
 		"10",     // sv_wateraccelerate
 		"1",      // sv_waterfriction

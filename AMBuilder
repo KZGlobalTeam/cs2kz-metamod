@@ -103,6 +103,8 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'language', 'kz_language.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
+
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
   
   ]
 
