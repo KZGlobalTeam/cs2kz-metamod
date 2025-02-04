@@ -31,7 +31,7 @@
 // Magic number so that landing speed at max ground prestrafe speed would result in the same takeoff velocity
 #define BH_NORMALIZE_FACTOR (BH_BASE_MULTIPLIER * log(SPEED_NORMAL + PS_SPEED_MAX) - (SPEED_NORMAL + PS_SPEED_MAX))
 // Misc
-#define DUCK_SPEED_NORMAL  8.0f
+#define DUCK_SPEED_NORMAL  15.0f
 #define DUCK_SPEED_MINIMUM 6.0234375f // Equal to if you just ducked/unducked for the first time in a while
 
 class KZClassicModeService : public KZModeService

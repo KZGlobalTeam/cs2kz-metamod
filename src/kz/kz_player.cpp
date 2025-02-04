@@ -3,7 +3,8 @@
 #include "utils/ctimer.h"
 #include "mode/kz_mode.h"
 // #include "mode/kz_mode_vnl.h" // Include the header for KZVanillaModeService
-#include "mode/kz_mode_ckz.h" // Include this if using KZClassicModeService
+#include "language/kz_language.h"
+//#include "mode/kz_mode_ckz.h" // Include this if using KZClassicModeService
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -22,9 +23,10 @@ void KZPlayer::Init()
 
 	// TODO: initialize every service.
 	delete this->modeService;
+	delete this->languageService;
 
 	//this->modeService = new KZClassicModeService(this); // or new KZVanillaModeService(this);
-
+	this->languageService = new KZLanguageService(this);
 	KZ::mode::InitModeService(this);
 }
 
@@ -33,6 +35,7 @@ void KZPlayer::Reset()
 	MovementPlayer::Reset();
 
 	// Reset services that should not persist across player sessions.
+	this->languageService->Reset();
 	this->modeService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, "defaultMode", true, true);
@@ -42,7 +45,7 @@ void KZPlayer::OnPlayerActive()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	// Mode/Styles stuff must be here for convars to be properly replicated.
-	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true);
+	g_pKZModeManager->SwitchToMode(this, "CKZ", true, true);
 }
 
 void KZPlayer::OnAuthorized()

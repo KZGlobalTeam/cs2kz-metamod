@@ -10,6 +10,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/mode/kz_mode.h"
 #include "kz/language/kz_language.h"
 
 #include "version.h"
@@ -40,8 +41,13 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZLanguageService::Init();
 	KZ::misc::Init();
 	KZ::misc::RegisterCommands();
-
+	if (!KZ::mode::InitModeCvars())
+	{
+		return false;
+	}
 	ismm->AddListener(this, this);
+	KZ::mode::InitModeManager();
+	KZ::mode::DisableReplicatedModeCvars();
 
 	if (late)
 	{
@@ -58,6 +64,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	this->unloading = true;
 	hooks::Cleanup();
 	utils::Cleanup();
+	KZ::mode::EnableReplicatedModeCvars();
 	g_pPlayerManager->Cleanup();
 	return true;
 }
@@ -68,6 +75,7 @@ void KZPlugin::AllPluginsLoaded()
 	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
+	KZ::mode::LoadModePlugins();
 }
 
 void KZPlugin::AddonInit()
@@ -142,7 +150,12 @@ const char *KZPlugin::GetURL()
 
 void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 {
-	if (strcmp(iface, KZ_UTILS_INTERFACE) == 0)
+	if (strcmp(iface, KZ_MODE_MANAGER_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return g_pKZModeManager;
+	}
+	else if (strcmp(iface, KZ_UTILS_INTERFACE) == 0)
 	{
 		*ret = META_IFACE_OK;
 		return g_pKZUtils;

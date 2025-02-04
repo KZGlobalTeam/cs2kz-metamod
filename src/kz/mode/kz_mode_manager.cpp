@@ -21,18 +21,20 @@ CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
 
 bool KZ::mode::InitModeCvars()
 {
+	Warning("Initializing Mode Cvars...\n");
 	bool success = true;
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
 		ConVarHandle cvarHandle = g_pCVar->FindConVar(KZ::mode::modeCvarNames[i]);
 		if (!cvarHandle.IsValid())
 		{
-			META_CONPRINTF("Failed to find %s!\n", KZ::mode::modeCvarNames[i]);
+			Warning("Failed to find %s!\n", KZ::mode::modeCvarNames[i]);
 			success = false;
 		}
 		modeCvarHandles[i] = cvarHandle;
 		modeCvars[i] = g_pCVar->GetConVar(cvarHandle);
 	}
+	Warning("Mode Cvars initialized.\n");
 	return success;
 }
 
@@ -43,9 +45,11 @@ void KZ::mode::InitModeManager()
 	{
 		return;
 	}
+	Warning("Initializing CKZ Mode Manager...\n");
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService * { return new KZClassicModeService(player); };
 	modeManager.RegisterMode(0, "CKZ", "Classic", vnlFactory);
 	initialized = true;
+	Warning("CKZ Mode Manager initialized successfully.\n");
 }
 
 void KZ::mode::LoadModePlugins()
@@ -60,7 +64,7 @@ void KZ::mode::LoadModePlugins()
 		ISmmPluginManager *pluginManager = (ISmmPluginManager *)g_SMAPI->MetaFactory(MMIFACE_PLMANAGER, &ret, 0);
 		if (ret == META_IFACE_FAILED)
 		{
-			META_CONPRINTF("Failed to get plugin manager interface!\n");
+			Warning("Failed to get plugin manager interface!\n");
 			return;
 		}
 		char error[256];
@@ -71,7 +75,7 @@ void KZ::mode::LoadModePlugins()
 			bool already = false;
 			if (!pluginManager->Load(fullPath, g_PLID, already, error, sizeof(error)))
 			{
-				META_CONPRINTF("Failed to load plugin: %s\nError: %s\n", fullPath, error);
+				Warning("Failed to load plugin: %s\nError: %s\n", fullPath, error);
 			}
 			output = g_pFullFileSystem->FindNext(findHandle);
 		} while (output);
@@ -80,22 +84,14 @@ void KZ::mode::LoadModePlugins()
 	}
 	else
 	{
-		META_CONPRINTF("No mode plugins found in directory: %s\n", buffer);
+		Warning("No mode plugins found in directory: %s\n", buffer);
 	}
 }
 
 void KZ::mode::InitModeService(KZPlayer *player)
 {
-	if (player->modeService)
-	{
-		delete player->modeService;
-		player->modeService = nullptr;
-	}
+	delete player->modeService;
 	player->modeService = new KZClassicModeService(player);
-	if (!player->modeService)
-	{
-		META_CONPRINTF("Failed to initialize KZClassicModeService for player %d\n", player->GetPlayerSlot());
-	}
 }
 
 void KZ::mode::DisableReplicatedModeCvars()
@@ -118,9 +114,12 @@ void KZ::mode::EnableReplicatedModeCvars()
 
 void KZ::mode::ApplyModeSettings(KZPlayer *player)
 {
+	/*Warning("Executing KZ::mode::ApplyModeSettings\n");
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
+		Warning("Executing KZ::mode::ApplyModeSettings [Loop Start]\n");
 		auto value = reinterpret_cast<CVValue_t *>(&(modeCvars[i]->values));
+		Warning("Executing KZ::mode::ApplyModeSettings [Loop Start - auto value]\n");
 		if (modeCvars[i]->m_eVarType == EConVarType_Float32)
 		{
 			f32 newValue = atof(player->modeService->GetModeConVarValues()[i]);
@@ -143,8 +142,10 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 			}
 			value->m_i32Value = newValue;
 		}
+		Warning("Executing KZ::mode::ApplyModeSettings [Loop End]\n");
 	}
-	player->enableWaterFix = player->modeService->EnableWaterFix();
+	Warning("Executing KZ::mode::ApplyModeSettings [Loop Exit]\n");
+	player->enableWaterFix = player->modeService->EnableWaterFix();*/
 }
 
 bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
@@ -372,7 +373,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 	KZModeManager::ModePluginInfo emptyInfo;
 	if (!mode)
 	{
-		META_CONPRINTF("[KZ] Warning: Getting mode info from a nullptr!\n");
+		Warning("[KZ] Warning: Getting mode info from a nullptr!\n");
 		return emptyInfo;
 	}
 	FOR_EACH_VEC(modeInfos, i)
@@ -390,7 +391,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 	KZModeManager::ModePluginInfo emptyInfo;
 	if (modeName.IsEmpty())
 	{
-		META_CONPRINTF("[KZ] Warning: Getting mode info from an empty string!\n");
+		Warning("[KZ] Warning: Getting mode info from an empty string!\n");
 		return emptyInfo;
 	}
 	FOR_EACH_VEC(modeInfos, i)
