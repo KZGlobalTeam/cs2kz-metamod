@@ -244,7 +244,6 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 		return;
 	}
 
-	u64 unknown = 0;
 	CSingleRecipientFilter filter(player.Get());
 	EmitSound_t soundParams;
 	soundParams.m_pSoundName = sound;
