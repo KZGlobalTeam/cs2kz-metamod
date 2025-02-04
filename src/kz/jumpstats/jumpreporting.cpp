@@ -75,11 +75,11 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetInvalidationReasonString(jump->invalidateReason)
 	);
 	std::string modeStyleNames = jump->GetJumpPlayer()->modeService->GetModeShortName();
-	FOR_EACH_VEC(jump->GetJumpPlayer()->styleServices, i)
+	/*FOR_EACH_VEC(jump->GetJumpPlayer()->styleServices, i)
 	{
 		modeStyleNames += " +";
 		modeStyleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();
-	}
+	}*/
 	target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Details 1",
 		modeStyleNames.c_str(),
 		jump->strafes.Count(),

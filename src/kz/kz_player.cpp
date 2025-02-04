@@ -45,8 +45,9 @@ void KZPlayer::Reset()
 	this->languageService->Reset();
 	this->modeService->Reset();
 	this->hudService->Reset();
+	this->jumpstatsService->Reset();
 
-	g_pKZModeManager->SwitchToMode(this, "defaultMode", true, true);
+	g_pKZModeManager->SwitchToMode(this, "CKZ", true, true);
 }
 
 void KZPlayer::OnPlayerActive()
@@ -153,6 +154,7 @@ void KZPlayer::OnProcessMovement()
 	KZ::mode::ApplyModeSettings(this);
 
 	this->DisableTurnbinds();
+	this->jumpstatsService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
 }
 
@@ -160,6 +162,7 @@ void KZPlayer::OnProcessMovementPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnProcessMovementPost();
+	this->jumpstatsService->OnProcessMovementPost();
 	MovementPlayer::OnProcessMovementPost();
 }
 
@@ -323,12 +326,14 @@ void KZPlayer::OnAirMove()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnAirMove();
+	this->jumpstatsService->OnAirMove();
 }
 
 void KZPlayer::OnAirMovePost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnAirMovePost();
+	this->jumpstatsService->OnAirMovePost();
 }
 
 void KZPlayer::OnFriction()
@@ -359,12 +364,14 @@ void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace);
+	this->jumpstatsService->OnTryPlayerMove();
 }
 
 void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
+	this->jumpstatsService->OnTryPlayerMovePost();
 }
 
 void KZPlayer::OnCategorizePosition(bool bStayOnGround)
@@ -432,18 +439,21 @@ void KZPlayer::OnStartTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnStartTouchGround();
+	this->jumpstatsService->EndJump();
 }
 
 void KZPlayer::OnStopTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnStopTouchGround();
+	this->jumpstatsService->AddJump();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnChangeMoveType(oldMoveType);
+	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 }
 
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
@@ -451,6 +461,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->modeService->OnTeleport(origin, angles, velocity);
+	this->jumpstatsService->InvalidateJumpstats("Teleported");
 }
 
 void KZPlayer::DisableTurnbinds()

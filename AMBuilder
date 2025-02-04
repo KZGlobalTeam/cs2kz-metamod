@@ -106,6 +106,7 @@ for sdk_target in MMSPlugin.sdk_targets:
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'jumpreporting.cpp'),
 
   
   ]
