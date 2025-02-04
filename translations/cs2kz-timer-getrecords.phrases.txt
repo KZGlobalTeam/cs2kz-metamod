@@ -140,6 +140,6 @@
 		"es"		"Uso: kz_wr/kz_sr <c/course/map/mode=...>\nEjemplo: \"kz_wr map=kz_map c=Main\"."
 		"pl"		"Użycie: kz_wr/kz_sr <c/course/map/mode=...>\nPrzykład: \"kz_wr map=kz_map c=Main\"."
 		"de"		"Verwendung: kz_wr/kz_sr <c/course/map/mode=...>\nBeispiel: \"kz_wr map=kz_map c=Main\"."
-		"ko"		"사용법: kz_wr/kz_sr <c/course/map/mode=...>\n예시: "kz_wr map=kz_map c=Main"."
+		"ko"		"사용법: kz_wr/kz_sr <c/course/map/mode=...>\n예시: \"kz_wr map=kz_map c=Main\"."
 	}
 }

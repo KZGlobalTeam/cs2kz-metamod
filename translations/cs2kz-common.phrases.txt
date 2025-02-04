@@ -43,6 +43,6 @@
 		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
 		"es"		"{darkred}No se puede encontrar un jugador llamado \"{player}\"."
 		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\"."
-		"ko"		"{darkred}"{player}" 해당 플레이어를 찾을 수 없습니다."
+		"ko"		"{darkred}\"{player}\" 해당 플레이어를 찾을 수 없습니다."  
 	}
 }

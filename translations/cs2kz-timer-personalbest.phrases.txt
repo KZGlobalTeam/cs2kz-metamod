@@ -181,6 +181,6 @@
 		"es"		"Uso: kz_pb <c/course/map/mode/p/player/s/style=...>\nEjemplo: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nPara no especificar un estilo, use \"style=none\"."
 		"de"		"Verwendung: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsempio: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nUm keinen Stil anzugeben, verwende \"style=none\"."
 		"pl"		"Użycie: kz_pb <c/course/map/mode/p/player/s/style=...>\nPrzykład: \"kz_pb map=kz_map p=Gracz c=Main style=ABH\"\nAby nie podawać stylu, użyj \"style=none\"."
-		"ko"		"사용법: kz_pb <c/course/map/mode/p/player/s/style=...>\n예시: "kz_pb map=kz_map p=Player c=Main style=ABH"\n스타일을 지정하지 않으려면 "style=none"을 사용하세요."
+		"ko"		"사용법: kz_pb <c/course/map/mode/p/player/s/style=...>\n예시: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\n스타일을 지정하지 않으려면 \"style=none\"을 사용하세요."
 	}
 }
