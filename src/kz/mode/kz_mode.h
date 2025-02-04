@@ -1,5 +1,6 @@
 #pragma once
 #include "../kz.h"
+#include "../jumpstats/kz_jumpstats.h"
 #include "UtlStringMap.h"
 
 #define KZ_MODE_MANAGER_INTERFACE "KZModeManagerInterface"
@@ -190,6 +191,7 @@ public:
 	{
 		return true;
 	}
+	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 
 	// Other events
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) {}

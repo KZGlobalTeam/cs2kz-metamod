@@ -70,7 +70,15 @@ class KZClassicModeService : public KZModeService
 		"0.9"     // sv_water_slow_amount
 	};
 	static_assert(Q_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
-
+	f32 distanceTiers[JUMPTYPE_COUNT - 3][DISTANCETIER_COUNT] = {
+		{217.0f, 265.0f, 270.0f, 275.0f, 280.0f, 285.0f}, // LJ
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // BH
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // MBH
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // WJ
+		{120.0f, 180.0f, 185.0f, 190.0f, 195.0f, 200.0f}, // LAJ
+		{217.0f, 260.0f, 265.0f, 270.0f, 275.0f, 280.0f}, // LAH
+		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // JB
+	};
 	bool hasValidDesiredViewAngle {};
 	QAngle lastValidDesiredViewAngle;
 	f32 lastJumpReleaseTime {};
@@ -131,6 +139,7 @@ public:
 	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace) override;
 	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace) override;
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
+	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 
 	// Insert subtick timing to be called later. Should only call this in PhysicsSimulate.
 	void InsertSubtickTiming(float time);

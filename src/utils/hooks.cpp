@@ -14,6 +14,7 @@
 #include "kz/kz.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 
 #include "vprof.h"
 
@@ -588,6 +589,7 @@ static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
+	//KZJumpstatsService::OnServerActivate();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

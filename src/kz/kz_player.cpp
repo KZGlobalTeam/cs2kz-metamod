@@ -5,6 +5,8 @@
 // #include "mode/kz_mode_vnl.h" // Include the header for KZVanillaModeService
 #include "language/kz_language.h"
 #include "hud/kz_hud.h"
+#include "jumpstats/kz_jumpstats.h"
+
 
 //#include "mode/kz_mode_ckz.h" // Include this if using KZClassicModeService
 
@@ -27,9 +29,11 @@ void KZPlayer::Init()
 	delete this->modeService;
 	delete this->languageService;
 	delete this->hudService;
+	delete this->jumpstatsService;
 
 	this->languageService = new KZLanguageService(this);
 	this->hudService = new KZHUDService(this);
+	this->jumpstatsService = new KZJumpstatsService(this);
 	KZ::mode::InitModeService(this);
 }
 

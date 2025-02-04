@@ -6,7 +6,7 @@
 
 #include "kz/mode/kz_mode.h"
 #include "kz/hud/kz_hud.h"
-
+#include "kz/jumpstats/kz_jumpstats.h"
 
 #include "sdk/gamerules.h"
 
@@ -62,7 +62,7 @@ void KZ::misc::OnServerActivate()
 // TODO: move command registration to the service class?
 void KZ::misc::RegisterCommands()
 {
-	//KZJumpstatsService::RegisterCommands();
+	KZJumpstatsService::RegisterCommands();
 	KZHUDService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 }
