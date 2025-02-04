@@ -297,7 +297,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), MODECVAR_COUNT);
 
 	player->SetVelocity({0, 0, 0});
-	//player->jumpstatsService->InvalidateJumpstats("Externally modified");
+	player->jumpstatsService->InvalidateJumpstats("Externally modified");
 
 	// Removed optionService code
 	return true;
