@@ -96,7 +96,7 @@
 		"it"	"{grey}Puoi assegnare diverse funzioni ai tasti, ad esempio: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"es"	"{grey}Puede asignar comandos a teclas para un acceso fácil, por ejemplo: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"de"	"{grey}Du kannst Befehle Tasten zuweisen, um einfachen Zugriff zu haben, zum Beispiel: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
-		"ko"	"{grey}명령어를 키에 바인딩하여 쉽게 접근할 수 있습니다. 예를 들어: {default}bind {purple}<key1> {default}"kz_cp"; bind {purple}<key2> {default}"kz_tp"."
+		"ko"	"{grey}명령어를 키에 바인딩하여 쉽게 접근할 수 있습니다. 예를 들어: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 	}
 	"Tip - kz_prevcp"
 	{
