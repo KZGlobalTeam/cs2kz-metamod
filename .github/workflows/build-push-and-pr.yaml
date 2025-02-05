@@ -7,12 +7,12 @@ on:
     tags-ignore:
       - v*
     paths-ignore:
-      - "README.md"
+      - 'README.md'
   pull_request:
     paths-ignore:
-      - "README.md"
-      - "cfg/**"
-      - "gamedata/**"
+      - 'README.md'
+      - 'cfg/**'
+      - 'gamedata/**'
 
 jobs:
   get-version-string:
@@ -49,13 +49,13 @@ jobs:
     strategy:
       matrix:
         path:
-          - check: "src"
-            exclude: "sdk"
+          - check: 'src'
+            exclude: 'sdk'
     steps:
       - uses: actions/checkout@v4
       - uses: jidicula/clang-format-action@v4.13.0
         with:
-          clang-format-version: "16"
+          clang-format-version: '16'
           check-path: ${{ matrix.path['check'] }}
           exclude-regex: ${{ matrix.path['exclude'] }}
 
