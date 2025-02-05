@@ -12,7 +12,7 @@ check_file() {
 
         local line_without_comment=$(echo "$line" | sed 's/\/\/.*$//')
         
-        local quote_count=$(echo "$line_without_comment" | grep -o '"' | grep -c .)
+        local quote_count=$(echo "$line_without_comment" | sed 's/\\"/X/g' | grep -o '"' | grep -c .)
 
 		[[ $quote_count -eq 0 ]] && continue
 
