@@ -11,16 +11,18 @@ check_file() {
         [[ -z "$line" || "$line" =~ ^[[:space:]]*([{}]|//) ]] && continue
 
         local line_without_comment=$(echo "$line" | sed 's/\/\/.*$//')
-        local cleaned_line=$(echo "$line_without_comment" | sed 's/\\"/X/g')
-        local quote_count=$(echo "$cleaned_line" | tr -cd '"' | wc -c)
+        
+        local quote_count=$(echo "$line_without_comment" | grep -o '"' | grep -c .)
+
+		[[ $quote_count -eq 0 ]] && continue
 
         if [[ $quote_count -eq 2 ]]; then
-            if [[ ! "$cleaned_line" =~ ^[[:space:]]*\"[^\"]+\"[[:space:]]*$ ]]; then
+            if [[ ! "$line_without_comment" =~ ^[[:space:]]*\"[^\"]+\"[[:space:]]*$ ]]; then
                 echo "Error in $file:$line_number - Incorrect single-quote format: $line"
                 ((errors_found++))
             fi
         elif [[ $quote_count -eq 4 ]]; then
-            if [[ ! "$cleaned_line" =~ ^[[:space:]]*\"[^\"]+\"[[:space:]]*\"[^\"]*\"[[:space:]]*$ ]]; then
+            if [[ ! "$line_without_comment" =~ ^[[:space:]]*\"[^\"]+\"[[:space:]]*\"[^\"]*\"[[:space:]]*$ ]]; then
                 echo "Error in $file:$line_number - Incorrect key-value format: $line"
                 ((errors_found++))
             fi
