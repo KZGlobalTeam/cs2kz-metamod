@@ -30,7 +30,7 @@ check_file() {
             echo "Error in $file:$line_number - Incorrect number of quotes (expected 2 or 4, found $quote_count): $line"
             ((errors_found++))
         fi
-    done < "$file"
+	done < "$file"
 
     return $errors_found
 }
