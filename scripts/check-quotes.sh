@@ -7,16 +7,14 @@ check_file() {
 
     while IFS= read -r line; do
         ((line_number++))
-        
+
         [[ -z "$line" || "$line" =~ ^[[:space:]]*([{}]|//) ]] && continue
 
-        local line_without_comment=$(echo "$line" | sed 's/\/\/.*$//')
+        local line_without_comment=$(echo "$line" | sed -E 's/([^:])\/\/.*$/\1/')
 
         local cleaned_line=$(echo "$line_without_comment" | sed 's/\\"/X/g')
 
         local quote_count=$(echo "$cleaned_line" | tr -cd '"' | wc -c)
-
-		[[ $quote_count -eq 0 ]] && continue
 
         if [[ $quote_count -eq 2 ]]; then
             if [[ ! "$cleaned_line" =~ ^[[:space:]]*\"[^\"]+\"[[:space:]]*$ ]]; then
@@ -28,7 +26,7 @@ check_file() {
                 echo "Error in $file:$line_number - Incorrect key-value format: $line"
                 ((errors_found++))
             fi
-        else
+        if [[ $quote_count -ne 0 ]]; then
             echo "Error in $file:$line_number - Incorrect number of quotes (expected 2 or 4, found $quote_count): $line"
             ((errors_found++))
         fi
