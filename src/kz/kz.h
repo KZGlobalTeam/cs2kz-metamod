@@ -222,4 +222,4 @@ namespace KZ
 		void OnRoundStart();
 		void EnforceTimeLimit();
 	} // namespace misc
-}; // namespace KZ
+} // namespace KZ
