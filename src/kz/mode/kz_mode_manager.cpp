@@ -3,13 +3,13 @@
 
 #include "filesystem.h"
 
-#include "utils/utils.h"
 #include "interfaces/interfaces.h"
+#include "utils/utils.h"
 
 #include "../language/kz_language.h"
 
-#include "utils/simplecmds.h"
 #include "utils/plat.h"
+#include "utils/simplecmds.h"
 
 static_function SCMD_CALLBACK(Command_KzModeShort);
 static_function SCMD_CALLBACK(Command_KzMode);
@@ -114,12 +114,9 @@ void KZ::mode::EnableReplicatedModeCvars()
 
 void KZ::mode::ApplyModeSettings(KZPlayer *player)
 {
-	//Warning("Executing KZ::mode::ApplyModeSettings\n");
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
-		//Warning("Executing KZ::mode::ApplyModeSettings [Loop Start]\n");
 		auto value = reinterpret_cast<CVValue_t *>(&(modeCvars[i]->values));
-		//Warning("Executing KZ::mode::ApplyModeSettings [Loop Start - auto value]\n");
 		if (modeCvars[i]->m_eVarType == EConVarType_Float32)
 		{
 			f32 newValue = atof(player->modeService->GetModeConVarValues()[i]);
@@ -142,9 +139,7 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 			}
 			value->m_i32Value = newValue;
 		}
-		//Warning("Executing KZ::mode::ApplyModeSettings [Loop End]\n");
 	}
-	//Warning("Executing KZ::mode::ApplyModeSettings [Loop Exit]\n");
 	player->enableWaterFix = player->modeService->EnableWaterFix();
 }
 
@@ -178,7 +173,6 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	if (!info)
 	{
 		info = modeInfos.AddToTailGetPtr();
-			// Removed database update code
 	}
 	*info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
 	if (id)

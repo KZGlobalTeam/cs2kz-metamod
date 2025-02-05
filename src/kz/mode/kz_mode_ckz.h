@@ -23,8 +23,8 @@
 #define PS_RATIO_TO_SPEED   0.5f
 // Prestrafe ratio will be not go down after landing for this amount of time - helps with small movements after landing
 // Ideally should be much higher than the perf window!
-//#define PS_LANDING_GRACE_PERIOD 0.25f
-#define PS_LANDING_GRACE_PERIOD 0.01f
+#define PS_LANDING_GRACE_PERIOD 0.25f
+// #define PS_LANDING_GRACE_PERIOD 0.01f
 // Bhop related
 #define BH_PERF_WINDOW                  0.02f // Any jump performed after landing will be a perf for this much time
 #define BH_BASE_MULTIPLIER              51.5f // Multiplier for how much speed would a perf gain in ideal scenario
@@ -35,43 +35,42 @@
 #define DUCK_SPEED_NORMAL  15.0f
 #define DUCK_SPEED_MINIMUM 6.0234375f // Equal to if you just ducked/unducked for the first time in a while
 
-#define MIN_CROUCH_JUMP_SPEED 50.0f  // Only apply boost if horizontal speed exceeds this.
-#define CROUCH_JUMP_BOOST     1.05f  // Increase horizontal speed by 5%.
-
+#define MIN_CROUCH_JUMP_SPEED 50.0f // Only apply boost if horizontal speed exceeds this.
+#define CROUCH_JUMP_BOOST     1.05f // Increase horizontal speed by 5%.
 
 class KZClassicModeService : public KZModeService
 {
 	using KZModeService::KZModeService;
 
 	static inline const char *modeCvarValues[] = {
-		"false",  // slope_drop_enable
-		"5.5",    // sv_accelerate
-		"true",  // sv_accelerate_use_weapon_speed
-		"300",    // sv_airaccelerate
-		"30",     // sv_air_max_wishspeed
-		"false",  // sv_autobunnyhopping
-		"true",   // sv_enablebunnyhopping
-		"4.05",    // sv_friction
-		"800",    // sv_gravity
-		"301.99337",  // sv_jump_impulse
-		"false",  // sv_jump_precision_enable
-		"0.015625",    // sv_jump_spam_penalty_time
-		"-0.707", // sv_ladder_angle
-		"1",      // sv_ladder_dampen
-		"1",      // sv_ladder_scale_speed
-		"320",    // sv_maxspeed
-		"3500",   // sv_maxvelocity
-		"0",      // sv_staminajumpcost
-		"0",      // sv_staminalandcost
-		"0",      // sv_staminamax
-		"60",   // sv_staminarecoveryrate
-		"0.7",    // sv_standable_normal
-		"64.0",   // sv_step_move_vel_min
-		"0.00250",      // sv_timebetweenducks
-		"0.7",    // sv_walkable_normal
-		"10",     // sv_wateraccelerate
-		"1",      // sv_waterfriction
-		"0.9"     // sv_water_slow_amount
+		"false",     // slope_drop_enable
+		"5.5",       // sv_accelerate
+		"true",      // sv_accelerate_use_weapon_speed
+		"300",       // sv_airaccelerate
+		"30",        // sv_air_max_wishspeed
+		"false",     // sv_autobunnyhopping
+		"true",      // sv_enablebunnyhopping
+		"4.05",      // sv_friction
+		"800",       // sv_gravity
+		"301.99337", // sv_jump_impulse
+		"false",     // sv_jump_precision_enable
+		"0.015625",  // sv_jump_spam_penalty_time
+		"-0.707",    // sv_ladder_angle
+		"1",         // sv_ladder_dampen
+		"1",         // sv_ladder_scale_speed
+		"320",       // sv_maxspeed
+		"3500",      // sv_maxvelocity
+		"0",         // sv_staminajumpcost
+		"0",         // sv_staminalandcost
+		"0",         // sv_staminamax
+		"60",        // sv_staminarecoveryrate
+		"0.7",       // sv_standable_normal
+		"64.0",      // sv_step_move_vel_min
+		"0.00250",   // sv_timebetweenducks
+		"0.7",       // sv_walkable_normal
+		"10",        // sv_wateraccelerate
+		"1",         // sv_waterfriction
+		"0.9"        // sv_water_slow_amount
 	};
 	static_assert(Q_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
 	f32 distanceTiers[JUMPTYPE_COUNT - 3][DISTANCETIER_COUNT] = {
@@ -156,7 +155,7 @@ public:
 	f32 GetPrestrafeGain();
 
 	void CheckVelocityQuantization();
-	//void RemoveCrouchJumpBind();
+	// void RemoveCrouchJumpBind();
 	/*
 		Ported from DanZay's SimpleKZ:
 		Duck speed is reduced by the game upon ducking or unducking.

@@ -3,7 +3,6 @@
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 
-
 class KZHUDService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;

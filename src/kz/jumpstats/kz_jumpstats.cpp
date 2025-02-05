@@ -595,7 +595,7 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
-	if (this->jumps.Count() <= 0 || this->player->JustTeleported() )
+	if (this->jumps.Count() <= 0 || this->player->JustTeleported())
 	{
 		return JumpType_Invalid;
 	}

@@ -191,6 +191,7 @@ public:
 	{
 		return true;
 	}
+
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 
 	// Other events

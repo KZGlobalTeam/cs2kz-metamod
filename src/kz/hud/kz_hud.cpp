@@ -11,10 +11,7 @@
 
 #define HUD_ON_GROUND_THRESHOLD 0.07f
 
-void KZHUDService::Init()
-{
-
-}
+void KZHUDService::Init() {}
 
 void KZHUDService::Reset()
 {
@@ -104,7 +101,7 @@ void KZHUDService::ResetShowPanel()
 void KZHUDService::TogglePanel()
 {
 	this->showPanel = !this->showPanel;
-	//this->player->optionService->SetPreferenceBool("showPanel", this->showPanel);
+	// this->player->optionService->SetPreferenceBool("showPanel", this->showPanel);
 	if (!this->showPanel)
 	{
 		utils::PrintAlert(this->player->GetController(), "#SFUI_EmptyString");

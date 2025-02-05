@@ -7,9 +7,6 @@
 #include "hud/kz_hud.h"
 #include "jumpstats/kz_jumpstats.h"
 
-
-//#include "mode/kz_mode_ckz.h" // Include this if using KZClassicModeService
-
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "vprof.h"
@@ -79,33 +76,33 @@ void KZPlayer::OnPhysicsSimulate()
 
 KZPlayer *KZPlayer::GetSpectatedPlayer()
 {
-    if (!this->IsAlive())
-    {
-        CCSPlayerController* controller = this->GetController();
-        if (!controller)
-        {
-            return nullptr;
-        }
-        
-        CBasePlayerPawn* observerPawn = controller->m_hObserverPawn();
-        if (!observerPawn)
-        {
-            return nullptr;
-        }
-        
-        CPlayer_ObserverServices* obsService = observerPawn->m_pObserverServices;
-        if (!obsService || !obsService->m_hObserverTarget().IsValid())
-        {
-            return nullptr;
-        }
+	if (!this->IsAlive())
+	{
+		CCSPlayerController *controller = this->GetController();
+		if (!controller)
+		{
+			return nullptr;
+		}
 
-        CCSPlayerPawn* pawn = this->GetPlayerPawn();
-        CBasePlayerPawn* target = (CBasePlayerPawn*)obsService->m_hObserverTarget().Get();
-        
-        // If the player is spectating their own corpse, consider that as not spectating anyone
-        return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);
-    }
-    return nullptr;
+		CBasePlayerPawn *observerPawn = controller->m_hObserverPawn();
+		if (!observerPawn)
+		{
+			return nullptr;
+		}
+
+		CPlayer_ObserverServices *obsService = observerPawn->m_pObserverServices;
+		if (!obsService || !obsService->m_hObserverTarget().IsValid())
+		{
+			return nullptr;
+		}
+
+		CCSPlayerPawn *pawn = this->GetPlayerPawn();
+		CBasePlayerPawn *target = (CBasePlayerPawn *)obsService->m_hObserverTarget().Get();
+
+		// If the player is spectating their own corpse, consider that as not spectating anyone
+		return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);
+	}
+	return nullptr;
 }
 
 void KZPlayer::OnPhysicsSimulatePost()

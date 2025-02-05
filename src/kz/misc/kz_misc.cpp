@@ -21,7 +21,7 @@ static_function f64 CheckRestart()
 
 void KZ::misc::Init()
 {
-	//KZOptionService::RegisterEventListener(&optionEventListener);
+	// KZOptionService::RegisterEventListener(&optionEventListener);
 	mapRestartTimer = StartTimer(CheckRestart, RESTART_CHECK_INTERVAL, true, false);
 }
 
