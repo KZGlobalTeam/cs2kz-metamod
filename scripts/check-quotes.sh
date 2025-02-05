@@ -10,7 +10,8 @@ check_file() {
         
         [[ -z "$line" || "$line" =~ ^[[:space:]]*([{}]|//) ]] && continue
 
-        local cleaned_line=$(echo "$line" | sed 's/\\"/X/g')
+        local line_without_comment=$(echo "$line" | sed 's/\/\/.*$//')
+        local cleaned_line=$(echo "$line_without_comment" | sed 's/\\"/X/g')
         local quote_count=$(echo "$cleaned_line" | tr -cd '"' | wc -c)
 
         if [[ $quote_count -eq 2 ]]; then
