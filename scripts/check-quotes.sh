@@ -26,9 +26,11 @@ check_file() {
                 echo "Error in $file:$line_number - Incorrect key-value format: $line"
                 ((errors_found++))
             fi
-        if [[ $quote_count -ne 0 ]]; then
-            echo "Error in $file:$line_number - Incorrect number of quotes (expected 2 or 4, found $quote_count): $line"
-            ((errors_found++))
+        else
+            if [[ $quote_count -ne 0 ]]; then
+                echo "Error in $file:$line_number - Incorrect number of quotes (expected 2 or 4, found $quote_count): $line"
+                ((errors_found++))
+            fi
         fi
 	done < "$file"
 
