@@ -30,7 +30,6 @@ class KZLanguageService;
 class KZModeService;
 class KZHUDService;
 
-
 class KZPlayer : public MovementPlayer
 {
 public:
@@ -124,7 +123,7 @@ public:
 	KZLanguageService *languageService {};
 	KZModeService *modeService {};
 	KZHUDService *hudService {};
-	//KZTriggerService *triggerService {};
+	// KZTriggerService *triggerService {};
 
 	void DisableTurnbinds();
 	void EnableGodMode();
@@ -159,7 +158,7 @@ public:
 	CUtlString ComputeCvarValueFromModeStyles(const char *name);
 
 	// Add this declaration
-	KZPlayer* GetSpectatedPlayer();
+	KZPlayer *GetSpectatedPlayer();
 };
 
 class KZBaseService
@@ -223,4 +222,4 @@ namespace KZ
 		void OnRoundStart();
 		void EnforceTimeLimit();
 	} // namespace misc
-};    // namespace KZ
+}; // namespace KZ
