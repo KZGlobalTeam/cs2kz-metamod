@@ -191,7 +191,9 @@ public:
 	CMoveDataBase() = default;
 	CMoveDataBase(const CMoveDataBase &source)
 		// clang-format off
-		: moveDataFlags {source.moveDataFlags}, 
+		: m_bFirstRunOfFunctions {source.m_bFirstRunOfFunctions},
+		m_bIsLateCommand {source.m_bIsLateCommand}, 
+		m_bHasNextCommand {source.m_bHasNextCommand},
 		m_nPlayerHandle {source.m_nPlayerHandle},
 		m_vecAbsViewAngles {source.m_vecAbsViewAngles},
 		m_vecViewAngles {source.m_vecViewAngles},
@@ -202,13 +204,14 @@ public:
 		m_vecVelocity {source.m_vecVelocity}, 
 		m_vecAngles {source.m_vecAngles},
 		m_bHasSubtickInputs {source.m_bHasSubtickInputs},
+		unknown {source.unknown},
 		m_collisionNormal {source.m_collisionNormal},
 		m_groundNormal {source.m_groundNormal}, 
 		m_vecAbsOrigin {source.m_vecAbsOrigin},
 		m_nTickCount {source.m_nTickCount},
 		m_nTargetTick {source.m_nTargetTick},
-		m_flSubtickEndFraction {source.m_flSubtickEndFraction},
-		m_flSubtickStartFraction {source.m_flSubtickStartFraction}
+		m_flSubtickStartFraction {source.m_flSubtickStartFraction},
+		m_flSubtickEndFraction {source.m_flSubtickEndFraction}
 	// clang-format on
 	{
 		for (int i = 0; i < source.m_AttackSubtickMoves.Count(); i++)
@@ -243,7 +246,9 @@ public:
 	}
 
 public:
-	uint8_t moveDataFlags;
+	bool m_bFirstRunOfFunctions: 1;
+	bool m_bIsLateCommand: 1;
+	bool m_bHasNextCommand: 1;
 	CHandle<CCSPlayerPawn> m_nPlayerHandle;
 	QAngle m_vecAbsViewAngles;
 	QAngle m_vecViewAngles;
@@ -256,15 +261,15 @@ public:
 	CUtlVector<SubtickMove> m_SubtickMoves;
 	CUtlVector<SubtickMove> m_AttackSubtickMoves;
 	bool m_bHasSubtickInputs;
-	float unknown; // Set to 1.0 during SetupMove, never change during gameplay.
+	float unknown; // Set to 1.0 during SetupMove, never change during gameplay. Is apparently used for weapon services stuff.
 	CUtlVector<touchlist_t> m_TouchList;
 	Vector m_collisionNormal;
 	Vector m_groundNormal; // unsure
 	Vector m_vecAbsOrigin;
 	int32_t m_nTickCount;
 	int32_t m_nTargetTick;
-	float m_flSubtickEndFraction;
 	float m_flSubtickStartFraction;
+	float m_flSubtickEndFraction;
 };
 
 class CMoveData : public CMoveDataBase
@@ -274,8 +279,8 @@ public:
 	Vector m_vecOldAngles;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
-	float m_flFrictionDecel;     // Related to ground acceleration subtick stuff with sv_stopspeed and friction
-	bool m_bJumpedThisTick;      // something to do with basevelocity and the tick the player jumps
+	float m_flFrictionDecel; // Related to ground acceleration subtick stuff with sv_stopspeed and friction
+	bool m_bInAir;
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
 
