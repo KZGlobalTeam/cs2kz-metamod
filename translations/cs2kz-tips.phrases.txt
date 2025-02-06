@@ -12,7 +12,7 @@
 		"ua"		"{grey}Тепер ви періодично будете бачити випадкові поради та підказки в чаті."
 		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler göreceksin."
 		"it"		"{grey}Ogni tanto riceverai dei consigli casuali."
-		"es"		"{grey}Usted ahora verá consejos aleatorios en el chat periódicamente."
+		"es"		"{grey}Ahora verás consejos aleatorios en el chat periódicamente."
 		"de"		"{grey}Du wirst jetzt regelmäßig zufällige Tipps im Chat sehen."
 		"ko"		"{grey}이제 주기적으로 채팅에서 랜덤 팁을 볼 수 있습니다."
 	}
@@ -27,7 +27,7 @@
 		"ua"		"{grey}Ви більше не будете бачити підказок в чаті."
 		"tr"		"{grey}Periyodik olarak sohbette rastgele öneriler görmeyeceksin."
 		"it"		"{grey}Non riceverai più i consigli casuali."
-		"es"		"{grey}Usted no verá más consejos aleatorios en el chat periódicamente."
+		"es"		"{grey}No verás más consejos aleatorios en el chat periódicamente."
 		"de"		"{grey}Du wirst jetzt keine zufälligen Tipps mehr im Chat sehen."
 		"ko"		"{grey}이제 채팅에서 주기적으로 랜덤 팁이 표시되지 않습니다."
 	}

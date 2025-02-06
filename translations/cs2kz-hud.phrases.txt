@@ -203,7 +203,7 @@
 		"ua"		"{grey}Ви увімкнули відображення центральної панелі."
 		"tr"		"{grey}Orta bilgi paneli açıldı."
 		"it"		"{grey}Il pannello centrale è stato abilitato."
-		"es"		"{grey}Su panel de información central ha sido habilitado."
+		"es"		"{grey}Tu panel de información central fue activado."
 		"de"		"{grey}Dein zentrales Informationspanel wurde aktiviert."
 		"ko"		"{grey}중앙 정보 패널이 활성화되었습니다."
 	}
@@ -218,7 +218,7 @@
 		"ua"		"{grey}Ви вимкнули відображення центральної панелі."
 		"tr"		"{grey}Orta bilgi paneli kapatıldı."
 		"it"		"{grey}Il pannello centrale è stato disabilitato."
-		"es"		"{grey}Su panel de información central ha sido deshabilitado."
+		"es"		"{grey}Tu panel de información central fue desactivado."
 		"de"		"{grey}Dein zentrales Informationspanel wurde deaktiviert."
 		"ko"		"{grey}중앙 정보 패널이 비활성화되었습니다."
 	}

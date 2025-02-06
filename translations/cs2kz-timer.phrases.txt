@@ -156,7 +156,7 @@
 		"ua"		"{darkred}Ви не можете поставити на паузу прямо зараз."
 		"tr"		"{darkred}Şuan duraklatamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa ora."
-		"es"		"{darkred}No puede pausar ahora."
+		"es"		"{darkred}No puedes pausar ahora."
 		"de"		"{darkred}Du kannst jetzt nicht pausieren."
 		"ko"		"{darkred}지금은 일시 정지를 할 수 없습니다."
 	}
@@ -171,7 +171,7 @@
 		"ua"		"{darkred}Ви не можете поставити на паузу, тому що ви щойно відновили таймер."
 		"tr"		"{darkred}Henüz duraklatmayı kaldırdığın için duraklayamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa quando hai appena ripreso."
-		"es"		"{darkred}No puede pausar porque acaba de reanudar."
+		"es"		"{darkred}No puedes pausar porque acabas de reanudar."
 		"de"		"{darkred}Du kannst nicht pausieren, weil du gerade fortgesetzt hast."
 		"ko"		"{darkred}방금 재개했기 때문에 일시 정지를 할 수 없습니다."
 	}
@@ -186,7 +186,7 @@
 		"ua"		"{darkred}Ви не можете поставити на паузу у повітрі."
 		"tr"		"{darkred}Havada duraklatamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa in volo."
-		"es"		"{darkred}No puede pausar en el aire."
+		"es"		"{darkred}No puedes pausar en el aire."
 		"de"		"{darkred}Du kannst in der Luft nicht pausieren."
 		"ko"		"{darkred}공중에서는 일시 정지를 할 수 없습니다."
 	}
@@ -201,7 +201,7 @@
 		"ua"		"{darkred}Ви не можете поставити на паузу, ви щойно приземлилися."
 		"tr"		"{darkred}Henüz yere indiğin için duraklatamazsın."
 		"it"		"{darkred}Non puoi mettere in pausa quando sei appena atterrato."
-		"es"		"{darkred}No puede pausar porque acaba de aterrizar."
+		"es"		"{darkred}No puedes pausar porque acabas de aterrizar."
 		"de"		"{darkred}Du kannst nicht pausieren, weil du gerade gelandet bist."
 		"ko"		"{darkred}방금 착지했기 때문에 일시 정지를 할 수 없습니다."
 	}
@@ -215,7 +215,7 @@
 		"ua"		"{darkred}Ви не можете поставити на паузу, тому що в цій області паузу вимкнено."
 		"tr"		"{darkred}Bu alanda duraklatmak yasak olduğu için duraklatamazsın."
 		"it"		"{darkred}La pausa è disabilitata in questa zona."
-		"es"		"{darkred}No puede pausar porque las pausas están deshabilitadas en esta zona."
+		"es"		"{darkred}No puedes pausar porque las pausas están deshabilitadas en esta zona."
 		"de"		"{darkred}Du kannst nicht pausieren, weil das Pausieren in diesem Bereich deaktiviert ist."
 		"ko"		"{darkred}이 구역에서는 일시 정지가 비활성화되어 있어 일시 정지를 할 수 없습니다."
 	}
@@ -229,7 +229,7 @@
 		"ua"		"{darkred}Ви не можете продовжити прямо зараз."
 		"tr"		"{darkred}Şuan duraklatmayı kapatamazsın."
 		"it"		"{darkred}Non puoi riprendere in questo momento."
-		"es"		"{darkred}No puede reanudar ahora."
+		"es"		"{darkred}No puedes reanudar ahora."
 		"de"		"{darkred}Du kannst jetzt nicht fortfahren."
 		"ko"		"{darkred}지금은 재개할 수 없습니다."
 	}
@@ -244,7 +244,7 @@
 		"ua"		"{darkred}Ви не можете продовжити, тому що ви щойно ставили на паузу."
 		"tr"		"{darkred}Henüz duraklattığın için duraklatmayı kaldıramazsın."
 		"it"		"{darkred}Non puoi riprendere quando hai appena messo in pausa."
-		"es"		"{darkred}No puede reanudar porque acaba de pausar."
+		"es"		"{darkred}No puedes reanudar porque acabas de pausar."
 		"de"		"{darkred}Du kannst nicht fortfahren, weil du gerade pausiert hast."
 		"ko"		"{darkred}방금 일시 정지했기 때문에 재개할 수 없습니다."
 	}
@@ -256,6 +256,7 @@
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили чекпоінт зону."
 		"tr"		"{darkred}Işınlanma noktası kaçırdığın için koşuyu bitiremezsin."
 		"ko"		"{darkred}체크포인트 구역을 놓쳤기 때문에 주행을 완료할 수 없습니다."
+		"es"		"{darkred}No puedes terminar tu carrera porque te salteaste una zona de checkpoint."
 	}
 	"Can't Finish Run (Missed Checkpoint Zones)"
 	{
@@ -266,6 +267,7 @@
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили {missed_count} чекпоінт зони."
 		"tr"		"{darkred} {missed_count} Işınlanma noktası kaçırdığın için koşuyu bitiremezsin."
 		"ko"		"{darkred}{missed_count}개의 체크포인트 구역을 놓쳤기 때문에 주행을 완료할 수 없습니다."
+		"es"		"{darkred}No puedes terminar tu carrera porque te salteaste {missed_count} zonas de checkpoint."
 	}
 	"Can't Finish Run (Missed Stage)"
 	{
@@ -276,6 +278,7 @@
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили зону стадії {stage_number}."
 		"tr"		"{darkred}{stage_number} aşamasını kaçırdığın için koşuyu bitiremezsin."
 		"ko"		"{darkred}스테이지 구역 {stage_number}를 놓쳤기 때문에 주행을 완료할 수 없습니다."
+		"es"		"{darkred}No puede finalizar su carrera, porque te salteaste la zona de etapa {stage_number}."
 	}
 	"Touched too high stage number (Missed stage)"
 	{
@@ -286,6 +289,7 @@
 		"ua"		"{darkred}Ви пропустили зону стадії {stage_number}!"
 		"tr"		"{darkred}{stage_number} aşamasını kaçırdın!"
 		"ko"		"{darkred}스테이지 구역 {stage_number}를 놓쳤습니다!"
+		"es"		"{darkred}¡Te salteaste la zona de etapa {stage_number}!"
 	}
 	"No Start Position For Course"
 	{
@@ -296,6 +300,7 @@
 		"ua"		"{darkred}Не знайдено стартову позицію для курсу {default}{course_name}{darkred}!"
 		"tr"		"{default}Bu rota için başlangıç noktası bulunamadı {course_name}{darkred}!"
 		"ko"		"{darkred}{default}{course_name}{darkred} 코스의 시작 위치를 찾을 수 없습니다!"
+		"es"		"{darkred}No se encuentra una posición de inicio para el recorrido {default}{course_name}{darkred}!"
 	}
 	"No Jumpstat Area Found"
 	{
@@ -305,12 +310,14 @@
 		"sv"		"{darkred}Jumpstat-området hittades inte på kartan!"
 		"ua"		"{darkred}Не знайдено зону тренування стрибків на даній мапі!"
 		"ko"		"{darkred}이 맵에서 롱 점프 구역을 찾을 수 없습니다!"
+		"es"		"{darkred}¡No se encontró zona de saltos en este mapa!"
 	}
 	"Turnbinds Disabled"
 	{
 		"en"		"{darkred}Turnbinds are disabled."
 		"chi"		"{darkred}旋转绑定已禁用."
 		"ko"		"{darkred}턴 바인딩이 비활성화되었습니다."
+		"es"		"{darkred}Binds de giros desactivados."
 	}
 	
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
@@ -323,6 +330,7 @@
 		"ua"		"{grey}Спліт {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"tr"		"{grey}Aralık {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"ko"		"{grey}분할 {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"es"		"{grey}Parte {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	"Course Checkpoint Reached"
 	{
@@ -332,6 +340,7 @@
 		"sv"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"ua"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"ko"		"{grey}체크포인트 {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"es"		"{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	"Course Stage Reached"
 	{
@@ -342,6 +351,7 @@
 		"ua"		"{grey}Стадія {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"tr"		"{grey}Aşama {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 		"ko"		"{grey}스테이지 {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
+		"es"		"{grey}Etapa {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
 	}
 	
 	// The spaces are intentional.
@@ -352,6 +362,7 @@
 		"chi"		" | SPB {diff_time}"
 		"sv"		" | SPB {diff_time}"
 		"ua"		" | SPB {diff_time}"
+		"es"		" | SPB {diff_time}"
 	}
 	"Global PB Diff (Overall)"
 	{
@@ -360,6 +371,7 @@
 		"chi"		" | GPB {diff_time}"
 		"sv"		" | GPB {diff_time}"
 		"ua"		" | GPB {diff_time}"
+		"es"		" | GPB {diff_time}"
 	}
 	"SR Diff (Overall)"
 	{
@@ -368,6 +380,7 @@
 		"chi"		" | SR {diff_time}"
 		"sv"		" | SR {diff_time}"
 		"ua"		" | SR {diff_time}"
+		"es"		" | SR {diff_time}"
 	}
 	"WR Diff (Overall)"
 	{
@@ -376,6 +389,7 @@
 		"chi"		" | WR {diff_time}"
 		"sv"		" | VR {diff_time}"
 		"ua"		" | WR {diff_time}"
+		"es"		" | WR {diff_time}"
 	}
 	"Server PB Diff (Pro)"
 	{
@@ -384,6 +398,7 @@
 		"chi"		" | PRO SPB {diff_time}"
 		"sv"		" | PRO SPB {diff_time}"
 		"ua"		" | PRO SPB {diff_time}"
+		"es"		" | PRO SPB {diff_time}"
 	}
 	"Global PB Diff (Pro)"
 	{
@@ -392,6 +407,7 @@
 		"chi"		" | PRO GPB {diff_time}"
 		"sv"		" | PRO GPB {diff_time}"
 		"ua"		" | PRO GPB {diff_time}"
+		"es"		" | PRO GPB {diff_time}"
 	}
 	"SR Diff (Pro)"
 	{
@@ -400,6 +416,7 @@
 		"chi"		" | PRO SR {diff_time}"
 		"sv"		" | PRO SR {diff_time}"
 		"ua"		" | PRO SR {diff_time}"
+		"es"		" | PRO SR {diff_time}"
 	}
 	"WR Diff (Pro)"
 	{
@@ -408,6 +425,7 @@
 		"chi"		" | PRO WR {diff_time}"
 		"sv"		" | PRO VR {diff_time}"
 		"ua"		" | PRO WR {diff_time}"
+		"es"		" | PRO WR {diff_time}"
 	}
 	
 	// You missed your best Overall time (01:23.45)
@@ -420,6 +438,7 @@
 		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {yellow}Tümünde {grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado tu mejor tiempo {yellow}General{grey} ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Overall)"
 	{
@@ -430,6 +449,7 @@
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi küresel süreni kaçırdın {yellow}Tümünde{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado tu mejor tiempo {yellow}General{grey} ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall)"
 	{
@@ -440,6 +460,7 @@
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey} час рекорду серевера ({lightred}{time}{grey})."
 		"tr"		"{grey}Süreyi kaçırdın {yellow}Tümünde{grey} sunucu rekoru ({lightred}{time}{grey})."
 		"ko"		"{grey}서버 최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado el tiempo récord del servidor {yellow}General{grey} ({lightred}{time}{grey})."
 	}
 	"Missed WR (Overall)"
 	{
@@ -450,6 +471,7 @@
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Süreyi kaçırdın {yellow}Tümünde{grey} küresel rekor ({lightred}{time}{grey})."
 		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado el tiempo récord global {yellow}General{grey} ({lightred}{time}{grey})."
 	}
 	"Missed Server PB (Pro)"
 	{
@@ -460,6 +482,7 @@
 		"ua"		"{grey}Ви пропустили свій найкращий {blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {blue}PRO{grey}  ({lightred}{time}{grey})."
 		"ko"		"{grey}최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado tu mejor tiempo {blue}PRO{grey} ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Pro)"
 	{
@@ -470,6 +493,7 @@
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi küresel süreni kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}글로벌 최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado tu mejor tiempo {blue}PRO{grey} ({lightred}{time}{grey})."
 	}
 	"Missed SR (Pro)"
 	{
@@ -480,6 +504,7 @@
 		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час рекорду сервера({lightred}{time}{grey})."
 		"tr"		"{grey}Sunucu rekorunu kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}서버 최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado el tiempo récord {blue}PRO{grey} del servidor ({lightred}{time}{grey})."
 	}
 	"Missed WR (Pro)"
 	{
@@ -490,6 +515,7 @@
 		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Dünya rekorunu kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}글로벌 최고 기록인 {blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado el tiempo récord {blue}PRO{grey} global ({lightred}{time}{grey})."
 	}
 	"Missed Server PB (Overall+Pro)"
 	{
@@ -500,6 +526,7 @@
 		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado tu mejor tiempo {yellow}General{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
 	}
 	"Missed Global PB (Overall+Pro)"
 	{
@@ -510,6 +537,7 @@
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}Küresel en iyi süreni kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado tu mejor tiempo global {yellow}General{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
 	}
 	"Missed SR (Overall+Pro)"
 	{
@@ -520,6 +548,7 @@
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час рекорду сервера ({lightred}{time}{grey})."
 		"tr"		"{grey}Sunucu rekor süresini kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}서버 최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado el tiempo récord {yellow}General{grey}/{blue}PRO{grey} del servidor ({lightred}{time}{grey})."
 	}
 	"Missed WR (Overall+Pro)"
 	{
@@ -530,6 +559,7 @@
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Küresel rekoru kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
 		"ko"		"{grey}글로벌 최고 기록인 {yellow}전체{grey}/{blue}PRO{grey} 시간을 놓쳤습니다 ({lightred}{time}{grey})."
+		"es"		"{grey}Has fallado el tiempo récord {yellow}General{grey}/{blue}PRO{grey} global ({lightred}{time}{grey})."
 	}
 	
 	"Compare Command Usage"
@@ -540,6 +570,7 @@
 		"ua"		"{grey}Використання: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"tr"		"{grey}Kullanım: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"ko"		"{grey}사용법: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"es"		"{grey}Usa: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 	}
 	"Compare Disabled"
 	{
@@ -549,6 +580,7 @@
 		"ua"		"{grey}Порівняння проходжень вимкнено."
 		"tr"		"{grey}Koşu karşılaştırılması devre dışı bırakıldı."
 		"ko"		"{grey}주행 비교가 비활성화되었습니다."
+		"es"		"{grey}Comparación de carreras desactivada."
 	}
 	"Compare Server PB"
 	{
@@ -558,6 +590,7 @@
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим рекордом сервера."
 		"tr"		"{grey}Şimdi kendi koşunu sunucuda yaptığın en iyi koşu ile karşılaştıracaksın."
 		"ko"		"{grey}이제 주행 기록이 서버 개인 최고 기록과 비교됩니다."
+		"es"		"{grey}Ahora compararás tu carrera con tu mejor marca personal del servidor."
 	}
 	"Compare Global PB"
 	{
@@ -567,6 +600,7 @@
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим глобальним найкращим часом."
 		"tr"		"{grey}Şimdiki koşunu küresel kendi rekorunla karşılaştıracaksın."
 		"ko"		"{grey}이제 주행 기록이 글로벌 개인 최고 기록과 최대 비교됩니다."
+		"es"		"{grey}Ahora compararás tu carrera con tu mejor marca personal global."
 	}
 	"Compare Server Record"
 	{
@@ -576,6 +610,7 @@
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з рекордом сервера."
 		"tr"		"{grey}Şimdi koşunu sunucu rekoruyla karşılaştıracaksın."
 		"ko"		"{grey}이제 주행 기록이 서버 최고 기록과 최대 비교됩니다."
+		"es"		"{grey}Ahora compararás tu carrera con el récord del servidor."
 	}
 	"Compare World Record"
 	{
@@ -585,20 +620,24 @@
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження зі світовим рекордом."
 		"tr"		"{grey}Şimdi koşunu dünya rekoruyla karşılaştıracaksın."
 		"ko"		"{grey}이제 주행 기록이 세계 최고 기록과 최대 비교됩니다."
+		"es"		"{grey}Ahora compararás tu carrera con el récord mundial."
 	}
 	
   	"Request - Failed (Invalid Map)"
 	{
 		"en"		"{darkred}Failed to process current request. (Invalid map)"
+		"es"		"{darkred}Fallo al procesar la solicitud actual. (Mapa no válido)"
 	}
   	"Request - Failed (Generic)"
 	{
 		"en"		"{darkred}Failed to process current request."
+		"es"		"{darkred}Fallo al procesar la solicitud actual."
 	}
   	"Request - Failed (No Course in Current Map)"
 	{
 		"#format"	"map_name:s"
 		"en"		"{darkred}Failed to process current request. (No course exists in map {map_name})"
+		"es"		"{darkred}Fallo al procesar la solicitud actual. (No hay recorridos en el mapa {map_name})"
 	}
 
 }

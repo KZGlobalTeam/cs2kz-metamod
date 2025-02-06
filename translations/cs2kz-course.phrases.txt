@@ -8,6 +8,7 @@
 		"ua"		"{grey}У вас немає поточного курсу. Перевірте в консолі список доступних курсів!"
 		"tr"		"{grey}Şu an bir rotan yok. Mevcut rotaları görmek için konsola bak!"
 		"ko"		"{grey}현재 코스가 없습니다. 사용 가능한 코스 목록은 콘솔에서 확인하세요!"
+		"es"		"{grey}No tiene un recorrido actual. ¡Mire la consola para ver una lista de los recorridos disponibles!"
 	}
 	"Current Course"
 	{
@@ -18,6 +19,7 @@
 		"ua"		"{grey}Ваш поточний курс це {default}{course}{grey}. Перевірте в консолі список доступних курсів!"
 		"tr"		"{grey}Şuanki rotan {default}{course}{grey}.  Mevcut rotaları görmek için konsola bak!"
 		"ko"		"{grey}현재 코스는 {default}{course}{grey}입니다. 사용 가능한 코스 목록은 콘솔에서 확인하세요!"
+		"es"		"{grey}Su recorrido actual es {default}{course}{grey}. ¡Mire la consola para ver una lista de los recorridos disponibles!"
 	}
 	"Course List Header"
 	{
@@ -27,5 +29,6 @@
 		"ua"		"Список доступних курсів (використовуйте kz_r <назва курсу> для телепортації до курсу):"
 		"tr"		"Mevcut rotaların listesi için ( kz_r <course name> yazarak rotaya ışınlanabilirsin):"
 		"ko"		"사용 가능한 코스 목록 (코스로 텔레포트하려면 kz_r <코스 이름>을 사용하세요):"
+		"es"		"Lista de recorridos disponibles (usa kz_r <nombre del recorrido> para teleportarte a un recorrido):"
 	}
 }

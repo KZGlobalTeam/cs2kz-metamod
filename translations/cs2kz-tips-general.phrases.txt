@@ -10,7 +10,7 @@
 		"ua"	"{grey}Використовуйте {default}/help {grey}щоб побачити всі доступні KZ команди."
 		"tr"	"{grey}Kullan: {default}/help {grey}tüm KZ komutlarını görmek için."
 		"it"	"{grey}Scrivi {default}/help {grey}per vedere tutti i comandi disponibili per il KZ."
-		"es"	"{grey}Use {default}/help {grey}para ver todos los comandos de KZ disponibles."
+		"es"	"{grey}Usa {default}/help {grey}para ver todos los comandos de KZ disponibles."
 		"de"	"{grey}Verwende {default}/help {grey}, um alle verfügbaren KZ-Befehle anzuzeigen."
 		"ko"	"{grey}모든 사용 가능한 KZ 명령어를 보려면 {default}/help {grey}를 사용하세요."
 	}
@@ -24,7 +24,7 @@
 		"ua"	"{grey}Ви можете змінити KZ режим написавши його абревіатуру. Наприклад, напишіть в чат {default}/ckz{grey} щоб переключитися на {purple}Classic {grey}режим або {default}/vnl {grey}аби переключитися на {purple}Vanilla {grey}режим."
 		"tr"	"{grey}Kısaltmasını kullanarak aktif modu değiştirebilirsin. Örnek olarak {default}/ckz{grey} yazarsan {purple}Classic  {grey}moda veya {default}/vnl {grey}yazarsan {purple}Vanilla {grey}moduna geçebilirsin."
 		"it"	"{grey}Puoi cambiare modalità scrivendone l'abbreviazione. Ad esempio scrivi {default}/ckz{grey} per cambiare alla modalità {purple}Classic {grey}oppure {default}/vnl {grey}per cambiare alla modalità {purple}Vanilla{grey}."
-		"es"	"{grey}Puede cambiar a un modo escribiendo su abreviación. Por ejemplo, escriba {default}/ckz{grey} para cambiar al modo {purple}Clásico {grey} o {default}/vnl {grey}para cambiar al modo {purple}Vanilla {grey}."
+		"es"	"{grey}Puedes cambiar a un modo escribiendo su abreviación. Por ejemplo, escribe {default}/ckz{grey} para cambiar al modo {purple}Clásico {grey} o {default}/vnl {grey}para cambiar al modo {purple}Vanilla {grey}."
 		"de"	"{grey}Du kannst zu einem Modus wechseln, indem du seine Abkürzung eingibst. Zum Beispiel, tippe {default}/ckz{grey}, um in den {purple}Classic {grey}Modus zu wechseln, oder {default}/vnl {grey}, um in den {purple}Vanilla {grey}Modus zu wechseln."
 		"ko"	"{grey}모드의 약어를 입력하여 모드를 전환할 수 있습니다. 예를 들어, {default}/ckz{grey}를 입력하면 {purple}클래식{grey} 모드로 전환되고, {default}/vnl{grey}을 입력하면 {purple}바닐라{grey} 모드로 전환됩니다."
 	}
@@ -38,7 +38,7 @@
 		"ua"	"{grey}Ви можете повернутися до своєї стартової позиції написавши в чат {default}/restart{grey}."
 		"tr"	"{grey}Başlangıç noktasına yazarak gidebilirsin: {default}/restart{grey}."
 		"it"	"{grey}Puoi teleportarti all'inizio della mappa con {default}/restart{grey}."
-		"es"	"{grey}Puede teleportarse a su posición inicial usando {default}/restart{grey}."
+		"es"	"{grey}Puedes teleportarte a su posición inicial usando {default}/restart{grey}."
 		"de"	"{grey}Du kannst mit {default}/restart{grey} zu deiner Startposition teleportieren."
 		"ko"	"{grey}시작 위치로 텔레포트하려면 {default}/restart{grey}를 사용하세요."
 	}
@@ -52,7 +52,7 @@
 		"ua"	"{grey}Ви можете написати в чат{default}/setstartpos {grey}та {default}/clearstartpos {grey}щоб керувати своєю стартовою позицією."
 		"tr"	"{grey}{default}/setstartpos {grey} ve {default}/clearstartpos {grey}kullanarak başlangıç noktanı kontrol edebilirsin."
 		"it"	"{grey}Puoi scrivere {default}/setstartpos {grey}e {default}/clearstartpos {grey}per modificare la posizione del teleport di inizio mappa."
-		"es"	"{grey}Puede sar {default}/setstartpos {grey}y {default}/clearstartpos {grey}para controlar la posición de su teleporte de inicio."
+		"es"	"{grey}Puedes usar {default}/setstartpos {grey}y {default}/clearstartpos {grey}para controlar la posición de tu teleporte de inicio."
 		"de"	"{grey}Du kannst {default}/setstartpos {grey}und {default}/clearstartpos {grey}verwenden, um deine Startteleport-Position zu steuern."
 		"ko"	"{grey}시작 텔레포트 위치를 제어하려면 {default}/setstartpos{grey}와 {default}/clearstartpos{grey}를 사용하세요."
 	}
@@ -66,7 +66,7 @@
 		"ua"	"{grey}Слідкуйте за собою. Робіть регулярні перерви, щоб розминатись і підтримувати водний баланс."
 		"tr"	"{grey}Kendine iyi bak. Ara ver gerinmeyi ve su içmeyi unutma"
 		"it"	"{grey}Prenditi cura di te stesso. Fai pause regolari per sgranchirti, riposare gli occhi e bere acqua."
-		"es"	"{grey}Cuídese. Tome pausas regulares para estirarse y manténgase hidratado."
+		"es"	"{grey}Cuídate. Toma pausas regulares para estirarte y mantenerte hidratado."
 		"de"	"{grey}Pass auf dich auf. Mach regelmäßige Pausen, um dich zu dehnen und genug zu trinken."
 		"ko"	"{grey}정기적으로 스트레칭하고 수분을 충분히 섭취하세요."
 	}
@@ -80,7 +80,7 @@
 		"ua"	"{grey}Якщо ви не хочете бачити такі поради в чаті, то вимкніть їх написавши {default}/tips{grey}."
 		"tr"	"{grey}Sohbetteki önerilerin çıkmasını istemiyorsan veya ihtiyacın yoksa bu komutla kapatabilirsin {default}/tips{grey}."
 		"it"	"{grey}Non vuoi suggerimenti in chat? Puoi cambiarne la visibilità con {default}/tips{grey}."
-		"es"	"{grey}¿No necesita consejos como estos apareciendo en su chat? Puede alternarlos con {default}/tips{grey}."
+		"es"	"{grey}¿No necesitas consejos como éstos apareciendo en tu chat? Puedes alternarlos con {default}/tips{grey}."
 		"de"	"{grey}Brauchst du solche Tipps nicht, die im Chat angezeigt werden? Du kannst sie mit {default}/tips{grey} ein- oder ausschalten."
 		"ko"	"{grey}이런 팁이 채팅에 표시되지 않게 하려면 {default}/tips{grey}로 전환할 수 있습니다."
 	}
@@ -94,7 +94,7 @@
 		"ua"	"{grey}Ви можете прив'язати команди до кнопок для легшого доступу, наприклад: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"tr"	"{grey}Komutları kolaylık açısından farklı tuşlara atayabilirsin örnek olarak: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"it"	"{grey}Puoi assegnare diverse funzioni ai tasti, ad esempio: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
-		"es"	"{grey}Puede asignar comandos a teclas para un acceso fácil, por ejemplo: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
+		"es"	"{grey}Puedes asignar comandos a teclas para un acceso fácil, por ejemplo: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"de"	"{grey}Du kannst Befehle Tasten zuweisen, um einfachen Zugriff zu haben, zum Beispiel: {default}bind {purple}<key1> {default}\"kz_cp\"; bind {purple}<key2> {default}\"kz_tp\"."
 		"ko"	"{grey}명령어를 키에 바인딩하여 쉽게 접근할 수 있습니다. 예를 들어: {default}bind {purple}<key1> {default}"kz_cp"; bind {purple}<key2> {default}"kz_tp"."
 	}
@@ -136,7 +136,7 @@
 		"ua"	"{grey}Повідомляйте про проблеми, пов'язані з CS2KZ, на нашому GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"tr"	"{grey}CS2KZ ile ilgili sıkıntıları Github sayfamıza bildirin: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"it"	"{grey}Segnala i problemi che incontri con CS2KZ sul nostro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
-		"es"	"{grey}Reporte problemas relacionados al CS2KZ en nuestro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"es"	"{grey}Reporta problemas relacionados al CS2KZ en nuestro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"de"	"{grey}Melde Probleme im Zusammenhang mit CS2KZ auf unserem GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"ko"	"{grey}CS2KZ 관련 문제를 GitHub에서 신고하세요: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
@@ -150,7 +150,7 @@
 		"ua"	"{grey}Ви можете керувати тим, які стрибки будуть відтворювати звуковий ефект, за допомогою {default}/jssound{grey}."
 		"tr"	"{grey}Hangi zıplama istatistiklerinin ses efekti çalmasını istediğinizi değiştirmek için {default}/jssound{grey}."
 		"it"	"{grey}Puoi cambiare quali salti riproducono un suono {default}/jssound{grey}."
-		"es"	"{grey}Puede controlar qué estadísticas de salto reproducen un sonido usando {default}/jssound{grey}."
+		"es"	"{grey}Puedes controlar qué estadísticas de salto reproducen un sonido usando {default}/jssound{grey}."
 		"de"	"{grey}Du kannst festlegen, welche Jumpstats einen Sound abspielen, indem du {default}/jssound{grey} verwendest."
 		"ko"	"{grey}어떤 점프 통계 사운드를 제어하려면 {default}/jssound{grey}를 사용하세요."
 	}
@@ -164,7 +164,7 @@
 		"ua"	"{grey}Напишіть в чат {default}/jsbroadcast {grey}щоб змінити типи стрибків інших гравців котрі будуть видні в чаті."
 		"tr"	"{grey} {default}/jsbroadcast {grey}kullanarak diğer oyuncuların zıplama istatistiklerinin hangilerinin senin sohbetinde yazmasını istediğini seçebilirsin."
 		"it"	"{grey}Scrivi {default}/jsbroadcast {grey}per cambiare quali salti di altri giocatori ti vengono mostrati."
-		"es"	"{grey}Use {default}/jsbroadcast {grey}para cambiar qué estadísticas de salto de otros jugadores se le muestran a usted."
+		"es"	"{grey}Usa {default}/jsbroadcast {grey}para cambiar qué estadísticas de salto de otros jugadores se te muestran."
 		"de"	"{grey}Verwende {default}/jsbroadcast {grey}, um zu ändern, welche Jumpstats von anderen Spielern dir angezeigt werden."
 		"ko"	"{grey}다른 플레이어의 점프 통계가 표시되는 방식을 변경하려면 {default}/jsbroadcast{grey}를 사용하세요."
 	}

@@ -13,7 +13,7 @@
 		"ua"		"{grey}Ви поставили чекпоінт (#{default}{checkpoint_count}{grey})."
 		"tr"		"{grey}Kontrol noktası oluşturdun (#{default}{checkpoint_count}{grey})."
 		"it"		"{grey}Hai creato un checkpoint (#{default}{checkpoint_count}{grey})."
-		"es"		"{grey}Ha creado un checkpoint (#{default}{checkpoint_count}{grey})."
+		"es"		"{grey}Has creado un checkpoint (#{default}{checkpoint_count}{grey})."
 		"de"		"{grey}Du hast ein Checkpoint gesetzt (#{default}{checkpoint_count}{grey})."
 		"ko"		"{grey}체크포인트를 만들었습니다 (#{default}{checkpoint_count}{grey})."
 	}
@@ -42,7 +42,7 @@
 		"ua"		"{darkred}Ви не можете поставити чекпоінт у повітрі."
 		"tr"		"{darkred}Havada kontrol noktası oluşturamazsın."
 		"it"		"{darkred}Non puoi creare un checkpoint in volo."
-		"es"		"{darkred}No puede crear un checkpoint en el aire."
+		"es"		"{darkred}No puedes crear un checkpoint en el aire."
 		"de"		"{darkred}Du kannst kein Checkpoint in der Luft machen."
 		"ko"		"{darkred}공중에서는 체크포인트를 만들 수 없습니다."
 	}
@@ -57,7 +57,7 @@
 		"ua"		"{darkred}Ви не можете поставити чекпоінт одразу після приземлення."
 		"tr"		"{darkred}Yeni indiğin için kontrol noktası oluşturamazsın."
 		"it"		"{darkred}Non puoi creare un checkpoint quando sei appena atterrato."
-		"es"		"{darkred}No puede crear un checkpoint porque acaba de aterrizar."
+		"es"		"{darkred}No puedes crear un checkpoint porque acabas de aterrizar."
 		"de"		"{darkred}Du kannst kein Checkpoint setzen weil du gerade gelanded bist."
 		"ko"		"{darkred}방금 착지했기 때문에 체크포인트를 만들 수 없습니다."
 	}
@@ -71,7 +71,7 @@
 		"ua"		"{darkred}Ви не можете поставити чекпоінт, так як вони вимкнені у цій зоні."
 		"tr"		"{darkred}Yasaklı bölge olduğu için burada kontrol noktası oluşturamazsın."
 		"it"		"{darkred}La creazione di checkpoint è disabilitata in questa zona."
-		"es"		"{darkred}No puede usar checkpoint porque los checkpoints están desactivados en esta zona."
+		"es"		"{darkred}No puedes usar checkpoint porque los checkpoints están desactivados en esta zona."
 		"de"		"{darkred}Du kannst in diesen Bereich kein Checkpoint setzen."
 		"ko"		"{darkred}이 구역에서는 체크포인트가 비활성화되어 있어 체크포인트를 만들 수 없습니다."
 	}
@@ -86,7 +86,7 @@
 		"ua"		"{darkred}Ви не можете телепортуватися, тому що у вас відсутні чекпоінти."
 		"tr"		"{darkred}Kontrol noktası oluşturmadığın için ışınlamazsın."
 		"it"		"{darkred}Non puoi teleportarti senza prima aver creato un checkpoint."
-		"es"		"{darkred}No puede teleportarse porque no ha creado un checkpoint."
+		"es"		"{darkred}No puedes teleportarte porque no has creado un checkpoint."
 		"de"		"{darkred}Du kannst dich nicht teleportieren, da Du keinen Checkpoint festgelegt hast."
 		"ko"		"{darkred}체크포인트를 설정하지 않았기 때문에 텔레포트할 수 없습니다."
 	}
@@ -101,7 +101,7 @@
 		"ua"		"{darkred}Ви не можете телепортуватися на свої чекпоінти тут."
 		"tr"		"{darkred}Bu bölgede kontrol noktalarına ışınlamazsın."
 		"it"		"{darkred}Da qui non puoi teleportarti ai tuoi checkpoint."
-		"es"		"{darkred}No puede teleportarse a sus checkpoints en esta zona."
+		"es"		"{darkred}No puedes teleportarte a tus checkpoints en esta zona."
 		"de"		"{darkred}Du kannst dich in diesem Bereich nicht zu Deinem Checkpoint teleportieren."
 		"ko"		"{darkred}이 구역에서는 체크포인트로 텔레포트할 수 없습니다."
 	}
@@ -116,7 +116,7 @@
 		"ua"		"{darkred}У вас немає чекпоінтів до яких можна повернутися."
 		"tr"		"{darkred}Geri dönecek bir kontrol noktanız yok."
 		"it"		"{darkred}Non ci sono checkpoint ai quali tornare indietro."
-		"es"		"{darkred}No tiene checkpoints a los que volver."
+		"es"		"{darkred}No tienes checkpoints a los que volver."
 		"de"		"{darkred}Du hast keine Checkpoints, zu denen Du zurückkehren kannst."
 		"ko"		"{darkred}돌아갈 체크포인트가 없습니다."
 	}
@@ -131,7 +131,7 @@
 		"ua"		"{darkred}У вас немає чекпоінтів до яких можна телепортуватися."
 		"tr"		"{darkred}İleri gidecek bir kontrol noktanız yok."
 		"it"		"{darkred}Non ci sono checkpoint ai quali andare avanti."
-		"es"		"{darkred}No tiene checkpoints a los que avanzar."
+		"es"		"{darkred}No tienes checkpoints a los que avanzar."
 		"de"		"{darkred}Es gibt keine Checkpoints, zu denen Du weitergehen kannst."
 		"ko"		"{darkred}앞으로 갈 체크포인트가 없습니다."
 	}
@@ -146,7 +146,7 @@
 		"ua"		"{darkred}У вас немає телепортів, які можна скасувати."
 		"tr"		"{darkred}Geri alamazsın çünkü geri alınabilecek ışınlanma noktası yok."
 		"it"		"{darkred}Non ci sono teleport da annullare."
-		"es"		"{darkred}No puede deshacer porque no hay teleportes para deshacer."
+		"es"		"{darkred}No hay teleportes para deshacer."
 		"de"		"{darkred}Du kannst nicht zurückkehren, da es keine Teleports gibt zum zurückkehren."
 		"ko"		"{darkred}되돌릴 텔레포트가 없기 때문에 취소할 수 없습니다."
 	}
@@ -161,7 +161,7 @@
 		"ua"		"{darkred}Ви не можете скасувати телепорт, тому що зробили його у повітрі."
 		"tr"		"{darkred}Havada ışınlandığın için geri alamazsın."
 		"it"		"{darkred}Non puoi annullare un teleport fatto in volo."
-		"es"		"{darkred}No puede deshacer porque se ha teleportado en el aire."
+		"es"		"{darkred}No puedes deshacer porque te has teleportado en el aire."
 		"de"		"{darkred}Du kannst nicht zurückkehren, weil du dich mitten in der Luft teleportiert hast."
 		"ko"		"{darkred}공중에서 텔레포트했기 때문에 되돌릴 수 없습니다."
 	}
@@ -176,7 +176,7 @@
 		"ua"		"{darkred}Ви не можете скасувати свій телепорт одразу після приземлення."
 		"tr"		"{darkred}Yeni indiğin için geri alamazsın."
 		"it"		"{darkred}Non puoi annullare un teleport quando sei appena atterrato."
-		"es"		"{darkred}No puede deshacer porque acaba de aterrizar."
+		"es"		"{darkred}No puedes deshacer porque acabas de aterrizar."
 		"de"		"{darkred}Du kannst nicht zurückkehren, da Du gerade gelandet sind."
 		"ko"		"{darkred}방금 착지했기 때문에 되돌릴 수 없습니다."
 	}
@@ -190,7 +190,7 @@
 		"ua"		"{darkred}Ви не можете скасувати свій телепорт, так як телепортувалися будучи в античекпоінт зоні."
 		"tr"		"{darkred}Geri alamazsın çünkü anti-kontrol noktasındayken ışınlandın."
 		"it"		"{darkred}Non puoi annullare un teleport fatto da una zona anti-checkpoint."
-		"es"		"{darkred}No puede deshacer porque se ha teleportado mientras estaba en una zona anti-checkpoint."
+		"es"		"{darkred}No puedes deshacer porque te has teleportado mientras estabas en una zona anti-checkpoint."
 		"de"		"{darkred}Du kannst nicht zurückkehren, da Du sich in einer Anti-Checkpoint-Zone teleportiert hast."
 		"ko"		"{darkred}체크포인트 비활성화 구역에서 텔레포트했기 때문에 되돌릴 수 없습니다."
 	}
@@ -204,7 +204,7 @@
 		"ua"		"{grey}Не вдалося встановити власну стартову позицію!"
 		"tr"		"{grey}Başlangıç noktası oluşturulamadı!"
 		"it"		"{grey}Impossibile creare la zona di partenza custom!"
-		"es"		"{grey}¡No se ha podido establecer su posición de inicio personalizada!"
+		"es"		"{grey}¡No se pudo establecer tu posición de inicio personalizada!"
 		"de"		"{grey}Deine custom Startposition konnte nicht festgelegt werden!"
 		"ko"		"{grey}사용자 지정 시작 위치를 설정하지 못했습니다!"
 	}
@@ -219,7 +219,7 @@
 		"ua"		"{grey}Ви встановили власну стартову позицію."
 		"tr"		"{grey}Başlangıç noktası oluşturuldu."
 		"it"		"{grey}Zona di partenza custom creata."
-		"es"		"{grey}Ha establecido su posición de inicio personalizada."
+		"es"		"{grey}Has establecido tu posición de inicio personalizada."
 		"de"		"{grey}Du hast deine custom Startposition festgelegt."
 		"ko"		"{grey}사용자 지정 시작 위치를 설정했습니다."
 	}
@@ -234,7 +234,7 @@
 		"ua"		"{grey}Ви очистили власну стартову позицію."
 		"tr"		"{grey}Başlangıç noktası temizlendi."
 		"it"		"{grey}Zona di partenza custom eliminata."
-		"es"		"{grey}Ha eliminado su posición de inicio personalizada."
+		"es"		"{grey}Has eliminado tu posición de inicio personalizada."
 		"de"		"{grey}Du hast deine Startposition gelöscht."
 		"ko"		"{grey}사용자 지정 시작 위치를 지웠습니다."
 	}
@@ -246,5 +246,6 @@
 		"ua"		"{darkred}Ваші чекпоінти були стерті мапою."
 		"tr"		"{darkred}Kontrol noktaları harita tarafından temizlendi."
 		"ko"		"{darkred}맵에서 체크포인트를 초기화했습니다."
+		"es"		"{darkred}El mapa ha limpiado tus checkpoints."
 	}
 }

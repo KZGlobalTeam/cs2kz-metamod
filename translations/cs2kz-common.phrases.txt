@@ -8,6 +8,7 @@
 		"ua"	"{darkred}Увага{grey}: Ви не автентифіковані у Steam. Можливо, ваше проходження не буде зараховано. Напишіть {default}!pc{grey} в чаті, щоб перевірити поточний стан автентифікації."
 		"tr"	"{darkred}Dikkat{grey}: Steam kimliğin doğrulanamadı.{default}!pc{grey} yazarak kimlik doğrulama statünü öğrenebilirsin."
 		"ko"	"{darkred}경고{grey}: 현재 Steam에 인증되지 않았습니다. 주행 기록이 저장되지 않을 수 있습니다. {default}!pc{grey}를 입력하여 현재 인증 상태를 확인하세요."
+		"es"	"{darkred}Atención{grey}: Actualmente no estás autenticado con Steam. Tu carrera podría no guardarse. Escribe {default}!pc{grey} para comprobar tu estado de autenticación actual."
 	}
 	"Player Authenticated (Steam)"
 	{
@@ -18,6 +19,7 @@
 		"ua"		"{grey}Гравець {default}{player}{grey} автентифікований у Steam."
 		"tr"		"{default}{player}{grey} isimli oyuncunun kimliği Steam ile doğrulandı"
 		"ko"		"{grey}플레이어 {default}{player}{grey}님은 Steam에 인증되었습니다."
+		"es"		"{grey}El jugador {default}{player}{grey} está autenticado con Steam."
 	}
 	"Player Not Authenticated (Steam)"
 	{
@@ -28,6 +30,7 @@
 		"ua"		"{grey}Гравець {default}{player}{grey} наразі {yellow}не{grey} автентифікований у Steam."
 		"tr"		"{default}{player}{grey} isimli oyuncunun kimliği Steam ile doğrulanamadı"
 		"ko"		"{grey}플레이어 {default}{player}{grey}님은 현재 {yellow}Steam에 인증되지 않았습니다{grey}."
+		"es"		"{grey}El jugador {default}{player}{grey} está actualmente {yellow}no{grey} autenticado con Steam."
 	}
 	"Error Message (Player Not Found)"
 	{
