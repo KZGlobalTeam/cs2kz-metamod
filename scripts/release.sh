@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Paths for Linux artifacts
-CS2KZ_SO="$GITHUB_WORKSPACE/artifacts/cs2kz-linux/addons/cs2kz/bin/linuxsteamrt64/cs2kz.so"
-LINUX_MODES_DIR="$GITHUB_WORKSPACE/artifacts/cs2kz-linux/addons/cs2kz/modes"
-LINUX_STYLES_DIR="$GITHUB_WORKSPACE/artifacts/cs2kz-linux/addons/cs2kz/styles"
+CS2KZ_SO="/home/runner/artifacts/cs2kz-linux/addons/cs2kz/bin/linuxsteamrt64/cs2kz.so"
+LINUX_MODES_DIR="/home/runner/artifacts/cs2kz-linux/addons/cs2kz/modes"
+LINUX_STYLES_DIR="/home/runner/artifacts/cs2kz-linux/addons/cs2kz/styles"
 
 # Paths for Windows artifacts
-CS2KZ_DLL="$GITHUB_WORKSPACE/artifacts/cs2kz-windows/addons/cs2kz/bin/win64/cs2kz.dll"
-WINDOWS_MODES_DIR="$GITHUB_WORKSPACE/artifacts/cs2kz-windows/addons/cs2kz/modes"
-WINDOWS_STYLES_DIR="$GITHUB_WORKSPACE/artifacts/cs2kz-windows/addons/cs2kz/styles"
+CS2KZ_DLL="/home/runner/artifacts/cs2kz-windows/addons/cs2kz/bin/win64/cs2kz.dll"
+WINDOWS_MODES_DIR="/home/runner/artifacts/cs2kz-windows/addons/cs2kz/modes"
+WINDOWS_STYLES_DIR="/home/runner/artifacts/cs2kz-windows/addons/cs2kz/styles"
 
 # Placeholder values for version, git_revision, and is_cutoff
 VERSION="$1"
