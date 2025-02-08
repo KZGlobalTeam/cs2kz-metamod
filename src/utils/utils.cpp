@@ -667,3 +667,21 @@ u32 utils::GetServerVersion()
 {
 	return serverVersion;
 }
+
+bool utils::ParseSteamID2(std::string_view steamID, u64 &out)
+{
+	if (steamID.size() <= 10)
+	{
+		return false;
+	}
+
+	// clang-format off
+
+	out = 0b0000000100010000000000000000000100000000000000000000000000000000
+		| (atoll(&steamID[10]) << 1)
+		| atoll(&steamID[8]);
+
+	// clang-format on
+
+	return true;
+}

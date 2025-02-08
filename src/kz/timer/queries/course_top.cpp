@@ -1,41 +1,60 @@
 #include "base_request.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/db/kz_db.h"
+#include "kz/global/kz_global.h"
 
 #include "utils/simplecmds.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
-
+// clang-format off
 #define COURSE_TOP_TABLE_KEY "Course Top - Table Name (Server Overall)"
-static_global const char *columnKeysLocal[] = {"#",
-											   "Course Top Header - Player Alias",
-											   "Course Top Header - Time",
-											   "Course Top Header - Teleports",
-											   "Course Top Header - SteamID64",
-											   "Course Top Header - Run ID"};
+static_global const char *columnKeysLocal[] = {
+	"#",
+	"Course Top Header - Player Alias",
+	"Course Top Header - Time",
+	"Course Top Header - Teleports",
+	"Course Top Header - SteamID64",
+	"Course Top Header - Run ID"
+};
 
 #define COURSE_TOP_PRO_TABLE_KEY "Course Top - Table Name (Server Pro)"
-static_global const char *columnKeysLocalPro[] = {"#", "Course Top Header - Player Alias", "Course Top Header - Time",
-												  "Course Top Header - SteamID64", "Course Top Header - Run ID"};
+static_global const char *columnKeysLocalPro[] = {
+	"#",
+	"Course Top Header - Player Alias",
+	"Course Top Header - Time",
+	"Course Top Header - SteamID64",
+	"Course Top Header - Run ID"
+};
 
 #define COURSE_TOP_TABLE_KEY_GLOBAL "Course Top - Table Name (Global Overall)"
-static_global const char *columnKeysGlobal[] = {"#",
-												"Course Top Header - Player Alias",
-												"Course Top Header - Time",
-												"Course Top Header - Teleports",
-												"Course Top Header - SteamID64",
-												"Course Top Header - Points"};
+static_global const char *columnKeysGlobal[] = {
+	"#",
+	"Course Top Header - Player Alias",
+	"Course Top Header - Time",
+	"Course Top Header - Teleports",
+	"Course Top Header - SteamID64",
+	"Course Top Header - Points",
+	"Course Top Header - Run ID"
+};
 
 #define COURSE_TOP_PRO_TABLE_KEY_GLOBAL "Course Top - Table Name (Global Pro)"
-static_global const char *columnKeysGlobalPro[] = {"#", "Course Top Header - Player Alias", "Course Top Header - Time",
-												   "Course Top Header - SteamID64", "Course Top Header - Points"};
+static_global const char *columnKeysGlobalPro[] = {
+	"#",
+	"Course Top Header - Player Alias",
+	"Course Top Header - Time",
+	"Course Top Header - SteamID64",
+	"Course Top Header - Points",
+	"Course Top Header - Run ID",
+};
+
+// clang-format on
 
 struct CourseTopRequest : public BaseRequest
 {
 	using BaseRequest::BaseRequest;
 
 	static constexpr u64 ctopFeatures =
-		RequestFeature::Course | RequestFeature::Map | RequestFeature::Mode | RequestFeature::Offset | RequestFeature::Limit | RequestFeature::Style;
+		RequestFeature::Course | RequestFeature::Map | RequestFeature::Mode | RequestFeature::Offset | RequestFeature::Limit;
 
 	struct RunStats
 	{
@@ -69,6 +88,13 @@ struct CourseTopRequest : public BaseRequest
 		{
 			CUtlString fmt;
 			fmt.Format("%llu", steamid64);
+			return fmt;
+		}
+
+		CUtlString GetPoints()
+		{
+			CUtlString fmt;
+			fmt.Format("%llu", points);
 			return fmt;
 		}
 	};
@@ -119,11 +145,10 @@ struct CourseTopRequest : public BaseRequest
 					return;
 				}
 
-				req->localStatus = ResponseStatus::DISABLED;
+				req->localStatus = ResponseStatus::RECEIVED;
 				ISQLResult *result = queries[0]->GetResultSet();
 				if (result && result->GetRowCount() > 0)
 				{
-					req->localStatus = ResponseStatus::RECEIVED;
 					while (result->FetchRow())
 					{
 						req->srData.overallData.AddToTail({(u64)result->GetInt64(0), result->GetString(2), (u64)result->GetInt64(4),
@@ -133,7 +158,6 @@ struct CourseTopRequest : public BaseRequest
 
 				if ((result = queries[1]->GetResultSet()) && result->GetRowCount() > 0)
 				{
-					req->localStatus = ResponseStatus::RECEIVED;
 					while (result->FetchRow())
 					{
 						req->srData.proData.AddToTail(
@@ -162,7 +186,58 @@ struct CourseTopRequest : public BaseRequest
 		{
 			return;
 		}
-		// TODO
+
+		if (this->globalStatus == ResponseStatus::ENABLED)
+		{
+			auto callback = [uid = this->uid](const KZ::API::events::CourseTop &ctops)
+			{
+				CourseTopRequest *req = (CourseTopRequest *)CourseTopRequest::Find(uid);
+				if (!req)
+				{
+					return;
+				}
+
+				if (ctops.map.has_value() && ctops.course.has_value())
+				{
+					req->mapName = ctops.map->name.c_str();
+					req->courseName = ctops.course->name.c_str();
+					req->globalStatus = ResponseStatus::RECEIVED;
+				}
+				else
+				{
+					req->globalStatus = ResponseStatus::DISABLED;
+					return;
+				}
+
+				for (const auto &record : ctops.overall)
+				{
+					u64 steamID64 = 0;
+
+					if (!utils::ParseSteamID2(record.player.id.c_str(), steamID64))
+					{
+						META_CONPRINTF("[KZ] Failed to parse SteamID :(\n");
+						continue;
+					}
+
+					req->wrData.overallData.AddToTail(
+						{record.id, record.player.name.c_str(), record.teleports, record.time, steamID64, (u64)floor(record.nubPoints)});
+				}
+				for (const auto &record : ctops.pro)
+				{
+					u64 steamID64 = 0;
+
+					if (!utils::ParseSteamID2(record.player.id.c_str(), steamID64))
+					{
+						META_CONPRINTF("[KZ] Failed to parse SteamID :(\n");
+						continue;
+					}
+
+					req->wrData.proData.AddToTail({record.id, record.player.name.c_str(), 0, record.time, steamID64, (u64)floor(record.proPoints)});
+				}
+			};
+			this->globalStatus = ResponseStatus::PENDING;
+			KZGlobalService::QueryCourseTop(this->mapName, this->courseName, this->apiMode, this->limit, this->offset, callback);
+		}
 	}
 
 	virtual void Reply()
@@ -180,19 +255,54 @@ struct CourseTopRequest : public BaseRequest
 		}
 
 		player->languageService->PrintChat(true, false, "Course Top - Check Console");
-		if (this->globalStatus == ResponseStatus::RECEIVED)
-		{
-			this->ReplyGlobal();
-		}
 		if (this->localStatus == ResponseStatus::RECEIVED)
 		{
 			this->ReplyLocal();
+		}
+		if (this->globalStatus == ResponseStatus::RECEIVED)
+		{
+			this->ReplyGlobal();
 		}
 	}
 
 	void ReplyGlobal()
 	{
-		// TODO
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		CUtlString headers[Q_ARRAYSIZE(columnKeysGlobal)];
+		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysGlobal); i++)
+		{
+			headers[i] = player->languageService->PrepareMessage(columnKeysGlobal[i]).c_str();
+		}
+		CUtlString headersPro[Q_ARRAYSIZE(columnKeysGlobalPro)];
+		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysGlobalPro); i++)
+		{
+			headersPro[i] = player->languageService->PrepareMessage(columnKeysGlobalPro[i]).c_str();
+		}
+		utils::DualTable<Q_ARRAYSIZE(columnKeysGlobal), Q_ARRAYSIZE(columnKeysGlobalPro)> dualTable(
+			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers,
+			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(),
+			headersPro);
+		CUtlString rank;
+		FOR_EACH_VEC(wrData.overallData, i)
+		{
+			rank.Format("%llu", this->offset + i + 1);
+			RunStats stats = wrData.overallData[i];
+			dualTable.left.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetPoints(),
+								  stats.GetRunID());
+		}
+		FOR_EACH_VEC(wrData.proData, i)
+		{
+			rank.Format("%llu", this->offset + i + 1);
+			RunStats stats = wrData.proData[i];
+			dualTable.right.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetSteamID64(), stats.GetPoints(), stats.GetRunID());
+		}
+		player->PrintConsole(false, false, dualTable.GetTitle());
+		player->PrintConsole(false, false, dualTable.GetHeader());
+		player->PrintConsole(false, false, dualTable.GetSeparator());
+		for (u32 i = 0; i < dualTable.GetNumEntries(); i++)
+		{
+			player->PrintConsole(false, false, dualTable.GetLine(i));
+		}
 	}
 
 	void ReplyLocal()
@@ -214,13 +324,13 @@ struct CourseTopRequest : public BaseRequest
 		CUtlString rank;
 		FOR_EACH_VEC(srData.overallData, i)
 		{
-			rank.Format("%i", i + 1);
+			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = srData.overallData[i];
 			dualTable.left.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetRunID());
 		}
 		FOR_EACH_VEC(srData.proData, i)
 		{
-			rank.Format("%i", i + 1);
+			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = srData.proData[i];
 			dualTable.right.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetSteamID64(), stats.GetRunID());
 		}

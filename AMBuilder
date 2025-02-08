@@ -16,6 +16,7 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket'),
   ]
 
   PROTOS = [
@@ -85,6 +86,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'http.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'player', 'player_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'player', 'player.cpp'),
@@ -124,6 +126,9 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_styles.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'commands.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'enforcer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'api', 'maps.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
 
@@ -148,7 +153,7 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'telemetry', 'kz_telemetry.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'announce_queue.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'announce.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'base_request.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'course_top.cpp'),
@@ -161,6 +166,12 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'kz_trigger.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'mapping_api.cpp'),
   ]
+
+  ws_dir = os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket', 'ixwebsocket')
+
+  for file in os.listdir(ws_dir):
+    if file.endswith('.cpp'):
+      binary.sources.append(os.path.join(ws_dir, file))
 
   binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = PROTOS)]
 

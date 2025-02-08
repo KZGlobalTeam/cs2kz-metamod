@@ -1,6 +1,7 @@
 #include "base_request.h"
 #include "kz/db/kz_db.h"
 #include "kz/course/kz_course.h"
+#include "kz/global/kz_global.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
@@ -38,20 +39,10 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 	}
 	this->localStatus = (queryLocal && KZDatabaseService::IsReady()) ? ResponseStatus::ENABLED : ResponseStatus::DISABLED;
 
-	// TODO: check global status here
-	this->globalStatus = ResponseStatus::DISABLED;
+	this->globalStatus = (queryGlobal && KZGlobalService::IsConnected() ? ResponseStatus::ENABLED : ResponseStatus::DISABLED);
 
 	KeyValues3 *kv = NULL;
 
-	if (this->HasFeature(RequestFeature::Player))
-	{
-		kv = params.FindMember("player");
-		if (!kv)
-		{
-			kv = params.FindMember("p");
-		}
-		this->SetupPlayer(kv ? kv->GetString() : "");
-	}
 	if (this->HasFeature(RequestFeature::Map))
 	{
 		kv = params.FindMember("map");
@@ -94,6 +85,15 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 	if (this->HasFeature(RequestFeature::Style) && ((kv = params.FindMember("style")) || (kv = params.FindMember("s"))))
 	{
 		this->SetupStyles(kv->GetString());
+	}
+	if (this->HasFeature(RequestFeature::Player))
+	{
+		kv = params.FindMember("player");
+		if (!kv)
+		{
+			kv = params.FindMember("p");
+		}
+		this->SetupPlayer(kv ? kv->GetString() : "");
 	}
 	if (localStatus != ResponseStatus::ENABLED && globalStatus != ResponseStatus::ENABLED)
 	{
@@ -290,6 +290,10 @@ void BaseRequest::SetupPlayer(CUtlString playerName)
 					req->targetSteamID64 = result->GetInt64(0);
 					req->targetPlayerName = result->GetString(1);
 				}
+				else if (req->globalStatus == ResponseStatus::ENABLED)
+				{
+					req->requestingGlobalPlayer = true;
+				}
 				else
 				{
 					req->localStatus = ResponseStatus::DISABLED;
@@ -303,7 +307,14 @@ void BaseRequest::SetupPlayer(CUtlString playerName)
 			BaseRequest *req = BaseRequest::Find(uid);
 			if (req)
 			{
-				req->localStatus = ResponseStatus::DISABLED;
+				if (req->globalStatus == ResponseStatus::ENABLED)
+				{
+					req->requestingGlobalPlayer = true;
+				}
+				else
+				{
+					req->localStatus = ResponseStatus::DISABLED;
+				}
 				req->requestingLocalPlayer = false;
 			}
 		};
@@ -330,20 +341,39 @@ void BaseRequest::SetupMode(CUtlString modeName)
 		return;
 	}
 
-	KZModeManager::ModePluginInfo modeInfo = modeName.IsEmpty() ? KZ::mode::GetModeInfo(callingPlayer->modeService) : KZ::mode::GetModeInfo(modeName);
-	if (modeInfo.databaseID < 0)
+	if (modeName.IsEmpty())
 	{
-		this->localStatus = ResponseStatus::DISABLED;
-	}
-	else
-	{
-		// Change the mode name to the right one for later usage.
+		KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(callingPlayer->modeService);
+
+		if (modeInfo.id == -2)
+		{
+			this->Invalidate();
+			return;
+		}
+
 		this->modeName = modeInfo.shortModeName;
 		this->localModeID = modeInfo.databaseID;
 	}
+	else
+	{
+		this->modeName = modeName;
 
-	// Global TODO: if it is not CKZ/VNL, just don't bother with global stuff.
-	// ... globalStatus = ResponseStatus::DISABLED;
+		KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(modeName);
+
+		if (modeInfo.databaseID < 0)
+		{
+			this->localStatus = ResponseStatus::DISABLED;
+		}
+		else
+		{
+			this->localModeID = modeInfo.databaseID;
+		}
+	}
+
+	if (!KZ::API::DecodeModeString(this->modeName.Get(), this->apiMode))
+	{
+		this->globalStatus = ResponseStatus::DISABLED;
+	}
 }
 
 void BaseRequest::SetupStyles(CUtlString styleNames)
@@ -400,6 +430,4 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 			styleList.AddToTail(info.id != -2 ? info.shortName : stylesSplit[i]);
 		}
 	}
-	// Global TODO: Keep a list of global styles. If one of the styles are not global, don't bother with global stuff.
-	// ... globalStatus = ResponseStatus::DISABLED;
 };

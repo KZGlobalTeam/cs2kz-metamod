@@ -1,0 +1,19 @@
+"Phrases"
+{
+	"Kick Player m_yaw"
+	{
+		"en"		"{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
+	}
+	"Kick Player m_yaw (Console)"
+	{
+		"en"		"Warning: Your m_yaw value must be less or equal to 0.3 to play on this server. You will be disconnected."
+	}
+	"Kick Player fps_max"
+	{
+		"en"		"{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
+	}
+	"Kick Player fps_max (Console)"
+	{
+		"en"		"Warning: Your fps_max value must be more or equal to 64 to play on this server. You will be disconnected."
+	}
+}

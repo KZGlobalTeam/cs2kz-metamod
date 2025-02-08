@@ -1,5 +1,6 @@
 #include "kz_timer.h"
 #include "kz/db/kz_db.h"
+#include "kz/global/kz_global.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
@@ -7,6 +8,9 @@
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
+
+#include "announce.h"
+
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
@@ -229,6 +233,10 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	{
 		this->player->languageService->PrintChat(true, false, "No Steam Authentication Warning");
 	}
+	if (KZGlobalService::IsConnected() && !this->player->hasPrime)
+	{
+		this->player->languageService->PrintChat(true, false, "No Prime Warning");
+	}
 
 	FOR_EACH_VEC(eventListeners, i)
 	{
@@ -294,8 +302,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 
 	if (!this->player->GetPlayerPawn()->IsBot())
 	{
-		CUtlString metadata = this->GetCurrentRunMetadata();
-		KZ::timer::AddRunToAnnounceQueue(player, this->GetCourse()->GetName(), time, teleportsUsed, metadata.Get());
+		RecordAnnounce::Create(this->player);
 	}
 
 	FOR_EACH_VEC(eventListeners, i)
@@ -1078,10 +1085,23 @@ void KZTimerService::ClearPBCache()
 	this->localPBCache.clear();
 }
 
-void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
+const PBData *KZTimerService::GetGlobalCachedPB(const KZCourse *course, PluginId modeID)
+{
+	PBDataKey key = ToPBDataKey(modeID, course->guid);
+
+	if (this->globalPBCache.find(key) == this->globalPBCache.end())
+	{
+		return nullptr;
+	}
+
+	return &this->globalPBCache[key];
+}
+
+void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId modeID, bool overall, bool global, CUtlString metadata, f64 points)
 {
 	PBData &pb = global ? this->globalPBCache[ToPBDataKey(modeID, course->guid)] : this->localPBCache[ToPBDataKey(modeID, course->guid)];
 
+	overall ? pb.overall.points = points : pb.pro.points = points;
 	overall ? pb.overall.pbTime = time : pb.pro.pbTime = time;
 	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error = "";

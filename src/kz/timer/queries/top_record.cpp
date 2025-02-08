@@ -1,6 +1,7 @@
 #include "base_request.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/db/kz_db.h"
+#include "kz/global/kz_global.h"
 
 #include "utils/simplecmds.h"
 
@@ -36,7 +37,49 @@ struct TopRecordRequest : public BaseRequest
 
 	virtual void QueryGlobal()
 	{
-		// TODO
+		if (this->requestingFirstCourse)
+		{
+			return;
+		}
+		if (this->globalStatus == ResponseStatus::ENABLED)
+		{
+			auto callback = [uid = this->uid](const KZ::API::events::WorldRecords &wrs)
+			{
+				TopRecordRequest *req = (TopRecordRequest *)TopRecordRequest::Find(uid);
+				if (!req)
+				{
+					return;
+				}
+
+				if (wrs.map.has_value() && wrs.course.has_value())
+				{
+					req->mapName = wrs.map->name.c_str();
+					req->courseName = wrs.course->name.c_str();
+					req->globalStatus = ResponseStatus::RECEIVED;
+				}
+				else
+				{
+					req->globalStatus = ResponseStatus::DISABLED;
+					return;
+				}
+
+				req->wrData.hasRecord = wrs.overall.has_value();
+				if (req->wrData.hasRecord)
+				{
+					req->wrData.holder = wrs.overall->player.name.c_str();
+					req->wrData.runTime = wrs.overall->time;
+					req->wrData.teleportsUsed = wrs.overall->teleports;
+				}
+				req->wrData.hasRecordPro = wrs.pro.has_value();
+				if (req->wrData.hasRecordPro)
+				{
+					req->wrData.holderPro = wrs.pro->player.name.c_str();
+					req->wrData.runTimePro = wrs.pro->time;
+				}
+			};
+			this->globalStatus = ResponseStatus::PENDING;
+			KZGlobalService::QueryWorldRecords(this->mapName, this->courseName, this->apiMode, callback);
+		}
 	}
 
 	virtual void QueryLocal()
@@ -113,19 +156,56 @@ struct TopRecordRequest : public BaseRequest
 			player->languageService->PrintChat(true, false, "Top Record Request - Failed (Generic)");
 			return;
 		}
-		if (this->globalStatus == ResponseStatus::RECEIVED)
-		{
-			this->ReplyGlobal();
-		}
 		if (this->localStatus == ResponseStatus::RECEIVED)
 		{
 			this->ReplyLocal();
+		}
+		if (this->globalStatus == ResponseStatus::RECEIVED)
+		{
+			this->ReplyGlobal();
 		}
 	}
 
 	void ReplyGlobal()
 	{
-		// TODO
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		// Local stuff
+		std::string tpText;
+		if (wrData.teleportsUsed > 0)
+		{
+			tpText = wrData.teleportsUsed == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
+											   : player->languageService->PrepareMessage("2+ Teleports Text", wrData.teleportsUsed);
+		}
+
+		char standardTime[32];
+		KZTimerService::FormatTime(wrData.runTime, standardTime, sizeof(standardTime));
+		char proTime[32];
+		KZTimerService::FormatTime(wrData.runTimePro, proTime, sizeof(proTime));
+
+		// Global Records on kz_map (Main) [VNL]
+		player->languageService->PrintChat(true, false, "WR Header", mapName.Get(), courseName.Get(), modeName.Get());
+		if (!wrData.hasRecord)
+		{
+			player->languageService->PrintChat(true, false, "No Times");
+		}
+		else if (!wrData.hasRecordPro)
+		{
+			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, wrData.holder.Get(), tpText);
+		}
+		// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+		else if (wrData.teleportsUsed == 0)
+		{
+			// KZ | Overall/PRO Record: 01:23.45 by Bill
+			player->languageService->PrintChat(true, false, "Top Record - Combined", standardTime, wrData.holder.Get());
+		}
+		else
+		{
+			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, wrData.holder.Get(), tpText);
+			// KZ | PRO Record: 23.45 by Player
+			player->languageService->PrintChat(true, false, "Top Record - PRO", proTime, wrData.holderPro.Get());
+		}
 	}
 
 	void ReplyLocal()
@@ -139,34 +219,34 @@ struct TopRecordRequest : public BaseRequest
 													: player->languageService->PrepareMessage("2+ Teleports Text", srData.teleportsUsed);
 		}
 
-		char localStandardTime[32];
-		KZTimerService::FormatTime(srData.runTime, localStandardTime, sizeof(localStandardTime));
-		char localProTime[32];
-		KZTimerService::FormatTime(srData.runTimePro, localProTime, sizeof(localProTime));
+		char standardTime[32];
+		KZTimerService::FormatTime(srData.runTime, standardTime, sizeof(standardTime));
+		char proTime[32];
+		KZTimerService::FormatTime(srData.runTimePro, proTime, sizeof(proTime));
 
-		// Records on kz_map (Main) [VNL]
+		// Server Records on kz_map (Main) [VNL]
 		player->languageService->PrintChat(true, false, "SR Header", mapName.Get(), courseName.Get(), modeName.Get());
 		if (!srData.hasRecord)
 		{
-			player->languageService->PrintChat(true, false, "SR - No Times");
+			player->languageService->PrintChat(true, false, "No Times");
 		}
 		else if (!srData.hasRecordPro)
 		{
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "SR - Overall", localStandardTime, srData.holder.Get(), localTPText);
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, srData.holder.Get(), localTPText);
 		}
 		// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 		else if (srData.teleportsUsed == 0)
 		{
 			// KZ | Overall/PRO Record: 01:23.45 by Bill
-			player->languageService->PrintChat(true, false, "SR - Combined", localStandardTime, srData.holder.Get());
+			player->languageService->PrintChat(true, false, "Top Record - Combined", standardTime, srData.holder.Get());
 		}
 		else
 		{
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "SR - Overall", localStandardTime, srData.holder.Get(), localTPText);
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, srData.holder.Get(), localTPText);
 			// KZ | PRO Record: 23.45 by Player
-			player->languageService->PrintChat(true, false, "SR - PRO", localProTime, srData.holderPro.Get());
+			player->languageService->PrintChat(true, false, "Top Record - PRO", proTime, srData.holderPro.Get());
 		}
 	}
 };

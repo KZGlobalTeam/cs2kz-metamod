@@ -1,6 +1,11 @@
 #pragma once
 
+#include <string_view>
+
 #include "common.h"
+
+class KZPlugin;
+extern KZPlugin g_KZPlugin;
 
 class KZPlugin : public ISmmPlugin, public IMetamodListener
 {
@@ -34,10 +39,8 @@ private:
 	char md5[33];
 
 public:
-	const char *GetMD5()
+	std::string_view GetMD5()
 	{
 		return md5;
 	}
 };
-
-extern KZPlugin g_KZPlugin;

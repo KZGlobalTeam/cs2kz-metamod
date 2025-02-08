@@ -14,3 +14,9 @@
 [submodule "vendor/sql_mm"]
 	path = vendor/sql_mm
 	url = https://github.com/zer0k-z/sql_mm.git
+[submodule "vendor/ixwebsocket"]
+	path = vendor/ixwebsocket
+	url = https://github.com/machinezone/IXWebSocket
+[submodule "vendor/json"]
+	path = vendor/json
+	url = https://github.com/nlohmann/json

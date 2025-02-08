@@ -4,6 +4,11 @@
 #include <cstdint>
 #include "metamod_oslink.h"
 
+// Needs to be here because later MSVC versions don't need this anymore
+#if !defined __linux__ && !defined __APPLE__ && defined _MSC_VER && _MSC_VER > 1500
+#undef snprintf
+#endif
+
 struct Section
 {
 	std::string m_szName;

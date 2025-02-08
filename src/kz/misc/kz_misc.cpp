@@ -19,6 +19,7 @@
 #include "kz/telemetry/kz_telemetry.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/tip/kz_tip.h"
+#include "kz/global/kz_global.h"
 
 #include "sdk/gamerules.h"
 
@@ -366,7 +367,7 @@ void KZ::misc::RegisterCommands()
 	KZNoclipService::RegisterCommands();
 	KZHUDService::RegisterCommands();
 	KZLanguageService::RegisterCommands();
-	KZTelemetryService::RegisterCommands();
+	KZGlobalService::RegisterCommands();
 	KZ::mode::RegisterCommands();
 	KZ::style::RegisterCommands();
 	KZ::course::RegisterCommands();

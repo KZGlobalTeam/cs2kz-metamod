@@ -1,6 +1,7 @@
 #include "kz.h"
 #include "utils/utils.h"
 #include "utils/ctimer.h"
+#include "anticheat/kz_anticheat.h"
 #include "checkpoint/kz_checkpoint.h"
 #include "db/kz_db.h"
 #include "hud/kz_hud.h"
@@ -17,6 +18,7 @@
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
 #include "trigger/kz_trigger.h"
+#include "global/kz_global.h"
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -34,6 +36,7 @@ void KZPlayer::Init()
 	this->hideLegs = false;
 
 	// TODO: initialize every service.
+	delete this->anticheatService;
 	delete this->checkpointService;
 	delete this->jumpstatsService;
 	delete this->languageService;
@@ -47,7 +50,9 @@ void KZPlayer::Init()
 	delete this->tipService;
 	delete this->telemetryService;
 	delete this->triggerService;
+	delete this->globalService;
 
+	this->anticheatService = new KZAnticheatService(this);
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
 	this->databaseService = new KZDatabaseService(this);
@@ -62,6 +67,7 @@ void KZPlayer::Init()
 	this->tipService = new KZTipService(this);
 	this->telemetryService = new KZTelemetryService(this);
 	this->triggerService = new KZTriggerService(this);
+	this->globalService = new KZGlobalService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -103,11 +109,17 @@ void KZPlayer::OnPlayerActive()
 	this->optionService->OnPlayerActive();
 }
 
+void KZPlayer::OnPlayerFullyConnect()
+{
+	this->anticheatService->OnPlayerFullyConnect();
+}
+
 void KZPlayer::OnAuthorized()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnAuthorized();
 	this->databaseService->SetupClient();
+	this->globalService->OnPlayerAuthorized();
 }
 
 META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)

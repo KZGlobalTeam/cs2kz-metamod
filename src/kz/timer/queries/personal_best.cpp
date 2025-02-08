@@ -1,6 +1,8 @@
 #include "base_request.h"
 #include "kz/db/kz_db.h"
+#include "kz/global/kz_global.h"
 
+#include "utils/utils.h"
 #include "utils/simplecmds.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
@@ -18,13 +20,16 @@ struct PBRequest : public BaseRequest
 		u32 teleportsUsed {};
 		u32 rank {};
 		u32 maxRank {};
+		u32 points {}; // Global only.
 
 		bool hasPBPro {};
 		f32 runTimePro {};
 		u32 rankPro {};
 		u32 maxRankPro {};
+		u32 pointsPro {}; // Global only.
 	} pbData, gpbData;
 
+	bool globallyBanned = false;
 	bool queryLocalRanking = true;
 
 	virtual void Init(u64 features, const CCommand *args, bool queryLocal, bool queryGlobal) override
@@ -64,7 +69,7 @@ struct PBRequest : public BaseRequest
 
 	virtual void QueryLocal()
 	{
-		if (this->requestingLocalPlayer || this->requestingFirstCourse)
+		if (this->requestingLocalPlayer || this->requestingFirstCourse || this->requestingGlobalPlayer)
 		{
 			return;
 		}
@@ -89,7 +94,69 @@ struct PBRequest : public BaseRequest
 		{
 			return;
 		}
-		// TODO
+		if (this->globalStatus != ResponseStatus::ENABLED)
+		{
+			// If the local query is waiting for a response from the global service...
+			if (this->requestingGlobalPlayer && this->localStatus == ResponseStatus::ENABLED)
+			{
+				this->localStatus = ResponseStatus::DISABLED;
+				this->requestingGlobalPlayer = false;
+			}
+			return;
+		}
+		this->globalStatus = ResponseStatus::PENDING;
+		auto callback = [uid = this->uid](const KZ::API::events::PersonalBest &pb)
+		{
+			PBRequest *req = (PBRequest *)PBRequest::Find(uid);
+			if (!req)
+			{
+				return;
+			}
+
+			if (req->requestingGlobalPlayer && req->localStatus == ResponseStatus::ENABLED && pb.player.has_value())
+			{
+				req->requestingGlobalPlayer = false;
+
+				if (!utils::ParseSteamID2(pb.player->id, req->targetSteamID64))
+				{
+					req->localStatus = ResponseStatus::DISABLED;
+				}
+
+				req->queryLocalRanking = !pb.player->isBanned;
+			}
+
+			if (pb.map.has_value() && pb.course.has_value())
+			{
+				req->mapName = pb.map->name.c_str();
+				req->courseName = pb.course->name.c_str();
+				req->globalStatus = ResponseStatus::RECEIVED;
+			}
+			else
+			{
+				req->globalStatus = ResponseStatus::DISABLED;
+				return;
+			}
+
+			req->gpbData.hasPB = pb.overall.has_value();
+			if (req->gpbData.hasPB)
+			{
+				req->gpbData.runTime = pb.overall->time;
+				req->gpbData.rank = pb.overall->nubRank;
+				req->gpbData.maxRank = pb.overall->nubMaxRank;
+				req->gpbData.teleportsUsed = pb.overall->teleports;
+				req->gpbData.points = pb.overall->nubPoints;
+			}
+			req->gpbData.hasPBPro = pb.pro.has_value();
+			if (req->gpbData.hasPBPro)
+			{
+				req->gpbData.runTimePro = pb.pro->time;
+				req->gpbData.rankPro = pb.pro->proRank;
+				req->gpbData.maxRankPro = pb.pro->proMaxRank;
+				req->gpbData.pointsPro = pb.pro->proPoints;
+			}
+		};
+		KZGlobalService::QueryPB(this->targetSteamID64, this->targetPlayerName, this->mapName, this->courseName, this->apiMode, this->styleList,
+								 callback);
 	}
 
 	virtual void Reply()
@@ -118,32 +185,98 @@ struct PBRequest : public BaseRequest
 		player->languageService->PrintChat(true, false, "PB Header", targetPlayerName.Get(), mapName.Get(), courseName.Get(),
 										   combinedModeStyleText.Get());
 
-		if (this->globalStatus == ResponseStatus::RECEIVED)
+		if (!this->pbData.hasPB && !this->gpbData.hasPB)
 		{
-			this->ReplyGlobal();
+			player->languageService->PrintChat(true, false, "PB Time - No Times");
 		}
-		if (this->localStatus == ResponseStatus::RECEIVED)
+		else
 		{
-			this->ReplyLocal();
+			if (this->localStatus == ResponseStatus::RECEIVED)
+			{
+				this->ReplyLocal();
+			}
+			if (this->globalStatus == ResponseStatus::RECEIVED)
+			{
+				this->ReplyGlobal();
+			}
+		}
+	}
+
+	void ReplyGlobal()
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		std::string tpText;
+		if (this->gpbData.teleportsUsed > 0)
+		{
+			tpText = this->gpbData.teleportsUsed == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
+													  : player->languageService->PrepareMessage("2+ Teleports Text", this->gpbData.teleportsUsed);
+		}
+
+		char overallTime[32];
+		KZTimerService::FormatTime(this->gpbData.runTime, overallTime, sizeof(overallTime));
+		char proTime[32];
+		KZTimerService::FormatTime(this->gpbData.runTimePro, proTime, sizeof(proTime));
+
+		if (!globallyBanned)
+		{
+			if (!this->gpbData.hasPBPro)
+			{
+				// KZ | Global: 12.34 (5 TPs) [Overall / 10000 pts]
+				player->languageService->PrintChat(true, false, "PB Time - Overall (Global)", overallTime, tpText, this->gpbData.rank,
+												   this->gpbData.maxRank, this->gpbData.points);
+			}
+			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			else if (this->gpbData.teleportsUsed == 0)
+			{
+				// KZ | Global: 12.34 [#1/24 Overall / 10000 pts] [#1/2 PRO / 10000 pts]
+				player->languageService->PrintChat(true, false, "PB Time - Combined (Global)", overallTime, this->gpbData.rank, this->gpbData.maxRank,
+												   this->gpbData.rankPro, this->gpbData.maxRankPro, this->gpbData.points, this->gpbData.pointsPro);
+			}
+			else
+			{
+				// KZ | Global: 12.34 (5 TPs) [#1/24 Overall / 10000 pts] | 23.45 [#1/2 PRO / 10000 pts]
+				player->languageService->PrintChat(true, false, "PB Time - Split (Global)", overallTime, tpText, this->gpbData.rank,
+												   this->gpbData.maxRank, proTime, this->gpbData.rankPro, this->gpbData.maxRankPro,
+												   this->gpbData.points, this->gpbData.pointsPro);
+			}
+		}
+		else
+		{
+			if (!this->gpbData.hasPBPro)
+			{
+				// KZ | Global: 12.34 (5 TPs) [Overall]
+				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Global)", overallTime, tpText);
+			}
+			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			else if (this->gpbData.teleportsUsed == 0)
+			{
+				// KZ | Global: 12.34 [Overall/PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Combined Rankless (Global)", overallTime);
+			}
+			else
+			{
+				// KZ | Global: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
+				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Global)", overallTime, tpText, proTime);
+			}
 		}
 	}
 
 	void ReplyLocal()
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
-		std::string localTPText;
+		std::string tpText;
 		if (this->pbData.teleportsUsed > 0)
 		{
-			localTPText = this->pbData.teleportsUsed == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
-														  : player->languageService->PrepareMessage("2+ Teleports Text", this->pbData.teleportsUsed);
+			tpText = this->pbData.teleportsUsed == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
+													 : player->languageService->PrepareMessage("2+ Teleports Text", this->pbData.teleportsUsed);
 		}
 
-		char localOverallTime[32];
-		KZTimerService::FormatTime(this->pbData.runTime, localOverallTime, sizeof(localOverallTime));
-		char localProTime[32];
-		KZTimerService::FormatTime(this->pbData.runTimePro, localProTime, sizeof(localProTime));
+		char overallTime[32];
+		KZTimerService::FormatTime(this->pbData.runTime, overallTime, sizeof(overallTime));
+		char proTime[32];
+		KZTimerService::FormatTime(this->pbData.runTimePro, proTime, sizeof(proTime));
 
-		if (queryLocalRanking)
+		if (!globallyBanned)
 		{
 			if (!this->pbData.hasPB)
 			{
@@ -152,21 +285,21 @@ struct PBRequest : public BaseRequest
 			else if (!this->pbData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Overall]
-				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", localOverallTime, localTPText, this->pbData.rank,
+				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", overallTime, tpText, this->pbData.rank,
 												   this->pbData.maxRank);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 			else if (this->pbData.teleportsUsed == 0)
 			{
 				// KZ | Server: 12.34 [#1/24 Overall] [#1/2 PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Combined (Server)", localOverallTime, this->pbData.rank,
-												   this->pbData.maxRank, this->pbData.rankPro, this->pbData.maxRankPro);
+				player->languageService->PrintChat(true, false, "PB Time - Combined (Server)", overallTime, this->pbData.rank, this->pbData.maxRank,
+												   this->pbData.rankPro, this->pbData.maxRankPro);
 			}
 			else
 			{
 				// KZ | Server: 12.34 (5 TPs) [#1/24 Overall] | 23.45 [#1/2 PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", localOverallTime, localTPText, this->pbData.rank,
-												   this->pbData.maxRank, localProTime, this->pbData.rankPro, this->pbData.maxRankPro);
+				player->languageService->PrintChat(true, false, "PB Time - Split (Server)", overallTime, tpText, this->pbData.rank,
+												   this->pbData.maxRank, proTime, this->pbData.rankPro, this->pbData.maxRankPro);
 			}
 		}
 		else
@@ -178,25 +311,20 @@ struct PBRequest : public BaseRequest
 			else if (!this->pbData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Overall]
-				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", localOverallTime, localTPText);
+				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", overallTime, tpText);
 			}
 			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 			else if (this->pbData.teleportsUsed == 0)
 			{
 				// KZ | Server: 12.34 [Overall/PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Combined Rankless (Server)", localOverallTime);
+				player->languageService->PrintChat(true, false, "PB Time - Combined Rankless (Server)", overallTime);
 			}
 			else
 			{
 				// KZ | Server: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
-				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Server)", localOverallTime, localTPText, localProTime);
+				player->languageService->PrintChat(true, false, "PB Time - Split Rankless (Server)", overallTime, tpText, proTime);
 			}
 		}
-	}
-
-	void ReplyGlobal()
-	{
-		// TODO
 	}
 
 	void ExecuteStandardLocalQuery()
