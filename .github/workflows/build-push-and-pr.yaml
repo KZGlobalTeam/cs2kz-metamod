@@ -13,13 +13,11 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     name: Build Push
     uses: ./.github/workflows/build.yaml
-    needs: get-version-string
     with:
       version: "push"
   build-pr:
     if: ${{ github.event_name == 'pull_request' }}
     name: Build PR
     uses: ./.github/workflows/build.yaml
-    needs: get-version-string
     with:
       version: "pr"
