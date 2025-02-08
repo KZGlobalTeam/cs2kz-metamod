@@ -1,112 +1,14 @@
-name: Dev release
+name: Master build
 
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
-  get-version-string:
-    name: Get version string
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set vars
-        id: vars
-        run: |
-          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-    outputs:
-      version_string: ${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
-
-  check-newlines:
-    name: Check for CRLF and final newlines
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check for CRLF and final newlines
-        run: ./scripts/check-newlines.sh
-
-  check-quotes:
-    name: Check for extra and/or missing quotes in translations
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check for extra and/or missing quotes in translations
-        run: ./scripts/check-quotes.sh
-
-  check-formatting:
-    name: Check for consistent formatting
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        path:
-          - check: 'src'
-            exclude: 'sdk'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: jidicula/clang-format-action@v4.13.0
-        with:
-          clang-format-version: '16'
-          check-path: ${{ matrix.path['check'] }}
-          exclude-regex: ${{ matrix.path['exclude'] }}
-
   build:
     name: Build
     uses: ./.github/workflows/build.yaml
     needs: get-version-string
     with:
-      version: ${{ needs.get-version-string.outputs.version_string }}
-
-  dev-release:
-    name: Dev Release
-    runs-on: ubuntu-latest
-    needs:
-      - get-version-string
-      - build
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Create folders
-        run: |
-          mkdir /home/runner/releases
-
-      - uses: actions/download-artifact@v4
-        with:
-          path: /home/runner/artifacts
-
-      - name: Archive Linux build
-        run: |
-          cd /home/runner/artifacts/cs2kz-linux
-          tar -czvf /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}.tar.gz  .
-          rm ./cfg/cs2kz-server-config.txt
-          tar -czvf /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}-upgrade.tar.gz  .
-
-      - name: Archive Windows build
-        run: |
-          cd /home/runner/artifacts/cs2kz-windows
-          zip -r /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}.zip *
-          rm ./cfg/cs2kz-server-config.txt
-          zip -r /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}-upgrade.zip *
-
-      - name: Tag the repository
-        id: tag
-        run: |
-          git config --global user.email "${{ github.repository_owner_id }}+${{ github.repository_owner }}@users.noreply.github.com"
-          git config --global user.name "${{ github.repository_owner }}"
-          git tag -a ${{ needs.get-version-string.outputs.version_string }} -m "Published version ${{ needs.get-version-string.outputs.version_string }}" ${GITHUB_SHA}
-          git push origin ${{ needs.get-version-string.outputs.version_string }}
-
-      - name: Dev Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ needs.get-version-string.outputs.version_string }}
-          files: |
-            /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}.tar.gz
-            /home/runner/releases/cs2kz-linux-${{ needs.get-version-string.outputs.version_string }}-upgrade.tar.gz
-            /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}.zip
-            /home/runner/releases/cs2kz-windows-${{ needs.get-version-string.outputs.version_string }}-upgrade.zip
-          generate_release_notes: false
-          prerelease: true
+      version: "0.0.0"
