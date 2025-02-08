@@ -141,6 +141,7 @@ class MMSPluginConfig(object):
         '_vsnprintf=vsnprintf',
         'HAVE_STDINT_H',
         'GNUC',
+        'USE_TLS=1'
       ]
       cxx.cflags += [
         '-pipe',
@@ -199,7 +200,8 @@ class MMSPluginConfig(object):
         '_CRT_SECURE_NO_DEPRECATE',
         '_CRT_SECURE_NO_WARNINGS',
         '_CRT_NONSTDC_NO_DEPRECATE',
-        '_HAS_EXCEPTIONS=0'
+        '_HAS_EXCEPTIONS=0',
+        'USE_TLS=1'
       ]
       cxx.cflags += [
         '/W3',
@@ -282,7 +284,6 @@ class MMSPluginConfig(object):
       os.path.join(mms_core_path, 'sourcehook'),
     ]
 
-    defines = []
     for other_sdk in self.sdk_manifests:
       cxx.defines += ['SE_{}={}'.format(other_sdk['define'], other_sdk['code'])]
 
