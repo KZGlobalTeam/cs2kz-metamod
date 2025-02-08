@@ -3,11 +3,13 @@ name: Code quality checks
 on:
   pull_request:
     paths:
+      - '.github/workflows/**'
       - 'src/**'
       - '.clang-format'
       - 'translations/**'
   push:
     paths:
+      - '.github/workflows/**'
       - 'src/**'
       - '.clang-format'
       - 'translations/**'
@@ -16,6 +18,10 @@ jobs:
   check-newlines:
     name: Check for CRLF and final newlines
     runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.message, '.github/workflows/') ||
+      contains(github.event.head_commit.message, 'src/') ||
+      contains(github.event.head_commit.message, '.clang-format')
     steps:
       - uses: actions/checkout@v4
       - run: ./scripts/check-newlines.sh
@@ -23,6 +29,10 @@ jobs:
   check-formatting:
     name: Check for consistent formatting
     runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.message, '.github/workflows/') ||
+      contains(github.event.head_commit.message, 'src/') ||
+      contains(github.event.head_commit.message, '.clang-format')
     strategy:
       matrix:
         path:
@@ -39,6 +49,9 @@ jobs:
   check-quotes:
     name: Check quotes in translations
     runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.message, 'translations/') ||
+      contains(github.event.head_commit.message, '.github/workflows/')
     steps:
       - uses: actions/checkout@v4
       - run: ./scripts/check-quotes.sh

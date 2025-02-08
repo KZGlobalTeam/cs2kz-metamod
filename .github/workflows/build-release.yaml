@@ -17,7 +17,7 @@ jobs:
     name: Build
     uses: ./.github/workflows/build.yaml
     with:
-      version: ${{ github.ref_name }}
+      version: ${{ github.event.inputs.version }}
 
   release:
     if: github.ref == 'refs/heads/master' 
@@ -53,6 +53,12 @@ jobs:
           zip -r /home/runner/releases/cs2kz-windows-${{ github.ref_name }}.zip *
           rm ./cfg/cs2kz-server-config.txt
           zip -r /home/runner/releases/cs2kz-windows-${{ github.ref_name }}-upgrade.zip *
+
+      - name: Create GitHub Tag
+        id: create_tag
+        run: |
+          git tag -a v${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
+          git push origin v${{ github.event.inputs.version }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
