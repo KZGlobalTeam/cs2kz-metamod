@@ -68,6 +68,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.version }}
           files: |
             /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz
             /home/runner/releases/cs2kz-linux-${{ github.ref_name }}-upgrade.tar.gz
