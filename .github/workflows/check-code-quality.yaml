@@ -1,0 +1,37 @@
+name: Code quality checks
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - '.clang-format'
+  push:
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - '.clang-format'
+
+jobs:
+  check-newlines:
+    name: Check for CRLF and final newlines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/check-newlines.sh
+
+  check-formatting:
+    name: Check for consistent formatting
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path:
+          - check: 'src'
+            exclude: 'sdk'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jidicula/clang-format-action@v4.13.0
+        with:
+          clang-format-version: '18'
+          check-path: ${{ matrix.path['check'] }}
+          exclude-regex: ${{ matrix.path['exclude'] }}
