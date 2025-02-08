@@ -20,7 +20,14 @@ cs2kz_sum_lin=$(md5sum "$CS2KZ_SO" | awk '{ print $1 }')
 cs2kz_sum_win=$(md5sum "$CS2KZ_DLL" | awk '{ print $1 }')
 
 # Initialize JSON strings for modes and styles
-modes_json=""
+modes_json=$(jq -n \
+    --arg linux_checksum "$cs2kz_sum_lin" \
+    --arg windows_checksum "$cs2kz_sum_win" \
+    '{
+      mode: $vnl,
+      linux_checksum: $linux_checksum,
+      windows_checksum: $windows_checksum
+    }')
 styles_json=""
 
 # Process modes
@@ -47,12 +54,7 @@ for mode_lin in "$LINUX_MODES_DIR"/cs2kz-mode-*.so; do
       windows_checksum: $windows_checksum
     }')
 
-  # Append to modes JSON
-  if [[ -z $modes_json ]]; then
-    modes_json="$mode_entry"
-  else
     modes_json="$modes_json,$mode_entry"
-  fi
 done
 
 # Process styles
@@ -112,7 +114,7 @@ json_payload=$(jq -n \
 
 AUTH_TOKEN="$3"
 
-response=$(curl -s -o /dev/null -w "%{http_code}" \
+response=$(curl -s -o /dev/null -w "%{http} %{http_code}" \
   -X POST https://api.cs2kz.org/plugin/versions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $AUTH_TOKEN" \
