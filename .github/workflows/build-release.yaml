@@ -42,6 +42,7 @@ jobs:
         run: |
           ./scripts/release.sh "${{ inputs.version }}" "${{ inputs.cutoff }}" "$AUTH_TOKEN"
 
+
       - name: Archive Linux build
         run: |
           cd /home/runner/artifacts/cs2kz-linux
@@ -59,6 +60,8 @@ jobs:
       - name: Create GitHub Tag
         id: create_tag
         run: |
+          git config --global user.email "${{ github.repository_owner_id }}+${{ github.repository_owner }}@users.noreply.github.com"
+          git config --global user.name "${{ github.repository_owner }}"
           git tag -a v${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
           git push origin v${{ github.event.inputs.version }}
 

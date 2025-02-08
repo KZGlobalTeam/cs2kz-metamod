@@ -114,7 +114,7 @@ json_payload=$(jq -n \
 
 AUTH_TOKEN="$3"
 
-response=$(curl -s -o /dev/null -w "%{http} %{http_code}" \
+response=$(curl -s -o /dev/null -w "%{http_code}" \
   -X POST https://api.cs2kz.org/plugin/versions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $AUTH_TOKEN" \
