@@ -24,7 +24,7 @@ modes_json=$(jq -n \
     --arg linux_checksum "$cs2kz_sum_lin" \
     --arg windows_checksum "$cs2kz_sum_win" \
     '{
-      mode: vnl,
+      mode: "vnl",
       linux_checksum: $linux_checksum,
       windows_checksum: $windows_checksum
     }')
