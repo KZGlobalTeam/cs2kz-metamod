@@ -1,4 +1,4 @@
-name: Code quality checks
+name: Translations checks
 
 on:
   pull_request:
