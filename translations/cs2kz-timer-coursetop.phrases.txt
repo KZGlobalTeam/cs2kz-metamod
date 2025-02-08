@@ -3,12 +3,22 @@
 	"Course Top - Table Name (Server Overall)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
-		"en"		"{map_name} Course {course_name} {mode_name} Overall Top (Server)"
+		"en"		"{map_name} ({course_name}) {mode_name} Overall Server Top"
 	}
 	"Course Top - Table Name (Server Pro)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
-		"en"		"{map_name} Course {course_name} {mode_name} PRO Top (Server)"
+		"en"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
+	}
+	"Course Top - Table Name (Global Overall)"
+	{
+		"#format"	"map_name:s,course_name:s,mode_name:s"
+		"en"		"{map_name} ({course_name}) {mode_name} Overall Global Top"
+	}
+	"Course Top - Table Name (Global Pro)"
+	{
+		"#format"	"map_name:s,course_name:s,mode_name:s"
+		"en"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 	}
 	"Course Top Header - Player Alias"
 	{

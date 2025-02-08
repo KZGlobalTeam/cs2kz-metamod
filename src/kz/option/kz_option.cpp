@@ -79,6 +79,31 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 	}
 }
 
+void KZOptionService::InitializeGlobalPrefs(std::string json)
+{
+	assert(!json.empty() && "API always sends at least an empty object");
+
+	CUtlString error;
+	LoadKV3FromJSON(&this->prefKV, &error, json.c_str(), "");
+
+	if (!error.IsEmpty())
+	{
+		META_CONPRINTF("[KZ::Options] Error loading global preferences: %s\n", error.Get());
+		return;
+	}
+
+	this->initState = GLOBAL;
+
+	META_CONPRINTF("[KZ::Options] Loaded global preferences.\n");
+
+	// Calling this before the player is ingame will create unwanted race conditions.
+	// We need to make sure the player is both authenticated and ingame.
+	if (this->player->IsInGame())
+	{
+		CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+	}
+}
+
 void KZOptionService::SaveLocalPrefs()
 {
 	if (this->player->IsFakeClient())

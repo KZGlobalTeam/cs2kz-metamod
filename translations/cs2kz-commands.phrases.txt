@@ -881,4 +881,16 @@
 		"tr"		"Şuanki rotayı ve haritadaki tüm rotaları göster."
 		"ko"		"현재 코스와 맵에 있는 모든 코스 목록을 표시합니다."
 	}
+	"Command Description - kz_spb"
+	{
+		"en"		"Retrieve server personal best statistics."
+	}
+	"Command Description - kz_gpb"
+	{
+		"en"		"Retrieve global personal best statistics."
+	}
+	"Command Description - kz_apistatus"
+	{
+		"en"		"Display the status of the GlobalAPI."
+	}
 }

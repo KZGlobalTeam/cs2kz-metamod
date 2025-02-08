@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../kz.h"
 #include "../checkpoint/kz_checkpoint.h"
 #include "kz/course/kz_course.h"
@@ -124,8 +125,9 @@ public:
 	static void InsertRecordToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool hasTeleports, bool global, CUtlString metadata = "");
 
 	void ClearPBCache();
+	const PBData *GetGlobalCachedPB(const KZCourse *course, PluginId modeID);
 	void UpdateLocalPBCache();
-	void InsertPBToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool hasTeleports, bool global, CUtlString metadata = "");
+	void InsertPBToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool overall, bool global, CUtlString metadata = "", f64 points = 0);
 	void SetCompareTarget(const char *typeString);
 
 	void CheckMissedTime();
@@ -353,19 +355,19 @@ namespace KZ
 
 		struct GlobalRankData
 		{
-			u32 mapPointsGained {};
-			u32 totalMapPoints {};
-			u32 playerRating {};
+			struct RunData
+			{
+				bool isFirstRun {};
+				u32 rank {};
+				f64 points = -1;
+				u64 maxRank {};
+			};
 
-			bool firstTime {};
-			f32 pbDiff {};
-			u32 rank {};
-			u32 maxRank {};
-
-			bool firstTimePro {};
-			f32 pbDiffPro {};
-			u32 rankPro {};
-			u32 maxRankPro {};
+			u32 recordId {};
+			f64 playerRating {};
+			f64 time {};
+			RunData nubData {};
+			RunData proData {};
 		};
 
 		void AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, const char *metadata);

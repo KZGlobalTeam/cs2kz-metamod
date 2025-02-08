@@ -66,11 +66,23 @@ const KZCourse *KZ::course::GetCourseByCourseID(i32 id)
 	return nullptr;
 }
 
-const KZCourse *KZ::course::GetCourseByLocalCourseID(i32 id)
+const KZCourse *KZ::course::GetCourseByLocalCourseID(u32 id)
 {
 	FOR_EACH_VEC(courseList, i)
 	{
 		if (courseList[i].localDatabaseID == id)
+		{
+			return &courseList[i];
+		}
+	}
+	return nullptr;
+}
+
+const KZCourse *KZ::course::GetCourseByGlobalCourseID(u32 id)
+{
+	FOR_EACH_VEC(courseList, i)
+	{
+		if (courseList[i].globalDatabaseID == id)
 		{
 			return &courseList[i];
 		}
@@ -133,11 +145,11 @@ bool KZ::course::UpdateCourseLocalID(const char *courseName, u32 databaseID)
 	return false;
 }
 
-bool KZ::course::UpdateCourseGlobalID(const char *courseName, i32 courseID, u32 globalID)
+bool KZ::course::UpdateCourseGlobalID(const char *courseName, u32 globalID)
 {
 	FOR_EACH_VEC(courseList, i)
 	{
-		if (courseList[i].HasMatchingIdentifiers(courseID, courseName))
+		if (courseList[i].GetName() == courseName)
 		{
 			courseList[i].globalDatabaseID = globalID;
 			return true;

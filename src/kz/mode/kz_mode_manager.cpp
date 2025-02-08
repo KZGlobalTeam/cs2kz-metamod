@@ -406,6 +406,21 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 	return emptyInfo;
 }
 
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZ::API::Mode mode)
+{
+	switch (mode)
+	{
+		case KZ::API::Mode::Vanilla:
+		{
+			return KZ::mode::GetModeInfo("vanilla");
+		}
+		case KZ::API::Mode::Classic:
+		{
+			return KZ::mode::GetModeInfo("classic");
+		}
+	}
+}
+
 KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 {
 	KZModeManager::ModePluginInfo emptyInfo;

@@ -47,13 +47,3 @@ void KZTelemetryService::ActiveCheck()
 	}
 	KZTelemetryService::lastActiveCheckTime = currentTime;
 }
-
-SCMD_CALLBACK(Command_KzStats)
-{
-	return MRES_SUPERCEDE;
-}
-
-void KZTelemetryService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_stats", Command_KzStats);
-}

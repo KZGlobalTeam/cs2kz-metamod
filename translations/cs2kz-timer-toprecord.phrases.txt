@@ -17,7 +17,13 @@
 		"de"		"{grey}Serverrekorde auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ko"		"{grey}서버 기록: {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
-	"SR - No Times"
+	"WR Header"
+	{
+		// Global Records on kz_map (Main) [VNL]
+		"#format"	"map_name:s,course_name:s,mode_name:s"
+		"en"		"{grey}Global Records on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+	}
+	"No Times"
 	{
 		"en"		"{grey}No times were found!"
 		"chi"		"{grey}未找到任何记录!"
@@ -32,7 +38,7 @@
 		"de"		"{grey}Es wurden keine Zeiten gefunden!"
 		"ko"		"{grey}기록이 없습니다!"
 	}
-	"SR - Overall"
+	"Top Record - Overall"
 	{
 		// KZ | Overall Record: 01:23.45 (5 TP) by Bill
 		"#format"	"time:s,player_name:s,tp_count_text:s"
@@ -49,7 +55,7 @@
 		"de"		"{yellow}Gesamt{grey}: {default}{time}{grey} von {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"ko"		"{yellow}전체{grey}: {default}{time}{grey} {lime}{player_name}{grey}님 ({yellow}{tp_count_text}{grey})"
 	}
-	"SR - Combined"
+	"Top Record - Combined"
 	{
 		// KZ | Overall/PRO Record: 01:23.45 by Bill
 		"#format"	"time:s,player_name:s"
@@ -66,7 +72,7 @@
 		"de"		"{yellow}Gesamt/{blue}PRO{grey}: {default}{time}{grey} von {lime}{player_name}{grey}"
 		"ko"		"{yellow}전체/{blue}PRO{grey}: {default}{time}{grey} {lime}{player_name}{grey}님"
 	}
-	"SR - PRO"
+	"Top Record - PRO"
 	{
 		// KZ | PRO Record: 23.45 by Player
 		"#format"	"time_pro:s,player_name_pro:s"

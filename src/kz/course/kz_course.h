@@ -28,6 +28,7 @@ struct PBData
 	struct
 	{
 		f64 pbTime {};
+		f64 points {};
 		CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
 		CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
 		CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> pbStageZoneTimes;
@@ -111,7 +112,10 @@ namespace KZ
 		const KZCourse *GetCourseByCourseID(i32 id);
 
 		// Get a course's information given its local course id.
-		const KZCourse *GetCourseByLocalCourseID(i32 id);
+		const KZCourse *GetCourseByLocalCourseID(u32 id);
+
+		// Get a course's information given its global course id.
+		const KZCourse *GetCourseByGlobalCourseID(u32 id);
 
 		// Get a course's information given its name.
 		const KZCourse *GetCourse(const char *courseName, bool caseSensitive = true);
@@ -129,8 +133,8 @@ namespace KZ
 		bool UpdateCourseLocalID(const char *courseName, u32 databaseID);
 
 		// Update the course's global ID given its map-defined name and ID.
-		bool UpdateCourseGlobalID(const char *courseName, i32 courseID, u32 globalID);
+		bool UpdateCourseGlobalID(const char *courseName, u32 globalID);
 
 		void RegisterCommands();
 	} // namespace course
-};    // namespace KZ
+}; // namespace KZ
