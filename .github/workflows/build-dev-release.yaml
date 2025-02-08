@@ -9,6 +9,5 @@ jobs:
   build:
     name: Build
     uses: ./.github/workflows/build.yaml
-    needs: get-version-string
     with:
       version: "0.0.0"
