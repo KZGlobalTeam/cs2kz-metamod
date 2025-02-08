@@ -25,8 +25,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check for CRLF and final newlines
-        run: |
-          ./scripts/check-newlines.sh
+        run: ./scripts/check-newlines.sh
+
+  check-quotes:
+    name: Check for extra and/or missing quotes in translations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for extra and/or missing quotes in translations
+        run: ./scripts/check-quotes.sh
 
   check-formatting:
     name: Check for consistent formatting
