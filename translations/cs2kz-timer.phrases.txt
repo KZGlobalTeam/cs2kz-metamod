@@ -134,6 +134,7 @@
 		// Course Points: 2345 Overall (+512) | Player Rating: 34475
 		"#format"	"points:.0f,points_gained:.0f,player_rating:.0f"
 		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
 
 	}
 	"Beat Course Info - Global Points (PRO)"
@@ -141,6 +142,7 @@
 		// Course Points: 2345 Overall (+512) / 3345 PRO (+123) | Player Rating: 34475
 		"#format"	"points:.0f,points_gained:.0f,points_pro:.0f,points_gained_pro:.0f,player_rating:.0f"
 		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
 	}
 	
 	"Can't Pause (Generic)"
@@ -306,6 +308,7 @@
 	"Turnbinds Disabled"
 	{
 		"en"		"{darkred}Turnbinds are disabled."
+		"ua"		"{darkred}Turnbinds команди вимкнено."
 		"chi"		"{darkred}旋转绑定已禁用."
 		"ko"		"{darkred}턴 바인딩이 비활성화되었습니다."
 	}
@@ -587,15 +590,18 @@
   	"Request - Failed (Invalid Map)"
 	{
 		"en"		"{darkred}Failed to process current request. (Invalid map)"
+		"ua"		"{darkred}Не вдалося обробити поточний запит. (Невірна мапа)"
 	}
   	"Request - Failed (Generic)"
 	{
 		"en"		"{darkred}Failed to process current request."
+		"ua"		"{darkred}Не вдалося обробити поточний запит."
 	}
   	"Request - Failed (No Course in Current Map)"
 	{
 		"#format"	"map_name:s"
 		"en"		"{darkred}Failed to process current request. (No course exists in map {map_name})"
+		"ua"		"{darkred}Не вдалося обробити поточний запит. (Не існує такого курсу на мапі {map_name})"
 	}
 
 }

@@ -3,17 +3,21 @@
 	"Kick Player m_yaw"
 	{
 		"en"		"{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
+		"ua"		"{yellow}Увага{grey}: Щоб грати на цьому сервері, ваше значення {default}m_yaw{grey} має бути меншим або дорівнювати 0.3. Вас буде від'єднано."
 	}
 	"Kick Player m_yaw (Console)"
 	{
 		"en"		"Warning: Your m_yaw value must be less or equal to 0.3 to play on this server. You will be disconnected."
+		"ua"		"Увага: Ваше значення m_yaw має бути меншим або дорівнювати 0.3. Вас буде від'єднано."
 	}
 	"Kick Player fps_max"
 	{
 		"en"		"{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
+		"ua"		"{yellow}Увага{grey}: Для гри на цьому сервері ваше значення {default}fps_max{grey} має бути більшим або рівним 64. Вас буде від'єднано."
 	}
 	"Kick Player fps_max (Console)"
 	{
 		"en"		"Warning: Your fps_max value must be more or equal to 64 to play on this server. You will be disconnected."
+		"ua"		"Увага: Для гри на цьому сервері ваше значення fps_max має бути більшим або рівним 64. Вас буде від'єднано."
 	}
 }

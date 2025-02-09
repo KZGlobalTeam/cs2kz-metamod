@@ -4,21 +4,25 @@
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} Overall Server Top"
+		"ua"		"{map_name} ({course_name}) {mode_name} Загальний топ сервера"
 	}
 	"Course Top - Table Name (Server Pro)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
+		"ua"		"{map_name} ({course_name}) {mode_name} PRO топ сервера"
 	}
 	"Course Top - Table Name (Global Overall)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} Overall Global Top"
+		"ua"		"{map_name} ({course_name}) {mode_name} Загальний глобальний топ"
 	}
 	"Course Top - Table Name (Global Pro)"
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
+		"ua"		"{map_name} ({course_name}) {mode_name} Глобальний PRO топ"
 	}
 	"Course Top Header - Player Alias"
 	{
@@ -88,6 +92,7 @@
 	"Course Top Header - Points"
 	{
 		"en"		"Points"
+		"ua"		"Очки"
 	}
 	"Course Top Request - Failed (Generic)"
 	{

@@ -12,6 +12,7 @@
 	"No Prime Warning"
 	{
 		"en"		"{darkred}Warning{grey}: You do not have Prime Status upgrade. Your run will not be saved globally."
+		"ua"		"{darkred}Увага{grey}: Ви не маєте Прайм-статусу. Ваш час проходження не буде збережено глобально."
 	}
 	"Player Authenticated (Steam)"
 	{
