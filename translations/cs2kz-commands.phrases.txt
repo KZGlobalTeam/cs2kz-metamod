@@ -884,13 +884,16 @@
 	"Command Description - kz_spb"
 	{
 		"en"		"Retrieve server personal best statistics."
+		"sv"		"Hämta personlig bästa statistik på servern."
 	}
 	"Command Description - kz_gpb"
 	{
 		"en"		"Retrieve global personal best statistics."
+		"sv"		"Hämta personlig bästa statistik globalt."
 	}
 	"Command Description - kz_apistatus"
 	{
 		"en"		"Display the status of the GlobalAPI."
+		"sv"		"Visa statusen på GlobalAPI."
 	}
 }
