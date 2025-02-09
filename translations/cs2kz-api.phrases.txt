@@ -3,6 +3,7 @@
 	"API Healthy"
 	{
 		"en"	"API is healthy."
+		"chi"	"API 处于正常状态."
 		"ua"	"API працює коректно."
 		"sv"	"API är välmående."
 	}
@@ -11,6 +12,7 @@
 		// API is unhealthy (status XXX).
 		"#format"	"status:d"
 		"en"		"{red}API is unhealthy (status {status})."
+		"chi"		"{red}API 工作不正常 (状态 {status})."
 		"ua"		"{red}API не працює коректно (статус {status})."
 		"sv"		"{red}API är inte välmående (status {status})."
 	}
