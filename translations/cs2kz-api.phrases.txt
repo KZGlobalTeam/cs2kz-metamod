@@ -3,7 +3,7 @@
 	"API Healthy"
 	{
 		"en"	"API is healthy."
-		"sv"	"API är välmående"
+		"sv"	"API är välmående."
 	}
 	"API Unhealthy"
 	{
