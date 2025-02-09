@@ -6,7 +6,11 @@ on:
       - master
     tags-ignore:
       - '**'
+    paths-ignore:
+      - 'translations/**'
   pull_request:
+    paths-ignore:
+      - 'translations/**'
 
 jobs:
   build-push:
