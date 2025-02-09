@@ -23,6 +23,7 @@
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{grey}Global Records on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ua"		"{grey}Світові рекорди на мапі {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"sv"		"{grey}Globala Rekord på {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"No Times"
 	{
@@ -112,7 +113,7 @@
 		"chi"		"{darkred}无法找到地图记录信息. {grey}(无效的关卡名称 {default}{course_name}{grey})"
 		"ru"		"{darkred}Не удалось получить информацию о рекорде. {grey}(Неверное название курса {default}{course_name}{grey})"
 		"fi"		"{darkred}Ennätysten haku epäonnistui. {grey}(Virheellinen kentän nimi {default}{course_name}{grey})"
-		"sv"		"{darkred}Det gick inte att hämta rekordinformation. {grey}(Ogiltigt namn av karta {default}{course_name}{grey})"
+		"sv"		"{darkred}Det gick inte att hämta rekordinformation. {grey}(Ogiltigt namn av bana {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про рекорд. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 		"tr"		"{darkred}Rekor bilgisi alınamadı. {grey}(Hatalı harita ismi {default}{course_name}{grey})"
 		"it"		"{darkred}Impossibile recuperare informazioni sui record. {grey}(Nome della mappa non valido {default}{course_name}{grey})"

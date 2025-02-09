@@ -4,6 +4,7 @@
 	{
 		"en"	"API is healthy."
 		"ua"	"API працює коректно."
+		"sv"	"API är välmående."
 	}
 	"API Unhealthy"
 	{
@@ -11,5 +12,6 @@
 		"#format"	"status:d"
 		"en"		"{red}API is unhealthy (status {status})."
 		"ua"		"{red}API не працює коректно (статус {status})."
+		"sv"		"{red}API är inte välmående (status {status})."
 	}
 }

@@ -885,15 +885,18 @@
 	{
 		"en"		"Retrieve server personal best statistics."
 		"ua"		"Показати персональний найкращий час на сервері."
+		"sv"		"Hämta personlig bästa statistik på servern."
 	}
 	"Command Description - kz_gpb"
 	{
 		"en"		"Retrieve global personal best statistics."
 		"ua"		"Показати глобальний персональний найкращий час."
+		"sv"		"Hämta personlig bästa statistik globalt."
 	}
 	"Command Description - kz_apistatus"
 	{
 		"en"		"Display the status of the GlobalAPI."
 		"ua"		"Показати статус GlobalAPI."
+		"sv"		"Visa statusen av GlobalAPI."
 	}
 }
