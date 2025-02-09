@@ -4,6 +4,7 @@
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} Overall Server Top"
+		"chi"		"{map_name} ({course_name}) {mode_name} 总体服务器前列"
 		"ua"		"{map_name} ({course_name}) {mode_name} Загальний топ сервера"
 		"sv"		"{map_name} ({course_name}) {mode_name} Allmän Server Top"
 	}
@@ -11,6 +12,7 @@
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
+		"chi"		"{map_name} ({course_name}) {mode_name} 裸跳服务器前列"
 		"ua"		"{map_name} ({course_name}) {mode_name} PRO топ сервера"
 		"sv"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
 	}
@@ -18,6 +20,7 @@
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} Overall Global Top"
+		"chi"		"{map_name} ({course_name}) {mode_name} 总体全球前列"
 		"ua"		"{map_name} ({course_name}) {mode_name} Загальний глобальний топ"
 		"sv"		"{map_name} ({course_name}) {mode_name} Allmän Global Top"
 	}
@@ -25,6 +28,7 @@
 	{
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
+		"chi"		"{map_name} ({course_name}) {mode_name} 裸跳全球前列"
 		"ua"		"{map_name} ({course_name}) {mode_name} Глобальний PRO топ"
 		"sv"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 	}
