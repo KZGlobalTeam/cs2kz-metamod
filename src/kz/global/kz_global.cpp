@@ -360,6 +360,11 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 		case ix::WebSocketMessageType::Error:
 		{
 			META_CONPRINTF("[KZ::Global] WebSocket error: `%s`\n", message->errorInfo.reason.c_str());
+			if (message->errorInfo.http_status == 401)
+			{
+				META_CONPRINTF("[KZ::Global] Unauthorized. Check your API key.\n");
+				KZGlobalService::apiSocket->disableAutomaticReconnection();
+			}
 			break;
 		}
 

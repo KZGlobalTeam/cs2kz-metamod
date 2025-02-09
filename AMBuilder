@@ -51,7 +51,8 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
-    ] 
+      '-lssl', '-lcrypto'
+    ]
     binary.sources += [
       'src/utils/plat_linux.cpp'
       ]
@@ -61,11 +62,18 @@ for sdk_target in MMSPlugin.sdk_targets:
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib')
+      os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedTLS.lib'),
+      'bcrypt.lib'
     ]
     binary.sources += [
       'src/utils/plat_win.cpp'
-      ]
+    ]
+    binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'drivers', 'builtin', 'include'),
+    ]
 
   binary.sources += [
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),

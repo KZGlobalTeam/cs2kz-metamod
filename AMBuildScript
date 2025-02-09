@@ -141,7 +141,8 @@ class MMSPluginConfig(object):
         '_vsnprintf=vsnprintf',
         'HAVE_STDINT_H',
         'GNUC',
-        'USE_TLS=1'
+        'IXWEBSOCKET_USE_TLS',
+        'IXWEBSOCKET_USE_OPEN_SSL'
       ]
       cxx.cflags += [
         '-pipe',
@@ -201,7 +202,9 @@ class MMSPluginConfig(object):
         '_CRT_SECURE_NO_WARNINGS',
         '_CRT_NONSTDC_NO_DEPRECATE',
         '_HAS_EXCEPTIONS=0',
-        'USE_TLS=1'
+        'IXWEBSOCKET_USE_TLS',
+        'IXWEBSOCKET_USE_MBED_TLS',
+        'IXWEBSOCKET_USE_MBED_TLS_MIN_VERSION_3'
       ]
       cxx.cflags += [
         '/W3',
