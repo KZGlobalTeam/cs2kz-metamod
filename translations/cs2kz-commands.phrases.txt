@@ -884,18 +884,21 @@
 	"Command Description - kz_spb"
 	{
 		"en"		"Retrieve server personal best statistics."
+		"chi"		"获取服务器个人最佳数据."
 		"ua"		"Показати персональний найкращий час на сервері."
 		"sv"		"Hämta personlig bästa statistik på servern."
 	}
 	"Command Description - kz_gpb"
 	{
 		"en"		"Retrieve global personal best statistics."
+		"chi"		"获取全球个人最佳数据."
 		"ua"		"Показати глобальний персональний найкращий час."
 		"sv"		"Hämta personlig bästa statistik globalt."
 	}
 	"Command Description - kz_apistatus"
 	{
 		"en"		"Display the status of the GlobalAPI."
+		"chi"		"显示 GlobalAPI 的状态."
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 	}

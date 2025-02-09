@@ -86,7 +86,7 @@
 		// Server: #1/24 Overall (-1:00.00) | #1/10 PRO (-2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
 		"en"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
-		"chi"		"{grey}服务器: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"chi"		"{grey}服务器: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}裸跳{grey}{pb_diff_text_pro}"
 		"ru"		"{grey}Сервер: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Среди всех{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"fi"		"{grey}Palvelin: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"sv"		"{grey}Server: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
@@ -118,7 +118,7 @@
 		// Global: #1/24 Overall (-1:00.00) | #1/10 PRO (-2:00.00)
 		"#format"	"rank:d,max_rank:d,pb_diff_text:s,rank_pro:d,max_rank_pro:d,pb_diff_text_pro:s"
 		"en"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
-		"chi"		"{grey}全球: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
+		"chi"		"{grey}全球: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}裸跳{grey}{pb_diff_text_pro}"
 		"fi"		"{grey}Maailmassa: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"sv"		"{grey}Global: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"ua"		"{grey}Глобальний: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
@@ -134,6 +134,7 @@
 		// Course Points: 2345 Overall (+512) | Player Rating: 34475
 		"#format"	"points:.0f,points_gained:.0f,player_rating:.0f"
 		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"chi"		"{grey}关卡得分: {purple}{points}{grey} {yellow}总体{grey} (+{purple}{points_gained}{grey}) | 玩家 Rating: {purple}{player_rating}{grey}"
 		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
 		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
 	}
@@ -142,6 +143,7 @@
 		// Course Points: 2345 Overall (+512) / 3345 PRO (+123) | Player Rating: 34475
 		"#format"	"points:.0f,points_gained:.0f,points_pro:.0f,points_gained_pro:.0f,player_rating:.0f"
 		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"chi"		"{grey}关卡得分: {purple}{points}{grey} {yellow}总体{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}裸跳{grey} (+{purple}{points_gained}{grey}) | 玩家 Rating: {purple}{player_rating}{grey}"
 		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
 		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
 	}
@@ -251,7 +253,7 @@
 	"Can't Finish Run (Missed a Checkpoint Zone)"
 	{
 		"en"		"{darkred}You can't finish your run, because you missed a checkpoint zone."
-		"chi"		"{darkred}你不能完成你的赛跑, 因为你错过了一个检查点."
+		"chi"		"{darkred}你不能完成你的跑图, 因为你错过了一个检查点."
 		"sv"		"{darkred}Du kan inte avsluta din tid, eftersom du missade en checkpoint zon."
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили чекпоінт зону."
 		"tr"		"{darkred}Işınlanma noktası kaçırdığın için koşuyu bitiremezsin."
@@ -261,7 +263,7 @@
 	{
 		"#format"	"missed_count:i"
 		"en"		"{darkred}You can't finish your run, because you missed {missed_count} checkpoint zones."
-		"chi"		"{darkred}你不能完成你的赛跑, 因为你错过了 {missed_count} 检查点."
+		"chi"		"{darkred}你不能完成你的跑图, 因为你错过了 {missed_count} 检查点."
 		"sv"		"{darkred}Du kan inte avsluta din tid, eftersom du missade {missed_count} checkpoint zoner."
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили {missed_count} чекпоінт зони."
 		"tr"		"{darkred} {missed_count} Işınlanma noktası kaçırdığın için koşuyu bitiremezsin."
@@ -271,7 +273,7 @@
 	{
 		"#format"	"stage_number:i"
 		"en"		"{darkred}You can't finish your run, because you missed stage zone {stage_number}."
-		"chi"		"{darkred}你不能完成你的赛跑, 因为你错过了阶段区域 {stage_number}."
+		"chi"		"{darkred}你不能完成你的跑图, 因为你错过了阶段区域 {stage_number}."
 		"sv"		"{darkred}Du kan inte avsluta din tid, eftersom du missade fas zon {stage_number}."
 		"ua"		"{darkred}Ви не можете завершити своє проходження, бо пропустили зону стадії {stage_number}."
 		"tr"		"{darkred}{stage_number} aşamasını kaçırdığın için koşuyu bitiremezsin."
@@ -383,7 +385,7 @@
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO SPB {diff_time}"
-		"chi"		" | PRO SPB {diff_time}"
+		"chi"		" | 裸跳 SPB {diff_time}"
 		"sv"		" | PRO SPB {diff_time}"
 		"ua"		" | PRO SPB {diff_time}"
 	}
@@ -391,7 +393,7 @@
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO GPB {diff_time}"
-		"chi"		" | PRO GPB {diff_time}"
+		"chi"		" | 裸跳 GPB {diff_time}"
 		"sv"		" | PRO GPB {diff_time}"
 		"ua"		" | PRO GPB {diff_time}"
 	}
@@ -399,7 +401,7 @@
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO SR {diff_time}"
-		"chi"		" | PRO SR {diff_time}"
+		"chi"		" | 裸跳 SR {diff_time}"
 		"sv"		" | PRO SR {diff_time}"
 		"ua"		" | PRO SR {diff_time}"
 	}
@@ -407,7 +409,7 @@
 	{
 		"#format"	"diff_time:s"
 		"en"		" | PRO WR {diff_time}"
-		"chi"		" | PRO WR {diff_time}"
+		"chi"		" | 裸跳 WR {diff_time}"
 		"sv"		" | PRO VR {diff_time}"
 		"ua"		" | PRO WR {diff_time}"
 	}
@@ -457,7 +459,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了你的最佳 {blue}PRO{grey} 时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了你的最佳 {blue}裸跳{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa {blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {blue}PRO{grey}  ({lightred}{time}{grey})."
@@ -467,7 +469,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了你的全球最佳 {blue}PRO{grey} 时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了你的全球最佳 {blue}裸跳{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din globala bästa {blue}PRO{grey} tiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi küresel süreni kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
@@ -477,7 +479,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了 {blue}PRO{grey} 服务器记录时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了 {blue}裸跳{grey} 服务器记录时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade {blue}PRO{grey} server rekordtiden({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час рекорду сервера({lightred}{time}{grey})."
 		"tr"		"{grey}Sunucu rekorunu kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
@@ -487,7 +489,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了 {blue}PRO{grey} 全球记录时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了 {blue}裸跳{grey} 全球记录时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade {blue}PRO{grey} globala rekordtiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Dünya rekorunu kaçırdın {blue}PRO{grey} ({lightred}{time}{grey})."
@@ -497,7 +499,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了你的最佳 {yellow}总{grey}/{blue}PRO{grey} 时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了你的最佳 {yellow}总体{grey}/{blue}裸跳{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa {yellow}Allmänna{grey}/{blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}En iyi süreni kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
@@ -507,7 +509,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了你的全球最佳 {yellow}总{grey}/{blue}PRO{grey} 时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了你的全球最佳 {yellow}总体{grey}/{blue}裸跳{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa globala {yellow}Allmänna{grey}/{blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
 		"tr"		"{grey}Küresel en iyi süreni kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
@@ -517,7 +519,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了 {yellow}总{grey}/{blue}PRO{grey} 服务器记录时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了 {yellow}总体{grey}/{blue}裸跳{grey} 服务器记录时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade {yellow}Allmänna{grey}/{blue}PRO{grey} server rekordtid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час рекорду сервера ({lightred}{time}{grey})."
 		"tr"		"{grey}Sunucu rekor süresini kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
@@ -527,7 +529,7 @@
 	{
 		"#format"	"time:s"
 		"en"		"{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
-		"chi"		"{grey}你错过了 {yellow}总{grey}/{blue}PRO{grey} 全球记录时长 ({lightred}{time}{grey})."
+		"chi"		"{grey}你错过了 {yellow}总体{grey}/{blue}裸跳{grey} 全球记录时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade {yellow}Allmänna{grey}/{blue}PRO{grey} globala rekordtiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили {yellow}Загальний{grey}/{blue}PRO{grey} час світового рекорду ({lightred}{time}{grey})."
 		"tr"		"{grey}Küresel rekoru kaçırdın {yellow}Overall{grey}/{blue}PRO{grey} ({lightred}{time}{grey})."
@@ -546,7 +548,7 @@
 	"Compare Disabled"
 	{
 		"en"		"{grey}Run comparison disabled."
-		"chi"		"{grey}赛跑比较已禁用."
+		"chi"		"{grey}跑图比较已禁用."
 		"sv"		"{grey}Tidsjämförelse är inaktiverat."
 		"ua"		"{grey}Порівняння проходжень вимкнено."
 		"tr"		"{grey}Koşu karşılaştırılması devre dışı bırakıldı."
@@ -555,7 +557,7 @@
 	"Compare Server PB"
 	{
 		"en"		"{grey}You will now compare your run to your server personal best."
-		"chi"		"{grey}现在将把你的赛跑记录与你的服务器个人最佳成绩进行比较."
+		"chi"		"{grey}现在将把你的跑图记录与你的服务器个人最佳成绩进行比较."
 		"sv"		"{grey}Du kommer nu att jämföra din tid med din bästa personliga tid på servern."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим рекордом сервера."
 		"tr"		"{grey}Şimdi kendi koşunu sunucuda yaptığın en iyi koşu ile karşılaştıracaksın."
@@ -564,7 +566,7 @@
 	"Compare Global PB"
 	{
 		"en"		"{grey}You will now compare your run to up to your global personal best."
-		"chi"		"{grey}现在将把你的赛跑记录与你的全球个人最佳成绩进行比较."
+		"chi"		"{grey}现在将把你的跑图记录与你的全球个人最佳成绩进行比较."
 		"sv"		"{grey}Du kommer nu att jämföra din tid med din bästa globala tid."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з вашим особистим глобальним найкращим часом."
 		"tr"		"{grey}Şimdiki koşunu küresel kendi rekorunla karşılaştıracaksın."
@@ -573,7 +575,7 @@
 	"Compare Server Record"
 	{
 		"en"		"{grey}You will now compare your run to up to the server record."
-		"chi"		"{grey}现在将把你的赛跑记录与服务器记录进行比较."
+		"chi"		"{grey}现在将把你的跑图记录与服务器记录进行比较."
 		"sv"		"{grey}Du kommer nu att jämföra din tid med server rekordet."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження з рекордом сервера."
 		"tr"		"{grey}Şimdi koşunu sunucu rekoruyla karşılaştıracaksın."
@@ -582,7 +584,7 @@
 	"Compare World Record"
 	{
 		"en"		"{grey}You will now compare your run to up to the world record."
-		"chi"		"{grey}现在将把你的赛跑记录与世界记录进行比较."
+		"chi"		"{grey}现在将把你的跑图记录与世界记录进行比较."
 		"sv"		"{grey}Du kommer nu att jämföra din tid med världsrekordet."
 		"ua"		"{grey}Зараз Ви порівняєте своє проходження зі світовим рекордом."
 		"tr"		"{grey}Şimdi koşunu dünya rekoruyla karşılaştıracaksın."
@@ -592,12 +594,14 @@
   	"Request - Failed (Invalid Map)"
 	{
 		"en"		"{darkred}Failed to process current request. (Invalid map)"
+		"chi"		"{darkred}无法处理当前请求. (错误地图)"
 		"ua"		"{darkred}Не вдалося обробити поточний запит. (Невірна мапа)"
 		"sv"		"{darkred}Det gick inte att behandla begäran. (Ogiltig map)"
 	}
   	"Request - Failed (Generic)"
 	{
 		"en"		"{darkred}Failed to process current request."
+		"chi"		"{darkred}无法处理当前请求."
 		"ua"		"{darkred}Не вдалося обробити поточний запит."
 		"sv"		"{darkred}Det gick inte att behandla begäran."
 	}
@@ -605,6 +609,7 @@
 	{
 		"#format"	"map_name:s"
 		"en"		"{darkred}Failed to process current request. (No course exists in map {map_name})"
+		"chi"		"{darkred}无法处理当前请求. (地图中没有关卡 {map_name})"
 		"ua"		"{darkred}Не вдалося обробити поточний запит. (Не існує такого курсу на мапі {map_name})"
 		"sv"		"{darkred}Det gick inte att behandla begäran. (Ingen bana finns på kartan {map_name})"
 	}
