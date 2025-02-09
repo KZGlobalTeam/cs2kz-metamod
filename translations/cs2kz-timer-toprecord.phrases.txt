@@ -22,6 +22,7 @@
 		// Global Records on kz_map (Main) [VNL]
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{grey}Global Records on {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"sv"		"{grey}Globala Rekord på {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"No Times"
 	{
