@@ -134,13 +134,14 @@
 		// Course Points: 2345 Overall (+512) | Player Rating: 34475
 		"#format"	"points:.0f,points_gained:.0f,player_rating:.0f"
 		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
-
+		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
 	}
 	"Beat Course Info - Global Points (PRO)"
 	{
 		// Course Points: 2345 Overall (+512) / 3345 PRO (+123) | Player Rating: 34475
 		"#format"	"points:.0f,points_gained:.0f,points_pro:.0f,points_gained_pro:.0f,player_rating:.0f"
 		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
 	}
 	
 	"Can't Pause (Generic)"
@@ -289,7 +290,7 @@
 		"#format"	"course_name:s"
 		"en"		"{darkred}Start position not found for course {default}{course_name}{darkred}!"
 		"chi"		"{darkred}{course_name} {darkred}的起始点无法找到!"
-		"sv"		"{darkred}Startpositionen hittades inte för kartan {default}{course_name}{darkred}!"
+		"sv"		"{darkred}Startpositionen hittades inte för banan {default}{course_name}{darkred}!"
 		"ua"		"{darkred}Не знайдено стартову позицію для курсу {default}{course_name}{darkred}!"
 		"tr"		"{default}Bu rota için başlangıç noktası bulunamadı {course_name}{darkred}!"
 		"ko"		"{darkred}{default}{course_name}{darkred} 코스의 시작 위치를 찾을 수 없습니다!"
@@ -307,6 +308,7 @@
 	{
 		"en"		"{darkred}Turnbinds are disabled."
 		"chi"		"{darkred}旋转绑定已禁用."
+		"sv"		"{darkred}Turnbinds är inaktiverade."
 		"ko"		"{darkred}턴 바인딩이 비활성화되었습니다."
 	}
 	
@@ -587,15 +589,21 @@
   	"Request - Failed (Invalid Map)"
 	{
 		"en"		"{darkred}Failed to process current request. (Invalid map)"
+		"sv"		"{darkred}Det gick inte att behandla begäran. (Ogiltig map)"
+
 	}
   	"Request - Failed (Generic)"
 	{
 		"en"		"{darkred}Failed to process current request."
+		"sv"		"{darkred}Det gick inte att behandla begäran."
+
 	}
   	"Request - Failed (No Course in Current Map)"
 	{
 		"#format"	"map_name:s"
 		"en"		"{darkred}Failed to process current request. (No course exists in map {map_name})"
+		"sv"		"{darkred}Det gick inte att behandla begäran. (Ingen bana finns på kartan {map_name})"
+
 	}
 
 }
