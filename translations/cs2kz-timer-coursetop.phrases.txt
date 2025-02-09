@@ -111,7 +111,7 @@
 	{
 		"en"		"{darkred}Failed to retrieve course top information. {grey}(Invalid course name {default}{course_name}{grey})"
 		"chi"		"{darkred}无法找到地图排行信息.{grey}(不存在的关卡 {default}{course_name}{grey})"
-		"sv"		"{darkred}Det gick inte att hämta banans toppinformation. {grey}(Ogiltigt namn på bana {default}{course_name}{grey})"
+		"sv"		"{darkred}Det gick inte att hämta banans toppinformation. {grey}(Ogiltigt namn av bana {default}{course_name}{grey})"
 		"tr"		"{darkred}Süre bilgisi alınırken hata. {grey}(Bilinmeyen harita ismi {default}{course_name}{grey})"
 		"ua"		"{darkred}Не вдалося отримати інформацію про таблицю лідерів курсу. {grey}(Невірна назва курсу {default}{course_name}{grey})"
 		"it"		"{darkred}Impossibile recuperare informazioni sulla classifica. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
