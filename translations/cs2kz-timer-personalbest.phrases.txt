@@ -131,6 +131,7 @@
 		// Global: 12.34 (5 TPs) [#1/24 Overall / 10000 pts]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d,points:d"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey} / {purple}{points}{grey} pts]"
+		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey} / {purple}{points}{grey} очок]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts]"
 	}
 	"PB Time - Combined (Global)"
@@ -138,6 +139,7 @@
 		// Global: 12.34 [#1/24 Overall / 10000 pts] [#1/2 PRO / 10000 pts]
 		"#format"	"time:s,rank:d,max_rank:d,rank_pro:d,max_rank_pro:d,points:d,points_pro:d"
 		"en"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"ua"		"{grey}Глобально: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey} / {purple}{points}{grey} очок] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} очок]"
 		"sv"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
 	"PB Time - Split (Global)"
@@ -145,6 +147,7 @@
 		// Global: 12.34 (5 TPs) [#1/24 Overall / 10000 pts] | 23.45 [#1/2 PRO / 10000 pts]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d,time_pro:s,rank_pro:d,max_rank_pro:d,points:d,points_pro:d"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey} / {purple}{points}{grey} очок] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} очок]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
 	"PB Time - Overall Rankless (Global)"
@@ -152,6 +155,7 @@
 		// Global: 12.34 (5 TPs) [Overall]
 		"#format"	"time:s,tp_count_text:s"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}]"
+		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Allmän{grey}]"
 	}
 	"PB Time - Combined Rankless (Global)"
@@ -159,6 +163,7 @@
 		// Global: 12.34 [Overall/PRO]
 		"#format"	"time:s"
 		"en"		"{grey}Global: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
+		"ua"		"{grey}Глобально: {default}{time}{grey} [{yellow}Загальний{grey}/{blue}PRO{grey}]"
 		"sv"		"{grey}Global: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Global)"
@@ -166,6 +171,7 @@
 		// Global: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
 		"#format"	"time:s,tp_count_text:s,time_pro:s"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Allmän{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)" 
