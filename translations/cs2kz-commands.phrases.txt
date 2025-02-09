@@ -894,6 +894,6 @@
 	"Command Description - kz_apistatus"
 	{
 		"en"		"Display the status of the GlobalAPI."
-		"sv"		"Visa statusen på GlobalAPI."
+		"sv"		"Visa statusen av GlobalAPI."
 	}
 }
