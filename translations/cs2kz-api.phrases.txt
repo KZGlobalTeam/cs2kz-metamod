@@ -3,11 +3,13 @@
 	"API Healthy"
 	{
 		"en"	"API is healthy."
+		"sv"	"API är välmående."
 	}
 	"API Unhealthy"
 	{
 		// API is unhealthy (status XXX).
 		"#format"	"status:d"
 		"en"		"{red}API is unhealthy (status {status})."
+		"en"		"{red}API är inte välmående (status {status})."
 	}
 }
