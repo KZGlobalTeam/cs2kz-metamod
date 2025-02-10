@@ -129,19 +129,30 @@ CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
 CUtlString KZUtils::GetCurrentMapName(bool *result)
 {
 	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
-	if (!networkGameServer)
+	if (networkGameServer)
 	{
 		if (result)
 		{
-			*result = false;
+			*result = true;
 		}
-		return "";
+		return networkGameServer->GetMapName();
 	}
+
+	const CGlobalVars *globals = g_pKZUtils->GetGlobals();
+	if (globals && strlen(globals->mapname.ToCStr()))
+	{
+		if (result)
+		{
+			*result = true;
+		}
+		return globals->mapname.ToCStr();
+	}
+
 	if (result)
 	{
-		*result = true;
+		*result = false;
 	}
-	return networkGameServer->GetMapName();
+	return "";
 }
 
 u64 KZUtils::GetCurrentMapWorkshopID()
