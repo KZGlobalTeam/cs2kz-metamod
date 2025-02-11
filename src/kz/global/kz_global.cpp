@@ -137,12 +137,17 @@ void KZGlobalService::OnActivateServer()
 	if (!initialized)
 	{
 		KZGlobalService::Init();
-		return;
 	}
 
-	if (!KZGlobalService::IsConnected())
 	{
-		return;
+		std::unique_lock handshakeLock(KZGlobalService::handshakeLock);
+
+		if (!KZGlobalService::handshakeInitiated)
+		{
+			KZGlobalService::handshakeInitiated = true;
+			KZGlobalService::handshakeCondvar.notify_one();
+			return;
+		}
 	}
 
 	bool ok = false;
@@ -427,6 +432,13 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 
 void KZGlobalService::InitiateWebSocketHandshake(const ix::WebSocketMessagePtr &message)
 {
+	META_CONPRINTF("[KZ::Global] Waiting for map to load...\n");
+
+	{
+		std::unique_lock handshakeLock(KZGlobalService::handshakeLock);
+		KZGlobalService::handshakeCondvar.wait(handshakeLock, []() { return KZGlobalService::handshakeInitiated; });
+	}
+
 	META_CONPRINTF("[KZ::Global] Performing handshake...\n");
 	assert(message->type == ix::WebSocketMessageType::Open);
 
@@ -488,6 +500,8 @@ void KZGlobalService::CompleteWebSocketHandshake(const ix::WebSocketMessagePtr &
 	}
 
 	META_CONPRINTF("[KZ::Global] Completed handshake!\n");
+
+	KZGlobalService::OnActivateServer();
 }
 
 void KZGlobalService::HeartbeatThread()

@@ -119,6 +119,21 @@ private:
 	static inline ix::WebSocket *apiSocket {};
 
 	/**
+	 * Protects `handshakeInitiated`.
+	 */
+	static inline std::mutex handshakeLock {};
+
+	/**
+	 * Whether we already initiated the handshake
+	 */
+	static inline bool handshakeInitiated {};
+
+	/**
+	 * Used to wait for `handshakeInitiated` to become true
+	 */
+	static inline std::condition_variable handshakeCondvar {};
+
+	/**
 	 * Interval at which we need to send ping messages over the WebSocket.
 	 *
 	 * Set by the API during the handshake.
