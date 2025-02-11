@@ -889,4 +889,22 @@
 		"ko"		"현재 코스와 맵에 있는 모든 코스 목록을 표시합니다."
 		"es"		"Mostrar el recorrido actual y la lista de todos los recorridos en el mapa."
 	}
+	"Command Description - kz_spb"
+	{
+		"en"		"Retrieve server personal best statistics."
+		"ua"		"Показати персональний найкращий час на сервері."
+		"sv"		"Hämta personlig bästa statistik på servern."
+	}
+	"Command Description - kz_gpb"
+	{
+		"en"		"Retrieve global personal best statistics."
+		"ua"		"Показати глобальний персональний найкращий час."
+		"sv"		"Hämta personlig bästa statistik globalt."
+	}
+	"Command Description - kz_apistatus"
+	{
+		"en"		"Display the status of the GlobalAPI."
+		"ua"		"Показати статус GlobalAPI."
+		"sv"		"Visa statusen av GlobalAPI."
+	}
 }

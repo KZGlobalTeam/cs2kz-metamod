@@ -60,6 +60,7 @@ public:
 	virtual void Init() override;
 	virtual void Reset() override;
 	virtual void OnPlayerActive() override;
+	virtual void OnPlayerFullyConnect() override;
 	virtual void OnAuthorized() override;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
@@ -253,4 +254,4 @@ namespace KZ
 		void InitTimeLimit();
 		void EnforceTimeLimit();
 	} // namespace misc
-};    // namespace KZ
+}; // namespace KZ

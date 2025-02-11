@@ -11,6 +11,8 @@
 #include "vendor/tinyformat.h"
 
 #include "entity2/entitysystem.h"
+#include "tier0/dbg.h"
+
 #define MAXPLAYERS 64
 
 #define ENGINE_FIXED_TICK_INTERVAL 0.015625f

@@ -1,0 +1,17 @@
+"Phrases"
+{
+	"API Healthy"
+	{
+		"en"	"API is healthy."
+		"ua"	"API працює коректно."
+		"sv"	"API är välmående."
+	}
+	"API Unhealthy"
+	{
+		// API is unhealthy (status XXX).
+		"#format"	"status:d"
+		"en"		"{red}API is unhealthy (status {status})."
+		"ua"		"{red}API не працює коректно (статус {status})."
+		"sv"		"{red}API är inte välmående (status {status})."
+	}
+}

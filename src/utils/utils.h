@@ -88,4 +88,6 @@ namespace utils
 		return str[strspn(str, "0123456789")] == 0;
 	}
 
+	bool ParseSteamID2(std::string_view steamID, u64 &out);
+
 } // namespace utils

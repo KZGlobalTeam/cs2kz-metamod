@@ -1,0 +1,13 @@
+name: Master build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
+    with:
+      version: "0.0.0"

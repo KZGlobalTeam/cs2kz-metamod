@@ -116,6 +116,8 @@ public:
 
 	virtual void OnPlayerActive() {}
 
+	virtual void OnPlayerFullyConnect() {}
+
 	virtual void OnAuthorized();
 
 public:

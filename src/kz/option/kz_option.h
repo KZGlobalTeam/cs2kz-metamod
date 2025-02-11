@@ -50,6 +50,7 @@ public:
 	}
 
 	void InitializeLocalPrefs(CUtlString text);
+	void InitializeGlobalPrefs(std::string json);
 
 	bool IsInitialized()
 	{
@@ -66,6 +67,11 @@ public:
 	{
 		SaveLocalPrefs();
 		SaveGlobalPrefs();
+	}
+
+	void GetPreferencesAsJSON(CUtlString *error, CUtlString *output)
+	{
+		SaveKV3AsJSON(&this->prefKV, error, output);
 	}
 
 	// Due to the way keyvalues3.h is written, we can't template these functions.

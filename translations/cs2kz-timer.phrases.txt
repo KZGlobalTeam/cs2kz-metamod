@@ -129,21 +129,21 @@
 		"ko"		"{grey}글로벌 순위: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
 	
-	"Beat Course Info - Global Points"
+	"Beat Course Info - Global Points (TP)"
 	{
-		// Map Points: 2345 (+512) | Player Rating: 34475
-		"#format"	"total_map_points:d,map_points_gained:d,player_rating:d"
-		"en"		"{grey}Map Points: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
-		"chi"		"{grey}地图积分: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | 玩家 Rating: {purple}{player_rating}{grey}"
-		"pl"		"{grey}Punkty mapy: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Ocena gracza: {purple}{player_rating}{grey}"
-		"fi"		"{grey}Kenttä Pisteet: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Pelaajan Pisteet: {purple}{player_rating}{grey}"
-		"sv"		"{grey}Map Poäng: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Spelarens Rating: {purple}{player_rating}{grey}"
-		"ua"		"{grey}Очки за мапу: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
-		"tr"		"{grey}Harita puanları: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Oyuncu değeri: {purple}{player_rating}{grey}"
-		"it"		"{grey}Punti mappa: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Valutazione Giocatore: {purple}{player_rating}{grey}"
-		"es"		"{grey}Puntos de mapa: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Clasificación del jugador: {purple}{player_rating}{grey}"
-		"de"		"{grey}Kartenpunkte: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Spielerwertung: {purple}{player_rating}{grey}"
-		"ko"		"{grey}Map Points: {purple}{total_map_points}{grey} (+{purple}{map_points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		// Course Points: 2345 Overall (+512) | Player Rating: 34475
+		"#format"	"points:.0f,points_gained:.0f,player_rating:.0f"
+		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
+		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
+	}
+	"Beat Course Info - Global Points (PRO)"
+	{
+		// Course Points: 2345 Overall (+512) / 3345 PRO (+123) | Player Rating: 34475
+		"#format"	"points:.0f,points_gained:.0f,points_pro:.0f,points_gained_pro:.0f,player_rating:.0f"
+		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
+		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
 	}
 	
 	"Can't Pause (Generic)"
@@ -296,7 +296,7 @@
 		"#format"	"course_name:s"
 		"en"		"{darkred}Start position not found for course {default}{course_name}{darkred}!"
 		"chi"		"{darkred}{course_name} {darkred}的起始点无法找到!"
-		"sv"		"{darkred}Startpositionen hittades inte för kartan {default}{course_name}{darkred}!"
+		"sv"		"{darkred}Startpositionen hittades inte för banan {default}{course_name}{darkred}!"
 		"ua"		"{darkred}Не знайдено стартову позицію для курсу {default}{course_name}{darkred}!"
 		"tr"		"{default}Bu rota için başlangıç noktası bulunamadı {course_name}{darkred}!"
 		"ko"		"{darkred}{default}{course_name}{darkred} 코스의 시작 위치를 찾을 수 없습니다!"
@@ -315,7 +315,9 @@
 	"Turnbinds Disabled"
 	{
 		"en"		"{darkred}Turnbinds are disabled."
+		"ua"		"{darkred}Turnbinds команди вимкнено."
 		"chi"		"{darkred}旋转绑定已禁用."
+		"sv"		"{darkred}Turnbinds är inaktiverade."
 		"ko"		"{darkred}턴 바인딩이 비활성화되었습니다."
 		"es"		"{darkred}Binds de giros desactivados."
 	}
@@ -432,7 +434,7 @@
 	"Missed Server PB (Overall)"
 	{
 		"#format"	"time:s"
-		"en"		"{grey}You missed your best {yellow}Overall{grey} time ({lightred}{time}{grey})."
+		"en"		"{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey})."
 		"chi"		"{grey}你错过了你的最佳 {yellow}总{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa {yellow}Allmänna{grey} tiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey} час ({lightred}{time}{grey})."
@@ -443,7 +445,7 @@
 	"Missed Global PB (Overall)"
 	{
 		"#format"	"time:s"
-		"en"		"{grey}You missed your global best {yellow}Overall{grey} time ({lightred}{time}{grey})."
+		"en"		"{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey})."
 		"chi"		"{grey}你错过了你的全球最佳 {yellow}总{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa globala {yellow}Allmänna{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey} час ({lightred}{time}{grey})."
@@ -476,7 +478,7 @@
 	"Missed Server PB (Pro)"
 	{
 		"#format"	"time:s"
-		"en"		"{grey}You missed your best {blue}PRO{grey} time ({lightred}{time}{grey})."
+		"en"		"{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
 		"chi"		"{grey}你错过了你的最佳 {blue}PRO{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa {blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {blue}PRO{grey} час ({lightred}{time}{grey})."
@@ -487,7 +489,7 @@
 	"Missed Global PB (Pro)"
 	{
 		"#format"	"time:s"
-		"en"		"{grey}You missed your global best {blue}PRO{grey} time ({lightred}{time}{grey})."
+		"en"		"{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
 		"chi"		"{grey}你错过了你的全球最佳 {blue}PRO{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din globala bästa {blue}PRO{grey} tiden ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {blue}PRO{grey} час ({lightred}{time}{grey})."
@@ -520,7 +522,7 @@
 	"Missed Server PB (Overall+Pro)"
 	{
 		"#format"	"time:s"
-		"en"		"{grey}You missed your best {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
+		"en"		"{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
 		"chi"		"{grey}你错过了你的最佳 {yellow}总{grey}/{blue}PRO{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa {yellow}Allmänna{grey}/{blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
@@ -531,7 +533,7 @@
 	"Missed Global PB (Overall+Pro)"
 	{
 		"#format"	"time:s"
-		"en"		"{grey}You missed your global best {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
+		"en"		"{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
 		"chi"		"{grey}你错过了你的全球最佳 {yellow}总{grey}/{blue}PRO{grey} 时长 ({lightred}{time}{grey})."
 		"sv"		"{grey}Du missade din bästa globala {yellow}Allmänna{grey}/{blue}PRO{grey} tid ({lightred}{time}{grey})."
 		"ua"		"{grey}Ви пропустили свій найкращий глобальний {yellow}Загальний{grey}/{blue}PRO{grey} час ({lightred}{time}{grey})."
@@ -626,17 +628,23 @@
   	"Request - Failed (Invalid Map)"
 	{
 		"en"		"{darkred}Failed to process current request. (Invalid map)"
+		"ua"		"{darkred}Не вдалося обробити поточний запит. (Невірна мапа)"
+		"sv"		"{darkred}Det gick inte att behandla begäran. (Ogiltig map)"
 		"es"		"{darkred}Fallo al procesar la solicitud actual. (Mapa no válido)"
 	}
   	"Request - Failed (Generic)"
 	{
 		"en"		"{darkred}Failed to process current request."
+		"ua"		"{darkred}Не вдалося обробити поточний запит."
+		"sv"		"{darkred}Det gick inte att behandla begäran."
 		"es"		"{darkred}Fallo al procesar la solicitud actual."
 	}
   	"Request - Failed (No Course in Current Map)"
 	{
 		"#format"	"map_name:s"
 		"en"		"{darkred}Failed to process current request. (No course exists in map {map_name})"
+		"ua"		"{darkred}Не вдалося обробити поточний запит. (Не існує такого курсу на мапі {map_name})"
+		"sv"		"{darkred}Det gick inte att behandla begäran. (Ingen bana finns på kartan {map_name})"
 		"es"		"{darkred}Fallo al procesar la solicitud actual. (No hay recorridos en el mapa {map_name})"
 	}
 

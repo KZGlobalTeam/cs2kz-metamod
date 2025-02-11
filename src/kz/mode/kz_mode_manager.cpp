@@ -59,7 +59,7 @@ void KZ::mode::InitModeManager()
 		return;
 	}
 	ModeServiceFactory vnlFactory = [](KZPlayer *player) -> KZModeService * { return new KZVanillaModeService(player); };
-	modeManager.RegisterMode(0, "VNL", "Vanilla", vnlFactory);
+	modeManager.RegisterMode(g_PLID, "VNL", "Vanilla", vnlFactory);
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
 	KZOptionService::RegisterEventListener(&optionEventListener);
 	initialized = true;
@@ -404,6 +404,21 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 		}
 	}
 	return emptyInfo;
+}
+
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZ::API::Mode mode)
+{
+	switch (mode)
+	{
+		case KZ::API::Mode::Vanilla:
+		{
+			return KZ::mode::GetModeInfo("vanilla");
+		}
+		case KZ::API::Mode::Classic:
+		{
+			return KZ::mode::GetModeInfo("classic");
+		}
+	}
 }
 
 KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)

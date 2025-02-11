@@ -94,7 +94,10 @@ void PlayerManager::OnClientConnected(CPlayerSlot slot, const char *pszName, uin
 {
 }
 
-void PlayerManager::OnClientFullyConnect(CPlayerSlot slot) {}
+void PlayerManager::OnClientFullyConnect(CPlayerSlot slot)
+{
+	this->ToPlayer(slot)->OnPlayerFullyConnect();
+}
 
 void PlayerManager::OnClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid) {}
 

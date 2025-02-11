@@ -16,11 +16,13 @@
 #include "kz/option/kz_option.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/timer/announce.h"
 #include "kz/timer/queries/base_request.h"
 #include "kz/telemetry/kz_telemetry.h"
 #include "kz/trigger/kz_trigger.h"
 #include "kz/db/kz_db.h"
 #include "kz/mappingapi/kz_mappingapi.h"
+#include "kz/global/kz_global.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
 
@@ -458,7 +460,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
-	KZ::timer::CheckAnnounceQueue();
+	RecordAnnounce::Check();
 	BaseRequest::CheckRequests();
 	KZ::misc::EnforceTimeLimit();
 	KZTelemetryService::ActiveCheck();
@@ -535,6 +537,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	}
 	player->timerService->OnClientDisconnect();
 	player->optionService->OnClientDisconnect();
+	player->globalService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -647,16 +650,17 @@ static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
-	KZJumpstatsService::OnServerActivate();
-	KZ::timer::ClearAnnounceQueue();
-	KZ::misc::OnServerActivate();
-	CUtlString dir = g_pKZUtils->GetCurrentMapDirectory();
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
 	u64 size = g_pKZUtils->GetCurrentMapSize();
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
+
+	KZJumpstatsService::OnServerActivate();
+	RecordAnnounce::Clear();
+	KZ::misc::OnServerActivate();
 	KZDatabaseService::SetupMap();
+	KZGlobalService::OnActivateServer();
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "../kz.h"
 #include "kz/mappingapi/kz_mappingapi.h"
+#include "kz/global/api/api.h"
 #include "../jumpstats/kz_jumpstats.h"
 #include "UtlStringMap.h"
 
@@ -280,6 +281,7 @@ namespace KZ::mode
 	void EnableReplicatedModeCvars();
 
 	KZModeManager::ModePluginInfo GetModeInfo(KZModeService *mode);
+	KZModeManager::ModePluginInfo GetModeInfo(KZ::API::Mode mode);
 	KZModeManager::ModePluginInfo GetModeInfo(CUtlString modeName);
 	KZModeManager::ModePluginInfo GetModeInfoFromDatabaseID(i32 id);
 

@@ -2,13 +2,20 @@
 {
 	"No Steam Authentication Warning"
 	{
-		"en"	"{darkred}Warning{grey}: You are not currently authenticated with Steam. Your run might not be saved. Type {default}!pc{grey} to check your current authentication status."
-		"chi"	"{darkred}注意{grey}: 你当前未通过Steam身份验证. 你的跳跃可能不会被记录. 输入 {default}!pc{grey} 以检查你的身份认证状态."
-		"sv"	"{darkred}Varning{grey}: Du är inte autentiserad med Steam. Din tid sparas kanske inte. Skriv {default}!pc{grey} för att kolla din autentiseringsstatus."
-		"ua"	"{darkred}Увага{grey}: Ви не автентифіковані у Steam. Можливо, ваше проходження не буде зараховано. Напишіть {default}!pc{grey} в чаті, щоб перевірити поточний стан автентифікації."
-		"tr"	"{darkred}Dikkat{grey}: Steam kimliğin doğrulanamadı.{default}!pc{grey} yazarak kimlik doğrulama statünü öğrenebilirsin."
-		"ko"	"{darkred}경고{grey}: 현재 Steam에 인증되지 않았습니다. 주행 기록이 저장되지 않을 수 있습니다. {default}!pc{grey}를 입력하여 현재 인증 상태를 확인하세요."
-		"es"	"{darkred}Atención{grey}: Actualmente no estás autenticado con Steam. Tu carrera podría no guardarse. Escribe {default}!pc{grey} para comprobar tu estado de autenticación actual."
+		"en"		"{darkred}Warning{grey}: You are not currently authenticated with Steam. Your run might not be saved. Type {default}!pc{grey} to check your current authentication status."
+		"chi"		"{darkred}注意{grey}: 你当前未通过Steam身份验证. 你的跳跃可能不会被记录. 输入 {default}!pc{grey} 以检查你的身份认证状态."
+		"sv"		"{darkred}Varning{grey}: Du är inte autentiserad med Steam. Din tid sparas kanske inte. Skriv {default}!pc{grey} för att kolla din autentiseringsstatus."
+		"ua"		"{darkred}Увага{grey}: Ви не автентифіковані у Steam. Можливо, ваше проходження не буде зараховано. Напишіть {default}!pc{grey} в чаті, щоб перевірити поточний стан автентифікації."
+		"tr"		"{darkred}Dikkat{grey}: Steam kimliğin doğrulanamadı.{default}!pc{grey} yazarak kimlik doğrulama statünü öğrenebilirsin."
+		"ko"		"{darkred}경고{grey}: 현재 Steam에 인증되지 않았습니다. 주행 기록이 저장되지 않을 수 있습니다. {default}!pc{grey}를 입력하여 현재 인증 상태를 확인하세요."
+		"es"		"{darkred}Atención{grey}: Actualmente no estás autenticado con Steam. Tu carrera podría no guardarse. Escribe {default}!pc{grey} para comprobar tu estado de autenticación actual."
+	}
+	"No Prime Warning"
+	{
+		"en"		"{darkred}Warning{grey}: You do not have Prime Status upgrade. Your run will not be saved globally."
+		"ua"		"{darkred}Увага{grey}: Ви не маєте Прайм-статусу. Ваш час проходження не буде збережено глобально."
+		"sv"		"{darkred}Varning{grey}: Du har inte Prime Status uppgraderingen. Din tid kommer inte att sparas globalt."
+		"es"		"{darkred}Atención{grey}:No tienes la mejora del estatus Prime. Tu carrera no será guardada globalmente."
 	}
 	"Player Authenticated (Steam)"
 	{

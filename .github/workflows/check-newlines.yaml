@@ -1,0 +1,13 @@
+name: CRLF and final newlines checks
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  check-newlines:
+    name: Check for CRLF and final newlines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/check-newlines.sh
