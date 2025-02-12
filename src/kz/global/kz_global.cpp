@@ -39,11 +39,12 @@ void KZGlobalService::Init()
 
 	KZGlobalService::apiUrl = KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org");
 	KZGlobalService::apiKey = KZOptionService::GetOptionStr("apiKey", "");
+	KZGlobalService::isEnabled = KZOptionService::GetOptionInt("runWithoutGlobal");
 
 	if (KZGlobalService::apiUrl.size() < 4 || KZGlobalService::apiUrl.substr(0, 4) != "http")
 	{
 		META_CONPRINTF("[KZ::Global] Invalid API url. GlobalService will be disabled.\n");
-		KZGlobalService::apiUrl = "";
+		KZGlobalService::isEnabled = false;
 		return;
 	}
 
@@ -184,6 +185,11 @@ void KZGlobalService::OnActivateServer()
 
 void KZGlobalService::OnPlayerAuthorized()
 {
+	if (!KZGlobalService::isEnabled)
+	{
+		return;
+	}
+
 	KZ::API::events::PlayerJoin data;
 	data.steamId = this->player->GetSteamId64();
 	data.name = this->player->GetName();
@@ -239,7 +245,7 @@ void KZGlobalService::OnPlayerAuthorized()
 
 void KZGlobalService::OnClientDisconnect()
 {
-	if (!this->player->IsConnected() || !this->player->IsAuthenticated())
+	if (!KZGlobalService::isEnabled || !this->player->IsConnected() || !this->player->IsAuthenticated())
 	{
 		return;
 	}

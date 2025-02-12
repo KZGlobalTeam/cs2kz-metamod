@@ -49,6 +49,7 @@
 		//"port"			"3306"
 	}
 
-	"apiUrl" "https://api.cs2kz.org"
-	"apiKey" ""
+	"apiUrl" 		""
+	"apiKey" 		""
+	"runWithoutGlobal"	"0"
 }
