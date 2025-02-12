@@ -204,6 +204,25 @@ void KZGlobalService::OnActivateServer()
 
 void KZGlobalService::OnServerGamePostSimulate()
 {
+	// These players were not registered with the API when they joined the server.
+	if (KZGlobalService::shouldAuthenticateExistingPlayers)
+	{
+		KZGlobalService::shouldAuthenticateExistingPlayers = false;
+		for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+			if (!player->IsInGame())
+			{
+				continue;
+			}
+
+			if (player->IsConnected() && player->IsAuthenticated())
+			{
+				player->globalService->OnPlayerAuthorized();
+			}
+		}
+	}
+
 	std::unordered_map<u64, StoredCallback> readyCallbacks;
 
 	{
@@ -233,6 +252,10 @@ void KZGlobalService::OnServerGamePostSimulate()
 
 void KZGlobalService::OnPlayerAuthorized()
 {
+	if (!KZGlobalService::IsConnected())
+	{
+		return;
+	}
 	KZ::API::events::PlayerJoin data;
 	data.steamId = this->player->GetSteamId64();
 	data.name = this->player->GetName();
