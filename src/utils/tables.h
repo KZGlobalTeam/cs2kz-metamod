@@ -58,7 +58,7 @@ namespace utils
 			}
 			entries[row].data[column] = value;
 			entries[row].data[column].Append("ᅟ"); // Add a space to reset the "font" to monospace
-			columnLengths[column] = MAX(columnLengths[column], V_strlen(entries[row].data[i].Get()));
+			columnLengths[column] = MAX(columnLengths[column], V_strlen(entries[row].data[column].Get()));
 			return true;
 		}
 
