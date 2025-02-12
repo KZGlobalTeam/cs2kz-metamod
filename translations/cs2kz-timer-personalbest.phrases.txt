@@ -51,7 +51,7 @@
 		// Server: 12.34 [#1/24 Overall] [#1/2 PRO]
 		"#format"	"time:s,rank:d,max_rank:d,rank_pro:d,max_rank_pro:d"
 		"en"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
-		"chi"		"{grey}服务器: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"chi"		"{grey}服务器: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}裸跳{grey}]"
 		"fi"		"{grey}Palvelin: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
@@ -67,7 +67,7 @@
 		// Server: 12.34 (5 TPs) [#1/24 Overall] | 23.45 [#1/2 PRO]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d,time_pro:s,rank_pro:d,max_rank_pro:d"
 		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
-		"chi"		"{grey}服务器: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"chi"		"{grey}服务器: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}裸跳{grey}]"
 		"fi"		"{grey}Palvelin: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kokonaisuus{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Total{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
@@ -99,7 +99,7 @@
 		// Server: 12.34 [Overall/PRO]
 		"#format"	"time:s"
 		"en"		"{grey}Server: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
-		"chi"		"{grey}服务器: {default}{time}{grey} [{yellow}总体{grey}/{blue}PRO{grey}]"
+		"chi"		"{grey}服务器: {default}{time}{grey} [{yellow}总体{grey}/{blue}裸跳{grey}]"
 		"fi"		"{grey}Palvelin: {default}{time}{grey} [{yellow}Kokonaisuus{grey}/{blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} [{yellow}Total{grey}/{blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} [{yellow}Загальний{grey}/{blue}PRO{grey}]"
@@ -115,7 +115,7 @@
 		// Server: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
 		"#format"	"time:s,tp_count_text:s,time_pro:s"
 		"en"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
-		"chi"		"{grey}服务器: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}总体{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"chi"		"{grey}服务器: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}总体{grey}] | {default}{time_pro}{grey} [{blue}裸跳{grey}]"
 		"fi"		"{grey}Palvelin: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kokonaisuus{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"sv"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Total{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"ua"		"{grey}Сервер: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
@@ -131,6 +131,7 @@
 		// Global: 12.34 (5 TPs) [#1/24 Overall / 10000 pts]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d,points:d"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey} / {purple}{points}{grey} pts]"
+		"chi"		"{grey}全球: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey} / {purple}{points}{grey} 得分]"
 		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey} / {purple}{points}{grey} очок]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts]"
 	}
@@ -139,6 +140,7 @@
 		// Global: 12.34 [#1/24 Overall / 10000 pts] [#1/2 PRO / 10000 pts]
 		"#format"	"time:s,rank:d,max_rank:d,rank_pro:d,max_rank_pro:d,points:d,points_pro:d"
 		"en"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"chi"		"{grey}全球: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey} / {purple}{points}{grey} 得分] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}裸跳{grey} / {purple}{points_pro}{grey} 得分]"
 		"ua"		"{grey}Глобально: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey} / {purple}{points}{grey} очок] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} очок]"
 		"sv"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
@@ -147,6 +149,7 @@
 		// Global: 12.34 (5 TPs) [#1/24 Overall / 10000 pts] | 23.45 [#1/2 PRO / 10000 pts]
 		"#format"	"time:s,tp_count_text:s,rank:d,max_rank:d,time_pro:s,rank_pro:d,max_rank_pro:d,points:d,points_pro:d"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"chi"		"{grey}全球: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}总体{grey} / {purple}{points}{grey} 得分] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}裸跳{grey} / {purple}{points_pro}{grey} 得分]"
 		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Загальний{grey} / {purple}{points}{grey} очок] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} очок]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
@@ -155,6 +158,7 @@
 		// Global: 12.34 (5 TPs) [Overall]
 		"#format"	"time:s,tp_count_text:s"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}]"
+		"chi"		"{grey}全球: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}总体{grey}]"
 		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Allmän{grey}]"
 	}
@@ -163,6 +167,7 @@
 		// Global: 12.34 [Overall/PRO]
 		"#format"	"time:s"
 		"en"		"{grey}Global: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
+		"chi"		"{grey}全球: {default}{time}{grey} [{yellow}总体{grey}/{blue}裸跳{grey}]"
 		"ua"		"{grey}Глобально: {default}{time}{grey} [{yellow}Загальний{grey}/{blue}PRO{grey}]"
 		"sv"		"{grey}Global: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
 	}
@@ -171,6 +176,7 @@
 		// Global: 12.34 (5 TPs) [Overall] | 23.45 [PRO]
 		"#format"	"time:s,tp_count_text:s,time_pro:s"
 		"en"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"chi"		"{grey}全球: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}总体{grey}] | {default}{time_pro}{grey} [{blue}裸跳{grey}]"
 		"ua"		"{grey}Глобально: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Загальний{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Allmän{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}

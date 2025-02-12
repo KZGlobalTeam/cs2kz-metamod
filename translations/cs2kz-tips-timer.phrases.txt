@@ -3,7 +3,7 @@
 	"Tip - kz_comparelevel"
 	{
 		"en"	"{grey}You can select different benchmarks to compare your run against by using {default}/comparelevel{grey}."
-		"chi"	"{grey}你可以使用 {default}/comparelevel{grey} 选择不同的基准来比较你的赛跑成绩."
+		"chi"	"{grey}你可以使用 {default}/comparelevel{grey} 选择不同的基准来比较你的跑图成绩."
 		"sv"	"{grey}Du kan jämföra din egna tid bland andra utgångslägen med {default}/comparelevel{grey}."
 		"ua"	"{grey}Ви можете обрати різні критерії для порівняння свого проходження, використовуючи команду {default}/comparelevel{grey}."
 		"tr"	"{grey}Bu kodu kullanarak koşunu karşılaştırmak için farklı kıyaslamalar seçebilirsin. {default}/comparelevel{grey}."

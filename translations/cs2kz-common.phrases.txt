@@ -13,6 +13,7 @@
 	"No Prime Warning"
 	{
 		"en"		"{darkred}Warning{grey}: You do not have Prime Status upgrade. Your run will not be saved globally."
+		"chi"		"{darkred}警告{grey}: 你没有优先状态升级. 你的记录将不会保存至全球."
 		"ua"		"{darkred}Увага{grey}: Ви не маєте Прайм-статусу. Ваш час проходження не буде збережено глобально."
 		"sv"		"{darkred}Varning{grey}: Du har inte Prime Status uppgraderingen. Din tid kommer inte att sparas globalt."
 		"es"		"{darkred}Atención{grey}:No tienes la mejora del estatus Prime. Tu carrera no será guardada globalmente."
