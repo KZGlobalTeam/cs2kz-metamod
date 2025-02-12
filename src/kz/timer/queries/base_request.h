@@ -116,7 +116,7 @@ protected:
 	CUtlString courseName;
 	bool requestingFirstCourse = false;
 
-	u64 limit = 20;
+	u64 limit = 10;
 	u64 offset = 0;
 
 	u64 targetSteamID64 {};
