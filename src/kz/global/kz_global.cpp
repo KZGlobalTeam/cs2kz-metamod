@@ -179,6 +179,10 @@ void KZGlobalService::OnActivateServer()
 			{
 				KZGlobalService::currentMap = KZGlobalService::CurrentMap(messageID, *mapInfo.map);
 			}
+			else
+			{
+				KZGlobalService::currentMap = std::nullopt;
+			}
 		}
 
 		if (!mapInfo.map.has_value())
