@@ -10,7 +10,7 @@
 		"ua"		"{grey}Використання: {default}kz_style <style>/+<style>/-<style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_style <style>/+<style>/-<style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_style <stile>/+<stile>/-<stile>{grey}. Controlla la console per gli stili disponibili!"
-		"es"		"{grey}Uso: {default}kz_style <style>/+<style>/-<style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"es"		"{grey}Usa: {default}kz_style <style>/+<style>/-<style>{grey}. ¡Mira la consola para ver los estilos posibles!"
 		"de"		"{grey}Verwendung: {default}kz_style <style>/+<style>/-<style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 		"ko"		"{grey}사용법: {default}kz_style <style>/+<style>/-<style>{grey}. 가능한 스타일은 콘솔에서 확인하세요!"
 	}
@@ -24,7 +24,7 @@
 		"ua"		"{grey}Використання: {default}kz_addstyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_addstyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_addstyle <stile>{grey}. Controlla la console per gli stili disponibili!"
-		"es"		"{grey}Uso: {default}kz_addstyle <style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"es"		"{grey}Usa: {default}kz_addstyle <style>{grey}. ¡Mira la consola para ver los estilos posibles!"
 		"de"		"{grey}Verwendung: {default}kz_addstyle <style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 		"ko"		"{grey}사용법: {default}kz_addstyle <style>{grey}. 가능한 스타일은 콘솔에서 확인하세요!"
 	}
@@ -38,7 +38,7 @@
 		"ua"		"{grey}Використання: {default}kz_removestyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_removestyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_removestyle <stile>{grey}. Controlla la console per gli stili disponibili!"
-		"es"		"{grey}Uso: {default}kz_removestyle <style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"es"		"{grey}Usa: {default}kz_removestyle <style>{grey}. ¡Mira la consola para ver los estilos posibles!"
 		"de"		"{grey}Verwendung: {default}kz_removestyle <style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 		"ko"		"{grey}사용법: {default}kz_removestyle <style>{grey}. 가능한 스타일은 콘솔에서 확인하세요!"
 	}
@@ -52,7 +52,7 @@
 		"ua"		"{grey}Використання: {default}kz_togglestyle <style>{grey}. Перевірте консоль, щоб побачити список доступних стилів!"
 		"tr"		"{grey}Kullanım: {default}kz_togglestyle <style>{grey}. Mevcut stiller için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_togglestyle <stile>{grey}. Controlla la console per gli stili disponibili!"
-		"es"		"{grey}Uso: {default}kz_togglestyle <style>{grey}. ¡Mire la consola para los estilos posibles!"
+		"es"		"{grey}Usa: {default}kz_togglestyle <style>{grey}. ¡Mire la consola para ver los estilos posibles!"
 		"de"		"{grey}Verwendung: {default}kz_togglestyle <style>{grey}. Überprüfe die Konsole auf mögliche Stile!"
 		"ko"		"{grey}사용법: {default}kz_togglestyle <style>{grey}. 가능한 스타일은 콘솔에서 확인하세요!"
 	}
@@ -110,7 +110,7 @@
 		"ua"		"{grey}Ви очистили свої стилі."
 		"tr"		"{grey}Stillerinizi temizlediniz."
 		"it"		"{grey}Hai eliminato gli stili."
-		"es"		"{grey}Ha eliminado sus estilos."
+		"es"		"{grey}Eliminaste tus estilos."
 		"de"		"{grey}Du hast deine Stile gelöscht."
 		"ko"		"{grey}스타일을 초기화했습니다."
 	}
@@ -125,7 +125,7 @@
 		"ua"		"{grey}Ви видалили {purple}{style}{grey} стиль."
 		"tr"		"{grey}Seçtiğiniz {purple}{style}{grey} stilini kaldırdınız."
 		"it"		"{grey}Hai rimosso lo stile {purple}{style}{grey}."
-		"es"		"{grey}Ha eliminado el estilo {purple}{style}{grey}."
+		"es"		"{grey}Eliminaste el estilo {purple}{style}{grey}."
 		"de"		"{grey}Du hast den Stil {purple}{style}{grey} entfernt."
 		"ko"		"{grey}{purple}{style}{grey} 스타일을 제거했습니다."
 	}
@@ -140,7 +140,7 @@
 		"ua"		"{grey}Ви додали {purple}{style}{grey} стиль."
 		"tr"		"{grey}Seçtiğiniz {purple}{style}{grey} stilini eklediniz."
 		"it"		"{grey}Hai aggiunto lo stile {purple}{style}{grey}."
-		"es"		"{grey}Ha añadido el estilo {purple}{style}{grey}."
+		"es"		"{grey}Añadiste el estilo {purple}{style}{grey}."
 		"de"		"{grey}Du hast den Stil {purple}{style}{grey} hinzugefügt."
 		"ko"		"{grey}{purple}{style}{grey} 스타일을 추가했습니다."
 	}

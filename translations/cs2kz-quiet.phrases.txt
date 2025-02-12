@@ -10,7 +10,7 @@
 		"ua"		"{grey}Ваші ноги тепер видно."
 		"tr"		"{grey}Oyuncu ayakları şuan görünür durumda."
 		"it"		"{grey}Le gambe ora sono visibili."
-		"es"		"{grey}Las piernas de su personaje ahora son visibles."
+		"es"		"{grey}Las piernas de tu personaje ahora son visibles."
 		"de"		"{grey}Die Beine deines Spielers sind jetzt sichtbar."
 		"ko"		"{grey}플레이어의 다리가 이제 표시됩니다."
 	}
@@ -24,7 +24,7 @@
 		"ua"		"{grey}Ви приховали свої ноги."
 		"tr"		"{grey}Oyuncu ayakları şuan görünmez durumda."
 		"it"		"{grey}Le gambe ora sono nascoste."
-		"es"		"{grey}Las piernas de su personaje ahora están ocultas."
+		"es"		"{grey}Las piernas de tu personaje ahora están ocultas."
 		"de"		"{grey}Die Beine deines Spielers sind jetzt versteckt."
 		"ko"		"{grey}플레이어의 다리가 이제 숨겨졌습니다."
 	}
@@ -39,7 +39,7 @@
 		"ua"		"{grey}Ви тепер можете бачити інших гравців."
 		"tr"		"{grey}Diğer oyuncuları görmeyi açtınız."
 		"it"		"{grey}Stai mostrando gli altri giocatori."
-		"es"		"{grey}Ahora está viendo a otros jugadores."
+		"es"		"{grey}Ahora estás viendo a otros jugadores."
 		"de"		"{grey}Du zeigst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 표시됩니다."
 	}
@@ -54,7 +54,7 @@
 		"ua"		"{grey}Ви приховали інших гравців."
 		"tr"		"{grey}Diğer oyuncuları görmeyi kapattınız."
 		"it"		"{grey}Stai nascondendo gli altri giocatori."
-		"es"		"{grey}Ahora está ocultando a otros jugadores."
+		"es"		"{grey}Ahora estás ocultando a otros jugadores."
 		"de"		"{grey}Du versteckst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 숨겨졌습니다."
 	}
@@ -69,7 +69,7 @@
 		"ua"		"{grey}Ви тепер бачите свою зброю."
 		"tr"		"{grey}Silahı görmeyi açtınız."
 		"it"		"{grey}Stai mostrando l'arma."
-		"es"		"{grey}Ahora está mostrando su arma."
+		"es"		"{grey}Ahora puedes ver tu arma."
 		"de"		"{grey}Du zeigst jetzt deine Waffe."
 		"ko"		"{grey}이제 무기가 표시됩니다."
 	}
@@ -84,7 +84,7 @@
 		"ua"		"{grey}Ви приховали свою зброю."
 		"tr"		"{grey}Silahı görmeyi kapattınız."
 		"it"		"{grey}Stai nascondendo l'arma."
-		"es"		"{grey}Ahora está escondiendo su arma."
+		"es"		"{grey}Ahora estás escondiendo tu arma."
 		"de"		"{grey}Du versteckst jetzt deine Waffe."
 		"ko"		"{grey}이제 무기가 숨겨졌습니다."
 	}

@@ -10,7 +10,7 @@
 		"ua"		"{grey}Noclip активовано."
 		"tr"		"{grey}Noclip açıldı."
 		"it"		"{grey}Noclip abilitato."
-		"es"		"{grey}Noclip habilitado."
+		"es"		"{grey}Noclip activado."
 		"de"		"{grey}Noclip aktiviert."
 		"ko"		"{grey}노클립 모드가 활성화되었습니다."
 	}
@@ -24,7 +24,7 @@
 		"ua"		"{grey}Noclip вимкнено."
 		"tr"		"{grey}Noclip kapatıldı."
 		"it"		"{grey}Noclip disabilitato."
-		"es"		"{grey}Noclip deshabilitado."
+		"es"		"{grey}Noclip desactivado."
 		"de"		"{grey}Noclip deaktiviert."
 		"ko"		"{grey}노클립 모드가 비활성화되었습니다."
 	}

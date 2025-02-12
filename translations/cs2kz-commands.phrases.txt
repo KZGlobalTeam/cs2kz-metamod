@@ -10,7 +10,7 @@
 		"ua"		"{grey}Перегляньте список доступних команд у консолі!"
 		"tr"		"{grey}Komutların listesi için konsola bak!"
 		"it"		"{grey}Apri la console per la lista dei comandi!"
-		"es"		"{grey}¡Mire su consola para la lista de comandos!"
+		"es"		"{grey}¡Mira tu consola para ver la lista de comandos!"
 		"de"		"{grey}Schau in deine Konsole um die Befehl liste zu sehen!"
 		"ko"		"{grey}콘솔에서 명령어 목록을 확인해 보세요!"
 	}
@@ -24,7 +24,7 @@
 		"ua"		"Щоб використати ці команди напишіть \"bind <key> kz_<назва команди>\" у вашій консолі, або напишіть !<назва команди> чи /<назва команди> в чаті.\nНаприклад: \"bind 1 kz_cp\" або \"!cp\" чи \"/cp\""
 		"tr"		"Bu komutları kullanmak için konsola \"bind <tuş> kz_<komut ismi>\"veya konuşma satırına !<komut ismi> ya da /<komut ismi> yazabilirsin. Örnek olarak: \"bind 1 kz_cp\" veya \"!cp\" or \"/cp\""
 		"it"		"Per usare questi comandi scrivi \"bind <tasto> kz_<nome comando>\" nella console, oppure !<nome comando> o /<nome comando> in chat.\nEsempio: \"bind 1 kz_cp\" o \"!cp\" o \"/cp\""
-		"es"		"Para usar estos comandos, puede escribir \"bind <key> kz_<command name>\" en su consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
+		"es"		"Para usar estos comandos, puedes escribir \"bind <key> kz_<command name>\" en tu consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: \„bind 1 kz_cp\" oder \„!cp\" oder \„/cp\""
 		"ko"		"이 명령어를 사용하려면 콘솔에 \"bind <key> kz_<명령어 이름>\"을 입력하거나, 채팅창에 !<명령어 이름> 또는 /<명령어 이름>을 입력하세요. 예시: \"bind 1 kz_cp\" 또는 \"!cp\" 또는 \"/cp\""
 	}
@@ -40,7 +40,7 @@
 		"ua"		"{grey}Ви змінили мову на {default}{language}{grey}."
 		"tr"		"{grey}Dili şununla değiştirdiniz: {default}{language}{grey}."
 		"it"		"{grey}Hai cambiato la lingua a {default}{language}{grey}."
-		"es"		"{grey}Ha cambiado su idioma a {default}{language}{grey}."
+		"es"		"{grey}Has cambiado tu idioma a {default}{language}{grey}."
 		"de"		"{grey}Du hast Deine Sprache auf {default}{language}{grey} umgestellt."
 		"ko"		"{grey}언어가 {default}{language}{grey}로 변경되었습니다."
 	}
@@ -181,7 +181,7 @@
 		"ua"		"Встановити поточну позицію як стартову."
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
 		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
-		"es"		"Establecer su posición de inicio personalizada a su posición actual."
+		"es"		"Establecer tu posición actual como tu posición de inicio personalizada."
 		"de"		"Setze deine benutzerdefinierte Startposition auf deiner aktuellen Position."
 		"ko"		"다음 체크포인트로 텔레포트합니다."
 	}
@@ -195,7 +195,7 @@
 		"ua"		"Встановити поточну позицію як стартову."
 		"tr"		"Şuanki yerini özel başlangıç noktası olarak ayarla."
 		"it"		"Imposta la zona di partenza custom alla tua posizione attuale."
-		"es"		"Establecer su posición de inicio personalizada a su posición actual."
+		"es"		"Establecer tu posición actual como tu posición de inicio personalizada."
 		"de"		"Setze deine benutzerdefinierte Startposition auf deiner aktuellen Position."
 		"ko"		"현재 위치를 사용자 지정 시작 위치로 설정합니다."
 	}
@@ -209,7 +209,7 @@
 		"ua"		"Очистити власну стартову позицію."
 		"tr"		"Başlangıç noktasını temizle."
 		"it"		"Elimina la zona di partenza custom."
-		"es"		"Eliminar su posición de inicio personalizada."
+		"es"		"Eliminar tu posición de inicio personalizada."
 		"de"		"Lösche deine benutzerdefinierte Startposition."
 		"ko"		"사용자 지정 시작 위치를 초기화합니다."
 	}
@@ -223,7 +223,7 @@
 		"ua"		"Очистити власну стартову позицію."
 		"tr"		"Başlangıç noktasını temizle."
 		"it"		"Elimina la zona di partenza custom."
-		"es"		"Eliminar su posición de inicio personalizada."
+		"es"		"Eliminar tu posición de inicio personalizada."
 		"de"		"Lösche deine benutzerdefinierte Startposition."
 		"ko"		"사용자 지정 시작 위치를 초기화합니다."
 	}
@@ -523,7 +523,7 @@
 		"ua"		"Приховати свої ноги від першої особи."
 		"tr"		"Birinci şahıs modunda ayakları göstermeyi kapat."
 		"it"		"Nascondi le gambe in prima persona."
-		"es"		"Ocultar sus piernas en primera persona."
+		"es"		"Ocultar tus piernas en primera persona."
 		"de"		"Verstecke deine Beine in der First-person Perspektive."
 		"ko"		"1인칭 시점에서 다리를 숨깁니다."
 	}
@@ -576,6 +576,7 @@
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
+		"es"		"Teleportar a la zona de saltos."
 	}
 	"Command Description - kz_ljarea"
 	{
@@ -584,6 +585,7 @@
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
+		"es"		"Teleportar a la zona de saltos."
 	}
 	"Command Description - kz_jsarea"
 	{
@@ -592,6 +594,7 @@
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
+		"es"		"Teleportar a la zona de saltos."
 	}
 	"Command Description - kz_end"
 	{
@@ -600,6 +603,7 @@
 		"sv"		"Teleportera till slutet."
 		"ua"		"Телепортуватися до кінця."
 		"ko"		"종료 지점으로 텔레포트합니다."
+		"es"		"Teleportar al final."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -853,6 +857,7 @@
 		"sv"		"Ställ in den högsta önskade nivån för run jämförelse."
 		"ua"		"Встановіть максимальний бажаний рівень порівняння проходжень."
 		"ko"		"기록 비교 시 선호하는 최대 비교 수준을 설정하는 기능입니다."
+		"es"		"Establecer el nivel máximo preferido de comparación de carreras."
 	}
 	"Command Description - kz_playercheck"
 	{
@@ -862,6 +867,7 @@
 		"ua"		"Перевірити статус вибраного гравця (за замовчуванням себе)."
 		"tr"		"Belirli bir oyuncunun statüsünü kontrol et (varsayılan kendin)."
 		"ko"		"지정된 플레이어의 상태를 확인합니다. (기본값: 본인)"
+		"es"		"Comprobar el estado del jugador especificado (por defecto es uno mismo)."
 	}
 	"Command Description - kz_pc"
 	{
@@ -871,6 +877,7 @@
 		"ua"		"Перевірити статус вибраного гравця (за замовчуванням себе)."
 		"tr"		"Belirli bir oyuncunun statüsünü kontrol et (varsayılan kendin)."
 		"ko"		"지정된 플레이어의 상태를 확인합니다. (기본값: 본인)"
+		"es"		"Comprobar el estado del jugador especificado (por defecto es uno mismo)."
 	}
 	"Command Description - kz_course"
 	{
@@ -880,6 +887,7 @@
 		"ua"		"Показати поточний курс, а також список всіх доступних курсів на мапі."
 		"tr"		"Şuanki rotayı ve haritadaki tüm rotaları göster."
 		"ko"		"현재 코스와 맵에 있는 모든 코스 목록을 표시합니다."
+		"es"		"Mostrar el recorrido actual y la lista de todos los recorridos en el mapa."
 	}
 	"Command Description - kz_spb"
 	{
