@@ -203,7 +203,12 @@ void KZGlobalService::OnServerGamePostSimulate()
 	std::unordered_map<u64, StoredCallback> readyCallbacks;
 
 	{
-		std::unique_lock callbacksLock(KZGlobalService::callbacksMutex);
+		std::unique_lock callbacksLock(KZGlobalService::callbacksMutex, std::defer_lock);
+
+		if (!callbacksLock.try_lock())
+		{
+			return;
+		}
 
 		for (auto it = KZGlobalService::callbacks.cbegin(); it != KZGlobalService::callbacks.cend();)
 		{
