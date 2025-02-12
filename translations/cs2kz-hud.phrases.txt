@@ -106,7 +106,7 @@
 		"it"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"es"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"de"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
-		"ko"		"체크포인트: {checkpoint_index}/{checkpoint_count} 텔레포트: {teleport_count}"
+		"ko"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
