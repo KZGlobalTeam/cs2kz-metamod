@@ -39,12 +39,12 @@ void KZGlobalService::Init()
 
 	KZGlobalService::apiUrl = KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org");
 	KZGlobalService::apiKey = KZOptionService::GetOptionStr("apiKey", "");
-	KZGlobalService::isEnabled = KZOptionService::GetOptionInt("runWithoutGlobal");
+	KZGlobalService::enabled = KZOptionService::GetOptionInt("enableGlobal", 1);
 
 	if (KZGlobalService::apiUrl.size() < 4 || KZGlobalService::apiUrl.substr(0, 4) != "http")
 	{
 		META_CONPRINTF("[KZ::Global] Invalid API url. GlobalService will be disabled.\n");
-		KZGlobalService::isEnabled = false;
+		KZGlobalService::enabled = false;
 		return;
 	}
 
@@ -185,7 +185,7 @@ void KZGlobalService::OnActivateServer()
 
 void KZGlobalService::OnPlayerAuthorized()
 {
-	if (!KZGlobalService::isEnabled)
+	if (!KZGlobalService::enabled)
 	{
 		return;
 	}
@@ -245,7 +245,7 @@ void KZGlobalService::OnPlayerAuthorized()
 
 void KZGlobalService::OnClientDisconnect()
 {
-	if (!KZGlobalService::isEnabled || !this->player->IsConnected() || !this->player->IsAuthenticated())
+	if (!KZGlobalService::enabled || !this->player->IsConnected() || !this->player->IsAuthenticated())
 	{
 		return;
 	}

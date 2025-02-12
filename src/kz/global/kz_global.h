@@ -165,7 +165,7 @@ private:
 	 *
 	 * Read from the configuration file.
 	 */
-	static inline bool isEnabled {};
+	static inline bool enabled {};
 
 	/**
 	 * Called bx IXWebSocket whenever we receive a message.
