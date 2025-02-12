@@ -160,11 +160,11 @@ private:
 	 */
 	static inline std::unordered_map<u64, Callback<const Json &>> callbacks {};
 
-	/*
-	* Whether the global service is enabled.
-	* 
-	* Read from the configuration file.
-	*/
+	/**
+	 * Whether the global service is enabled.
+	 *
+	 * Read from the configuration file.
+	 */
 	static inline bool isEnabled {};
 
 	/**
