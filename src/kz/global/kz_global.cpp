@@ -375,7 +375,7 @@ KZGlobalService::SubmitRecordResult KZGlobalService::SubmitRecord(u16 filterID, 
 	data.time = time;
 	data.metadata = metadata;
 
-	if (!KZGlobalService::IsConnected())
+	if (!KZGlobalService::IsConnected() && KZGlobalService::MightConnect())
 	{
 		std::unique_lock runQueueLock(KZGlobalService::runQueueMutex);
 		KZGlobalService::runQueue.emplace_back(std::move(data), std::move(cb));

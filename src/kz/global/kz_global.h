@@ -41,6 +41,19 @@ public:
 	}
 
 	/**
+	 * Returns whether we might connect to the API in the future.
+	 */
+	static bool MightConnect()
+	{
+		// clang-format off
+
+		return (KZGlobalService::apiSocket != nullptr)
+			&& (KZGlobalService::apiSocket->getReadyState() != ix::ReadyState::Open);
+
+		// clang-format on
+	}
+
+	/**
 	 * Executes the given function `f` with a pointer to the current map (if any).
 	 *
 	 * This function will lock access to the current map and therefore should complete quickly.
