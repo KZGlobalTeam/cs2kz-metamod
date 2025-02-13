@@ -105,7 +105,7 @@ void KZGlobalService::Cleanup()
 
 void KZGlobalService::UpdateGlobalCache()
 {
-	if (KZGlobalService::currentMap.has_value())
+	if (!KZGlobalService::currentMap.has_value())
 	{
 		return;
 	}
