@@ -65,6 +65,11 @@ struct CourseTopRequest : public BaseRequest
 		u64 steamid64;
 		u64 points {}; // 0 for local database
 
+		CUtlString GetName()
+		{
+			return name;
+		}
+
 		CUtlString GetRunID()
 		{
 			CUtlString fmt;
@@ -268,79 +273,108 @@ struct CourseTopRequest : public BaseRequest
 	void ReplyGlobal()
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		CUtlString rank;
+
+		// Overall table
 		CUtlString headers[Q_ARRAYSIZE(columnKeysGlobal)];
 		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysGlobal); i++)
 		{
 			headers[i] = player->languageService->PrepareMessage(columnKeysGlobal[i]).c_str();
 		}
+		utils::Table<Q_ARRAYSIZE(columnKeysGlobal)> table(
+			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
+		FOR_EACH_VEC(wrData.overallData, i)
+		{
+			rank.Format("%llu", this->offset + i + 1);
+			RunStats stats = wrData.overallData[i];
+			table.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetPoints(),
+						 stats.GetRunID());
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+		player->PrintConsole(false, false, table.GetTitle());
+		player->PrintConsole(false, false, table.GetHeader());
+
+		for (u32 i = 0; i < table.GetNumEntries(); i++)
+		{
+			player->PrintConsole(false, false, table.GetLine(i));
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+
+		// Pro table
 		CUtlString headersPro[Q_ARRAYSIZE(columnKeysGlobalPro)];
 		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysGlobalPro); i++)
 		{
 			headersPro[i] = player->languageService->PrepareMessage(columnKeysGlobalPro[i]).c_str();
 		}
-		utils::DualTable<Q_ARRAYSIZE(columnKeysGlobal), Q_ARRAYSIZE(columnKeysGlobalPro)> dualTable(
-			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers,
+		utils::Table<Q_ARRAYSIZE(columnKeysGlobalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(),
 			headersPro);
-		CUtlString rank;
-		FOR_EACH_VEC(wrData.overallData, i)
-		{
-			rank.Format("%llu", this->offset + i + 1);
-			RunStats stats = wrData.overallData[i];
-			dualTable.left.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetPoints(),
-								  stats.GetRunID());
-		}
 		FOR_EACH_VEC(wrData.proData, i)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = wrData.proData[i];
-			dualTable.right.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetSteamID64(), stats.GetPoints(), stats.GetRunID());
+			tablePro.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetSteamID64(), stats.GetPoints(), stats.GetRunID());
 		}
-		player->PrintConsole(false, false, dualTable.GetTitle());
-		player->PrintConsole(false, false, dualTable.GetHeader());
-		player->PrintConsole(false, false, dualTable.GetSeparator());
-		for (u32 i = 0; i < dualTable.GetNumEntries(); i++)
+		player->PrintConsole(false, false, tablePro.GetSeparator("="));
+		player->PrintConsole(false, false, tablePro.GetTitle());
+		player->PrintConsole(false, false, tablePro.GetHeader());
+		for (u32 i = 0; i < tablePro.GetNumEntries(); i++)
 		{
-			player->PrintConsole(false, false, dualTable.GetLine(i));
+			player->PrintConsole(false, false, tablePro.GetLine(i));
 		}
+		player->PrintConsole(false, false, tablePro.GetSeparator("="));
 	}
 
 	void ReplyLocal()
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		CUtlString rank;
+
+		// Overall table
 		CUtlString headers[Q_ARRAYSIZE(columnKeysLocal)];
 		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysLocal); i++)
 		{
 			headers[i] = player->languageService->PrepareMessage(columnKeysLocal[i]).c_str();
 		}
+		utils::Table<Q_ARRAYSIZE(columnKeysLocal)> table(
+			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
+		FOR_EACH_VEC(srData.overallData, i)
+		{
+			rank.Format("%llu", this->offset + i + 1);
+			RunStats stats = srData.overallData[i];
+			table.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetRunID());
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+		player->PrintConsole(false, false, table.GetTitle());
+		player->PrintConsole(false, false, table.GetHeader());
+
+		for (u32 i = 0; i < table.GetNumEntries(); i++)
+		{
+			player->PrintConsole(false, false, table.GetLine(i));
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+		// Pro table
 		CUtlString headersPro[Q_ARRAYSIZE(columnKeysLocalPro)];
 		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysLocalPro); i++)
 		{
 			headersPro[i] = player->languageService->PrepareMessage(columnKeysLocalPro[i]).c_str();
 		}
-		utils::DualTable<Q_ARRAYSIZE(columnKeysLocal), Q_ARRAYSIZE(columnKeysLocalPro)> dualTable(
-			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers,
+		utils::Table<Q_ARRAYSIZE(columnKeysLocalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headersPro);
-		CUtlString rank;
-		FOR_EACH_VEC(srData.overallData, i)
-		{
-			rank.Format("%llu", this->offset + i + 1);
-			RunStats stats = srData.overallData[i];
-			dualTable.left.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetRunID());
-		}
 		FOR_EACH_VEC(srData.proData, i)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = srData.proData[i];
-			dualTable.right.SetRow(i, rank, stats.name, stats.GetTime(), stats.GetSteamID64(), stats.GetRunID());
+			tablePro.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetSteamID64(), stats.GetRunID());
 		}
-		player->PrintConsole(false, false, dualTable.GetTitle());
-		player->PrintConsole(false, false, dualTable.GetHeader());
-		player->PrintConsole(false, false, dualTable.GetSeparator());
-		for (u32 i = 0; i < dualTable.GetNumEntries(); i++)
+		player->PrintConsole(false, false, tablePro.GetSeparator("="));
+		player->PrintConsole(false, false, tablePro.GetTitle());
+		player->PrintConsole(false, false, tablePro.GetHeader());
+		for (u32 i = 0; i < tablePro.GetNumEntries(); i++)
 		{
-			player->PrintConsole(false, false, dualTable.GetLine(i));
+			player->PrintConsole(false, false, tablePro.GetLine(i));
 		}
+		player->PrintConsole(false, false, tablePro.GetSeparator("="));
 	}
 };
 

@@ -19,6 +19,7 @@ namespace utils
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				this->headers[i] = headers[i];
+				this->headers[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
 				columnLengths[i] = this->headers[i].Length();
 			}
 		}
@@ -28,6 +29,7 @@ namespace utils
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				this->headers[i] = headers[i];
+				this->headers[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
 				columnLengths[i] = this->headers[i].Length();
 			}
 		}
@@ -55,7 +57,8 @@ namespace utils
 				entries.SetCountNonDestructively(row + 1);
 			}
 			entries[row].data[column] = value;
-			columnLengths[column] = MAX(columnLengths[column], V_strlen(value));
+			entries[row].data[column].Append("ᅟ"); // Add a space to reset the "font" to monospace
+			columnLengths[column] = MAX(columnLengths[column], V_strlen(entries[row].data[column].Get()));
 			return true;
 		}
 
@@ -75,6 +78,7 @@ namespace utils
 			entries[row] = {args...};
 			for (u32 i = 0; i < columnCount; i++)
 			{
+				entries[row].data[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
 				columnLengths[i] = MAX(columnLengths[i], (u32)V_strlen(entries[row].data[i].Get()));
 			}
 		}
@@ -101,7 +105,8 @@ namespace utils
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				CUtlString value;
-				value.Format("%-*s%s", columnLengths[i], headers[i].Get(), i == columnCount - 1 ? "" : "  ");
+				value.Format("%-*s%s", columnLengths[i] + GetPaddingForWideString(headers[i].Get()), headers[i].Get(),
+							 i == columnCount - 1 ? "" : "  ");
 				for (i32 i = 0; i < value.Length() - 1; i++)
 				{
 					if (value[i] == '%' && value[i + 1] == '%')
@@ -125,7 +130,8 @@ namespace utils
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				CUtlString value;
-				value.Format("%-*s%s", columnLengths[i], entries[row].data[i].Get(), i == columnCount - 1 ? "" : "  ");
+				value.Format("%-*s%s", columnLengths[i] + GetPaddingForWideString(entries[row].data[i].Get()), entries[row].data[i].Get(),
+							 i == columnCount - 1 ? "" : "  ");
 				for (i32 i = 0; i < value.Length() - 1; i++)
 				{
 					if (value[i] == '%' && value[i + 1] == '%')
@@ -139,12 +145,12 @@ namespace utils
 			return result;
 		}
 
-		CUtlString GetSeparator()
+		CUtlString GetSeparator(const char *characters = "_")
 		{
 			CUtlString result;
 			for (u32 i = 0; i < GetTableWidth(); i++)
 			{
-				result += "_";
+				result += characters;
 			}
 			return result;
 		}
@@ -176,14 +182,14 @@ namespace utils
 		CUtlString GetTitle()
 		{
 			CUtlString result;
-			result.Format("%-*s | %-*s", left.GetTableWidth(), left.GetTitle().Get(), right.GetTableWidth(), right.GetTitle().Get());
+			result.Format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetTitle().Get(), right.GetTableWidth(), right.GetTitle().Get());
 			return result;
 		}
 
 		CUtlString GetHeader()
 		{
 			CUtlString result;
-			result.Format("%-*s | %-*s", left.GetTableWidth(), left.GetHeader().Get(), right.GetTableWidth(), right.GetHeader().Get());
+			result.Format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetHeader().Get(), right.GetTableWidth(), right.GetHeader().Get());
 			return result;
 		}
 
@@ -194,14 +200,15 @@ namespace utils
 				return "";
 			}
 			CUtlString result;
-			result.Format("%-*s | %-*s", left.GetTableWidth(), left.GetLine(row).Get(), right.GetTableWidth(), right.GetLine(row).Get());
+			result.Format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetLine(row).Get(), right.GetTableWidth(), right.GetLine(row).Get());
 			return result;
 		}
 
-		CUtlString GetSeparator()
+		CUtlString GetSeparator(const char *characters = "_")
 		{
 			CUtlString result;
-			result.Format("%-*s | %-*s", left.GetTableWidth(), left.GetSeparator().Get(), right.GetTableWidth(), right.GetSeparator().Get());
+			result.Format("%-*s \t|\t %-*s", left.GetTableWidth(), left.GetSeparator(characters).Get(), right.GetTableWidth(),
+						  right.GetSeparator(characters).Get());
 			return result;
 		}
 

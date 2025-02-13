@@ -90,4 +90,8 @@ namespace utils
 
 	bool ParseSteamID2(std::string_view steamID, u64 &out);
 
+	inline u32 GetPaddingForWideString(const char *string)
+	{
+		return MAX(0, strlen(string) - mbstowcs(NULL, string, 0));
+	}
 } // namespace utils

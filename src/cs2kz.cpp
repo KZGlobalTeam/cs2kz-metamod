@@ -39,6 +39,7 @@ PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
+	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
 
 	if (!utils::Initialize(ismm, error, maxlen))

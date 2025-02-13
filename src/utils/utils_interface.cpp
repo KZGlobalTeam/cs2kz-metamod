@@ -167,15 +167,15 @@ u64 KZUtils::GetCurrentMapWorkshopID()
 
 CUtlString KZUtils::GetCurrentMapVPK()
 {
-	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();
-	if (!networkGameServer)
+	CUtlString map = this->GetCurrentMapName();
+	if (map.IsEmpty())
 	{
 		return "";
 	}
 	CUtlVector<CUtlString> paths;
 	char mapName[1024];
 
-	g_SMAPI->PathFormat(mapName, sizeof(mapName), "maps/%s.vpk", networkGameServer->GetMapName());
+	g_SMAPI->PathFormat(mapName, sizeof(mapName), "maps/%s.vpk", map.Get());
 
 	g_pFullFileSystem->FindFileAbsoluteList(paths, mapName, "GAME");
 	if (paths.Count() > 0)
