@@ -41,11 +41,15 @@ public:
 	}
 
 	/**
-	 * Returns the current global map information.
+	 * Executes the given function `f` with a pointer to the current map (if any).
+	 *
+	 * This function will lock access to the current map and therefore should complete quickly.
 	 */
-	static std::optional<KZ::API::Map> GetCurrentMap()
+	template<typename F>
+	static auto WithCurrentMap(F &&f)
 	{
-		return currentMap;
+		std::unique_lock currentMapLock(KZGlobalService::currentMapMutex);
+		return f(KZGlobalService::currentMap.has_value() ? &KZGlobalService::currentMap->info : nullptr);
 	}
 
 	/**
@@ -63,6 +67,7 @@ public:
 	static void RestoreConVars();
 
 	static void OnActivateServer();
+	static void OnServerGamePostSimulate();
 
 	void OnPlayerAuthorized();
 	void OnClientDisconnect();
@@ -151,14 +156,44 @@ private:
 	static inline u64 nextMessageId = 1;
 
 	/**
+	 * Protects `currentMap`.
+	 */
+	static inline std::mutex currentMapMutex {};
+
+	struct CurrentMap
+	{
+		u64 messageId;
+		KZ::API::Map info;
+
+		CurrentMap(u64 messageId, KZ::API::Map info) : messageId(messageId), info(info) {}
+	};
+
+	/**
 	 * The API's view of the current map.
 	 */
-	static inline std::optional<KZ::API::Map> currentMap {};
+	static inline std::optional<CurrentMap> currentMap {};
+
+	/**
+	 * Protects `callbacks`.
+	 */
+	static inline std::mutex callbacksMutex {};
+
+	struct StoredCallback
+	{
+		Callback<u64, const Json &> callback;
+
+		/**
+		 * The payload received by the WebSocket.
+		 *
+		 * If this is `std::nullopt` then we haven't received a response yet and cannot execute the callback.
+		 */
+		std::optional<Json> payload;
+	};
 
 	/**
 	 * Callbacks to execute when the API sends messages with specific IDs.
 	 */
-	static inline std::unordered_map<u64, Callback<const Json &>> callbacks {};
+	static inline std::unordered_map<u64, StoredCallback> callbacks {};
 
 	/**
 	 * Called bx IXWebSocket whenever we receive a message.
@@ -184,11 +219,49 @@ private:
 	 * Sends a WebSocket message.
 	 */
 	template<typename T>
-	static void SendMessage(const char *event, const T &data);
+	static void SendMessage(const char *event, const T &data)
+	{
+	}
 
 	/**
 	 * Sends a WebSocket message.
 	 */
 	template<typename T, typename CallbackFunc>
-	static void SendMessage(const char *event, const T &data, CallbackFunc callback);
+	static void SendMessage(const char *event, const T &data, CallbackFunc &&callback)
+	{
+		u64 messageId = KZGlobalService::nextMessageId++;
+
+		Json payload {};
+		payload.Set("id", messageId);
+		payload.Set("event", event);
+		payload.Set("data", data);
+
+		auto callbackToStore = [callback](u64 messageId, Json responseJson)
+		{
+			if (!responseJson.IsValid())
+			{
+				META_CONPRINTF("[KZ::Global] WebSocket message is not valid JSON.\n");
+				return;
+			}
+
+			typename std::remove_const<typename std::remove_reference<typename decltype(std::function(callback))::second_argument_type>::type>::type
+				responseData {};
+
+			if (!responseJson.Get("data", responseData))
+			{
+				META_CONPRINTF("[KZ::Global] WebSocket message does not contain a valid `data` field.\n");
+				return;
+			}
+
+			META_CONPRINTF("[KZ::Global] Calling callback (%d).\n", messageId);
+			callback(messageId, responseData);
+		};
+
+		{
+			std::unique_lock callbacksLock(KZGlobalService::callbacksMutex);
+			KZGlobalService::callbacks[messageId] = {callbackToStore, std::nullopt};
+		}
+
+		KZGlobalService::apiSocket->send(payload.ToString());
+	}
 };

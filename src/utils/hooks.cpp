@@ -686,6 +686,7 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszNam
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
 {
 	ProcessTimers();
+	KZGlobalService::OnServerGamePostSimulate();
 }
 
 static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg)

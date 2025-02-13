@@ -105,13 +105,22 @@ void KZGlobalService::Cleanup()
 
 void KZGlobalService::UpdateGlobalCache()
 {
-	if (!KZGlobalService::currentMap.has_value())
-	{
-		return;
-	}
-	KZ::API::events::WantWorldRecordsForCache data(KZGlobalService::currentMap->id);
+	u16 currentMapID = 0;
 
-	auto callback = [](const KZ::API::events::WorldRecordsForCache &records)
+	{
+		std::unique_lock currentMapLock(KZGlobalService::currentMapMutex);
+
+		if (!KZGlobalService::currentMap.has_value())
+		{
+			return;
+		}
+
+		currentMapID = KZGlobalService::currentMap->info.id;
+	}
+
+	KZ::API::events::WantWorldRecordsForCache data(currentMapID);
+
+	auto callback = [](u64 messageId, const KZ::API::events::WorldRecordsForCache &records)
 	{
 		for (const KZ::API::Record &record : records.records)
 		{
@@ -161,9 +170,20 @@ void KZGlobalService::OnActivateServer()
 
 	KZ::API::events::MapChange data(currentMapName.Get());
 
-	auto callback = [currentMapName](const KZ::API::events::MapInfo &mapInfo)
+	auto callback = [currentMapName](u64 messageID, const KZ::API::events::MapInfo &mapInfo)
 	{
-		KZGlobalService::currentMap = mapInfo.map;
+		{
+			std::unique_lock handshakeLock(KZGlobalService::handshakeLock);
+
+			if (mapInfo.map.has_value())
+			{
+				KZGlobalService::currentMap = KZGlobalService::CurrentMap(messageID, *mapInfo.map);
+			}
+			else
+			{
+				KZGlobalService::currentMap = std::nullopt;
+			}
+		}
 
 		if (!mapInfo.map.has_value())
 		{
@@ -182,6 +202,35 @@ void KZGlobalService::OnActivateServer()
 	KZGlobalService::SendMessage("map-change", data, callback);
 }
 
+void KZGlobalService::OnServerGamePostSimulate()
+{
+	std::unordered_map<u64, StoredCallback> readyCallbacks;
+
+	{
+		std::unique_lock callbacksLock(KZGlobalService::callbacksMutex, std::defer_lock);
+
+		if (!callbacksLock.try_lock())
+		{
+			return;
+		}
+
+		for (auto it = KZGlobalService::callbacks.cbegin(); it != KZGlobalService::callbacks.cend();)
+		{
+			auto curr = it++;
+
+			if (curr->second.payload.has_value())
+			{
+				readyCallbacks.insert(KZGlobalService::callbacks.extract(curr));
+			}
+		}
+	}
+
+	for (auto &[messageID, callback] : readyCallbacks)
+	{
+		callback.callback(messageID, *callback.payload);
+	}
+}
+
 void KZGlobalService::OnPlayerAuthorized()
 {
 	KZ::API::events::PlayerJoin data;
@@ -189,7 +238,7 @@ void KZGlobalService::OnPlayerAuthorized()
 	data.name = this->player->GetName();
 	data.ipAddress = this->player->GetIpAddress();
 
-	auto callback = [player = this->player](const KZ::API::events::PlayerJoinAck &ack)
+	auto callback = [player = this->player](u64 messageId, const KZ::API::events::PlayerJoinAck &ack)
 	{
 		const std::string preferences = ack.preferences.ToString();
 
@@ -201,13 +250,24 @@ void KZGlobalService::OnPlayerAuthorized()
 
 	KZGlobalService::SendMessage("player-join", data, callback);
 
-	if (KZGlobalService::currentMap.has_value())
+	u16 currentMapID = 0;
+
+	{
+		std::unique_lock currentMapLock(KZGlobalService::currentMapMutex);
+
+		if (KZGlobalService::currentMap.has_value())
+		{
+			currentMapID = KZGlobalService::currentMap->info.id;
+		}
+	}
+
+	if (currentMapID != 0)
 	{
 		KZ::API::events::WantPlayerRecords data;
-		data.mapId = KZGlobalService::currentMap->id;
+		data.mapId = currentMapID;
 		data.playerId = this->player->GetSteamId64();
 
-		auto callback = [player = this->player](const KZ::API::events::PlayerRecords &pbs)
+		auto callback = [player = this->player](u64 messageId, const KZ::API::events::PlayerRecords &pbs)
 		{
 			for (const KZ::API::Record &record : pbs.records)
 			{
@@ -270,10 +330,14 @@ bool KZGlobalService::SubmitRecord(u16 filterID, f64 time, u32 teleports, std::s
 	{
 		return false;
 	}
-	if (!KZGlobalService::currentMap.has_value())
+
 	{
-		META_CONPRINTF("[KZ::Global] Cannot submit record on non-global map.\n");
-		return false;
+		std::unique_lock currentMapLock(KZGlobalService::currentMapMutex);
+		if (!KZGlobalService::currentMap.has_value())
+		{
+			META_CONPRINTF("[KZ::Global] Cannot submit record on non-global map.\n");
+			return false;
+		}
 	}
 
 	KZ::API::events::NewRecord data;
@@ -288,7 +352,7 @@ bool KZGlobalService::SubmitRecord(u16 filterID, f64 time, u32 teleports, std::s
 	data.time = time;
 	data.metadata = metadata;
 
-	KZGlobalService::SendMessage("new-record", data, cb);
+	KZGlobalService::SendMessage("new-record", data, [cb](u64 messageId, KZ::API::events::NewRecordAck ack) { return cb(ack); });
 
 	return true;
 }
@@ -302,7 +366,7 @@ bool KZGlobalService::QueryPB(u64 steamid64, CUtlString targetPlayerName, CUtlSt
 		pbRequest.styles.emplace_back(styleNames[i].Get());
 	}
 
-	KZGlobalService::SendMessage("want-personal-best", pbRequest, cb);
+	KZGlobalService::SendMessage("want-personal-best", pbRequest, [=](u64 messageId, KZ::API::events::PersonalBest pb) { return cb(pb); });
 	return true;
 }
 
@@ -311,7 +375,7 @@ bool KZGlobalService::QueryCourseTop(CUtlString mapName, CUtlString courseNameOr
 {
 	KZ::API::events::WantCourseTop ctopRequest = {mapName.Get(), courseNameOrNumber.Get(), mode, limit, offset};
 
-	KZGlobalService::SendMessage("want-course-top", ctopRequest, cb);
+	KZGlobalService::SendMessage("want-course-top", ctopRequest, [=](u64 messageId, KZ::API::events::CourseTop courseTop) { return cb(courseTop); });
 	return true;
 }
 
@@ -320,7 +384,7 @@ bool KZGlobalService::QueryWorldRecords(CUtlString mapName, CUtlString courseNam
 {
 	KZ::API::events::WantWorldRecords ctopRequest = {mapName.Get(), courseNameOrNumber.Get(), mode};
 
-	KZGlobalService::SendMessage("want-world-records", ctopRequest, cb);
+	KZGlobalService::SendMessage("want-world-records", ctopRequest, [=](u64 messageId, KZ::API::events::WorldRecords wrs) { return cb(wrs); });
 	return true;
 }
 
@@ -411,12 +475,14 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 				return;
 			}
 
-			auto callback = KZGlobalService::callbacks.find(messageId);
-
-			if (callback != KZGlobalService::callbacks.end())
 			{
-				callback->second(payload);
-				KZGlobalService::callbacks.erase(messageId);
+				std::unique_lock callbacksLock(KZGlobalService::callbacksMutex);
+				auto callback = KZGlobalService::callbacks.find(messageId);
+
+				if (callback != KZGlobalService::callbacks.end())
+				{
+					callback->second.payload = std::make_optional(payload);
+				}
 			}
 
 			break;
@@ -496,7 +562,8 @@ void KZGlobalService::CompleteWebSocketHandshake(const ix::WebSocketMessagePtr &
 
 	if (ack.map.has_value())
 	{
-		ack.map.swap(KZGlobalService::currentMap);
+		std::unique_lock currentMapLock(KZGlobalService::currentMapMutex);
+		KZGlobalService::currentMap = KZGlobalService::CurrentMap(0, *ack.map);
 	}
 
 	META_CONPRINTF("[KZ::Global] Completed handshake!\n");
@@ -521,51 +588,4 @@ void KZGlobalService::HeartbeatThread()
 
 		std::this_thread::sleep_for(std::chrono::milliseconds((u64)(KZGlobalService::heartbeatInterval * 1000)));
 	}
-}
-
-template<typename T>
-void KZGlobalService::SendMessage(const char *event, const T &data)
-{
-	u64 messageId = KZGlobalService::nextMessageId++;
-
-	Json payload {};
-	payload.Set("id", messageId);
-	payload.Set("event", event);
-	payload.Set("data", data);
-
-	KZGlobalService::apiSocket->send(payload.ToString());
-}
-
-template<typename T, typename CallbackFunc>
-void KZGlobalService::SendMessage(const char *event, const T &data, CallbackFunc callback)
-{
-	u64 messageId = KZGlobalService::nextMessageId++;
-
-	Json payload {};
-	payload.Set("id", messageId);
-	payload.Set("event", event);
-	payload.Set("data", data);
-
-	KZGlobalService::callbacks[messageId] = [messageId, callback](Json responseJson)
-	{
-		if (!responseJson.IsValid())
-		{
-			META_CONPRINTF("[KZ::Global] WebSocket message is not valid JSON.\n");
-			return;
-		}
-
-		typename std::remove_const<typename std::remove_reference<typename decltype(std::function(callback))::argument_type>::type>::type
-			responseData {};
-
-		if (!responseJson.Get("data", responseData))
-		{
-			META_CONPRINTF("[KZ::Global] WebSocket message does not contain a valid `data` field.\n");
-			return;
-		}
-
-		META_CONPRINTF("[KZ::Global] Calling callback (%d).\n", messageId);
-		callback(responseData);
-	};
-
-	KZGlobalService::apiSocket->send(payload.ToString());
 }

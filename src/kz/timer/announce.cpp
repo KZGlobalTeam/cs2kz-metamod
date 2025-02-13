@@ -44,12 +44,21 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 
 	this->course.name = player->timerService->GetCourse()->GetName().Get();
 	this->course.localID = player->timerService->GetCourse()->localDatabaseID;
-	this->global = KZGlobalService::GetCurrentMap().has_value();
-	if (this->global)
+
+	// clang-format off
+
+	KZGlobalService::WithCurrentMap([&](const KZ::API::Map *currentMap)
 	{
+		this->global = currentMap != nullptr;
+
+		if (currentMap == nullptr)
+		{
+			return;
+		}
+
 		const KZ::API::Map::Course *course = nullptr;
 
-		for (const KZ::API::Map::Course &c : KZGlobalService::GetCurrentMap()->courses)
+		for (const KZ::API::Map::Course &c : currentMap->courses)
 		{
 			if (KZ_STREQ(c.name.c_str(), this->course.name.c_str()))
 			{
@@ -64,9 +73,13 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 		}
 		else
 		{
-			this->globalFilterID = (apiMode == KZ::API::Mode::Classic) ? course->filters.classic.id : course->filters.vanilla.id;
+			this->globalFilterID = (apiMode == KZ::API::Mode::Classic)
+				? course->filters.classic.id
+				: course->filters.vanilla.id;
 		}
-	}
+	});
+
+	// clang-format on
 
 	// Setup styles
 	FOR_EACH_VEC(player->styleServices, i)
