@@ -151,6 +151,12 @@ private:
 	static inline bool handshakeCompleted {};
 
 	/**
+	 * Whether we should reauthenticate existing players.
+	 * This happens if the API initializes after the players have connected.
+	 */
+	static inline std::atomic_bool shouldAuthenticateExistingPlayers = false;
+
+	/**
 	 * The ID to use for the next WebSocket message.
 	 */
 	static inline u64 nextMessageId = 1;
