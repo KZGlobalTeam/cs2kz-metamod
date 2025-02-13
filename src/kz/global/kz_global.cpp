@@ -148,6 +148,15 @@ void KZGlobalService::OnActivateServer()
 		KZGlobalService::Init();
 	}
 
+	bool ok = false;
+	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&ok);
+
+	if (!ok)
+	{
+		META_CONPRINTF("[KZ::Global] Failed to get current map name. Cannot send `map-change` event.\n");
+		return;
+	}
+
 	{
 		std::unique_lock handshakeLock(KZGlobalService::handshakeLock);
 
@@ -157,15 +166,6 @@ void KZGlobalService::OnActivateServer()
 			KZGlobalService::handshakeCondvar.notify_one();
 			return;
 		}
-	}
-
-	bool ok = false;
-	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&ok);
-
-	if (!ok)
-	{
-		META_CONPRINTF("[KZ::Global] Failed to get current map name. Cannot send `map-change` event.\n");
-		return;
 	}
 
 	KZ::API::events::MapChange data(currentMapName.Get());
