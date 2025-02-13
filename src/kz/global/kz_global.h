@@ -227,6 +227,14 @@ private:
 	template<typename T>
 	static void SendMessage(const char *event, const T &data)
 	{
+		u64 messageId = KZGlobalService::nextMessageId++;
+
+		Json payload {};
+		payload.Set("id", messageId);
+		payload.Set("event", event);
+		payload.Set("data", data);
+
+		KZGlobalService::apiSocket->send(payload.ToString());
 	}
 
 	/**
