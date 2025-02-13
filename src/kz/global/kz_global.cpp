@@ -346,12 +346,12 @@ void KZGlobalService::OnClientDisconnect()
 	KZGlobalService::SendMessage("player-leave", data);
 }
 
-bool KZGlobalService::SubmitRecord(u16 filterID, f64 time, u32 teleports, std::string_view modeMD5, void *styles, std::string_view metadata,
-								   Callback<KZ::API::events::NewRecordAck> cb)
+KZGlobalService::SubmitRecordResult KZGlobalService::SubmitRecord(u16 filterID, f64 time, u32 teleports, std::string_view modeMD5, void *styles,
+																  std::string_view metadata, Callback<KZ::API::events::NewRecordAck> cb)
 {
 	if (!this->player->IsAuthenticated() && !this->player->hasPrime)
 	{
-		return false;
+		return KZGlobalService::SubmitRecordResult::PlayerNotAuthenticated;
 	}
 
 	{
@@ -359,7 +359,7 @@ bool KZGlobalService::SubmitRecord(u16 filterID, f64 time, u32 teleports, std::s
 		if (!KZGlobalService::currentMap.has_value())
 		{
 			META_CONPRINTF("[KZ::Global] Cannot submit record on non-global map.\n");
-			return false;
+			return KZGlobalService::SubmitRecordResult::MapNotGlobal;
 		}
 	}
 
@@ -375,9 +375,16 @@ bool KZGlobalService::SubmitRecord(u16 filterID, f64 time, u32 teleports, std::s
 	data.time = time;
 	data.metadata = metadata;
 
+	if (!KZGlobalService::IsConnected())
+	{
+		std::unique_lock runQueueLock(KZGlobalService::runQueueMutex);
+		KZGlobalService::runQueue.emplace_back(std::move(data), std::move(cb));
+		return KZGlobalService::SubmitRecordResult::Queued;
+	}
+
 	KZGlobalService::SendMessage("new-record", data, [cb](u64 messageId, KZ::API::events::NewRecordAck ack) { return cb(ack); });
 
-	return true;
+	return KZGlobalService::SubmitRecordResult::Submitted;
 }
 
 bool KZGlobalService::QueryPB(u64 steamid64, CUtlString targetPlayerName, CUtlString mapName, CUtlString courseNameOrNumber, KZ::API::Mode mode,
@@ -431,6 +438,13 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 				case 1000 /* NORMAL */:
 				{
 					META_CONPRINTF("[KZ::Global] Server closed connection: %s\n", message->closeInfo.reason.c_str());
+					break;
+				};
+				case 1006 /* cloudflare trolling */:
+				{
+					META_CONPRINTF("[KZ::Global] Server closed connection unexpectedly: %s\n", message->closeInfo.reason.c_str());
+					META_CONPRINTF("[KZ::Global] Attempting to reconnect...\n");
+					KZGlobalService::apiSocket->enableAutomaticReconnection();
 					break;
 				};
 				case 1008 /* POLICY */:
@@ -592,6 +606,19 @@ void KZGlobalService::CompleteWebSocketHandshake(const ix::WebSocketMessagePtr &
 	META_CONPRINTF("[KZ::Global] Completed handshake!\n");
 
 	KZGlobalService::OnActivateServer();
+
+	std::vector<KZGlobalService::QueuedRecord> queuedRecords;
+
+	{
+		std::unique_lock runQueueLock(KZGlobalService::runQueueMutex);
+		KZGlobalService::runQueue.swap(queuedRecords);
+	}
+
+	for (const KZGlobalService::QueuedRecord &queuedRecord : queuedRecords)
+	{
+		KZGlobalService::SendMessage("new-record", queuedRecord.data,
+									 [cb = queuedRecord.callback](u64 messageId, KZ::API::events::NewRecordAck ack) { return cb(ack); });
+	}
 }
 
 void KZGlobalService::HeartbeatThread()

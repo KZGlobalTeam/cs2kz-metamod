@@ -72,13 +72,36 @@ public:
 	void OnPlayerAuthorized();
 	void OnClientDisconnect();
 
+	enum class SubmitRecordResult
+	{
+		/**
+		 * The player is not authenticated / does not have prime status.
+		 */
+		PlayerNotAuthenticated,
+
+		/**
+		 * The current map is not global.
+		 */
+		MapNotGlobal,
+
+		/**
+		 * We are not currently connected to the API, but we queued up the record to be submitted later (if possible).
+		 */
+		Queued,
+
+		/**
+		 * The record was submitted.
+		 */
+		Submitted,
+	};
+
 	/**
 	 * Submits a new record to the API.
 	 *
 	 * Returns whether the record was submitted. This could be false if the map is not global.
 	 */
-	bool SubmitRecord(u16 filterID, f64 time, u32 teleports, std::string_view modeMD5, void *styles, std::string_view metadata,
-					  Callback<KZ::API::events::NewRecordAck> cb);
+	SubmitRecordResult SubmitRecord(u16 filterID, f64 time, u32 teleports, std::string_view modeMD5, void *styles, std::string_view metadata,
+									Callback<KZ::API::events::NewRecordAck> cb);
 
 	/**
 	 * Query the personal best of a player on a certain map, course, mode, style.
@@ -202,6 +225,28 @@ private:
 	static inline std::unordered_map<u64, StoredCallback> callbacks {};
 
 	/**
+	 * Protects `runQueue`.
+	 */
+	static inline std::mutex runQueueMutex {};
+
+	struct QueuedRecord
+	{
+		KZ::API::events::NewRecord data;
+		Callback<KZ::API::events::NewRecordAck> callback;
+
+		QueuedRecord(KZ::API::events::NewRecord &&data, Callback<KZ::API::events::NewRecordAck> &&callback)
+			: data(std::move(data)), callback(std::move(callback))
+		{
+		}
+	};
+
+	/**
+	 * Runs that were submitted while we weren't connected, which we might be
+	 * able to submit later when connected again.
+	 */
+	static inline std::vector<QueuedRecord> runQueue {};
+
+	/**
 	 * Called bx IXWebSocket whenever we receive a message.
 	 */
 	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
@@ -227,6 +272,12 @@ private:
 	template<typename T>
 	static void SendMessage(const char *event, const T &data)
 	{
+		if (!KZGlobalService::apiSocket)
+		{
+			META_CONPRINTF("[KZ::Global] WARN: called `SendMessage()` without API connection\n");
+			return;
+		}
+
 		u64 messageId = KZGlobalService::nextMessageId++;
 
 		Json payload {};
@@ -243,6 +294,12 @@ private:
 	template<typename T, typename CallbackFunc>
 	static void SendMessage(const char *event, const T &data, CallbackFunc &&callback)
 	{
+		if (!KZGlobalService::apiSocket)
+		{
+			META_CONPRINTF("[KZ::Global] WARN: called `SendMessage()` without API connection\n");
+			return;
+		}
+
 		u64 messageId = KZGlobalService::nextMessageId++;
 
 		Json payload {};

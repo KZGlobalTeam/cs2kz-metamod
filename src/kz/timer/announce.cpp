@@ -148,9 +148,26 @@ void RecordAnnounce::SubmitGlobal()
 	};
 
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
+
 	// Dirty hack since nested forward declaration isn't possible.
-	this->global = player->globalService->SubmitRecord(this->globalFilterID, this->time, this->teleports, this->mode.md5, (void *)(&this->styles),
-													   this->metadata.c_str(), callback);
+	KZGlobalService::SubmitRecordResult submissionResult = player->globalService->SubmitRecord(
+		this->globalFilterID, this->time, this->teleports, this->mode.md5, (void *)(&this->styles), this->metadata.c_str(), callback);
+
+	switch (submissionResult)
+	{
+		case KZGlobalService::SubmitRecordResult::PlayerNotAuthenticated: /* fallthrough */
+		case KZGlobalService::SubmitRecordResult::MapNotGlobal:           /* fallthrough */
+		case KZGlobalService::SubmitRecordResult::Queued:
+		{
+			this->global = false;
+			break;
+		};
+		case KZGlobalService::SubmitRecordResult::Submitted:
+		{
+			this->global = true;
+			break;
+		};
+	}
 }
 
 void RecordAnnounce::UpdateGlobalCache()
