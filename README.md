@@ -8,7 +8,7 @@ WIP, not ready for release
 
 - Optional[^1]: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
 
-- Optional[^1]: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) 1.3.3 or later for local database support
+- Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) 1.3.3 or later for local database support
 
 [^1]: if your server is global, this plugin is required
 
