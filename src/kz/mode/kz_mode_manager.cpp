@@ -179,12 +179,12 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	{
 		if (!V_stricmp(modeInfos[i].shortModeName, shortModeName) || !V_stricmp(modeInfos[i].longModeName, longModeName))
 		{
-			if (modeInfos[i].id < 0)
+			if (modeInfos[i].id > 0)
 			{
-				info = &modeInfos[i];
-				break;
+				return false;
 			}
-			return false;
+			info = &modeInfos[i];
+			break;
 		}
 	}
 
@@ -211,23 +211,32 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	return true;
 }
 
-void KZModeManager::UnregisterMode(const char *modeName)
+void KZModeManager::UnregisterMode(PluginId id)
 {
-	if (!modeName)
-	{
-		return;
-	}
-
 	// Cannot unregister VNL.
-	if (V_stricmp("VNL", modeName) == 0 || V_stricmp("Vanilla", modeName) == 0)
+	if (id = g_PLID)
 	{
 		return;
 	}
 
 	FOR_EACH_VEC(modeInfos, i)
 	{
-		if (V_stricmp(modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(modeInfos[i].longModeName, modeName) == 0)
+		if (id == modeInfos[i].id)
 		{
+			for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+			{
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+				if (!player->IsInGame())
+				{
+					continue;
+				}
+				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[i].longModeName)
+					|| !V_strcmp(player->modeService->GetModeShortName(), modeInfos[i].shortModeName))
+				{
+					this->SwitchToMode(player, "VNL");
+				}
+			}
+
 			char shortModeCmd[64];
 			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[i].shortModeName.Get());
 			scmd::UnregisterCmd(shortModeCmd);
@@ -236,20 +245,8 @@ void KZModeManager::UnregisterMode(const char *modeName)
 			modeInfos[i].md5[0] = 0;
 			modeInfos[i].factory = nullptr;
 			modeInfos[i].shortCmdRegistered = false;
-			break;
-		}
-	}
 
-	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
-	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player->IsInGame())
-		{
-			continue;
-		}
-		if (strcmp(player->modeService->GetModeName(), modeName) == 0 || strcmp(player->modeService->GetModeShortName(), modeName) == 0)
-		{
-			this->SwitchToMode(player, "VNL");
+			break;
 		}
 	}
 }
@@ -334,7 +331,7 @@ void KZModeManager::Cleanup()
 	char error[256];
 	FOR_EACH_VEC(modeInfos, i)
 	{
-		if (modeInfos[i].id == 0)
+		if (modeInfos[i].id == g_PLID)
 		{
 			continue;
 		}
@@ -419,6 +416,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZ::API::Mode mode)
 			return KZ::mode::GetModeInfo("classic");
 		}
 	}
+	return KZModeManager::ModePluginInfo();
 }
 
 KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
