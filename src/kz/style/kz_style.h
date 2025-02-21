@@ -180,10 +180,8 @@ public:
 
 	virtual bool RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory,
 							   const char **incompatibleStyles = nullptr, u32 incompatibleStylesCount = 0);
-	virtual void UnregisterStyle(const char *styleName);
+	virtual void UnregisterStyle(PluginId id);
 	void Cleanup();
-
-	void OnDatabaseSetup();
 
 	void AddStyle(KZPlayer *player, const char *styleName, bool silent = false);
 	void RemoveStyle(KZPlayer *player, const char *styleName, bool silent = false);
