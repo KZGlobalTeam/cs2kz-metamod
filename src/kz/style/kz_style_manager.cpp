@@ -129,12 +129,12 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 	{
 		if (!V_stricmp(styleInfos[i].shortName, shortName) || !V_stricmp(styleInfos[i].longName, longName))
 		{
-			if (styleInfos[i].id < 0)
+			if (styleInfos[i].id > 0)
 			{
-				info = &styleInfos[i];
-				break;
+				return false;
 			}
-			return false;
+			info = &styleInfos[i];
+			break;
 		}
 	}
 
@@ -160,36 +160,30 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 	return true;
 }
 
-void KZStyleManager::UnregisterStyle(const char *styleName)
+void KZStyleManager::UnregisterStyle(PluginId id)
 {
-	if (!styleName)
-	{
-		return;
-	}
-
 	FOR_EACH_VEC(styleInfos, i)
 	{
-		if (V_stricmp(styleInfos[i].shortName, styleName) == 0 || V_stricmp(styleInfos[i].longName, styleName) == 0)
+		if (styleInfos[i].id == id)
 		{
+			for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+			{
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+				FOR_EACH_VEC(player->styleServices, i)
+				{
+					if (!V_stricmp(player->styleServices[i]->GetStyleName(), styleInfos[i].longName)
+						|| !V_stricmp(player->styleServices[i]->GetStyleShortName(), styleInfos[i].shortName))
+					{
+						this->RemoveStyle(player, styleInfos[i].longName);
+						break;
+					}
+				}
+			}
 			styleInfos[i].id = -1;
 			styleInfos[i].md5[0] = 0;
 			styleInfos[i].factory = nullptr;
 			styleInfos[i].incompatibleStyles.RemoveAll();
 			break;
-		}
-	}
-
-	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
-	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		FOR_EACH_VEC(player->styleServices, i)
-		{
-			if (!V_stricmp(player->styleServices[i]->GetStyleName(), styleName)
-				|| !V_stricmp(player->styleServices[i]->GetStyleShortName(), styleName))
-			{
-				this->RemoveStyle(player, styleName);
-				break;
-			}
 		}
 	}
 }
