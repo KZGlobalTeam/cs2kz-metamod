@@ -116,8 +116,6 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'commands.cpp'),
     
-    os.path.join(builder.sourcePath, 'src', 'kz', 'course', 'kz_course.cpp'),
-    
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'kz_db.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_courses.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_pb.cpp'),

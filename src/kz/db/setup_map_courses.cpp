@@ -1,5 +1,4 @@
 #include "kz_db.h"
-#include "kz/course/kz_course.h"
 
 #include "queries/courses.h"
 
@@ -14,25 +13,25 @@ bool KZDatabaseService::AreCoursesSetUp()
 	return coursesSetUp;
 }
 
-void KZDatabaseService::SetupCourses(CUtlVector<KZCourse> &courses)
+void KZDatabaseService::SetupCourses(CUtlVector<KZCourseDescriptor *> &courses)
 {
 	char query[1024];
 	Transaction txn;
 	FOR_EACH_VEC(courses, i)
 	{
-		KZCourse &course = courses[i];
-		std::string cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(course.GetName());
+		KZCourseDescriptor *course = courses[i];
+		std::string cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(course->GetName());
 		switch (databaseType)
 		{
 			case DatabaseType::SQLite:
 			{
-				V_snprintf(query, sizeof(query), sqlite_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), course.id);
+				V_snprintf(query, sizeof(query), sqlite_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), course->id);
 				txn.queries.push_back(query);
 				break;
 			}
 			case DatabaseType::MySQL:
 			{
-				V_snprintf(query, sizeof(query), mysql_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), course.id);
+				V_snprintf(query, sizeof(query), mysql_mapcourses_insert, KZDatabaseService::GetMapID(), cleanCourseName.c_str(), course->id);
 				txn.queries.push_back(query);
 				break;
 			}

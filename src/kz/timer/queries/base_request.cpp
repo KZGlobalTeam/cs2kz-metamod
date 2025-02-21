@@ -1,6 +1,5 @@
 #include "base_request.h"
 #include "kz/db/kz_db.h"
-#include "kz/course/kz_course.h"
 #include "kz/global/kz_global.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/mode/kz_mode.h"
@@ -184,7 +183,7 @@ void BaseRequest::SetupCourse(CUtlString courseName)
 	if (this->mapName == currentMap)
 	{
 		// Try to get the player's current course.
-		const KZCourse *course = callingPlayer->timerService->GetCourse();
+		const KZCourseDescriptor *course = callingPlayer->timerService->GetCourse();
 		if (!course)
 		{
 			// No course? Take the map's first course.

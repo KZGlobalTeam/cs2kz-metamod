@@ -4,7 +4,6 @@
 
 #include "kz/timer/kz_timer.h"
 #include "kz/global/api/api.h"
-#include "kz/course/kz_course.h"
 
 struct RecordAnnounce
 {

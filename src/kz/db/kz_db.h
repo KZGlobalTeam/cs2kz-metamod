@@ -112,7 +112,7 @@ public:
 
 	// Course
 	static bool AreCoursesSetUp();
-	static void SetupCourses(CUtlVector<KZCourse> &courses);
+	static void SetupCourses(CUtlVector<KZCourseDescriptor *> &courses);
 	static void FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Client/Player

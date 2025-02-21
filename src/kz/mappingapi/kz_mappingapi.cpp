@@ -3,7 +3,6 @@
 */
 
 #include "kz/kz.h"
-#include "kz/course/kz_course.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/trigger/kz_trigger.h"
 #include "movement/movement.h"
@@ -11,11 +10,26 @@
 #include "entity2/entitykeyvalues.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "utils/ctimer.h"
+#include "kz/db/kz_db.h"
+#include "kz/language/kz_language.h"
+#include "utils/simplecmds.h"
+#include "UtlSortVector.h"
 
 #include "tier0/memdbgon.h"
 
 #define KEY_TRIGGER_TYPE         "timer_trigger_type"
 #define KEY_IS_COURSE_DESCRIPTOR "timer_course_descriptor"
+
+using namespace KZ::course;
+
+class CourseLessFunc
+{
+public:
+	bool Less(const KZCourseDescriptor *src1, const KZCourseDescriptor *src2, void *pCtx)
+	{
+		return src1->id < src2->id;
+	}
+};
 
 enum
 {
@@ -50,6 +64,7 @@ static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset
 static_function MappingInterface g_mappingInterface;
 
 MappingInterface *g_pMappingApi = &g_mappingInterface;
+static_global CUtlSortVector<KZCourseDescriptor *, CourseLessFunc> g_sortedCourses(KZ_MAX_COURSE_COUNT, KZ_MAX_COURSE_COUNT);
 
 // TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
 
@@ -119,27 +134,9 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 		}
 	}
 
-	// Attempt to register a new course using course number and name.
-	KZCourse *course = KZ::course::InsertCourse(courseNumber, courseName);
-	if (!course)
-	{
-		Mapi_Error("Failed to register course name '%s' (hammerId %i)", courseName, hammerId);
-		return false;
-	}
-	// Check if the course already has a descriptor. This should not happen.
-	if (course->descriptor)
-	{
-		// Courses made with hammerId -1 is from pre-mapping API, which is fine.
-		if (course->descriptor->hammerId == -1)
-		{
-			return false;
-		}
-		assert(0);
-		Mapi_Error("Course name '%s' already had a descriptor!", courseName);
-		return false;
-	}
-	i32 index = g_mappingApi.courseDescriptors.AddToTail({course, hammerId, targetName, disableCheckpoints});
-	course->descriptor = &g_mappingApi.courseDescriptors[index];
+	i32 index = g_mappingApi.courseDescriptors.AddToTail(
+		{hammerId, targetName, disableCheckpoints, (u32)g_mappingApi.courseDescriptors.Count() + 1, courseNumber, courseName});
+	g_sortedCourses.Insert(&g_mappingApi.courseDescriptors[index]);
 	return true;
 }
 
@@ -654,37 +651,37 @@ void KZ::mapapi::OnRoundStart()
 		bool invalid = false;
 		if (splitXor != 0)
 		{
-			Mapi_Error("Course \"%s\" Split zones aren't consecutive or don't start at 1!", courseDescriptor->course->name);
+			Mapi_Error("Course \"%s\" Split zones aren't consecutive or don't start at 1!", courseDescriptor->name);
 			invalid = true;
 		}
 
 		if (cpXor != 0)
 		{
-			Mapi_Error("Course \"%s\" Checkpoint zones aren't consecutive or don't start at 1!", courseDescriptor->course->name);
+			Mapi_Error("Course \"%s\" Checkpoint zones aren't consecutive or don't start at 1!", courseDescriptor->name);
 			invalid = true;
 		}
 
 		if (stageXor != 0)
 		{
-			Mapi_Error("Course \"%s\" Stage zones aren't consecutive or don't start at 1!", courseDescriptor->course->name);
+			Mapi_Error("Course \"%s\" Stage zones aren't consecutive or don't start at 1!", courseDescriptor->name);
 			invalid = true;
 		}
 
 		if (splitCount > KZ_MAX_SPLIT_ZONES)
 		{
-			Mapi_Error("Course \"%s\" Too many split zones! Maximum is %i.", courseDescriptor->course->name, KZ_MAX_SPLIT_ZONES);
+			Mapi_Error("Course \"%s\" Too many split zones! Maximum is %i.", courseDescriptor->name, KZ_MAX_SPLIT_ZONES);
 			invalid = true;
 		}
 
 		if (cpCount > KZ_MAX_CHECKPOINT_ZONES)
 		{
-			Mapi_Error("Course \"%s\" Too many checkpoint zones! Maximum is %i.", courseDescriptor->course->name, KZ_MAX_CHECKPOINT_ZONES);
+			Mapi_Error("Course \"%s\" Too many checkpoint zones! Maximum is %i.", courseDescriptor->name, KZ_MAX_CHECKPOINT_ZONES);
 			invalid = true;
 		}
 
 		if (stageCount > KZ_MAX_STAGE_ZONES)
 		{
-			Mapi_Error("Course \"%s\" Too many stage zones! Maximum is %i.", courseDescriptor->course->name, KZ_MAX_STAGE_ZONES);
+			Mapi_Error("Course \"%s\" Too many stage zones! Maximum is %i.", courseDescriptor->name, KZ_MAX_STAGE_ZONES);
 			invalid = true;
 		}
 
@@ -771,4 +768,143 @@ bool MappingInterface::GetJumpstatArea(Vector &pos, QAngle &angles)
 	}
 
 	return g_mappingApi.hasJumpstatArea;
+}
+
+void KZ::course::ClearCourses()
+{
+	g_sortedCourses.RemoveAll();
+	KZTimerService::ClearRecordCache();
+}
+
+u32 KZ::course::GetCourseCount()
+{
+	return g_sortedCourses.Count();
+}
+
+const KZCourseDescriptor *KZ::course::GetCourseByCourseID(i32 id)
+{
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		if (g_sortedCourses[i]->id == id)
+		{
+			return g_sortedCourses[i];
+		}
+	}
+	return nullptr;
+}
+
+const KZCourseDescriptor *KZ::course::GetCourseByLocalCourseID(u32 id)
+{
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		if (g_sortedCourses[i]->localDatabaseID == id)
+		{
+			return g_sortedCourses[i];
+		}
+	}
+	return nullptr;
+}
+
+const KZCourseDescriptor *KZ::course::GetCourseByGlobalCourseID(u32 id)
+{
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		if (g_sortedCourses[i]->globalDatabaseID == id)
+		{
+			return g_sortedCourses[i];
+		}
+	}
+	return nullptr;
+}
+
+const KZCourseDescriptor *KZ::course::GetCourse(const char *courseName, bool caseSensitive)
+{
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		const char *name = g_sortedCourses[i]->name;
+		if (caseSensitive ? KZ_STREQ(name, courseName) : KZ_STREQI(name, courseName))
+		{
+			return g_sortedCourses[i];
+		}
+	}
+	return nullptr;
+}
+
+const KZCourseDescriptor *KZ::course::GetCourse(u32 guid)
+{
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		if (g_sortedCourses[i]->guid == guid)
+		{
+			return g_sortedCourses[i];
+		}
+	}
+	return nullptr;
+}
+
+const KZCourseDescriptor *KZ::course::GetFirstCourse()
+{
+	if (g_sortedCourses.Count() >= 1)
+	{
+		return g_sortedCourses[0];
+	}
+	return nullptr;
+}
+
+void KZ::course::SetupLocalCourses()
+{
+	if (KZDatabaseService::IsMapSetUp())
+	{
+		KZDatabaseService::SetupCourses(g_sortedCourses);
+	}
+}
+
+bool KZ::course::UpdateCourseLocalID(const char *courseName, u32 databaseID)
+{
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		if (g_sortedCourses[i]->GetName() == courseName)
+		{
+			g_sortedCourses[i]->localDatabaseID = databaseID;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool KZ::course::UpdateCourseGlobalID(const char *courseName, u32 globalID)
+{
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		if (g_sortedCourses[i]->GetName() == courseName)
+		{
+			g_sortedCourses[i]->globalDatabaseID = globalID;
+			return true;
+		}
+	}
+	return false;
+}
+
+SCMD_CALLBACK(Command_KzCourse)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (player->timerService->GetCourse())
+	{
+		player->languageService->PrintChat(true, false, "Current Course", player->timerService->GetCourse()->name);
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "No Current Course");
+	}
+	player->languageService->PrintConsole(false, false, "Course List Header");
+	for (u32 i = 0; i < KZ::course::GetCourseCount(); i++)
+	{
+		player->PrintConsole(false, false, "%s", g_sortedCourses[i]->name);
+	}
+	return MRES_SUPERCEDE;
+}
+
+void KZ::course::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_course", Command_KzCourse);
 }
