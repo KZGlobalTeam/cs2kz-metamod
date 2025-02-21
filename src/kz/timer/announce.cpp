@@ -1,6 +1,7 @@
 #include "announce.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
+#include "kz/global/events.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
@@ -12,7 +13,7 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	  time(player->timerService->GetTime()), teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
-	this->global = player->hasPrime && KZGlobalService::IsConnected();
+	this->global = player->hasPrime && KZGlobalService::IsAvailable();
 
 	// Setup player
 	this->player.name = player->GetName();
@@ -121,7 +122,7 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 
 void RecordAnnounce::SubmitGlobal()
 {
-	auto callback = [uid = this->uid](const KZ::API::events::NewRecordAck &ack)
+	auto callback = [uid = this->uid](KZ::API::events::NewRecordAck &ack)
 	{
 		META_CONPRINTF("[KZ::Global] Record submitted under ID %d\n", ack.recordId);
 
@@ -172,7 +173,7 @@ void RecordAnnounce::SubmitGlobal()
 
 void RecordAnnounce::UpdateGlobalCache()
 {
-	KZGlobalService::UpdateGlobalCache();
+	KZGlobalService::UpdateRecordCache();
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
 	if (player && this->globalResponse.received)
 	{

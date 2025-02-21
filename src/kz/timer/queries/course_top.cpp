@@ -194,7 +194,7 @@ struct CourseTopRequest : public BaseRequest
 
 		if (this->globalStatus == ResponseStatus::ENABLED)
 		{
-			auto callback = [uid = this->uid](const KZ::API::events::CourseTop &ctops)
+			auto callback = [uid = this->uid](KZ::API::events::CourseTop &ctops)
 			{
 				CourseTopRequest *req = (CourseTopRequest *)CourseTopRequest::Find(uid);
 				if (!req)
@@ -216,32 +216,19 @@ struct CourseTopRequest : public BaseRequest
 
 				for (const auto &record : ctops.overall)
 				{
-					u64 steamID64 = 0;
-
-					if (!utils::ParseSteamID2(record.player.id.c_str(), steamID64))
-					{
-						META_CONPRINTF("[KZ] Failed to parse SteamID :(\n");
-						continue;
-					}
-
 					req->wrData.overallData.AddToTail(
-						{record.id, record.player.name.c_str(), record.teleports, record.time, steamID64, (u64)floor(record.nubPoints)});
+						{record.id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
 				}
 				for (const auto &record : ctops.pro)
 				{
-					u64 steamID64 = 0;
-
-					if (!utils::ParseSteamID2(record.player.id.c_str(), steamID64))
-					{
-						META_CONPRINTF("[KZ] Failed to parse SteamID :(\n");
-						continue;
-					}
-
-					req->wrData.proData.AddToTail({record.id, record.player.name.c_str(), 0, record.time, steamID64, (u64)floor(record.proPoints)});
+					req->wrData.proData.AddToTail(
+						{record.id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
 				}
 			};
 			this->globalStatus = ResponseStatus::PENDING;
-			KZGlobalService::QueryCourseTop(this->mapName, this->courseName, this->apiMode, this->limit, this->offset, callback);
+			KZGlobalService::QueryCourseTop(std::string_view(this->mapName.Get(), this->mapName.Length()),
+											std::string_view(this->courseName.Get(), this->courseName.Length()), this->apiMode, this->limit,
+											this->offset, callback);
 		}
 	}
 

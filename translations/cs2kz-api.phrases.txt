@@ -1,19 +1,8 @@
 "Phrases"
 {
-	"API Healthy"
+	"Global Check"
 	{
-		"en"	"API is healthy."
-		"chi"	"API 处于正常状态."
-		"ua"	"API працює коректно."
-		"sv"	"API är välmående."
-	}
-	"API Unhealthy"
-	{
-		// API is unhealthy (status XXX).
-		"#format"	"status:d"
-		"en"		"{red}API is unhealthy (status {status})."
-		"chi"		"{red}API 工作不正常 (状态 {status})."
-		"ua"		"{red}API не працює коректно (статус {status})."
-		"sv"		"{red}API är inte välmående (status {status})."
+		"#format"	"api:s,server:s,map:s,player:s,mode:s,styles:s"
+		"en"	"API {api} {grey}| {default} Server {server} {grey}| {default} Map {map} {grey}| {default} You {player} {grey}| {default} Mode {mode} {grey}| {default} Styles {styles}"
 	}
 }

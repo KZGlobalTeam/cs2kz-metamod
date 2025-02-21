@@ -2,8 +2,10 @@
  * Run submission stuff.
  */
 
+#pragma once
+
 #include "kz/timer/kz_timer.h"
-#include "kz/global/api/api.h"
+#include "kz/global/api.h"
 
 struct RecordAnnounce
 {

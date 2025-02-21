@@ -339,7 +339,7 @@ public:
 			return false;
 		}
 
-		out = value;
+		out = std::make_optional(std::move(value));
 		return true;
 	}
 

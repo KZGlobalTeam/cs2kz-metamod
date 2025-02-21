@@ -1,6 +1,7 @@
 #include "base_request.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
+#include "kz/global/events.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -105,7 +106,7 @@ struct PBRequest : public BaseRequest
 			return;
 		}
 		this->globalStatus = ResponseStatus::PENDING;
-		auto callback = [uid = this->uid](const KZ::API::events::PersonalBest &pb)
+		auto callback = [uid = this->uid](KZ::API::events::PersonalBest &pb)
 		{
 			PBRequest *req = (PBRequest *)PBRequest::Find(uid);
 			if (!req)
@@ -116,12 +117,6 @@ struct PBRequest : public BaseRequest
 			if (req->requestingGlobalPlayer && req->localStatus == ResponseStatus::ENABLED && pb.player.has_value())
 			{
 				req->requestingGlobalPlayer = false;
-
-				if (!utils::ParseSteamID2(pb.player->id, req->targetSteamID64))
-				{
-					req->localStatus = ResponseStatus::DISABLED;
-				}
-
 				req->queryLocalRanking = !pb.player->isBanned;
 			}
 
@@ -155,8 +150,9 @@ struct PBRequest : public BaseRequest
 				req->gpbData.pointsPro = pb.pro->proPoints;
 			}
 		};
-		KZGlobalService::QueryPB(this->targetSteamID64, this->targetPlayerName, this->mapName, this->courseName, this->apiMode, this->styleList,
-								 callback);
+		KZGlobalService::QueryPB(this->targetSteamID64, std::string_view(this->targetPlayerName.Get(), this->targetPlayerName.Length()),
+								 std::string_view(this->mapName.Get(), this->mapName.Length()),
+								 std::string_view(this->courseName.Get(), this->courseName.Length()), this->apiMode, this->styleList, callback);
 	}
 
 	virtual void Reply()
