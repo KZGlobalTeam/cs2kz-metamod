@@ -154,6 +154,7 @@ class MMSPluginConfig(object):
         '-Wno-switch',
         '-msse',
         '-fPIC',
+		'-Wa,--noexecstack',
       ]
 
       cxx.cxxflags += ['-std=c++17']
@@ -167,7 +168,8 @@ class MMSPluginConfig(object):
         '-Wno-non-virtual-dtor',
         '-Wno-overloaded-virtual',
         '-Wno-register',
-        '-Wno-deprecated-anon-enum-enum-conversion'
+        '-Wno-deprecated-anon-enum-enum-conversion',
+        '-Wa,--noexecstack',
       ]
       if (cxx.version >= 'gcc-4.7' or cxx.family == 'clang'):
         cxx.cxxflags += ['-Wno-delete-non-virtual-dtor']
@@ -261,7 +263,7 @@ class MMSPluginConfig(object):
       if cxx.family == 'gcc':
         cxx.linkflags += ['-static-libgcc']
       elif cxx.family == 'clang':
-        cxx.linkflags += ['-lgcc_eh']
+        cxx.linkflags += ['-lgcc_eh', '-Wl,-z,noexecstack']
       cxx.linkflags += ['-static-libstdc++']
     elif cxx.target.platform == 'windows':
       cxx.defines += ['WIN32', '_WINDOWS']
