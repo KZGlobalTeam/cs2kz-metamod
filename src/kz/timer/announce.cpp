@@ -176,7 +176,7 @@ void RecordAnnounce::UpdateGlobalCache()
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
 	if (player && this->globalResponse.received)
 	{
-		const KZCourse *course = KZ::course::GetCourse(this->course.name.c_str());
+		const KZCourseDescriptor *course = KZ::course::GetCourse(this->course.name.c_str());
 		auto mode = KZ::mode::GetModeInfo(this->mode.name.c_str());
 		if (mode.id > -2)
 		{

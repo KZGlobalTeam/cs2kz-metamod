@@ -109,7 +109,7 @@ void KZTimerService::StartZoneEndTouch(const KZCourseDescriptor *course)
 
 void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 splitNumber)
 {
-	if (!this->timerRunning || course->course->guid != this->currentCourseGUID)
+	if (!this->timerRunning || course->guid != this->currentCourseGUID)
 	{
 		return;
 	}
@@ -127,7 +127,7 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 
 void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, i32 cpNumber)
 {
-	if (!this->timerRunning || course->course->guid != this->currentCourseGUID)
+	if (!this->timerRunning || course->guid != this->currentCourseGUID)
 	{
 		return;
 	}
@@ -146,7 +146,7 @@ void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, 
 
 void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 stageNumber)
 {
-	if (!this->timerRunning || course->course->guid != this->currentCourseGUID)
+	if (!this->timerRunning || course->guid != this->currentCourseGUID)
 	{
 		return;
 	}
@@ -179,7 +179,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 		|| this->player->noclipService->JustNoclipped()
 		|| !this->HasValidMoveType()
 		|| this->JustLanded()
-		|| (this->GetTimerRunning() && courseDesc->course->guid == this->currentCourseGUID)
+		|| (this->GetTimerRunning() && courseDesc->guid == this->currentCourseGUID)
 		|| (!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) && !this->GetValidJump()))
 	// clang-format on
 	{
@@ -194,7 +194,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	bool allowStart = true;
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		allowStart &= eventListeners[i]->OnTimerStart(this->player, courseDesc->course->guid);
+		allowStart &= eventListeners[i]->OnTimerStart(this->player, courseDesc->guid);
 	}
 	if (!allowStart)
 	{
@@ -217,12 +217,12 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	this->cpZoneTimes.FillWithValue(invalidTime);
 	this->stageZoneTimes.FillWithValue(invalidTime);
 
-	SetCourse(courseDesc->course->guid);
+	SetCourse(courseDesc->guid);
 	this->validTime = true;
 	this->shouldAnnounceMissedTime = true;
 	this->shouldAnnounceMissedProTime = true;
 
-	this->UpdateCurrentCompareType(ToPBDataKey(KZ::mode::GetModeInfo(this->player->modeService).id, courseDesc->course->guid));
+	this->UpdateCurrentCompareType(ToPBDataKey(KZ::mode::GetModeInfo(this->player->modeService).id, courseDesc->guid));
 
 	if (playSound)
 	{
@@ -240,7 +240,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->course->guid);
+		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->guid);
 	}
 	return true;
 }
@@ -252,7 +252,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 		return false;
 	}
 
-	if (!this->timerRunning || courseDesc->course->guid != this->currentCourseGUID)
+	if (!this->timerRunning || courseDesc->guid != this->currentCourseGUID)
 	{
 		this->PlayTimerFalseEndSound();
 		this->lastFalseEndTime = g_pKZUtils->GetServerGlobals()->curtime;
@@ -986,7 +986,7 @@ void KZTimerService::UpdateLocalRecordCache()
 				{
 					continue;
 				}
-				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				const KZCourseDescriptor *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
 				if (!course)
 				{
 					continue;
@@ -1004,7 +1004,7 @@ void KZTimerService::UpdateLocalRecordCache()
 				{
 					continue;
 				}
-				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				const KZCourseDescriptor *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
 				if (!course)
 				{
 					continue;
@@ -1016,7 +1016,7 @@ void KZTimerService::UpdateLocalRecordCache()
 	KZDatabaseService::QueryAllRecords(g_pKZUtils->GetCurrentMapName(), onQuerySuccess, KZDatabaseService::OnGenericTxnFailure);
 }
 
-void KZTimerService::InsertRecordToCache(f64 time, const KZCourse *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
+void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
 {
 	PBData &pb = global ? KZTimerService::wrCache[ToPBDataKey(modeID, course->guid)] : KZTimerService::srCache[ToPBDataKey(modeID, course->guid)];
 
@@ -1037,7 +1037,7 @@ void KZTimerService::InsertRecordToCache(f64 time, const KZCourse *course, Plugi
 	KeyValues3 *data = kv.FindMember("splitZoneTimes");
 	if (data && data->GetType() == KV3_TYPE_ARRAY)
 	{
-		for (i32 i = 0; i < course->descriptor->splitCount; i++)
+		for (i32 i = 0; i < course->splitCount; i++)
 		{
 			f64 time = -1.0f;
 			KeyValues3 *element = data->GetArrayElement(i);
@@ -1052,7 +1052,7 @@ void KZTimerService::InsertRecordToCache(f64 time, const KZCourse *course, Plugi
 	data = kv.FindMember("cpZoneTimes");
 	if (data && data->GetType() == KV3_TYPE_ARRAY)
 	{
-		for (i32 i = 0; i < course->descriptor->checkpointCount; i++)
+		for (i32 i = 0; i < course->checkpointCount; i++)
 		{
 			f64 time = -1.0f;
 			KeyValues3 *element = data->GetArrayElement(i);
@@ -1067,7 +1067,7 @@ void KZTimerService::InsertRecordToCache(f64 time, const KZCourse *course, Plugi
 	data = kv.FindMember("stageZoneTimes");
 	if (data && data->GetType() == KV3_TYPE_ARRAY)
 	{
-		for (i32 i = 0; i < course->descriptor->stageCount; i++)
+		for (i32 i = 0; i < course->stageCount; i++)
 		{
 			f64 time = -1.0f;
 			KeyValues3 *element = data->GetArrayElement(i);
@@ -1085,7 +1085,7 @@ void KZTimerService::ClearPBCache()
 	this->localPBCache.clear();
 }
 
-const PBData *KZTimerService::GetGlobalCachedPB(const KZCourse *course, PluginId modeID)
+const PBData *KZTimerService::GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID)
 {
 	PBDataKey key = ToPBDataKey(modeID, course->guid);
 
@@ -1097,7 +1097,8 @@ const PBData *KZTimerService::GetGlobalCachedPB(const KZCourse *course, PluginId
 	return &this->globalPBCache[key];
 }
 
-void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId modeID, bool overall, bool global, CUtlString metadata, f64 points)
+void KZTimerService::InsertPBToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata,
+									 f64 points)
 {
 	PBData &pb = global ? this->globalPBCache[ToPBDataKey(modeID, course->guid)] : this->localPBCache[ToPBDataKey(modeID, course->guid)];
 
@@ -1119,7 +1120,7 @@ void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId 
 	KeyValues3 *data = kv.FindMember("splitZoneTimes");
 	if (data && data->GetType() == KV3_TYPE_ARRAY)
 	{
-		for (i32 i = 0; i < course->descriptor->splitCount; i++)
+		for (i32 i = 0; i < course->splitCount; i++)
 		{
 			f64 time = -1.0f;
 			KeyValues3 *element = data->GetArrayElement(i);
@@ -1134,7 +1135,7 @@ void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId 
 	data = kv.FindMember("cpZoneTimes");
 	if (data && data->GetType() == KV3_TYPE_ARRAY)
 	{
-		for (i32 i = 0; i < course->descriptor->checkpointCount; i++)
+		for (i32 i = 0; i < course->checkpointCount; i++)
 		{
 			f64 time = -1.0f;
 			KeyValues3 *element = data->GetArrayElement(i);
@@ -1149,7 +1150,7 @@ void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId 
 	data = kv.FindMember("stageZoneTimes");
 	if (data && data->GetType() == KV3_TYPE_ARRAY)
 	{
-		for (i32 i = 0; i < course->descriptor->stageCount; i++)
+		for (i32 i = 0; i < course->stageCount; i++)
 		{
 			f64 time = -1.0f;
 			KeyValues3 *element = data->GetArrayElement(i);
@@ -1164,7 +1165,7 @@ void KZTimerService::InsertPBToCache(f64 time, const KZCourse *course, PluginId 
 
 void KZTimerService::CheckMissedTime()
 {
-	const KZCourse *course = this->GetCourse();
+	const KZCourseDescriptor *course = this->GetCourse();
 	// No active course, the timer is not running or if we already announce late PBs.
 	if (!course || !this->GetTimerRunning() || (!this->shouldAnnounceMissedTime && !this->shouldAnnounceMissedProTime))
 	{
@@ -1218,7 +1219,7 @@ void KZTimerService::CheckMissedTime()
 
 void KZTimerService::ShowSplitText(u32 currentSplit)
 {
-	const KZCourse *course = this->GetCourse();
+	const KZCourseDescriptor *course = this->GetCourse();
 	// No active course so we can't compare anything.
 	if (!course)
 	{
@@ -1271,7 +1272,7 @@ void KZTimerService::ShowSplitText(u32 currentSplit)
 
 void KZTimerService::ShowCheckpointText(u32 currentCheckpoint)
 {
-	const KZCourse *course = this->GetCourse();
+	const KZCourseDescriptor *course = this->GetCourse();
 	// No active course so we can't compare anything.
 	if (!course)
 	{
@@ -1324,7 +1325,7 @@ void KZTimerService::ShowCheckpointText(u32 currentCheckpoint)
 
 void KZTimerService::ShowStageText()
 {
-	const KZCourse *course = this->GetCourse();
+	const KZCourseDescriptor *course = this->GetCourse();
 	// No active course so we can't compare anything.
 	if (!course)
 	{
@@ -1435,7 +1436,7 @@ void KZTimerService::UpdateLocalPBCache()
 				{
 					continue;
 				}
-				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				const KZCourseDescriptor *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
 				if (!course)
 				{
 					continue;
@@ -1453,7 +1454,7 @@ void KZTimerService::UpdateLocalPBCache()
 				{
 					continue;
 				}
-				const KZCourse *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
+				const KZCourseDescriptor *course = KZ::course::GetCourseByLocalCourseID(result->GetInt(1));
 				if (!course)
 				{
 					continue;

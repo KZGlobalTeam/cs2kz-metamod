@@ -9,9 +9,11 @@
 
 #define KZ_MAPAPI_VERSION 2
 
-#define KZ_MAX_SPLIT_ZONES      100
-#define KZ_MAX_CHECKPOINT_ZONES 100
-#define KZ_MAX_STAGE_ZONES      100
+#define KZ_MAX_SPLIT_ZONES        100
+#define KZ_MAX_CHECKPOINT_ZONES   100
+#define KZ_MAX_STAGE_ZONES        100
+#define KZ_MAX_COURSE_COUNT       128
+#define KZ_MAX_COURSE_NAME_LENGTH 65
 
 #define INVALID_SPLIT_NUMBER      0
 #define INVALID_CHECKPOINT_NUMBER 0
@@ -79,15 +81,14 @@ struct KzMapTeleport
 
 struct KZCourseDescriptor
 {
-	KZCourseDescriptor(KZCourse *course, i32 hammerId = -1, const char *targetName = "", bool disableCheckpoints = false)
-		: course(course), hammerId(hammerId), disableCheckpoints(disableCheckpoints)
+	KZCourseDescriptor(i32 hammerId = -1, const char *targetName = "", bool disableCheckpoints = false, u32 guid = 0,
+					   i32 courseID = INVALID_COURSE_NUMBER, const char *courseName = "")
+		: hammerId(hammerId), disableCheckpoints(disableCheckpoints), guid(guid), id(courseID)
 	{
 		V_snprintf(entityTargetname, sizeof(entityTargetname), "%s", targetName);
+		V_snprintf(name, sizeof(name), "%s", courseName);
 	}
 
-	KZCourseDescriptor() = default;
-
-	KZCourse *course = nullptr;
 	char entityTargetname[128] {};
 	i32 hammerId = -1;
 	bool disableCheckpoints = false;
@@ -110,6 +111,30 @@ struct KZCourseDescriptor
 	i32 splitCount {};
 	i32 checkpointCount {};
 	i32 stageCount {};
+
+	// Shared identifiers
+	u32 guid {};
+
+	// Mapper assigned course ID.
+	i32 id;
+	// Mapper assigned course name.
+	char name[KZ_MAX_COURSE_NAME_LENGTH] {};
+
+	bool HasMatchingIdentifiers(i32 id, const char *name) const
+	{
+		return this->id == id && (!V_stricmp(this->name, name));
+	}
+
+	CUtlString GetName() const
+	{
+		return name;
+	}
+
+	// ID used for local database.
+	u32 localDatabaseID {};
+
+	// ID used for global database.
+	u32 globalDatabaseID {};
 };
 
 struct KzTrigger
@@ -165,3 +190,41 @@ public:
 };
 
 extern MappingInterface *g_pMappingApi;
+
+namespace KZ::course
+{
+	// Clear the list of current courses.
+	void ClearCourses();
+
+	// Get the number of courses on this map.
+	u32 GetCourseCount();
+
+	// Get a course's information given its map-defined course id.
+	const KZCourseDescriptor *GetCourseByCourseID(i32 id);
+
+	// Get a course's information given its local course id.
+	const KZCourseDescriptor *GetCourseByLocalCourseID(u32 id);
+
+	// Get a course's information given its global course id.
+	const KZCourseDescriptor *GetCourseByGlobalCourseID(u32 id);
+
+	// Get a course's information given its name.
+	const KZCourseDescriptor *GetCourse(const char *courseName, bool caseSensitive = true);
+
+	// Get a course's information given its GUID.
+	const KZCourseDescriptor *GetCourse(u32 guid);
+
+	// Get the first course's information sorted by map-defined ID.
+	const KZCourseDescriptor *GetFirstCourse();
+
+	// Setup all the courses to the local database.
+	void SetupLocalCourses();
+
+	// Update the course's database ID given its name.
+	bool UpdateCourseLocalID(const char *courseName, u32 databaseID);
+
+	// Update the course's global ID given its map-defined name and ID.
+	bool UpdateCourseGlobalID(const char *courseName, u32 globalID);
+
+	void RegisterCommands();
+}; // namespace KZ::course

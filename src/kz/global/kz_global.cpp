@@ -124,7 +124,7 @@ void KZGlobalService::UpdateGlobalCache()
 	{
 		for (const KZ::API::Record &record : records.records)
 		{
-			const KZCourse *course = KZ::course::GetCourseByGlobalCourseID(record.course.id);
+			const KZCourseDescriptor *course = KZ::course::GetCourseByGlobalCourseID(record.course.id);
 
 			if (course == nullptr)
 			{
@@ -294,7 +294,7 @@ void KZGlobalService::OnPlayerAuthorized()
 		{
 			for (const KZ::API::Record &record : pbs.records)
 			{
-				const KZCourse *course = KZ::course::GetCourseByGlobalCourseID(record.course.id);
+				const KZCourseDescriptor *course = KZ::course::GetCourseByGlobalCourseID(record.course.id);
 
 				if (course == nullptr)
 				{

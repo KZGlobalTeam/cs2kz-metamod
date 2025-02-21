@@ -2,7 +2,6 @@
 
 #include "../kz.h"
 #include "../checkpoint/kz_checkpoint.h"
-#include "kz/course/kz_course.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 
 #define KZ_MAX_MODE_NAME_LENGTH 128
@@ -21,6 +20,55 @@
 #define KZ_TIMER_SND_MISSED_TIME      "UI.RankDown"
 
 #define KZ_PAUSE_COOLDOWN 1.0f
+
+struct PBData
+{
+	PBData()
+	{
+		Reset();
+	}
+
+	void Reset()
+	{
+		overall.pbTime = {};
+		overall.pbSplitZoneTimes.FillWithValue(-1.0);
+		overall.pbCpZoneTimes.FillWithValue(-1.0);
+		overall.pbStageZoneTimes.FillWithValue(-1.0);
+		pro.pbTime = {};
+		pro.pbSplitZoneTimes.FillWithValue(-1.0);
+		pro.pbCpZoneTimes.FillWithValue(-1.0);
+		pro.pbStageZoneTimes.FillWithValue(-1.0);
+	}
+
+	struct
+	{
+		f64 pbTime {};
+		f64 points {};
+		CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
+		CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
+		CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> pbStageZoneTimes;
+	} overall, pro;
+};
+
+// Convert mode and course ID to one single value.
+typedef u64 PBDataKey;
+
+inline PBDataKey ToPBDataKey(u32 modeID, u32 courseID)
+{
+	return modeID | ((u64)courseID << 32);
+}
+
+inline void ConvertFromPBDataKey(PBDataKey key, uint32_t *modeID, uint32_t *courseID)
+{
+	if (modeID)
+	{
+		*modeID = (uint32_t)key;
+	}
+	if (courseID)
+	{
+		*courseID = (uint32_t)(key >> 32);
+	}
+}
 
 class KZTimerServiceEventListener
 {
@@ -122,12 +170,14 @@ private:
 public:
 	static void ClearRecordCache();
 	static void UpdateLocalRecordCache();
-	static void InsertRecordToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool hasTeleports, bool global, CUtlString metadata = "");
+	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
+									CUtlString metadata = "");
 
 	void ClearPBCache();
-	const PBData *GetGlobalCachedPB(const KZCourse *course, PluginId modeID);
+	const PBData *GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID);
 	void UpdateLocalPBCache();
-	void InsertPBToCache(f64 time, const KZCourse *courseName, PluginId modeID, bool overall, bool global, CUtlString metadata = "", f64 points = 0);
+	void InsertPBToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool overall, bool global, CUtlString metadata = "",
+						 f64 points = 0);
 	void SetCompareTarget(const char *typeString);
 
 	void CheckMissedTime();
@@ -203,14 +253,9 @@ public:
 		timerRunning = time > 0.0f;
 	}
 
-	const KZCourse *GetCourse()
+	const KZCourseDescriptor *GetCourse()
 	{
 		return KZ::course::GetCourse(currentCourseGUID);
-	}
-
-	const KZCourseDescriptor *GetCourseDescriptor()
-	{
-		return GetCourse() ? GetCourse()->descriptor : nullptr;
 	}
 
 	void SetCourse(u32 courseGUID)

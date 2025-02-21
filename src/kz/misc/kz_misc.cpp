@@ -5,7 +5,6 @@
 #include "utils/simplecmds.h"
 
 #include "kz/checkpoint/kz_checkpoint.h"
-#include "kz/course/kz_course.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/mode/kz_mode.h"
@@ -75,9 +74,9 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		const KZCourse *course = KZ::course::GetCourse(args->ArgS(), false);
+		const KZCourseDescriptor *course = KZ::course::GetCourse(args->ArgS(), false);
 
-		if (!course || !course->descriptor || !course->descriptor->hasEndPosition)
+		if (!course || !course || !course->hasEndPosition)
 		{
 			player->languageService->PrintChat(true, false, "No End Position For Course", args->ArgS());
 			return MRES_SUPERCEDE;
@@ -87,12 +86,12 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 	bool shouldTeleport = false;
 	Vector tpOrigin;
 	QAngle tpAngles;
-	if (player->timerService->GetCourseDescriptor())
+	if (player->timerService->GetCourse())
 	{
-		if (player->timerService->GetCourseDescriptor()->hasEndPosition)
+		if (player->timerService->GetCourse()->hasEndPosition)
 		{
-			tpOrigin = player->timerService->GetCourseDescriptor()->endPosition;
-			tpAngles = player->timerService->GetCourseDescriptor()->endAngles;
+			tpOrigin = player->timerService->GetCourse()->endPosition;
+			tpAngles = player->timerService->GetCourse()->endAngles;
 			shouldTeleport = true;
 		}
 		else
@@ -106,7 +105,7 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 	// If we have no active course the map only has one course, !r should send the player to the end of that course.
 	else if (KZ::course::GetCourseCount() == 1)
 	{
-		const KZCourseDescriptor *descriptor = KZ::course::GetFirstCourse()->descriptor;
+		const KZCourseDescriptor *descriptor = KZ::course::GetFirstCourse();
 		if (descriptor->hasEndPosition)
 		{
 			tpOrigin = descriptor->endPosition;
@@ -143,13 +142,13 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 static_function SCMD_CALLBACK(Command_KzRestart)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	const KZCourse *startPosCourse = nullptr;
+	const KZCourseDescriptor *startPosCourse = nullptr;
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
 		startPosCourse = KZ::course::GetCourse(args->ArgS(), false);
 
-		if (!startPosCourse || !startPosCourse->descriptor || !startPosCourse->descriptor->hasStartPosition)
+		if (!startPosCourse || !startPosCourse || !startPosCourse->hasStartPosition)
 		{
 			player->languageService->PrintChat(true, false, "No Start Position For Course", args->ArgS());
 			return MRES_SUPERCEDE;
@@ -175,7 +174,7 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 
 	if (startPosCourse)
 	{
-		player->Teleport(&startPosCourse->descriptor->startPosition, &startPosCourse->descriptor->startAngles, &vec3_origin);
+		player->Teleport(&startPosCourse->startPosition, &startPosCourse->startAngles, &vec3_origin);
 		return MRES_SUPERCEDE;
 	}
 
@@ -187,12 +186,11 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	}
 
 	// If we have no custom start position, we try to get the start position of the current course.
-	if (player->timerService->GetCourseDescriptor())
+	if (player->timerService->GetCourse())
 	{
-		if (player->timerService->GetCourseDescriptor()->hasStartPosition)
+		if (player->timerService->GetCourse()->hasStartPosition)
 		{
-			player->Teleport(&player->timerService->GetCourseDescriptor()->startPosition, &player->timerService->GetCourseDescriptor()->startAngles,
-							 &vec3_origin);
+			player->Teleport(&player->timerService->GetCourse()->startPosition, &player->timerService->GetCourse()->startAngles, &vec3_origin);
 		}
 		return MRES_SUPERCEDE;
 	}
@@ -200,7 +198,7 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	// If we have no active course the map only has one course, !r should send the player to that course.
 	if (KZ::course::GetCourseCount() == 1)
 	{
-		const KZCourseDescriptor *descriptor = KZ::course::GetFirstCourse()->descriptor;
+		const KZCourseDescriptor *descriptor = KZ::course::GetFirstCourse();
 		if (descriptor && descriptor->hasStartPosition)
 		{
 			player->Teleport(&descriptor->startPosition, &descriptor->startAngles, &vec3_origin);
