@@ -203,6 +203,10 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 		finalPlayerAngles[YAW] -= destAngles[YAW];
 		this->player->SetAngles(finalPlayerAngles);
 	}
+	else if (!tracker.kzTrigger->teleport.reorientPlayer && tracker.kzTrigger->teleport.useDestinationAngles)
+	{
+		this->player->SetAngles(destAngles);
+	}
 
 	if (tracker.kzTrigger->teleport.resetSpeed)
 	{
