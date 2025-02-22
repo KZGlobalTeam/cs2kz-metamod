@@ -903,7 +903,14 @@
 		"ua"		"Показати глобальний персональний найкращий час."
 		"sv"		"Hämta personlig bästa statistik globalt."
 	}
-	"Command Description - kz_apistatus"
+	"Command Description - kz_globalcheck"
+	{
+		"en"		"Display the status of the GlobalAPI."
+		"chi"		"显示 GlobalAPI 的状态."
+		"ua"		"Показати статус GlobalAPI."
+		"sv"		"Visa statusen av GlobalAPI."
+	}
+	"Command Description - kz_gc"
 	{
 		"en"		"Display the status of the GlobalAPI."
 		"chi"		"显示 GlobalAPI 的状态."
