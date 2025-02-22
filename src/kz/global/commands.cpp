@@ -35,8 +35,13 @@ static_function SCMD_CALLBACK(Command_KzGlobalCheck)
 
 				for (const auto &globalMode : globalModes)
 				{
-					if (mode == globalMode.mode
-								  && (KZ_STREQ(modeInfo.md5, globalMode.linuxChecksum.c_str()) || KZ_STREQ(modeInfo.md5, globalMode.windowsChecksum.c_str())))
+#ifdef _WIN32
+					const std::string& checksum = globalMode.windowsChecksum;
+#else
+					const std::string& checksum = globalMode.linuxChecksum;
+#endif
+
+					if (mode == globalMode.mode && KZ_STREQ(modeInfo.md5, checksum.c_str()))
 					{
 						return true;
 					}
@@ -69,8 +74,13 @@ static_function SCMD_CALLBACK(Command_KzGlobalCheck)
 
 				for (const auto &globalStyle : globalStyles)
 				{
-					if (style == globalStyle.style
-						&& (KZ_STREQ(styleInfo.md5, globalStyle.linuxChecksum.c_str()) || KZ_STREQ(styleInfo.md5, globalStyle.windowsChecksum.c_str())))
+#ifdef _WIN32
+					const std::string& checksum = globalStyle.windowsChecksum;
+#else
+					const std::string& checksum = globalStyle.linuxChecksum;
+#endif
+
+					if (style == globalStyle.style && KZ_STREQ(styleInfo.md5, checksum.c_str()))
 					{
 						found = true;
 						break;
