@@ -27,6 +27,11 @@ bool KZGlobalService::IsAvailable()
 	return KZGlobalService::state.load() == KZGlobalService::State::HandshakeCompleted;
 }
 
+bool KZGlobalService::MayBecomeAvailable()
+{
+	return KZGlobalService::state.load() != KZGlobalService::State::Disconnected;
+}
+
 void KZGlobalService::UpdateRecordCache()
 {
 	u16 currentMapID = 0;

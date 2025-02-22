@@ -31,6 +31,11 @@ public:
 	static bool IsAvailable();
 
 	/**
+	 * Returns whether the global service might become "available" in the future.
+	 */
+	static bool MayBecomeAvailable();
+
+	/**
 	 * Executes a function with information about the current map.
 	 *
 	 * `F` should be a function that accepts a single argument of type `const KZ::API::Map*`.

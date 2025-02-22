@@ -112,21 +112,29 @@ static_function SCMD_CALLBACK(Command_KzGlobalCheck)
 		HTTP::Request request(HTTP::Method::GET, "https://api.cs2kz.org");
 		auto callback = [player](HTTP::Response response)
 		{
-			bool apiStatus = (response.status == 200);
-			bool serverStatus = false;
-			bool mapStatus = false;
-			bool playerStatus = false;
-			bool modeStatus = false;
-			bool styleStatus = false;
+			std::string_view apiStatus = MakeStatusString(response.status == 200);
+			std::string_view serverStatus = MakeStatusString(false);
+			std::string_view mapStatus = MakeStatusString(false);
+			std::string_view playerStatus = MakeStatusString(false);
+			std::string_view modeStatus = MakeStatusString(false);
+			std::string_view styleStatus = MakeStatusString(false);
+
+			if (KZGlobalService::MayBecomeAvailable())
+			{
+				mapStatus = "{yellow}?";
+				playerStatus = "{yellow}?";
+				modeStatus = "{yellow}?";
+				styleStatus = "{yellow}?";
+			}
 
 			// clang-format off
 			player->languageService->PrintChat(true, false, "Global Check",
-					MakeStatusString(apiStatus),
-					MakeStatusString(serverStatus),
-					MakeStatusString(mapStatus),
-					MakeStatusString(playerStatus),
-					MakeStatusString(modeStatus),
-					MakeStatusString(styleStatus));
+					apiStatus,
+					serverStatus,
+					mapStatus,
+					playerStatus,
+					modeStatus,
+					styleStatus);
 			// clang-format on
 		};
 		request.Send(callback);
