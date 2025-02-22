@@ -8,7 +8,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
-
+#include "kz/spec/kz_spec.h"
 #include "announce.h"
 
 #include "utils/utils.h"
@@ -226,6 +226,10 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 
 	if (playSound)
 	{
+		for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
+		{
+			player->timerService->PlayTimerStartSound();
+		}
 		this->PlayTimerStartSound();
 	}
 
@@ -254,6 +258,10 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 
 	if (!this->timerRunning || courseDesc->guid != this->currentCourseGUID)
 	{
+		for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
+		{
+			player->timerService->PlayTimerFalseEndSound();
+		}
 		this->PlayTimerFalseEndSound();
 		this->lastFalseEndTime = g_pKZUtils->GetServerGlobals()->curtime;
 		return false;
@@ -298,6 +306,11 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 
 	this->timerRunning = false;
 	this->lastEndTime = g_pKZUtils->GetServerGlobals()->curtime;
+
+	for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
+	{
+		player->timerService->PlayTimerEndSound();
+	}
 	this->PlayTimerEndSound();
 
 	if (!this->player->GetPlayerPawn()->IsBot())
@@ -322,6 +335,10 @@ bool KZTimerService::TimerStop(bool playSound)
 	this->timerRunning = false;
 	if (playSound)
 	{
+		for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
+		{
+			player->timerService->PlayTimerStopSound();
+		}
 		this->PlayTimerStopSound();
 	}
 
