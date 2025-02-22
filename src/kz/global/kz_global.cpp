@@ -469,21 +469,24 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 		{
 			META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n%s\n------\n", message->str.c_str());
 
+			Json payload(message->str);
+
 			switch (KZGlobalService::state.load())
 			{
 				case KZGlobalService::State::HandshakeInitiated:
 				{
-					// clang-format off
-					KZGlobalService::AddMainThreadCallback([payload = Json(message->str)] ()
+					KZ::API::handshake::HelloAck helloAck;
+
+					if (!helloAck.FromJson(payload))
 					{
-						KZ::API::handshake::HelloAck helloAck;
+						META_CONPRINTF("[KZ::Global] Failed to decode 'HelloAck'\n");
+						break;
+					}
 
-						if (!helloAck.FromJson(payload))
-						{
-							META_CONPRINTF("[KZ::Global] Failed to decode 'HelloAck'\n");
-							return;
-						}
-
+					// clang-format off
+					KZGlobalService::AddMainThreadCallback([=]()
+					{
+						KZ::API::handshake::HelloAck helloAck = helloAck;
 						KZGlobalService::CompleteHandshake(helloAck);
 					});
 					// clang-format on
@@ -492,26 +495,21 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 
 				case KZGlobalService::State::HandshakeCompleted:
 				{
-					// clang-format off
-					KZGlobalService::AddMainThreadCallback([payload = Json(message->str)]()
+					if (!payload.IsValid())
 					{
-						if (!payload.IsValid())
-						{
-							META_CONPRINTF("[KZ::Global] WebSocket message is not valid JSON.\n");
-							return;
-						}
+						META_CONPRINTF("[KZ::Global] WebSocket message is not valid JSON.\n");
+						break;
+					}
 
-						u32 messageID = 0;
+					u32 messageID = 0;
 
-						if (!payload.Get("id", messageID))
-						{
-							META_CONPRINTF("[KZ::Global] Ignoring message without valid ID\n");
-							return;
-						}
+					if (!payload.Get("id", messageID))
+					{
+						META_CONPRINTF("[KZ::Global] Ignoring message without valid ID\n");
+						break;
+					}
 
-						KZGlobalService::ExecuteMessageCallback(messageID, payload);
-					});
-					// clang-format on
+					KZGlobalService::AddMainThreadCallback([=]() { KZGlobalService::ExecuteMessageCallback(messageID, payload); });
 				}
 				break;
 			}
