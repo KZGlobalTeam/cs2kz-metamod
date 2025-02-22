@@ -317,7 +317,7 @@ void KZGlobalService::OnPlayerAuthorized()
 					break;
 
 				case KZGlobalService::State::Disconnected:
-					META_CONPRINTF("[KZ::Global] Cannot fetch player PBs if disconnected. (state=%i)\n");
+					META_CONPRINTF("[KZ::Global] Cannot fetch player PBs if we are disconnected from the API. (state=%i)\n");
 					break;
 
 				default:
@@ -467,8 +467,7 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 
 		case ix::WebSocketMessageType::Message:
 		{
-			// META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n%s\n------\n", message->str.c_str());
-			META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n");
+			META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n%s\n------\n", message->str.c_str());
 
 			switch (KZGlobalService::state.load())
 			{
