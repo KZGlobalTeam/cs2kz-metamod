@@ -436,10 +436,17 @@ private:
 		}
 
 		// clang-format off
-		return payload.Set("id", messageID)
+		bool success = payload.Set("id", messageID)
 			&& payload.Set("event", event)
 			&& payload.Set("data", data);
 		// clang-format on
+
+		if (!success)
+		{
+			META_CONPRINTF("[KZ::Global] Failed to serialize message for event `%s`.\n", event);
+		}
+
+		return success;
 	}
 
 	/**
