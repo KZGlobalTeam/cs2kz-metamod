@@ -8,7 +8,7 @@
 #include "utils/http.h"
 #include "utils/simplecmds.h"
 
-static_function std::string_view makeStatusString(bool checkmark)
+static_function std::string_view MakeStatusString(bool checkmark)
 {
 	using namespace std::literals::string_view_literals;
 	return checkmark ? "{green}✓{default}"sv : "{darkred}✗{default}"sv;
@@ -89,12 +89,12 @@ static_function SCMD_CALLBACK(Command_KzGlobalCheck)
 
 		// clang-format off
 		player->languageService->PrintChat(true, false, "Global Check",
-				makeStatusString(apiStatus),
-				makeStatusString(serverStatus),
-				makeStatusString(mapStatus),
-				makeStatusString(playerStatus),
-				makeStatusString(modeStatus),
-				makeStatusString(styleStatus));
+				MakeStatusString(apiStatus),
+				MakeStatusString(serverStatus),
+				MakeStatusString(mapStatus),
+				MakeStatusString(playerStatus),
+				MakeStatusString(modeStatus),
+				MakeStatusString(styleStatus));
 		// clang-format on
 	}
 	else
@@ -111,12 +111,12 @@ static_function SCMD_CALLBACK(Command_KzGlobalCheck)
 
 			// clang-format off
 			player->languageService->PrintChat(true, false, "Global Check",
-					makeStatusString(apiStatus),
-					makeStatusString(serverStatus),
-					makeStatusString(mapStatus),
-					makeStatusString(playerStatus),
-					makeStatusString(modeStatus),
-					makeStatusString(styleStatus));
+					MakeStatusString(apiStatus),
+					MakeStatusString(serverStatus),
+					MakeStatusString(mapStatus),
+					MakeStatusString(playerStatus),
+					MakeStatusString(modeStatus),
+					MakeStatusString(styleStatus));
 			// clang-format on
 		};
 		request.Send(callback);
