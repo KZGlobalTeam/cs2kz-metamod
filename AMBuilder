@@ -134,7 +134,9 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'kz_global.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'commands.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'enforcer.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'api', 'maps.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'api.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'handshake.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'events.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
 

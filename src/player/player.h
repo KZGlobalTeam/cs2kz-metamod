@@ -157,6 +157,7 @@ public:
 	Player *ToPlayer(CPlayerSlot slot);
 	Player *ToPlayer(CEntityIndex entIndex);
 	Player *ToPlayer(CPlayerUserId userID);
+	Player *SteamIdToPlayer(u64 steamID, bool validated = true);
 
 	virtual void ResetPlayers()
 	{

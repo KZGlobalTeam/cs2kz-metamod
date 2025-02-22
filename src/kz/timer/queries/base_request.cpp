@@ -38,7 +38,7 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 	}
 	this->localStatus = (queryLocal && KZDatabaseService::IsReady()) ? ResponseStatus::ENABLED : ResponseStatus::DISABLED;
 
-	this->globalStatus = (queryGlobal && KZGlobalService::IsConnected() ? ResponseStatus::ENABLED : ResponseStatus::DISABLED);
+	this->globalStatus = (queryGlobal && KZGlobalService::IsAvailable() ? ResponseStatus::ENABLED : ResponseStatus::DISABLED);
 
 	KeyValues3 *kv = NULL;
 

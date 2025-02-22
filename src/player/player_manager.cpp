@@ -74,6 +74,19 @@ Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 	return nullptr;
 }
 
+Player *PlayerManager::SteamIdToPlayer(u64 steamID, bool validated)
+{
+	for (size_t idx = 0; idx < sizeof(this->players); idx++)
+	{
+		if (this->players[idx]->GetSteamId64(validated) == steamID)
+		{
+			return this->players[idx];
+		}
+	}
+
+	return nullptr;
+}
+
 void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg,
 									const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {

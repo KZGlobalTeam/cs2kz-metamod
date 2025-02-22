@@ -1,7 +1,7 @@
 #pragma once
 #include "../kz.h"
 #include "kz/mappingapi/kz_mappingapi.h"
-#include "kz/global/api/api.h"
+#include "kz/global/api.h"
 #include "../jumpstats/kz_jumpstats.h"
 #include "UtlStringMap.h"
 

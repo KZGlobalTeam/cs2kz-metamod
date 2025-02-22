@@ -7,7 +7,7 @@
 #include "utils/utils.h"
 #include "utils/argparse.h"
 #include "utils/tables.h"
-#include "kz/global/api/api.h"
+#include "kz/global/api.h"
 #include "kz/language/kz_language.h"
 
 struct BaseRequest
