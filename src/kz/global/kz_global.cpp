@@ -488,13 +488,7 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 						break;
 					}
 
-					// clang-format off
-					KZGlobalService::AddMainThreadCallback([=]()
-					{
-						KZ::API::handshake::HelloAck helloAck = helloAck;
-						KZGlobalService::CompleteHandshake(helloAck);
-					});
-					// clang-format on
+					KZGlobalService::AddMainThreadCallback([ack = std::move(helloAck)]() mutable { KZGlobalService::CompleteHandshake(ack); });
 				}
 				break;
 

@@ -37,8 +37,8 @@ namespace KZ::API::handshake
 		struct ModeInfo
 		{
 			Mode mode;
-			std::string linuxChecksum;
-			std::string windowsChecksum;
+			std::string linuxChecksum {};
+			std::string windowsChecksum {};
 
 			bool FromJson(const Json &json);
 		};
@@ -46,17 +46,17 @@ namespace KZ::API::handshake
 		struct StyleInfo
 		{
 			Style style;
-			std::string linuxChecksum;
-			std::string windowsChecksum;
+			std::string linuxChecksum {};
+			std::string windowsChecksum {};
 
 			bool FromJson(const Json &json);
 		};
 
 		// seconds
-		f64 heartbeatInterval;
-		std::optional<KZ::API::Map> mapInfo;
-		std::vector<ModeInfo> modes;
-		std::vector<StyleInfo> styles;
+		f64 heartbeatInterval {};
+		std::optional<KZ::API::Map> mapInfo {};
+		std::vector<ModeInfo> modes {};
+		std::vector<StyleInfo> styles {};
 
 		bool FromJson(const Json &json);
 	};
