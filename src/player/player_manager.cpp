@@ -74,11 +74,11 @@ Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 	return nullptr;
 }
 
-Player *PlayerManager::SteamIdToPlayer(u64 steamID)
+Player *PlayerManager::SteamIdToPlayer(u64 steamID, bool validated)
 {
 	for (size_t idx = 0; idx < sizeof(this->players); idx++)
 	{
-		if (this->players[idx]->GetSteamId64() == steamID)
+		if (this->players[idx]->GetSteamId64(validated) == steamID)
 		{
 			return this->players[idx];
 		}

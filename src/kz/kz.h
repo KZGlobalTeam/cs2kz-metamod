@@ -226,7 +226,7 @@ public:
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
 	KZPlayer *ToPlayer(CPlayerUserId userID);
 	KZPlayer *ToPlayer(u32 index);
-	KZPlayer *SteamIdToPlayer(u64 steamID);
+	KZPlayer *SteamIdToPlayer(u64 steamID, bool validated = true);
 
 	KZPlayer *ToKZPlayer(MovementPlayer *player)
 	{

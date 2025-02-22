@@ -41,7 +41,7 @@ KZPlayer *KZPlayerManager::ToPlayer(u32 index)
 	return static_cast<KZPlayer *>(MovementPlayerManager::players[index]);
 }
 
-KZPlayer *KZPlayerManager::SteamIdToPlayer(u64 steamID)
+KZPlayer *KZPlayerManager::SteamIdToPlayer(u64 steamID, bool validated)
 {
-	return static_cast<KZPlayer *>(PlayerManager::SteamIdToPlayer(steamID));
+	return static_cast<KZPlayer *>(PlayerManager::SteamIdToPlayer(steamID, validated));
 }
