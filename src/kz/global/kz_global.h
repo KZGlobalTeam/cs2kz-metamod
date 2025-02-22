@@ -22,6 +22,12 @@ class KZGlobalService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 public:
+	/**
+	 * Returns whether the global service is "available".
+	 *
+	 * That is, whether it makes sense to call any of the other functions that
+	 * need an established connection to the API.
+	 */
 	static bool IsAvailable();
 
 	/**
@@ -43,6 +49,12 @@ public:
 		return f(currentMap);
 	}
 
+	/**
+	 * Executes a function with a list of `ModeInfo` structs we got from the API.
+	 *
+	 * `F` should be a function that accepts a single argument of type
+	 * `const std::vector<KZ::API::handshake::HelloAck::ModeInfo>&`.
+	 */
 	template<typename F>
 	static auto WithGlobalModes(F &&f)
 	{
@@ -51,6 +63,12 @@ public:
 		return f(modes);
 	}
 
+	/**
+	 * Executes a function with a list of `StyleInfo` structs we got from the API.
+	 *
+	 * `F` should be a function that accepts a single argument of type
+	 * `const std::vector<KZ::API::handshake::HelloAck::StyleInfo>&`.
+	 */
 	template<typename F>
 	static auto WithGlobalStyles(F &&f)
 	{
@@ -59,6 +77,9 @@ public:
 		return f(styles);
 	}
 
+	/**
+	 * Updates the cached world records for the current map.
+	 */
 	static void UpdateRecordCache();
 
 public:
@@ -73,8 +94,14 @@ public:
 	void OnPlayerAuthorized();
 	void OnClientDisconnect();
 
+	/**
+	 * Information about the current player we received from the API when the player connected.
+	 */
 	struct
 	{
+		/**
+		 * Whether the player is globally banned.
+		 */
 		bool isBanned {};
 	} playerInfo {};
 
@@ -245,37 +272,67 @@ private:
 		DisconnectedButWorthRetrying,
 	};
 
+	/**
+	 * The current connection state
+	 */
 	static inline std::atomic<State> state = State::Uninitialized;
 
 	static inline struct
 	{
 		std::mutex mutex;
+
+		/**
+		 * Callbacks to execute on the main thread as soon as possible
+		 */
 		std::vector<std::function<void()>> queue;
+
+		/**
+		 * Callbacks to execute on the main thread as soon as we are fully connected to the API
+		 */
 		std::vector<std::function<void()>> whenConnectedQueue;
 	} mainThreadCallbacks {};
 
 	// invariant: should be `nullptr` if `state == Uninitialized` and otherwise a valid pointer
 	static inline ix::WebSocket *socket = nullptr;
+
+	/**
+	 * The ID we'll use for the next message we send to the API.
+	 */
 	static inline std::atomic<u32> nextMessageID = 1;
 
+	/**
+	 * Callbacks to execute when we receive responses to messages we sent earlier.
+	 *
+	 * The key is the message ID we're looking for, and the callback will be
+	 * invoked with that message ID and the payload.
+	 */
 	static inline struct
 	{
 		std::mutex mutex;
 		std::unordered_map<u32, std::function<void(u32, const Json &)>> queue;
 	} messageCallbacks {};
 
+	/**
+	 * Information about the current map we got from the API
+	 */
 	static inline struct
 	{
 		std::mutex mutex;
 		std::optional<KZ::API::Map> data;
 	} currentMap {};
 
+	/**
+	 * Information about all modes the API knows about
+	 */
 	static inline struct
 	{
 		std::mutex mutex;
 		std::vector<KZ::API::handshake::HelloAck::ModeInfo> data;
 	} globalModes;
 
+	/**
+	 * Information about all styles the API knows about
+	 */
 	static inline struct
 	{
 		std::mutex mutex;
@@ -285,10 +342,30 @@ private:
 	static void EnforceConVars();
 	static void RestoreConVars();
 
+	/**
+	 * Callback we pass to `IXWebSocket`.
+	 *
+	 * This will be called on the WebSocket thread.
+	 */
 	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
+
+	/**
+	 * Initiates the handshake with the API once a connection has been established.
+	 *
+	 * Has to be called from the main thread.
+	 */
 	static void InitiateHandshake();
+
+	/**
+	 * Completes the handshake with the API.
+	 *
+	 * Has to be called from the main thread.
+	 */
 	static void CompleteHandshake(KZ::API::handshake::HelloAck &ack);
 
+	/**
+	 * Queues a callback to be executed on the main thread as soon as possible.
+	 */
 	template<typename CB>
 	static void AddMainThreadCallback(CB &&callback)
 	{
@@ -296,6 +373,9 @@ private:
 		KZGlobalService::mainThreadCallbacks.queue.emplace_back(std::move(callback));
 	}
 
+	/**
+	 * Queues a callback to be executed on the main thread as soon as we have an established connection to the API.
+	 */
 	template<typename CB>
 	static void AddWhenConnectedCallback(CB &&callback)
 	{
@@ -303,6 +383,11 @@ private:
 		KZGlobalService::mainThreadCallbacks.whenConnectedQueue.emplace_back(std::move(callback));
 	}
 
+	/**
+	 * Queues a callback to be executed when we receive a message with the given ID.
+	 *
+	 * The callback will be executed on the main thread.
+	 */
 	template<typename CB>
 	static void AddMessageCallback(u32 messageID, CB &&callback)
 	{
@@ -310,8 +395,18 @@ private:
 		KZGlobalService::messageCallbacks.queue[messageID] = std::move(callback);
 	}
 
+	/**
+	 * Executes the callback with the given ID, if any.
+	 *
+	 * The callback will be executed on the main thread.
+	 */
 	static void ExecuteMessageCallback(u32 messageID, const Json &payload);
 
+	/**
+	 * Prepares a message to be sent to the API.
+	 *
+	 * Note: we specialize `handshake::Hello` here because the format is slightly different from all other messages
+	 */
 	static bool PrepareMessage(std::string_view event, u32 messageID, const KZ::API::handshake::Hello &data, Json &payload)
 	{
 		if (KZGlobalService::state.load() != State::Connected)
@@ -323,6 +418,9 @@ private:
 		return payload.Set("id", messageID) && data.ToJson(payload);
 	}
 
+	/**
+	 * Prepares a message to be sent to the API.
+	 */
 	template<typename T>
 	static bool PrepareMessage(std::string_view event, u32 messageID, const T &data, Json &payload)
 	{
@@ -339,6 +437,9 @@ private:
 		// clang-format on
 	}
 
+	/**
+	 * Sends a message to the API.
+	 */
 	template<typename T>
 	static bool SendMessage(std::string_view event, const T &data)
 	{
@@ -353,6 +454,9 @@ private:
 		return true;
 	}
 
+	/**
+	 * Sends a message to the API with a callback to be executed when we get a response.
+	 */
 	template<typename T, typename CB>
 	static bool SendMessage(std::string_view event, const T &data, CB &&callback)
 	{

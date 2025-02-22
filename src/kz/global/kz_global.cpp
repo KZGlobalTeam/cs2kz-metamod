@@ -235,7 +235,7 @@ void KZGlobalService::OnActivateServer()
 
 void KZGlobalService::OnPlayerAuthorized()
 {
-	if (!this->player->IsConnected() || !this->player->IsAuthenticated())
+	if (!this->player->IsConnected())
 	{
 		return;
 	}
@@ -467,7 +467,8 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 
 		case ix::WebSocketMessageType::Message:
 		{
-			META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n%s\n------\n", message->str.c_str());
+			// META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n%s\n------\n", message->str.c_str());
+			META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n");
 
 			switch (KZGlobalService::state.load())
 			{
