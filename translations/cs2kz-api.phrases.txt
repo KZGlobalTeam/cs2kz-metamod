@@ -4,5 +4,6 @@
 	{
 		"#format"	"api:s,server:s,map:s,player:s,mode:s,styles:s"
 		"en"	"API {api} {grey}| {default} Server {server} {grey}| {default} Map {map} {grey}| {default} You {player} {grey}| {default} Mode {mode} {grey}| {default} Styles {styles}"
+		"ua"	"API {api} {grey}| {default} Сервер {server} {grey}| {default} Мапа {map} {grey}| {default} Ви {player} {grey}| {default} Режим {mode} {grey}| {default} Стилі {styles}"
 	}
 }
