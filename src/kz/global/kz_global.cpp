@@ -155,13 +155,16 @@ void KZGlobalService::Cleanup()
 
 	META_CONPRINTF("[KZ::Global] Cleaning up GlobalService...\n");
 
-	KZGlobalService::state.store(KZGlobalService::State::Uninitialized);
-
 	KZGlobalService::RestoreConVars();
 
-	KZGlobalService::socket->stop();
-	delete KZGlobalService::socket;
-	KZGlobalService::socket = nullptr;
+	if (KZGlobalService::socket != nullptr)
+	{
+		KZGlobalService::socket->stop();
+		delete KZGlobalService::socket;
+		KZGlobalService::socket = nullptr;
+	}
+
+	KZGlobalService::state.store(KZGlobalService::State::Uninitialized);
 
 	ix::uninitNetSystem();
 }
