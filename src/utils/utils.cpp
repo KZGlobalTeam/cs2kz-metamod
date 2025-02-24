@@ -22,7 +22,7 @@
 
 #include "tier0/memdbgon.h"
 
-#define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_MISSING0 | FCVAR_MISSING1 | FCVAR_MISSING2 | FCVAR_MISSING3)
+#define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | 1ull << 32) // FCVAR_DEFENSIVE
 
 #define RESOLVE_SIG(gameConfig, name, type, variable) \
 	type *variable = (decltype(variable))gameConfig->ResolveSignature(name); \
