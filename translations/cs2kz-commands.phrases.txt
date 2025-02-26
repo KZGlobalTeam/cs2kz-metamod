@@ -906,14 +906,14 @@
 	"Command Description - kz_globalcheck"
 	{
 		"en"		"Display the status of the GlobalAPI."
-		"chi"		"显示 GlobalAPI 的状态."
+		"chi"		"显示 全球API 的状态."
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 	}
 	"Command Description - kz_gc"
 	{
 		"en"		"Display the status of the GlobalAPI."
-		"chi"		"显示 GlobalAPI 的状态."
+		"chi"		"显示 全球API 的状态."
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 	}
