@@ -181,9 +181,6 @@ void RecordAnnounce::UpdateGlobalCache()
 		auto mode = KZ::mode::GetModeInfo(this->mode.name.c_str());
 		if (mode.id > -2)
 		{
-			META_CONPRINTF("this->time=%f this->oldGPB.overall.time=%f, this->oldGPB.pro.time=%f", this->time, this->oldGPB.overall.time,
-						   this->oldGPB.pro.time);
-
 			if (this->time < this->oldGPB.overall.time)
 			{
 				player->timerService->InsertPBToCache(this->time, course, mode.id, true, true, this->metadata.c_str(),

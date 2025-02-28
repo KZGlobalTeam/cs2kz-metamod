@@ -224,6 +224,12 @@ void KZGlobalService::OnActivateServer()
 				if (mapInfo.data.has_value())
 				{
 					META_CONPRINTF("[KZ::Global] %s is approved.\n", mapInfo.data->name.c_str());
+
+					for (const auto &course : mapInfo.data->courses)
+					{
+						KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
+						META_CONPRINTF("[KZ::Global] Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
+					}
 				}
 				else
 				{
@@ -475,7 +481,7 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 
 		case ix::WebSocketMessageType::Message:
 		{
-			META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n%s\n------\n", message->str.c_str());
+			META_CONPRINTF("[KZ::Global] Received WebSocket message:\n-----\n%s\n------\n", message->str.substr(0, 1024).c_str());
 
 			Json payload(message->str);
 
@@ -572,6 +578,15 @@ void KZGlobalService::CompleteHandshake(KZ::API::handshake::HelloAck &ack)
 		}
 	}).detach();
 	// clang-format on
+
+	if (ack.mapInfo.has_value())
+	{
+		for (const auto &course : ack.mapInfo->courses)
+		{
+			KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
+			META_CONPRINTF("[KZ::Global] Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
+		}
+	}
 
 	{
 		std::unique_lock lock(KZGlobalService::currentMap.mutex);
