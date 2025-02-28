@@ -423,6 +423,17 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 				}
 				break;
 
+				case 1008 /* POLICY VIOLATION */:
+				{
+					if (KZGlobalService::state.load() == KZGlobalService::State::HandshakeCompleted
+						&& message->closeInfo.reason.find("heartbeat") != message->closeInfo.reason.size())
+					{
+						KZGlobalService::socket->enableAutomaticReconnection();
+						KZGlobalService::state.store(KZGlobalService::State::DisconnectedButWorthRetrying);
+					}
+				}
+				break;
+
 				default:
 				{
 					KZGlobalService::socket->disableAutomaticReconnection();
@@ -459,8 +470,10 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 				case 502:
 				{
 					META_CONPRINTF("[KZ::Global] API encountered an internal error\n");
-					KZGlobalService::socket->disableAutomaticReconnection();
-					KZGlobalService::state.store(KZGlobalService::State::Disconnected);
+					KZGlobalService::socket->enableAutomaticReconnection();
+					KZGlobalService::socket->setMinWaitBetweenReconnectionRetries(10 * 60'000 /* ms */);
+					KZGlobalService::socket->setMaxWaitBetweenReconnectionRetries(30 * 60'000 /* ms */);
+					KZGlobalService::state.store(KZGlobalService::State::DisconnectedButWorthRetrying);
 				}
 				break;
 
