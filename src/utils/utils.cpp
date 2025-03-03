@@ -685,3 +685,24 @@ bool utils::ParseSteamID2(std::string_view steamID, u64 &out)
 
 	return true;
 }
+
+QAngle utils::GetInterpolatedViewAngles(QAngle oldAngles, QAngle currentAngles)
+{
+	// First half of the movement, tweak the angle to be the middle of the desired angle and the last angle
+	QAngle newAngles = currentAngles;
+	if (newAngles[YAW] - oldAngles[YAW] > 180)
+	{
+		newAngles[YAW] -= 360.0f;
+	}
+	else if (newAngles[YAW] - oldAngles[YAW] < -180)
+	{
+		newAngles[YAW] += 360.0f;
+	}
+
+	for (u32 i = 0; i < 3; i++)
+	{
+		newAngles[i] += oldAngles[i];
+		newAngles[i] *= 0.5f;
+	}
+	return newAngles;
+}

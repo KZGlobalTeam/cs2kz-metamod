@@ -269,6 +269,10 @@ public:
 	CMoveData moveDataPost;
 	QAngle oldAngles;
 
+	// Angles extracted from the player command itself.
+	QAngle oldCmdAngle;
+	QAngle cmdAngle;
+
 	bool processingDuck {};
 	bool duckBugged {};
 	bool walkMoved {};
@@ -299,6 +303,7 @@ public:
 
 	bool enableWaterFix {};
 	bool ignoreNextCategorizePosition {};
+	bool enableDoubleAirMove {};
 
 private:
 	bool collidingWithWorld {};

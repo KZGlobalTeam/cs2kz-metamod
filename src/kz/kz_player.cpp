@@ -20,6 +20,7 @@
 #include "trigger/kz_trigger.h"
 #include "global/kz_global.h"
 
+#include "sdk/usercmd.h"
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "vprof.h"
@@ -163,6 +164,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 	{
 		KZHUDService::DrawPanels(this, this);
 	}
+	this->oldCmdAngle = this->cmdAngle;
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
@@ -188,6 +190,7 @@ void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 void KZPlayer::OnSetupMove(PlayerCommand *pc)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->cmdAngle = {pc->base().viewangles().x(), pc->base().viewangles().y(), pc->base().viewangles().z()};
 	this->modeService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{

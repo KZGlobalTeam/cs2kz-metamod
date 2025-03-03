@@ -165,6 +165,7 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 		}
 	}
 	player->enableWaterFix = player->modeService->EnableWaterFix();
+	player->enableDoubleAirMove = player->modeService->EnableDoubleAirMove();
 }
 
 bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory)

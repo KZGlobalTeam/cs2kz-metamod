@@ -257,16 +257,6 @@ void KZClassicModeService::OnStartTouchGround()
 	this->player->TouchTriggersAlongPath(this->player->landingOrigin, ground, bounds);
 }
 
-void KZClassicModeService::OnPhysicsSimulate()
-{
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - 0.5 * ENGINE_FIXED_TICK_INTERVAL);
-}
-
-void KZClassicModeService::OnPhysicsSimulatePost()
-{
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL);
-}
-
 void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
 {
 	return;
@@ -303,7 +293,6 @@ void KZClassicModeService::OnProcessMovement()
 	this->CheckVelocityQuantization();
 	this->RemoveCrouchJumpBind();
 	this->ReduceDuckSlowdown();
-	this->InterpolateViewAngles();
 	this->UpdateAngleHistory();
 	this->CalcPrestrafe();
 }
@@ -311,7 +300,6 @@ void KZClassicModeService::OnProcessMovement()
 void KZClassicModeService::OnProcessMovementPost()
 {
 	this->player->UpdateTriggerTouchList();
-	this->RestoreInterpolatedViewAngles();
 	this->oldDuckPressed = this->forcedUnduck || this->player->IsButtonPressed(IN_DUCK, true);
 	this->oldJumpPressed = this->player->IsButtonPressed(IN_JUMP);
 	Vector velocity;
@@ -325,93 +313,6 @@ void KZClassicModeService::OnProcessMovementPost()
 	if (this->player->GetPlayerPawn()->m_flVelocityModifier() != velMod)
 	{
 		this->player->GetPlayerPawn()->m_flVelocityModifier(velMod);
-	}
-}
-
-void KZClassicModeService::InsertSubtickTiming(float time)
-{
-	return;
-	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
-	if (!moveServices
-		|| fabs(roundf(time) - time) < 0.001 // Don't create subtick too close to real time, there will be movement processing there anyway.
-		|| time * ENGINE_FIXED_TICK_RATE - g_pKZUtils->GetServerGlobals()->tickcount > 1.0f   // Don't create subtick timing too far into the future.
-		|| time * ENGINE_FIXED_TICK_RATE - g_pKZUtils->GetServerGlobals()->tickcount < -1.0f) // Don't create subtick timing too far back.
-	{
-		return;
-	}
-
-	for (i32 i = 0; i < 4; i++)
-	{
-		// Empty slot, let's use this.
-		if (moveServices->m_arrForceSubtickMoveWhen[i] < EPSILON)
-		{
-			moveServices->m_arrForceSubtickMoveWhen[i] = time;
-			return;
-		}
-		// Did we already add this timing?
-		if (fabs(time - moveServices->m_arrForceSubtickMoveWhen[i]) < EPSILON)
-		{
-			return;
-		}
-		// Is this subtick value still valid? If not, we use this value.
-		if (moveServices->m_arrForceSubtickMoveWhen[i] * ENGINE_FIXED_TICK_RATE < g_pKZUtils->GetServerGlobals()->tickcount - 1)
-		{
-			moveServices->m_arrForceSubtickMoveWhen[i] = time;
-			return;
-		}
-		// Shift the later other subtick moves. We will lose the last one... oh well.
-		if (time < moveServices->m_arrForceSubtickMoveWhen[i])
-		{
-			for (i32 j = i; j < 3; j++)
-			{
-				moveServices->m_arrForceSubtickMoveWhen[j + 1] = moveServices->m_arrForceSubtickMoveWhen[j];
-			}
-			moveServices->m_arrForceSubtickMoveWhen[i] = time;
-			return;
-		}
-	}
-}
-
-void KZClassicModeService::InterpolateViewAngles()
-{
-	return;
-	// Second half of the movement, no change.
-	CGlobalVars *globals = g_pKZUtils->GetGlobals();
-	f64 subtickFraction, whole;
-	subtickFraction = modf((f64)globals->curtime * ENGINE_FIXED_TICK_RATE, &whole);
-	if (subtickFraction < 0.001)
-	{
-		return;
-	}
-
-	// First half of the movement, tweak the angle to be the middle of the desired angle and the last angle
-	QAngle newAngles = player->currentMoveData->m_vecViewAngles;
-	QAngle oldAngles = this->hasValidDesiredViewAngle ? this->lastValidDesiredViewAngle : this->player->moveDataPost.m_vecViewAngles;
-	if (newAngles[YAW] - oldAngles[YAW] > 180)
-	{
-		newAngles[YAW] -= 360.0f;
-	}
-	else if (newAngles[YAW] - oldAngles[YAW] < -180)
-	{
-		newAngles[YAW] += 360.0f;
-	}
-
-	for (u32 i = 0; i < 3; i++)
-	{
-		newAngles[i] += oldAngles[i];
-		newAngles[i] *= 0.5f;
-	}
-	player->currentMoveData->m_vecViewAngles = newAngles;
-}
-
-void KZClassicModeService::RestoreInterpolatedViewAngles()
-{
-	return;
-	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
-	if (g_pKZUtils->GetGlobals()->frametime > 0.0f)
-	{
-		this->hasValidDesiredViewAngle = true;
-		this->lastValidDesiredViewAngle = player->currentMoveData->m_vecViewAngles;
 	}
 }
 

@@ -276,7 +276,7 @@ class CMoveData : public CMoveDataBase
 {
 public:
 	Vector m_outWishVel;
-	Vector m_vecOldAngles;
+	QAngle m_vecOldAngles;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
 	float m_flFrictionDecel; // Related to ground acceleration subtick stuff with sv_stopspeed and friction

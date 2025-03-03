@@ -94,4 +94,6 @@ namespace utils
 	{
 		return MAX(0, strlen(string) - mbstowcs(NULL, string, 0));
 	}
+
+	QAngle GetInterpolatedViewAngles(QAngle start, QAngle end);
 } // namespace utils

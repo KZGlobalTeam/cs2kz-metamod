@@ -58,6 +58,11 @@ public:
 		return false;
 	}
 
+	virtual bool EnableDoubleAirMove()
+	{
+		return false;
+	}
+
 	// Jumpstats
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 	virtual const char **GetModeConVarValues() = 0;

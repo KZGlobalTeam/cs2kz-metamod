@@ -89,7 +89,6 @@ void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerC
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
-	CBasePlayerController *controller = player->GetController();
 	player->OnSetupMove(pc);
 	SetupMove(ms, pc, mv);
 	player->OnSetupMovePost(pc);
@@ -293,9 +292,49 @@ void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
-	player->OnAirMove();
-	AirMove(ms, mv);
-	player->OnAirMovePost();
+	bool enableDoubleAirMove = player->enableDoubleAirMove && g_pKZUtils->GetGlobals()->frametime > 0;
+	META_CONPRINTF("fractions %f %f\n", mv->m_flSubtickStartFraction, mv->m_flSubtickEndFraction);
+	if (!enableDoubleAirMove)
+	{
+		player->OnAirMove();
+		AirMove(ms, mv);
+		player->OnAirMovePost();
+		return;
+	}
+	bool splitAirMove = mv->m_flSubtickStartFraction < 0.5f && mv->m_flSubtickEndFraction > 0.5f;
+
+	if (splitAirMove)
+	{
+		f32 originalFrametime = g_pKZUtils->GetGlobals()->frametime;
+		QAngle originalAngles = player->cmdAngle;
+
+		// First half of the airstrafe, use the interpolated view angles.
+		g_pKZUtils->GetGlobals()->frametime = (0.5f - mv->m_flSubtickStartFraction) * ENGINE_FIXED_TICK_INTERVAL;
+		mv->m_vecViewAngles = utils::GetInterpolatedViewAngles(player->oldCmdAngle, player->cmdAngle);
+		player->OnAirMove();
+		AirMove(ms, mv);
+		player->OnAirMovePost();
+		player->oldAngles = mv->m_vecViewAngles;
+
+		// Restore to the current view angles.
+		g_pKZUtils->GetGlobals()->frametime = (mv->m_flSubtickEndFraction - 0.5f) * ENGINE_FIXED_TICK_INTERVAL;
+		mv->m_vecViewAngles = originalAngles;
+		player->OnAirMove();
+		AirMove(ms, mv);
+		player->OnAirMovePost();
+		// Restore frametime to the original value.
+		g_pKZUtils->GetGlobals()->frametime = originalFrametime;
+	}
+	else
+	{
+		if (mv->m_flSubtickEndFraction < 0.5f)
+		{
+			mv->m_vecViewAngles = utils::GetInterpolatedViewAngles(player->oldCmdAngle, player->cmdAngle);
+		}
+		player->OnAirMove();
+		AirMove(ms, mv);
+		player->OnAirMovePost();
+	}
 }
 
 void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveData *mv)

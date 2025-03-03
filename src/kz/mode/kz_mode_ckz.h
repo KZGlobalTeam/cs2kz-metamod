@@ -140,12 +140,15 @@ public:
 
 	virtual bool EnableWaterFix() override;
 
+	virtual bool EnableDoubleAirMove() override
+	{
+		return true;
+	}
+
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const char **GetModeConVarValues() override;
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
 
-	virtual void OnPhysicsSimulate() override;
-	virtual void OnPhysicsSimulatePost() override;
 	virtual void OnSetupMove(PlayerCommand *pc) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
@@ -164,12 +167,6 @@ public:
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
-
-	// Insert subtick timing to be called later. Should only call this in PhysicsSimulate.
-	void InsertSubtickTiming(float time);
-
-	void InterpolateViewAngles();
-	void RestoreInterpolatedViewAngles();
 
 	void UpdateAngleHistory();
 	void CalcPrestrafe();
