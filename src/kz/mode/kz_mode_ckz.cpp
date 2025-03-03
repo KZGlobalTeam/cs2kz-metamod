@@ -269,6 +269,7 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 
 void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
 {
+	return;
 	for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
 	{
 		CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
@@ -329,6 +330,7 @@ void KZClassicModeService::OnProcessMovementPost()
 
 void KZClassicModeService::InsertSubtickTiming(float time)
 {
+	return;
 	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
 	if (!moveServices
 		|| fabs(roundf(time) - time) < 0.001 // Don't create subtick too close to real time, there will be movement processing there anyway.
@@ -372,6 +374,7 @@ void KZClassicModeService::InsertSubtickTiming(float time)
 
 void KZClassicModeService::InterpolateViewAngles()
 {
+	return;
 	// Second half of the movement, no change.
 	CGlobalVars *globals = g_pKZUtils->GetGlobals();
 	f64 subtickFraction, whole;
@@ -403,6 +406,7 @@ void KZClassicModeService::InterpolateViewAngles()
 
 void KZClassicModeService::RestoreInterpolatedViewAngles()
 {
+	return;
 	player->currentMoveData->m_vecViewAngles = player->moveDataPre.m_vecViewAngles;
 	if (g_pKZUtils->GetGlobals()->frametime > 0.0f)
 	{
