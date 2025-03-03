@@ -136,7 +136,6 @@ void KZClassicModeService::Reset()
 {
 	this->hasValidDesiredViewAngle = {};
 	this->lastValidDesiredViewAngle = vec3_angle;
-	this->lastJumpReleaseTime = {};
 	this->oldDuckPressed = {};
 	this->forcedUnduck = {};
 	this->postProcessMovementZSpeed = {};
@@ -259,27 +258,32 @@ void KZClassicModeService::OnStartTouchGround()
 
 void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
 {
-	return;
+	if (!this->player->GetPlayerPawn() || !this->player->GetPlayerPawn()->IsAlive() || !(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND))
+	{
+		return;
+	}
+	google::protobuf::RepeatedPtrField<CSubtickMoveStep> moves;
 	for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
 	{
 		CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
-		float when = subtickMove->when();
-		if (subtickMove->button() == IN_JUMP)
+		if (subtickMove->button() != IN_JUMP)
 		{
-			f32 inputTime = (g_pKZUtils->GetGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
-			if (when != 0)
-			{
-				if (subtickMove->pressed() && inputTime - this->lastJumpReleaseTime > 0.5 * ENGINE_FIXED_TICK_INTERVAL)
-				{
-					this->player->GetMoveServices()->m_bOldJumpPressed = false;
-				}
-				if (!subtickMove->pressed())
-				{
-					this->lastJumpReleaseTime = (g_pKZUtils->GetGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
-				}
-			}
+			// Move it to the end of the array
+			*moves.Add() = *subtickMove;
+			pc->mutable_base()->mutable_subtick_moves()->SwapElements(j, pc->mutable_base()->subtick_moves_size() - 1);
+			pc->mutable_base()->mutable_subtick_moves()->RemoveLast();
+			j--; // Adjust counter since we removed an element
 		}
-		subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
+		else
+		{
+			subtickMove->set_when(0);
+		}
+	}
+
+	// Add all non-jump moves to the end
+	for (const auto &move : moves)
+	{
+		*pc->mutable_base()->add_subtick_moves() = move;
 	}
 }
 
@@ -939,6 +943,10 @@ void KZClassicModeService::OnDuckPost()
 
 void KZClassicModeService::OnAirMove()
 {
+	Vector origin;
+	this->player->GetOrigin(&origin);
+	META_CONPRINTF("%i %f %f %f\n", g_pKZUtils->GetGlobals()->tickcount, g_pKZUtils->GetGlobals()->curtime,
+				   g_pKZUtils->GetGlobals()->m_flSubtickFraction, origin.z);
 	this->airMoving = true;
 	this->player->currentMoveData->m_flMaxSpeed = SPEED_NORMAL;
 }

@@ -15,8 +15,8 @@
 #define SPEED_NORMAL 250.0f
 // Prestrafe related
 #define PS_SPEED_MAX        26.0f
-#define PS_MIN_REWARD_RATE  7.0f  // Minimum computed turn rate for any prestrafe reward
-#define PS_MAX_REWARD_RATE  16.0f // Ideal computed turn rate for maximum prestrafe reward
+#define PS_MIN_REWARD_RATE  2.0f  // Minimum computed turn rate for any prestrafe reward
+#define PS_MAX_REWARD_RATE  15.0f // Ideal computed turn rate for maximum prestrafe reward
 #define PS_MAX_PS_TIME      0.55f // Time to reach maximum prestrafe speed with optimal turning
 #define PS_TURN_RATE_WINDOW 0.02f // Turn rate will be computed over this amount of time
 #define PS_DECREMENT_RATIO  3.0f  // Prestrafe will lose this fast compared to gaining
@@ -101,7 +101,6 @@ class KZClassicModeService : public KZModeService
 
 	bool hasValidDesiredViewAngle {};
 	QAngle lastValidDesiredViewAngle;
-	f32 lastJumpReleaseTime {};
 	bool oldDuckPressed {};
 	bool oldJumpPressed {};
 	bool forcedUnduck {};
