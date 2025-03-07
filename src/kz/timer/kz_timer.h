@@ -373,52 +373,8 @@ public:
 	void OnPlayerSpawn();
 	void OnPlayerJoinTeam(i32 team);
 	void OnPlayerDeath();
-	void OnOptionsChanged();
 	static void OnRoundStart();
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 
 	void OnPlayerPreferencesLoaded();
 };
-
-namespace KZ
-{
-	namespace timer
-	{
-		// Announcements
-		struct LocalRankData
-		{
-			bool firstTime {};
-			f32 pbDiff {};
-			u32 rank {};
-			u32 maxRank {};
-
-			bool firstTimePro {};
-			f32 pbDiffPro {};
-			u32 rankPro {};
-			u32 maxRankPro {};
-		};
-
-		struct GlobalRankData
-		{
-			struct RunData
-			{
-				bool isFirstRun {};
-				u32 rank {};
-				f64 points = -1;
-				u64 maxRank {};
-			};
-
-			u32 recordId {};
-			f64 playerRating {};
-			f64 time {};
-			RunData nubData {};
-			RunData proData {};
-		};
-
-		void AddRunToAnnounceQueue(KZPlayer *player, CUtlString courseName, f64 time, u64 teleportsUsed, const char *metadata);
-		void ClearAnnounceQueue();
-		void CheckAnnounceQueue();
-		void UpdateLocalRankData(u32 id, LocalRankData data);
-		void UpdateGlobalRankData(u32 id, GlobalRankData data);
-	} // namespace timer
-} // namespace KZ
