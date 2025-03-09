@@ -15,12 +15,15 @@
 #define SPEED_NORMAL 250.0f
 // Prestrafe related
 #define PS_SPEED_MAX        26.0f
-#define PS_MIN_REWARD_RATE  7.0f  // Minimum computed turn rate for any prestrafe reward
-#define PS_MAX_REWARD_RATE  16.0f // Ideal computed turn rate for maximum prestrafe reward
-#define PS_MAX_PS_TIME      0.55f // Time to reach maximum prestrafe speed with optimal turning
+#define PS_MIN_REWARD_RATE  2.0f  // Minimum computed turn rate for any prestrafe reward
+#define PS_MAX_REWARD_RATE  15.5f // Ideal computed turn rate for maximum prestrafe reward
+#define PS_MAX_PS_TIME      0.50f // Time to reach maximum prestrafe speed with optimal turning
 #define PS_TURN_RATE_WINDOW 0.02f // Turn rate will be computed over this amount of time
 #define PS_DECREMENT_RATIO  3.0f  // Prestrafe will lose this fast compared to gaining
-#define PS_RATIO_TO_SPEED   0.5f
+// Controls the ratio between prestrafe ratio and gain.
+// The lower the value, the faster the prespeed gain at the start, but the slower the gain near the max value.
+// 1 means prestrafe gain is linear with the ratio.
+#define PS_RATIO_TO_SPEED 0.5f
 // Prestrafe ratio will be not go down after landing for this amount of time - helps with small movements after landing
 // Ideally should be much higher than the perf window!
 #define PS_LANDING_GRACE_PERIOD 0.25f
