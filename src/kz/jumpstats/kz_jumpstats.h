@@ -79,7 +79,6 @@ public:
 	f32 CalcMaxYaw(bool useRadians = false);
 	f32 CalcAccelSpeed(bool tryMaxSpeed = false);
 	f32 CalcIdealGain();
-	void Dump();
 };
 
 class Strafe

@@ -771,11 +771,6 @@ void KZTimerService::OnPlayerDeath()
 	this->TimerStop();
 }
 
-void KZTimerService::OnOptionsChanged()
-{
-	// TODO
-}
-
 void KZTimerService::OnRoundStart()
 {
 	KZTimerService::TimerStopAll();

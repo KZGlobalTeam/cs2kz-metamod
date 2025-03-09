@@ -174,11 +174,11 @@ void Strafe::UpdateCollisionVelocityChange(f32 delta)
 {
 	if (delta < 0.0f)
 	{
-		this->externalLoss -= delta;
+		this->collisionLoss -= delta;
 	}
 	else
 	{
-		this->externalGain += delta;
+		this->collisionGain += delta;
 	}
 }
 

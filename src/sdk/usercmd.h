@@ -40,7 +40,8 @@ public:
 	} buttonstates;
 
 	// Not part of the player message
-	uint32_t unknown[4];
+	uint32_t unknown[2];
+	u64 flags;
 	PlayerCommand *unknowncmd;
-	PlayerCommand *unknowncmd2;
+	PlayerCommand *parentcmd;
 };
