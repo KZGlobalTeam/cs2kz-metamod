@@ -156,13 +156,6 @@ class CTraceFilterPlayerMovementCS : public CTraceFilter
 {
 };
 
-// TODO: Remove this!
-struct CCheckTransmitInfoS2
-{
-	CBitVec<16384> *m_pTransmitEdict;
-	uint8 unk[1000];
-};
-
 struct SubtickMove
 {
 	float when;
@@ -192,8 +185,8 @@ public:
 	CMoveDataBase(const CMoveDataBase &source)
 		// clang-format off
 		: m_bFirstRunOfFunctions {source.m_bFirstRunOfFunctions},
+		m_bHasZeroFrametime {source.m_bHasZeroFrametime},
 		m_bIsLateCommand {source.m_bIsLateCommand}, 
-		m_bHasNextCommand {source.m_bHasNextCommand},
 		m_nPlayerHandle {source.m_nPlayerHandle},
 		m_vecAbsViewAngles {source.m_vecAbsViewAngles},
 		m_vecViewAngles {source.m_vecViewAngles},
@@ -247,8 +240,8 @@ public:
 
 public:
 	bool m_bFirstRunOfFunctions: 1;
+	bool m_bHasZeroFrametime: 1;
 	bool m_bIsLateCommand: 1;
-	bool m_bHasNextCommand: 1;
 	CHandle<CCSPlayerPawn> m_nPlayerHandle;
 	QAngle m_vecAbsViewAngles;
 	QAngle m_vecViewAngles;
@@ -257,7 +250,7 @@ public:
 	float m_flSideMove; // Warning! Flipped compared to CS:GO, moving right gives negative value
 	float m_flUpMove;
 	Vector m_vecVelocity;
-	Vector m_vecAngles;
+	QAngle m_vecAngles;
 	CUtlVector<SubtickMove> m_SubtickMoves;
 	CUtlVector<SubtickMove> m_AttackSubtickMoves;
 	bool m_bHasSubtickInputs;
@@ -276,7 +269,7 @@ class CMoveData : public CMoveDataBase
 {
 public:
 	Vector m_outWishVel;
-	Vector m_vecOldAngles;
+	QAngle m_vecOldAngles;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
 	float m_flFrictionDecel; // Related to ground acceleration subtick stuff with sv_stopspeed and friction
