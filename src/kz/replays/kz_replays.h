@@ -144,7 +144,6 @@ struct ReplayHeader
 	u32 magicNumber;
 	u32 version;
 	ReplayType replayType;
-	char version[32];
 	u32 timestamp;
 
 	struct
@@ -195,15 +194,14 @@ struct ManualReplayHeader
 	std::string name;
 };
 
-struct TickData
+// Sometimes there are multiple ticks of movement in a single server tick.
+// Apart from the latest tick, up to 4 other ticks will be run at timescale 0, and if there are more, the buttons will be condensed so the server
+// doesn't run more than 4 commands (or whatever the value of sv_late_commands_allowed is).
+struct PlayerCommandLite
 {
-	// Sometimes there are multiple ticks of movement in a single server tick.
-	// Apart from the latest tick, up to 4 other ticks will be run at timescale 0, and if there are more, the buttons will be condensed so the server
-	// doesn't run more than 4 commands (or whatever the value of sv_late_commands_allowed is).
-
 	// Player command stuff
 	// This is only meaningful for the anticheat. Playback doesn't use this.
-	std::vector<SubtickMove> cmdSubtickMoves;
+	SubtickMove cmdSubtickMoves[12];
 	i32 mousedx {};
 	i32 mousedy {};
 	i32 weapon {};
@@ -211,6 +209,10 @@ struct TickData
 	u64 buttons[3] {};
 	// True if the command is not a substitute or a null command.
 	bool isNewCommand {};
+};
+
+struct TickData
+{
 	// Technically, these arriving commands will not necessarily be processed on this tick, but it is still useful to verify if something is off.
 	u32 numCommandArrivedThisTick {};
 
@@ -226,7 +228,7 @@ struct TickData
 		Vector velocity;
 		// These subtick moves do not match the cmdSubtickMoves as it can be modified by modes,
 		// and subtickMoves always have one extra when = 1.0 empty move.
-		std::vector<SubtickMove> subtickMoves;
+		SubtickMove subtickMoves[13];
 		// Movement services stuff
 		// Why are there 6+ variables that track crouching again?
 		bool inCrouch;
