@@ -86,3 +86,13 @@ void *CModule::FindVirtualTable(const std::string &name)
 	Warning("Failed to find RTTI Complete Object Locator for %s\n", name.c_str());
 	return nullptr;
 }
+
+void *Plat_MemReserve(void *ptr, size_t size)
+{
+	return VirtualAlloc(ptr, size, MEM_RESERVE, PAGE_NOACCESS);
+}
+
+void *Plat_MemCommit(void *ptr, size_t size)
+{
+	return VirtualAlloc(ptr, size, MEM_COMMIT, PAGE_READWRITE);
+}
