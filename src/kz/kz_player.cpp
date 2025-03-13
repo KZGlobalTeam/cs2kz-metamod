@@ -163,7 +163,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 	}
 }
 
-void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
+void KZPlayer::OnProcessUsercmds(CUserCmd *cmds, int numcmds)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
@@ -173,7 +173,7 @@ void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
 	}
 }
 
-void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
+void KZPlayer::OnProcessUsercmdsPost(CUserCmd *cmds, int numcmds)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnProcessUsercmdsPost(cmds, numcmds);
@@ -183,7 +183,7 @@ void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 	}
 }
 
-void KZPlayer::OnSetupMove(PlayerCommand *pc)
+void KZPlayer::OnSetupMove(CUserCmd *pc)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnSetupMove(pc);
@@ -193,7 +193,7 @@ void KZPlayer::OnSetupMove(PlayerCommand *pc)
 	}
 }
 
-void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
+void KZPlayer::OnSetupMovePost(CUserCmd *pc)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnSetupMovePost(pc);

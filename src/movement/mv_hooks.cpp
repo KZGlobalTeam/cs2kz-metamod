@@ -74,7 +74,7 @@ f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
 	return maxSpeed;
 }
 
-i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, void *cmds, int numcmds, bool paused, float margin)
+i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, CUserCmd *cmds, int numcmds, bool paused, float margin)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(controller);
@@ -85,16 +85,16 @@ i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, v
 	return retValue;
 }
 
-void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerCommand *pc, CMoveData *mv)
+void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, CUserCmd *cmd, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	CBasePlayerController *controller = player->GetController();
 	player->currentMoveData = mv;
 	player->moveDataPre = CMoveData(*mv);
-	player->OnSetupMove(pc);
-	SetupMove(ms, pc, mv);
-	player->OnSetupMovePost(pc);
+	player->OnSetupMove(cmd);
+	SetupMove(ms, cmd, mv);
+	player->OnSetupMovePost(cmd);
 }
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)

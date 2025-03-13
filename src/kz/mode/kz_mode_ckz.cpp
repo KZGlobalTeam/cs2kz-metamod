@@ -309,11 +309,11 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 	}
 }
 
-void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
+void KZClassicModeService::OnSetupMove(CUserCmd *cmd)
 {
-	for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
+	for (i32 j = 0; j < cmd->mutable_base()->subtick_moves_size(); j++)
 	{
-		CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
+		CSubtickMoveStep *subtickMove = cmd->mutable_base()->mutable_subtick_moves(j);
 		float when = subtickMove->when();
 		if (subtickMove->button() == IN_JUMP)
 		{

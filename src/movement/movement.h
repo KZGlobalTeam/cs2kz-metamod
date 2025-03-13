@@ -15,7 +15,7 @@ class CCSPlayer_MovementServices;
 class CCSPlayerController;
 class MovementPlayer;
 class CCSPlayerPawnBase;
-class PlayerCommand;
+class CUserCmd;
 
 #ifdef DEBUG_TPM
 struct TraceHistory
@@ -45,8 +45,8 @@ namespace movement
 
 	void FASTCALL Detour_PhysicsSimulate(CCSPlayerController *);
 	f32 FASTCALL Detour_GetMaxSpeed(CCSPlayerPawn *);
-	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, PlayerCommand *, CMoveData *);
-	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, void *, int, bool, float);
+	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, CUserCmd *, CMoveData *);
+	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, CUserCmd *, int, bool, float);
 	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_PlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckParameters(CCSPlayer_MovementServices *, CMoveData *);
@@ -106,13 +106,13 @@ public:
 	virtual void OnPhysicsSimulate();
 	virtual void OnPhysicsSimulatePost();
 
-	virtual void OnProcessUsercmds(void *, int) {}
+	virtual void OnProcessUsercmds(CUserCmd *, int) {}
 
-	virtual void OnProcessUsercmdsPost(void *, int) {}
+	virtual void OnProcessUsercmdsPost(CUserCmd *, int) {}
 
-	virtual void OnSetupMove(PlayerCommand *) {}
+	virtual void OnSetupMove(CUserCmd *) {}
 
-	virtual void OnSetupMovePost(PlayerCommand *) {}
+	virtual void OnSetupMovePost(CUserCmd *) {}
 
 	virtual void OnProcessMovement();
 	virtual void OnProcessMovementPost();

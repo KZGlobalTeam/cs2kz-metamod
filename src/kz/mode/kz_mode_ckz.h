@@ -149,7 +149,7 @@ public:
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
-	virtual void OnSetupMove(PlayerCommand *pc) override;
+	virtual void OnSetupMove(CUserCmd *cmd) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnCategorizePosition(bool bStayOnGround) override;
