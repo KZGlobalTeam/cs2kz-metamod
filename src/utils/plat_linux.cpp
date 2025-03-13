@@ -246,4 +246,21 @@ void *CModule::FindVirtualTable(const std::string &name)
 	Warning("Failed to find vtable for %s\n", name.c_str());
 	return nullptr;
 }
+
+void *Plat_MemReserve(void *ptr, size_t size)
+{
+	void *result = mmap(0, size, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	if (result == MAP_FAILED)
+	{
+		result = 0;
+	}
+	return result;
+}
+
+void *Plat_MemCommit(void *ptr, size_t size)
+{
+	mprotect(ptr, size, PROT_READ | PROT_WRITE);
+	return ptr;
+}
+
 #endif

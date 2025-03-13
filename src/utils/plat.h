@@ -46,3 +46,18 @@ int GetModuleInformation(HINSTANCE module, void **base, size_t *length, std::vec
 #endif
 
 void Plat_WriteMemory(void *pPatchAddress, uint8_t *pPatch, int iPatchSize);
+
+void *Plat_MemReserve(void *pAddress, size_t size);
+void *Plat_MemCommit(void *pAddress, size_t size);
+
+struct Arena
+{
+	uintptr_t base;
+	uintptr_t end;
+	uintptr_t committed;
+	uintptr_t current;
+};
+
+Arena *Plat_ArenaNew(size_t maxSize);
+void *Plat_ArenaAlloc(Arena *arena, size_t size, size_t align);
+void Plat_ArenaFreeAll(Arena *arena);
