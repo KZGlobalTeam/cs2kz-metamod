@@ -158,17 +158,17 @@ class CTraceFilterPlayerMovementCS : public CTraceFilter
 
 struct SubtickMove
 {
-	float when;
-	uint64 button;
+	float when {};
+	uint64 button {};
 
 	union
 	{
-		bool pressed;
+		bool pressed {};
 
 		struct
 		{
-			float analog_forward_delta;
-			float analog_left_delta;
+			float analog_forward_delta {};
+			float analog_left_delta {};
 		} analogMove;
 	};
 
