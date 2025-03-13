@@ -66,7 +66,7 @@ public:
 	}
 
 	// Triggerfix
-	virtual void OnSetupMove(PlayerCommand *pc) override;
+	virtual void OnSetupMove(CUserCmd *cmd) override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnDuckPost() override;
 	virtual void OnAirMove() override;
