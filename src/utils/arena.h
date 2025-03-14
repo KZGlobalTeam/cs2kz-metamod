@@ -3,6 +3,10 @@
 
 struct Arena
 {
+	// No copying allowed
+	Arena(const Arena &) = delete;
+	Arena &operator=(const Arena &) = delete;
+
 	uintptr_t base;
 	uintptr_t end;
 	uintptr_t committed;
@@ -12,9 +16,4 @@ struct Arena
 	~Arena();
 	void *Alloc(size_t size, size_t align);
 	void FreeAll();
-
-private:
-	// No copying allowed
-	Arena(const Arena &);
-	Arena &operator=(const Arena &);
 };
