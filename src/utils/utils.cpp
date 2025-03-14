@@ -10,6 +10,7 @@
 #include "interfaces/interfaces.h"
 #include "igameeventsystem.h"
 #include "sdk/recipientfilters.h"
+#include "sdk/usercmd.h"
 #include "public/networksystem/inetworkmessages.h"
 #include "gametrace.h"
 
@@ -84,11 +85,13 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConCommands();
 	utils::UpdateServerVersion();
 	InitDetours();
+	CUserCmd::InitPools();
 	return true;
 }
 
 void utils::Cleanup()
 {
+	CUserCmd::CleanupPools();
 	FlushAllDetours();
 }
 

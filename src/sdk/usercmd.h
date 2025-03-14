@@ -1,6 +1,8 @@
 #pragma once
 #include "common.h"
 #include "cs_usercmd.pb.h"
+
+struct SubtickMoveNode;
 class CSGOUserCmdPB;
 
 class CUserCmdBase
@@ -24,6 +26,37 @@ private:
 template<typename T>
 class CUserCmdBaseHost : public CUserCmdBase, public T
 {
+};
+
+struct CmdData
+{
+	u32 serverTick {};
+	SubtickMoveNode *subtickMoves;
+	f64 renderTimes[4] {};
+	i32 mousedx {};
+	i32 mousedy {};
+	i32 weapon {};
+	QAngle angles;
+	u64 buttons[3] {};
+
+	f32 GetFps() const
+	{
+		i32 numSamples = 0;
+		while (numSamples < 4 && renderTimes[numSamples] != 0.0)
+		{
+			numSamples++;
+		}
+
+		return numSamples < 2 ? -1.0f : (renderTimes[numSamples - 1] - renderTimes[0]) / (numSamples - 1);
+	}
+};
+
+struct CmdDataNode
+{
+	CmdDataNode *prev;
+	CmdDataNode *next;
+	CmdData data;
+	void Free();
 };
 
 class CUserCmd : public CUserCmdBaseHost<CSGOUserCmdPB>
@@ -71,4 +104,8 @@ public:
 	Flag flags;
 	CUserCmd *unknowncmd;
 	CUserCmd *parentcmd;
+
+	static void InitPools();
+	static void CleanupPools();
+	CmdDataNode *MakeDataNode(u32 serverTick);
 };

@@ -247,7 +247,7 @@ void *CModule::FindVirtualTable(const std::string &name)
 	return nullptr;
 }
 
-void *Plat_MemReserve(void *ptr, size_t size)
+void *Plat_MemReserve(void *pAddress, size_t size)
 {
 	void *result = mmap(0, size, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (result == MAP_FAILED)
@@ -257,10 +257,14 @@ void *Plat_MemReserve(void *ptr, size_t size)
 	return result;
 }
 
-void *Plat_MemCommit(void *ptr, size_t size)
+void *Plat_MemCommit(void *pAddress, size_t size)
 {
-	mprotect(ptr, size, PROT_READ | PROT_WRITE);
-	return ptr;
+	mprotect(pAddress, size, PROT_READ | PROT_WRITE);
+	return pAddress;
 }
 
+void Plat_MemRelease(void *pAddress, U64 size)
+{
+	munmap(pAddress, size);
+}
 #endif

@@ -87,12 +87,17 @@ void *CModule::FindVirtualTable(const std::string &name)
 	return nullptr;
 }
 
-void *Plat_MemReserve(void *ptr, size_t size)
+void *Plat_MemReserve(void *pAddress, size_t size)
 {
-	return VirtualAlloc(ptr, size, MEM_RESERVE, PAGE_NOACCESS);
+	return VirtualAlloc(pAddress, size, MEM_RESERVE, PAGE_NOACCESS);
 }
 
-void *Plat_MemCommit(void *ptr, size_t size)
+void *Plat_MemCommit(void *pAddress, size_t size)
 {
-	return VirtualAlloc(ptr, size, MEM_COMMIT, PAGE_READWRITE);
+	return VirtualAlloc(pAddress, size, MEM_COMMIT, PAGE_READWRITE);
+}
+
+void Plat_MemRelease(void *pAddress, size_t size)
+{
+	VirtualFree(pAddress, 0, MEM_RELEASE);
 }

@@ -49,3 +49,4 @@ void Plat_WriteMemory(void *pPatchAddress, uint8_t *pPatch, int iPatchSize);
 
 void *Plat_MemReserve(void *pAddress, size_t size);
 void *Plat_MemCommit(void *pAddress, size_t size);
+void Plat_MemRelease(void *pAddress, size_t size);
