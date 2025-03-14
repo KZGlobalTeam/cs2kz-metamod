@@ -1,25 +1,25 @@
 #include "common.h"
+#include "arena.h"
 #include "plat.h"
 
 #include "tier0/memdbgon.h"
 
-Arena *Plat_ArenaNew(size_t maxSize)
+Arena::Arena(size_t maxSize)
 {
-	Arena *arena = (Arena *)malloc(sizeof(Arena));
-	arena->base = (uintptr_t)Plat_MemReserve(nullptr, maxSize);
-	arena->end = arena->base + maxSize;
-	arena->committed = arena->base;
-	arena->current = arena->base;
-	return arena;
+	maxSize = (maxSize + 4095) & ~4095;
+	this->base = (uintptr_t)Plat_MemReserve(nullptr, maxSize);
+	this->end = this->base + maxSize;
+	this->committed = this->base;
+	this->current = this->base;
 }
 
-void *Plat_ArenaAlloc(Arena *arena, size_t size, size_t align)
+void *Arena::Alloc(size_t size, size_t align)
 {
 	assert(!(align & (align - 1)));
-	uintptr_t result = (arena->current + (align - 1)) & ~(align - 1);
-	if (result + size >= arena->committed)
+	uintptr_t result = (this->current + (align - 1)) & ~(align - 1);
+	if (result + size >= this->committed)
 	{
-		if (result + size >= arena->end)
+		if (result + size >= this->end)
 		{
 			return nullptr;
 		}
@@ -30,13 +30,13 @@ void *Plat_ArenaAlloc(Arena *arena, size_t size, size_t align)
 			return nullptr;
 		}
 		// Not actually true, it's a bit further than that, but doesn't matter.
-		arena->committed = result + commit;
+		this->committed = result + commit;
 	}
-	arena->current = result + size;
+	this->current = result + size;
 	return (void *)result;
 }
 
-void Plat_ArenaFreeAll(Arena *arena)
+void Arena::FreeAll()
 {
-	arena->current = arena->base;
+	this->current = this->base;
 }
