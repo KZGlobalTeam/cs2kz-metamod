@@ -2,6 +2,8 @@
 
 #include "kz/kz.h"
 
+class CmdDataNode;
+
 class KZTelemetryService : public KZBaseService
 {
 public:
@@ -42,4 +44,12 @@ public:
 	}
 
 	void OnPhysicsSimulatePost();
+
+	void OnProcessUsercmds(CUserCmd *cmds, int numcmds);
+	void OnClientDisconnect();
+
+private:
+	u32 lastCmdNumReceived {};
+	CmdDataNode *cmdDataHead {};
+	CmdDataNode *cmdDataTail {};
 };
