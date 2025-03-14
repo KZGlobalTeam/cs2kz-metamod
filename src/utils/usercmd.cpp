@@ -27,6 +27,7 @@ CmdDataNode *CUserCmd::MakeDataNode(u32 serverTick)
 		return nullptr;
 	}
 	cmdData->data.serverTick = serverTick;
+	cmdData->data.cmdNum = this->cmdNum;
 	cmdData->data.mousedx = this->base().mousedx();
 	cmdData->data.mousedy = this->base().mousedy();
 	cmdData->data.weapon = this->base().weaponselect();
@@ -56,7 +57,11 @@ CmdDataNode *CUserCmd::MakeDataNode(u32 serverTick)
 			node->move.analogMove.analog_forward_delta = move.analog_forward_delta();
 			node->move.analogMove.analog_left_delta = move.analog_left_delta();
 		}
-		lastMove->next = node;
+		if (lastMove)
+		{
+			lastMove->next = node;
+		}
+		lastMove = node;
 	}
 	return cmdData;
 }
