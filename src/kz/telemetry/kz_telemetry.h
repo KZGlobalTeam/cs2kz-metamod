@@ -48,8 +48,9 @@ public:
 	void OnProcessUsercmds(CUserCmd *cmds, int numcmds);
 	void OnClientDisconnect();
 
+	void DumpCmdStats();
+
 private:
-	u32 lastCmdNumReceived {};
-	CmdDataNode *cmdDataHead {};
-	CmdDataNode *cmdDataTail {};
+	CmdDataNode *cmdDataNodeHead {};
+	CmdDataNode *cmdDataNodeTail {};
 };

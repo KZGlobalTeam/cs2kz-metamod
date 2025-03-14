@@ -3,7 +3,8 @@
 #include "kz/language/kz_language.h"
 #include "sdk/usercmd.h"
 
-#define BUFFER_TIME   120.0f
+#include "utils/simplecmds.h"
+#define BUFFER_TICKS  (u32)(120 * 64) // 2 minutes
 #define AFK_THRESHOLD 30.0f
 f64 KZTelemetryService::lastActiveCheckTime = 0.0f;
 
@@ -22,21 +23,23 @@ void KZTelemetryService::OnPhysicsSimulatePost()
 	}
 
 	// Remove all commands that are too old.
-	auto cmdHead = this->cmdDataHead;
-	while (cmdHead)
+	auto currentCmdNode = this->cmdDataNodeHead;
+	auto thresholdTick = g_pKZUtils->GetGlobals()->tickcount - BUFFER_TICKS;
+	while (currentCmdNode)
 	{
-		if (cmdHead->data.serverTick > g_pKZUtils->GetGlobals()->tickcount - BUFFER_TIME * ENGINE_FIXED_TICK_INTERVAL)
+		if (currentCmdNode->data.serverTick > thresholdTick)
 		{
 			break;
 		}
-		this->cmdDataHead = cmdHead->next;
-		if (this->cmdDataHead)
+		auto nextCmdNode = currentCmdNode->next;
+		currentCmdNode->Free();
+		currentCmdNode = nextCmdNode;
+		if (currentCmdNode)
 		{
-			this->cmdDataHead->prev = nullptr;
+			currentCmdNode->prev = nullptr;
 		}
-		cmdHead->Free();
-		cmdHead = this->cmdDataHead;
 	}
+	this->cmdDataNodeHead = currentCmdNode;
 }
 
 void KZTelemetryService::OnProcessUsercmds(CUserCmd *cmds, int numcmds)
@@ -44,9 +47,9 @@ void KZTelemetryService::OnProcessUsercmds(CUserCmd *cmds, int numcmds)
 	for (int i = 0; i < numcmds; i++)
 	{
 		i32 cmdNum = cmds[i].cmdNum;
-		if (cmdNum > this->lastCmdNumReceived)
+		i32 lastCmdNumReceived = this->cmdDataNodeTail ? this->cmdDataNodeTail->data.cmdNum : -1;
+		if (cmdNum > lastCmdNumReceived)
 		{
-			this->lastCmdNumReceived = cmdNum;
 			auto node = cmds[i].MakeDataNode(g_pKZUtils->GetServerGlobals()->tickcount);
 			// Should not happen.
 			if (!node)
@@ -54,30 +57,40 @@ void KZTelemetryService::OnProcessUsercmds(CUserCmd *cmds, int numcmds)
 				META_CONPRINTF("[KZ] Failed to allocate CmdDataNode!\n");
 				continue;
 			}
-			if (!this->cmdDataHead)
+			if (!this->cmdDataNodeHead)
 			{
-				this->cmdDataHead = this->cmdDataTail = node;
+				this->cmdDataNodeHead = node;
 			}
-			else
+			node->prev = this->cmdDataNodeTail;
+			if (this->cmdDataNodeTail)
 			{
-				this->cmdDataTail->next = node;
-				node->prev = this->cmdDataTail;
-				this->cmdDataTail = node;
+				this->cmdDataNodeTail->next = node;
 			}
+			this->cmdDataNodeTail = node;
 		}
 	}
 }
 
 void KZTelemetryService::OnClientDisconnect()
 {
-	CmdDataNode *node = this->cmdDataHead;
+	CmdDataNode *node = this->cmdDataNodeHead;
 	while (node)
 	{
 		CmdDataNode *next = node->next;
 		node->Free();
 		node = next;
 	}
-	this->cmdDataHead = this->cmdDataTail = nullptr;
+	this->cmdDataNodeHead = this->cmdDataNodeTail = nullptr;
+}
+
+void KZTelemetryService::DumpCmdStats()
+{
+	if (!this->cmdDataNodeHead)
+	{
+		return;
+	}
+	this->player->PrintAlert(false, false, "CmdStats: %i @%i -> %i @%i\n", this->cmdDataNodeHead->data.cmdNum, this->cmdDataNodeHead->data.serverTick,
+							 this->cmdDataNodeTail->data.cmdNum, this->cmdDataNodeTail->data.serverTick);
 }
 
 void KZTelemetryService::ActiveCheck()
@@ -103,6 +116,19 @@ void KZTelemetryService::ActiveCheck()
 				player->telemetryService->activeStats.activeTime += duration;
 			}
 		}
+		player->telemetryService->DumpCmdStats();
 	}
 	KZTelemetryService::lastActiveCheckTime = currentTime;
+}
+
+SCMD_CALLBACK(Kz_CmdStats)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->telemetryService->DumpCmdStats();
+	return MRES_SUPERCEDE;
+}
+
+void KZTelemetryService::RegisterCommands()
+{
+	scmd::RegisterCmd("kz_cmdstats", Kz_CmdStats);
 }
