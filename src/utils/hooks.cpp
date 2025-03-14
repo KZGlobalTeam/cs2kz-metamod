@@ -549,6 +549,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->timerService->OnClientDisconnect();
 	player->optionService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
+	player->telemetryService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }

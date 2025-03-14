@@ -13,6 +13,11 @@ Arena::Arena(size_t maxSize)
 	this->current = this->base;
 }
 
+Arena::~Arena()
+{
+	Plat_MemRelease((void *)this->base, this->end - this->base);
+}
+
 void *Arena::Alloc(size_t size, size_t align)
 {
 	assert(!(align & (align - 1)));

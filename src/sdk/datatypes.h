@@ -178,6 +178,13 @@ struct SubtickMove
 	}
 };
 
+// Not a Valve class, just here to make a linked list.
+struct SubtickMoveNode
+{
+	SubtickMoveNode *next;
+	SubtickMove move;
+};
+
 class CMoveDataBase
 {
 public:

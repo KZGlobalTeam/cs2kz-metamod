@@ -166,6 +166,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 void KZPlayer::OnProcessUsercmds(CUserCmd *cmds, int numcmds)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->telemetryService->OnProcessUsercmds(cmds, numcmds);
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
