@@ -8,7 +8,7 @@
 
 struct ReplayEvent
 {
-	u32 tick;
+	u32 serverTick;
 
 	enum Type : u8
 	{
@@ -56,12 +56,13 @@ struct TeleportEvent : public ReplayEvent
 		PLUGIN,
 	} source {};
 
+	// Note: This uses std::optional just to not forget later that any of these fields can be null.
 	std::optional<Vector> origin;
 	std::optional<QAngle> angles;
 	std::optional<Vector> velocity;
 };
 
-// Use to override takeoff data in replays.
+// Use to override takeoff data in replays (used by the HUD for example).
 struct TakeoffEvent : public ReplayEvent
 {
 	f32 takeoffSpeed;
@@ -133,7 +134,8 @@ struct SensitivityChangeEvent : public ReplayEvent
 
 enum ReplayType : u8
 {
-	ReplayType_Run = 0,
+	ReplayType_None = 0,
+	ReplayType_Run,
 	ReplayType_Jumpstats,
 	ReplayType_Cheater,
 	ReplayType_Manual
@@ -176,6 +178,8 @@ struct ReplayHeader
 struct RunReplayHeader
 {
 	std::string courseName;
+	u32 timerStartTick;
+	u32 timerEndTick;
 };
 
 struct CheaterReplayHeader
@@ -197,25 +201,9 @@ struct ManualReplayHeader
 // Sometimes there are multiple ticks of movement in a single server tick.
 // Apart from the latest tick, up to 4 other ticks will be run at timescale 0, and if there are more, the buttons will be condensed so the server
 // doesn't run more than 4 commands (or whatever the value of sv_late_commands_allowed is).
-struct PlayerCommandLite
-{
-	// Player command stuff
-	// This is only meaningful for the anticheat. Playback doesn't use this.
-	SubtickMove cmdSubtickMoves[12];
-	i32 mousedx {};
-	i32 mousedy {};
-	i32 weapon {};
-	QAngle angles;
-	u64 buttons[3] {};
-	// True if the command is not a substitute or a null command.
-	bool isNewCommand {};
-};
-
+// We only track the main ticks for playback purposes. Check the tracked user commands for player sent inputs instead.
 struct TickData
 {
-	// Technically, these arriving commands will not necessarily be processed on this tick, but it is still useful to verify if something is off.
-	u32 numCommandArrivedThisTick {};
-
 	// Data to override in CreateMove.
 	struct
 	{
@@ -228,7 +216,8 @@ struct TickData
 		Vector velocity;
 		// These subtick moves do not match the cmdSubtickMoves as it can be modified by modes,
 		// and subtickMoves always have one extra when = 1.0 empty move.
-		SubtickMove subtickMoves[13];
+		// The theoretical max amount of moves are 1 (minimum) + 12 (player sent) + 4 (forced moves) = 17
+		SubtickMove subtickMoves[17];
 		// Movement services stuff
 		// Why are there 6+ variables that track crouching again?
 		bool inCrouch;
@@ -259,11 +248,17 @@ struct TickData
 
 struct ReplayData
 {
+	u32 serverStartTick;
 	std::vector<ReplayEvent *> event;
 	std::vector<TickData> tickData;
 };
 
 class KZReplayService : public KZBaseService
+
 {
+public:
 	using KZBaseService::KZBaseService;
+
+	// This gets updated throughout the tick, and should be propagated to all active recordings.
+	TickData currentTickData;
 };
