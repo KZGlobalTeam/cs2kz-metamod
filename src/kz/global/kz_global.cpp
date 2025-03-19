@@ -414,9 +414,9 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 
 			switch (message->closeInfo.code)
 			{
-				case 1000 /* NORMAL */:
-				case 1001 /* GOING AWAY */:
-				case 1006 /* ABNORMAL */: /* fall-through */
+				case 1000 /* NORMAL */:     /* fall-through */
+				case 1001 /* GOING AWAY */: /* fall-through */
+				case 1006 /* ABNORMAL */:
 				{
 					KZGlobalService::socket->enableAutomaticReconnection();
 					KZGlobalService::state.store(KZGlobalService::State::DisconnectedButWorthRetrying);
@@ -430,6 +430,11 @@ void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 					{
 						KZGlobalService::socket->enableAutomaticReconnection();
 						KZGlobalService::state.store(KZGlobalService::State::DisconnectedButWorthRetrying);
+					}
+					else
+					{
+						KZGlobalService::socket->disableAutomaticReconnection();
+						KZGlobalService::state.store(KZGlobalService::State::Disconnected);
 					}
 				}
 				break;
