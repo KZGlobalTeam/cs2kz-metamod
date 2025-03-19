@@ -42,6 +42,26 @@ public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
 	SCHEMA_FIELD_POINTER(CInButtonState, m_nButtons)
 	SCHEMA_FIELD_POINTER(float, m_arrForceSubtickMoveWhen)
+
+	void SetForcedSubtickMove(i32 index, f32 when)
+	{
+		if (index > 3)
+		{
+			DevMsg("SetForcedSubtickMove: index %d out of range\n", index);
+			return;
+		}
+		static constexpr auto datatable_hash = hash_32_fnv1a_const("CPlayer_MovementServices");
+		static constexpr auto prop_hash = hash_32_fnv1a_const("m_arrForceSubtickMoveWhen");
+		static const auto m_key = schema::GetOffset(ThisClassName, datatable_hash, "m_arrForceSubtickMoveWhen", prop_hash);
+		static const auto m_chain = schema::FindChainOffset(ThisClassName);
+		static const size_t offset =
+			((::size_t)&reinterpret_cast<char const volatile &>((((CPlayer_MovementServices *)0)->m_arrForceSubtickMoveWhen)));
+		if (m_chain != 0 && m_key.networked)
+		{
+			schema::NetworkStateChanged((uintptr_t)(this) + m_chain, m_key.offset, index);
+		}
+		m_arrForceSubtickMoveWhen[index] = when;
+	}
 };
 
 class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices

@@ -90,6 +90,8 @@ void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerC
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	CBasePlayerController *controller = player->GetController();
+	player->currentMoveData = mv;
+	player->moveDataPre = CMoveData(*mv);
 	player->OnSetupMove(pc);
 	SetupMove(ms, pc, mv);
 	player->OnSetupMovePost(pc);

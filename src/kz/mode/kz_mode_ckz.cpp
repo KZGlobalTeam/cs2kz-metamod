@@ -259,12 +259,51 @@ void KZClassicModeService::OnStartTouchGround()
 
 void KZClassicModeService::OnPhysicsSimulate()
 {
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL - 0.5 * ENGINE_FIXED_TICK_INTERVAL);
+	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
+	if (!moveServices)
+	{
+		return;
+	}
+	u32 tickCount = g_pKZUtils->GetServerGlobals()->tickcount;
+
+	f32 subtickMoveTime = (tickCount - 0.5) * ENGINE_FIXED_TICK_INTERVAL;
+	for (u32 i = 0; i < 4; i++)
+	{
+		if (fabs(subtickMoveTime - moveServices->m_arrForceSubtickMoveWhen[i]) < 0.001)
+		{
+			return;
+		}
+		if (subtickMoveTime > moveServices->m_arrForceSubtickMoveWhen[i])
+		{
+			moveServices->SetForcedSubtickMove(i, subtickMoveTime);
+			return;
+		}
+	}
 }
 
 void KZClassicModeService::OnPhysicsSimulatePost()
 {
-	this->InsertSubtickTiming(g_pKZUtils->GetServerGlobals()->tickcount * ENGINE_FIXED_TICK_INTERVAL + 0.5 * ENGINE_FIXED_TICK_INTERVAL);
+	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
+	if (!moveServices)
+	{
+		return;
+	}
+	u32 tickCount = g_pKZUtils->GetServerGlobals()->tickcount;
+
+	f32 subtickMoveTime = (tickCount + 0.5) * ENGINE_FIXED_TICK_INTERVAL;
+	for (u32 i = 0; i < 4; i++)
+	{
+		if (fabs(subtickMoveTime - moveServices->m_arrForceSubtickMoveWhen[i]) < 0.001)
+		{
+			subtickMoveTime += ENGINE_FIXED_TICK_INTERVAL;
+			continue;
+		}
+		if (subtickMoveTime > moveServices->m_arrForceSubtickMoveWhen[i])
+		{
+			moveServices->SetForcedSubtickMove(i, subtickMoveTime);
+			subtickMoveTime += ENGINE_FIXED_TICK_INTERVAL;
+		}
+	}
 }
 
 void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
@@ -324,49 +363,6 @@ void KZClassicModeService::OnProcessMovementPost()
 	if (this->player->GetPlayerPawn()->m_flVelocityModifier() != velMod)
 	{
 		this->player->GetPlayerPawn()->m_flVelocityModifier(velMod);
-	}
-}
-
-void KZClassicModeService::InsertSubtickTiming(float time)
-{
-	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
-	if (!moveServices
-		|| fabs(roundf(time) - time) < 0.001 // Don't create subtick too close to real time, there will be movement processing there anyway.
-		|| time * ENGINE_FIXED_TICK_RATE - g_pKZUtils->GetServerGlobals()->tickcount > 1.0f   // Don't create subtick timing too far into the future.
-		|| time * ENGINE_FIXED_TICK_RATE - g_pKZUtils->GetServerGlobals()->tickcount < -1.0f) // Don't create subtick timing too far back.
-	{
-		return;
-	}
-
-	for (i32 i = 0; i < 4; i++)
-	{
-		// Empty slot, let's use this.
-		if (moveServices->m_arrForceSubtickMoveWhen[i] < EPSILON)
-		{
-			moveServices->m_arrForceSubtickMoveWhen[i] = time;
-			return;
-		}
-		// Did we already add this timing?
-		if (fabs(time - moveServices->m_arrForceSubtickMoveWhen[i]) < EPSILON)
-		{
-			return;
-		}
-		// Is this subtick value still valid? If not, we use this value.
-		if (moveServices->m_arrForceSubtickMoveWhen[i] * ENGINE_FIXED_TICK_RATE < g_pKZUtils->GetServerGlobals()->tickcount - 1)
-		{
-			moveServices->m_arrForceSubtickMoveWhen[i] = time;
-			return;
-		}
-		// Shift the later other subtick moves. We will lose the last one... oh well.
-		if (time < moveServices->m_arrForceSubtickMoveWhen[i])
-		{
-			for (i32 j = i; j < 3; j++)
-			{
-				moveServices->m_arrForceSubtickMoveWhen[j + 1] = moveServices->m_arrForceSubtickMoveWhen[j];
-			}
-			moveServices->m_arrForceSubtickMoveWhen[i] = time;
-			return;
-		}
 	}
 }
 
