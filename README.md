@@ -17,7 +17,10 @@ WIP, not ready for release
 - Download the latest version in the release section and extract them to your server's `csgo/` directory.
 
 # Compilation
-- Remember to *recursively* clone the plugin, and symlink needs to be enabled as well!
+- Remember to *recursively* clone the plugin, and symlink needs to be enabled as well! ([this isn't the default on windows](https://stackoverflow.com/a/59761201))
+   ```
+   git clone -c core.symlinks=true --recursive https://github.com/KZGlobalTeam/cs2kz-metamod.git
+   ```
 - Latest [AMBuild](https://github.com/alliedmodders/ambuild/) needs to be installed for compilation.
 
 - For each platform:
