@@ -20,6 +20,7 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/global/kz_global.h"
 
+#include "utils/calltree.h"
 #include "sdk/gamerules.h"
 
 #define RESTART_CHECK_INTERVAL 1800.0f

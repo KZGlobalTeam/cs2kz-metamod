@@ -39,6 +39,7 @@ class KZNoclipService;
 class KZOptionService;
 class KZQuietService;
 class KZRacingService;
+class KZReplayService;
 class KZSavelocService;
 class KZSpecService;
 class KZGotoService;
@@ -150,6 +151,7 @@ public:
 	KZOptionService *optionService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
+	KZReplayService *replayService {};
 	KZSavelocService *savelocService {};
 	KZSpecService *specService {};
 	KZGotoService *gotoService {};

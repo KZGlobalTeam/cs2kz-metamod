@@ -15,6 +15,7 @@
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
 #include "kz/quiet/kz_quiet.h"
+#include "kz/replay/kz_replay.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/timer/announce.h"
 #include "kz/timer/queries/base_request.h"
@@ -26,6 +27,7 @@
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
 
+#include "utils/calltree.h"
 #include "vprof.h"
 
 #include "memdbgon.h"
@@ -67,9 +69,143 @@ SH_DECL_HOOK7_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CChe
 static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
 										const uint16 *pEntityIndicies, int nEntities, bool bEnablePVSBits);
 
+#define SH_DECL_MANUALHOOK0(hookname, vtblidx, vtbloffs, thisptroffs, rettype) \
+	SHINT_MAKE_GENERICSTUFF_BEGIN_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+	typedef fastdelegate::FastDelegate<rettype> FD; \
+	MAKE_DELEG(rettype, (), ()); \
+	virtual rettype Func() \
+	{ \
+		TRACK_FUNCTION_NAMED(hookname); \
+		SH_HANDLEFUNC((), (), rettype); \
+	} \
+	typedef rettype (::SourceHook::EmptyClass::*ECMFP)(); \
+	typedef SourceHook::ExecutableClassN<::SourceHook::EmptyClass, ECMFP, rettype> CallEC; \
+	typedef rettype RetType; \
+	SHINT_MAKE_GENERICSTUFF_END_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+\
+	const ::SourceHook::PassInfo __SourceHook_ParamInfosM_##hookname[] = {{1, 0, 0}}; \
+	const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_##hookname[] = {__SH_EPI}; \
+	::SourceHook::ProtoInfo SH_MFHCls(hookname)::ms_Proto = {0, __SH_GPI(rettype), __SourceHook_ParamInfosM_##hookname, \
+															 0, __SH_EPI,          __SourceHook_ParamInfos2M_##hookname}; \
+	void __SoureceHook_FHM_SetOverrideResult##hookname(::SourceHook::ISourceHook *shptr, rettype value) \
+	{ \
+		::SourceHook::SetOverrideResult<SH_MFHCls(hookname)::RetType>()(shptr, value); \
+	}
+
+#define SH_DECL_MANUALHOOK0_void(hookname, vtblidx, vtbloffs, thisptroffs) \
+	SHINT_MAKE_GENERICSTUFF_BEGIN_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+	typedef fastdelegate::FastDelegate<void> FD; \
+	MAKE_DELEG_void((), ()); \
+	virtual void Func() \
+	{ \
+		TRACK_FUNCTION_NAMED(hookname); \
+		SH_HANDLEFUNC_void((), ()); \
+	} \
+	typedef void (::SourceHook::EmptyClass::*ECMFP)(); \
+	typedef SourceHook::ExecutableClassN<SourceHook::EmptyClass, ECMFP, void> CallEC; \
+	SHINT_MAKE_GENERICSTUFF_END_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+\
+	const ::SourceHook::PassInfo __SourceHook_ParamInfosM_##hookname[] = {{1, 0, 0}}; \
+	const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_##hookname[] = {__SH_EPI}; \
+	::SourceHook::ProtoInfo SH_MFHCls(hookname)::ms_Proto = {0, {0, 0, 0}, __SourceHook_ParamInfosM_##hookname, \
+															 0, __SH_EPI,  __SourceHook_ParamInfos2M_##hookname};
+
+#define SH_DECL_MANUALHOOK1_void(hookname, vtblidx, vtbloffs, thisptroffs, param1) \
+	SHINT_MAKE_GENERICSTUFF_BEGIN_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+	typedef fastdelegate::FastDelegate<void, param1> FD; \
+	MAKE_DELEG_void((param1 p1), (p1)); \
+	virtual void Func(param1 p1) \
+	{ \
+		TRACK_FUNCTION_NAMED(hookname); \
+		SH_HANDLEFUNC_void((param1), (p1)); \
+	} \
+	typedef void (::SourceHook::EmptyClass::*ECMFP)(param1); \
+	typedef SourceHook::ExecutableClassN<SourceHook::EmptyClass, ECMFP, void, param1> CallEC; \
+	SHINT_MAKE_GENERICSTUFF_END_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+\
+	const ::SourceHook::PassInfo __SourceHook_ParamInfosM_##hookname[] = {{1, 0, 0}, __SH_GPI(param1)}; \
+	const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_##hookname[] = {__SH_EPI, __SH_EPI}; \
+	::SourceHook::ProtoInfo SH_MFHCls(hookname)::ms_Proto = {1, {0, 0, 0}, __SourceHook_ParamInfosM_##hookname, \
+															 0, __SH_EPI,  __SourceHook_ParamInfos2M_##hookname};
+
+#define SH_DECL_MANUALHOOK2_void(hookname, vtblidx, vtbloffs, thisptroffs, param1, param2) \
+	SHINT_MAKE_GENERICSTUFF_BEGIN_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+	typedef fastdelegate::FastDelegate<void, param1, param2> FD; \
+	MAKE_DELEG_void((param1 p1, param2 p2), (p1, p2)); \
+	virtual void Func(param1 p1, param2 p2) \
+	{ \
+		TRACK_FUNCTION_NAMED(hookname); \
+		SH_HANDLEFUNC_void((param1, param2), (p1, p2)); \
+	} \
+	typedef void (::SourceHook::EmptyClass::*ECMFP)(param1, param2); \
+	typedef SourceHook::ExecutableClassN<SourceHook::EmptyClass, ECMFP, void, param1, param2> CallEC; \
+	SHINT_MAKE_GENERICSTUFF_END_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+\
+	const ::SourceHook::PassInfo __SourceHook_ParamInfosM_##hookname[] = {{1, 0, 0}, __SH_GPI(param1), __SH_GPI(param2)}; \
+	const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_##hookname[] = {__SH_EPI, __SH_EPI, __SH_EPI}; \
+	::SourceHook::ProtoInfo SH_MFHCls(hookname)::ms_Proto = {2, {0, 0, 0}, __SourceHook_ParamInfosM_##hookname, \
+															 0, __SH_EPI,  __SourceHook_ParamInfos2M_##hookname};
+
+#define SH_DECL_MANUALHOOK3_void(hookname, vtblidx, vtbloffs, thisptroffs, param1, param2, param3) \
+	SHINT_MAKE_GENERICSTUFF_BEGIN_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+	typedef fastdelegate::FastDelegate<void, param1, param2, param3> FD; \
+	MAKE_DELEG_void((param1 p1, param2 p2, param3 p3), (p1, p2, p3)); \
+	virtual void Func(param1 p1, param2 p2, param3 p3) \
+	{ \
+		TRACK_FUNCTION_NAMED(hookname); \
+		SH_HANDLEFUNC_void((param1, param2, param3), (p1, p2, p3)); \
+	} \
+	typedef void (::SourceHook::EmptyClass::*ECMFP)(param1, param2, param3); \
+	typedef SourceHook::ExecutableClassN<SourceHook::EmptyClass, ECMFP, void, param1, param2, param3> CallEC; \
+	SHINT_MAKE_GENERICSTUFF_END_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+\
+	const ::SourceHook::PassInfo __SourceHook_ParamInfosM_##hookname[] = {{1, 0, 0}, __SH_GPI(param1), __SH_GPI(param2), __SH_GPI(param3)}; \
+	const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_##hookname[] = {__SH_EPI, __SH_EPI, __SH_EPI, __SH_EPI}; \
+	::SourceHook::ProtoInfo SH_MFHCls(hookname)::ms_Proto = {3, {0, 0, 0}, __SourceHook_ParamInfosM_##hookname, \
+															 0, __SH_EPI,  __SourceHook_ParamInfos2M_##hookname};
+
+#define SH_DECL_MANUALHOOK4_void(hookname, vtblidx, vtbloffs, thisptroffs, param1, param2, param3, param4) \
+	SHINT_MAKE_GENERICSTUFF_BEGIN_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+	typedef fastdelegate::FastDelegate<void, param1, param2, param3, param4> FD; \
+	MAKE_DELEG_void((param1 p1, param2 p2, param3 p3, param4 p4), (p1, p2, p3, p4)); \
+	virtual void Func(param1 p1, param2 p2, param3 p3, param4 p4) \
+	{ \
+		TRACK_FUNCTION_NAMED(hookname); \
+		SH_HANDLEFUNC_void((param1, param2, param3, param4), (p1, p2, p3, p4)); \
+	} \
+	typedef void (::SourceHook::EmptyClass::*ECMFP)(param1, param2, param3, param4); \
+	typedef SourceHook::ExecutableClassN<SourceHook::EmptyClass, ECMFP, void, param1, param2, param3, param4> CallEC; \
+	SHINT_MAKE_GENERICSTUFF_END_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+\
+	const ::SourceHook::PassInfo __SourceHook_ParamInfosM_##hookname[] = { \
+		{1, 0, 0}, __SH_GPI(param1), __SH_GPI(param2), __SH_GPI(param3), __SH_GPI(param4)}; \
+	const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_##hookname[] = {__SH_EPI, __SH_EPI, __SH_EPI, __SH_EPI, __SH_EPI}; \
+	::SourceHook::ProtoInfo SH_MFHCls(hookname)::ms_Proto = {4, {0, 0, 0}, __SourceHook_ParamInfosM_##hookname, \
+															 0, __SH_EPI,  __SourceHook_ParamInfos2M_##hookname};
+
+#define SH_DECL_MANUALHOOK5_void(hookname, vtblidx, vtbloffs, thisptroffs, param1, param2, param3, param4, param5) \
+	SHINT_MAKE_GENERICSTUFF_BEGIN_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+	typedef fastdelegate::FastDelegate<void, param1, param2, param3, param4, param5> FD; \
+	MAKE_DELEG_void((param1 p1, param2 p2, param3 p3, param4 p4, param5 p5), (p1, p2, p3, p4, p5)); \
+	virtual void Func(param1 p1, param2 p2, param3 p3, param4 p4, param5 p5) \
+	{ \
+		TRACK_FUNCTION_NAMED(hookname); \
+		SH_HANDLEFUNC_void((param1, param2, param3, param4, param5), (p1, p2, p3, p4, p5)); \
+	} \
+	typedef void (::SourceHook::EmptyClass::*ECMFP)(param1, param2, param3, param4, param5); \
+	typedef SourceHook::ExecutableClassN<SourceHook::EmptyClass, ECMFP, void, param1, param2, param3, param4, param5> CallEC; \
+	SHINT_MAKE_GENERICSTUFF_END_MANUAL(hookname, vtbloffs, vtblidx, thisptroffs) \
+\
+	const ::SourceHook::PassInfo __SourceHook_ParamInfosM_##hookname[] = {{1, 0, 0},        __SH_GPI(param1), __SH_GPI(param2), \
+																		  __SH_GPI(param3), __SH_GPI(param4), __SH_GPI(param5)}; \
+	const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_##hookname[] = {__SH_EPI, __SH_EPI, __SH_EPI, __SH_EPI, __SH_EPI, __SH_EPI}; \
+	::SourceHook::ProtoInfo SH_MFHCls(hookname)::ms_Proto = {5, {0, 0, 0}, __SourceHook_ParamInfosM_##hookname, \
+															 0, __SH_EPI,  __SourceHook_ParamInfos2M_##hookname};
+
 // ISource2Server
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
 static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick);
+static_function void Hook_GameFramePost(bool simulating, bool bFirstTick, bool bLastTick);
 SH_DECL_HOOK0_void(ISource2Server, GameServerSteamAPIActivated, SH_NOATTRIB, 0);
 static_function void Hook_GameServerSteamAPIActivated();
 SH_DECL_HOOK0_void(ISource2Server, GameServerSteamAPIDeactivated, SH_NOATTRIB, 0);
@@ -159,6 +295,317 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 
 static_global bool ignoreTouchEvent {};
 
+// MovementServices
+
+SH_DECL_MANUALHOOK0_void(Init, 0, 0, 0);
+static_function void Hook_OnInit();
+
+SH_DECL_MANUALHOOK0_void(PostThink, 0, 0, 0);
+static_function void Hook_OnPostThink();
+
+SH_DECL_MANUALHOOK0_void(UpdateCollisionBounds, 0, 0, 0);
+static_function void Hook_OnUpdateCollisionBounds();
+
+SH_DECL_MANUALHOOK1_void(UpdateIdleTime, 0, 0, 0, CMoveData *);
+static_function void Hook_OnUpdateIdleTime(CMoveData *pMoveData);
+
+SH_DECL_MANUALHOOK1_void(PlayerRunCommand, 0, 0, 0, CUserCmd *);
+static_function void Hook_OnPlayerRunCommand(CUserCmd *pCmd);
+
+SH_DECL_MANUALHOOK3_void(RunLateCommands, 0, 0, 0, CUserCmd **, int, CUserCmd *);
+static_function void Hook_OnRunCommands(CUserCmd **ppCmds, int nCmds, CUserCmd *pCmd);
+static_function void Hook_OnRunCommandsPost(CUserCmd **ppCmds, int nCmds, CUserCmd *pCmd);
+
+SH_DECL_MANUALHOOK3_void(CondenseCommands, 0, 0, 0, CUserCmd **, int, CUserCmd *);
+static_function void Hook_OnBuildCommand(CUserCmd **ppCmds, int nCmds, CUserCmd *pCmd);
+
+SH_DECL_MANUALHOOK1_void(ProcessMovement, 0, 0, 0, CMoveData *);
+static_function void Hook_OnProcessMovement(CMoveData *pMoveData);
+
+SH_DECL_MANUALHOOK1_void(GetSmoothedVelocity, 0, 0, 0, Vector *);
+static_function void Hook_OnGetSmoothedVelocity(Vector *pVelocity);
+
+SH_DECL_MANUALHOOK0(InitMoveData, 0, 0, 0, CMoveData *);
+static_function CMoveData *Hook_OnInitMoveData();
+
+SH_DECL_MANUALHOOK2_void(CreateMove, 0, 0, 0, CUserCmd *, CMoveData *);
+static_function void Hook_OnCreateMove(CUserCmd *pCmd, CMoveData *pMoveData);
+
+SH_DECL_MANUALHOOK1_void(ResetSubtickAccelSpeed, 0, 0, 0, CMoveData *);
+static_function void Hook_OnResetSubtickAccelSpeed(CMoveData *pMoveData);
+
+SH_DECL_MANUALHOOK2_void(CheckJumpPeak, 0, 0, 0, CUserCmd *, CMoveData *);
+static_function void Hook_OnCheckJumpPeak(CUserCmd *pCmd, CMoveData *pMoveData);
+
+SH_DECL_MANUALHOOK2_void(FinishMove, 0, 0, 0, CUserCmd *, CMoveData *);
+static_function void Hook_OnFinishMove(CUserCmd *pCmd, CMoveData *pMoveData);
+
+SH_DECL_MANUALHOOK1_void(UpdatePostProcessMovement, 0, 0, 0, CMoveData *);
+static_function void Hook_OnUpdatePostProcessMovement(CMoveData *pMoveData);
+
+SH_DECL_MANUALHOOK1_void(RandomizeUserCmdSeed, 0, 0, 0, CUserCmd *);
+static_function void Hook_OnRandomizeUserCmdSeed(CUserCmd *pCmd);
+
+SH_DECL_MANUALHOOK0_void(ClearRndSeedAndUpdateNoDefuseArea, 0, 0, 0);
+static_function void Hook_OnClearRndSeedAndUpdateNoDefuseArea();
+
+SH_DECL_MANUALHOOK0_void(ShouldNullfyFrametime, 0, 0, 0);
+static_function void Hook_OnShouldNullfyFrametime();
+
+SH_DECL_MANUALHOOK1_void(CheckMovingGround, 0, 0, 0, f64);
+static_function void Hook_OnCheckMovingGround(f64 ground);
+
+SH_DECL_MANUALHOOK5_void(NoclipAccelerate, 0, 0, 0, CMoveData *, f32, f32, f32, bool);
+static_function void Hook_OnNoclipAccelerate(CMoveData *pMoveData, f32 wishSpeed, f32 accel, f32 maxSpeed, bool bIsOnGround);
+
+SH_DECL_MANUALHOOK3_void(IsCollidingWithAnotherEntity, 0, 0, 0, CMoveData *, Vector *, u8);
+static_function void Hook_OnIsCollidingWithAnotherEntity(CMoveData *pMoveData, Vector *pVec, u8 flags);
+
+SH_DECL_MANUALHOOK0_void(PlayerFallingDamage, 0, 0, 0);
+static_function void Hook_OnPlayerFallingDamage();
+
+SH_DECL_MANUALHOOK0_void(InitializeCollisionProp, 0, 0, 0);
+static_function void Hook_OnInitializeCollisionProp();
+
+SH_DECL_MANUALHOOK0_void(GetLadderSurfaceProps, 0, 0, 0);
+static_function void Hook_OnGetLadderSurfaceProps();
+
+SH_DECL_MANUALHOOK3_void(UpdateStepSound, 0, 0, 0, void *, Vector *, Vector *);
+static_function void Hook_OnUpdateStepSound(void *pSound, Vector *pVec1, Vector *pVec2);
+
+struct __SourceHook_MFHCls_PlayStepSoundBase
+{
+	static __SourceHook_MFHCls_PlayStepSoundBase ms_Inst;
+	static ::SourceHook::MemFuncInfo ms_MFI;
+	static ::SourceHook::IHookManagerInfo *ms_HI;
+	static ::SourceHook::ProtoInfo ms_Proto;
+
+	__SourceHook_MFHCls_PlayStepSoundBase()
+	{
+		ms_MFI.isVirtual = true;
+		ms_MFI.thisptroffs = 0;
+		ms_MFI.vtblindex = 0;
+		ms_MFI.vtbloffs = 0;
+	}
+
+	static int HookManPubFunc(bool store, ::SourceHook::IHookManagerInfo *hi)
+	{
+		using namespace ::SourceHook;
+		if (g_SHPtr->GetIfaceVersion() != 5)
+		{
+			return 1;
+		}
+		if (g_SHPtr->GetImplVersion() < 5)
+		{
+			return 1;
+		}
+		if (store)
+		{
+			ms_HI = hi;
+		}
+		if (hi)
+		{
+			MemFuncInfo mfi = {true, -1, 0, 0};
+			GetFuncInfo(&__SourceHook_MFHCls_PlayStepSoundBase::Func, mfi);
+			hi->SetInfo(1, ms_MFI.vtbloffs, ms_MFI.vtblindex, &ms_Proto,
+						reinterpret_cast<void **>(reinterpret_cast<char *>(&ms_Inst) + mfi.vtbloffs)[mfi.vtblindex]);
+		}
+		return 0;
+	}
+
+	typedef fastdelegate::FastDelegate<void, Vector *, void *, f32> FD;
+
+	struct IMyDelegate : ::SourceHook::ISHDelegate
+	{
+		virtual void Call(Vector *p1, void *p2, f32 p3) = 0;
+	};
+
+	struct CMyDelegateImpl : IMyDelegate
+	{
+		FD m_Deleg;
+
+		CMyDelegateImpl(FD deleg) : m_Deleg(deleg) {}
+
+		virtual ~CMyDelegateImpl() {}
+
+		void Call(Vector *p1, void *p2, f32 p3)
+		{
+			m_Deleg(p1, p2, p3);
+		}
+
+		void DeleteThis()
+		{
+			delete this;
+		}
+
+		bool IsEqual(ISHDelegate *pOtherDeleg)
+		{
+			return m_Deleg == static_cast<CMyDelegateImpl *>(pOtherDeleg)->m_Deleg;
+		}
+	};
+
+	;
+
+	virtual void Func(Vector *p1, void *p2, f32 p3)
+	{
+		FunctionTracker::ScopedTracker _function_tracker_instance(GetTracker(), __func__);
+		using namespace ::SourceHook;
+		void *ourvfnptr = reinterpret_cast<void *>(*reinterpret_cast<void ***>(reinterpret_cast<char *>(this) + ms_MFI.vtbloffs) + ms_MFI.vtblindex);
+		void *vfnptr_origentry;
+		META_RES status = MRES_IGNORED;
+		META_RES prev_res;
+		META_RES cur_res;
+		IMyDelegate *iter;
+		IHookContext *pContext =
+			g_SHPtr->SetupHookLoop(ms_HI, ourvfnptr, reinterpret_cast<void *>(this), &vfnptr_origentry, &status, &prev_res, &cur_res, 0, 0);
+		prev_res = MRES_IGNORED;
+		while ((iter = static_cast<IMyDelegate *>(pContext->GetNext())))
+		{
+			cur_res = MRES_IGNORED;
+			iter->Call(p1, p2, p3);
+			prev_res = cur_res;
+			if (cur_res > status)
+			{
+				status = cur_res;
+			}
+		}
+		if (status != MRES_SUPERCEDE && pContext->ShouldCallOrig())
+		{
+			void (EmptyClass::*mfp)(Vector *, void *, f32);
+			reinterpret_cast<void **>(&mfp)[0] = vfnptr_origentry;
+			;
+			(reinterpret_cast<EmptyClass *>(this)->*mfp)(p1, p2, p3);
+		}
+		prev_res = MRES_IGNORED;
+		while ((iter = static_cast<IMyDelegate *>(pContext->GetNext())))
+		{
+			cur_res = MRES_IGNORED;
+			iter->Call(p1, p2, p3);
+			prev_res = cur_res;
+			if (cur_res > status)
+			{
+				status = cur_res;
+			}
+		}
+		g_SHPtr->EndContext(pContext);
+		;
+	}
+
+	typedef void (::SourceHook::EmptyClass::*ECMFP)(Vector *, void *, f32);
+	typedef SourceHook::ExecutableClassN<SourceHook::EmptyClass, ECMFP, void, Vector *, void *, f32> CallEC;
+};
+
+__SourceHook_MFHCls_PlayStepSoundBase __SourceHook_MFHCls_PlayStepSoundBase::ms_Inst;
+::SourceHook::MemFuncInfo __SourceHook_MFHCls_PlayStepSoundBase::ms_MFI;
+::SourceHook::IHookManagerInfo *__SourceHook_MFHCls_PlayStepSoundBase::ms_HI;
+
+int __SourceHook_FHMAddPlayStepSoundBase(void *iface, ::SourceHook::ISourceHook::AddHookMode mode, bool post,
+										 __SourceHook_MFHCls_PlayStepSoundBase::FD handler)
+{
+	return g_SHPtr->AddHook(g_PLID, mode, iface, 0, __SourceHook_MFHCls_PlayStepSoundBase::HookManPubFunc,
+							new __SourceHook_MFHCls_PlayStepSoundBase::CMyDelegateImpl(handler), post);
+}
+
+bool __SourceHook_FHMRemovePlayStepSoundBase(void *iface, bool post, __SourceHook_MFHCls_PlayStepSoundBase::FD handler)
+{
+	__SourceHook_MFHCls_PlayStepSoundBase::CMyDelegateImpl tmp(handler);
+	return g_SHPtr->RemoveHook(g_PLID, iface, 0, __SourceHook_MFHCls_PlayStepSoundBase::HookManPubFunc, &tmp, post);
+}
+
+__SourceHook_MFHCls_PlayStepSoundBase::ECMFP __SoureceHook_FHM_GetRecallMFPPlayStepSoundBase(::SourceHook::EmptyClass *thisptr)
+{
+	union
+	{
+		__SourceHook_MFHCls_PlayStepSoundBase::ECMFP mfp;
+		void *addr;
+	} u;
+
+	u.addr = (*reinterpret_cast<void ***>(
+		reinterpret_cast<char *>(thisptr)
+		+ __SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.vtbloffs))[__SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.vtblindex];
+	;
+	return u.mfp;
+}
+
+__SourceHook_MFHCls_PlayStepSoundBase::CallEC __SoureceHook_FHM_SHCallPlayStepSoundBase(void *ptr)
+{
+	__SourceHook_MFHCls_PlayStepSoundBase::ECMFP mfp;
+	void *vfnptr = reinterpret_cast<void *>(
+		*reinterpret_cast<void ***>((reinterpret_cast<char *>(ptr) + __SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.thisptroffs
+									 + __SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.vtbloffs))
+		+ __SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.vtblindex);
+	*reinterpret_cast<void **>(&mfp) = *reinterpret_cast<void **>(vfnptr);
+	if (sizeof(mfp) == 2 * sizeof(void *))
+	{
+		void **pleaseShutUpMsvc = reinterpret_cast<void **>(&mfp);
+		pleaseShutUpMsvc[1] = 0;
+	}
+	return __SourceHook_MFHCls_PlayStepSoundBase::CallEC(reinterpret_cast<::SourceHook::EmptyClass *>(ptr), mfp, vfnptr, g_SHPtr);
+}
+
+void __SourceHook_FHM_ReconfigurePlayStepSoundBase(int p_vtblindex, int p_vtbloffs, int p_thisptroffs)
+{
+	g_SHPtr->RemoveHookManager(g_PLID, __SourceHook_MFHCls_PlayStepSoundBase::HookManPubFunc);
+	__SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.thisptroffs = p_thisptroffs;
+	__SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.vtblindex = p_vtblindex;
+	__SourceHook_MFHCls_PlayStepSoundBase::ms_MFI.vtbloffs = p_vtbloffs;
+}
+
+const ::SourceHook::PassInfo __SourceHook_ParamInfosM_PlayStepSoundBase[] = {
+	{1, 0, 0},
+	{sizeof(Vector *), ::SourceHook::GetPassInfo<Vector *>::type, ::SourceHook::GetPassInfo<Vector *>::flags},
+	{sizeof(void *), ::SourceHook::GetPassInfo<void *>::type, ::SourceHook::GetPassInfo<void *>::flags},
+	{sizeof(f32), ::SourceHook::GetPassInfo<f32>::type, ::SourceHook::GetPassInfo<f32>::flags}};
+const ::SourceHook::PassInfo::V2Info __SourceHook_ParamInfos2M_PlayStepSoundBase[] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+::SourceHook::ProtoInfo __SourceHook_MFHCls_PlayStepSoundBase::ms_Proto = {3, {0, 0, 0},    __SourceHook_ParamInfosM_PlayStepSoundBase,
+																		   0, {0, 0, 0, 0}, __SourceHook_ParamInfos2M_PlayStepSoundBase};
+;
+static_function void Hook_OnPlayStepSoundBase(Vector *vecOrigin, void *psurface, f32 fvol);
+
+SH_DECL_MANUALHOOK2_void(GetStepSoundVelocities, 0, 0, 0, f32 *, f32 *);
+static_function void Hook_OnGetStepSoundVelocities(f32 *velwalk, f32 *velrun);
+
+SH_DECL_MANUALHOOK2_void(SetStepSoundTime, 0, 0, 0, int, bool);
+static_function void Hook_OnSetStepSoundTime(int time, bool bIsOnGround);
+
+SH_DECL_MANUALHOOK0(GetTeamBasedStepSound, 0, 0, 0, const char *);
+static_function const char *Hook_OnGetTeamBasedStepSound();
+
+SH_DECL_MANUALHOOK2_void(PlayStepSound, 0, 0, 0, Vector *, Vector *);
+static_function void Hook_OnPlayStepSound(Vector *, Vector *);
+
+static_global int initHook {};
+static_global int postThinkHook {};
+static_global int updateCollisionBoundsHook {};
+static_global int updateIdleTimeHook {};
+static_global int playerRunCommandHook {};
+static_global int runCommandsHook {};
+static_global int runCommandsPostHook {};
+static_global int buildCommandHook {};
+static_global int processMovementHook {};
+static_global int getSmoothedVelocityHook {};
+static_global int initMoveDataHook {};
+static_global int createMoveHook {};
+static_global int resetSubtickAccelSpeedHook {};
+static_global int checkJumpPeakHook {};
+static_global int finishMoveHook {};
+static_global int updatePostProcessMovementHook {};
+static_global int randomizeUserCmdSeedHook {};
+static_global int clearRndSeedAndUpdateNoDefuseAreaHook {};
+static_global int shouldNullfyFrametimeHook {};
+static_global int checkMovingGroundHook {};
+static_global int noclipAccelerateHook {};
+static_global int isCollidingWithAnotherEntityHook {};
+static_global int playerFallingDamageHook {};
+static_global int initializeCollisionPropHook {};
+static_global int getLadderSurfacePropsHook {};
+static_global int updateStepSoundHook {};
+static_global int playStepSoundBaseHook {};
+static_global int getStepSoundVelocitiesHook {};
+static_global int setStepSoundTimeHook {};
+static_global int getTeamBasedStepSoundHook {};
+static_global int playStepSoundHook {};
+
 void hooks::Initialize()
 {
 	SH_MANUALHOOK_RECONFIGURE(StartTouch, g_pGameConfig->GetOffset("StartTouch"), 0, 0);
@@ -167,10 +614,41 @@ void hooks::Initialize()
 	SH_MANUALHOOK_RECONFIGURE(Teleport, g_pGameConfig->GetOffset("Teleport"), 0, 0);
 
 	SH_MANUALHOOK_RECONFIGURE(ChangeTeam, g_pGameConfig->GetOffset("ControllerChangeTeam"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(Init, g_pGameConfig->GetOffset("Init"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(PostThink, g_pGameConfig->GetOffset("PostThink"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(UpdateCollisionBounds, g_pGameConfig->GetOffset("UpdateCollisionBounds"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(UpdateIdleTime, g_pGameConfig->GetOffset("UpdateIdleTime"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(PlayerRunCommand, g_pGameConfig->GetOffset("PlayerRunCommand"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(RunLateCommands, g_pGameConfig->GetOffset("RunLateCommands"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(CondenseCommands, g_pGameConfig->GetOffset("CondenseCommands"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(ProcessMovement, g_pGameConfig->GetOffset("ProcessMovement"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(GetSmoothedVelocity, g_pGameConfig->GetOffset("GetSmoothedVelocity"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(InitMoveData, g_pGameConfig->GetOffset("InitMoveData"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(CreateMove, g_pGameConfig->GetOffset("CreateMove"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(ResetSubtickAccelSpeed, g_pGameConfig->GetOffset("ResetSubtickAccelSpeed"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(CheckJumpPeak, g_pGameConfig->GetOffset("CheckJumpPeak"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(FinishMove, g_pGameConfig->GetOffset("FinishMove"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(UpdatePostProcessMovement, g_pGameConfig->GetOffset("UpdatePostProcessMovement"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(RandomizeUserCmdSeed, g_pGameConfig->GetOffset("RandomizeUserCmdSeed"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(ClearRndSeedAndUpdateNoDefuseArea, g_pGameConfig->GetOffset("ClearRndSeedAndUpdateNoDefuseArea"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(ShouldNullfyFrametime, g_pGameConfig->GetOffset("ShouldNullfyFrametime"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(CheckMovingGround, g_pGameConfig->GetOffset("CheckMovingGround"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(NoclipAccelerate, g_pGameConfig->GetOffset("NoclipAccelerate"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(IsCollidingWithAnotherEntity, g_pGameConfig->GetOffset("IsCollidingWithAnotherEntity"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(PlayerFallingDamage, g_pGameConfig->GetOffset("PlayerFallingDamage"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(InitializeCollisionProp, g_pGameConfig->GetOffset("InitializeCollisionProp"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(GetLadderSurfaceProps, g_pGameConfig->GetOffset("GetLadderSurfaceProps"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(UpdateStepSound, g_pGameConfig->GetOffset("UpdateStepSound"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(PlayStepSoundBase, g_pGameConfig->GetOffset("PlayStepSoundBase"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(GetStepSoundVelocities, g_pGameConfig->GetOffset("GetStepSoundVelocities"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(SetStepSoundTime, g_pGameConfig->GetOffset("SetStepSoundTime"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(GetTeamBasedStepSound, g_pGameConfig->GetOffset("GetTeamBasedStepSound"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(PlayStepSound, g_pGameConfig->GetOffset("PlayStepSound"), 0, 0);
 
 	SH_ADD_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
 
 	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
+	SH_ADD_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFramePost), false);
 	SH_ADD_HOOK(ISource2Server, GameServerSteamAPIActivated, interfaces::pServer, SH_STATIC(Hook_GameServerSteamAPIActivated), false);
 	SH_ADD_HOOK(ISource2Server, GameServerSteamAPIDeactivated, interfaces::pServer, SH_STATIC(Hook_GameServerSteamAPIDeactivated), false);
 
@@ -243,7 +721,193 @@ void hooks::Initialize()
 		SH_STATIC(Hook_OnCreateLoadingSpawnGroupHook), 
 		false
 	);
-
+	CCSPlayer_MovementServices * moveServicesVtbl = (CCSPlayer_MovementServices *)modules::server->FindVirtualTable("CCSPlayer_MovementServices");
+	initHook = SH_ADD_MANUALDVPHOOK(
+		Init, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnInit), 
+		false
+	);
+	postThinkHook = SH_ADD_MANUALDVPHOOK(
+		PostThink, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnPostThink), 
+		false
+	);
+	updateCollisionBoundsHook = SH_ADD_MANUALDVPHOOK(
+		UpdateCollisionBounds, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnUpdateCollisionBounds), 
+		false
+	);
+	updateIdleTimeHook = SH_ADD_MANUALDVPHOOK(
+		UpdateIdleTime, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnUpdateIdleTime), 
+		false
+	);
+	playerRunCommandHook = SH_ADD_MANUALDVPHOOK(
+		PlayerRunCommand, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnPlayerRunCommand), 
+		false
+	);
+	 runCommandsHook = SH_ADD_MANUALDVPHOOK(
+	 	RunLateCommands, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnRunCommands), 
+	 	false
+	 );
+	 runCommandsPostHook = SH_ADD_MANUALDVPHOOK(
+	 	RunLateCommands, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnRunCommandsPost), 
+	 	true
+	 );
+	 buildCommandHook = SH_ADD_MANUALDVPHOOK(
+	 	CondenseCommands, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnBuildCommand), 
+	 	false
+	 );
+	 processMovementHook = SH_ADD_MANUALDVPHOOK(
+	 	ProcessMovement, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnProcessMovement), 
+	 	false
+	 );
+	 getSmoothedVelocityHook = SH_ADD_MANUALDVPHOOK(
+	 	GetSmoothedVelocity, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnGetSmoothedVelocity), 
+	 	false
+	 );
+	 initMoveDataHook = SH_ADD_MANUALDVPHOOK(
+	 	InitMoveData, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnInitMoveData), 
+	 	false
+	 );
+	 createMoveHook = SH_ADD_MANUALDVPHOOK(
+	 	CreateMove, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnCreateMove), 
+	 	false
+	 );
+	 resetSubtickAccelSpeedHook = SH_ADD_MANUALDVPHOOK(
+	 	ResetSubtickAccelSpeed, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnResetSubtickAccelSpeed), 
+	 	false
+	 );
+	 checkJumpPeakHook = SH_ADD_MANUALDVPHOOK(
+	 	CheckJumpPeak, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnCheckJumpPeak), 
+	 	false
+	 );
+	 finishMoveHook = SH_ADD_MANUALDVPHOOK(
+	 	FinishMove, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnFinishMove), 
+	 	false
+	 );
+	 updatePostProcessMovementHook = SH_ADD_MANUALDVPHOOK(
+	 	UpdatePostProcessMovement, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnUpdatePostProcessMovement), 
+	 	false
+	 );
+	 randomizeUserCmdSeedHook = SH_ADD_MANUALDVPHOOK(
+	 	RandomizeUserCmdSeed, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnRandomizeUserCmdSeed), 
+	 	false
+	 );
+	 clearRndSeedAndUpdateNoDefuseAreaHook = SH_ADD_MANUALDVPHOOK(
+	 	ClearRndSeedAndUpdateNoDefuseArea, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnClearRndSeedAndUpdateNoDefuseArea), 
+	 	false
+	 );
+	 shouldNullfyFrametimeHook = SH_ADD_MANUALDVPHOOK(
+	 	ShouldNullfyFrametime, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnShouldNullfyFrametime), 
+	 	false
+	 );
+	 checkMovingGroundHook = SH_ADD_MANUALDVPHOOK(
+	 	CheckMovingGround, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnCheckMovingGround), 
+	 	false
+	 );
+	 noclipAccelerateHook = SH_ADD_MANUALDVPHOOK(
+	 	NoclipAccelerate, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnNoclipAccelerate), 
+	 	false
+	 );
+	 isCollidingWithAnotherEntityHook = SH_ADD_MANUALDVPHOOK(
+	 	IsCollidingWithAnotherEntity, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnIsCollidingWithAnotherEntity), 
+	 	false
+	 );
+	playerFallingDamageHook = SH_ADD_MANUALDVPHOOK(
+		PlayerFallingDamage, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnPlayerFallingDamage), 
+		false
+	);
+	initializeCollisionPropHook = SH_ADD_MANUALDVPHOOK(
+		InitializeCollisionProp, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnInitializeCollisionProp), 
+		false
+	);
+	getLadderSurfacePropsHook = SH_ADD_MANUALDVPHOOK(
+		GetLadderSurfaceProps, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnGetLadderSurfaceProps), 
+		false
+	);
+	updateStepSoundHook = SH_ADD_MANUALDVPHOOK(
+		UpdateStepSound, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnUpdateStepSound), 
+		false
+	);
+	playStepSoundBaseHook = SH_ADD_MANUALDVPHOOK(
+		PlayStepSoundBase, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnPlayStepSoundBase), 
+		false
+	);
+	getStepSoundVelocitiesHook = SH_ADD_MANUALDVPHOOK(
+		GetStepSoundVelocities, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnGetStepSoundVelocities), 
+		false
+	);
+	setStepSoundTimeHook = SH_ADD_MANUALDVPHOOK(
+		SetStepSoundTime, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnSetStepSoundTime), 
+		false
+	);
+	getTeamBasedStepSoundHook = SH_ADD_MANUALDVPHOOK(
+		GetTeamBasedStepSound, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnGetTeamBasedStepSound), 
+		false
+	);
+	playStepSoundHook = SH_ADD_MANUALDVPHOOK(
+		PlayStepSound, 
+		moveServicesVtbl, 
+		SH_STATIC(Hook_OnPlayStepSound), 
+		false
+	);
 	// clang-format on
 }
 
@@ -252,6 +916,7 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
 
 	SH_REMOVE_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFrame), false);
+	SH_REMOVE_HOOK(ISource2Server, GameFrame, interfaces::pServer, SH_STATIC(Hook_GameFramePost), false);
 	SH_REMOVE_HOOK(ISource2Server, GameServerSteamAPIActivated, interfaces::pServer, SH_STATIC(Hook_GameServerSteamAPIActivated), false);
 	SH_REMOVE_HOOK(ISource2Server, GameServerSteamAPIDeactivated, interfaces::pServer, SH_STATIC(Hook_GameServerSteamAPIDeactivated), false);
 
@@ -263,7 +928,6 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), true);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientVoice, g_pSource2GameClients, SH_STATIC(Hook_ClientVoice), false);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
-
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 
 	SH_REMOVE_HOOK(IGameEventManager2, FireEvent, interfaces::pGameEventManager, SH_STATIC(Hook_FireEvent), false);
@@ -284,6 +948,38 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK_ID(entitySystemHook);
 
 	SH_REMOVE_HOOK_ID(createLoadingSpawnGroupHook);
+
+	SH_REMOVE_HOOK_ID(initHook);
+	SH_REMOVE_HOOK_ID(postThinkHook);
+	SH_REMOVE_HOOK_ID(updateCollisionBoundsHook);
+	SH_REMOVE_HOOK_ID(updateIdleTimeHook);
+	SH_REMOVE_HOOK_ID(playerRunCommandHook);
+	SH_REMOVE_HOOK_ID(runCommandsHook);
+	SH_REMOVE_HOOK_ID(runCommandsPostHook);
+	SH_REMOVE_HOOK_ID(buildCommandHook);
+	SH_REMOVE_HOOK_ID(processMovementHook);
+	SH_REMOVE_HOOK_ID(getSmoothedVelocityHook);
+	SH_REMOVE_HOOK_ID(initMoveDataHook);
+	SH_REMOVE_HOOK_ID(createMoveHook);
+	SH_REMOVE_HOOK_ID(resetSubtickAccelSpeedHook);
+	SH_REMOVE_HOOK_ID(checkJumpPeakHook);
+	SH_REMOVE_HOOK_ID(finishMoveHook);
+	SH_REMOVE_HOOK_ID(updatePostProcessMovementHook);
+	SH_REMOVE_HOOK_ID(randomizeUserCmdSeedHook);
+	SH_REMOVE_HOOK_ID(clearRndSeedAndUpdateNoDefuseAreaHook);
+	SH_REMOVE_HOOK_ID(shouldNullfyFrametimeHook);
+	SH_REMOVE_HOOK_ID(checkMovingGroundHook);
+	SH_REMOVE_HOOK_ID(noclipAccelerateHook);
+	SH_REMOVE_HOOK_ID(isCollidingWithAnotherEntityHook);
+	SH_REMOVE_HOOK_ID(playerFallingDamageHook);
+	SH_REMOVE_HOOK_ID(initializeCollisionPropHook);
+	SH_REMOVE_HOOK_ID(getLadderSurfacePropsHook);
+	SH_REMOVE_HOOK_ID(updateStepSoundHook);
+	SH_REMOVE_HOOK_ID(playStepSoundBaseHook);
+	SH_REMOVE_HOOK_ID(getStepSoundVelocitiesHook);
+	SH_REMOVE_HOOK_ID(setStepSoundTimeHook);
+	SH_REMOVE_HOOK_ID(getTeamBasedStepSoundHook);
+	SH_REMOVE_HOOK_ID(playStepSoundHook);
 
 	if (GameEntitySystem())
 	{
@@ -478,6 +1174,14 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	RETURN_META(MRES_IGNORED);
 }
 
+// ISource2Server
+static_function void Hook_GameFramePost(bool simulating, bool bFirstTick, bool bLastTick)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	KZReplayService::OnGameFramePost();
+	RETURN_META(MRES_IGNORED);
+}
+
 static_function void Hook_GameServerSteamAPIActivated()
 {
 	g_steamAPI.Init();
@@ -521,7 +1225,7 @@ static_function void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const c
 	{
 		AddEntityHooks(player->GetPlayerPawn());
 	}
-	else
+	else if (!player->GetClient()->IsHLTV())
 	{
 		Warning("[KZ] WARNING: Player pawn for slot %i not found!\n", slot.Get());
 	}
@@ -718,4 +1422,159 @@ static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGrou
 {
 	KZ::mapapi::OnCreateLoadingSpawnGroupHook(pKeyValues);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
+}
+
+static_function void Hook_OnInit()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnPostThink()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnUpdateCollisionBounds()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnUpdateIdleTime(CMoveData *pMoveData)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnPlayerRunCommand(CUserCmd *pCmd)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnRunCommands(CUserCmd **ppCmds, int nCmds, CUserCmd *pCmd)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnRunCommandsPost(CUserCmd **ppCmds, int nCmds, CUserCmd *pCmd)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnBuildCommand(CUserCmd **ppCmds, int nCmds, CUserCmd *pCmd)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnProcessMovement(CMoveData *pMoveData)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnGetSmoothedVelocity(Vector *pVelocity)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function CMoveData *Hook_OnInitMoveData()
+{
+	RETURN_META_VALUE(MRES_IGNORED, 0);
+}
+
+static_function void Hook_OnCreateMove(CUserCmd *pCmd, CMoveData *pMoveData)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnResetSubtickAccelSpeed(CMoveData *pMoveData)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnCheckJumpPeak(CUserCmd *pCmd, CMoveData *pMoveData)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnFinishMove(CUserCmd *pCmd, CMoveData *pMoveData)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnUpdatePostProcessMovement(CMoveData *pMoveData)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnRandomizeUserCmdSeed(CUserCmd *pCmd)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnClearRndSeedAndUpdateNoDefuseArea()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnShouldNullfyFrametime()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnCheckMovingGround(f64 ground)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnNoclipAccelerate(CMoveData *pMoveData, f32 wishSpeed, f32 accel, f32 maxSpeed, bool bIsOnGround)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnIsCollidingWithAnotherEntity(CMoveData *pMoveData, Vector *pVec, u8 flags)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnPlayerFallingDamage()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnInitializeCollisionProp()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnGetLadderSurfaceProps()
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnUpdateStepSound(void *pSound, Vector *pVec1, Vector *pVec2)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnPlayStepSoundBase(Vector *vecOrigin, void *psurface, f32 fvol)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnGetStepSoundVelocities(f32 *velwalk, f32 *velrun)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnSetStepSoundTime(int time, bool bIsOnGround)
+{
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function const char *Hook_OnGetTeamBasedStepSound()
+{
+	RETURN_META_VALUE(MRES_IGNORED, 0);
+}
+
+static_function void Hook_OnPlayStepSound(Vector *, Vector *)
+{
+	RETURN_META(MRES_IGNORED);
 }

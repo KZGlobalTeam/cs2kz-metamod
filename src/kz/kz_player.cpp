@@ -11,6 +11,7 @@
 #include "noclip/kz_noclip.h"
 #include "option/kz_option.h"
 #include "quiet/kz_quiet.h"
+#include "replay/kz_replay.h"
 #include "spec/kz_spec.h"
 #include "goto/kz_goto.h"
 #include "style/kz_style.h"
@@ -49,6 +50,7 @@ void KZPlayer::Init()
 	delete this->telemetryService;
 	delete this->triggerService;
 	delete this->globalService;
+	delete this->replayService;
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->checkpointService = new KZCheckpointService(this);
@@ -66,6 +68,7 @@ void KZPlayer::Init()
 	this->telemetryService = new KZTelemetryService(this);
 	this->triggerService = new KZTriggerService(this);
 	this->globalService = new KZGlobalService(this);
+	this->replayService = new KZReplayService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -87,6 +90,7 @@ void KZPlayer::Reset()
 	this->timerService->Reset();
 	this->specService->Reset();
 	this->triggerService->Reset();
+	this->replayService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);

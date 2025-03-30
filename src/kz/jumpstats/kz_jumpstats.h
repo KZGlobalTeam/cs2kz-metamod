@@ -3,7 +3,7 @@
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
-
+#include "utils/eventlisteners.h"
 #include "../kz.h"
 
 class KZPlayer;
@@ -210,6 +210,7 @@ class Jump
 private:
 	KZPlayer *player;
 
+public:
 	Vector takeoffOrigin;
 	Vector adjustedTakeoffOrigin;
 	Vector takeoffVelocity;
@@ -232,6 +233,9 @@ private:
 	f32 duckEndDuration {};
 	f32 width {};
 	f32 gainEff {};
+	u32 block;
+	f32 edge;
+	f32 miss;
 
 	bool hitHead {};
 	bool valid = true;
@@ -274,12 +278,12 @@ public:
 
 	Strafe *GetCurrentStrafe();
 
-	JumpType GetJumpType()
+	JumpType GetJumpType() const
 	{
 		return this->jumpType;
 	}
 
-	KZPlayer *GetJumpPlayer()
+	KZPlayer *GetJumpPlayer() const
 	{
 		return this->player;
 	}
@@ -309,7 +313,7 @@ public:
 		return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z;
 	}
 
-	f32 GetDistance(bool useDistbugFix = true, bool disableAddDist = false, i32 floorLevel = -1);
+	f32 GetDistance(bool useDistbugFix = true, bool disableAddDist = false, i32 floorLevel = -1) const;
 
 	f32 GetMaxSpeed()
 	{
@@ -370,6 +374,14 @@ public:
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
 };
 
+class KZJumpstatsServiceEventListener
+{
+public:
+	virtual void OnJumpStart(const Jump *jump) {}
+
+	virtual void OnJumpEnd(const Jump *jump) {}
+};
+
 class KZJumpstatsService : public KZBaseService
 {
 public:
@@ -379,7 +391,7 @@ public:
 		this->tpmVelocity = Vector(0, 0, 0);
 	}
 
-	// Jumpstats
+	DECLARE_CLASS_EVENT_LISTENER(KZJumpstatsServiceEventListener);
 
 private:
 	DistanceTier broadcastMinTier {};

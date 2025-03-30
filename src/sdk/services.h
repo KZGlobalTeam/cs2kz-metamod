@@ -69,7 +69,10 @@ public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices_Humanoid);
 	SCHEMA_FIELD(bool, m_bDucking)
 	SCHEMA_FIELD(bool, m_bDucked)
+	SCHEMA_FIELD(bool, m_bInCrouch)
 	SCHEMA_FIELD(float, m_flSurfaceFriction)
+	SCHEMA_FIELD(uint32_t, m_nCrouchState)
+	SCHEMA_FIELD(GameTime_t, m_flCrouchTransitionStartTime)
 };
 
 class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid

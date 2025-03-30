@@ -368,6 +368,126 @@
 				"windows"		"263"
 				"linux"			"264"
 			}
+			"Init" 
+			{
+				"windows"		"4"
+			}
+			"PostThink" 
+			{
+				"windows"		"9"
+			}
+			"UpdateCollisionBounds" 
+			{
+				"windows"		"11"
+			}
+			"UpdateIdleTime" 
+			{
+				"windows"		"17"
+			}
+			"PlayerRunCommand" 
+			{
+				"windows"		"18"
+			}
+			"RunLateCommands" 
+			{
+				"windows"		"19"
+			}
+			"CondenseCommands" 
+			{
+				"windows"		"20"
+			}
+			"ProcessMovement" 
+			{
+				"windows"		"21"
+			}
+			"GetSmoothedVelocity" 
+			{
+				"windows"		"22"
+			}
+			"InitMoveData" 
+			{
+				"windows"		"24"
+			}
+			"CreateMove" 
+			{
+				"windows"		"25"
+			}
+			"ResetSubtickAccelSpeed" 
+			{
+				"windows"		"26"
+			}
+			"CheckJumpPeak" 
+			{
+				"windows"		"27"
+			}
+			"FinishMove" 
+			{
+				"windows"		"28"
+			}
+			"UpdatePostProcessMovement" 
+			{
+				"windows"		"29"
+			}
+			"RandomizeUserCmdSeed" 
+			{
+				"windows"		"31"
+			}
+			"ClearRndSeedAndUpdateNoDefuseArea" 
+			{
+				"windows"		"32"
+			}
+			"ShouldNullfyFrametime" 
+			{
+				"windows"		"33"
+			}
+			"CheckMovingGround" 
+			{
+				"windows"		"34"
+			}
+			"NoclipAccelerate" 
+			{
+				"windows"		"36"
+			}
+			"IsCollidingWithAnotherEntity" 
+			{
+				"windows"		"37"
+			}
+			"PlayerFallingDamage" 
+			{
+				"windows"		"38"
+			}
+			"InitializeCollisionProp" 
+			{
+				"windows"		"39"
+			}
+			"GetLadderSurfaceProps" 
+			{
+				"windows"		"41"
+			}
+			"UpdateStepSound" 
+			{
+				"windows"		"42"
+			}
+			"PlayStepSoundBase" 
+			{
+				"windows"		"43"
+			}
+			"GetStepSoundVelocities" 
+			{
+				"windows"		"44"
+			}
+			"SetStepSoundTime" 
+			{
+				"windows"		"45"
+			}
+			"GetTeamBasedStepSound" 
+			{
+				"windows"		"46"
+			}
+			"PlayStepSound" 
+			{
+				"windows"		"49"
+			}
 		}
 	}
 }
