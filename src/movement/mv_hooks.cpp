@@ -6,6 +6,10 @@
 #include "tier0/memdbgon.h"
 #include "sdk/usercmd.h"
 #include "vprof.h"
+#include "utils/calltree.h"
+#define VPROF_BUDGET(name, group) \
+	TRACK_FUNCTION_STR(name); \
+	VPROF_BUDGET_FLAGS(name, group, BUDGETFLAG_OTHER)
 #ifdef DEBUG_TPM
 #include "fmtstr.h"
 

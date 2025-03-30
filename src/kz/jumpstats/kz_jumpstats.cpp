@@ -1,7 +1,7 @@
 #include "../kz.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
-
+#include "utils/eventlisteners.h"
 #include "kz_jumpstats.h"
 #include "../mode/kz_mode.h"
 #include "../style/kz_style.h"
@@ -10,6 +10,8 @@
 #include "kz/trigger/kz_trigger.h"
 
 #include "tier0/memdbgon.h"
+
+IMPLEMENT_CLASS_EVENT_LISTENER(KZJumpstatsService, KZJumpstatsServiceEventListener);
 
 // clang-format off
 
@@ -551,7 +553,7 @@ Strafe *Jump::GetCurrentStrafe()
 	return &this->strafes.Tail();
 }
 
-f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist, i32 floorLevel)
+f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist, i32 floorLevel) const
 {
 	f32 dist = 32.0f;
 	if (this->jumpType == JumpType_LadderJump || disableAddDist)

@@ -167,6 +167,7 @@ u64 KZUtils::GetCurrentMapWorkshopID()
 
 CUtlString KZUtils::GetCurrentMapVPK()
 {
+	META_CONPRINTF("GetCurrentMapVPK\n");
 	CUtlString map = this->GetCurrentMapName();
 	if (map.IsEmpty())
 	{
@@ -176,14 +177,18 @@ CUtlString KZUtils::GetCurrentMapVPK()
 	char mapName[1024];
 
 	g_SMAPI->PathFormat(mapName, sizeof(mapName), "maps/%s.vpk", map.Get());
-
+	META_CONPRINTF("GetCurrentMapVPK: searching for path to map called %s\n", mapName);
 	g_pFullFileSystem->FindFileAbsoluteList(paths, mapName, "GAME");
 	if (paths.Count() > 0)
 	{
+		META_CONPRINTF("GetCurrentMapVPK: Found path %s\n", paths[0].Get());
 		CUtlString realPath = paths[0];
 		if (realPath.MatchesPattern("vpk:*"))
 		{
 			realPath = realPath.Slice((sizeof("vpk:") - 1));
+			CUtlString pathTest = realPath.StripFilename().StripExtension() + ".vpk";
+			META_CONPRINTF("GetCurrentMapVPK: Path %s contains 'vpk:', fixing it to point the map towards an externally valid map path: %s\n",
+						   paths[0].Get(), pathTest.Get());
 			return realPath.StripFilename().StripExtension() + ".vpk";
 		}
 		return realPath;

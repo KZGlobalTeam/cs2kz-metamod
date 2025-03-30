@@ -1,18 +1,9 @@
 #include "kz_option.h"
 #include "kz/db/kz_db.h"
+#include "utils/eventlisteners.h"
 static_global KeyValues *pServerCfgKeyValues;
 
-CUtlVector<KZOptionServiceEventListener *> KZOptionService::eventListeners;
-
-bool KZOptionService::RegisterEventListener(KZOptionServiceEventListener *eventListener)
-{
-	if (eventListeners.Find(eventListener) >= 0)
-	{
-		return false;
-	}
-	eventListeners.AddToTail(eventListener);
-	return true;
-}
+IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 
 bool KZOptionService::UnregisterEventListener(KZOptionServiceEventListener *eventListener)
 {
