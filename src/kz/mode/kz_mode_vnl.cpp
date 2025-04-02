@@ -37,7 +37,7 @@ DistanceTier KZVanillaModeService::GetDistanceTier(JumpType jumpType, f32 distan
 	return tier;
 }
 
-const char **KZVanillaModeService::GetModeConVarValues()
+const CVValue_t *KZVanillaModeService::GetModeConVarValues()
 {
 	return modeCvarValues;
 }
@@ -182,7 +182,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 
 		// Did we run out of planes to clip against?
 		// 2024-11-07 update also adds a low velocity check... This is only correct as long as you don't collide with other players.
-		f32 standableZ = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_STANDABLE_NORMAL]->values))->m_flValue;
+		f32 standableZ = KZ::mode::modeCvarRefs[MODECVAR_SV_STANDABLE_NORMAL]->GetFloat();
 		if (numplanes >= MAX_CLIP_PLANES || (pm.m_vHitNormal.z >= standableZ && velocity.Length2D() < 1.0f))
 		{
 			// this shouldn't really happen

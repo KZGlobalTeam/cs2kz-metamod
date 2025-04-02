@@ -76,7 +76,7 @@ Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 
 Player *PlayerManager::SteamIdToPlayer(u64 steamID, bool validated)
 {
-	for (size_t idx = 0; idx < Q_ARRAYSIZE(this->players); idx++)
+	for (size_t idx = 0; idx < KZ_ARRAYSIZE(this->players); idx++)
 	{
 		if (this->players[idx]->GetSteamId64(validated) == steamID)
 		{

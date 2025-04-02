@@ -76,7 +76,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, bool hidden
 
 	i32 conPrefixLen = strlen(SCMD_CONSOLE_PREFIX);
 	bool hasConPrefix = false;
-	if (nameLength >= conPrefixLen && strnicmp(name, SCMD_CONSOLE_PREFIX, conPrefixLen) == 0)
+	if (nameLength >= conPrefixLen && V_strnicmp(name, SCMD_CONSOLE_PREFIX, conPrefixLen) == 0)
 	{
 		if (nameLength == conPrefixLen)
 		{
@@ -177,7 +177,7 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	return result;
 }
 
-META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
 	if (!g_coreCmdsRegistered)
 	{
@@ -193,11 +193,11 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 
 	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
 
-	if (!cmd.IsValid() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
+	if (!cmd.IsValidRef() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
 	{
 		return MRES_IGNORED;
 	}
-	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
+	const char *commandName = cmd.GetName();
 
 	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{

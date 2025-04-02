@@ -189,7 +189,7 @@ public:
 	virtual void PrintAlert(bool addPrefix, bool includeSpectators, const char *format, ...);
 	virtual void PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
 
-	CUtlString ComputeCvarValueFromModeStyles(const char *name);
+	const CVValue_t *GetCvarValueFromModeStyles(const char *name);
 };
 
 class KZBaseService
@@ -249,10 +249,11 @@ namespace KZ
 		void OnServerActivate();
 		void RegisterCommands();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
-		void ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
+		void ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
 		META_RES CheckBlockedRadioCommands(const char *cmd);
 		void OnRoundStart();
 		void InitTimeLimit();
 		void EnforceTimeLimit();
+		void UnrestrictTimeLimit();
 	} // namespace misc
 }; // namespace KZ

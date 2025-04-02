@@ -1,5 +1,4 @@
 #pragma once
-#include <platform.h>
 
 class CBaseEntity;
 class CBaseModelEntity;

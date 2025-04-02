@@ -71,11 +71,11 @@ static_global CUtlSortVector<KZCourseDescriptor *, CourseLessFunc> g_sortedCours
 static_function void Mapi_Error(const char *format, ...)
 {
 	i32 errorIndex = g_mappingApi.errorCount;
-	if (errorIndex >= Q_ARRAYSIZE(g_mappingApi.errors))
+	if (errorIndex >= KZ_ARRAYSIZE(g_mappingApi.errors))
 	{
 		return;
 	}
-	else if (errorIndex == Q_ARRAYSIZE(g_mappingApi.errors) - 1)
+	else if (errorIndex == KZ_ARRAYSIZE(g_mappingApi.errors) - 1)
 	{
 		snprintf(g_mappingApi.errors[errorIndex], sizeof(g_mappingApi.errors[errorIndex]), "Too many errors to list!");
 		return;

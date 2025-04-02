@@ -12,16 +12,24 @@ namespace utils
 	bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen);
 	void Cleanup();
 
-	// ConVars
+	// ConVars/ConCommands
 	void UnlockConVars();
 	void UnlockConCommands();
-	bool SetConvarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate);
+
+	bool SetConVarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate, bool triggerCallback = false);
+	bool SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const char *value, bool replicate, bool triggerCallback = false);
+	bool SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const CVValue_t *value, bool replicate, bool triggerCallback = false);
 
 	void SendConVarValue(CPlayerSlot slot, const char *cvar, const char *value);
-	void SendConVarValue(CPlayerSlot slot, ConVar *cvar, const char *value);
+	// These two functions require a valid server convar reference, unlike the first one when you can send arbitrary convars,
+	// which can be useful for client-only convars with replicate flag.
+	void SendConVarValue(CPlayerSlot slot, const ConVarRefAbstract conVarRef, const char *value);
+	void SendConVarValue(CPlayerSlot slot, const ConVarRefAbstract conVarRef, const CVValue_t *value);
 
 	void SendMultipleConVarValues(CPlayerSlot slot, const char **cvars, const char **values, u32 size);
-	void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
+	// These two functions require all valid convar references as well.
+	void SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVarRefs, const char **values, u32 size);
+	void SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVarRefs, const CVValue_t *values, u32 size);
 
 	CBaseEntity *FindEntityByClassname(CEntityInstance *start, const char *name);
 

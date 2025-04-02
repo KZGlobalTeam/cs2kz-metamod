@@ -102,8 +102,8 @@ public:
 	virtual CPlayerSlot GetEntityPlayerSlot(CBaseEntity *entity);
 
 	// Convar stuff.
-	virtual void SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value);
-	virtual void SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size);
+	virtual void SendConVarValue(CPlayerSlot slot, ConVarRefAbstract conVar, const char *value);
+	virtual void SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVars, const char **values, u32 size);
 
 	// Normalize the angle between -180 and 180.
 	virtual f32 NormalizeDeg(f32 a);

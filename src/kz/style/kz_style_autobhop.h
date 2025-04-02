@@ -37,7 +37,7 @@ public:
 		return "ABH";
 	}
 
-	virtual const char *GetTweakedConvarValue(const char *name) override;
+	virtual const CVValue_t *GetTweakedConvarValue(const char *name) override;
 	virtual void Init() override;
 	virtual void Cleanup() override;
 	virtual void OnProcessMovement() override;

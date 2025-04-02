@@ -224,37 +224,37 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 
 void KZTriggerService::ApplySlide(bool replicate)
 {
-	CUtlString aaValue = player->ComputeCvarValueFromModeStyles("sv_airaccelerate");
-	aaValue.Format("%f", atof(aaValue.Get()) * 4.0);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", "2", replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", "2", replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue.Get(), replicate);
+	const CVValue_t *aaValue = player->GetCvarValueFromModeStyles("sv_airaccelerate");
+	const CVValue_t newAA = (aaValue->m_fl32Value * 4.0f);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_standable_normal", "2", replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_walkable_normal", "2", replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue, replicate);
 }
 
 void KZTriggerService::CancelSlide(bool replicate)
 {
-	CUtlString standableValue = player->ComputeCvarValueFromModeStyles("sv_standable_normal");
-	CUtlString walkableValue = player->ComputeCvarValueFromModeStyles("sv_walkable_normal");
-	CUtlString aaValue = player->ComputeCvarValueFromModeStyles("sv_airaccelerate");
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue.Get(), replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_standable_normal", standableValue.Get(), replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableValue.Get(), replicate);
+	const CVValue_t *standableValue = player->GetCvarValueFromModeStyles("sv_standable_normal");
+	const CVValue_t *walkableValue = player->GetCvarValueFromModeStyles("sv_walkable_normal");
+	const CVValue_t *aaValue = player->GetCvarValueFromModeStyles("sv_airaccelerate");
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue, replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_standable_normal", standableValue, replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_walkable_normal", walkableValue, replicate);
 }
 
 void KZTriggerService::ApplyAntiBhop(bool replicate)
 {
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", "0.0", replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", "false", replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_impulse", "0.0", replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", "false", replicate);
 	player->GetMoveServices()->m_bOldJumpPressed() = true;
 }
 
 void KZTriggerService::CancelAntiBhop(bool replicate)
 {
-	CUtlString impulseModeValue = player->ComputeCvarValueFromModeStyles("sv_jump_impulse");
-	CUtlString spamModeValue = player->ComputeCvarValueFromModeStyles("sv_jump_spam_penalty_time");
-	CUtlString autoBhopValue = player->ComputeCvarValueFromModeStyles("sv_autobunnyhopping");
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_impulse", impulseModeValue.Get(), replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue.Get(), replicate);
-	utils::SetConvarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue.Get(), replicate);
+	const CVValue_t *impulseModeValue = player->GetCvarValueFromModeStyles("sv_jump_impulse");
+	const CVValue_t *spamModeValue = player->GetCvarValueFromModeStyles("sv_jump_spam_penalty_time");
+	const CVValue_t *autoBhopValue = player->GetCvarValueFromModeStyles("sv_autobunnyhopping");
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_impulse", impulseModeValue, replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue, replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue, replicate);
 }

@@ -17,6 +17,8 @@ MappingInterface *g_pMappingApi = NULL;
 ModeServiceFactory g_ModeFactory = [](KZPlayer *player) -> KZModeService * { return new KZClassicModeService(player); };
 PLUGIN_EXPOSE(KZClassicModePlugin, g_KZClassicModePlugin);
 
+CConVarRef<f32> sv_standable_normal("sv_standable_normal");
+
 bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
 	PLUGIN_SAVEVARS();
@@ -59,6 +61,7 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 		return false;
 	}
 
+	ConVar_Register();
 	return true;
 }
 
@@ -207,7 +210,7 @@ META_RES KZClassicModeService::GetPlayerMaxSpeed(f32 &maxSpeed)
 	return MRES_SUPERCEDE;
 }
 
-const char **KZClassicModeService::GetModeConVarValues()
+const CVValue_t *KZClassicModeService::GetModeConVarValues()
 {
 	return modeCvarValues;
 }
@@ -606,6 +609,10 @@ void KZClassicModeService::SlopeFix()
 
 	f32 standableZ = 0.7f; // Equal to the mode's cvar.
 
+	if (sv_standable_normal.IsValidRef() && sv_standable_normal.IsConVarDataAvailable())
+	{
+		standableZ = sv_standable_normal.Get();
+	}
 	bbox_t bounds;
 	this->player->GetBBoxBounds(&bounds);
 	trace_t trace;
@@ -618,7 +625,7 @@ void KZClassicModeService::SlopeFix()
 	{
 		return;
 	}
-	// TODO: Unhardcode sv_standable_normal
+
 	if (standableZ <= trace.m_vHitNormal.z && trace.m_vHitNormal.z < 1.0f)
 	{
 		// Copy the ClipVelocity function from sdk2013

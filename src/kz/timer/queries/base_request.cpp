@@ -30,7 +30,7 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 {
 	this->features = features;
 	KeyValues3 params;
-	if (!utils::ParseArgsToKV3(args->ArgS(), params, const_cast<const char **>(paramKeys), Q_ARRAYSIZE(paramKeys)))
+	if (!utils::ParseArgsToKV3(args->ArgS(), params, const_cast<const char **>(paramKeys), KZ_ARRAYSIZE(paramKeys)))
 	{
 		this->Invalidate("");
 		this->PrintInstructions();

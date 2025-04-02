@@ -86,7 +86,7 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 		return 0.0;
 	}
 
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	f64 tmp = wishspeedcapped - accelspeed;
 	if (tmp <= 0.0)
 	{
@@ -105,7 +105,7 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 f32 AACall::CalcMinYaw(bool useRadians)
 {
 	// If your velocity is lower than sv_air_max_wishspeed, any direction will get you gain.
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	if (this->velocityPre.Length2D() <= wishspeedcapped)
 	{
 		return 0.0;
@@ -118,7 +118,7 @@ f32 AACall::CalcMaxYaw(bool useRadians)
 	f32 gamma1, numer, denom;
 	gamma1 = AACall::CalcAccelSpeed(true);
 	f32 speed = this->velocityPre.Length2D();
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	if (gamma1 <= 2 * wishspeedcapped)
 	{
 		numer = -gamma1;
@@ -151,7 +151,7 @@ f32 AACall::CalcIdealGain()
 	// sqrt(v^2+a^2+2*v*a*cos(yaw)
 	// clang-format off
 	
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	
 	f32 idealSpeed = sqrt(this->velocityPre.Length2DSqr()
 		+ MIN(this->CalcAccelSpeed(true), wishspeedcapped)
@@ -821,7 +821,7 @@ void KZJumpstatsService::OnAirMovePost()
 		VectorScale(wishvel, this->player->currentMoveData->m_flMaxSpeed / wishspeed, wishvel);
 		wishspeed = this->player->currentMoveData->m_flMaxSpeed;
 	}
-	auto accel = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIRACCELERATE]->values))->m_flValue;
+	f32 accel = KZ::mode::modeCvarRefs[MODECVAR_SV_AIRACCELERATE]->GetFloat();
 
 	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }

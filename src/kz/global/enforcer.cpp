@@ -21,62 +21,42 @@ enum EnforcedServerCvars
 };
 
 // clang-format off
-static_global const char* enforcedServerCVars[] = 
+static_global ConVarRefAbstract *enforcedServerCVars[] = 
 {
-	"sv_cheats", 
-	"mp_drop_knife_enable",
-	"sv_turbophysics",
-    "cq_enable",
-    "cq_buffer_bloat_msecs_max",
-    "cq_dilation_percentage",
-    "sv_cq_min_queue",
-	"sv_condense_late_buttons",
-	"sv_late_commands_allowed",
-	"cq_max_starved_substitute_commands",
-	"sv_cq_trim_bloat_remainder",
-	"sv_cq_trim_bloat_space",
-	"sv_cq_trim_catchup_remainder",
-	"sv_runcmds"
+	new CConVarRef<bool>("sv_cheats"), 
+	new CConVarRef<bool>("mp_drop_knife_enable"),
+	new CConVarRef<bool>("sv_turbophysics"),
+	new CConVarRef<bool>("cq_enable"),
+	new CConVarRef<float32>("cq_buffer_bloat_msecs_max"),
+	new CConVarRef<float32>("cq_dilation_percentage"),
+	new CConVarRef<int32>("sv_cq_min_queue"),
+	new CConVarRef<bool>("sv_condense_late_buttons"),
+	new CConVarRef<int32>("sv_late_commands_allowed"),
+	new CConVarRef<int32>("cq_max_starved_substitute_commands"),
+	new CConVarRef<int32>("sv_cq_trim_bloat_remainder"),
+	new CConVarRef<int32>("sv_cq_trim_bloat_space"),
+	new CConVarRef<int32>("sv_cq_trim_catchup_remainder"),
+	new CConVarRef<bool>("sv_runcmds")
 };
-static_assert(Q_ARRAYSIZE(enforcedServerCVars) == ENFORCEDCVAR_COUNT, "Array enforcedServerCVars length is not the same as ENFORCEDCVAR_COUNT!");
+static_assert(KZ_ARRAYSIZE(enforcedServerCVars) == ENFORCEDCVAR_COUNT, "Array enforcedServerCVars length is not the same as ENFORCEDCVAR_COUNT!");
 
 // clang-format on
-
-i64 originalFlags[ENFORCEDCVAR_COUNT];
 
 void KZGlobalService::EnforceConVars()
 {
 	for (u32 i = 0; i < ENFORCEDCVAR_COUNT; i++)
 	{
-		ConVarHandle cvarHandle = g_pCVar->FindConVar(enforcedServerCVars[i]);
-		if (!cvarHandle.IsValid())
-		{
-			META_CONPRINTF("Failed to find %s!\n", enforcedServerCVars[i]);
-			continue;
-		}
-
-		ConVar *cvar = g_pCVar->GetConVar(cvarHandle);
-		assert(cvar);
-		originalFlags[i] = cvar->flags;
-		cvar->flags |= FCVAR_CHEAT;
+		ConVarData *data = enforcedServerCVars[i]->GetConVarData();
+		data->RemoveFlags(FCVAR_COMMANDLINE_ENFORCED);
+		data->AddFlags(FCVAR_CHEAT);
 	}
-	// Revert all cvars to default if it hasn't been the case yet
-	interfaces::pEngine->ServerCommand("sv_cheats 0");
+	g_pCVar->ResetConVarsToDefaultValuesByFlag(FCVAR_CHEAT);
 }
 
 void KZGlobalService::RestoreConVars()
 {
 	for (u32 i = 0; i < ENFORCEDCVAR_COUNT; i++)
 	{
-		ConVarHandle cvarHandle = g_pCVar->FindConVar(enforcedServerCVars[i]);
-		if (!cvarHandle.IsValid())
-		{
-			META_CONPRINTF("Failed to find %s!\n", enforcedServerCVars[i]);
-			continue;
-		}
-
-		ConVar *cvar = g_pCVar->GetConVar(cvarHandle);
-		assert(cvar);
-		cvar->flags = originalFlags[i];
+		enforcedServerCVars[i]->GetConVarData()->RemoveFlags(FCVAR_CHEAT);
 	}
 }

@@ -13,7 +13,7 @@ KZStyleManager *g_pStyleManager = NULL;
 StyleServiceFactory g_StyleFactory = [](KZPlayer *player) -> KZStyleService * { return new KZAutoBhopStyleService(player); };
 PLUGIN_EXPOSE(KZAutoBhopStylePlugin, g_KZAutoBhopStylePlugin);
 
-ConVar *sv_autobunnyhopping;
+CConVarRef<bool> sv_autobunnyhopping("sv_autobunnyhopping");
 
 bool KZAutoBhopStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
@@ -50,12 +50,7 @@ bool KZAutoBhopStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t
 		V_snprintf(error, maxlen, "Failed to register style");
 		return false;
 	}
-
-	sv_autobunnyhopping = g_pCVar->GetConVar(g_pCVar->FindConVar("sv_autobunnyhopping"));
-	if (!sv_autobunnyhopping)
-	{
-		return false;
-	}
+	ConVar_Register();
 
 	return true;
 }
@@ -131,11 +126,12 @@ void KZAutoBhopStyleService::Init()
 	g_pKZUtils->SendConVarValue(this->player->GetPlayerSlot(), sv_autobunnyhopping, "true");
 }
 
-const char *KZAutoBhopStyleService::GetTweakedConvarValue(const char *name)
+const CVValue_t *KZAutoBhopStyleService::GetTweakedConvarValue(const char *name)
 {
+	static_persist const CVValue_t sv_autobunnyhopping_desiredValue = true;
 	if (!V_stricmp(name, "sv_autobunnyhopping"))
 	{
-		return "true";
+		return &sv_autobunnyhopping_desiredValue;
 	}
 	return nullptr;
 }
@@ -147,6 +143,5 @@ void KZAutoBhopStyleService::Cleanup()
 
 void KZAutoBhopStyleService::OnProcessMovement()
 {
-	u32 newValue = 1;
-	V_memcpy(&(sv_autobunnyhopping->values), &newValue, 16);
+	sv_autobunnyhopping.Set(true);
 }

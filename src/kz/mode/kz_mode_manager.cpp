@@ -34,21 +34,21 @@ static_global class KZOptionServiceEventListener_Modes : public KZOptionServiceE
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player) override;
 } optionEventListener;
 
-bool KZ::mode::InitModeCvars()
+bool KZ::mode::CheckModeCvars()
 {
-	bool success = true;
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
-		ConVarHandle cvarHandle = g_pCVar->FindConVar(KZ::mode::modeCvarNames[i]);
-		if (!cvarHandle.IsValid())
+		if (!modeCvarRefs[i]->IsValidRef())
 		{
-			META_CONPRINTF("Failed to find %s!\n", KZ::mode::modeCvarNames[i]);
-			success = false;
+			META_CONPRINTF("Failed to find %s reference!\n", KZ::mode::modeCvarNames[i]);
+			return false;
 		}
-		modeCvarHandles[i] = cvarHandle;
-		modeCvars[i] = g_pCVar->GetConVar(cvarHandle);
+		if (!modeCvarRefs[i]->IsConVarDataAvailable())
+		{
+			META_CONPRINTF("Failed to find %s cvarData!\n", KZ::mode::modeCvarNames[i]);
+		}
 	}
-	return success;
+	return true;
 }
 
 void KZ::mode::InitModeManager()
@@ -122,8 +122,8 @@ void KZ::mode::DisableReplicatedModeCvars()
 {
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
-		assert(modeCvars[i]);
-		modeCvars[i]->flags &= ~FCVAR_REPLICATED;
+		assert(modeCvarRefs[i]->IsValidRef() && modeCvarRefs[i]->IsConVarDataAvailable());
+		modeCvarRefs[i]->GetConVarData()->RemoveFlags(FCVAR_REPLICATED);
 	}
 }
 
@@ -131,8 +131,8 @@ void KZ::mode::EnableReplicatedModeCvars()
 {
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
-		assert(modeCvars[i]);
-		modeCvars[i]->flags |= FCVAR_REPLICATED;
+		assert(modeCvarRefs[i]->IsValidRef() && modeCvarRefs[i]->IsConVarDataAvailable());
+		modeCvarRefs[i]->GetConVarData()->AddFlags(FCVAR_REPLICATED);
 	}
 }
 
@@ -140,29 +140,10 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 {
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
-		auto value = reinterpret_cast<CVValue_t *>(&(modeCvars[i]->values));
-		if (modeCvars[i]->m_eVarType == EConVarType_Float32)
-		{
-			f32 newValue = atof(player->modeService->GetModeConVarValues()[i]);
-			value->m_flValue = newValue;
-		}
-		else
-		{
-			i32 newValue;
-			if (V_stricmp(player->modeService->GetModeConVarValues()[i], "true") == 0)
-			{
-				newValue = 1;
-			}
-			else if (V_stricmp(player->modeService->GetModeConVarValues()[i], "false") == 0)
-			{
-				newValue = 0;
-			}
-			else
-			{
-				newValue = atoi(player->modeService->GetModeConVarValues()[i]);
-			}
-			value->m_i32Value = newValue;
-		}
+		auto &value = player->modeService->GetModeConVarValues()[i];
+		auto original = modeCvarRefs[i]->GetConVarData()->Value(-1);
+		auto traits = modeCvarRefs[i]->TypeTraits();
+		traits->Copy(original, value);
 	}
 	player->enableWaterFix = player->modeService->EnableWaterFix();
 }
@@ -311,7 +292,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		player->languageService->PrintChat(true, false, "Switched Mode", player->modeService->GetModeName());
 	}
 
-	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvars, player->modeService->GetModeConVarValues(), MODECVAR_COUNT);
+	utils::SendMultipleConVarValues(player->GetPlayerSlot(), KZ::mode::modeCvarRefs, player->modeService->GetModeConVarValues(), MODECVAR_COUNT);
 
 	player->SetVelocity({0, 0, 0});
 	player->jumpstatsService->InvalidateJumpstats("Externally modified");
@@ -340,16 +321,9 @@ void KZModeManager::Cleanup()
 	// Restore cvars to normal values.
 	for (u32 i = 0; i < MODECVAR_COUNT; i++)
 	{
-		auto value = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[i]->values));
-		auto defaultValue = KZ::mode::modeCvars[i]->m_cvvDefaultValue;
-		if (KZ::mode::modeCvars[i]->m_eVarType == EConVarType_Float32)
-		{
-			value->m_flValue = defaultValue->m_flValue;
-		}
-		else
-		{
-			value->m_i64Value = defaultValue->m_i64Value;
-		}
+		CBufferStringN<32> defaultValue;
+		KZ::mode::modeCvarRefs[i]->GetDefaultAsString(defaultValue);
+		KZ::mode::modeCvarRefs[i]->SetString(defaultValue);
 	}
 }
 

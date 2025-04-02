@@ -296,33 +296,21 @@ void KZ::misc::Init()
 	KZOptionService::RegisterEventListener(&optionEventListener);
 	KZ::misc::EnforceTimeLimit();
 	mapRestartTimer = StartTimer(CheckRestart, RESTART_CHECK_INTERVAL, true, false);
+	CConVarRef<int32> sv_infinite_ammo("sv_infinite_ammo");
+	if (sv_infinite_ammo.IsValidRef() && sv_infinite_ammo.IsConVarDataAvailable())
+	{
+		sv_infinite_ammo.RemoveFlags(FCVAR_CHEAT);
+	}
+	CConVarRef<CUtlString> bot_stop("bot_stop");
+	if (bot_stop.IsValidRef() && bot_stop.IsConVarDataAvailable())
+	{
+		bot_stop.RemoveFlags(FCVAR_CHEAT);
+	}
 }
 
 void KZ::misc::OnServerActivate()
 {
-	static_persist bool cvTweaked {};
-	if (!cvTweaked)
-	{
-		cvTweaked = true;
-		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
-		if (cvarHandle.IsValid())
-		{
-			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
-		}
-		else
-		{
-			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
-		}
-		cvarHandle = g_pCVar->FindConVar("bot_stop");
-		if (cvarHandle.IsValid())
-		{
-			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
-		}
-		else
-		{
-			META_CONPRINTF("Warning: bot_stop is not found!\n");
-		}
-	}
+	KZ::misc::EnforceTimeLimit();
 	g_pKZUtils->UpdateCurrentMapMD5();
 
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
@@ -452,7 +440,7 @@ static_function void SanitizeMsg(const char *input, char *output, u32 size)
 	output[x] = '\0';
 }
 
-void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
 	if (!GameEntitySystem())
 	{
@@ -464,12 +452,13 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 
 	KZPlayer *player = NULL;
 
-	if (!cmd.IsValid() || !controller || !(player = g_pKZPlayerManager->ToPlayer(controller)))
+	if (!cmd.IsValidRef() || !controller || !(player = g_pKZPlayerManager->ToPlayer(controller)))
 	{
 		return;
 	}
-	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
-	const char *p;
+	const char *p {};
+	const char *commandName = cmd.GetName();
+
 	// Is it a chat message?
 	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{
@@ -512,7 +501,6 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
 			META_CONPRINTF("* %s: %s\n", player->GetName(), message.Get());
 		}
-		return;
 	}
 
 	return;
