@@ -64,7 +64,7 @@ Player *PlayerManager::ToPlayer(CEntityIndex entIndex)
 Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 {
 	// Untested, careful!
-	for (int i = 0; i < g_pKZUtils->GetServerGlobals()->maxClients; i++)
+	for (int i = 0; i < MAXPLAYERS; i++)
 	{
 		if (interfaces::pEngine->GetPlayerUserId(i) == userID.Get())
 		{

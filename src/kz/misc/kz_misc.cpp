@@ -259,7 +259,7 @@ static_function SCMD_CALLBACK(Command_KzPlayerCheck)
 	}
 	else
 	{
-		for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+		for (i32 i = 0; i <= MAXPLAYERS; i++)
 		{
 			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
 
@@ -341,13 +341,12 @@ void KZ::misc::RegisterCommands()
 	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
 	scmd::RegisterCmd("kz_pc", Command_KzPlayerCheck);
 	scmd::RegisterCmd("kz_playercheck", Command_KzPlayerCheck);
-	scmd::RegisterCmd("jointeam", Command_JoinTeam, true);
-	scmd::RegisterCmd("switchhands", Command_KzSwitchHands, true);
-	scmd::RegisterCmd("switchhandsleft", Command_KzSwitchHands, true);
-	scmd::RegisterCmd("switchhandsright", Command_KzSwitchHands, true);
+	scmd::RegisterCmd("jointeam", Command_JoinTeam);
+	scmd::RegisterCmd("switchhands", Command_KzSwitchHands);
+	scmd::RegisterCmd("switchhandsleft", Command_KzSwitchHands);
+	scmd::RegisterCmd("switchhandsright", Command_KzSwitchHands);
 	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 	KZGotoService::RegisterCommands();
-	KZCheckpointService::RegisterCommands();
 	KZJumpstatsService::RegisterCommands();
 	KZTimerService::RegisterCommands();
 	KZNoclipService::RegisterCommands();

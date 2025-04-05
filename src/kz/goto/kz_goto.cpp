@@ -26,7 +26,7 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		return false;
 	}
 
-	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+	for (i32 i = 0; i <= MAXPLAYERS; i++)
 	{
 		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
 		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);

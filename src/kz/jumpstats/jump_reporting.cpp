@@ -186,7 +186,7 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[tier];
 
-	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+	for (i32 i = 0; i <= MAXPLAYERS; i++)
 	{
 		CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(i)));
 		if (ent)
