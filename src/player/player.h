@@ -76,7 +76,7 @@ public:
 
 	const char *GetName()
 	{
-		return GetController() ? GetController()->GetPlayerName() : "<blank>";
+		return GetClient() ? GetClient()->GetClientName() : "<blank>";
 	}
 
 	const char *GetIpAddress()
