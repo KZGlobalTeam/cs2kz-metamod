@@ -263,12 +263,12 @@ struct CourseTopRequest : public BaseRequest
 		CUtlString rank;
 
 		// Overall table
-		CUtlString headers[Q_ARRAYSIZE(columnKeysGlobal)];
-		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysGlobal); i++)
+		CUtlString headers[KZ_ARRAYSIZE(columnKeysGlobal)];
+		for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeysGlobal); i++)
 		{
 			headers[i] = player->languageService->PrepareMessage(columnKeysGlobal[i]).c_str();
 		}
-		utils::Table<Q_ARRAYSIZE(columnKeysGlobal)> table(
+		utils::Table<KZ_ARRAYSIZE(columnKeysGlobal)> table(
 			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
 		FOR_EACH_VEC(wrData.overallData, i)
 		{
@@ -288,12 +288,12 @@ struct CourseTopRequest : public BaseRequest
 		player->PrintConsole(false, false, table.GetSeparator("="));
 
 		// Pro table
-		CUtlString headersPro[Q_ARRAYSIZE(columnKeysGlobalPro)];
-		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysGlobalPro); i++)
+		CUtlString headersPro[KZ_ARRAYSIZE(columnKeysGlobalPro)];
+		for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeysGlobalPro); i++)
 		{
 			headersPro[i] = player->languageService->PrepareMessage(columnKeysGlobalPro[i]).c_str();
 		}
-		utils::Table<Q_ARRAYSIZE(columnKeysGlobalPro)> tablePro(
+		utils::Table<KZ_ARRAYSIZE(columnKeysGlobalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(),
 			headersPro);
 		FOR_EACH_VEC(wrData.proData, i)
@@ -318,12 +318,12 @@ struct CourseTopRequest : public BaseRequest
 		CUtlString rank;
 
 		// Overall table
-		CUtlString headers[Q_ARRAYSIZE(columnKeysLocal)];
-		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysLocal); i++)
+		CUtlString headers[KZ_ARRAYSIZE(columnKeysLocal)];
+		for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeysLocal); i++)
 		{
 			headers[i] = player->languageService->PrepareMessage(columnKeysLocal[i]).c_str();
 		}
-		utils::Table<Q_ARRAYSIZE(columnKeysLocal)> table(
+		utils::Table<KZ_ARRAYSIZE(columnKeysLocal)> table(
 			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
 		FOR_EACH_VEC(srData.overallData, i)
 		{
@@ -341,12 +341,12 @@ struct CourseTopRequest : public BaseRequest
 		}
 		player->PrintConsole(false, false, table.GetSeparator("="));
 		// Pro table
-		CUtlString headersPro[Q_ARRAYSIZE(columnKeysLocalPro)];
-		for (u32 i = 0; i < Q_ARRAYSIZE(columnKeysLocalPro); i++)
+		CUtlString headersPro[KZ_ARRAYSIZE(columnKeysLocalPro)];
+		for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeysLocalPro); i++)
 		{
 			headersPro[i] = player->languageService->PrepareMessage(columnKeysLocalPro[i]).c_str();
 		}
-		utils::Table<Q_ARRAYSIZE(columnKeysLocalPro)> tablePro(
+		utils::Table<KZ_ARRAYSIZE(columnKeysLocalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headersPro);
 		FOR_EACH_VEC(srData.proData, i)
 		{
@@ -365,36 +365,32 @@ struct CourseTopRequest : public BaseRequest
 	}
 };
 
-SCMD_CALLBACK(CommandKZCourseTop)
+SCMD(kz_ctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, true, args);
 	return MRES_SUPERCEDE;
 }
 
-SCMD_CALLBACK(CommandKZGlobalCourseTop)
+SCMD_LINK(kz_coursetop, kz_ctop);
+SCMD_LINK(kz_maptop, kz_ctop);
+
+SCMD(kz_gctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, false, true, args);
 	return MRES_SUPERCEDE;
 }
 
-SCMD_CALLBACK(CommandKZServerCourseTop)
+SCMD_LINK(kz_gcoursetop, kz_gctop);
+SCMD_LINK(kz_gmaptop, kz_gctop);
+
+SCMD(kz_sctop, SCFL_TIMER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, false, args);
 	return MRES_SUPERCEDE;
 }
 
-void KZTimerService::RegisterCourseTopCommands()
-{
-	scmd::RegisterCmd("kz_ctop", CommandKZCourseTop);
-	scmd::RegisterCmd("kz_coursetop", CommandKZCourseTop);
-	scmd::RegisterCmd("kz_maptop", CommandKZCourseTop);
-	scmd::RegisterCmd("kz_gctop", CommandKZGlobalCourseTop);
-	scmd::RegisterCmd("kz_gcoursetop", CommandKZGlobalCourseTop);
-	scmd::RegisterCmd("kz_gmaptop", CommandKZGlobalCourseTop);
-	scmd::RegisterCmd("kz_sctop", CommandKZServerCourseTop);
-	scmd::RegisterCmd("kz_scoursetop", CommandKZServerCourseTop);
-	scmd::RegisterCmd("kz_smaptop", CommandKZServerCourseTop);
-}
+SCMD_LINK(kz_scoursetop, kz_sctop);
+SCMD_LINK(kz_smaptop, kz_sctop);

@@ -112,8 +112,8 @@ SH_DECL_HOOK2(IGameEventManager2, FireEvent, SH_NOATTRIB, false, bool, IGameEven
 static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast);
 
 // ICvar
-SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext &, const CCommand &);
-static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args);
+SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandRef, const CCommandContext &, const CCommand &);
+static_function void Hook_DispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
 
 // IGameEventSystem
 SH_DECL_HOOK8_void(IGameEventSystem, PostEventAbstract, SH_NOATTRIB, 0, CSplitScreenSlot, bool, int, const uint64 *, INetworkMessageInternal *,
@@ -462,7 +462,6 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	RecordAnnounce::Check();
 	BaseRequest::CheckRequests();
-	KZ::misc::EnforceTimeLimit();
 	KZTelemetryService::ActiveCheck();
 	RETURN_META(MRES_IGNORED);
 }
@@ -618,7 +617,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 }
 
 // ICvar
-static_function void Hook_DispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+static_function void Hook_DispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	if (META_RES result = KZ::misc::CheckBlockedRadioCommands(args[0]))

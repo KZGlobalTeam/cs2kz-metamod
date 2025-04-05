@@ -60,7 +60,7 @@ public:
 
 	// Jumpstats
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
-	virtual const char **GetModeConVarValues() = 0;
+	virtual const CVValue_t *GetModeConVarValues() = 0;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
 	{
@@ -231,7 +231,7 @@ extern KZModeManager *g_pKZModeManager;
 
 namespace KZ::mode
 {
-	bool InitModeCvars();
+	bool CheckModeCvars();
 	void InitModeService(KZPlayer *player);
 	void InitModeManager();
 	void LoadModePlugins();
@@ -269,12 +269,43 @@ namespace KZ::mode
 		"sv_water_slow_amount"
 	};
 
+
+	static_assert(KZ_ARRAYSIZE(modeCvarNames) == MODECVAR_COUNT, "Array modeCvarNames length is not the same as MODECVAR_COUNT!");
+	// Quite a horrible thing to do but there is no other way around it...
+	inline ConVarRefAbstract *modeCvarRefs[] =
+	{
+		new CConVarRef<bool>("slope_drop_enable"),
+		new CConVarRef<float>("sv_accelerate"),
+		new CConVarRef<bool>("sv_accelerate_use_weapon_speed"),
+		new CConVarRef<float>("sv_airaccelerate"),
+		new CConVarRef<float>("sv_air_max_wishspeed"),
+		new CConVarRef<bool>("sv_autobunnyhopping"),
+		new CConVarRef<bool>("sv_enablebunnyhopping"),
+		new CConVarRef<float>("sv_friction"),
+		new CConVarRef<float>("sv_gravity"),
+		new CConVarRef<float>("sv_jump_impulse"),
+		new CConVarRef<bool>("sv_jump_precision_enable"),
+		new CConVarRef<float>("sv_jump_spam_penalty_time"),
+		new CConVarRef<float>("sv_ladder_angle"),
+		new CConVarRef<float>("sv_ladder_dampen"),
+		new CConVarRef<float>("sv_ladder_scale_speed"),
+		new CConVarRef<float>("sv_maxspeed"),
+		new CConVarRef<float>("sv_maxvelocity"),
+		new CConVarRef<float>("sv_staminajumpcost"),
+		new CConVarRef<float>("sv_staminalandcost"),
+		new CConVarRef<float>("sv_staminamax"),
+		new CConVarRef<float>("sv_staminarecoveryrate"),
+		new CConVarRef<float>("sv_standable_normal"),
+		new CConVarRef<float>("sv_step_move_vel_min"),
+		new CConVarRef<float>("sv_timebetweenducks"),
+		new CConVarRef<float>("sv_walkable_normal"),
+		new CConVarRef<float>("sv_wateraccelerate"),
+		new CConVarRef<float>("sv_waterfriction"),
+		new CConVarRef<float>("sv_water_slow_amount")
+	};
+
 	// clang-format on
-
-	static_assert(Q_ARRAYSIZE(modeCvarNames) == MODECVAR_COUNT, "Array modeCvarNames length is not the same as MODECVAR_COUNT!");
-
-	inline ConVarHandle modeCvarHandles[MODECVAR_COUNT];
-	inline ConVar *modeCvars[MODECVAR_COUNT];
+	static_assert(KZ_ARRAYSIZE(modeCvarNames) == MODECVAR_COUNT, "Array modeCvarRefs length is not the same as MODECVAR_COUNT!");
 
 	void ApplyModeSettings(KZPlayer *player);
 	void DisableReplicatedModeCvars();
@@ -284,6 +315,4 @@ namespace KZ::mode
 	KZModeManager::ModePluginInfo GetModeInfo(KZ::API::Mode mode);
 	KZModeManager::ModePluginInfo GetModeInfo(CUtlString modeName);
 	KZModeManager::ModePluginInfo GetModeInfoFromDatabaseID(i32 id);
-
-	void RegisterCommands();
 }; // namespace KZ::mode

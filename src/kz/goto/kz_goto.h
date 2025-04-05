@@ -10,7 +10,6 @@ private:
 public:
 	virtual void Reset() override;
 	static void Init();
-	static void RegisterCommands();
 
 	bool GotoPlayer(const char *playerNamePart);
 };

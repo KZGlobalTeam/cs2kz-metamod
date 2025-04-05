@@ -213,18 +213,10 @@ f32 MovementPlayer::GetGroundPosition()
 
 	f32 standableZ = 0.7;
 
-	static_persist ConVar *sv_standable_normal;
-	if (!sv_standable_normal)
+	CConVarRef<float> sv_standable_normal("sv_standable_normal");
+	if (sv_standable_normal.IsValidRef() && sv_standable_normal.IsConVarDataAvailable())
 	{
-		ConVarHandle cvarHandle = g_pCVar->FindConVar("sv_standable_normal");
-		if (cvarHandle.IsValid())
-		{
-			sv_standable_normal = g_pCVar->GetConVar(cvarHandle);
-		}
-	}
-	if (sv_standable_normal)
-	{
-		standableZ = reinterpret_cast<CVValue_t *>(&sv_standable_normal->values)->m_flValue;
+		standableZ = sv_standable_normal.Get();
 	}
 
 	bbox_t bounds;
@@ -299,18 +291,10 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 		// The true landing origin from TryPlayerMove, use this whenever you can
 		f32 normal = 0.7;
 
-		static_persist ConVar *sv_walkable_normal;
-		if (!sv_walkable_normal)
+		CConVarRef<float> sv_walkable_normal("sv_walkable_normal");
+		if (sv_walkable_normal.IsValidRef() && sv_walkable_normal.IsConVarDataAvailable())
 		{
-			ConVarHandle cvarHandle = g_pCVar->FindConVar("sv_walkable_normal");
-			if (cvarHandle.IsValid())
-			{
-				sv_walkable_normal = g_pCVar->GetConVar(cvarHandle);
-			}
-		}
-		if (sv_walkable_normal)
-		{
-			normal = reinterpret_cast<CVValue_t *>(&sv_walkable_normal->values)->m_flValue;
+			normal = sv_walkable_normal.Get();
 		}
 
 		FOR_EACH_VEC(mv->m_TouchList, i)
@@ -336,20 +320,14 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	{
 		// Predicts the landing origin if reverse bug happens
 		// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
-		static_persist ConVar *sv_gravity;
-		if (!sv_gravity)
-		{
-			ConVarHandle cvarHandle = g_pCVar->FindConVar("sv_gravity");
-			if (cvarHandle.IsValid())
-			{
-				sv_gravity = g_pCVar->GetConVar(cvarHandle);
-			}
-		}
+
 		Vector gravity = {0, 0, -800};
-		if (sv_gravity)
+		CConVarRef<float> sv_gravity("sv_gravity");
+		if (sv_gravity.IsValidRef() && sv_gravity.IsConVarDataAvailable())
 		{
-			gravity.z = -reinterpret_cast<CVValue_t *>(&sv_gravity->values)->m_flValue;
+			gravity.z = sv_gravity.Get();
 		}
+
 		// basic x + vt + (0.5a)t^2 = 0;
 		const f64 delta = landingVelocity.z * landingVelocity.z - 2 * gravity.z * diffZ;
 		const f64 time = (-landingVelocity.z - sqrt(delta)) / (gravity.z);

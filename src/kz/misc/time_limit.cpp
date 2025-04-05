@@ -3,33 +3,96 @@
 #include "kz/kz.h"
 #include "kz/option/kz_option.h"
 // Make sure that the server can't run for too long.
-static_global ConVar *mp_roundtime {};
-static_global ConVar *mp_timelimit {};
+
+// Original value
+static_global CVValue_t *mp_timelimit_cvvalue;
+static_global CVValue_t *mp_roundtime_cvvalue;
+static_global CVValue_t *mp_roundtime_defuse_cvvalue;
+static_global CVValue_t *mp_roundtime_hostage_cvvalue;
+
+// Original max value. mp_timelimit has no max value.
+static_global CVValue_t *mp_roundtime_cvvalue_max;
+static_global CVValue_t *mp_roundtime_defuse_cvvalue_max;
+static_global CVValue_t *mp_roundtime_hostage_cvvalue_max;
+
+static_global CVValue_t hardcodedTimeLimit(1440.0f);
+static_global bool cvarLoaded = false;
+CConVarRef<float> mp_timelimit("mp_timelimit");
+CConVarRef<float> mp_roundtime("mp_roundtime");
+CConVarRef<float> mp_roundtime_defuse("mp_roundtime_defuse");
+CConVarRef<float> mp_roundtime_hostage("mp_roundtime_hostage");
+ConVarRefAbstract *convars[] = {&mp_timelimit, &mp_roundtime, &mp_roundtime_defuse, &mp_roundtime_hostage};
+
+static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue)
+{
+	assert(mp_timelimit.IsValidRef() && mp_timelimit.IsConVarDataAvailable());
+	assert(mp_roundtime.IsValidRef() && mp_roundtime.IsConVarDataAvailable());
+	assert(mp_roundtime_defuse.IsValidRef() && mp_roundtime_defuse.IsConVarDataAvailable());
+	assert(mp_roundtime_hostage.IsValidRef() && mp_roundtime_hostage.IsConVarDataAvailable());
+
+	u16 refIndex = ref->GetAccessIndex();
+	bool replicate = false;
+
+	for (ConVarRefAbstract *cvar : convars)
+	{
+		if (cvar->GetAccessIndex() == refIndex)
+		{
+			replicate = true;
+			break;
+		}
+	}
+	if (!replicate)
+	{
+		return;
+	}
+	for (ConVarRefAbstract *cvar : convars)
+	{
+		if (!cvar->IsFlagSet(FCVAR_PERFORMING_CALLBACKS))
+		{
+			cvar->SetString(pNewValue);
+		}
+	}
+}
 
 void KZ::misc::EnforceTimeLimit()
 {
-	if (!mp_roundtime)
+	if (cvarLoaded || !mp_timelimit.IsValidRef() || !mp_roundtime.IsValidRef() || !mp_roundtime_defuse.IsValidRef()
+		|| !mp_roundtime_hostage.IsValidRef())
 	{
-		mp_roundtime = g_pCVar->GetConVar(g_pCVar->FindConVar("mp_roundtime"));
+		return;
 	}
-	if (!mp_timelimit)
+	cvarLoaded = true;
+	mp_timelimit_cvvalue = mp_timelimit.GetConVarData()->Value(-1);
+	mp_roundtime_cvvalue = mp_roundtime.GetConVarData()->Value(-1);
+	mp_roundtime_defuse_cvvalue = mp_roundtime_defuse.GetConVarData()->Value(-1);
+	mp_roundtime_hostage_cvvalue = mp_roundtime_hostage.GetConVarData()->Value(-1);
+
+	mp_roundtime_cvvalue_max = mp_roundtime.GetConVarData()->MaxValue();
+	mp_roundtime_defuse_cvvalue_max = mp_roundtime_defuse.GetConVarData()->MaxValue();
+	mp_roundtime_hostage_cvvalue_max = mp_roundtime_hostage.GetConVarData()->MaxValue();
+
+	mp_timelimit.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
+	mp_roundtime.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
+	mp_roundtime_defuse.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
+	mp_roundtime_hostage.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
+	g_pCVar->InstallGlobalChangeCallback(OnCvarChanged);
+}
+
+void KZ::misc::UnrestrictTimeLimit()
+{
+	if (!cvarLoaded)
 	{
-		mp_timelimit = g_pCVar->GetConVar(g_pCVar->FindConVar("mp_timelimit"));
+		return;
 	}
-	if (mp_roundtime)
-	{
-		mp_roundtime->m_cvvMaxValue->m_flValue = 1440.0f;
-	}
-	if (mp_timelimit)
-	{
-		*(f32 *)(&mp_timelimit->values) = *(f32 *)(&mp_roundtime->values);
-	}
+
+	mp_timelimit.GetConVarData()->RemoveMaxValue();
+	mp_roundtime.GetConVarData()->SetMaxValue(mp_roundtime_cvvalue_max);
+	mp_roundtime_defuse.GetConVarData()->SetMaxValue(mp_roundtime_defuse_cvvalue_max);
+	mp_roundtime_hostage.GetConVarData()->SetMaxValue(mp_roundtime_hostage_cvvalue_max);
+	g_pCVar->RemoveGlobalChangeCallback(OnCvarChanged);
 }
 
 void KZ::misc::InitTimeLimit()
 {
-	f32 timeLimit = KZOptionService::GetOptionFloat("defaultTimeLimit", 60.0f);
-	char command[32];
-	V_snprintf(command, sizeof(command), "mp_roundtime %f", timeLimit);
-	interfaces::pEngine->ServerCommand(command);
+	mp_timelimit.Set(KZOptionService::GetOptionFloat("defaultTimeLimit", 60.0f));
 }

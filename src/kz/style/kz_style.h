@@ -25,7 +25,7 @@ public:
 	}
 
 	// Return the tweaked value, null if this convar name is not tweaked.
-	virtual const char *GetTweakedConvarValue(const char *name)
+	virtual const CVValue_t *GetTweakedConvarValue(const char *name)
 	{
 		return nullptr;
 	}
@@ -205,5 +205,4 @@ namespace KZ::style
 	KZStyleManager::StylePluginInfo GetStyleInfo(KZStyleService *style);
 	KZStyleManager::StylePluginInfo GetStyleInfo(CUtlString styleName);
 
-	void RegisterCommands();
 }; // namespace KZ::style

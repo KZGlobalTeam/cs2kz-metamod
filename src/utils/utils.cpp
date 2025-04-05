@@ -22,7 +22,7 @@
 
 #include "tier0/memdbgon.h"
 
-#define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | 1ull << 32) // FCVAR_DEFENSIVE
+#define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_DEFENSIVE)
 
 #define RESOLVE_SIG(gameConfig, name, type, variable) \
 	type *variable = (decltype(variable))gameConfig->ResolveSignature(name); \
@@ -110,24 +110,17 @@ void utils::UnlockConVars()
 		return;
 	}
 
-	ConVar *pCvar = nullptr;
-	ConVarHandle hCvarHandle;
-	hCvarHandle.Set(0);
+	ConVarRefAbstract ref(ConVarRef((u16)0));
 
-	// Can't use FindFirst/Next here as it would skip cvars with certain flags, so just loop through the handles
-	do
+	// Can't use FOR_EACH_CONVAR here (?) as it would skip cvars with certain flags, so just loop through the handles
+	while (ref.IsValidRef())
 	{
-		pCvar = g_pCVar->GetConVar(hCvarHandle);
-
-		hCvarHandle.Set(hCvarHandle.Get() + 1);
-
-		if (!pCvar || !(pCvar->flags & FCVAR_FLAGS_TO_REMOVE))
+		if (ref.IsConVarDataAvailable())
 		{
-			continue;
+			ref.RemoveFlags(FCVAR_FLAGS_TO_REMOVE);
 		}
-
-		pCvar->flags &= ~FCVAR_FLAGS_TO_REMOVE;
-	} while (pCvar);
+		ref = {ConVarRef(ref.GetAccessIndex() + 1)};
+	}
 }
 
 void utils::UnlockConCommands()
@@ -137,24 +130,18 @@ void utils::UnlockConCommands()
 		return;
 	}
 
-	ConCommand *pConCommand = nullptr;
-	ConCommand *pInvalidCommand = g_pCVar->GetCommand(ConCommandHandle());
-	ConCommandHandle hConCommandHandle;
-	hConCommandHandle.Set(0);
-
-	do
+	ConCommandRef conCommand = {(u16)0};
+	ConCommandData *conCommandData = conCommand.GetRawData();
+	ConCommandData *invalidData = g_pCVar->GetConCommandData(ConCommandRef());
+	while (conCommandData != invalidData)
 	{
-		pConCommand = g_pCVar->GetCommand(hConCommandHandle);
-
-		hConCommandHandle.Set(hConCommandHandle.Get() + 1);
-
-		if (!pConCommand || pConCommand == pInvalidCommand || !(pConCommand->GetFlags() & FCVAR_FLAGS_TO_REMOVE))
+		if (conCommand.IsFlagSet(FCVAR_FLAGS_TO_REMOVE))
 		{
-			continue;
+			conCommand.RemoveFlags(FCVAR_FLAGS_TO_REMOVE);
 		}
-
-		pConCommand->RemoveFlags(FCVAR_FLAGS_TO_REMOVE);
-	} while (pConCommand && pConCommand != pInvalidCommand);
+		conCommand = {(uint16)(conCommand.GetAccessIndex() + 1)};
+		conCommandData = conCommand.GetRawData();
+	}
 }
 
 CBasePlayerController *utils::GetController(CBaseEntity *entity)
@@ -165,7 +152,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
 		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
 		{
-			for (i32 i = 0; i <= g_pKZUtils->GetServerGlobals()->maxClients; i++)
+			for (i32 i = 0; i <= MAXPLAYERS; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
 				if (controller && controller->m_hObserverPawn() && controller->m_hObserverPawn().Get() == entity)
@@ -183,7 +170,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
 		{
 			// Seems like the pawn lost its controller, we can try looping through the controllers to find this pawn instead.
-			for (i32 i = 0; i <= g_pKZUtils->GetServerGlobals()->maxClients; i++)
+			for (i32 i = 0; i <= MAXPLAYERS; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
 				if (controller && controller->m_hPlayerPawn() && controller->m_hPlayerPawn().Get() == entity)
@@ -274,102 +261,97 @@ f32 utils::GetAngleDifference(const f32 source, const f32 target, const f32 c, b
 	return fmod(fabs(target - source) + c, 2 * c) - c;
 }
 
-bool utils::SetConvarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate)
+bool utils::SetConVarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate, bool triggerCallback)
 {
-	ConVarHandle cvarHandle = g_pCVar->FindConVar(name);
-	if (!cvarHandle.IsValid())
-	{
-		assert(0);
-		META_CONPRINTF("Failed to find %s!\n", name);
-		return false;
-	}
-
 	if (!name || !value)
 	{
 		assert(0);
 		return false;
 	}
 
-	ConVar *cvar = g_pCVar->GetConVar(cvarHandle);
-	assert(cvar);
-	auto cvarValue = reinterpret_cast<CVValue_t *>(&(cvar->values));
-	bool result = true;
-	switch (cvar->m_eVarType)
+	ConVarRefAbstract cvarRef(name);
+	if (!cvarRef.IsValidRef() || !cvarRef.IsConVarDataAvailable())
 	{
-		case EConVarType_Bool:
-		{
-			cvarValue->m_bValue = !(value[0] == 'f' || value[0] == '0');
-		}
-		break;
-
-		case EConVarType_Int16:
-		case EConVarType_UInt16:
-		case EConVarType_Int32:
-		case EConVarType_UInt32:
-		case EConVarType_Int64:
-		case EConVarType_UInt64:
-		{
-			char *end = nullptr;
-			i64 integer = strtol(value, &end, 10);
-			if (value != end && value != nullptr)
-			{
-				cvarValue->m_i64Value = integer;
-			}
-			else
-			{
-				result = false;
-			}
-		}
-		break;
-
-		case EConVarType_Float32:
-		{
-			char *end = nullptr;
-			f32 floatValue = strtof(value, &end);
-			if (value != end && value != nullptr)
-			{
-				cvarValue->m_flValue = floatValue;
-			}
-			else
-			{
-				result = false;
-			}
-		}
-		break;
-
-		case EConVarType_Float64:
-		{
-			char *end = nullptr;
-			f64 floatValue = strtod(value, &end);
-			if (value != end && value != nullptr)
-			{
-				cvarValue->m_dbValue = floatValue;
-			}
-			else
-			{
-				result = false;
-			}
-		}
-		break;
-			// Do not support string.
-			// case EConVarType_String:
-			// {
-			// 	cvarValue->m_szValue = value;
-			// }
-			// break;
-
-		default:
-			assert(0);
-			break;
+		assert(0);
+		META_CONPRINTF("Failed to find %s!\n", name);
+		return false;
 	}
 
-	if (result && replicate)
+	if (triggerCallback)
 	{
-		SendConVarValue(slot, cvar, value);
+		cvarRef.SetString(value);
 	}
-	assert(result);
+	else
+	{
+		CVValue_t newValue;
+		cvarRef.TypeTraits()->Construct(&newValue);
+		cvarRef.TypeTraits()->Copy(cvarRef.GetConVarData()->Value(-1), newValue);
+		cvarRef.TypeTraits()->Destruct(&newValue);
+	}
 
-	return result;
+	if (replicate)
+	{
+		SendConVarValue(slot, cvarRef, value);
+	}
+
+	return true;
+}
+
+bool utils::SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const char *value, bool replicate, bool triggerCallback)
+{
+	if (!conVarRef.IsValidRef() || !conVarRef.IsConVarDataAvailable())
+	{
+		assert(0);
+		// If the ref is not valid, then the name is not available here, so this will silently fail.
+		return false;
+	}
+
+	if (triggerCallback)
+	{
+		conVarRef.SetString(value);
+	}
+	else
+	{
+		CVValue_t newValue;
+		conVarRef.TypeTraits()->Construct(&newValue);
+		conVarRef.TypeTraits()->Copy(conVarRef.GetConVarData()->Value(-1), newValue);
+		conVarRef.TypeTraits()->Destruct(&newValue);
+	}
+
+	if (replicate)
+	{
+		SendConVarValue(slot, conVarRef, value);
+	}
+
+	return true;
+}
+
+bool utils::SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const CVValue_t *value, bool replicate, bool triggerCallback)
+{
+	if (!conVarRef.IsValidRef() || !conVarRef.IsConVarDataAvailable())
+	{
+		assert(0);
+		// If the ref is not valid, then the name is not available here, so this will silently fail.
+		return false;
+	}
+
+	CBufferString buf;
+	conVarRef.TypeTraits()->ValueToString(value, buf);
+	if (triggerCallback)
+	{
+		conVarRef.SetString(buf);
+	}
+	else
+	{
+		conVarRef.TypeTraits()->Copy(conVarRef.GetConVarData()->Value(-1), *value);
+	}
+
+	if (replicate)
+	{
+		SendConVarValue(slot, conVarRef, buf.Get());
+	}
+
+	return true;
 }
 
 void utils::SendConVarValue(CPlayerSlot slot, const char *conVar, const char *value)
@@ -399,27 +381,62 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, const char **cvars, const
 	delete msg;
 }
 
-void utils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
+void utils::SendConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const char *value)
 {
-	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
-	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
-	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
-	cvar->set_name(conVar->m_pszName);
-	cvar->set_value(value);
-	CSingleRecipientFilter filter(slot.Get());
-	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
-	delete msg;
+	if (!conVarRef.IsValidRef() || !conVarRef.IsConVarDataAvailable())
+	{
+		return;
+	}
+	utils::SendConVarValue(slot, conVarRef.GetName(), value);
 }
 
-void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **conVar, const char **values, u32 size)
+void utils::SendConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const CVValue_t *value)
+{
+	if (!conVarRef.IsValidRef() || !conVarRef.IsConVarDataAvailable())
+	{
+		return;
+	}
+	CBufferString valueStr;
+	conVarRef.GetConVarData()->TypeTraits()->ValueToString(value, valueStr);
+	utils::SendConVarValue(slot, conVarRef.GetName(), valueStr.Get());
+}
+
+void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVarRefs, const char **values, u32 size)
 {
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
 	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
 	for (u32 i = 0; i < size; i++)
 	{
+		if (!conVarRefs[i]->IsValidRef())
+		{
+			delete msg;
+			return;
+		}
 		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
-		cvar->set_name(conVar[i]->m_pszName);
+		cvar->set_name(conVarRefs[i]->GetName());
 		cvar->set_value(values[i]);
+	}
+	CSingleRecipientFilter filter(slot.Get());
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	delete msg;
+}
+
+void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVarRefs, const CVValue_t *values, u32 size)
+{
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
+	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
+	CBufferString buf;
+	for (u32 i = 0; i < size; i++)
+	{
+		if (!conVarRefs[i]->IsValidRef())
+		{
+			delete msg;
+			return;
+		}
+		conVarRefs[i]->TypeTraits()->ValueToString(&values[i], buf);
+		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
+		cvar->set_name(conVarRefs[i]->GetName());
+		cvar->set_value(buf.Get());
 	}
 	CSingleRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);

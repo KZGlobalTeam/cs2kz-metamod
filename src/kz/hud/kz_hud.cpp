@@ -189,7 +189,7 @@ void KZTimerServiceEventListener_HUD::OnTimerEndPost(KZPlayer *player, u32 cours
 	player->hudService->OnTimerStopped(time);
 }
 
-static_function SCMD_CALLBACK(Command_KzPanel)
+SCMD(kz_panel, SCFL_HUD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->hudService->TogglePanel();
@@ -202,9 +202,4 @@ static_function SCMD_CALLBACK(Command_KzPanel)
 		player->languageService->PrintChat(true, false, "HUD Option - Info Panel - Disable");
 	}
 	return MRES_SUPERCEDE;
-}
-
-void KZHUDService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_panel", Command_KzPanel);
 }

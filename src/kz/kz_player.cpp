@@ -27,8 +27,6 @@
 #include "tier0/memdbgon.h"
 
 extern CSteamGameServerAPIContext g_steamAPI;
-static_global ConVar *sv_standable_normal;
-static_global ConVar *sv_walkable_normal;
 
 void KZPlayer::Init()
 {
@@ -820,103 +818,41 @@ void KZPlayer::OnChangeTeamPost(i32 team)
 	this->timerService->OnPlayerJoinTeam(team);
 }
 
-CUtlString KZPlayer::ComputeCvarValueFromModeStyles(const char *name)
+const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(const char *name)
 {
-	ConVarHandle cvarHandle = g_pCVar->FindConVar(name);
-	if (!cvarHandle.IsValid())
-	{
-		assert(0);
-		META_CONPRINTF("Failed to find %s!\n", name);
-		return "";
-	}
-
 	if (!name)
 	{
 		assert(0);
-		return "";
+		return CVValue_t::InvalidValue();
 	}
 
-	ConVar *cvar = g_pCVar->GetConVar(cvarHandle);
-	assert(cvar);
-	CVValue_t *cvarValue = cvar->m_cvvDefaultValue;
-	CUtlString valueStr;
-
-	switch (cvar->m_eVarType)
+	ConVarRefAbstract cvarRef(name);
+	if (!cvarRef.IsValidRef() || !cvarRef.IsConVarDataAvailable())
 	{
-		case EConVarType_Bool:
-		{
-			valueStr.Format("%s", cvarValue->m_bValue ? "true" : "false");
-			break;
-		}
-		case EConVarType_Int16:
-		{
-			valueStr.Format("%i", cvarValue->m_i16Value);
-			break;
-		}
-		case EConVarType_Int32:
-		{
-			valueStr.Format("%i", cvarValue->m_i32Value);
-			break;
-		}
-		case EConVarType_Int64:
-		{
-			valueStr.Format("%lli", cvarValue->m_i64Value);
-			break;
-		}
-		case EConVarType_UInt16:
-		{
-			valueStr.Format("%u", cvarValue->m_u16Value);
-			break;
-		}
-		case EConVarType_UInt32:
-		{
-			valueStr.Format("%u", cvarValue->m_u32Value);
-			break;
-		}
-		case EConVarType_UInt64:
-		{
-			valueStr.Format("%llu", cvarValue->m_u64Value);
-			break;
-		}
+		assert(0);
+		META_CONPRINTF("Failed to find %s!\n", name);
+		return CVValue_t::InvalidValue();
+	}
 
-		case EConVarType_Float32:
+	FOR_EACH_VEC_BACK(this->styleServices, i)
+	{
+		if (this->styleServices[i]->GetTweakedConvarValue(name))
 		{
-			valueStr.Format("%f", cvarValue->m_flValue);
-			break;
+			return this->styleServices[i]->GetTweakedConvarValue(name);
 		}
-
-		case EConVarType_Float64:
-		{
-			valueStr.Format("%lf", cvarValue->m_dbValue);
-			break;
-		}
-
-		case EConVarType_String:
-		{
-			valueStr.Format("%s", cvarValue->m_szValue);
-			break;
-		}
-
-		default:
-			assert(0);
-			break;
 	}
 
 	for (int i = 0; i < MODECVAR_COUNT; i++)
 	{
-		if (!V_stricmp(KZ::mode::modeCvarNames[i], name))
+		if (!KZ::mode::modeCvarRefs[i]->IsValidRef() || !KZ::mode::modeCvarRefs[i]->IsConVarDataAvailable())
 		{
-			valueStr.Format("%s", this->modeService->GetModeConVarValues()[i]);
-			break;
+			continue;
+		}
+		if (!V_stricmp(KZ::mode::modeCvarRefs[i]->GetName(), name))
+		{
+			return &this->modeService->GetModeConVarValues()[i];
 		}
 	}
 
-	FOR_EACH_VEC(this->styleServices, i)
-	{
-		if (this->styleServices[i]->GetTweakedConvarValue(name))
-		{
-			valueStr.Format("%s", this->styleServices[i]->GetTweakedConvarValue(name));
-		}
-	}
-	return valueStr;
+	return cvarRef.GetConVarData()->Value(-1);
 }

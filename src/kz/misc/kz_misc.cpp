@@ -37,7 +37,7 @@ static_global class KZOptionServiceEventListener_Misc : public KZOptionServiceEv
 	}
 } optionEventListener;
 
-static_function SCMD_CALLBACK(Command_KzHidelegs)
+SCMD(kz_hidelegs, SCFL_PLAYER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
@@ -52,7 +52,7 @@ static_function SCMD_CALLBACK(Command_KzHidelegs)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzHide)
+SCMD(kz_hide, SCFL_PLAYER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
@@ -67,7 +67,7 @@ static_function SCMD_CALLBACK(Command_KzHide)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzEnd)
+SCMD(kz_end, SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
@@ -139,7 +139,7 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzRestart)
+SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	const KZCourseDescriptor *startPosCourse = nullptr;
@@ -209,7 +209,9 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzLj)
+SCMD_LINK(kz_r, kz_restart);
+
+SCMD(kz_lj, SCFL_JUMPSTATS | SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
@@ -228,7 +230,10 @@ static_function SCMD_CALLBACK(Command_KzLj)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzHideWeapon)
+SCMD_LINK(kz_ljarea, kz_lj);
+SCMD_LINK(kz_jsarea, kz_lj);
+
+SCMD(kz_hideweapon, SCFL_PLAYER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
@@ -243,13 +248,7 @@ static_function SCMD_CALLBACK(Command_KzHideWeapon)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_JoinTeam)
-{
-	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), true);
-	return MRES_SUPERCEDE;
-}
-
-static_function SCMD_CALLBACK(Command_KzPlayerCheck)
+SCMD(kz_playercheck, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	KZPlayer *targetPlayer = nullptr;
@@ -259,7 +258,7 @@ static_function SCMD_CALLBACK(Command_KzPlayerCheck)
 	}
 	else
 	{
-		for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+		for (i32 i = 0; i <= MAXPLAYERS; i++)
 		{
 			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
 
@@ -285,6 +284,24 @@ static_function SCMD_CALLBACK(Command_KzPlayerCheck)
 	return MRES_SUPERCEDE;
 }
 
+SCMD_LINK(kz_pc, kz_playercheck);
+
+SCMD(jointeam, SCFL_HIDDEN)
+{
+	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), true);
+	return MRES_SUPERCEDE;
+}
+
+SCMD(switchhands, SCFL_HIDDEN)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->quietService->ResetHideWeapon();
+	return MRES_IGNORED;
+}
+
+SCMD_LINK(switchhandsleft, switchhands);
+SCMD_LINK(switchhandsright, switchhands);
+
 static_function f64 CheckRestart()
 {
 	utils::ResetMapIfEmpty();
@@ -296,33 +313,21 @@ void KZ::misc::Init()
 	KZOptionService::RegisterEventListener(&optionEventListener);
 	KZ::misc::EnforceTimeLimit();
 	mapRestartTimer = StartTimer(CheckRestart, RESTART_CHECK_INTERVAL, true, false);
+	CConVarRef<int32> sv_infinite_ammo("sv_infinite_ammo");
+	if (sv_infinite_ammo.IsValidRef() && sv_infinite_ammo.IsConVarDataAvailable())
+	{
+		sv_infinite_ammo.RemoveFlags(FCVAR_CHEAT);
+	}
+	CConVarRef<CUtlString> bot_stop("bot_stop");
+	if (bot_stop.IsValidRef() && bot_stop.IsConVarDataAvailable())
+	{
+		bot_stop.RemoveFlags(FCVAR_CHEAT);
+	}
 }
 
 void KZ::misc::OnServerActivate()
 {
-	static_persist bool cvTweaked {};
-	if (!cvTweaked)
-	{
-		cvTweaked = true;
-		auto cvarHandle = g_pCVar->FindConVar("sv_infinite_ammo");
-		if (cvarHandle.IsValid())
-		{
-			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
-		}
-		else
-		{
-			META_CONPRINTF("Warning: sv_infinite_ammo is not found!\n");
-		}
-		cvarHandle = g_pCVar->FindConVar("bot_stop");
-		if (cvarHandle.IsValid())
-		{
-			g_pCVar->GetConVar(cvarHandle)->flags &= ~FCVAR_CHEAT;
-		}
-		else
-		{
-			META_CONPRINTF("Warning: bot_stop is not found!\n");
-		}
-	}
+	KZ::misc::EnforceTimeLimit();
 	g_pKZUtils->UpdateCurrentMapMD5();
 
 	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
@@ -332,44 +337,7 @@ void KZ::misc::OnServerActivate()
 	interfaces::pEngine->ServerCommand("mp_restartgame 1");
 }
 
-SCMD_CALLBACK(Command_KzSwitchHands)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->quietService->ResetHideWeapon();
-	return MRES_IGNORED;
-}
-
-// TODO: move command registration to the service class?
-void KZ::misc::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs);
-	scmd::RegisterCmd("kz_hide", Command_KzHide);
-	scmd::RegisterCmd("kz_restart", Command_KzRestart);
-	scmd::RegisterCmd("kz_r", Command_KzRestart);
-	scmd::RegisterCmd("kz_lj", Command_KzLj);
-	scmd::RegisterCmd("kz_ljarea", Command_KzLj);
-	scmd::RegisterCmd("kz_jsarea", Command_KzLj);
-	scmd::RegisterCmd("kz_end", Command_KzEnd);
-	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
-	scmd::RegisterCmd("kz_pc", Command_KzPlayerCheck);
-	scmd::RegisterCmd("kz_playercheck", Command_KzPlayerCheck);
-	scmd::RegisterCmd("jointeam", Command_JoinTeam, true);
-	scmd::RegisterCmd("switchhands", Command_KzSwitchHands, true);
-	scmd::RegisterCmd("switchhandsleft", Command_KzSwitchHands, true);
-	scmd::RegisterCmd("switchhandsright", Command_KzSwitchHands, true);
-	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
-	KZGotoService::RegisterCommands();
-	KZCheckpointService::RegisterCommands();
-	KZJumpstatsService::RegisterCommands();
-	KZTimerService::RegisterCommands();
-	KZNoclipService::RegisterCommands();
-	KZHUDService::RegisterCommands();
-	KZLanguageService::RegisterCommands();
-	KZGlobalService::RegisterCommands();
-	KZ::mode::RegisterCommands();
-	KZ::style::RegisterCommands();
-	KZ::course::RegisterCommands();
-}
+// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 
 void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 {
@@ -452,7 +420,7 @@ static_function void SanitizeMsg(const char *input, char *output, u32 size)
 	output[x] = '\0';
 }
 
-void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
 	if (!GameEntitySystem())
 	{
@@ -464,12 +432,13 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 
 	KZPlayer *player = NULL;
 
-	if (!cmd.IsValid() || !controller || !(player = g_pKZPlayerManager->ToPlayer(controller)))
+	if (!cmd.IsValidRef() || !controller || !(player = g_pKZPlayerManager->ToPlayer(controller)))
 	{
 		return;
 	}
-	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
-	const char *p;
+	const char *p {};
+	const char *commandName = cmd.GetName();
+
 	// Is it a chat message?
 	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{
@@ -512,7 +481,6 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
 			META_CONPRINTF("* %s: %s\n", player->GetName(), message.Get());
 		}
-		return;
 	}
 
 	return;

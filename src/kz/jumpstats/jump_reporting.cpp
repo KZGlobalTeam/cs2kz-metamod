@@ -106,12 +106,12 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 		jump->GetDuckTime(false)
 	);
 	
-	CUtlString headers[Q_ARRAYSIZE(columnKeys)];
-	for (u32 i = 0; i < Q_ARRAYSIZE(columnKeys); i++)
+	CUtlString headers[KZ_ARRAYSIZE(columnKeys)];
+	for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeys); i++)
 	{
 		headers[i] = target->languageService->PrepareMessage(columnKeys[i]).c_str();
 	}
-	utils::Table<Q_ARRAYSIZE(columnKeys)> table("", headers);
+	utils::Table<KZ_ARRAYSIZE(columnKeys)> table("", headers);
 	
 	FOR_EACH_VEC(jump->strafes, i)
 	{
@@ -186,7 +186,7 @@ void KZJumpstatsService::BroadcastJumpToChat(Jump *jump)
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[tier];
 
-	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+	for (i32 i = 0; i <= MAXPLAYERS; i++)
 	{
 		CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(i)));
 		if (ent)

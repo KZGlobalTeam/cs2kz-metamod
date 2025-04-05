@@ -20,7 +20,6 @@ private:
 
 public:
 	static void ActiveCheck();
-	static void RegisterCommands();
 
 	f64 GetActiveTime() const
 	{

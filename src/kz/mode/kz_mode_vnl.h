@@ -15,38 +15,38 @@ class KZVanillaModeService : public KZModeService
 		{215.0f, 255.0f, 265.0f, 270.0f, 273.0f, 275.0f}, // JB
 	};
 
-	static inline const char *modeCvarValues[] = {
-		"true",          // slope_drop_enable
-		"5.5",           // sv_accelerate
-		"true",          // sv_accelerate_use_weapon_speed
-		"12",            // sv_airaccelerate
-		"30",            // sv_air_max_wishspeed
-		"false",         // sv_autobunnyhopping
-		"false",         // sv_enablebunnyhopping
-		"5.2",           // sv_friction
-		"800",           // sv_gravity
-		"301.993377411", // sv_jump_impulse
-		"true",          // sv_jump_precision_enable
-		"0.015625",      // sv_jump_spam_penalty_time
-		"-0.707",        // sv_ladder_angle
-		"0.2",           // sv_ladder_dampen
-		"0.78",          // sv_ladder_scale_speed
-		"320",           // sv_maxspeed
-		"3500",          // sv_maxvelocity
-		"0.08",          // sv_staminajumpcost
-		"0.05",          // sv_staminalandcost
-		"80",            // sv_staminamax
-		"60",            // sv_staminarecoveryrate
-		"0.7",           // sv_standable_normal
-		"64.0",          // sv_step_move_vel_min
-		"0.4",           // sv_timebetweenducks
-		"0.7",           // sv_walkable_normal
-		"10",            // sv_wateraccelerate
-		"1",             // sv_waterfriction
-		"0.9"            // sv_water_slow_amount
+	static inline CVValue_t modeCvarValues[] = {
+		(bool)true,            // slope_drop_enable
+		(float)5.5f,           // sv_accelerate
+		(bool)true,            // sv_accelerate_use_weapon_speed
+		(float)12.0f,          // sv_airaccelerate
+		(float)30.0f,          // sv_air_max_wishspeed
+		(bool)false,           // sv_autobunnyhopping
+		(bool)false,           // sv_enablebunnyhopping
+		(float)5.2f,           // sv_friction
+		(float)800.0f,         // sv_gravity
+		(float)301.993377411f, // sv_jump_impulse
+		(bool)true,            // sv_jump_precision_enable
+		(float)0.015625f,      // sv_jump_spam_penalty_time
+		(float)-0.707f,        // sv_ladder_angle
+		(float)0.2f,           // sv_ladder_dampen
+		(float)0.78f,          // sv_ladder_scale_speed
+		(float)320.0f,         // sv_maxspeed
+		(float)3500.0f,        // sv_maxvelocity
+		(float)0.08f,          // sv_staminajumpcost
+		(float)0.05f,          // sv_staminalandcost
+		(float)80.0f,          // sv_staminamax
+		(float)60.0f,          // sv_staminarecoveryrate
+		(float)0.7f,           // sv_standable_normal
+		(float)64.0f,          // sv_step_move_vel_min
+		(float)0.4f,           // sv_timebetweenducks
+		(float)0.7f,           // sv_walkable_normal
+		(float)10.0f,          // sv_wateraccelerate
+		(float)1.0f,           // sv_waterfriction
+		(float)0.9f            // sv_water_slow_amount
 	};
 
-	static_assert(Q_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
+	static_assert(KZ_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
 
 	// Keep track of TryPlayerMove path for triggerfixing.
 	bool airMoving {};
@@ -57,7 +57,7 @@ public:
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
-	virtual const char **GetModeConVarValues() override;
+	virtual const CVValue_t *GetModeConVarValues() override;
 
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
 	{

@@ -28,6 +28,10 @@
 		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: \„bind 1 kz_cp\" oder \„!cp\" oder \„/cp\""
 		"ko"		"이 명령어를 사용하려면 콘솔에 \"bind <key> kz_<명령어 이름>\"을 입력하거나, 채팅창에 !<명령어 이름> 또는 /<명령어 이름>을 입력하세요. 예시: \"bind 1 kz_cp\" 또는 \"!cp\" 또는 \"/cp\""
 	}
+	"Command Help Response Category Hint (Console)"
+	{
+		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
+	}
 	"Switch Language"
 	{
 		// You have switched your language to english.
@@ -45,6 +49,84 @@
 		"ko"		"{grey}언어가 {default}{language}{grey}로 변경되었습니다."
 	}
 
+	
+	// Categories
+	"Command List Header - Name"
+	{
+		"en"		"Name"
+	}
+	"Command List Header - Description"
+	{
+		"en"		"Description"
+	}
+	"Command List - Checkpoint"
+	{
+		"en"		"Checkpoint Commands:"
+	}
+	"Command List - Record"
+	{
+		"en"		"Record Commands:"
+	}
+	"Command List - Jumpstats"
+	{
+		"en"		"Jumpstats Commands:"
+	}
+	"Command List - Measure"
+	{
+		"en"		"Measure Commands:"
+	}
+	"Command List - ModeStyle"
+	{
+		"en"		"Mode/Style Commands:"
+	}
+	"Command List - Preference"
+	{
+		"en"		"Preference Commands:"
+	}
+	"Command List - Racing"
+	{
+		"en"		"Racing Commands:"
+	}
+	"Command List - Replay"
+	{
+		"en"		"Replay Commands:"
+	}
+	"Command List - Saveloc"
+	{
+		"en"		"Saveloc Commands:"
+	}
+	"Command List - Spec"
+	{
+		"en"		"Spectate Commands:"
+	}
+	"Command List - Status"
+	{
+		"en"		"Status Commands:"
+	}
+	"Command List - Timer"
+	{
+		"en"		"Timer Commands:"
+	}
+	"Command List - Player"
+	{
+		"en"		"Player Commands:"
+	}
+	"Command List - Global"
+	{
+		"en"		"Global Commands:"
+	}
+	"Command List - Misc"
+	{
+		"en"		"Miscellaneous Commands:"
+	}
+	"Command List - Map"
+	{
+		"en"		"Map Commands:"
+	}
+	"Command List - HUD"
+	{
+		"en"		"HUD Commands:"
+	}
 	// Commands
 	"Command Description - kz_undo"
 	{
@@ -618,18 +700,6 @@
 		"es"		"Ocultar arma."
 		"de"		"Deine Waffe verstecken."
 		"ko"		"무기 모델을 숨깁니다."
-	}
-	"Command Description - jointeam"
-	{
-		// Hidden to users.
-		"en"		"Jointeam interceptor."
-		"chi"		"Jointeam interceptor."
-		"pl"		"Jointeam interceptor."
-		"fi"		"Jointeam interceptor."
-		"sv"		"Jointeam interceptor."
-		"it"		"Jointeam interceptor."
-		"de"		"Jointeam interceptor."
-		"ko"		"Jointeam interceptor."
 	}
 	"Command Description - kz_help"
 	{

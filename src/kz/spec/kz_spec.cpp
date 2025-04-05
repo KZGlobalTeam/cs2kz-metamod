@@ -110,12 +110,7 @@ void KZTimerServiceEventListener_Spec::OnTimerStartPost(KZPlayer *player, u32 co
 	player->specService->Reset();
 }
 
-static_function SCMD_CALLBACK(Command_KzSpec)
+SCMD(kz_spec, SCFL_SPEC)
 {
 	return MRES_HANDLED;
-}
-
-void KZSpecService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_spec", Command_KzSpec);
 }

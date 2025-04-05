@@ -455,14 +455,7 @@ void KZDatabaseServiceEventListener_Styles::OnDatabaseSetup()
 	KZDatabaseService::UpdateStyleIDs();
 }
 
-static_function SCMD_CALLBACK(Command_KzToggleStyle)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	styleManager.ToggleStyle(player, args->Arg(1));
-	return MRES_SUPERCEDE;
-}
-
-static_function SCMD_CALLBACK(Command_KzStyle)
+SCMD(kz_style, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!args->Arg(1))
@@ -485,34 +478,32 @@ static_function SCMD_CALLBACK(Command_KzStyle)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzAddStyle)
+SCMD(kz_togglestyle, SCFL_MODESTYLE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	styleManager.ToggleStyle(player, args->Arg(1));
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_addstyle, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.AddStyle(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzRemoveStyle)
+SCMD(kz_removestyle, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.RemoveStyle(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzClearStyles)
+SCMD(kz_clearstyles, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.ClearStyles(player);
 	return MRES_SUPERCEDE;
-}
-
-void KZ::style::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_style", Command_KzStyle);
-	scmd::RegisterCmd("kz_togglestyle", Command_KzToggleStyle);
-	scmd::RegisterCmd("kz_addstyle", Command_KzAddStyle);
-	scmd::RegisterCmd("kz_removestyle", Command_KzRemoveStyle);
-	scmd::RegisterCmd("kz_clearstyles", Command_KzClearStyles);
 }
 
 void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *player)

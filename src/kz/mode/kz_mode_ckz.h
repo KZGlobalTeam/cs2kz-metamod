@@ -70,37 +70,37 @@ class KZClassicModeService : public KZModeService
 		{217.0f, 275.0f, 280.0f, 285.0f, 290.0f, 295.0f}, // JB
 	};
 
-	static inline const char *modeCvarValues[] = {
-		"false",  // slope_drop_enable
-		"6.5",    // sv_accelerate
-		"false",  // sv_accelerate_use_weapon_speed
-		"100",    // sv_airaccelerate
-		"30",     // sv_air_max_wishspeed
-		"false",  // sv_autobunnyhopping
-		"true",   // sv_enablebunnyhopping
-		"5.2",    // sv_friction
-		"800",    // sv_gravity
-		"302.0",  // sv_jump_impulse
-		"false",  // sv_jump_precision_enable
-		"0.0",    // sv_jump_spam_penalty_time
-		"-0.707", // sv_ladder_angle
-		"1",      // sv_ladder_dampen
-		"1",      // sv_ladder_scale_speed
-		"320",    // sv_maxspeed
-		"3500",   // sv_maxvelocity
-		"0",      // sv_staminajumpcost
-		"0",      // sv_staminalandcost
-		"0",      // sv_staminamax
-		"9999",   // sv_staminarecoveryrate
-		"0.7",    // sv_standable_normal
-		"64.0",   // sv_step_move_vel_min
-		"0",      // sv_timebetweenducks
-		"0.7",    // sv_walkable_normal
-		"10",     // sv_wateraccelerate
-		"1",      // sv_waterfriction
-		"0.9"     // sv_water_slow_amount
+	static inline CVValue_t modeCvarValues[] = {
+		(bool)false,    // slope_drop_enable
+		(float)6.5f,    // sv_accelerate
+		(bool)false,    // sv_accelerate_use_weapon_speed
+		(float)100.0f,  // sv_airaccelerate
+		(float)30.0f,   // sv_air_max_wishspeed
+		(bool)false,    // sv_autobunnyhopping
+		(bool)true,     // sv_enablebunnyhopping
+		(float)5.2f,    // sv_friction
+		(float)800.0f,  // sv_gravity
+		(float)302.0f,  // sv_jump_impulse
+		(bool)false,    // sv_jump_precision_enable
+		(float)0.0f,    // sv_jump_spam_penalty_time
+		(float)-0.707f, // sv_ladder_angle
+		(float)1.0f,    // sv_ladder_dampen
+		(float)1.0f,    // sv_ladder_scale_speed
+		(float)320.0f,  // sv_maxspeed
+		(float)3500.0f, // sv_maxvelocity
+		(float)0.0f,    // sv_staminajumpcost
+		(float)0.0f,    // sv_staminalandcost
+		(float)0.0f,    // sv_staminamax
+		(float)9999.0f, // sv_staminarecoveryrate
+		(float)0.7f,    // sv_standable_normal
+		(float)64.0f,   // sv_step_move_vel_min
+		(float)0.0f,    // sv_timebetweenducks
+		(float)0.7f,    // sv_walkable_normal
+		(float)10.0f,   // sv_wateraccelerate
+		(float)1.0f,    // sv_waterfriction
+		(float)0.9f     // sv_water_slow_amount
 	};
-	static_assert(Q_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
+	static_assert(KZ_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
 
 	bool hasValidDesiredViewAngle {};
 	QAngle lastValidDesiredViewAngle;
@@ -144,7 +144,7 @@ public:
 	virtual bool EnableWaterFix() override;
 
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
-	virtual const char **GetModeConVarValues() override;
+	virtual const CVValue_t *GetModeConVarValues() override;
 	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
 
 	virtual void OnPhysicsSimulate() override;

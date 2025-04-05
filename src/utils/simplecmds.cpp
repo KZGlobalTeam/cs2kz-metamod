@@ -5,6 +5,7 @@
 #include "../kz/kz.h"
 #include "../kz/language/kz_language.h"
 #include "../kz/option/kz_option.h"
+#include "utils/tables.h"
 
 #include "tier0/memdbgon.h"
 // private structs
@@ -16,8 +17,37 @@ struct Scmd
 	i32 nameLength;
 	char name[SCMD_MAX_NAME_LEN];
 	scmd::Callback_t *callback;
-	bool hidden;
+	char descKey[SCMD_MAX_NAME_LEN];
+	u64 flags;
 };
+
+// clang-format off
+const char* cmdFlagNames[] = {
+	"Checkpoint",
+	"Record",
+	"Jumpstats",
+	"Measure",
+	"ModeStyle",
+	"Preference",
+	"Racing",
+	"Replay",
+	"Saveloc",
+	"Spec",
+	"Status",
+	"Timer",
+	"Player",
+	"Global",
+	"Misc",
+	"Map",
+	"HUD"
+};
+
+static_global const char *columnKeys[] = {
+	"Command List Header - Name",
+	"Command List Header - Description"
+};
+
+// clang-format on
 
 struct ScmdManager
 {
@@ -26,35 +56,91 @@ struct ScmdManager
 };
 
 static_global ScmdManager g_cmdManager = {};
-static_global bool g_coreCmdsRegistered = false;
 
-static_function SCMD_CALLBACK(Command_KzHelp)
+static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool printEmpty)
+{
+	char tableName[64];
+	V_snprintf(tableName, sizeof(tableName), "Command List - %s", cmdFlagNames[category]);
+	CUtlString headers[KZ_ARRAYSIZE(columnKeys)];
+	for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeys); i++)
+	{
+		headers[i] = player->languageService->PrepareMessage(columnKeys[i]).c_str();
+	}
+	Scmd *cmds = g_cmdManager.cmds;
+	utils::Table<KZ_ARRAYSIZE(columnKeys)> table(player->languageService->PrepareMessage(tableName).c_str(), headers);
+
+	u32 cmdCount = 0;
+	CUtlVector<CUtlString> uniqueCallbacks;
+	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+	{
+		if (cmds[i].flags & (1ull << category))
+		{
+			if (uniqueCallbacks.Find(cmds[i].descKey) == -1)
+			{
+				uniqueCallbacks.AddToTail(cmds[i].descKey);
+				table.SetRow(cmdCount, cmds[i].name, player->languageService->PrepareMessage(cmds[i].descKey).c_str());
+				cmdCount++;
+			}
+			else
+			{
+				CUtlString newEntry = table.GetEntry(cmdCount - 1).data[0];
+				// Remove the trailing space that exists in each column
+				newEntry.SetLength(newEntry.Length() - strlen("ᅟ"));
+				newEntry.Append("/");
+				newEntry.Append(cmds[i].name);
+				table.Set(cmdCount - 1, 0, newEntry);
+			}
+		}
+	}
+	if (!printEmpty && cmdCount == 0)
+	{
+		return;
+	}
+	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetTitle());
+	player->PrintConsole(false, false, table.GetHeader());
+
+	for (u32 i = 0; i < table.GetNumEntries(); i++)
+	{
+		player->PrintConsole(false, false, table.GetLine(i));
+	}
+	player->PrintConsole(false, false, table.GetSeparator("="));
+}
+
+SCMD(kz_help, SCFL_MISC)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->languageService->PrintChat(true, false, "Command Help Response (Chat)");
 	player->languageService->PrintConsole(false, false, "Command Help Response (Console)");
-	Scmd *cmds = g_cmdManager.cmds;
-	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+	u64 category = 0;
+	bool foundCategory {};
+	if (args->ArgC() >= 2)
 	{
-		if (cmds[i].hidden)
+		for (i32 i = 1; i < args->ArgC(); i++)
 		{
-			continue;
+			for (i32 j = 0; j < KZ_ARRAYSIZE(cmdFlagNames); j++)
+			{
+				if (!V_stricmp(args->Arg(i), cmdFlagNames[j]))
+				{
+					PrintCategoryCommands(player, j, true);
+					foundCategory = true;
+				}
+			}
 		}
-		char descriptionKey[152] {}; // About the max length of a command plus the keyword
-		V_snprintf(descriptionKey, sizeof(descriptionKey), "Command Description - %s", cmds[i].name);
-		player->PrintConsole(false, false, "%s: %s", cmds[i].name, player->languageService->PrepareMessage(descriptionKey).c_str());
+	}
+
+	if (!foundCategory)
+	{
+		player->languageService->PrintConsole(false, false, "Command Help Response Category Hint (Console)");
+		for (i32 i = 0; i < KZ_ARRAYSIZE(cmdFlagNames); i++)
+		{
+			PrintCategoryCommands(player, i, false);
+		}
 	}
 	return MRES_SUPERCEDE;
 }
 
-static_function void RegisterCoreCmds()
-{
-	g_coreCmdsRegistered = true;
-
-	scmd::RegisterCmd("kz_help", Command_KzHelp);
-}
-
-bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, bool hidden)
+bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *descKey, u64 flags)
 {
 	Assert(name);
 	Assert(callback);
@@ -76,7 +162,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, bool hidden
 
 	i32 conPrefixLen = strlen(SCMD_CONSOLE_PREFIX);
 	bool hasConPrefix = false;
-	if (nameLength >= conPrefixLen && strnicmp(name, SCMD_CONSOLE_PREFIX, conPrefixLen) == 0)
+	if (nameLength >= conPrefixLen && V_strnicmp(name, SCMD_CONSOLE_PREFIX, conPrefixLen) == 0)
 	{
 		if (nameLength == conPrefixLen)
 		{
@@ -107,10 +193,34 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, bool hidden
 	}
 
 	// Command name is unique!
-	Scmd cmd = {hasConPrefix, nameLength, "", callback, hidden};
+	Scmd cmd = {hasConPrefix, nameLength, "", callback, "", flags};
 	V_snprintf(cmd.name, SCMD_MAX_NAME_LEN, "%s", name);
+
+	// Check if we want to override the command description.
+	if (!descKey)
+	{
+		V_snprintf(cmd.descKey, SCMD_MAX_NAME_LEN, "Command Description - %s", cmd.name);
+	}
+	else
+	{
+		V_snprintf(cmd.descKey, SCMD_MAX_NAME_LEN, "%s", descKey);
+	}
+
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
+
 	return true;
+}
+
+bool scmd::LinkCmd(const char *name, const char *linkedName)
+{
+	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+	{
+		if (!V_stricmp(g_cmdManager.cmds[i].name, linkedName))
+		{
+			return scmd::RegisterCmd(name, g_cmdManager.cmds[i].callback, g_cmdManager.cmds[i].descKey, g_cmdManager.cmds[i].flags);
+		}
+	}
+	return false;
 }
 
 bool scmd::UnregisterCmd(const char *name)
@@ -138,11 +248,6 @@ bool scmd::UnregisterCmd(const char *name)
 
 META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 {
-	if (!g_coreCmdsRegistered)
-	{
-		RegisterCoreCmds();
-	}
-
 	META_RES result = MRES_IGNORED;
 	if (!GameEntitySystem())
 	{
@@ -177,13 +282,8 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	return result;
 }
 
-META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext &ctx, const CCommand &args)
+META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
-	if (!g_coreCmdsRegistered)
-	{
-		RegisterCoreCmds();
-	}
-
 	META_RES result = MRES_IGNORED;
 	if (!GameEntitySystem())
 	{
@@ -193,11 +293,11 @@ META_RES scmd::OnDispatchConCommand(ConCommandHandle cmd, const CCommandContext 
 
 	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
 
-	if (!cmd.IsValid() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
+	if (!cmd.IsValidRef() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
 	{
 		return MRES_IGNORED;
 	}
-	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
+	const char *commandName = cmd.GetName();
 
 	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{

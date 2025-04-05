@@ -59,14 +59,14 @@ CPlayerSlot KZUtils::GetEntityPlayerSlot(CBaseEntity *entity)
 	return utils::GetEntityPlayerSlot(entity);
 }
 
-void KZUtils::SendConVarValue(CPlayerSlot slot, ConVar *conVar, const char *value)
+void KZUtils::SendConVarValue(CPlayerSlot slot, ConVarRefAbstract conVar, const char *value)
 {
 	utils::SendConVarValue(slot, conVar, value);
 }
 
-void KZUtils::SendMultipleConVarValues(CPlayerSlot slot, ConVar **cvars, const char **values, u32 size)
+void KZUtils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVars, const char **values, u32 size)
 {
-	utils::SendMultipleConVarValues(slot, cvars, values, size);
+	utils::SendMultipleConVarValues(slot, conVars, values, size);
 }
 
 f32 KZUtils::NormalizeDeg(f32 a)

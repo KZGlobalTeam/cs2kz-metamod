@@ -14,7 +14,7 @@ static_function std::string_view MakeStatusString(bool checkmark)
 	return checkmark ? "{green}✓{default}"sv : "{darkred}✗{default}"sv;
 }
 
-static_function SCMD_CALLBACK(Command_KzGlobalCheck)
+SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
@@ -143,8 +143,4 @@ static_function SCMD_CALLBACK(Command_KzGlobalCheck)
 	return MRES_SUPERCEDE;
 }
 
-void KZGlobalService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_globalcheck", Command_KzGlobalCheck);
-	scmd::RegisterCmd("kz_gc", Command_KzGlobalCheck);
-}
+SCMD_LINK(kz_gc, kz_globalcheck);

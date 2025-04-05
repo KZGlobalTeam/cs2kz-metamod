@@ -52,13 +52,13 @@ namespace utils
 			{
 				return false;
 			}
-			if (row >= entries.Count())
+			if (row >= (u32)entries.Count())
 			{
 				entries.SetCountNonDestructively(row + 1);
 			}
 			entries[row].data[column] = value;
 			entries[row].data[column].Append("ᅟ"); // Add a space to reset the "font" to monospace
-			columnLengths[column] = MAX(columnLengths[column], V_strlen(entries[row].data[column].Get()));
+			columnLengths[column] = MAX(columnLengths[column], (u32)V_strlen(entries[row].data[column].Get()));
 			return true;
 		}
 
@@ -81,6 +81,11 @@ namespace utils
 				entries[row].data[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
 				columnLengths[i] = MAX(columnLengths[i], (u32)V_strlen(entries[row].data[i].Get()));
 			}
+		}
+
+		TableEntry GetEntry(u32 row)
+		{
+			return entries[row];
 		}
 
 		u32 GetTableWidth()

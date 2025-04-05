@@ -226,5 +226,4 @@ namespace KZ::course
 	// Update the course's global ID given its map-defined name and ID.
 	bool UpdateCourseGlobalID(const char *courseName, u32 globalID);
 
-	void RegisterCommands();
 }; // namespace KZ::course

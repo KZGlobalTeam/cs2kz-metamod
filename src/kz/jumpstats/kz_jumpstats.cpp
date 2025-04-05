@@ -86,7 +86,7 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 		return 0.0;
 	}
 
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	f64 tmp = wishspeedcapped - accelspeed;
 	if (tmp <= 0.0)
 	{
@@ -105,7 +105,7 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 f32 AACall::CalcMinYaw(bool useRadians)
 {
 	// If your velocity is lower than sv_air_max_wishspeed, any direction will get you gain.
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	if (this->velocityPre.Length2D() <= wishspeedcapped)
 	{
 		return 0.0;
@@ -118,7 +118,7 @@ f32 AACall::CalcMaxYaw(bool useRadians)
 	f32 gamma1, numer, denom;
 	gamma1 = AACall::CalcAccelSpeed(true);
 	f32 speed = this->velocityPre.Length2D();
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	if (gamma1 <= 2 * wishspeedcapped)
 	{
 		numer = -gamma1;
@@ -151,7 +151,7 @@ f32 AACall::CalcIdealGain()
 	// sqrt(v^2+a^2+2*v*a*cos(yaw)
 	// clang-format off
 	
-	const f64 wishspeedcapped = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIR_MAX_WISHSPEED]->values))->m_flValue;
+	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	
 	f32 idealSpeed = sqrt(this->velocityPre.Length2DSqr()
 		+ MIN(this->CalcAccelSpeed(true), wishspeedcapped)
@@ -821,7 +821,7 @@ void KZJumpstatsService::OnAirMovePost()
 		VectorScale(wishvel, this->player->currentMoveData->m_flMaxSpeed / wishspeed, wishvel);
 		wishspeed = this->player->currentMoveData->m_flMaxSpeed;
 	}
-	auto accel = reinterpret_cast<CVValue_t *>(&(KZ::mode::modeCvars[MODECVAR_SV_AIRACCELERATE]->values))->m_flValue;
+	f32 accel = KZ::mode::modeCvarRefs[MODECVAR_SV_AIRACCELERATE]->GetFloat();
 
 	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }
@@ -1208,39 +1208,32 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 	}
 }
 
-static_function SCMD_CALLBACK(Command_KzToggleJumpstats)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJumpstatsReporting();
-	return MRES_SUPERCEDE;
-}
-
-static_function SCMD_CALLBACK(Command_KzJSAlways)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJSAlways();
-	return MRES_SUPERCEDE;
-}
-
-static_function SCMD_CALLBACK(Command_KzJsPrintMinTier)
+SCMD(kz_jsbroadcast, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetBroadcastMinTier(args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzJsSoundMinTier)
+SCMD(kz_jssound, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetSoundMinTier(args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-void KZJumpstatsService::RegisterCommands()
+SCMD(kz_togglestats, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
-	scmd::RegisterCmd("kz_jsbroadcast", Command_KzJsPrintMinTier);
-	scmd::RegisterCmd("kz_jssound", Command_KzJsSoundMinTier);
-	scmd::RegisterCmd("kz_togglestats", Command_KzToggleJumpstats);
-	scmd::RegisterCmd("kz_togglejs", Command_KzToggleJumpstats);
-	scmd::RegisterCmd("kz_jsalways", Command_KzJSAlways);
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJumpstatsReporting();
+	return MRES_SUPERCEDE;
+}
+
+SCMD_LINK(kz_togglejs, kz_togglestats);
+
+SCMD(kz_jsalways, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJSAlways();
+	return MRES_SUPERCEDE;
 }

@@ -26,7 +26,7 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		return false;
 	}
 
-	for (i32 i = 0; i <= g_pKZUtils->GetGlobals()->maxClients; i++)
+	for (i32 i = 0; i <= MAXPLAYERS; i++)
 	{
 		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
 		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
@@ -78,15 +78,10 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 	return false;
 }
 
-static_function SCMD_CALLBACK(Command_KzGoto)
+SCMD(kz_goto, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	const char *targetNamePart = args->ArgS();
 	player->gotoService->GotoPlayer(targetNamePart);
 	return MRES_SUPERCEDE;
-}
-
-void KZGotoService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_goto", Command_KzGoto);
 }

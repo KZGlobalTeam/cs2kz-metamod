@@ -46,7 +46,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	{
 		return false;
 	}
-
+	ConVar_Register();
 	hooks::Initialize();
 	movement::InitDetours();
 	KZCheckpointService::Init();
@@ -57,8 +57,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZLanguageService::Init();
 	KZ::misc::Init();
 	KZQuietService::Init();
-	KZ::misc::RegisterCommands();
-	if (!KZ::mode::InitModeCvars())
+	if (!KZ::mode::CheckModeCvars())
 	{
 		return false;
 	}
@@ -85,6 +84,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
+	KZ::misc::UnrestrictTimeLimit();
 	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
@@ -93,6 +93,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	g_pPlayerManager->Cleanup();
 	KZDatabaseService::Cleanup();
 	KZGlobalService::Cleanup();
+	ConVar_Unregister();
 	return true;
 }
 

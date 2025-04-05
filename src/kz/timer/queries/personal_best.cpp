@@ -423,30 +423,23 @@ struct PBRequest : public BaseRequest
 	}
 };
 
-SCMD_CALLBACK(CommandKZPB)
+SCMD(kz_pb, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PBRequest::Create<PBRequest>(player, PBRequest::pbFeatures, true, true, args);
 	return MRES_SUPERCEDE;
 }
 
-SCMD_CALLBACK(CommandKZSPB)
+SCMD(kz_spb, SCFL_RECORD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PBRequest::Create<PBRequest>(player, PBRequest::pbFeatures, true, false, args);
 	return MRES_SUPERCEDE;
 }
 
-SCMD_CALLBACK(CommandKZGPB)
+SCMD(kz_gpb, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PBRequest::Create<PBRequest>(player, PBRequest::pbFeatures, false, true, args);
 	return MRES_SUPERCEDE;
-}
-
-void KZTimerService::RegisterPBCommand()
-{
-	scmd::RegisterCmd("kz_pb", CommandKZPB);
-	scmd::RegisterCmd("kz_spb", CommandKZSPB);
-	scmd::RegisterCmd("kz_gpb", CommandKZGPB);
 }

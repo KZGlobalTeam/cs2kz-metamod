@@ -399,7 +399,6 @@ private:
 	f32 lastWPressedTime {};
 
 public:
-	static void RegisterCommands();
 	static void StartDemoRecording(CUtlString playerName);
 	static void OnServerActivate();
 	static DistanceTier GetDistTierFromString(const char *tierString);

@@ -74,7 +74,7 @@ void KZTipService::ShuffleTips()
 	}
 }
 
-static_function SCMD_CALLBACK(Command_KzToggleTips)
+SCMD(kz_tips, SCFL_MISC)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->tipService->ToggleTips();
@@ -83,7 +83,6 @@ static_function SCMD_CALLBACK(Command_KzToggleTips)
 
 void KZTipService::InitTips()
 {
-	scmd::RegisterCmd("kz_tips", Command_KzToggleTips);
 	LoadTips();
 	ShuffleTips();
 	tipTimer = StartTimer(PrintTips, true);
