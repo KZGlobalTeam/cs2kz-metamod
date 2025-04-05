@@ -12,7 +12,6 @@ public:
 	static void Init();
 	static void LoadLanguages();
 	static void LoadTranslations();
-	static void RegisterCommands();
 
 	virtual void Reset() override
 	{

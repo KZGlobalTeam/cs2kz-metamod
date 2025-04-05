@@ -57,7 +57,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZLanguageService::Init();
 	KZ::misc::Init();
 	KZQuietService::Init();
-	KZ::misc::RegisterCommands();
 	if (!KZ::mode::CheckModeCvars())
 	{
 		return false;

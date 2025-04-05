@@ -90,7 +90,6 @@ public:
 public:
 	static void Init();
 	static void Cleanup();
-	static void RegisterCommands();
 
 	static void OnServerGamePostSimulate();
 	static void OnActivateServer();

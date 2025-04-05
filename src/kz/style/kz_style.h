@@ -205,5 +205,4 @@ namespace KZ::style
 	KZStyleManager::StylePluginInfo GetStyleInfo(KZStyleService *style);
 	KZStyleManager::StylePluginInfo GetStyleInfo(CUtlString styleName);
 
-	void RegisterCommands();
 }; // namespace KZ::style

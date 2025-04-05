@@ -885,7 +885,7 @@ bool KZ::course::UpdateCourseGlobalID(const char *courseName, u32 globalID)
 	return false;
 }
 
-SCMD_CALLBACK(Command_KzCourse)
+SCMD(kz_course, SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (player->timerService->GetCourse())
@@ -902,9 +902,4 @@ SCMD_CALLBACK(Command_KzCourse)
 		player->PrintConsole(false, false, "%s", g_sortedCourses[i]->name);
 	}
 	return MRES_SUPERCEDE;
-}
-
-void KZ::course::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_course", Command_KzCourse);
 }

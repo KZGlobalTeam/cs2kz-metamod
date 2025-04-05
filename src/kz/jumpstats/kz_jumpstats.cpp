@@ -1208,39 +1208,32 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 	}
 }
 
-static_function SCMD_CALLBACK(Command_KzToggleJumpstats)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJumpstatsReporting();
-	return MRES_SUPERCEDE;
-}
-
-static_function SCMD_CALLBACK(Command_KzJSAlways)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->jumpstatsService->ToggleJSAlways();
-	return MRES_SUPERCEDE;
-}
-
-static_function SCMD_CALLBACK(Command_KzJsPrintMinTier)
+SCMD(kz_jsbroadcast, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetBroadcastMinTier(args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzJsSoundMinTier)
+SCMD(kz_jssound, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetSoundMinTier(args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
-void KZJumpstatsService::RegisterCommands()
+SCMD(kz_togglestats, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
-	scmd::RegisterCmd("kz_jsbroadcast", Command_KzJsPrintMinTier);
-	scmd::RegisterCmd("kz_jssound", Command_KzJsSoundMinTier);
-	scmd::RegisterCmd("kz_togglestats", Command_KzToggleJumpstats);
-	scmd::RegisterCmd("kz_togglejs", Command_KzToggleJumpstats);
-	scmd::RegisterCmd("kz_jsalways", Command_KzJSAlways);
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJumpstatsReporting();
+	return MRES_SUPERCEDE;
+}
+
+SCMD_LINK(kz_togglejs, kz_togglestats);
+
+SCMD(kz_jsalways, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJSAlways();
+	return MRES_SUPERCEDE;
 }

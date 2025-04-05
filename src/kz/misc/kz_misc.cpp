@@ -37,7 +37,7 @@ static_global class KZOptionServiceEventListener_Misc : public KZOptionServiceEv
 	}
 } optionEventListener;
 
-static_function SCMD_CALLBACK(Command_KzHidelegs)
+SCMD(kz_hidelegs, SCFL_PLAYER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
@@ -52,7 +52,7 @@ static_function SCMD_CALLBACK(Command_KzHidelegs)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzHide)
+SCMD(kz_hide, SCFL_PLAYER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHide();
@@ -67,7 +67,7 @@ static_function SCMD_CALLBACK(Command_KzHide)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzEnd)
+SCMD(kz_end, SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
@@ -139,7 +139,7 @@ static_function SCMD_CALLBACK(Command_KzEnd)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzRestart)
+SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	const KZCourseDescriptor *startPosCourse = nullptr;
@@ -209,7 +209,9 @@ static_function SCMD_CALLBACK(Command_KzRestart)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzLj)
+SCMD_LINK(kz_r, kz_restart);
+
+SCMD(kz_lj, SCFL_JUMPSTATS | SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
@@ -228,7 +230,10 @@ static_function SCMD_CALLBACK(Command_KzLj)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzHideWeapon)
+SCMD_LINK(kz_ljarea, kz_lj);
+SCMD_LINK(kz_jsarea, kz_lj);
+
+SCMD(kz_hideweapon, SCFL_PLAYER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
@@ -243,13 +248,7 @@ static_function SCMD_CALLBACK(Command_KzHideWeapon)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_JoinTeam)
-{
-	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), true);
-	return MRES_SUPERCEDE;
-}
-
-static_function SCMD_CALLBACK(Command_KzPlayerCheck)
+SCMD(kz_playercheck, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	KZPlayer *targetPlayer = nullptr;
@@ -284,6 +283,24 @@ static_function SCMD_CALLBACK(Command_KzPlayerCheck)
 		true, false, targetPlayer->IsAuthenticated() ? "Player Authenticated (Steam)" : "Player Not Authenticated (Steam)", targetPlayer->GetName());
 	return MRES_SUPERCEDE;
 }
+
+SCMD_LINK(kz_pc, kz_playercheck);
+
+SCMD(jointeam, SCFL_HIDDEN)
+{
+	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), true);
+	return MRES_SUPERCEDE;
+}
+
+SCMD(switchhands, SCFL_HIDDEN)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->quietService->ResetHideWeapon();
+	return MRES_IGNORED;
+}
+
+SCMD_LINK(switchhandsleft, switchhands);
+SCMD_LINK(switchhandsright, switchhands);
 
 static_function f64 CheckRestart()
 {
@@ -320,43 +337,7 @@ void KZ::misc::OnServerActivate()
 	interfaces::pEngine->ServerCommand("mp_restartgame 1");
 }
 
-SCMD_CALLBACK(Command_KzSwitchHands)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->quietService->ResetHideWeapon();
-	return MRES_IGNORED;
-}
-
-// TODO: move command registration to the service class?
-void KZ::misc::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_hidelegs", Command_KzHidelegs);
-	scmd::RegisterCmd("kz_hide", Command_KzHide);
-	scmd::RegisterCmd("kz_restart", Command_KzRestart);
-	scmd::RegisterCmd("kz_r", Command_KzRestart);
-	scmd::RegisterCmd("kz_lj", Command_KzLj);
-	scmd::RegisterCmd("kz_ljarea", Command_KzLj);
-	scmd::RegisterCmd("kz_jsarea", Command_KzLj);
-	scmd::RegisterCmd("kz_end", Command_KzEnd);
-	scmd::RegisterCmd("kz_hideweapon", Command_KzHideWeapon);
-	scmd::RegisterCmd("kz_pc", Command_KzPlayerCheck);
-	scmd::RegisterCmd("kz_playercheck", Command_KzPlayerCheck);
-	scmd::RegisterCmd("jointeam", Command_JoinTeam);
-	scmd::RegisterCmd("switchhands", Command_KzSwitchHands);
-	scmd::RegisterCmd("switchhandsleft", Command_KzSwitchHands);
-	scmd::RegisterCmd("switchhandsright", Command_KzSwitchHands);
-	// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
-	KZGotoService::RegisterCommands();
-	KZJumpstatsService::RegisterCommands();
-	KZTimerService::RegisterCommands();
-	KZNoclipService::RegisterCommands();
-	KZHUDService::RegisterCommands();
-	KZLanguageService::RegisterCommands();
-	KZGlobalService::RegisterCommands();
-	KZ::mode::RegisterCommands();
-	KZ::style::RegisterCommands();
-	KZ::course::RegisterCommands();
-}
+// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 
 void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 {

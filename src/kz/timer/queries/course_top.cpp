@@ -365,36 +365,32 @@ struct CourseTopRequest : public BaseRequest
 	}
 };
 
-SCMD_CALLBACK(CommandKZCourseTop)
+SCMD(kz_ctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, true, args);
 	return MRES_SUPERCEDE;
 }
 
-SCMD_CALLBACK(CommandKZGlobalCourseTop)
+SCMD_LINK(kz_coursetop, kz_ctop);
+SCMD_LINK(kz_maptop, kz_ctop);
+
+SCMD(kz_gctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, false, true, args);
 	return MRES_SUPERCEDE;
 }
 
-SCMD_CALLBACK(CommandKZServerCourseTop)
+SCMD_LINK(kz_gcoursetop, kz_gctop);
+SCMD_LINK(kz_gmaptop, kz_gctop);
+
+SCMD(kz_sctop, SCFL_TIMER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, false, args);
 	return MRES_SUPERCEDE;
 }
 
-void KZTimerService::RegisterCourseTopCommands()
-{
-	scmd::RegisterCmd("kz_ctop", CommandKZCourseTop);
-	scmd::RegisterCmd("kz_coursetop", CommandKZCourseTop);
-	scmd::RegisterCmd("kz_maptop", CommandKZCourseTop);
-	scmd::RegisterCmd("kz_gctop", CommandKZGlobalCourseTop);
-	scmd::RegisterCmd("kz_gcoursetop", CommandKZGlobalCourseTop);
-	scmd::RegisterCmd("kz_gmaptop", CommandKZGlobalCourseTop);
-	scmd::RegisterCmd("kz_sctop", CommandKZServerCourseTop);
-	scmd::RegisterCmd("kz_scoursetop", CommandKZServerCourseTop);
-	scmd::RegisterCmd("kz_smaptop", CommandKZServerCourseTop);
-}
+SCMD_LINK(kz_scoursetop, kz_sctop);
+SCMD_LINK(kz_smaptop, kz_sctop);

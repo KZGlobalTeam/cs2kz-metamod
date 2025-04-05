@@ -253,22 +253,16 @@ struct TopRecordRequest : public BaseRequest
 	}
 };
 
-SCMD_CALLBACK(CommandKZWR)
+SCMD(kz_wr, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	TopRecordRequest::Create<TopRecordRequest>(player, TopRecordRequest::trFeatures, true, true, args);
 	return MRES_SUPERCEDE;
 }
 
-SCMD_CALLBACK(CommandKZSR)
+SCMD(kz_sr, SCFL_RECORD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	TopRecordRequest::Create<TopRecordRequest>(player, TopRecordRequest::trFeatures, true, false, args);
 	return MRES_SUPERCEDE;
-}
-
-void KZTimerService::RegisterRecordCommands()
-{
-	scmd::RegisterCmd("kz_wr", CommandKZWR);
-	scmd::RegisterCmd("kz_sr", CommandKZSR);
 }

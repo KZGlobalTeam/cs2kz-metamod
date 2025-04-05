@@ -55,7 +55,7 @@ void KZNoclipService::HandleNoclip()
 
 // Commands
 
-static_function SCMD_CALLBACK(Command_KzNoclip)
+SCMD(kz_noclip, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->noclipService->ToggleNoclip();
@@ -70,12 +70,8 @@ static_function SCMD_CALLBACK(Command_KzNoclip)
 	return MRES_SUPERCEDE;
 }
 
-void KZNoclipService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_noclip", Command_KzNoclip);
-	scmd::RegisterCmd("kz_nc", Command_KzNoclip);
-	scmd::RegisterCmd("noclip", Command_KzNoclip);
-}
+SCMD_LINK(kz_nc, kz_noclip);
+SCMD_LINK(noclip, kz_noclip);
 
 void KZNoclipService::HandleMoveCollision()
 {

@@ -12,8 +12,6 @@ private:
 	bool inNoclip {};
 
 public:
-	static void RegisterCommands();
-
 	void DisableNoclip()
 	{
 		this->inNoclip = false;

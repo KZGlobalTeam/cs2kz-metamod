@@ -315,6 +315,4 @@ namespace KZ::mode
 	KZModeManager::ModePluginInfo GetModeInfo(KZ::API::Mode mode);
 	KZModeManager::ModePluginInfo GetModeInfo(CUtlString modeName);
 	KZModeManager::ModePluginInfo GetModeInfoFromDatabaseID(i32 id);
-
-	void RegisterCommands();
 }; // namespace KZ::mode

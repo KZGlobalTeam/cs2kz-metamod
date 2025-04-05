@@ -105,7 +105,7 @@ const char *KZLanguageService::GetTranslatedFormat(const char *language, const c
 	return outFormat;
 }
 
-static_function SCMD_CALLBACK(Command_KzSetLanguage)
+SCMD(kz_language, SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	char language[32] {};
@@ -115,9 +115,4 @@ static_function SCMD_CALLBACK(Command_KzSetLanguage)
 	player->languageService->PrintChat(true, false, "Switch Language", language);
 
 	return MRES_SUPERCEDE;
-}
-
-void KZLanguageService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_language", Command_KzSetLanguage);
 }

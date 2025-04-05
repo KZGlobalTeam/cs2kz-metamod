@@ -784,7 +784,7 @@ void KZTimerService::OnTeleport(const Vector *newPosition, const QAngle *newAngl
 	}
 }
 
-static_function SCMD_CALLBACK(Command_KzStopTimer)
+SCMD(kz_stop, SCFL_TIMER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (player->timerService->GetTimerRunning())
@@ -794,14 +794,14 @@ static_function SCMD_CALLBACK(Command_KzStopTimer)
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzPauseTimer)
+SCMD(kz_pause, SCFL_TIMER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->timerService->TogglePause();
 	return MRES_SUPERCEDE;
 }
 
-static_function SCMD_CALLBACK(Command_KzSetCompareLevel)
+SCMD(kz_comparelevel, SCFL_RECORD | SCFL_TIMER | SCFL_PREFERENCE | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->timerService->SetCompareTarget(args->Arg(1));
@@ -1482,16 +1482,6 @@ void KZTimerService::Init()
 {
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
 	KZOptionService::RegisterEventListener(&optionEventListener);
-}
-
-void KZTimerService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_stop", Command_KzStopTimer);
-	scmd::RegisterCmd("kz_pause", Command_KzPauseTimer);
-	scmd::RegisterCmd("kz_comparelevel", Command_KzSetCompareLevel);
-	KZTimerService::RegisterPBCommand();
-	KZTimerService::RegisterRecordCommands();
-	KZTimerService::RegisterCourseTopCommands();
 }
 
 void KZTimerService::OnPlayerPreferencesLoaded()

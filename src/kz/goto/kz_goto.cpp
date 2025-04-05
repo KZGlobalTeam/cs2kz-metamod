@@ -78,15 +78,10 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 	return false;
 }
 
-static_function SCMD_CALLBACK(Command_KzGoto)
+SCMD(kz_goto, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	const char *targetNamePart = args->ArgS();
 	player->gotoService->GotoPlayer(targetNamePart);
 	return MRES_SUPERCEDE;
-}
-
-void KZGotoService::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_goto", Command_KzGoto);
 }

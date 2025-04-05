@@ -16,7 +16,6 @@
 #include "utils/plat.h"
 
 static_function SCMD_CALLBACK(Command_KzModeShort);
-static_function SCMD_CALLBACK(Command_KzMode);
 
 static_global KZModeManager modeManager;
 KZModeManager *g_pKZModeManager = &modeManager;
@@ -170,9 +169,10 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	}
 
 	char shortModeCmd[64];
-
+	char shortModeDescription[64];
 	V_snprintf(shortModeCmd, 64, "kz_%s", shortModeName);
-	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort);
+	V_snprintf(shortModeDescription, 64, "Command Description - kz_%s", shortModeName);
+	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort, shortModeDescription, SCFL_MODESTYLE);
 
 	// Add to the list otherwise, and update the database for ID.
 	if (!info)
@@ -327,7 +327,7 @@ void KZModeManager::Cleanup()
 	}
 }
 
-static_function SCMD_CALLBACK(Command_KzMode)
+SCMD(kz_mode, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	modeManager.SwitchToMode(player, args->Arg(1));
@@ -421,11 +421,6 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfoFromDatabaseID(i32 id)
 		}
 	}
 	return KZModeManager::ModePluginInfo();
-}
-
-void KZ::mode::RegisterCommands()
-{
-	scmd::RegisterCmd("kz_mode", Command_KzMode);
 }
 
 void KZDatabaseServiceEventListener_Modes::OnDatabaseSetup()
