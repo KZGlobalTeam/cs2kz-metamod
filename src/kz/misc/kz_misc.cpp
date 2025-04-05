@@ -469,17 +469,28 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 		return;
 	}
 	const char *commandName = g_pCVar->GetCommand(cmd)->GetName();
-
+	const char *p;
 	// Is it a chat message?
 	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{
 		if (args.ArgC() < 2)
 		{
-			// no argument somehow
+			// no argument, happens when the player just types "say" or "say_team" in console
 			return;
 		}
-
-		i32 argLen = strlen(args[1]);
+		// 3 cases:
+		// say ""
+		// say_team ""
+		// say /<insert text>
+		i32 argLen = strlen(args.ArgS());
+		p = args.ArgS();
+		bool wrappedInQuotes = false;
+		if (args.ArgS()[0] == '"' && args.ArgS()[argLen - 1] == '"')
+		{
+			argLen -= 2;
+			wrappedInQuotes = true;
+			p += 1;
+		}
 		if (argLen < 1 || args[1][0] == SCMD_CHAT_SILENT_TRIGGER)
 		{
 			// arg is too short!
@@ -487,14 +498,7 @@ void KZ::misc::ProcessConCommand(ConCommandHandle cmd, const CCommandContext &ct
 		}
 
 		CUtlString message;
-		for (int i = 1; i < args.ArgC(); i++)
-		{
-			if (i > 1)
-			{
-				message += ' ';
-			}
-			message += args[i];
-		}
+		message.SetDirect(p, strlen(p) - wrappedInQuotes);
 
 		if (player->IsAlive())
 		{
