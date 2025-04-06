@@ -38,6 +38,7 @@ class GameSessionConfiguration_t
 
 class EntListener : public IEntityListener
 {
+	virtual void OnEntityCreated(CEntityInstance *pEntity);
 	virtual void OnEntitySpawned(CEntityInstance *pEntity);
 	virtual void OnEntityDeleted(CEntityInstance *pEntity);
 } entityListener;
@@ -330,10 +331,21 @@ static_function void RemoveEntityHooks(CBaseEntity *entity)
 	}
 }
 
+void EntListener::OnEntityCreated(CEntityInstance *pEntity)
+{
+	if (V_strstr(pEntity->GetClassname(), "trigger_"))
+	{
+		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pEntity);
+		trigger->m_NetworkTransmitComponent().m_nStateFlags() = 7; // Always transmit
+	}
+}
+
 void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 {
 	if (V_strstr(pEntity->GetClassname(), "trigger_"))
 	{
+		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pEntity);
+		trigger->m_fEffects() &= ~EF_NODRAW;
 		AddEntityHooks(static_cast<CBaseEntity *>(pEntity));
 		KZ::mapapi::CheckEndTimerTrigger((CBaseTrigger *)pEntity);
 	}
