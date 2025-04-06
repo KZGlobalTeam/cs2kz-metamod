@@ -79,7 +79,7 @@ const char *KZLanguageService::GetLanguage()
 
 	if (lang && lang[0] != '\0')
 	{
-		return (languagesKV->GetString(lang), lang);
+		return languagesKV->GetString(lang, lang);
 	}
 	return KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE);
 }
