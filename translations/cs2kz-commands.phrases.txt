@@ -31,7 +31,7 @@
 	"Command Help Response Category Hint (Console)"
 	{
 		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
-		"chi"		"您可以使用"kz_help <类别>"获取特定类别的命令列表(例如：kz_help checkpoint misc).\n可用类别列表:checkpoint(存点),record(记录),jumpstats(跳跃统计),measure(测量),modestyle(模式风格),preference(偏好设置),racing(竞速),replay(重播),saveloc(保存位置),spec(观察),status(状态),timer(计时器),player(玩家),global(全局),misc(杂项),map(地图)"
+		"chi"		"您可以使用"kz_help <类别>"获取特定类别的命令列表(例如：kz_help checkpoint misc).\n可用类别列表:checkpoint(存点),record(记录),jumpstats(跳跃统计),measure(测量),modestyle(模式风格),preference(偏好设置),racing(竞速),replay(重播),saveloc(保存位置),spec(观察),status(状态),timer(计时器),player(玩家),global(全球),misc(杂项),map(地图)"
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 	}
 	"Switch Language"
