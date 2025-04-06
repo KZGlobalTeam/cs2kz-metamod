@@ -32,6 +32,7 @@
 	{
 		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
+		"ua"		"Ви можете використати \"kz_help <категорія>\", щоб отримати список команд, пов'язаних з певною категорією (наприклад, kz_help checkpoint misc).\nСписок доступних категорій: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 	}
 	"Switch Language"
 	{
@@ -56,96 +57,115 @@
 	{
 		"en"		"Name"
 		"sv"		"Namn"
+		"ua"		"Назва"
 	}
 	"Command List Header - Description"
 	{
 		"en"		"Description"
-		"en"		"Beskrivning"
+		"sv"		"Beskrivning"
+		"ua"		"Опис"
 	}
 	"Command List - Checkpoint"
 	{
 		"en"		"Checkpoint Commands:"
 		"sv"		"Checkpointkommandon:"
+		"ua"		"Команди Чекпоінтів:"
 	}
 	"Command List - Record"
 	{
 		"en"		"Record Commands:"
 		"sv"		"Rekordkommandon:"
+		"ua"		"Команди Рекордів:"
 	}
 	"Command List - Jumpstats"
 	{
 		"en"		"Jumpstats Commands:"
 		"sv"		"Jumpstatkommandon:"
+		"ua"		"Команди Статистики стрибків:"
 	}
 	"Command List - Measure"
 	{
 		"en"		"Measure Commands:"
 		"sv"		"Mätningskommandon:"
+		"ua"		"Команди Вимірювання:"
 	}
 	"Command List - ModeStyle"
 	{
 		"en"		"Mode/Style Commands:"
 		"sv"		"Mode/Stilkommandon:"
+		"ua"		"Команди Режиму/Стилю:"
 	}
 	"Command List - Preference"
 	{
 		"en"		"Preference Commands:"
 		"sv"		"Preferenskommandon:"
+		"ua"		"Команди Налаштувань:"
 	}
 	"Command List - Racing"
 	{
 		"en"		"Racing Commands:"
 		"sv"		"Racingkommandon:"
+		"ua"		"Команди Гонки:"
 	}
 	"Command List - Replay"
 	{
 		"en"		"Replay Commands:"
 		"sv"		"Repriskommandon:"
+		"ua"		"Команди Повтору:"
 	}
 	"Command List - Saveloc"
 	{
 		"en"		"Saveloc Commands:"
 		"sv"		"Saveloc kommandon:"
+		"ua"		"Команди Saveloc:"
 	}
 	"Command List - Spec"
 	{
 		"en"		"Spectate Commands:"
 		"sv"		"Åskådningskommandon:"
+		"ua"		"Команди Спостерігання:"
 	}
 	"Command List - Status"
 	{
 		"en"		"Status Commands:"
 		"sv"		"Statuskommandon:"
+		"ua"		"Команди Статусу:"
 	}
 	"Command List - Timer"
 	{
 		"en"		"Timer Commands:"
 		"sv"		"Timerkommandon:"
+		"ua"		"Команди Таймера:"
 	}
 	"Command List - Player"
 	{
 		"en"		"Player Commands:"
 		"sv"		"Spelarkommandon:"
+		"ua"		"Команди Гравця:"
 	}
 	"Command List - Global"
 	{
 		"en"		"Global Commands:"
 		"sv"		"Globala Kommandon:"
+		"ua"		"Глобальні Команди:"
 	}
 	"Command List - Misc"
 	{
 		"en"		"Miscellaneous Commands:"
 		"sv"		"Blandade Kommandon:"
+		"ua"		"Інші Команди:"
 	}
 	"Command List - Map"
 	{
 		"en"		"Map Commands:"
 		"sv"		"Kartkommandon:"
+		"ua"		"Команди Мапи:"
 	}
 	"Command List - HUD"
 	{
 		"en"		"HUD Commands:"
 		"sv"		"HUD Kommandon:"
+		"ua"		"Команди HUD:"
 	}
 	// Commands
 	"Command Description - kz_undo"
