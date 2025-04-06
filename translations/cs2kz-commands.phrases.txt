@@ -31,7 +31,7 @@
 	"Command Help Response Category Hint (Console)"
 	{
 		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
-		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
+		"chi"		"您可以使用"kz_help <类别>"获取特定类别的命令列表(例如：kz_help checkpoint misc).\n可用类别列表:checkpoint(存点),record(记录),jumpstats(跳跃统计),measure(测量),modestyle(模式风格),preference(偏好设置),racing(竞速),replay(重播),saveloc(保存位置),spec(观察),status(状态),timer(计时器),player(玩家),global(全局),misc(杂项),map(地图)"
 	}
 	"Switch Language"
 	{
@@ -55,97 +55,97 @@
 	"Command List Header - Name"
 	{
 		"en"		"Name"
-		"sv"		"Namn"
+		"en"		"名称"
 	}
 	"Command List Header - Description"
 	{
 		"en"		"Description"
-		"en"		"Beskrivning"
+		"chi"		"描述"
 	}
 	"Command List - Checkpoint"
 	{
 		"en"		"Checkpoint Commands:"
-		"sv"		"Checkpointkommandon:"
+		"chi"		"存点 命令:"
 	}
 	"Command List - Record"
 	{
 		"en"		"Record Commands:"
-		"sv"		"Rekordkommandon:"
+		"chi"		"记录 命令:"
 	}
 	"Command List - Jumpstats"
 	{
 		"en"		"Jumpstats Commands:"
-		"sv"		"Jumpstatkommandon:"
+		"chi"		"起跳数据 命令:"
 	}
 	"Command List - Measure"
 	{
 		"en"		"Measure Commands:"
-		"sv"		"Mätningskommandon:"
+		"chi"		"测量 命令:"
 	}
 	"Command List - ModeStyle"
 	{
 		"en"		"Mode/Style Commands:"
-		"sv"		"Mode/Stilkommandon:"
+		"chi"		"模式/风格 命令:"
 	}
 	"Command List - Preference"
 	{
 		"en"		"Preference Commands:"
-		"sv"		"Preferenskommandon:"
+		"chi"		"偏好设置 命令:"
 	}
 	"Command List - Racing"
 	{
 		"en"		"Racing Commands:"
-		"sv"		"Racingkommandon:"
+		"chi"		"竞速 命令:"
 	}
 	"Command List - Replay"
 	{
 		"en"		"Replay Commands:"
-		"sv"		"Repriskommandon:"
+		"chi"		"重播 命令:"
 	}
 	"Command List - Saveloc"
 	{
 		"en"		"Saveloc Commands:"
-		"sv"		"Saveloc kommandon:"
+		"chi"		"保存位置 命令:"
 	}
 	"Command List - Spec"
 	{
 		"en"		"Spectate Commands:"
-		"sv"		"Åskådningskommandon:"
+		"chi"		"观察 命令:"
 	}
 	"Command List - Status"
 	{
 		"en"		"Status Commands:"
-		"sv"		"Statuskommandon:"
+		"chi"		"状态 命令:"
 	}
 	"Command List - Timer"
 	{
 		"en"		"Timer Commands:"
-		"sv"		"Timerkommandon:"
+		"chi"		"计时器 命令:"
 	}
 	"Command List - Player"
 	{
 		"en"		"Player Commands:"
-		"sv"		"Spelarkommandon:"
+		"chi"		"玩家 命令:"
 	}
 	"Command List - Global"
 	{
 		"en"		"Global Commands:"
-		"sv"		"Globala Kommandon:"
+		"chi"		"全球 命令:"
 	}
 	"Command List - Misc"
 	{
 		"en"		"Miscellaneous Commands:"
-		"sv"		"Blandade Kommandon:"
+		"chi"		"杂项 命令:"
 	}
 	"Command List - Map"
 	{
 		"en"		"Map Commands:"
-		"sv"		"Kartkommandon:"
+		"chi"		"地图 命令:"
 	}
 	"Command List - HUD"
 	{
 		"en"		"HUD Commands:"
-		"sv"		"HUD Kommandon:"
+		"chi"		"HUD 命令:"
 	}
 	// Commands
 	"Command Description - kz_undo"
