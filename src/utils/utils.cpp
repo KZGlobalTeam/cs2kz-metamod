@@ -425,7 +425,6 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 {
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("SetConVar");
 	auto msg = netmsg->AllocateMessage()->ToPB<CNETMsg_SetConVar>();
-	CBufferString buf;
 	for (u32 i = 0; i < size; i++)
 	{
 		if (!conVarRefs[i]->IsValidRef())
@@ -433,6 +432,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 			delete msg;
 			return;
 		}
+		CBufferString buf;
 		conVarRefs[i]->TypeTraits()->ValueToString(&values[i], buf);
 		CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
 		cvar->set_name(conVarRefs[i]->GetName());
