@@ -57,7 +57,7 @@
 	"Command List Header - Name"
 	{
 		"en"		"Name"
-		"en"		"名称"
+		"chi"		"名称"
 		"sv"		"Namn"
 		"ua"		"Назва"
 	}
