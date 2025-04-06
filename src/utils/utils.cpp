@@ -285,6 +285,7 @@ bool utils::SetConVarValue(CPlayerSlot slot, const char *name, const char *value
 	{
 		CVValue_t newValue;
 		cvarRef.TypeTraits()->Construct(&newValue);
+		cvarRef.TypeTraits()->StringToValue(value, &newValue);
 		cvarRef.TypeTraits()->Copy(cvarRef.GetConVarData()->Value(-1), newValue);
 		cvarRef.TypeTraits()->Destruct(&newValue);
 	}
@@ -314,6 +315,7 @@ bool utils::SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const 
 	{
 		CVValue_t newValue;
 		conVarRef.TypeTraits()->Construct(&newValue);
+		conVarRef.TypeTraits()->StringToValue(value, &newValue);
 		conVarRef.TypeTraits()->Copy(conVarRef.GetConVarData()->Value(-1), newValue);
 		conVarRef.TypeTraits()->Destruct(&newValue);
 	}
