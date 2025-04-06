@@ -65,7 +65,6 @@
 	{
 		"en"		"Description"
 		"chi"		"描述"
-		"en"		"Beskrivning"
 		"sv"		"Beskrivning"
 		"ua"		"Опис"
 	}
