@@ -31,6 +31,7 @@
 	"Command Help Response Category Hint (Console)"
 	{
 		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
+		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 	}
 	"Switch Language"
 	{
@@ -54,78 +55,97 @@
 	"Command List Header - Name"
 	{
 		"en"		"Name"
+		"sv"		"Namn"
 	}
 	"Command List Header - Description"
 	{
 		"en"		"Description"
+		"en"		"Beskrivning"
 	}
 	"Command List - Checkpoint"
 	{
 		"en"		"Checkpoint Commands:"
+		"sv"		"Checkpointkommandon:"
 	}
 	"Command List - Record"
 	{
 		"en"		"Record Commands:"
+		"sv"		"Rekordkommandon:"
 	}
 	"Command List - Jumpstats"
 	{
 		"en"		"Jumpstats Commands:"
+		"sv"		"Jumpstatkommandon:"
 	}
 	"Command List - Measure"
 	{
 		"en"		"Measure Commands:"
+		"sv"		"Mätningskommandon:"
 	}
 	"Command List - ModeStyle"
 	{
 		"en"		"Mode/Style Commands:"
+		"sv"		"Mode/Stilkommandon:"
 	}
 	"Command List - Preference"
 	{
 		"en"		"Preference Commands:"
+		"sv"		"Preferenskommandon:"
 	}
 	"Command List - Racing"
 	{
 		"en"		"Racing Commands:"
+		"sv"		"Racingkommandon:"
 	}
 	"Command List - Replay"
 	{
 		"en"		"Replay Commands:"
+		"sv"		"Repriskommandon:"
 	}
 	"Command List - Saveloc"
 	{
 		"en"		"Saveloc Commands:"
+		"sv"		"Saveloc kommandon:"
 	}
 	"Command List - Spec"
 	{
 		"en"		"Spectate Commands:"
+		"sv"		"Åskådningskommandon:"
 	}
 	"Command List - Status"
 	{
 		"en"		"Status Commands:"
+		"sv"		"Statuskommandon:"
 	}
 	"Command List - Timer"
 	{
 		"en"		"Timer Commands:"
+		"sv"		"Timerkommandon:"
 	}
 	"Command List - Player"
 	{
 		"en"		"Player Commands:"
+		"sv"		"Spelarkommandon:"
 	}
 	"Command List - Global"
 	{
 		"en"		"Global Commands:"
+		"sv"		"Globala Kommandon:"
 	}
 	"Command List - Misc"
 	{
 		"en"		"Miscellaneous Commands:"
+		"sv"		"Blandade Kommandon:"
 	}
 	"Command List - Map"
 	{
 		"en"		"Map Commands:"
+		"sv"		"Kartkommandon:"
 	}
 	"Command List - HUD"
 	{
 		"en"		"HUD Commands:"
+		"sv"		"HUD Kommandon:"
 	}
 	// Commands
 	"Command Description - kz_undo"
