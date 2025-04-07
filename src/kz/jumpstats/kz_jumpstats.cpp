@@ -605,7 +605,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	{
 		f32 ignoreLadderJumpTime = this->player->GetPlayerPawn()->m_ignoreLadderJumpTime();
 
-		bool ignoringLadder = ignoreLadderJumpTime > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL;
+		bool ignoringLadder = ignoreLadderJumpTime > g_pKZUtils->GetGlobals()->curtime;
 		bool holdingJumpDuringIgnoreLadderPeriod =
 			this->player->jumpstatsService->lastJumpButtonTime > ignoreLadderJumpTime - IGNORE_JUMP_TIME
 			&& this->player->jumpstatsService->lastJumpButtonTime < ignoreLadderJumpTime + ENGINE_FIXED_TICK_INTERVAL;
@@ -620,6 +620,8 @@ JumpType KZJumpstatsService::DetermineJumpType()
 			{
 				return JumpType_Invalid;
 			}
+			// Mark this as a ladder hop, so if the player jumps again, we don't add a new jump.
+			this->ladderHopThisMove = true;
 			return JumpType_Ladderhop;
 		}
 		else
@@ -702,6 +704,7 @@ void KZJumpstatsService::Reset()
 	this->tpmVelocity = Vector(0, 0, 0);
 	this->possibleEdgebug = {};
 	this->lastWPressedTime = {};
+	this->ladderHopThisMove = false;
 }
 
 void KZJumpstatsService::OnProcessMovement()
@@ -828,6 +831,10 @@ void KZJumpstatsService::OnAirMovePost()
 
 void KZJumpstatsService::AddJump()
 {
+	if (ladderHopThisMove)
+	{
+		return;
+	}
 	this->jumps.AddToTail({this->player});
 }
 
@@ -844,6 +851,7 @@ void KZJumpstatsService::UpdateJump()
 
 void KZJumpstatsService::EndJump()
 {
+	META_CONPRINTF("[%i] EndJump\n", g_pKZUtils->GetGlobals()->tickcount);
 	if (this->jumps.Count() > 0)
 	{
 		Jump *jump = &this->jumps.Tail();
@@ -1101,6 +1109,7 @@ void KZJumpstatsService::OnProcessMovementPost()
 		this->InvalidateJumpstats("Edgebugged");
 	}
 	this->possibleEdgebug = false;
+	this->ladderHopThisMove = false;
 	this->TrackJumpstatsVariables();
 	this->DetectWater();
 }

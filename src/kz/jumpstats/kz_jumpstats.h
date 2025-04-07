@@ -397,6 +397,7 @@ private:
 	Vector tpmVelocity;
 	bool possibleEdgebug {};
 	f32 lastWPressedTime {};
+	bool ladderHopThisMove {};
 
 public:
 	static void StartDemoRecording(CUtlString playerName);
