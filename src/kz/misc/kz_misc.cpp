@@ -312,7 +312,7 @@ void KZ::misc::Init()
 {
 	KZOptionService::RegisterEventListener(&optionEventListener);
 	KZ::misc::EnforceTimeLimit();
-	mapRestartTimer = StartTimer(CheckRestart, RESTART_CHECK_INTERVAL, true, false);
+	mapRestartTimer = StartTimer(CheckRestart, RESTART_CHECK_INTERVAL, true, true);
 	CConVarRef<int32> sv_infinite_ammo("sv_infinite_ammo");
 	if (sv_infinite_ammo.IsValidRef() && sv_infinite_ammo.IsConVarDataAvailable())
 	{

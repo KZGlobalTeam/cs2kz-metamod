@@ -644,7 +644,15 @@ void utils::ResetMap()
 	char cmd[MAX_PATH + 12]; // "changelevel " takes 12 characters
 	if (g_pKZUtils->GetCurrentMapWorkshopID() == 0)
 	{
-		V_snprintf(cmd, sizeof(cmd), "changelevel %s", g_pKZUtils->GetGlobals()->mapname.ToCStr());
+		if (g_pKZUtils->GetGlobals()->mapname.ToCStr()[0] == 0)
+		{
+			META_CONPRINTF("[KZ] Warning: Map name is empty, cannot reload the current map! Defaulting to de_dust2...\n");
+			V_snprintf(cmd, sizeof(cmd), "changelevel de_dust2");
+		}
+		else
+		{
+			V_snprintf(cmd, sizeof(cmd), "changelevel %s", g_pKZUtils->GetGlobals()->mapname.ToCStr());
+		}
 	}
 	else
 	{
