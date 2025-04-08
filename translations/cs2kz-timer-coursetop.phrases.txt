@@ -7,6 +7,7 @@
 		"chi"		"{map_name} ({course_name}) {mode_name} 总体服务器榜单"
 		"ua"		"{map_name} ({course_name}) {mode_name} Загальний топ сервера"
 		"sv"		"{map_name} ({course_name}) {mode_name} Allmän Server Top"
+		"fi"		"{map_name} ({course_name}) {mode_name} Palvelimen Top"
 	}
 	"Course Top - Table Name (Server Pro)"
 	{
@@ -15,6 +16,7 @@
 		"chi"		"{map_name} ({course_name}) {mode_name} 裸跳服务器榜单"
 		"ua"		"{map_name} ({course_name}) {mode_name} PRO топ сервера"
 		"sv"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
+		"fi"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
 	}
 	"Course Top - Table Name (Global Overall)"
 	{
@@ -23,6 +25,7 @@
 		"chi"		"{map_name} ({course_name}) {mode_name} 总体全球榜单"
 		"ua"		"{map_name} ({course_name}) {mode_name} Загальний глобальний топ"
 		"sv"		"{map_name} ({course_name}) {mode_name} Allmän Global Top"
+		"fi"		"{map_name} ({course_name}) {mode_name} Kaikkien aikojen Global Top"
 	}
 	"Course Top - Table Name (Global Pro)"
 	{
@@ -31,6 +34,7 @@
 		"chi"		"{map_name} ({course_name}) {mode_name} 裸跳全球榜单"
 		"ua"		"{map_name} ({course_name}) {mode_name} Глобальний PRO топ"
 		"sv"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
+		"fi"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 	}
 	"Course Top Header - Player Alias"
 	{
@@ -44,6 +48,7 @@
 		"de"		"Alias"
 		"pl"		"Alias"
 		"ko"		"별명"
+		"fi"		"Alias"
 	}
 	"Course Top Header - Time"
 	{
@@ -57,6 +62,7 @@
 		"de"		"Zeit"
 		"pl"		"Czas"
 		"ko"		"시간"
+		"fi"		"Aika"
 	}
 	"Course Top Header - Teleports"
 	{
@@ -70,6 +76,7 @@
 		"de"		"Teleports"
 		"pl"		"Teleporty"
 		"ko"		"텔레포트"
+		"fi"		"Teleportit"
 	}
 	"Course Top Header - SteamID64"
 	{
@@ -83,6 +90,7 @@
 		"de"		"SteamID64"
 		"pl"		"SteamID64"
 		"ko"		"SteamID64"
+		"fi"		"SteamID64"
 	}
 	"Course Top Header - Run ID"
 	{
@@ -96,12 +104,14 @@
 		"de"		"ID des Runs"
 		"pl"		"ID Runu"
 		"ko"		"Run ID"
+		"fi"		"Run ID"
 	}
 	"Course Top Header - Points"
 	{
 		"en"		"Points"
 		"ua"		"Очки"
 		"sv"		"Poäng"
+		"fi"		"Pisteet"
 	}
 	"Course Top Request - Failed (Generic)"
 	{
@@ -115,6 +125,7 @@
 		"de"		"{darkred}Fehler beim Abrufen der Strecken-Topinformationen."
 		"pl"		"{darkred}Nie udało się pobrać informacji o najlepszych wynikach kursu."
 		"ko"		"{darkred}코스 최고 기록 정보를 가져오지 못했습니다."
+		"fi"		"{darkred}Huipputuloksien haku epäonnistui."
 	}
 	"Course Top Request - Invalid Course Name"
 	{
@@ -128,6 +139,7 @@
 		"de"		"{darkred}Fehler beim Abrufen der Strecken-Topinformationen. {grey}(Ungültiger Streckenname {default}{course_name}{grey})"
 		"pl"		"{darkred}Nie udało się pobrać informacji o najlepszych wynikach kursu. {grey}(Nieprawidłowa nazwa kursu {default}{course_name}{grey})"
 		"ko"		"{darkred}코스 최고 기록 정보를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
+		"fi"		"{darkred}Huipputuloksien haku epäonnistui. {grey} Invalid course name {default}{course_name}{grey})"
 	}
 	"Course Top - Check Console"
 	{
@@ -141,6 +153,7 @@
 		"de"		"{grey}Strecken-Topdaten abgerufen. Überprüfen Sie die Konsole auf Details!"
 		"pl"		"{grey}Dane o najlepszych wynikach kursu zostały pobrane. Sprawdź konsolę, aby uzyskać więcej informacji!"
 		"ko"		"{grey}코스 최고 기록 데이터를 가져왔습니다. 자세한 내용은 콘솔을 확인하세요!"
+		"fi"		"{grey}Huipputulokset haettu. Katso konsolista tarkemmat tulokset!"
 	}
 	"Course Top Command Usage"
 	{
@@ -154,6 +167,7 @@
 		"de"		"{grey}Verwendung: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Überprüfen Sie die Konsole auf Details!"
 		"pl"		"{grey}Użycie: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Sprawdź konsolę, aby uzyskać więcej informacji!"
 		"ko"		"{grey}사용법: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
+		"fi"		"{grey}Käyttö: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Katso konsolista tarkemmat tulokset!"
 	}
 	"Course Top Command Usage - Console"
 	{
@@ -167,5 +181,6 @@
 		"de"		"Verwendung: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nBeispiel: \"kz_ctop map=kz_map c=Main o=10 l=20\". Fügen Sie 'g' oder 's' am Anfang vor dem 'top'-Suffix hinzu, um nur global/server anzugeben (z.B. kz_gctop)."
 		"pl"		"Użycie: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nPrzykład: \"kz_ctop map=kz_map c=Main o=10 l=20\". Dodaj 'g' lub 's' na początku przed sufiksem 'top', aby określić tylko globalny/serwerowy (np. kz_gctop)."
 		"ko"		"사용법: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\n예시: \"kz_ctop map=kz_map c=Main o=10 l=20\". 'g' 또는 's'를 'top' 접미사 앞에 추가하여 글로벌/서버만 지정할 수 있습니다 (예: kz_gctop)."
+		"fi"		"Käyttö: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nEsimerkki: \"kz_ctop map=kz_map c=Main o=10 l=20\". Lisää 'g' tai 's' alkuun ennen 'top'-päätettä  määrittääksesi globaalin/palvelimen tulokset (esim. kz_gctop)."
 	}
 }
