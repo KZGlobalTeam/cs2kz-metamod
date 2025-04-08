@@ -139,7 +139,7 @@
 		"de"		"{darkred}Fehler beim Abrufen der Strecken-Topinformationen. {grey}(Ungültiger Streckenname {default}{course_name}{grey})"
 		"pl"		"{darkred}Nie udało się pobrać informacji o najlepszych wynikach kursu. {grey}(Nieprawidłowa nazwa kursu {default}{course_name}{grey})"
 		"ko"		"{darkred}코스 최고 기록 정보를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
-		"fi"		"{darkred}Huipputuloksien haku epäonnistui. {grey} Invalid course name {default}{course_name}{grey})"
+		"fi"		"{darkred}Huipputuloksien haku epäonnistui. {grey} Virheellinen kartan nimi {default}{course_name}{grey})"
 	}
 	"Course Top - Check Console"
 	{
