@@ -7,5 +7,6 @@
 		"chi"	"API {api} {grey}| {default} 服务器 {server} {grey}| {default} 地图 {map} {grey}| {default} 你 {player} {grey}| {default} 模式 {mode} {grey}| {default} 风格 {styles}"
 		"sv"	"API {api} {grey}| {default} Server {server} {grey}| {default} Karta {map} {grey}| {default} Du {player} {grey}| {default} Mode {mode} {grey}| {default} Stil {styles}"
 		"ua"	"API {api} {grey}| {default} Сервер {server} {grey}| {default} Мапа {map} {grey}| {default} Ви {player} {grey}| {default} Режим {mode} {grey}| {default} Стилі {styles}"
+		"fi"	"API {api} {grey}| {default} Palvelin {server} {grey}| {default} Kartta {map} {grey}| {default} Sinä {player} {grey}| {default} Tila {mode} {grey}| {default} Tyyli {styles}"
 	}
 }
