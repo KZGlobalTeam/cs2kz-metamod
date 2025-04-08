@@ -6,7 +6,7 @@
 		"chi"		"{yellow}警告{grey}: 你的 {default}m_yaw{grey} 数值必须小于或等于 0.3 才能在此服务器上游玩. 你将会断开连接."
 		"ua"		"{yellow}Увага{grey}: Щоб грати на цьому сервері, ваше значення {default}m_yaw{grey} має бути меншим або дорівнювати 0.3. Вас буде від'єднано."
 		"sv"		"{yellow}Varning{grey}: Ditt {default}m_yaw{grey} värde måste mindre eller lika med 0.3 för att spela på den här servern. Du blir disconnectad."
-		"fi"		"{yellow}Varoitus{grey}: Sinun {default}m_yar{grey} arvo täytyy olla vähemmän tai yhtäsuuri kuin 0.3 pelataksesi tällä palvelimella. Yhteys katkaistaan."
+		"fi"		"{yellow}Varoitus{grey}: Sinun {default}m_yaw{grey} arvo täytyy olla vähemmän tai yhtäsuuri kuin 0.3 pelataksesi tällä palvelimella. Yhteys katkaistaan."
 	}
 	"Kick Player m_yaw (Console)"
 	{
