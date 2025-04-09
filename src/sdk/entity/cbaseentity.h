@@ -66,6 +66,62 @@ public:
 	SCHEMA_FIELD(CGameSceneNode *, m_pSceneNode)
 };
 
+class CNetworkTransmitComponent
+{
+public:
+	DECLARE_SCHEMA_CLASS(CNetworkTransmitComponent)
+
+	class m_nStateFlags_prop
+	{
+	public:
+		std::add_lvalue_reference_t<int> Get()
+		{
+			static constexpr auto datatable_hash = hash_32_fnv1a_const(ThisClassName);
+			static constexpr auto prop_hash = hash_32_fnv1a_const("m_nTransmitStateOwnedCounter");
+			static const auto m_key = schema::GetOffset(ThisClassName, datatable_hash, "m_nTransmitStateOwnedCounter", prop_hash);
+			static const size_t offset = ((::size_t)&reinterpret_cast<char const volatile &>((((ThisClass *)0)->m_nStateFlags)));
+			ThisClass *pThisClass = (ThisClass *)((byte *)this - offset);
+			return *reinterpret_cast<std::add_pointer_t<int>>((uintptr_t)(pThisClass) + m_key.offset + -4);
+		}
+
+		void Set(int val)
+		{
+			static constexpr auto datatable_hash = hash_32_fnv1a_const(ThisClassName);
+			static constexpr auto prop_hash = hash_32_fnv1a_const("m_nTransmitStateOwnedCounter");
+			static const auto m_key = schema::GetOffset(ThisClassName, datatable_hash, "m_nTransmitStateOwnedCounter", prop_hash);
+			static const auto m_chain = schema::FindChainOffset(ThisClassName);
+			static const size_t offset = ((::size_t)&reinterpret_cast<char const volatile &>((((ThisClass *)0)->m_nStateFlags)));
+			ThisClass *pThisClass = (ThisClass *)((byte *)this - offset);
+			*reinterpret_cast<std::add_pointer_t<int>>((uintptr_t)(pThisClass) + m_key.offset + -4) = val;
+		}
+
+		operator std::add_lvalue_reference_t<int>()
+		{
+			return Get();
+		}
+
+		std::add_lvalue_reference_t<int> operator()()
+		{
+			return Get();
+		}
+
+		std::add_lvalue_reference_t<int> operator->()
+		{
+			return Get();
+		}
+
+		void operator()(int val)
+		{
+			Set(val);
+		}
+
+		void operator=(int val)
+		{
+			Set(val);
+		}
+	} m_nStateFlags;
+};
+
 class CBaseEntity : public CEntityInstance
 {
 public:
@@ -74,7 +130,7 @@ public:
 	SCHEMA_FIELD(CBodyComponent *, m_CBodyComponent)
 	SCHEMA_FIELD(CBitVec<64>, m_isSteadyState)
 	SCHEMA_FIELD(float, m_lastNetworkChange)
-	SCHEMA_FIELD_POINTER(void, m_NetworkTransmitComponent)
+	SCHEMA_FIELD(CNetworkTransmitComponent, m_NetworkTransmitComponent)
 	SCHEMA_FIELD(int, m_iHealth)
 	SCHEMA_FIELD(uint8, m_lifeState)
 	SCHEMA_FIELD(int, m_iTeamNum)
