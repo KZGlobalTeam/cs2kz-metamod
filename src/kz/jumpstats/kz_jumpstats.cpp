@@ -605,7 +605,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	{
 		f32 ignoreLadderJumpTime = this->player->GetPlayerPawn()->m_ignoreLadderJumpTime();
 
-		bool ignoringLadder = ignoreLadderJumpTime > g_pKZUtils->GetGlobals()->curtime;
+		bool ignoringLadder = ignoreLadderJumpTime > g_pKZUtils->GetGlobals()->curtime - ENGINE_FIXED_TICK_INTERVAL;
 		bool holdingJumpDuringIgnoreLadderPeriod =
 			this->player->jumpstatsService->lastJumpButtonTime > ignoreLadderJumpTime - IGNORE_JUMP_TIME
 			&& this->player->jumpstatsService->lastJumpButtonTime < ignoreLadderJumpTime + ENGINE_FIXED_TICK_INTERVAL;
@@ -851,7 +851,6 @@ void KZJumpstatsService::UpdateJump()
 
 void KZJumpstatsService::EndJump()
 {
-	META_CONPRINTF("[%i] EndJump\n", g_pKZUtils->GetGlobals()->tickcount);
 	if (this->jumps.Count() > 0)
 	{
 		Jump *jump = &this->jumps.Tail();
