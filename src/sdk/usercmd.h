@@ -30,7 +30,7 @@ class CUserCmdBaseHost : public CUserCmdBase, public T
 
 struct CmdData
 {
-	u32 serverTick {};
+	i32 serverTick {};
 	u32 cmdNum {};
 	SubtickMoveNode *subtickMoves;
 	f64 renderTimes[4] {};

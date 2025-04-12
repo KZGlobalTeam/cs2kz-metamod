@@ -1,5 +1,4 @@
 #include "kz/replay/kz_replay.h"
-#include "kz_replay.h"
 
 // ====================================
 
@@ -217,6 +216,9 @@ u64 ReplayRecorder::PushBreather(const CircularReplayRecorder &crr, u64 wishNumT
 	}
 
 	// TODO: Push events as well
+	auto eventIterator = std::find_if(crr.events.begin(), crr.events.end(), [wishNumTicks](const ReplayEvent &event)
+									  { return event.serverTick >= g_pKZUtils->GetServerGlobals()->tickcount - wishNumTicks; });
+	this->rpData->events.insert(this->rpData->events.end(), eventIterator, crr.events.end());
 	return numTicks;
 }
 

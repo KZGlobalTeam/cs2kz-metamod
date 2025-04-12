@@ -5,11 +5,6 @@ static_global KeyValues *pServerCfgKeyValues;
 
 IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 
-bool KZOptionService::UnregisterEventListener(KZOptionServiceEventListener *eventListener)
-{
-	return eventListeners.FindAndRemove(eventListener);
-}
-
 void KZOptionService::LoadDefaultOptions()
 {
 	char serverCfgPath[1024];

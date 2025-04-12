@@ -72,6 +72,8 @@ struct TakeoffEventData
 };
 
 // Due to things like breakables and moving blocks, we can't rely on tick data to replicate jumpstats.
+// This is very much not ideal because this is more or less the same struct as the Jump struct in the jumpstats service.
+// TODO: Do something about this.
 struct JumpstatEventData
 {
 	Vector takeoffOrigin;
@@ -192,7 +194,7 @@ enum ReplayType : u8
 
 struct ReplayHeader
 {
-	ReplayHeader() : magicNumber(RP_MAGIC_NUMBER), uid(RandomInt(0, 0xFFFFFFFFFFFFFFFF)) {}
+	ReplayHeader() : magicNumber(RP_MAGIC_NUMBER), uid(rand() * rand() + rand()) {}
 
 	const u32 magicNumber;
 	const u64 uid;
@@ -442,6 +444,12 @@ struct ReplayRecorder
 
 	void Cleanup();
 	void Push(const TickData &tick, const SubtickMoveLite *subtickMoves);
+
+	void PushEvent(const ReplayEvent &event)
+	{
+		this->rpData->events.push_back(event);
+	}
+
 	u64 PushBreather(const struct CircularReplayRecorder &crr, u64 wishNumTicks);
 
 private:
@@ -451,7 +459,7 @@ public:
 	u64 guid;
 	ReplayData *rpData = nullptr;
 	bool keepData = false;
-	u32 idealEndTick {};
+	i32 idealEndTick {};
 
 	enum
 	{

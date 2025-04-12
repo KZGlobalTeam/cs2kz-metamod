@@ -21,6 +21,7 @@ void KZReplayService::Init()
 
 ReplayRecorder *KZReplayService::CreateRecorder()
 {
+	META_CONPRINTF("[KZ] Creating replay recorder\n");
 	this->recorders.push_back(new ReplayRecorder());
 	ReplayRecorder *recorder = this->recorders.back();
 	ReplayHeader &header = recorder->rpData->header;
@@ -65,10 +66,10 @@ void KZReplayService::OnTimerStart() {}
 ReplayRecorder *KZReplayService::CreateJumpstatRecorder(ReplayEvent *jsEvent)
 {
 	ReplayRecorder *recorder = this->CreateRecorder();
-	// Record 5 seconds of jumpstats
+	// Record 5 seconds of jumpstats: 3s of breather + 2s after.
 	recorder->PushBreather(this->circularRecorder, 192);
 	recorder->idealEndTick = g_pKZUtils->GetGlobals()->tickcount + 128;
-	u32 eventIndex;
+	u32 eventIndex {};
 
 	// There should always be at least the jumpstat event itself here.
 	assert(recorder->rpData->events.size() > 0);
@@ -108,7 +109,8 @@ void KZReplayService::CheckRecorders()
 		if (g_pKZUtils->GetGlobals()->tickcount >= recorder->idealEndTick)
 		{
 			// TODO: this should run on another thread and make use of mutex there
-			recorder->SaveToFile();
+			// recorder->SaveToFile();
+			META_CONPRINTF("[KZ] Finished recording %s\n", recorder->rpData->header.player.name);
 			this->recorders.erase(std::remove(this->recorders.begin(), this->recorders.end(), recorder), this->recorders.end());
 			this->finishedRecorders.push_back(recorder);
 			recorder->keepData = true;
@@ -168,6 +170,11 @@ void KZReplayService::OnPhysicsSimulatePost()
 	this->currentTickData.flags |= (pawn->m_fFlags() & FL_BASEVELOCITY) ? REPLAYTICK_POST_FL_BASEVELOCITY : 0;
 	this->currentTickData.flags |= (pawn->m_fFlags() & FL_CONVEYOR_NEW) ? REPLAYTICK_POST_FL_CONVEYOR_NEW : 0;
 	this->circularRecorder.Push(this->currentTickData, this->currentSubtickMoves);
+
+	for (auto &recorder : this->recorders)
+	{
+		recorder->Push(this->currentTickData, this->currentSubtickMoves);
+	}
 }
 
 void KZReplayService::OnGameFramePost()
@@ -207,6 +214,10 @@ void KZReplayService::OnJumpEnd(const Jump *jump)
 	{
 		this->markedJumpstatEvent = this->circularRecorder.PushEvent(event);
 	}
+	for (auto &recorder : this->recorders)
+	{
+		recorder->PushEvent(event);
+	}
 }
 
 void JumpstatEventData::FromJump(const Jump *jump)
@@ -230,7 +241,7 @@ void JumpstatEventData::FromJump(const Jump *jump)
 	for (i32 i = 0; i < jump->strafes.Count(); ++i)
 	{
 		this->strafes[i].aaCalls.reserve(jump->strafes[i].aaCalls.Count());
-		for (u32 j = 0; j < jump->strafes[i].aaCalls.Count(); ++j)
+		for (i32 j = 0; j < jump->strafes[i].aaCalls.Count(); ++j)
 		{
 			const AACall &call = jump->strafes[i].aaCalls[j];
 			this->strafes[i].aaCalls[j] = {
