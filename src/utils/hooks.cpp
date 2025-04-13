@@ -661,6 +661,12 @@ static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
+	// The host doesn't disconnect when the map changes.
+	if (!interfaces::pEngine->IsDedicatedServer())
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(0));
+		player->Reset();
+	}
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
 	u64 size = g_pKZUtils->GetCurrentMapSize();
 	char md5[33];
