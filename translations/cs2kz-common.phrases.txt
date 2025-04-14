@@ -19,6 +19,7 @@
 		"sv"		"{darkred}Varning{grey}: Du har inte Prime Status uppgraderingen. Din tid kommer inte att sparas globalt."
 		"es"		"{darkred}Atención{grey}:No tienes la mejora del estatus Prime. Tu carrera no será guardada globalmente."
 		"fi"		"{darkred}Varoitus{grey}: Sinulla ei ole Prime Status -päivitystä. Tulostasi ei tallenneta maailmanlaajuisesti."
+		"ko"		"{darkred}경고{grey}: 프라임 계정이 아닙니다. 공식 기록이 저장되지 않습니다."
 	}
 	"Player Authenticated (Steam)"
 	{
