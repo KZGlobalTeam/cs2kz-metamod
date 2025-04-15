@@ -17,6 +17,7 @@ enum EnforcedServerCvars
 	ENFORCEDCVAR_SV_CQ_TRIM_BLOAT_SPACE,
 	ENFORCEDCVAR_SV_CQ_TRIM_CATCHUP_REMAINDER,
 	ENFORCEDCVAR_SV_RUNCMDS,
+	ENFORCEDCVAR_MP_IGNORE_ROUND_WIN_CONDITIONS,
 	ENFORCEDCVAR_COUNT
 };
 
@@ -36,6 +37,7 @@ static_global ConVarRefAbstract *enforcedServerCVars[] =
 	new CConVarRef<int32>("sv_cq_trim_bloat_remainder"),
 	new CConVarRef<int32>("sv_cq_trim_bloat_space"),
 	new CConVarRef<int32>("sv_cq_trim_catchup_remainder"),
+	new CConVarRef<bool>("mp_ignore_round_win_conditions"),
 	new CConVarRef<bool>("sv_runcmds")
 };
 static_assert(KZ_ARRAYSIZE(enforcedServerCVars) == ENFORCEDCVAR_COUNT, "Array enforcedServerCVars length is not the same as ENFORCEDCVAR_COUNT!");
