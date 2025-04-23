@@ -1,0 +1,30 @@
+"Phrases"
+{
+	"Switch Language"
+	{
+		// You have switched your language to english.
+		"#format"	"language:s"
+		"en"		"{grey}You have switched your language to {default}{language}{grey}."
+		"chi"		"{grey}你选择了你的语言为 {default}{language}{grey}."
+		"pl"		"{grey}Zmieniłeś język na {default}{language}{grey}."
+		"fi"		"{grey}Kielesi on nyt {default}{language}{grey}."
+		"sv"		"{grey}Du har bytt språket till {default}{language}{grey}."
+		"ua"		"{grey}Ви змінили мову на {default}{language}{grey}."
+		"tr"		"{grey}Dili şununla değiştirdiniz: {default}{language}{grey}."
+		"it"		"{grey}Hai cambiato la lingua a {default}{language}{grey}."
+		"es"		"{grey}Has cambiado tu idioma a {default}{language}{grey}."
+		"de"		"{grey}Du hast Deine Sprache auf {default}{language}{grey} umgestellt."
+		"ko"		"{grey}언어가 {default}{language}{grey}로 변경되었습니다."
+	}
+	
+	"Menu Hint"
+	{
+		// Menus are now accessible via your radio hotkeys, or radio/radio1/radio2 console commands!
+		"en"		"{lime}Menus are now accessible via your radio hotkeys, or {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} console commands!"
+	}
+
+	"Language Change - Manual Menu Change Required"
+	{
+		"en"		"{yellow}Please reconnect to the server to apply changes to the menu."
+	}
+}

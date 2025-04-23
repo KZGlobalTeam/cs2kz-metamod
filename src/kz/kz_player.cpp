@@ -97,6 +97,11 @@ void KZPlayer::Reset()
 	}
 }
 
+void KZPlayer::OnPlayerConnect()
+{
+	this->languageService->OnPlayerConnect();
+}
+
 void KZPlayer::OnPlayerActive()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");

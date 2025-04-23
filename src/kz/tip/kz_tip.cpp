@@ -1,5 +1,6 @@
 #include "kz_tip.h"
-#include "../language/kz_language.h"
+#include "kz/timer/kz_timer.h"
+#include "kz/language/kz_language.h"
 
 static_global KeyValues *pTipKeyValues;
 static_global CUtlVector<const char *> tipNames;
@@ -7,9 +8,24 @@ static_global f64 tipInterval;
 static_global i32 nextTipIndex;
 static_global CTimer<> *tipTimer;
 
+static_global class KZTimerServiceEventListener_Tip : public KZTimerServiceEventListener
+{
+	virtual void OnTimerStartPost(KZPlayer *player, u32 courseGUID) override;
+} timerEventListener;
+
+void KZTipService::Init()
+{
+	LoadTips();
+	ShuffleTips();
+	tipTimer = StartTimer(PrintTips, true);
+	KZTimerService::RegisterEventListener(&timerEventListener);
+}
+
 void KZTipService::Reset()
 {
 	this->showTips = true;
+	this->teamJoinedAtLeastOnce = false;
+	this->timerStartedAtLeastOnce = false;
 }
 
 void KZTipService::ToggleTips()
@@ -81,13 +97,6 @@ SCMD(kz_tips, SCFL_MISC)
 	return MRES_SUPERCEDE;
 }
 
-void KZTipService::InitTips()
-{
-	LoadTips();
-	ShuffleTips();
-	tipTimer = StartTimer(PrintTips, true);
-}
-
 f64 KZTipService::PrintTips()
 {
 	for (int i = 0; i <= MAXPLAYERS; i++)
@@ -100,4 +109,31 @@ f64 KZTipService::PrintTips()
 	}
 	nextTipIndex = (nextTipIndex + 1) % tipNames.Count();
 	return tipInterval;
+}
+
+void KZTipService::OnPlayerJoinTeam(i32 team)
+{
+	if (this->teamJoinedAtLeastOnce || (team != CS_TEAM_CT && team != CS_TEAM_T))
+	{
+		return;
+	}
+
+	this->teamJoinedAtLeastOnce = true;
+	this->player->languageService->PrintChat(true, false, "Menu Hint");
+}
+
+void KZTipService::OnTimerStartPost()
+{
+	if (this->timerStartedAtLeastOnce)
+	{
+		return;
+	}
+
+	this->teamJoinedAtLeastOnce = true;
+	// TODO: Print no cheating stuff
+}
+
+void KZTimerServiceEventListener_Tip::OnTimerStartPost(KZPlayer *player, u32 courseGUID)
+{
+	player->tipService->OnTimerStartPost();
 }
