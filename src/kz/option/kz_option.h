@@ -5,6 +5,7 @@
 #include "interfaces/interfaces.h"
 #include "filesystem.h"
 #include "keyvalues3.h"
+#include "utils/eventlisteners.h"
 
 class KZOptionServiceEventListener
 {
@@ -17,10 +18,9 @@ class KZOptionService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
 
-public:
-	static bool RegisterEventListener(KZOptionServiceEventListener *eventListener);
-	static bool UnregisterEventListener(KZOptionServiceEventListener *eventListener);
+	DECLARE_CLASS_EVENT_LISTENER(KZOptionServiceEventListener);
 
+public:
 	static void InitOptions();
 	static const char *GetOptionStr(const char *optionName, const char *defaultValue = "");
 	static f64 GetOptionFloat(const char *optionName, f64 defaultValue = 0.0);
@@ -29,8 +29,6 @@ public:
 
 private:
 	static void LoadDefaultOptions();
-
-	static CUtlVector<KZOptionServiceEventListener *> eventListeners;
 
 private:
 	enum

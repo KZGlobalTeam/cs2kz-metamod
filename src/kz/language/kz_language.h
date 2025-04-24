@@ -3,6 +3,7 @@
 
 #include "../kz.h"
 #include "../spec/kz_spec.h"
+#include "utils/eventlisteners.h"
 
 class KZLanguageService : public KZBaseService
 {
@@ -10,21 +11,30 @@ class KZLanguageService : public KZBaseService
 
 public:
 	static void Init();
+	static void LoadConfigFiles();
 	static void LoadLanguages();
 	static void LoadTranslations();
 
-	virtual void Reset() override
+	struct LanguageInfo
 	{
-		hasQueriedLanguage = {};
-		hasSavedLanguage = {};
-		language[0] = 0;
-	}
+		LanguageInfo();
+		enum struct CacheLevel
+		{
+			CACHE_NONE = 0,
+			CACHE_CVAR,
+			CACHE_PREF,
+			CACHE_OVERRIDE
+		} cacheLevel = CacheLevel::CACHE_NONE;
+		char lastAddon[16] {};
+		char language[16] {};
+	};
 
-	void SetLanguage(const char *lang)
-	{
-		hasSavedLanguage = true;
-		V_strncpy(language, lang, sizeof(language));
-	}
+	static inline std::unordered_map<uint64, LanguageInfo> clientLanguageInfos;
+
+	static void UpdateLanguage(u64 xuid, const char *langKey, LanguageInfo::CacheLevel cacheLevel, bool shouldReconnect = false);
+
+	void OnPlayerConnect();
+	void OnPlayerPreferencesLoaded();
 
 	const char *GetLanguage();
 
@@ -188,9 +198,4 @@ public:
 	REGISTER_PRINT_ALL_FUNCTION(PrintAlertAll, MESSAGE_ALERT)
 	REGISTER_PRINT_ALL_FUNCTION(PrintHTMLCentreAll, MESSAGE_HTML)
 #undef REGISTER_PRINT_ALL_FUNCTION
-
-private:
-	bool hasQueriedLanguage {};
-	bool hasSavedLanguage {};
-	char language[32] {};
 };

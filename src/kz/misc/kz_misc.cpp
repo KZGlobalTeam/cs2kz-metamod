@@ -393,6 +393,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		}
 		player->specService->ResetSavedPosition();
 	}
+	player->tipService->OnPlayerJoinTeam(newTeam);
 }
 
 static_function void SanitizeMsg(const char *input, char *output, u32 size)
