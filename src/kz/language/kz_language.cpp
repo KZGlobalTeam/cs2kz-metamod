@@ -30,6 +30,12 @@ static_global KeyValues *addonsKV;
 
 void KZLanguageService::Init()
 {
+	KZLanguageService::LoadConfigFiles();
+	KZOptionService::RegisterEventListener(&optionEventListener);
+}
+
+void KZLanguageService::LoadConfigFiles()
+{
 	if (translationKV)
 	{
 		delete translationKV;
@@ -37,6 +43,10 @@ void KZLanguageService::Init()
 	if (languagesKV)
 	{
 		delete languagesKV;
+	}
+	if (addonsKV)
+	{
+		delete addonsKV;
 	}
 	translationKV = new KeyValues("Phrases");
 	translationKV->UsesEscapeSequences(true);
@@ -46,7 +56,6 @@ void KZLanguageService::Init()
 	addonsKV->UsesEscapeSequences(true);
 	KZLanguageService::LoadTranslations();
 	KZLanguageService::LoadLanguages();
-	KZOptionService::RegisterEventListener(&optionEventListener);
 }
 
 void KZLanguageService::LoadLanguages()
@@ -187,4 +196,9 @@ SCMD(kz_language, SCFL_PREFERENCE)
 		player->languageService->PrintChat(false, false, "Language Change - Manual Menu Change Required");
 	}
 	return MRES_SUPERCEDE;
+}
+
+CON_COMMAND_F(kz_reload_translations, "Reload translation configuration files", FCVAR_NONE)
+{
+	KZLanguageService::LoadConfigFiles();
 }

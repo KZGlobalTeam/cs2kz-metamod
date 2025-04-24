@@ -11,6 +11,7 @@ class KZLanguageService : public KZBaseService
 
 public:
 	static void Init();
+	static void LoadConfigFiles();
 	static void LoadLanguages();
 	static void LoadTranslations();
 
