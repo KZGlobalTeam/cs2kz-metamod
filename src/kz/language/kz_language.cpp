@@ -14,7 +14,7 @@
 
 extern IMultiAddonManager *g_pMultiAddonManager;
 
-static_global class KZOptionServiceEventListener_HUD : public KZOptionServiceEventListener
+static_global class KZOptionServiceEventListener_Language : public KZOptionServiceEventListener
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
 	{
@@ -46,6 +46,7 @@ void KZLanguageService::Init()
 	addonsKV->UsesEscapeSequences(true);
 	KZLanguageService::LoadTranslations();
 	KZLanguageService::LoadLanguages();
+	KZOptionService::RegisterEventListener(&optionEventListener);
 }
 
 void KZLanguageService::LoadLanguages()
@@ -87,7 +88,7 @@ void KZLanguageService::LoadTranslations()
 
 void KZLanguageService::OnPlayerPreferencesLoaded()
 {
-	const char *language = this->player->optionService->GetPreferenceStr("language");
+	const char *language = this->player->optionService->GetPreferenceStr("preferredLanguage");
 	bool shouldReconnect = !(this->player->checkpointService->GetCheckpointCount() || this->player->timerService->GetTimerRunning());
 	if (language[0])
 	{
@@ -179,7 +180,7 @@ SCMD(kz_language, SCFL_PREFERENCE)
 	V_strlower(language);
 	bool shouldReconnect = !(player->checkpointService->GetCheckpointCount() || player->timerService->GetTimerRunning());
 	KZLanguageService::UpdateLanguage(player->GetSteamId64(), language, KZLanguageService::LanguageInfo::CacheLevel::CACHE_OVERRIDE, true);
-
+	player->optionService->SetPreferenceStr("preferredLanguage", language);
 	if (!shouldReconnect)
 	{
 		player->languageService->PrintChat(true, false, "Switch Language", language);
