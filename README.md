@@ -2,9 +2,9 @@ WIP, not ready for release
 
 # Requirements
 
-- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1284 or later
+- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1325 or later
 
-- Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases) for menus and KZ sound effects (eg. jumpstats)
+- Optional: Custom [MultiAddonManager](https://github.com/zer0k-z/MultiAddonManager/releases) v1.3.5-clientside for menus for KZ sound effects (eg. jumpstats)
 
 - Optional[^1]: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
 
