@@ -1,0 +1,169 @@
+// CS2KZ Menu (Korean)
+"RadioPanel.txt"
+{
+	"Groups"
+	{
+		"menu_simple"
+		{
+			"hotkey"	"0"
+			"title"		"TP 메뉴"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Checkpoint"
+				{
+					"hotkey"	"1"
+					"label"		"체크포인트"
+					"cmd"		"kz_cp; radio"
+				}
+
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"텔레포트"
+					"cmd"		"kz_tp; radio"
+				}
+
+				"Pause"
+				{
+					"hotkey"	"3"
+					"label"		"일시정지/재개"
+					"cmd"		"kz_pause; radio"
+				}
+
+				"Restart"
+				{
+					"hotkey"	"4"
+					"label"		"재시작/리스폰"
+					"cmd"		"kz_r; radio"
+				}
+			}
+		}
+
+		"menu_advanced"
+		{
+			"hotkey"	"1"
+			"title"		"고급 TP 메뉴"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Checkpoint"
+				{
+					"hotkey"	"1"
+					"label"		"체크포인트"
+					"cmd"		"kz_cp; radio1"
+				}
+
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"텔레포트"
+					"cmd"		"kz_tp; radio1"
+				}
+				
+				"Prev Checkpoint"
+				{
+					"hotkey"	"3"
+					"label"		"이전 체크포인트로"
+					"cmd"		"kz_prevcp; radio1"
+				}
+
+				"Next Checkpoint"
+				{
+					"hotkey"	"4"
+					"label"		"다음 체크포인트로"
+					"cmd"		"kz_nextcp; radio1"
+				}
+
+				"Undo Teleport"
+				{
+					"hotkey"	"5"
+					"label"		"텔레포트 이전 위치로"
+					"cmd"		"kz_undo; radio1"
+				}
+
+				"Pause"
+				{
+					"hotkey"	"6"
+					"label"		"일시정지/재개"
+					"cmd"		"kz_pause; radio1"
+				}
+
+				"Restart"
+				{
+					"hotkey"	"7"
+					"label"		"재시작/리스폰"
+					"cmd"		"kz_r; radio1"
+				}
+
+				"Noclip"
+				{
+					"hotkey"	"8"
+					"label"		"노클립 전환"
+					"cmd"		"kz_noclip; radio1"
+				}
+			}
+		}
+
+		"menu_option"
+		{
+			"hotkey"	"2"
+			"title"		"Option Menu"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Set Custom Start Position"
+				{
+					"hotkey"	"1"
+					"label"		"커스텀 시작 지점 설정"
+					"cmd"		"kz_ssp"
+				}
+				
+				"Clear Custom Start Position"
+				{
+					"hotkey"	"2"
+					"label"		"커스텀 시작지점 지우기"
+					"cmd"		"kz_csp"
+				}
+
+				"Hide"
+				{
+					"hotkey"	"3"
+					"label"		"다른 플레이어 표시/비표시"
+					"cmd"		"kz_hide"
+				}
+
+				"Hide Weapon"
+				{
+					"hotkey"	"4"
+					"label"		"무기 표시/비표시"
+					"cmd"		"kz_hideweapon"
+				}
+
+				"Hide Legs"
+				{
+					"hotkey"	"5"
+					"label"		"다리 표시/비표시"
+					"cmd"		"kz_hidelegs"
+				}
+
+				"Toggle Jumpstats"
+				{
+					"hotkey"	"6"
+					"label"		"Toggle Jumpstats Display"
+					"cmd"		"kz_togglejs"
+				}
+
+				"Toggle Jumpstats Always"
+				{
+					"hotkey"	"7"
+					"label"		"Toggle Always Jumpstats"
+					"cmd"		"kz_jsalways"
+				}
+			}
+		}
+	}
+}
