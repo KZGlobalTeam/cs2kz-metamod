@@ -153,14 +153,14 @@
 				"Toggle Jumpstats"
 				{
 					"hotkey"	"6"
-					"label"		"Toggle Jumpstats Display"
+					"label"		"점프 데이터 표시 전환"
 					"cmd"		"kz_togglejs"
 				}
 
 				"Toggle Jumpstats Always"
 				{
 					"hotkey"	"7"
-					"label"		"Toggle Always Jumpstats"
+					"label"		"점프 데이터 항상 표시"
 					"cmd"		"kz_jsalways"
 				}
 			}
