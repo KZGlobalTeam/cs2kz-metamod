@@ -70,7 +70,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZ::mode::DisableReplicatedModeCvars();
 
 	KZOptionService::InitOptions();
-	KZTipService::InitTips();
+	KZTipService::Init();
 	if (late)
 	{
 		g_steamAPI.Init();
@@ -113,9 +113,11 @@ void KZPlugin::AddonInit()
 	static_persist bool addonLoaded;
 	if (g_pMultiAddonManager != nullptr && !addonLoaded)
 	{
-		g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID);
-		g_pMultiAddonManager->RefreshAddons();
-		addonLoaded = true;
+		addonLoaded = g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID, true);
+		CConVarRef<bool> mm_cache_clients_with_addons("mm_cache_clients_with_addons");
+		CConVarRef<float> mm_cache_clients_duration("mm_cache_clients_duration");
+		mm_cache_clients_with_addons.Set(true);
+		mm_cache_clients_duration.Set(30.0f);
 	}
 }
 
@@ -123,7 +125,7 @@ bool KZPlugin::IsAddonMounted()
 {
 	if (g_pMultiAddonManager != nullptr)
 	{
-		return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID);
+		return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID, true);
 	}
 	return false;
 }

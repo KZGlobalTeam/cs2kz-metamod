@@ -35,23 +35,6 @@
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"ua"		"Ви можете використати \"kz_help <категорія>\", щоб отримати список команд, пов'язаних з певною категорією (наприклад, kz_help checkpoint misc).\nСписок доступних категорій: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 	}
-	"Switch Language"
-	{
-		// You have switched your language to english.
-		"#format"	"language:s"
-		"en"		"{grey}You have switched your language to {default}{language}{grey}."
-		"chi"		"{grey}你选择了你的语言为 {default}{language}{grey}."
-		"pl"		"{grey}Zmieniłeś język na {default}{language}{grey}."
-		"fi"		"{grey}Kielesi on nyt {default}{language}{grey}."
-		"sv"		"{grey}Du har bytt språket till {default}{language}{grey}."
-		"ua"		"{grey}Ви змінили мову на {default}{language}{grey}."
-		"tr"		"{grey}Dili şununla değiştirdiniz: {default}{language}{grey}."
-		"it"		"{grey}Hai cambiato la lingua a {default}{language}{grey}."
-		"es"		"{grey}Has cambiado tu idioma a {default}{language}{grey}."
-		"de"		"{grey}Du hast Deine Sprache auf {default}{language}{grey} umgestellt."
-		"ko"		"{grey}언어가 {default}{language}{grey}로 변경되었습니다."
-	}
-
 	
 	// Categories
 	"Command List Header - Name"

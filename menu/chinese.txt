@@ -1,0 +1,168 @@
+"RadioPanel.txt"
+{
+	"Groups"
+	{
+		"menu_simple"
+		{
+			"hotkey"	"0"
+			"title"		"存点菜单 (简易)"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Checkpoint"
+				{
+					"hotkey"	"1"
+					"label"		"存点"
+					"cmd"		"kz_cp; radio"
+				}
+
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"传送"
+					"cmd"		"kz_tp; radio"
+				}
+
+				"Pause"
+				{
+					"hotkey"	"3"
+					"label"		"暂停/继续"
+					"cmd"		"kz_pause; radio"
+				}
+
+				"Restart"
+				{
+					"hotkey"	"4"
+					"label"		"重置/重生"
+					"cmd"		"kz_r; radio"
+				}
+			}
+		}
+
+		"menu_advanced"
+		{
+			"hotkey"	"1"
+			"title"		"存点菜单 (进阶)"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Checkpoint"
+				{
+					"hotkey"	"1"
+					"label"		"存点"
+					"cmd"		"kz_cp; radio1"
+				}
+
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"传送"
+					"cmd"		"kz_tp; radio1"
+				}
+				
+				"Prev Checkpoint"
+				{
+					"hotkey"	"3"
+					"label"		"上一个存点"
+					"cmd"		"kz_prevcp; radio1"
+				}
+
+				"Next Checkpoint"
+				{
+					"hotkey"	"4"
+					"label"		"下一个存点"
+					"cmd"		"kz_nextcp; radio1"
+				}
+
+				"Undo Teleport"
+				{
+					"hotkey"	"5"
+					"label"		"撤销传送"
+					"cmd"		"kz_undo; radio1"
+				}
+
+				"Pause"
+				{
+					"hotkey"	"6"
+					"label"		"暂停/继续"
+					"cmd"		"kz_pause; radio1"
+				}
+
+				"Restart"
+				{
+					"hotkey"	"7"
+					"label"		"重置/重生"
+					"cmd"		"kz_r; radio1"
+				}
+
+				"Noclip"
+				{
+					"hotkey"	"8"
+					"label"		"切换飞行模式"
+					"cmd"		"kz_noclip; radio1"
+				}
+			}
+		}
+
+		"menu_option"
+		{
+			"hotkey"	"2"
+			"title"		"选项菜单"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Set Custom Start Position"
+				{
+					"hotkey"	"1"
+					"label"		"设置自定义起点"
+					"cmd"		"kz_ssp"
+				}
+				
+				"Clear Custom Start Position"
+				{
+					"hotkey"	"2"
+					"label"		"清除自定义起点"
+					"cmd"		"kz_csp"
+				}
+
+				"Hide"
+				{
+					"hotkey"	"3"
+					"label"		"显示/隐藏其他玩家"
+					"cmd"		"kz_hide"
+				}
+
+				"Hide Weapon"
+				{
+					"hotkey"	"4"
+					"label"		"显示/隐藏武器"
+					"cmd"		"kz_hideweapon"
+				}
+
+				"Hide Legs"
+				{
+					"hotkey"	"5"
+					"label"		"显示/隐藏腿部"
+					"cmd"		"kz_hidelegs"
+				}
+
+				"Toggle Jumpstats"
+				{
+					"hotkey"	"6"
+					"label"		"切换跳跃数据展示"
+					"cmd"		"kz_togglejs"
+				}
+
+				"Toggle Jumpstats Always"
+				{
+					"hotkey"	"7"
+					"label"		"切换总是显示跳跃数据"
+					"cmd"		"kz_jsalways"
+				}
+			}
+		}
+	}
+}
