@@ -147,7 +147,14 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 	langInfo.cacheLevel = cacheLevel;
 	if (!KZ_STREQILEN(langInfo.lastAddon, addon, sizeof(langInfo.lastAddon)))
 	{
-		META_CONPRINTF("[KZ::Language] Adding %s and removing %s\n", addon, langInfo.lastAddon);
+		if (KZ_STREQI(langInfo.lastAddon, KZ_WORKSHOP_ADDON_ID))
+		{
+			META_CONPRINTF("[KZ::Language] Adding %s for client %lli\n", addon, xuid);
+		}
+		else
+		{
+			META_CONPRINTF("[KZ::Language] Adding %s and removing %s for client %lli\n", addon, langInfo.lastAddon, xuid);
+		}
 		g_pMultiAddonManager->RemoveClientAddon(langInfo.lastAddon, xuid);
 		g_pMultiAddonManager->AddClientAddon(addon, xuid, true);
 		V_strncpy(langInfo.lastAddon, addon, sizeof(langInfo.lastAddon));

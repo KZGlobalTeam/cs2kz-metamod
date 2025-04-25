@@ -113,7 +113,7 @@ void KZPlugin::AddonInit()
 	static_persist bool addonLoaded;
 	if (g_pMultiAddonManager != nullptr && !addonLoaded)
 	{
-		addonLoaded = g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDONS_ID, true);
+		addonLoaded = g_pMultiAddonManager->AddAddon(KZ_WORKSHOP_ADDON_ID, true);
 		CConVarRef<bool> mm_cache_clients_with_addons("mm_cache_clients_with_addons");
 		CConVarRef<float> mm_cache_clients_duration("mm_cache_clients_duration");
 		mm_cache_clients_with_addons.Set(true);
@@ -125,7 +125,7 @@ bool KZPlugin::IsAddonMounted()
 {
 	if (g_pMultiAddonManager != nullptr)
 	{
-		return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDONS_ID, true);
+		return g_pMultiAddonManager->IsAddonMounted(KZ_WORKSHOP_ADDON_ID, true);
 	}
 	return false;
 }
