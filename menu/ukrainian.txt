@@ -1,0 +1,170 @@
+// CS2KZ Меню (Українська)
+// Україномовне радіо меню доповнення для плагіна CS2KZ.
+"RadioPanel.txt"
+{
+	"Groups"
+	{
+		"menu_simple"
+		{
+			"hotkey"	"0"
+			"title"		"TP Меню (Просте)"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Checkpoint"
+				{
+					"hotkey"	"1"
+					"label"		"Чекпоінт (CP)"
+					"cmd"		"kz_cp; radio"
+				}
+
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"Телепорт (TP)"
+					"cmd"		"kz_tp; radio"
+				}
+
+				"Pause"
+				{
+					"hotkey"	"3"
+					"label"		"Пауза/Продовжити"
+					"cmd"		"kz_pause; radio"
+				}
+
+				"Restart"
+				{
+					"hotkey"	"4"
+					"label"		"Рестарт/Респавн"
+					"cmd"		"kz_r; radio"
+				}
+			}
+		}
+
+		"menu_advanced"
+		{
+			"hotkey"	"1"
+			"title"		"TP Меню (Розширене)"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Checkpoint"
+				{
+					"hotkey"	"1"
+					"label"		"Чекпоінт (CP)"
+					"cmd"		"kz_cp; radio1"
+				}
+
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"Телепорт (TP)"
+					"cmd"		"kz_tp; radio1"
+				}
+				
+				"Prev Checkpoint"
+				{
+					"hotkey"	"3"
+					"label"		"Попередній CP"
+					"cmd"		"kz_prevcp; radio1"
+				}
+
+				"Next Checkpoint"
+				{
+					"hotkey"	"4"
+					"label"		"Наступний CP"
+					"cmd"		"kz_nextcp; radio1"
+				}
+
+				"Undo Teleport"
+				{
+					"hotkey"	"5"
+					"label"		"Відмінити TP"
+					"cmd"		"kz_undo; radio1"
+				}
+
+				"Pause"
+				{
+					"hotkey"	"6"
+					"label"		"Пауза/Продовжити"
+					"cmd"		"kz_pause; radio1"
+				}
+
+				"Restart"
+				{
+					"hotkey"	"7"
+					"label"		"Рестарт/Респавн"
+					"cmd"		"kz_r; radio1"
+				}
+
+				"Noclip"
+				{
+					"hotkey"	"8"
+					"label"		"Перемикання Noclip"
+					"cmd"		"kz_noclip; radio1"
+				}
+			}
+		}
+
+		"menu_option"
+		{
+			"hotkey"	"2"
+			"title"		"Меню Опцій"
+			"timeout"	"100000"
+
+			"Commands"
+			{
+				"Set Custom Start Position"
+				{
+					"hotkey"	"1"
+					"label"		"Встановити стартову позицію"
+					"cmd"		"kz_ssp"
+				}
+				
+				"Clear Custom Start Position"
+				{
+					"hotkey"	"2"
+					"label"		"Скинути стартову позицію"
+					"cmd"		"kz_csp"
+				}
+
+				"Hide"
+				{
+					"hotkey"	"3"
+					"label"		"Показати/Приховати інших гравців"
+					"cmd"		"kz_hide"
+				}
+
+				"Hide Weapon"
+				{
+					"hotkey"	"4"
+					"label"		"Показати/Приховати зброю"
+					"cmd"		"kz_hideweapon"
+				}
+
+				"Hide Legs"
+				{
+					"hotkey"	"5"
+					"label"		"Показати/Приховати ноги"
+					"cmd"		"kz_hidelegs"
+				}
+
+				"Toggle Jumpstats"
+				{
+					"hotkey"	"6"
+					"label"		"Перемкнути статистику стрибків"
+					"cmd"		"kz_togglejs"
+				}
+
+				"Toggle Jumpstats Always"
+				{
+					"hotkey"	"7"
+					"label"		"Статистика для всіх стрибків"
+					"cmd"		"kz_jsalways"
+				}
+			}
+		}
+	}
+}

@@ -21,10 +21,12 @@
 	{
 		// Menus are now accessible via your radio hotkeys, or radio/radio1/radio2 console commands!
 		"en"		"{lime}Menus are now accessible via your radio hotkeys, or {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} console commands!"
+		"ua"		"{lime}Меню тепер доступні за допомогою гарячих клавіш радіокоманд або {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} команд в консолі!"
 	}
 
 	"Language Change - Manual Menu Change Required"
 	{
 		"en"		"{yellow}Please reconnect to the server to apply changes to the menu."
+		"ua"		"{yellow}Будь ласка, перепідключіться до сервера, щоб застосувати зміни в меню."
 	}
 }
