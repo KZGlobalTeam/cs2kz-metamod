@@ -5,10 +5,14 @@ on:
     paths:
       - '.github/workflows/**'
       - 'translations/**'
+      - 'menu/**'
+      - 'scripts/**'
   push:
     paths:
       - '.github/workflows/**'
       - 'translations/**'
+      - 'menu/**'
+      - 'scripts/**'
 
 jobs:
   check-quotes:

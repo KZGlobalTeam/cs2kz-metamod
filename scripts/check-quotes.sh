@@ -43,7 +43,7 @@ exit_code=0
 while IFS= read -r -d '' file; do
     check_file "$file"
     errors_total=$((errors_total + $?))
-done < <(find ./translations -type f -name "*.txt" -print0)
+done < <(find ./translations ./menu -type f -name "*.txt" -print0)
 
 if [ $errors_total -eq 0 ]; then
     echo "No errors found. All strings are properly formatted."
