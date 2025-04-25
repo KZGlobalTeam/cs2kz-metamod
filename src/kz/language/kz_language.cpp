@@ -165,7 +165,7 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 void KZLanguageService::OnPlayerConnect()
 {
 	uint64 xuid = this->player->GetSteamId64();
-	if (KZLanguageService::clientLanguageInfos[xuid].cacheLevel > LanguageInfo::CacheLevel::CACHE_NONE)
+	if (!xuid || KZLanguageService::clientLanguageInfos[xuid].cacheLevel > LanguageInfo::CacheLevel::CACHE_NONE)
 	{
 		return;
 	}
