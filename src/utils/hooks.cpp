@@ -713,7 +713,7 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 	if (g_KZPlugin.IsAddonMounted())
 	{
 		Warning("[CS2KZ] Precache kz soundevents \n");
-		pResourceManifest->AddResource(KZ_WORKSHOP_ADDONS_SNDEVENT_FILE);
+		pResourceManifest->AddResource(KZ_WORKSHOP_ADDON_SNDEVENT_FILE);
 	}
 }
 
