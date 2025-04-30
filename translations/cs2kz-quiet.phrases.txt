@@ -13,6 +13,7 @@
 		"es"		"{grey}Las piernas de tu personaje ahora son visibles."
 		"de"		"{grey}Die Beine deines Spielers sind jetzt sichtbar."
 		"ko"		"{grey}플레이어의 다리가 이제 표시됩니다."
+		"lv"		"{grey}Tava spēlētāja kājas tagad ir redzamas."
 	}
 	"Quiet Option - Show Player Legs - Disable"
 	{
@@ -27,6 +28,7 @@
 		"es"		"{grey}Las piernas de tu personaje ahora están ocultas."
 		"de"		"{grey}Die Beine deines Spielers sind jetzt versteckt."
 		"ko"		"{grey}플레이어의 다리가 이제 숨겨졌습니다."
+		"lv"		"{grey}Tava spēlētāja kājas tagad ir paslēptas."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
@@ -42,6 +44,7 @@
 		"es"		"{grey}Ahora estás viendo a otros jugadores."
 		"de"		"{grey}Du zeigst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 표시됩니다."
+		"lv"		"{grey}Tagad tu redzi citus spēlētājus."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
@@ -57,6 +60,7 @@
 		"es"		"{grey}Ahora estás ocultando a otros jugadores."
 		"de"		"{grey}Du versteckst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 숨겨졌습니다."
+		"lv"		"{grey}Tagad tu neredzi citus spēlētājus."
 	}
 	"Quiet Option - Show Weapon - Enable"
 	{
@@ -72,6 +76,7 @@
 		"es"		"{grey}Ahora puedes ver tu arma."
 		"de"		"{grey}Du zeigst jetzt deine Waffe."
 		"ko"		"{grey}이제 무기가 표시됩니다."
+		"lv"		"{grey}Tagad tu redzi savu ieroci."
 	}
 	"Quiet Option - Show Weapon - Disable"
 	{
@@ -87,5 +92,6 @@
 		"es"		"{grey}Ahora estás escondiendo tu arma."
 		"de"		"{grey}Du versteckst jetzt deine Waffe."
 		"ko"		"{grey}이제 무기가 숨겨졌습니다."
+		"lv"		"{grey}Tagad tu neredzi savu ieroci."
 	}
 }

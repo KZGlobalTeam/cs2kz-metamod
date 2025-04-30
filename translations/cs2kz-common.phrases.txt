@@ -10,6 +10,7 @@
 		"ko"		"{darkred}경고{grey}: 현재 Steam에 인증되지 않았습니다. 주행 기록이 저장되지 않을 수 있습니다. {default}!pc{grey}를 입력하여 현재 인증 상태를 확인하세요."
 		"es"		"{darkred}Atención{grey}: Actualmente no estás autenticado con Steam. Tu carrera podría no guardarse. Escribe {default}!pc{grey} para comprobar tu estado de autenticación actual."
 		"fi"		"{darkred}Varoitus{grey}: Sinä et ole autentikoitu Steamin kanssa. Suoritusta ei välttämättä tallenneta. Kirjoita {default}!pc{grey} tarkistaaksesi nykyisen autentikointi statuksen."
+		"lv"		"{darkred}Brīdinājums{grey}: Tu neesi autentificējies ar Steam. Tavs skrējiens var netikt saglabāts. Ieraksti {default}!pc{grey}, lai pārbaudītu savu pašreizējo autentifikācijas statusu."
 	}
 	"No Prime Warning"
 	{
@@ -20,6 +21,7 @@
 		"es"		"{darkred}Atención{grey}:No tienes la mejora del estatus Prime. Tu carrera no será guardada globalmente."
 		"fi"		"{darkred}Varoitus{grey}: Sinulla ei ole Prime Status -päivitystä. Tulostasi ei tallenneta maailmanlaajuisesti."
 		"ko"		"{darkred}경고{grey}: 프라임 계정이 아닙니다. 공식 기록이 저장되지 않습니다."
+		"lv"		"{darkred}Brīdinājums{grey}: Tev nav Prime Status jauninājuma. Tavs skrējiens globāli netiks saglabāts."
 	}
 	"Player Authenticated (Steam)"
 	{
@@ -32,6 +34,7 @@
 		"ko"		"{grey}플레이어 {default}{player}{grey}님은 Steam에 인증되었습니다."
 		"es"		"{grey}El jugador {default}{player}{grey} está autenticado con Steam."
 		"fi"		"{grey}Pelaajaa {default}{player}{grey} on autentikoitu Steamin kanssa."
+		"lv"		"{grey}Spēlētājs {default}{player}{grey} ir autentificēts ar Steam."
 	}
 	"Player Not Authenticated (Steam)"
 	{
@@ -44,6 +47,7 @@
 		"ko"		"{grey}플레이어 {default}{player}{grey}님은 현재 {yellow}Steam에 인증되지 않았습니다{grey}."
 		"es"		"{grey}El jugador {default}{player}{grey} está actualmente {yellow}no{grey} autenticado con Steam."
 		"fi"		"{grey}Pelaajaa {default}{player}{grey} {yellow}ei ole{grey} autentikoitu Steamin kanssa."
+		"lv"		"{grey}Spēlētājs {default}{player}{grey} pašlaik {yellow}nav{grey} autentificēts ar Steam."
 	}
 	"Error Message (Player Not Found)"
 	{
@@ -59,6 +63,7 @@
 		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
 		"es"		"{darkred}No se puede encontrar un jugador llamado \"{player}\"."
 		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\"."
-		"ko"		"{darkred}\"{player}\" 해당 플레이어를 찾을 수 없습니다."  
+		"ko"		"{darkred}\"{player}\" 해당 플레이어를 찾을 수 없습니다."
+		"lv"		"{darkred}Neizdevās atrast spēlētāju ar vārdu \"{player}\"."
 	}
 }
