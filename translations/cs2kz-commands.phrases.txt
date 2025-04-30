@@ -46,7 +46,7 @@
 		"chi"		"名称"
 		"sv"		"Namn"
 		"ua"		"Назва"
-		"lv"		"Vārds"
+		"lv"		"Nosaukums"
 	}
 	"Command List Header - Description"
 	{
