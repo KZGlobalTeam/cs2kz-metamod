@@ -1,168 +1,168 @@
-	"lv"		"RadioPanel.txt"
+"RadioPanel.txt"
+{
+	"Groups"
 	{
-		"Groups"
+		"menu_simple"
 		{
-			"menu_simple"
+			"hotkey"	"0"
+			"title"		"TP izvēlne (SIMPLE)"
+			"timeout"	"100000"
+
+			"Commands"
 			{
-				"hotkey"	"0"
-				"title"		"TP izvēlne (SIMPLE)"
-				"timeout"	"100000"
-
-				"Commands"
+				"Checkpoint"
 				{
-					"Checkpoint"
-					{
-						"hotkey"	"1"
-						"label"		"Checkpoint"
-						"cmd"		"kz_cp; radio"
-					}
+					"hotkey"	"1"
+					"label"		"Checkpoint"
+					"cmd"		"kz_cp; radio"
+				}
 
-					"Teleport"
-					{
-						"hotkey"	"2"
-						"label"		"Teleportēties"
-						"cmd"		"kz_tp; radio"
-					}
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"Teleportēties"
+					"cmd"		"kz_tp; radio"
+				}
 
-					"Pause"
-					{
-						"hotkey"	"3"
-						"label"		"Pauzēt/Atjaunot"
-						"cmd"		"kz_pause; radio"
-					}
+				"Pause"
+				{
+					"hotkey"	"3"
+					"label"		"Pauzēt/Atjaunot"
+					"cmd"		"kz_pause; radio"
+				}
 
-					"Restart"
-					{
-						"hotkey"	"4"
-						"label"		"Restartēt/Atdzimt"
-						"cmd"		"kz_r; radio"
-					}
+				"Restart"
+				{
+					"hotkey"	"4"
+					"label"		"Restartēt/Atdzimt"
+					"cmd"		"kz_r; radio"
 				}
 			}
+		}
 
-			"menu_extended"
+		"menu_extended"
+		{
+			"hotkey"	"1"
+			"title"		"TP izvēlne (Paplašinātā)"
+			"timeout"	"100000"
+
+			"Commands"
 			{
-				"hotkey"	"1"
-				"title"		"TP izvēlne (Paplašinātā)"
-				"timeout"	"100000"
-
-				"Commands"
+				"Checkpoint"
 				{
-					"Checkpoint"
-					{
-						"hotkey"	"1"
-						"label"		"Checkpoint"
-						"cmd"		"kz_cp; radio1"
-					}
+					"hotkey"	"1"
+					"label"		"Checkpoint"
+					"cmd"		"kz_cp; radio1"
+				}
 
-					"Teleport"
-					{
-						"hotkey"	"2"
-						"label"		"Teleportēties"
-						"cmd"		"kz_tp; radio1"
-					}
-					
-					"Prev Checkpoint"
-					{
-						"hotkey"	"3"
-						"label"		"Iepriekšējais CP"
-						"cmd"		"kz_prevcp; radio1"
-					}
+				"Teleport"
+				{
+					"hotkey"	"2"
+					"label"		"Teleportēties"
+					"cmd"		"kz_tp; radio1"
+				}
+				
+				"Prev Checkpoint"
+				{
+					"hotkey"	"3"
+					"label"		"Iepriekšējais CP"
+					"cmd"		"kz_prevcp; radio1"
+				}
 
-					"Next Checkpoint"
-					{
-						"hotkey"	"4"
-						"label"		"Nākamais CP"
-						"cmd"		"kz_nextcp; radio1"
-					}
+				"Next Checkpoint"
+				{
+					"hotkey"	"4"
+					"label"		"Nākamais CP"
+					"cmd"		"kz_nextcp; radio1"
+				}
 
-					"Undo Teleport"
-					{
-						"hotkey"	"5"
-						"label"		"Atcelt TP"
-						"cmd"		"kz_undo; radio1"
-					}
+				"Undo Teleport"
+				{
+					"hotkey"	"5"
+					"label"		"Atcelt TP"
+					"cmd"		"kz_undo; radio1"
+				}
 
-					"Pause"
-					{
-						"hotkey"	"6"
-						"label"		"Pauzēt/Atjaunot"
-						"cmd"		"kz_pause; radio1"
-					}
+				"Pause"
+				{
+					"hotkey"	"6"
+					"label"		"Pauzēt/Atjaunot"
+					"cmd"		"kz_pause; radio1"
+				}
 
-					"Restart"
-					{
-						"hotkey"	"7"
-						"label"		"Restartēt/Atdzimt"
-						"cmd"		"kz_r; radio1"
-					}
+				"Restart"
+				{
+					"hotkey"	"7"
+					"label"		"Restartēt/Atdzimt"
+					"cmd"		"kz_r; radio1"
+				}
 
-					"Noclip"
-					{
-						"hotkey"	"8"
-						"label"		"Mainīt Noclip"
-						"cmd"		"kz_noclip; radio1"
-					}
+				"Noclip"
+				{
+					"hotkey"	"8"
+					"label"		"Mainīt Noclip"
+					"cmd"		"kz_noclip; radio1"
 				}
 			}
+		}
 
-			"menu_option"
+		"menu_option"
+		{
+			"hotkey"	"2"
+			"title"		"Opciju izvēlne"
+			"timeout"	"100000"
+
+			"Commands"
 			{
-				"hotkey"	"2"
-				"title"		"Opciju izvēlne"
-				"timeout"	"100000"
-
-				"Commands"
+				"Set Custom Start Position"
 				{
-					"Set Custom Start Position"
-					{
-						"hotkey"	"1"
-						"label"		"Iestatīt pielāgoto starta pozīciju"
-						"cmd"		"kz_ssp"
-					}
-					
-					"Clear Custom Start Position"
-					{
-						"hotkey"	"2"
-						"label"		"Notīrīt pielāgoto starta pozīciju"
-						"cmd"		"kz_csp"
-					}
+					"hotkey"	"1"
+					"label"		"Iestatīt pielāgoto starta pozīciju"
+					"cmd"		"kz_ssp"
+				}
+				
+				"Clear Custom Start Position"
+				{
+					"hotkey"	"2"
+					"label"		"Notīrīt pielāgoto starta pozīciju"
+					"cmd"		"kz_csp"
+				}
 
-					"Hide"
-					{
-						"hotkey"	"3"
-						"label"		"Parādīt/Slēpt citus spēlētājus"
-						"cmd"		"kz_hide"
-					}
+				"Hide"
+				{
+					"hotkey"	"3"
+					"label"		"Parādīt/Slēpt citus spēlētājus"
+					"cmd"		"kz_hide"
+				}
 
-					"Hide Weapon"
-					{
-						"hotkey"	"4"
-						"label"		"Parādīt/Slēpt ieročus"
-						"cmd"		"kz_hideweapon"
-					}
+				"Hide Weapon"
+				{
+					"hotkey"	"4"
+					"label"		"Parādīt/Slēpt ieročus"
+					"cmd"		"kz_hideweapon"
+				}
 
-					"Hide Legs"
-					{
-						"hotkey"	"5"
-						"label"		"Parādīt/Slēpt kājas"
-						"cmd"		"kz_hidelegs"
-					}
+				"Hide Legs"
+				{
+					"hotkey"	"5"
+					"label"		"Parādīt/Slēpt kājas"
+					"cmd"		"kz_hidelegs"
+				}
 
-					"Toggle Jumpstats Display"
-					{
-						"hotkey"	"6"
-						"label"		"Ieslēgt/Izslēgt Jumpstats Display"
-						"cmd"		"kz_togglejs"
-					}
+				"Toggle Jumpstats Display"
+				{
+					"hotkey"	"6"
+					"label"		"Ieslēgt/Izslēgt Jumpstats Display"
+					"cmd"		"kz_togglejs"
+				}
 
-					"Toggle Jumpstats Always"
-					{
-						"hotkey"	"7"
-						"label"		"Ieslēgt/Izslēgt Jumpstats vienmēr"
-						"cmd"		"kz_jsalways"
-					}
+				"Toggle Jumpstats Always"
+				{
+					"hotkey"	"7"
+					"label"		"Ieslēgt/Izslēgt Jumpstats vienmēr"
+					"cmd"		"kz_jsalways"
 				}
 			}
 		}
 	}
+}
