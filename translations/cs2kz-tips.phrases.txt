@@ -15,6 +15,7 @@
 		"es"		"{grey}Ahora verás consejos aleatorios en el chat periódicamente."
 		"de"		"{grey}Du wirst jetzt regelmäßig zufällige Tipps im Chat sehen."
 		"ko"		"{grey}이제 주기적으로 채팅에서 랜덤 팁을 볼 수 있습니다."
+		"lv"  		"{grey}Tagad tu regulāri redzēsi nejaušus padomus čatā."
 	}
 	"Option - Tips - Disable"
 	{
@@ -30,5 +31,6 @@
 		"es"		"{grey}No verás más consejos aleatorios en el chat periódicamente."
 		"de"		"{grey}Du wirst jetzt keine zufälligen Tipps mehr im Chat sehen."
 		"ko"		"{grey}이제 채팅에서 주기적으로 랜덤 팁이 표시되지 않습니다."
+		"lv"  		"{grey}Tu vairs neredzēsi nejaušus padomus čatā regulāri."
 	}
 }

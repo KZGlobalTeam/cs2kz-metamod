@@ -16,6 +16,7 @@
 		"pl"		"{grey}Rekordy serwera na {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"de"		"{grey}Serverrekorde auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ko"		"{grey}서버 기록: {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"lv"  		"{grey}Servera rekordi kartē {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"WR Header"
 	{
@@ -25,6 +26,7 @@
 		"chi"		"{grey}全球记录位于 {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"ua"		"{grey}Світові рекорди на мапі {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"sv"		"{grey}Globala Rekord på {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"lv"  		"{grey}Globālie rekordi kartē {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"No Times"
 	{
@@ -40,6 +42,7 @@
 		"pl"		"{grey}Nie znaleziono żadnych czasów!"
 		"de"		"{grey}Es wurden keine Zeiten gefunden!"
 		"ko"		"{grey}기록이 없습니다!"
+		"lv"  		"{grey}Nav atrasti nekādi laiki!"
 	}
 	"Top Record - Overall"
 	{
@@ -57,6 +60,7 @@
 		"pl"		"{yellow}Ogólny{grey}: {default}{time}{grey} od {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"de"		"{yellow}Gesamt{grey}: {default}{time}{grey} von {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 		"ko"		"{yellow}전체{grey}: {default}{time}{grey} {lime}{player_name}{grey}님 ({yellow}{tp_count_text}{grey})"
+		"lv"  		"{yellow}Kopējais{grey}: {default}{time}{grey} no {lime}{player_name}{grey} ({yellow}{tp_count_text}{grey})"
 	}
 	"Top Record - Combined"
 	{
@@ -74,6 +78,7 @@
 		"pl"		"{yellow}Ogólny/{blue}PRO{grey}: {default}{time}{grey} od {lime}{player_name}{grey}"
 		"de"		"{yellow}Gesamt/{blue}PRO{grey}: {default}{time}{grey} von {lime}{player_name}{grey}"
 		"ko"		"{yellow}전체/{blue}PRO{grey}: {default}{time}{grey} {lime}{player_name}{grey}님"
+		"lv"  		"{yellow}Kopējais/{blue}PRO{grey}: {default}{time}{grey} no {lime}{player_name}{grey}"
 	}
 	"Top Record - PRO"
 	{
@@ -91,6 +96,7 @@
 		"pl"		"{blue}PRO{grey}: {default}{time_pro}{grey} od {lime}{player_name_pro}{grey}"
 		"de"		"{blue}PRO{grey}: {default}{time_pro}{grey} von {lime}{player_name_pro}{grey}"
 		"ko"		"{blue}PRO{grey}: {default}{time_pro}{grey} {lime}{player_name_pro}{grey}님"
+		"lv"  		"{blue}PRO{grey}: {default}{time_pro}{grey} no {lime}{player_name_pro}{grey}"
 	}
 	"Top Record Request - Failed (Generic)" 
 	{
@@ -106,6 +112,7 @@
 		"pl"		"{darkred}Nie udało się pobrać informacji o rekordzie."
 		"de"		"{darkred}Fehler beim Abrufen der Rekordinformationen."
 		"ko"		"{darkred}기록 정보를 가져오지 못했습니다."
+		"lv"  		"{darkred}Neizdevās iegūt rekorda informāciju."
 	}
 	"Top Record Request - Invalid Course Name"
 	{
@@ -122,6 +129,7 @@
 		"pl"		"{darkred}Nie udało się pobrać informacji o rekordzie. {grey}(Nieprawidłowa nazwa kursu {default}{course_name}{grey})"
 		"de"		"{darkred}Abruf von Rekordinformationen fehlgeschlagen. {grey}(Ungültiger Kursname {default}{course_name}{grey})"
 		"ko"		"{darkred}기록 정보를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
+		"lv"  		"{darkred}Neizdevās iegūt rekorda informāciju. {grey}(Nederīgs kursa nosaukums {default}{course_name}{grey})"
 	}
 	"WR/SR Command Usage"
 	{
@@ -136,6 +144,7 @@
 		"pl"		"{grey}Użycie: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Sprawdź konsolę, aby uzyskać więcej informacji!"
 		"de"		"{grey}Verwendung: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Siehe Konsole für Details!"
 		"ko"		"{grey}사용법: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
+		"lv"  		"{grey}Pielietojums: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Pārbaudi konsoli, lai iegūtu detalizētu informāciju!"
 	}
 	"WR/SR Command Usage - Console"
 	{
@@ -150,5 +159,6 @@
 		"pl"		"Użycie: kz_wr/kz_sr <c/course/map/mode=...>\nPrzykład: \"kz_wr map=kz_map c=Main\"."
 		"de"		"Verwendung: kz_wr/kz_sr <c/course/map/mode=...>\nBeispiel: \"kz_wr map=kz_map c=Main\"."
 		"ko"		"사용법: kz_wr/kz_sr <c/course/map/mode=...>\n예시: \"kz_wr map=kz_map c=Main\"."
+		"lv"  		"Pielietojums: kz_wr/kz_sr <c/course/map/mode=...>\nPiemērs: \"kz_wr map=kz_map c=Main\"."
 	}
 }

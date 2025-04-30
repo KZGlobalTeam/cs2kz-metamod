@@ -13,6 +13,7 @@
 		"es"		"{grey}¡Mira tu consola para ver la lista de comandos!"
 		"de"		"{grey}Schau in deine Konsole um die Befehl liste zu sehen!"
 		"ko"		"{grey}콘솔에서 명령어 목록을 확인해 보세요!"
+		"lv"		"{grey}Skaties konsolē, lai redzētu komandu sarakstu!"
 	}
 	"Command Help Response (Console)"
 	{
@@ -27,6 +28,7 @@
 		"es"		"Para usar estos comandos, puedes escribir \"bind <key> kz_<command name>\" en tu consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
 		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: \„bind 1 kz_cp\" oder \„!cp\" oder \„/cp\""
 		"ko"		"이 명령어를 사용하려면 콘솔에 \"bind <key> kz_<명령어 이름>\"을 입력하거나, 채팅창에 !<명령어 이름> 또는 /<명령어 이름>을 입력하세요. 예시: \"bind 1 kz_cp\" 또는 \"!cp\" 또는 \"/cp\""
+		"lv"		"Lai pielietotu šīs komandas, tu vari ierakstīt \"bind <taustiņš> kz_<komandas nosaukums>\" konsolē, vai ierakstīt !<komandas nosaukums> vai /<komandas nosaukums> čatā.\nPiemēram: \"bind 1 kz_cp\" vai \"!cp\" vai \"/cp\""
 	}
 	"Command Help Response Category Hint (Console)"
 	{
@@ -34,6 +36,7 @@
 		"chi"		"您可以使用 \"kz_help <类别>\" 获取特定类别的命令列表 (例如：kz_help checkpoint misc).\n可用类别列表: checkpoint(存点), record(记录), jumpstats(跳跃统计), measure(测量), modestyle(模式风格), preference(偏好设置), racing(竞速), replay(重播), saveloc(保存位置), spec(观察), status(状态), timer(计时器), player(玩家), global(全球), misc(杂项), map(地图)"
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"ua"		"Ви можете використати \"kz_help <категорія>\", щоб отримати список команд, пов'язаних з певною категорією (наприклад, kz_help checkpoint misc).\nСписок доступних категорій: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
+		"lv"		"Tu vari pielietot \"kz_help <kategorija>\", lai iegūtu komandu sarakstu, kas saistītas ar konkrētu kategoriju (piem. kz_help checkpoint misc).\nPieejamo kategoriju saraksts: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 	}
 	
 	// Categories
@@ -43,6 +46,7 @@
 		"chi"		"名称"
 		"sv"		"Namn"
 		"ua"		"Назва"
+		"lv"		"Vārds"
 	}
 	"Command List Header - Description"
 	{
@@ -50,6 +54,7 @@
 		"chi"		"描述"
 		"sv"		"Beskrivning"
 		"ua"		"Опис"
+		"lv"		"Apraksts"
 	}
 	"Command List - Checkpoint"
 	{
@@ -57,6 +62,7 @@
 		"chi"		"存点 命令:"
 		"sv"		"Checkpointkommandon:"
 		"ua"		"Команди Чекпоінтів:"
+		"lv"		"Checkpoint Komandas:"
 	}
 	"Command List - Record"
 	{
@@ -64,6 +70,7 @@
 		"chi"		"记录 命令:"
 		"sv"		"Rekordkommandon:"
 		"ua"		"Команди Рекордів:"
+		"lv"		"Record Komandas:"
 	}
 	"Command List - Jumpstats"
 	{
@@ -71,6 +78,7 @@
 		"chi"		"起跳数据 命令:"
 		"sv"		"Jumpstatkommandon:"
 		"ua"		"Команди Статистики стрибків:"
+		"lv"		"Jumpstats Komandas:"
 	}
 	"Command List - Measure"
 	{
@@ -78,6 +86,7 @@
 		"chi"		"测量 命令:"
 		"sv"		"Mätningskommandon:"
 		"ua"		"Команди Вимірювання:"
+		"lv"		"Measure Komandas:"
 	}
 	"Command List - ModeStyle"
 	{
@@ -85,6 +94,7 @@
 		"chi"		"模式/风格 命令:"
 		"sv"		"Mode/Stilkommandon:"
 		"ua"		"Команди Режиму/Стилю:"
+		"lv"		"Režīma/Stila Komandas:"
 	}
 	"Command List - Preference"
 	{
@@ -92,6 +102,7 @@
 		"chi"		"偏好设置 命令:"
 		"sv"		"Preferenskommandon:"
 		"ua"		"Команди Налаштувань:"
+		"lv"		"Preferenču Komandas:"
 	}
 	"Command List - Racing"
 	{
@@ -99,6 +110,7 @@
 		"chi"		"竞速 命令:"
 		"sv"		"Racingkommandon:"
 		"ua"		"Команди Гонки:"
+		"lv"		"Racing Komandas:"
 	}
 	"Command List - Replay"
 	{
@@ -106,6 +118,7 @@
 		"chi"		"重播 命令:"
 		"sv"		"Repriskommandon:"
 		"ua"		"Команди Повтору:"
+		"lv"		"Replay Komandas:"
 	}
 	"Command List - Saveloc"
 	{
@@ -113,6 +126,7 @@
 		"chi"		"保存位置 命令:"
 		"sv"		"Saveloc kommandon:"
 		"ua"		"Команди Saveloc:"
+		"lv"		"Saveloc Komandas:"
 	}
 	"Command List - Spec"
 	{
@@ -120,6 +134,7 @@
 		"chi"		"观察 命令:"
 		"sv"		"Åskådningskommandon:"
 		"ua"		"Команди Спостерігання:"
+		"lv"		"Skatītāja Komandas:"
 	}
 	"Command List - Status"
 	{
@@ -127,6 +142,7 @@
 		"chi"		"状态 命令:"
 		"sv"		"Statuskommandon:"
 		"ua"		"Команди Статусу:"
+		"lv"		"Statusa Komandas:"
 	}
 	"Command List - Timer"
 	{
@@ -134,6 +150,7 @@
 		"chi"		"计时器 命令:"
 		"sv"		"Timerkommandon:"
 		"ua"		"Команди Таймера:"
+		"lv"		"Taimera Komandas:"
 	}
 	"Command List - Player"
 	{
@@ -141,6 +158,7 @@
 		"chi"		"玩家 命令:"
 		"sv"		"Spelarkommandon:"
 		"ua"		"Команди Гравця:"
+		"lv"		"Spēlētāja Komandas:"
 	}
 	"Command List - Global"
 	{
@@ -148,6 +166,7 @@
 		"chi"		"全球 命令:"
 		"sv"		"Globala Kommandon:"
 		"ua"		"Глобальні Команди:"
+		"lv"		"Globālās Komandas:"
 	}
 	"Command List - Misc"
 	{
@@ -155,6 +174,7 @@
 		"chi"		"杂项 命令:"
 		"sv"		"Blandade Kommandon:"
 		"ua"		"Інші Команди:"
+		"lv"		"Miscellaneous Komandas:"
 	}
 	"Command List - Map"
 	{
@@ -162,6 +182,7 @@
 		"chi"		"地图 命令:"
 		"sv"		"Kartkommandon:"
 		"ua"		"Команди Мапи:"
+		"lv"		"Kartes Kmandas:"
 	}
 	"Command List - HUD"
 	{
@@ -169,6 +190,7 @@
 		"chi"		"HUD 命令:"
 		"sv"		"HUD Kommandon:"
 		"ua"		"Команди HUD:"
+		"lv"		"HUD Komandas:"
 	}
 	// Commands
 	"Command Description - kz_undo"
@@ -184,6 +206,7 @@
 		"es"		"Deshacer teleporte."
 		"de"		"Teleport rückgängig machen."
 		"ko"		"텔레포트를 취소합니다."
+		"lv"		"Atcelt teleportēšanu."
 	}
 	"Command Description - kz_checkpoint"
 	{
@@ -198,6 +221,7 @@
 		"es"		"Crear un checkpoint en el suelo o en una escalera."
 		"de"		"Setze ein Checkpoint auf dem Boden oder Leiter."
 		"ko"		"지면이나 사다리 위에서 체크포인트를 설정합니다."
+		"lv"		"Iestatīt kontrolpunktu uz zemes vai uz kāpnēm."
 	}
 	"Command Description - kz_cp"
 	{
@@ -212,6 +236,7 @@
 		"es"		"Crear un checkpoint en el suelo o en una escalera."
 		"de"		"Setze ein Checkpoint auf dem Boden oder Leiter."
 		"ko"		"지면이나 사다리 위에서 체크포인트를 설정합니다."
+		"lv"		"Iestatīt kontrolpunktu uz zemes vai uz kāpnēm."
 	}
 	"Command Description - kz_teleport"
 	{
@@ -226,6 +251,7 @@
 		"es"		"Teleportar al checkpoint actual."
 		"de"		"Zum aktuellen Checkpoint teleportieren."
 		"ko"		"현재 체크포인트로 텔레포트합니다."
+		"lv"		"Teleportēt uz pašreizējo kontrolpunktu."
 	}
 	"Command Description - kz_tp"
 	{
@@ -240,6 +266,7 @@
 		"es"		"Teleportar al checkpoint actual."
 		"de"		"Zum aktuellen Checkpoint teleportieren."
 		"ko"		"현재 체크포인트로 텔레포트합니다."
+		"lv"		"Teleportēt uz pašreizējo kontrolpunktu."
 	}
 	"Command Description - kz_prevcp"
 	{
@@ -254,6 +281,7 @@
 		"es"		"Teleportar al checkpoint anterior."
 		"de"		"Zum letzten Checkpoint teleportieren."
 		"ko"		"마지막 체크포인트로 텔레포트합니다."
+		"lv"		"Teleportēt uz pēdējo kontrolpunktu."
 	}
 	"Command Description - kz_pcp"
 	{
@@ -268,6 +296,7 @@
 		"es"		"Teleportar al checkpoint anterior."
 		"de"		"Zum letzten Checkpoint teleportieren."
 		"ko"		"마지막 체크포인트로 텔레포트합니다."
+		"lv"		"Teleportēt uz pēdējo kontrolpunktu."
 	}
 	"Command Description - kz_nextcp"
 	{
@@ -281,6 +310,7 @@
 		"it"		"Teleportati al prossimo checkpoint."
 		"es"		"Teleportar al próximo checkpoint."
 		"de"		"Zum nächsten Checkpoint teleportieren."
+		"lv"		"Teleportēt uz nākamo kontrolpunktu."
 	}
 	"Command Description - kz_ncp"
 	{
@@ -295,6 +325,7 @@
 		"es"		"Teleportar al próximo checkpoint."
 		"de"		"Zum nächsten Checkpoint teleportieren."
 		"ko"		"다음 체크포인트로 텔레포트합니다."
+		"lv"		"Teleportēt uz nākamo kontrolpunktu."
 	}
 	"Command Description - kz_setstartpos"
 	{
@@ -309,6 +340,7 @@
 		"es"		"Establecer tu posición actual como tu posición de inicio personalizada."
 		"de"		"Setze deine benutzerdefinierte Startposition auf deiner aktuellen Position."
 		"ko"		"다음 체크포인트로 텔레포트합니다."
+		"lv"		"Iestatīt savu pielāgoto starta pozīciju uz pašreizējo pozīciju."
 	}
 	"Command Description - kz_ssp"
 	{
@@ -323,6 +355,7 @@
 		"es"		"Establecer tu posición actual como tu posición de inicio personalizada."
 		"de"		"Setze deine benutzerdefinierte Startposition auf deiner aktuellen Position."
 		"ko"		"현재 위치를 사용자 지정 시작 위치로 설정합니다."
+		"lv"		"Iestatīt savu pielāgoto starta pozīciju uz pašreizējo pozīciju."
 	}
 	"Command Description - kz_clearstartpos"
 	{
@@ -337,6 +370,7 @@
 		"es"		"Eliminar tu posición de inicio personalizada."
 		"de"		"Lösche deine benutzerdefinierte Startposition."
 		"ko"		"사용자 지정 시작 위치를 초기화합니다."
+		"lv"		"Notīrīt savu pielāgoto starta pozīciju."
 	}
 	"Command Description - kz_csp"
 	{
@@ -351,6 +385,7 @@
 		"es"		"Eliminar tu posición de inicio personalizada."
 		"de"		"Lösche deine benutzerdefinierte Startposition."
 		"ko"		"사용자 지정 시작 위치를 초기화합니다."
+		"lv"		"Notīrīt savu pielāgoto starta pozīciju."
 	}
 	"Command Description - kz_panel"
 	{
@@ -365,6 +400,7 @@
 		"es"		"Alternar visualización del panel central."
 		"de"		"Anzeigen des mittleren Penels umschalten."
 		"ko"		"중앙 패널 표시를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt centrālā paneļa attēlošanu."
 	}
 	"Command Description - kz_jsbroadcast"
 	{
@@ -379,6 +415,7 @@
 		"es"		"Cambiar valor mínimo de estadísticas de salto para difusión."
 		"de"		"Ändern des Mindestwert für die Übertragung von Jumpstats."
 		"ko"		"점프 통계 알림의 최소 임계값을 변경합니다."
+		"lv"		"Mainīt jumpstats minimālo slieksni izziņošanai."
 	}
 	"Command Description - kz_jssound"
 	{
@@ -393,6 +430,7 @@
 		"es"		"Cambiar valor mínimo de estadísticas de salto para efectos de sonido."
 		"de"		"Ändern des Mindestwert für die Jumpstats Sounds."
 		"ko"		"점프 통계 사운드 효과의 최소 임계값을 변경합니다."
+		"lv"		"Mainīt jumpstats minimālo slieksni skaņas efektiem."
 	}
 	"Command Description - kz_togglestats"
 	{
@@ -407,6 +445,7 @@
 		"es"		"Alternar reportes de estadísticas de salto."
 		"de"		"Jumpstats-Berichte umschalten."
 		"ko"		"점프 통계 보고를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt jumpstats ziņošanu."
 	}
 	"Command Description - kz_togglejs"
 	{
@@ -421,6 +460,7 @@
 		"es"		"Alternar reportes de estadísticas de salto."
 		"de"		"Jumpstats-Berichte umschalten."
 		"ko"		"점프 통계 보고를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt jumpstats ziņošanu."
 	}
 	"Command Description - kz_jsalways"
 	{
@@ -435,6 +475,7 @@
 		"es"		"Alternar estadísticas de salto siempre activas."
 		"de"		"Jumpstats immer ein umschalten."
 		"ko"		"점프 통계를 전환합니다."
+		"lv"		"Ieslēgt/Izslēgt always-on jumpstats."
 	}
 	"Command Description - kz_mode"
 	{
@@ -449,6 +490,7 @@
 		"es"		"Listar o cambiar modo."
 		"de"		"Modi ändern oder auflisten."
 		"ko"		"모드를 표시하거나 변경합니다."
+		"lv"		"Uzskaitīt vai mainīt režīmu."
 	}
 	"Command Description - kz_noclip"
 	{
@@ -463,6 +505,7 @@
 		"es"		"Alternar noclip."
 		"de"		"Noclip umschalten."
 		"ko"		"노클립 모드를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt noclip režīmu."
 	}
 	"Command Description - kz_nc"
 	{
@@ -477,6 +520,7 @@
 		"es"		"Alternar noclip."
 		"de"		"Noclip umschalten."
 		"ko"		"노클립 모드를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt noclip režīmu."
 	}
 	"Command Description - noclip"
 	{
@@ -491,6 +535,7 @@
 		"es"		"Alternar noclip."
 		"de"		"Noclip umschalten."
 		"ko"		"노클립 모드를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt noclip režīmu."
 	}
 	"Command Description - kz_spec"
 	{
@@ -505,6 +550,7 @@
 		"es"		"Espectar a un jugador."
 		"de"		"Ein Spieler Spectaten."
 		"ko"		"플레이어를 관전합니다."
+		"lv"		"Specot spēlētāju."
 	}
 	"Command Description - kz_goto"
 	{
@@ -520,6 +566,7 @@
 		"es"		"Ir hacia un jugador."
 		"de"		"Zum Spieler gehen."
 		"ko"		"플레이어에게 이동합니다."
+		"lv"		"Doties pie spēlētāja."
 	}
 	"Command Description - kz_style"
 	{
@@ -535,6 +582,7 @@
 		"es"		"Listar, añadir, remover o alternar estilo."
 		"de"		"Stil Auflisten, hinzufügen, entfernen oder umschalten."
 		"ko"		"스타일을 표시, 추가, 제거하거나 전환합니다."
+		"lv"		"Uzskaitīt, pievienot, noņemt vai ieslēgt/izslēgt stilu."
 	}
 	"Command Description - kz_addstyle"
 	{
@@ -550,6 +598,7 @@
 		"es"		"Listar o añadir estilo."
 		"de"		"Stil hinzufügen."
 		"ko"		"스타일을 표시하거나 추가합니다."
+		"lv"		"Uzskaitīt vai pievienot stilu."
 	}
 	"Command Description - kz_removestyle"
 	{
@@ -565,6 +614,7 @@
 		"es"		"Listar estilos activos o remover estilo."
 		"de"		"Stil entfernen."
 		"ko"		"활성화 된 스타일을 표시하거나 스타일을 제거합니다."
+		"lv"		"Uzskaitīt aktīvos stilus vai noņemt stilu."
 	}
 	"Command Description - kz_togglestyle"
 	{
@@ -580,6 +630,7 @@
 		"es"		"Listar o alternar estilo."
 		"de"		"Stil auflisten oder umschalten."
 		"ko"		"스타일을 표시하거나 전환합니다."
+		"lv"		"Uzskaitīt vai ieslēgt/izslēgt stilu."
 	}
 	"Command Description - kz_clearstyles"
 	{
@@ -595,6 +646,7 @@
 		"es"		"Eliminar todos los estilos."
 		"de"		"Alle Stile löschen."
 		"ko"		"모든 스타일을 초기화합니다."
+		"lv"		"Notīrīt visus stilus."
 	}
 	"Command Description - kz_stop"
 	{
@@ -609,6 +661,7 @@
 		"es"		"Detener temporizador."
 		"de"		"Timer stoppen."
 		"ko"		"타이머를 중지합니다."
+		"lv"		"Apturēt taimeri."
 	}
 	"Command Description - kz_pause"
 	{
@@ -623,6 +676,7 @@
 		"es"		"Alternar pausa del temporizador."
 		"de"		"Timer pausieren"
 		"ko"		"타이머 일시 정지를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt taimera pauzēšanu."
 	}
 	"Command Description - kz_tips"
 	{
@@ -637,6 +691,7 @@
 		"es"		"Alternar visibilidad de consejos."
 		"de"		"Tipps umschalten."
 		"ko"		"도움말 표시를 전환합니다."
+		"lv"		"Ieslēgt/izslēgt padomus."
 	}
 	"Command Description - kz_hidelegs"
 	{
@@ -651,6 +706,7 @@
 		"es"		"Ocultar tus piernas en primera persona."
 		"de"		"Verstecke deine Beine in der First-person Perspektive."
 		"ko"		"1인칭 시점에서 다리를 숨깁니다."
+		"lv"		"Slēpt savas kājas pirmajā personā."
 	}
 	"Command Description - kz_hide"
 	{
@@ -665,6 +721,7 @@
 		"es"		"Ocultar otros jugadores."
 		"de"		"Andere Spieler verstecken."
 		"ko"		"다른 플레이어를 숨깁니다."
+		"lv"		"Paslēpt citus spēlētājus."
 	}
 	"Command Description - kz_restart"
 	{
@@ -679,6 +736,7 @@
 		"es"		"Reiniciar."
 		"de"		"Neustart."
 		"ko"		"재시작합니다."
+		"lv"		"Restartēt."
 	}
 	"Command Description - kz_r"
 	{
@@ -693,6 +751,7 @@
 		"es"		"Reiniciar."
 		"de"		"Neustart."
 		"ko"		"재시작합니다."
+		"lv"		"Restartēt."
 	}
 	"Command Description - kz_lj"
 	{
@@ -702,6 +761,7 @@
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
 		"es"		"Teleportar a la zona de saltos."
+		"lv"		"Teleportēt uz jumpstat zonu."
 	}
 	"Command Description - kz_ljarea"
 	{
@@ -711,6 +771,7 @@
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
 		"es"		"Teleportar a la zona de saltos."
+		"lv"		"Teleportēt uz jumpstat zonu."
 	}
 	"Command Description - kz_jsarea"
 	{
@@ -720,6 +781,7 @@
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
 		"es"		"Teleportar a la zona de saltos."
+		"lv"		"Teleportēt uz jumpstat zonu."
 	}
 	"Command Description - kz_end"
 	{
@@ -729,6 +791,7 @@
 		"ua"		"Телепортуватися до кінця."
 		"ko"		"종료 지점으로 텔레포트합니다."
 		"es"		"Teleportar al final."
+		"lv"		"Teleportēt līdz beigām."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -743,6 +806,7 @@
 		"es"		"Ocultar arma."
 		"de"		"Deine Waffe verstecken."
 		"ko"		"무기 모델을 숨깁니다."
+		"lv"		"Slēpt ieroča modeļa skatu."
 	}
 	"Command Description - kz_help"
 	{
@@ -757,6 +821,7 @@
 		"es"		"Mostrar este mensaje de ayuda."
 		"de"		"Diese Nachricht anzeigen."
 		"ko"		"도움말 메시지를 표시합니다."
+		"lv"		"Parādīt šo palīdzības ziņojumu."
 	}
 	"Command Description - kz_language"
 	{
@@ -771,6 +836,7 @@
 		"es"		"Cambiar idioma."
 		"de"		"Deine Sprache ändern."
 		"ko"		"현재 언어를 변경합니다."
+		"lv"		"Mainīt pašreizējo valodu."
 	}
 	"Command Description - kz_vnl"
 	{
@@ -785,6 +851,7 @@
 		"es"		"Cambiar a modo Vanilla."
 		"de"		"Zum Vanilla Modus wechseln."
 		"ko"		"바닐라 모드로 전환합니다."
+		"lv"		"Pāriet uz Vanilla režīmu."
 	}
 	"Command Description - kz_ckz"
 	{
@@ -799,6 +866,7 @@
 		"es"		"Cambiar a modo Clásico."
 		"de"		"Zum Classic Modus wechseln."
 		"ko"		"클래식 모드로 전환합니다."
+		"lv"		"Pāriet uz klasisko režīmu."
 	}
 	"Command Description - kz_pb"
 	{
@@ -814,6 +882,7 @@
 		"es"		"Mostrar estadísticas de mejores marcas personales."
 		"de"		"Persönliche Bestleistungen abrufen."
 		"ko"		"개인 최고 기록 통계를 확인합니다."
+		"lv"		"Saņemt personīgos labākos rezultātus."
 	}
 	"Command Description - kz_wr"
 	{
@@ -829,6 +898,7 @@
 		"es"		"Mostrar récords del servidor y del mundo."
 		"de"		"Server- und Weltrekorde abrufen."
 		"ko"		"서버 및 세계 기록을 확인합니다."
+		"lv"		"Saņemt servera un pasaules rekordus."
 	}
 	"Command Description - kz_sr"
 	{
@@ -844,6 +914,7 @@
 		"es"		"Mostrar récords del servidor."
 		"de"		"Serverrekorde abrufen."
 		"ko"		"서버 기록을 확인합니다."
+		"lv"		"Saņemt servera rekordus."
 	}
 	"Command Description - kz_ctop"
 	{
@@ -857,6 +928,7 @@
    		"es"		"Mostrar mejores tiempos del curso de un mapa."
 		"de"		"Top-Zeiten der Strecken einer Map abrufen."
 		"ko"		"맵의 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt labākos trases laikus kartē."
 	}
 	"Command Description - kz_coursetop"
 	{
@@ -870,6 +942,7 @@
    		"es"		"Mostrar mejores tiempos del curso de un mapa."
 		"de"		"Top-Zeiten der Strecken einer Map abrufen."
 		"ko"		"맵의 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt labākos trases laikus kartē."
 	}
 	"Command Description - kz_maptop"
 	{
@@ -883,6 +956,7 @@
    		"es"		"Mostrar mejores tiempos del curso de un mapa."
 		"de"		"Top-Zeiten der Strecken einer Map abrufen."
 		"ko"		"맵의 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt labākos trases laikus kartē."
 	}
 	"Command Description - kz_gctop"
 	{
@@ -896,6 +970,7 @@
 		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 		"de"		"Globale Top-Zeiten der Strecken einer Map abrufen."
 		"ko"		"맵의 글로벌 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt globālos labākos trases laikus kartē."
 	}
 	"Command Description - kz_gcoursetop"
 	{
@@ -909,6 +984,7 @@
 		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 		"de"		"Globale Top-Zeiten der Strecken einer Map abrufen."
 		"ko"		"맵의 글로벌 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt globālos labākos trases laikus kartē."
 
 	}
 	"Command Description - kz_gmaptop"
@@ -923,6 +999,7 @@
 		"es"		"Mostrar mejores tiempos globales del curso de un mapa."
 		"de"		"Globale Top-Zeiten der Strecken einer Map abrufen."
 		"ko"		"맵의 글로벌 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt globālos labākos trases laikus kartē."
 	}
 	"Command Description - kz_sctop"
 	{
@@ -936,6 +1013,7 @@
 		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 		"de"		"Top-Zeiten der Strecken eines Servers für eine Map abrufen."
 		"ko"		"맵의 서버 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt servera labākos trases laikus kartē."
 	}
 	"Command Description - kz_scoursetop"
 	{
@@ -949,6 +1027,7 @@
 		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 		"de"		"Top-Zeiten der Strecken eines Servers für eine Map abrufen."
 		"ko"		"맵의 서버 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt servera labākos trases laikus kartē."
 	}
 	"Command Description - kz_smaptop"
 	{
@@ -962,6 +1041,7 @@
 		"es"		"Mostrar mejores tiempos del servidor del curso de un mapa."
 		"de"		"Top-Zeiten der Strecken eines Servers für eine Map abrufen."
 		"ko"		"맵의 서버 상위 코스 기록을 확인합니다."
+		"lv"		"Saņemt servera labākos trases laikus kartē."
 	}
 	"Command Description - kz_comparelevel"
 	{
@@ -971,6 +1051,7 @@
 		"ua"		"Встановіть максимальний бажаний рівень порівняння проходжень."
 		"ko"		"기록 비교 시 선호하는 최대 비교 수준을 설정하는 기능입니다."
 		"es"		"Establecer el nivel máximo preferido de comparación de carreras."
+		"lv"		"iestatīt maksimālo vēlamo līmeni skrējienu salīdzināšanai."
 	}
 	"Command Description - kz_playercheck"
 	{
@@ -981,6 +1062,7 @@
 		"tr"		"Belirli bir oyuncunun statüsünü kontrol et (varsayılan kendin)."
 		"ko"		"지정된 플레이어의 상태를 확인합니다. (기본값: 본인)"
 		"es"		"Comprobar el estado del jugador especificado (por defecto es uno mismo)."
+		"lv"		"Pārbaudīt norādītā spēlētāja statusu (pēc noklusējuma – sevi)."
 	}
 	"Command Description - kz_pc"
 	{
@@ -991,6 +1073,7 @@
 		"tr"		"Belirli bir oyuncunun statüsünü kontrol et (varsayılan kendin)."
 		"ko"		"지정된 플레이어의 상태를 확인합니다. (기본값: 본인)"
 		"es"		"Comprobar el estado del jugador especificado (por defecto es uno mismo)."
+		"lv"		"Pārbaudīt norādītā spēlētāja statusu (pēc noklusējuma – sevi)."
 	}
 	"Command Description - kz_course"
 	{
@@ -1001,6 +1084,7 @@
 		"tr"		"Şuanki rotayı ve haritadaki tüm rotaları göster."
 		"ko"		"현재 코스와 맵에 있는 모든 코스 목록을 표시합니다."
 		"es"		"Mostrar el recorrido actual y la lista de todos los recorridos en el mapa."
+		"lv"		"Parādīt pašreizējo trasi un visu karšu trašu sarakstu."
 	}
 	"Command Description - kz_spb"
 	{
@@ -1008,6 +1092,7 @@
 		"chi"		"获取服务器个人最佳数据."
 		"ua"		"Показати персональний найкращий час на сервері."
 		"sv"		"Hämta personlig bästa statistik på servern."
+		"lv"		"Saņemt servera personīgos labākos rezultātus."
 	}
 	"Command Description - kz_gpb"
 	{
@@ -1015,6 +1100,7 @@
 		"chi"		"获取全球个人最佳数据."
 		"ua"		"Показати глобальний персональний найкращий час."
 		"sv"		"Hämta personlig bästa statistik globalt."
+		"lv"		"Saņemt globālos personīgos labākos rezultātus."
 	}
 	"Command Description - kz_globalcheck"
 	{
@@ -1022,6 +1108,7 @@
 		"chi"		"显示 全球API 的状态."
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
+		"lv"		"Parādīt GlobalAPI statusu."
 	}
 	"Command Description - kz_gc"
 	{
@@ -1029,5 +1116,6 @@
 		"chi"		"显示 全球API 的状态."
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
+		"lv"		"Parādīt GlobalAPI statusu."
 	}
 }

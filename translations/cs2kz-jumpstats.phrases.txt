@@ -15,6 +15,7 @@
 		"es"		"Desplazamiento"
 		"de"		"Offset"
 		"ko"		"오프셋"
+		"lv"		"Nobīde"
 	}
 	"Height"
 	{
@@ -30,6 +31,7 @@
 		"es"		"Altura"
 		"de"		"Höhe"
 		"ko"		"높이"
+		"lv"		"Augstums"
 	}
 	"Pre"
 	{
@@ -45,6 +47,7 @@
 		"es"		"Pre"
 		"de"		"Pre"
 		"ko"		"프리"
+		"lv"		"Pre"
 	}
 	"Max"
 	{
@@ -60,6 +63,7 @@
 		"es"		"Máx"
 		"de"		"Max"
 		"ko"		"최대"
+		"lv"		"Max"
 	}
 	"Strafes" // Plural
 	{
@@ -75,6 +79,7 @@
 		"es"		"Strafes"
 		"de"		"Strafes"
 		"ko"		"스트레이프"
+		"lv"		"Strafes"
 	}
 	"Strafe" // Singular
 	{
@@ -90,6 +95,7 @@
 		"de"		"Strafe"
 		"ko"		"스트레이프"
 		"es"		"Strafe"
+		"lv"		"Strafe"
 	}
 	"Sync"
 	{
@@ -105,6 +111,7 @@
 		"de"		"Sync"
 		"ko"		"싱크"
 		"es"		"Sinc"
+		"lv"		"Sinhr."
 	}
 	"Air"
 	{
@@ -120,6 +127,7 @@
 		"de"		"Air"
 		"ko"		"공중"
 		"es"		"Aire"
+		"lv"		"Air"
 	}
 	"Air Time"
 	{
@@ -135,6 +143,7 @@
 		"de"		"Air-Zeit"
 		"ko"		"공중 시간"
 		"es"		"Tiempo en el aire"
+		"lv"		"Airtime"
 	}
 	"Block"
 	{
@@ -150,6 +159,7 @@
 		"de"		"Block"
 		"ko"		"블록"
 		"es"		"Bloque"
+		"lv"		"Block"
 	}
 	"Bad Angles (Short)"
 	{
@@ -164,6 +174,7 @@
 		"de"		"BA"
 		"ko"		"BA"
 		"es"		"BA"
+		"lv"		"BA"
 	}
 	"Overlap (Short)"
 	{
@@ -179,6 +190,7 @@
 		"de"		"OL"
 		"ko"		"OL"
 		"es"		"OL"
+		"lv"		"OL"
 	}
 	"Dead Air (Short)"
 	{
@@ -194,6 +206,7 @@
 		"de"		"DA"
 		"ko"		"DA"
 		"es"		"DA"
+		"lv"		"DA"
 	}
 	"Edge"
 	{
@@ -209,6 +222,7 @@
 		"de"		"Kante"
 		"ko"		"엣지"
 		"es"		"Borde"
+		"lv"		"Edge"
 	}
 	"Deviation"
 	{
@@ -224,6 +238,7 @@
 		"de"		"Abweichung"
 		"ko"		"편차"
 		"es"		"Desviación"
+		"lv"		"Novirze"
 	}
 	"Width"
 	{
@@ -239,6 +254,7 @@
 		"de"		"Breite"
 		"ko"		"너비"
 		"es"		"Ancho"
+		"lv"		"Platums"
 	}
 	"Duck Time"
 	{
@@ -254,6 +270,7 @@
 		"de"		"Geduckt"
 		"ko"		"앉기"
 		"es"		"Agachado"
+		"lv"		"Tupus"
 	}
 	"Gain Efficiency (Short)"
 	{
@@ -268,6 +285,7 @@
 		"de"		"GainEff"
 		"ko"		"GainEff"
 		"es"		"GainEff"
+		"lv"		"GainEff"
 	}
 	"Air Path"
 	{
@@ -282,6 +300,7 @@
 		"de"		"Airpath"
 		"ko"		"공중 경로"
 		"es"		"Airpath"
+		"lv"		"Airpath"
 	}
 	"Angle Ratio"
 	{
@@ -296,6 +315,7 @@
 		"de"		"AngRatio(Avg/Med/Max)"
 		"ko"		"각도 비율(평균/중앙/최대)"
 		"es"		"AngRatio(Prom/Med/Máx)"
+		"lv"		"AngRatio(Avg/Med/Max)"
 	}
 	"Gain"
 	{
@@ -310,6 +330,7 @@
 		"de"		"Gain"
 		"ko"		"게인"
 		"es"		"Ganancia"
+		"lv"		"Gain"
 	}
 	"Loss"
 	{
@@ -323,7 +344,8 @@
 		"it"		"Loss"
 		"de"		"Verlust"
 		"ko"		"손실"
-		"es"		"Pérdida"	
+		"es"		"Pérdida"
+		"lv"		"Loss"	
 	}
 	"Average Gain (Short)"
 	{
@@ -338,6 +360,7 @@
 		"de"		"AvgGain"
 		"ko"		"평균 게인"
 		"es"		"PromGan"
+		"lv"		"AvgGain"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -354,6 +377,7 @@
 		"de"		"Erster Sprung"
 		"ko"		"첫 번째 점프"
 		"es"		"Primer salto"
+		"lv"		"Pirmais lēciens"
 	}
 	"Invalid movetype change"
 	{
@@ -367,7 +391,8 @@
 		"it"		"Invalid movetype change"
 		"de"		"Ungültige Änderung des Bewegungstyps"
 		"ko"		"잘못된 이동 유형 변경"
-		"es"		"Cambio de tipo de movimiento no válido"	
+		"es"		"Cambio de tipo de movimiento no válido"
+		"lv"		"Nederīga kustības veida maiņa"
 	}
 	"Invalid movetype"
 	{
@@ -382,6 +407,7 @@
 		"de"		"Ungültigr Bewegungstyp"
 		"ko"		"잘못된 이동 유형"
 		"es"		"Tipo de movimiento no válido"
+		"lv"		"Nederīgs kustības veids"
 	}
 	"Just noclipped"
 	{
@@ -396,6 +422,7 @@
 		"de"		"Gerade genoclipped"
 		"ko"		"방금 노클립 모드로 전환되었습니다."
 		"es"		"Acabas de noclippear"
+		"lv"		"Tikko izmantots noclip"
 	}
 	"Invalid collisions"
 	{
@@ -410,6 +437,7 @@
 		"de"		"Ungültige collisions"
 		"ko"		"잘못된 충돌"
 		"es"		"Colisiones no válidas"
+		"lv"		"Nederīgas sadursmes"
 	}
 	"Base velocity detected"
 	{
@@ -424,6 +452,8 @@
 		"de"		"Basisgeschwindigkeit erkannt"
 		"ko"		"기본 속도가 감지되었습니다."
 		"es"		"Velocidad base detectada"
+		"lv"		"Tika noteikts bāzes ātrums"
+
 	}
 	"Player gravity scale changed"
 	{
@@ -432,6 +462,7 @@
 		"ua"		"Змінено шкалу гравітації гравця"
 		"ko"		"플레이어 중력 비율이 변경되었습니다."
 		"es"		"Escala de gravedad de jugador cambiada"
+		"lv"		"Spēlētāja gravitācijas mērogs ir mainīts"
 	}
 	"Invalid gains"
 	{
@@ -446,6 +477,7 @@
 		"de"		"Ungültige gains"
 		"ko"		"잘못된 게인"
 		"es"		"Ganancias no válidas"
+		"lv"		"Nederīgi ieguvumi"
 	}
 	"Externally modified"
 	{
@@ -460,6 +492,7 @@
 		"de"		"Extern modifiziert"
 		"ko"		"외부에서 수정됨"
 		"es"		"Externamente modificado"
+		"lv"		"Modificēts ārēji"
 	}
 	"Edgebugged"
 	{
@@ -474,6 +507,7 @@
 		"de"		"Geedgebugged"
 		"ko"		"엣지 버그"
 		"es"		"Edgebugged"
+		"lv"		"Edgebugged"
 	}
 	"Teleported"
 	{
@@ -488,6 +522,7 @@
 		"de"		"Teleportiert"
 		"ko"		"텔레포트됨"
 		"es"		"Teleportado"
+		"lv"		"Teleportēts"
 	}
 	"Disabled By Map"
 	{
@@ -496,6 +531,7 @@
 		"ua"		"Вимкнено налаштуваннями мапи."
 		"ko"		"맵에 의해 비활성화 됨"
 		"es"		"Desactivado por el mapa"
+		"lv"		"Disabled by map"
 	}
 
 	// =====[OPTIONS]=====
@@ -513,6 +549,7 @@
 		"de"		"{grey}Du hast das Jumpstats-Berichte aktiviert."
 		"ko"		"{grey}점프 통계 보고 기능을 활성화했습니다."
 		"es"		"{gray}Has activado los informes de estadísticas de salto."
+		"lv"		"{grey}Tu esi ieslēdzis lēcienu statistikas ziņošanu."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
@@ -528,6 +565,7 @@
 		"de"		"{grey}Du hast alle Jumpstats-Berichte deaktiviert."
 		"ko"		"{grey}모든 점프 통계 보고 기능을 비활성화했습니다."
 		"es"		"{grey}Has desactivado todos los informes de estadísticas de salto."
+		"lv"		"{grey}Tu esi atspējojis visu lēcienu statistikas ziņošanu."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -543,6 +581,7 @@
 		"de"		"{grey}Du hast die immer aktiven Jumpstats aktiviert."
 		"ko"		"{grey}항상 활성화된 점프 통계 기능을 활성화했습니다."
 		"es"		"{grey}Has activado las estadísticas de salto siempre activas."
+		"lv"		"{grey}Tu esi ieslēdzis always-on lēcienu statistiku."
 	}
 	"Jumpstats Option - Jumpstats Always - Disable"
 	{
@@ -558,6 +597,7 @@
 		"de"		"{grey}Du hast die immer aktiven Jumpstats deaktiviert."
 		"ko"		"{grey}항상 활성화된 점프 통계 기능을 비활성화했습니다."
 		"es"		"{grey}Has desactivado las estadísticas de salto siempre activas."
+		"lv"		"{grey}Tu esi atspējojis vienmēr ieslēgto lēcienu statistiku."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -572,6 +612,7 @@
 		"de"		"{grey}Verwendung: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"ko"		"{grey}사용법: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"es"		"{grey}Usa: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"lv"		"{grey}Pielietojums: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
 	{
@@ -586,6 +627,7 @@
 		"de"		"{grey}Jumpstats-Übertragung deaktiviert."
 		"ko"		"{grey}점프 통계 방송이 비활성화되었습니다."
 		"es"		"{grey}Difusión de estadísticas de salto desactivada."
+		"lv"		"{grey}Lēcienu statistikas pārraide ir atspējota."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
@@ -601,6 +643,7 @@
 		"de"		"{grey}Der Broadcast-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
 		"ko"		"{grey}점프 통계 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
 		"es"		"{grey}El límite de difusión de estadísticas de saltos es ahora {default}{tier}."
+		"lv"		"{grey}Lēcienu statistikas pārraides slieksnis tagad ir {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -615,6 +658,7 @@
 		"de"		"{grey}Verwendung: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"ko"		"{grey}사용법: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"es"		"{grey}Usa: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"lv"		"{grey}Pielietojums: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
 	{
@@ -629,6 +673,7 @@
 		"de"		"{grey}Jumpstats-Soundeffekt deaktiviert."
 		"ko"		"{grey}점프 통계 사운드 효과가 비활성화되었습니다."
 		"es"		"{grey}Sonido de efectos de saltos activados."
+		"lv"		"{grey}Lēcienu statistikas skaņas efekts ir atspējots."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
@@ -644,6 +689,7 @@
 		"de"		"{grey}Der Soundeffekt-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
 		"ko"		"{grey}점프 통계 사운드 효과 임계값이 이제 {default}{tier}로 설정되었습니다."
 		"es"		"{grey}El límite de efectos de sonidos de estadísticas de salto es ahora {default}{tier}."
+		"lv"		"{grey}Lēcienu statistikas skaņas efekta slieksnis tagad ir {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"
@@ -661,6 +707,7 @@
 		"it"		"{default}{player} {grey}ha saltato {color}{distance} {grey}unità con un {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"ko"		"{default}{player} {grey}님이 {color}{distance} {grey}유닛을 {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]로 점프했습니다."
 		"es"		"{default}{player} {grey}saltó {color}{distance} {grey}unidades con un {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+		"lv"		"{default}{player} {grey}ieleca {color}{distance} {grey}vienības ar {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 	}
 	
 	"Jumpstats Report - Invalidation Reason"
@@ -677,6 +724,7 @@
 		"it"		"({reason})"
 		"ko"		"({reason})"
 		"es"		"({reason})"
+		"lv"		"({reason})"
 	}
 	
 	"Jumpstats Report - Chat Summary"
@@ -694,6 +742,7 @@
 		"it"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Width | {olive}{height} {grey}Height"
 		"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}편차 | {olive}{width} {grey}폭 | {olive}{height} {grey}높이"
 		"es"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sinc | {olive}{pre} {grey}Pre | {olive}{max} {grey}Máx\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Desviación | {olive}{width} {grey}Ancho | {olive}{height} {grey}Altura"
+		"lv"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%% {grey}| {olive}{deviation} {grey}Deviation | {olive}{width} {grey}Width | {olive}{height} {grey}Height"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -709,6 +758,7 @@
 		"it"		"{player_name} ha saltato {distance} unità con un {jump_type} {invalidation_reason}"
 		"ko"		"{player_name}님이 {distance} 유닛을 {jump_type}으로 점프했으며, 이유: {invalidation_reason}"
 		"es"		"{player_name} saltó {distance} unidades con un {jump_type} {invalidation_reason}"
+		"lv"		"{player_name} leca {distance} vienības ar {jump_type} {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{
@@ -724,6 +774,7 @@
 		"it"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
 		"ko"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} 높이"
 		"es"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sinc | {pre} Pre | {max} Máx | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Altura"
+		"lv"		"{mode_style} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
@@ -739,5 +790,6 @@
 		"it"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"ko"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"es"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Desviación | {width} Ancho | {air_time} Tiempo en el aire | {offset} Desplazamiento | {duck_end_time}/{duck_total_time} Agachado"
+		"lv"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | 
 	}
 }

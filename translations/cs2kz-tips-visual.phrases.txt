@@ -13,6 +13,7 @@
 		"es"	"{grey}Usa {default}/panel {grey} para alternar el panel en el medio de tu pantalla."
 		"de"	"{grey}Verwende {default}/panel {grey}, um den Panel in der Mitte deines Bildschirms ein- oder auszuschalten."
 		"ko"	"{grey}스크린 중앙의 패널을 전환하려면 {default}/panel{grey}을 사용하세요."
+		"lv"	"{grey}Izmanto {default}/panel {grey}, lai ieslēgtu/izslēgtu paneli ekrāna vidū."
 	}
 	"Tip - kz_hidelegs"
 	{
@@ -27,6 +28,7 @@
 		"es"	"{grey}Puedes alternar la visibilidad de tus piernas escribiendo{default} /hidelegs{grey}."
 		"de"	"{grey}Du kannst die Sichtbarkeit deiner Beine umschalten, indem du{default} /hidelegs{grey} eingibst."
 		"ko"	"{grey}다리 표시 여부를 전환하려면 {default}/hidelegs{grey}를 입력하세요."
+		"lv"	"{grey}Tu vari izslēgt kāju redzamību, rakstot{default} /hidelegs{grey}."
 	}
 	"Tip - kz_hide"
 	{
@@ -41,6 +43,7 @@
 		"es"	"{grey}¿No quieres ver a otros jugadores? Usa {default}/hide{grey}."
 		"de"	"{grey}Möchtest du andere Spieler nicht sehen? Verwende {default}/hide{grey}."
 		"ko"	"{grey}다른 플레이어를 보고 싶지 않으면 {default}/hide{grey}를 사용하세요."
+		"lv"	"{grey}Nevēlies redzēt citus spēlētājus? Izmanto {default}/hide{grey}."
 	}
 	"Tip - kz_hideweapon"
 	{
@@ -55,5 +58,6 @@
 		"es"	"{grey}Escribe {default}/hideweapon {grey}para alternar la visibilidad de tu arma."
 		"de"	"{grey}Gib {default}/hideweapon {grey} ein, um die Sichtbarkeit deiner Waffe umzuschalten."
 		"ko"	"{grey}무기 표시 여부를 전환하려면 {default}/hideweapon{grey}을 입력하세요."
+		"lv"	"{grey}Rakstot {default}/hideweapon {grey}, tu vari izslēgt ieroča redzamību."
 	}
 }
