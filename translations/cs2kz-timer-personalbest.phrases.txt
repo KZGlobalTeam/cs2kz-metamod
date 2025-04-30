@@ -132,7 +132,7 @@
 		"de"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Insgesamt{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Ogółem{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"ko"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
-		lv"  		"{grey}Serveris: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"lv"  		"{grey}Serveris: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Time - Overall (Global)"
 	{
