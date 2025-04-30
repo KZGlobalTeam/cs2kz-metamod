@@ -5,7 +5,7 @@
 			"menu_simple"
 			{
 				"hotkey"	"0"
-				"title"		"TP izvēlne (Basic)"
+				"title"		"TP izvēlne (SIMPLE)"
 				"timeout"	"100000"
 
 				"Commands"
