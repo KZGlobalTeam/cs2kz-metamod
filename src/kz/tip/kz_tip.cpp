@@ -1,6 +1,7 @@
 #include "kz_tip.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
+#include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 
 static_global KeyValues *pTipKeyValues;
 static_global CUtlVector<const char *> tipNames;
@@ -12,6 +13,8 @@ static_global class KZTimerServiceEventListener_Tip : public KZTimerServiceEvent
 {
 	virtual void OnTimerStartPost(KZPlayer *player, u32 courseGUID) override;
 } timerEventListener;
+
+extern IMultiAddonManager *g_pMultiAddonManager;
 
 void KZTipService::Init()
 {
@@ -119,7 +122,10 @@ void KZTipService::OnPlayerJoinTeam(i32 team)
 	}
 
 	this->teamJoinedAtLeastOnce = true;
-	this->player->languageService->PrintChat(true, false, "Menu Hint");
+	if (g_pMultiAddonManager)
+	{
+		this->player->languageService->PrintChat(true, false, "Menu Hint");
+	}
 }
 
 void KZTipService::OnTimerStartPost()
