@@ -1,0 +1,168 @@
+"RadioPanel.txt"
+{
+    "Groups"
+    {
+        "menu_simple"
+        {
+            "hotkey"    "0"
+            "title"     "TP Menu (Einfach)"
+            "timeout"   "100000"
+
+            "Commands"
+            {
+                "Checkpoint"
+                {
+                    "hotkey"    "1"
+                    "label"     "Checkpoint"
+                    "cmd"       "kz_cp; radio"
+                }
+
+                "Teleport"
+                {
+                    "hotkey"    "2"
+                    "label"     "Teleport"
+                    "cmd"       "kz_tp; radio"
+                }
+
+                "Pause"
+                {
+                    "hotkey"    "3"
+                    "label"     "Pause/Resume"
+                    "cmd"       "kz_pause; radio"
+                }
+
+                "Restart"
+                {
+                    "hotkey"    "4"
+                    "label"     "Restart/Respawn"
+                    "cmd"       "kz_r; radio"
+                }
+            }
+        }
+
+        "menu_advanced"
+        {
+            "hotkey"    "1"
+            "title"     "TP Menu (Erweitert)"
+            "timeout"   "100000"
+
+            "Commands"
+            {
+                "Checkpoint"
+                {
+                    "hotkey"    "1"
+                    "label"     "Checkpoint"
+                    "cmd"       "kz_cp; radio1"
+                }
+
+                "Teleport"
+                {
+                    "hotkey"    "2"
+                    "label"     "Teleport"
+                    "cmd"       "kz_tp; radio1"
+                }
+                
+                "Prev Checkpoint"
+                {
+                    "hotkey"    "3"
+                    "label"     "Letzter CP"
+                    "cmd"       "kz_prevcp; radio1"
+                }
+
+                "Next Checkpoint"
+                {
+                    "hotkey"    "4"
+                    "label"     "Nächster CP"
+                    "cmd"       "kz_nextcp; radio1"
+                }
+
+                "Undo Teleport"
+                {
+                    "hotkey"    "5"
+                    "label"     "TP Ruckg. machen"
+                    "cmd"       "kz_undo; radio1"
+                }
+
+                "Pause"
+                {
+                    "hotkey"    "6"
+                    "label"     "Pause/Fortsetzen"
+                    "cmd"       "kz_pause; radio1"
+                }
+
+                "Restart"
+                {
+                    "hotkey"    "7"
+                    "label"     "Neustart/Respawn"
+                    "cmd"       "kz_r; radio1"
+                }
+
+                "Noclip"
+                {
+                    "hotkey"    "8"
+                    "label"     "Noclip togglen"
+                    "cmd"       "kz_noclip; radio1"
+                }
+            }
+        }
+
+        "menu_option"
+        {
+            "hotkey"    "2"
+            "title"     "Optionen Menu"
+            "timeout"   "100000"
+
+            "Commands"
+            {
+                "Set Custom Start Position"
+                {
+                    "hotkey"    "1"
+                    "label"     "Benutz.def. Startposition setzen"
+                    "cmd"       "kz_ssp"
+                }
+                
+                "Clear Custom Start Position"
+                {
+                    "hotkey"    "2"
+                    "label"     "Benutz.def. Startposition löschen"
+                    "cmd"       "kz_csp"
+                }
+                
+                "Hide"
+                {
+                    "hotkey"    "3"
+                    "label"     "Andere Spieler ein/ausblenden"
+                    "cmd"       "kz_hide"
+                }
+                
+                "Hide Weapon"
+                {
+                    "hotkey"    "4"
+                    "label"     "Waffe ein/ausblenden"
+                    "cmd"       "kz_hideweapon"
+                }
+                
+                "Hide Legs"
+                {
+                    "hotkey"    "5"
+                    "label"     "Beine ein/ausblenden"
+                    "cmd"       "kz_hidelegs"
+                }
+                
+                "Toggle Jumpstats"
+                {
+                    "hotkey"    "6"
+                    "label"     "Jumpstats umschalten"
+                    "cmd"       "kz_togglejs"
+                }
+                
+                "Toggle Jumpstats Always"
+                {
+                    "hotkey"    "7"
+                    "label"     "Jumpstats immer anzeigen"
+                    "cmd"       "kz_jsalways"
+                }
+            }
+        }
+    }
+}

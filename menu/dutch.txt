@@ -1,0 +1,168 @@
+RadioPanel.txt
+{
+    "Groups"
+    {
+        "menu_simple"
+        {
+            "hotkey"    "0"
+            "title"     "TP Menu (Eenvoudig)"
+            "timeout"   "100000"
+
+            "Commands"
+            {
+                "Checkpoint"
+                {
+                    "hotkey"    "1"
+                    "label"     "Checkpoint"
+                    "cmd"       "kz_cp; radio"
+                }
+
+                "Teleport"
+                {
+                    "hotkey"    "2"
+                    "label"     "Teleport"
+                    "cmd"       "kz_tp; radio"
+                }
+
+                "Pause"
+                {
+                    "hotkey"    "3"
+                    "label"     "Pauze/Hervatten"
+                    "cmd"       "kz_pause; radio"
+                }
+
+                "Restart"
+                {
+                    "hotkey"    "4"
+                    "label"     "Herstarten/Respawn"
+                    "cmd"       "kz_r; radio"
+                }
+            }
+        }
+
+        "menu_advanced"
+        {
+            "hotkey"    "1"
+            "title"     "TP Menu (Geavanceerd)"
+            "timeout"   "100000"
+
+            "Commands"
+            {
+                "Checkpoint"
+                {
+                    "hotkey"    "1"
+                    "label"     "Checkpoint"
+                    "cmd"       "kz_cp; radio1"
+                }
+
+                "Teleport"
+                {
+                    "hotkey"    "2"
+                    "label"     "Teleport"
+                    "cmd"       "kz_tp; radio1"
+                }
+
+                "Prev Checkpoint"
+                {
+                    "hotkey"    "3"
+                    "label"     "Vorige CP"
+                    "cmd"       "kz_prevcp; radio1"
+                }
+
+                "Next Checkpoint"
+                {
+                    "hotkey"    "4"
+                    "label"     "Volgende CP"
+                    "cmd"       "kz_nextcp; radio1"
+                }
+
+                "Undo Teleport"
+                {
+                    "hotkey"    "5"
+                    "label"     "Ongedaan maken Teleport"
+                    "cmd"       "kz_undo; radio1"
+                }
+
+                "Pause"
+                {
+                    "hotkey"    "6"
+                    "label"     "Pauze/Hervatten"
+                    "cmd"       "kz_pause; radio1"
+                }
+
+                "Restart"
+                {
+                    "hotkey"    "7"
+                    "label"     "Herstarten/Respawn"
+                    "cmd"       "kz_r; radio1"
+                }
+
+                "Noclip"
+                {
+                    "hotkey"    "8"
+                    "label"     "Noclip in-/uitschakelen"
+                    "cmd"       "kz_noclip; radio1"
+                }
+            }
+        }
+
+        "menu_option"
+        {
+            "hotkey"    "2"
+            "title"     "Optiemenu"
+            "timeout"   "100000"
+
+            "Commands"
+            {
+                "Set Custom Start Position"
+                {
+                    "hotkey"    "1"
+                    "label"     "Aangepaste startpositie instellen"
+                    "cmd"       "kz_ssp"
+                }
+
+                "Clear Custom Start Position"
+                {
+                    "hotkey"    "2"
+                    "label"     "Aangepaste startpositie verwijderen"
+                    "cmd"       "kz_csp"
+                }
+
+                "Hide"
+                {
+                    "hotkey"    "3"
+                    "label"     "Toon/Verberg andere spelers"
+                    "cmd"       "kz_hide"
+                }
+
+                "Hide Weapon"
+                {
+                    "hotkey"    "4"
+                    "label"     "Toon/Verberg wapen"
+                    "cmd"       "kz_hideweapon"
+                }
+
+                "Hide Legs"
+                {
+                    "hotkey"    "5"
+                    "label"     "Toon/Verberg benen"
+                    "cmd"       "kz_hidelegs"
+                }
+
+                "Toggle Jumpstats"
+                {
+                    "hotkey"    "6"
+                    "label"     "Jumpstats in-/uitschakelen"
+                    "cmd"       "kz_togglejs"
+                }
+
+                "Toggle Jumpstats Always"
+                {
+                    "hotkey"    "7"
+                    "label"     "Toon altijd Jumpstats"
+                    "cmd"       "kz_jsalways"
+                }
+            }
+        }
+    }
+}
