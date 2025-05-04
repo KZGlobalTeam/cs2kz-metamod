@@ -64,6 +64,21 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t *tableMap, const char *cla
 		keyValueMap->Insert(hash_32_fnv1a_const(field.m_pszName), {field.m_nSingleInheritanceOffset, IsFieldNetworked(field)});
 	}
 
+	if (pClassInfo->m_pDataDescMap)
+	{
+		fieldsSize = pClassInfo->m_pDataDescMap->dataNumFields;
+
+		for (int i = 0; i < fieldsSize; ++i)
+		{
+			auto &field = pClassInfo->m_pDataDescMap->dataDesc[i];
+
+			if (!field.fieldName || !field.fieldName[0] || field.fieldOffset < 0)
+			{
+				continue;
+			}
+			keyValueMap->Insert(hash_32_fnv1a_const(field.fieldName), {field.fieldOffset, false});
+		}
+	}
 	return true;
 }
 
