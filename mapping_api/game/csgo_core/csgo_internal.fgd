@@ -33,7 +33,7 @@
 	timer_modifier_gravity(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Player Gravity" : "1.0" : "Scales the player's gravity by this amount."
 	
 	// KZ Anti Bhop
-	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
+	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" max="100.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
 	+ "0.0 prevents jumping completely. This is the time for which antibhop will be applied. Time is only counted when the player is on the ground."
 	
 	// KZ Zone
@@ -51,7 +51,7 @@
 	// KZ Teleport
 	timer_teleport_destination(target_destination) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Destination" : : "The entity to which the player should be teleported. Using special targetnames starting with ! won't work. (!activator, !player etc) Maximum length is 127 characters."
 
-	timer_teleport_delay(float) {group="KZ | Teleport" min="0.0" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Delay" : "0.0" : "This is how long the player can stay in the trigger. If it's one of the bhop triggers, then this means how long the player can stay on ground. For only bhop triggers the minimum delay is 0.1 seconds."
+	timer_teleport_delay(float) {group="KZ | Teleport" min="0.0" max="100.0" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Delay" : "0.0" : "This is how long the player can stay in the trigger. If it's one of the bhop triggers, then this means how long the player can stay on ground. For only bhop triggers the minimum delay is 0.1 seconds."
 	
 	timer_teleport_use_dest_angles(boolean) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Use Destination Angles" : 1 : "Whether to set the player's view angles to the destination entity's angles or keep the player's current view angles."
 	
