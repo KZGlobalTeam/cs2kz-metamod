@@ -12,6 +12,7 @@
 #include "cs2kz.h"
 #include "ctimer.h"
 #include "kz/kz.h"
+#include "kz/beam/kz_beam.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
 #include "kz/quiet/kz_quiet.h"
@@ -475,6 +476,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	RecordAnnounce::Check();
 	BaseRequest::CheckRequests();
 	KZTelemetryService::ActiveCheck();
+	KZBeamService::UpdateBeams();
 	RETURN_META(MRES_IGNORED);
 }
 
