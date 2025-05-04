@@ -38,8 +38,8 @@ static_function CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, 
 	{
 		return filter;
 	}
-	CCSPlayerPawn *tarGetPlayerPawn = targetPlayer->GetPlayerPawn();
-	if (!tarGetPlayerPawn)
+	CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPlayerPawn();
+	if (!targetPlayerPawn)
 	{
 		return nullptr;
 	}
@@ -59,7 +59,7 @@ static_function CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, 
 		{
 			continue;
 		}
-		if (obsService->m_hObserverTarget().IsValid() && obsService->m_hObserverTarget().GetEntryIndex() == tarGetPlayerPawn->GetEntityIndex().Get())
+		if (obsService->m_hObserverTarget().IsValid() && obsService->m_hObserverTarget().GetEntryIndex() == targetPlayerPawn->GetEntityIndex().Get())
 		{
 			filter->AddRecipient(player->GetPlayerSlot());
 		}
