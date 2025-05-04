@@ -2,6 +2,7 @@
 
 #include "utils/gameconfig.h"
 #include "utils/schema.h"
+#include "utils/interfaces.h"
 #include "ehandle.h"
 
 extern CGameConfig *g_pGameConfig;
@@ -202,5 +203,10 @@ public:
 	void Teleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 	{
 		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Teleport"), this, newPosition, newAngles, newVelocity);
+	}
+
+	void DispatchSpawn(CEntityKeyValues *pEntityKeyValues = nullptr)
+	{
+		g_pKZUtils->DispatchSpawn(this, pEntityKeyValues);
 	}
 };

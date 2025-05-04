@@ -6,6 +6,7 @@
 #include "sdk/services.h"
 
 #include "kz_quiet.h"
+#include "kz/beam/kz_beam.h"
 #include "kz/option/kz_option.h"
 #include "utils/utils.h"
 
@@ -36,6 +37,18 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		}
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPlayerPawn();
+
+		// Only show beam to the owner.
+		EntityInstanceByClassIter_t iterGrenade(NULL, "smokegrenade_projectile");
+
+		for (auto grenade = iterGrenade.First(); grenade; grenade = iterGrenade.Next())
+		{
+			if (targetPlayer->beamService->playerBeam.handle == grenade->GetRefEHandle())
+			{
+				continue;
+			}
+			pTransmitInfo->m_pTransmitEdict->Clear(grenade->GetEntityIndex().Get());
+		}
 
 		EntityInstanceByClassIter_t iter(NULL, "player");
 		// clang-format off

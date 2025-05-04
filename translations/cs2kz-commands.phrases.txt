@@ -1124,4 +1124,12 @@
 		"sv"		"Visa statusen av GlobalAPI."
 		"lv"		"Parādīt GlobalAPI statusu."
 	}
+	"Command Description - kz_beam"
+	{
+		"en"		"Toggle player beam type."
+	}
+	"Command Description - kz_beamoffset"
+	{
+		"en"		"Set or get player beam offset."
+	}
 }

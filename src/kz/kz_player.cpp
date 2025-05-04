@@ -2,6 +2,7 @@
 #include "utils/utils.h"
 #include "utils/ctimer.h"
 #include "anticheat/kz_anticheat.h"
+#include "beam/kz_beam.h"
 #include "checkpoint/kz_checkpoint.h"
 #include "db/kz_db.h"
 #include "hud/kz_hud.h"
@@ -35,6 +36,7 @@ void KZPlayer::Init()
 
 	// TODO: initialize every service.
 	delete this->anticheatService;
+	delete this->beamService;
 	delete this->checkpointService;
 	delete this->jumpstatsService;
 	delete this->languageService;
@@ -51,6 +53,7 @@ void KZPlayer::Init()
 	delete this->globalService;
 
 	this->anticheatService = new KZAnticheatService(this);
+	this->beamService = new KZBeamService(this);
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
 	this->databaseService = new KZDatabaseService(this);
@@ -730,6 +733,10 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	this->jumpstatsService->InvalidateJumpstats("Teleported");
 	this->modeService->OnTeleport(origin, angles, velocity);
 	this->timerService->OnTeleport(origin, angles, velocity);
+	if (origin)
+	{
+		this->beamService->OnTeleport();
+	}
 }
 
 void KZPlayer::DisableTurnbinds()
@@ -792,9 +799,9 @@ void KZPlayer::UpdatePlayerModelAlpha()
 	}
 }
 
-bool KZPlayer::JustTeleported()
+bool KZPlayer::JustTeleported(f32 threshold)
 {
-	return g_pKZUtils->GetServerGlobals()->curtime - this->lastTeleportTime < KZ_RECENT_TELEPORT_THRESHOLD;
+	return g_pKZUtils->GetServerGlobals()->curtime - this->lastTeleportTime < threshold;
 }
 
 void KZPlayer::ToggleHideLegs()
