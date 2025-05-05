@@ -31,7 +31,8 @@
 	timer_modifier_disable_jumpstats(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Disable Jumpstats" : 0 : "Disable jumpstats when the player is touching this trigger"
 	timer_modifier_enable_slide(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Enable Slide" : 0 : "Makes every surface surfable, if the player is touching this trigger."
 	timer_modifier_gravity(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Player Gravity" : "1.0" : "Scales the player's gravity by this amount."
-	
+	timer_modifier_jump_impulse(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Jump Speed Modifier" : "1.0" : "Multiply the player's base jump velocity by this value. This has exponential effect on jump heights, a 2x modifier will give players 4x the jump height."
+
 	// KZ Anti Bhop
 	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" max="100.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
 	+ "0.0 prevents jumping completely. This is the time for which antibhop will be applied. Time is only counted when the player is on the ground."

@@ -221,7 +221,6 @@ void KZPlayer::OnProcessMovement()
 		this->styleServices[i]->OnProcessMovement();
 	}
 
-	this->triggerService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 }
@@ -469,6 +468,7 @@ void KZPlayer::OnCheckJumpButton()
 	{
 		this->styleServices[i]->OnCheckJumpButton();
 	}
+	this->triggerService->OnCheckJumpButton();
 }
 
 void KZPlayer::OnCheckJumpButtonPost()
