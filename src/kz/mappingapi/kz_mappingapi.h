@@ -52,7 +52,8 @@ struct KzMapModifier
 	bool disableTeleports;
 	bool disableJumpstats;
 	bool enableSlide;
-	float gravity;
+	f32 gravity;
+	f32 jumpFactor;
 };
 
 // KZTRIGGER_ANTI_BHOP

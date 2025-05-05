@@ -61,6 +61,7 @@ void KZTriggerService::OnPhysicsSimulatePost()
 
 	if (this->antiBhopActive)
 	{
+		this->modifiers.jumpFactor = 0.0f;
 		this->ApplyAntiBhop(!this->lastAntiBhopActive);
 	}
 	else if (this->lastAntiBhopActive)
@@ -68,11 +69,16 @@ void KZTriggerService::OnPhysicsSimulatePost()
 		this->CancelAntiBhop(true);
 	}
 
+	this->ApplyJumpFactor(this->modifiers.jumpFactor != this->lastModifiers.jumpFactor);
+
 	this->lastModifiers = this->modifiers;
 	this->lastAntiBhopActive = this->antiBhopActive;
 }
 
-void KZTriggerService::OnProcessMovement() {}
+void KZTriggerService::OnCheckJumpButton()
+{
+	this->ApplyJumpFactor(false);
+}
 
 void KZTriggerService::OnProcessMovementPost()
 {
@@ -84,6 +90,7 @@ void KZTriggerService::OnProcessMovementPost()
 	}
 
 	this->antiBhopActive = false;
+	this->modifiers.jumpFactor = 1.0f;
 }
 
 void KZTriggerService::OnStopTouchGround()

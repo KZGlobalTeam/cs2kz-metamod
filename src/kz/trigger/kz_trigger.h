@@ -92,6 +92,7 @@ private:
 		i32 disableTeleportsCount;
 		i32 disableJumpstatsCount;
 		i32 enableSlideCount;
+		f32 jumpFactor = 1.0f;
 	};
 
 	Modifiers modifiers {};
@@ -117,6 +118,8 @@ private:
 
 	void UpdateModifiersInternal();
 
+	void ApplyJumpFactor(bool replicate = false);
+
 	void ApplySlide(bool replicate = false);
 	void CancelSlide(bool replicate = false);
 
@@ -132,7 +135,7 @@ public:
 	void OnPhysicsSimulate();
 	void OnPhysicsSimulatePost();
 
-	void OnProcessMovement();
+	void OnCheckJumpButton();
 	void OnProcessMovementPost();
 
 	void OnStopTouchGround();
