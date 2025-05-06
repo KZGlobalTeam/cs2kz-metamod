@@ -1,6 +1,7 @@
 #include "kz_trigger.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/noclip/kz_noclip.h"
 #include "kz/timer/kz_timer.h"
@@ -67,6 +68,88 @@ void KZTriggerService::OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouch
 		return;
 	}
 	this->OnMappingApiTriggerEndTouchPost(tracker);
+}
+
+void KZTriggerService::AddPushEvent(const KzTrigger *trigger)
+{
+	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
+	PushEvent event {trigger, curtime + trigger->push.delay};
+	if (this->pushEvents.Find(event) == -1)
+	{
+		this->pushEvents.AddToTail(event);
+	}
+}
+
+void KZTriggerService::CleanupPushEvents()
+{
+	f32 frametime = g_pKZUtils->GetGlobals()->frametime;
+	// Don't remove push events since these push events are not fired yet.
+	if (frametime == 0.0f)
+	{
+		return;
+	}
+	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
+	FOR_EACH_VEC_BACK(this->pushEvents, i)
+	{
+		if (curtime - frametime >= this->pushEvents[i].pushTime + this->pushEvents[i].source->push.cooldown
+			|| curtime < this->pushEvents[i].pushTime + this->pushEvents[i].source->push.cooldown)
+		{
+			this->pushEvents.Remove(i);
+		}
+	}
+}
+
+void KZTriggerService::ApplyPushes()
+{
+	f32 frametime = g_pKZUtils->GetGlobals()->frametime;
+	// There's no point applying any push if player isn't going to move anyway.
+	if (frametime == 0.0f)
+	{
+		return;
+	}
+	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
+	bool setSpeed[3] {};
+	this->player->GetPlayerPawn()->m_fFlags() &= ~FL_BASEVELOCITY;
+	if (this->pushEvents.Count() == 0)
+	{
+		return;
+	}
+	FOR_EACH_VEC(this->pushEvents, i)
+	{
+		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime)
+		{
+			continue;
+		}
+		auto &push = this->pushEvents[i].source->push;
+		for (u32 i = 0; i < 3; i++)
+		{
+			Vector baseVel;
+			this->player->GetBaseVelocity(&baseVel);
+			// Set speed overrides add speed.
+			if (push.setSpeed[i])
+			{
+				baseVel[i] = push.impulse[i];
+				setSpeed[i] = true;
+			}
+			else if (!setSpeed[i])
+			{
+				baseVel[i] += push.impulse[i];
+			}
+			this->player->SetBaseVelocity(baseVel);
+			this->player->GetPlayerPawn()->m_fFlags() |= FL_BASEVELOCITY;
+			this->player->jumpstatsService->InvalidateJumpstats("Disabled By Map");
+		}
+	}
+	Vector velocity, newVelocity;
+	this->player->GetVelocity(&velocity);
+	for (u32 i = 0; i < 3; i++)
+	{
+		newVelocity[i] = setSpeed[i] ? 0 : velocity[i];
+	}
+	if (velocity != newVelocity)
+	{
+		this->player->SetVelocity(newVelocity);
+	}
 }
 
 void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tracker)
@@ -156,7 +239,14 @@ void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tra
 			}
 		}
 		break;
-
+		case KZTRIGGER_PUSH:
+		{
+			if (tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_START_TOUCH)
+			{
+				this->AddPushEvent(trigger);
+			}
+		}
+		break;
 		default:
 			break;
 	}
@@ -185,6 +275,11 @@ void KZTriggerService::OnMappingApiTriggerTouchPost(TriggerTouchTracker tracker)
 		case KZTRIGGER_SEQUENTIAL_BHOP:
 		{
 			this->TouchTeleportTrigger(tracker);
+		}
+		break;
+		case KZTRIGGER_PUSH:
+		{
+			this->TouchPushTrigger(tracker);
 		}
 		break;
 	}
@@ -238,7 +333,14 @@ void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker track
 			}
 		}
 		break;
-
+		case KZTRIGGER_PUSH:
+		{
+			if (tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_END_TOUCH)
+			{
+				this->AddPushEvent(tracker.kzTrigger);
+			}
+		}
+		break;
 		default:
 			break;
 	}

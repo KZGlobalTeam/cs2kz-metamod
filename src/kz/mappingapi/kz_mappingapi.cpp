@@ -308,7 +308,29 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			trigger.teleport.relative = ekv->GetBool("timer_teleport_relative");
 		}
 		break;
+		case KZTRIGGER_PUSH:
+		{
+			Vector impulse = ekv->GetVector("timer_push_amount");
+			trigger.push.impulse[0] = impulse.x;
+			trigger.push.impulse[1] = impulse.y;
+			trigger.push.impulse[2] = impulse.z;
+			trigger.push.setSpeed[0] = ekv->GetBool("timer_push_abs_speed_x");
+			trigger.push.setSpeed[1] = ekv->GetBool("timer_push_abs_speed_y");
+			trigger.push.setSpeed[2] = ekv->GetBool("timer_push_abs_speed_z");
+			trigger.push.cancelOnTeleport = ekv->GetBool("timer_push_cancel_on_teleport");
+			trigger.push.cooldown = ekv->GetFloat("timer_push_cooldown", 0.1f);
+			trigger.push.delay = ekv->GetFloat("timer_push_delay", 0.0f);
 
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_start_touch") ? KzMapPush::KZ_PUSH_START_TOUCH : 0;
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_touch") ? KzMapPush::KZ_PUSH_TOUCH : 0;
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_end_touch") ? KzMapPush::KZ_PUSH_END_TOUCH : 0;
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_jump_event") ? KzMapPush::KZ_PUSH_JUMP_EVENT : 0;
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_jump_button") ? KzMapPush::KZ_PUSH_JUMP_BUTTON : 0;
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_attack") ? KzMapPush::KZ_PUSH_ATTACK : 0;
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_attack2") ? KzMapPush::KZ_PUSH_ATTACK2 : 0;
+			trigger.push.pushConditions |= ekv->GetBool("timer_push_condition_use") ? KzMapPush::KZ_PUSH_USE : 0;
+		}
+		break;
 		case KZTRIGGER_DISABLED:
 		{
 			// Check for pre-mapping api triggers for backwards compatibility.

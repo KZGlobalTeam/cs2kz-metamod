@@ -16,6 +16,7 @@ void KZTriggerService::Reset()
 	this->lastTouchedSingleBhop = {};
 	this->bhopTouchCount = {};
 	this->lastTouchedSequentialBhops = {};
+	this->pushEvents.RemoveAll();
 }
 
 void KZTriggerService::OnPhysicsSimulate()
@@ -80,6 +81,8 @@ void KZTriggerService::OnCheckJumpButton()
 	this->ApplyJumpFactor(false);
 }
 
+void KZTriggerService::OnProcessMovement() {}
+
 void KZTriggerService::OnProcessMovementPost()
 {
 	// if the player isn't touching any bhop triggers on ground/a ladder, then
@@ -91,6 +94,8 @@ void KZTriggerService::OnProcessMovementPost()
 
 	this->antiBhopActive = false;
 	this->modifiers.jumpFactor = 1.0f;
+	this->ApplyPushes();
+	this->CleanupPushEvents();
 }
 
 void KZTriggerService::OnStopTouchGround()
@@ -115,6 +120,22 @@ void KZTriggerService::OnStopTouchGround()
 			//  otherwise jumping back and forth between a multibhop and a singlebhop wouldn't work.
 			// We only care about the most recently touched trigger!
 			this->lastTouchedSingleBhop = tracker.kzTrigger->entity;
+		}
+		if (this->player->jumped && KZ::mapapi::IsPushTrigger(tracker.kzTrigger->type)
+			&& tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_JUMP_EVENT)
+		{
+			this->AddPushEvent(tracker.kzTrigger);
+		}
+	}
+}
+
+void KZTriggerService::OnTeleport()
+{
+	FOR_EACH_VEC_BACK(this->pushEvents, i)
+	{
+		if (this->pushEvents[i].source->push.cancelOnTeleport)
+		{
+			this->pushEvents.Remove(i);
 		}
 	}
 }
