@@ -132,6 +132,22 @@ void MovementPlayer::SetVelocity(const Vector &velocity)
 	}
 }
 
+void MovementPlayer::GetBaseVelocity(Vector *velocity)
+{
+	if (this->GetPlayerPawn())
+	{
+		*velocity = this->GetPlayerPawn()->m_vecBaseVelocity();
+	}
+}
+
+void MovementPlayer::SetBaseVelocity(const Vector &velocity)
+{
+	if (this->GetPlayerPawn())
+	{
+		this->GetPlayerPawn()->m_vecBaseVelocity(velocity);
+	}
+}
+
 void MovementPlayer::GetAngles(QAngle *angles)
 {
 	if (this->processingMovement && this->currentMoveData)
@@ -191,6 +207,16 @@ bool MovementPlayer::IsButtonPressed(InputBitMask_t button, bool onlyDown)
 		return false;
 	}
 	return ms->m_nButtons()->IsButtonPressed(button, onlyDown);
+}
+
+bool MovementPlayer::IsButtonNewlyPressed(InputBitMask_t button)
+{
+	CCSPlayer_MovementServices *ms = this->GetMoveServices();
+	if (!ms)
+	{
+		return false;
+	}
+	return ms->m_nButtons()->IsButtonNewlyPressed(button);
 }
 
 f32 MovementPlayer::GetGroundPosition()

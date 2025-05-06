@@ -70,6 +70,12 @@ public:
 		}
 	};
 
+	struct PushEvent
+	{
+		const KzTrigger *source;
+		f32 pushTime;
+	};
+
 private:
 	// Touchlist related functions.
 	CUtlVector<TriggerTouchTracker> triggerTrackers;
@@ -114,6 +120,7 @@ private:
 	void TouchModifierTrigger(TriggerTouchTracker tracker);
 	void TouchAntibhopTrigger(TriggerTouchTracker tracker);
 	bool TouchTeleportTrigger(TriggerTouchTracker tracker);
+	void TouchPushTrigger(TriggerTouchTracker tracker);
 	void ResetBhopState();
 
 	void UpdateModifiersInternal();
@@ -126,6 +133,11 @@ private:
 	void ApplyAntiBhop(bool replicate = false);
 	void CancelAntiBhop(bool replicate = false);
 
+	CUtlVector<PushEvent> pushEvents;
+	void AddPushEvent(const KzTrigger *trigger);
+	void CleanupPushEvents();
+	void ApplyPushes();
+
 	void OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tracker);
 	void OnMappingApiTriggerTouchPost(TriggerTouchTracker tracker);
 	void OnMappingApiTriggerEndTouchPost(TriggerTouchTracker tracker);
@@ -136,9 +148,11 @@ public:
 	void OnPhysicsSimulatePost();
 
 	void OnCheckJumpButton();
+	void OnProcessMovement();
 	void OnProcessMovementPost();
 
 	void OnStopTouchGround();
+	void OnTeleport();
 
 	// Touchlist related functions (public)
 
@@ -192,4 +206,11 @@ public:
 inline bool operator==(const KZTriggerService::TriggerTouchTracker &left, const KZTriggerService::TriggerTouchTracker &right)
 {
 	return left.triggerHandle == right.triggerHandle;
+}
+
+inline bool operator==(const KZTriggerService::PushEvent &left, const KZTriggerService::PushEvent &right)
+{
+	assert(left.source);
+	assert(right.source);
+	return left.source->entity == right.source->entity;
 }

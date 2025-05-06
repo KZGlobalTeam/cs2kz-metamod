@@ -86,6 +86,8 @@ public:
 	virtual void SetOrigin(const Vector &origin);
 	virtual void GetVelocity(Vector *velocity);
 	virtual void SetVelocity(const Vector &velocity);
+	virtual void GetBaseVelocity(Vector *velocity);
+	virtual void SetBaseVelocity(const Vector &velocity);
 	virtual void GetAngles(QAngle *angles);
 	// It is not recommended use this to change the angle inside movement processing, it might not work!
 	virtual void SetAngles(const QAngle &angles);
@@ -95,6 +97,7 @@ public:
 	virtual TurnState GetTurning();
 
 	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
+	virtual bool IsButtonNewlyPressed(InputBitMask_t button);
 
 	virtual void RegisterTakeoff(bool jumped, bool fromLadder = false, Vector *overrideOrigin = nullptr);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);

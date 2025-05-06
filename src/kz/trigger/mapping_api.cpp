@@ -223,6 +223,21 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 	return true;
 }
 
+void KZTriggerService::TouchPushTrigger(TriggerTouchTracker tracker)
+{
+	u32 pushConditions = tracker.kzTrigger->push.pushConditions;
+	// clang-format off
+	if (pushConditions & KzMapPush::KZ_PUSH_TOUCH
+		|| (this->player->IsButtonNewlyPressed(IN_ATTACK) && pushConditions & KzMapPush::KZ_PUSH_ATTACK)
+		|| (this->player->IsButtonNewlyPressed(IN_ATTACK2) && pushConditions & KzMapPush::KZ_PUSH_ATTACK2)
+		|| (this->player->IsButtonNewlyPressed(IN_JUMP) && pushConditions & KzMapPush::KZ_PUSH_JUMP_BUTTON)
+		|| (this->player->IsButtonNewlyPressed(IN_USE) && pushConditions & KzMapPush::KZ_PUSH_USE))
+	// clang-format on
+	{
+		this->AddPushEvent(tracker.kzTrigger);
+	}
+}
+
 void KZTriggerService::ApplySlide(bool replicate)
 {
 	const CVValue_t *aaValue = player->GetCvarValueFromModeStyles("sv_airaccelerate");
