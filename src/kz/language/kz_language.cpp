@@ -162,25 +162,29 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 	}
 }
 
-void KZLanguageService::OnPlayerConnect()
+void KZLanguageService::OnPlayerConnect(u64 steamID64)
 {
-	uint64 xuid = this->player->GetSteamId64();
-	if (!xuid || KZLanguageService::clientLanguageInfos[xuid].cacheLevel > LanguageInfo::CacheLevel::CACHE_NONE)
+	if (!steamID64 || KZLanguageService::clientLanguageInfos[steamID64].cacheLevel > LanguageInfo::CacheLevel::CACHE_NONE)
 	{
 		return;
 	}
-	// clang-format off
-	g_pClientCvarValue->QueryCvarValue(this->player->GetPlayerSlot(), "cl_language",
-		[xuid](CPlayerSlot nSlot, ECvarValueStatus eStatus, const char *pszCvarName, const char *pszCvarValue)
-		{
-			if (eStatus == ECvarValueStatus::ValueIntact)
+	this->UpdateLanguage(steamID64, KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE), LanguageInfo::CacheLevel::CACHE_NONE,
+						 false);
+	if (g_pClientCvarValue)
+	{
+		// clang-format off
+		g_pClientCvarValue->QueryCvarValue(this->player->GetPlayerSlot(), "cl_language",
+			[steamID64](CPlayerSlot nSlot, ECvarValueStatus eStatus, const char *pszCvarName, const char *pszCvarValue)
 			{
-				const char* langKey = languagesKV->GetString(pszCvarValue, pszCvarValue);
-				META_CONPRINTF("[KZ::Language] Received client convar value: %s\n", langKey);
-				KZLanguageService::UpdateLanguage(xuid, langKey, LanguageInfo::CacheLevel::CACHE_CVAR, true);
-			}
-	});
-	// clang-format on
+				if (eStatus == ECvarValueStatus::ValueIntact)
+				{
+					const char* langKey = languagesKV->GetString(pszCvarValue, pszCvarValue);
+					META_CONPRINTF("[KZ::Language] Received client convar value: %s\n", langKey);
+					KZLanguageService::UpdateLanguage(steamID64, langKey, LanguageInfo::CacheLevel::CACHE_CVAR, true);
+				}
+		});
+		// clang-format on
+	}
 }
 
 KZLanguageService::LanguageInfo::LanguageInfo()

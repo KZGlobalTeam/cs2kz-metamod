@@ -114,7 +114,7 @@ public:
 		unauthenticatedSteamID = CSteamID(xuid);
 	}
 
-	virtual void OnPlayerConnect() {}
+	virtual void OnPlayerConnect(u64 steamID64) {}
 
 	virtual void OnPlayerActive() {}
 

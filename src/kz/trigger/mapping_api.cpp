@@ -228,7 +228,7 @@ void KZTriggerService::ApplySlide(bool replicate)
 	const CVValue_t newAA = (aaValue->m_fl32Value * 4.0f);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_standable_normal", "2", replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_walkable_normal", "2", replicate);
-	utils::SetConVarValue(player->GetPlayerSlot(), "sv_airaccelerate", aaValue, replicate);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_airaccelerate", &newAA, replicate);
 }
 
 void KZTriggerService::CancelSlide(bool replicate)
