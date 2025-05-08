@@ -109,11 +109,12 @@ void KZTriggerService::ApplyPushes()
 	}
 	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
 	bool setSpeed[3] {};
-	this->player->GetPlayerPawn()->m_fFlags() &= ~FL_BASEVELOCITY;
+
 	if (this->pushEvents.Count() == 0)
 	{
 		return;
 	}
+	bool useBaseVelocity = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND;
 	FOR_EACH_VEC(this->pushEvents, i)
 	{
 		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime)
@@ -123,32 +124,61 @@ void KZTriggerService::ApplyPushes()
 		auto &push = this->pushEvents[i].source->push;
 		for (u32 i = 0; i < 3; i++)
 		{
-			Vector baseVel;
-			this->player->GetBaseVelocity(&baseVel);
+			Vector vel;
+			if (useBaseVelocity && i != 2)
+			{
+				this->player->GetBaseVelocity(&vel);
+			}
+			else
+			{
+				this->player->GetVelocity(&vel);
+			}
 			// Set speed overrides add speed.
 			if (push.setSpeed[i])
 			{
-				baseVel[i] = push.impulse[i];
+				vel[i] = push.impulse[i];
 				setSpeed[i] = true;
 			}
 			else if (!setSpeed[i])
 			{
-				baseVel[i] += push.impulse[i];
+				vel[i] += push.impulse[i];
 			}
-			this->player->SetBaseVelocity(baseVel);
-			this->player->GetPlayerPawn()->m_fFlags() |= FL_BASEVELOCITY;
+			// If we are pushing the player up, make sure they cannot re-ground themselves.
+			if (i == 2 && vel[i] > 0 && useBaseVelocity)
+			{
+				this->player->GetPlayerPawn()->m_hGroundEntity().FromIndex(INVALID_EHANDLE_INDEX);
+				this->player->GetPlayerPawn()->m_fFlags() &= ~FL_ONGROUND;
+				this->player->currentMoveData->m_groundNormal = vec3_origin;
+			}
+			if (useBaseVelocity && i != 2)
+			{
+				this->player->SetBaseVelocity(vel);
+				this->player->GetPlayerPawn()->m_fFlags() |= FL_BASEVELOCITY;
+			}
+			else
+			{
+				this->player->SetVelocity(vel);
+			}
 			this->player->jumpstatsService->InvalidateJumpstats("Disabled By Map");
 		}
 	}
-	Vector velocity, newVelocity;
-	this->player->GetVelocity(&velocity);
-	for (u32 i = 0; i < 3; i++)
+	// Try to nullify velocity if needed.
+	if (useBaseVelocity)
 	{
-		newVelocity[i] = setSpeed[i] ? 0 : velocity[i];
-	}
-	if (velocity != newVelocity)
-	{
-		this->player->SetVelocity(newVelocity);
+		Vector velocity, newVelocity;
+		this->player->GetVelocity(&velocity);
+		newVelocity = velocity;
+		for (u32 i = 0; i < 2; i++)
+		{
+			if (setSpeed[i])
+			{
+				newVelocity[i] = 0;
+			}
+		}
+		if (velocity != newVelocity)
+		{
+			this->player->SetVelocity(newVelocity);
+		}
 	}
 }
 
