@@ -93,7 +93,7 @@ namespace utils
 			return false;
 		}
 
-		return str[strspn(str, "0123456789")] == 0;
+		return str[strspn(str, "0123456789.")] == 0;
 	}
 
 	bool ParseSteamID2(std::string_view steamID, u64 &out);
@@ -101,5 +101,11 @@ namespace utils
 	inline u32 GetPaddingForWideString(const char *string)
 	{
 		return MAX(0, strlen(string) - mbstowcs(NULL, string, 0));
+	}
+
+	template<typename T = CBaseEntity>
+	T *CreateEntityByName(const char *className)
+	{
+		return reinterpret_cast<T *>(g_pKZUtils->CreateEntityByName(className, -1));
 	}
 } // namespace utils

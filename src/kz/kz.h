@@ -26,6 +26,7 @@
 
 class KZPlayer;
 class KZAnticheatService;
+class KZBeamService;
 class KZCheckpointService;
 class KZDatabaseService;
 class KZGlobalService;
@@ -139,6 +140,7 @@ private:
 
 public:
 	KZAnticheatService *anticheatService {};
+	KZBeamService *beamService {};
 	KZCheckpointService *checkpointService {};
 	KZDatabaseService *databaseService {};
 	KZGlobalService *globalService {};
@@ -173,7 +175,7 @@ public:
 
 	void UpdatePlayerModelAlpha();
 	// Teleport checking, used for multiple services
-	virtual bool JustTeleported();
+	virtual bool JustTeleported(f32 threshold = KZ_RECENT_TELEPORT_THRESHOLD);
 	// Triggerfix stuff
 
 	// Hit all triggers from start to end with the specified bounds,
