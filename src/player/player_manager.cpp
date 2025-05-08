@@ -95,7 +95,7 @@ void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, void
 void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1,
 									CBufferString *pRejectReason)
 {
-	this->ToPlayer(slot)->OnPlayerConnect();
+	this->ToPlayer(slot)->OnPlayerConnect(xuid);
 }
 
 void PlayerManager::OnConnectClientPost(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg,

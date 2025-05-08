@@ -97,9 +97,9 @@ void KZPlayer::Reset()
 	}
 }
 
-void KZPlayer::OnPlayerConnect()
+void KZPlayer::OnPlayerConnect(u64 steamID64)
 {
-	this->languageService->OnPlayerConnect();
+	this->languageService->OnPlayerConnect(steamID64);
 }
 
 void KZPlayer::OnPlayerActive()

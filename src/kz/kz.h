@@ -59,7 +59,7 @@ public:
 	// General events
 	virtual void Init() override;
 	virtual void Reset() override;
-	virtual void OnPlayerConnect() override;
+	virtual void OnPlayerConnect(u64 steamID64) override;
 	virtual void OnPlayerActive() override;
 	virtual void OnPlayerFullyConnect() override;
 	virtual void OnAuthorized() override;
