@@ -70,6 +70,12 @@ public:
 		}
 	};
 
+	struct PushEvent
+	{
+		const KzTrigger *source;
+		f32 pushTime;
+	};
+
 private:
 	// Touchlist related functions.
 	CUtlVector<TriggerTouchTracker> triggerTrackers;
@@ -92,6 +98,7 @@ private:
 		i32 disableTeleportsCount;
 		i32 disableJumpstatsCount;
 		i32 enableSlideCount;
+		f32 jumpFactor = 1.0f;
 	};
 
 	Modifiers modifiers {};
@@ -113,15 +120,23 @@ private:
 	void TouchModifierTrigger(TriggerTouchTracker tracker);
 	void TouchAntibhopTrigger(TriggerTouchTracker tracker);
 	bool TouchTeleportTrigger(TriggerTouchTracker tracker);
+	void TouchPushTrigger(TriggerTouchTracker tracker);
 	void ResetBhopState();
 
 	void UpdateModifiersInternal();
+
+	void ApplyJumpFactor(bool replicate = false);
 
 	void ApplySlide(bool replicate = false);
 	void CancelSlide(bool replicate = false);
 
 	void ApplyAntiBhop(bool replicate = false);
 	void CancelAntiBhop(bool replicate = false);
+
+	CUtlVector<PushEvent> pushEvents;
+	void AddPushEvent(const KzTrigger *trigger);
+	void CleanupPushEvents();
+	void ApplyPushes();
 
 	void OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tracker);
 	void OnMappingApiTriggerTouchPost(TriggerTouchTracker tracker);
@@ -132,10 +147,12 @@ public:
 	void OnPhysicsSimulate();
 	void OnPhysicsSimulatePost();
 
+	void OnCheckJumpButton();
 	void OnProcessMovement();
 	void OnProcessMovementPost();
 
 	void OnStopTouchGround();
+	void OnTeleport();
 
 	// Touchlist related functions (public)
 
@@ -189,4 +206,11 @@ public:
 inline bool operator==(const KZTriggerService::TriggerTouchTracker &left, const KZTriggerService::TriggerTouchTracker &right)
 {
 	return left.triggerHandle == right.triggerHandle;
+}
+
+inline bool operator==(const KZTriggerService::PushEvent &left, const KZTriggerService::PushEvent &right)
+{
+	assert(left.source);
+	assert(right.source);
+	return left.source->entity == right.source->entity;
 }

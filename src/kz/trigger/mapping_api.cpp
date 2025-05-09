@@ -81,6 +81,7 @@ void KZTriggerService::TouchModifierTrigger(TriggerTouchTracker tracker)
 		}
 		this->player->GetPlayerPawn()->m_flGravityScale(trigger->modifier.gravity);
 	}
+	this->modifiers.jumpFactor = trigger->modifier.jumpFactor;
 }
 
 void KZTriggerService::TouchAntibhopTrigger(TriggerTouchTracker tracker)
@@ -222,10 +223,25 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 	return true;
 }
 
+void KZTriggerService::TouchPushTrigger(TriggerTouchTracker tracker)
+{
+	u32 pushConditions = tracker.kzTrigger->push.pushConditions;
+	// clang-format off
+	if (pushConditions & KzMapPush::KZ_PUSH_TOUCH
+		|| (this->player->IsButtonNewlyPressed(IN_ATTACK) && pushConditions & KzMapPush::KZ_PUSH_ATTACK)
+		|| (this->player->IsButtonNewlyPressed(IN_ATTACK2) && pushConditions & KzMapPush::KZ_PUSH_ATTACK2)
+		|| (this->player->IsButtonNewlyPressed(IN_JUMP) && pushConditions & KzMapPush::KZ_PUSH_JUMP_BUTTON)
+		|| (this->player->IsButtonNewlyPressed(IN_USE) && pushConditions & KzMapPush::KZ_PUSH_USE))
+	// clang-format on
+	{
+		this->AddPushEvent(tracker.kzTrigger);
+	}
+}
+
 void KZTriggerService::ApplySlide(bool replicate)
 {
 	const CVValue_t *aaValue = player->GetCvarValueFromModeStyles("sv_airaccelerate");
-	const CVValue_t newAA = (aaValue->m_fl32Value * 4.0f);
+	const CVValue_t newAA = aaValue->m_fl32Value * 4.0f;
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_standable_normal", "2", replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_walkable_normal", "2", replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_airaccelerate", &newAA, replicate);
@@ -243,7 +259,6 @@ void KZTriggerService::CancelSlide(bool replicate)
 
 void KZTriggerService::ApplyAntiBhop(bool replicate)
 {
-	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_impulse", "0.0", replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", "false", replicate);
 	player->GetMoveServices()->m_bOldJumpPressed() = true;
@@ -251,10 +266,15 @@ void KZTriggerService::ApplyAntiBhop(bool replicate)
 
 void KZTriggerService::CancelAntiBhop(bool replicate)
 {
-	const CVValue_t *impulseModeValue = player->GetCvarValueFromModeStyles("sv_jump_impulse");
 	const CVValue_t *spamModeValue = player->GetCvarValueFromModeStyles("sv_jump_spam_penalty_time");
 	const CVValue_t *autoBhopValue = player->GetCvarValueFromModeStyles("sv_autobunnyhopping");
-	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_impulse", impulseModeValue, replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue, replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue, replicate);
+}
+
+void KZTriggerService::ApplyJumpFactor(bool replicate)
+{
+	const CVValue_t *impulseModeValue = player->GetCvarValueFromModeStyles("sv_jump_impulse");
+	const CVValue_t newImpulseValue = (impulseModeValue->m_fl32Value * this->modifiers.jumpFactor);
+	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_impulse", &newImpulseValue, replicate);
 }
