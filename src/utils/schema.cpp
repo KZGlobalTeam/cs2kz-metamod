@@ -47,11 +47,22 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t *tableMap, const char *cla
 	}
 
 	short fieldsSize = pClassInfo->m_nFieldCount;
+	short dataNumFields = pClassInfo->m_pDataDescMap ? pClassInfo->m_pDataDescMap->dataNumFields : 0;
 	SchemaClassFieldData_t *pFields = pClassInfo->m_pFields;
-
 	SchemaKeyValueMap_t *keyValueMap = new SchemaKeyValueMap_t(0, 0, DefLessFunc(uint32_t));
-	keyValueMap->EnsureCapacity(fieldsSize);
+	keyValueMap->EnsureCapacity(fieldsSize + dataNumFields);
 	tableMap->Insert(classKey, keyValueMap);
+
+	for (int i = 0; i < dataNumFields; ++i)
+	{
+		auto &field = pClassInfo->m_pDataDescMap->dataDesc[i];
+
+		if (!field.fieldName || !field.fieldName[0] || field.fieldOffset < 0)
+		{
+			continue;
+		}
+		keyValueMap->Insert(hash_32_fnv1a_const(field.fieldName), {field.fieldOffset, false});
+	}
 
 	for (int i = 0; i < fieldsSize; ++i)
 	{
@@ -64,21 +75,6 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t *tableMap, const char *cla
 		keyValueMap->Insert(hash_32_fnv1a_const(field.m_pszName), {field.m_nSingleInheritanceOffset, IsFieldNetworked(field)});
 	}
 
-	if (pClassInfo->m_pDataDescMap)
-	{
-		fieldsSize = pClassInfo->m_pDataDescMap->dataNumFields;
-
-		for (int i = 0; i < fieldsSize; ++i)
-		{
-			auto &field = pClassInfo->m_pDataDescMap->dataDesc[i];
-
-			if (!field.fieldName || !field.fieldName[0] || field.fieldOffset < 0)
-			{
-				continue;
-			}
-			keyValueMap->Insert(hash_32_fnv1a_const(field.fieldName), {field.fieldOffset, false});
-		}
-	}
 	return true;
 }
 
