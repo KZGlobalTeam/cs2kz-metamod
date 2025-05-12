@@ -27,7 +27,7 @@
 		"#format"	"{name:s}"
 		"en"		"{grey}There is no one spectating {lime}{name}{grey} right now."
 		"chi"		"{grey}现在暂时没有人在观察玩家{lime}{name}{grey}."
-		"sv"		"{grey}Finns ingen åskådare {lime}{name}{grey} just nu."
+		"sv"		"{grey}Ingen åskådar {lime}{name}{grey} just nu."
 		"ru"		"{grey}Сейчас никто не наблюдает за {lime}{name}{grey}."
 	}
 	"Target Spectator List"
