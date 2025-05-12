@@ -18,7 +18,7 @@
 	"Spectator List"
 	{
 		// All spectators (players) - Alice, Bob, Charlie
-		"#format"	"{count:d},{players:s}"
+		"#format"	"count:d,players:s"
 		"en"		"{grey}All spectators ({default}{count}{grey}) - {players}"
 		"chi"		"{grey}观察者 ({default}{count}{grey}) - {players}"
 		"ua"		"{grey}Всі спостерігачі ({default}{count}{grey}) - {players}"
@@ -28,7 +28,7 @@
 	"Target Spectator List (None)"
 	{
 		// No one is spectating Bill right now.
-		"#format"	"{name:s}"
+		"#format"	"name:s"
 		"en"		"{grey}There is no one spectating {lime}{name}{grey} right now."
 		"chi"		"{grey}现在暂时没有人在观察玩家{lime}{name}{grey}."
 		"ua"		"{grey}Зараз ніхто не спостерігає за {lime}{name}{grey}."
@@ -38,7 +38,7 @@
 	"Target Spectator List"
 	{
 		// Spectating Bill (2) - Alice, Charlie
-		"#format"	"{name:s},{count:d},{players:s}"
+		"#format"	"name:s,count:d,players:s"
 		"en"		"{grey}Spectating {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"chi"		"{grey}正在观察 {lime}{name}{grey} 的玩家(共{default}{count}{grey}人) - {players}"
 		"ua"		"{grey}Спостерігачі {lime}{name}{grey} ({default}{count}{grey}) - {players}"

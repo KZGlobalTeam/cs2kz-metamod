@@ -156,14 +156,10 @@ bool KZSpecService::CanSpectate()
 void KZSpecService::GetSpectatorList(CUtlVector<CUtlString> &spectatorList)
 {
 	KZPlayer *spectator = this->player->specService->GetNextSpectator(nullptr);
-	if (spectator)
+	while (spectator)
 	{
-		CUtlVector<CUtlString> spectatorList;
-		while (spectator)
-		{
-			spectatorList.AddToTail(spectator->GetName());
-			spectator = this->player->specService->GetNextSpectator(spectator);
-		}
+		spectatorList.AddToTail(spectator->GetName());
+		spectator = this->player->specService->GetNextSpectator(spectator);
 	}
 }
 
