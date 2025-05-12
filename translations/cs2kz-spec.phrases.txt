@@ -36,7 +36,7 @@
 		"#format"	"{name:s},{count:d},{players:s}"
 		"en"		"{grey}Spectating {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"chi"		"{grey}正在观察{lime}{name}{grey}视角的玩家(共{default}{count}{grey}人) - {players}"
-		"sv"		"{grey}Skådar {lime}{name}{grey} ({default}{count}{grey}) - {players}"
+		"sv"		"{grey}Åskådar {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"ru"		"{grey}Наблюдатели {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 	}
 	"Spectate Failure (Generic)"
