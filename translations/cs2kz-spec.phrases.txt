@@ -4,12 +4,14 @@
 	{
 		"en"		"{grey}Usage: {default}kz_spec <@me/name>{grey}."
 		"ua"		"{grey}Використання: {default}kz_spec <@me/нікнейм>{grey}."
+		"sv"		"{grey}Användning: {default}kz_spec <@me/name>{grey}."
 	}
 	"Spectator List (None)"
 	{
 		"en"		"{grey}There is no one spectating right now."
 		"ua"		"{grey}Зараз ніхто не спостерігає."
 		"chi"		"{grey}当前没有玩家在观察席."
+		"sv"		"{grey}Finns ingen åskådare just nu."
 		"ru"		"{grey}Сейчас никто не наблюдает."
 	}
 	"Spectator List"
@@ -19,6 +21,7 @@
 		"en"		"{grey}All spectators ({default}{count}{grey}) - {players}"
 		"ua"		"{grey}Всі спостерігачі ({default}{count}{grey}) - {players}"
 		"chi"		"{grey}观察者 ({default}{count}{grey}) - {players}"
+		"sv"		"{grey}Alla åskådare ({default}{count}{grey}) - {players}"
 		"ru"		"{grey}Все наблюдатели ({default}{count}{grey}) - {players}"
 	}
 	"Target Spectator List (None)"
@@ -28,6 +31,7 @@
 		"en"		"{grey}There is no one spectating {lime}{name}{grey} right now."
 		"ua"		"{grey}Зараз ніхто не спостерігає за {lime}{name}{grey}."
 		"chi"		"{grey}现在暂时没有人在观察玩家{lime}{name}{grey}."
+		"sv"		"{grey}Ingen åskådar {lime}{name}{grey} just nu."
 		"ru"		"{grey}Сейчас никто не наблюдает за {lime}{name}{grey}."
 	}
 	"Target Spectator List"
@@ -37,23 +41,27 @@
 		"en"		"{grey}Spectating {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"ua"		"{grey}Спостерігачі {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"chi"		"{grey}正在观察{lime}{name}{grey}视角的玩家(共{default}{count}{grey}人) - {players}"
+		"sv"		"{grey}Åskådar {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"ru"		"{grey}Наблюдатели {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 	}
 	"Spectate Failure (Generic)"
 	{
 		"en"		"{darkred}You cannot go into spectator mode right now."
 		"ua"		"{darkred}Ви не можете зараз перейти в режим спостерігача."
+		"sv"		"{darkred}Du kan inte gå i åskådarläge just nu."
 	}
 	"Spectate Failure (Dead)"
 	{
 		"en"		"{darkred}The player you specified is not alive."
 		"ua"		"{darkred}Вказаний вами гравець не живий."
 		"chi"		"{darkred}你观察的玩家不再是存活状态."
+		"sv"		"{darkred}Spelaren du har angett lever inte."
 		"ru"		"{darkred}Указанный вами игрок не живой."
 	}
 	"Spectate Failure (Player Not Found)"
 	{
 		"en"		"{darkred}The player you specified cannot be found."
 		"ua"		"{darkred}Вказаного вами гравця не знайдено."
+		"sv"		"{darkred}Spelaren du har angett kan inte hittas."
 	}
 }

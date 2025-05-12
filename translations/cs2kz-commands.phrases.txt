@@ -556,6 +556,7 @@
 	{
 		"en"		"List currently spectating players in chat."
 		"ua"		"Показати в чаті список спостерігачів."
+		"sv"		"Lista närvarande åskådare i chatten."
 	}
 	"Command Description - kz_goto"
 	{
