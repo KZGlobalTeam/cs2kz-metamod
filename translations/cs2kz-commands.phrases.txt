@@ -555,6 +555,7 @@
 	"Command Description - kz_specs"
 	{
 		"en"		"List currently spectating players in chat."
+		"ua"		"Показати в чаті список спостерігачів."
 	}
 	"Command Description - kz_goto"
 	{
