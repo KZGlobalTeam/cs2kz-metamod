@@ -13,8 +13,8 @@
 		"es"	"{grey}Puedes alternar las estadísticas de salto escribiendo {default}/togglejs{grey}."
 		"de"	"{grey}Sie können die Berichterstattung über Jumpstats aktivieren oder deaktivieren, indem Sie {default}/togglejs{grey} eingeben."
 		"ko"	"{grey}점프 통계 보고 기능을 전환하려면 {default}/togglejs{grey}를 입력하세요."
-	}
 		"lv"	"{grey}Tu vari ieslēgt vai izslēgt jumpstats atskaiti, rakstot {default}/togglejs{grey}."
+	}
 	"Tip - kz_jsalways"
 	{
 		"en"	"{grey}Use {default}/jsalways {grey}to toggle always-on jumpstats mode."
