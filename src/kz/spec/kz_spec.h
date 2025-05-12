@@ -23,6 +23,7 @@ public:
 	bool SpectatePlayer(const char *playerName);
 	bool CanSpectate();
 
+	void GetSpectatorList(CUtlVector<CUtlString> &spectatorList);
 	KZPlayer *GetSpectatedPlayer();
 	KZPlayer *GetNextSpectator(KZPlayer *current);
 };

@@ -552,6 +552,10 @@
 		"ko"		"플레이어를 관전합니다."
 		"lv"		"Specot spēlētāju."
 	}
+	"Command Description - kz_specs"
+	{
+		"en"		"List currently spectating players in chat."
+	}
 	"Command Description - kz_goto"
 	{
 		"en"		"Go to a player."

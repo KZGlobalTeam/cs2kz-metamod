@@ -7,6 +7,7 @@ class CBasePlayerPawn;
 #include "utils/schema.h"
 #include "entity/cbaseplayerpawn.h"
 #include "cinbuttonstate.h"
+#include "datatypes.h"
 
 class CPlayerPawnComponent
 {
@@ -31,7 +32,8 @@ class CPlayer_ObserverServices : public CPlayerPawnComponent
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_ObserverServices)
-	SCHEMA_FIELD(uint8_t, m_iObserverMode)
+	SCHEMA_FIELD(ObserverMode_t, m_iObserverMode)
+	SCHEMA_FIELD(ObserverMode_t, m_iObserverLastMode)
 	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hObserverTarget)
 };
 

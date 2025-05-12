@@ -28,8 +28,10 @@ public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerController);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPlayerPawn);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hObserverPawn);
-	SCHEMA_FIELD_POINTER_OFFSET(CStrafeStats, m_nNonSuspiciousHitStreak, 4);
+	SCHEMA_FIELD_POINTER_OFFSET(CStrafeStats, m_nNonSuspiciousHitStreak, 4)
 	SCHEMA_FIELD(GameTime_t, m_LastTimePlayerWasDisconnectedForPawnsRemove)
+	SCHEMA_FIELD(int32, m_DesiredObserverMode)
+	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hDesiredObserverTarget)
 
 	CStrafeStats *GetCStrafeStats()
 	{
