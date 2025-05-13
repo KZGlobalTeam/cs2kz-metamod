@@ -111,7 +111,7 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 					if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
 					{
 						player->languageService->PrintChat(true, false, "Spectate Failure (Dead)");
-						return MRES_HANDLED;
+						return MRES_SUPERCEDE;
 					}
 					targetPlayer = otherPlayer;
 					break;
@@ -123,7 +123,7 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Spectate Failure (Player Not Found)", playerName);
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 
 	// Join spectator team if not already in it.
@@ -212,7 +212,7 @@ SCMD(kz_spec, SCFL_SPEC)
 	if (!player->specService->CanSpectate())
 	{
 		player->languageService->PrintChat(true, false, "Spectate Failure (Generic)");
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 	u32 numAlivePlayers = 0;
 	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
@@ -226,17 +226,17 @@ SCMD(kz_spec, SCFL_SPEC)
 	if (numAlivePlayers == 0 && args->ArgC() == 1)
 	{
 		player->specService->SpectatePlayer("@me");
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 	if (args->ArgC() < 2)
 	{
 		player->languageService->PrintChat(true, false, "Spec Command Usage", args->ArgS());
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 
 	player->specService->SpectatePlayer(args->Arg(1));
 
-	return MRES_HANDLED;
+	return MRES_SUPERCEDE;
 }
 
 SCMD(kz_specs, SCFL_SPEC)
@@ -247,7 +247,7 @@ SCMD(kz_specs, SCFL_SPEC)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Spectator List (None)");
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 	CUtlVector<CUtlString> spectatorList;
 	targetPlayer->specService->GetSpectatorList(spectatorList);
@@ -283,7 +283,7 @@ SCMD(kz_specs, SCFL_SPEC)
 											   spectatorListString.Get());
 		}
 	}
-	return MRES_HANDLED;
+	return MRES_SUPERCEDE;
 }
 
 SCMD_LINK(kz_speclist, kz_specs);
