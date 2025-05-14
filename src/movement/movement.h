@@ -82,6 +82,7 @@ public:
 	// This doesn't work during movement processing!
 	virtual void Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
 
+	virtual void GetEyeOrigin(Vector *origin);
 	virtual void GetOrigin(Vector *origin);
 	virtual void SetOrigin(const Vector &origin);
 	virtual void GetVelocity(Vector *velocity);
