@@ -1,0 +1,29 @@
+"Phrases"
+{
+	"Beam Changed (None)"
+	{
+		"en"		"{grey}You have disabled your player beams."
+	}
+	"Beam Changed (Ground)"
+	{
+		"en"		"{grey}You have set your player beam type to {default}Ground{grey}."
+	}
+	"Beam Changed (Feet)"
+	{
+		"en"		"{grey}You have set your player beam type to {default}Feet{grey}."
+	}
+	"Beam Offset Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_beamoffset <x> <y> <z>"
+	}
+	"Beam Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_beam <off/feet/ground>"
+	}
+	"Current Beam Offset"
+	{
+		// Current beam offset: 0.00 0.00 1.75
+		"#format"	"x:f,y:f,z:f"
+		"en"		"{grey}Current beam offset: {x:.2f} {y:.2f} {x:.2f}"
+	}
+}

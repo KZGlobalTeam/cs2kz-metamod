@@ -52,6 +52,11 @@ CCSPlayer_MovementServices *MovementPlayer::GetMoveServices()
 	return static_cast<CCSPlayer_MovementServices *>(this->GetPlayerPawn()->m_pMovementServices());
 };
 
+void MovementPlayer::GetEyeOrigin(Vector *origin)
+{
+	g_pSource2GameClients->ClientEarPosition(this->GetPlayerSlot(), origin);
+}
+
 void MovementPlayer::GetOrigin(Vector *origin)
 {
 	if (this->processingMovement && this->currentMoveData)
