@@ -91,6 +91,10 @@ void KZTriggerService::CleanupPushEvents()
 	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
 	FOR_EACH_VEC_BACK(this->pushEvents, i)
 	{
+		if (!this->pushEvents[i].applied)
+		{
+			continue;
+		}
 		if (curtime - frametime >= this->pushEvents[i].pushTime + this->pushEvents[i].source->push.cooldown
 			|| curtime < this->pushEvents[i].pushTime + this->pushEvents[i].source->push.cooldown)
 		{
@@ -117,10 +121,11 @@ void KZTriggerService::ApplyPushes()
 	bool useBaseVelocity = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND;
 	FOR_EACH_VEC(this->pushEvents, i)
 	{
-		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime)
+		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime || this->pushEvents[i].applied)
 		{
 			continue;
 		}
+		this->pushEvents[i].applied = true;
 		auto &push = this->pushEvents[i].source->push;
 		for (u32 i = 0; i < 3; i++)
 		{
@@ -205,6 +210,11 @@ void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tra
 			this->modifiers.enableSlideCount += modifier.enableSlide ? 1 : 0;
 			// Modifying jump velocity will also disable jumpstats.
 			this->modifiers.disableJumpstatsCount += modifier.jumpFactor != 1.0f ? 1 : 0;
+			this->modifiers.jumpFactor = modifier.jumpFactor;
+			// Modifying force (un)duck will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount += modifier.forceDuck || modifier.forceUnduck ? 1 : 0;
+			this->modifiers.forcedDuckCount += modifier.forceDuck ? 1 : 0;
+			this->modifiers.forcedUnduckCount += modifier.forceUnduck ? 1 : 0;
 		}
 		break;
 
@@ -337,11 +347,18 @@ void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker track
 			this->modifiers.enableSlideCount -= modifier.enableSlide ? 1 : 0;
 			// Modifying jump factor will also disable jumpstats.
 			this->modifiers.disableJumpstatsCount -= modifier.jumpFactor != 1.0f ? 1 : 0;
+
+			// Modifying force (un)duck will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount -= modifier.forceDuck || modifier.forceUnduck ? 1 : 0;
+			this->modifiers.forcedDuckCount -= modifier.forceDuck ? 1 : 0;
+			this->modifiers.forcedUnduckCount -= modifier.forceUnduck ? 1 : 0;
 			assert(this->modifiers.disablePausingCount >= 0);
 			assert(this->modifiers.disableCheckpointsCount >= 0);
 			assert(this->modifiers.disableTeleportsCount >= 0);
 			assert(this->modifiers.disableJumpstatsCount >= 0);
 			assert(this->modifiers.enableSlideCount >= 0);
+			assert(this->modifiers.forcedDuckCount >= 0);
+			assert(this->modifiers.forcedUnduckCount >= 0);
 		}
 		break;
 

@@ -56,6 +56,8 @@ struct KzMapModifier
 	bool enableSlide;
 	f32 gravity;
 	f32 jumpFactor;
+	bool forceDuck;
+	bool forceUnduck;
 };
 
 // KZTRIGGER_ANTI_BHOP

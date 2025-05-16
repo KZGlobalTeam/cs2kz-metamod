@@ -33,7 +33,8 @@ public:
 
 	EInButtonState GetButtonState(uint64 button)
 	{
-		return (EInButtonState)(this->m_pButtonStates[0] & button + this->m_pButtonStates[1] & button * 2 + this->m_pButtonStates[2] & button * 4);
+		return (EInButtonState)(!!(this->m_pButtonStates[0] & button) + !!(this->m_pButtonStates[1] & button) * 2
+								+ !!(this->m_pButtonStates[2] & button) * 4);
 	};
 
 	bool IsButtonNewlyPressed(uint64 button)

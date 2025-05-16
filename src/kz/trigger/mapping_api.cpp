@@ -32,6 +32,24 @@ void KZTriggerService::UpdateModifiersInternal()
 	{
 		this->CancelAntiBhop();
 	}
+
+	if (this->modifiers.forcedDuckCount > 0)
+	{
+		this->ApplyForcedDuck();
+	}
+	else if (this->lastModifiers.forcedDuckCount > 0)
+	{
+		this->CancelForcedDuck();
+	}
+
+	if (this->modifiers.forcedUnduckCount > 0)
+	{
+		this->ApplyForcedUnduck();
+	}
+	else if (this->lastModifiers.forcedUnduckCount > 0)
+	{
+		this->CancelForcedUnduck();
+	}
 }
 
 bool KZTriggerService::InAntiPauseArea()
@@ -270,6 +288,29 @@ void KZTriggerService::CancelAntiBhop(bool replicate)
 	const CVValue_t *autoBhopValue = player->GetCvarValueFromModeStyles("sv_autobunnyhopping");
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue, replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue, replicate);
+}
+
+void KZTriggerService::ApplyForcedDuck()
+{
+	this->player->GetMoveServices()->m_bDuckOverride.Set(true);
+}
+
+void KZTriggerService::CancelForcedDuck()
+{
+	this->player->GetMoveServices()->m_bDuckOverride.Set(false);
+}
+
+void KZTriggerService::ApplyForcedUnduck()
+{
+	// Set crouch time to a very large value so that the player cannot reduck.
+	this->player->GetMoveServices()->m_flLastDuckTime(100000.0f);
+	// This needs to be done every tick just since the player can be in spots that are not unduckable (eg. crouch tunnels)
+	this->player->GetPlayerPawn()->m_fFlags.Set(this->player->GetPlayerPawn()->m_fFlags() & ~FL_DUCKING);
+}
+
+void KZTriggerService::CancelForcedUnduck()
+{
+	this->player->GetMoveServices()->m_flLastDuckTime(0.0f);
 }
 
 void KZTriggerService::ApplyJumpFactor(bool replicate)

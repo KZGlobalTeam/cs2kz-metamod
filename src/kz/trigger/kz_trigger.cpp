@@ -48,7 +48,7 @@ void KZTriggerService::OnPhysicsSimulatePost()
 	/*
 		NOTE:
 		1. To prevent multiplayer bugs, make sure that all of these cvars are part of the mode convars.
-		2. The apply part is here mostly just to replicate the values to the client.
+		2. The apply part is here mostly just to replicate the values to the client, with the exception of push triggers.
 	*/
 
 	if (this->modifiers.enableSlideCount > 0)
@@ -71,6 +71,9 @@ void KZTriggerService::OnPhysicsSimulatePost()
 	}
 
 	this->ApplyJumpFactor(this->modifiers.jumpFactor != this->lastModifiers.jumpFactor);
+	// Try to apply pushes one last time on this tick, to catch all the buttons that were not set during movement processing (attack+attack2).
+	this->ApplyPushes();
+	this->CleanupPushEvents();
 
 	this->lastModifiers = this->modifiers;
 	this->lastAntiBhopActive = this->antiBhopActive;
@@ -234,7 +237,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 		}
 	}
 
-	UpdateModifiersInternal();
+	this->UpdateModifiersInternal();
 }
 
 void KZTriggerService::EndTouchAll()

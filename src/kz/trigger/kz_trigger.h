@@ -74,6 +74,7 @@ public:
 	{
 		const KzTrigger *source;
 		f32 pushTime;
+		bool applied = false;
 	};
 
 private:
@@ -98,6 +99,8 @@ private:
 		i32 disableTeleportsCount;
 		i32 disableJumpstatsCount;
 		i32 enableSlideCount;
+		i32 forcedDuckCount;
+		i32 forcedUnduckCount;
 		f32 jumpFactor = 1.0f;
 	};
 
@@ -132,6 +135,12 @@ private:
 
 	void ApplyAntiBhop(bool replicate = false);
 	void CancelAntiBhop(bool replicate = false);
+
+	void ApplyForcedDuck();
+	void CancelForcedDuck();
+
+	void ApplyForcedUnduck();
+	void CancelForcedUnduck();
 
 	CUtlVector<PushEvent> pushEvents;
 	void AddPushEvent(const KzTrigger *trigger);

@@ -34,6 +34,8 @@
 	timer_modifier_enable_slide(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Enable Slide" : 0 : "Makes every surface surfable, if the player is touching this trigger."
 	timer_modifier_gravity(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Player Gravity" : "1.0" : "Scales the player's gravity by this amount."
 	timer_modifier_jump_impulse(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Jump Speed Modifier" : "1.0" : "Multiply the player's base jump velocity by this value. This has exponential effect on jump heights, a 2x modifier will give players 4x the jump height."
+	timer_modifier_force_duck(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Force Ducking" : 0 : "Force ducking when the player is touching this trigger"
+	timer_modifier_force_unduck(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Force Unducking" : 0 : "Force unducking when the player is touching this trigger"
 
 	// KZ Anti Bhop
 	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" max="100.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
