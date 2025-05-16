@@ -43,8 +43,10 @@ void KZHUDService::Reset()
 
 std::string KZHUDService::GetSpeedText(const char *language)
 {
-	Vector velocity;
+	Vector velocity, baseVelocity;
 	this->player->GetVelocity(&velocity);
+	this->player->GetBaseVelocity(&baseVelocity);
+	velocity += baseVelocity;
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
 	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
 		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > HUD_ON_GROUND_THRESHOLD)

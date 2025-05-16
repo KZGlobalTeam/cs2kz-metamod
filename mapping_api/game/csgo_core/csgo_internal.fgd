@@ -22,6 +22,8 @@
 		11 : "Multi Bhop"
 		12 : "Single Bhop"
 		13 : "Sequential Bhop"
+
+		14 : "Push"
 	]
 
 	// KZ Modifiers
@@ -31,9 +33,12 @@
 	timer_modifier_disable_jumpstats(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Disable Jumpstats" : 0 : "Disable jumpstats when the player is touching this trigger"
 	timer_modifier_enable_slide(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Enable Slide" : 0 : "Makes every surface surfable, if the player is touching this trigger."
 	timer_modifier_gravity(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Player Gravity" : "1.0" : "Scales the player's gravity by this amount."
-	
+	timer_modifier_jump_impulse(float) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Jump Speed Modifier" : "1.0" : "Multiply the player's base jump velocity by this value. This has exponential effect on jump heights, a 2x modifier will give players 4x the jump height."
+	timer_modifier_force_duck(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Force Ducking" : 0 : "Force ducking when the player is touching this trigger"
+	timer_modifier_force_unduck(boolean) {group="KZ | Modifiers" enabled={variable="timer_trigger_type" value="1"}} : "Force Unducking" : 0 : "Force unducking when the player is touching this trigger"
+
 	// KZ Anti Bhop
-	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
+	timer_anti_bhop_time(float) {group="KZ | Anti Bhop" min="0.0" max="100.0" enabled={variable="timer_trigger_type" value="4"}} : "Time" : "0.2" : "Only works if the Name is timer_anti_bhop. "
 	+ "0.0 prevents jumping completely. This is the time for which antibhop will be applied. Time is only counted when the player is on the ground."
 	
 	// KZ Zone
@@ -51,7 +56,7 @@
 	// KZ Teleport
 	timer_teleport_destination(target_destination) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Destination" : : "The entity to which the player should be teleported. Using special targetnames starting with ! won't work. (!activator, !player etc) Maximum length is 127 characters."
 
-	timer_teleport_delay(float) {group="KZ | Teleport" min="0.0" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Delay" : "0.0" : "This is how long the player can stay in the trigger. If it's one of the bhop triggers, then this means how long the player can stay on ground. For only bhop triggers the minimum delay is 0.1 seconds."
+	timer_teleport_delay(float) {group="KZ | Teleport" min="0.0" max="100.0" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Delay" : "0.0" : "This is how long the player can stay in the trigger. If it's one of the bhop triggers, then this means how long the player can stay on ground. For only bhop triggers the minimum delay is 0.1 seconds."
 	
 	timer_teleport_use_dest_angles(boolean) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Use Destination Angles" : 1 : "Whether to set the player's view angles to the destination entity's angles or keep the player's current view angles."
 	
@@ -61,6 +66,27 @@
 	
 	timer_teleport_relative(boolean) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Relative To Trigger Origin" : 0 : "Only works if the Name is timer_teleport. "
 		+ "Gets the offset of the player to this trigger, then teleports the player to the destination with that offset added. If 'Reorient Player' is enabled, then the offset is rotated by the destination entity's yaw."
+		
+	// KZ Push
+	timer_push_amount(vector) {group="KZ | Push"  enabled={variable="timer_trigger_type" values=["14"]}} : "Push Amount" : "0 0 0" : "Push the player by this amount."
+	
+	timer_push_condition_start_touch(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on Start Touch" : 0 : "Push the player upon trigger start touch."
+	timer_push_condition_touch(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on Touch" : 0 : "Push the player upon trigger touch."
+	timer_push_condition_end_touch(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on End Touch" : 0 : "Push the player upon trigger end touch."
+	timer_push_condition_jump_event(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on Jump Event" : 1 : "Push the player upon jump event."
+	timer_push_condition_jump_button(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on Jump Button" : 0 : "Push the player upon jump button press."
+	timer_push_condition_attack(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on Attack" : 0 : "Push the player upon player attack (primary)."
+	timer_push_condition_attack2(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on Attack 2" : 0 : "Push the player upon player attack (secondary)."
+	timer_push_condition_use(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Push on Use" : 0 : "Push the player upon player use."
+	
+	
+	timer_push_abs_speed_x(boolean) {group="KZ | Push"  enabled={variable="timer_trigger_type" values=["14"]}} : "Set Player X Speed" : 0 : "Whether to set the player's X speed to the specified value instead of adding to it."
+	timer_push_abs_speed_y(boolean) {group="KZ | Push"  enabled={variable="timer_trigger_type" values=["14"]}} : "Set Player Y Speed" : 0 : "Whether to set the player's Y speed to the specified value instead of adding to it."
+	timer_push_abs_speed_z(boolean) {group="KZ | Push"  enabled={variable="timer_trigger_type" values=["14"]}} : "Set Player Z Speed" : 0 : "Whether to set the player's Z speed to the specified value instead of adding to it."
+
+	timer_push_cancel_on_teleport(boolean) {group="KZ | Push" enabled={variable="timer_trigger_type" values=["14"]}} : "Cancel on teleport" : 1 : "Remove the push from this trigger if the player is teleported."
+	timer_push_cooldown(float) {group="KZ | Push" min="0.0" max="100.0" enabled={variable="timer_trigger_type" values=["14"]}} : "Push Cooldown" : "0.1" : "This is how long the player has to wait before they can be pushed again by this trigger."
+	timer_push_delay(float) {group="KZ | Push" min="0.0" max="5.0" enabled={variable="timer_trigger_type" values=["14"]}} : "Push Delay" : "0.0" : "Delay the push by this long."
 ]
 
 @OverrideClass = info_target_server_only
