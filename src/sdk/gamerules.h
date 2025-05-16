@@ -17,6 +17,7 @@ public:
 	SCHEMA_FIELD(GameTime_t, m_fRoundStartTime)
 	SCHEMA_FIELD(GameTime_t, m_flGameStartTime)
 	SCHEMA_FIELD(int, m_iRoundWinStatus);
+	SCHEMA_FIELD(int, m_iRoundTime);
 };
 
 class CCSGameRulesProxy : public CBaseEntity

@@ -2,6 +2,7 @@
 #include "common.h"
 #include "kz/kz.h"
 #include "kz/option/kz_option.h"
+#include "sdk/gamerules.h"
 // Make sure that the server can't run for too long.
 
 // Original value
@@ -51,6 +52,14 @@ static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot,
 		{
 			cvar->SetString(pNewValue);
 		}
+	}
+
+	// Reflect the change in value to the HUD as well.
+	CCSGameRules *gameRules = g_pKZUtils->GetGameRules();
+	i32 newRoundTime = int(atof(pNewValue) * 60.0f);
+	if (gameRules && gameRules->m_iRoundTime() != newRoundTime)
+	{
+		gameRules->m_iRoundTime(newRoundTime);
 	}
 }
 
