@@ -8,6 +8,7 @@
 #include "hud/kz_hud.h"
 #include "jumpstats/kz_jumpstats.h"
 #include "language/kz_language.h"
+#include "measure/kz_measure.h"
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
 #include "option/kz_option.h"
@@ -51,6 +52,7 @@ void KZPlayer::Init()
 	delete this->telemetryService;
 	delete this->triggerService;
 	delete this->globalService;
+	delete this->measureService;
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->beamService = new KZBeamService(this);
@@ -69,6 +71,7 @@ void KZPlayer::Init()
 	this->telemetryService = new KZTelemetryService(this);
 	this->triggerService = new KZTriggerService(this);
 	this->globalService = new KZGlobalService(this);
+	this->measureService = new KZMeasureService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -90,6 +93,8 @@ void KZPlayer::Reset()
 	this->timerService->Reset();
 	this->specService->Reset();
 	this->triggerService->Reset();
+	this->measureService->Reset();
+	this->beamService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
@@ -169,6 +174,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 	{
 		KZHUDService::DrawPanels(this, this);
 	}
+	this->measureService->OnPhysicsSimulatePost();
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)

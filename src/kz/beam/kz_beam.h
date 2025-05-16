@@ -41,6 +41,17 @@ namespace KZ::beam
 		bool moving = true;
 	};
 
+	struct InstantBeam
+	{
+		constexpr static i32 maxLingerTicks = 4;
+		CEntityHandle handle;
+		Vector start;
+		Vector end;
+		i32 tickRemaining;
+		i32 totalTicks;
+		i32 tickLingered = 0;
+	};
+
 } // namespace KZ::beam
 
 class KZBeamService : public KZBaseService
@@ -77,7 +88,7 @@ public:
 	}
 
 	void UpdatePlayerBeam();
-	void UpdateTarget();
+
 	bool teleportedThisTick = false;
 
 	void OnTeleport()
@@ -86,4 +97,14 @@ public:
 	}
 
 	void OnPlayerPreferencesLoaded();
+
+	CUtlVector<KZ::beam::InstantBeam> instantBeams;
+
+	void AddInstantBeam(const Vector &start, const Vector &end, u32 lifetime);
+	void UpdateInstantBeams();
 };
+
+inline bool operator==(const KZ::beam::InstantBeam &lhs, const KZ::beam::InstantBeam &rhs)
+{
+	return lhs.handle == rhs.handle;
+}

@@ -1,0 +1,45 @@
+"Phrases"
+{
+	"Measure - Non Solid Position"
+	{
+		"en"		"{darkred}You are not aiming at anything solid!"
+		"chi"		"{darkred}准星瞄准位置不是实体."
+		"ru"		"{darkred}Вы не целитесь на что-то твердое!"
+	}
+	"Measure - Start Position Set"
+	{
+		"en"		"{grey}You have set your first position for measurement."
+	}
+	"Measure - Points Not Set"
+	{
+		"en"		"{darkred}You must set both points to measure a distance."
+		"chi"		"{darkred}需要设置两点才能测量距离."
+		"ru"		"{darkred}Вы должны установить обе точки для измерения расстояния."
+	}
+	"Measure - Blocks Not Aligned"
+	{
+		"en"		"{darkred}You are not aiming at the front of a block!"
+		"chi"		"{darkred}你需要瞄准板子的正面测量!"
+		"ru"		"{darkred}Вы не целитесь в переднюю часть блока!"
+	}
+	"Measure - Start Position Timeout"
+	{
+		"en"		"{grey}Your first measurement position has timed out."
+	}
+	"Measure - Result"
+	{
+		// Distance - Horizontal: 123.45 (121.11), Vertical: 12.34
+		"#format"	"horizontal:.1f,effective:.1f,vertical:.1f"
+		"en"		"{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
+		"chi"		"{default}距离{grey} - 水平位移: {default}{horizontal}{grey} ({default}{effective}{grey}), 垂直位移: {default}{vertical}{grey}"
+		"ru"		"{default}Дистация{grey} - Горизонтальная: {default}{horizontal}{grey} ({default}{effective}{grey}), Вертикальная: {default}{vertical}{grey}"
+	}
+	"Measure - Block Result"
+	{
+		// Block Distance : 123
+		"#format"	"block:d"
+		"en"		"{default}Block Distance{grey} - Horizontal: {default}{block}{grey}"
+		"chi"		"{default}距离{grey}: {default}{block}{grey}"
+		"ru"		"{default}Дистанция блока{grey} - Горизонтальная: {default}{block}{grey}"
+	}
+}

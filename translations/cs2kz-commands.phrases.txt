@@ -1126,10 +1126,26 @@
 	}
 	"Command Description - kz_beam"
 	{
-		"en"		"Toggle player beam type."
+		"en"		"Set or toggle player beam type (off/ground/feet)."
 	}
 	"Command Description - kz_beamoffset"
 	{
 		"en"		"Set or get player beam offset."
+	}
+	"Command Description - kz_measure"
+	{
+		"en"		"Measure the distance between two points, or measure the block distance if two points are at the same place."
+	}
+	"Command Description - kz_measurestart"
+	{
+		"en"		"Set the start position of the measurement."
+	}
+	"Command Description - kz_measureend"
+	{
+		"en"		"Set the end position of the measurement and calculate the distance."
+	}
+	"Command Description - kz_measureblock"
+	{
+		"en"		"Measure the block distance."
 	}
 }

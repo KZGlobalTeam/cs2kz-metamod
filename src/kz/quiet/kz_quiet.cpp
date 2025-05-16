@@ -47,6 +47,10 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			{
 				continue;
 			}
+			if (targetPlayer->beamService->instantBeams.Find({grenade->GetRefEHandle()}) != -1)
+			{
+				continue;
+			}
 			pTransmitInfo->m_pTransmitEdict->Clear(grenade->GetEntityIndex().Get());
 		}
 

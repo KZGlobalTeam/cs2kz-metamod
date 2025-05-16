@@ -206,6 +206,15 @@ void KZBeamService::Reset()
 	this->canResumeBeam = {};
 	this->noclipTick = 0;
 	this->teleportedThisTick = false;
+	FOR_EACH_VEC(this->instantBeams, i)
+	{
+		KZ::beam::InstantBeam *beam = &this->instantBeams[i];
+		if (beam->handle.Get())
+		{
+			g_pKZUtils->RemoveEntity(beam->handle.Get());
+		}
+	}
+	this->instantBeams.RemoveAll();
 }
 
 void KZBeamService::UpdateBeams()
@@ -223,5 +232,50 @@ void KZBeamService::UpdateBeams()
 			continue;
 		}
 		player->beamService->Update();
+		player->beamService->UpdateInstantBeams();
+	}
+}
+
+void KZBeamService::AddInstantBeam(const Vector &start, const Vector &end, u32 lifetime)
+{
+	KZ::beam::InstantBeam *beam = this->instantBeams.AddToTailGetPtr();
+	CBaseModelEntity *ent = CreateGrenadeEnt(CS_TEAM_T);
+	beam->handle = ent->GetRefEHandle();
+	beam->start = start;
+	beam->end = end;
+	beam->tickRemaining = lifetime;
+	beam->totalTicks = lifetime;
+	ent->Teleport(&start, nullptr, &vec3_origin);
+}
+
+void KZBeamService::UpdateInstantBeams()
+{
+	FOR_EACH_VEC(this->instantBeams, i)
+	{
+		KZ::beam::InstantBeam *beam = &this->instantBeams[i];
+		if (!beam->handle.Get())
+		{
+			this->instantBeams.Remove(i);
+			i--;
+			continue;
+		}
+
+		if (beam->tickLingered > beam->maxLingerTicks)
+		{
+			g_pKZUtils->RemoveEntity(beam->handle.Get());
+			this->instantBeams.Remove(i);
+			i--;
+			continue;
+		}
+		else if (beam->tickRemaining >= 0)
+		{
+			Vector current = Lerp((f32)beam->tickRemaining / (f32)beam->totalTicks, beam->end, beam->start);
+			static_cast<CBaseEntity *>(beam->handle.Get())->Teleport(&current, nullptr, &vec3_origin);
+			beam->tickRemaining--;
+		}
+		else
+		{
+			beam->tickLingered++;
+		}
 	}
 }
