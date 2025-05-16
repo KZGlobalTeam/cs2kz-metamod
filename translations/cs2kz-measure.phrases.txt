@@ -9,6 +9,7 @@
 	"Measure - Start Position Set"
 	{
 		"en"		"{grey}You have set your first position for measurement."
+		"chi"		"{grey}你已设置测量的起始位置."
 	}
 	"Measure - Points Not Set"
 	{
@@ -25,6 +26,7 @@
 	"Measure - Start Position Timeout"
 	{
 		"en"		"{grey}Your first measurement position has timed out."
+		"chi"		"{grey}你的起始测量点已过期."
 	}
 	"Measure - Result"
 	{
