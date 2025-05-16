@@ -53,6 +53,18 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t *tableMap, const char *cla
 	keyValueMap->EnsureCapacity(fieldsSize + dataNumFields);
 	tableMap->Insert(classKey, keyValueMap);
 
+	for (int i = 0; i < fieldsSize; ++i)
+	{
+		SchemaClassFieldData_t &field = pFields[i];
+
+#ifdef CS2_SDK_ENABLE_SCHEMA_FIELD_OFFSET_LOGGING
+		Msg("%s::%s found at -> 0x%X (networked = %i) - %llx\n", className, field.m_pszName, field.m_nSingleInheritanceOffset,
+			IsFieldNetworked(field), &field);
+#endif
+
+		keyValueMap->Insert(hash_32_fnv1a_const(field.m_pszName), {field.m_nSingleInheritanceOffset, IsFieldNetworked(field)});
+	}
+
 	for (int i = 0; i < dataNumFields; ++i)
 	{
 		auto &field = pClassInfo->m_pDataDescMap->dataDesc[i];
@@ -61,20 +73,12 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t *tableMap, const char *cla
 		{
 			continue;
 		}
+		if (keyValueMap->Find(hash_32_fnv1a_const(field.fieldName)) != keyValueMap->InvalidIndex())
+		{
+			continue;
+		}
 		keyValueMap->Insert(hash_32_fnv1a_const(field.fieldName), {field.fieldOffset, false});
 	}
-
-	for (int i = 0; i < fieldsSize; ++i)
-	{
-		SchemaClassFieldData_t &field = pFields[i];
-
-#ifdef CS2_SDK_ENABLE_SCHEMA_FIELD_OFFSET_LOGGING
-		Msg("%s::%s found at -> 0x%X - %llx\n", className, field.m_pszName, field.m_nSingleInheritanceOffset, &field);
-#endif
-
-		keyValueMap->Insert(hash_32_fnv1a_const(field.m_pszName), {field.m_nSingleInheritanceOffset, IsFieldNetworked(field)});
-	}
-
 	return true;
 }
 
