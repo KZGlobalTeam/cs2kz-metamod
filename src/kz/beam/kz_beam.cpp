@@ -118,6 +118,14 @@ void KZBeamService::Update()
 		return;
 	}
 
+	/*
+	 For the player beam, create a grenade that is X ticks behind the player's origin.
+
+	 This is done by storing a history of player's position.
+
+	 The grenade position is updated as long as the player is in the air,
+	 except if they enter the air via noclip, in which case the player needs to land before the beam is updated again.
+	*/
 	if (this->target->noclipService->JustNoclipped() && !this->noclipTick)
 	{
 		this->noclipTick = g_pKZUtils->GetServerGlobals()->tickcount + originHistorySize;

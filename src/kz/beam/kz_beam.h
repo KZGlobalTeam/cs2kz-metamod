@@ -2,17 +2,6 @@
 #include "kz/kz.h"
 #include "tier1/circularbuffer.h"
 
-/*
- For the player beam, create a grenade that is X ticks behind the player's origin.
-
- This is done by storing a history of player's position.
-
- If the player lands on the ground/is on a ladder, tell the beam to stop updating after X ticks.
-
- If the player noclips, tell the beam to stop updating after X ticks and only start updating once the player is on the ground and/or is on a ladder.
-
- If the player teleports, force the grenade to recreate itself after X ticks so that no beam can be made.
-*/
 namespace KZ::beam
 {
 	constexpr int originHistorySize = 8;
