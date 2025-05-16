@@ -52,6 +52,11 @@ namespace KZ::beam
 		i32 tickLingered = 0;
 	};
 
+	inline bool operator==(const InstantBeam &lhs, const InstantBeam &rhs)
+	{
+		return lhs.handle == rhs.handle;
+	}
+
 } // namespace KZ::beam
 
 class KZBeamService : public KZBaseService
@@ -103,8 +108,3 @@ public:
 	void AddInstantBeam(const Vector &start, const Vector &end, u32 lifetime);
 	void UpdateInstantBeams();
 };
-
-inline bool operator==(const KZ::beam::InstantBeam &lhs, const KZ::beam::InstantBeam &rhs)
-{
-	return lhs.handle == rhs.handle;
-}
