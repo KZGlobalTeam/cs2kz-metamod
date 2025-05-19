@@ -5,28 +5,33 @@
 		"en"		"{darkred}You are not aiming at anything solid!"
 		"chi"		"{darkred}准星瞄准位置不是实体."
 		"ru"		"{darkred}Вы не целитесь на что-то твердое!"
+		"ua"		"{darkred}Ви не націлюєтеся на щось тверде!"
 	}
 	"Measure - Start Position Set"
 	{
 		"en"		"{grey}You have set your first position for measurement."
 		"chi"		"{grey}你已设置测量的起始位置."
+		"ua"		"{grey}Ви встановили першу позицію для вимірювання."
 	}
 	"Measure - Points Not Set"
 	{
 		"en"		"{darkred}You must set both points to measure a distance."
 		"chi"		"{darkred}需要设置两点才能测量距离."
 		"ru"		"{darkred}Вы должны установить обе точки для измерения расстояния."
+		"ua"		"{darkred}Ви повинні встановити обидві точки для вимірювання відстані."
 	}
 	"Measure - Blocks Not Aligned"
 	{
 		"en"		"{darkred}You are not aiming at the front of a block!"
 		"chi"		"{darkred}你需要瞄准板子的正面测量!"
 		"ru"		"{darkred}Вы не целитесь в переднюю часть блока!"
+		"ua"		"{darkred}Ви не цілитеся у передню частину блоку!"
 	}
 	"Measure - Start Position Timeout"
 	{
 		"en"		"{grey}Your first measurement position has timed out."
 		"chi"		"{grey}你的起始测量点已过期."
+		"ua"		"{grey}Час очікування першої точки вимірювання вичерпано."
 	}
 	"Measure - Result"
 	{
@@ -35,6 +40,7 @@
 		"en"		"{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
 		"chi"		"{default}距离{grey} - 水平位移: {default}{horizontal}{grey} ({default}{effective}{grey}), 垂直位移: {default}{vertical}{grey}"
 		"ru"		"{default}Дистация{grey} - Горизонтальная: {default}{horizontal}{grey} ({default}{effective}{grey}), Вертикальная: {default}{vertical}{grey}"
+		"ua"		"{default}Відстань{grey} - Горизонтальна: {default}{horizontal}{grey} ({default}{effective}{grey}), Вертикальна: {default}{vertical}{grey}"
 	}
 	"Measure - Block Result"
 	{
@@ -43,5 +49,6 @@
 		"en"		"{default}Block Distance{grey} - Horizontal: {default}{block}{grey}"
 		"chi"		"{default}距离{grey}: {default}{block}{grey}"
 		"ru"		"{default}Дистанция блока{grey} - Горизонтальная: {default}{block}{grey}"
+		"ua"		"{default}Відстань між блоками{grey} - Горизонтальна: {default}{block}{grey}"
 	}
 }

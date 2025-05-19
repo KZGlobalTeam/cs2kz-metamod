@@ -1128,30 +1128,36 @@
 	{
 		"en"		"Set or toggle player beam type (off/ground/feet)."
 		"chi"		"设置或切换玩家的光束类型 (关闭/地面/脚下)."
+		"ua"		"Встановити або перемикнути тип променя руху (вимкнути/по землі/від ніг)."
 	}
 	"Command Description - kz_beamoffset"
 	{
 		"en"		"Set or get player beam offset."
 		"chi"		"设置或获取玩家光束的偏移值."
+		"ua"		"Встановити або отримати значення зміщення променя руху."
 	}
 	"Command Description - kz_measure"
 	{
 		"en"		"Measure the distance between two points, or measure the block distance if two points are at the same place."
 		"chi"		"测量两个点之间的距离, 或当两个点相同时测量方块距离."
+		"ua"		"Виміряти відстань між двома точками або відстань між блоками, якщо дві точки знаходяться на одному рівні."
 	}
 	"Command Description - kz_measurestart"
 	{
 		"en"		"Set the start position of the measurement."
 		"chi"		"设置测量的起始位置."
+		"ua"		"Встановити початкову позицію для вимірювання."
 	}
 	"Command Description - kz_measureend"
 	{
 		"en"		"Set the end position of the measurement and calculate the distance."
 		"chi"		"设置测量的结束位置并计算距离."
+		"ua"		"Встановити кінцеве положення для вимірювання та обчислити відстань."
 	}
 	"Command Description - kz_measureblock"
 	{
 		"en"		"Measure the block distance."
 		"chi"		"测量方块之间的距离."
+		"ua"		"Виміряти відстань між блоками."
 	}
 }
