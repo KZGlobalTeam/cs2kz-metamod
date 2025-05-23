@@ -41,6 +41,8 @@ enum KzTriggerType
 	KZTRIGGER_MULTI_BHOP,
 	KZTRIGGER_SINGLE_BHOP,
 	KZTRIGGER_SEQUENTIAL_BHOP,
+
+	KZTRIGGER_PUSH,
 	KZTRIGGER_COUNT,
 };
 
@@ -52,7 +54,10 @@ struct KzMapModifier
 	bool disableTeleports;
 	bool disableJumpstats;
 	bool enableSlide;
-	float gravity;
+	f32 gravity;
+	f32 jumpFactor;
+	bool forceDuck;
+	bool forceUnduck;
 };
 
 // KZTRIGGER_ANTI_BHOP
@@ -79,7 +84,33 @@ struct KzMapTeleport
 	bool relative;
 };
 
+// KZTRIGGER_PUSH
+struct KzMapPush
+{
+	// Cannot use Vector here as it is not a POD type.
+	f32 impulse[3];
+
+	enum KzMapPushCondition : u32
+	{
+		KZ_PUSH_START_TOUCH = 1,
+		KZ_PUSH_TOUCH = 2,
+		KZ_PUSH_END_TOUCH = 4,
+		KZ_PUSH_JUMP_EVENT = 8,
+		KZ_PUSH_JUMP_BUTTON = 16,
+		KZ_PUSH_ATTACK = 32,
+		KZ_PUSH_ATTACK2 = 64,
+		KZ_PUSH_USE = 128,
+	};
+
+	u32 pushConditions;
+	bool setSpeed[3];
+	bool cancelOnTeleport;
+	f32 cooldown;
+	f32 delay;
+};
+
 struct KZCourseDescriptor
+
 {
 	KZCourseDescriptor(i32 hammerId = -1, const char *targetName = "", bool disableCheckpoints = false, u32 guid = 0,
 					   i32 courseID = INVALID_COURSE_NUMBER, const char *courseName = "")
@@ -149,6 +180,7 @@ struct KzTrigger
 		KzMapAntibhop antibhop;
 		KzMapZone zone;
 		KzMapTeleport teleport;
+		KzMapPush push;
 	};
 };
 
@@ -178,6 +210,11 @@ namespace KZ::mapapi
 		static_assert(KZTRIGGER_ZONE_START == 5 && KZTRIGGER_ZONE_STAGE == 9,
 					  "Don't forget to change this function when changing the KzTriggerType enum!!!");
 		return triggerType >= KZTRIGGER_ZONE_START && triggerType <= KZTRIGGER_ZONE_STAGE;
+	}
+
+	inline bool IsPushTrigger(KzTriggerType triggerType)
+	{
+		return triggerType == KZTRIGGER_PUSH;
 	}
 } // namespace KZ::mapapi
 
