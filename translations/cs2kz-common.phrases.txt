@@ -66,4 +66,12 @@
 		"ko"		"{darkred}\"{player}\" 해당 플레이어를 찾을 수 없습니다."
 		"lv"		"{darkred}Neizdevās atrast spēlētāju ar vārdu \"{player}\"."
 	}
+	"Command Cooldown"
+	{
+		"en"		"{grey}Please wait before using that command again."
+		"chi"		"{grey}请勿频繁输入指令,请稍后再试."
+		"ru"		"{grey}Пожалуйста, подождите, прежде чем использовать эту команду снова."
+		"sv"		"{grey}Vänligen vänta innan du använder kommandot igen."
+		"ua"		"{grey}Будь ласка, зачекайте, перш ніж використовувати цю команду знову."
+	}
 }

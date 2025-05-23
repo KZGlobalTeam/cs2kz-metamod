@@ -1,0 +1,47 @@
+"Phrases"
+{
+	"Beam Changed (None)"
+	{
+		"en"		"{grey}You have disabled your player beams."
+		"chi"		"{grey}你已关闭玩家光束效果."
+		"sv"		"{grey}Du har inaktiverat din spelarstråle."
+		"ua"		"{grey}Ви вимкнули промені руху під час стрибка."
+	}
+	"Beam Changed (Ground)"
+	{
+		"en"		"{grey}You have set your player beam type to {default}Ground{grey}."
+		"chi"		"{grey}你已将玩家光束类型设置为 {default}地面{grey}."
+		"sv"		"{grey}Du har ställt in din spelarstråltyp till {default}Mark{grey}."
+		"ua"		"{grey}Ви встановили тип променя — {default}По землі{grey}."
+	}
+	"Beam Changed (Feet)"
+	{
+		"en"		"{grey}You have set your player beam type to {default}Feet{grey}."
+		"chi"		"{grey}你已将玩家光束类型设置为 {default}脚下{grey}."
+		"sv"		"{grey}Du har ställt in din spelarstråltyp till {default}Fötter{grey}."
+		"ua"		"{grey}Ви встановили тип променя — {default}Від ніг{grey}."
+	}
+	"Beam Offset Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_beamoffset <x> <y> <z>"
+		"chi"		"{grey}用法: {default}kz_beamoffset <x> <y> <z>"
+		"sv"		"{grey}Användning: {default}kz_beamoffset <x> <y> <z>"
+		"ua"		"{grey}Використання: {default}kz_beamoffset <x> <y> <z>"
+	}
+	"Beam Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_beam <off/feet/ground>"
+		"chi"		"{grey}用法：{default}kz_beam <off/feet/ground>"
+		"sv"		"{grey}Användning: {default}kz_beam <off/feet/ground>"
+		"ua"		"{grey}Використання：{default}kz_beam <off/feet/ground>"
+	}
+	"Current Beam Offset"
+	{
+		// Current beam offset: 0.00 0.00 1.75
+		"#format"	"x:f,y:f,z:f"
+		"en"		"{grey}Current beam offset: {x:.2f} {y:.2f} {x:.2f}"
+		"chi"		"{grey}当前光束偏移：{x:.2f} {y:.2f} {z:.2f}"
+		"sv"		"{grey}Nuvarande stråloffset: {x:.2f} {y:.2f} {x:.2f}"
+		"ua"		"{grey}Поточне зміщення променя: {x:.2f} {y:.2f} {z:.2f}"
+	}
+}

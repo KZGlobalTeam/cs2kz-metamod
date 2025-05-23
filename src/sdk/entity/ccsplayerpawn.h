@@ -9,6 +9,7 @@ class CCSPlayerPawnBase : public CBasePlayerPawn
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerPawnBase);
 	SCHEMA_FIELD(CCSPlayer_ViewModelServices *, m_pViewModelServices)
+	SCHEMA_FIELD(QAngle, m_angEyeAngles)
 };
 
 class CCSPlayerPawn : public CCSPlayerPawnBase
