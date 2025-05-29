@@ -16,6 +16,7 @@ void KZTriggerService::Reset()
 	this->lastTouchedSingleBhop = {};
 	this->bhopTouchCount = {};
 	this->lastTouchedSequentialBhops = {};
+	this->pushEvents.RemoveAll();
 }
 
 void KZTriggerService::OnPhysicsSimulate()
@@ -47,7 +48,7 @@ void KZTriggerService::OnPhysicsSimulatePost()
 	/*
 		NOTE:
 		1. To prevent multiplayer bugs, make sure that all of these cvars are part of the mode convars.
-		2. The apply part is here mostly just to replicate the values to the client.
+		2. The apply part is here mostly just to replicate the values to the client, with the exception of push triggers.
 	*/
 
 	if (this->modifiers.enableSlideCount > 0)
@@ -61,6 +62,7 @@ void KZTriggerService::OnPhysicsSimulatePost()
 
 	if (this->antiBhopActive)
 	{
+		this->modifiers.jumpFactor = 0.0f;
 		this->ApplyAntiBhop(!this->lastAntiBhopActive);
 	}
 	else if (this->lastAntiBhopActive)
@@ -68,8 +70,18 @@ void KZTriggerService::OnPhysicsSimulatePost()
 		this->CancelAntiBhop(true);
 	}
 
+	this->ApplyJumpFactor(this->modifiers.jumpFactor != this->lastModifiers.jumpFactor);
+	// Try to apply pushes one last time on this tick, to catch all the buttons that were not set during movement processing (attack+attack2).
+	this->ApplyPushes();
+	this->CleanupPushEvents();
+
 	this->lastModifiers = this->modifiers;
 	this->lastAntiBhopActive = this->antiBhopActive;
+}
+
+void KZTriggerService::OnCheckJumpButton()
+{
+	this->ApplyJumpFactor(false);
 }
 
 void KZTriggerService::OnProcessMovement() {}
@@ -84,6 +96,9 @@ void KZTriggerService::OnProcessMovementPost()
 	}
 
 	this->antiBhopActive = false;
+	this->modifiers.jumpFactor = 1.0f;
+	this->ApplyPushes();
+	this->CleanupPushEvents();
 }
 
 void KZTriggerService::OnStopTouchGround()
@@ -108,6 +123,22 @@ void KZTriggerService::OnStopTouchGround()
 			//  otherwise jumping back and forth between a multibhop and a singlebhop wouldn't work.
 			// We only care about the most recently touched trigger!
 			this->lastTouchedSingleBhop = tracker.kzTrigger->entity;
+		}
+		if (this->player->jumped && KZ::mapapi::IsPushTrigger(tracker.kzTrigger->type)
+			&& tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_JUMP_EVENT)
+		{
+			this->AddPushEvent(tracker.kzTrigger);
+		}
+	}
+}
+
+void KZTriggerService::OnTeleport()
+{
+	FOR_EACH_VEC_BACK(this->pushEvents, i)
+	{
+		if (this->pushEvents[i].source->push.cancelOnTeleport)
+		{
+			this->pushEvents.Remove(i);
 		}
 	}
 }
@@ -206,7 +237,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 		}
 	}
 
-	UpdateModifiersInternal();
+	this->UpdateModifiersInternal();
 }
 
 void KZTriggerService::EndTouchAll()

@@ -1,6 +1,7 @@
 #include "kz_trigger.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/noclip/kz_noclip.h"
 #include "kz/timer/kz_timer.h"
@@ -69,6 +70,123 @@ void KZTriggerService::OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouch
 	this->OnMappingApiTriggerEndTouchPost(tracker);
 }
 
+void KZTriggerService::AddPushEvent(const KzTrigger *trigger)
+{
+	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
+	PushEvent event {trigger, curtime + trigger->push.delay};
+	if (this->pushEvents.Find(event) == -1)
+	{
+		this->pushEvents.AddToTail(event);
+	}
+}
+
+void KZTriggerService::CleanupPushEvents()
+{
+	f32 frametime = g_pKZUtils->GetGlobals()->frametime;
+	// Don't remove push events since these push events are not fired yet.
+	if (frametime == 0.0f)
+	{
+		return;
+	}
+	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
+	FOR_EACH_VEC_BACK(this->pushEvents, i)
+	{
+		if (!this->pushEvents[i].applied)
+		{
+			continue;
+		}
+		if (curtime - frametime >= this->pushEvents[i].pushTime + this->pushEvents[i].source->push.cooldown
+			|| curtime < this->pushEvents[i].pushTime + this->pushEvents[i].source->push.cooldown)
+		{
+			this->pushEvents.Remove(i);
+		}
+	}
+}
+
+void KZTriggerService::ApplyPushes()
+{
+	f32 frametime = g_pKZUtils->GetGlobals()->frametime;
+	// There's no point applying any push if player isn't going to move anyway.
+	if (frametime == 0.0f)
+	{
+		return;
+	}
+	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
+	bool setSpeed[3] {};
+
+	if (this->pushEvents.Count() == 0)
+	{
+		return;
+	}
+	bool useBaseVelocity = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND;
+	FOR_EACH_VEC(this->pushEvents, i)
+	{
+		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime || this->pushEvents[i].applied)
+		{
+			continue;
+		}
+		this->pushEvents[i].applied = true;
+		auto &push = this->pushEvents[i].source->push;
+		for (u32 i = 0; i < 3; i++)
+		{
+			Vector vel;
+			if (useBaseVelocity && i != 2)
+			{
+				this->player->GetBaseVelocity(&vel);
+			}
+			else
+			{
+				this->player->GetVelocity(&vel);
+			}
+			// Set speed overrides add speed.
+			if (push.setSpeed[i])
+			{
+				vel[i] = push.impulse[i];
+				setSpeed[i] = true;
+			}
+			else if (!setSpeed[i])
+			{
+				vel[i] += push.impulse[i];
+			}
+			// If we are pushing the player up, make sure they cannot re-ground themselves.
+			if (i == 2 && vel[i] > 0 && useBaseVelocity)
+			{
+				this->player->GetPlayerPawn()->m_hGroundEntity().FromIndex(INVALID_EHANDLE_INDEX);
+				this->player->GetPlayerPawn()->m_fFlags() &= ~FL_ONGROUND;
+				this->player->currentMoveData->m_groundNormal = vec3_origin;
+			}
+			if (useBaseVelocity && i != 2)
+			{
+				this->player->SetBaseVelocity(vel);
+				this->player->GetPlayerPawn()->m_fFlags() |= FL_BASEVELOCITY;
+			}
+			else
+			{
+				this->player->SetVelocity(vel);
+			}
+			this->player->jumpstatsService->InvalidateJumpstats("Disabled By Map");
+		}
+	}
+	// Try to nullify velocity if needed.
+	if (useBaseVelocity)
+	{
+		Vector velocity, newVelocity;
+		this->player->GetVelocity(&velocity);
+		newVelocity = velocity;
+		for (u32 i = 0; i < 2; i++)
+		{
+			if (setSpeed[i])
+			{
+				newVelocity[i] = 0;
+			}
+		}
+		if (velocity != newVelocity)
+		{
+			this->player->SetVelocity(newVelocity);
+		}
+	}
+}
+
 void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tracker)
 {
 	const KzTrigger *trigger = tracker.kzTrigger;
@@ -90,6 +208,13 @@ void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tra
 			// Enabling slide will also disable jumpstats.
 			this->modifiers.disableJumpstatsCount += modifier.enableSlide ? 1 : 0;
 			this->modifiers.enableSlideCount += modifier.enableSlide ? 1 : 0;
+			// Modifying jump velocity will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount += modifier.jumpFactor != 1.0f ? 1 : 0;
+			this->modifiers.jumpFactor = modifier.jumpFactor;
+			// Modifying force (un)duck will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount += modifier.forceDuck || modifier.forceUnduck ? 1 : 0;
+			this->modifiers.forcedDuckCount += modifier.forceDuck ? 1 : 0;
+			this->modifiers.forcedUnduckCount += modifier.forceUnduck ? 1 : 0;
 		}
 		break;
 
@@ -154,7 +279,14 @@ void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tra
 			}
 		}
 		break;
-
+		case KZTRIGGER_PUSH:
+		{
+			if (tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_START_TOUCH)
+			{
+				this->AddPushEvent(trigger);
+			}
+		}
+		break;
 		default:
 			break;
 	}
@@ -185,6 +317,11 @@ void KZTriggerService::OnMappingApiTriggerTouchPost(TriggerTouchTracker tracker)
 			this->TouchTeleportTrigger(tracker);
 		}
 		break;
+		case KZTRIGGER_PUSH:
+		{
+			this->TouchPushTrigger(tracker);
+		}
+		break;
 	}
 }
 
@@ -208,11 +345,20 @@ void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker track
 			// Enabling slide will also disable jumpstats.
 			this->modifiers.disableJumpstatsCount -= modifier.enableSlide ? 1 : 0;
 			this->modifiers.enableSlideCount -= modifier.enableSlide ? 1 : 0;
+			// Modifying jump factor will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount -= modifier.jumpFactor != 1.0f ? 1 : 0;
+
+			// Modifying force (un)duck will also disable jumpstats.
+			this->modifiers.disableJumpstatsCount -= modifier.forceDuck || modifier.forceUnduck ? 1 : 0;
+			this->modifiers.forcedDuckCount -= modifier.forceDuck ? 1 : 0;
+			this->modifiers.forcedUnduckCount -= modifier.forceUnduck ? 1 : 0;
 			assert(this->modifiers.disablePausingCount >= 0);
 			assert(this->modifiers.disableCheckpointsCount >= 0);
 			assert(this->modifiers.disableTeleportsCount >= 0);
 			assert(this->modifiers.disableJumpstatsCount >= 0);
 			assert(this->modifiers.enableSlideCount >= 0);
+			assert(this->modifiers.forcedDuckCount >= 0);
+			assert(this->modifiers.forcedUnduckCount >= 0);
 		}
 		break;
 
@@ -234,7 +380,14 @@ void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker track
 			}
 		}
 		break;
-
+		case KZTRIGGER_PUSH:
+		{
+			if (tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_END_TOUCH)
+			{
+				this->AddPushEvent(tracker.kzTrigger);
+			}
+		}
+		break;
 		default:
 			break;
 	}

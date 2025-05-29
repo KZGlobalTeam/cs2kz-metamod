@@ -19,6 +19,7 @@ enum EInButtonState : uint64_t
 class CInButtonState
 {
 	DECLARE_SCHEMA_CLASS(CInButtonState);
+
 public:
 	SCHEMA_FIELD_POINTER(uint64, m_pButtonStates);
 
@@ -28,6 +29,17 @@ public:
 		{
 			buttons[i] = this->m_pButtonStates[i];
 		}
+	}
+
+	EInButtonState GetButtonState(uint64 button)
+	{
+		return (EInButtonState)(!!(this->m_pButtonStates[0] & button) + !!(this->m_pButtonStates[1] & button) * 2
+								+ !!(this->m_pButtonStates[2] & button) * 4);
+	};
+
+	bool IsButtonNewlyPressed(uint64 button)
+	{
+		return this->GetButtonState(button) >= 3;
 	}
 
 	static bool IsButtonPressed(uint64 buttons[3], uint64 button, bool onlyDown = false)
@@ -50,7 +62,8 @@ public:
 						if (currentButton & 1)
 						{
 							u64 keyMask = 1ull << key;
-							EInButtonState keyState = (EInButtonState)(keyMask && buttons[0] + (keyMask && buttons[1]) * 2 + (keyMask && buttons[2]) * 4);
+							EInButtonState keyState =
+								(EInButtonState)(keyMask && buttons[0] + (keyMask && buttons[1]) * 2 + (keyMask && buttons[2]) * 4);
 							if (keyState > IN_BUTTON_DOWN_UP)
 							{
 								return true;
@@ -78,5 +91,8 @@ public:
 		}
 	}
 
-	bool IsButtonPressed(uint64 button, bool onlyDown) { return CInButtonState::IsButtonPressed(this->m_pButtonStates, button, onlyDown); }
+	bool IsButtonPressed(uint64 button, bool onlyDown)
+	{
+		return CInButtonState::IsButtonPressed(this->m_pButtonStates, button, onlyDown);
+	}
 };

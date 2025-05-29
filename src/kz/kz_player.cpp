@@ -224,13 +224,13 @@ void KZPlayer::OnProcessMovement()
 	KZ::mode::ApplyModeSettings(this);
 
 	this->DisableTurnbinds();
+	this->triggerService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnProcessMovement();
 	}
 
-	this->triggerService->OnProcessMovement();
 	this->jumpstatsService->OnProcessMovement();
 	this->checkpointService->TpHoldPlayerStill();
 }
@@ -238,7 +238,6 @@ void KZPlayer::OnProcessMovement()
 void KZPlayer::OnProcessMovementPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->triggerService->OnProcessMovementPost();
 
 	this->jumpstatsService->UpdateJump();
 	this->modeService->OnProcessMovementPost();
@@ -247,6 +246,7 @@ void KZPlayer::OnProcessMovementPost()
 		this->styleServices[i]->OnProcessMovementPost();
 	}
 	this->jumpstatsService->OnProcessMovementPost();
+	this->triggerService->OnProcessMovementPost();
 	MovementPlayer::OnProcessMovementPost();
 }
 
@@ -478,6 +478,7 @@ void KZPlayer::OnCheckJumpButton()
 	{
 		this->styleServices[i]->OnCheckJumpButton();
 	}
+	this->triggerService->OnCheckJumpButton();
 }
 
 void KZPlayer::OnCheckJumpButtonPost()
@@ -710,7 +711,6 @@ void KZPlayer::OnStartTouchGround()
 void KZPlayer::OnStopTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->triggerService->OnStopTouchGround();
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -718,6 +718,7 @@ void KZPlayer::OnStopTouchGround()
 		this->styleServices[i]->OnStopTouchGround();
 	}
 	this->jumpstatsService->AddJump();
+	this->triggerService->OnStopTouchGround();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
@@ -743,6 +744,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	{
 		this->beamService->OnTeleport();
 	}
+	this->triggerService->OnTeleport();
 }
 
 void KZPlayer::DisableTurnbinds()
