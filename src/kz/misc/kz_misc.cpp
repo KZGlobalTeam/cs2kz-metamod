@@ -472,13 +472,13 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 
 		if (player->IsAlive())
 		{
-			utils::SayChat(player->GetController(), "{lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::SayChat(player->GetController(), "{lime}%s{default} : %s", player->GetName(), message.Get());
 			utils::PrintConsoleAll("%s: %s", player->GetName(), message.Get());
 			META_CONPRINTF("%s: %s\n", player->GetName(), message.Get());
 		}
 		else
 		{
-			utils::SayChat(player->GetController(), "{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
+			utils::SayChat(player->GetController(), "{grey}* {lime}%s{default} : %s", player->GetName(), message.Get());
 			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
 			META_CONPRINTF("* %s: %s\n", player->GetName(), message.Get());
 		}
