@@ -45,10 +45,10 @@ jobs:
 
       - name: Archive Linux build
         run: |
-          cd /home/runner/artifacts
-          tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz cs2kz-linux --transform "s|^cs2kz-linux||"
-          rm ./cs2kz-linux/cfg/cs2kz-server-config.txt
-          tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}-upgrade.tar.gz cs2kz-linux --transform "s|^cs2kz-linux||"
+          cd /home/runner/artifacts/cs2kz-linux
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}.tar.gz *
+          rm ./cfg/cs2kz-server-config.txt
+          tar -czvf /home/runner/releases/cs2kz-linux-${{ github.ref_name }}-upgrade.tar.gz *
 
       - name: Archive Windows build
         run: |
