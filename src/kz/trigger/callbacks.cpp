@@ -118,7 +118,7 @@ void KZTriggerService::ApplyPushes()
 	{
 		return;
 	}
-	bool useBaseVelocity = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND;
+	bool useBaseVelocity = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->processingMovement;
 	FOR_EACH_VEC(this->pushEvents, i)
 	{
 		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime || this->pushEvents[i].applied)
