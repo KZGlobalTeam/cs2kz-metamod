@@ -23,6 +23,55 @@ class IGameEventListener2;
 class CTimerBase;
 class CServerSideClient;
 class CCSGameRules;
+class BotProfileManager;
+class BotProfile;
+
+// temporary botprofile classes
+#include "utllinkedlist.h"
+#include "utlvector.h"
+
+class BotProfile
+{
+public:
+	const char *botName;
+	float aggression;
+	float skill;
+	float teamwork;
+	float aimFocusInitial;
+	float aimFocusDecay;
+	float aimFocusOffsetScale;
+	float aimFocusInterval;
+	u16 wordArray24[16];
+	int weaponPreference_maybe;
+	int cost;
+	int skin;
+	u8 difficultyFlags;
+	int voicePitch;
+	float reactionTime;
+	float attackDelay;
+	int teamNum;
+	u8 byte64;
+	int voiceBank;
+	float lookAngleMaxAccelNormal;
+	float lookAngleStiffnessNormal;
+	float lookAngleDampingNormal;
+	float lookAngleMaxAccelAttacking;
+	float lookAngleStiffnessAttacking;
+	float lookAngleDampingAttacking;
+	CUtlVector<BotProfile *> profiles;
+};
+
+class BotProfileManager
+{
+public:
+	CUtlLinkedList<BotProfile> botProfiles;
+	CUtlLinkedList<BotProfile> botProfiles2;
+	CUtlVector<char *> voiceBanks;
+	const char *strings1[100];
+	const char *strings2[100];
+	const char *strings3[100];
+	i32 dword9B8;
+};
 
 struct SndOpEventGuid_t;
 struct EmitSound_t;
@@ -38,6 +87,8 @@ typedef CBaseEntity *CreateEntityByName_t(const char *className, int iForceEdict
 typedef void DispatchSpawn_t(CBaseEntity *pEntity, CEntityKeyValues *pEntityKeyValues);
 typedef void RemoveEntity_t(CEntityInstance *);
 typedef void DebugDrawMesh_t(CTransform &transform, Ray_t &ray, i32 r, i32 g, i32 b, i32 a, bool solid, bool ignoreZ, f32 duration);
+typedef CCSPlayerController *CreateBot_t(BotProfile *botProfile, i32 teamNumber);
+typedef BotProfile *GetBotProfile_t(BotProfileManager *pThis, u8 difficulty, i32 teamNumber, i32 weaponClass, bool a5);
 
 namespace interfaces
 {
@@ -46,6 +97,7 @@ namespace interfaces
 	inline ISource2Server *pServer = nullptr;
 	inline IGameEventManager2 *pGameEventManager = nullptr;
 	inline IGameEventSystem *pGameEventSystem = nullptr;
+	inline BotProfileManager **ppBotProfileManager = nullptr;
 
 	inline bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	{
@@ -74,10 +126,11 @@ class KZUtils
 public:
 	KZUtils(TracePlayerBBox_t *TracePlayerBBox, GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles,
 			EmitSoundFunc_t *EmitSound, SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName,
-			DispatchSpawn_t *DispatchSpawn, RemoveEntity_t *RemoveEntity, DebugDrawMesh_t *DebugDrawMesh)
+			DispatchSpawn_t *DispatchSpawn, RemoveEntity_t *RemoveEntity, DebugDrawMesh_t *DebugDrawMesh, CreateBot_t *CreateBot,
+			GetBotProfile_t *GetBotProfile)
 		: TracePlayerBBox(TracePlayerBBox), GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles),
 		  EmitSound(EmitSound), SwitchTeam(SwitchTeam), SetPawn(SetPawn), CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn),
-		  RemoveEntity(RemoveEntity), DebugDrawMesh(DebugDrawMesh)
+		  RemoveEntity(RemoveEntity), DebugDrawMesh(DebugDrawMesh), CreateBot(CreateBot), GetBotProfile_(GetBotProfile)
 	{
 	}
 
@@ -91,6 +144,8 @@ public:
 	DispatchSpawn_t *const DispatchSpawn;
 	RemoveEntity_t *const RemoveEntity;
 	DebugDrawMesh_t *const DebugDrawMesh;
+	CreateBot_t *const CreateBot;
+	GetBotProfile_t *const GetBotProfile_;
 
 	virtual CGameConfig *GetGameConfig();
 	virtual const CGlobalVars *GetServerGlobals();
@@ -143,6 +198,8 @@ public:
 	// Draw debug overlays. Listen server only.
 	virtual void AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, u8 r, u8 g, u8 b, u8 a, bool noDepthTest, f64 flDuration);
 	virtual void ClearOverlays();
+
+	BotProfile *GetBotProfile(u8 difficulty = 2, i32 teamNumber = CS_TEAM_CT, i32 weaponClass = 2);
 };
 
 extern KZUtils *g_pKZUtils;
