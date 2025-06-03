@@ -298,3 +298,14 @@ u32 KZUtils::GetPlayerCount()
 	}
 	return count;
 }
+
+BotProfile *KZUtils::GetBotProfile(u8 difficulty, i32 teamNumber, i32 weaponClass)
+{
+	BotProfile *result = NULL;
+	if (!interfaces::ppBotProfileManager || !*interfaces::ppBotProfileManager)
+	{
+		return result;
+	}
+	result = this->GetBotProfile_(*interfaces::ppBotProfileManager, difficulty, teamNumber, weaponClass, false);
+	return result;
+}

@@ -18,6 +18,7 @@
 #include "timer/kz_timer.h"
 #include "tip/kz_tip.h"
 #include "trigger/kz_trigger.h"
+#include "recording/kz_recording.h"
 #include "global/kz_global.h"
 
 #include "sdk/datatypes.h"
@@ -48,6 +49,7 @@ void KZPlayer::Init()
 	delete this->tipService;
 	delete this->telemetryService;
 	delete this->triggerService;
+	delete this->recordingService;
 	delete this->globalService;
 
 	this->anticheatService = new KZAnticheatService(this);
@@ -65,6 +67,7 @@ void KZPlayer::Init()
 	this->tipService = new KZTipService(this);
 	this->telemetryService = new KZTelemetryService(this);
 	this->triggerService = new KZTriggerService(this);
+	this->recordingService = new KZRecordingService(this);
 	this->globalService = new KZGlobalService(this);
 
 	KZ::mode::InitModeService(this);
@@ -87,6 +90,7 @@ void KZPlayer::Reset()
 	this->timerService->Reset();
 	this->specService->Reset();
 	this->triggerService->Reset();
+	this->recordingService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
@@ -675,6 +679,7 @@ void KZPlayer::OnPostThinkPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPostThinkPost();
+	this->recordingService->OnPostThinkPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnPostThinkPost();
@@ -816,6 +821,7 @@ void KZPlayer::UpdateTriggerTouchList()
 void KZPlayer::OnChangeTeamPost(i32 team)
 {
 	this->timerService->OnPlayerJoinTeam(team);
+	this->recordingService->OnPlayerJoinTeam(team);
 }
 
 const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(const char *name)

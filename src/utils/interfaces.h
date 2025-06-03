@@ -24,6 +24,56 @@ class IGameEventListener2;
 class CTimerBase;
 class CServerSideClient;
 class CCSGameRules;
+class BotProfileManager;
+class BotProfile;
+
+// temporary botprofile classes
+#include "utllinkedlist.h"
+#include "utlvector.h"
+class BotProfile
+{
+public:
+	const char *botName;
+	float aggression;
+	float skill;
+	float teamwork;
+	float aimFocusInitial;
+	float aimFocusDecay;
+	float aimFocusOffsetScale;
+	float aimFocusInterval;
+	u16 wordArray24[16];
+	int weaponPreference_maybe;
+	int cost;
+	int skin;
+	u8 difficultyFlags;
+	int voicePitch;
+	float reactionTime;
+	float attackDelay;
+	int teamNum;
+	u8 byte64;
+	int voiceBank;
+	float lookAngleMaxAccelNormal;
+	float lookAngleStiffnessNormal;
+	float lookAngleDampingNormal;
+	float lookAngleMaxAccelAttacking;
+	float lookAngleStiffnessAttacking;
+	float lookAngleDampingAttacking;
+	CUtlVector<BotProfile *> profiles;
+};
+
+
+class BotProfileManager
+{
+public:
+	CUtlLinkedList<BotProfile> botProfiles;
+	CUtlLinkedList<BotProfile> botProfiles2;
+	CUtlVector<char *> voiceBanks;
+	const char *strings1[100];
+	const char *strings2[100];
+	const char *strings3[100];
+	i32 dword9B8;
+};
+
 
 struct SndOpEventGuid_t;
 struct EmitSound_t;
@@ -38,6 +88,8 @@ typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex 
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilter *filter, trace_t &pm);
 typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
 typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool, bool);
+typedef CCSPlayerController *CreateBot_t(BotProfile *botProfile, i32 teamNumber);
+typedef BotProfile *GetBotProfile_t(BotProfileManager *pThis, u8 difficulty, i32 teamNumber, i32 weaponClass, bool a5);
 
 namespace interfaces
 {
@@ -46,6 +98,7 @@ namespace interfaces
 	inline ISource2Server *pServer = nullptr;
 	inline IGameEventManager2 *pGameEventManager = nullptr;
 	inline IGameEventSystem *pGameEventSystem = nullptr;
+	inline BotProfileManager **ppBotProfileManager = nullptr;
 
 	inline bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	{
@@ -74,10 +127,10 @@ class KZUtils
 public:
 	KZUtils(TracePlayerBBox_t *TracePlayerBBox, InitGameTrace_t *InitGameTrace, InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter,
 			GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, EmitSoundFunc_t *EmitSound,
-			SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn)
+			SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn, CreateBot_t *CreateBot, GetBotProfile_t *GetBotProfile)
 		: TracePlayerBBox(TracePlayerBBox), InitGameTrace(InitGameTrace), InitPlayerMovementTraceFilter(InitPlayerMovementTraceFilter),
 		  GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles), EmitSound(EmitSound), SwitchTeam(SwitchTeam),
-		  SetPawn(SetPawn)
+		  SetPawn(SetPawn), CreateBot(CreateBot), GetBotProfile_(GetBotProfile)
 	{
 	}
 
@@ -89,6 +142,8 @@ public:
 	EmitSoundFunc_t *const EmitSound;
 	SwitchTeam_t *const SwitchTeam;
 	SetPawn_t *const SetPawn;
+	CreateBot_t *const CreateBot;
+	GetBotProfile_t *const GetBotProfile_;
 
 	virtual CGameConfig *GetGameConfig();
 	virtual const CGlobalVars *GetServerGlobals();
@@ -120,7 +175,7 @@ public:
 	{
 		return (GetClientList() && GetController(slot)) ? GetClientList()->Element(slot.Get()) : nullptr;
 	}
-
+	
 	virtual CUtlString GetCurrentMapName(bool *success = NULL);
 	virtual u64 GetCurrentMapWorkshopID();
 	virtual CUtlString GetCurrentMapVPK();
@@ -137,6 +192,8 @@ public:
 
 	// Get the real and connected player count.
 	virtual u32 GetPlayerCount();
+	
+	BotProfile *GetBotProfile(u8 difficulty = 2, i32 teamNumber = CS_TEAM_CT, i32 weaponClass = 2);
 };
 
 extern KZUtils *g_pKZUtils;

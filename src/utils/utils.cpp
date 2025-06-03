@@ -67,6 +67,11 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	{
 		return false;
 	}
+	
+	if (!(interfaces::ppBotProfileManager = (BotProfileManager **)g_pGameConfig->ResolveSignatureFromMov("BotProfileManager")))
+	{
+		return false;
+	}
 
 	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
 	RESOLVE_SIG(g_pGameConfig, "InitGameTrace", InitGameTrace_t, InitGameTrace);
@@ -76,9 +81,11 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound);
 	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam);
 	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn);
+	RESOLVE_SIG(g_pGameConfig, "CreateBot", CreateBot_t, CreateBot);
+	RESOLVE_SIG(g_pGameConfig, "BotProfileManager::GetBotProfile", GetBotProfile_t, GetBotProfile);
 
 	g_pKZUtils = new KZUtils(TracePlayerBBox, InitGameTrace, InitPlayerMovementTraceFilter, GetLegacyGameEventListener, SnapViewAngles, EmitSound,
-							 SwitchTeam, SetPawn);
+							 SwitchTeam, SetPawn, CreateBot, GetBotProfile);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();

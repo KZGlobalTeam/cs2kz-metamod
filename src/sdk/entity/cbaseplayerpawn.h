@@ -17,6 +17,7 @@ public:
 	SCHEMA_FIELD(CCSPlayer_ItemServices *, m_pItemServices)
 	SCHEMA_FIELD(CPlayer_ObserverServices *, m_pObserverServices)
 	SCHEMA_FIELD(CCSPlayer_WaterServices *, m_pWaterServices)
+	SCHEMA_FIELD(QAngle, v_angle)
 
 	void CommitSuicide(bool bExplode, bool bForce)
 	{

@@ -22,6 +22,8 @@
 #include "kz/language/kz_language.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
+#include "kz/recording/kz_recording.h"
+#include "kz/replays/kz_replaysystem.h"
 
 #include "version.h"
 
@@ -57,6 +59,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZLanguageService::Init();
 	KZ::misc::Init();
 	KZQuietService::Init();
+	KZRecordingService::Init();
 	if (!KZ::mode::CheckModeCvars())
 	{
 		return false;
@@ -77,6 +80,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		g_pKZPlayerManager->OnLateLoad();
 		// We need to reset the map for mapping api to properly load in.
 		utils::ResetMap();
+		KZ::replaysystem::Init();
 	}
 	return true;
 }
@@ -93,6 +97,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	g_pPlayerManager->Cleanup();
 	KZDatabaseService::Cleanup();
 	KZGlobalService::Cleanup();
+	KZ::replaysystem::Cleanup();
 	ConVar_Unregister();
 	return true;
 }
