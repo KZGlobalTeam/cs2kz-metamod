@@ -1,0 +1,17 @@
+"Phrases"
+{
+	"Invalid replay course name"
+	{
+		"#format" "courseName:s"
+		"en"      "{darkred}Course name {courseName} doesn't exist!"
+	}
+	"No replay course found"
+	{
+		"en"      "{darkred}No courses found on this map."
+	}
+	"No replay for course"
+	{
+		"#format" "courseName:s"
+		"en"      "{darkred}No replay for {courseName} exists."
+	}
+}
