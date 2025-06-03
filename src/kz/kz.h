@@ -51,6 +51,7 @@ class KZTimerService;
 class KZTipService;
 class KZTriggerService;
 class KZPistolService;
+class KZRecordingService;
 
 class KZPlayer : public MovementPlayer
 {
@@ -164,6 +165,7 @@ public:
 	KZTipService *tipService {};
 	KZTriggerService *triggerService {};
 	KZPistolService *pistolService {};
+	KZRecordingService *recordingService {};
 
 	void DisableTurnbinds();
 	void EnableGodMode();
