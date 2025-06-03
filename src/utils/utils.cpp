@@ -68,6 +68,11 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		return false;
 	}
 
+	if (!(interfaces::ppBotProfileManager = (BotProfileManager **)g_pGameConfig->ResolveSignatureFromMov("BotProfileManager")))
+	{
+		return false;
+	}
+
 	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
 	RESOLVE_SIG(g_pGameConfig, "GetLegacyGameEventListener", GetLegacyGameEventListener_t, GetLegacyGameEventListener);
 	RESOLVE_SIG(g_pGameConfig, "SnapViewAngles", SnapViewAngles_t, SnapViewAngles);
@@ -78,9 +83,11 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "DispatchSpawn", DispatchSpawn_t, DispatchSpawn);
 	RESOLVE_SIG(g_pGameConfig, "RemoveEntity", RemoveEntity_t, RemoveEntity);
 	RESOLVE_SIG(g_pGameConfig, "DebugDrawMesh", DebugDrawMesh_t, DebugDrawMesh);
+	RESOLVE_SIG(g_pGameConfig, "CreateBot", CreateBot_t, CreateBot);
+	RESOLVE_SIG(g_pGameConfig, "BotProfileManager::GetBotProfile", GetBotProfile_t, GetBotProfile);
 
 	g_pKZUtils = new KZUtils(TracePlayerBBox, GetLegacyGameEventListener, SnapViewAngles, EmitSound, SwitchTeam, SetPawn, CreateEntityByName,
-							 DispatchSpawn, RemoveEntity, DebugDrawMesh);
+							 DispatchSpawn, RemoveEntity, DebugDrawMesh, CreateBot, GetBotProfile);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
