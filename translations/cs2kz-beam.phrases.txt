@@ -47,7 +47,7 @@
 
 	"Beam Cvar Hint"
 	{
-		// Warning: The spec_show_xray cvar needs to be set to 1 for beams to be visible.
+		// Note: The spec_show_xray cvar needs to be set to 1 for beams to be visible.
 		"en"		"{blue}Note{grey}: The {default}spec_show_xray{grey} cvar needs to be set to {default}1{grey} for beams to be visible."
 	}
 }
