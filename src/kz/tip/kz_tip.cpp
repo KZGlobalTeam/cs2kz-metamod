@@ -1,8 +1,11 @@
 #include "kz_tip.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
-#include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 
+#include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
+#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
+
+extern IClientCvarValue *g_pClientCvarValue;
 static_global KeyValues *pTipKeyValues;
 static_global CUtlVector<const char *> tipNames;
 static_global f64 tipInterval;
@@ -125,6 +128,34 @@ void KZTipService::OnPlayerJoinTeam(i32 team)
 	if (g_pMultiAddonManager)
 	{
 		this->player->languageService->PrintChat(true, false, "Menu Hint");
+	}
+	this->QueryBeamCvar();
+}
+
+void KZTipService::QueryBeamCvar()
+{
+	CPlayerUserId userID = this->player->GetClient()->GetUserID();
+	if (g_pClientCvarValue)
+	{
+		// clang-format off
+		g_pClientCvarValue->QueryCvarValue(this->player->GetPlayerSlot(), "spec_show_xray",
+			[userID](CPlayerSlot nSlot, ECvarValueStatus eStatus, const char *pszCvarName, const char *pszCvarValue)
+			{
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+				if (!player)
+				{
+					return;
+				}
+				if (eStatus == ECvarValueStatus::ValueIntact && KZ_STREQI(pszCvarName, "0"))
+				{
+					player->languageService->PrintChat(true, false, "Beam Cvar Hint");
+				}
+		});
+		// clang-format on
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Beam Cvar Hint");
 	}
 }
 

@@ -24,6 +24,7 @@ public:
 	static f64 PrintTips();
 	void OnPlayerJoinTeam(i32 team);
 	void OnTimerStartPost();
+	void QueryBeamCvar();
 
 private:
 	bool ShouldPrintTip();
