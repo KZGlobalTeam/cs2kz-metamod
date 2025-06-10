@@ -49,6 +49,7 @@
 	{
 		// Note: The spec_show_xray cvar needs to be set to 1 for beams to be visible.
 		"en"		"{blue}Note{grey}: The {default}spec_show_xray{grey} cvar needs to be set to {default}1{grey} for beams to be visible."
+		"chi"		"{blue}笔记{grey}: 需要将 {default}spec_show_xray{grey} 变量设置为 {default}1{grey} 光束才会可见."
 		"sv"		"{blue}Obs:{grey}: Cvar-värdet {default}spec_show_xray{grey} måste vara inställt på {default}1{grey} för att strålarna ska synas."
 		"ua"		"{blue}Примітка{grey}: Для того, щоб промені були видимими, параметр {default}spec_show_xray{grey} повинен бути встановлений на {default}1{grey}."
 	}
