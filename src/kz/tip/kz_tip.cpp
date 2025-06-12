@@ -146,16 +146,8 @@ void KZTipService::QueryBeamCvar()
 				{
 					return;
 				}
-				if (eStatus == ECvarValueStatus::ValueIntact && KZ_STREQI(pszCvarName, "0"))
-				{
-					player->languageService->PrintChat(true, false, "Beam Cvar Hint");
-				}
 		});
 		// clang-format on
-	}
-	else
-	{
-		this->player->languageService->PrintChat(true, false, "Beam Cvar Hint");
 	}
 }
 

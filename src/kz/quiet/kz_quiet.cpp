@@ -3,10 +3,12 @@
 #include "gameevents.pb.h"
 #include "cs_gameevents.pb.h"
 
+#include "sdk/entity/cparticlesystem.h"
 #include "sdk/services.h"
 
 #include "kz_quiet.h"
 #include "kz/beam/kz_beam.h"
+#include "kz/measure/kz_measure.h"
 #include "kz/option/kz_option.h"
 #include "utils/utils.h"
 
@@ -38,20 +40,27 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		targetPlayer->quietService->UpdateHideState();
 		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPlayerPawn();
 
-		// Only show beam to the owner.
-		EntityInstanceByClassIter_t iterGrenade(NULL, "smokegrenade_projectile");
+		EntityInstanceByClassIter_t iterParticleSystem(NULL, "info_particle_system");
 
-		for (auto grenade = iterGrenade.First(); grenade; grenade = iterGrenade.Next())
+		for (CParticleSystem *particleSystem = static_cast<CParticleSystem *>(iterParticleSystem.First()); particleSystem;
+			 particleSystem = static_cast<CParticleSystem *>(iterParticleSystem.Next()))
 		{
-			if (targetPlayer->beamService->playerBeam.handle == grenade->GetRefEHandle())
+			if (particleSystem->m_iTeamNum() != CUSTOM_PARTICLE_SYSTEM_TEAM)
 			{
+				continue; // Only hide custom particle systems created by the plugin.
+			}
+			if (targetPlayer->beamService->playerBeam == particleSystem->GetRefEHandle()
+				|| targetPlayer->beamService->playerBeamNew == particleSystem->GetRefEHandle())
+			{
+				// Don't hide the beam for the owner.
 				continue;
 			}
-			if (targetPlayer->beamService->instantBeams.Find({grenade->GetRefEHandle()}) != -1)
+			if (targetPlayer->measureService->measurerHandle == particleSystem->GetRefEHandle())
 			{
+				// Don't hide the measure beam for the owner.
 				continue;
 			}
-			pTransmitInfo->m_pTransmitEdict->Clear(grenade->GetEntityIndex().Get());
+			pTransmitInfo->m_pTransmitEdict->Clear(particleSystem->GetEntityIndex().Get());
 		}
 
 		EntityInstanceByClassIter_t iter(NULL, "player");

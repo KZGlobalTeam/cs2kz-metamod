@@ -6,8 +6,8 @@
 
 #include "utils/simplecmds.h"
 #include "utils/ctimer.h"
-
-using namespace KZ::beam;
+#include "sdk/entity/cparticlesystem.h"
+#include "entitykeyvalues.h"
 
 static_global class KZOptionServiceEventListener_Beam : public KZOptionServiceEventListener
 {
@@ -44,13 +44,10 @@ SCMD(kz_beam, SCFL_MISC | SCFL_PREFERENCE)
 		else
 		{
 			player->languageService->PrintChat(true, false, "Beam Command Usage");
+			return MRES_HANDLED;
 		}
 	}
-	else
-	{
-		player->beamService->SetBeamType(newDesiredBeamType);
-	}
-	player->beamService->buffer.Clear();
+	player->beamService->SetBeamType(newDesiredBeamType);
 	switch (player->beamService->desiredBeamType)
 	{
 		case KZBeamService::BEAM_NONE:
@@ -88,150 +85,124 @@ SCMD(kz_beamoffset, SCFL_MISC | SCFL_PREFERENCE)
 	return MRES_HANDLED;
 }
 
-static_function CBaseModelEntity *CreateGrenadeEnt(i32 team)
-{
-	CBaseModelEntity *beamEnt = utils::CreateEntityByName<CBaseModelEntity>("smokegrenade_projectile");
-	beamEnt->m_iTeamNum(team);
-	beamEnt->DispatchSpawn();
-	beamEnt->m_clrRender({0, 0, 0, 0});
-	beamEnt->m_nRenderMode(10);
-	beamEnt->m_nActualMoveType = MOVETYPE_NONE;
-	beamEnt->m_MoveType = MOVETYPE_NONE;
-	beamEnt->m_flGravityScale = 0.0f;
-
-	return beamEnt;
-}
-
 void KZBeamService::Update()
 {
 	KZPlayer *newTarget = this->player->IsAlive() ? this->player : this->player->specService->GetSpectatedPlayer();
 
 	if (this->target != newTarget)
 	{
-		this->buffer.Clear();
+		if (this->playerBeam.Get())
+		{
+			g_pKZUtils->RemoveEntity(this->playerBeam.Get());
+		}
+		if (this->playerBeamNew.Get())
+		{
+			g_pKZUtils->RemoveEntity(this->playerBeamNew.Get());
+		}
+		this->playerBeam = {};
+		this->playerBeamNew = {};
 		this->target = newTarget;
 	}
 
-	if (!this->target || !this->target->GetPlayerPawn())
+	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->GetMoveType() == MOVETYPE_WALK)
+		|| this->player->GetMoveType() == MOVETYPE_LADDER)
 	{
-		this->playerBeam.moving = false;
-		return;
+		this->validBeam = g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime >= 0.04f;
 	}
 
-	/*
-	 For the player beam, create a grenade that is X ticks behind the player's origin.
-
-	 This is done by storing a history of player's position.
-
-	 The grenade position is updated as long as the player is in the air,
-	 except if they enter the air via noclip, in which case the player needs to land before the beam is updated again.
-	*/
-	if (this->target->noclipService->JustNoclipped() && !this->noclipTick)
+	if (this->player->noclipService->JustNoclipped() || this->teleportedThisTick)
 	{
-		this->noclipTick = g_pKZUtils->GetServerGlobals()->tickcount + originHistorySize;
+		this->validBeam = false;
 	}
-
-	if ((this->target->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->target->GetMoveType() == MOVETYPE_WALK)
-		|| this->target->GetMoveType() == MOVETYPE_LADDER)
-	{
-		this->noclipTick = 0;
-		this->canResumeBeam = true;
-	}
-
-	bool shouldStopBeam =
-		this->target->GetPlayerPawn()->m_fFlags & FL_ONGROUND || this->target->GetMoveType() != MOVETYPE_WALK || !this->target->IsAlive();
-	if (shouldStopBeam && this->beamStopTick <= 0)
-	{
-		// Add a few trailing ticks just so the beam doesn't end abruptly right before landing.
-		this->beamStopTick = g_pKZUtils->GetServerGlobals()->tickcount + originHistorySize + 4;
-	}
-
-	if (!shouldStopBeam && this->canResumeBeam)
-	{
-		this->beamStopTick = 0;
-	}
-
-	if ((this->beamStopTick && g_pKZUtils->GetServerGlobals()->tickcount > this->beamStopTick)
-		|| this->noclipTick && g_pKZUtils->GetServerGlobals()->tickcount > this->noclipTick || !this->desiredBeamType)
-	{
-		this->playerBeam.moving = false;
-	}
-	else
-	{
-		this->UpdatePlayerBeam();
-	}
-	BeamOrigin origin;
-	this->target->GetOrigin(&origin);
-	if (this->desiredBeamType == BEAM_GROUND)
-	{
-		origin.z = this->target->takeoffGroundOrigin.z;
-	}
-	origin.forceRecreate = this->teleportedThisTick;
-	this->buffer.Write(origin);
 	this->teleportedThisTick = false;
+	this->UpdatePlayerBeam();
 }
 
 void KZBeamService::UpdatePlayerBeam()
 {
-	if (this->buffer.GetReadAvailable() < originHistorySize)
+	bool shouldDraw = this->desiredBeamType != KZBeamService::BEAM_NONE;
+
+	// clang-format off
+	shouldDraw &= this->target && this->target->GetPlayerPawn() && this->target->GetPlayerPawn()->IsAlive()
+	 	&& this->target->beamService->validBeam
+	 	&& this->target->takeoffTime > 0.0f
+	 	&& (!(this->target->GetPlayerPawn()->m_fFlags & FL_ONGROUND) || g_pKZUtils->GetServerGlobals()->curtime - this->target->landingTime < 0.04f);
+	// clang-format on
+	if (!shouldDraw)
 	{
+		if (this->playerBeam.Get())
+		{
+			g_pKZUtils->RemoveEntity(this->playerBeam.Get());
+		}
+		if (this->playerBeamNew.Get())
+		{
+			g_pKZUtils->RemoveEntity(this->playerBeamNew.Get());
+		}
+		this->playerBeam = {};
+		this->playerBeamNew = {};
 		return;
 	}
-	if (!this->playerBeam.handle.Get())
-	{
-		this->playerBeam.handle = CreateGrenadeEnt(CS_TEAM_CT);
-	}
-	CBaseModelEntity *ent = static_cast<CBaseModelEntity *>(playerBeam.handle.Get());
-	BeamOrigin origin;
-	this->buffer.Peek(&origin, originHistorySize - 1);
-	origin += this->playerBeamOffset;
+	Vector origin = this->target->moveDataPre.m_vecAbsOrigin;
 
-	if (origin == playerBeam.lastOrigin)
+	if (this->desiredBeamType == KZBeamService::BEAM_GROUND)
 	{
-		playerBeam.moving = false;
+		origin.z = this->target->takeoffOrigin.z;
 	}
-	else
+	CParticleSystem *beam = static_cast<CParticleSystem *>(this->playerBeam.Get());
+
+	if (!beam)
 	{
-		if (!playerBeam.moving || origin.forceRecreate)
+		beam = utils::CreateEntityByName<CParticleSystem>("info_particle_system");
+
+		CEntityKeyValues *pKeyValues = new CEntityKeyValues();
+		pKeyValues->SetString("effect_name", "particles/ui/hud/ui_map_def_utility_trail.vpcf");
+		pKeyValues->SetVector("origin", origin);
+		pKeyValues->SetBool("start_active", true);
+
+		beam->DispatchSpawn(pKeyValues);
+		this->playerBeam = beam->GetRefEHandle();
+	}
+	origin += this->playerBeamOffset;
+	beam->Teleport(&origin, nullptr, &vec3_origin);
+
+	// Setup for the next beam because the current one will expire in 4 seconds.
+	if (beam && g_pKZUtils->GetServerGlobals()->curtime - beam->m_flStartTime().GetTime() > 3.0f)
+	{
+		if (!this->playerBeamNew.Get())
 		{
-			g_pKZUtils->RemoveEntity(playerBeam.handle.Get());
-			playerBeam.handle = CreateGrenadeEnt(ent->m_iTeamNum())->GetRefEHandle();
-			playerBeam.moving = true;
+			CParticleSystem *newBeam = utils::CreateEntityByName<CParticleSystem>("info_particle_system");
+
+			CEntityKeyValues *pKeyValues = new CEntityKeyValues();
+			pKeyValues->SetString("effect_name", "particles/ui/hud/ui_map_def_utility_trail.vpcf");
+			pKeyValues->SetVector("origin", origin);
+			pKeyValues->SetBool("start_active", true);
+
+			newBeam->DispatchSpawn(pKeyValues);
+			newBeam->m_iTeamNum(CUSTOM_PARTICLE_SYSTEM_TEAM);
+			this->playerBeamNew = newBeam->GetRefEHandle();
 		}
-		playerBeam.lastOrigin = origin;
-		ent->Teleport(&origin, nullptr, &vec3_origin);
+		else if (g_pKZUtils->GetServerGlobals()->curtime - beam->m_flStartTime().GetTime() > 3.2f)
+		{
+			g_pKZUtils->RemoveEntity(beam);
+			this->playerBeam = this->playerBeamNew;
+			this->playerBeamNew = {};
+		}
 	}
 }
 
 void KZBeamService::Reset()
 {
 	this->playerBeam = {};
+	this->playerBeamNew = {};
 	this->playerBeamOffset = KZBeamService::defaultOffset;
 	this->target = {};
-	this->buffer.Clear();
+	this->validBeam = {};
 	this->desiredBeamType = {};
-	this->beamStopTick = 0;
-	this->canResumeBeam = {};
-	this->noclipTick = 0;
 	this->teleportedThisTick = false;
-	FOR_EACH_VEC(this->instantBeams, i)
-	{
-		KZ::beam::InstantBeam *beam = &this->instantBeams[i];
-		if (beam->handle.Get())
-		{
-			g_pKZUtils->RemoveEntity(beam->handle.Get());
-		}
-	}
-	this->instantBeams.RemoveAll();
 }
 
 void KZBeamService::UpdateBeams()
 {
-	static CConVarRef<float> sv_grenade_trajectory_prac_trailtime("sv_grenade_trajectory_prac_trailtime");
-	if (sv_grenade_trajectory_prac_trailtime.Get() != 4.0f)
-	{
-		sv_grenade_trajectory_prac_trailtime.Set(4.0f);
-	}
 	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
@@ -240,50 +211,5 @@ void KZBeamService::UpdateBeams()
 			continue;
 		}
 		player->beamService->Update();
-		player->beamService->UpdateInstantBeams();
-	}
-}
-
-void KZBeamService::AddInstantBeam(const Vector &start, const Vector &end, u32 lifetime)
-{
-	KZ::beam::InstantBeam *beam = this->instantBeams.AddToTailGetPtr();
-	CBaseModelEntity *ent = CreateGrenadeEnt(CS_TEAM_T);
-	beam->handle = ent->GetRefEHandle();
-	beam->start = start;
-	beam->end = end;
-	beam->tickRemaining = lifetime;
-	beam->totalTicks = lifetime;
-	ent->Teleport(&start, nullptr, &vec3_origin);
-}
-
-void KZBeamService::UpdateInstantBeams()
-{
-	FOR_EACH_VEC(this->instantBeams, i)
-	{
-		KZ::beam::InstantBeam *beam = &this->instantBeams[i];
-		if (!beam->handle.Get())
-		{
-			this->instantBeams.Remove(i);
-			i--;
-			continue;
-		}
-
-		if (beam->tickLingered > beam->maxLingerTicks)
-		{
-			g_pKZUtils->RemoveEntity(beam->handle.Get());
-			this->instantBeams.Remove(i);
-			i--;
-			continue;
-		}
-		else if (beam->tickRemaining >= 0)
-		{
-			Vector current = Lerp((f32)beam->tickRemaining / (f32)beam->totalTicks, beam->end, beam->start);
-			static_cast<CBaseEntity *>(beam->handle.Get())->Teleport(&current, nullptr, &vec3_origin);
-			beam->tickRemaining--;
-		}
-		else
-		{
-			beam->tickLingered++;
-		}
 	}
 }

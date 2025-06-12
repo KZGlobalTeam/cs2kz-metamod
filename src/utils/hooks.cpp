@@ -717,6 +717,8 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 		Warning("[CS2KZ] Precache kz soundevents \n");
 		pResourceManifest->AddResource(KZ_WORKSHOP_ADDON_SNDEVENT_FILE);
 	}
+	pResourceManifest->AddResource("particles/ui/hud/ui_map_def_utility_trail.vpcf");
+	pResourceManifest->AddResource("particles/ui/annotation/ui_annotation_line_segment.vpcf");
 }
 
 static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,
