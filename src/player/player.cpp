@@ -25,5 +25,5 @@ void Player::Kick(const char *internalReason, ENetworkDisconnectionReason reason
 void Player::OnAuthorized()
 {
 	auto steamID = this->GetClient()->GetClientSteamID();
-	this->hasPrime = steamID ? (g_steamAPI.SteamGameServer()->UserHasLicenseForApp(*steamID, 624820) == 0) : false;
+	this->hasPrime = steamID ? (g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(*steamID, 624820) == 0) : false;
 }
