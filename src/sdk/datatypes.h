@@ -39,8 +39,7 @@ enum MsgDest : int32_t
 	HUD_PRINTALERT = 6
 };
 
-
-enum InputBitMask_t : int64
+enum InputBitMask_t : uint64
 {
 	IN_NONE = 0x0,
 	IN_ALL = 0xffffffffffffffff,
