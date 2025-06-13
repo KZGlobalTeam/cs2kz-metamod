@@ -26,12 +26,14 @@ public:
 	f32 startPosSetTime {};
 	MeasurePos startPos {};
 	f32 lastMeasureTime {};
+	CEntityHandle measurerHandle {};
 
 	virtual void Reset() override
 	{
 		startPosSetTime = {};
 		startPos.Invalidate();
 		lastMeasureTime = {};
+		measurerHandle = {};
 	}
 
 	void TryMeasure();
@@ -45,6 +47,4 @@ public:
 
 	// Calculates the minimum equivalent jumpstat distance to go between the two points
 	static f32 GetEffectiveDistance(Vector pointA, Vector pointB);
-
-	static void CalculateAdjustedBeamOrigins(const Vector &start, const Vector &end, Vector &adjustedStart, Vector &adjustedEnd);
 };

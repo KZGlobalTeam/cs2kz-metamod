@@ -18,7 +18,7 @@ struct TransmitInfo
 	CBitVec<16384> *m_pTransmitEdict;
 };
 
-enum ObserverMode_t : uint8_t
+enum ObserverMode_t : uint32
 {
 	OBS_MODE_NONE = 0x0,
 	OBS_MODE_FIXED = 0x1,
@@ -39,7 +39,7 @@ enum MsgDest : int32_t
 	HUD_PRINTALERT = 6
 };
 
-enum InputBitMask_t : uint64_t
+enum InputBitMask_t : uint64
 {
 	IN_NONE = 0x0,
 	IN_ALL = 0xffffffffffffffff,

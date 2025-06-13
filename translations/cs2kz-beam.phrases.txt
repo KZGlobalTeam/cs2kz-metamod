@@ -45,11 +45,4 @@
 		"ua"		"{grey}Поточне зміщення променя: {x:.2f} {y:.2f} {z:.2f}"
 	}
 
-	"Beam Cvar Hint"
-	{
-		// Note: The spec_show_xray cvar needs to be set to 1 for beams to be visible.
-		"en"		"{blue}Note{grey}: The {default}spec_show_xray{grey} cvar needs to be set to {default}1{grey} for beams to be visible."
-		"sv"		"{blue}Obs:{grey}: Cvar-värdet {default}spec_show_xray{grey} måste vara inställt på {default}1{grey} för att strålarna ska synas."
-		"ua"		"{blue}Примітка{grey}: Для того, щоб промені були видимими, параметр {default}spec_show_xray{grey} повинен бути встановлений на {default}1{grey}."
-	}
 }

@@ -236,6 +236,11 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 		this->player->SetVelocity(finalVelocity);
 	}
 
+	// We need to call teleport hook because we don't use teleport function directly.
+	if (this->player->processingMovement && this->player->currentMoveData)
+	{
+		this->player->OnTeleport(&finalOrigin, nullptr, nullptr);
+	}
 	this->player->SetOrigin(finalOrigin);
 
 	return true;

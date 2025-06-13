@@ -3,13 +3,32 @@
 #include "kz/beam/kz_beam.h"
 #include "kz/language/kz_language.h"
 
-#define KZ_MEASURE_TIMEOUT       60.0f
-#define KZ_MEASURE_MAX_DISTANCE  32768.0f
-#define KZ_MEASURE_COOLDOWN      0.5f
-#define KZ_MEASURE_BEAM_LIFETIME 32
-#define KZ_MEASURE_MIN_DIST      0.01f
-#define KZ_MEASURE_SOUND_START   "UI.PlayerPing"
-#define KZ_MEASURE_SOUND_END     "UI.PlayerPingUrgent"
+#include "sdk/entity/cparticlesystem.h"
+#include "entitykeyvalues.h"
+
+#define KZ_MEASURE_TIMEOUT      60.0f
+#define KZ_MEASURE_DURATION     4.0f
+#define KZ_MEASURE_MAX_DISTANCE 32768.0f
+#define KZ_MEASURE_COOLDOWN     0.5f
+#define KZ_MEASURE_MIN_DIST     0.01f
+#define KZ_MEASURE_SOUND_START  "UI.PlayerPing"
+#define KZ_MEASURE_SOUND_END    "UI.PlayerPingUrgent"
+
+static_function CEntityHandle CreateMeasureBeam(const Vector &start, const Vector &end)
+{
+	CParticleSystem *measurer = utils::CreateEntityByName<CParticleSystem>("info_particle_system");
+	CEntityKeyValues *pKeyValues = new CEntityKeyValues();
+	pKeyValues->SetString("effect_name", "particles/ui/annotation/ui_annotation_line_segment.vpcf");
+	pKeyValues->SetVector("origin", start);
+	pKeyValues->SetInt("tint_cp", 16);
+	pKeyValues->SetColor("tint_cp_color", Color(255, 255, 255, 255));
+	pKeyValues->SetInt("data_cp", 1);
+	pKeyValues->SetVector("data_cp_value", end);
+	pKeyValues->SetBool("start_active", true);
+	measurer->m_iTeamNum(CUSTOM_PARTICLE_SYSTEM_TEAM);
+	measurer->DispatchSpawn(pKeyValues);
+	return measurer->GetRefEHandle();
+}
 
 void KZMeasureService::TryMeasure()
 {
@@ -28,15 +47,22 @@ void KZMeasureService::TryMeasure()
 
 void KZMeasureService::StartMeasure()
 {
-	player->measureService->startPos = player->measureService->GetLookAtPos();
-	player->measureService->startPosSetTime = g_pKZUtils->GetServerGlobals()->curtime;
-	if (!player->measureService->startPos.IsValid())
+	this->player->measureService->startPos = this->player->measureService->GetLookAtPos();
+	this->player->measureService->startPosSetTime = g_pKZUtils->GetServerGlobals()->curtime;
+	if (!this->player->measureService->startPos.IsValid())
 	{
-		player->languageService->PrintChat(true, false, "Measure - Non Solid Position");
+		this->player->languageService->PrintChat(true, false, "Measure - Non Solid Position");
 		return;
 	}
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_MEASURE_SOUND_START);
-	player->languageService->PrintChat(true, false, "Measure - Start Position Set");
+	this->player->languageService->PrintChat(true, false, "Measure - Start Position Set");
+	if (this->measurerHandle.Get())
+	{
+		g_pKZUtils->RemoveEntity(this->measurerHandle.Get());
+	}
+
+	this->measurerHandle = CreateMeasureBeam(this->player->measureService->startPos.origin + this->player->measureService->startPos.normal * 0.25f,
+											 this->player->measureService->startPos.origin + this->player->measureService->startPos.normal * 0.25f);
 }
 
 bool KZMeasureService::EndMeasure(f32 minDistThreshold)
@@ -71,9 +97,13 @@ bool KZMeasureService::EndMeasure(f32 minDistThreshold)
 	this->player->languageService->PrintChat(true, false, "Measure - Result", horizontalDist, effectiveDist, verticalDist);
 	this->lastMeasureTime = g_pKZUtils->GetServerGlobals()->curtime;
 
-	Vector beamStart, beamEnd;
-	KZMeasureService::CalculateAdjustedBeamOrigins(this->startPos.origin, endPos.origin, beamStart, beamEnd);
-	this->player->beamService->AddInstantBeam(beamStart, beamEnd, KZ_MEASURE_BEAM_LIFETIME);
+	if (this->measurerHandle.Get())
+	{
+		g_pKZUtils->RemoveEntity(this->measurerHandle.Get());
+	}
+
+	this->measurerHandle = CreateMeasureBeam(this->player->measureService->startPos.origin + this->player->measureService->startPos.normal * 0.25f,
+											 endPos.origin + endPos.normal * 0.25f);
 
 	this->startPos.Invalidate();
 	return true;
@@ -104,9 +134,7 @@ void KZMeasureService::MeasureBlock()
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_MEASURE_SOUND_END);
 	this->player->languageService->PrintChat(true, false, "Measure - Block Result", block);
 
-	Vector beamStart, beamEnd;
-	KZMeasureService::CalculateAdjustedBeamOrigins(start.origin, end.origin, beamStart, beamEnd);
-	this->player->beamService->AddInstantBeam(beamStart, beamEnd, KZ_MEASURE_BEAM_LIFETIME);
+	this->measurerHandle = CreateMeasureBeam(start.origin + start.normal * 0.25f, end.origin + end.normal * 0.25f);
 }
 
 KZMeasureService::MeasurePos KZMeasureService::GetLookAtPos(const Vector *overrideOrigin, const QAngle *overrideAngles)
@@ -150,6 +178,20 @@ void KZMeasureService::OnPhysicsSimulatePost()
 	{
 		this->startPos.Invalidate();
 		this->player->languageService->PrintChat(true, false, "Measure - Start Position Timeout");
+		if (this->measurerHandle.Get())
+		{
+			g_pKZUtils->RemoveEntity(this->measurerHandle.Get());
+			this->measurerHandle = {};
+		}
+	}
+	if (this->measurerHandle.Get())
+	{
+		CParticleSystem *measurer = static_cast<CParticleSystem *>(this->measurerHandle.Get());
+		if (measurer && g_pKZUtils->GetServerGlobals()->curtime - measurer->m_flStartTime().GetTime() > KZ_MEASURE_DURATION)
+		{
+			g_pKZUtils->RemoveEntity(this->measurerHandle.Get());
+			this->measurerHandle = {};
+		}
 	}
 }
 
@@ -170,27 +212,6 @@ f32 KZMeasureService::GetEffectiveDistance(Vector pointA, Vector pointB)
 	}
 
 	return sqrt(pow(Ax - Bx, 2.0f) + pow(Ay - By, 2.0f)) + 32.0f;
-}
-
-void KZMeasureService::CalculateAdjustedBeamOrigins(const Vector &start, const Vector &end, Vector &adjustedStart, Vector &adjustedEnd)
-{
-	// The beam starts ~21% into the distance and ends 96.875% in (if it's drawn over 32 ticks),
-	// so we need to offset the start and end position accordingly:
-	/*
-		old_start = new_start + (new_end - new_start) * 0.21
-		old_end = new_start + (new_end - new_start) * 0.96875
-		old_start = new_start * 0.9 + new_end * 0.21
-		old_end = new_end * 0.96875 + new_start * 0.03125
-
-		new_start = (old_start - new_end * 0.21) / 0.79										(1)
-		old_end = new_end * 0.96875 + (old_start - new_end * 0.21) / 0.79 * 0.03125
-		old_end = new_end * (0.96875 - 0.03125/0.9*0.21) + old_start * 0.03125/0.9
-
-		new_end = (old_end - old_start * 0.03125 / 0.79) / (0.96875 - 0.03125 / 0.79 * 0.21) (2)
-	*/
-
-	adjustedEnd = (end - start * 0.03125 / 0.79) / (0.96875 - 0.03125 / 0.79 * 0.21);
-	adjustedStart = (start - adjustedEnd * 0.21) / 0.79;
 }
 
 SCMD(kz_measure, SCFL_MEASURE)
