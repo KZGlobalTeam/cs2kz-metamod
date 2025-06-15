@@ -38,11 +38,11 @@
 	"Current Beam Offset"
 	{
 		// Current beam offset: 0.00 0.00 1.75
-		"#format"	"x:f,y:f,z:f"
-		"en"		"{grey}Current beam offset: {x:.2f} {y:.2f} {x:.2f}"
-		"chi"		"{grey}当前光束偏移：{x:.2f} {y:.2f} {z:.2f}"
-		"sv"		"{grey}Nuvarande stråloffset: {x:.2f} {y:.2f} {x:.2f}"
-		"ua"		"{grey}Поточне зміщення променя: {x:.2f} {y:.2f} {z:.2f}"
+		"#format"	"x:.2f,y:.2f,z:.2f"
+		"en"		"{grey}Current beam offset: {default}{x} {y} {z}"
+		"chi"		"{grey}当前光束偏移：{default}{x} {y} {z}"
+		"sv"		"{grey}Nuvarande stråloffset: {default}{x} {y} {x}"
+		"ua"		"{grey}Поточне зміщення променя: {default}{x} {y} {z}"
 	}
 
 }

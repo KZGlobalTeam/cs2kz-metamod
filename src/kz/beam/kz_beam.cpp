@@ -78,10 +78,13 @@ SCMD(kz_beamoffset, SCFL_MISC | SCFL_PREFERENCE)
 		player->languageService->PrintChat(true, false, "Beam Offset Command Usage");
 		player->languageService->PrintChat(true, false, "Current Beam Offset", player->beamService->playerBeamOffset.x,
 										   player->beamService->playerBeamOffset.y, player->beamService->playerBeamOffset.z);
+		return MRES_HANDLED;
 	}
 	player->beamService->playerBeamOffset = Vector(atof(args->Arg(1)), atof(args->Arg(2)), atof(args->Arg(3)));
 
 	player->optionService->SetPreferenceVector("beamOffset", player->beamService->playerBeamOffset);
+	player->languageService->PrintChat(true, false, "Current Beam Offset", player->beamService->playerBeamOffset.x,
+									   player->beamService->playerBeamOffset.y, player->beamService->playerBeamOffset.z);
 	return MRES_HANDLED;
 }
 
