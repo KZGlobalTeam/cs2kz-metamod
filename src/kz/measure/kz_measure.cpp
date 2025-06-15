@@ -134,6 +134,10 @@ void KZMeasureService::MeasureBlock()
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_MEASURE_SOUND_END);
 	this->player->languageService->PrintChat(true, false, "Measure - Block Result", block);
 
+	if (this->measurerHandle.Get())
+	{
+		g_pKZUtils->RemoveEntity(this->measurerHandle.Get());
+	}
 	this->measurerHandle = CreateMeasureBeam(start.origin + start.normal * 0.25f, end.origin + end.normal * 0.25f);
 }
 
