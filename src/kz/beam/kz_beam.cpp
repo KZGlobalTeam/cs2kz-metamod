@@ -107,15 +107,24 @@ void KZBeamService::Update()
 		this->target = newTarget;
 	}
 
-	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->GetMoveType() == MOVETYPE_WALK)
-		|| this->player->GetMoveType() == MOVETYPE_LADDER)
-	{
-		this->validBeam = g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime >= 0.04f;
-	}
-
-	if (this->player->noclipService->JustNoclipped() || this->teleportedThisTick)
+	// It is possible that the player is in game has no player pawn on game frame loop.
+	// This is probably the case for CSTV bots.
+	if (!this->player->GetPlayerPawn())
 	{
 		this->validBeam = false;
+	}
+	else
+	{
+		if ((this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND && this->player->GetMoveType() == MOVETYPE_WALK)
+			|| this->player->GetMoveType() == MOVETYPE_LADDER)
+		{
+			this->validBeam = g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime >= 0.04f;
+		}
+
+		if (this->player->noclipService->JustNoclipped() || this->teleportedThisTick)
+		{
+			this->validBeam = false;
+		}
 	}
 	this->teleportedThisTick = false;
 	this->UpdatePlayerBeam();
@@ -129,7 +138,7 @@ void KZBeamService::UpdatePlayerBeam()
 	shouldDraw &= this->target && this->target->GetPlayerPawn() && this->target->GetPlayerPawn()->IsAlive()
 	 	&& this->target->beamService->validBeam
 	 	&& this->target->takeoffTime > 0.0f
-	 	&& (!(this->target->GetPlayerPawn()->m_fFlags & FL_ONGROUND) || g_pKZUtils->GetServerGlobals()->curtime - this->target->landingTime < 0.04f);
+	 	&& (!(this->target->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) || g_pKZUtils->GetServerGlobals()->curtime - this->target->landingTime < 0.04f);
 	// clang-format on
 	if (!shouldDraw)
 	{
