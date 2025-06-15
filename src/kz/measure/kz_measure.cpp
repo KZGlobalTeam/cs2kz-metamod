@@ -91,6 +91,10 @@ bool KZMeasureService::EndMeasure(f32 minDistThreshold)
 	if (minDistThreshold >= 0.0f && horizontalDist <= minDistThreshold && verticalDist <= minDistThreshold)
 	{
 		this->startPos.Invalidate();
+		if (this->measurerHandle.Get())
+		{
+			g_pKZUtils->RemoveEntity(this->measurerHandle.Get());
+		}
 		return false;
 	}
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_MEASURE_SOUND_END);
