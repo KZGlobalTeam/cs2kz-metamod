@@ -257,5 +257,6 @@ namespace KZ
 		void InitTimeLimit();
 		void EnforceTimeLimit();
 		void UnrestrictTimeLimit();
+		void OnPhysicsGameSystemFrameBoundary(void *pThis);
 	} // namespace misc
 }; // namespace KZ

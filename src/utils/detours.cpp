@@ -7,6 +7,7 @@
 #include "movement/movement.h"
 #include "fmtstr.h"
 #include "tier0/memdbgon.h"
+#include "sdk/physicsgamesystem.h"
 
 CUtlVector<CDetourBase *> g_vecDetours;
 extern CGameConfig *g_pGameConfig;
@@ -14,6 +15,7 @@ extern CGameConfig *g_pGameConfig;
 DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket);
 // Unused
 DECLARE_DETOUR(TraceShape, Detour_TraceShape);
+DECLARE_DETOUR(CPhysicsGameSystemFrameBoundary, Detour_CPhysicsGameSystemFrameBoundary);
 
 DECLARE_MOVEMENT_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
@@ -46,6 +48,7 @@ void InitDetours()
 {
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(g_pGameConfig, RecvServerBrowserPacket);
+	INIT_DETOUR(g_pGameConfig, CPhysicsGameSystemFrameBoundary);
 #ifdef DEBUG_TPM
 	INIT_DETOUR(g_pGameConfig, TraceShape);
 	TraceShape.DisableDetour();
@@ -132,4 +135,10 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 	}
 #endif
 	return ret;
+}
+
+void Detour_CPhysicsGameSystemFrameBoundary(void *pThis)
+{
+	CPhysicsGameSystemFrameBoundary(pThis);
+	KZ::misc::OnPhysicsGameSystemFrameBoundary(pThis);
 }

@@ -21,6 +21,7 @@
 #include "kz/global/kz_global.h"
 
 #include "sdk/gamerules.h"
+#include "sdk/physicsgamesystem.h"
 
 #define RESTART_CHECK_INTERVAL 1800.0f
 static_global CTimer<> *mapRestartTimer;
@@ -497,5 +498,102 @@ void KZ::misc::OnRoundStart()
 		// Make sure that the round time is synchronized with the global time.
 		gameRules->m_fRoundStartTime().SetTime(0.0f);
 		gameRules->m_flGameStartTime().SetTime(0.0f);
+	}
+}
+
+static_global bool shouldDrawPlayerClips = false;
+static_global bool playerClipsDrawn = false;
+
+CON_COMMAND_F(kz_toggleplayerclips, "Draw/hide player clips (listen server only)", FCVAR_NONE)
+{
+	shouldDrawPlayerClips = true;
+	if (playerClipsDrawn)
+	{
+		g_pKZUtils->ClearOverlays();
+		shouldDrawPlayerClips = false;
+		playerClipsDrawn = false;
+	}
+}
+
+// clang-format off
+CConVar<Color> kz_playerclip_color("kz_playerclip_color", FCVAR_NONE, "Color of player clips (rgba) drawn by kz_toggleplayerclips.", Color(0x80, 0, 0x80, 0xFF),
+	[](CConVar<Color> *ref, CSplitScreenSlot nSlot, const Color *pNewValue, const Color *pOldValue)
+	{
+		if (shouldDrawPlayerClips)
+		{
+			g_pKZUtils->ClearOverlays();
+			playerClipsDrawn = false;
+		}
+	}
+);
+// clang-format on
+
+void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
+{
+	static_persist CPhysicsGameSystem *physicsGameSystem = nullptr;
+	// Map probably reloaded, mark clips as not drawn.
+	if (pThis != physicsGameSystem)
+	{
+		physicsGameSystem = (CPhysicsGameSystem *)pThis;
+		g_pKZUtils->ClearOverlays();
+		shouldDrawPlayerClips = false;
+		playerClipsDrawn = false;
+	}
+	if (!shouldDrawPlayerClips || playerClipsDrawn)
+	{
+		return;
+	}
+	FOR_EACH_MAP(physicsGameSystem->m_PhysicsSpawnGroups, i)
+	{
+		CPhysicsGameSystem::PhysicsSpawnGroups_t &group = physicsGameSystem->m_PhysicsSpawnGroups[i];
+		CPhysAggregateInstance *instance = group.m_pLevelAggregateInstance;
+		auto *aggregateData = instance ? instance->aggregateData : nullptr;
+		if (!aggregateData)
+		{
+			META_CONPRINTF("PhysicsSpawnGroup %i: No aggregate data found for instance %p\n", i, instance);
+			continue;
+		}
+		playerClipsDrawn = true;
+		FOR_EACH_VEC(aggregateData->m_Parts, i)
+		{
+			const VPhysXBodyPart_t *part = aggregateData->m_Parts[i];
+			if (!part)
+			{
+				continue;
+			}
+			FOR_EACH_VEC(part->m_rnShape.m_hulls, j)
+			{
+				const RnHullDesc_t &hull = part->m_rnShape.m_hulls[j];
+				const RnCollisionAttr_t &collisionAttr = aggregateData->m_CollisionAttributes[hull.m_nCollisionAttributeIndex];
+				if (collisionAttr.HasInteractsAsLayer(LAYER_INDEX_CONTENTS_PLAYER_CLIP))
+				{
+					CTransform transform;
+					transform.SetToIdentity();
+					Ray_t ray;
+					ray.Init(hull.m_Hull.m_Bounds.m_vMinBounds, hull.m_Hull.m_Bounds.m_vMaxBounds, hull.m_Hull.m_VertexPositions.Base(),
+							 hull.m_Hull.m_Vertices.Count());
+					g_pKZUtils->DebugDrawMesh(transform, ray, kz_playerclip_color.Get().r(), kz_playerclip_color.Get().g(),
+											  kz_playerclip_color.Get().b(), kz_playerclip_color.Get().a(), true, false, -1.0f);
+				}
+			}
+			FOR_EACH_VEC(part->m_rnShape.m_meshes, j)
+			{
+				const RnMeshDesc_t &mesh = part->m_rnShape.m_meshes[j];
+				const RnCollisionAttr_t &collisionAttr = aggregateData->m_CollisionAttributes[mesh.m_nCollisionAttributeIndex];
+				if (collisionAttr.HasInteractsAsLayer(LAYER_INDEX_CONTENTS_PLAYER_CLIP))
+				{
+					CTransform transform;
+					transform.SetToIdentity();
+					FOR_EACH_VEC(mesh.m_Mesh.m_Triangles, k)
+					{
+						const RnTriangle_t &triangle = mesh.m_Mesh.m_Triangles[k];
+						g_pKZUtils->AddTriangleOverlay(mesh.m_Mesh.m_Vertices[triangle.m_nIndex[0]], mesh.m_Mesh.m_Vertices[triangle.m_nIndex[1]],
+													   mesh.m_Mesh.m_Vertices[triangle.m_nIndex[2]], kz_playerclip_color.Get().r(),
+													   kz_playerclip_color.Get().g(), kz_playerclip_color.Get().b(), kz_playerclip_color.Get().a(),
+													   false, -1.0f);
+					}
+				}
+			}
+		}
 	}
 }
