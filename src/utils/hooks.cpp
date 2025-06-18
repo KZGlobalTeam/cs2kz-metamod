@@ -671,15 +671,19 @@ static_function bool Hook_ActivateServer()
 	}
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
 	u64 size = g_pKZUtils->GetCurrentMapSize();
-	char md5[33];
-	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
-	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu, md5 %s\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size, md5);
+
+	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size);
 
 	KZJumpstatsService::OnServerActivate();
 	RecordAnnounce::Clear();
 	KZ::misc::OnServerActivate();
 	KZDatabaseService::SetupMap();
 	KZGlobalService::OnActivateServer();
+
+	char md5[33];
+	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
+	META_CONPRINTF("[KZ] Map file md5: %s\n", md5);
+
 	RETURN_META_VALUE(MRES_IGNORED, 1);
 }
 

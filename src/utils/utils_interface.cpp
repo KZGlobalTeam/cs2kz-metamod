@@ -198,11 +198,23 @@ CUtlString KZUtils::GetCurrentMapDirectory()
 
 u64 KZUtils::GetCurrentMapSize()
 {
-	if (this->GetCurrentMapVPK())
+	CUtlString currentMap = this->GetCurrentMapVPK();
+	u32 size = 0;
+	if (g_pFullFileSystem->FileExists(currentMap.Get()))
 	{
-		return g_pFullFileSystem->Size(this->GetCurrentMapVPK(), "GAME");
+		size = g_pFullFileSystem->Size(currentMap.Get());
 	}
-	return 0;
+	else
+	{
+		CUtlString newFileName = currentMap.StripExtension() + "_dir.vpk";
+		size = g_pFullFileSystem->Size(newFileName.Get());
+		for (u32 i = 0; g_pFullFileSystem->FileExists(newFileName.Get()); i++)
+		{
+			newFileName.Format("%s_%03i.vpk", currentMap.StripExtension().Get(), i);
+			size += g_pFullFileSystem->Size(newFileName.Get());
+		}
+	}
+	return size;
 }
 
 bool KZUtils::UpdateCurrentMapMD5()
@@ -228,45 +240,107 @@ bool KZUtils::GetFileMD5(const char *filePath, char *buffer, i32 size)
 {
 	u8 chunk[8192];
 	FileHandle_t file = g_pFullFileSystem->OpenEx(filePath, "rb");
-	i64 sizeRemaining = g_pFullFileSystem->Size(file);
-	i32 bytesRead;
-	MD5Context_t ctx;
-	unsigned char digest[MD5_DIGEST_LENGTH];
-	memset(&ctx, 0, sizeof(MD5Context_t));
-
-	MD5Init(&ctx);
-	while (sizeRemaining > 0)
+	if (file)
 	{
-		bytesRead = g_pFullFileSystem->Read(chunk, sizeRemaining > sizeof(chunk) ? sizeof(chunk) : sizeRemaining, file);
-		sizeRemaining -= bytesRead;
-		if (bytesRead > 0)
+		i64 sizeRemaining = g_pFullFileSystem->Size(file);
+		i32 bytesRead;
+		MD5Context_t ctx;
+		unsigned char digest[MD5_DIGEST_LENGTH];
+		memset(&ctx, 0, sizeof(MD5Context_t));
+
+		MD5Init(&ctx);
+		while (sizeRemaining > 0)
 		{
-			MD5Update(&ctx, chunk, bytesRead);
+			bytesRead = g_pFullFileSystem->Read(chunk, sizeRemaining > sizeof(chunk) ? sizeof(chunk) : sizeRemaining, file);
+			sizeRemaining -= bytesRead;
+			if (bytesRead > 0)
+			{
+				MD5Update(&ctx, chunk, bytesRead);
+			}
+			if (g_pFullFileSystem->EndOfFile(file))
+			{
+				g_pFullFileSystem->Close(file);
+				file = NULL;
+				break;
+			}
+			else if (!g_pFullFileSystem->IsOk(file))
+			{
+				if (file)
+				{
+					g_pFullFileSystem->Close(file);
+				}
+				return false;
+			}
 		}
-		if (g_pFullFileSystem->EndOfFile(file))
+
+		MD5Final(digest, &ctx);
+		char *data = MD5_Print(digest, sizeof(digest));
+		V_strncpy(buffer, data, size);
+		if (file)
 		{
 			g_pFullFileSystem->Close(file);
-			file = NULL;
-			break;
 		}
-		else if (!g_pFullFileSystem->IsOk(file))
+		return true;
+	}
+
+	// Try and get the MD5 for multifile vpks.
+	if (V_strlen(filePath) >= 4 && KZ_STREQI(filePath + V_strlen(filePath) - 4, ".vpk"))
+	{
+		i32 index = 0;
+		CUtlString originalPath = filePath;
+		CUtlString newFile = originalPath.StripExtension() + "_dir.vpk";
+		file = g_pFullFileSystem->OpenEx(newFile.Get(), "rb");
+		if (file)
 		{
+			i64 sizeRemaining = g_pFullFileSystem->Size(file);
+			i32 bytesRead;
+			MD5Context_t ctx;
+			unsigned char digest[MD5_DIGEST_LENGTH];
+			memset(&ctx, 0, sizeof(MD5Context_t));
+
+			MD5Init(&ctx);
+			while (sizeRemaining > 0)
+			{
+				bytesRead = g_pFullFileSystem->Read(chunk, sizeRemaining > sizeof(chunk) ? sizeof(chunk) : sizeRemaining, file);
+				sizeRemaining -= bytesRead;
+				if (bytesRead > 0)
+				{
+					MD5Update(&ctx, chunk, bytesRead);
+				}
+				if (g_pFullFileSystem->EndOfFile(file))
+				{
+					g_pFullFileSystem->Close(file);
+					newFile.Format("%s_%03i.vpk", originalPath.StripExtension(), index);
+					file = g_pFullFileSystem->OpenEx(newFile.Get(), "rb");
+					if (!file)
+					{
+						break;
+					}
+					sizeRemaining = g_pFullFileSystem->Size(file);
+					index++;
+				}
+				else if (!g_pFullFileSystem->IsOk(file))
+				{
+					if (file)
+					{
+						g_pFullFileSystem->Close(file);
+					}
+					return false;
+				}
+			}
+
+			MD5Final(digest, &ctx);
+			char *data = MD5_Print(digest, sizeof(digest));
+			V_strncpy(buffer, data, size);
 			if (file)
 			{
 				g_pFullFileSystem->Close(file);
 			}
-			return false;
+			return true;
 		}
+		return false;
 	}
-
-	MD5Final(digest, &ctx);
-	char *data = MD5_Print(digest, sizeof(digest));
-	V_strncpy(buffer, data, size);
-	if (file)
-	{
-		g_pFullFileSystem->Close(file);
-	}
-	return true;
+	return false;
 }
 
 CCSGameRules *KZUtils::GetGameRules()
