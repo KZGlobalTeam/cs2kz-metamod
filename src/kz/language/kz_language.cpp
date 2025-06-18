@@ -101,7 +101,7 @@ void KZLanguageService::OnPlayerPreferencesLoaded()
 	bool shouldReconnect = !(this->player->checkpointService->GetCheckpointCount() || this->player->timerService->GetTimerRunning());
 	if (language[0])
 	{
-		KZLanguageService::UpdateLanguage(this->player->GetSteamId64(), language, LanguageInfo::CacheLevel::CACHE_PREF, shouldReconnect);
+		KZLanguageService::UpdateLanguage(this->player->GetSteamId64(false), language, LanguageInfo::CacheLevel::CACHE_PREF, shouldReconnect);
 		if (!shouldReconnect)
 		{
 			this->player->languageService->PrintChat(false, false, "Language Change - Manual Menu Change Required");
@@ -111,7 +111,7 @@ void KZLanguageService::OnPlayerPreferencesLoaded()
 
 const char *KZLanguageService::GetLanguage()
 {
-	return KZLanguageService::clientLanguageInfos[this->player->GetSteamId64()].language;
+	return KZLanguageService::clientLanguageInfos[this->player->GetSteamId64(false)].language;
 }
 
 const char *KZLanguageService::GetTranslatedFormat(const char *language, const char *phrase)
@@ -161,8 +161,8 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 			g_pMultiAddonManager->AddClientAddon(addon, xuid, true);
 		}
 		V_strncpy(langInfo.lastAddon, addon, sizeof(langInfo.lastAddon));
-		V_strncpy(langInfo.language, langKey, sizeof(langInfo.language));
 	}
+	V_strncpy(langInfo.language, langKey, sizeof(langInfo.language));
 }
 
 void KZLanguageService::OnPlayerConnect(u64 steamID64)
@@ -202,7 +202,7 @@ SCMD(kz_language, SCFL_PREFERENCE)
 	V_snprintf(language, sizeof(language), "%s", args->Arg(1));
 	V_strlower(language);
 	bool shouldReconnect = !(player->checkpointService->GetCheckpointCount() || player->timerService->GetTimerRunning());
-	KZLanguageService::UpdateLanguage(player->GetSteamId64(), language, KZLanguageService::LanguageInfo::CacheLevel::CACHE_OVERRIDE, true);
+	KZLanguageService::UpdateLanguage(player->GetSteamId64(false), language, KZLanguageService::LanguageInfo::CacheLevel::CACHE_OVERRIDE, true);
 	player->optionService->SetPreferenceStr("preferredLanguage", language);
 	if (!shouldReconnect)
 	{

@@ -92,7 +92,7 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 
 void KZOptionService::SaveLocalPrefs()
 {
-	if (this->player->IsFakeClient())
+	if (this->player->IsFakeClient() || !this->player->IsAuthenticated())
 	{
 		return;
 	}
