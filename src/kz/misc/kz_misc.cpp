@@ -1,4 +1,4 @@
-#include "common.h"
+#include "src/common.h"
 #include "utils/utils.h"
 #include "utils/ctimer.h"
 #include "kz/kz.h"
@@ -10,6 +10,7 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/language/kz_language.h"
 #include "kz/style/kz_style.h"
+#include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/noclip/kz_noclip.h"
 #include "kz/hud/kz_hud.h"
 #include "kz/option/kz_option.h"
@@ -22,6 +23,8 @@
 
 #include "sdk/gamerules.h"
 #include "sdk/physicsgamesystem.h"
+#include "sdk/entity/cbasetrigger.h"
+#include "sdk/cskeletoninstance.h"
 
 #define RESTART_CHECK_INTERVAL 1800.0f
 static_global CTimer<> *mapRestartTimer;
@@ -326,18 +329,6 @@ void KZ::misc::Init()
 	}
 }
 
-void KZ::misc::OnServerActivate()
-{
-	KZ::misc::EnforceTimeLimit();
-	g_pKZUtils->UpdateCurrentMapMD5();
-
-	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
-	KZ::misc::InitTimeLimit();
-
-	// Restart round to ensure settings (e.g. mp_weapons_allow_map_placed) are applied
-	interfaces::pEngine->ServerCommand("mp_restartgame 1");
-}
-
 // TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
 
 void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
@@ -501,51 +492,68 @@ void KZ::misc::OnRoundStart()
 	}
 }
 
-static_global bool shouldDrawPlayerClips = false;
-static_global bool playerClipsDrawn = false;
+static_global bool clipsDrawn = false;
+static_global bool triggersDrawn = false;
 
-CON_COMMAND_F(kz_toggleplayerclips, "Draw/hide player clips (listen server only)", FCVAR_NONE)
+static_function void ResetOverlays()
 {
-	shouldDrawPlayerClips = true;
-	if (playerClipsDrawn)
-	{
-		g_pKZUtils->ClearOverlays();
-		shouldDrawPlayerClips = false;
-		playerClipsDrawn = false;
-	}
+	g_pKZUtils->ClearOverlays();
+	clipsDrawn = false;
+	triggersDrawn = false;
+}
+
+void OnDebugColorCvarChanged(CConVar<Color> *ref, CSplitScreenSlot nSlot, const Color *pNewValue, const Color *pOldValue)
+{
+	ResetOverlays();
 }
 
 // clang-format off
-CConVar<Color> kz_playerclip_color("kz_playerclip_color", FCVAR_NONE, "Color of player clips (rgba) drawn by kz_toggleplayerclips.", Color(0x80, 0, 0x80, 0xFF),
-	[](CConVar<Color> *ref, CSplitScreenSlot nSlot, const Color *pNewValue, const Color *pOldValue)
+CConVar<bool> kz_showplayerclips("kz_showplayerclips", FCVAR_NONE, "Draw player clips (listen server only)", false,
+	[](CConVar<bool> *ref, CSplitScreenSlot nSlot, const bool *bNewValue, const bool *bOldValue)
 	{
-		if (shouldDrawPlayerClips)
-		{
-			g_pKZUtils->ClearOverlays();
-			playerClipsDrawn = false;
-		}
+		ResetOverlays();
 	}
 );
+
+CConVar<bool> kz_showtriggers("kz_showtriggers", FCVAR_NONE, "Draw triggers (listen server only)", false,
+	[](CConVar<bool> *ref, CSplitScreenSlot nSlot, const bool *bNewValue, const bool *bOldValue)
+	{
+		ResetOverlays();
+	}
+);
+
+CConVar<Color> kz_playerclip_color("kz_playerclip_color", FCVAR_NONE, "Color of player clips (rgba) drawn by kz_toggleplayerclips.", Color(0x80, 0, 0x80, 0xFF), OnDebugColorCvarChanged);
+CConVar<Color> kz_trigger_teleport_color("kz_trigger_teleport_color", FCVAR_NONE, "Color of trigger_teleport (rgba) drawn by kz_showtriggers.", Color(255, 0, 255, 0x80), OnDebugColorCvarChanged);
+CConVar<Color> kz_trigger_multiple_colors[KZTRIGGER_COUNT] = 
+{
+	{"kz_trigger_multiple_color", FCVAR_NONE, "Color of trigger_multiple (rgba) drawn by kz_showtriggers.", Color(255, 199, 105, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_modifiers_color", FCVAR_NONE, "Color of Mapping API's Modifiers trigger (rgba) drawn by kz_showtriggers.", Color(255, 255, 128, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_reset_checkpoints_color", FCVAR_NONE, "Color of Mapping API's Reset Checkpoints trigger (rgba) drawn by kz_showtriggers.", Color(255, 140, 204, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_single_bhop_reset_color", FCVAR_NONE, "Color of Mapping API's Single bhop reset trigger (rgba) drawn by kz_showtriggers.", Color(140, 255, 212, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_anti_bhop_color", FCVAR_NONE, "Color of Mapping API's Anti Bhop trigger (rgba) drawn by kz_showtriggers.", Color(255, 64, 64, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_start_zone_color", FCVAR_NONE, "Color of Mapping API's Start Zone trigger (rgba) drawn by kz_showtriggers.", Color(0, 255, 0, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_end_zone_color", FCVAR_NONE, "Color of Mapping API's End Zone trigger (rgba) drawn by kz_showtriggers.", Color(255, 0, 0, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_split_zone_color", FCVAR_NONE, "Color of Mapping API's Split Zone trigger (rgba) drawn by kz_showtriggers.", Color(0, 255, 228, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_checkpoint_zone_color", FCVAR_NONE, "Color of Mapping API's Checkpoint Zone trigger (rgba) drawn by kz_showtriggers.", Color(219, 255, 0, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_stage_zone_color", FCVAR_NONE, "Color of Mapping API's Stage Zone trigger (rgba) drawn by kz_showtriggers.", Color(255, 157, 0, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_general_teleport_color", FCVAR_NONE, "Color of Mapping API's General Teleport trigger (rgba) drawn by kz_showtriggers.", Color(230, 117, 255, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_multi_bhop_color", FCVAR_NONE, "Color of Mapping API's Multi Bhop trigger (rgba) drawn by kz_showtriggers.", Color(79, 31, 255, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_single_bhop_color", FCVAR_NONE, "Color of Mapping API's Single Bhop trigger (rgba) drawn by kz_showtriggers.", Color(31, 107, 255, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_sequential_bhop_color", FCVAR_NONE, "Color of Mapping API's Sequential Bhop trigger (rgba) drawn by kz_showtriggers.", Color(196, 84, 214, 0x80), OnDebugColorCvarChanged},
+	{"kz_trigger_mappingapi_push_color", FCVAR_NONE, "Color of Mapping API's Push trigger (rgba) drawn by kz_showtriggers.", Color(155, 255, 0, 0x80), OnDebugColorCvarChanged},
+};
+
 // clang-format on
 
-void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
+static_function void DrawClipMeshes(CPhysicsGameSystem *gs)
 {
-	static_persist CPhysicsGameSystem *physicsGameSystem = nullptr;
-	// Map probably reloaded, mark clips as not drawn.
-	if (pThis != physicsGameSystem)
-	{
-		physicsGameSystem = (CPhysicsGameSystem *)pThis;
-		g_pKZUtils->ClearOverlays();
-		shouldDrawPlayerClips = false;
-		playerClipsDrawn = false;
-	}
-	if (!shouldDrawPlayerClips || playerClipsDrawn)
+	if (clipsDrawn)
 	{
 		return;
 	}
-	FOR_EACH_MAP(physicsGameSystem->m_PhysicsSpawnGroups, i)
+	FOR_EACH_MAP(gs->m_PhysicsSpawnGroups, i)
 	{
-		CPhysicsGameSystem::PhysicsSpawnGroups_t &group = physicsGameSystem->m_PhysicsSpawnGroups[i];
+		CPhysicsGameSystem::PhysicsSpawnGroups_t &group = gs->m_PhysicsSpawnGroups[i];
 		CPhysAggregateInstance *instance = group.m_pLevelAggregateInstance;
 		auto *aggregateData = instance ? instance->aggregateData : nullptr;
 		if (!aggregateData)
@@ -553,7 +561,6 @@ void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
 			META_CONPRINTF("PhysicsSpawnGroup %i: No aggregate data found for instance %p\n", i, instance);
 			continue;
 		}
-		playerClipsDrawn = true;
 		FOR_EACH_VEC(aggregateData->m_Parts, i)
 		{
 			const VPhysXBodyPart_t *part = aggregateData->m_Parts[i];
@@ -571,7 +578,7 @@ void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
 					transform.SetToIdentity();
 					Ray_t ray;
 					ray.Init(hull.m_Hull.m_Bounds.m_vMinBounds, hull.m_Hull.m_Bounds.m_vMaxBounds, hull.m_Hull.m_VertexPositions.Base(),
-							 hull.m_Hull.m_Vertices.Count());
+							 hull.m_Hull.m_VertexPositions.Count());
 					g_pKZUtils->DebugDrawMesh(transform, ray, kz_playerclip_color.Get().r(), kz_playerclip_color.Get().g(),
 											  kz_playerclip_color.Get().b(), kz_playerclip_color.Get().a(), true, false, -1.0f);
 				}
@@ -596,4 +603,119 @@ void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
 			}
 		}
 	}
+}
+
+static_function void DrawTriggers()
+{
+	if (triggersDrawn || !GameEntitySystem())
+	{
+		return;
+	}
+	EntityInstanceIter_t iter;
+	for (CEntityInstance *pEnt = iter.First(); pEnt; pEnt = iter.Next())
+	{
+		if (V_strstr(pEnt->GetClassname(), "trigger_"))
+		{
+			CBaseTrigger *pTrigger = static_cast<CBaseTrigger *>(pEnt);
+			CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(pTrigger->m_CBodyComponent()->m_pSceneNode());
+			CPhysAggregateInstance *pPhysInstance =
+				pSkeleton ? (CPhysAggregateInstance *)pSkeleton->m_modelState().GetPhysAggregateInstance() : nullptr;
+			const KzTrigger *kzTrigger = KZ::mapapi::GetKzTrigger(pTrigger);
+			Color triggerColor;
+			if (KZ_STREQI(pEnt->GetClassname(), "trigger_teleport"))
+			{
+				triggerColor = kz_trigger_teleport_color.Get();
+			}
+			else if (kzTrigger)
+			{
+				triggerColor = kz_trigger_multiple_colors[kzTrigger->type].Get();
+			}
+			else
+			{
+				triggerColor = kz_trigger_multiple_colors[0].Get();
+			}
+			auto *aggregateData = pPhysInstance ? pPhysInstance->aggregateData : nullptr;
+			if (!aggregateData)
+			{
+				META_CONPRINTF("Trigger %i: No aggregate data found for instance %p\n", pTrigger->entindex(), pPhysInstance);
+				continue;
+			}
+			FOR_EACH_VEC(aggregateData->m_Parts, i)
+			{
+				const VPhysXBodyPart_t *part = aggregateData->m_Parts[i];
+				if (!part)
+				{
+					continue;
+				}
+				triggersDrawn = true;
+				FOR_EACH_VEC(part->m_rnShape.m_hulls, j)
+				{
+					const RnHullDesc_t &hull = part->m_rnShape.m_hulls[j];
+					const RnCollisionAttr_t &collisionAttr = aggregateData->m_CollisionAttributes[hull.m_nCollisionAttributeIndex];
+
+					CTransform transform;
+					transform.SetToIdentity();
+					transform.m_vPosition = pTrigger->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+					transform.m_orientation = Quaternion(pTrigger->m_CBodyComponent()->m_pSceneNode()->m_angAbsRotation());
+					Ray_t ray;
+					ray.Init(hull.m_Hull.m_Bounds.m_vMinBounds, hull.m_Hull.m_Bounds.m_vMaxBounds, hull.m_Hull.m_VertexPositions.Base(),
+							 hull.m_Hull.m_Vertices.Count());
+					g_pKZUtils->DebugDrawMesh(transform, ray, triggerColor.r(), triggerColor.g(), triggerColor.b(), triggerColor.a(), true, false,
+											  -1.0f);
+				}
+				FOR_EACH_VEC(part->m_rnShape.m_meshes, j)
+				{
+					const RnMeshDesc_t &mesh = part->m_rnShape.m_meshes[j];
+					const RnCollisionAttr_t &collisionAttr = aggregateData->m_CollisionAttributes[mesh.m_nCollisionAttributeIndex];
+					CTransform transform;
+					transform.SetToIdentity();
+					transform.m_vPosition = pTrigger->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+					transform.m_orientation = Quaternion(pTrigger->m_CBodyComponent()->m_pSceneNode()->m_angAbsRotation());
+					FOR_EACH_VEC(mesh.m_Mesh.m_Triangles, k)
+					{
+						const RnTriangle_t &triangle = mesh.m_Mesh.m_Triangles[k];
+						Vector tri[3] = {utils::TransformPoint(transform, mesh.m_Mesh.m_Vertices[triangle.m_nIndex[0]]),
+										 utils::TransformPoint(transform, mesh.m_Mesh.m_Vertices[triangle.m_nIndex[1]]),
+										 utils::TransformPoint(transform, mesh.m_Mesh.m_Vertices[triangle.m_nIndex[2]])};
+						g_pKZUtils->AddTriangleOverlay(tri[0], tri[1], tri[2], triggerColor.r(), triggerColor.g(), triggerColor.b(), triggerColor.a(),
+													   false, -1.0f);
+					}
+				}
+			}
+		}
+	}
+}
+
+void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
+{
+	static_persist CPhysicsGameSystem *physicsGameSystem = nullptr;
+	// Map probably reloaded, mark clips as not drawn.
+	if (pThis != physicsGameSystem)
+	{
+		physicsGameSystem = (CPhysicsGameSystem *)pThis;
+		g_pKZUtils->ClearOverlays();
+		clipsDrawn = false;
+	}
+	if (kz_showtriggers.Get())
+	{
+		DrawTriggers();
+	}
+	if (kz_showplayerclips.Get())
+	{
+		DrawClipMeshes(physicsGameSystem);
+	}
+}
+
+void KZ::misc::OnServerActivate()
+{
+	KZ::misc::EnforceTimeLimit();
+	g_pKZUtils->UpdateCurrentMapMD5();
+
+	interfaces::pEngine->ServerCommand("exec cs2kz.cfg");
+	KZ::misc::InitTimeLimit();
+
+	// Restart round to ensure settings (e.g. mp_weapons_allow_map_placed) are applied
+	interfaces::pEngine->ServerCommand("mp_restartgame 1");
+	kz_showplayerclips.Set(false);
+	kz_showtriggers.Set(false);
 }
