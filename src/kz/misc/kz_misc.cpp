@@ -169,7 +169,6 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 			player->noclipService->HandleNoclip();
 		}
 		player->GetPlayerPawn()->Respawn();
-		player->quietService->ResetHideWeapon();
 	}
 	else
 	{
@@ -299,7 +298,6 @@ SCMD(jointeam, SCFL_HIDDEN)
 SCMD(switchhands, SCFL_HIDDEN)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->quietService->ResetHideWeapon();
 	return MRES_IGNORED;
 }
 
@@ -361,7 +359,6 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		player->GetPlayerPawn()->CommitSuicide(false, true);
 		player->GetController()->SwitchTeam(newTeam);
 		player->GetController()->Respawn();
-		player->quietService->ResetHideWeapon();
 		if (restorePos && player->specService->HasSavedPosition())
 		{
 			player->specService->LoadPosition();
@@ -568,6 +565,7 @@ static_function void DrawClipMeshes(CPhysicsGameSystem *gs)
 			{
 				continue;
 			}
+			clipsDrawn = true;
 			FOR_EACH_VEC(part->m_rnShape.m_hulls, j)
 			{
 				const RnHullDesc_t &hull = part->m_rnShape.m_hulls[j];
