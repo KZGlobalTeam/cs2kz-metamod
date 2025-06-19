@@ -175,6 +175,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 		KZHUDService::DrawPanels(this, this);
 	}
 	this->measureService->OnPhysicsSimulatePost();
+	this->quietService->OnPhysicsSimulatePost();
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)

@@ -70,22 +70,6 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			 pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
 		// clang-format on
 		{
-			if (targetPlayerPawn == pawn)
-			{
-				for (u32 j = 0; j < 3; j++)
-				{
-					if (!pawn->m_pViewModelServices->m_hViewModel[j].IsValid())
-					{
-						continue;
-					}
-					// Hide weapon stuff.
-					if (targetPlayer->quietService->ShouldHideWeapon(j))
-					{
-						pTransmitInfo->m_pTransmitEdict->Clear(pawn->m_pViewModelServices->m_hViewModel[j].GetEntryIndex());
-					}
-				}
-				continue;
-			}
 			// Bit is not even set, don't bother.
 			if (!pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
 			{
@@ -220,7 +204,6 @@ void KZQuietService::Reset()
 {
 	this->hideOtherPlayers = this->player->optionService->GetPreferenceBool("hideOtherPlayers", false);
 	this->hideWeapon = this->player->optionService->GetPreferenceBool("hideWeapon", false);
-	this->ResetHideWeapon();
 }
 
 void KZQuietService::SendFullUpdate()
@@ -266,6 +249,28 @@ void KZQuietService::ToggleHideWeapon()
 {
 	this->hideWeapon = !this->hideWeapon;
 	this->player->optionService->SetPreferenceBool("hideWeapon", this->hideWeapon);
+}
+
+void KZQuietService::OnPhysicsSimulatePost()
+{
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	if (!pawn)
+	{
+		return;
+	}
+	CCSPlayer_ViewModelServices *vms = pawn->m_pViewModelServices();
+	if (!vms)
+	{
+		return;
+	}
+	for (i32 i = 0; i < 3; i++)
+	{
+		CBaseModelEntity *vmEnt = static_cast<CBaseModelEntity *>(vms->m_hViewModel[i].Get());
+		if (vmEnt)
+		{
+			vmEnt->m_fEffects(this->ShouldHideWeapon() ? 0x420 : 0);
+		}
+	}
 }
 
 void KZQuietService::OnPlayerPreferencesLoaded()
