@@ -310,7 +310,7 @@ bool KZUtils::GetFileMD5(const char *filePath, char *buffer, i32 size)
 				if (g_pFullFileSystem->EndOfFile(file))
 				{
 					g_pFullFileSystem->Close(file);
-					newFile.Format("%s_%03i.vpk", originalPath.StripExtension(), index);
+					newFile.Format("%s_%03i.vpk", originalPath.StripExtension().Get(), index);
 					file = g_pFullFileSystem->OpenEx(newFile.Get(), "rb");
 					if (!file)
 					{
