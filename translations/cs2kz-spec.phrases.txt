@@ -4,7 +4,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_spec <@me/name>{grey}."
 		"chi"		"{grey}用法: {default}kz_spec <@me/name>{grey}."
-		"ua"		"{grey}Використання: {default}kz_spec <@me/нікнейм>{grey}."
+		"uk"		"{grey}Використання: {default}kz_spec <@me/нікнейм>{grey}."
 		"sv"		"{grey}Användning: {default}kz_spec <@me/name>{grey}."
 		"ko"		"{grey}사용법: {default}kz_spec <@me/name>{grey}."
 	}
@@ -12,7 +12,7 @@
 	{
 		"en"		"{grey}There is no one spectating right now."
 		"chi"		"{grey}当前没有玩家在观察席."
-		"ua"		"{grey}Зараз ніхто не спостерігає."
+		"uk"		"{grey}Зараз ніхто не спостерігає."
 		"sv"		"{grey}Finns ingen åskådare just nu."
 		"ru"		"{grey}Сейчас никто не наблюдает."
 		"ko"		"{grey}지금은 관전중인 인원이 없습니다."
@@ -23,7 +23,7 @@
 		"#format"	"count:d,players:s"
 		"en"		"{grey}All spectators ({default}{count}{grey}) - {players}"
 		"chi"		"{grey}观察者 ({default}{count}{grey}) - {players}"
-		"ua"		"{grey}Всі спостерігачі ({default}{count}{grey}) - {players}"
+		"uk"		"{grey}Всі спостерігачі ({default}{count}{grey}) - {players}"
 		"sv"		"{grey}Alla åskådare ({default}{count}{grey}) - {players}"
 		"ru"		"{grey}Все наблюдатели ({default}{count}{grey}) - {players}"
 		"ko"		"{grey}관전중인 인원 ({default}{count}{grey}) - {players}"
@@ -34,7 +34,7 @@
 		"#format"	"name:s"
 		"en"		"{grey}There is no one spectating {lime}{name}{grey} right now."
 		"chi"		"{grey}现在暂时没有人在观察玩家{lime}{name}{grey}."
-		"ua"		"{grey}Зараз ніхто не спостерігає за {lime}{name}{grey}."
+		"uk"		"{grey}Зараз ніхто не спостерігає за {lime}{name}{grey}."
 		"sv"		"{grey}Ingen åskådar {lime}{name}{grey} just nu."
 		"ru"		"{grey}Сейчас никто не наблюдает за {lime}{name}{grey}."
 		"ko"		"{grey}지금은 {lime}{name}{grey} 님을 관전중인 인원이 없습니다."
@@ -45,7 +45,7 @@
 		"#format"	"name:s,count:d,players:s"
 		"en"		"{grey}Spectating {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"chi"		"{grey}正在观察 {lime}{name}{grey} 的玩家(共{default}{count}{grey}人) - {players}"
-		"ua"		"{grey}Спостерігачі {lime}{name}{grey} ({default}{count}{grey}) - {players}"
+		"uk"		"{grey}Спостерігачі {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"sv"		"{grey}Åskådar {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"ru"		"{grey}Наблюдатели {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"ko"		"{lime}{name}{grey} 님을 관전중인 인원 ({default}{count}{grey}) - {players}"
@@ -54,7 +54,7 @@
 	{
 		"en"		"{darkred}You cannot go into spectator mode right now."
 		"chi"		"{darkred}你现在无法进入观察者模式."
-		"ua"		"{darkred}Ви не можете зараз перейти в режим спостерігача."
+		"uk"		"{darkred}Ви не можете зараз перейти в режим спостерігача."
 		"sv"		"{darkred}Du kan inte gå i åskådarläge just nu."
 		"ko"		"{darkred}지금은 관전 모드로 전환할 수 없습니다."
 	}
@@ -62,7 +62,7 @@
 	{
 		"en"		"{darkred}The player you specified is not alive."
 		"chi"		"{darkred}你观察的玩家不再是存活状态."
-		"ua"		"{darkred}Вказаний вами гравець не живий."
+		"uk"		"{darkred}Вказаний вами гравець не живий."
 		"sv"		"{darkred}Spelaren du har angett lever inte."
 		"ru"		"{darkred}Указанный вами игрок не живой."
 		"ko"		"{darkred}해당 플레이어는 살아있는 상태가 아닙니다."
@@ -71,7 +71,7 @@
 	{
 		"en"		"{darkred}The player you specified cannot be found."
 		"chi"		"{darkred}你指定的玩家无法找到."
-		"ua"		"{darkred}Вказаного вами гравця не знайдено."
+		"uk"		"{darkred}Вказаного вами гравця не знайдено."
 		"sv"		"{darkred}Spelaren du har angett kan inte hittas."
 		"ko"		"{darkred}해당하는 플레이어를 찾지 못하였습니다."
 	}

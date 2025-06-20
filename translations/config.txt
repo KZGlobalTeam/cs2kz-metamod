@@ -31,6 +31,6 @@
 	"tchinese"		"zho"
 	"thai"			"th"
 	"turkish"		"tr"
-	"ukrainian"		"ua"
+	"ukrainian"		"uk"
 	"vietnamese"	"vi"
 }
