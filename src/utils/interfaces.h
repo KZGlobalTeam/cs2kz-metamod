@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "sdk/datatypes.h"
+#include "sdk/physics/types.h"
 #include "playerslot.h"
 #include "vector.h"
 #include "igameeventsystem.h"
@@ -61,6 +62,7 @@ namespace interfaces
 		GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetFileSystemFactory, g_pFullFileSystem, IFileSystem, FILESYSTEM_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, g_pVPhysics2, IVPhysics2, VPHYSICS2_INTERFACE_VERSION);
 
 		return true;
 	}
@@ -143,6 +145,11 @@ public:
 	// Draw debug overlays. Listen server only.
 	virtual void AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, u8 r, u8 g, u8 b, u8 a, bool noDepthTest, f64 flDuration);
 	virtual void ClearOverlays();
+
+	virtual CBaseEntity *PhysicsBodyToEntity(HPhysicsBody body);
+	virtual bool GetPhysicsBodyTransform(HPhysicsBody body, CTransform &transform);
+	virtual void CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Ray_t *ray, const Vector *start, const Vector *extent,
+								 const RnQueryAttr_t *filter);
 };
 
 extern KZUtils *g_pKZUtils;

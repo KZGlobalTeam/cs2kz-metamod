@@ -144,6 +144,10 @@ CModule **CGameConfig::GetModule(const char *name)
 	{
 		return &modules::steamnetworkingsockets;
 	}
+	else if (strcmp(library, "vphysics2") == 0)
+	{
+		return &modules::vphysics2;
+	}
 	return nullptr;
 }
 

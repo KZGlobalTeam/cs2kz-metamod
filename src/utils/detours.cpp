@@ -7,7 +7,8 @@
 #include "movement/movement.h"
 #include "fmtstr.h"
 #include "tier0/memdbgon.h"
-#include "sdk/physicsgamesystem.h"
+#include "sdk/physics/gamesystem.h"
+#include "sdk/physics/ivphysics2.h"
 
 CUtlVector<CDetourBase *> g_vecDetours;
 extern CGameConfig *g_pGameConfig;
@@ -16,6 +17,7 @@ DECLARE_DETOUR(RecvServerBrowserPacket, Detour_RecvServerBrowserPacket);
 // Unused
 DECLARE_DETOUR(TraceShape, Detour_TraceShape);
 DECLARE_DETOUR(CPhysicsGameSystemFrameBoundary, Detour_CPhysicsGameSystemFrameBoundary);
+DECLARE_DETOUR(CastBox, Detour_CastBox);
 
 DECLARE_MOVEMENT_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
@@ -48,6 +50,7 @@ void InitDetours()
 	g_vecDetours.RemoveAll();
 	INIT_DETOUR(g_pGameConfig, RecvServerBrowserPacket);
 	INIT_DETOUR(g_pGameConfig, CPhysicsGameSystemFrameBoundary);
+	CastBox.CreateDetour(g_pGameConfig);
 #ifdef DEBUG_TPM
 	INIT_DETOUR(g_pGameConfig, TraceShape);
 	TraceShape.DisableDetour();
@@ -73,26 +76,68 @@ int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)
 	return retValue;
 }
 
+bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCenter, const Vector &vDelta, const Vector &vExtents, void *attr)
+{
+	META_CONPRINTF("CastBox center %s, delta %s, extents %s, ", VecToString(vCenter), VecToString(vDelta), VecToString(vExtents));
+	RnQueryShapeAttr_t *pTraceFilter = (RnQueryShapeAttr_t *)attr;
+	META_CONPRINTF("RnQueryShapeAttr_t {\n"
+				   "  m_nInteractsWith: 0x%016llx\n"
+				   "  m_nInteractsExclude: 0x%016llx\n"
+				   "  m_nInteractsAs: 0x%016llx\n"
+				   "  m_nEntityIdsToIgnore: [%u, %u]\n"
+				   "  m_nOwnerIdsToIgnore: [%u, %u]\n"
+				   "  m_nHierarchyIds: [%u, %u]\n"
+				   "  m_nObjectSetMask: 0x%04x\n"
+				   "  m_nCollisionGroup: %u\n"
+				   "  m_bHitSolid: %d\n"
+				   "  m_bHitSolidRequiresGenerateContacts: %d\n"
+				   "  m_bHitTrigger: %d\n"
+				   "  m_bShouldIgnoreDisabledPairs: %d\n"
+				   "  m_bIgnoreIfBothInteractWithHitboxes: %d\n"
+				   "  m_bForceHitEverything: %d\n"
+				   "  m_bUnknown: %d\n"
+				   "}\n",
+				   (unsigned long long)pTraceFilter->m_nInteractsWith, (unsigned long long)pTraceFilter->m_nInteractsExclude,
+				   (unsigned long long)pTraceFilter->m_nInteractsAs, pTraceFilter->m_nEntityIdsToIgnore[0], pTraceFilter->m_nEntityIdsToIgnore[1],
+				   pTraceFilter->m_nOwnerIdsToIgnore[0], pTraceFilter->m_nOwnerIdsToIgnore[1], pTraceFilter->m_nHierarchyIds[0],
+				   pTraceFilter->m_nHierarchyIds[1], pTraceFilter->m_nObjectSetMask, pTraceFilter->m_nCollisionGroup,
+				   pTraceFilter->m_bHitSolid ? 1 : 0, pTraceFilter->m_bHitSolidRequiresGenerateContacts ? 1 : 0, pTraceFilter->m_bHitTrigger ? 1 : 0,
+				   pTraceFilter->m_bShouldIgnoreDisabledPairs ? 1 : 0, pTraceFilter->m_bIgnoreIfBothInteractWithHitboxes ? 1 : 0,
+				   pTraceFilter->m_bForceHitEverything ? 1 : 0, pTraceFilter->m_bUnknown ? 1 : 0);
+	bool result = CastBox(world, results, vCenter, vDelta, vExtents, attr);
+	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *res = (CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *)results;
+	META_CONPRINTF("\t-> %i results\n", res->Count());
+	return result;
+}
+
 bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
 					   trace_t *pm)
 {
-	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
-#ifdef DEBUG_TPM
-	f32 error;
-	Vector velocity;
-	for (u32 i = 0; i < 2; i++)
-	{
-		if (g_pKZPlayerManager->ToPlayer(i) && g_pKZPlayerManager->ToPlayer(i)->GetMoveServices())
-		{
-			error = g_pKZPlayerManager->ToPlayer(i)->GetMoveServices()->m_flAccumulatedJumpError();
-			velocity = g_pKZPlayerManager->ToPlayer(i)->currentMoveData->m_vecVelocity;
-			break;
-		}
-	}
-	traceHistory.AddToTail({start, end, ray, pm->DidHit(), pm->m_vStartPos, pm->m_vEndPos, pm->m_vHitNormal, pm->m_vHitPoint, pm->m_flHitOffset,
-							pm->m_flFraction, error, velocity});
-	return ret;
-	META_CONPRINTF("Trace %s -> %s, ", VecToString(start), VecToString(end));
+	META_CONPRINTF("\n\nTrace %s -> %s, ", VecToString(start), VecToString(end));
+	// META_CONPRINTF("RnQueryShapeAttr_t {\n"
+	// 			   "  m_nInteractsWith: 0x%016llx\n"
+	// 			   "  m_nInteractsExclude: 0x%016llx\n"
+	// 			   "  m_nInteractsAs: 0x%016llx\n"
+	// 			   "  m_nEntityIdsToIgnore: [%u, %u]\n"
+	// 			   "  m_nOwnerIdsToIgnore: [%u, %u]\n"
+	// 			   "  m_nHierarchyIds: [%u, %u]\n"
+	// 			   "  m_nObjectSetMask: 0x%04x\n"
+	// 			   "  m_nCollisionGroup: %u\n"
+	// 			   "  m_bHitSolid: %d\n"
+	// 			   "  m_bHitSolidRequiresGenerateContacts: %d\n"
+	// 			   "  m_bHitTrigger: %d\n"
+	// 			   "  m_bShouldIgnoreDisabledPairs: %d\n"
+	// 			   "  m_bIgnoreIfBothInteractWithHitboxes: %d\n"
+	// 			   "  m_bForceHitEverything: %d\n"
+	// 			   "  m_bUnknown: %d\n"
+	// 			   "}\n",
+	// 			   (unsigned long long)pTraceFilter->m_nInteractsWith, (unsigned long long)pTraceFilter->m_nInteractsExclude,
+	// 			   (unsigned long long)pTraceFilter->m_nInteractsAs, pTraceFilter->m_nEntityIdsToIgnore[0], pTraceFilter->m_nEntityIdsToIgnore[1],
+	// 			   pTraceFilter->m_nOwnerIdsToIgnore[0], pTraceFilter->m_nOwnerIdsToIgnore[1], pTraceFilter->m_nHierarchyIds[0],
+	// 			   pTraceFilter->m_nHierarchyIds[1], pTraceFilter->m_nObjectSetMask, pTraceFilter->m_nCollisionGroup,
+	// 			   pTraceFilter->m_bHitSolid ? 1 : 0, pTraceFilter->m_bHitSolidRequiresGenerateContacts ? 1 : 0, pTraceFilter->m_bHitTrigger ? 1 : 0,
+	// 			   pTraceFilter->m_bShouldIgnoreDisabledPairs ? 1 : 0, pTraceFilter->m_bIgnoreIfBothInteractWithHitboxes ? 1 : 0,
+	// 			   pTraceFilter->m_bForceHitEverything ? 1 : 0, pTraceFilter->m_bUnknown ? 1 : 0);
 	switch (ray.m_eType)
 	{
 		case RAY_TYPE_LINE:
@@ -123,6 +168,23 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 			break;
 		}
 	}
+	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
+#ifdef DEBUG_TPM
+	f32 error;
+	Vector velocity;
+	for (u32 i = 0; i < 2; i++)
+	{
+		if (g_pKZPlayerManager->ToPlayer(i) && g_pKZPlayerManager->ToPlayer(i)->GetMoveServices())
+		{
+			error = g_pKZPlayerManager->ToPlayer(i)->GetMoveServices()->m_flAccumulatedJumpError();
+			velocity = g_pKZPlayerManager->ToPlayer(i)->currentMoveData->m_vecVelocity;
+			break;
+		}
+	}
+	traceHistory.AddToTail({start, end, ray, pm->DidHit(), pm->m_vStartPos, pm->m_vEndPos, pm->m_vHitNormal, pm->m_vHitPoint, pm->m_flHitOffset,
+							pm->m_flFraction, error, velocity});
+	return ret;
+#endif
 	if (pm->DidHit())
 	{
 		META_CONPRINTF("hit %s (normal %s, triangle %i, body %p, shape %p)\n", VecToString(pm->m_vEndPos), VecToString(pm->m_vHitNormal),
@@ -132,7 +194,6 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 	{
 		META_CONPRINT("missed\n");
 	}
-#endif
 	return ret;
 }
 

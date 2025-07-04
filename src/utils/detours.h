@@ -13,6 +13,8 @@ extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket
 bool FASTCALL Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
 								trace_t *pm);
 extern CDetour<decltype(Detour_TraceShape)> TraceShape;
+bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCenter, const Vector &vDelta, const Vector &vExtents, void *attr);
+extern CDetour<decltype(Detour_CastBox)> CastBox;
 void FASTCALL Detour_CPhysicsGameSystemFrameBoundary(void *pThis);
 extern CDetour<decltype(Detour_CPhysicsGameSystemFrameBoundary)> CPhysicsGameSystemFrameBoundary;
 

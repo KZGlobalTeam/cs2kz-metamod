@@ -185,10 +185,55 @@ struct alignas(16) RnNode_t
 {
 public:
 	Vector m_vMin;
-	uint32 m_nChildren;
+	uint32 m_nChildrenOrTriangleCount: 30;
+	uint32 m_nAxisOrLeaf: 2;
 	Vector m_vMax;
 	uint32 m_nTriangleOffset;
+
+	RnNode_t *GetChild1()
+	{
+		return this + 1;
+	}
+
+	// Probably should make sure this is not a leaf before calling...
+	RnNode_t *GetChild2()
+	{
+		return this + m_nChildrenOrTriangleCount;
+	}
+
+	inline bool IsLeaf()
+	{
+		return m_nAxisOrLeaf == 3;
+	}
+
+	inline uint8 GetAxis()
+	{
+		return m_nAxisOrLeaf;
+	}
+
+	uint32 GetHeight()
+	{
+		return IsLeaf() ? 0 : 1 + Max(GetChild1()->GetHeight(), GetChild2()->GetHeight());
+	}
+
+	void PrintDebug(u32 depth = 0)
+	{
+		if (IsLeaf())
+		{
+			META_CONPRINTF("%*sLeaf (%f %f %f -> %f %f %f), %i triangles, triangle offset %i\n", depth, "", m_vMin.x, m_vMin.y, m_vMin.z, m_vMax.x,
+						   m_vMax.y, m_vMax.z, m_nChildrenOrTriangleCount, m_nTriangleOffset);
+		}
+		else
+		{
+			META_CONPRINTF("%*sBranch (%f %f %f -> %f %f %f): Axis %i, Child2 offset %i\n", depth, "", m_vMin.x, m_vMin.y, m_vMin.z, m_vMax.x,
+						   m_vMax.y, m_vMax.z, GetAxis(), m_nChildrenOrTriangleCount);
+			GetChild1()->PrintDebug(depth + 1);
+			GetChild2()->PrintDebug(depth + 1);
+		}
+	}
 };
+
+static_assert(sizeof(RnNode_t) == 32, "RnNode_t size doesn't match");
 
 struct alignas(4) RnTriangle_t
 {
@@ -352,25 +397,45 @@ struct CPhysAggregateData
 	const char *m_pEmbeddedKeyvalues;
 };
 
-class CPhysAggregateInstance
+enum PhysicsShapeType_t : __int32
 {
-	uint8_t unknown[0x18];
-	void *physicsWorld;
-
-public:
-	CPhysAggregateData *aggregateData;
+	SHAPE_SPHERE = 0,
+	SHAPE_CAPSULE,
+	SHAPE_HULL,
+	SHAPE_MESH,
+	SHAPE_COUNT,
+	SHAPE_UNKNOWN
 };
 
-class CPhysicsGameSystem
+class IPhysicsBody
 {
 public:
-	struct PhysicsSpawnGroups_t
-	{
-		uint8_t unknown[0x10];
-		CPhysAggregateInstance *m_pLevelAggregateInstance;
-		uint8_t unknown2[0x58];
-	};
+};
 
-	uint8_t unk[0x78];
-	CUtlMap<uint, PhysicsSpawnGroups_t> m_PhysicsSpawnGroups;
+class IPhysicsShape
+{
+	virtual ~IPhysicsShape() = 0;
+	virtual void unk01() = 0;
+	virtual void unk02() = 0;
+	virtual void unk03() = 0;
+
+public:
+	virtual PhysicsShapeType_t GetShapeType() = 0;
+	virtual SphereBase_t<float32> *GetSphere() = 0;
+	virtual RnCapsule_t *GetCapsule() = 0;
+	virtual RnHull_t *GetHull() = 0;
+	virtual RnMesh_t *GetMesh() = 0;
+};
+
+struct PhysicsTrace_t
+{
+	HPhysicsBody m_HitObject;
+	HPhysicsShape m_HitShape;
+	Vector m_vHitPoint;
+	Vector m_vHitNormal;
+	const CPhysSurfaceProperties *m_pSurfaceProperties;
+	float m_flHitOffset;
+	float m_flFraction;
+	int m_nTriangle;
+	bool m_bStartInSolid;
 };

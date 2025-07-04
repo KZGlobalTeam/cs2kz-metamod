@@ -9,7 +9,7 @@
 #include "checksum_md5.h"
 #include "sdk/serversideclient.h"
 #include "sdk/gamerules.h"
-
+#include "sdk/physics/ivphysics2.h"
 #include "memdbgon.h"
 
 static_global char currentMapMD5[33];
@@ -389,4 +389,50 @@ void KZUtils::ClearOverlays()
 	{
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("ClearOverlays"), debugoverlay);
 	}
+}
+
+CON_COMMAND_F(kz_worldtest, "", FCVAR_NONE)
+{
+	i32 numWorlds = g_pVPhysics2->NumWorlds();
+	META_CONPRINTF("NumWorlds = %i\n", g_pVPhysics2->NumWorlds());
+	for (int i = 0; i < numWorlds; i++)
+	{
+		CVPhys2World *world = g_pVPhysics2->GetWorld(i);
+		META_CONPRINTF("world #%i flag: %i\n", i, world->worldFlags);
+	}
+}
+
+CBaseEntity *KZUtils::PhysicsBodyToEntity(HPhysicsBody body)
+{
+	CEntityHandle handle = CALL_VIRTUAL(int, g_pGameConfig->GetOffset("BodyToEntHandle"), body);
+	return (CBaseEntity *)GameEntitySystem()->GetEntityInstance(handle);
+}
+
+void KZUtils::CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Ray_t *ray, const Vector *start, const Vector *extent,
+							  const RnQueryAttr_t *filter)
+{
+	i32 numWorlds = g_pVPhysics2->NumWorlds();
+	for (int i = 0; i < numWorlds; i++)
+	{
+		CVPhys2World *world = g_pVPhysics2->GetWorld(i);
+		if (world->worldFlags == 2)
+		{
+			world->CastBoxMultiple(result, ray, start, extent, filter);
+			return;
+		}
+	}
+}
+
+bool KZUtils::GetPhysicsBodyTransform(HPhysicsBody body, CTransform &transform)
+{
+	transform.SetToIdentity();
+	CBaseEntity *ent = this->PhysicsBodyToEntity(body);
+	if (!ent)
+	{
+		return false;
+	}
+	assert(ent->m_CBodyComponent()->m_pSceneNode());
+	transform.m_vPosition = ent->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+	transform.m_orientation = Quaternion(ent->m_CBodyComponent()->m_pSceneNode()->m_angAbsRotation());
+	return true;
 }
