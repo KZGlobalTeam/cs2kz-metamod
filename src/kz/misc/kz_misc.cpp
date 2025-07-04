@@ -3,6 +3,7 @@
 #include "utils/ctimer.h"
 #include "kz/kz.h"
 #include "utils/simplecmds.h"
+#include "utils/detours.h"
 
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/jumpstats/kz_jumpstats.h"
@@ -22,7 +23,7 @@
 #include "kz/global/kz_global.h"
 
 #include "sdk/gamerules.h"
-#include "sdk/physicsgamesystem.h"
+#include "sdk/physics/gamesystem.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "sdk/cskeletoninstance.h"
 
@@ -711,4 +712,164 @@ void KZ::misc::OnServerActivate()
 	interfaces::pEngine->ServerCommand("mp_restartgame 1");
 	kz_showplayerclips.Set(false);
 	kz_showtriggers.Set(false);
+}
+
+CConVar<bool> kz_phys_debug_hull("kz_phys_debug_hull", FCVAR_NONE, "", true);
+CConVar<bool> kz_phys_debug_mesh("kz_phys_debug_mesh_nodes", FCVAR_NONE, "", true);
+CConVar<bool> kz_phys_debug_mesh_nodes("kz_phys_debug_mesh_nodes", FCVAR_NONE, "", false);
+CConVar<bool> kz_phys_debug_mesh_triangles("kz_phys_debug_mesh_triangles", FCVAR_NONE, "", false);
+
+SCMD(kz_testground)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	Vector origin;
+	player->GetOrigin(&origin);
+	Ray_t ray;
+	ray.Init(Vector(-16.0f, -16.0f, 0.0f), Vector(16.0f, 16.0f, 72.0f));
+	Vector extent = vec3_origin;
+	extent.z = -20.0f;
+	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> results;
+	CTraceFilterPlayerMovementCS filter;
+	g_pKZUtils->InitPlayerMovementTraceFilter(filter, player->GetPlayerPawn(),
+											  player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
+											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	filter.m_bIterateEntities = true;
+	CastBox.EnableDetour();
+	g_pKZUtils->CastBoxMultiple(&results, &ray, &origin, &extent, &filter);
+	CastBox.DisableDetour();
+	META_CONPRINTF("Done!\n");
+	FOR_EACH_VEC(results, i)
+	{
+		PhysicsTrace_t &result = results[i];
+		CTransform transform;
+		META_CONPRINTF("Hit Point: (%.3f, %.3f, %.3f)\n", result.m_vHitPoint.x, result.m_vHitPoint.y, result.m_vHitPoint.z);
+		META_CONPRINTF("Hit Normal: (%.3f, %.3f, %.3f)\n", result.m_vHitNormal.x, result.m_vHitNormal.y, result.m_vHitNormal.z);
+		META_CONPRINTF("Hit Offset: %.3f\n", result.m_flHitOffset);
+		META_CONPRINTF("Fraction: %.3f\n", result.m_flFraction);
+		META_CONPRINTF("Triangle: %d\n", result.m_nTriangle);
+		META_CONPRINTF("StartInSolid: %s\n", result.m_bStartInSolid ? "true" : "false");
+		if (g_pKZUtils->GetPhysicsBodyTransform(result.m_HitObject, transform))
+		{
+			CBaseEntity *ent = g_pKZUtils->PhysicsBodyToEntity(result.m_HitObject);
+			const char *name = ent->GetClassname();
+			i32 index = ent->entindex();
+			Vector origin = ent->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+			QAngle rotation = ent->m_CBodyComponent()->m_pSceneNode()->m_angAbsRotation();
+			META_CONPRINTF("Entity %s (index %i), origin %f %f %f, rotation %f %f %f\n", name, index, origin.x, origin.y, origin.z, rotation.x,
+						   rotation.y, rotation.z);
+		}
+		PhysicsShapeType_t shapeType = result.m_HitShape->GetShapeType();
+
+		META_CONPRINTF("Hit shape #%i = %llx ", i, result.m_HitShape);
+		switch (shapeType)
+		{
+			// Never seen a sphere ever.
+			case SHAPE_SPHERE:
+			{
+				META_CONPRINTF("(sphere)\n");
+				break;
+			}
+			// The only capsule in CS2 is the player hitbox (?) but that isn't going to matter for player movement.
+			case SHAPE_CAPSULE:
+			{
+				META_CONPRINTF("(capsule)\n");
+				break;
+			}
+			case SHAPE_HULL:
+			{
+				META_CONPRINTF("(hull)\n");
+				if (!kz_phys_debug_hull.Get())
+				{
+					break;
+				}
+				RnHull_t *hull = result.m_HitShape->GetHull();
+
+				Vector centroid = utils::TransformPoint(transform, hull->m_vCentroid);
+				META_CONPRINTF("  m_vCentroid: (%f, %f, %f)\n", centroid.x, centroid.y, centroid.z);
+				Vector minBounds = utils::TransformPoint(transform, hull->m_Bounds.m_vMinBounds);
+				Vector maxBounds = utils::TransformPoint(transform, hull->m_Bounds.m_vMaxBounds);
+				META_CONPRINTF("  m_Bounds: Min(%f, %f, %f) Max(%f, %f, %f)\n", minBounds.x, minBounds.y, minBounds.z, maxBounds.x, maxBounds.y,
+							   maxBounds.z);
+
+				META_CONPRINTF("  m_Vertices: count = %d\n", hull->m_Vertices.Count());
+				FOR_EACH_VEC(hull->m_Vertices, i)
+				{
+					META_CONPRINTF("    [%d] m_nEdge: %u\n", i, hull->m_Vertices[i].m_nEdge);
+				}
+
+				META_CONPRINTF("  m_VertexPositions: count = %d\n", hull->m_VertexPositions.Count());
+				FOR_EACH_VEC(hull->m_VertexPositions, i)
+				{
+					Vector v = utils::TransformPoint(transform, hull->m_VertexPositions[i]);
+					META_CONPRINTF("    [%d] (%f, %f, %f)\n", i, v.x, v.y, v.z);
+				}
+
+				META_CONPRINTF("  m_Edges: count = %d\n", hull->m_Edges.Count());
+				FOR_EACH_VEC(hull->m_Edges, i)
+				{
+					const RnHalfEdge_t &e = hull->m_Edges[i];
+					META_CONPRINTF("    [%d] Next: %u, Twin: %u, Origin: %u, Face: %u\n", i, e.m_nNext, e.m_nTwin, e.m_nOrigin, e.m_nFace);
+				}
+
+				META_CONPRINTF("  m_Faces: count = %d\n", hull->m_Faces.Count());
+				FOR_EACH_VEC(hull->m_Faces, i)
+				{
+					META_CONPRINTF("    [%d] m_nEdge: %u\n", i, hull->m_Faces[i].m_nEdge);
+				}
+
+				META_CONPRINTF("  m_FacePlanes: count = %d\n", hull->m_FacePlanes.Count());
+				FOR_EACH_VEC(hull->m_FacePlanes, i)
+				{
+					const RnPlane_t &p = hull->m_FacePlanes[i];
+					Vector normal = utils::TransformPoint(transform, p.m_vNormal);
+					META_CONPRINTF("    [%d] Normal: (%f, %f, %f), Offset: %f\n", i, normal.x, normal.y, normal.z, p.m_flOffset);
+				}
+
+				META_CONPRINTF("  m_nFlags: 0x%08X\n", hull->m_nFlags);
+				break;
+			}
+			case SHAPE_MESH:
+			{
+				META_CONPRINTF("(mesh, tri %i)", result.m_nTriangle);
+				if (!kz_phys_debug_mesh.Get())
+				{
+					break;
+				}
+				RnMesh_t *mesh = result.m_HitShape->GetMesh();
+				Vector vMin = utils::TransformPoint(transform, mesh->m_vMin);
+				Vector vMax = utils::TransformPoint(transform, mesh->m_vMax);
+				META_CONPRINTF("  m_vMin: (%f, %f, %f)\n", vMin.x, vMin.y, vMin.z);
+				META_CONPRINTF("  m_vMax: (%f, %f, %f)\n", vMax.x, vMax.y, vMax.z);
+
+				META_CONPRINTF("  m_Triangles: count = %d\n", mesh->m_Triangles.Count());
+
+				if (mesh->m_Nodes.Count() > 0 && kz_phys_debug_mesh_nodes.Get())
+				{
+					RnNode_t &node = mesh->m_Nodes[i];
+					node.PrintDebug();
+				}
+				if (kz_phys_debug_mesh_triangles.Get())
+				{
+					FOR_EACH_VEC(mesh->m_Triangles, i)
+					{
+						const RnTriangle_t &triangle = mesh->m_Triangles[i];
+						META_CONPRINTF("    Triangle [%d]: indices = (%d, %d, %d)\n", i, triangle.m_nIndex[0], triangle.m_nIndex[1],
+									   triangle.m_nIndex[2]);
+						Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
+						Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
+						Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
+						META_CONPRINTF("      v0: (%f, %f, %f)\n", v0.x, v0.y, v0.z);
+						META_CONPRINTF("      v1: (%f, %f, %f)\n", v1.x, v1.y, v1.z);
+						META_CONPRINTF("      v2: (%f, %f, %f)\n", v2.x, v2.y, v2.z);
+					}
+				}
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
+	return MRES_SUPERCEDE;
 }
