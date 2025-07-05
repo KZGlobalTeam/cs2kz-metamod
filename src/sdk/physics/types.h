@@ -190,33 +190,33 @@ public:
 	Vector m_vMax;
 	uint32 m_nTriangleOffset;
 
-	RnNode_t *GetChild1()
+	const RnNode_t *GetChild1() const
 	{
 		return this + 1;
 	}
 
 	// Probably should make sure this is not a leaf before calling...
-	RnNode_t *GetChild2()
+	const RnNode_t *GetChild2() const
 	{
 		return this + m_nChildrenOrTriangleCount;
 	}
 
-	inline bool IsLeaf()
+	inline bool IsLeaf() const
 	{
 		return m_nAxisOrLeaf == 3;
 	}
 
-	inline uint8 GetAxis()
+	inline uint8 GetAxis() const
 	{
 		return m_nAxisOrLeaf;
 	}
 
-	uint32 GetHeight()
+	uint32 GetHeight() const
 	{
 		return IsLeaf() ? 0 : 1 + Max(GetChild1()->GetHeight(), GetChild2()->GetHeight());
 	}
 
-	void PrintDebug(u32 depth = 0)
+	void PrintDebug(u32 depth = 0) const
 	{
 		if (IsLeaf())
 		{
