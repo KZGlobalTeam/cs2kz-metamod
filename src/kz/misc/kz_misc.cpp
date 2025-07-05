@@ -714,9 +714,49 @@ void KZ::misc::OnServerActivate()
 	kz_showtriggers.Set(false);
 }
 
+static_function void ComputeSweptAABB(const Vector &boxMins, const Vector &boxMaxs, const Vector &delta, Vector &outMins, Vector &outMaxs)
+{
+	// AABB at end position
+	Vector endMins = boxMins + delta;
+	Vector endMaxs = boxMaxs + delta;
+
+	// Swept AABB is the min/max of both boxes
+	outMins.x = Min(boxMins.x, endMins.x);
+	outMins.y = Min(boxMins.y, endMins.y);
+	outMins.z = Min(boxMins.z, endMins.z);
+	outMaxs.x = Max(boxMaxs.x, endMaxs.x);
+	outMaxs.y = Max(boxMaxs.y, endMaxs.y);
+	outMaxs.z = Max(boxMaxs.z, endMaxs.z);
+}
+
+static_function void FindTrianglesInBox(const RnNode_t *node, CUtlVector<uint32> &triangles, const Vector &mins, const Vector &maxs,
+										const CTransform *transform = nullptr)
+{
+	Vector nodeMins = transform ? utils::TransformPoint(*transform, node->m_vMin) : node->m_vMin;
+	Vector nodeMaxs = transform ? utils::TransformPoint(*transform, node->m_vMax) : node->m_vMax;
+	if (!QuickBoxIntersectTest(nodeMins, nodeMaxs, mins, maxs))
+	{
+		return;
+	}
+
+	if (node->IsLeaf())
+	{
+		for (u32 i = 0; i < node->m_nChildrenOrTriangleCount; i++)
+		{
+			triangles.AddToTail(node->m_nTriangleOffset + i);
+		}
+	}
+	else
+	{
+		FindTrianglesInBox(node->GetChild1(), triangles, mins, maxs, transform);
+		FindTrianglesInBox(node->GetChild2(), triangles, mins, maxs, transform);
+	}
+}
+
 CConVar<bool> kz_phys_debug_hull("kz_phys_debug_hull", FCVAR_NONE, "", true);
-CConVar<bool> kz_phys_debug_mesh("kz_phys_debug_mesh_nodes", FCVAR_NONE, "", true);
+CConVar<bool> kz_phys_debug_mesh("kz_phys_debug_mesh", FCVAR_NONE, "", true);
 CConVar<bool> kz_phys_debug_mesh_nodes("kz_phys_debug_mesh_nodes", FCVAR_NONE, "", false);
+CConVar<bool> kz_phys_debug_mesh_nodes_trace_only("kz_phys_debug_mesh_nodes_trace_only", FCVAR_NONE, "", true);
 CConVar<bool> kz_phys_debug_mesh_triangles("kz_phys_debug_mesh_triangles", FCVAR_NONE, "", false);
 
 SCMD(kz_testground)
@@ -843,10 +883,33 @@ SCMD(kz_testground)
 
 				META_CONPRINTF("  m_Triangles: count = %d\n", mesh->m_Triangles.Count());
 
-				if (mesh->m_Nodes.Count() > 0 && kz_phys_debug_mesh_nodes.Get())
+				if (mesh->m_Nodes.Count() > 0)
 				{
 					RnNode_t &node = mesh->m_Nodes[i];
-					node.PrintDebug();
+					if (kz_phys_debug_mesh_nodes.Get())
+					{
+						node.PrintDebug();
+					}
+					if (kz_phys_debug_mesh_nodes_trace_only.Get())
+					{
+						CUtlVector<u32> triangles;
+						Vector sweptMins, sweptMaxs;
+						ComputeSweptAABB(origin + Vector(-16.0f, -16.0f, 0.0f), origin + Vector(16.0f, 16.0f, 72.0f), extent, sweptMins, sweptMaxs);
+						FindTrianglesInBox(&node, triangles, sweptMins, sweptMaxs, &transform);
+						META_CONPRINTF("  Number of relevant triangles: %i\n", triangles.Count());
+						FOR_EACH_VEC(triangles, i)
+						{
+							const RnTriangle_t &triangle = mesh->m_Triangles[triangles[i]];
+							META_CONPRINTF("    Triangle [%d]: indices = (%d, %d, %d)\n", triangles[i], triangle.m_nIndex[0], triangle.m_nIndex[1],
+										   triangle.m_nIndex[2]);
+							Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
+							Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
+							Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
+							META_CONPRINTF("      v0: (%f, %f, %f)\n", v0.x, v0.y, v0.z);
+							META_CONPRINTF("      v1: (%f, %f, %f)\n", v1.x, v1.y, v1.z);
+							META_CONPRINTF("      v2: (%f, %f, %f)\n", v2.x, v2.y, v2.z);
+						}
+					}
 				}
 				if (kz_phys_debug_mesh_triangles.Get())
 				{
