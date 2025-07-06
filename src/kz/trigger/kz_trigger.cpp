@@ -44,6 +44,7 @@ void KZTriggerService::OnPhysicsSimulate()
 
 void KZTriggerService::OnPhysicsSimulatePost()
 {
+	this->player->UpdateTriggerTouchList();
 	this->TouchAll();
 	/*
 		NOTE:
