@@ -5,6 +5,7 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/noclip/kz_noclip.h"
 
 void KZTriggerService::Reset()
 {
@@ -181,7 +182,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 		this->player->GetPlayerPawn()->m_flGravityScale(1);
 	}
 
-	if (!this->player->IsAlive() || this->player->GetCollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
+	if (!this->player->IsAlive() || this->player->noclipService->IsNoclipping())
 	{
 		this->EndTouchAll();
 		return;
@@ -327,7 +328,7 @@ bool KZTriggerService::IsManagedByTriggerService(CBaseEntity *toucher, CBaseEnti
 		player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(touched));
 		trigger = static_cast<CBaseTrigger *>(toucher);
 	}
-	if (player && player->IsAlive() && player->GetMoveType() != MOVETYPE_NOCLIP)
+	if (player && player->IsAlive())
 	{
 		return true;
 	}

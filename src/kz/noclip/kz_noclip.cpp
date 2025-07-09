@@ -26,11 +26,11 @@ void KZNoclipService::HandleNoclip()
 			this->player->SetMoveType(MOVETYPE_NOCLIP);
 			this->player->timerService->TimerStop();
 		}
-		if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
-		{
-			pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_NOTRIGGER;
-			pawn->CollisionRulesChanged();
-		}
+		// if (pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_NOTRIGGER)
+		// {
+		// 	pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_NOTRIGGER;
+		// 	pawn->CollisionRulesChanged();
+		// }
 		this->lastNoclipTime = g_pKZUtils->GetServerGlobals()->curtime;
 		this->player->timerService->TimerStop();
 	}
