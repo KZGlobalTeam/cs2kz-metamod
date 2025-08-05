@@ -74,6 +74,7 @@ struct SndOpEventGuid_t
 
 	SoundEventGuid_t m_nGuid;
 	uint32 m_hStackHash;
+	uint64 pad; // size might be incorrect
 };
 
 // used with EmitSound_t
