@@ -134,6 +134,11 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			end.z = zFinal;
 			this->player->GetMoveServices()->m_flAccumulatedJumpError = preciseZMoveDistance - (end.z - origin.z);
 		}
+		// AG2 Update: Fixed several cases where a player would get stuck on map geometry while surfing (i.e., on surf maps)
+		if (numplanes == 1)
+		{
+			VectorMA(end, 0.03125f, planes[0], end);
+		}
 		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
 		if (pFirstDest && (end == *pFirstDest))
 		{
