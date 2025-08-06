@@ -513,7 +513,7 @@ void KZTimerService::Pause()
 	this->lastStaminaValue = this->player->GetMoveServices()->m_flStamina;
 	this->player->SetVelocity(vec3_origin);
 	this->player->SetMoveType(MOVETYPE_NONE);
-	this->player->GetPlayerPawn()->m_flGravityScale(0);
+	this->player->GetPlayerPawn()->SetGravityScale(0);
 
 	if (this->GetTimerRunning())
 	{

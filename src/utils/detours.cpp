@@ -19,7 +19,6 @@ DECLARE_DETOUR(CPhysicsGameSystemFrameBoundary, Detour_CPhysicsGameSystemFrameBo
 
 DECLARE_MOVEMENT_DETOUR(PhysicsSimulate);
 DECLARE_MOVEMENT_DETOUR(ProcessUsercmds);
-DECLARE_MOVEMENT_DETOUR(GetMaxSpeed);
 DECLARE_MOVEMENT_DETOUR(SetupMove);
 DECLARE_MOVEMENT_DETOUR(ProcessMovement);
 DECLARE_MOVEMENT_DETOUR(PlayerMove);

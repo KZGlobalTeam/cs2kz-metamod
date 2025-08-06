@@ -63,10 +63,10 @@ SH_DECL_MANUALHOOK1_void(ChangeTeam, 0, 0, 0, int);
 static_function void Hook_OnChangeTeamPost(i32 team);
 
 // ISource2GameEntities
-SH_DECL_HOOK7_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &,
-				   const Entity2Networkable_t **, const uint16 *, int, bool);
-static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
-										const uint16 *pEntityIndicies, int nEntities, bool bEnablePVSBits);
+SH_DECL_HOOK7_void(ISource2GameEntities, CheckTransmit, SH_NOATTRIB, false, CCheckTransmitInfo **, int, CBitVec<16384> &, CBitVec<16384> &,
+				   const Entity2Networkable_t **, const uint16 *, int);
+static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int, CBitVec<16384> &, CBitVec<16384> &,
+										const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities);
 
 // ISource2Server
 SH_DECL_HOOK3_void(ISource2Server, GameFrame, SH_NOATTRIB, false, bool, bool, bool);
@@ -461,10 +461,10 @@ static_function void Hook_OnChangeTeamPost(i32 team)
 }
 
 // ISource2GameEntities
-static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfo, int infoCount, CBitVec<16384> &, const Entity2Networkable_t **pNetworkables,
-										const uint16 *pEntityIndicies, int nEntities, bool bEnablePVSBits)
+static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfos, int infoCount, CBitVec<16384> &unk1, CBitVec<16384> &,
+										const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities)
 {
-	KZ::quiet::OnCheckTransmit(pInfo, infoCount);
+	KZ::quiet::OnCheckTransmit(pInfos, infoCount);
 	RETURN_META(MRES_IGNORED);
 }
 

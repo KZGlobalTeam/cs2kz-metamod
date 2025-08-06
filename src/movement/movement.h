@@ -44,7 +44,6 @@ namespace movement
 	void InitDetours();
 
 	void FASTCALL Detour_PhysicsSimulate(CCSPlayerController *);
-	f32 FASTCALL Detour_GetMaxSpeed(CCSPlayerPawn *);
 	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, PlayerCommand *, CMoveData *);
 	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, void *, int, bool, float);
 	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
@@ -64,7 +63,7 @@ namespace movement
 	void FASTCALL Detour_AirMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_Friction(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_WalkMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_TryPlayerMove(CCSPlayer_MovementServices *, CMoveData *, Vector *, trace_t *);
+	void FASTCALL Detour_TryPlayerMove(CCSPlayer_MovementServices *, CMoveData *, Vector *, trace_t *, bool *);
 	void FASTCALL Detour_CategorizePosition(CCSPlayer_MovementServices *, CMoveData *, bool);
 	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_PostPlayerMove(CCSPlayer_MovementServices *, CMoveData *);
@@ -103,8 +102,6 @@ public:
 	virtual void RegisterTakeoff(bool jumped, bool fromLadder = false, Vector *overrideOrigin = nullptr);
 	virtual void RegisterLanding(const Vector &landingVelocity, bool distbugFix = true);
 	virtual f32 GetGroundPosition();
-
-	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed);
 
 	// Movement hooks
 	virtual void OnPhysicsSimulate();
@@ -186,9 +183,9 @@ public:
 
 	virtual void OnWalkMovePost() {}
 
-	virtual void OnTryPlayerMove(Vector *, trace_t *) {}
+	virtual void OnTryPlayerMove(Vector *, trace_t *, bool *) {}
 
-	virtual void OnTryPlayerMovePost(Vector *, trace_t *) {}
+	virtual void OnTryPlayerMovePost(Vector *, trace_t *, bool *) {}
 
 	virtual void OnCategorizePosition(bool) {}
 

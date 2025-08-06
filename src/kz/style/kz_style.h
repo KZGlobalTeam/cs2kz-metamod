@@ -14,11 +14,6 @@ public:
 	virtual void Init() {};
 	virtual void Cleanup() {};
 
-	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
-	{
-		return MRES_IGNORED;
-	}
-
 	virtual bool IsCompatibleWithStyle(CUtlString style)
 	{
 		return true;
@@ -113,9 +108,9 @@ public:
 
 	virtual void OnWalkMovePost() {}
 
-	virtual void OnTryPlayerMove(Vector *, trace_t *) {}
+	virtual void OnTryPlayerMove(Vector *, trace_t *, bool *) {}
 
-	virtual void OnTryPlayerMovePost(Vector *, trace_t *) {}
+	virtual void OnTryPlayerMovePost(Vector *, trace_t *, bool *) {}
 
 	virtual void OnCategorizePosition(bool) {}
 

@@ -133,12 +133,6 @@ void KZPlayer::OnAuthorized()
 	this->globalService->OnPlayerAuthorized();
 }
 
-META_RES KZPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
-{
-	VPROF_BUDGET(__func__, "CS2KZ");
-	return this->modeService->GetPlayerMaxSpeed(maxSpeed);
-}
-
 void KZPlayer::OnPhysicsSimulate()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
@@ -222,6 +216,7 @@ void KZPlayer::OnProcessMovement()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnProcessMovement();
+
 	KZ::mode::ApplyModeSettings(this);
 
 	this->DisableTurnbinds();
@@ -574,24 +569,24 @@ void KZPlayer::OnWalkMovePost()
 	}
 }
 
-void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
+void KZPlayer::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace);
+	this->modeService->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnTryPlayerMove(pFirstDest, pFirstTrace);
+		this->styleServices[i]->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	}
 	this->jumpstatsService->OnTryPlayerMove();
 }
 
-void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
+void KZPlayer::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
+	this->modeService->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
+		this->styleServices[i]->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
 	}
 	this->jumpstatsService->OnTryPlayerMovePost();
 }

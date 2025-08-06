@@ -1,6 +1,7 @@
 #include "movement.h"
 #include "utils/utils.h"
 #include "utils/detours.h"
+#include "sdk/tracefilter.h"
 #include "tier0/memdbgon.h"
 
 void MovementPlayer::OnProcessMovement()
@@ -232,10 +233,7 @@ f32 MovementPlayer::GetGroundPosition()
 		mv = &this->moveDataPost;
 	}
 
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->GetPlayerPawn(),
-											  this->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	CTraceFilterPlayerMovementCS filter(this->GetPlayerPawn());
 
 	Vector ground = mv->m_vecAbsOrigin;
 	ground.z -= 2;
@@ -258,7 +256,6 @@ f32 MovementPlayer::GetGroundPosition()
 	}
 
 	trace_t trace;
-	g_pKZUtils->InitGameTrace(&trace);
 
 	g_pKZUtils->TracePlayerBBox(mv->m_vecAbsOrigin, ground, bounds, &filter, trace);
 
@@ -411,11 +408,6 @@ void MovementPlayer::Reset()
 	this->ignoreNextCategorizePosition = false;
 	this->collidingWithWorld = false;
 	this->previousOnGround = false;
-}
-
-META_RES MovementPlayer::GetPlayerMaxSpeed(f32 &maxSpeed)
-{
-	return MRES_IGNORED;
 }
 
 void MovementPlayer::GetBBoxBounds(bbox_t *bounds)

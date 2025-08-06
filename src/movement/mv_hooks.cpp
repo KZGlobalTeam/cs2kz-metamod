@@ -16,7 +16,6 @@ extern CGameConfig *g_pGameConfig;
 void movement::InitDetours()
 {
 	INIT_DETOUR(g_pGameConfig, PhysicsSimulate);
-	INIT_DETOUR(g_pGameConfig, GetMaxSpeed);
 	INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
 	INIT_DETOUR(g_pGameConfig, SetupMove);
 	INIT_DETOUR(g_pGameConfig, ProcessMovement);
@@ -58,20 +57,6 @@ void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 	PhysicsSimulate(controller);
 	player->OnPhysicsSimulatePost();
 	g_KZPlugin.simulatingPhysics = false;
-}
-
-f32 FASTCALL movement::Detour_GetMaxSpeed(CCSPlayerPawn *pawn)
-{
-	VPROF_BUDGET(__func__, "CS2KZ");
-	MovementPlayer *player = playerManager->ToPlayer(pawn);
-	f32 maxSpeed = GetMaxSpeed(pawn);
-	f32 newMaxSpeed = maxSpeed;
-
-	if (player->GetPlayerMaxSpeed(newMaxSpeed) != MRES_IGNORED)
-	{
-		return newMaxSpeed;
-	}
-	return maxSpeed;
 }
 
 i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, void *cmds, int numcmds, bool paused, float margin)
@@ -319,7 +304,8 @@ void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveDat
 	player->OnWalkMovePost();
 }
 
-void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t *pFirstTrace)
+void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t *pFirstTrace,
+											 bool *bIsSurfing)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
@@ -330,10 +316,10 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 	f32 &liveError = ms->m_flAccumulatedJumpError();
 	Vector &liveVelocity = mv->m_vecVelocity;
 	TraceShape.EnableDetour();
-	player->OnTryPlayerMove(pFirstDest, pFirstTrace);
+	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
 	i32 count = traceHistory.Count();
-	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace);
+	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
 	if (traceHistory.Count() != count)
 	{
 		for (i32 i = 0; i + count < traceHistory.Count(); i++)
@@ -375,9 +361,9 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 		}
 	}
 #else
-	player->OnTryPlayerMove(pFirstDest, pFirstTrace);
+	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
-	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace);
+	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
 #endif
 	if (mv->m_vecVelocity != oldVelocity)
 	{
@@ -386,7 +372,7 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 		// but for now this doesn't matter.
 		player->SetCollidingWithWorld();
 	}
-	player->OnTryPlayerMovePost(pFirstDest, pFirstTrace);
+	player->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
 
 #ifdef DEBUG_TPM
 	TraceShape.DisableDetour();

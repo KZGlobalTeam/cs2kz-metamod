@@ -6,6 +6,7 @@
 #include "mappingapi/kz_mappingapi.h"
 #include "circularbuffer.h"
 
+// TODO: If we want to enable player collision, we need to unhardcode this.
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
 
@@ -65,8 +66,6 @@ public:
 	virtual void OnPlayerFullyConnect() override;
 	virtual void OnAuthorized() override;
 
-	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed) override;
-
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
 	virtual void OnProcessUsercmds(void *, int) override;
@@ -108,8 +107,8 @@ public:
 	virtual void OnFrictionPost() override;
 	virtual void OnWalkMove() override;
 	virtual void OnWalkMovePost() override;
-	virtual void OnTryPlayerMove(Vector *, trace_t *) override;
-	virtual void OnTryPlayerMovePost(Vector *, trace_t *) override;
+	virtual void OnTryPlayerMove(Vector *, trace_t *, bool *) override;
+	virtual void OnTryPlayerMovePost(Vector *, trace_t *, bool *) override;
 	virtual void OnCategorizePosition(bool) override;
 	virtual void OnCategorizePositionPost(bool) override;
 	virtual void OnFinishGravity() override;

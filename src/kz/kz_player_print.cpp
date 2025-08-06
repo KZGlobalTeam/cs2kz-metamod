@@ -161,10 +161,15 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 
-	for (int i = 0; i < filter->GetRecipientCount(); i++)
+	auto recipients = filter->GetRecipients();
+	int index = recipients.FindNextSetBit(0);
+
+	while (index > -1)
 	{
-		IGameEventListener2 *listener = g_pKZUtils->GetLegacyGameEventListener(filter->GetRecipientIndex(i));
+		IGameEventListener2 *listener = g_pKZUtils->GetLegacyGameEventListener(index);
 		listener->FireGameEvent(event);
+
+		index = recipients.FindNextSetBit(index + 1);
 	}
 	interfaces::pGameEventManager->FreeEvent(event);
 	delete filter;

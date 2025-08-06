@@ -10,6 +10,7 @@ struct VPhysicsCollisionAttribute_t
 	SCHEMA_FIELD(uint8, m_nCollisionGroup)
 	SCHEMA_FIELD(uint64, m_nInteractsAs)
 	SCHEMA_FIELD(uint64, m_nInteractsWith)
+	SCHEMA_FIELD(uint16, m_nHierarchyId)
 };
 
 class CCollisionProperty

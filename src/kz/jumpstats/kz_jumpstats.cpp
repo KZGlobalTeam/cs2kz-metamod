@@ -1058,7 +1058,7 @@ void KZJumpstatsService::DetectExternalModifications()
 	{
 		this->InvalidateJumpstats("Base velocity detected");
 	}
-	if (this->player->GetPlayerPawn()->m_flGravityScale() != 1)
+	if (this->player->GetPlayerPawn()->m_flGravityScale() != 1 || this->player->GetPlayerPawn()->m_flActualGravityScale() != 1)
 	{
 		this->InvalidateJumpstats("Player gravity scale changed");
 	}

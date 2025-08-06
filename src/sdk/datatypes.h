@@ -7,7 +7,6 @@
 #pragma clang diagnostic pop
 #endif
 #include "ehandle.h"
-#include "gametrace.h"
 
 class CCSPlayerPawn;
 class CCSPlayerController;
@@ -74,6 +73,7 @@ struct SndOpEventGuid_t
 
 	SoundEventGuid_t m_nGuid;
 	uint32 m_hStackHash;
+	uint32 unknown[3];
 };
 
 // used with EmitSound_t
@@ -150,10 +150,6 @@ struct touchlist_t
 {
 	Vector deltavelocity;
 	trace_t trace;
-};
-
-class CTraceFilterPlayerMovementCS : public CTraceFilter
-{
 };
 
 struct SubtickMove

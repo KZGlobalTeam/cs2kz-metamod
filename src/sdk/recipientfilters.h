@@ -4,11 +4,26 @@
 #include "interfaces/interfaces.h"
 #include "inetchannel.h"
 #include "sdk/entity/cbaseentity.h"
+#include "sdk/serversideclient.h"
+#include "interfaces/interfaces.h"
+#include "iserver.h"
 
 class CRecipientFilter : public IRecipientFilter
 {
 public:
 	CRecipientFilter(NetChannelBufType_t nBufType = BUF_RELIABLE, bool bInitMessage = false) : m_nBufType(nBufType), m_bInitMessage(bInitMessage) {}
+
+	CRecipientFilter(IRecipientFilter *source, CPlayerSlot exceptSlot = {-1})
+	{
+		m_Recipients = source->GetRecipients();
+		m_nBufType = source->GetNetworkBufType();
+		m_bInitMessage = source->IsInitMessage();
+
+		if (exceptSlot.Get() != -1)
+		{
+			m_Recipients.Clear(exceptSlot.Get());
+		}
+	}
 
 	~CRecipientFilter() override {}
 
@@ -22,59 +37,99 @@ public:
 		return m_bInitMessage;
 	}
 
-	int GetRecipientCount(void) const override
+	const CPlayerBitVec &GetRecipients(void) const override
 	{
-		return m_Recipients.Count();
+		return m_Recipients;
 	}
 
-	CPlayerSlot GetRecipientIndex(int slot) const override
+	void SetRecipients(uint64 nRecipients)
 	{
-		if (slot < 0 || slot >= GetRecipientCount())
-		{
-			return CPlayerSlot(-1);
-		}
-
-		return m_Recipients[slot];
+		m_Recipients.Set(0UL, static_cast<uint32>(nRecipients & 0xFFFFFFFF));
+		m_Recipients.Set(1UL, static_cast<uint32>(nRecipients >> 32));
 	}
 
 	void AddRecipient(CPlayerSlot slot)
 	{
-		// Don't add if it already exists
-		if (m_Recipients.Find(slot) != m_Recipients.InvalidIndex())
+		if (slot.Get() >= 0 && slot.Get() < ABSOLUTE_PLAYER_LIMIT)
 		{
-			return;
+			m_Recipients.Set(slot.Get());
 		}
-
-		m_Recipients.AddToTail(slot);
 	}
 
-	void AddAllPlayers()
+	void RemoveRecipient(CPlayerSlot slot)
 	{
-		m_Recipients.RemoveAll();
-		if (!GameEntitySystem())
+		if (slot.Get() >= 0 && slot.Get() < ABSOLUTE_PLAYER_LIMIT)
 		{
-			return;
+			m_Recipients.Clear(slot.Get());
 		}
-		for (int i = 0; i <= MAXPLAYERS; i++)
+	}
+
+	void AddPlayersFromBitMask(const CPlayerBitVec &playerbits)
+	{
+		int index = playerbits.FindNextSetBit(0);
+
+		while (index > -1)
 		{
-			CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(i + 1)));
-			if (ent)
+			AddRecipient(index);
+
+			index = playerbits.FindNextSetBit(index + 1);
+		}
+	}
+
+	void RemovePlayersFromBitMask(const CPlayerBitVec &playerbits)
+	{
+		int index = playerbits.FindNextSetBit(0);
+
+		while (index > -1)
+		{
+			RemoveRecipient(index);
+
+			index = playerbits.FindNextSetBit(index + 1);
+		}
+	}
+
+public:
+	void CopyFrom(const CRecipientFilter &src)
+	{
+		m_Recipients = src.m_Recipients;
+		m_bInitMessage = src.m_bInitMessage;
+	}
+
+	void Reset(void)
+	{
+		m_Recipients.ClearAll();
+		m_bInitMessage = false;
+	}
+
+	void MakeInitMessage(void)
+	{
+		m_bInitMessage = true;
+	}
+
+	void MakeReliable(void);
+
+	void AddAllPlayers(void)
+	{
+		m_Recipients.ClearAll();
+
+		for (int i = 0; i < g_pKZUtils->GetClientList()->Count(); i++)
+		{
+			if (g_pKZUtils->GetClientList()->Element(i)->IsInGame())
 			{
-				AddRecipient(i);
+				AddRecipient(g_pKZUtils->GetClientList()->Element(i)->GetPlayerSlot());
 			}
 		}
 	}
 
-private:
-	// Can't copy this unless we explicitly do it!
-	CRecipientFilter(CRecipientFilter const &source)
+	void RemoveAllRecipients(void)
 	{
-		Assert(0);
+		m_Recipients.ClearAll();
 	}
 
+protected:
+	CPlayerBitVec m_Recipients;
 	NetChannelBufType_t m_nBufType;
 	bool m_bInitMessage;
-	CUtlVectorFixed<CPlayerSlot, MAXPLAYERS> m_Recipients;
 };
 
 class CBroadcastRecipientFilter : public CRecipientFilter
@@ -86,53 +141,11 @@ public:
 	}
 };
 
-class CCopyRecipientFilter : public CRecipientFilter
+class CSingleRecipientFilter : public CRecipientFilter
 {
 public:
-	CCopyRecipientFilter(IRecipientFilter *source, int iExcept)
+	CSingleRecipientFilter(CPlayerSlot slot)
 	{
-		for (int i = 0; i < source->GetRecipientCount(); i++)
-		{
-			if (source->GetRecipientIndex(i).Get() != iExcept)
-			{
-				this->AddRecipient(source->GetRecipientIndex(i));
-			}
-		}
+		AddRecipient(slot);
 	}
-};
-
-class CSingleRecipientFilter : public IRecipientFilter
-{
-public:
-	CSingleRecipientFilter(int iRecipient, NetChannelBufType_t nBufType = BUF_RELIABLE, bool bInitMessage = false)
-		: m_nBufType(nBufType), m_bInitMessage(bInitMessage), m_iRecipient(iRecipient)
-	{
-	}
-
-	~CSingleRecipientFilter() override {}
-
-	NetChannelBufType_t GetNetworkBufType(void) const override
-	{
-		return m_nBufType;
-	}
-
-	bool IsInitMessage(void) const override
-	{
-		return m_bInitMessage;
-	}
-
-	int GetRecipientCount(void) const override
-	{
-		return 1;
-	}
-
-	CPlayerSlot GetRecipientIndex(int slot) const override
-	{
-		return CPlayerSlot(m_iRecipient);
-	}
-
-private:
-	NetChannelBufType_t m_nBufType;
-	bool m_bInitMessage;
-	int m_iRecipient;
 };
