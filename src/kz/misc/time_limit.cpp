@@ -24,7 +24,7 @@ CConVarRef<float> mp_roundtime_defuse("mp_roundtime_defuse");
 CConVarRef<float> mp_roundtime_hostage("mp_roundtime_hostage");
 ConVarRefAbstract *convars[] = {&mp_timelimit, &mp_roundtime, &mp_roundtime_defuse, &mp_roundtime_hostage};
 
-static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue)
+static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue, void *__unk01)
 {
 	assert(mp_timelimit.IsValidRef() && mp_timelimit.IsConVarDataAvailable());
 	assert(mp_roundtime.IsValidRef() && mp_roundtime.IsConVarDataAvailable());

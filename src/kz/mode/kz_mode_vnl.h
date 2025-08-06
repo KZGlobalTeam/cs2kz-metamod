@@ -31,7 +31,7 @@ class KZVanillaModeService : public KZModeService
 		(float)-0.707f,        // sv_ladder_angle
 		(float)0.2f,           // sv_ladder_dampen
 		(float)0.78f,          // sv_ladder_scale_speed
-		(float)320.0f,         // sv_maxspeed
+		(float)250.0f,         // sv_maxspeed is 250.0 instead of 320.0 to prevent abuses with no weapon
 		(float)3500.0f,        // sv_maxvelocity
 		(float)0.08f,          // sv_staminajumpcost
 		(float)0.05f,          // sv_staminalandcost
@@ -43,7 +43,9 @@ class KZVanillaModeService : public KZModeService
 		(float)0.7f,           // sv_walkable_normal
 		(float)10.0f,          // sv_wateraccelerate
 		(float)1.0f,           // sv_waterfriction
-		(float)0.9f            // sv_water_slow_amount
+		(float)0.9f,           // sv_water_slow_amount
+		(int)0,                // mp_solid_teammates
+		(int)0                 // mp_solid_enemies
 	};
 
 	static_assert(KZ_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
@@ -59,20 +61,15 @@ public:
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const CVValue_t *GetModeConVarValues() override;
 
-	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
-	{
-		maxSpeed = MIN(maxSpeed, 250.0f);
-		return MRES_SUPERCEDE;
-	}
-
 	// Triggerfix
 	virtual void OnSetupMove(PlayerCommand *pc) override;
+	virtual void OnPlayerMove() override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnDuckPost() override;
 	virtual void OnAirMove() override;
 	virtual void OnAirMovePost() override;
-	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace) override;
-	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace) override;
+	virtual void OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing) override;
+	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing) override;
 
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;

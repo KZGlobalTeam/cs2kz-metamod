@@ -236,17 +236,19 @@ SCMD(kz_lj, SCFL_JUMPSTATS | SCFL_MAP)
 SCMD_LINK(kz_ljarea, kz_lj);
 SCMD_LINK(kz_jsarea, kz_lj);
 
-SCMD(kz_hideweapon, SCFL_PLAYER | SCFL_PREFERENCE)
+SCMD(kz_hideweapon, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->quietService->ToggleHideWeapon();
-	if (player->quietService->ShouldHideWeapon())
+
+	if (!player->GetPlayerPawn() || !player->GetPlayerPawn()->m_pWeaponServices())
 	{
-		player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Disable");
+		return MRES_SUPERCEDE;
 	}
-	else
+	CBaseModelEntity *activeWeapon = player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
+	if (activeWeapon)
 	{
-		player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Enable");
+		player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon.Set(nullptr);
+		player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Disable");
 	}
 	return MRES_SUPERCEDE;
 }
@@ -458,18 +460,20 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 
 		CUtlString message;
 		message.SetDirect(p, strlen(p) - wrappedInQuotes);
+		auto name = player->GetName();
+		auto msg = message.Get();
 
 		if (player->IsAlive())
 		{
-			utils::SayChat(player->GetController(), "{lime}%s{default}: %s", player->GetName(), message.Get());
-			utils::PrintConsoleAll("%s: %s", player->GetName(), message.Get());
-			META_CONPRINTF("%s: %s\n", player->GetName(), message.Get());
+			utils::SayChat(player->GetController(), "{lime}%s{default}: %s", name, msg);
+			utils::PrintConsoleAll("%s: %s", name, msg);
+			META_CONPRINTF("%s: %s\n", name, msg);
 		}
 		else
 		{
-			utils::SayChat(player->GetController(), "{grey}* {lime}%s{default}: %s", player->GetName(), message.Get());
-			utils::PrintConsoleAll("* %s: %s", player->GetName(), message.Get());
-			META_CONPRINTF("* %s: %s\n", player->GetName(), message.Get());
+			utils::SayChat(player->GetController(), "{grey}* {lime}%s{default}: %s", name, msg);
+			utils::PrintConsoleAll("* %s: %s", name, msg);
+			META_CONPRINTF("* %s: %s\n", name, msg);
 		}
 	}
 
@@ -552,7 +556,7 @@ static_function void DrawClipMeshes(CPhysicsGameSystem *gs)
 	{
 		CPhysicsGameSystem::PhysicsSpawnGroups_t &group = gs->m_PhysicsSpawnGroups[i];
 		CPhysAggregateInstance *instance = group.m_pLevelAggregateInstance;
-		auto *aggregateData = instance ? instance->aggregateData : nullptr;
+		CPhysAggregateData *aggregateData = instance ? instance->aggregateData : nullptr;
 		if (!aggregateData)
 		{
 			META_CONPRINTF("PhysicsSpawnGroup %i: No aggregate data found for instance %p\n", i, instance);
@@ -616,8 +620,7 @@ static_function void DrawTriggers()
 		{
 			CBaseTrigger *pTrigger = static_cast<CBaseTrigger *>(pEnt);
 			CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(pTrigger->m_CBodyComponent()->m_pSceneNode());
-			CPhysAggregateInstance *pPhysInstance =
-				pSkeleton ? (CPhysAggregateInstance *)pSkeleton->m_modelState().GetPhysAggregateInstance() : nullptr;
+			CPhysAggregateInstance *pPhysInstance = pSkeleton ? (CPhysAggregateInstance *)pSkeleton->m_modelState().m_pVPhysicsAggregate() : nullptr;
 			const KzTrigger *kzTrigger = KZ::mapapi::GetKzTrigger(pTrigger);
 			Color triggerColor;
 			if (KZ_STREQI(pEnt->GetClassname(), "trigger_teleport"))

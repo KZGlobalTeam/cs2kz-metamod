@@ -175,11 +175,11 @@ void KZTriggerService::UpdateTriggerTouchList()
 	if (this->player->timerService->GetPaused())
 	{
 		// No gravity while paused.
-		this->player->GetPlayerPawn()->m_flGravityScale(0);
+		this->player->GetPlayerPawn()->SetGravityScale(0);
 	}
 	else
 	{
-		this->player->GetPlayerPawn()->m_flGravityScale(1);
+		this->player->GetPlayerPawn()->SetGravityScale(1);
 	}
 
 	if (!this->player->IsAlive() || this->player->noclipService->IsNoclipping())

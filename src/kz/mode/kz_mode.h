@@ -38,6 +38,8 @@ enum KzModeCvars
 	MODECVAR_SV_WATERACCELERATE,
 	MODECVAR_SV_WATERFRICTION,
 	MODECVAR_SV_WATER_SLOW_AMOUNT,
+	MODECVAR_MP_SOLID_TEAMMATES,
+	MODECVAR_MP_SOLID_ENEMIES,
 	MODECVAR_COUNT,
 };
 class KZPlayer;
@@ -61,11 +63,6 @@ public:
 	// Jumpstats
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) = 0;
 	virtual const CVValue_t *GetModeConVarValues() = 0;
-
-	virtual META_RES GetPlayerMaxSpeed(f32 &maxSpeed)
-	{
-		return MRES_IGNORED;
-	}
 
 	// Movement hooks
 	virtual void OnPhysicsSimulate() {}
@@ -149,9 +146,9 @@ public:
 
 	virtual void OnWalkMovePost() {}
 
-	virtual void OnTryPlayerMove(Vector *, trace_t *) {}
+	virtual void OnTryPlayerMove(Vector *, trace_t *, bool *) {}
 
-	virtual void OnTryPlayerMovePost(Vector *, trace_t *) {}
+	virtual void OnTryPlayerMovePost(Vector *, trace_t *, bool *) {}
 
 	virtual void OnCategorizePosition(bool) {}
 
@@ -266,7 +263,9 @@ namespace KZ::mode
 		"sv_walkable_normal",
 		"sv_wateraccelerate",
 		"sv_waterfriction",
-		"sv_water_slow_amount"
+		"sv_water_slow_amount",
+		"mp_solid_teammates",
+		"mp_solid_enemies"
 	};
 
 
@@ -301,7 +300,9 @@ namespace KZ::mode
 		new CConVarRef<float>("sv_walkable_normal"),
 		new CConVarRef<float>("sv_wateraccelerate"),
 		new CConVarRef<float>("sv_waterfriction"),
-		new CConVarRef<float>("sv_water_slow_amount")
+		new CConVarRef<float>("sv_water_slow_amount"),
+		new CConVarRef<int>("mp_solid_teammates"),
+		new CConVarRef<int>("mp_solid_enemies")
 	};
 
 	// clang-format on

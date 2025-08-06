@@ -175,7 +175,7 @@ void PlayerManager::OnValidateAuthTicket(ValidateAuthTicketResponse_t *pResponse
 	for (Player *player : players)
 	{
 		CServerSideClient *cl = player->GetClient();
-		if (cl && *cl->GetClientSteamID() == pResponse->m_SteamID)
+		if (cl && cl->GetClientSteamID() == pResponse->m_SteamID)
 		{
 			player->OnAuthorized();
 			return;

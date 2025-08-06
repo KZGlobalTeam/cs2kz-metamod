@@ -29,5 +29,6 @@ void Player::OnAuthorized()
 	{
 		g_steamAPI.Init();
 	}
-	this->hasPrime = steamID ? (g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(*steamID, 624820) == 0) : false;
+	this->hasPrime =
+		g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense;
 }

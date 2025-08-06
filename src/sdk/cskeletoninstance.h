@@ -8,14 +8,7 @@ class CModelState
 public:
 	DECLARE_SCHEMA_CLASS(CModelState)
 
-private:
-	SCHEMA_FIELD_POINTER_OFFSET(IPhysAggregateInstance *, m_bClientClothCreationSuppressed, -8)
-
-public:
-	IPhysAggregateInstance *GetPhysAggregateInstance()
-	{
-		return *m_bClientClothCreationSuppressed();
-	}
+	SCHEMA_FIELD(IPhysAggregateInstance *, m_pVPhysicsAggregate)
 };
 
 class CSkeletonInstance : public CGameSceneNode

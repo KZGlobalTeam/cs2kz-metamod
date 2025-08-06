@@ -4,6 +4,7 @@
 #include "kz/language/kz_language.h"
 
 #include "sdk/entity/cparticlesystem.h"
+#include "sdk/tracefilter.h"
 #include "entitykeyvalues.h"
 
 #define KZ_MEASURE_TIMEOUT      60.0f
@@ -168,10 +169,9 @@ KZMeasureService::MeasurePos KZMeasureService::GetLookAtPos(const Vector *overri
 	Vector endPos = origin + forward * KZ_MEASURE_MAX_DISTANCE;
 	trace_t tr;
 	bbox_t bounds({vec3_origin, vec3_origin});
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, pawn, pawn->m_Collision().m_collisionAttribute().m_nInteractsWith(),
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
-	g_pKZUtils->InitGameTrace(&tr);
+
+	CTraceFilterPlayerMovementCS filter(pawn);
+
 	g_pKZUtils->TracePlayerBBox(origin, endPos, bounds, &filter, tr);
 	if (tr.DidHit())
 	{

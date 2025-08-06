@@ -264,7 +264,7 @@ class MMSPluginConfig(object):
         cxx.linkflags += ['-static-libgcc']
       elif cxx.family == 'clang':
         cxx.linkflags += ['-lgcc_eh', '-Wl,-z,noexecstack']
-      cxx.linkflags += ['-static-libstdc++']
+      # cxx.linkflags += ['-static-libstdc++']
     elif cxx.target.platform == 'windows':
       cxx.defines += ['WIN32', '_WINDOWS']
 

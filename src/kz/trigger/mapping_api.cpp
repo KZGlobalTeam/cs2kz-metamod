@@ -94,10 +94,10 @@ void KZTriggerService::TouchModifierTrigger(TriggerTouchTracker tracker)
 		// No gravity while paused.
 		if (this->player->timerService->GetPaused())
 		{
-			this->player->GetPlayerPawn()->m_flGravityScale(0);
+			this->player->GetPlayerPawn()->SetGravityScale(0);
 			return;
 		}
-		this->player->GetPlayerPawn()->m_flGravityScale(trigger->modifier.gravity);
+		this->player->GetPlayerPawn()->SetGravityScale(trigger->modifier.gravity);
 	}
 	this->modifiers.jumpFactor = trigger->modifier.jumpFactor;
 }

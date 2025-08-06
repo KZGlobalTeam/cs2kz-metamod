@@ -364,7 +364,7 @@ u32 KZUtils::GetPlayerCount()
 		{
 			CServerSideClient *client = clients->Element(i);
 
-			if (client && client->IsConnected() && !client->IsFakePlayer() && !client->IsHLTV())
+			if (client && client->IsConnected() && !client->IsFakeClient() && !client->IsHLTV())
 			{
 				count++;
 			}

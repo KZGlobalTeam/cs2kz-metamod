@@ -64,7 +64,7 @@ public:
 
 	bool IsFakeClient()
 	{
-		return GetClient() ? GetClient()->IsFakePlayer() : false;
+		return GetClient() ? GetClient()->IsFakeClient() : false;
 	}
 
 	bool IsCSTV()
@@ -84,7 +84,7 @@ public:
 		return GetClient() ? GetClient()->GetRemoteAddress()->ToString(true) : nullptr;
 	}
 
-	const CSteamID &GetSteamId(bool validated = true)
+	const CSteamID GetSteamId(bool validated = true)
 	{
 		static_persist const CSteamID invalidId = k_steamIDNil;
 		if (validated && !IsAuthenticated())
@@ -94,7 +94,7 @@ public:
 		CServerSideClient *client = GetClient();
 		if (client && IsAuthenticated())
 		{
-			return *client->GetClientSteamID();
+			return client->GetClientSteamID();
 		}
 		return unauthenticatedSteamID;
 	}

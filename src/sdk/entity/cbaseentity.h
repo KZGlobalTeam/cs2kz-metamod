@@ -144,8 +144,10 @@ public:
 	SCHEMA_FIELD(CNetworkVelocityVector, m_vecVelocity)
 	SCHEMA_FIELD(CCollisionProperty *, m_pCollision)
 	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hGroundEntity)
+	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hOwnerEntity)
 	SCHEMA_FIELD(uint32_t, m_fFlags)
 	SCHEMA_FIELD(float, m_flGravityScale)
+	SCHEMA_FIELD(float, m_flActualGravityScale)
 	SCHEMA_FIELD(float, m_flWaterLevel)
 	SCHEMA_FIELD(int, m_fEffects)
 
@@ -208,5 +210,11 @@ public:
 	void DispatchSpawn(CEntityKeyValues *pEntityKeyValues = nullptr)
 	{
 		g_pKZUtils->DispatchSpawn(this, pEntityKeyValues);
+	}
+
+	void SetGravityScale(float scale)
+	{
+		this->m_flActualGravityScale(scale);
+		this->m_flGravityScale(scale);
 	}
 };

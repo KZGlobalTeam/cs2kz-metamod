@@ -10,7 +10,7 @@ class CBasePlayerController;
 
 struct SchemaKey
 {
-	int32 offset;
+	uint32 offset;
 	bool networked;
 };
 
@@ -35,7 +35,6 @@ namespace schema
 } // namespace schema
 
 class CBaseEntity;
-void SetStateChanged(CBaseEntity *pEntity, int offset);
 
 constexpr uint32_t val_32_const = 0x811c9dc5;
 constexpr uint32_t prime_32_const = 0x1000193;
@@ -87,11 +86,11 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			} \
 			else if (m_key.networked) \
 			{ \
-				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \ \
-					need to have their this pointer corrected by the offset . \
+				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \ \ \ \
+					need to have their this pointer corrected by the offset . \ \ \
 				DevMsg("Attempting to call SetStateChanged on %s::%s\n", ThisClassName, #varName); */ \
 				if (!IsStruct) \
-					((CEntityInstance *)pThisClass)->NetworkStateChanged(m_key.offset + extra_offset, -1, -1); \
+					((CEntityInstance *)pThisClass)->NetworkStateChanged({m_key.offset + extra_offset}); \
 				else \
 					CALL_VIRTUAL(void, 1, pThisClass, m_key.offset + extra_offset, 0xFFFFFFFF, 0xFFFFFFFF); \
 			} \

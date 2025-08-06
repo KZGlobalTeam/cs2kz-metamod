@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "gametrace.h"
 #include "tier1/utlmap.h"
 #include "mathlib/transform.h"
 #include "tier1/utlvector.h"
@@ -133,6 +133,7 @@ public:
 	CUtlVectorSIMDPaddedVector m_Vertices;
 	CUtlVector<RnTriangle_t> m_Triangles;
 	CUtlVector<RnWing_t> m_Wings;
+	CUtlVector<uint8> m_TriangleEdgeFlags;
 	CUtlVector<uint8> m_Materials;
 	Vector m_vOrthographicAreas;
 	uint32 m_nFlags;
@@ -304,6 +305,29 @@ struct CPhysConstraintData
 	const VPhysXConstraintParams_t *m_pParams;
 };
 
+class PhysShapeMarkup_t
+{
+	int32 m_nBodyInAggregate;
+	int32 m_nShapeInBody;
+	uint64 m_sHitGroup; // CGlobalSymbol
+};
+
+/*
+ * Tutorial on how to update this struct:
+ Plan A:
+ - Find CPhysicsGameSystem::NotifyAggregateInitialized with "Install updater " string
+ - XRef it to the only function calling it, should be something like:
+		v15 = Physics_CreateAggregate(a2, a3, a4, v14, a5, v17);
+		*(a1 + 272) = v15;
+		if ( v15 )
+		{
+		  CPhysicsGameSystem::NotifyAggregateInitialized(qword_17AB370, a2, v15);
+  - Inside Physics_CreateAggregate, find Physics_GetAggregateData (the one with all arguments going into its parameters)
+  - The first (only?) function having two arguments with the second being 1 is CPhysAggregateData::CPhysAggregateData
+  Plan B:
+  - Find function that has "shatter_mesh_%i.vmesh" string in it.
+  - The first function having two arguments with the second being 1 is CPhysAggregateData::CPhysAggregateData
+*/
 struct CPhysAggregateData
 {
 	CInterlockedUInt m_nRefCounter;
@@ -311,11 +335,12 @@ struct CPhysAggregateData
 	int16 m_nIncrementalVectorIndex;
 	int16 m_nReserved;
 	CUtlVectorUltraConservative<char const *> m_BoneNames;
-	CUtlMemory<unsigned int, int> m_BonesHash;
-	CUtlMemory<short unsigned int, int> m_IndexNames;
-	CUtlMemory<short unsigned int, int> m_IndexHash;
-	CUtlMemory<short unsigned int, int> m_BoneParents;
+	CUtlMemory<uint32> m_BonesHash;
+	CUtlMemory<uint16> m_IndexNames;
+	CUtlMemory<uint16> m_IndexHash;
+	CUtlMemory<uint16> m_BoneParents;
 	CUtlMemory<matrix3x4_t, int> m_BindPose;
+	CUtlMemory<PhysShapeMarkup_t> m_shapeMarkups;
 	CUtlVectorConservative<const VPhysXBodyPart_t *> m_Parts;
 	CUtlVectorUltraConservative<CPhysConstraintData> m_Constraints;
 	CUtlVectorUltraConservative<const VPhysXJoint_t *> m_Joints;
@@ -329,7 +354,7 @@ struct CPhysAggregateData
 
 class CPhysAggregateInstance
 {
-	u8 unknown[0x18];
+	uint8_t unknown[0x18];
 	void *physicsWorld;
 
 public:
@@ -341,11 +366,11 @@ class CPhysicsGameSystem
 public:
 	struct PhysicsSpawnGroups_t
 	{
-		u8 unknown[0x10];
+		uint8_t unknown[0x10];
 		CPhysAggregateInstance *m_pLevelAggregateInstance;
-		u8 unknown2[0x58];
+		uint8_t unknown2[0x58];
 	};
 
-	uint8_t unk[0x20];
+	uint8_t unk[0x78];
 	CUtlMap<uint, PhysicsSpawnGroups_t> m_PhysicsSpawnGroups;
 };

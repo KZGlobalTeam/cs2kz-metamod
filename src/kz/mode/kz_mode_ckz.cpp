@@ -4,6 +4,7 @@
 #include "utils/interfaces.h"
 #include "utils/gameconfig.h"
 #include "sdk/usercmd.h"
+#include "sdk/tracefilter.h"
 #include "sdk/entity/cbasetrigger.h"
 
 #include "version.h"
@@ -202,14 +203,6 @@ DistanceTier KZClassicModeService::GetDistanceTier(JumpType jumpType, f32 distan
 	return tier;
 }
 
-META_RES KZClassicModeService::GetPlayerMaxSpeed(f32 &maxSpeed)
-{
-	this->originalMaxSpeed = maxSpeed;
-	this->tweakedMaxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
-	maxSpeed = tweakedMaxSpeed;
-	return MRES_SUPERCEDE;
-}
-
 const CVValue_t *KZClassicModeService::GetModeConVarValues()
 {
 	return modeCvarValues;
@@ -349,6 +342,12 @@ void KZClassicModeService::OnProcessMovement()
 	this->CalcPrestrafe();
 }
 
+void KZClassicModeService::OnPlayerMove()
+{
+	this->originalMaxSpeed = this->player->currentMoveData->m_flMaxSpeed;
+	this->player->currentMoveData->m_flMaxSpeed = SPEED_NORMAL + this->GetPrestrafeGain();
+}
+
 void KZClassicModeService::OnProcessMovementPost()
 {
 	this->player->UpdateTriggerTouchList();
@@ -362,7 +361,7 @@ void KZClassicModeService::OnProcessMovementPost()
 	{
 		this->lastValidPlane = vec3_origin;
 	}
-	f32 velMod = this->originalMaxSpeed >= 0 ? this->tweakedMaxSpeed / this->originalMaxSpeed : 1.0f;
+	f32 velMod = this->originalMaxSpeed >= 0 ? (SPEED_NORMAL + this->GetPrestrafeGain()) / this->originalMaxSpeed : 1.0f;
 	if (this->player->GetPlayerPawn()->m_flVelocityModifier() != velMod)
 	{
 		this->player->GetPlayerPawn()->m_flVelocityModifier(velMod);
@@ -599,10 +598,7 @@ void KZClassicModeService::CheckVelocityQuantization()
 // URL: https://forums.alliedmods.net/showthread.php?p=2322788
 void KZClassicModeService::SlopeFix()
 {
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPlayerPawn(),
-											  this->player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
 
 	Vector ground = this->player->currentMoveData->m_vecAbsOrigin;
 	ground.z -= 2;
@@ -616,7 +612,6 @@ void KZClassicModeService::SlopeFix()
 	bbox_t bounds;
 	this->player->GetBBoxBounds(&bounds);
 	trace_t trace;
-	g_pKZUtils->InitGameTrace(&trace);
 
 	g_pKZUtils->TracePlayerBBox(this->player->currentMoveData->m_vecAbsOrigin, ground, bounds, &filter, trace);
 
@@ -711,7 +706,7 @@ static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilt
 	return true;
 }
 
-void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
+void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
 	this->tpmTriggerFixOrigins.RemoveAll();
 	this->overrideTPM = false;
@@ -744,9 +739,8 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	bbox_t bounds;
 	this->player->GetBBoxBounds(&bounds);
 
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, pawn, pawn->m_Collision().m_collisionAttribute().m_nInteractsWith(),
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	CTraceFilterPlayerMovementCS filter(pawn);
+
 	bool potentiallyStuck {};
 
 	for (bumpCount = 0; bumpCount < MAX_BUMPS; bumpCount++)
@@ -950,7 +944,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	this->tpmVelocity = velocity;
 }
 
-void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
+void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
@@ -993,13 +987,9 @@ void KZClassicModeService::OnCategorizePosition(bool bStayOnGround)
 	bbox_t bounds;
 	this->player->GetBBoxBounds(&bounds);
 
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPlayerPawn(),
-											  this->player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
 
 	trace_t trace;
-	g_pKZUtils->InitGameTrace(&trace);
 
 	Vector origin, groundOrigin;
 	this->player->GetOrigin(&origin);

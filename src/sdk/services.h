@@ -21,11 +21,11 @@ public:
 	uint8 __pad0030[0x6];    // 0x0
 };
 
-class CCSPlayer_ViewModelServices : public CPlayerPawnComponent
+class CPlayer_WeaponServices : public CPlayerPawnComponent
 {
 public:
-	DECLARE_SCHEMA_CLASS(CCSPlayer_ViewModelServices)
-	SCHEMA_FIELD_POINTER(CHandle<CBaseModelEntity>, m_hViewModel);
+	DECLARE_SCHEMA_CLASS(CPlayer_WeaponServices)
+	SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hActiveWeapon)
 };
 
 class CPlayer_ObserverServices : public CPlayerPawnComponent

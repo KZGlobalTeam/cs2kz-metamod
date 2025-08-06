@@ -251,27 +251,7 @@ void KZQuietService::ToggleHideWeapon()
 	this->player->optionService->SetPreferenceBool("hideWeapon", this->hideWeapon);
 }
 
-void KZQuietService::OnPhysicsSimulatePost()
-{
-	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	if (!pawn)
-	{
-		return;
-	}
-	CCSPlayer_ViewModelServices *vms = pawn->m_pViewModelServices();
-	if (!vms)
-	{
-		return;
-	}
-	for (i32 i = 0; i < 3; i++)
-	{
-		CBaseModelEntity *vmEnt = static_cast<CBaseModelEntity *>(vms->m_hViewModel[i].Get());
-		if (vmEnt)
-		{
-			vmEnt->m_fEffects(this->ShouldHideWeapon() ? 0x420 : 0);
-		}
-	}
-}
+void KZQuietService::OnPhysicsSimulatePost() {}
 
 void KZQuietService::OnPlayerPreferencesLoaded()
 {

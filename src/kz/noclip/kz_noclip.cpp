@@ -6,6 +6,8 @@
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
+#define FL_NOCLIP (1 << 3)
+
 void KZNoclipService::Reset()
 {
 	this->lastNoclipTime = {};

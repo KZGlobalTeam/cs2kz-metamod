@@ -1,6 +1,7 @@
 #include "kz_mode_vnl.h"
 #include "utils/interfaces.h"
 #include "sdk/usercmd.h"
+#include "sdk/tracefilter.h"
 #include "sdk/entity/cbasetrigger.h"
 
 const char *KZVanillaModeService::GetModeName()
@@ -71,7 +72,7 @@ static_function f32 QuantizeFloat(f32 value)
 	return (value + offset) - offset;
 }
 
-void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace)
+void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
 	this->tpmTriggerFixOrigins.RemoveAll();
 
@@ -96,7 +97,6 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	this->player->GetOrigin(&origin);
 	Vector &velocity = this->player->currentMoveData->m_vecVelocity;
 	this->player->GetVelocity(&oldVelocity);
-	g_pKZUtils->InitGameTrace(&pm);
 
 	VectorCopy(velocity, original_velocity); // Store original velocity
 	VectorCopy(velocity, primal_velocity);
@@ -108,10 +108,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	bbox_t bounds;
 	this->player->GetBBoxBounds(&bounds);
 
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, this->player->GetPlayerPawn(),
-											  this->player->GetPlayerPawn()->m_pCollision()->m_collisionAttribute().m_nInteractsWith,
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
 
 	f32 originalError = this->player->GetMoveServices()->m_flAccumulatedJumpError();
 	for (bumpcount = 0; bumpcount < numbumps; bumpcount++)
@@ -136,6 +133,11 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			zFinal -= 199608.0f;
 			end.z = zFinal;
 			this->player->GetMoveServices()->m_flAccumulatedJumpError = preciseZMoveDistance - (end.z - origin.z);
+		}
+		// AG2 Update: Fixed several cases where a player would get stuck on map geometry while surfing (i.e., on surf maps)
+		if (numplanes == 1)
+		{
+			VectorMA(end, 0.03125f, planes[0], end);
 		}
 		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
 		if (pFirstDest && (end == *pFirstDest))
@@ -270,7 +272,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	this->player->currentMoveData->m_vecVelocity = oldVelocity;
 }
 
-void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace)
+void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
 	if (this->airMoving)
 	{
@@ -355,6 +357,11 @@ void KZVanillaModeService::OnSetupMove(PlayerCommand *pc)
 		f64 precisionLoss = approxOffsetCurtime - exactCurtime;
 		subtickMove->set_when(subtickMove->when() - precisionLoss / ENGINE_FIXED_TICK_INTERVAL);
 	}
+}
+
+void KZVanillaModeService::OnPlayerMove()
+{
+	this->player->currentMoveData->m_flMaxSpeed = MIN(this->player->currentMoveData->m_flMaxSpeed, 250.0f);
 }
 
 void KZVanillaModeService::OnProcessMovementPost()

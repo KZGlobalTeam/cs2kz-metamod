@@ -7,7 +7,6 @@
 #include "igameeventsystem.h"
 
 class CGameConfig;
-class CTraceFilterPlayerMovementCS;
 class CTraceFilter;
 class CCSPlayerController;
 class CGameResourceService;
@@ -28,9 +27,6 @@ class CCSGameRules;
 struct SndOpEventGuid_t;
 struct EmitSound_t;
 
-typedef void InitPlayerMovementTraceFilter_t(CTraceFilterPlayerMovementCS &pFilter, CEntityInstance *pHandleEntity, uint64_t interactWith,
-											 int collisionGroup);
-typedef void InitGameTrace_t(trace_t *trace);
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
 typedef CBaseEntity *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
@@ -76,20 +72,16 @@ namespace interfaces
 class KZUtils
 {
 public:
-	KZUtils(TracePlayerBBox_t *TracePlayerBBox, InitGameTrace_t *InitGameTrace, InitPlayerMovementTraceFilter_t *InitPlayerMovementTraceFilter,
-			GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, EmitSoundFunc_t *EmitSound,
-			SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName, DispatchSpawn_t *DispatchSpawn,
-			RemoveEntity_t *RemoveEntity, DebugDrawMesh_t *DebugDrawMesh)
-		: TracePlayerBBox(TracePlayerBBox), InitGameTrace(InitGameTrace), InitPlayerMovementTraceFilter(InitPlayerMovementTraceFilter),
-		  GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles), EmitSound(EmitSound), SwitchTeam(SwitchTeam),
-		  SetPawn(SetPawn), CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn), RemoveEntity(RemoveEntity),
-		  DebugDrawMesh(DebugDrawMesh)
+	KZUtils(TracePlayerBBox_t *TracePlayerBBox, GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles,
+			EmitSoundFunc_t *EmitSound, SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName,
+			DispatchSpawn_t *DispatchSpawn, RemoveEntity_t *RemoveEntity, DebugDrawMesh_t *DebugDrawMesh)
+		: TracePlayerBBox(TracePlayerBBox), GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles),
+		  EmitSound(EmitSound), SwitchTeam(SwitchTeam), SetPawn(SetPawn), CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn),
+		  RemoveEntity(RemoveEntity), DebugDrawMesh(DebugDrawMesh)
 	{
 	}
 
 	TracePlayerBBox_t *const TracePlayerBBox;
-	InitGameTrace_t *const InitGameTrace;
-	InitPlayerMovementTraceFilter_t *const InitPlayerMovementTraceFilter;
 	GetLegacyGameEventListener_t *const GetLegacyGameEventListener;
 	SnapViewAngles_t *const SnapViewAngles;
 	EmitSoundFunc_t *const EmitSound;

@@ -12,11 +12,3 @@ public:
 	SCHEMA_FIELD(Color, m_clrRender)
 	SCHEMA_FIELD(uint8, m_nRenderMode)
 };
-
-class CBaseViewModel : public CBaseModelEntity
-{
-public:
-
-	DECLARE_SCHEMA_CLASS(CBaseViewModel);
-	SCHEMA_FIELD(int, m_nViewModelIndex);
-};
