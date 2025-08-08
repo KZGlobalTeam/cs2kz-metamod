@@ -33,9 +33,4 @@ parser.options.add_argument('--enable-debug', action='store_const', const='1', d
                        help='Enable debugging symbols')
 parser.options.add_argument('--enable-optimize', action='store_const', const='1', dest='opt',
                        help='Enable optimization')
-parser.options.add_argument('-s', '--sdks', default='cs2', dest='sdks',
-                       help='Build against specified SDKs; valid args are "all", "present", or '
-                            'comma-delimited list of engine names (default: "all")')
-parser.options.add_argument('--targets', type=str, dest='targets', default='x86_64',
-                            help="Override the target architecture (use commas to separate multiple targets).")
 parser.Configure()
