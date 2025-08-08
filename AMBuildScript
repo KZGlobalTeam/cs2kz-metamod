@@ -238,8 +238,8 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
 
     cxx = self.target
     lib = cxx.StaticLibrary(f'versionlib_{cxx.target.arch}')
-  
-    self.configureCXX(lib.compiler)
+    
+    self.configureCXX(lib.compiler, True)
   
     # VS generator doesn't like having non string sources, but we need that for correct
     # dependency tracking
@@ -274,7 +274,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     self.generateVersioningHeaders()
     self.generateVersionLib()    
 
-  def configureCXX(self, cxx):
+  def configureCXX(self, cxx, force_disable_optimization = False):
     if cxx.behavior == 'gcc':
       cxx.defines += [
         'stricmp=strcasecmp',
@@ -375,7 +375,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
       ]
 
     # Optimization
-    if builder.options.opt == '1':
+    if builder.options.opt == '1' and not force_disable_optimization:
       cxx.defines += ['NDEBUG']
       if cxx.behavior == 'gcc':
         cxx.cflags += ['-O3', '-flto']
