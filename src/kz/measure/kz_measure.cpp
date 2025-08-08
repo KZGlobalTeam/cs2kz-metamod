@@ -28,6 +28,7 @@ static_function CEntityHandle CreateMeasureBeam(const Vector &start, const Vecto
 	pKeyValues->SetBool("start_active", true);
 	measurer->m_iTeamNum(CUSTOM_PARTICLE_SYSTEM_TEAM);
 	measurer->DispatchSpawn(pKeyValues);
+	delete pKeyValues;
 	return measurer->GetRefEHandle();
 }
 

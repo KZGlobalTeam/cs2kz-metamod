@@ -93,6 +93,8 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	g_pPlayerManager->Cleanup();
 	KZDatabaseService::Cleanup();
 	KZGlobalService::Cleanup();
+	KZLanguageService::Cleanup();
+	KZOptionService::Cleanup();
 	ConVar_Unregister();
 	return true;
 }

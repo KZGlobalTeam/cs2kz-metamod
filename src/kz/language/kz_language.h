@@ -14,6 +14,7 @@ public:
 	static void LoadConfigFiles();
 	static void LoadLanguages();
 	static void LoadTranslations();
+	static void Cleanup();
 
 	struct LanguageInfo
 	{
