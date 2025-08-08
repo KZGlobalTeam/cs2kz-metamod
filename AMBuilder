@@ -1,25 +1,8 @@
 import os
 
-# Here only one sdk should be available to generate only one executable in the end,
-# as multi-sdk loading isn't supported out of the box by metamod, and would require specifying the full path in the vdf
-# which in the end would ruin the multi-platform (unix, win etc) loading by metamod as it won't be able to append platform specific extension
-# so just fall back to the single binary.
-# Multi-sdk solutions should be manually loaded with a custom plugin loader (examples being sourcemod, stripper:source)
-
-for sdk_target in MMSPlugin.sdk_targets:
-  sdk = sdk_target.sdk
-  cxx = sdk_target.cxx
-
-  CXXINCLUDES = [
-      os.path.join(builder.sourcePath, 'src'),
-      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
-      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
-      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
-      os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket'),
-  ]
-
-  PROTOS = [
+def get_proto_builder(builder, sdk_target, sdk):
+  
+  protoc_builder = builder.tools.Protoc(protoc = sdk_target.protoc, sources = [
     os.path.join(sdk['path'], 'common', 'netmessages.proto'),
     os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
     os.path.join(sdk['path'], 'common', 'network_connection.proto'),
@@ -34,10 +17,18 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'protobuf', 'cs_gameevents.proto'),
     os.path.join(builder.sourcePath, 'protobuf', 'cs_usercmd.proto'),
     os.path.join(builder.sourcePath, 'protobuf', 'networksystem_protomessages.proto'),
-  ]
+  ])
 
-  # Main binary
-  binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.plugin_name, sdk)
+  protoc_builder.protoc.includes += [
+    os.path.join(sdk['path'], 'gcsdk'),
+    os.path.join(builder.sourcePath, 'protobuf')
+  ]
+  
+  return protoc_builder
+
+def configure_main(sdk_target, sdk, cxx):
+  binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.metadata['name'], sdk)
+
 
   if binary.compiler.family == 'gcc' or binary.compiler.family == 'clang':
     binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
@@ -45,47 +36,24 @@ for sdk_target in MMSPlugin.sdk_targets:
   if binary.compiler.family == 'clang':
     binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
 
-  binary.compiler.cxxincludes += CXXINCLUDES
-
-  if binary.compiler.target.platform == 'linux':
-    binary.compiler.postlink += [
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
-      os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
-      '-lssl', '-lcrypto'
-    ]
-    binary.sources += [
-      'src/utils/plat_linux.cpp'
-      ]
-  elif binary.compiler.target.platform == 'windows':
-    binary.compiler.postlink += [
-      os.path.join('psapi.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
-      os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'mbedTLS.lib'),
-      'bcrypt.lib'
-    ]
-    binary.sources += [
-      'src/utils/plat_win.cpp'
-    ]
-    binary.compiler.cxxincludes += [
-      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'include'),
-      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'include'),
-      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'drivers', 'builtin', 'include'),
-    ]
-
+  binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'src'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket'),
+  ]
+  
   binary.sources += [
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitykeyvalues.cpp'),
     os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
     os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'),
-    
-    
+
     os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
-    
+
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils_interface.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils_print.cpp'),
@@ -139,13 +107,12 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'api.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'handshake.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'events.cpp'),
+    
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'jump_reporting.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'recorder.cpp'),
-    
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'language', 'kz_language.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'measure', 'kz_measure.cpp'),
@@ -172,80 +139,123 @@ for sdk_target in MMSPlugin.sdk_targets:
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
     
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'callbacks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'kz_trigger.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'mapping_api.cpp'),
   ]
+
 
   ws_dir = os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket', 'ixwebsocket')
 
   for file in os.listdir(ws_dir):
     if file.endswith('.cpp'):
       binary.sources.append(os.path.join(ws_dir, file))
-
-  binary.custom = [builder.tools.Protoc(protoc = sdk_target.protoc, sources = PROTOS)]
-
-  # Mode binaries
-  mode_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-mode-ckz", sdk)
-
-  if mode_binary.compiler.family == 'gcc' or mode_binary.compiler.family == 'clang':
-    mode_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
-
-  if mode_binary.compiler.family == 'clang':
-    mode_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
-
-  mode_binary.compiler.cxxincludes += CXXINCLUDES
-
-  if mode_binary.compiler.target.platform == 'linux':
-    mode_binary.compiler.postlink += [
+ 
+  if binary.compiler.target.platform == 'linux':
+    binary.compiler.postlink += [
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
-    ] 
-    mode_binary.sources += [
+      '-lssl', '-lcrypto'
+    ]
+    binary.sources += [
       'src/utils/plat_linux.cpp'
       ]
-  elif mode_binary.compiler.target.platform == 'windows':
-    mode_binary.compiler.postlink += [
+  elif binary.compiler.target.platform == 'windows':
+    binary.compiler.postlink += [
+      os.path.join('psapi.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
+      os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedTLS.lib'),
+      'bcrypt.lib'
+    ]
+    binary.sources += [
+      'src/utils/plat_win.cpp'
+    ]
+    binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'drivers', 'builtin', 'include'),
+    ]
+
+
+  return binary
+
+def configure_ckz(sdk, cxx):
+  ckz_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-mode-ckz", sdk)
+
+  if ckz_binary.compiler.family == 'gcc' or ckz_binary.compiler.family == 'clang':
+    ckz_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
+  if ckz_binary.compiler.family == 'clang':
+    ckz_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
+
+  ckz_binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'src'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+  ]
+
+  if ckz_binary.compiler.target.platform == 'linux':
+    ckz_binary.compiler.postlink += [
+      os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
+    ] 
+    ckz_binary.sources += [
+      'src/utils/plat_linux.cpp'
+      ]
+  elif ckz_binary.compiler.target.platform == 'windows':
+    ckz_binary.compiler.postlink += [
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
     ]
-    mode_binary.sources += [
+    ckz_binary.sources += [
       'src/utils/plat_win.cpp'
       ]
 
-  mode_binary.sources += [
+  ckz_binary.sources += [
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
   ]
+  return ckz_binary
   
-  # Style binaries
-  style_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.plugin_name}-style-autobhop", sdk)
+def configure_abh(sdk, cxx):
+  abh_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-autobhop", sdk)
 
-  if style_binary.compiler.family == 'gcc' or style_binary.compiler.family == 'clang':
-    style_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+  if abh_binary.compiler.family == 'gcc' or abh_binary.compiler.family == 'clang':
+    abh_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
 
-  if style_binary.compiler.family == 'clang':
-    style_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
+  if abh_binary.compiler.family == 'clang':
+    abh_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
 
-  style_binary.compiler.cxxincludes += CXXINCLUDES
+  abh_binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'src'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+  ]
 
-  if style_binary.compiler.target.platform == 'linux':
-    style_binary.compiler.postlink += [
+  if abh_binary.compiler.target.platform == 'linux':
+    abh_binary.compiler.postlink += [
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
     ] 
-    style_binary.sources += [
+    abh_binary.sources += [
       'src/utils/plat_linux.cpp'
       ]
-  elif style_binary.compiler.target.platform == 'windows':
-    style_binary.compiler.postlink += [
+  elif abh_binary.compiler.target.platform == 'windows':
+    abh_binary.compiler.postlink += [
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
     ]
-    style_binary.sources += [
+    abh_binary.sources += [
       'src/utils/plat_win.cpp'
       ]
 
-  style_binary.sources += [
+  abh_binary.sources += [
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
@@ -253,29 +263,39 @@ for sdk_target in MMSPlugin.sdk_targets:
     os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_autobhop.cpp'),
   ]
   
-  protoc_builder = builder.tools.Protoc(protoc = sdk_target.protoc, sources = PROTOS)
-  protoc_builder.protoc.includes += [
-    os.path.join(sdk['path'], 'gcsdk'),
-    os.path.join(builder.sourcePath, 'protobuf')
-  ]
+  return abh_binary
 
-  binary.custom = [protoc_builder]
-  mode_binary.custom = [protoc_builder]
-  style_binary.custom = [protoc_builder]
+sdk_target = MMSPlugin.sdk_target
+sdk = MMSPlugin.sdk_target.sdk
+cxx = MMSPlugin.sdk_target.cxx
 
-  nodes = builder.Add(binary)
-  mode_nodes = builder.Add(mode_binary)
-  style_nodes = builder.Add(style_binary)
+# Main binary
+binary = configure_main(sdk_target, sdk, cxx)
+# Mode binaries
+ckz_binary = configure_ckz(sdk, cxx)
+# Style binaries
+abh_binary = configure_abh(sdk, cxx)
 
-  # If we are generating a VS project, make sure to add the modes in, and the build folder for linter.
-  if builder.options.generator == 'vs':
-    binary.sources += mode_binary.sources
-    binary.sources += style_binary.sources
-    binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')]
+protoc_builder = get_proto_builder(builder, sdk_target, sdk)
+
+binary.custom = [protoc_builder]
+ckz_binary.custom = [protoc_builder]
+abh_binary.custom = [protoc_builder]
+
+# We have to split nodes here because they will be put into different folders.
+nodes = builder.Add(binary)
+mode_nodes = builder.Add(ckz_binary)
+style_nodes = builder.Add(abh_binary)
+
+# If we are generating a VS project, make sure to add the modes in, and the build folder for linter.
+if builder.options.generator == 'vs':
+  binary.sources += ckz_binary.sources
+  binary.sources += abh_binary.sources
+  binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
 
-  MMSPlugin.binaries += [nodes]
-  MMSPlugin.mode_binaries += [mode_nodes]
-  MMSPlugin.style_binaries += [style_nodes]
+MMSPlugin.binaries += [nodes]
+MMSPlugin.mode_binaries += [mode_nodes]
+MMSPlugin.style_binaries += [style_nodes]
 
 # vim: filetype=python expandtab shiftwidth=2 tabstop=8 textwidth=99

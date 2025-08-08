@@ -39,6 +39,14 @@ void KZOptionService::InitOptions()
 	LoadDefaultOptions();
 }
 
+void KZOptionService::Cleanup()
+{
+	if (pServerCfgKeyValues)
+	{
+		delete pServerCfgKeyValues;
+	}
+}
+
 void KZOptionService::InitializeLocalPrefs(CUtlString text)
 {
 	if (this->initState > LOCAL)

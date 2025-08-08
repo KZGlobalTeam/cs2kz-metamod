@@ -173,6 +173,7 @@ void KZBeamService::UpdatePlayerBeam()
 
 		beam->DispatchSpawn(pKeyValues);
 		this->playerBeam = beam->GetRefEHandle();
+		delete pKeyValues;
 	}
 	origin += this->playerBeamOffset;
 	beam->Teleport(&origin, nullptr, &vec3_origin);
@@ -192,6 +193,8 @@ void KZBeamService::UpdatePlayerBeam()
 			newBeam->DispatchSpawn(pKeyValues);
 			newBeam->m_iTeamNum(CUSTOM_PARTICLE_SYSTEM_TEAM);
 			this->playerBeamNew = newBeam->GetRefEHandle();
+
+			delete pKeyValues;
 		}
 		else if (g_pKZUtils->GetServerGlobals()->curtime - beam->m_flStartTime().GetTime() > 3.2f)
 		{

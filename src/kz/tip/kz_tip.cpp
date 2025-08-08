@@ -53,9 +53,7 @@ void KZTipService::PrintTip()
 void KZTipService::LoadTips()
 {
 	pTipKeyValues = new KeyValues("Tips");
-	KeyValues *configKeyValues = new KeyValues("Config");
 	pTipKeyValues->UsesEscapeSequences(true);
-	configKeyValues->UsesEscapeSequences(true);
 
 	char buffer[1024];
 	g_SMAPI->PathFormat(buffer, sizeof(buffer), "addons/cs2kz/translations/*.*");
@@ -85,6 +83,7 @@ void KZTipService::LoadTips()
 	}
 
 	tipInterval = KZOptionService::GetOptionFloat("tipInterval", KZ_DEFAULT_TIP_INTERVAL);
+	delete pTipKeyValues;
 }
 
 void KZTipService::ShuffleTips()

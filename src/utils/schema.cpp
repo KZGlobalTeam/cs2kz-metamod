@@ -82,6 +82,11 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t &tableMap, const char *cla
 			continue;
 		}
 
+#ifdef CS2_SDK_ENABLE_SCHEMA_FIELD_OFFSET_LOGGING
+		Msg("%s::%s found at -> 0x%X (datamap) - %llx, type: %d, size: %d\n", className, field.fieldName, field.fieldOffset, &field, field.fieldType,
+			field.fieldSize);
+#endif
+
 		std::pair<uint32_t, SchemaKey> newEntry;
 		newEntry.first = hashKey;
 		newEntry.second.offset = field.fieldOffset;

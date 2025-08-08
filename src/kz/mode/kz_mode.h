@@ -40,6 +40,7 @@ enum KzModeCvars
 	MODECVAR_SV_WATER_SLOW_AMOUNT,
 	MODECVAR_MP_SOLID_TEAMMATES,
 	MODECVAR_MP_SOLID_ENEMIES,
+	MODECVAR_SV_SUBTICK_MOVEMENT_VIEW_ANGLES,
 	MODECVAR_COUNT,
 };
 class KZPlayer;
@@ -265,7 +266,8 @@ namespace KZ::mode
 		"sv_waterfriction",
 		"sv_water_slow_amount",
 		"mp_solid_teammates",
-		"mp_solid_enemies"
+		"mp_solid_enemies",
+		"sv_subtick_movement_view_angles"
 	};
 
 
@@ -302,7 +304,8 @@ namespace KZ::mode
 		new CConVarRef<float>("sv_waterfriction"),
 		new CConVarRef<float>("sv_water_slow_amount"),
 		new CConVarRef<int>("mp_solid_teammates"),
-		new CConVarRef<int>("mp_solid_enemies")
+		new CConVarRef<int>("mp_solid_enemies"),
+		new CConVarRef<bool>("sv_subtick_movement_view_angles")
 	};
 
 	// clang-format on

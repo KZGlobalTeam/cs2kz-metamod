@@ -93,6 +93,8 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	g_pPlayerManager->Cleanup();
 	KZDatabaseService::Cleanup();
 	KZGlobalService::Cleanup();
+	KZLanguageService::Cleanup();
+	KZOptionService::Cleanup();
 	ConVar_Unregister();
 	return true;
 }
@@ -138,46 +140,6 @@ bool KZPlugin::Pause(char *error, size_t maxlen)
 bool KZPlugin::Unpause(char *error, size_t maxlen)
 {
 	return true;
-}
-
-const char *KZPlugin::GetLicense()
-{
-	return "GPLv3";
-}
-
-const char *KZPlugin::GetVersion()
-{
-	return VERSION_STRING;
-}
-
-const char *KZPlugin::GetDate()
-{
-	return __DATE__;
-}
-
-const char *KZPlugin::GetLogTag()
-{
-	return "KZ";
-}
-
-const char *KZPlugin::GetAuthor()
-{
-	return "zer0.k";
-}
-
-const char *KZPlugin::GetDescription()
-{
-	return "CS2 KreedZ";
-}
-
-const char *KZPlugin::GetName()
-{
-	return "CS2KZ";
-}
-
-const char *KZPlugin::GetURL()
-{
-	return "https://github.com/KZGlobalTeam/cs2kz-metamod";
 }
 
 void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)

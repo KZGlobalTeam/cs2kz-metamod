@@ -1,0 +1,11 @@
+{
+    "name": "cs2kz",
+    "alias": "cs2kz",
+    "display_name": "CS2KZ",
+    "description": "CS2 KreedZ",
+    "author": "zer0.k",
+    "url": "https://cs2kz.org/",
+    "log_tag": "CS2KZ",
+    "license": "GPLv3",
+    "version": "0.0.0-dev"
+}

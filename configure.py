@@ -25,7 +25,7 @@ parser.options.add_argument('-a', '--plugin-alias', type=str, dest='plugin_alias
                        help='Plugin alias')
 parser.options.add_argument('--hl2sdk-root', type=str, dest='hl2sdk_root', default='../',
                        help='Root search folder for HL2SDKs')
-parser.options.add_argument('--hl2sdk-manifests', type=str, dest='hl2sdk_manifests', default='./metamod-source/hl2sdk-manifests',
+parser.options.add_argument('--hl2sdk-manifests', type=str, dest='hl2sdk_manifests', default='../metamod-source/hl2sdk-manifests',
                        help='HL2SDK manifests source tree folder')
 parser.options.add_argument('--mms_path', type=str, dest='mms_path', default='../metamod-source',
                        help='Metamod:Source source tree folder')
@@ -33,9 +33,4 @@ parser.options.add_argument('--enable-debug', action='store_const', const='1', d
                        help='Enable debugging symbols')
 parser.options.add_argument('--enable-optimize', action='store_const', const='1', dest='opt',
                        help='Enable optimization')
-parser.options.add_argument('-s', '--sdks', default='cs2', dest='sdks',
-                       help='Build against specified SDKs; valid args are "all", "present", or '
-                            'comma-delimited list of engine names (default: "all")')
-parser.options.add_argument('--targets', type=str, dest='targets', default='x86_64',
-                            help="Override the target architecture (use commas to separate multiple targets).")
 parser.Configure()

@@ -24,7 +24,7 @@ jobs:
 
       - name: Update version header
         run: |
-          echo "#define VERSION_STRING \"${{ inputs.version }}\"" > ./src/version.h
+          sed -i 's/"version": "0.0.0-dev"/"version": "${{ inputs.version }}"/' ./plugin-metadata.json
 
       - name: Build and run Docker image
         run: |
@@ -76,7 +76,7 @@ jobs:
       - name: Update version header
         shell: bash
         run: |
-          echo "#define VERSION_STRING \"${{ inputs.version }}\"" > ./src/version.h
+          sed -i 's/"version": "0.0.0-dev"/"version": "${{ inputs.version }}"/' ./plugin-metadata.json
 
       - name: Run AMBuild
         working-directory: build

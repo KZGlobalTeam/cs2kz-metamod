@@ -58,6 +58,22 @@ void KZLanguageService::LoadConfigFiles()
 	KZLanguageService::LoadLanguages();
 }
 
+void KZLanguageService::Cleanup()
+{
+	if (translationKV)
+	{
+		delete translationKV;
+	}
+	if (languagesKV)
+	{
+		delete languagesKV;
+		if (addonsKV)
+		{
+			delete addonsKV;
+		}
+	}
+}
+
 void KZLanguageService::LoadLanguages()
 {
 	char fullPath[1024];
