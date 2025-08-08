@@ -1,4 +1,5 @@
 #pragma once
+#include "version_gen.h"
 
 #include "kz_mode.h"
 #include "sdk/datatypes.h"
@@ -46,14 +47,45 @@ public:
 	bool Unpause(char *error, size_t maxlen);
 
 public:
-	const char *GetAuthor();
-	const char *GetName();
-	const char *GetDescription();
-	const char *GetURL();
-	const char *GetLicense();
-	const char *GetVersion();
-	const char *GetDate();
-	const char *GetLogTag();
+	const char *GetAuthor()
+	{
+		return PLUGIN_AUTHOR;
+	}
+
+	const char *GetName()
+	{
+		return PLUGIN_DISPLAY_NAME;
+	}
+
+	const char *GetDescription()
+	{
+		return PLUGIN_DESCRIPTION;
+	}
+
+	const char *GetURL()
+	{
+		return PLUGIN_URL;
+	}
+
+	const char *GetLicense()
+	{
+		return PLUGIN_LICENSE;
+	}
+
+	const char *GetVersion()
+	{
+		return PLUGIN_FULL_VERSION;
+	}
+
+	const char *GetDate()
+	{
+		return __DATE__;
+	}
+
+	const char *GetLogTag()
+	{
+		return PLUGIN_LOGTAG;
+	}
 };
 
 class KZClassicModeService : public KZModeService

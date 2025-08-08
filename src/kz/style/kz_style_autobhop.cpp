@@ -3,7 +3,6 @@
 #include "utils/addresses.h"
 #include "utils/interfaces.h"
 #include "utils/gameconfig.h"
-#include "version.h"
 
 KZAutoBhopStylePlugin g_KZAutoBhopStylePlugin;
 
@@ -74,46 +73,6 @@ bool KZAutoBhopStylePlugin::Unpause(char *error, size_t maxlen)
 		return false;
 	}
 	return true;
-}
-
-const char *KZAutoBhopStylePlugin::GetLicense()
-{
-	return "GPLv3";
-}
-
-const char *KZAutoBhopStylePlugin::GetVersion()
-{
-	return VERSION_STRING;
-}
-
-const char *KZAutoBhopStylePlugin::GetDate()
-{
-	return __DATE__;
-}
-
-const char *KZAutoBhopStylePlugin::GetLogTag()
-{
-	return "KZ-Style-AutoBhop";
-}
-
-const char *KZAutoBhopStylePlugin::GetAuthor()
-{
-	return "zer0.k";
-}
-
-const char *KZAutoBhopStylePlugin::GetDescription()
-{
-	return "AutoBhop style plugin for CS2KZ";
-}
-
-const char *KZAutoBhopStylePlugin::GetName()
-{
-	return "CS2KZ-Style-AutoBhop";
-}
-
-const char *KZAutoBhopStylePlugin::GetURL()
-{
-	return "https://github.com/KZGlobalTeam/cs2kz-metamod";
 }
 
 CGameEntitySystem *GameEntitySystem()

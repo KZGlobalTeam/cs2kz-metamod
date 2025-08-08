@@ -3,7 +3,7 @@
 bool KZ::API::handshake::Hello::ToJson(Json &json) const
 {
 	// clang-format off
-	return json.Set("plugin_version", VERSION_STRING)
+	return json.Set("plugin_version", PLUGIN_FULL_VERSION)
 		&& json.Set("plugin_version_checksum", this->checksum)
 		&& json.Set("map", this->currentMapName)
 		&& json.Set("players", this->players);

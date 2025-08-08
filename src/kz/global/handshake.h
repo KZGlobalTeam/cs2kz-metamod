@@ -3,7 +3,7 @@
 #include <optional>
 #include <string_view>
 
-#include "version.h"
+#include "version_gen.h"
 #include "kz/global/api.h"
 
 namespace KZ::API::handshake

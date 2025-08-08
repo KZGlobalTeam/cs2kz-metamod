@@ -7,8 +7,6 @@
 #include "sdk/tracefilter.h"
 #include "sdk/entity/cbasetrigger.h"
 
-#include "version.h"
-
 KZClassicModePlugin g_KZClassicModePlugin;
 
 CGameConfig *g_pGameConfig = NULL;
@@ -85,46 +83,6 @@ bool KZClassicModePlugin::Unpause(char *error, size_t maxlen)
 		return false;
 	}
 	return true;
-}
-
-const char *KZClassicModePlugin::GetLicense()
-{
-	return "GPLv3";
-}
-
-const char *KZClassicModePlugin::GetVersion()
-{
-	return VERSION_STRING;
-}
-
-const char *KZClassicModePlugin::GetDate()
-{
-	return __DATE__;
-}
-
-const char *KZClassicModePlugin::GetLogTag()
-{
-	return "KZ-Mode-Classic";
-}
-
-const char *KZClassicModePlugin::GetAuthor()
-{
-	return "zer0.k";
-}
-
-const char *KZClassicModePlugin::GetDescription()
-{
-	return "Classic mode plugin for CS2KZ";
-}
-
-const char *KZClassicModePlugin::GetName()
-{
-	return "CS2KZ-Mode-Classic";
-}
-
-const char *KZClassicModePlugin::GetURL()
-{
-	return "https://github.com/KZGlobalTeam/cs2kz-metamod";
 }
 
 CGameEntitySystem *GameEntitySystem()

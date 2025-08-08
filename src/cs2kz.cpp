@@ -23,8 +23,6 @@
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
 
-#include "version.h"
-
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
