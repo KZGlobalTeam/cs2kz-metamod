@@ -1,9 +1,10 @@
 #include "kz/kz.h"
 
-constexpr const char *blockedCommands[] = {"playerchatwheel", "player_ping", "roger",     "negative",    "cheer",      "holdpos",
-										   "followme",        "thanks",      "go",        "fallback",    "sticktog",   "holdpos",
-										   "followme",        "roger",       "negative",  "cheer",       "compliment", "thanks",
-										   "enemyspot",       "needbackup",  "takepoint", "sectorclear", "inposition"};
+constexpr const char *blockedCommands[] = {
+	"playerchatwheel", "player_ping", "holdpos",     "regroup",    "followme", "takingfire", "go",        "fallback",
+	"sticktog",        "cheer",       "thanks",      "compliment", "report",   "roger",      "enemyspot", "needbackup",
+	"sectorclear",     "inposition",  "reportingin", "getout",     "negative", "enemydown",
+};
 
 META_RES KZ::misc::CheckBlockedRadioCommands(const char *cmd)
 {
