@@ -26,6 +26,7 @@ class CPlayer_WeaponServices : public CPlayerPawnComponent
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_WeaponServices)
 	SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hActiveWeapon)
+	SCHEMA_FIELD_POINTER(CUtlVector<CHandle<CBaseModelEntity>>, m_hMyWeapons)
 };
 
 class CPlayer_ObserverServices : public CPlayerPawnComponent
@@ -44,7 +45,7 @@ public:
 	SCHEMA_FIELD_POINTER(CInButtonState, m_nButtons)
 	SCHEMA_FIELD_POINTER(float, m_arrForceSubtickMoveWhen)
 
-	void SetForcedSubtickMove(i32 index, f32 when)
+	void SetForcedSubtickMove(i32 index, f32 when, bool network = true)
 	{
 		if (index > 3)
 		{
@@ -57,7 +58,7 @@ public:
 		static const auto m_chain = schema::FindChainOffset(ThisClassName);
 		static const size_t offset =
 			((::size_t)&reinterpret_cast<char const volatile &>((((CPlayer_MovementServices *)0)->m_arrForceSubtickMoveWhen)));
-		if (m_chain != 0 && m_key.networked)
+		if (m_chain != 0 && m_key.networked && network)
 		{
 			schema::NetworkStateChanged((uintptr_t)(this) + m_chain, m_key.offset, index);
 		}
