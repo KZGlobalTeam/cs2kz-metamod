@@ -143,6 +143,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'callbacks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'kz_trigger.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'mapping_api.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'meshtracer', 'meshtrace.cpp'),
   ]
 
 

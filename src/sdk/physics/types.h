@@ -81,11 +81,29 @@ public:
 	RnCapsule_t m_Capsule;
 };
 
-struct alignas(4) AABB_t
+struct AABB_t
 {
-public:
-	Vector m_vMinBounds;
-	Vector m_vMaxBounds;
+	union
+	{
+		struct
+		{
+			Vector m_vMinBounds;
+			Vector m_vMaxBounds;
+		};
+
+		Vector m_vBounds[2];
+	};
+
+	AABB_t()
+	{
+		m_vMinBounds.Init();
+		m_vMaxBounds.Init();
+	}
+
+	Vector operator[](int index)
+	{
+		return m_vBounds[index];
+	}
 };
 
 struct alignas(1) RnVertex_t;
@@ -417,7 +435,6 @@ class IPhysicsShape
 	virtual ~IPhysicsShape() = 0;
 	virtual void unk01() = 0;
 	virtual void unk02() = 0;
-	virtual void unk03() = 0;
 
 public:
 	virtual PhysicsShapeType_t GetShapeType() = 0;

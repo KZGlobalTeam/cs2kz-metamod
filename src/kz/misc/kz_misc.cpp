@@ -26,6 +26,7 @@
 #include "sdk/physics/gamesystem.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "sdk/cskeletoninstance.h"
+#include "sdk/tracefilter.h"
 
 #define RESTART_CHECK_INTERVAL 1800.0f
 static_global CTimer<> *mapRestartTimer;
@@ -769,10 +770,7 @@ SCMD(kz_testground)
 	Vector extent = vec3_origin;
 	extent.z = -20.0f;
 	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> results;
-	CTraceFilterPlayerMovementCS filter;
-	g_pKZUtils->InitPlayerMovementTraceFilter(filter, player->GetPlayerPawn(),
-											  player->GetPlayerPawn()->m_Collision().m_collisionAttribute().m_nInteractsWith(),
-											  COLLISION_GROUP_PLAYER_MOVEMENT);
+	CTraceFilterPlayerMovementCS filter(player->GetPlayerPawn());
 	filter.m_bIterateEntities = true;
 	CastBox.EnableDetour();
 	g_pKZUtils->CastBoxMultiple(&results, &ray, &origin, &extent, &filter);
