@@ -304,6 +304,9 @@ void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveDat
 	player->OnWalkMovePost();
 }
 
+CConVar<bool> kz_retrace_tpm_enable("kz_retrace_tpm_enable", FCVAR_NONE, "Enable retrace", false);
+CConVar<bool> kz_retrace_cg_enable("kz_retrace_cg_enable", FCVAR_NONE, "Enable retrace", false);
+
 void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t *pFirstTrace,
 											 bool *bIsSurfing)
 {
@@ -363,7 +366,15 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 #else
 	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
+	if (kz_retrace_tpm_enable.Get())
+	{
+		TraceShape.EnableDetour();
+	}
 	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
+	if (kz_retrace_tpm_enable.Get())
+	{
+		TraceShape.DisableDetour();
+	}
 #endif
 	if (mv->m_vecVelocity != oldVelocity)
 	{
@@ -394,7 +405,15 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 	Vector oldVelocity = mv->m_vecVelocity;
 	bool oldOnGround = !!(player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND);
 
+	if (kz_retrace_cg_enable.Get())
+	{
+		TraceShape.EnableDetour();
+	}
 	CategorizePosition(ms, mv, bStayOnGround);
+	if (kz_retrace_cg_enable.Get())
+	{
+		TraceShape.DisableDetour();
+	}
 
 	bool ground = !!(player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND);
 
