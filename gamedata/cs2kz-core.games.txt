@@ -66,7 +66,7 @@
 			{
 				"library"	"server"
 				"windows"	"\x48\x89\x4C\x24\x08\x55\x53\x57\x41\x54\x41\x55\x48\x8D\x6C\x24\x80\x48\x81\xEC\x80\x01\x00\x00\x48\x8B\xFA"
-				"linux"		"\x55\x48\x89\xF0\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x28\x01\x00\x00"
+				"linux"		"\x55\x48\x89\xE5\x41\x57\x49\x89\xFF\x41\x56\x41\x89\xCE\x41\x55\x41\x54"
 			}
 			// dev_create_move_report
 			"SetupMove"
@@ -375,7 +375,7 @@
 			"DebugTriangle"
 			{
 				"windows"		"54"
-				"linux"			"55"
+				"linux"			"52"
 			}
 			// CDebugOverlayGameSystem second vtable, offset 1 (windows):
 			//   result = debugoverlay;
@@ -398,16 +398,18 @@
 			}
 			// Physics/TraceShape (Server) with entities iteration
 			// Use that offset for Phys2World => case 2 => xref the last function in case and get first jump => Get offset
+			// Alternatively, "MotionController Async Update" offset + 10
 			"CastBoxMultiple"
 			{
 				"windows"		"172"
-				"linux"			"" // TODO
+				"linux"			"161" // TODO
 			}
 			// Same function, right after the cast
 			// v22 = (*(**&v44[v21] + 0x450LL))(*&v44[v21]);
 			"BodyToEntHandle"
 			{
 				"windows"		"138"
+				"linux"			"147"
 			}
 		}
 	}
