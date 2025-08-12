@@ -415,7 +415,7 @@ struct CPhysAggregateData
 	const char *m_pEmbeddedKeyvalues;
 };
 
-enum PhysicsShapeType_t : __int32
+enum PhysicsShapeType_t : uint32
 {
 	SHAPE_SPHERE = 0,
 	SHAPE_CAPSULE,
