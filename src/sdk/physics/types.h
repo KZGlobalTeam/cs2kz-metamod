@@ -432,7 +432,7 @@ public:
 
 class IPhysicsShape
 {
-	virtual ~IPhysicsShape() = 0;
+	virtual void unk00() = 0;
 	virtual void unk01() = 0;
 	virtual void unk02() = 0;
 
