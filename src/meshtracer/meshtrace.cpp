@@ -255,6 +255,17 @@ bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, cons
 		return true;
 	}
 	g_pKZUtils->ClearOverlays();
+	if (trace.m_nTriangle != -1)
+	{
+		CTransform transform;
+		g_pKZUtils->GetPhysicsBodyTransform(trace.m_hBody, transform);
+		RnMesh_t *mesh = trace.m_hShape->GetMesh();
+		const RnTriangle_t &triangle = mesh->m_Triangles[trace.m_nTriangle];
+		Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
+		Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
+		Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
+		g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 0, 255, 0, 128, true, -1.0f);
+	}
 	Vector extent = end - start;
 
 	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> results;
@@ -299,7 +310,6 @@ bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, cons
 
 				if (triangles[i] == trace.m_nTriangle)
 				{
-					g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 0, 255, 0, 128, true, -1.0f);
 					continue; // skip the original triangle, we already know it hit
 				}
 				// Reconstruct the ray
