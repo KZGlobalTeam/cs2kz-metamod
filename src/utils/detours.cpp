@@ -199,15 +199,15 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 	}
 #else
 	g_pPhysicsQuery = (void *)physicsQuery;
-	META_CONPRINTF("[Debug] %s start\n", __func__);
 	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
 	CConVarRef<bool> kz_retrace_tpm_enable("kz_retrace_tpm_enable");
 	CConVarRef<bool> kz_retrace_cg_enable("kz_retrace_cg_enable");
 	if (kz_retrace_tpm_enable.Get() || kz_retrace_cg_enable.Get())
 	{
+		DebuggerBreak();
 		RetraceShape(ray, start, end, *pTraceFilter, *pm);
+		DebuggerBreak();
 	}
-	META_CONPRINTF("[Debug] %s end\n", __func__);
 #endif
 	return ret;
 }
