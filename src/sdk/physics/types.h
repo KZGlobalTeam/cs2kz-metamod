@@ -18,7 +18,14 @@ struct alignas(8) RnSphereDesc_t;
 struct alignas(8) RnCapsuleDesc_t;
 struct alignas(8) RnHullDesc_t;
 struct alignas(8) RnMeshDesc_t;
-
+struct VPhysXConstraintParams_t;
+struct PhysShapeMarkup_t;
+struct VPhysXBodyPart_t;
+struct VPhysXJoint_t;
+struct RnCapsule_t;
+struct RnHull_t;
+struct RnMesh_t;
+#ifndef IDA_IGNORE
 struct alignas(8) VPhysics2ShapeDef_t
 {
 public:
@@ -360,19 +367,19 @@ public:
 	float32 m_flPlasticity;
 };
 
+struct PhysShapeMarkup_t
+{
+	int32 m_nBodyInAggregate;
+	int32 m_nShapeInBody;
+	uint64 m_sHitGroup; // CGlobalSymbol
+};
+#endif
 struct CPhysConstraintData
 {
 	uint32 m_nFlags;
 	uint16 m_nParent;
 	uint16 m_nChild;
 	const VPhysXConstraintParams_t *m_pParams;
-};
-
-class PhysShapeMarkup_t
-{
-	int32 m_nBodyInAggregate;
-	int32 m_nShapeInBody;
-	uint64 m_sHitGroup; // CGlobalSymbol
 };
 
 /*

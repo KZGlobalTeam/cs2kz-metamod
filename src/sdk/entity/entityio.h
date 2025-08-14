@@ -13,6 +13,8 @@ struct EntityIOConnectionDesc_t
 	EntityIOTargetType_t m_nTargetType;
 	int32 m_nTimesToFire;
 	float m_flDelay;
+	KeyValues3 unknown;
+	bool unknown2;
 };
 
 struct EntityIOConnection_t : EntityIOConnectionDesc_t
@@ -34,4 +36,7 @@ public:
 	void *vtable;
 	EntityIOConnection_t *m_pConnections;
 	EntityIOOutputDesc_t *m_pDesc;
+	uint8_t m_Value[16];
 };
+
+static_assert(sizeof(CEntityIOOutput) == 0x28, "CEntityIOOutput size is incorrect");
