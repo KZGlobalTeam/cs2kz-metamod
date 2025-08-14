@@ -4,7 +4,7 @@
 #include "utils/schema.h"
 #include "utils/interfaces.h"
 #include "ehandle.h"
-
+#ifndef IDA_IGNORE
 extern CGameConfig *g_pGameConfig;
 
 class CCollisionProperty;
@@ -218,3 +218,4 @@ public:
 		this->m_flGravityScale(scale);
 	}
 };
+#endif // IDA_IGNORE

@@ -17,6 +17,17 @@ struct TransmitInfo
 	CBitVec<16384> *m_pTransmitEdict;
 };
 
+enum MsgDest : int32_t
+{
+	HUD_PRINTNOTIFY = 1,
+	HUD_PRINTCONSOLE = 2,
+	HUD_PRINTTALK = 3,
+	HUD_PRINTCENTER = 4,
+	HUD_PRINTTALK2 = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
+	HUD_PRINTALERT = 6
+};
+#ifndef IDA_IGNORE
+
 enum ObserverMode_t : uint32
 {
 	OBS_MODE_NONE = 0x0,
@@ -26,16 +37,6 @@ enum ObserverMode_t : uint32
 	OBS_MODE_ROAMING = 0x4,
 	OBS_MODE_DIRECTED = 0x5,
 	NUM_OBSERVER_MODES = 0x6,
-};
-
-enum MsgDest : int32_t
-{
-	HUD_PRINTNOTIFY = 1,
-	HUD_PRINTCONSOLE = 2,
-	HUD_PRINTTALK = 3,
-	HUD_PRINTCENTER = 4,
-	HUD_PRINTTALK2 = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
-	HUD_PRINTALERT = 6
 };
 
 enum InputBitMask_t : uint64
@@ -62,7 +63,7 @@ enum InputBitMask_t : uint64
 	IN_ZOOM = 0x400000000,
 	IN_LOOK_AT_WEAPON = 0x800000000,
 };
-
+#endif
 // Sound stuff.
 
 typedef uint32 SoundEventGuid_t;
