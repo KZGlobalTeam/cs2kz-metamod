@@ -249,11 +249,13 @@ static_function void FindTrianglesInBox(const RnNode_t *node, CUtlVector<uint32>
 
 bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace &trace)
 {
+	META_CONPRINTF("[Debug] %s start\n", __func__);
 	// No need to retrace missed rays.
 	if (!trace.DidHit())
 	{
 		return true;
 	}
+	META_CONPRINTF("[Debug] Clearing overlays\n", __func__);
 	g_pKZUtils->ClearOverlays();
 	if (trace.m_nTriangle != -1)
 	{
@@ -264,11 +266,13 @@ bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, cons
 		Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
 		Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
 		Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
+		META_CONPRINTF("[Debug] Adding original hit triangle\n", __func__);
 		g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 0, 255, 0, 128, true, -1.0f);
 	}
 	Vector extent = end - start;
 
 	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> results;
+	META_CONPRINTF("[Debug] CastBoxMultiple\n", __func__);
 	g_pKZUtils->CastBoxMultiple(&results, &ray, &start, &extent, &filter);
 	// Early exit if we run into non-mesh shapes because we can't trace against them yet.
 	FOR_EACH_VEC(results, i)

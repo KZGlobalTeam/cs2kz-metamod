@@ -27,7 +27,7 @@ class KZVanillaModeService : public KZModeService
 		(float)5.2f,           // sv_friction
 		(float)800.0f,         // sv_gravity
 		(float)301.993377411f, // sv_jump_impulse
-		(bool)false,           // sv_jump_precision_enable
+		(bool)true,            // sv_jump_precision_enable
 		(float)0.015625f,      // sv_jump_spam_penalty_time
 		(float)-0.707f,        // sv_ladder_angle
 		(float)0.2f,           // sv_ladder_dampen

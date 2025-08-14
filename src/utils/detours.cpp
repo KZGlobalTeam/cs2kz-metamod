@@ -112,6 +112,7 @@ bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCe
 }
 
 extern bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace &trace);
+static void *g_pPhysicsQuery = nullptr;
 
 bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
 					   trace_t *pm)
@@ -197,6 +198,8 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 		META_CONPRINT("missed\n");
 	}
 #else
+	g_pPhysicsQuery = (void *)physicsQuery;
+	META_CONPRINTF("[Debug] %s start\n", __func__);
 	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
 	CConVarRef<bool> kz_retrace_tpm_enable("kz_retrace_tpm_enable");
 	CConVarRef<bool> kz_retrace_cg_enable("kz_retrace_cg_enable");
@@ -204,8 +207,49 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 	{
 		RetraceShape(ray, start, end, *pTraceFilter, *pm);
 	}
+	META_CONPRINTF("[Debug] %s end\n", __func__);
 #endif
 	return ret;
+}
+
+#include "utils/simplecmds.h"
+#include "sdk/tracefilter.h"
+
+SCMD(kz_drawtriangle, SCFL_HIDDEN)
+{
+	if (!g_pPhysicsQuery)
+	{
+		return MRES_SUPERCEDE;
+	}
+	g_pKZUtils->ClearOverlays();
+	auto pawn = controller->GetPlayerPawn();
+	Vector origin;
+	g_pKZPlayerManager->ToPlayer(controller)->GetEyeOrigin(&origin);
+	QAngle angles = pawn->m_angEyeAngles();
+
+	Vector forward;
+	AngleVectors(angles, &forward);
+	Vector endPos = origin + forward * 32768;
+	trace_t tr;
+
+	CTraceFilterPlayerMovementCS filter(pawn);
+	Ray_t ray;
+	TraceShape.EnableDetour();
+	bool result = TraceShape(g_pPhysicsQuery, ray, origin, endPos, &filter, &tr);
+	TraceShape.DisableDetour();
+	if (tr.DidHit() && tr.m_nTriangle != -1)
+	{
+		CTransform transform;
+		g_pKZUtils->GetPhysicsBodyTransform(tr.m_hBody, transform);
+		RnMesh_t *mesh = tr.m_hShape->GetMesh();
+		const RnTriangle_t &triangle = mesh->m_Triangles[tr.m_nTriangle];
+		Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
+		Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
+		Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
+
+		g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 0, 255, 0, 128, true, -1.0f);
+	}
+	return MRES_SUPERCEDE;
 }
 
 void Detour_CPhysicsGameSystemFrameBoundary(void *pThis)

@@ -16,15 +16,9 @@ struct SchemaKey
 
 struct CNetworkVarChainer : public CSmartPtr<CEntityInstance>
 {
-	struct ChainUpdatePropagationLL_t
-	{
-		ChainUpdatePropagationLL_t *pNext;
-		CUtlDelegate<void(const CNetworkVarChainer &)> updateDelegate;
-	};
-
-	uint8 unk[24];
+	CUtlVector<int> netVarChainerUnknown;
 	ChangeAccessorFieldPathIndex_t m_PathIndex;
-	ChainUpdatePropagationLL_t *m_pPropagationList;
+	bool netVarChainerUnknown2;
 };
 
 namespace schema
@@ -86,8 +80,8 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			} \
 			else if (m_key.networked) \
 			{ \
-				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \ \ \ \
-					need to have their this pointer corrected by the offset . \ \ \
+				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \
+					need to have their this pointer corrected by the offset. \
 				DevMsg("Attempting to call SetStateChanged on %s::%s\n", ThisClassName, #varName); */ \
 				if (!IsStruct) \
 					((CEntityInstance *)pThisClass)->NetworkStateChanged({m_key.offset + extra_offset}); \
