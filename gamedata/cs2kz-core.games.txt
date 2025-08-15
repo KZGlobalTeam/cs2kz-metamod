@@ -375,7 +375,7 @@
 			"DebugTriangle"
 			{
 				"windows"		"54"
-				"linux"			"52"
+				"linux"			"55"
 			}
 			// CDebugOverlayGameSystem second vtable, offset 1 (windows):
 			//   result = debugoverlay;
@@ -402,7 +402,7 @@
 			"CastBoxMultiple"
 			{
 				"windows"		"172"
-				"linux"			"171"
+				"linux"			"172"
 			}
 			// Same function, right after the cast
 			// v22 = (*(**&v44[v21] + 0x450LL))(*&v44[v21]);
