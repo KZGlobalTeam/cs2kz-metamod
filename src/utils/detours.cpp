@@ -111,7 +111,7 @@ bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCe
 	return result;
 }
 
-extern bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace &trace);
+extern bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace &tr);
 static void *g_pPhysicsQuery = nullptr;
 
 bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
@@ -204,9 +204,7 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 	CConVarRef<bool> kz_retrace_cg_enable("kz_retrace_cg_enable");
 	if (kz_retrace_tpm_enable.Get() || kz_retrace_cg_enable.Get())
 	{
-		DebuggerBreak();
 		RetraceShape(ray, start, end, *pTraceFilter, *pm);
-		DebuggerBreak();
 	}
 #endif
 	return ret;
@@ -246,6 +244,9 @@ SCMD(kz_drawtriangle, SCFL_HIDDEN)
 		Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
 		Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
 		Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
+
+		META_CONPRINTF("Triangle (%i): normal %f %f %f, endpos %f %f %f, fraction %f\n", tr.m_nTriangle, tr.m_vHitNormal.x, tr.m_vHitNormal.y,
+					   tr.m_vHitNormal.z, tr.m_vEndPos.x, tr.m_vEndPos.y, tr.m_vEndPos.z, tr.m_flFraction);
 
 		g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 0, 255, 0, 128, true, -1.0f);
 	}
