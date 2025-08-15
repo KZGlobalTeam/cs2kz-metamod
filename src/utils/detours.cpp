@@ -51,11 +51,7 @@ void InitDetours()
 	INIT_DETOUR(g_pGameConfig, RecvServerBrowserPacket);
 	INIT_DETOUR(g_pGameConfig, CPhysicsGameSystemFrameBoundary);
 	CastBox.CreateDetour(g_pGameConfig);
-	TraceShape.CreateDetour(g_pGameConfig);
-#ifdef DEBUG_TPM
 	INIT_DETOUR(g_pGameConfig, TraceShape);
-	TraceShape.DisableDetour();
-#endif
 }
 
 void FlushAllDetours()
@@ -111,7 +107,7 @@ bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCe
 	return result;
 }
 
-extern bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace &tr);
+extern bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace *tr);
 static void *g_pPhysicsQuery = nullptr;
 
 bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
@@ -200,11 +196,13 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 #else
 	g_pPhysicsQuery = (void *)physicsQuery;
 	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
-	CConVarRef<bool> kz_retrace_tpm_enable("kz_retrace_tpm_enable");
-	CConVarRef<bool> kz_retrace_cg_enable("kz_retrace_cg_enable");
-	if (kz_retrace_tpm_enable.Get() || kz_retrace_cg_enable.Get())
+	if (ray.m_eType == RAY_TYPE_HULL)
 	{
-		RetraceShape(ray, start, end, *pTraceFilter, *pm);
+		CConVarRef<bool> kz_retrace_enable("kz_retrace_enable");
+		if (kz_retrace_enable.Get())
+		{
+			ret = RetraceShape(ray, start, end, *pTraceFilter, pm);
+		}
 	}
 #endif
 	return ret;
@@ -232,9 +230,7 @@ SCMD(kz_drawtriangle, SCFL_HIDDEN)
 
 	CTraceFilterPlayerMovementCS filter(pawn);
 	Ray_t ray;
-	TraceShape.EnableDetour();
 	bool result = TraceShape(g_pPhysicsQuery, ray, origin, endPos, &filter, &tr);
-	TraceShape.DisableDetour();
 	if (tr.DidHit() && tr.m_nTriangle != -1)
 	{
 		CTransform transform;

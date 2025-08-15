@@ -208,19 +208,20 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 	return result;
 }
 
-static_function void ComputeSweptAABB(const Vector &boxMins, const Vector &boxMaxs, const Vector &delta, Vector &outMins, Vector &outMaxs)
+static_function void ComputeSweptAABB(const Vector &boxMins, const Vector &boxMaxs, const Vector &delta, f32 epsilon, Vector &outMins,
+									  Vector &outMaxs)
 {
 	// AABB at end position
 	Vector endMins = boxMins + delta;
 	Vector endMaxs = boxMaxs + delta;
 
 	// Swept AABB is the min/max of both boxes
-	outMins.x = Min(boxMins.x, endMins.x);
-	outMins.y = Min(boxMins.y, endMins.y);
-	outMins.z = Min(boxMins.z, endMins.z);
-	outMaxs.x = Max(boxMaxs.x, endMaxs.x);
-	outMaxs.y = Max(boxMaxs.y, endMaxs.y);
-	outMaxs.z = Max(boxMaxs.z, endMaxs.z);
+	outMins.x = Min(boxMins.x, endMins.x) - epsilon;
+	outMins.y = Min(boxMins.y, endMins.y) - epsilon;
+	outMins.z = Min(boxMins.z, endMins.z) - epsilon;
+	outMaxs.x = Max(boxMaxs.x, endMaxs.x) + epsilon;
+	outMaxs.y = Max(boxMaxs.y, endMaxs.y) + epsilon;
+	outMaxs.z = Max(boxMaxs.z, endMaxs.z) + epsilon;
 }
 
 static_function void FindTrianglesInBox(const RnNode_t *node, CUtlVector<uint32> &triangles, const Vector &mins, const Vector &maxs,
@@ -247,106 +248,94 @@ static_function void FindTrianglesInBox(const RnNode_t *node, CUtlVector<uint32>
 	}
 }
 
-bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace &trace)
+bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace *trace)
 {
-	// No need to retrace missed rays.
-	if (!trace.DidHit())
-	{
-		return true;
-	}
-
-	g_pKZUtils->ClearOverlays();
-	if (trace.m_nTriangle != -1)
-	{
-		CTransform transform;
-		g_pKZUtils->GetPhysicsBodyTransform(trace.m_hBody, transform);
-		RnMesh_t *mesh = trace.m_hShape->GetMesh();
-		const RnTriangle_t &triangle = mesh->m_Triangles[trace.m_nTriangle];
-		Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
-		Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
-		Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
-		META_CONPRINTF("  Original triangle (%i): %f %f %f -> %f %f %f, normal %f %f %f, endpos %f %f %f, fraction %f\n", trace.m_nTriangle, start.x,
-					   start.y, start.z, end.x, end.y, end.z, trace.m_vHitNormal.x, trace.m_vHitNormal.y, trace.m_vHitNormal.z, trace.m_vEndPos.x,
-					   trace.m_vEndPos.y, trace.m_vEndPos.z, trace.m_flFraction);
-
-		g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 0, 255, 0, 128, true, -1.0f);
-	}
-	Vector extent = end - start;
+	Vector to = end - start;
 
 	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> results;
 
-	g_pKZUtils->CastBoxMultiple(&results, &ray, &start, &extent, &filter);
-	// Early exit if we run into non-mesh shapes because we can't trace against them yet.
+	// reset fraction
+	trace->m_flFraction = 1;
+
+	f32 epsilon = kz_surface_clip_epsilon.Get();
+	// overtrace a little bit to make sure we don't miss any triangles!
+	{
+		Ray_t::Hull_t hull = ray.m_Hull;
+		Vector extents = (hull.m_vMaxs - hull.m_vMins) * 0.5f;
+		extents += epsilon * 2.0f;
+		Vector offset = (hull.m_vMaxs + hull.m_vMins) * 0.5f;
+		Vector start2 = start + offset;
+		g_pKZUtils->CastBoxMultiple(&results, &start2, &to, &extents, &filter);
+	}
+	Vector finalv0, finalv1, finalv2;
+	bool hitty = false;
+	if (trace->m_nTriangle != -1)
+	{
+		META_CONPRINTF("  Original tri index %i\n", trace->m_nTriangle);
+	}
 	FOR_EACH_VEC(results, i)
 	{
-		PhysicsTrace_t &result = results[i];
-		PhysicsShapeType_t shapeType = result.m_HitShape->GetShapeType();
+		PhysicsTrace_t &physTrace = results[i];
+		PhysicsShapeType_t shapeType = physTrace.m_HitShape->GetShapeType();
 		if (shapeType != SHAPE_MESH)
 		{
-			return false;
+			continue;
 		}
-	}
-
-	FOR_EACH_VEC(results, i)
-	{
-		PhysicsTrace_t &result = results[i];
+		META_CONPRINTF("  Tri index %i\n", physTrace.m_nTriangle);
 		CTransform transform;
-		g_pKZUtils->GetPhysicsBodyTransform(result.m_HitObject, transform);
-		RnMesh_t *mesh = result.m_HitShape->GetMesh();
+		g_pKZUtils->GetPhysicsBodyTransform(physTrace.m_HitObject, transform);
+		RnMesh_t *mesh = physTrace.m_HitShape->GetMesh();
 		if (mesh->m_Nodes.Count() > 0)
 		{
-			RnNode_t &node = mesh->m_Nodes[i];
-			CUtlVector<u32> triangles;
-			Vector sweptMins, sweptMaxs;
-			ComputeSweptAABB(start + ray.m_Hull.m_vMins, start + ray.m_Hull.m_vMaxs, extent, sweptMins, sweptMaxs);
-			FindTrianglesInBox(&node, triangles, sweptMins, sweptMaxs, &transform);
-			if (triangles.Count() == 0)
+			// const RnTriangle_t &triangle = mesh->m_Triangles[triangles[i]];
+			const RnTriangle_t &triangle = mesh->m_Triangles[physTrace.m_nTriangle];
+			Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
+			Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
+			Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
+
+			// Reconstruct the ray
+			TraceRay_t traceRay;
+			traceRay.start = start;
+			traceRay.end = end;
+			traceRay.size.m_vMinBounds = ray.m_Hull.m_vMins;
+			traceRay.size.m_vMaxBounds = ray.m_Hull.m_vMaxs;
+
+			Triangle_t tri(v0, v1, v2);
+			Brush_t triangleBrush = GenerateTriangleAabbBevelPlanes(tri);
+
+			// Do our own trace calculation
+			TraceResult_t brushTrace = TraceThroughBrush(traceRay, triangleBrush);
+
+			g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 255, 0, 0, 128, true, -1.0f);
+			if (brushTrace.fraction < trace->m_flFraction)
 			{
-				return false;
-			}
-			META_CONPRINTF("  Number of relevant triangles: %i\n", triangles.Count());
-			FOR_EACH_VEC(triangles, i)
-			{
-				const RnTriangle_t &triangle = mesh->m_Triangles[triangles[i]];
-				Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
-				Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
-				Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
-
-				if (triangles[i] == trace.m_nTriangle)
-				{
-					continue; // skip the original triangle, we already know it hit
-				}
-				// Reconstruct the ray
-				TraceRay_t traceRay;
-				traceRay.start = start;
-				traceRay.end = end;
-				traceRay.size.m_vMinBounds = ray.m_Hull.m_vMins;
-				traceRay.size.m_vMaxBounds = ray.m_Hull.m_vMaxs;
-
-				Triangle_t tri(v0, v1, v2);
-				Brush_t triangleBrush = GenerateTriangleAabbBevelPlanes(tri);
-
-				// Do our own trace calculation
-				TraceResult_t result = TraceThroughBrush(traceRay, triangleBrush);
-				if (result.fraction < 1.0f)
-				{
-					META_CONPRINTF("  Triangle %i: normal %f %f %f, endpos %f %f %f, fraction %f\n", triangles[i], result.plane.normal.x,
-								   result.plane.normal.y, result.plane.normal.z, result.endpos.x, result.endpos.y, result.endpos.z, result.fraction);
-				}
-				if (trace.DidHit() && trace.m_nTriangle != triangles[i])
-				{
-					g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 255, 0, 0, 128, true, -1.0f);
-				}
-				if (result.fraction < trace.m_flFraction)
-				{
-					META_CONPRINTF("  Overriding triangle %i with %i\n", trace.m_nTriangle, triangles[i]);
-					trace.m_flFraction = result.fraction;
-					trace.m_vHitNormal = result.plane.normal;
-					trace.m_vEndPos = result.endpos;
-					trace.m_nTriangle = triangles[i];
-				}
+				META_CONPRINTF("  Overriding triangle %i with %i\n", trace->m_nTriangle, physTrace.m_nTriangle);
+				META_CONPRINTF("  Triangle %i: normal %f %f %f, endpos %f %f %f, fraction %f\n", physTrace.m_nTriangle, brushTrace.plane.normal.x,
+							   brushTrace.plane.normal.y, brushTrace.plane.normal.z, brushTrace.endpos.x, brushTrace.endpos.y, brushTrace.endpos.z,
+							   brushTrace.fraction);
+				trace->m_pSurfaceProperties = physTrace.m_pSurfaceProperties;
+				trace->m_hBody = physTrace.m_HitObject;
+				trace->m_hShape = physTrace.m_HitShape;
+				trace->m_BodyTransform = transform;
+				trace->m_vStartPos = start;
+				trace->m_vEndPos = brushTrace.endpos;
+				trace->m_vHitNormal = brushTrace.plane.normal;
+				trace->m_vHitPoint = brushTrace.endpos;
+				trace->m_flHitOffset = 0;
+				trace->m_flFraction = brushTrace.fraction;
+				trace->m_nTriangle = physTrace.m_nTriangle;
+				trace->m_bStartInSolid = brushTrace.startsolid;
+				trace->m_bExactHitPoint = true;
+				finalv0 = v0;
+				finalv1 = v1;
+				finalv2 = v2;
+				hitty = true;
 			}
 		}
 	}
-	return true;
+	if (hitty)
+	{
+		g_pKZUtils->AddTriangleOverlay(finalv0, finalv1, finalv2, 0, 0, 255, 128, true, -1.0f);
+	}
+	return trace->m_flFraction < 1;
 }

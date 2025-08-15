@@ -82,6 +82,8 @@ void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerC
 	player->OnSetupMovePost(pc);
 }
 
+CConVar<bool> kz_retrace_enable("kz_retrace_enable", FCVAR_NONE, "Enable retrace", false);
+
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
@@ -97,6 +99,15 @@ void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, C
 bool FASTCALL movement::Detour_PlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	if (kz_retrace_enable.Get())
+	{
+		g_pKZUtils->ClearOverlays();
+		TraceShape.EnableDetour();
+	}
+	else
+	{
+		TraceShape.DisableDetour();
+	}
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnPlayerMove();
 	auto retValue = PlayerMove(ms, mv);
@@ -304,9 +315,6 @@ void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveDat
 	player->OnWalkMovePost();
 }
 
-CConVar<bool> kz_retrace_tpm_enable("kz_retrace_tpm_enable", FCVAR_NONE, "Enable retrace", false);
-CConVar<bool> kz_retrace_cg_enable("kz_retrace_cg_enable", FCVAR_NONE, "Enable retrace", false);
-
 void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t *pFirstTrace,
 											 bool *bIsSurfing)
 {
@@ -318,7 +326,7 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 	Vector initialVelocity = mv->m_vecVelocity;
 	f32 &liveError = ms->m_flAccumulatedJumpError();
 	Vector &liveVelocity = mv->m_vecVelocity;
-	TraceShape.EnableDetour();
+	// TraceShape.EnableDetour();
 	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
 	i32 count = traceHistory.Count();
@@ -364,17 +372,9 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 		}
 	}
 #else
-	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
+	// player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
-	if (kz_retrace_tpm_enable.Get())
-	{
-		TraceShape.EnableDetour();
-	}
 	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
-	if (kz_retrace_tpm_enable.Get())
-	{
-		TraceShape.DisableDetour();
-	}
 #endif
 	if (mv->m_vecVelocity != oldVelocity)
 	{
@@ -383,10 +383,10 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 		// but for now this doesn't matter.
 		player->SetCollidingWithWorld();
 	}
-	player->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
+	// player->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
 
 #ifdef DEBUG_TPM
-	TraceShape.DisableDetour();
+	// TraceShape.DisableDetour();
 #endif
 }
 
@@ -405,15 +405,7 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 	Vector oldVelocity = mv->m_vecVelocity;
 	bool oldOnGround = !!(player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND);
 
-	if (kz_retrace_cg_enable.Get())
-	{
-		TraceShape.EnableDetour();
-	}
 	CategorizePosition(ms, mv, bStayOnGround);
-	if (kz_retrace_cg_enable.Get())
-	{
-		TraceShape.DisableDetour();
-	}
 
 	bool ground = !!(player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND);
 

@@ -767,13 +767,14 @@ SCMD(kz_testground)
 	player->GetOrigin(&origin);
 	Ray_t ray;
 	ray.Init(Vector(-16.0f, -16.0f, 0.0f), Vector(16.0f, 16.0f, 72.0f));
-	Vector extent = vec3_origin;
-	extent.z = -20.0f;
+	Vector direction = vec3_origin;
+	direction.z = -20.0f;
 	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> results;
 	CTraceFilterPlayerMovementCS filter(player->GetPlayerPawn());
 	filter.m_bIterateEntities = true;
 	CastBox.EnableDetour();
-	g_pKZUtils->CastBoxMultiple(&results, &ray, &origin, &extent, &filter);
+	// TODO: calculate extents
+	// g_pKZUtils->CastBoxMultiple(&results, &origin, &direction, &extents, &filter);
 	CastBox.DisableDetour();
 	META_CONPRINTF("Done!\n");
 	FOR_EACH_VEC(results, i)
@@ -892,7 +893,8 @@ SCMD(kz_testground)
 					{
 						CUtlVector<u32> triangles;
 						Vector sweptMins, sweptMaxs;
-						ComputeSweptAABB(origin + Vector(-16.0f, -16.0f, 0.0f), origin + Vector(16.0f, 16.0f, 72.0f), extent, sweptMins, sweptMaxs);
+						ComputeSweptAABB(origin + Vector(-16.0f, -16.0f, 0.0f), origin + Vector(16.0f, 16.0f, 72.0f), direction, sweptMins,
+										 sweptMaxs);
 						FindTrianglesInBox(&node, triangles, sweptMins, sweptMaxs, &transform);
 						META_CONPRINTF("  Number of relevant triangles: %i\n", triangles.Count());
 						FOR_EACH_VEC(triangles, i)
