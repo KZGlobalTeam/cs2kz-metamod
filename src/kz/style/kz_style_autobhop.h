@@ -20,12 +20,12 @@ public:
 
 	const char *GetName()
 	{
-		return PLUGIN_DISPLAY_NAME;
+		return "CS2KZ-Style-AutoBhop";
 	}
 
 	const char *GetDescription()
 	{
-		return PLUGIN_DESCRIPTION;
+		return "AutoBhop style plugin for CS2KZ";
 	}
 
 	const char *GetURL()

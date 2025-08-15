@@ -54,12 +54,12 @@ public:
 
 	const char *GetName()
 	{
-		return PLUGIN_DISPLAY_NAME;
+		return "CS2KZ-Mode-Classic";
 	}
 
 	const char *GetDescription()
 	{
-		return PLUGIN_DESCRIPTION;
+		return "Classic mode plugin for CS2KZ";
 	}
 
 	const char *GetURL()
