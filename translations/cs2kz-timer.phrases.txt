@@ -709,4 +709,12 @@
 		"lv"		"{darkred}Neizdevās apstrādāt pašreizējo pieprasījumu. (Kartē {map_name} nav neviena trases)"
 	}
 
+	"Timer Stop Sound Enabled"
+	{
+		"en"		"{grey}You have enabled the timer stop sound."
+	}
+	"Timer Stop Sound Disabled"
+	{
+		"en"		"{grey}You have disabled the timer stop sound."
+	}
 }

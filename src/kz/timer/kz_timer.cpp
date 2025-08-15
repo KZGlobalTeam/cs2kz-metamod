@@ -434,7 +434,10 @@ void KZTimerService::PlayReachedStageSound()
 
 void KZTimerService::PlayTimerStopSound()
 {
-	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_STOP);
+	if (this->shouldPlayTimerStopSound)
+	{
+		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_STOP);
+	}
 }
 
 void KZTimerService::PlayMissedTimeSound()
@@ -636,6 +639,22 @@ bool KZTimerService::CanResume(bool showError)
 	return true;
 }
 
+SCMD(kz_timerstopsound, SCFL_TIMER | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->timerService->ToggleTimerStopSound();
+	return MRES_SUPERCEDE;
+}
+
+SCMD_LINK(kz_tss, kz_toggletimerstopsound);
+
+void KZTimerService::ToggleTimerStopSound()
+{
+	this->shouldPlayTimerStopSound = !this->shouldPlayTimerStopSound;
+	this->player->optionService->SetPreferenceBool("timerStopSound", this->shouldPlayTimerStopSound);
+	this->player->languageService->PrintChat(true, false, this->shouldPlayTimerStopSound ? "Timer Stop Sound Enabled" : "Timer Stop Sound Disabled");
+}
+
 void KZTimerService::Reset()
 {
 	this->timerRunning = {};
@@ -657,6 +676,7 @@ void KZTimerService::Reset()
 	this->validJump = {};
 	this->lastInvalidateTime = {};
 	this->touchedGroundSinceTouchingStartZone = {};
+	this->shouldPlayTimerStopSound = true;
 }
 
 void KZTimerService::OnPhysicsSimulatePost()
@@ -1492,6 +1512,7 @@ void KZTimerService::OnPlayerPreferencesLoaded()
 		return;
 	}
 	this->preferredCompareType = (CompareType)this->player->optionService->GetPreferenceInt("preferredCompareType", COMPARE_GPB);
+	this->shouldPlayTimerStopSound = this->player->optionService->GetPreferenceBool("timerStopSound", true);
 }
 
 void KZDatabaseServiceEventListener_Timer::OnMapSetup()

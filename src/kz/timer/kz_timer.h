@@ -334,6 +334,7 @@ private:
 	f32 lastDuckValue {};
 	f32 lastStaminaValue {};
 	bool touchedGroundSinceTouchingStartZone {};
+	bool shouldPlayTimerStopSound = true;
 
 public:
 	bool GetPaused()
@@ -356,7 +357,7 @@ public:
 		paused ? Resume() : Pause();
 	}
 
-	// Event listeners
+	void ToggleTimerStopSound();
 
 public:
 	virtual void Reset() override;

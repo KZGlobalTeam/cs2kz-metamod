@@ -1166,4 +1166,12 @@
 		"sv"		"Mät blockavståndet."
 		"ua"		"Виміряти відстань між блоками."
 	}
+	"Command Description - kz_timerstopsound"
+	{
+		"en"		"Toggle the timer stop sound."
+	}
+	"Command Description - kz_autohideweapon"
+	{
+		"en"		"Toggle the automatic hiding of weapon viewmodel."
+	}
 }

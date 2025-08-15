@@ -175,6 +175,10 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 		KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
 	}
 
+	if (player->quietService->ShouldAutoHideWeapon())
+	{
+		player->quietService->HideCurrentWeapon(true);
+	}
 	if (startPosCourse)
 	{
 		player->Teleport(&startPosCourse->startPosition, &startPosCourse->startAngles, &vec3_origin);
@@ -235,23 +239,6 @@ SCMD(kz_lj, SCFL_JUMPSTATS | SCFL_MAP)
 
 SCMD_LINK(kz_ljarea, kz_lj);
 SCMD_LINK(kz_jsarea, kz_lj);
-
-SCMD(kz_hideweapon, SCFL_PLAYER)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-
-	if (!player->GetPlayerPawn() || !player->GetPlayerPawn()->m_pWeaponServices())
-	{
-		return MRES_SUPERCEDE;
-	}
-	CBaseModelEntity *activeWeapon = player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
-	if (activeWeapon)
-	{
-		player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon.Set(nullptr);
-		player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Disable");
-	}
-	return MRES_SUPERCEDE;
-}
 
 SCMD(kz_playercheck, SCFL_PLAYER)
 {
@@ -383,6 +370,11 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 			}
 		}
 		player->specService->ResetSavedPosition();
+	}
+
+	if (player->quietService->ShouldAutoHideWeapon())
+	{
+		player->quietService->HideCurrentWeapon(true);
 	}
 	player->tipService->OnPlayerJoinTeam(newTeam);
 }

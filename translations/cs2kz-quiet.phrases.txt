@@ -94,4 +94,12 @@
 		"ko"		"{grey}이제 무기가 숨겨졌습니다."
 		"lv"		"{grey}Tagad tu neredzi savu ieroci."
 	}
+	"Quiet Option - Auto Hide Weapon - Enable"
+	{
+		"en"		"{grey}You will now automatically hide your weapon upon spawning."
+	}
+	"Quiet Option - Auto Hide Weapon - Disable"
+	{
+		"en"		"{grey}You will no longer automatically hide your weapon upon spawning."
+	}
 }
