@@ -412,8 +412,8 @@ CBaseEntity *KZUtils::PhysicsBodyToEntity(HPhysicsBody body)
 	return (CBaseEntity *)GameEntitySystem()->GetEntityInstance(handle);
 }
 
-void KZUtils::CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Ray_t *ray, const Vector *start, const Vector *extent,
-							  const RnQueryAttr_t *filter)
+void KZUtils::CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Vector *start, const Vector *direction,
+							  const Vector *bboxExtents, const RnQueryAttr_t *filter)
 {
 	i32 numWorlds = g_pVPhysics2->NumWorlds();
 	for (int i = 0; i < numWorlds; i++)
@@ -421,7 +421,7 @@ void KZUtils::CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *resu
 		CVPhys2World *world = g_pVPhysics2->GetWorld(i);
 		if (world->worldFlags == 2)
 		{
-			world->CastBoxMultiple(result, ray, start, extent, filter);
+			world->CastBoxMultiple(result, start, direction, bboxExtents, filter);
 			return;
 		}
 	}

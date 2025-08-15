@@ -45,8 +45,17 @@ std::string KZHUDService::GetSpeedText(const char *language)
 {
 	Vector velocity, baseVelocity;
 	this->player->GetVelocity(&velocity);
+	Vector origin;
+	this->player->GetOrigin(&origin);
 	this->player->GetBaseVelocity(&baseVelocity);
 	velocity += baseVelocity;
+#if 1
+	std::string result;
+	char buf[256];
+	V_snprintf(buf, sizeof(buf), "%.3f %.3f %.3f<br>%.4f<br>%.4f", origin.x, origin.y, origin.z, velocity.Length2D(), velocity.z);
+	result = buf;
+	return result;
+#else
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
 	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
 		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > HUD_ON_GROUND_THRESHOLD)
@@ -56,6 +65,7 @@ std::string KZHUDService::GetSpeedText(const char *language)
 	}
 	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text (Takeoff)", velocity.Length2D(),
 													 this->player->takeoffVelocity.Length2D());
+#endif
 }
 
 std::string KZHUDService::GetKeyText(const char *language)

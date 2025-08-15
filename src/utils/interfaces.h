@@ -148,8 +148,8 @@ public:
 
 	virtual CBaseEntity *PhysicsBodyToEntity(HPhysicsBody body);
 	virtual bool GetPhysicsBodyTransform(HPhysicsBody body, CTransform &transform);
-	virtual void CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Ray_t *ray, const Vector *start, const Vector *extent,
-								 const RnQueryAttr_t *filter);
+	virtual void CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Vector *start, const Vector *direction,
+								 const Vector *bboxExtents, const RnQueryAttr_t *filter);
 };
 
 extern KZUtils *g_pKZUtils;

@@ -30,9 +30,9 @@ private:
 public:
 	int worldFlags;
 
-	void CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Ray_t *ray, const Vector *start, const Vector *extent,
+	void CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Vector *start, const Vector *direction, const Vector *bboxExtents,
 						 const RnQueryAttr_t *filter)
 	{
-		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CastBoxMultiple"), this, result, ray, start, extent, filter);
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CastBoxMultiple"), this, result, start, direction, bboxExtents, filter);
 	}
 };
