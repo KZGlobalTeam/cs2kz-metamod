@@ -249,13 +249,12 @@ static_function void FindTrianglesInBox(const RnNode_t *node, CUtlVector<uint32>
 
 bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace &trace)
 {
-	DebuggerBreak();
 	// No need to retrace missed rays.
 	if (!trace.DidHit())
 	{
 		return true;
 	}
-	DebuggerBreak();
+
 	g_pKZUtils->ClearOverlays();
 	if (trace.m_nTriangle != -1)
 	{
@@ -266,13 +265,16 @@ bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, cons
 		Vector v0 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[0]]);
 		Vector v1 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[1]]);
 		Vector v2 = utils::TransformPoint(transform, mesh->m_Vertices[triangle.m_nIndex[2]]);
-		DebuggerBreak();
+		META_CONPRINTF("  Original triangle (%i): %f %f %f -> %f %f %f, normal %f %f %f, endpos %f %f %f, fraction %f\n", trace.m_nTriangle, start.x,
+					   start.y, start.z, end.x, end.y, end.z, trace.m_vHitNormal.x, trace.m_vHitNormal.y, trace.m_vHitNormal.z, trace.m_vEndPos.x,
+					   trace.m_vEndPos.y, trace.m_vEndPos.z, trace.m_flFraction);
+
 		g_pKZUtils->AddTriangleOverlay(v0, v1, v2, 0, 255, 0, 128, true, -1.0f);
 	}
 	Vector extent = end - start;
 
 	CUtlVectorFixedGrowable<PhysicsTrace_t, 128> results;
-	DebuggerBreak();
+
 	g_pKZUtils->CastBoxMultiple(&results, &ray, &start, &extent, &filter);
 	// Early exit if we run into non-mesh shapes because we can't trace against them yet.
 	FOR_EACH_VEC(results, i)
@@ -303,8 +305,6 @@ bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, cons
 				return false;
 			}
 			META_CONPRINTF("  Number of relevant triangles: %i\n", triangles.Count());
-			META_CONPRINTF("  Original triangle (%i): normal %f %f %f, endpos %f %f %f, fraction %f\n", trace.m_nTriangle, trace.m_vHitNormal.x,
-						   trace.m_vHitNormal.y, trace.m_vHitNormal.z, trace.m_vEndPos.x, trace.m_vEndPos.y, trace.m_vEndPos.z, trace.m_flFraction);
 			FOR_EACH_VEC(triangles, i)
 			{
 				const RnTriangle_t &triangle = mesh->m_Triangles[triangles[i]];
