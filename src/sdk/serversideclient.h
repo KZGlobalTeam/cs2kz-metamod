@@ -72,12 +72,6 @@ public:
 
 COMPILE_TIME_ASSERT(sizeof(CNetworkStatTrace) == 40);
 
-abstract_class INetworkChannelNotify
-{
-public:
-	virtual void OnShutdownChannel(INetChannel * pChannel) = 0;
-};
-
 class CServerSideClientBase : public CUtlSlot, public INetworkChannelNotify, public INetworkMessageProcessingPreFilter
 {
 public:
