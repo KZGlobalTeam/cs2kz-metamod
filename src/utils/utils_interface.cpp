@@ -378,7 +378,11 @@ void KZUtils::AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector cons
 	void *debugoverlay = CALL_VIRTUAL(void *, g_pGameConfig->GetOffset("GetDebugOverlay"), interfaces::pServer);
 	if (debugoverlay)
 	{
+#ifdef _WIN32
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("DebugTriangle"), debugoverlay, &p1, &p2, &p3, r, g, b, a, noDepthTest, flDuration);
+#else
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("DebugTriangle"), debugoverlay, &p1, &p2, &p3, r, g, flDuration, b, a, noDepthTest);
+#endif
 	}
 }
 
