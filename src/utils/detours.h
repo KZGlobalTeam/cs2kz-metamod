@@ -10,7 +10,7 @@
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock);
 extern CDetour<decltype(Detour_RecvServerBrowserPacket)> RecvServerBrowserPacket;
 
-bool FASTCALL Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
+bool FASTCALL Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *pTraceFilter,
 								trace_t *pm);
 extern CDetour<decltype(Detour_TraceShape)> TraceShape;
 bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCenter, const Vector &vDelta, const Vector &vExtents, void *attr);

@@ -8,6 +8,7 @@
 extern CGameConfig *g_pGameConfig;
 
 class CCollisionProperty;
+class CSkeletonInstance;
 
 class CNetworkedQuantizedFloat
 {
@@ -45,6 +46,16 @@ public:
 class CGameSceneNode
 {
 public:
+	virtual ~CGameSceneNode() = 0;
+	virtual void AddedToEntityDatabase(CEntityInstance *ent) = 0;
+    virtual void Connect(char const *, CEntityInstance *ent) = 0;
+    virtual void Spawn(CEntityInstance *ent, char const *string, CEntityKeyValues const *entKv) = 0;
+    virtual void Activate(CEntityInstance *ent, ActivateType_t type) = 0;
+    virtual void UpdateOnRemove(CEntityInstance *ent) = 0;
+    virtual void OnSetDormant(/*CEntityInstance *, EntityDormancyType_t, EntityDormancyType_t*/) = 0;
+    virtual CSkeletonInstance *GetSkeletonInstance(void) = 0;
+	
+	
 	DECLARE_SCHEMA_CLASS(CGameSceneNode)
 
 	SCHEMA_FIELD(CEntityInstance *, m_pOwner)

@@ -107,10 +107,10 @@ bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCe
 	return result;
 }
 
-extern bool RetraceShape(const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter &filter, CGameTrace *tr);
+extern bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter &filter, CGameTrace *tr);
 static void *g_pPhysicsQuery = nullptr;
 
-bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, const CTraceFilter *pTraceFilter,
+bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *pTraceFilter,
 					   trace_t *pm)
 {
 #ifdef DEBUG_TPM
@@ -201,7 +201,7 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 		CConVarRef<bool> kz_retrace_enable("kz_retrace_enable");
 		if (kz_retrace_enable.Get())
 		{
-			ret = RetraceShape(ray, start, end, *pTraceFilter, pm);
+			ret = RetraceHull(ray, start, end, *pTraceFilter, pm);
 		}
 	}
 #endif
