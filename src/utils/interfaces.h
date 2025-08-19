@@ -33,7 +33,7 @@ typedef CBaseEntity *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *,
 typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 typedef void TracePlayerBBox_t(const Vector &start, const Vector &end, const bbox_t &bounds, CTraceFilter *filter, trace_t &pm);
 typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
-typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool, bool);
+typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool, bool, bool);
 typedef CBaseEntity *CreateEntityByName_t(const char *className, int iForceEdictIndex);
 typedef void DispatchSpawn_t(CBaseEntity *pEntity, CEntityKeyValues *pEntityKeyValues);
 typedef void RemoveEntity_t(CEntityInstance *);
