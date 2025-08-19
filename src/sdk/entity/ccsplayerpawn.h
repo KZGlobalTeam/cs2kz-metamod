@@ -6,7 +6,6 @@ class CCSPlayerPawnBase : public CBasePlayerPawn
 {
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayerPawnBase);
-	SCHEMA_FIELD(QAngle, m_angEyeAngles)
 };
 
 class CCSPlayerPawn : public CCSPlayerPawnBase
@@ -18,6 +17,8 @@ public:
 	SCHEMA_FIELD(float, m_flSlopeDropHeight)
 
 	SCHEMA_FIELD(float, m_flVelocityModifier)
+
+	SCHEMA_FIELD(QAngle, m_angEyeAngles)
 
 	void Respawn()
 	{
