@@ -396,6 +396,11 @@
 				"windows"		"2"
 				"linux"			"3"
 			}
+			"IPhysicsShape::GetCollisionAttr"
+			{
+				"windows"		"14"
+				"linux"			"14"
+			}
 			// Physics/TraceShape (Server) with entities iteration
 			// Use that offset for Phys2World => case 2 => xref the last function in case and get first jump => Get offset
 			// Alternatively, "MotionController Async Update" offset + 10
@@ -406,7 +411,7 @@
 			}
 			// Same function, right after the cast
 			// v22 = (*(**&v44[v21] + 0x450LL))(*&v44[v21]);
-			"BodyToEntHandle"
+			"IPhysicsBody::GetEntHandle"
 			{
 				"windows"		"138"
 				"linux"			"138"

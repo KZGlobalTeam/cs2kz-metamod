@@ -408,8 +408,14 @@ CON_COMMAND_F(kz_worldtest, "", FCVAR_NONE)
 
 CBaseEntity *KZUtils::PhysicsBodyToEntity(HPhysicsBody body)
 {
-	CEntityHandle handle = CALL_VIRTUAL(int, g_pGameConfig->GetOffset("BodyToEntHandle"), body);
+	CEntityHandle handle = CALL_VIRTUAL(int, g_pGameConfig->GetOffset("IPhysicsBody::GetEntHandle"), body);
 	return (CBaseEntity *)GameEntitySystem()->GetEntityInstance(handle);
+}
+
+CEntityHandle KZUtils::PhysicsBodyToEntityHandle(HPhysicsBody body)
+{
+	CEntityHandle result = CALL_VIRTUAL(int, g_pGameConfig->GetOffset("IPhysicsBody::GetEntHandle"), body);
+	return result;
 }
 
 void KZUtils::CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Vector *start, const Vector *direction,

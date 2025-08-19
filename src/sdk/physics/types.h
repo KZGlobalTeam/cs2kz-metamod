@@ -4,6 +4,10 @@
 #include "mathlib/transform.h"
 #include "tier1/utlvector.h"
 #include "tier1/utlstring.h"
+#include "utils/virtual.h"
+#include "utils/gameconfig.h"
+
+extern CGameConfig *g_pGameConfig;
 
 typedef CUtlVector<Vector> CUtlVectorSIMDPaddedVector;
 
@@ -398,28 +402,66 @@ struct CPhysConstraintData
   - Find function that has "shatter_mesh_%i.vmesh" string in it.
   - The first function having two arguments with the second being 1 is CPhysAggregateData::CPhysAggregateData
 */
+
+class alignas(8) VPhysXCollisionAttributes_t
+{
+	public:
+    uint32 m_CollisionGroup;
+    CUtlVector<uint32> m_InteractAs;
+    CUtlVector<uint32> m_InteractWith;
+    CUtlVector<uint32> m_InteractExclude;
+    CUtlString m_CollisionGroupString;
+    CUtlVector<CUtlString> m_InteractAsStrings;
+    CUtlVector<CUtlString> m_InteractWithStrings;
+    CUtlVector<CUtlString> m_InteractExcludeStrings;
+};
+
+struct alignas(8) VPhysXAggregateData_t
+{
+	public:
+    uint16 m_nFlags;
+    uint16 m_nRefCounter;
+    CUtlVector<uint32> m_bonesHash;
+    CUtlVector<CUtlString> m_boneNames;
+    CUtlVector<uint16> m_indexNames;
+    CUtlVector<uint16> m_indexHash;
+    CUtlVector<matrix3x4a_t> m_bindPose;
+    CUtlVector<VPhysXBodyPart_t> m_parts;
+    CUtlVector<PhysShapeMarkup_t> m_shapeMarkups;
+    CUtlVector<CPhysConstraintData> m_constraints2;
+    CUtlVector<VPhysXJoint_t> m_joints;
+    void *m_pFeModel;
+    CUtlVector<uint16> m_boneParents;
+    CUtlVector<uint32> m_surfacePropertyHashes;
+    CUtlVector<VPhysXCollisionAttributes_t> m_collisionAttributes;
+    CUtlVector<CUtlString> m_debugPartNames;
+    CUtlString m_embeddedKeyvalues;
+};
+
 struct CPhysAggregateData
 {
-	CInterlockedUInt m_nRefCounter;
-	uint16 m_nFlags;
-	int16 m_nIncrementalVectorIndex;
-	int16 m_nReserved;
-	CUtlVectorUltraConservative<char const *> m_BoneNames;
-	CUtlMemory<uint32> m_BonesHash;
-	CUtlMemory<uint16> m_IndexNames;
-	CUtlMemory<uint16> m_IndexHash;
-	CUtlMemory<uint16> m_BoneParents;
-	CUtlMemory<matrix3x4_t, int> m_BindPose;
-	CUtlMemory<PhysShapeMarkup_t> m_shapeMarkups;
-	CUtlVectorConservative<const VPhysXBodyPart_t *> m_Parts;
-	CUtlVectorUltraConservative<CPhysConstraintData> m_Constraints;
-	CUtlVectorUltraConservative<const VPhysXJoint_t *> m_Joints;
-	void *m_pFeModel;
-	CUtlVectorUltraConservative<RnCollisionAttr_t> m_CollisionAttributes;
-	CUtlVectorUltraConservative<const CPhysSurfaceProperties *> m_SurfaceProperties;
-	CUtlVectorUltraConservative<const CPhysAggregateData *> m_ParentResources;
-	const void *m_pDebugPartNames;
-	const char *m_pEmbeddedKeyvalues;
+    CInterlockedUInt m_nRefCounter;
+    uint16 m_nFlags;
+    uint32 m_nIncrementalVectorIndex;
+    CUtlVectorUltraConservative<char const *> m_BoneNames;
+    CUtlLeanVector<uint32, int> m_BonesHash;
+    CUtlLeanVector<uint16, int> m_IndexNames;
+    CUtlLeanVector<uint16, int> m_IndexHash;
+    CUtlLeanVector<uint16, int> m_BoneParents;
+    CUtlLeanVector<matrix3x4_t, int> m_BindPose;
+    CUtlLeanVector<PhysShapeMarkup_t, int> m_shapeMarkups;
+    CUtlLeanVector<const VPhysXBodyPart_t *, int> m_Parts;
+    CUtlVectorUltraConservative<CPhysConstraintData> m_Constraints;
+    CUtlVectorUltraConservative<const VPhysXJoint_t *> m_Joints;
+    void *m_pFeModel;
+    CUtlVectorUltraConservative<RnCollisionAttr_t> m_CollisionAttributes;
+    CUtlVectorUltraConservative<const CPhysSurfaceProperties *> m_SurfaceProperties;
+    CUtlVectorUltraConservative<const CPhysAggregateData *> m_ParentResources;
+    const void *m_pDebugPartNames;
+    const char *m_pEmbeddedKeyvalues;
+    void *unk1; // something about m_pEmbeddedKeyvalues, might be CUtlVectorUltraConservative
+    VPhysXAggregateData_t *m_pVPhysXAggregateData;
+    void *unk3; // because allocation says 224 bytes
 };
 
 enum PhysicsShapeType_t : uint32
@@ -449,6 +491,12 @@ public:
 	virtual RnCapsule_t *GetCapsule() = 0;
 	virtual RnHull_t *GetHull() = 0;
 	virtual RnMesh_t *GetMesh() = 0;
+	
+	RnCollisionAttr_t *GetCollisionAttr()
+	{
+		RnCollisionAttr_t *result = CALL_VIRTUAL(RnCollisionAttr_t *, g_pGameConfig->GetOffset("IPhysicsShape::GetCollisionAttr"), this);
+		return result;
+	}
 };
 
 struct PhysicsTrace_t

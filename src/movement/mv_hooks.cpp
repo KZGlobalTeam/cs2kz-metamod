@@ -82,7 +82,7 @@ void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerC
 	player->OnSetupMovePost(pc);
 }
 
-CConVar<bool> kz_retrace_enable("kz_retrace_enable", FCVAR_NONE, "Enable retrace", false);
+CConVar<bool> kz_retrace_enable("kz_retrace_enable", FCVAR_NONE, "Enable retrace", true);
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {

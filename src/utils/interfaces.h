@@ -147,6 +147,7 @@ public:
 	virtual void ClearOverlays();
 
 	virtual CBaseEntity *PhysicsBodyToEntity(HPhysicsBody body);
+	virtual CEntityHandle PhysicsBodyToEntityHandle(HPhysicsBody body);
 	virtual bool GetPhysicsBodyTransform(HPhysicsBody body, CTransform &transform);
 	virtual void CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Vector *start, const Vector *direction,
 								 const Vector *bboxExtents, const RnQueryAttr_t *filter);
