@@ -149,7 +149,7 @@ void KZMeasureService::MeasureBlock()
 KZMeasureService::MeasurePos KZMeasureService::GetLookAtPos(const Vector *overrideOrigin, const QAngle *overrideAngles)
 {
 	Vector origin;
-	CCSPlayerPawnBase *pawn = static_cast<CCSPlayerPawnBase *>(this->player->GetCurrentPawn());
+	CCSPlayerPawn *pawn = static_cast<CCSPlayerPawn *>(this->player->GetCurrentPawn());
 	if (overrideOrigin)
 	{
 		origin = *overrideOrigin;
