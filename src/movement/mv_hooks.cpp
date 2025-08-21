@@ -6,11 +6,7 @@
 #include "tier0/memdbgon.h"
 #include "sdk/usercmd.h"
 #include "vprof.h"
-#ifdef DEBUG_TPM
-#include "fmtstr.h"
 
-CUtlVector<TraceHistory> traceHistory;
-#endif
 extern CGameConfig *g_pGameConfig;
 
 void movement::InitDetours()
@@ -320,62 +316,10 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
-#ifdef DEBUG_TPM
-	traceHistory.RemoveAll();
-	f32 initialError = ms->m_flAccumulatedJumpError();
-	Vector initialVelocity = mv->m_vecVelocity;
-	f32 &liveError = ms->m_flAccumulatedJumpError();
-	Vector &liveVelocity = mv->m_vecVelocity;
-	// TraceShape.EnableDetour();
-	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
-	Vector oldVelocity = mv->m_vecVelocity;
-	i32 count = traceHistory.Count();
-	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
-	if (traceHistory.Count() != count)
-	{
-		for (i32 i = 0; i + count < traceHistory.Count(); i++)
-		{
-			if (traceHistory[i].end != traceHistory[i + count].end)
-			{
-				META_CONPRINTF("Trace not matching! Previous traces (initial error %f, initial velocity %s):\n", initialError,
-							   VecToString(initialVelocity));
-				for (i32 j = 0; j <= i; j++)
-				{
-					META_CONPRINTF("Pred %f %f %f -> %f %f %f, error %f, velocity %s ", traceHistory[j].start.x, traceHistory[j].start.y,
-								   traceHistory[j].start.z, traceHistory[j].end.x, traceHistory[j].end.y, traceHistory[j].end.z,
-								   traceHistory[j].error, VecToString(traceHistory[j].velocity));
-					if (traceHistory[j].didHit)
-					{
-						META_CONPRINTF("hit %s (normal %s, hitpoint %s)\n", VecToString(traceHistory[j].m_vEndPos),
-									   VecToString(traceHistory[j].m_vHitNormal), VecToString(traceHistory[j].m_vHitPoint));
-					}
-					else
-					{
-						META_CONPRINTF("missed\n");
-					}
-					META_CONPRINTF("Real %f %f %f -> %f %f %f, error %f, velocity %s ", traceHistory[j + count].start.x,
-								   traceHistory[j + count].start.y, traceHistory[j + count].start.z, traceHistory[j + count].end.x,
-								   traceHistory[j + count].end.y, traceHistory[j + count].end.z, traceHistory[j + count].error,
-								   VecToString(traceHistory[j + count].velocity));
-					if (traceHistory[j + count].didHit)
-					{
-						META_CONPRINTF("hit %s (normal %s, hitpoint %s)\n", VecToString(traceHistory[j + count].m_vEndPos),
-									   VecToString(traceHistory[j + count].m_vHitNormal), VecToString(traceHistory[j + count].m_vHitPoint));
-					}
-					else
-					{
-						META_CONPRINTF("missed\n");
-					}
-				}
-				break;
-			}
-		}
-	}
-#else
+
 	// player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
 	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
-#endif
 	if (mv->m_vecVelocity != oldVelocity)
 	{
 		// Velocity changed, must have collided with something.
@@ -384,10 +328,6 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 		player->SetCollidingWithWorld();
 	}
 	// player->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
-
-#ifdef DEBUG_TPM
-	// TraceShape.DisableDetour();
-#endif
 }
 
 void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms, CMoveData *mv, bool bStayOnGround)

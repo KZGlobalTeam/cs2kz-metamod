@@ -110,102 +110,20 @@ bool FASTCALL Detour_CastBox(const void *world, void *results, const Vector &vCe
 extern bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter &filter, CGameTrace *tr);
 static void *g_pPhysicsQuery = nullptr;
 
-bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *pTraceFilter,
-					   trace_t *pm)
+bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *pTraceFilter, trace_t *pm)
 {
-#ifdef DEBUG_TPM
-	META_CONPRINTF("\n\nTrace %s -> %s, ", VecToString(start), VecToString(end));
-	META_CONPRINTF("RnQueryShapeAttr_t {\n"
-				   "  m_nInteractsWith: 0x%016llx\n"
-				   "  m_nInteractsExclude: 0x%016llx\n"
-				   "  m_nInteractsAs: 0x%016llx\n"
-				   "  m_nEntityIdsToIgnore: [%u, %u]\n"
-				   "  m_nOwnerIdsToIgnore: [%u, %u]\n"
-				   "  m_nHierarchyIds: [%u, %u]\n"
-				   "  m_nObjectSetMask: 0x%04x\n"
-				   "  m_nCollisionGroup: %u\n"
-				   "  m_bHitSolid: %d\n"
-				   "  m_bHitSolidRequiresGenerateContacts: %d\n"
-				   "  m_bHitTrigger: %d\n"
-				   "  m_bShouldIgnoreDisabledPairs: %d\n"
-				   "  m_bIgnoreIfBothInteractWithHitboxes: %d\n"
-				   "  m_bForceHitEverything: %d\n"
-				   "  m_bUnknown: %d\n"
-				   "}\n",
-				   (unsigned long long)pTraceFilter->m_nInteractsWith, (unsigned long long)pTraceFilter->m_nInteractsExclude,
-				   (unsigned long long)pTraceFilter->m_nInteractsAs, pTraceFilter->m_nEntityIdsToIgnore[0], pTraceFilter->m_nEntityIdsToIgnore[1],
-				   pTraceFilter->m_nOwnerIdsToIgnore[0], pTraceFilter->m_nOwnerIdsToIgnore[1], pTraceFilter->m_nHierarchyIds[0],
-				   pTraceFilter->m_nHierarchyIds[1], pTraceFilter->m_nObjectSetMask, pTraceFilter->m_nCollisionGroup,
-				   pTraceFilter->m_bHitSolid ? 1 : 0, pTraceFilter->m_bHitSolidRequiresGenerateContacts ? 1 : 0, pTraceFilter->m_bHitTrigger ? 1 : 0,
-				   pTraceFilter->m_bShouldIgnoreDisabledPairs ? 1 : 0, pTraceFilter->m_bIgnoreIfBothInteractWithHitboxes ? 1 : 0,
-				   pTraceFilter->m_bForceHitEverything ? 1 : 0, pTraceFilter->m_bUnknown ? 1 : 0);
-	switch (ray.m_eType)
+	g_pPhysicsQuery = (void *)physicsQuery;
+	bool result = false;
+	CConVarRef<bool> kz_retrace_enable("kz_retrace_enable");
+	if (ray.m_eType == RAY_TYPE_HULL && kz_retrace_enable.Get())
 	{
-		case RAY_TYPE_LINE:
-		{
-			META_CONPRINTF("RAY_TYPE_LINE offset %s radius %f, ", VecToString(ray.m_Line.m_vStartOffset), ray.m_Line.m_flRadius);
-			break;
-		}
-		case RAY_TYPE_SPHERE:
-		{
-			META_CONPRINTF("RAY_TYPE_SPHERE radius %f, center %s, ", ray.m_Sphere.m_flRadius, VecToString(ray.m_Sphere.m_vCenter));
-			break;
-		}
-		case RAY_TYPE_HULL:
-		{
-			META_CONPRINTF("RAY_TYPE_HULL mins = %s, maxs = %s, ", VecToString(ray.m_Hull.m_vMins), VecToString(ray.m_Hull.m_vMaxs));
-			break;
-		}
-		case RAY_TYPE_CAPSULE:
-		{
-			META_CONPRINTF("RAY_TYPE_CAPSULE radius %f, center %s %s, ", ray.m_Capsule.m_flRadius, VecToString(ray.m_Capsule.m_vCenter[0]),
-						   VecToString(ray.m_Capsule.m_vCenter[1]));
-			break;
-		}
-		case RAY_TYPE_MESH:
-		{
-			META_CONPRINTF("RAY_TYPE_MESH mins = %s, maxs = %s, numVertice = %i, pVertices = %p, ", VecToString(ray.m_Mesh.m_vMins),
-						   VecToString(ray.m_Mesh.m_vMaxs), ray.m_Mesh.m_nNumVertices, ray.m_Mesh.m_pVertices);
-			break;
-		}
-	}
-	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
-	f32 error;
-	Vector velocity;
-	for (u32 i = 0; i < 2; i++)
-	{
-		if (g_pKZPlayerManager->ToPlayer(i) && g_pKZPlayerManager->ToPlayer(i)->GetMoveServices())
-		{
-			error = g_pKZPlayerManager->ToPlayer(i)->GetMoveServices()->m_flAccumulatedJumpError();
-			velocity = g_pKZPlayerManager->ToPlayer(i)->currentMoveData->m_vecVelocity;
-			break;
-		}
-	}
-	traceHistory.AddToTail({start, end, ray, pm->DidHit(), pm->m_vStartPos, pm->m_vEndPos, pm->m_vHitNormal, pm->m_vHitPoint, pm->m_flHitOffset,
-							pm->m_flFraction, error, velocity});
-	return ret;
-	if (pm->DidHit())
-	{
-		META_CONPRINTF("hit %s (normal %s, triangle %i, body %p, shape %p)\n", VecToString(pm->m_vEndPos), VecToString(pm->m_vHitNormal),
-					   pm->m_nTriangle, pm->m_hBody, pm->m_hShape);
+		result = RetraceHull(ray, start, end, *pTraceFilter, pm);
 	}
 	else
 	{
-		META_CONPRINT("missed\n");
+		result = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
 	}
-#else
-	g_pPhysicsQuery = (void *)physicsQuery;
-	bool ret = TraceShape(physicsQuery, ray, start, end, pTraceFilter, pm);
-	if (ray.m_eType == RAY_TYPE_HULL)
-	{
-		CConVarRef<bool> kz_retrace_enable("kz_retrace_enable");
-		if (kz_retrace_enable.Get())
-		{
-			ret = RetraceHull(ray, start, end, *pTraceFilter, pm);
-		}
-	}
-#endif
-	return ret;
+	return result;
 }
 
 #include "utils/simplecmds.h"
