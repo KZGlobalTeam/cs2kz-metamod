@@ -10,6 +10,7 @@
 extern CGameConfig *g_pGameConfig;
 
 typedef CUtlVector<Vector> CUtlVectorSIMDPaddedVector;
+struct VPhysXAggregateData_t;
 
 template<typename T>
 struct SphereBase_t
@@ -377,6 +378,7 @@ struct PhysShapeMarkup_t
 	int32 m_nShapeInBody;
 	uint64 m_sHitGroup; // CGlobalSymbol
 };
+
 #endif
 struct CPhysConstraintData
 {
@@ -386,6 +388,42 @@ struct CPhysConstraintData
 	const VPhysXConstraintParams_t *m_pParams;
 };
 
+#ifndef IDA_IGNORE
+class alignas(8) VPhysXCollisionAttributes_t
+{
+public:
+	uint32 m_CollisionGroup;
+	CUtlVector<uint32> m_InteractAs;
+	CUtlVector<uint32> m_InteractWith;
+	CUtlVector<uint32> m_InteractExclude;
+	CUtlString m_CollisionGroupString;
+	CUtlVector<CUtlString> m_InteractAsStrings;
+	CUtlVector<CUtlString> m_InteractWithStrings;
+	CUtlVector<CUtlString> m_InteractExcludeStrings;
+};
+
+struct alignas(8) VPhysXAggregateData_t
+{
+public:
+	uint16 m_nFlags;
+	uint16 m_nRefCounter;
+	CUtlVector<uint32> m_bonesHash;
+	CUtlVector<CUtlString> m_boneNames;
+	CUtlVector<uint16> m_indexNames;
+	CUtlVector<uint16> m_indexHash;
+	CUtlVector<matrix3x4a_t> m_bindPose;
+	CUtlVector<VPhysXBodyPart_t> m_parts;
+	CUtlVector<PhysShapeMarkup_t> m_shapeMarkups;
+	CUtlVector<CPhysConstraintData> m_constraints2;
+	CUtlVector<VPhysXJoint_t> m_joints;
+	void *m_pFeModel;
+	CUtlVector<uint16> m_boneParents;
+	CUtlVector<uint32> m_surfacePropertyHashes;
+	CUtlVector<VPhysXCollisionAttributes_t> m_collisionAttributes;
+	CUtlVector<CUtlString> m_debugPartNames;
+	CUtlString m_embeddedKeyvalues;
+};
+#endif
 /*
  * Tutorial on how to update this struct:
  Plan A:
@@ -402,94 +440,60 @@ struct CPhysConstraintData
   - Find function that has "shatter_mesh_%i.vmesh" string in it.
   - The first function having two arguments with the second being 1 is CPhysAggregateData::CPhysAggregateData
 */
-
-class alignas(8) VPhysXCollisionAttributes_t
-{
-	public:
-    uint32 m_CollisionGroup;
-    CUtlVector<uint32> m_InteractAs;
-    CUtlVector<uint32> m_InteractWith;
-    CUtlVector<uint32> m_InteractExclude;
-    CUtlString m_CollisionGroupString;
-    CUtlVector<CUtlString> m_InteractAsStrings;
-    CUtlVector<CUtlString> m_InteractWithStrings;
-    CUtlVector<CUtlString> m_InteractExcludeStrings;
-};
-
-struct alignas(8) VPhysXAggregateData_t
-{
-	public:
-    uint16 m_nFlags;
-    uint16 m_nRefCounter;
-    CUtlVector<uint32> m_bonesHash;
-    CUtlVector<CUtlString> m_boneNames;
-    CUtlVector<uint16> m_indexNames;
-    CUtlVector<uint16> m_indexHash;
-    CUtlVector<matrix3x4a_t> m_bindPose;
-    CUtlVector<VPhysXBodyPart_t> m_parts;
-    CUtlVector<PhysShapeMarkup_t> m_shapeMarkups;
-    CUtlVector<CPhysConstraintData> m_constraints2;
-    CUtlVector<VPhysXJoint_t> m_joints;
-    void *m_pFeModel;
-    CUtlVector<uint16> m_boneParents;
-    CUtlVector<uint32> m_surfacePropertyHashes;
-    CUtlVector<VPhysXCollisionAttributes_t> m_collisionAttributes;
-    CUtlVector<CUtlString> m_debugPartNames;
-    CUtlString m_embeddedKeyvalues;
-};
-
 template<class T, class I = int, class A = CMemAllocAllocator>
 class CUtlLeanVectorCustom : public CUtlLeanVector<T, I, A>
 {
-	public:
-    inline T *Base()
-    {
-        return this->m_nCount > 0 ? this->m_pElements : nullptr;
-    }
-	
-    const inline T *Base() const
-    {
-        return this->m_nCount > 0 ? this->m_pElements : nullptr;
-    }
-	
-    inline T &operator[](int i)
-    {
-        Assert(i < this->m_nCount);
-        return this->Base()[i];
-    }
-	
+public:
+	inline T *Base()
+	{
+		return this->m_nCount > 0 ? this->m_pElements : nullptr;
+	}
+
+	const inline T *Base() const
+	{
+		return this->m_nCount > 0 ? this->m_pElements : nullptr;
+	}
+
+	inline T &operator[](int i)
+	{
+		Assert(i < this->m_nCount);
+		return this->Base()[i];
+	}
+
 	inline const T &operator[](int i) const
-    {
-        Assert(i < this->m_nCount);
-        return this->Base()[i];
-    }
+	{
+		Assert(i < this->m_nCount);
+		return this->Base()[i];
+	}
 };
 
 struct CPhysAggregateData
 {
-    CInterlockedUInt m_nRefCounter;
-    uint16 m_nFlags;
-    uint32 m_nIncrementalVectorIndex;
-    CUtlVectorUltraConservative<char const *> m_BoneNames;
-    CUtlLeanVector<uint32, int> m_BonesHash;
-    CUtlLeanVector<uint16, int> m_IndexNames;
-    CUtlLeanVector<uint16, int> m_IndexHash;
-    CUtlLeanVector<uint16, int> m_BoneParents;
-    CUtlLeanVector<matrix3x4_t, int> m_BindPose;
-    CUtlLeanVector<PhysShapeMarkup_t, int> m_shapeMarkups;
-    CUtlLeanVectorCustom<const VPhysXBodyPart_t *, int> m_Parts;
-    CUtlVectorUltraConservative<CPhysConstraintData> m_Constraints;
-    CUtlVectorUltraConservative<const VPhysXJoint_t *> m_Joints;
-    void *m_pFeModel;
-    CUtlVectorUltraConservative<RnCollisionAttr_t> m_CollisionAttributes;
-    CUtlVectorUltraConservative<const CPhysSurfaceProperties *> m_SurfaceProperties;
-    CUtlVectorUltraConservative<const CPhysAggregateData *> m_ParentResources;
-    const void *m_pDebugPartNames;
-    const char *m_pEmbeddedKeyvalues;
-    void *unk1; // something about m_pEmbeddedKeyvalues, might be CUtlVectorUltraConservative
-    VPhysXAggregateData_t *m_pVPhysXAggregateData;
-    void *unk3; // because allocation says 224 bytes
+	CInterlockedUInt m_nRefCounter;
+	uint16 m_nFlags;
+	uint32 m_nIncrementalVectorIndex;
+	CUtlVectorUltraConservative<char const *> m_BoneNames;
+	CUtlLeanVector<uint32, int> m_BonesHash;
+	CUtlLeanVector<uint16, int> m_IndexNames;
+	CUtlLeanVector<uint16, int> m_IndexHash;
+	CUtlLeanVector<uint16, int> m_BoneParents;
+	CUtlLeanVector<matrix3x4_t, int> m_BindPose;
+	CUtlLeanVector<PhysShapeMarkup_t, int> m_shapeMarkups;
+	CUtlLeanVectorCustom<const VPhysXBodyPart_t *, int> m_Parts;
+	CUtlVectorUltraConservative<CPhysConstraintData> m_Constraints;
+	CUtlVectorUltraConservative<const VPhysXJoint_t *> m_Joints;
+	void *m_pFeModel;
+	CUtlVectorUltraConservative<RnCollisionAttr_t> m_CollisionAttributes;
+	CUtlVectorUltraConservative<const CPhysSurfaceProperties *> m_SurfaceProperties;
+	CUtlVectorUltraConservative<const CPhysAggregateData *> m_ParentResources;
+	const void *m_pDebugPartNames;
+	const char *m_pEmbeddedKeyvalues;
+	void *unk1; // something about m_pEmbeddedKeyvalues, might be CUtlVectorUltraConservative
+	VPhysXAggregateData_t *m_pVPhysXAggregateData;
+	void *unk3; // because allocation says 224 bytes
 };
+
+static_assert(sizeof(CPhysAggregateData) == 224, "CPhysAggregateData size mismatch");
 
 enum PhysicsShapeType_t : uint32
 {
@@ -504,12 +508,14 @@ enum PhysicsShapeType_t : uint32
 class IPhysicsBody
 {
 	virtual void unk0() = 0;
+
 public:
 };
 
 class CPhysicsShadowController
 {
 	virtual void unk0() = 0;
+
 public:
 	void *qword08;
 };
@@ -526,7 +532,7 @@ public:
 	virtual RnCapsule_t *GetCapsule() = 0;
 	virtual RnHull_t *GetHull() = 0;
 	virtual RnMesh_t *GetMesh() = 0;
-	
+
 	RnCollisionAttr_t *GetCollisionAttr()
 	{
 		RnCollisionAttr_t *result = CALL_VIRTUAL(RnCollisionAttr_t *, g_pGameConfig->GetOffset("IPhysicsShape::GetCollisionAttr"), this);
@@ -535,9 +541,10 @@ public:
 };
 
 class CRnBody;
+
 class CPhysicsBody : public IPhysicsBody
 {
-	public:
+public:
 	CRnBody *m_pRnBody;
 	int64_t qword10;
 	CPhysicsShadowController *m_pShadowController;
