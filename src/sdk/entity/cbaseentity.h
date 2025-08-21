@@ -1,5 +1,6 @@
 #pragma once
 
+#include "schemasystem/schematypes.h"
 #include "utils/gameconfig.h"
 #include "utils/schema.h"
 #include "utils/interfaces.h"
@@ -42,20 +43,22 @@ public:
 	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecY)
 	SCHEMA_FIELD(CNetworkedQuantizedFloat, m_vecZ)
 };
+class CSkeletonInstance;
+class CEntityKeyValues;
+class CSkeletonAnimationController;
 
 class CGameSceneNode
 {
 public:
 	virtual ~CGameSceneNode() = 0;
 	virtual void AddedToEntityDatabase(CEntityInstance *ent) = 0;
-    virtual void Connect(char const *, CEntityInstance *ent) = 0;
-    virtual void Spawn(CEntityInstance *ent, char const *string, CEntityKeyValues const *entKv) = 0;
-    virtual void Activate(CEntityInstance *ent, ActivateType_t type) = 0;
-    virtual void UpdateOnRemove(CEntityInstance *ent) = 0;
-    virtual void OnSetDormant(/*CEntityInstance *, EntityDormancyType_t, EntityDormancyType_t*/) = 0;
-    virtual CSkeletonInstance *GetSkeletonInstance(void) = 0;
-	
-	
+	virtual void Connect(char const *, CEntityInstance *ent) = 0;
+	virtual void Spawn(CEntityInstance *ent, char const *string, CEntityKeyValues const *entKv) = 0;
+	virtual void Activate(CEntityInstance *ent, ActivateType_t type) = 0;
+	virtual void UpdateOnRemove(CEntityInstance *ent) = 0;
+	virtual void OnSetDormant(/*CEntityInstance *, EntityDormancyType_t, EntityDormancyType_t*/) = 0;
+	virtual CSkeletonInstance *GetSkeletonInstance(void) = 0;
+
 	DECLARE_SCHEMA_CLASS(CGameSceneNode)
 
 	SCHEMA_FIELD(CEntityInstance *, m_pOwner)
