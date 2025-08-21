@@ -111,6 +111,7 @@ static_function Vector VectorNormaliseChebyshev(Vector vec)
 	}
 	return result;
 }
+
 // #define SURFACE_CLIP_EPSILON 0
 //  https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/qcommon/cm_trace.c#L483
 static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f32 surfaceClipEpsilon = kz_surface_clip_epsilon.Get())
@@ -136,7 +137,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 	for (i32 i = 0; i < brush.planeCount; i++)
 	{
 		Plane_t plane = brush.planes[i];
-		
+
 		// NOTE(GameChaos): GameChaos's chebyshev length minkowski sum epsilon modification!
 		Vector chebyshevEpsilonVec = VectorNormaliseChebyshev(plane.normal) * surfaceClipEpsilon;
 		f32 chebyshevEps = DotProduct(chebyshevEpsilonVec, plane.normal);
@@ -148,7 +149,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 
 		f32 d1 = DotProduct(ray.start, plane.normal) - dist;
 		f32 d2 = DotProduct(ray.end, plane.normal) - dist;
-		//if (d2 > 0)
+		// if (d2 > 0)
 		if (d2 > chebyshevEps)
 		{
 			getout = true; // endpoint is not in solid
@@ -166,7 +167,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		}
 
 		// if it doesn't cross the plane, the plane isn't relevent
-		//if (d1 <= 0 && d2 <= 0)
+		// if (d1 <= 0 && d2 <= 0)
 		if (d1 <= chebyshevEps && d2 <= chebyshevEps)
 		{
 			continue;
@@ -190,7 +191,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		{ // leave
 			// Changed (d1 + chebyshevEps) to (d1 - chebyshevEps)
 			//  to fix seamshot bug. https://www.youtube.com/watch?v=YnCG6fbTQ-I
-			//f32 f = (d1 + chebyshevEps) / (d1 - d2);
+			// f32 f = (d1 + chebyshevEps) / (d1 - d2);
 			f32 f = (d1 - chebyshevEps) / (d1 - d2);
 			if (f > 1)
 			{
@@ -290,7 +291,6 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 {
 	Vector to = end - start;
 
-	
 #if 0
 	if (trace->m_nTriangle != -1)
 	{
@@ -318,8 +318,7 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 	extents += epsilon * 4;
 	Vector start2 = start + hullOffset;
 	Vector finalv0, finalv1, finalv2;
-	
-	
+
 	TraceResult_t finalBrushTrace = {};
 	CGameTrace finalTrace = CGameTrace();
 	finalTrace.m_pSurfaceProperties = trace->m_pSurfaceProperties;
@@ -329,14 +328,14 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 	finalTrace.m_vStartPos = start;
 	finalBrushTrace.fraction = 1;
 	PhysicsTrace_t *finalPhysTrace = nullptr;
-	
+
 	CUtlVector<HPhysicsShape> shapes;
 	Ray_t::Hull_t sweptAabb;
 	ComputeSweptAABB(ray.m_Hull.m_vMins, ray.m_Hull.m_vMaxs, to, epsilon, sweptAabb.m_vMins, sweptAabb.m_vMaxs);
 	Ray_t queryRay;
 	queryRay.Init(sweptAabb.m_vMins, sweptAabb.m_vMaxs);
 	g_pKZUtils->Query(&shapes, &queryRay, &start, &filter, false);
-	
+
 	EntityInstanceIter_t iter;
 	FOR_EACH_VEC(shapes, i)
 	{
@@ -356,7 +355,7 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 		{
 			continue;
 		}
-		
+
 		RnCollisionAttr_t *collisionAttr = shape->GetCollisionAttr();
 		if (!collisionAttr)
 		{
@@ -369,54 +368,52 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 		{
 			continue;
 		}
-		
-		//auto surfaceProps = aggregateData->m_SurfaceProperties[mesh->m_nSurfacePropertyIndex];
+
+		// auto surfaceProps = aggregateData->m_SurfaceProperties[mesh->m_nSurfacePropertyIndex];
 		CTransform transform;
 		transform.SetToIdentity();
 		transform.m_vPosition = ent->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
 		transform.m_orientation = Quaternion(ent->m_CBodyComponent()->m_pSceneNode()->m_angAbsRotation());
-		
+
 		CUtlVector<uint32> triangles;
-		FindTrianglesInBox(&mesh->m_Nodes[0], triangles,
-						   sweptAabb.m_vMins + start,
-						   sweptAabb.m_vMaxs + start, &transform);
+		FindTrianglesInBox(&mesh->m_Nodes[0], triangles, sweptAabb.m_vMins + start, sweptAabb.m_vMaxs + start, &transform);
 		FOR_EACH_VEC(triangles, k)
 		{
 			const RnTriangle_t *triangle = &mesh->m_Triangles[triangles[k]];
-			//const RnTriangle_t *triangle = &triangles[k];
+			// const RnTriangle_t *triangle = &triangles[k];
 			Triangle_t tri(utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[0]]),
 						   utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[1]]),
 						   utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[2]]));
-			
+
 			// Reconstruct the ray
 			TraceRay_t traceRay;
 			traceRay.start = start;
 			traceRay.end = end;
 			traceRay.size.m_vMinBounds = ray.m_Hull.m_vMins;
 			traceRay.size.m_vMaxBounds = ray.m_Hull.m_vMaxs;
-			
+
 			Brush_t triangleBrush = GenerateTriangleAabbBevelPlanes(tri);
-			
+
 			// Do our own trace calculation
 			TraceResult_t brushTrace = TraceThroughBrush(traceRay, triangleBrush);
-			
+
 			g_pKZUtils->AddTriangleOverlay(tri.verts[0], tri.verts[1], tri.verts[2], 255, 0, 0, 32, true, -1.0f);
 			if (brushTrace.fraction < finalBrushTrace.fraction)
 			{
 				finalBrushTrace = brushTrace;
-				//finalPhysTrace = physTrace;
-				//META_CONPRINTF("  Overriding triangle %i with %i\n", trace->m_nTriangle, physTrace->m_nTriangle);
-				//META_CONPRINTF("  Triangle %i: normal %f %f %f, endpos %f %f %f, fraction %f\n", physTrace->m_nTriangle, brushTrace.plane.normal.x,
-				//brushTrace.plane.normal.y, brushTrace.plane.normal.z, brushTrace.endpos.x, brushTrace.endpos.y, brushTrace.endpos.z,
-				//brushTrace.fraction);
+				// finalPhysTrace = physTrace;
+				// META_CONPRINTF("  Overriding triangle %i with %i\n", trace->m_nTriangle, physTrace->m_nTriangle);
+				// META_CONPRINTF("  Triangle %i: normal %f %f %f, endpos %f %f %f, fraction %f\n", physTrace->m_nTriangle, brushTrace.plane.normal.x,
+				// brushTrace.plane.normal.y, brushTrace.plane.normal.z, brushTrace.endpos.x, brushTrace.endpos.y, brushTrace.endpos.z,
+				// brushTrace.fraction);
 				finalv0 = tri.verts[0];
 				finalv1 = tri.verts[1];
 				finalv2 = tri.verts[2];
-				
+
 				// we hit something!
-				//finalTrace.m_pSurfaceProperties = surfaceProps;
+				// finalTrace.m_pSurfaceProperties = surfaceProps;
 				finalTrace.m_pEnt = ent;
-				//finalTrace.m_pHitbox = ;
+				// finalTrace.m_pHitbox = ;
 				finalTrace.m_hBody = body;
 				finalTrace.m_hShape = shape;
 				finalTrace.m_BodyTransform = transform;
@@ -437,9 +434,10 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 		triangles.Purge();
 	}
 	shapes.Purge();
-	
+
 	// didn't hit, or didn't move
-	if (finalBrushTrace.fraction >= 1) // || (!finalBrushTrace.startsolid && finalBrushTrace.endpos.x == start.x && finalBrushTrace.endpos.y == start.y && finalBrushTrace.endpos.z == start.z))
+	if (finalBrushTrace.fraction >= 1) // || (!finalBrushTrace.startsolid && finalBrushTrace.endpos.x == start.x && finalBrushTrace.endpos.y ==
+									   // start.y && finalBrushTrace.endpos.z == start.z))
 	{
 		*trace = finalTrace;
 	}
@@ -464,6 +462,6 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 		// we hit something!
 		g_pKZUtils->AddTriangleOverlay(finalv0, finalv1, finalv2, 0, 0, 255, 32, true, -1.0f);
 	}
-	
+
 	return trace->m_flFraction < 1;
 }
