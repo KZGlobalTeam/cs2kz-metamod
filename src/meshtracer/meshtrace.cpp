@@ -86,6 +86,16 @@ static_function f32 CalculatePlaneAabbExpansion(AABB_t aabb, Plane_t plane)
 
 CConVar<float> kz_surface_clip_epsilon("kz_surface_clip_epsilon", FCVAR_NONE, "Surface clip epsilon", 0.03125f);
 
+static_function Vector VectorNormaliseChebyshev(Vector vec)
+{
+	f32 chebyshevLength = abs(MAX(vec.x, MAX(vec.y, vec.z)));
+	Vector result = vec;
+	if (chebyshevLength > 0)
+	{
+		result /= chebyshevLength;
+	}
+	return result;
+}
 // #define SURFACE_CLIP_EPSILON 0
 //  https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/qcommon/cm_trace.c#L483
 static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f32 surfaceClipEpsilon = kz_surface_clip_epsilon.Get())
@@ -111,6 +121,10 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 	for (i32 i = 0; i < brush.planeCount; i++)
 	{
 		Plane_t plane = brush.planes[i];
+		
+		// NOTE(GameChaos): GameChaos's chebyshev length minkowski sum epsilon modification!
+		Vector chebyshevEpsilonVec = VectorNormaliseChebyshev(plane.normal) * surfaceClipEpsilon;
+		f32 chebyshevEps = DotProduct(chebyshevEpsilonVec, plane.normal);
 
 		// adjust the plane distance apropriately for mins/maxs
 		// FIXME: use signbits into 8 way lookup for each mins/maxs
@@ -119,7 +133,8 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 
 		f32 d1 = DotProduct(ray.start, plane.normal) - dist;
 		f32 d2 = DotProduct(ray.end, plane.normal) - dist;
-		if (d2 > 0)
+		//if (d2 > 0)
+		if (d2 > chebyshevEps)
 		{
 			getout = true; // endpoint is not in solid
 		}
@@ -129,13 +144,15 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		}
 
 		// if completely in front of face, no intersection with the entire brush
-		if (d1 > 0 && (d2 >= surfaceClipEpsilon || d2 >= d1))
+		// if (d1 > 0 && (d2 >= chebyshevEps || d2 >= d1))
+		if (d1 > chebyshevEps && d2 >= chebyshevEps)
 		{
 			return result;
 		}
 
 		// if it doesn't cross the plane, the plane isn't relevent
-		if (d1 <= 0 && d2 <= 0)
+		//if (d1 <= 0 && d2 <= 0)
+		if (d1 <= chebyshevEps && d2 <= chebyshevEps)
 		{
 			continue;
 		}
@@ -143,7 +160,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		// crosses face
 		if (d1 > d2)
 		{ // enter
-			f32 f = (d1 - surfaceClipEpsilon) / (d1 - d2);
+			f32 f = (d1 - chebyshevEps) / (d1 - d2);
 			if (f < 0)
 			{
 				f = 0;
@@ -156,7 +173,10 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		}
 		else
 		{ // leave
-			f32 f = (d1 + surfaceClipEpsilon) / (d1 - d2);
+			// Changed (d1 + chebyshevEps) to (d1 - chebyshevEps)
+			//  to fix seamshot bug.
+			//f32 f = (d1 + chebyshevEps) / (d1 - d2);
+			f32 f = (d1 - chebyshevEps) / (d1 - d2);
 			if (f > 1)
 			{
 				f = 1;
