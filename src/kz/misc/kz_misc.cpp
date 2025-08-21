@@ -733,6 +733,7 @@ static_function void ComputeSweptAABB(const Vector &boxMins, const Vector &boxMa
 static_function void FindTrianglesInBox(const RnNode_t *node, CUtlVector<uint32> &triangles, const Vector &mins, const Vector &maxs,
 										const CTransform *transform = nullptr)
 {
+	// TODO: incorrect way to transform aabb, fix!
 	Vector nodeMins = transform ? utils::TransformPoint(*transform, node->m_vMin) : node->m_vMin;
 	Vector nodeMaxs = transform ? utils::TransformPoint(*transform, node->m_vMax) : node->m_vMax;
 	if (!QuickBoxIntersectTest(nodeMins, nodeMaxs, mins, maxs))
