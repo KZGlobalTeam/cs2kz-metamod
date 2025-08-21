@@ -33,7 +33,16 @@ static_function Brush_t GenerateTriangleAabbBevelPlanes(Triangle_t triangle)
 	}
 
 	// next 2 planes are the 2 faces of the triangle
-	Vector triangleNormal = CrossProduct(triangle.verts[1] - triangle.verts[0], triangle.verts[2] - triangle.verts[0]).Normalized();
+	Vector triangleNormal = CrossProduct(triangle.verts[1] - triangle.verts[0], triangle.verts[2] - triangle.verts[0]);
+	// make sure the vector is actually normalised
+	// TODO: is double normalisation the best solution for wonky normals?
+	{
+		f32 len = VectorNormalize(triangleNormal);
+		if (len <= 0.9999 || len > 0.10001)
+		{
+			VectorNormalize(triangleNormal);
+		}
+	}
 
 	// check if we have a valid triangle normal, aka if the triangle isn't a line or a point
 	// also check whether the triangle normal is axis aligned, in which case skip it, because it
@@ -62,7 +71,13 @@ static_function Brush_t GenerateTriangleAabbBevelPlanes(Triangle_t triangle)
 			{
 				Vector axisNormal = {0, 0, 0};
 				axisNormal[axis] = triangleNormal[axis] < 0 ? 1 : -1;
-				Vector planeNormal = CrossProduct(axisNormal, edgeNormal).Normalized();
+				Vector planeNormal = CrossProduct(axisNormal, edgeNormal);
+				f32 len = VectorNormalize(planeNormal);
+				// TODO: is double normalisation the best solution for wonky normals?
+				if (len <= 0.9999 || len > 0.10001)
+				{
+					VectorNormalize(planeNormal);
+				}
 				result.planes[result.planeCount].normal = planeNormal;
 				result.planes[result.planeCount].distance = DotProduct(planeNormal, triangle.verts[p1]);
 				result.planeCount++;
@@ -174,7 +189,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		else
 		{ // leave
 			// Changed (d1 + chebyshevEps) to (d1 - chebyshevEps)
-			//  to fix seamshot bug.
+			//  to fix seamshot bug. https://www.youtube.com/watch?v=YnCG6fbTQ-I
 			//f32 f = (d1 + chebyshevEps) / (d1 - d2);
 			f32 f = (d1 - chebyshevEps) / (d1 - d2);
 			if (f > 1)
@@ -299,7 +314,8 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 	Ray_t::Hull_t hull = ray.m_Hull;
 	Vector hullOffset = (hull.m_vMaxs + hull.m_vMins) * 0.5f;
 	Vector extents = (hull.m_vMaxs - hull.m_vMins) * 0.5f;
-	extents += epsilon * 200.0f;
+	// extend the extents a bit to make sure we get every possible triangle we could theoretically hit!
+	extents += epsilon * 4;
 	Vector start2 = start + hullOffset;
 	Vector finalv0, finalv1, finalv2;
 	
