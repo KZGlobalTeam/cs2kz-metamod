@@ -1,7 +1,7 @@
 #pragma once
 #include "types.h"
 
-class AABB_t;
+struct AABB_t;
 
 class CPhysAggregateInstance
 {

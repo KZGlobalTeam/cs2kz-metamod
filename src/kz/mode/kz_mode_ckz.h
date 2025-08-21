@@ -135,6 +135,7 @@ class KZClassicModeService : public KZModeService
 		(int)0,         // mp_solid_teammates
 		(int)0,         // mp_solid_enemies
 		(bool)false,    // sv_subtick_movement_view_angles
+		(bool)true,     // kz_retrace_enable
 	};
 	static_assert(KZ_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
 

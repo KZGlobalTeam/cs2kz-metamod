@@ -397,7 +397,6 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 			// Do our own trace calculation
 			TraceResult_t brushTrace = TraceThroughBrush(traceRay, triangleBrush);
 
-			g_pKZUtils->AddTriangleOverlay(tri.verts[0], tri.verts[1], tri.verts[2], 255, 0, 0, 32, true, -1.0f);
 			if (brushTrace.fraction < finalBrushTrace.fraction)
 			{
 				finalBrushTrace = brushTrace;
@@ -435,33 +434,6 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 	}
 	shapes.Purge();
 
-	// didn't hit, or didn't move
-	if (finalBrushTrace.fraction >= 1) // || (!finalBrushTrace.startsolid && finalBrushTrace.endpos.x == start.x && finalBrushTrace.endpos.y ==
-									   // start.y && finalBrushTrace.endpos.z == start.z))
-	{
-		*trace = finalTrace;
-	}
-	else
-	{
-#if 0
-		META_CONPRINTF("  NEW tri index %i\n  hit offset %f hit point %.2f %.2f %.2f\n  fraction %f endpos %.2f %.2f %.2f end %.2f %.2f %.2f\n",
-					   trace->m_nTriangle,
-					   trace->m_flHitOffset,
-					   trace->m_vHitPoint.x,
-					   trace->m_vHitPoint.y,
-					   trace->m_vHitPoint.z,
-					   trace->m_flFraction,
-					   trace->m_vEndPos.x,
-					   trace->m_vEndPos.y,
-					   trace->m_vEndPos.z,
-					   end.x,
-					   end.y,
-					   end.z);
-#endif
-		*trace = finalTrace;
-		// we hit something!
-		g_pKZUtils->AddTriangleOverlay(finalv0, finalv1, finalv2, 0, 0, 255, 32, true, -1.0f);
-	}
-
+	*trace = finalTrace;
 	return trace->m_flFraction < 1;
 }

@@ -95,15 +95,6 @@ void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, C
 bool FASTCALL movement::Detour_PlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	if (kz_retrace_enable.Get())
-	{
-		g_pKZUtils->ClearOverlays();
-		TraceShape.EnableDetour();
-	}
-	else
-	{
-		TraceShape.DisableDetour();
-	}
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnPlayerMove();
 	auto retValue = PlayerMove(ms, mv);
