@@ -35,4 +35,8 @@ public:
 	{
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CastBoxMultiple"), this, result, start, direction, bboxExtents, filter);
 	}
+	void Query(CUtlVector<HPhysicsShape> *result, const Ray_t *ray, const Vector *position, RnQueryAttr_t *filter, bool overlapTest)
+	{
+		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CVPhys2World::QueryBox"), this, result, ray, position, filter, overlapTest);
+	}
 };

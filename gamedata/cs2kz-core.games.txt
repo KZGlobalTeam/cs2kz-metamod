@@ -409,6 +409,12 @@
 				"windows"		"172"
 				"linux"			"172"
 			}
+			// actual fucking pain to find this lol
+			"CVPhys2World::QueryBox"
+			{
+				"windows"		"184"
+				"linux"			"187"
+			}
 			// Same function, right after the cast
 			// v22 = (*(**&v44[v21] + 0x450LL))(*&v44[v21]);
 			"IPhysicsBody::GetEntHandle"

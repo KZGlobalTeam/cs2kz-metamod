@@ -438,6 +438,33 @@ struct alignas(8) VPhysXAggregateData_t
     CUtlString m_embeddedKeyvalues;
 };
 
+template<class T, class I = int, class A = CMemAllocAllocator>
+class CUtlLeanVectorCustom : public CUtlLeanVector<T, I, A>
+{
+	public:
+    inline T *Base()
+    {
+        return this->m_nCount > 0 ? this->m_pElements : nullptr;
+    }
+	
+    const inline T *Base() const
+    {
+        return this->m_nCount > 0 ? this->m_pElements : nullptr;
+    }
+	
+    inline T &operator[](int i)
+    {
+        Assert(i < this->m_nCount);
+        return this->Base()[i];
+    }
+	
+	inline const T &operator[](int i) const
+    {
+        Assert(i < this->m_nCount);
+        return this->Base()[i];
+    }
+};
+
 struct CPhysAggregateData
 {
     CInterlockedUInt m_nRefCounter;
@@ -450,7 +477,7 @@ struct CPhysAggregateData
     CUtlLeanVector<uint16, int> m_BoneParents;
     CUtlLeanVector<matrix3x4_t, int> m_BindPose;
     CUtlLeanVector<PhysShapeMarkup_t, int> m_shapeMarkups;
-    CUtlLeanVector<const VPhysXBodyPart_t *, int> m_Parts;
+    CUtlLeanVectorCustom<const VPhysXBodyPart_t *, int> m_Parts;
     CUtlVectorUltraConservative<CPhysConstraintData> m_Constraints;
     CUtlVectorUltraConservative<const VPhysXJoint_t *> m_Joints;
     void *m_pFeModel;
@@ -476,16 +503,24 @@ enum PhysicsShapeType_t : uint32
 
 class IPhysicsBody
 {
+	virtual void unk0() = 0;
 public:
+};
+
+class CPhysicsShadowController
+{
+	virtual void unk0() = 0;
+public:
+	void *qword08;
 };
 
 class IPhysicsShape
 {
 	virtual void unk00() = 0;
 	virtual void unk01() = 0;
-	virtual void unk02() = 0;
 
 public:
+	virtual HPhysicsBody GetOwnerBody() = 0;
 	virtual PhysicsShapeType_t GetShapeType() = 0;
 	virtual SphereBase_t<float32> *GetSphere() = 0;
 	virtual RnCapsule_t *GetCapsule() = 0;
@@ -497,6 +532,16 @@ public:
 		RnCollisionAttr_t *result = CALL_VIRTUAL(RnCollisionAttr_t *, g_pGameConfig->GetOffset("IPhysicsShape::GetCollisionAttr"), this);
 		return result;
 	}
+};
+
+class CRnBody;
+class CPhysicsBody : public IPhysicsBody
+{
+	public:
+	CRnBody *m_pRnBody;
+	int64_t qword10;
+	CPhysicsShadowController *m_pShadowController;
+	CUtlVector<IPhysicsShape *> m_PhysicsShapes;
 };
 
 struct PhysicsTrace_t

@@ -151,6 +151,7 @@ public:
 	virtual bool GetPhysicsBodyTransform(HPhysicsBody body, CTransform &transform);
 	virtual void CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *result, const Vector *start, const Vector *direction,
 								 const Vector *bboxExtents, const RnQueryAttr_t *filter);
+	virtual void Query(CUtlVector<HPhysicsShape> *result, const Ray_t *ray, const Vector *position, RnQueryAttr_t *filter, bool overlapTest);
 };
 
 extern KZUtils *g_pKZUtils;

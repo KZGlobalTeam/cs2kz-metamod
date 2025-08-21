@@ -433,6 +433,20 @@ void KZUtils::CastBoxMultiple(CUtlVectorFixedGrowable<PhysicsTrace_t, 128> *resu
 	}
 }
 
+void KZUtils::Query(CUtlVector<HPhysicsShape> *result, const Ray_t *ray, const Vector *position, RnQueryAttr_t *filter, bool overlapTest)
+{
+	i32 numWorlds = g_pVPhysics2->NumWorlds();
+	for (int i = 0; i < numWorlds; i++)
+	{
+		CVPhys2World *world = g_pVPhysics2->GetWorld(i);
+		if (world->worldFlags == 2)
+		{
+			world->Query(result, ray, position, filter, overlapTest);
+			return;
+		}
+	}
+}
+
 bool KZUtils::GetPhysicsBodyTransform(HPhysicsBody body, CTransform &transform)
 {
 	transform.SetToIdentity();
