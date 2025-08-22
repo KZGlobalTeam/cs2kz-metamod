@@ -67,6 +67,7 @@ void KZVanillaModeService::OnDuckPost()
 
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
+#if 0
 	this->tpmTriggerFixOrigins.RemoveAll();
 
 	Vector origin = this->player->currentMoveData->m_vecAbsOrigin;
@@ -342,11 +343,13 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		PlayerLandingRoughEffect(this->player, 0.85f);
 	}
 	this->player->currentMoveData->m_vecVelocity = velocity;
+	this->player->currentMoveData->m_vecVelocity = oldVelocity;
 #endif
 }
 
 void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
+#if 0
 	if (this->airMoving)
 	{
 		if (this->tpmTriggerFixOrigins.Count() > 1)
@@ -360,6 +363,7 @@ void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 		}
 		this->player->UpdateTriggerTouchList();
 	}
+#endif
 }
 
 void KZVanillaModeService::OnAirMove()

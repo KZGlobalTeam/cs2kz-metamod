@@ -1,6 +1,7 @@
 #include "cs_usercmd.pb.h"
 #include "cs2kz.h"
 #include "movement.h"
+#include "meshtracer/meshtrace.h"
 #include "utils/detours.h"
 #include "utils/gameconfig.h"
 #include "tier0/memdbgon.h"
@@ -308,9 +309,23 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 
-	// player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
+	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
-	TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
+	if (!kz_retrace_enable.Get())
+	{
+		TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
+	}
+	else
+	{
+		Vector originalOrigin = mv->m_vecAbsOrigin;
+		Vector originalVelocity = mv->m_vecVelocity;
+		// need to run the original tryplayermove :(
+		TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
+		mv->m_vecAbsOrigin = originalOrigin;
+		mv->m_vecVelocity = originalVelocity;
+
+		TryPlayerMove_Custom(ms, mv, pFirstDest, pFirstTrace, bIsSurfing, player);
+	}
 	if (mv->m_vecVelocity != oldVelocity)
 	{
 		// Velocity changed, must have collided with something.
@@ -318,7 +333,7 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 		// but for now this doesn't matter.
 		player->SetCollidingWithWorld();
 	}
-	// player->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
+	player->OnTryPlayerMovePost(pFirstDest, pFirstTrace, bIsSurfing);
 }
 
 void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms, CMoveData *mv, bool bStayOnGround)

@@ -699,6 +699,7 @@ static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilt
 
 void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
+#if 0
 	this->tpmTriggerFixOrigins.RemoveAll();
 	this->overrideTPM = false;
 	this->didTPM = true;
@@ -933,10 +934,12 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	}
 	this->tpmOrigin = pm.m_vEndPos;
 	this->tpmVelocity = velocity;
+#endif
 }
 
 void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
+#if 0
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	bool velocityHeavilyModified =
@@ -960,6 +963,7 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 		}
 		this->player->UpdateTriggerTouchList();
 	}
+#endif
 }
 
 void KZClassicModeService::OnCategorizePosition(bool bStayOnGround)
