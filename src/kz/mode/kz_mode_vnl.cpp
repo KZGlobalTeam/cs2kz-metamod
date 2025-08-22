@@ -74,6 +74,7 @@ static_function f32 QuantizeFloat(f32 value)
 
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
+#if 0
 	this->tpmTriggerFixOrigins.RemoveAll();
 
 	Vector origin, oldVelocity;
@@ -270,10 +271,12 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	}
 	this->player->GetMoveServices()->m_flAccumulatedJumpError = originalError;
 	this->player->currentMoveData->m_vecVelocity = oldVelocity;
+#endif
 }
 
 void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
+#if 0
 	if (this->airMoving)
 	{
 		if (this->tpmTriggerFixOrigins.Count() > 1)
@@ -287,6 +290,7 @@ void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 		}
 		this->player->UpdateTriggerTouchList();
 	}
+#endif
 }
 
 void KZVanillaModeService::OnAirMove()
