@@ -1,6 +1,7 @@
 #pragma once
 #include "gametrace.h"
 #include "sdk/entity/cbaseplayerpawn.h"
+#include "utils/addresses.h"
 
 struct CTraceFilterPlayerMovementCS : public CTraceFilter
 {
@@ -17,5 +18,17 @@ struct CTraceFilterPlayerMovementCS : public CTraceFilter
 		m_bIgnoreIfBothInteractWithHitboxes = false;
 		m_bForceHitEverything = false;
 		m_bUnknown = true;
+	}
+
+	virtual bool ShouldHitEntity(CEntityInstance *ent) override
+	{
+		static void **vtable = (void **)modules::server->FindVirtualTable("CTraceFilterPlayerMovementCS");
+		assert(vtable);
+		using ShouldHitEntityFn = bool (*)(CTraceFilterPlayerMovementCS *, CEntityInstance *);
+#ifdef _WIN32
+		return (*reinterpret_cast<ShouldHitEntityFn *>(vtable[1]))(this, ent);
+#else
+		return (*reinterpret_cast<ShouldHitEntityFn *>(vtable[2]))(this, ent);
+#endif
 	}
 };
