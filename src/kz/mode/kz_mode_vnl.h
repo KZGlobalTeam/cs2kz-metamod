@@ -22,6 +22,7 @@ class KZVanillaModeService : public KZModeService
 		(float)12.0f,          // sv_airaccelerate
 		(float)30.0f,          // sv_air_max_wishspeed
 		(bool)false,           // sv_autobunnyhopping
+		(float)0.0f,           // sv_bounce
 		(bool)false,           // sv_enablebunnyhopping
 		(float)5.2f,           // sv_friction
 		(float)800.0f,         // sv_gravity
