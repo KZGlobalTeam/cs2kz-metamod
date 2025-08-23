@@ -553,7 +553,7 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 					finalTrace.m_flFraction = 0;
 					finalTrace.m_nTriangle = k;
 					finalTrace.m_eRayType = RAY_TYPE_HULL;
-					finalTrace.m_bStartInSolid = finalBrushTrace.startsolid;
+					finalTrace.m_bStartInSolid = true;
 					finalTrace.m_bExactHitPoint = false;
 					*trace = finalTrace;
 					return true;
@@ -569,10 +569,19 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 			if (brushTrace.fraction <= finalBrushTrace.fraction)
 			{
 				// try to handle traces with an identical fraction gracefully
-				if (brushTrace.fraction == finalBrushTrace.fraction - 1 && finalBrushTrace.fraction < 1)
+				if (brushTrace.distance >= finalBrushTrace.distance - epsilon)
 				{
+					// don't car about fractions that didn't hit
+					if (finalBrushTrace.fraction == 1)
+					{
+						continue;
+					}
 					f32 newDot = DotProduct(brushTrace.plane.normal, delta);
 					f32 oldDot = DotProduct(finalBrushTrace.plane.normal, delta);
+					if (newDot != oldDot)
+					{
+						META_CONPRINTF("identical fraction %f %f, newDot %f oldDot %f\n", brushTrace.fraction, finalBrushTrace.fraction, newDot, oldDot);
+					}
 					// If the old normal is more in line with the
 					//  trace delta (end-start), then prefer the old one.
 					if (oldDot >= newDot)
@@ -899,23 +908,17 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 			continue;
 		}
 
+#if 0
 		// If we started in a solid object, or we were in solid space
 		//  the whole way, zero out our velocity and return that we
 		//  are blocked by floor and wall.
 
-#if 0
 		// TODO(GameChaos): no allsolid exists, delete?
         if (pm.allsolid && !kz_rampbugfix.Get())
         {
             // entity is trapped in another solid
             VectorCopy(vec3_origin, mv->m_vecVelocity);
-			
-            if (m_pPlayer->m_nWallRunState >= WALLRUN_RUNNING)
-            {
-                //Msg( "EndWallrun because blocked\n" );
-                EndWallRun();
-            }
-            return 4;
+            return;
         }
 #endif
 
@@ -924,8 +927,8 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 		//  zero the plane counter.
 		if (pm.m_flFraction > 0.0f)
 		{
-#if 0
-			// TODO(GameChaos): This isn't a thing in source, delete?
+#if 1
+			// TODO(GameChaos): This isn't a thing in source 2, delete?
             if ((!bumpcount || pawn->m_hGroundEntity().Get() != nullptr || !kz_rampbugfix.Get()) && numbumps > 0 && pm.m_flFraction == 1.0f)
             {
                 // There's a precision issue with terrain tracing that can cause a swept box to successfully trace
@@ -943,9 +946,9 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
                 }
                 else if (stuck.m_bStartInSolid || stuck.m_flFraction != 1.0f)
                 {
-                    Msg("Player will become stuck!!! allfrac: %f pm: %i, %f, %f, %f vs stuck: %i, %f, %f\n",
-                        allFraction, pm.m_bStartInSolid, pm.m_flFraction, pm.m_vHitNormal.z, pm.fractionleftsolid,
-                        stuck.m_bStartInSolid, stuck.m_flFraction, stuck.plane.normal.z);
+                    META_CONPRINTF("Player will become stuck!!! allfrac: %f pm: %i, %f, %f vs stuck: %i, %f, %f\n",
+                        allFraction, pm.m_bStartInSolid, pm.m_flFraction, pm.m_vHitNormal.z,
+                        stuck.m_bStartInSolid, stuck.m_flFraction, stuck.m_vHitNormal.z);
                     VectorCopy(vec3_origin, mv->m_vecVelocity);
                     break;
                 }
