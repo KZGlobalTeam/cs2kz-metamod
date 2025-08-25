@@ -13,6 +13,8 @@ struct EntityIOConnectionDesc_t
 	EntityIOTargetType_t m_nTargetType;
 	int32 m_nTimesToFire;
 	float m_flDelay;
+	KeyValues3 unknown;
+	bool unknown2;
 };
 
 struct EntityIOConnection_t : EntityIOConnectionDesc_t
