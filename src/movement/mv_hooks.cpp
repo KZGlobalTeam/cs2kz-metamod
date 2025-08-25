@@ -80,6 +80,7 @@ void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerC
 }
 
 CConVar<bool> kz_retrace_enable("kz_retrace_enable", FCVAR_NONE, "Enable retrace", true);
+CConVar<bool> kz_custom_tryplayermove("kz_custom_tryplayermove", FCVAR_NONE, "Custom tryplayermove implementation", true);
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
@@ -311,7 +312,7 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 
 	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
-	if (!kz_retrace_enable.Get())
+	if (!kz_retrace_enable.Get() || !kz_custom_tryplayermove.Get())
 	{
 		TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
 	}

@@ -7,6 +7,7 @@
 #include "utils/utils.h"
 #include "utils/hooks.h"
 #include "utils/gameconfig.h"
+#include "utils/kz_maths.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
@@ -76,6 +77,9 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		// We need to reset the map for mapping api to properly load in.
 		utils::ResetMap();
 	}
+#ifdef DEBUG
+	KzMathsTest();
+#endif // DEBUG
 	return true;
 }
 
