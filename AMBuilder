@@ -64,6 +64,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'http.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'kz_maths.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'player', 'player_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'player', 'player.cpp'),
