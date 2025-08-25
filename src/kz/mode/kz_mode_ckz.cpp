@@ -133,7 +133,10 @@ void KZClassicModeService::Cleanup()
 			FOR_EACH_VEC(*weapons, i)
 			{
 				CBaseModelEntity *weapon = (*weapons)[i].Get();
-				weapon->m_fEffects(0);
+				if (weapon)
+				{
+					weapon->m_fEffects(0);
+				}
 			}
 		}
 	}
@@ -278,7 +281,10 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 		FOR_EACH_VEC(*weapons, i)
 		{
 			CBaseModelEntity *weapon = (*weapons)[i].Get();
-			weapon->m_fEffects(EF_NOSHADOW | EF_NORECEIVESHADOW);
+			if (weapon)
+			{
+				weapon->m_fEffects(EF_NOSHADOW | EF_NORECEIVESHADOW);
+			}
 		}
 	}
 }

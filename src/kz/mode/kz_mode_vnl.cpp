@@ -50,9 +50,9 @@ void KZVanillaModeService::Reset()
 }
 
 // 1:1 with CS2.
-static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out)
+static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out, float overbounce)
 {
-	f32 backoff = -((in.x * normal.x) + ((normal.z * in.z) + (in.y * normal.y))) * 1;
+	f32 backoff = -(((normal.y * in.y) + (normal.z * in.z)) + (in.x * normal.x)) * overbounce;
 	backoff = fmaxf(backoff, 0.0) + 0.03125;
 	out = normal * backoff + in;
 }
@@ -65,18 +65,13 @@ void KZVanillaModeService::OnDuckPost()
 // We don't actually do anything here aside from predicting triggerfix.
 #define MAX_CLIP_PLANES 5
 
-static_function f32 QuantizeFloat(f32 value)
-{
-	constexpr const f32 offset = 196608.0f;
-
-	return (value + offset) - offset;
-}
-
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
 	this->tpmTriggerFixOrigins.RemoveAll();
 
-	Vector origin, oldVelocity;
+	Vector origin = this->player->currentMoveData->m_vecAbsOrigin;
+	Vector velocity = this->player->currentMoveData->m_vecVelocity;
+	float jumpError = this->player->GetMoveServices()->m_flAccumulatedJumpError();
 	int bumpcount, numbumps;
 	Vector dir;
 	float d;
@@ -87,16 +82,21 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	int i, j;
 	trace_t pm;
 	Vector end;
-
 	float time_left, allFraction;
+	bool inAir;
 
-	numbumps = 4; // Bump up to four times
-
+	numbumps = 4;  // Bump up to four times
 	numplanes = 0; //  and not sliding along any planes
 
-	this->player->GetOrigin(&origin);
-	Vector &velocity = this->player->currentMoveData->m_vecVelocity;
-	this->player->GetVelocity(&oldVelocity);
+#if 0
+	if (bIsSurfing)
+	{
+		*bIsSurfing = false;
+	}
+#endif
+
+	// Check if player is in air
+	inAir = (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0;
 
 	VectorCopy(velocity, original_velocity); // Store original velocity
 	VectorCopy(velocity, primal_velocity);
@@ -109,36 +109,59 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	this->player->GetBBoxBounds(&bounds);
 
 	CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
+#if 0
+	if (this->player->IsFakeClient())
+	{
+		filter.EnableInteractsWithLayer(LAYER_INDEX_CONTENTS_NPC_CLIP);
+	}
+#endif
 
-	f32 originalError = this->player->GetMoveServices()->m_flAccumulatedJumpError();
+#if 0 
+	// AG2 Update: Kill player speed if someone is standing on top of them
+	// Note that this function is only called when the player might collide with something while on the ground.
+	if (this->player->GetPlayerPawn()->m_hGroundEntity().Get() != NULL)
+	{
+		if (IsStoodOn(this->player->GetPlayerPawn()))
+		{
+			velocity.Init();
+		}
+	}
+#endif
 	for (bumpcount = 0; bumpcount < numbumps; bumpcount++)
 	{
 		if (velocity.Length() == 0.0)
 		{
 			break;
 		}
-		// Assume we can move all the way from the current origin to the
-		//  end point.
-		VectorMA(origin, time_left, velocity, end);
-		if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0 && time_left != 0.0f)
+
+		if (/*enableJumpPrecision && */ inAir && time_left != 0.0f)
 		{
-			f32 zMoveDistance = time_left * velocity.z;
-			f32 preciseZMoveDistance = zMoveDistance + this->player->GetMoveServices()->m_flAccumulatedJumpError;
-			f32 quantizedMoveDistance = QuantizeFloat(zMoveDistance);
-			end.z = QuantizeFloat(preciseZMoveDistance + origin.z);
-			f32 zFinal = preciseZMoveDistance - quantizedMoveDistance;
-			quantizedMoveDistance += 199608.0f;
-			zFinal += quantizedMoveDistance;
-			zFinal += origin.z;
-			zFinal -= 199608.0f;
-			end.z = zFinal;
-			this->player->GetMoveServices()->m_flAccumulatedJumpError = preciseZMoveDistance - (end.z - origin.z);
+			float initialZDistance = time_left * velocity.z;
+			float desiredZDistance = initialZDistance + jumpError;
+
+			end.x = (time_left * velocity.x) + origin.x;
+			end.y = (time_left * velocity.y) + origin.y;
+
+			float finalZPosition =
+				(((desiredZDistance - ((initialZDistance + 196608.0f) - 196608.0f)) + (((initialZDistance + 196608.0f) - 196608.0f) + 196608.0f))
+				 + origin.z)
+				- 196608.0f;
+			end.z = finalZPosition;
+
+			jumpError = desiredZDistance - (finalZPosition - origin.z);
 		}
-		// AG2 Update: Fixed several cases where a player would get stuck on map geometry while surfing (i.e., on surf maps)
+		else
+		{
+			VectorMA(origin, time_left, velocity, end);
+		}
+
+		// AG2 Update: Fixed several cases where a player would get stuck on map geometry while surfing
 		if (numplanes == 1)
 		{
 			VectorMA(end, 0.03125f, planes[0], end);
 		}
+
+		// See if we can make it from origin to end point.
 		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
 		if (pFirstDest && (end == *pFirstDest))
 		{
@@ -146,13 +169,17 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		}
 		else
 		{
+#if 0
+			this->player->GetMoveServices()->m_nTraceCount++;
+#endif
 			g_pKZUtils->TracePlayerBBox(origin, end, bounds, &filter, pm);
 		}
-		if (allFraction == 0)
+
+		if (allFraction == 0.0f)
 		{
-			if (pm.m_flFraction < 1 && time_left * velocity.Length() >= 0.03125 && pm.m_flFraction * velocity.Length() * time_left < 0.03125)
+			if (pm.m_flFraction < 1.0f && velocity.Length() * time_left >= 0.03125f && (pm.m_flFraction * velocity.Length() * time_left) < 0.03125f)
 			{
-				pm.m_flFraction = 0;
+				pm.m_flFraction = 0.0f;
 			}
 		}
 
@@ -168,29 +195,42 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		}
 
 		allFraction += pm.m_flFraction;
-		// If we covered the entire distance, we are done
-		//  and can return.
 
 		// Triggerfix related
 		this->tpmTriggerFixOrigins.AddToTail(pm.m_vEndPos);
 
-		if (pm.m_flFraction == 1)
+		if (pm.m_flFraction == 1.0f)
 		{
 			break; // moved the entire distance
 		}
+
+#if 0
+		AddToTouched(this->player->currentMoveData, pm, velocity);
+#endif
 		// Reduce amount of m_flFrameTime left by total time left * fraction
 		//  that we covered.
 		time_left -= pm.m_flFraction * time_left;
 
 		// Did we run out of planes to clip against?
-		// 2024-11-07 update also adds a low velocity check... This is only correct as long as you don't collide with other players.
-		f32 standableZ = KZ::mode::modeCvarRefs[MODECVAR_SV_STANDABLE_NORMAL]->GetFloat();
-		if (numplanes >= MAX_CLIP_PLANES || (pm.m_vHitNormal.z >= standableZ && velocity.Length2D() < 1.0f))
+		if (numplanes >= MAX_CLIP_PLANES)
 		{
 			// this shouldn't really happen
 			//  Stop our movement if so.
 			VectorCopy(vec3_origin, velocity);
+			// Con_DPrintf("Too many planes 4\n");
+
 			break;
+		}
+
+		// 2024-11-07 update also adds a low velocity check... This is only correct as long as you don't collide with other players.
+		if (inAir && velocity.z < 0.0f)
+		{
+			float standableZ = KZ::mode::modeCvarRefs[MODECVAR_SV_STANDABLE_NORMAL]->GetFloat();
+			if (pm.m_vHitNormal.z >= standableZ /*&& this->player->GetMoveServices()->CanStandOn(pm)*/ && velocity.Length2D() < 1.0f)
+			{
+				velocity.Init();
+				break;
+			}
 		}
 
 		// Set up next clipping plane
@@ -201,13 +241,33 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		//
 
 		// reflect player velocity
-		// Only give this a try for first impact plane because you can get yourself stuck in an acute corner by jumping
-		// in place
+		// Only give this a try for first impact plane because you can get yourself stuck in an acute corner by jumping in place
 		//  and pressing forward and nobody was really using this bounce/reflection feature anyway...
-		if (numplanes == 1 && this->player->GetPlayerPawn()->m_MoveType() == MOVETYPE_WALK
-			&& this->player->GetPlayerPawn()->m_hGroundEntity().Get() == NULL)
+		if (numplanes == 1)
 		{
-			ClipVelocity(original_velocity, planes[0], new_velocity);
+			float sv_bounce = KZ::mode::modeCvarRefs[MODECVAR_SV_BOUNCE]->GetFloat();
+			float walkableZ = KZ::mode::modeCvarRefs[MODECVAR_SV_WALKABLE_NORMAL]->GetFloat();
+			for (i = 0; i < numplanes; i++)
+			{
+				if (planes[i][2] > walkableZ)
+				{
+					// floor or slope
+					ClipVelocity(original_velocity, planes[i], new_velocity, 1);
+					VectorCopy(new_velocity, original_velocity);
+				}
+				else
+				{
+					ClipVelocity(original_velocity, planes[i], new_velocity,
+								 1.0 + sv_bounce * (1 - this->player->GetMoveServices()->m_flSurfaceFriction()));
+
+#if 0
+					if (bIsSurfing)
+					{
+						*bIsSurfing = true;
+					}
+#endif
+				}
+			}
 
 			VectorCopy(new_velocity, velocity);
 			VectorCopy(new_velocity, original_velocity);
@@ -216,7 +276,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		{
 			for (i = 0; i < numplanes; i++)
 			{
-				ClipVelocity(original_velocity, planes[i], velocity);
+				ClipVelocity(original_velocity, planes[i], velocity, 1);
 
 				for (j = 0; j < numplanes; j++)
 				{
@@ -255,21 +315,34 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			// if original velocity is against the original velocity, stop dead
 			// to avoid tiny occilations in sloping corners
 			//
-			d = velocity.Dot(primal_velocity);
-			if (d <= 0)
+			if (velocity.Dot(primal_velocity) <= 0.0f)
 			{
-				// Con_DPrintf("Back\n");
 				VectorCopy(vec3_origin, velocity);
 				break;
 			}
 		}
 	}
-	if (allFraction == 0)
+
+	if (allFraction == 0 && numplanes > 0)
 	{
 		VectorCopy(vec3_origin, velocity);
 	}
-	this->player->GetMoveServices()->m_flAccumulatedJumpError = originalError;
-	this->player->currentMoveData->m_vecVelocity = oldVelocity;
+
+#if 0
+	float primalSpeed2D = primal_velocity.Length2D();
+	float currentSpeed2D = velocity.Length2D();
+	float lateralStoppingAmount = primalSpeed2D - currentSpeed2D;
+	
+	if (lateralStoppingAmount > 1160.0f)
+	{
+		PlayerLandingRoughEffect(this->player, 1.0f);
+	}
+	else if (lateralStoppingAmount > 580.0f)
+	{
+		PlayerLandingRoughEffect(this->player, 0.85f);
+	}
+	this->player->currentMoveData->m_vecVelocity = velocity;
+#endif
 }
 
 void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)

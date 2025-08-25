@@ -109,6 +109,7 @@ class KZClassicModeService : public KZModeService
 		(float)100.0f,  // sv_airaccelerate
 		(float)30.0f,   // sv_air_max_wishspeed
 		(bool)false,    // sv_autobunnyhopping
+		(float)0.0f,    // sv_bounce
 		(bool)true,     // sv_enablebunnyhopping
 		(float)5.2f,    // sv_friction
 		(float)800.0f,  // sv_gravity
