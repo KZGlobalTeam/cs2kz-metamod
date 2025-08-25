@@ -132,8 +132,6 @@ v2i v2i::divceils(v2i a, int32_t b)
 	return result;
 }
 
-
-
 v3i v3i::add(v3i a, v3i b)
 {
 	v3i result = V3i(a.x + b.x, a.y + b.y, a.z + b.z);
@@ -259,8 +257,6 @@ v3i v3i::divceils(v3i a, int32_t b)
 	v3i result = V3i(i32divceil(a.x, b), i32divceil(a.y, b), i32divceil(a.z, b));
 	return result;
 }
-
-
 
 v4i v4i::add(v4i a, v4i b)
 {
@@ -579,8 +575,6 @@ Vector2D v2::Vec()
 	return result;
 }
 
-
-
 v3 v3::add(v3 a, v3 b)
 {
 	v3 result = V3(a.x + b.x, a.y + b.y, a.z + b.z);
@@ -709,31 +703,19 @@ v3i v3::tov3i(v3 value)
 
 v3 v3::floor(v3 value)
 {
-	v3 result = V3(
-		f32floor(value.x),
-		f32floor(value.y),
-		f32floor(value.z)
-	);
+	v3 result = V3(f32floor(value.x), f32floor(value.y), f32floor(value.z));
 	return result;
 }
 
 v3 v3::ceil(v3 value)
 {
-	v3 result = V3(
-		f32ceil(value.x),
-		f32ceil(value.y),
-		f32ceil(value.z)
-	);
+	v3 result = V3(f32ceil(value.x), f32ceil(value.y), f32ceil(value.z));
 	return result;
 }
 
 v3 v3::round(v3 value)
 {
-	v3 result = V3(
-		f32round(value.x),
-		f32round(value.y),
-		f32round(value.z)
-	);
+	v3 result = V3(f32round(value.x), f32round(value.y), f32round(value.z));
 	return result;
 }
 
@@ -783,7 +765,6 @@ Vector v3::Vec()
 	Vector result = Vector(x, y, z);
 	return result;
 }
-
 
 v4 v4::add(v4 a, v4 b)
 {
@@ -877,13 +858,15 @@ v4 v4::min(v4 a, v4 b)
 
 v4 v4::fma(v4 direction, v4 scale, v4 add)
 {
-	v4 result = V4(f32fma(direction.x, scale.x, add.x), f32fma(direction.y, scale.y, add.y), f32fma(direction.z, scale.z, add.z), f32fma(direction.w, scale.w, add.w));
+	v4 result = V4(f32fma(direction.x, scale.x, add.x), f32fma(direction.y, scale.y, add.y), f32fma(direction.z, scale.z, add.z),
+				   f32fma(direction.w, scale.w, add.w));
 	return result;
 }
 
 v4 v4::fma(v4 direction, float scale, v4 add)
 {
-	v4 result = V4(f32fma(direction.x, scale, add.x), f32fma(direction.y, scale, add.y), f32fma(direction.z, scale, add.z), f32fma(direction.w, scale, add.w));
+	v4 result = V4(f32fma(direction.x, scale, add.x), f32fma(direction.y, scale, add.y), f32fma(direction.z, scale, add.z),
+				   f32fma(direction.w, scale, add.w));
 	return result;
 }
 
@@ -907,34 +890,19 @@ v4i v4::tov4i(v4 value)
 
 v4 v4::floor(v4 value)
 {
-	v4 result = V4(
-		f32floor(value.x),
-		f32floor(value.y),
-		f32floor(value.z),
-		f32floor(value.w)
-	);
+	v4 result = V4(f32floor(value.x), f32floor(value.y), f32floor(value.z), f32floor(value.w));
 	return result;
 }
 
 v4 v4::ceil(v4 value)
 {
-	v4 result = V4(
-		f32ceil(value.x),
-		f32ceil(value.y),
-		f32ceil(value.z),
-		f32ceil(value.w)
-	);
+	v4 result = V4(f32ceil(value.x), f32ceil(value.y), f32ceil(value.z), f32ceil(value.w));
 	return result;
 }
 
 v4 v4::round(v4 value)
 {
-	v4 result = V4(
-		f32round(value.x),
-		f32round(value.y),
-		f32round(value.z),
-		f32round(value.w)
-	);
+	v4 result = V4(f32round(value.x), f32round(value.y), f32round(value.z), f32round(value.w));
 	return result;
 }
 
@@ -990,8 +958,6 @@ Quaternion v4::Quat()
 	Quaternion result = Quaternion(x, y, z, w);
 	return result;
 }
-
-
 
 int32_t i32wrap(int32_t value, int32_t max)
 {
@@ -1803,17 +1769,17 @@ uint64_t NextPowerOf2(uint64_t value)
  * your project.
  */
 
-
-struct pcg_state_setseq_64 {    // Internals are *Private*.
-	uint64_t state;             // RNG state.  All values are possible.
-	uint64_t inc;               // Controls which RNG sequence (stream) is
-	// selected. Must *always* be odd.
+struct pcg_state_setseq_64
+{                   // Internals are *Private*.
+	uint64_t state; // RNG state.  All values are possible.
+	uint64_t inc;   // Controls which RNG sequence (stream) is
+					// selected. Must *always* be odd.
 };
 typedef struct pcg_state_setseq_64 pcg32_random_t;
 
 // If you *must* statically initialize it, here's one.
 
-#define PCG32_INITIALIZER   { 0x853c49e6748fea9bULL, 0xda3e39cb94b95bdbULL }
+#define PCG32_INITIALIZER {0x853c49e6748fea9bULL, 0xda3e39cb94b95bdbULL}
 
 // pcg32_srandom(initstate, initseq)
 // pcg32_srandom_r(rng, initstate, initseq):
@@ -1821,22 +1787,21 @@ typedef struct pcg_state_setseq_64 pcg32_random_t;
 //     sequence selection constant (a.k.a. stream id)
 
 static void pcg32_srandom(uint64_t initstate, uint64_t initseq);
-static void pcg32_srandom_r(pcg32_random_t* rng, uint64_t initstate,
-					 uint64_t initseq);
+static void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq);
 
 // pcg32_random()
 // pcg32_random_r(rng)
 //     Generate a uniformly distributed 32-bit random number
 
 static uint32_t pcg32_random(void);
-static uint32_t pcg32_random_r(pcg32_random_t* rng);
+static uint32_t pcg32_random_r(pcg32_random_t *rng);
 
 // pcg32_boundedrand(bound):
 // pcg32_boundedrand_r(rng, bound):
 //     Generate a uniformly distributed number, r, where 0 <= r < bound
 
 static uint32_t pcg32_boundedrand(uint32_t bound);
-static uint32_t pcg32_boundedrand_r(pcg32_random_t* rng, uint32_t bound);
+static uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound);
 
 static pcg32_random_t pcg32_global = PCG32_INITIALIZER;
 
@@ -1845,83 +1810,83 @@ static pcg32_random_t pcg32_global = PCG32_INITIALIZER;
 //     Seed the rng.  Specified in two parts, state initializer and a
 //     sequence selection constant (a.k.a. stream id)
 
-static void pcg32_srandom_r(pcg32_random_t* rng, uint64_t initstate, uint64_t initseq)
+static void pcg32_srandom_r(pcg32_random_t *rng, uint64_t initstate, uint64_t initseq)
 {
-    rng->state = 0U;
-    rng->inc = (initseq << 1u) | 1u;
-    pcg32_random_r(rng);
-    rng->state += initstate;
-    pcg32_random_r(rng);
+	rng->state = 0U;
+	rng->inc = (initseq << 1u) | 1u;
+	pcg32_random_r(rng);
+	rng->state += initstate;
+	pcg32_random_r(rng);
 }
 
 static void pcg32_srandom(uint64_t seed, uint64_t seq)
 {
-    pcg32_srandom_r(&pcg32_global, seed, seq);
+	pcg32_srandom_r(&pcg32_global, seed, seq);
 }
 
 // pcg32_random()
 // pcg32_random_r(rng)
 //     Generate a uniformly distributed 32-bit random number
 
-static uint32_t pcg32_random_r(pcg32_random_t* rng)
+static uint32_t pcg32_random_r(pcg32_random_t *rng)
 {
-    uint64_t oldstate = rng->state;
-    rng->state = oldstate * 6364136223846793005ULL + rng->inc;
-    uint32_t xorshifted = (uint32_t)(((oldstate >> 18u) ^ oldstate) >> 27u);
-    uint32_t rot = oldstate >> 59u;
-    return (xorshifted >> rot) | (xorshifted << ((0u - rot) & 31));
+	uint64_t oldstate = rng->state;
+	rng->state = oldstate * 6364136223846793005ULL + rng->inc;
+	uint32_t xorshifted = (uint32_t)(((oldstate >> 18u) ^ oldstate) >> 27u);
+	uint32_t rot = oldstate >> 59u;
+	return (xorshifted >> rot) | (xorshifted << ((0u - rot) & 31));
 }
 
 static uint32_t pcg32_random()
 {
-    return pcg32_random_r(&pcg32_global);
+	return pcg32_random_r(&pcg32_global);
 }
-
 
 // pcg32_boundedrand(bound):
 // pcg32_boundedrand_r(rng, bound):
 //     Generate a uniformly distributed number, r, where 0 <= r < bound
 
-static uint32_t pcg32_boundedrand_r(pcg32_random_t* rng, uint32_t bound)
+static uint32_t pcg32_boundedrand_r(pcg32_random_t *rng, uint32_t bound)
 {
-    // To avoid bias, we need to make the range of the RNG a multiple of
-    // bound, which we do by dropping output less than a threshold.
-    // A naive scheme to calculate the threshold would be to do
-    //
-    //     uint32_t threshold = 0x100000000ull % bound;
-    //
-    // but 64-bit div/mod is slower than 32-bit div/mod (especially on
-    // 32-bit platforms).  In essence, we do
-    //
-    //     uint32_t threshold = (0x100000000ull-bound) % bound;
-    //
-    // because this version will calculate the same modulus, but the LHS
-    // value is less than 2^32.
-	
-    uint32_t threshold = (0u - bound) % bound;
-	
-    // Uniformity guarantees that this loop will terminate.  In practice, it
-    // should usually terminate quickly; on average (assuming all bounds are
-    // equally likely), 82.25% of the time, we can expect it to require just
-    // one iteration.  In the worst case, someone passes a bound of 2^31 + 1
-    // (i.e., 2147483649), which invalidates almost 50% of the range.  In 
-    // practice, bounds are typically small and only a tiny amount of the range
-    // is eliminated.
-    for (;;) {
-        uint32_t r = pcg32_random_r(rng);
-        if (r >= threshold)
-            return r % bound;
-    }
-}
+	// To avoid bias, we need to make the range of the RNG a multiple of
+	// bound, which we do by dropping output less than a threshold.
+	// A naive scheme to calculate the threshold would be to do
+	//
+	//     uint32_t threshold = 0x100000000ull % bound;
+	//
+	// but 64-bit div/mod is slower than 32-bit div/mod (especially on
+	// 32-bit platforms).  In essence, we do
+	//
+	//     uint32_t threshold = (0x100000000ull-bound) % bound;
+	//
+	// because this version will calculate the same modulus, but the LHS
+	// value is less than 2^32.
 
+	uint32_t threshold = (0u - bound) % bound;
+
+	// Uniformity guarantees that this loop will terminate.  In practice, it
+	// should usually terminate quickly; on average (assuming all bounds are
+	// equally likely), 82.25% of the time, we can expect it to require just
+	// one iteration.  In the worst case, someone passes a bound of 2^31 + 1
+	// (i.e., 2147483649), which invalidates almost 50% of the range.  In
+	// practice, bounds are typically small and only a tiny amount of the range
+	// is eliminated.
+	for (;;)
+	{
+		uint32_t r = pcg32_random_r(rng);
+		if (r >= threshold)
+		{
+			return r % bound;
+		}
+	}
+}
 
 static uint32_t pcg32_boundedrand(uint32_t bound)
 {
-    return pcg32_boundedrand_r(&pcg32_global, bound);
+	return pcg32_boundedrand_r(&pcg32_global, bound);
 }
 
 // PCG source END
-
 
 static float RandF32_(pcg32_random_t *rng)
 {
@@ -1944,10 +1909,10 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 		v2 test = {{12555, -24050}};
 		ASSERT_EQ(test.x, 12555);
 		ASSERT_EQ(test.y, -24050);
-		
+
 		ASSERT_EQ(test.x, test.e[0]);
 		ASSERT_EQ(test.y, test.e[1]);
-		
+
 		static_assert(Q_ARRAYSIZE(test.e) == 2, "");
 		static_assert(sizeof(test) == 8, "");
 	}
@@ -1956,19 +1921,19 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 		ASSERT_EQ(test.x, 12555);
 		ASSERT_EQ(test.y, -24050);
 		ASSERT_EQ(test.z, -9824);
-		
+
 		ASSERT_EQ(test.r, 12555);
 		ASSERT_EQ(test.g, -24050);
 		ASSERT_EQ(test.b, -9824);
-		
+
 		ASSERT_EQ(test.x, test.e[0]);
 		ASSERT_EQ(test.y, test.e[1]);
 		ASSERT_EQ(test.z, test.e[2]);
-		
+
 		ASSERT_EQ(test.x, test.r);
 		ASSERT_EQ(test.y, test.g);
 		ASSERT_EQ(test.z, test.b);
-		
+
 		static_assert(Q_ARRAYSIZE(test.e) == 3, "");
 		static_assert(sizeof(test) == 12, "");
 	}
@@ -1978,30 +1943,30 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 		ASSERT_EQ(test.y, -24050);
 		ASSERT_EQ(test.z, -9824);
 		ASSERT_EQ(test.w, -1002);
-		
+
 		ASSERT_EQ(test.r, 12555);
 		ASSERT_EQ(test.g, -24050);
 		ASSERT_EQ(test.b, -9824);
 		ASSERT_EQ(test.a, -1002);
-		
+
 		ASSERT_EQ(test.x, test.e[0]);
 		ASSERT_EQ(test.y, test.e[1]);
 		ASSERT_EQ(test.z, test.e[2]);
 		ASSERT_EQ(test.w, test.e[3]);
-		
+
 		ASSERT_EQ(test.x, test.r);
 		ASSERT_EQ(test.y, test.g);
 		ASSERT_EQ(test.z, test.b);
 		ASSERT_EQ(test.w, test.a);
-		
+
 		ASSERT_EQ(test.x, test.xyz.x);
 		ASSERT_EQ(test.y, test.xyz.y);
 		ASSERT_EQ(test.z, test.xyz.z);
-		
+
 		ASSERT_EQ(test.x, test.rgb.x);
 		ASSERT_EQ(test.y, test.rgb.y);
 		ASSERT_EQ(test.z, test.rgb.z);
-		
+
 		static_assert(Q_ARRAYSIZE(test.e) == 4, "");
 		static_assert(sizeof(test) == 16, "");
 		static_assert(sizeof(test.xyz) == 12, "");
@@ -2011,10 +1976,10 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 		v2i test = {{12555, -24050}};
 		ASSERT_EQ(test.x, 12555);
 		ASSERT_EQ(test.y, -24050);
-		
+
 		ASSERT_EQ(test.x, test.e[0]);
 		ASSERT_EQ(test.y, test.e[1]);
-		
+
 		static_assert(Q_ARRAYSIZE(test.e) == 2, "");
 		static_assert(sizeof(test) == 8, "");
 	}
@@ -2023,19 +1988,19 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 		ASSERT_EQ(test.x, 12555);
 		ASSERT_EQ(test.y, -24050);
 		ASSERT_EQ(test.z, -9824);
-		
+
 		ASSERT_EQ(test.r, 12555);
 		ASSERT_EQ(test.g, -24050);
 		ASSERT_EQ(test.b, -9824);
-		
+
 		ASSERT_EQ(test.x, test.e[0]);
 		ASSERT_EQ(test.y, test.e[1]);
 		ASSERT_EQ(test.z, test.e[2]);
-		
+
 		ASSERT_EQ(test.x, test.r);
 		ASSERT_EQ(test.y, test.g);
 		ASSERT_EQ(test.z, test.b);
-		
+
 		static_assert(Q_ARRAYSIZE(test.e) == 3, "");
 		static_assert(sizeof(test) == 12, "");
 	}
@@ -2045,36 +2010,36 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 		ASSERT_EQ(test.y, -24050);
 		ASSERT_EQ(test.z, -9824);
 		ASSERT_EQ(test.w, -1002);
-		
+
 		ASSERT_EQ(test.r, 12555);
 		ASSERT_EQ(test.g, -24050);
 		ASSERT_EQ(test.b, -9824);
 		ASSERT_EQ(test.a, -1002);
-		
+
 		ASSERT_EQ(test.x, test.e[0]);
 		ASSERT_EQ(test.y, test.e[1]);
 		ASSERT_EQ(test.z, test.e[2]);
 		ASSERT_EQ(test.w, test.e[3]);
-		
+
 		ASSERT_EQ(test.x, test.r);
 		ASSERT_EQ(test.y, test.g);
 		ASSERT_EQ(test.z, test.b);
 		ASSERT_EQ(test.w, test.a);
-		
+
 		ASSERT_EQ(test.x, test.xyz.x);
 		ASSERT_EQ(test.y, test.xyz.y);
 		ASSERT_EQ(test.z, test.xyz.z);
-		
+
 		ASSERT_EQ(test.x, test.rgb.x);
 		ASSERT_EQ(test.y, test.rgb.y);
 		ASSERT_EQ(test.z, test.rgb.z);
-		
+
 		static_assert(Q_ARRAYSIZE(test.e) == 4, "");
 		static_assert(sizeof(test) == 16, "");
 		static_assert(sizeof(test.xyz) == 12, "");
 		static_assert(sizeof(test.rgb) == 12, "");
 	}
-	
+
 	// test functions
 	{
 		ASSERT_EQ((f32fma(4, 2, 6)), 14);
@@ -2134,7 +2099,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], testA.e[i] / testB.e[i]);
 			}
 		}
-		
+
 		{
 			v2 result = v2::divs(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2173,9 +2138,9 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 		{
-			assert(v2::equals((v2){{0, 1}}, (v2){{0, 1}}));
-			assert(!v2::equals((v2){{1, 1}}, (v2){{0, 1}}));
-			assert(!v2::equals((v2){{0, 2}}, (v2){{0, 1}}));
+			assert(v2::equals((v2) {{0, 1}}, (v2) {{0, 1}}));
+			assert(!v2::equals((v2) {{1, 1}}, (v2) {{0, 1}}));
+			assert(!v2::equals((v2) {{0, 2}}, (v2) {{0, 1}}));
 		}
 		{
 			v2 result = v2::sign(testA);
@@ -2198,7 +2163,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], (int32_t)testA.e[i]);
 			}
 		}
-		
+
 		{
 			v2 result = v2::floor(testA);
 			for (int32_t i = 0; i < elements; i++)
@@ -2276,7 +2241,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], testA.e[i] / testB.e[i]);
 			}
 		}
-		
+
 		{
 			v3 result = v3::divs(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2285,10 +2250,10 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 		{
-			assert(v3::equals(v3{{0, 1, 2}}, v3{{0, 1, 2}}));
-			assert(!v3::equals(v3{{1, 1, 2}}, v3{{0, 1, 2}}));
-			assert(!v3::equals(v3{{0, 2, 2}}, v3{{0, 1, 2}}));
-			assert(!v3::equals(v3{{0, 1, 3}}, v3{{0, 1, 2}}));
+			assert(v3::equals(v3 {{0, 1, 2}}, v3 {{0, 1, 2}}));
+			assert(!v3::equals(v3 {{1, 1, 2}}, v3 {{0, 1, 2}}));
+			assert(!v3::equals(v3 {{0, 2, 2}}, v3 {{0, 1, 2}}));
+			assert(!v3::equals(v3 {{0, 1, 3}}, v3 {{0, 1, 2}}));
 		}
 		{
 			v3 result = v3::negate(testA);
@@ -2359,7 +2324,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], (int32_t)testA.e[i]);
 			}
 		}
-		
+
 		{
 			v3 result = v3::floor(testA);
 			for (int32_t i = 0; i < elements; i++)
@@ -2463,7 +2428,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], testA.e[i] / testB.e[i]);
 			}
 		}
-		
+
 		{
 			v4 result = v4::divs(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2502,11 +2467,11 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 		{
-			assert(v4::equals((v4){{0, 1, 2, 3}}, (v4){{0, 1, 2, 3}}));
-			assert(!v4::equals((v4){{1, 1, 2, 3}}, (v4){{0, 1, 2, 3}}));
-			assert(!v4::equals((v4){{0, 2, 2, 3}}, (v4){{0, 1, 2, 3}}));
-			assert(!v4::equals((v4){{0, 1, 3, 3}}, (v4){{0, 1, 2, 3}}));
-			assert(!v4::equals((v4){{0, 1, 3, 5}}, (v4){{0, 1, 2, 3}}));
+			assert(v4::equals((v4) {{0, 1, 2, 3}}, (v4) {{0, 1, 2, 3}}));
+			assert(!v4::equals((v4) {{1, 1, 2, 3}}, (v4) {{0, 1, 2, 3}}));
+			assert(!v4::equals((v4) {{0, 2, 2, 3}}, (v4) {{0, 1, 2, 3}}));
+			assert(!v4::equals((v4) {{0, 1, 3, 3}}, (v4) {{0, 1, 2, 3}}));
+			assert(!v4::equals((v4) {{0, 1, 3, 5}}, (v4) {{0, 1, 2, 3}}));
 		}
 		{
 			v4 result = v4::sign(testA);
@@ -2529,7 +2494,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], (int32_t)testA.e[i]);
 			}
 		}
-		
+
 		{
 			v4 result = v4::floor(testA);
 			for (int32_t i = 0; i < elements; i++)
@@ -2608,7 +2573,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], testA.e[i] / testB.e[i]);
 			}
 		}
-		
+
 		{
 			v2i result = v2i::divs(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2647,9 +2612,9 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 		{
-			assert(v2i::equals((v2i){{0, 1}}, (v2i){{0, 1}}));
-			assert(!v2i::equals((v2i){{1, 1}}, (v2i){{0, 1}}));
-			assert(!v2i::equals((v2i){{0, 2}}, (v2i){{0, 1}}));
+			assert(v2i::equals((v2i) {{0, 1}}, (v2i) {{0, 1}}));
+			assert(!v2i::equals((v2i) {{1, 1}}, (v2i) {{0, 1}}));
+			assert(!v2i::equals((v2i) {{0, 2}}, (v2i) {{0, 1}}));
 		}
 		{
 			v2i result = v2i::sign(testA);
@@ -2672,7 +2637,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], (float)testA.e[i]);
 			}
 		}
-		
+
 		{
 			v2i result = v2i::divfloor(testA, testB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2680,7 +2645,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divfloor(testA.e[i], testB.e[i]));
 			}
 		}
-		
+
 		{
 			v2i result = v2i::divfloors(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2688,7 +2653,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divfloor(testA.e[i], scalarB));
 			}
 		}
-		
+
 		{
 			v2i result = v2i::divceil(testA, testB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2696,7 +2661,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divceil(testA.e[i], testB.e[i]));
 			}
 		}
-		
+
 		{
 			v2i result = v2i::divceils(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2761,7 +2726,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], testA.e[i] / testB.e[i]);
 			}
 		}
-		
+
 		{
 			v3i result = v3i::divs(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2800,10 +2765,10 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 		{
-			assert(v3i::equals((v3i){{0, 1, 2}}, (v3i){{0, 1, 2}}));
-			assert(!v3i::equals((v3i){{1, 1, 2}}, (v3i){{0, 1, 2}}));
-			assert(!v3i::equals((v3i){{0, 2, 2}}, (v3i){{0, 1, 2}}));
-			assert(!v3i::equals((v3i){{0, 1, 3}}, (v3i){{0, 1, 2}}));
+			assert(v3i::equals((v3i) {{0, 1, 2}}, (v3i) {{0, 1, 2}}));
+			assert(!v3i::equals((v3i) {{1, 1, 2}}, (v3i) {{0, 1, 2}}));
+			assert(!v3i::equals((v3i) {{0, 2, 2}}, (v3i) {{0, 1, 2}}));
+			assert(!v3i::equals((v3i) {{0, 1, 3}}, (v3i) {{0, 1, 2}}));
 		}
 		{
 			v3i result = v3i::sign(testA);
@@ -2826,7 +2791,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], (float)testA.e[i]);
 			}
 		}
-		
+
 		{
 			v3i result = v3i::divfloor(testA, testB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2834,7 +2799,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divfloor(testA.e[i], testB.e[i]));
 			}
 		}
-		
+
 		{
 			v3i result = v3i::divfloors(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2842,7 +2807,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divfloor(testA.e[i], scalarB));
 			}
 		}
-		
+
 		{
 			v3i result = v3i::divceil(testA, testB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2850,7 +2815,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divceil(testA.e[i], testB.e[i]));
 			}
 		}
-		
+
 		{
 			v3i result = v3i::divceils(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2915,7 +2880,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], testA.e[i] / testB.e[i]);
 			}
 		}
-		
+
 		{
 			v4i result = v4i::divs(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2954,11 +2919,11 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 		{
-			assert(v4i::equals((v4i){{0, 1, 2, 3}}, (v4i){{0, 1, 2, 3}}));
-			assert(!v4i::equals((v4i){{1, 1, 2, 3}}, (v4i){{0, 1, 2, 3}}));
-			assert(!v4i::equals((v4i){{0, 2, 2, 3}}, (v4i){{0, 1, 2, 3}}));
-			assert(!v4i::equals((v4i){{0, 1, 3, 3}}, (v4i){{0, 1, 2, 3}}));
-			assert(!v4i::equals((v4i){{0, 1, 3, 5}}, (v4i){{0, 1, 2, 3}}));
+			assert(v4i::equals((v4i) {{0, 1, 2, 3}}, (v4i) {{0, 1, 2, 3}}));
+			assert(!v4i::equals((v4i) {{1, 1, 2, 3}}, (v4i) {{0, 1, 2, 3}}));
+			assert(!v4i::equals((v4i) {{0, 2, 2, 3}}, (v4i) {{0, 1, 2, 3}}));
+			assert(!v4i::equals((v4i) {{0, 1, 3, 3}}, (v4i) {{0, 1, 2, 3}}));
+			assert(!v4i::equals((v4i) {{0, 1, 3, 5}}, (v4i) {{0, 1, 2, 3}}));
 		}
 		{
 			v4i result = v4i::sign(testA);
@@ -2981,7 +2946,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], (float)testA.e[i]);
 			}
 		}
-		
+
 		{
 			v4i result = v4i::divfloor(testA, testB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2989,7 +2954,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divfloor(testA.e[i], testB.e[i]));
 			}
 		}
-		
+
 		{
 			v4i result = v4i::divfloors(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -2999,7 +2964,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], expected);
 			}
 		}
-		
+
 		{
 			v4i result = v4i::divceil(testA, testB);
 			for (int32_t i = 0; i < elements; i++)
@@ -3007,7 +2972,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], i32divceil(testA.e[i], testB.e[i]));
 			}
 		}
-		
+
 		{
 			v4i result = v4i::divceils(testA, scalarB);
 			for (int32_t i = 0; i < elements; i++)
@@ -3018,11 +2983,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 	}
-	
-	
-	
-	
-	
+
 	// test c++ operators and functions
 	{
 		v3 testA = {{RandF32_(rng), RandF32_(rng), RandF32_(rng)}};
@@ -3030,7 +2991,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 		v3 testC = {{RandF32_(rng), RandF32_(rng), RandF32_(rng)}};
 		float scalarB = RandF32_(rng);
 		int32_t elements = 3;
-		
+
 		{
 			ASSERT_EQ(testA.x, testA[0]);
 			ASSERT_EQ(testA.y, testA[1]);
@@ -3134,11 +3095,11 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 			}
 		}
 		{
-			assert((v3{{0, 1, 2}} == v3{{0, 1, 2}}));
-			assert((v3{{1, 1, 2}} != v3{{0, 1, 2}}));
-			assert((v3{{0, 2, 2}} != v3{{0, 1, 2}}));
-			assert((v3{{0, 1, 3}} != v3{{0, 1, 2}}));
-			assert((V3(0, 1, 2) == v3{{0, 1, 2}}));
+			assert((v3 {{0, 1, 2}} == v3 {{0, 1, 2}}));
+			assert((v3 {{1, 1, 2}} != v3 {{0, 1, 2}}));
+			assert((v3 {{0, 2, 2}} != v3 {{0, 1, 2}}));
+			assert((v3 {{0, 1, 3}} != v3 {{0, 1, 2}}));
+			assert((V3(0, 1, 2) == v3 {{0, 1, 2}}));
 			Vector testAVec = testA.Vec();
 			Vector testBVec = testB.Vec();
 			assert(V3(testAVec) == testA);
@@ -3150,12 +3111,10 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(testAVec[i], testA.e[i]);
 				ASSERT_EQ(testBVec[i], testB.e[i]);
 			}
-			assert((V3(V2(0, 1), 2) == v3{{0, 1, 2}}));
-			assert((V3(42) == v3{{42, 42, 42}}));
+			assert((V3(V2(0, 1), 2) == v3 {{0, 1, 2}}));
+			assert((V3(42) == v3 {{42, 42, 42}}));
 		}
-		
-		
-		
+
 		{
 			v3 result = testA;
 			result += testB;
@@ -3212,7 +3171,7 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 				ASSERT_EQ(result.e[i], testA.e[i] / testB.e[i]);
 			}
 		}
-		
+
 		{
 			v3 result = testA;
 			result /= scalarB;
@@ -3224,7 +3183,6 @@ static void KzMathsTestInner(pcg32_random_t *rng)
 	}
 }
 
-
 void KzMathsTest()
 {
 	pcg32_random_t rng = {};
@@ -3234,6 +3192,7 @@ void KzMathsTest()
 		KzMathsTestInner(&rng);
 	}
 }
+
 #undef ASSERT_EQ
 
 #endif // DEBUG

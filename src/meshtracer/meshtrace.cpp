@@ -41,8 +41,8 @@ struct TraceResult_t
 	bool startsolid; // if true, the initial point was in a solid area
 	float fraction;  // time completed, 1.0 = didn't hit anything
 	float distance;  // distance from start to end where a hit happened
-	v3 endpos;   // final position
-	v3 plane;    // surface normal at impact, transformed to world space
+	v3 endpos;       // final position
+	v3 plane;        // surface normal at impact, transformed to world space
 };
 
 // https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/qcommon/cm_local.h#L154
@@ -61,7 +61,7 @@ struct TraceRay_t
 		this->size[1] = maxsIn;
 		this->distance = v3::len(endIn - startIn);
 	}
-	
+
 	void Init(const Vector &startIn, const Vector &endIn, const Vector &minsIn, const Vector &maxsIn)
 	{
 		this->start = V3(startIn);
@@ -84,7 +84,7 @@ static_function v3 NormaliseStern(v3 vec)
 	// TODO(GameChaos): is double normalisation the best solution for wonky normals?
 	v3 result = vec;
 	f32 len = v3::normInPlace(&result);
-	if (len <= 0.9999f || len > 0.10001f)
+	if (len <= 0.9999f || len > 1.0001f)
 	{
 		result = v3::normalise(result);
 	}
@@ -101,7 +101,7 @@ static_function Brush_t GenerateTriangleAabbBevelPlanes(Triangle_t triangle)
 		v3::min(v3::min(triangle.verts[0], triangle.verts[1]), triangle.verts[2]),
 		v3::max(v3::max(triangle.verts[0], triangle.verts[1]), triangle.verts[2]),
 	};
-	
+
 	// -x, -y, -z, +x, +y, +z
 	for (i32 dir = -1, aabbInd = 0; dir < 2; dir += 2, aabbInd++)
 	{
@@ -157,9 +157,7 @@ static_function Brush_t GenerateTriangleAabbBevelPlanes(Triangle_t triangle)
 
 static_function f32 CalculatePlaneAabbExpansion(v3 bounds[2], Plane_t plane)
 {
-	v3 offset = V3(bounds[plane.normal.x < 0 ? 1 : 0].x,
-				   bounds[plane.normal.y < 0 ? 1 : 0].y,
-				   bounds[plane.normal.z < 0 ? 1 : 0].z);
+	v3 offset = V3(bounds[plane.normal.x < 0 ? 1 : 0].x, bounds[plane.normal.y < 0 ? 1 : 0].y, bounds[plane.normal.z < 0 ? 1 : 0].z);
 	f32 result = v3::dot(offset, plane.normal);
 	return result;
 }
@@ -210,7 +208,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		// NOTE(GameChaos): GameChaos's chebyshev length minkowski sum epsilon modification!
 		v3 chebyshevEpsilonVec = NormaliseChebyshev(plane.normal) * surfaceClipEpsilon;
 		f32 chebyshevEps = v3::dot(chebyshevEpsilonVec, plane.normal);
-		//f32 chebyshevEps = surfaceClipEpsilon;
+		// f32 chebyshevEps = surfaceClipEpsilon;
 
 		// adjust the plane distance apropriately for mins/maxs
 		f32 dist = plane.distance - CalculatePlaneAabbExpansion(ray.size, plane);
@@ -218,27 +216,27 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		f32 d1 = v3::dot(ray.start, plane.normal) - dist;
 		f32 d2 = v3::dot(ray.end, plane.normal) - dist;
 		if (d2 > 0)
-		//if (d2 > chebyshevEps)
+		// if (d2 > chebyshevEps)
 		{
 			getout = true; // endpoint is not in solid
 		}
 		if (d1 > 0)
-		//if (d1 > chebyshevEps)
+		// if (d1 > chebyshevEps)
 		{
 			startout = true;
 		}
-		
+
 		// if completely in front of face, no intersection with the entire brush
 		// if (d1 > 0 && d2 > 0)
 		if (d1 > 0 && (d2 >= chebyshevEps || d2 >= d1))
-		 //if (d1 > chebyshevEps && d2 > chebyshevEps)
+		// if (d1 > chebyshevEps && d2 > chebyshevEps)
 		{
 			return result;
 		}
 
 		// if it doesn't cross the plane, the plane isn't relevent
 		if (d1 <= 0 && d2 <= 0)
-		 //if (d1 <= chebyshevEps && d2 <= chebyshevEps)
+		// if (d1 <= chebyshevEps && d2 <= chebyshevEps)
 		{
 			continue;
 		}
@@ -308,7 +306,7 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 	else
 	{
 		result.endpos = v3::fma(ray.end - ray.start, result.fraction, ray.start);
-		//result.endpos = ((ray.end - ray.start) * result.fraction) + ray.start;
+		// result.endpos = ((ray.end - ray.start) * result.fraction) + ray.start;
 	}
 	result.distance *= result.fraction;
 	// If allsolid is set (was entirely inside something solid), the plane is not valid.
@@ -371,7 +369,7 @@ static_function bool AabbTriangleIntersects(TraceRay_t ray, Triangle_t tri)
 		// separating axis, not the AABB center. We don't
 		// need to cast the center, because we know that the
 		// aabb is at origin compared to the triangle!
-		
+
 		f32 r = extents.x * KZM_ABS(v3::dot(xAxis, axes[i])) + extents.y * KZM_ABS(v3::dot(yAxis, axes[i]))
 				+ extents.z * KZM_ABS(v3::dot(zAxis, axes[i]));
 
@@ -416,8 +414,7 @@ static_function TraceResult_t TraceAabbTriangle(TraceRay_t ray, Triangle_t tri, 
 	return result;
 }
 
-static_function void ComputeSweptAABB(v3 boxMins, v3 boxMaxs, v3 delta, f32 epsilon, Vector &outMins,
-									  Vector &outMaxs)
+static_function void ComputeSweptAABB(v3 boxMins, v3 boxMaxs, v3 delta, f32 epsilon, Vector &outMins, Vector &outMaxs)
 {
 	// Swept AABB is the min/max of both boxes
 	outMins = (v3::min(boxMins, boxMins + delta) - epsilon).Vec();
@@ -452,13 +449,13 @@ static_function void FindTrianglesInBox(const RnNode_t *node, CUtlVector<uint32>
 static_function void TraceResultToCGameTrace(CGameTrace *out, TraceResult_t tr, v3 startPos, HPhysicsShape shape, i32 triangleInd)
 {
 	v3 delta = tr.endpos - startPos;
-	
+
 	CGameTrace newTrace;
 	newTrace.Init();
 	// TODO(GameChaos): defaults!!!
 	// out->m_pSurfaceProperties = ;
 	// out->m_pHitbox = &defaultHitBox;
-	
+
 	newTrace.m_pSurfaceProperties = out->m_pSurfaceProperties;
 	newTrace.m_pHitbox = out->m_pHitbox;
 	newTrace.m_eRayType = RAY_TYPE_HULL;
@@ -520,16 +517,15 @@ static_function void TraceResultToCGameTrace(CGameTrace *out, TraceResult_t tr, 
 
 bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter &filter, CGameTrace *trace)
 {
-
 	f32 epsilon = kz_surface_clip_epsilon.Get();
 	TraceRay_t traceRay;
 	traceRay.Init(start, end, ray.m_Hull.m_vMins, ray.m_Hull.m_vMaxs);
-	
+
 	TraceResult_t finalBrushTrace = {};
 	finalBrushTrace.endpos = V3(end);
 	finalBrushTrace.fraction = 1;
 	finalBrushTrace.distance = traceRay.distance;
-	
+
 	CUtlVector<HPhysicsShape> shapes;
 	Ray_t::Hull_t sweptAabb;
 	// extend the extents a bit to make sure we get every possible triangle we could theoretically hit!
@@ -589,17 +585,16 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 		{
 			const RnTriangle_t *triangle = &mesh->m_Triangles[triangles[k]];
 			// const RnTriangle_t *triangle = &triangles[k];
-			Triangle_t tri = {
-				V3(utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[0]])),
-				V3(utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[1]])),
-				V3(utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[2]]))
-			};
+			Triangle_t tri = {V3(utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[0]])),
+							  V3(utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[1]])),
+							  V3(utils::TransformPoint(transform, mesh->m_Vertices[triangle->m_nIndex[2]]))};
 
 			// Do our own trace calculation
 			TraceResult_t brushTrace = TraceAabbTriangle(traceRay, tri);
-			//META_CONPRINTF("start %f %f %fbrushTrace as%i ss%i f%f d%f e%f %f %f p%f %f %f\n",
-			//start.x, start.y, start.z, brushTrace.allsolid, brushTrace.startsolid, brushTrace.fraction, brushTrace.distance, brushTrace.endpos.x, brushTrace.endpos.y, brushTrace.endpos.z, brushTrace.plane.x, brushTrace.plane.y, brushTrace.plane.z);
-			
+			// META_CONPRINTF("start %f %f %fbrushTrace as%i ss%i f%f d%f e%f %f %f p%f %f %f\n",
+			// start.x, start.y, start.z, brushTrace.allsolid, brushTrace.startsolid, brushTrace.fraction, brushTrace.distance, brushTrace.endpos.x,
+			// brushTrace.endpos.y, brushTrace.endpos.z, brushTrace.plane.x, brushTrace.plane.y, brushTrace.plane.z);
+
 			bool forceUseNewTrace = false;
 #if 1
 #if 0
@@ -660,7 +655,7 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 	}
 	triangles.Purge();
 	shapes.Purge();
-	
+
 #if 0
 	if (finalBrushTrace.fraction < 1)
 	{
@@ -690,8 +685,8 @@ static_function void ClipVelocity(const Vector &in, const Vector &normal, Vector
 {
 	// Determine how far along plane to slide based on incoming direction.
 	float backoff = DotProduct(in, normal) * overbounce;
-	out = in - (normal * backoff); 
-	
+	out = in - (normal * backoff);
+
 	// iterate once to make sure we aren't still moving through the plane
 	float adjust = DotProduct(out, normal);
 	constexpr float pushaway = -1;
@@ -799,8 +794,8 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 				{
 					for (i = numplanes; i-- > 0;)
 					{
-						if (!CloseEnough(planes[i], Vector(0.0f, 0.0f, 0.0f), FLT_EPSILON) && KZM_ABS(planes[i].x) <= 1.0f && KZM_ABS(planes[i].y) <= 1.0f
-							&& KZM_ABS(planes[i].z) <= 1.0f && valid_plane != planes[i])
+						if (!CloseEnough(planes[i], Vector(0.0f, 0.0f, 0.0f), FLT_EPSILON) && KZM_ABS(planes[i].x) <= 1.0f
+							&& KZM_ABS(planes[i].y) <= 1.0f && KZM_ABS(planes[i].z) <= 1.0f && valid_plane != planes[i])
 						{
 							valid_plane = planes[i];
 							has_valid_plane = true;

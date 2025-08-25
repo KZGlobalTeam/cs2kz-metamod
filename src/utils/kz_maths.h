@@ -61,7 +61,7 @@ union v2i
 	static v2i divs(v2i a, int32_t b);
 	static bool equals(v2i a, v2i b);
 	static v2i negate(v2i value);
-	
+
 	static v2i mod(v2i a, v2i b);
 	static v2i mods(v2i a, int32_t b);
 	static v2i max(v2i a, v2i b);
@@ -74,12 +74,13 @@ union v2i
 	static v2i divfloors(v2i a, int32_t b);
 	static v2i divceil(v2i a, v2i b);
 	static v2i divceils(v2i a, int32_t b);
-	
+
 	inline int32_t &operator[](int i)
 	{
 		return e[i];
 	}
 };
+
 static_assert(std::is_pod_v<v2i> == true);
 
 inline v2i V2i(int32_t value)
@@ -228,7 +229,7 @@ union v3i
 	{
 		int32_t r, g, b;
 	};
-	
+
 	v2i xy;
 	int32_t e[3];
 
@@ -242,7 +243,7 @@ union v3i
 	static v3i divs(v3i a, int32_t b);
 	static bool equals(v3i a, v3i b);
 	static v3i negate(v3i value);
-	
+
 	static v3i mod(v3i a, v3i b);
 	static v3i mods(v3i a, int32_t b);
 	static v3i max(v3i a, v3i b);
@@ -255,12 +256,13 @@ union v3i
 	static v3i divfloors(v3i a, int32_t b);
 	static v3i divceil(v3i a, v3i b);
 	static v3i divceils(v3i a, int32_t b);
-	
+
 	inline int32_t &operator[](int i)
 	{
 		return e[i];
 	}
 };
+
 static_assert(std::is_pod_v<v3i> == true);
 
 inline v3i V3i(int32_t value)
@@ -433,7 +435,7 @@ union v4i
 	static v4i divs(v4i a, int32_t b);
 	static bool equals(v4i a, v4i b);
 	static v4i negate(v4i value);
-	
+
 	static v4i mod(v4i a, v4i b);
 	static v4i mods(v4i a, int32_t b);
 	static v4i max(v4i a, v4i b);
@@ -446,12 +448,13 @@ union v4i
 	static v4i divfloors(v4i a, int32_t b);
 	static v4i divceil(v4i a, v4i b);
 	static v4i divceils(v4i a, int32_t b);
-	
+
 	inline int32_t &operator[](int i)
 	{
 		return e[i];
 	}
 };
+
 static_assert(std::is_pod_v<v4i> == true);
 
 inline v4i V4i(int32_t value)
@@ -636,7 +639,7 @@ union v2
 	static v2 divs(v2 a, float b);
 	static bool equals(v2 a, v2 b);
 	static v2 negate(v2 value);
-	
+
 	static float dot(v2 a, v2 b);
 	static float cross(v2 a, v2 b);
 	static v2 mod(v2 a, v2 b);
@@ -657,14 +660,15 @@ union v2
 	static float lensq(v2 value);
 	static float len(v2 value);
 	static v2 lerp(v2 a, v2 b, float t);
-	
+
 	Vector2D Vec();
-	
+
 	inline float &operator[](int i)
 	{
 		return e[i];
 	}
 };
+
 static_assert(std::is_pod_v<v2> == true);
 
 inline v2 V2(float value)
@@ -838,7 +842,7 @@ union v3
 	static v3 divs(v3 a, float b);
 	static bool equals(v3 a, v3 b);
 	static v3 negate(v3 value);
-	
+
 	static float dot(v3 a, v3 b);
 	static v3 cross(v3 a, v3 b);
 	static v3 mod(v3 a, v3 b);
@@ -859,14 +863,15 @@ union v3
 	static float lensq(v3 value);
 	static float len(v3 value);
 	static v3 lerp(v3 a, v3 b, float t);
-	
+
 	Vector Vec();
-	
+
 	inline float &operator[](int i)
 	{
 		return e[i];
 	}
 };
+
 static_assert(std::is_trivially_copyable_v<v3> && std::is_standard_layout_v<v3> && std::is_trivially_default_constructible_v<v3>);
 
 inline v3 V3(float value)
@@ -1051,7 +1056,7 @@ union v4
 	static v4 divs(v4 a, float b);
 	static bool equals(v4 a, v4 b);
 	static v4 negate(v4 value);
-	
+
 	static float dot(v4 a, v4 b);
 	static v4 cross(v4 a, v4 b);
 	static v4 mod(v4 a, v4 b);
@@ -1072,15 +1077,16 @@ union v4
 	static float lensq(v4 value);
 	static float len(v4 value);
 	static v4 lerp(v4 a, v4 b, float t);
-	
+
 	Vector4D Vec();
 	Quaternion Quat();
-	
+
 	inline float &operator[](int i)
 	{
 		return e[i];
 	}
 };
+
 static_assert(std::is_pod_v<v4> == true);
 
 inline v4 V4(float value)
@@ -1264,12 +1270,13 @@ union mat3
 	static v3 mulv3(mat3 matrix, v3 vec);
 	static mat3 rotate(float angle, v3 axis);
 	static mat4 tomat4(mat3 matrix);
-	
+
 	inline v3 &operator[](int i)
 	{
 		return col[i];
 	}
 };
+
 static_assert(std::is_pod_v<mat3> == true);
 
 inline mat3 operator*(mat3 a, mat3 b)
@@ -1297,12 +1304,13 @@ union mat4
 	static mat4 scalef32(float scale);
 	static mat4 mul(mat4 left, mat4 right);
 	static v4 mulv4(mat4 matrix, v4 vec);
-	
+
 	inline v4 &operator[](int i)
 	{
 		return col[i];
 	}
 };
+
 static_assert(std::is_pod_v<mat4> == true);
 
 inline mat4 operator*(mat4 a, mat4 b)
