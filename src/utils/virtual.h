@@ -1,7 +1,8 @@
 #pragma once
 #include "dbg.h"
 
-#define CALL_VIRTUAL(retType, idx, ...) vmt::CallVirtual<retType>(idx, __VA_ARGS__)
+#define CALL_VIRTUAL(retType, idx, ...)                                 vmt::CallVirtual<retType>(idx, __VA_ARGS__)
+#define CALL_VIRTUAL_OVERRIDE_VTBL(retType, idx, vtable, classPtr, ...) vmt::CallVirtualOverrideVTable<retType>(idx, vtable, classPtr, __VA_ARGS__)
 
 namespace vmt
 {
@@ -31,6 +32,28 @@ namespace vmt
 		auto pFunc = GetVMethod<T(__thiscall *)(void *, Args...)>(uIndex, pClass);
 #else
 		auto pFunc = GetVMethod<T(__cdecl *)(void *, Args...)>(uIndex, pClass);
+#endif
+		if (!pFunc)
+		{
+			Warning("Tried calling a null virtual function.\n");
+			return T();
+		}
+
+		return pFunc(pClass, args...);
+	}
+
+	template<typename T, typename... Args>
+	inline T CallVirtualOverrideVTable(uint32 uIndex, void **pVTable, void *pClass, Args... args)
+	{
+		if (!pVTable)
+		{
+			Warning("Tried getting virtual function from a null vtable.\n");
+			return T();
+		}
+#ifdef _WIN32
+		auto pFunc = reinterpret_cast<T(__thiscall *)(void *, Args...)>(pVTable[uIndex]);
+#else
+		auto pFunc = reinterpret_cast<T(__cdecl *)(void *, Args...)>(pVTable[uIndex]);
 #endif
 		if (!pFunc)
 		{

@@ -2,6 +2,7 @@
 #include "gametrace.h"
 #include "sdk/entity/cbaseplayerpawn.h"
 #include "utils/addresses.h"
+#include "utils/virtual.h"
 
 struct CTraceFilterPlayerMovementCS : public CTraceFilter
 {
@@ -22,13 +23,12 @@ struct CTraceFilterPlayerMovementCS : public CTraceFilter
 
 	virtual bool ShouldHitEntity(CEntityInstance *ent) override
 	{
-		static void **vtable = (void **)modules::server->FindVirtualTable("CTraceFilterPlayerMovementCS");
-		assert(vtable);
-		using ShouldHitEntityFn = bool (*)(CTraceFilterPlayerMovementCS *, CEntityInstance *);
+		auto vTable = *static_cast<void ***>(modules::server->FindVirtualTable("CTraceFilterPlayerMovementCS"));
+		assert(vTable);
 #ifdef _WIN32
-		return (*reinterpret_cast<ShouldHitEntityFn *>(vtable[1]))(this, ent);
+		return CALL_VIRTUAL_OVERRIDE_VTBL(bool, 1, vTable, this, ent);
 #else
-		return (*reinterpret_cast<ShouldHitEntityFn *>(vtable[2]))(this, ent);
+		return CALL_VIRTUAL_OVERRIDE_VTBL(bool, 2, vTable, this, ent);
 #endif
 	}
 };
