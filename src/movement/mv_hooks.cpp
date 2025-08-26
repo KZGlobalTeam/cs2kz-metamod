@@ -318,12 +318,14 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 	}
 	else
 	{
+#if 0
 		Vector originalOrigin = mv->m_vecAbsOrigin;
 		Vector originalVelocity = mv->m_vecVelocity;
 		// need to run the original tryplayermove :(
 		TryPlayerMove(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
 		mv->m_vecAbsOrigin = originalOrigin;
 		mv->m_vecVelocity = originalVelocity;
+#endif
 
 		TryPlayerMove_Custom(ms, mv, pFirstDest, pFirstTrace, bIsSurfing, player);
 	}

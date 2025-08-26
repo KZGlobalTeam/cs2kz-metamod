@@ -162,18 +162,16 @@ static_function f32 CalculatePlaneAabbExpansion(v3 bounds[2], Plane_t plane)
 	return result;
 }
 
-CConVar<float> kz_surface_clip_epsilon("kz_surface_clip_epsilon", FCVAR_NONE, "Surface clip epsilon", 0.03125f);
-
-static_function v3 NormaliseChebyshev(v3 vec)
+static_function f32 CalculateEpsilonExpansion(f32 epsilon, v3 plane)
 {
-	f32 chebyshevLength = KZM_MAX3(KZM_ABS(vec.x), KZM_ABS(vec.y), KZM_ABS(vec.z));
-	v3 result = vec;
-	if (chebyshevLength > 0)
-	{
-		result /= chebyshevLength;
-	}
+	v3 offset = V3(plane.x < 0 ? -epsilon : epsilon,
+				   plane.y < 0 ? -epsilon : epsilon,
+				   plane.z < 0 ? -epsilon : epsilon);
+	f32 result = v3::dot(offset, plane);
 	return result;
 }
+
+CConVar<float> kz_surface_clip_epsilon("kz_surface_clip_epsilon", FCVAR_NONE, "Surface clip epsilon", 0.03125f);
 
 // #define SURFACE_CLIP_EPSILON 0
 //  https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/qcommon/cm_trace.c#L483
@@ -204,39 +202,37 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 	for (i32 i = 0; i < brush.planeCount; i++)
 	{
 		Plane_t plane = brush.planes[i];
-
-		// NOTE(GameChaos): GameChaos's chebyshev length minkowski sum epsilon modification!
-		v3 chebyshevEpsilonVec = NormaliseChebyshev(plane.normal) * surfaceClipEpsilon;
-		f32 chebyshevEps = v3::dot(chebyshevEpsilonVec, plane.normal);
-		// f32 chebyshevEps = surfaceClipEpsilon;
-
+		
+		// NOTE(GameChaos): expand epsilon by the correct amount, similar to CalculatePlaneAabbExpansion.
+		//  this is so that the player doesn't hit backfacing normals.
+		f32 epsilon = CalculateEpsilonExpansion(surfaceClipEpsilon, plane.normal);
+		
 		// adjust the plane distance apropriately for mins/maxs
 		f32 dist = plane.distance - CalculatePlaneAabbExpansion(ray.size, plane);
 
 		f32 d1 = v3::dot(ray.start, plane.normal) - dist;
 		f32 d2 = v3::dot(ray.end, plane.normal) - dist;
 		if (d2 > 0)
-		// if (d2 > chebyshevEps)
+		//if (d2 > epsilon)
 		{
 			getout = true; // endpoint is not in solid
 		}
 		if (d1 > 0)
-		// if (d1 > chebyshevEps)
+		//if (d1 > epsilon)
 		{
 			startout = true;
 		}
 
 		// if completely in front of face, no intersection with the entire brush
-		// if (d1 > 0 && d2 > 0)
-		if (d1 > 0 && (d2 >= chebyshevEps || d2 >= d1))
-		// if (d1 > chebyshevEps && d2 > chebyshevEps)
+		//if (d1 > 0 && (d2 >= epsilon || d2 >= d1))
+		if (d1 > epsilon && d2 > epsilon)
 		{
 			return result;
 		}
 
 		// if it doesn't cross the plane, the plane isn't relevent
-		if (d1 <= 0 && d2 <= 0)
-		// if (d1 <= chebyshevEps && d2 <= chebyshevEps)
+		//if (d1 <= 0 && d2 <= 0)
+		if (d1 <= epsilon && d2 <= epsilon)
 		{
 			continue;
 		}
@@ -244,12 +240,25 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		// crosses face
 		if (d1 > d2)
 		{ // enter
-			f32 f = (d1 - chebyshevEps) / (d1 - d2);
+			f32 f = (d1 - epsilon) / (d1 - d2);
 			if (f < 0)
 			{
 				f = 0;
 			}
-			if (f > enterFrac)
+			// NOTE(GameChaos): pick the plane that is the most aligned to ray direction
+			//  otherwise traces that have the same fraction will be resolved by random chance
+			if (f == enterFrac && enterFrac > -1)
+			{
+				v3 delta = ray.end - ray.start;
+				f32 newDot = v3::dot(delta, plane.normal);
+				f32 oldDot = v3::dot(delta, clipplane.normal);
+				if (newDot > oldDot)
+				{
+					enterFrac = f;
+					clipplane = plane;
+				}
+			}
+			else if (f > enterFrac)
 			{
 				enterFrac = f;
 				clipplane = plane;
@@ -257,10 +266,10 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 		}
 		else
 		{ // leave
-			// NOTE(GameChaos): Changed (d1 + chebyshevEps) to (d1 - chebyshevEps)
+			// NOTE(GameChaos): Changed (d1 + epsilon) to (d1 - epsilon)
 			//  to fix seamshot bug. https://www.youtube.com/watch?v=YnCG6fbTQ-I
-			// f32 f = (d1 + chebyshevEps) / (d1 - d2);
-			f32 f = (d1 - chebyshevEps) / (d1 - d2);
+			// f32 f = (d1 + epsilon) / (d1 - d2);
+			f32 f = (d1 - epsilon) / (d1 - d2);
 			if (f > 1)
 			{
 				f = 1;
@@ -317,10 +326,10 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 }
 
 // source: https://gdbooks.gitbooks.io/3dcollisions/content/Chapter4/aabb-triangle.html
-static_function bool AabbTriangleIntersects(TraceRay_t ray, Triangle_t tri)
+static_function bool IntersectAabbTriangle(TraceRay_t ray, Triangle_t tri, f32 surfaceClipEpsilon)
 {
 	v3 centre = (ray.size[1] + ray.size[0]) * 0.5f + ray.start;
-	v3 extents = (ray.size[1] - ray.size[0]) * 0.5f;
+	v3 extents = (ray.size[1] - ray.size[0]) * 0.5f + surfaceClipEpsilon;
 	// Translate the triangle as conceptually moving the AABB to origin
 	for (i32 i = 0; i < 3; i++)
 	{
@@ -390,12 +399,12 @@ static_function TraceResult_t TraceAabbTriangle(TraceRay_t ray, Triangle_t tri, 
 {
 	TraceResult_t result = {};
 	result.fraction = 1;
-#if 0
+#if 1
 	v3 delta = ray.end - ray.start;
+	// if start and end are the same use static check
 	if (delta.x == 0 && delta.y == 0 && delta.z == 0)
 	{
-		// if start and end are the same use static check
-		if (AabbTriangleIntersects(ray, tri))
+		if (IntersectAabbTriangle(ray, tri, 0))
 		{
 			result.startsolid = true;
 			result.fraction = 0;
@@ -594,58 +603,24 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 			// META_CONPRINTF("start %f %f %fbrushTrace as%i ss%i f%f d%f e%f %f %f p%f %f %f\n",
 			// start.x, start.y, start.z, brushTrace.allsolid, brushTrace.startsolid, brushTrace.fraction, brushTrace.distance, brushTrace.endpos.x,
 			// brushTrace.endpos.y, brushTrace.endpos.z, brushTrace.plane.x, brushTrace.plane.y, brushTrace.plane.z);
-
-			bool forceUseNewTrace = false;
-#if 1
-#if 0
-			if (brushTrace.distance <= finalBrushTrace.distance + epsilon
-				&& brushTrace.distance >= finalBrushTrace.distance - epsilon
-				&& brushTrace.fraction < 1 && finalBrushTrace.fraction < 1)
-			{
-				// try to handle traces with an identical fraction gracefully
-				f32 newDot = v3::dot(brushTrace.plane, delta);
-				f32 oldDot = v3::dot(finalBrushTrace.plane, delta);
-#if 0
-				if (newDot != oldDot)
-				{
-					META_CONPRINTF("identical fraction %f %f, newDot %f oldDot %f\n", brushTrace.fraction, finalBrushTrace.fraction, newDot,
-								   oldDot);
-				}
-#endif
-				// If the old normal is more in line with the
-				//  trace delta (end-start), then prefer the old one.
-				if (oldDot > newDot)
-				{
-					continue;
-				}
-				else
-				{
-					// use new trace
-					forceUseNewTrace = true;
-				}
-			}
-#else
+			
+			
 			if (brushTrace.fraction == finalBrushTrace.fraction && finalBrushTrace.fraction < 1)
 			{
 				// try to handle traces with an identical fraction gracefully
 				f32 newDot = v3::dot(brushTrace.plane, delta);
 				f32 oldDot = v3::dot(finalBrushTrace.plane, delta);
-				// If the old normal is more in line with the
-				//  trace delta (end-start), then prefer the old one.
-				if (oldDot > newDot)
-				{
-					continue;
-				}
-				else
+				// If the new normal is more in line with the
+				//  trace delta (end-start), then use the new one.
+				if (newDot > oldDot)
 				{
 					// use new trace
-					forceUseNewTrace = true;
+					finalBrushTrace = brushTrace;
+					finalShape = shape;
+					finalTriangle = k;
 				}
 			}
-#endif
-#endif
-
-			if (brushTrace.fraction < finalBrushTrace.fraction || forceUseNewTrace)
+			else if (brushTrace.fraction < finalBrushTrace.fraction)
 			{
 				finalBrushTrace = brushTrace;
 				finalShape = shape;
@@ -670,15 +645,23 @@ bool RetraceHull(const Ray_t &ray, const Vector &start, const Vector &end, CTrac
 	return trace->m_flFraction < 1;
 }
 
+#define KZ_TPM_VALVE 1
+#if KZ_TPM_VALVE
+#define KZ_MAX_CLIP_PLANES          4
+#define KZ_NUMBUMPS                 4
+#else
 #define KZ_MAX_CLIP_PLANES          5
+#define KZ_NUMBUMPS                 8
+#endif
 #define RAMP_INITIAL_RETRACE_LENGTH 0.03125f
+#define KZ_CLIP_PUSHAWAY 0.0f
 
-#if 0
+#if KZ_TPM_VALVE
 static_function void ClipVelocity(const Vector &in, const Vector &normal, Vector &out, float overbounce)
 {
 	f32 backoff = -DotProduct(in, normal) * overbounce;
-	backoff = fmaxf(backoff, 0) + 0.03125f;
-	out = normal * backoff + in;
+	backoff = fmaxf(backoff, 0) + KZ_CLIP_PUSHAWAY;
+	out = in + normal * backoff;
 }
 #else
 static_function void ClipVelocity(const Vector &in, const Vector &normal, Vector &out, float overbounce)
@@ -689,10 +672,9 @@ static_function void ClipVelocity(const Vector &in, const Vector &normal, Vector
 
 	// iterate once to make sure we aren't still moving through the plane
 	float adjust = DotProduct(out, normal);
-	constexpr float pushaway = -1;
-	if (adjust < 1)
+	if (adjust < KZ_CLIP_PUSHAWAY)
 	{
-		adjust = KZM_MAX(pushaway, adjust);
+		adjust = KZM_MIN(adjust, -KZ_CLIP_PUSHAWAY);
 		out -= (normal * adjust);
 	}
 }
@@ -725,7 +707,7 @@ static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilt
 	}
 
 	g_pKZUtils->TracePlayerBBox(tr.m_vEndPos, tr.m_vEndPos, bounds, filter, stuck);
-	if (stuck.m_bStartInSolid || !CloseEnough(stuck.m_flFraction, 1.0f, FLT_EPSILON))
+	if (stuck.m_bStartInSolid || stuck.m_flFraction != 1)
 	{
 		return false;
 	}
@@ -734,6 +716,7 @@ static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilt
 }
 
 CConVar<bool> kz_rampbugfix("kz_rampbugfix", FCVAR_NONE, "Fix rampbugs", true);
+
 
 // adapted from momentum mod 0.8.7 https://github.com/momentum-mod/game/blob/develop/mp/src/game/shared/momentum/mom_gamemovement.cpp
 void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing,
@@ -745,8 +728,6 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 	int i, j, h;
 	trace_t pm;
 	Vector end;
-	i32 numbumps = 8;
-
 	i32 numplanes = 0; //  and not sliding along any planes
 
 	bool stuck_on_ramp = false;   // lets assume client isn't stuck already
@@ -769,12 +750,17 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 	auto pawn = player->GetPlayerPawn();
 	CTraceFilterPlayerMovementCS filter(pawn);
 	CConVarRef<float> sv_standable_normal("sv_standable_normal");
+	CConVarRef<float> sv_walkable_normal("sv_walkable_normal");
 	CConVarRef<float> sv_bounce("sv_bounce");
 	f32 standableZ = sv_standable_normal.GetFloat();
+	f32 walkableZ = sv_walkable_normal.GetFloat();
 	f32 bounce = sv_bounce.GetFloat();
 	f32 fullBounce = 1 + bounce * (1.0f - ms->m_flSurfaceFriction());
+#if KZ_TPM_VALVE
+	bool inAir = (pawn->m_fFlags & FL_ONGROUND) == 0;
+#endif
 
-	for (i32 bumpcount = 0; bumpcount < numbumps; bumpcount++)
+	for (i32 bumpcount = 0; bumpcount < KZ_NUMBUMPS; bumpcount++)
 	{
 		if (mv->m_vecVelocity.LengthSqr() == 0)
 		{
@@ -901,6 +887,14 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 		//  end point.
 
 		VectorMA(fixed_origin, time_left, mv->m_vecVelocity, end);
+		
+#if KZ_TPM_VALVE
+		// AG2 Update: Fixed several cases where a player would get stuck on map geometry while surfing
+		if (numplanes == 1)
+		{
+			VectorMA(end, 0.03125f, planes[0], end);
+		}
+#endif
 
 		// See if we can make it from origin to end point.
 		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
@@ -968,28 +962,41 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 			continue;
 		}
 
-#if 0
+#if 1
 		// If we started in a solid object, or we were in solid space
 		//  the whole way, zero out our velocity and return that we
 		//  are blocked by floor and wall.
 
 		// TODO(GameChaos): no allsolid exists, delete?
-        if (pm.allsolid && !kz_rampbugfix.Get())
+        //if (pm.allsolid && !kz_rampbugfix.Get())
+        if (pm.m_bStartInSolid && !kz_rampbugfix.Get())
         {
             // entity is trapped in another solid
-			mv->m_vecVelocity = vec3_origin;
+			mv->m_vecVelocity.Init();
             return;
         }
 #endif
-
+#if KZ_TPM_VALVE
+		if (allFraction == 0.0f)
+		{
+			if (pm.m_flFraction < 1.0f && mv->m_vecVelocity.Length() * time_left >= 0.03125f && (pm.m_flFraction * mv->m_vecVelocity.Length() * time_left) < 0.03125f)
+			{
+				pm.m_flFraction = 0.0f;
+			}
+		}
+#endif
 		// If we moved some portion of the total distance, then
 		//  copy the end position into the pmove.origin and
 		//  zero the plane counter.
+#if KZ_TPM_VALVE
+		if (pm.m_flFraction * MAX(1.0, mv->m_vecVelocity.Length()) > 0.03125f)
+#else
 		if (pm.m_flFraction > 0.0f)
+#endif
 		{
 #if 1
 			// TODO(GameChaos): This isn't a thing in source 2, delete?
-			if ((!bumpcount || pawn->m_hGroundEntity().Get() != nullptr || !kz_rampbugfix.Get()) && numbumps > 0 && pm.m_flFraction == 1.0f)
+			if ((!bumpcount || pawn->m_hGroundEntity().Get() != nullptr || !kz_rampbugfix.Get()) && KZ_NUMBUMPS > 0 && pm.m_flFraction == 1.0f)
 			{
 				// There's a precision issue with terrain tracing that can cause a swept box to successfully trace
 				// when the end position is stuck in the triangle.  Re-run the test with an unswept box to catch that
@@ -1008,7 +1015,7 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 				{
 					META_CONPRINTF("Player will become stuck!!! allfrac: %f pm: %i, %f, %f vs stuck: %i, %f, %f\n", allFraction, pm.m_bStartInSolid,
 								   pm.m_flFraction, pm.m_vHitNormal.z, stuck.m_bStartInSolid, stuck.m_flFraction, stuck.m_vHitNormal.z);
-					VectorCopy(vec3_origin, mv->m_vecVelocity);
+					mv->m_vecVelocity.Init();
 					break;
 				}
 			}
@@ -1024,13 +1031,18 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 			original_velocity = mv->m_vecVelocity;
 			mv->m_vecAbsOrigin = pm.m_vEndPos;
 			fixed_origin = mv->m_vecAbsOrigin;
+#if !KZ_TPM_VALVE
 			allFraction += pm.m_flFraction;
+#endif
 			numplanes = 0;
 		}
+#if KZ_TPM_VALVE
+		allFraction += pm.m_flFraction;
+#endif
 
 		// If we covered the entire distance, we are done
 		//  and can return.
-		if (pm.m_flFraction == 1)
+		if (CloseEnough(pm.m_flFraction, 1, FLT_EPSILON))
 		{
 			break; // moved the entire distance
 		}
@@ -1043,9 +1055,21 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 		{
 			// this shouldn't really happen
 			//  Stop our movement if so.
-			mv->m_vecVelocity = vec3_origin;
+			mv->m_vecVelocity.Init();
 			break;
 		}
+		
+#if KZ_TPM_VALVE
+		// 2024-11-07 update also adds a low velocity check... This is only correct as long as you don't collide with other players.
+		if (inAir && mv->m_vecVelocity.z < 0.0f)
+		{
+			if (pm.m_vHitNormal.z >= standableZ /*&& this->player->GetMoveServices()->CanStandOn(pm)*/ && mv->m_vecVelocity.Length2D() < 1.0f)
+			{
+				mv->m_vecVelocity.Init();
+				break;
+			}
+		}
+#endif
 
 		// Set up next clipping plane
 		planes[numplanes] = pm.m_vHitNormal;
@@ -1058,10 +1082,32 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 		// Only give this a try for first impact plane because you can get yourself stuck in an acute corner by
 		// jumping in place
 		//  and pressing forward and nobody was really using this bounce/reflection feature anyway...
+#if KZ_TPM_VALVE
+		// standard sdk 2013
+		if (numplanes == 1)
+		{
+			for (i = 0; i < numplanes; i++)
+			{
+				if (planes[i][2] > walkableZ)
+				{
+					// floor or slope
+					ClipVelocity(original_velocity, planes[i], new_velocity, 1);
+					original_velocity = new_velocity;
+				}
+				else
+				{
+					ClipVelocity(original_velocity, planes[i], new_velocity, fullBounce);
+				}
+			}
+			mv->m_vecVelocity = new_velocity;
+			original_velocity = new_velocity;
+		}
+#else
+		// momentum mod implementation
 		if (numplanes == 1 && pawn->m_MoveType() == MOVETYPE_WALK && pawn->m_hGroundEntity().Get() == nullptr)
 		{
 			// Is this a floor/slope that the player can walk on?
-			if (planes[0][2] >= standableZ)
+			if (planes[0][2] >= walkableZ)
 			{
 				ClipVelocity(original_velocity, planes[0], new_velocity, 1);
 				original_velocity = new_velocity;
@@ -1070,10 +1116,10 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 			{
 				ClipVelocity(original_velocity, planes[0], new_velocity, fullBounce);
 			}
-
 			mv->m_vecVelocity = new_velocity;
 			original_velocity = new_velocity;
 		}
+#endif
 		else
 		{
 			for (i = 0; i < numplanes; i++)
@@ -1107,7 +1153,7 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 			{ // go along the crease
 				if (numplanes != 2)
 				{
-					mv->m_vecVelocity = vec3_origin;
+					mv->m_vecVelocity.Init();
 					break;
 				}
 
@@ -1136,7 +1182,7 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 				// Though now it's good to note: the following code is needed for when a ramp creates a "V" shape,
 				// and pinches the surfer between two planes of differing normals.
 				CrossProduct(planes[0], planes[1], dir);
-				dir.NormalizeInPlace();
+				dir = NormaliseStern(V3(dir)).Vec();
 				d = dir.Dot(mv->m_vecVelocity);
 				VectorScale(dir, d, mv->m_vecVelocity);
 			}
@@ -1148,13 +1194,14 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 			d = mv->m_vecVelocity.Dot(primal_velocity);
 			if (d <= 0)
 			{
-				mv->m_vecVelocity = vec3_origin;
+				mv->m_vecVelocity.Init();
 				break;
 			}
 		}
 	}
 
 	if (CloseEnough(allFraction, 0.0f, FLT_EPSILON))
+	//if (allFraction == 0)
 	{
 		// We don't want to touch this!
 		// If a client is triggering this, and if they are on a surf ramp they will stand still but gain velocity
@@ -1172,7 +1219,7 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
             // If we found something we stop.
             if (pm.m_flFraction < 1.0f)
             {
-				mv->m_vecVelocity = vec3_origin;
+				mv->m_vecVelocity.Init();
             }
             // Otherwise we just set our next pos and we ignore the bug.
             else
@@ -1187,7 +1234,7 @@ void TryPlayerMove_Custom(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector 
 #endif
 		{
 			// otherwise default behavior
-			VectorCopy(vec3_origin, mv->m_vecVelocity);
+			mv->m_vecVelocity.Init();
 		}
 	}
 }
