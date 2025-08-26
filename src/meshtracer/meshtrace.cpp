@@ -212,13 +212,13 @@ static_function TraceResult_t TraceThroughBrush(TraceRay_t ray, Brush_t brush, f
 
 		f32 d1 = v3::dot(ray.start, plane.normal) - dist;
 		f32 d2 = v3::dot(ray.end, plane.normal) - dist;
-		if (d2 > 0)
-		//if (d2 > epsilon)
+		//if (d2 > 0)
+		if (d2 > epsilon)
 		{
 			getout = true; // endpoint is not in solid
 		}
-		if (d1 > 0)
-		//if (d1 > epsilon)
+		//if (d1 > 0)
+		if (d1 > epsilon)
 		{
 			startout = true;
 		}
