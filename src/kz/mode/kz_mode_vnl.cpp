@@ -345,6 +345,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	this->player->currentMoveData->m_vecVelocity = velocity;
 	this->player->currentMoveData->m_vecVelocity = oldVelocity;
 #endif
+#endif
 }
 
 void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
