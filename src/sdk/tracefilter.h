@@ -23,7 +23,7 @@ struct CTraceFilterPlayerMovementCS : public CTraceFilter
 
 	virtual bool ShouldHitEntity(CEntityInstance *ent) override
 	{
-		auto vTable = *static_cast<void ***>(modules::server->FindVirtualTable("CTraceFilterPlayerMovementCS"));
+		auto vTable = static_cast<void **>(modules::server->FindVirtualTable("CTraceFilterPlayerMovementCS"));
 		assert(vTable);
 #ifdef _WIN32
 		return CALL_VIRTUAL_OVERRIDE_VTBL(bool, 1, vTable, this, ent);
