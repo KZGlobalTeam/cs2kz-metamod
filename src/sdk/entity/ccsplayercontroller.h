@@ -32,6 +32,14 @@ public:
 	SCHEMA_FIELD(GameTime_t, m_LastTimePlayerWasDisconnectedForPawnsRemove)
 	SCHEMA_FIELD(int32, m_DesiredObserverMode)
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hDesiredObserverTarget)
+	SCHEMA_FIELD(CUtlSymbolLarge, m_szClan)
+	SCHEMA_FIELD_POINTER(char, m_szClanName)
+
+	void SetClan(const char *clan)
+	{
+		V_strncpy(m_szClanName, clan, 32);
+		m_szClan(m_szClanName());
+	}
 
 	CStrafeStats *GetCStrafeStats()
 	{

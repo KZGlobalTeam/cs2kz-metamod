@@ -297,6 +297,12 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->SetVelocity({0, 0, 0});
 	player->jumpstatsService->InvalidateJumpstats("Externally modified");
 
+	if (player->GetController())
+	{
+		char clanName[32];
+		V_snprintf(clanName, sizeof(clanName), "[%s]", player->modeService->GetModeShortName());
+		player->SetClan(clanName);
+	}
 	player->optionService->SetPreferenceStr("preferredMode", modeName);
 	return true;
 }

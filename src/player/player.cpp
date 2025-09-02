@@ -32,3 +32,18 @@ void Player::OnAuthorized()
 	this->hasPrime =
 		g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense;
 }
+
+void Player::SetName(const char *name)
+{
+	if (this->GetClient())
+	{
+		this->GetClient()->m_ConVars->SetString("name", name);
+		this->GetClient()->UpdateUserSettings();
+		this->GetClient()->SetName(name);
+	}
+}
+
+void Player::SetClan(const char *clan)
+{
+	this->GetController()->SetClan(clan);
+}

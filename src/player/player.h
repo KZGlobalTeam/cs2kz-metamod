@@ -79,6 +79,10 @@ public:
 		return GetClient() ? GetClient()->GetClientName() : "<blank>";
 	}
 
+	void SetName(const char *name);
+
+	void SetClan(const char *clan);
+
 	const char *GetIpAddress()
 	{
 		return GetClient() ? GetClient()->GetRemoteAddress()->ToString(true) : nullptr;

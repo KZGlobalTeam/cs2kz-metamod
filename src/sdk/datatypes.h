@@ -180,8 +180,7 @@ public:
 	CMoveDataBase() = default;
 	CMoveDataBase(const CMoveDataBase &source)
 		// clang-format off
-		: m_bFirstRunOfFunctions {source.m_bFirstRunOfFunctions},
-		m_bHasZeroFrametime {source.m_bHasZeroFrametime},
+		: m_bHasZeroFrametime {source.m_bHasZeroFrametime},
 		m_bIsLateCommand {source.m_bIsLateCommand}, 
 		m_nPlayerHandle {source.m_nPlayerHandle},
 		m_vecAbsViewAngles {source.m_vecAbsViewAngles},
@@ -235,7 +234,6 @@ public:
 	}
 
 public:
-	bool m_bFirstRunOfFunctions: 1;
 	bool m_bHasZeroFrametime: 1;
 	bool m_bIsLateCommand: 1;
 	CHandle<CCSPlayerPawn> m_nPlayerHandle;
