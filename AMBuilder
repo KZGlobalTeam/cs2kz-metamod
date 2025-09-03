@@ -125,6 +125,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replaysystem.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'saveloc', 'kz_saveloc.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'spec', 'kz_spec.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'goto', 'kz_goto.cpp'),
@@ -293,7 +294,7 @@ style_nodes = builder.Add(abh_binary)
 if builder.options.generator == 'vs':
   binary.sources += ckz_binary.sources
   binary.sources += abh_binary.sources
-  binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')]
+  binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.metadata['name'], f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
 
 MMSPlugin.binaries += [nodes]
