@@ -390,14 +390,3 @@ void KZUtils::ClearOverlays()
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("ClearOverlays"), debugoverlay);
 	}
 }
-
-BotProfile *KZUtils::GetBotProfile(u8 difficulty, i32 teamNumber, i32 weaponClass)
-{
-	BotProfile *result = NULL;
-	if (!interfaces::ppBotProfileManager || !*interfaces::ppBotProfileManager)
-	{
-		return result;
-	}
-	result = this->GetBotProfile_(*interfaces::ppBotProfileManager, difficulty, teamNumber, weaponClass, false);
-	return result;
-}
