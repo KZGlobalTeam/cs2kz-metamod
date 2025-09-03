@@ -165,9 +165,9 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 static_global bool ignoreTouchEvent {};
 
 // CCSPlayer_MovementServices
-static_global int finishMoveHook {};
-SH_DECL_MANUALHOOK2_void(FinishMove, 0, 0, 0, CUserCmd *, CMoveData *);
-static_function void Hook_OnFinishMove(CUserCmd *pCmd, CMoveData *pMoveData);
+static_global int playerRunCommandHook {};
+SH_DECL_MANUALHOOK1_void(PlayerRunCommand, 0, 0, 0, PlayerCommand *);
+static_function void Hook_OnPlayerRunCommand(PlayerCommand *pCmd);
 
 void hooks::Initialize()
 {
@@ -178,7 +178,7 @@ void hooks::Initialize()
 
 	SH_MANUALHOOK_RECONFIGURE(ChangeTeam, g_pGameConfig->GetOffset("ControllerChangeTeam"), 0, 0);
 
-	SH_MANUALHOOK_RECONFIGURE(FinishMove, g_pGameConfig->GetOffset("FinishMove"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(PlayerRunCommand, g_pGameConfig->GetOffset("PlayerRunCommand"), 0, 0);
 
 	SH_ADD_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
 
@@ -256,10 +256,10 @@ void hooks::Initialize()
 		false
 	);
 	CCSPlayer_MovementServices *moveServicesVtbl = (CCSPlayer_MovementServices *)modules::server->FindVirtualTable("CCSPlayer_MovementServices");
-	finishMoveHook = SH_ADD_MANUALDVPHOOK(
-	 	FinishMove, 
+	playerRunCommandHook = SH_ADD_MANUALDVPHOOK(
+	 	PlayerRunCommand, 
 	 	moveServicesVtbl, 
-	 	SH_STATIC(Hook_OnFinishMove), 
+	 	SH_STATIC(Hook_OnPlayerRunCommand), 
 	 	false
 	 );
 
@@ -304,7 +304,7 @@ void hooks::Cleanup()
 
 	SH_REMOVE_HOOK_ID(createLoadingSpawnGroupHook);
 
-	SH_REMOVE_HOOK_ID(finishMoveHook);
+	SH_REMOVE_HOOK_ID(playerRunCommandHook);
 
 	if (GameEntitySystem())
 	{
@@ -749,10 +749,10 @@ static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGrou
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
-static_function void Hook_OnFinishMove(CUserCmd *pCmd, CMoveData *pMoveData)
+static_function void Hook_OnPlayerRunCommand(PlayerCommand *pCmd)
 {
 	CCSPlayer_MovementServices *pThis = META_IFACEPTR(CCSPlayer_MovementServices);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
-	KZ::replaysystem::FinishMovePre(player, pMoveData);
+	KZ::replaysystem::OnPlayerRunCommandPre(player, pCmd);
 	RETURN_META(MRES_IGNORED);
 }

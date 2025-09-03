@@ -121,6 +121,9 @@ public:
 	SCHEMA_FIELD(float, m_flStamina)
 	SCHEMA_FIELD(bool, m_bDuckOverride)
 	SCHEMA_FIELD(float, m_flLastDuckTime)
+	SCHEMA_FIELD(float, m_bDesiresDuck)
+	SCHEMA_FIELD(float, m_flDuckOffset)
+	SCHEMA_FIELD(bool, m_duckUntilOnGround)
 };
 
 class CCSPlayer_WaterServices : public CPlayerPawnComponent
