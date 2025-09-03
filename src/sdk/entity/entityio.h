@@ -13,8 +13,12 @@ struct EntityIOConnectionDesc_t
 	EntityIOTargetType_t m_nTargetType;
 	int32 m_nTimesToFire;
 	float m_flDelay;
-	KeyValues3 unknown;
-	bool unknown2;
+
+	struct
+	{
+		KeyValues3 unknown;
+		bool unknown2;
+	} m_Unknown;
 };
 
 struct EntityIOConnection_t : EntityIOConnectionDesc_t
@@ -22,6 +26,9 @@ struct EntityIOConnection_t : EntityIOConnectionDesc_t
 	bool m_bMarkedForRemoval;
 	EntityIOConnection_t *m_pNext;
 };
+
+static_assert(offsetof(EntityIOConnection_t, m_bMarkedForRemoval) == 0x40, "EntityIOConnection_t::m_bMarkedForRemoval offset is incorrect");
+static_assert(sizeof(EntityIOConnection_t) == 0x50, "EntityIOConnection_t size is incorrect");
 
 struct EntityIOOutputDesc_t
 {
