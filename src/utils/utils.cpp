@@ -68,10 +68,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		return false;
 	}
 
-	if (!(interfaces::ppBotProfileManager = (BotProfileManager **)g_pGameConfig->ResolveSignatureFromMov("BotProfileManager")))
-	{
-		return false;
-	}
 	bool sigResolved = true;
 	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
 	RESOLVE_SIG(g_pGameConfig, "GetLegacyGameEventListener", GetLegacyGameEventListener_t, GetLegacyGameEventListener);
@@ -84,7 +80,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "RemoveEntity", RemoveEntity_t, RemoveEntity);
 	RESOLVE_SIG(g_pGameConfig, "DebugDrawMesh", DebugDrawMesh_t, DebugDrawMesh);
 	RESOLVE_SIG(g_pGameConfig, "CreateBot", CreateBot_t, CreateBot);
-	RESOLVE_SIG(g_pGameConfig, "BotProfileManager::GetBotProfile", GetBotProfile_t, GetBotProfile);
 
 	if (!sigResolved)
 	{
@@ -93,7 +88,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		return false;
 	}
 	g_pKZUtils = new KZUtils(TracePlayerBBox, GetLegacyGameEventListener, SnapViewAngles, EmitSound, SwitchTeam, SetPawn, CreateEntityByName,
-							 DispatchSpawn, RemoveEntity, DebugDrawMesh, CreateBot, GetBotProfile);
+							 DispatchSpawn, RemoveEntity, DebugDrawMesh, CreateBot);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();

@@ -3,6 +3,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/mode/kz_mode.h"
 #include "utils/simplecmds.h"
+#include "sdk/usercmd.h"
 #include "filesystem.h"
 
 static_global class : public KZTimerServiceEventListener
@@ -46,40 +47,134 @@ void KZRecordingService::Init()
 
 void KZRecordingService::OnPlayerJoinTeam(i32 team) {}
 
-void KZRecordingService::OnPostThinkPost()
-{
-	// record data for replay playback
-	if (!this->player->IsAlive())
-	{
-		return;
-	}
-
-	Tickdata tickdata = {};
-	tickdata.gameTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	tickdata.gameTime = g_pKZUtils->GetServerGlobals()->curtime;
-	tickdata.realTime = g_pKZUtils->GetServerGlobals()->realtime;
-	time_t unixTime = 0;
-	time(&unixTime);
-	tickdata.unixTime = (u64)unixTime;
-	this->player->GetOrigin(&tickdata.origin);
-	this->player->GetVelocity(&tickdata.velocity);
-	this->player->GetAngles(&tickdata.angles);
-	auto movementServices = this->player->GetMoveServices();
-	tickdata.duckSpeed = movementServices->m_flDuckSpeed;
-	tickdata.duckAmount = movementServices->m_flDuckAmount;
-
-	tickdata.buttons = movementServices->m_nButtons()->m_pButtonStates[0];
-	tickdata.replayFlags.ducking = movementServices->m_bDucking;
-	tickdata.replayFlags.ducked = movementServices->m_bDucked;
-	tickdata.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
-
-	this->circularRecording.tickdata.Write(tickdata);
-}
+void KZRecordingService::OnPostThinkPost() {}
 
 void KZRecordingService::Reset()
 {
 	this->circularRecording.events.Purge();
-	this->circularRecording.tickdata.Advance(this->circularRecording.tickdata.GetReadAvailable());
+	this->circularRecording.tickData.Advance(this->circularRecording.tickData.GetReadAvailable());
+}
+
+void KZRecordingService::OnTimerStart()
+{
+	this->recorders.push_back(Recorder());
+	this->currentRecorder = this->recorders.back().uuid;
+}
+
+void KZRecordingService::OnTimerStop()
+{
+	this->currentRecorder = {};
+}
+
+void KZRecordingService::OnTimerEnd()
+{
+	for (auto &recorder : this->recorders)
+	{
+		if (recorder.uuid == this->currentRecorder)
+		{
+			recorder.desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f; // record 2 seconds after timer end
+			break;
+		}
+	}
+}
+
+void KZRecordingService::OnPhysicsSimulate()
+{
+	// record data for replay playback
+	if (!this->player->IsAlive() || this->player->IsFakeClient())
+	{
+		return;
+	}
+
+	this->currentTickData = {};
+	this->currentTickData.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
+	this->currentTickData.gameTime = g_pKZUtils->GetServerGlobals()->curtime;
+	this->currentTickData.realTime = g_pKZUtils->GetServerGlobals()->realtime;
+	time_t unixTime = 0;
+	time(&unixTime);
+	this->currentTickData.unixTime = (u64)unixTime;
+
+	this->player->GetOrigin(&this->currentTickData.pre.origin);
+	this->player->GetVelocity(&this->currentTickData.pre.velocity);
+	this->player->GetAngles(&this->currentTickData.pre.angles);
+	auto movementServices = this->player->GetMoveServices();
+	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
+	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
+	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.pre.jumpPressedTime = movementServices->m_flJumpPressedTime;
+	this->currentTickData.pre.duckSpeed = movementServices->m_flDuckSpeed;
+	this->currentTickData.pre.duckAmount = movementServices->m_flDuckAmount;
+	this->currentTickData.pre.duckOffset = movementServices->m_flDuckOffset;
+	this->currentTickData.pre.lastDuckTime = movementServices->m_flLastDuckTime;
+	this->currentTickData.pre.replayFlags.ducking = movementServices->m_bDucking;
+	this->currentTickData.pre.replayFlags.ducked = movementServices->m_bDucked;
+	this->currentTickData.pre.replayFlags.desiresDuck = movementServices->m_bDesiresDuck;
+
+	this->currentTickData.pre.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
+	this->currentTickData.pre.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
+}
+
+void KZRecordingService::OnSetupMove(PlayerCommand *pc)
+{
+	if (!this->player->IsAlive() || this->player->IsFakeClient())
+	{
+		return;
+	}
+
+	this->currentTickData.cmdNumber = pc->cmdNum;
+	this->currentTickData.clientTick = pc->base().client_tick();
+	this->currentTickData.forward = pc->base().forwardmove();
+	this->currentTickData.left = pc->base().leftmove();
+	this->currentTickData.up = pc->base().upmove();
+	this->currentTickData.pre.angles = {pc->base().viewangles().x(), pc->base().viewangles().y(), pc->base().viewangles().z()};
+	this->currentSubtickData.numSubtickMoves = pc->base().subtick_moves_size();
+	for (u32 i = 0; i < this->currentSubtickData.numSubtickMoves && i < 64; i++)
+	{
+		auto &move = pc->base().subtick_moves(i);
+		this->currentSubtickData.subtickMoves[i].when = move.when();
+		this->currentSubtickData.subtickMoves[i].button = move.button();
+		if (move.button())
+		{
+			this->currentSubtickData.subtickMoves[i].pressed = move.pressed();
+		}
+		else
+		{
+			this->currentSubtickData.subtickMoves[i].analogMove.analog_forward_delta = move.analog_forward_delta();
+			this->currentSubtickData.subtickMoves[i].analogMove.analog_left_delta = move.analog_left_delta();
+			this->currentSubtickData.subtickMoves[i].analogMove.analog_pitch_delta = move.analog_pitch_delta();
+			this->currentSubtickData.subtickMoves[i].analogMove.analog_yaw_delta = move.analog_yaw_delta();
+		}
+	}
+}
+
+void KZRecordingService::OnPhysicsSimulatePost()
+{
+	// record data for replay playback
+	if (!this->player->IsAlive() || this->player->IsFakeClient())
+	{
+		return;
+	}
+
+	this->player->GetOrigin(&this->currentTickData.post.origin);
+	this->player->GetVelocity(&this->currentTickData.post.velocity);
+	this->player->GetAngles(&this->currentTickData.post.angles);
+	auto movementServices = this->player->GetMoveServices();
+	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
+	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
+	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.post.jumpPressedTime = movementServices->m_flJumpPressedTime;
+	this->currentTickData.post.duckSpeed = movementServices->m_flDuckSpeed;
+	this->currentTickData.post.duckAmount = movementServices->m_flDuckAmount;
+	this->currentTickData.post.duckOffset = movementServices->m_flDuckOffset;
+	this->currentTickData.post.lastDuckTime = movementServices->m_flLastDuckTime;
+	this->currentTickData.post.replayFlags.ducking = movementServices->m_bDucking;
+	this->currentTickData.post.replayFlags.ducked = movementServices->m_bDucked;
+	this->currentTickData.post.replayFlags.desiresDuck = movementServices->m_bDesiresDuck;
+
+	this->currentTickData.post.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
+	this->currentTickData.post.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
+	this->circularRecording.tickData.Write(this->currentTickData);
+	this->circularRecording.subtickData.Write(this->currentSubtickData);
 }
 
 SCMD(kz_testsavereplay, SCFL_REPLAY)
@@ -101,6 +196,8 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 	{
 		courseId = course->id;
 	}
+
+	// TODO: Append uuid into the file name?
 	V_snprintf(filename, sizeof(filename), "%s/%i_%s_%s.replay", replayPath, courseId, modeInfo.shortModeName.Get(),
 			   player->timerService->GetCurrentTimeType() == KZTimerService::TimeType_Pro ? "PRO" : "TP");
 	g_pFullFileSystem->CreateDirHierarchy(replayPath);
@@ -123,15 +220,22 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 
 		g_pFullFileSystem->Write(&header, sizeof(header), file);
 
-		// write tickdata
-		i32 tickdataCount = player->recordingService->circularRecording.tickdata.GetReadAvailable();
+		// write tickData
+		i32 tickdataCount = player->recordingService->circularRecording.tickData.GetReadAvailable();
 		g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
 		// circular buffer reads FIFO
 		for (i32 i = tickdataCount - 1; i >= 0; i--)
 		{
-			Tickdata tickdata = {};
-			player->recordingService->circularRecording.tickdata.Peek(&tickdata, i);
-			g_pFullFileSystem->Write(&tickdata, sizeof(tickdata), file);
+			TickData tickData = {};
+			player->recordingService->circularRecording.tickData.Peek(&tickData, i);
+			g_pFullFileSystem->Write(&tickData, sizeof(tickData), file);
+		}
+		for (i32 i = tickdataCount - 1; i >= 0; i--)
+		{
+			SubtickData subtickData = {};
+			player->recordingService->circularRecording.subtickData.Peek(&subtickData, i);
+			g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
+			g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
 		}
 		g_pFullFileSystem->Close(file);
 	}

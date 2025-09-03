@@ -50,7 +50,6 @@ void InitDetours()
 	INIT_DETOUR(g_pGameConfig, CPhysicsGameSystemFrameBoundary);
 #ifdef DEBUG_TPM
 	INIT_DETOUR(g_pGameConfig, TraceShape);
-	INIT_DETOUR(g_pGameConfig, BotProfileManager_ctor);
 	TraceShape.DisableDetour();
 #endif
 }
