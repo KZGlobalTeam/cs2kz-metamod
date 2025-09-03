@@ -345,7 +345,10 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 	}
 	else if (newTeam == CS_TEAM_CT && currentTeam != CS_TEAM_CT || newTeam == CS_TEAM_T && currentTeam != CS_TEAM_T)
 	{
-		player->GetPlayerPawn()->CommitSuicide(false, true);
+		if (player->GetPlayerPawn())
+		{
+			player->GetPlayerPawn()->CommitSuicide(false, true);
+		}
 		player->GetController()->SwitchTeam(newTeam);
 		player->GetController()->Respawn();
 		if (restorePos && player->specService->HasSavedPosition())

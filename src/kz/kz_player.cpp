@@ -21,6 +21,7 @@
 #include "tip/kz_tip.h"
 #include "trigger/kz_trigger.h"
 #include "recording/kz_recording.h"
+#include "replays/kz_replaysystem.h"
 #include "global/kz_global.h"
 
 #include "sdk/datatypes.h"
@@ -141,6 +142,7 @@ void KZPlayer::OnPhysicsSimulate()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulate();
+	this->recordingService->OnPhysicsSimulate();
 	this->triggerService->OnPhysicsSimulate();
 	this->modeService->OnPhysicsSimulate();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -150,12 +152,14 @@ void KZPlayer::OnPhysicsSimulate()
 	this->noclipService->HandleMoveCollision();
 	this->EnableGodMode();
 	this->UpdatePlayerModelAlpha();
+	KZ::replaysystem::OnPhysicsSimulate(this);
 }
 
 void KZPlayer::OnPhysicsSimulatePost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulatePost();
+	this->recordingService->OnPhysicsSimulatePost();
 	this->triggerService->OnPhysicsSimulatePost();
 	this->telemetryService->OnPhysicsSimulatePost();
 	this->modeService->OnPhysicsSimulatePost();
@@ -174,6 +178,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 	}
 	this->measureService->OnPhysicsSimulatePost();
 	this->quietService->OnPhysicsSimulatePost();
+	KZ::replaysystem::OnPhysicsSimulatePost(this);
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)
@@ -199,6 +204,7 @@ void KZPlayer::OnProcessUsercmdsPost(void *cmds, int numcmds)
 void KZPlayer::OnSetupMove(PlayerCommand *pc)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->recordingService->OnSetupMove(pc);
 	this->modeService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -222,6 +228,7 @@ void KZPlayer::OnProcessMovement()
 	MovementPlayer::OnProcessMovement();
 
 	KZ::mode::ApplyModeSettings(this);
+	KZ::replaysystem::OnProcessMovement(this);
 
 	this->DisableTurnbinds();
 	this->triggerService->OnProcessMovement();
@@ -247,6 +254,7 @@ void KZPlayer::OnProcessMovementPost()
 	}
 	this->jumpstatsService->OnProcessMovementPost();
 	this->triggerService->OnProcessMovementPost();
+	KZ::replaysystem::OnProcessMovementPost(this);
 	MovementPlayer::OnProcessMovementPost();
 }
 
@@ -418,6 +426,7 @@ void KZPlayer::OnDuck()
 	{
 		this->styleServices[i]->OnDuck();
 	}
+	KZ::replaysystem::OnDuck(this);
 }
 
 void KZPlayer::OnDuckPost()
