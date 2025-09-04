@@ -300,7 +300,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	if (player->GetController())
 	{
 		char clanName[32];
-		V_snprintf(clanName, sizeof(clanName), "[%s]", player->modeService->GetModeShortName());
+		V_snprintf(clanName, sizeof(clanName), "[%s%s]", player->modeService->GetModeShortName(), player->styleServices.Count() > 0 ? "*" : "");
 		player->SetClan(clanName);
 	}
 	player->optionService->SetPreferenceStr("preferredMode", modeName);
