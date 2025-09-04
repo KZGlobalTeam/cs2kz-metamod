@@ -1,6 +1,9 @@
 #include "player.h"
-#include "steam/steam_gameserver.h"
+#include "networksystem/inetworkmessages.h"
+#include "gameevents.pb.h"
+#include "sdk/recipientfilters.h"
 
+#include "steam/steam_gameserver.h"
 extern CSteamGameServerAPIContext g_steamAPI;
 
 CCSPlayerController *Player::GetController()
@@ -46,4 +49,11 @@ void Player::SetName(const char *name)
 void Player::SetClan(const char *clan)
 {
 	this->GetController()->SetClan(clan);
+
+	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("cs_game_disconnected");
+	if (!event)
+	{
+		return;
+	}
+	interfaces::pGameEventManager->FireEvent(event);
 }
