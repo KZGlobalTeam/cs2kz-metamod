@@ -49,11 +49,4 @@ void Player::SetName(const char *name)
 void Player::SetClan(const char *clan)
 {
 	this->GetController()->SetClan(clan);
-
-	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("cs_game_disconnected");
-	if (!event)
-	{
-		return;
-	}
-	interfaces::pGameEventManager->FireEvent(event);
 }

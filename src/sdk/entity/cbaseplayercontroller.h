@@ -28,6 +28,23 @@ public:
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPawn)
 	SCHEMA_FIELD_POINTER(char, m_iszPlayerName)
 
+	void SetOrRefreshPlayerName(const char *name = nullptr)
+	{
+		if (name)
+		{
+			V_strncpy(this->m_iszPlayerName(), name, 128);
+		}
+		static constexpr auto datatable_hash = hash_32_fnv1a_const("CBasePlayerController");
+		static constexpr auto prop_hash = hash_32_fnv1a_const("m_iszPlayerName");
+		static const auto m_key = schema::GetOffset(ThisClassName, datatable_hash, "m_iszPlayerName", prop_hash);
+		static const auto m_chain = schema::FindChainOffset(ThisClassName);
+
+		if (m_key.networked)
+		{
+			this->NetworkStateChanged({m_key.offset});
+		}
+	}
+
 	CBasePlayerPawn *GetCurrentPawn()
 	{
 		return m_hPawn.Get();

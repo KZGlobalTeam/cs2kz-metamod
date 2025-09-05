@@ -39,6 +39,16 @@ public:
 	{
 		V_strncpy(m_szClanName, clan, 32);
 		m_szClan(m_szClanName());
+		i32 length = V_strlen(this->m_iszPlayerName());
+		if (this->m_iszPlayerName[length - 1] == ' ')
+		{
+			this->m_iszPlayerName[length - 1] = '\0';
+		}
+		else
+		{
+			V_snprintf(this->m_iszPlayerName(), 128, "%s ", this->m_iszPlayerName());
+		}
+		this->SetOrRefreshPlayerName();
 	}
 
 	CStrafeStats *GetCStrafeStats()
