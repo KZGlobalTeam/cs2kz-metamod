@@ -45,14 +45,106 @@ void KZRecordingService::Init()
 	KZTimerService::RegisterEventListener(&timerEventListener);
 }
 
-void KZRecordingService::OnPlayerJoinTeam(i32 team) {}
+void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, int numCmds)
+{
+	if (numCmds <= 0)
+	{
+		return;
+	}
+	i32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
 
-void KZRecordingService::OnPostThinkPost() {}
+	i32 numToRemove = 0;
+	for (i32 i = 0; i < this->circularRecording.cmdData.GetReadAvailable(); i++)
+	{
+		// Remove old commands from circular buffer (keep 2 minutes)
+		CmdData data;
+		if (!this->circularRecording.cmdData.Peek(&data, 1, i))
+		{
+			break;
+		}
+		if (data.serverTick + 2 * 60 * 64 < currentTick)
+		{
+			numToRemove++;
+		}
+		else
+		{
+			break;
+		}
+	}
+	this->circularRecording.cmdData.Advance(numToRemove);
+	this->circularRecording.cmdSubtickData.Advance(numToRemove);
+	// record data for replay playback
+	if (this->player->IsFakeClient())
+	{
+		return;
+	}
+	for (i32 i = 0; i < numCmds; i++)
+	{
+		auto &pc = cmds[i];
+
+		if (pc.cmdNum <= this->lastCmdNumReceived)
+		{
+			continue;
+		}
+		CmdData data;
+		data.serverTick = currentTick;
+		data.gameTime = g_pKZUtils->GetServerGlobals()->curtime;
+		data.realTime = g_pKZUtils->GetServerGlobals()->realtime;
+		time_t unixTime = 0;
+		time(&unixTime);
+		data.unixTime = (u64)unixTime;
+		INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
+		netchan->GetRemoteFramerate(&data.framerate, nullptr, nullptr);
+		data.latency = netchan->GetEngineLatency();
+		data.avgLoss = netchan->GetAvgLoss(FLOW_INCOMING) + netchan->GetAvgChoke(FLOW_INCOMING);
+		data.cmdNumber = pc.cmdNum;
+		data.clientTick = pc.base().client_tick();
+		data.forward = pc.base().forwardmove();
+		data.left = pc.base().leftmove();
+		data.up = pc.base().upmove();
+		data.buttons[0] = pc.base().buttons_pb().buttonstate1();
+		data.buttons[1] = pc.base().buttons_pb().buttonstate2();
+		data.buttons[2] = pc.base().buttons_pb().buttonstate3();
+		data.angles = {pc.base().viewangles().x(), pc.base().viewangles().y(), pc.base().viewangles().z()};
+		data.mousedx = pc.base().mousedx();
+		data.mousedy = pc.base().mousedy();
+		this->circularRecording.cmdData.Write(data);
+
+		SubtickData subtickData;
+		subtickData.numSubtickMoves = pc.base().subtick_moves_size();
+		for (u32 j = 0; j < subtickData.numSubtickMoves && j < 64; j++)
+		{
+			auto &move = pc.base().subtick_moves(j);
+			subtickData.subtickMoves[j].when = move.when();
+			subtickData.subtickMoves[j].button = move.button();
+			if (move.button())
+			{
+				subtickData.subtickMoves[j].pressed = move.pressed();
+			}
+			else
+			{
+				subtickData.subtickMoves[j].analogMove.analog_forward_delta = move.analog_forward_delta();
+				subtickData.subtickMoves[j].analogMove.analog_left_delta = move.analog_left_delta();
+				subtickData.subtickMoves[j].analogMove.analog_pitch_delta = move.analog_pitch_delta();
+				subtickData.subtickMoves[j].analogMove.analog_yaw_delta = move.analog_yaw_delta();
+			}
+		}
+		this->circularRecording.cmdSubtickData.Write(subtickData);
+		this->lastCmdNumReceived = pc.cmdNum;
+	}
+}
+
+void KZRecordingService::OnPlayerJoinTeam(i32 team) {}
 
 void KZRecordingService::Reset()
 {
 	this->circularRecording.events.Purge();
 	this->circularRecording.tickData.Advance(this->circularRecording.tickData.GetReadAvailable());
+	this->circularRecording.subtickData.Advance(this->circularRecording.subtickData.GetReadAvailable());
+	this->circularRecording.cmdData.Advance(this->circularRecording.cmdData.GetReadAvailable());
+	this->circularRecording.cmdSubtickData.Advance(this->circularRecording.cmdSubtickData.GetReadAvailable());
+
+	this->lastCmdNumReceived = 0;
 }
 
 void KZRecordingService::OnTimerStart()

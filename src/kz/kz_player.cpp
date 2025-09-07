@@ -193,6 +193,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 void KZPlayer::OnProcessUsercmds(PlayerCommand *cmds, int numcmds)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->recordingService->OnProcessUsercmds(cmds, numcmds);
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -726,7 +727,6 @@ void KZPlayer::OnPostThinkPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->modeService->OnPostThinkPost();
-	this->recordingService->OnPostThinkPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnPostThinkPost();
