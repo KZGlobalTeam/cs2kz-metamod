@@ -45,7 +45,7 @@ namespace movement
 
 	void FASTCALL Detour_PhysicsSimulate(CCSPlayerController *);
 	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, PlayerCommand *, CMoveData *);
-	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, void *, int, bool, float);
+	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, PlayerCommand *, int, bool, float);
 	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_PlayerMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_CheckParameters(CCSPlayer_MovementServices *, CMoveData *);
@@ -108,9 +108,9 @@ public:
 	virtual void OnPhysicsSimulate();
 	virtual void OnPhysicsSimulatePost();
 
-	virtual void OnProcessUsercmds(void *, int) {}
+	virtual void OnProcessUsercmds(PlayerCommand *, int) {}
 
-	virtual void OnProcessUsercmdsPost(void *, int) {}
+	virtual void OnProcessUsercmdsPost(PlayerCommand *, int) {}
 
 	virtual void OnSetupMove(PlayerCommand *) {}
 
