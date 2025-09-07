@@ -4,6 +4,7 @@
 #include "kz/kz.h"
 #include "kz/replays/kz_replay.h"
 #include "circularbuffer.h"
+#include "utils/circularfifobuffer.h"
 #include "utils/uuid.h"
 
 struct PlayerCommand;
@@ -18,12 +19,6 @@ struct CircularRecorder
 		virtual void ElementRelease(TickData &element) {};
 	};
 
-	class CircularCmdData : public CFixedSizeCircularBuffer<CmdData, 64 * 60 * 2>
-	{
-		virtual void ElementAlloc(CmdData &element) {};
-		virtual void ElementRelease(CmdData &element) {};
-	};
-
 	class CircularSubtickData : public CFixedSizeCircularBuffer<SubtickData, 64 * 60 * 2>
 	{
 		virtual void ElementAlloc(SubtickData &element) {};
@@ -34,9 +29,9 @@ struct CircularRecorder
 	CircularTickdata tickData;
 	CircularSubtickData subtickData;
 
-	// TODO
-	CircularCmdData cmdData;
-	CircularSubtickData cmdSubtickData;
+	// Extra 20 seconds for commands in case of network issues
+	CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)> cmdData;
+	CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)> cmdSubtickData;
 };
 
 struct Recorder
@@ -63,11 +58,12 @@ class KZRecordingService : public KZBaseService
 
 public:
 	static void Init();
+	void OnProcessUsercmds(PlayerCommand *base, int numCmds);
+
 	void OnPhysicsSimulate();
 	void OnSetupMove(PlayerCommand *pc);
 	void OnPhysicsSimulatePost();
 	void OnPlayerJoinTeam(i32 team);
-	void OnPostThinkPost();
 
 	virtual void Reset() override;
 	// TODO
@@ -80,4 +76,5 @@ public:
 	UUID_t currentRecorder;
 	std::vector<Recorder> recorders;
 	CircularRecorder circularRecording;
+	i32 lastCmdNumReceived = 0;
 };
