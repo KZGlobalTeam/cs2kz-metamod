@@ -192,13 +192,17 @@ struct CmdData
 	f32 realTime {};
 	u64 unixTime {};
 	f32 framerate {};
-	f32 avgLatency {};
+	f32 latency {};
 	f32 avgLoss {};
 	u32 cmdNumber {};
 	u32 clientTick {};
 	f32 forward {};
 	f32 left {};
 	f32 up {};
+	u64 buttons[3] {};
+	QAngle angles {};
+	i32 mousedx {};
+	i32 mousedy {};
 };
 
 struct ReplayHeader
