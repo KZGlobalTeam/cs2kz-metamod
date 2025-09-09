@@ -37,8 +37,11 @@ public:
 
 	void SetClan(const char *clan)
 	{
-		V_strncpy(m_szClanName, clan, 32);
-		m_szClan(m_szClanName());
+		if (!clan)
+		{
+			return;
+		}
+		this->m_szClan(clan);
 		i32 length = V_strlen(this->m_iszPlayerName());
 		if (this->m_iszPlayerName[length - 1] == ' ')
 		{
