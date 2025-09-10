@@ -37,8 +37,8 @@ static_global const f32 rankThresholds[NUM_RANKS] = {
 	30000.0f,  // Master
 	35000.0f   // Legend
 };
-static_global const char *rankColors[NUM_RANKS] = {"{default}", "{grey}",   "{grey}", "{lightblue}", "{blue}",
-												   "{purple}",  "{orchid}", "{red}",  "{gold}",      "{gold}"};
+static_global const char *rankColors[NUM_RANKS] = {"{default}", "{grey}",   "{grey}", "{blue}", "{darkblue}",
+												   "{purple}",  "{orchid}", "{red}",  "{gold}", "{gold}"};
 
 #define RATING_REFRESH_PERIOD 120.0f // seconds
 
