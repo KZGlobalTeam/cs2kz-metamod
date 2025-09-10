@@ -21,6 +21,7 @@
 #include "tip/kz_tip.h"
 #include "trigger/kz_trigger.h"
 #include "global/kz_global.h"
+#include "profile/kz_profile.h"
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -53,6 +54,7 @@ void KZPlayer::Init()
 	delete this->triggerService;
 	delete this->globalService;
 	delete this->measureService;
+	delete this->profileService;
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->beamService = new KZBeamService(this);
@@ -72,6 +74,7 @@ void KZPlayer::Init()
 	this->triggerService = new KZTriggerService(this);
 	this->globalService = new KZGlobalService(this);
 	this->measureService = new KZMeasureService(this);
+	this->profileService = new KZProfileService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -130,6 +133,7 @@ void KZPlayer::OnAuthorized()
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnAuthorized();
 	this->databaseService->SetupClient();
+	this->profileService->timeToNextRatingRefresh = 0.0f; // Force immediate refresh
 	this->globalService->OnPlayerAuthorized();
 }
 
@@ -170,6 +174,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 	}
 	this->measureService->OnPhysicsSimulatePost();
 	this->quietService->OnPhysicsSimulatePost();
+	this->profileService->OnPhysicsSimulatePost();
 }
 
 void KZPlayer::OnProcessUsercmds(void *cmds, int numcmds)

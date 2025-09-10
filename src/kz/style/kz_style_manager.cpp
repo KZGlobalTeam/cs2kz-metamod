@@ -12,6 +12,7 @@
 #include "../language/kz_language.h"
 #include "../option/kz_option.h"
 #include "../telemetry/kz_telemetry.h"
+#include "../profile/kz_profile.h"
 
 #include "utils/plat.h"
 
@@ -270,12 +271,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 		player->languageService->PrintChat(true, false, "Style Added", info.longName);
 	}
 
-	if (player->GetController())
-	{
-		char clanName[32];
-		V_snprintf(clanName, sizeof(clanName), "[%s%s]", player->modeService->GetModeShortName(), player->styleServices.Count() > 0 ? "*" : "");
-		player->SetClan(clanName);
-	}
+	player->profileService->UpdateClantag();
 }
 
 void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool silent)
@@ -307,12 +303,7 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 		player->languageService->PrintChat(true, false, "Style Not Active", styleName);
 	}
 
-	if (player->GetController())
-	{
-		char clanName[32];
-		V_snprintf(clanName, sizeof(clanName), "[%s%s]", player->modeService->GetModeShortName(), player->styleServices.Count() > 0 ? "*" : "");
-		player->SetClan(clanName);
-	}
+	player->profileService->UpdateClantag();
 }
 
 void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool silent)
@@ -383,12 +374,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 		player->languageService->PrintChat(true, false, "Style Added", info.longName);
 	}
 
-	if (player->GetController())
-	{
-		char clanName[32];
-		V_snprintf(clanName, sizeof(clanName), "[%s%s]", player->modeService->GetModeShortName(), player->styleServices.Count() > 0 ? "*" : "");
-		player->SetClan(clanName);
-	}
+	player->profileService->UpdateClantag();
 }
 
 void KZStyleManager::ClearStyles(KZPlayer *player, bool silent)
@@ -404,12 +390,7 @@ void KZStyleManager::ClearStyles(KZPlayer *player, bool silent)
 		player->languageService->PrintChat(true, false, "Styles Cleared");
 	}
 
-	if (player->GetController())
-	{
-		char clanName[32];
-		V_snprintf(clanName, sizeof(clanName), "[%s]", player->modeService->GetModeShortName());
-		player->SetClan(clanName);
-	}
+	player->profileService->UpdateClantag();
 }
 
 void KZStyleManager::RefreshStyles(KZPlayer *player)

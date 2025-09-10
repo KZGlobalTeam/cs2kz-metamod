@@ -24,7 +24,6 @@ public:
 	{
 		unauthenticatedSteamID = k_steamIDNil;
 		hasPrime = false;
-		clan[0] = '\0';
 	}
 
 	virtual CCSPlayerController *GetController();
@@ -132,7 +131,6 @@ public:
 	// General
 	const i32 index;
 	bool hasPrime {};
-	char clan[32] {};
 
 private:
 	CSteamID unauthenticatedSteamID = k_steamIDNil;

@@ -44,6 +44,7 @@ class KZRacingService;
 class KZSavelocService;
 class KZSpecService;
 class KZGotoService;
+class KZProfileService;
 class KZStyleService;
 class KZTelemetryService;
 class KZTimerService;
@@ -155,6 +156,7 @@ public:
 	KZSavelocService *savelocService {};
 	KZSpecService *specService {};
 	KZGotoService *gotoService {};
+	KZProfileService *profileService {};
 	CUtlVector<KZStyleService *> styleServices {};
 	KZTelemetryService *telemetryService {};
 	KZTimerService *timerService {};

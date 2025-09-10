@@ -20,6 +20,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/tip/kz_tip.h"
 #include "kz/global/kz_global.h"
+#include "kz/profile/kz_profile.h"
 
 #include "sdk/gamerules.h"
 #include "sdk/physicsgamesystem.h"
@@ -455,17 +456,19 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 		auto name = player->GetName();
 		auto msg = message.Get();
 
+		std::string coloredPrefix = player->profileService->GetPrefix(true);
+		std::string prefix = player->profileService->GetPrefix(false);
 		if (player->IsAlive())
 		{
-			utils::SayChat(player->GetController(), "{lime}%s{default}: %s", name, msg);
-			utils::PrintConsoleAll("%s: %s", name, msg);
-			META_CONPRINTF("%s: %s\n", name, msg);
+			utils::SayChat(player->GetController(), "%s {lime}%s{default}: %s", coloredPrefix.c_str(), name, msg);
+			utils::PrintConsoleAll("%s: %s", prefix.c_str(), name, msg);
+			META_CONPRINTF("%s: %s\n", prefix.c_str(), name, msg);
 		}
 		else
 		{
-			utils::SayChat(player->GetController(), "{grey}* {lime}%s{default}: %s", name, msg);
-			utils::PrintConsoleAll("* %s: %s", name, msg);
-			META_CONPRINTF("* %s: %s\n", name, msg);
+			utils::SayChat(player->GetController(), "{grey}* %s {lime}%s{default}: %s", coloredPrefix.c_str(), name, msg);
+			utils::PrintConsoleAll("* %s %s: %s", prefix.c_str(), name, msg);
+			META_CONPRINTF("* %s %s: %s\n", prefix.c_str(), name, msg);
 		}
 	}
 

@@ -24,6 +24,7 @@
 #include "kz/db/kz_db.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
+#include "kz/profile/kz_profile.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
 
@@ -465,6 +466,7 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfos, int infoCou
 										const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities)
 {
 	KZ::quiet::OnCheckTransmit(pInfos, infoCount);
+	KZProfileService::OnCheckTransmit();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -477,6 +479,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	BaseRequest::CheckRequests();
 	KZTelemetryService::ActiveCheck();
 	KZBeamService::UpdateBeams();
+	KZProfileService::OnGameFrame();
 	RETURN_META(MRES_IGNORED);
 }
 

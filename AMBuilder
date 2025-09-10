@@ -120,6 +120,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_vnl.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'noclip', 'kz_noclip.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'kz_option.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'kz_profile.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replays.cpp'),

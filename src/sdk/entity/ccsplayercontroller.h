@@ -33,7 +33,8 @@ public:
 	SCHEMA_FIELD(int32, m_DesiredObserverMode)
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hDesiredObserverTarget)
 	SCHEMA_FIELD(CUtlSymbolLarge, m_szClan)
-	SCHEMA_FIELD_POINTER(char, m_szClanName)
+	SCHEMA_FIELD(int32, m_iCompetitiveRanking);
+	SCHEMA_FIELD(int8, m_iCompetitiveRankType);
 
 	void SetClan(const char *clan)
 	{

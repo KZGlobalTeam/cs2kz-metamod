@@ -11,6 +11,7 @@
 #include "../db/kz_db.h"
 #include "../option/kz_option.h"
 #include "../telemetry/kz_telemetry.h"
+#include "../profile/kz_profile.h"
 
 #include "utils/simplecmds.h"
 #include "utils/plat.h"
@@ -297,12 +298,8 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->SetVelocity({0, 0, 0});
 	player->jumpstatsService->InvalidateJumpstats("Externally modified");
 
-	if (player->GetController())
-	{
-		char clanName[32];
-		V_snprintf(clanName, sizeof(clanName), "[%s%s]", player->modeService->GetModeShortName(), player->styleServices.Count() > 0 ? "*" : "");
-		player->SetClan(clanName);
-	}
+	player->profileService->RequestRating();
+	player->profileService->UpdateClantag();
 	player->optionService->SetPreferenceStr("preferredMode", modeName);
 	return true;
 }

@@ -48,6 +48,8 @@ void Player::SetName(const char *name)
 
 void Player::SetClan(const char *clan)
 {
-	V_strncpy(this->clan, clan, 32);
-	this->GetController()->SetClan(this->clan);
+	if (this->GetController())
+	{
+		this->GetController()->SetClan(clan);
+	}
 }
