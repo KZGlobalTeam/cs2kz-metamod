@@ -87,7 +87,7 @@ Player *PlayerManager::SteamIdToPlayer(u64 steamID, bool validated)
 	return nullptr;
 }
 
-void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg,
+void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, uint32 steam_handle, C2S_CONNECT_Message *pConnectMsg,
 									const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
 }
@@ -98,7 +98,7 @@ void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint6
 	this->ToPlayer(slot)->OnPlayerConnect(xuid);
 }
 
-void PlayerManager::OnConnectClientPost(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg,
+void PlayerManager::OnConnectClientPost(const char *pszName, ns_address *pAddr, uint32 steam_handle, C2S_CONNECT_Message *pConnectMsg,
 										const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
 }

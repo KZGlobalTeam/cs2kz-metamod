@@ -186,10 +186,10 @@ public:
 
 	// These following functions are NOT called upon map change.
 	// Note: ConnectClient can be triggered multiple times with MultiAddonsManager.
-	void OnConnectClient(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg, const char *pszChallenge,
+	void OnConnectClient(const char *pszName, ns_address *pAddr, uint32 steam_handle, C2S_CONNECT_Message *pConnectMsg, const char *pszChallenge,
 						 const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence);
 	void OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress, bool bFakePlayer);
-	void OnConnectClientPost(const char *pszName, ns_address *pAddr, void *pNetInfo, C2S_CONNECT_Message *pConnectMsg, const char *pszChallenge,
+	void OnConnectClientPost(const char *pszName, ns_address *pAddr, uint32 steam_handle, C2S_CONNECT_Message *pConnectMsg, const char *pszChallenge,
 							 const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence);
 
 	// These following functions are called upon map change.
