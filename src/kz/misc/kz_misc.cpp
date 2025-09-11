@@ -461,8 +461,8 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 		if (player->IsAlive())
 		{
 			utils::SayChat(player->GetController(), "%s {lime}%s{default}: %s", coloredPrefix.c_str(), name, msg);
-			utils::PrintConsoleAll("%s: %s", prefix.c_str(), name, msg);
-			META_CONPRINTF("%s: %s\n", prefix.c_str(), name, msg);
+			utils::PrintConsoleAll("%s %s: %s", prefix.c_str(), name, msg);
+			META_CONPRINTF("%s %s: %s\n", prefix.c_str(), name, msg);
 		}
 		else
 		{
