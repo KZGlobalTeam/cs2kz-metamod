@@ -298,6 +298,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->SetVelocity({0, 0, 0});
 	player->jumpstatsService->InvalidateJumpstats("Externally modified");
 
+	player->profileService->currentRating = -1.0f;
 	player->profileService->RequestRating();
 	player->profileService->UpdateClantag();
 	player->optionService->SetPreferenceStr("preferredMode", modeName);

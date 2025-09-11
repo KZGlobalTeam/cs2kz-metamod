@@ -27,6 +27,7 @@ public:
 	SCHEMA_FIELD(bool, m_bIsHLTV)
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPawn)
 	SCHEMA_FIELD_POINTER(char, m_iszPlayerName)
+	SCHEMA_FIELD(PlayerConnectedState, m_iConnected)
 
 	void SetOrRefreshPlayerName(const char *name = nullptr)
 	{
@@ -39,10 +40,7 @@ public:
 		static const auto m_key = schema::GetOffset(ThisClassName, datatable_hash, "m_iszPlayerName", prop_hash);
 		static const auto m_chain = schema::FindChainOffset(ThisClassName);
 
-		if (m_key.networked)
-		{
-			this->NetworkStateChanged({m_key.offset});
-		}
+		this->NetworkStateChanged({m_key.offset});
 	}
 
 	CBasePlayerPawn *GetCurrentPawn()

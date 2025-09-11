@@ -51,5 +51,15 @@ void Player::SetClan(const char *clan)
 	if (this->GetController())
 	{
 		this->GetController()->SetClan(clan);
+		i32 length = V_strlen(this->GetController()->m_iszPlayerName());
+		if (this->GetController()->m_iszPlayerName()[length - 1] == ' ')
+		{
+			this->GetController()->m_iszPlayerName()[length - 1] = '\0';
+		}
+		else
+		{
+			V_snprintf(this->GetController()->m_iszPlayerName(), 128, "%s ", this->GetController()->m_iszPlayerName());
+		}
+		this->SetName(this->GetController()->m_iszPlayerName());
 	}
 }

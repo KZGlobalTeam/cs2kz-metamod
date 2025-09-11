@@ -42,6 +42,8 @@ static_global const char *rankColors[NUM_RANKS] = {"{default}", "{grey}",   "{gr
 
 #define RATING_REFRESH_PERIOD 120.0f // seconds
 
+CConVar<bool> kz_profile_rating_badge_enabled("kz_profile_rating_badge_enabled", FCVAR_NONE, "Whether to show competitive rank in scoreboard.", true);
+
 void KZProfileService::OnGameFrame()
 {
 	if (g_pKZUtils->GetServerGlobals()->tickcount % 64 != 0)
@@ -69,7 +71,7 @@ void KZProfileService::OnCheckTransmit()
 
 void KZProfileService::RequestRating()
 {
-	if (/*!KZGlobalService::IsAvailable() || */ !this->player->IsAuthenticated() || !this->player->IsConnected())
+	if (!KZGlobalService::IsAvailable() || !this->player->IsAuthenticated() || !this->player->IsConnected())
 	{
 		return;
 	}
@@ -88,7 +90,6 @@ void KZProfileService::RequestRating()
 	{
 		return;
 	}
-	this->currentRating = -1.0f;
 	this->timeToNextRatingRefresh = g_pKZUtils->GetServerGlobals()->realtime + RATING_REFRESH_PERIOD + RandomFloat(-30.0f, 30.0f);
 
 	std::string url = "https://api.cs2kz.org/players/" + std::to_string(steamID64) + "/profile?mode=" + std::to_string(static_cast<u8>(mode));
@@ -139,6 +140,15 @@ bool KZProfileService::CanDisplayRank()
 
 void KZProfileService::UpdateClantag()
 {
+	if (!this->player->IsConnected()
+		|| (this->player->GetController() && this->player->GetController()->m_iConnected() != PlayerConnectedState::PlayerConnected))
+	{
+		if (this->player->GetController() && this->player->GetController()->m_szClan() != "")
+		{
+			this->SetClantag("");
+		}
+		return;
+	}
 	if (this->CanDisplayRank())
 	{
 		i32 rank = Ranks::Unknown;
@@ -175,7 +185,7 @@ void KZProfileService::OnPhysicsSimulatePost()
 
 void KZProfileService::UpdateCompetitiveRank()
 {
-	if (!this->player->GetController())
+	if (!this->player->GetController() || !kz_profile_rating_badge_enabled.GetBool())
 	{
 		return;
 	}

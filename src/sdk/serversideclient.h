@@ -100,7 +100,7 @@ public:
 
 	const char *GetClientName() const
 	{
-		return m_Name;
+		return m_Name.Get();
 	}
 
 	INetChannel *GetNetChannel() const
