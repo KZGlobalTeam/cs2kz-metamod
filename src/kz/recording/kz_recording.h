@@ -26,10 +26,14 @@ struct CircularRecorder
 	};
 
 	CUtlVector<RpEvent> events;
+
+	// This is only written as long as the player is alive.
 	CircularTickdata tickData;
 	CircularSubtickData subtickData;
 
 	// Extra 20 seconds for commands in case of network issues
+	// Note that command data is tracked regardless of whether the player is alive or not.
+	// This means if the player goes to spectator, the command data will no longer match the tick data.
 	CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)> cmdData;
 	CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)> cmdSubtickData;
 };
