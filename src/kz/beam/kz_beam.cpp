@@ -23,6 +23,11 @@ void KZBeamService::OnPlayerPreferencesLoaded()
 	this->playerBeamOffset = this->player->optionService->GetPreferenceVector("beamOffset", KZBeamService::defaultOffset);
 }
 
+void KZBeamService::Init()
+{
+	KZOptionService::RegisterEventListener(&optionEventListener);
+}
+
 SCMD(kz_beam, SCFL_MISC | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);

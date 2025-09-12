@@ -22,6 +22,7 @@
 #include "trigger/kz_trigger.h"
 #include "global/kz_global.h"
 #include "profile/kz_profile.h"
+#include "pistol/kz_pistol.h"
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -55,6 +56,7 @@ void KZPlayer::Init()
 	delete this->globalService;
 	delete this->measureService;
 	delete this->profileService;
+	delete this->pistolService;
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->beamService = new KZBeamService(this);
@@ -75,6 +77,7 @@ void KZPlayer::Init()
 	this->globalService = new KZGlobalService(this);
 	this->measureService = new KZMeasureService(this);
 	this->profileService = new KZProfileService(this);
+	this->pistolService = new KZPistolService(this);
 
 	KZ::mode::InitModeService(this);
 }

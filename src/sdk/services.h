@@ -3,26 +3,51 @@
 class CBaseEntity;
 class CBaseModelEntity;
 class CBasePlayerPawn;
+class CBasePlayerWeapon;
 
 #include "utils/schema.h"
 #include "entity/cbaseplayerpawn.h"
 #include "cinbuttonstate.h"
 #include "datatypes.h"
+#include "econ/ccsplayerinventory.h"
 
 class CPlayerPawnComponent
 {
 public:
 	DECLARE_SCHEMA_CLASS(CPlayerPawnComponent);
 
+private:
+	virtual void unk_00() = 0;
+	virtual void unk_01() = 0;
+	virtual ~CPlayerPawnComponent() = 0;
+	virtual void unk_03() = 0;
+	virtual void unk_04() = 0;
+	virtual void unk_05() = 0;
+	virtual void unk_06() = 0;
+	virtual void unk_07() = 0;
+	virtual void unk_08() = 0;
+	virtual void unk_09() = 0;
+	virtual void unk_10() = 0;
+	virtual void unk_11() = 0;
+	virtual void unk_12() = 0;
+	virtual void unk_13() = 0;
+	virtual void unk_14() = 0;
+	virtual void unk_15() = 0;
+	virtual void unk_16() = 0;
+	virtual void unk_17() = 0;
+
 public:
-	uint8 vtable[0x8];
 	uint8 chainEntity[0x28]; // Unused
 	CBasePlayerPawn *pawn;   // 0x16
 	uint8 __pad0030[0x6];    // 0x0
 };
 
+static_assert(sizeof(CPlayerPawnComponent) == 0x40);
+
 class CPlayer_WeaponServices : public CPlayerPawnComponent
 {
+	virtual ~CPlayer_WeaponServices() = 0;
+
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_WeaponServices)
 	SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hActiveWeapon)
@@ -31,6 +56,8 @@ public:
 
 class CPlayer_ObserverServices : public CPlayerPawnComponent
 {
+	virtual ~CPlayer_ObserverServices() = 0;
+
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_ObserverServices)
 	SCHEMA_FIELD(ObserverMode_t, m_iObserverMode)
@@ -40,6 +67,8 @@ public:
 
 class CPlayer_MovementServices : public CPlayerPawnComponent
 {
+	virtual ~CPlayer_MovementServices() = 0;
+
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices);
 	SCHEMA_FIELD_POINTER(CInButtonState, m_nButtons)
@@ -68,6 +97,8 @@ public:
 
 class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 {
+	virtual ~CPlayer_MovementServices_Humanoid() = 0;
+
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_MovementServices_Humanoid);
 	SCHEMA_FIELD(bool, m_bDucking)
@@ -77,6 +108,8 @@ public:
 
 class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid
 {
+	virtual ~CCSPlayer_MovementServices() = 0;
+
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayer_MovementServices);
 	SCHEMA_FIELD(Vector, m_vecLadderNormal)
@@ -92,38 +125,48 @@ public:
 
 class CCSPlayer_WaterServices : public CPlayerPawnComponent
 {
+	virtual ~CCSPlayer_WaterServices() = 0;
+
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayer_WaterServices);
 	SCHEMA_FIELD(float, m_flWaterJumpTime)
 	SCHEMA_FIELD(Vector, m_vecWaterJumpVel)
 };
 
-class CCSPlayer_ItemServices
-
+class CPlayer_ItemServices : public CPlayerPawnComponent
 {
+	virtual ~CPlayer_ItemServices() = 0;
+
+public:
+	DECLARE_SCHEMA_CLASS(CPlayer_ItemServices);
+};
+
+class CCSPlayer_ItemServices : public CPlayer_ItemServices
+{
+	virtual ~CCSPlayer_ItemServices() = 0;
+
 public:
 	DECLARE_SCHEMA_CLASS(CCSPlayer_ItemServices);
 
-	virtual ~CCSPlayer_ItemServices() = 0;
-
 private:
-	virtual void unk_01() = 0;
-	virtual void unk_02() = 0;
-	virtual void unk_03() = 0;
-	virtual void unk_04() = 0;
-	virtual void unk_05() = 0;
-	virtual void unk_06() = 0;
-	virtual void unk_07() = 0;
-	virtual void unk_08() = 0;
-	virtual void unk_09() = 0;
-	virtual void unk_10() = 0;
-	virtual void unk_11() = 0;
-	virtual void unk_12() = 0;
-	virtual void unk_13() = 0;
-	virtual void unk_14() = 0;
-	virtual CBaseEntity *_GiveNamedItem(const char *pchName) = 0;
+	virtual CBasePlayerWeapon *_GiveNamedItem(const char *pchName) = 0;
 
 public:
 	virtual bool GiveNamedItemBool(const char *pchName) = 0;
-	virtual CBaseEntity *GiveNamedItem(const char *pchName) = 0;
+	virtual CBasePlayerWeapon *GiveNamedItem(const char *pchName) = 0;
+	virtual void DropActiveWeapon(CBasePlayerWeapon *pWeapon) = 0;
+	virtual void StripPlayerWeapons(bool removeSuit) = 0;
+};
+
+class CCSPlayerController_InventoryServices
+{
+public:
+	DECLARE_SCHEMA_CLASS(CCSPlayerController_InventoryServices)
+
+	SCHEMA_FIELD_POINTER_OFFSET(CCSPlayerInventory, m_nPersonaDataXpTrailLevel, 4)
+
+	CCSPlayerInventory *GetInventory()
+	{
+		return m_nPersonaDataXpTrailLevel();
+	}
 };

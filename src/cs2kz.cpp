@@ -22,6 +22,8 @@
 #include "kz/language/kz_language.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
+#include "kz/beam/kz_beam.h"
+#include "kz/pistol/kz_pistol.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
@@ -53,6 +55,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZGotoService::Init();
 	KZHUDService::Init();
 	KZLanguageService::Init();
+	KZBeamService::Init();
+	KZPistolService::Init();
 	KZ::misc::Init();
 	KZQuietService::Init();
 	if (!KZ::mode::CheckModeCvars())

@@ -25,6 +25,7 @@
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
 #include "kz/profile/kz_profile.h"
+#include "kz/pistol/kz_pistol.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
 
@@ -626,6 +627,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 				if (player)
 				{
 					player->timerService->OnPlayerSpawn();
+					player->pistolService->OnPlayerSpawn();
 				}
 			}
 		}

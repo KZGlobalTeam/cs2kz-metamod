@@ -7,6 +7,7 @@ class KZBeamService : public KZBaseService
 public:
 	using KZBaseService::KZBaseService;
 
+	static void Init();
 	virtual void Reset();
 	static void UpdateBeams();
 	void Update();

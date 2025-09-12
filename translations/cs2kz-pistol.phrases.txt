@@ -1,0 +1,21 @@
+"Phrases"
+{
+	"Pistol Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_pistol <name|off>{grey}."
+	}
+	"Pistol Disabled"
+	{
+		"en"		"{grey}You have disabled your pistol."
+	}
+	"Pistol Changed"
+	{
+		"#format"	"pistol:s"
+		"en"		"{grey}You have changed your pistol to {default}{pistol}{grey}."
+	}
+	"Pistol Unknown"
+	{
+		"#format"	"pistol:s"
+		"en"		"{darkred}Unknown pistol: {default}{pistol}{grey}."
+	}
+}

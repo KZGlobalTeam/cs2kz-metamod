@@ -1,5 +1,6 @@
 #pragma once
 #include "cbaseplayercontroller.h"
+#include "sdk/services.h"
 #include "random.h"
 
 enum OverlapState : uint8
@@ -33,8 +34,9 @@ public:
 	SCHEMA_FIELD(int32, m_DesiredObserverMode)
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hDesiredObserverTarget)
 	SCHEMA_FIELD(CUtlSymbolLarge, m_szClan)
-	SCHEMA_FIELD(int32, m_iCompetitiveRanking);
-	SCHEMA_FIELD(int8, m_iCompetitiveRankType);
+	SCHEMA_FIELD(int32, m_iCompetitiveRanking)
+	SCHEMA_FIELD(int8, m_iCompetitiveRankType)
+	SCHEMA_FIELD(CCSPlayerController_InventoryServices *, m_pInventoryServices)
 
 	void SetClan(const char *clan)
 	{
