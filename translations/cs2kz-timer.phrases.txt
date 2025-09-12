@@ -712,9 +712,11 @@
 	"Timer Stop Sound Enabled"
 	{
 		"en"		"{grey}You have enabled the timer stop sound."
+		"ua"		"{grey}Ви увімкнули звук зупинки таймера."
 	}
 	"Timer Stop Sound Disabled"
 	{
 		"en"		"{grey}You have disabled the timer stop sound."
+		"ua"		"{grey}Ви вимкнули звук зупинки таймера."
 	}
 }

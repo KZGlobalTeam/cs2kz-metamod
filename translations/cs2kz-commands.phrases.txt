@@ -1169,13 +1169,16 @@
 	"Command Description - kz_timerstopsound"
 	{
 		"en"		"Toggle the timer stop sound."
+		"ua"		"Увімк./вимк. звук зупинки таймера."
 	}
 	"Command Description - kz_autohideweapon"
 	{
 		"en"		"Toggle the automatic hiding of weapon viewmodel."
+		"ua"		"Увімк./вимк. автоматичне приховування зброї."
 	}
 	"Command Description - kz_pistol"
 	{
 		"en"		"Change or remove the current pistol."
+		"ua"		"Змінити або видалити поточний пістолет."
 	}
 }

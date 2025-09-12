@@ -97,9 +97,11 @@
 	"Quiet Option - Auto Hide Weapon - Enable"
 	{
 		"en"		"{grey}You will now automatically hide your weapon upon spawning."
+		"ua"		"{grey}Тепер зброю буде автоматично приховано після відродження."
 	}
 	"Quiet Option - Auto Hide Weapon - Disable"
 	{
 		"en"		"{grey}You will no longer automatically hide your weapon upon spawning."
+		"ua"		"{grey}Зброю більше не буде автоматично приховано після відродження."
 	}
 }
