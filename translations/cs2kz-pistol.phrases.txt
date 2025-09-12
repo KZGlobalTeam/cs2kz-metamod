@@ -3,19 +3,23 @@
 	"Pistol Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_pistol <name|off>{grey}."
+		"ua"		"{grey}Використання: {default}kz_pistol <name|off>{grey}."
 	}
 	"Pistol Disabled"
 	{
 		"en"		"{grey}You have disabled your pistol."
+		"ua"		"{grey}Ви вимкнули пістолет."
 	}
 	"Pistol Changed"
 	{
 		"#format"	"pistol:s"
 		"en"		"{grey}You have changed your pistol to {default}{pistol}{grey}."
+		"ua"		"{grey}Ви змінили пістолет на {default}{pistol}{grey}."
 	}
 	"Pistol Unknown"
 	{
 		"#format"	"pistol:s"
 		"en"		"{darkred}Unknown pistol: {default}{pistol}{grey}."
+		"ua"		"{darkred}Невідомий пістолет: {default}{pistol}{grey}."
 	}
 }
