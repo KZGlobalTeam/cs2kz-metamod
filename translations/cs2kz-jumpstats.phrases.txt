@@ -458,6 +458,7 @@
 	"Player gravity scale changed"
 	{
 		"en"		"Player gravity scale changed"
+		"chi"		"玩家重力大小更改"
 		"sv"		"Spelarens gravitationsskala har ändrats"
 		"ua"		"Змінено шкалу гравітації гравця"
 		"ko"		"플레이어 중력 비율이 변경되었습니다."
@@ -527,6 +528,7 @@
 	"Disabled By Map"
 	{
 		"en"		"Disabled by map"
+		"chi"		"被地图禁用"
 		"sv"		"Inaktiverat av kartan"
 		"ua"		"Вимкнено налаштуваннями мапи."
 		"ko"		"맵에 의해 비활성화 됨"
