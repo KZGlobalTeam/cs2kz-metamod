@@ -21,6 +21,7 @@
 #include "kz/tip/kz_tip.h"
 #include "kz/global/kz_global.h"
 #include "kz/profile/kz_profile.h"
+#include "kz/pistol/kz_pistol.h"
 
 #include "sdk/gamerules.h"
 #include "sdk/physicsgamesystem.h"
@@ -346,7 +347,10 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 	}
 	else if (newTeam == CS_TEAM_CT && currentTeam != CS_TEAM_CT || newTeam == CS_TEAM_T && currentTeam != CS_TEAM_T)
 	{
-		player->GetPlayerPawn()->CommitSuicide(false, true);
+		if (player->GetPlayerPawn())
+		{
+			player->GetPlayerPawn()->CommitSuicide(false, true);
+		}
 		player->GetController()->SwitchTeam(newTeam);
 		player->GetController()->Respawn();
 		if (restorePos && player->specService->HasSavedPosition())
@@ -372,7 +376,7 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		}
 		player->specService->ResetSavedPosition();
 	}
-
+	player->pistolService->OnPlayerJoinTeam();
 	if (player->quietService->ShouldAutoHideWeapon())
 	{
 		player->quietService->HideCurrentWeapon(true);

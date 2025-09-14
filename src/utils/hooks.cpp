@@ -627,7 +627,6 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 				if (player)
 				{
 					player->timerService->OnPlayerSpawn();
-					player->pistolService->OnPlayerSpawn();
 				}
 			}
 		}

@@ -57,7 +57,7 @@ public:
 		this->preferredPistol = 8; // Default to USP-S
 	}
 
-	void OnPlayerSpawn()
+	void OnPlayerJoinTeam()
 	{
 		this->UpdatePistol();
 	}

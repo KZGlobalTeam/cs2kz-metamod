@@ -16,14 +16,17 @@ struct SchemaKey
 
 struct CNetworkVarChainer : public CSmartPtr<CEntityInstance>
 {
-	struct ChainUpdatePropagationLL_t
+	struct UnkStruct
 	{
-		ChainUpdatePropagationLL_t *pNext;
+		void *unk0;
 		CUtlDelegate<void(const CNetworkVarChainer &)> updateDelegate;
+		uint unk3;
 	};
 
-	uint8 unk[24];
+	CUtlVector<UnkStruct> unk0;
 	ChangeAccessorFieldPathIndex_t m_PathIndex;
+	// If true, the entity instance will have its NetworkStateChanged called when the value changes.
+	bool unknown2;
 };
 
 namespace schema
@@ -50,6 +53,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 	return (str[0] == '\0') ? value : hash_64_fnv1a_const(&str[1], (value ^ uint64_t(str[0])) * prime_64_const);
 }
 
+// clang-format off
 #define SCHEMA_FIELD_OFFSET(type, varName, extra_offset) \
 	class varName##_prop \
 	{ \
@@ -85,8 +89,8 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			} \
 			else if (m_key.networked) \
 			{ \
-				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \ \ \ \
-					need to have their this pointer corrected by the offset . \ \ \
+				/* WIP: Works fine for most props, but inlined classes in the middle of a class will \
+					need to have their this pointer corrected by the offset . \
 				DevMsg("Attempting to call SetStateChanged on %s::%s\n", ThisClassName, #varName); */ \
 				if (!IsStruct) \
 					((CEntityInstance *)pThisClass)->NetworkStateChanged({m_key.offset + extra_offset}); \
@@ -146,7 +150,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			return Get(); \
 		} \
 	} varName;
-
+// clang-format on
 // Use this when you want the member's value itself
 #define SCHEMA_FIELD(type, varName) SCHEMA_FIELD_OFFSET(type, varName, 0)
 
