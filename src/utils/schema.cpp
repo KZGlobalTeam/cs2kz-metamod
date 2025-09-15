@@ -70,7 +70,7 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 		SchemaClassFieldData_t &field = pFields[i];
 
 #ifdef _DEBUG
-		Message("%s::%s found at -> 0x%X - %llx\n", pClassInfo->m_pszName, field.m_pszName, field.m_nSingleInheritanceOffset, &field);
+		Msg("%s::%s found at -> 0x%X - %llx\n", pClassInfo->m_pszName, field.m_pszName, field.m_nSingleInheritanceOffset, &field);
 #endif
 
 		std::pair<uint32_t, SchemaKey> keyValuePair;
@@ -79,12 +79,6 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 		keyValuePair.second.networked = IsFieldNetworked(field);
 
 		keyValueMap.insert(keyValuePair);
-	}
-
-	// If this is a child class there might be a parent class with __m_pChainEntity
-	if (keyValueMap.find(g_ChainKey) != keyValueMap.end() && pClassInfo->m_nBaseClassCount)
-	{
-		InitChainOffset(pClassInfo->m_pBaseClasses[0].m_pClass, keyValueMap);
 	}
 
 	short dataNumFields = pClassInfo->m_pDataDescMap ? pClassInfo->m_pDataDescMap->dataNumFields : 0;
@@ -97,14 +91,14 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 			continue;
 		}
 		uint32_t hashKey = hash_32_fnv1a_const(field.fieldName);
-		if (keyValueMap.find(hashKey) != keyValueMap.end())
+		if (keyValueMap.find(hashKey) == keyValueMap.end())
 		{
 			continue;
 		}
 
 #ifdef _DEBUG
-		Msg("%s::%s found at -> 0x%X (datamap) - %llx, type: %d, size: %d\n", className, field.fieldName, field.fieldOffset, &field, field.fieldType,
-			field.fieldSize);
+		Msg("%s::%s found at -> 0x%X (datamap) - %llx, type: %d, size: %d\n", pClassInfo->m_pszName, field.fieldName, field.fieldOffset, &field,
+			field.fieldType, field.fieldSize);
 #endif
 
 		std::pair<uint32_t, SchemaKey> newEntry;
@@ -112,6 +106,12 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 		newEntry.second.offset = field.fieldOffset;
 		newEntry.second.networked = false;
 		keyValueMap.insert(newEntry);
+	}
+
+	// If this is a child class there might be a parent class with __m_pChainEntity
+	if (keyValueMap.find(g_ChainKey) == keyValueMap.end() && pClassInfo->m_nBaseClassCount)
+	{
+		InitChainOffset(pClassInfo->m_pBaseClasses[0].m_pClass, keyValueMap);
 	}
 }
 
