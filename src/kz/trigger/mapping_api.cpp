@@ -297,12 +297,12 @@ void KZTriggerService::CancelAntiBhop(bool replicate)
 
 void KZTriggerService::ApplyForcedDuck()
 {
-	this->player->GetMoveServices()->m_bDuckOverride.Set(true);
+	this->player->GetMoveServices()->m_bDuckOverride(true);
 }
 
 void KZTriggerService::CancelForcedDuck()
 {
-	this->player->GetMoveServices()->m_bDuckOverride.Set(false);
+	this->player->GetMoveServices()->m_bDuckOverride(false);
 }
 
 void KZTriggerService::ApplyForcedUnduck()
@@ -310,7 +310,7 @@ void KZTriggerService::ApplyForcedUnduck()
 	// Set crouch time to a very large value so that the player cannot reduck.
 	this->player->GetMoveServices()->m_flLastDuckTime(100000.0f);
 	// This needs to be done every tick just since the player can be in spots that are not unduckable (eg. crouch tunnels)
-	this->player->GetPlayerPawn()->m_fFlags.Set(this->player->GetPlayerPawn()->m_fFlags() & ~FL_DUCKING);
+	this->player->GetPlayerPawn()->m_fFlags(this->player->GetPlayerPawn()->m_fFlags() & ~FL_DUCKING);
 }
 
 void KZTriggerService::CancelForcedUnduck()

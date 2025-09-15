@@ -140,11 +140,11 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	}
 	// This needs to be set if the player spectates themself, so that the camera position is correct.
 	controller->m_DesiredObserverMode(OBS_MODE_IN_EYE);
-	controller->m_hDesiredObserverTarget.Set(targetPlayer->GetPlayerPawn());
+	controller->m_hDesiredObserverTarget(targetPlayer->GetPlayerPawn());
 
 	obsService->m_iObserverMode(OBS_MODE_IN_EYE);
 	obsService->m_iObserverLastMode(OBS_MODE_NONE);
-	obsService->m_hObserverTarget.Set(targetPlayer->GetPlayerPawn());
+	obsService->m_hObserverTarget(targetPlayer->GetPlayerPawn());
 	return true;
 }
 

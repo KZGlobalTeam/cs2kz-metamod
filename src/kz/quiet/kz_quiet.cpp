@@ -279,7 +279,7 @@ void KZQuietService::HideCurrentWeapon(bool silent)
 	CBaseModelEntity *activeWeapon = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
 	if (activeWeapon)
 	{
-		this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon.Set(nullptr);
+		this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon(nullptr);
 		if (!silent)
 		{
 			this->player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Disable");

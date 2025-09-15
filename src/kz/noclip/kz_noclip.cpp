@@ -21,7 +21,7 @@ void KZNoclipService::HandleNoclip()
 	{
 		if ((pawn->m_fFlags() & FL_NOCLIP) == 0)
 		{
-			pawn->m_fFlags.Set(pawn->m_fFlags() | FL_NOCLIP);
+			pawn->m_fFlags(pawn->m_fFlags() | FL_NOCLIP);
 		}
 		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
 		{
@@ -40,7 +40,7 @@ void KZNoclipService::HandleNoclip()
 	{
 		if ((pawn->m_fFlags() & FL_NOCLIP) != 0)
 		{
-			pawn->m_fFlags.Set(pawn->m_fFlags() & ~FL_NOCLIP);
+			pawn->m_fFlags(pawn->m_fFlags() & ~FL_NOCLIP);
 		}
 		if (pawn->m_nActualMoveType() == MOVETYPE_NOCLIP)
 		{

@@ -37,8 +37,8 @@ public:
 		}
 		static constexpr auto datatable_hash = hash_32_fnv1a_const("CBasePlayerController");
 		static constexpr auto prop_hash = hash_32_fnv1a_const("m_iszPlayerName");
-		static const auto m_key = schema::GetOffset(ThisClassName, datatable_hash, "m_iszPlayerName", prop_hash);
-		static const auto m_chain = schema::FindChainOffset(ThisClassName);
+		static const auto m_key = schema::GetOffset(m_className, datatable_hash, "m_iszPlayerName", prop_hash);
+		static const auto m_chain = schema::FindChainOffset(m_className, m_classNameHash);
 
 		this->NetworkStateChanged({m_key.offset});
 	}

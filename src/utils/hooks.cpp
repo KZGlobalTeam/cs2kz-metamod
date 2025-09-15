@@ -334,14 +334,7 @@ static_function void RemoveEntityHooks(CBaseEntity *entity)
 	}
 }
 
-void EntListener::OnEntityCreated(CEntityInstance *pEntity)
-{
-	if (V_strstr(pEntity->GetClassname(), "trigger_"))
-	{
-		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pEntity);
-		trigger->m_NetworkTransmitComponent().m_nStateFlags() = 7; // Always transmit
-	}
-}
+void EntListener::OnEntityCreated(CEntityInstance *pEntity) {}
 
 void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 {

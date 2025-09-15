@@ -83,13 +83,13 @@ public:
 		}
 		static constexpr auto datatable_hash = hash_32_fnv1a_const("CPlayer_MovementServices");
 		static constexpr auto prop_hash = hash_32_fnv1a_const("m_arrForceSubtickMoveWhen");
-		static const auto m_key = schema::GetOffset(ThisClassName, datatable_hash, "m_arrForceSubtickMoveWhen", prop_hash);
-		static const auto m_chain = schema::FindChainOffset(ThisClassName);
+		static const auto m_key = schema::GetOffset(m_className, datatable_hash, "m_arrForceSubtickMoveWhen", prop_hash);
+		static const auto m_chain = schema::FindChainOffset(m_className, m_classNameHash);
 		static const size_t offset =
 			((::size_t)&reinterpret_cast<char const volatile &>((((CPlayer_MovementServices *)0)->m_arrForceSubtickMoveWhen)));
 		if (m_chain != 0 && m_key.networked && network)
 		{
-			schema::NetworkStateChanged((uintptr_t)(this) + m_chain, m_key.offset, index);
+			::ChainNetworkStateChanged((uintptr_t)(this) + m_chain, m_key.offset, index);
 		}
 		m_arrForceSubtickMoveWhen[index] = when;
 	}
