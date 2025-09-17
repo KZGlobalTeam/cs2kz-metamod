@@ -13,6 +13,7 @@ struct PistolInfo_t
 class KZPistolService : public KZBaseService
 {
 public:
+	// clang-format off
 	static inline const std::vector<PistolInfo_t> pistols = {
 		{-1, CS_TEAM_NONE, "Disabled", "", {"knife", "disable", "disabled", "none", "off", "0"}},
 		{1, CS_TEAM_NONE, "Desert Eagle", "weapon_deagle", {"deagle", "deag", "desert_eagle", "deserteagle", "desert-eagle", "de"}},
@@ -22,9 +23,10 @@ public:
 		{30, CS_TEAM_T, "Tec-9", "weapon_tec9", {"tec9", "tec-9", "tec_9"}},
 		{32, CS_TEAM_CT, "P2000", "weapon_hkp2000", {"hkp2000", "p2k", "p2000"}},
 		{36, CS_TEAM_NONE, "P250", "weapon_p250", {"p250"}},
-		{61, CS_TEAM_CT, "USP-S", "weapon_usp_silencer", {"usps", "usp-s", "usp"}}, 
+		{61, CS_TEAM_CT, "USP-S", "weapon_usp_silencer", {"usps", "usp-s", "usp"}},
 		{63, CS_TEAM_NONE, "CZ75-Auto", "weapon_cz75a", {"cz75-auto", "cz75a", "cz75", "cz-75", "cz_75", "cz", "cz75_auto", "cz-75_auto", "cz_75_auto"}},
 		{64, CS_TEAM_NONE, "R8 Revolver", "weapon_revolver", {"r8 revolver", "r8revolver", "revolver", "r8", "r8_revolver"}}};
+	// clang-format on
 
 	static int GetPistolIndexByName(const char *name)
 	{
