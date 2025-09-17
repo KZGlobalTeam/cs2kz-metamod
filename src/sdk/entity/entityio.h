@@ -36,7 +36,7 @@ struct EntityIOOutputDesc_t
 	uint32 m_nFlags;
 	uint32 m_nOutputOffset;
 };
-
+#ifndef IDA_IGNORE
 class CEntityIOOutput
 {
 public:
@@ -44,3 +44,4 @@ public:
 	EntityIOConnection_t *m_pConnections;
 	EntityIOOutputDesc_t *m_pDesc;
 };
+#endif

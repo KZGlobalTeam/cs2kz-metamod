@@ -22,7 +22,7 @@ struct CStrafeStats
 	uint32 overlaps[16];
 	uint32 underlaps[16];
 };
-
+#ifndef IDA_IGNORE
 class CCSPlayerController : public CBasePlayerController
 {
 public:
@@ -101,3 +101,4 @@ public:
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("ControllerRespawn"), this);
 	}
 };
+#endif

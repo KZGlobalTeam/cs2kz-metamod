@@ -8,7 +8,7 @@
 extern CGameConfig *g_pGameConfig;
 
 class CCollisionProperty;
-
+#ifndef IDA_IGNORE
 class CNetworkedQuantizedFloat
 {
 public:
@@ -168,3 +168,4 @@ public:
 		this->m_flGravityScale(scale);
 	}
 };
+#endif

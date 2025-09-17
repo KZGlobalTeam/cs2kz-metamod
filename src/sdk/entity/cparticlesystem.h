@@ -1,6 +1,6 @@
 #pragma once
 #include "cbasemodelentity.h"
-
+#ifndef IDA_IGNORE
 class CParticleSystem : public CBaseModelEntity
 {
 public:
@@ -30,3 +30,4 @@ public:
 };
 
 #define CUSTOM_PARTICLE_SYSTEM_TEAM 5
+#endif

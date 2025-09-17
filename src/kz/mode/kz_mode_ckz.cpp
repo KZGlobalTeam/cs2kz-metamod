@@ -124,21 +124,7 @@ void KZClassicModeService::Cleanup()
 	auto pawn = this->player->GetPlayerPawn();
 	if (pawn)
 	{
-		pawn->m_clrRender(Color(255, 255, 255, 255));
-		pawn->m_fEffects(0);
 		pawn->m_flVelocityModifier(1.0f);
-		if (pawn->m_pWeaponServices())
-		{
-			CUtlVector<CHandle<CBaseModelEntity>> *weapons = pawn->m_pWeaponServices()->m_hMyWeapons();
-			FOR_EACH_VEC(*weapons, i)
-			{
-				CBaseModelEntity *weapon = (*weapons)[i].Get();
-				if (weapon)
-				{
-					weapon->m_fEffects(0);
-				}
-			}
-		}
 	}
 }
 
@@ -271,20 +257,6 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 		{
 			moveServices->SetForcedSubtickMove(i, subtickMoveTime);
 			subtickMoveTime += ENGINE_FIXED_TICK_INTERVAL;
-		}
-	}
-	this->player->GetPlayerPawn()->m_fEffects(EF_NOSHADOW | EF_NORECEIVESHADOW);
-	this->player->GetPlayerPawn()->m_clrRender(Color(255, 255, 255, 254));
-	if (this->player->GetPlayerPawn()->m_pWeaponServices())
-	{
-		CUtlVector<CHandle<CBaseModelEntity>> *weapons = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hMyWeapons();
-		FOR_EACH_VEC(*weapons, i)
-		{
-			CBaseModelEntity *weapon = (*weapons)[i].Get();
-			if (weapon)
-			{
-				weapon->m_fEffects(EF_NOSHADOW | EF_NORECEIVESHADOW);
-			}
 		}
 	}
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "cbasetrigger.h"
 #include "entityio.h"
-
+#ifndef IDA_IGNORE
 class CTriggerMultiple : public CBaseTrigger
 {
 public:
@@ -9,3 +9,4 @@ public:
 
 	SCHEMA_FIELD(CEntityIOOutput, m_OnTrigger)
 };
+#endif
