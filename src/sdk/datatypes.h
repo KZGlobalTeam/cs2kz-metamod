@@ -193,7 +193,7 @@ public:
 		m_bHasSubtickInputs {source.m_bHasSubtickInputs},
 		unknown {source.unknown},
 		m_collisionNormal {source.m_collisionNormal},
-		m_groundNormal {source.m_groundNormal}, 
+		m_groundNormal {source.m_groundNormal},
 		m_vecAbsOrigin {source.m_vecAbsOrigin},
 		m_nTickCount {source.m_nTickCount},
 		m_nTargetTick {source.m_nTargetTick},
@@ -261,10 +261,18 @@ public:
 class CMoveData : public CMoveDataBase
 {
 public:
+	CMoveData() = default;
+
+	CMoveData(const CMoveData &source)
+		: CMoveDataBase(source), m_outWishVel {source.m_outWishVel}, m_vecOldAngles {source.m_vecOldAngles},
+		  m_vecAccelPerSecond {source.m_vecAccelPerSecond}, m_vecInputRotated {source.m_vecInputRotated}, m_flMaxSpeed {source.m_flMaxSpeed}
+	{
+	}
+
 	Vector m_outWishVel;
 	QAngle m_vecOldAngles;
-	Vector unknown0; // something related to friction bleed
-	Vector unknown1;
+	Vector m_vecAccelPerSecond; // related to accel and friction
+	Vector m_vecInputRotated;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
 	float m_flFrictionDecel;
