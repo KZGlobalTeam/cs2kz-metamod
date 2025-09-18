@@ -263,14 +263,16 @@ class CMoveData : public CMoveDataBase
 public:
 	Vector m_outWishVel;
 	QAngle m_vecOldAngles;
+	Vector unknown0; // something related to friction bleed
+	Vector unknown1;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
-	float m_flFrictionDecel; // Related to ground acceleration subtick stuff with sv_stopspeed and friction
+	float m_flFrictionDecel;
 	bool m_bInAir;
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
 
-static_assert(sizeof(CMoveData) == 256, "Class didn't match expected size");
+static_assert(sizeof(CMoveData) == 280, "Class didn't match expected size");
 
 // Custom data types goes here.
 
