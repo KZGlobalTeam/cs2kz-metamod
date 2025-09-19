@@ -91,7 +91,7 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 			continue;
 		}
 		uint32_t hashKey = hash_32_fnv1a_const(field.fieldName);
-		if (keyValueMap.find(hashKey) == keyValueMap.end())
+		if (keyValueMap.find(hashKey) != keyValueMap.end())
 		{
 			continue;
 		}
