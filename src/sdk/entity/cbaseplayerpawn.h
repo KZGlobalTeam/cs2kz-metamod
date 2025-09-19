@@ -11,7 +11,7 @@ class CPlayer_WeaponServices;
 class CBasePlayerPawn : public CBaseModelEntity
 {
 public:
-	DECLARE_SCHEMA_CLASS(CBasePlayerPawn);
+	DECLARE_SCHEMA_CLASS_ENTITY(CBasePlayerPawn);
 
 	SCHEMA_FIELD(CPlayer_MovementServices *, m_pMovementServices)
 	SCHEMA_FIELD(CHandle<CBasePlayerController>, m_hController)

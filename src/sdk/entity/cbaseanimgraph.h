@@ -4,5 +4,5 @@
 class CBaseAnimGraph : public CBaseModelEntity
 {
 public:
-	DECLARE_SCHEMA_CLASS(CBaseAnimGraph);
+	DECLARE_SCHEMA_CLASS_ENTITY(CBaseAnimGraph);
 };
