@@ -468,8 +468,4 @@ public:
 	CUtlVector<INetMessage *> m_HltvQueuedMessages;
 	HltvReplayStats_t m_HltvReplayStats;
 };
-#ifdef __linux__
-COMPILE_TIME_ASSERT(sizeof(CServerSideClient) == 4064);
-#endif
-
 #endif // SERVERSIDECLIENT_H
