@@ -7,7 +7,7 @@ typedef uint16 attrib_definition_index_t;
 class CEconItemAttribute // : public CNetworkVarChainer
 {
 public:
-	DECLARE_SCHEMA_CLASS_INLINE(CEconItemAttribute)
+	DECLARE_SCHEMA_CLASS_BASE(CEconItemAttribute, 1)
 
 	SCHEMA_FIELD(attrib_definition_index_t, m_iAttributeDefinitionIndex)
 	SCHEMA_FIELD(float, m_flValue)

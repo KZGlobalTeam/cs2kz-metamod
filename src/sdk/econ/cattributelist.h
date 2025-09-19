@@ -5,7 +5,7 @@
 class CAttributeList
 {
 public:
-	DECLARE_SCHEMA_CLASS_INLINE(CAttributeList)
+	DECLARE_SCHEMA_CLASS_BASE(CAttributeList, 1)
 
 	SCHEMA_FIELD_POINTER(CUtlVector<CEconItemAttribute>, m_Attributes)
 };

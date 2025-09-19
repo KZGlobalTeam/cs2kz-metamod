@@ -26,7 +26,7 @@ struct CStrafeStats
 class CCSPlayerController : public CBasePlayerController
 {
 public:
-	DECLARE_SCHEMA_CLASS(CCSPlayerController);
+	DECLARE_SCHEMA_CLASS_ENTITY(CCSPlayerController);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPlayerPawn);
 	SCHEMA_FIELD(CHandle<CCSPlayerPawnBase>, m_hObserverPawn);
 	SCHEMA_FIELD_POINTER_OFFSET(CStrafeStats, m_nNonSuspiciousHitStreak, 4)

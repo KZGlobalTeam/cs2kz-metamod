@@ -3,5 +3,5 @@
 
 class CBasePlayerWeapon : public CEconEntity
 {
-	DECLARE_SCHEMA_CLASS(CBasePlayerWeapon)
+	DECLARE_SCHEMA_CLASS_ENTITY(CBasePlayerWeapon)
 };

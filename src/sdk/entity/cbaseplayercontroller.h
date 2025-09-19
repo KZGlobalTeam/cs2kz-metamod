@@ -21,7 +21,7 @@ enum class PlayerConnectedState : uint32_t
 class CBasePlayerController : public CBaseEntity
 {
 public:
-	DECLARE_SCHEMA_CLASS(CBasePlayerController);
+	DECLARE_SCHEMA_CLASS_ENTITY(CBasePlayerController);
 
 	SCHEMA_FIELD(uint64, m_steamID)
 	SCHEMA_FIELD(bool, m_bIsHLTV)

@@ -5,7 +5,7 @@ class CBaseModelEntity;
 
 struct VPhysicsCollisionAttribute_t
 {
-	DECLARE_SCHEMA_CLASS_INLINE(VPhysicsCollisionAttribute_t)
+	DECLARE_SCHEMA_CLASS_BASE(VPhysicsCollisionAttribute_t, 1)
 
 	SCHEMA_FIELD(uint8, m_nCollisionGroup)
 	SCHEMA_FIELD(uint64, m_nInteractsAs)
@@ -16,7 +16,7 @@ struct VPhysicsCollisionAttribute_t
 class CCollisionProperty
 {
 public:
-	DECLARE_SCHEMA_CLASS_INLINE(CCollisionProperty)
+	DECLARE_SCHEMA_CLASS_BASE(CCollisionProperty, 1)
 
 	SCHEMA_FIELD(VPhysicsCollisionAttribute_t, m_collisionAttribute)
 	SCHEMA_FIELD(Vector, m_vecMins)

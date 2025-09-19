@@ -5,7 +5,7 @@
 class CEconEntity : public CBaseAnimGraph
 {
 public:
-	DECLARE_SCHEMA_CLASS(CEconEntity)
+	DECLARE_SCHEMA_CLASS_ENTITY(CEconEntity)
 	SCHEMA_FIELD(CAttributeContainer, m_AttributeManager)
 
 	SCHEMA_FIELD(int, m_nFallbackPaintKit)

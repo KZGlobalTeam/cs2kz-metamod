@@ -5,13 +5,13 @@
 class CCSPlayerPawnBase : public CBasePlayerPawn
 {
 public:
-	DECLARE_SCHEMA_CLASS(CCSPlayerPawnBase);
+	DECLARE_SCHEMA_CLASS_ENTITY(CCSPlayerPawnBase);
 };
 
 class CCSPlayerPawn : public CCSPlayerPawnBase
 {
 public:
-	DECLARE_SCHEMA_CLASS(CCSPlayerPawn);
+	DECLARE_SCHEMA_CLASS_ENTITY(CCSPlayerPawn);
 	SCHEMA_FIELD(float, m_ignoreLadderJumpTime)
 	SCHEMA_FIELD(float, m_flSlopeDropOffset)
 	SCHEMA_FIELD(float, m_flSlopeDropHeight)

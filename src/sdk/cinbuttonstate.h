@@ -18,7 +18,7 @@ enum EInButtonState : uint64_t
 
 class CInButtonState
 {
-	DECLARE_SCHEMA_CLASS(CInButtonState);
+	DECLARE_SCHEMA_CLASS_ENTITY(CInButtonState);
 
 public:
 	SCHEMA_FIELD_POINTER(uint64, m_pButtonStates);

@@ -93,7 +93,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			}                                                                                                                \
 			else if (m_key.networked)                                                                                        \
 			{                                                                                                                \
-				if (!m_networkStateChangedOffset && !m_forceNonEntity)                                                       \
+				if (m_networkStateChangedOffset == -1)                                                                       \
 					::EntityNetworkStateChanged(pThisClass, m_key.offset + extra_offset);                                    \
 				else                                                                                                         \
 					::NetworkVarStateChanged(pThisClass, m_key.offset + extra_offset, m_networkStateChangedOffset);          \
@@ -158,7 +158,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			}                                                                                                                \
 			else if (m_key.networked)                                                                                        \
 			{                                                                                                                \
-				if (!m_networkStateChangedOffset && !m_forceNonEntity)                                                       \
+				if (m_networkStateChangedOffset == -1)                                                                       \
 					::EntityNetworkStateChanged(pThisClass, m_key.offset + extra_offset);                                    \
 				else                                                                                                         \
 					::NetworkVarStateChanged(pThisClass, m_key.offset + extra_offset, m_networkStateChangedOffset);          \
@@ -190,24 +190,18 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 #define SCHEMA_FIELD_POINTER(type, varName) \
 	SCHEMA_FIELD_POINTER_OFFSET(type, varName, 0)
 
-// If the class needs a specific offset for its NetworkStateChanged (like CEconItemView), use this and provide the offset
-#define DECLARE_SCHEMA_CLASS_BASE(ClassName, offset, forceNonEntity)				\
+// Use DECLARE_SCHEMA_CLASS_BASE for non-entity classes such as CCollisionProperty or CGlowProperty
+// Their NetworkStateChanged function is elsewhere on their vtable rather than being CEntityInstance::NetworkStateChanged (usually 1)
+// Though some classes like CGameRules will instead use their CNetworkVarChainer as a link back to the parent entity
+// Some classes, such as CModelState, have offset 0 despite not being entity.
+#define DECLARE_SCHEMA_CLASS_BASE(ClassName, offset)				\
 	private:																		\
 		typedef ClassName ThisClass;												\
 		static constexpr const char* m_className = #ClassName;						\
 		static constexpr uint32_t m_classNameHash = hash_32_fnv1a_const(#ClassName);\
 		static constexpr int m_networkStateChangedOffset = offset;					\
-		static constexpr bool m_forceNonEntity = forceNonEntity;					\
 	public:
 
-#define DECLARE_SCHEMA_CLASS(className) DECLARE_SCHEMA_CLASS_BASE(className, 0, false)
-
-// Use this for non-entity classes such as CCollisionProperty or CGlowProperty
-// The only difference is that their NetworkStateChanged function is index 1 on their vtable rather than being CEntityInstance::NetworkStateChanged
-// Though some classes like CGameRules will instead use their CNetworkVarChainer as a link back to the parent entity
-#define DECLARE_SCHEMA_CLASS_INLINE(className) DECLARE_SCHEMA_CLASS_BASE(className, 1, false)
-
-// Some classes, such as CModelState have offset 0 despite not being entity.
-#define DECLARE_SCHEMA_CLASS_FORCE_INLINE(className) DECLARE_SCHEMA_CLASS_BASE(className, 0, true)
+#define DECLARE_SCHEMA_CLASS_ENTITY(className) DECLARE_SCHEMA_CLASS_BASE(className, -1)
 
 // clang-format on
