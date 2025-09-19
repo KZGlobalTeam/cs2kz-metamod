@@ -5,7 +5,7 @@
 class CBaseTrigger : public CBaseEntity
 {
 public:
-	DECLARE_SCHEMA_CLASS(CBaseTrigger)
+	DECLARE_SCHEMA_CLASS_ENTITY(CBaseTrigger)
 
 	SCHEMA_FIELD(CUtlSymbolLarge, m_iFilterName)
 	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hFilter)
