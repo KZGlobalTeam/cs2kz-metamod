@@ -376,7 +376,11 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		}
 		player->specService->ResetSavedPosition();
 	}
-	player->pistolService->OnPlayerJoinTeam();
+	// The pistol service doesn't need to do anything if the player doesn't join a playing team.
+	if (newTeam >= CS_TEAM_T)
+	{
+		player->pistolService->OnPlayerJoinTeam();
+	}
 	if (player->quietService->ShouldAutoHideWeapon())
 	{
 		player->quietService->HideCurrentWeapon(true);
