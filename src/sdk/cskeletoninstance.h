@@ -6,9 +6,11 @@ class IPhysAggregateInstance;
 class CModelState
 {
 public:
-	DECLARE_SCHEMA_CLASS(CModelState)
+	DECLARE_SCHEMA_CLASS_FORCE_INLINE(CModelState)
 
 	SCHEMA_FIELD(IPhysAggregateInstance *, m_pVPhysicsAggregate)
+	SCHEMA_FIELD(uint64, m_MeshGroupMask)
+	SCHEMA_FIELD_POINTER(CUtlVector<int32>, m_nBodyGroupChoices)
 };
 
 class CSkeletonInstance : public CGameSceneNode

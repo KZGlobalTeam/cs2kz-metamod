@@ -10,6 +10,7 @@ class CBasePlayerWeapon;
 #include "cinbuttonstate.h"
 #include "datatypes.h"
 #include "econ/ccsplayerinventory.h"
+#include "entity/cbaseplayerweapon.h"
 
 class CPlayerPawnComponent
 {
@@ -50,8 +51,8 @@ class CPlayer_WeaponServices : public CPlayerPawnComponent
 
 public:
 	DECLARE_SCHEMA_CLASS(CPlayer_WeaponServices)
-	SCHEMA_FIELD(CHandle<CBaseModelEntity>, m_hActiveWeapon)
-	SCHEMA_FIELD_POINTER(CUtlVector<CHandle<CBaseModelEntity>>, m_hMyWeapons)
+	SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, m_hActiveWeapon)
+	SCHEMA_FIELD_POINTER(CUtlVector<CHandle<CBasePlayerWeapon>>, m_hMyWeapons)
 };
 
 class CPlayer_ObserverServices : public CPlayerPawnComponent

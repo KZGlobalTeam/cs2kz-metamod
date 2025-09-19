@@ -3,7 +3,10 @@
 #include "kz/language/kz_language.h"
 
 #include "utils/simplecmds.h"
-#include "kz_pistol.h"
+#include "icvar.h"
+#include "sdk/cskeletoninstance.h"
+
+IMPLEMENT_CLASS_EVENT_LISTENER(KZPistolService, KZPistolServiceEventListener);
 
 static_global class : public KZOptionServiceEventListener
 {
@@ -58,8 +61,9 @@ void KZPistolService::UpdatePistol()
 		if (this->NeedWeaponStripping())
 		{
 			this->player->GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
-			this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
+			auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
 				this->player->GetController()->m_iTeamNum() == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
+			CALL_FORWARD(eventListeners, OnWeaponGiven, this->player, weapon);
 		}
 		return;
 	}
@@ -79,7 +83,7 @@ void KZPistolService::UpdatePistol()
 	{
 		switchTeam = true;
 	}
-	else if (pistol.team == CS_TEAM_NONE)
+	else if (pistol.team == CS_TEAM_NONE && !this->player->IsFakeClient())
 	{
 		// Check the player's inventory. If there's a skin on this current team, don't switch. Otherwise, switch team.
 		bool checkOtherTeam = true;
@@ -107,13 +111,15 @@ void KZPistolService::UpdatePistol()
 		}
 	}
 	this->player->GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
-	this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(this->player->GetController()->m_iTeamNum == CS_TEAM_CT ? "weapon_knife"
-																															: "weapon_knife_t");
+	auto knife = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
+		this->player->GetController()->m_iTeamNum == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
 	if (switchTeam)
 	{
 		player->GetPlayerPawn()->m_iTeamNum(otherTeam);
 	}
-	this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(pistol.className);
+	auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(pistol.className);
+	CALL_FORWARD(eventListeners, OnWeaponGiven, this->player, weapon);
+
 	if (switchTeam)
 	{
 		player->GetPlayerPawn()->m_iTeamNum(originalTeam);

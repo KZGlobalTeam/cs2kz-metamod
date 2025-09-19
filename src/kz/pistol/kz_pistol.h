@@ -1,5 +1,6 @@
 #pragma once
 #include "../kz.h"
+#include "utils/eventlisteners.h"
 
 struct PistolInfo_t
 {
@@ -10,12 +11,18 @@ struct PistolInfo_t
 	std::vector<const char *> aliases;
 };
 
+class KZPistolServiceEventListener
+{
+public:
+	virtual void OnWeaponGiven(KZPlayer *player, CBasePlayerWeapon *weapon) {}
+};
+
 class KZPistolService : public KZBaseService
 {
 public:
 	// clang-format off
 	static inline const std::vector<PistolInfo_t> pistols = {
-		{-1, CS_TEAM_NONE, "Disabled", "", {"knife", "disable", "disabled", "none", "off", "0"}},
+		{0, CS_TEAM_NONE, "Knife", "weapon_knife", {"knife", "disable", "disabled", "none", "off", "0"}},
 		{1, CS_TEAM_NONE, "Desert Eagle", "weapon_deagle", {"deagle", "deag", "desert_eagle", "deserteagle", "desert-eagle", "de"}},
 		{2, CS_TEAM_NONE, "Dual Berettas", "weapon_elite", {"elite", "dualies", "dual_elites", "dual_berettas", "dual-elites", "dual-berettas", "dualelites", "dualberettas", "berettas", "dual berettas"}},
 		{3, CS_TEAM_CT, "Five-SeveN", "weapon_fiveseven", {"fiveseven", "five_seven", "five7", "five_7", "five-7", "5seven", "5_seven", "5-seven", "57", "5-7", "5_7"}},
@@ -32,7 +39,7 @@ public:
 	{
 		if (!name)
 		{
-			return -1;
+			return 0;
 		}
 		for (i16 i = 0; i < pistols.size(); i++)
 		{
@@ -48,10 +55,25 @@ public:
 				}
 			}
 		}
-		return -1;
+		return 0;
+	}
+
+	static int GetPistolIndexByItemDef(i16 itemDef)
+	{
+		for (i16 i = 0; i < pistols.size(); i++)
+		{
+			if (pistols[i].itemDef == itemDef)
+			{
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	using KZBaseService::KZBaseService;
+
+	DECLARE_CLASS_EVENT_LISTENER(KZPistolServiceEventListener);
+
 	static void Init();
 
 	virtual void Reset() override

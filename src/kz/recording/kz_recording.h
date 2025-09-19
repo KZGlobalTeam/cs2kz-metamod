@@ -28,14 +28,34 @@ struct CircularRecorder
 	CUtlVector<RpEvent> events;
 
 	// This is only written as long as the player is alive.
-	CircularTickdata tickData;
-	CircularSubtickData subtickData;
+	CircularTickdata *tickData;
+	CircularSubtickData *subtickData;
+	CFIFOCircularBuffer<WeaponChange, 64 * 60 * 2> *weaponChangeEvents;
+	EconInfo earliestWeapon;
 
 	// Extra 20 seconds for commands in case of network issues
 	// Note that command data is tracked regardless of whether the player is alive or not.
 	// This means if the player goes to spectator, the command data will no longer match the tick data.
-	CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)> cmdData;
-	CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)> cmdSubtickData;
+	CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)> *cmdData;
+	CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)> *cmdSubtickData;
+
+	CircularRecorder()
+	{
+		this->tickData = new CircularTickdata();
+		this->subtickData = new CircularSubtickData();
+		this->weaponChangeEvents = new CFIFOCircularBuffer<WeaponChange, 64 * 60 * 2>();
+		this->cmdData = new CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)>();
+		this->cmdSubtickData = new CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)>();
+	}
+
+	~CircularRecorder()
+	{
+		delete this->tickData;
+		delete this->subtickData;
+		delete this->weaponChangeEvents;
+		delete this->cmdData;
+		delete this->cmdSubtickData;
+	}
 };
 
 struct Recorder
@@ -81,4 +101,6 @@ public:
 	std::vector<Recorder> recorders;
 	CircularRecorder circularRecording;
 	i32 lastCmdNumReceived = 0;
+
+	EconInfo currentWeaponEconInfo;
 };

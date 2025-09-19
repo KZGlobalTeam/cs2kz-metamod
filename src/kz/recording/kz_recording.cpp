@@ -54,11 +54,11 @@ void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, int numCmds)
 	i32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
 
 	i32 numToRemove = 0;
-	for (i32 i = 0; i < this->circularRecording.cmdData.GetReadAvailable(); i++)
+	for (i32 i = 0; i < this->circularRecording.cmdData->GetReadAvailable(); i++)
 	{
 		// Remove old commands from circular buffer (keep 2 minutes)
 		CmdData data;
-		if (!this->circularRecording.cmdData.Peek(&data, 1, i))
+		if (!this->circularRecording.cmdData->Peek(&data, 1, i))
 		{
 			break;
 		}
@@ -71,8 +71,8 @@ void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, int numCmds)
 			break;
 		}
 	}
-	this->circularRecording.cmdData.Advance(numToRemove);
-	this->circularRecording.cmdSubtickData.Advance(numToRemove);
+	this->circularRecording.cmdData->Advance(numToRemove);
+	this->circularRecording.cmdSubtickData->Advance(numToRemove);
 	// record data for replay playback
 	if (this->player->IsFakeClient())
 	{
@@ -108,7 +108,7 @@ void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, int numCmds)
 		data.angles = {pc.base().viewangles().x(), pc.base().viewangles().y(), pc.base().viewangles().z()};
 		data.mousedx = pc.base().mousedx();
 		data.mousedy = pc.base().mousedy();
-		this->circularRecording.cmdData.Write(data);
+		this->circularRecording.cmdData->Write(data);
 
 		SubtickData subtickData;
 		subtickData.numSubtickMoves = pc.base().subtick_moves_size();
@@ -129,7 +129,7 @@ void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, int numCmds)
 				subtickData.subtickMoves[j].analogMove.analog_yaw_delta = move.analog_yaw_delta();
 			}
 		}
-		this->circularRecording.cmdSubtickData.Write(subtickData);
+		this->circularRecording.cmdSubtickData->Write(subtickData);
 		this->lastCmdNumReceived = pc.cmdNum;
 	}
 }
@@ -139,10 +139,10 @@ void KZRecordingService::OnPlayerJoinTeam(i32 team) {}
 void KZRecordingService::Reset()
 {
 	this->circularRecording.events.Purge();
-	this->circularRecording.tickData.Advance(this->circularRecording.tickData.GetReadAvailable());
-	this->circularRecording.subtickData.Advance(this->circularRecording.subtickData.GetReadAvailable());
-	this->circularRecording.cmdData.Advance(this->circularRecording.cmdData.GetReadAvailable());
-	this->circularRecording.cmdSubtickData.Advance(this->circularRecording.cmdSubtickData.GetReadAvailable());
+	this->circularRecording.tickData->Advance(this->circularRecording.tickData->GetReadAvailable());
+	this->circularRecording.subtickData->Advance(this->circularRecording.subtickData->GetReadAvailable());
+	this->circularRecording.cmdData->Advance(this->circularRecording.cmdData->GetReadAvailable());
+	this->circularRecording.cmdSubtickData->Advance(this->circularRecording.cmdSubtickData->GetReadAvailable());
 
 	this->lastCmdNumReceived = 0;
 }
@@ -220,6 +220,7 @@ void KZRecordingService::OnSetupMove(PlayerCommand *pc)
 	this->currentTickData.up = pc->base().upmove();
 	this->currentTickData.pre.angles = {pc->base().viewangles().x(), pc->base().viewangles().y(), pc->base().viewangles().z()};
 	this->currentSubtickData.numSubtickMoves = pc->base().subtick_moves_size();
+	this->currentTickData.leftHanded = this->player->GetPlayerPawn()->m_bLeftHanded() || pc->left_hand_desired();
 	for (u32 i = 0; i < this->currentSubtickData.numSubtickMoves && i < 64; i++)
 	{
 		auto &move = pc->base().subtick_moves(i);
@@ -265,8 +266,40 @@ void KZRecordingService::OnPhysicsSimulatePost()
 
 	this->currentTickData.post.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
 	this->currentTickData.post.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
-	this->circularRecording.tickData.Write(this->currentTickData);
-	this->circularRecording.subtickData.Write(this->currentSubtickData);
+	this->circularRecording.tickData->Write(this->currentTickData);
+	this->circularRecording.subtickData->Write(this->currentSubtickData);
+
+	auto weapon = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon.Get();
+
+	if (this->currentWeaponEconInfo != EconInfo(weapon))
+	{
+		this->currentWeaponEconInfo = EconInfo(weapon);
+		WeaponChange event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.econInfo = this->currentWeaponEconInfo;
+		this->circularRecording.weaponChangeEvents->Write(event);
+	}
+	// Remove old events from circular buffer (keep 2 minutes)
+	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
+	i32 numToRemove = 0;
+	for (i32 i = 0; i < this->circularRecording.weaponChangeEvents->GetReadAvailable(); i++)
+	{
+		WeaponChange data;
+		if (!this->circularRecording.weaponChangeEvents->Peek(&data, 1, i))
+		{
+			break;
+		}
+		if (data.serverTick + 2 * 60 * 64 < currentTick)
+		{
+			numToRemove++;
+		}
+		else
+		{
+			this->circularRecording.earliestWeapon = data.econInfo;
+			break;
+		}
+	}
+	this->circularRecording.weaponChangeEvents->Advance(numToRemove);
 }
 
 SCMD(kz_testsavereplay, SCFL_REPLAY)
@@ -308,27 +341,43 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 
 		V_snprintf(header.map.name, sizeof(header.map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
 		g_pKZUtils->GetCurrentMapMD5(header.map.md5, sizeof(header.map.md5));
-		// TODO: styles!
+		header.firstWeapon = player->recordingService->circularRecording.earliestWeapon;
 
+		// TODO: styles!
 		g_pFullFileSystem->Write(&header, sizeof(header), file);
 
 		// write tickData
-		i32 tickdataCount = player->recordingService->circularRecording.tickData.GetReadAvailable();
+		i32 tickdataCount = player->recordingService->circularRecording.tickData->GetReadAvailable();
 		g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
 		// circular buffer reads FIFO
+		TickData tickData = {};
 		for (i32 i = tickdataCount - 1; i >= 0; i--)
 		{
-			TickData tickData = {};
-			player->recordingService->circularRecording.tickData.Peek(&tickData, i);
+			player->recordingService->circularRecording.tickData->Peek(&tickData, i);
 			g_pFullFileSystem->Write(&tickData, sizeof(tickData), file);
 		}
+		SubtickData subtickData = {};
 		for (i32 i = tickdataCount - 1; i >= 0; i--)
 		{
-			SubtickData subtickData = {};
-			player->recordingService->circularRecording.subtickData.Peek(&subtickData, i);
+			player->recordingService->circularRecording.subtickData->Peek(&subtickData, i);
 			g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
 			g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
 		}
+		i32 numWeaponChanges = player->recordingService->circularRecording.weaponChangeEvents->GetReadAvailable();
+		g_pFullFileSystem->Write(&numWeaponChanges, sizeof(i32), file);
+		// This struct is HUGE. Allocate it on the heap.
+		WeaponChange *event = new WeaponChange();
+		for (i32 i = 0; i < numWeaponChanges; i++)
+		{
+			player->recordingService->circularRecording.weaponChangeEvents->Peek(event, 1, i);
+			g_pFullFileSystem->Write(&event->serverTick, sizeof(event->serverTick), file);
+			g_pFullFileSystem->Write(&event->econInfo.mainInfo, sizeof(event->econInfo.mainInfo), file);
+			for (int j = 0; j < event->econInfo.mainInfo.numAttributes; j++)
+			{
+				g_pFullFileSystem->Write(&event->econInfo.attributes[j], sizeof(event->econInfo.attributes[j]), file);
+			}
+		}
+		delete event;
 		g_pFullFileSystem->Close(file);
 	}
 

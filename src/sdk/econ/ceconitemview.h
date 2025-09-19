@@ -5,8 +5,11 @@
 class CEconItemView
 {
 public:
-	DECLARE_SCHEMA_CLASS(CEconItemView)
-
+#ifdef _WIN32
+	DECLARE_SCHEMA_CLASS_BASE(CEconItemView, 27, false)
+#else
+	DECLARE_SCHEMA_CLASS_BASE(CEconItemView, 28, false)
+#endif
 	SCHEMA_FIELD(uint16, m_iItemDefinitionIndex)
 	SCHEMA_FIELD(int32, m_iEntityQuality)
 	SCHEMA_FIELD(uint32, m_iEntityLevel)

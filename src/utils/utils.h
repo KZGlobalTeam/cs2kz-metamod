@@ -122,4 +122,8 @@ namespace utils
 	{
 		return reinterpret_cast<T *>(g_pKZUtils->CreateEntityByName(className, -1));
 	}
+
+	void InitItemAttributes();
+	std::string GetItemAttributeName(u16 id);
+	bool DoesPaintKitUseLegacyModel(float paintKit);
 } // namespace utils
