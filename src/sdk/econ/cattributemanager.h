@@ -4,5 +4,5 @@
 class CAttributeManager
 {
 public:
-	DECLARE_SCHEMA_CLASS_BASE(CAttributeManager, 2, false)
+	DECLARE_SCHEMA_CLASS_BASE(CAttributeManager, 2)
 };
