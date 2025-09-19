@@ -69,17 +69,18 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	}
 
 	bool sigResolved = true;
-	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox);
-	RESOLVE_SIG(g_pGameConfig, "GetLegacyGameEventListener", GetLegacyGameEventListener_t, GetLegacyGameEventListener);
-	RESOLVE_SIG(g_pGameConfig, "SnapViewAngles", SnapViewAngles_t, SnapViewAngles);
-	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound);
-	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam);
-	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn);
-	RESOLVE_SIG(g_pGameConfig, "CreateEntityByName", CreateEntityByName_t, CreateEntityByName);
-	RESOLVE_SIG(g_pGameConfig, "DispatchSpawn", DispatchSpawn_t, DispatchSpawn);
-	RESOLVE_SIG(g_pGameConfig, "RemoveEntity", RemoveEntity_t, RemoveEntity);
-	RESOLVE_SIG(g_pGameConfig, "DebugDrawMesh", DebugDrawMesh_t, DebugDrawMesh);
-	RESOLVE_SIG(g_pGameConfig, "CreateBot", CreateBot_t, CreateBot);
+	RESOLVE_SIG(g_pGameConfig, "TracePlayerBBox", TracePlayerBBox_t, TracePlayerBBox, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "GetLegacyGameEventListener", GetLegacyGameEventListener_t, GetLegacyGameEventListener, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "SnapViewAngles", SnapViewAngles_t, SnapViewAngles, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "CreateEntityByName", CreateEntityByName_t, CreateEntityByName, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "DispatchSpawn", DispatchSpawn_t, DispatchSpawn, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "RemoveEntity", RemoveEntity_t, RemoveEntity, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "DebugDrawMesh", DebugDrawMesh_t, DebugDrawMesh, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "CreateBot", CreateBot_t, CreateBot, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "SetOrAddAttributeValueByName", SetOrAddAttributeValueByName_t, SetOrAddAttributeValueByName, sigResolved);
 
 	if (!sigResolved)
 	{
@@ -88,11 +89,12 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		return false;
 	}
 	g_pKZUtils = new KZUtils(TracePlayerBBox, GetLegacyGameEventListener, SnapViewAngles, EmitSound, SwitchTeam, SetPawn, CreateEntityByName,
-							 DispatchSpawn, RemoveEntity, DebugDrawMesh, CreateBot);
+							 DispatchSpawn, RemoveEntity, DebugDrawMesh, CreateBot, SetOrAddAttributeValueByName);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 	utils::UpdateServerVersion();
+	utils::InitItemAttributes();
 	InitDetours();
 	return true;
 }
@@ -721,4 +723,91 @@ bool utils::ParseSteamID2(std::string_view steamID, u64 &out)
 	// clang-format on
 
 	return true;
+}
+
+static_global std::map<u16, std::string> itemAttributes;
+static_global std::map<u32, bool> paintKitUsesLegacyModel;
+static_global std::map<u16, std::string> weaponNames;
+
+void utils::InitItemAttributes()
+{
+	KeyValues *kv = new KeyValues("items_game");
+	kv->LoadFromFile(g_pFullFileSystem, "scripts/items/items_game.txt", "GAME");
+	if (!kv)
+	{
+		Warning("[KZ] Failed to load items_game.txt for item attributes!\n");
+		delete kv;
+		return;
+	}
+	KeyValues *subKey = kv->FindKey("attributes");
+	if (!subKey)
+	{
+		Warning("[KZ] Failed to find attributes key in items_game.txt!\n");
+		delete kv;
+		return;
+	}
+	for (KeyValues *sub = subKey->GetFirstSubKey(); sub != NULL; sub = sub->GetNextKey())
+	{
+		if (!sub->GetString("name")[0])
+		{
+			continue;
+		}
+		u16 id = atoi(sub->GetName());
+		if (id == 0)
+		{
+			continue;
+		}
+		itemAttributes[id] = sub->GetString("name");
+	}
+	subKey = kv->FindKey("paint_kits");
+	if (!subKey)
+	{
+		Warning("[KZ] Failed to find paint_kits key in items_game.txt!\n");
+		delete kv;
+		return;
+	}
+	for (KeyValues *sub = subKey->GetFirstSubKey(); sub != NULL; sub = sub->GetNextKey())
+	{
+		u32 id = atoi(sub->GetName());
+		if (id == 0)
+		{
+			continue;
+		}
+		paintKitUsesLegacyModel[id] = sub->GetInt("use_legacy_model", 0) != 0;
+	}
+	subKey = kv->FindKey("items");
+	if (!subKey)
+	{
+		Warning("[KZ] Failed to find items key in items_game.txt!\n");
+		delete kv;
+		return;
+	}
+	for (KeyValues *sub = subKey->GetFirstSubKey(); sub != NULL; sub = sub->GetNextKey())
+	{
+		if (!sub->GetString("name")[0])
+		{
+			continue;
+		}
+		u16 id = atoi(sub->GetName());
+		if (id == 0)
+		{
+			continue;
+		}
+		if (!V_strstr(sub->GetString("name"), "weapon_"))
+		{
+			continue;
+		}
+		weaponNames[id] = sub->GetString("name");
+	}
+	delete kv;
+}
+
+std::string utils::GetItemAttributeName(u16 id)
+{
+	return itemAttributes[id];
+}
+
+bool utils::DoesPaintKitUseLegacyModel(float paintKit)
+{
+	return paintKitUsesLegacyModel[static_cast<u32>(paintKit)];
 }
