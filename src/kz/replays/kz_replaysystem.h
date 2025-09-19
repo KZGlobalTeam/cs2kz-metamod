@@ -6,6 +6,7 @@ class KZPlayer;
 class CCSPlayerPawnBase;
 class PlayerCommand;
 class CUserCmd;
+class CBasePlayerWeapon;
 
 namespace KZ::replaysystem
 {
@@ -18,6 +19,7 @@ namespace KZ::replaysystem
 	void OnProcessMovementPost(KZPlayer *player);
 	void OnPhysicsSimulatePost(KZPlayer *player);
 	void OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command);
+	void OnWeaponGiven(KZPlayer *player, CBasePlayerWeapon *weapon);
 } // namespace KZ::replaysystem
 
 #endif // KZ_REPLAYSYSTEM_H

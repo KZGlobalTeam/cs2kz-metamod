@@ -19,6 +19,7 @@ public:
 	SCHEMA_FIELD(float, m_flVelocityModifier)
 
 	SCHEMA_FIELD(QAngle, m_angEyeAngles)
+	SCHEMA_FIELD(bool, m_bLeftHanded)
 
 	void Respawn()
 	{

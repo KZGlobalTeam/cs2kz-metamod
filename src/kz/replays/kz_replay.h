@@ -2,6 +2,8 @@
 #define KZ_REPLAY_H
 
 #include "common.h"
+
+#include "utils/econinfo.h"
 // relative to csgo/
 #define KZ_REPLAY_PATH      "kzreplays"
 #define KZ_REPLAY_RUNS_PATH KZ_REPLAY_PATH "/runs"
@@ -17,9 +19,7 @@ enum RpEventType
 	RPEVENT_TIMER_START,
 	RPEVENT_TIMER_END,
 	RPEVENT_TIMER_STOPPED,
-	RPEVENT_TIMER_PAUSE,
-	RPEVENT_NEW_WEAPON,
-	RPEVENT_REMOVE_WEAPON,
+	RPEVENT_TIMER_PAUSE
 };
 
 struct RpFlags
@@ -27,6 +27,12 @@ struct RpFlags
 	bool ducking: 1;
 	bool ducked: 1;
 	bool desiresDuck: 1;
+};
+
+struct WeaponChange
+{
+	u32 serverTick {};
+	EconInfo econInfo;
 };
 
 struct RpEvent
@@ -86,7 +92,7 @@ struct SubtickData
 
 struct TickData
 {
-	i32 serverTick {};
+	u32 serverTick {};
 	f32 gameTime {};
 	f32 realTime {};
 	u64 unixTime {};
@@ -101,6 +107,7 @@ struct TickData
 	f32 forward {};
 	f32 left {};
 	f32 up {};
+	bool leftHanded {};
 
 	struct
 	{
@@ -228,6 +235,7 @@ struct ReplayHeader
 		char md5[33];
 	} map;
 
+	EconInfo firstWeapon;
 	// TODO: styles!
 #if 0
 	i32 styleCount;
