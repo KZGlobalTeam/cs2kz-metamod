@@ -55,6 +55,12 @@ class KZVanillaModeService : public KZModeService
 	// Keep track of TryPlayerMove path for triggerfixing.
 	bool airMoving {};
 	CUtlVector<Vector> tpmTriggerFixOrigins;
+	bool inFullWalkMove = false;
+	f32 currentSpeed = 0.0f;
+	f32 currentAccelPerSecond = 0.0f;
+
+	Vector preTPMOrigin;
+	Vector preTPMVelocity;
 
 public:
 	virtual void Reset() override;
@@ -77,6 +83,13 @@ public:
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
+
+	virtual void OnWalkMove() override;
+	virtual void OnWalkMovePost() override;
+	virtual void OnFriction() override;
+	virtual void OnFrictionPost() override;
+	virtual void OnFullWalkMove(bool &bAllow) override;
+	virtual void OnFullWalkMovePost(bool bAllow) override;
 
 	virtual void OnStartTouchGround() override;
 };

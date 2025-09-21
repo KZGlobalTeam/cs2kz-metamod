@@ -64,6 +64,7 @@ void KZVanillaModeService::OnDuckPost()
 
 // We don't actually do anything here aside from predicting triggerfix.
 #define MAX_CLIP_PLANES 5
+CConVar<bool> kz_tpm_log("kz_tpm_log", FCVAR_NONE, "Logs information about TryPlayerMove traces.", false);
 
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
@@ -360,6 +361,28 @@ void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 		}
 		this->player->UpdateTriggerTouchList();
 	}
+
+	Vector origin;
+	Vector velocity;
+	this->player->GetOrigin(&origin);
+	this->player->GetVelocity(&velocity);
+	if (kz_tpm_log.Get())
+	{
+		// clang-format off
+		// Tickcount, curtime, frametime, subtick fraction, old origin x, old origin y, old origin z, old velocity x, old velocity y, old velocity z, old velocity length, old velocity length 2D, new origin x, new origin y, new origin z, new velocity x, new velocity y, new velocity z, new velocity length, new velocity length 2D
+		utils::PrintConsoleAll("%i,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
+			g_pKZUtils->GetGlobals()->tickcount,
+			g_pKZUtils->GetGlobals()->curtime,
+			g_pKZUtils->GetGlobals()->frametime,
+			g_pKZUtils->GetGlobals()->m_flSubtickFraction,
+			this->preTPMOrigin.x, this->preTPMOrigin.y, this->preTPMOrigin.z,
+			this->preTPMVelocity.x, this->preTPMVelocity.y, this->preTPMVelocity.z,
+			this->preTPMVelocity.Length(), this->preTPMVelocity.Length2D(),
+			origin.x, origin.y, origin.z,
+			velocity.x, velocity.y, velocity.z,
+			velocity.Length(), velocity.Length2D());
+		// clang-format on
+	}
 }
 
 void KZVanillaModeService::OnAirMove()
@@ -416,20 +439,38 @@ bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 	return false;
 }
 
+CConVar<f32> kz_force_subtick_forward_when("kz_force_subtick_forward_when", FCVAR_NONE, "Enforce 'when' field of W inputs.", -1.0f);
+CConVar<bool> kz_vnl_enable_walkmove_logging("kz_vnl_enable_walkmove_logging", FCVAR_NONE, "Enable walkmove logging.", false);
+
 void KZVanillaModeService::OnSetupMove(PlayerCommand *pc)
 {
-	// We make subtick inputs "less subticky" so that float precision error doesn't impact jump height (or at least minimalize it)
-	auto subtickMoves = pc->mutable_base()->mutable_subtick_moves();
-	f64 frameTime = 0;
-	for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
+	if (kz_force_subtick_forward_when.Get() >= 0.0f)
 	{
-		CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
-		frameTime = subtickMove->when() * ENGINE_FIXED_TICK_INTERVAL;
-		f32 approxOffsetCurtime = g_pKZUtils->GetGlobals()->curtime - frameTime + ENGINE_FIXED_TICK_INTERVAL;
-		f64 exactCurtime = g_pKZUtils->GetGlobals()->curtime - frameTime + ENGINE_FIXED_TICK_INTERVAL;
-		f64 precisionLoss = approxOffsetCurtime - exactCurtime;
-		subtickMove->set_when(subtickMove->when() - precisionLoss / ENGINE_FIXED_TICK_INTERVAL);
+		auto subtickMoves = pc->mutable_base()->mutable_subtick_moves();
+		for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
+		{
+			CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
+			if (subtickMove->button() == IN_FORWARD)
+			{
+				subtickMove->set_when(kz_force_subtick_forward_when.Get());
+			}
+		}
 	}
+#if 0
+	// We make subtick inputs "less subticky" so that float precision error doesn't impact jump height (or at least minimalize it)
+	
+	// auto subtickMoves = pc->mutable_base()->mutable_subtick_moves();
+	// f64 frameTime = 0;
+	// for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
+	// {
+	// 	CSubtickMoveStep *subtickMove = pc->mutable_base()->mutable_subtick_moves(j);
+	// 	frameTime = subtickMove->when() * ENGINE_FIXED_TICK_INTERVAL;
+	// 	f32 approxOffsetCurtime = g_pKZUtils->GetGlobals()->curtime - frameTime + ENGINE_FIXED_TICK_INTERVAL;
+	// 	f64 exactCurtime = g_pKZUtils->GetGlobals()->curtime - frameTime + ENGINE_FIXED_TICK_INTERVAL;
+	// 	f64 precisionLoss = approxOffsetCurtime - exactCurtime;
+	// 	subtickMove->set_when(subtickMove->when() - precisionLoss / ENGINE_FIXED_TICK_INTERVAL);
+	// }
+#endif
 }
 
 void KZVanillaModeService::OnPlayerMove()
@@ -457,6 +498,80 @@ void KZVanillaModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 	{
 		this->player->currentMoveData->m_vecVelocity = *newVelocity;
 	}
+}
+
+void KZVanillaModeService::OnWalkMove()
+{
+	this->currentSpeed = this->player->currentMoveData->m_vecVelocity.x;
+}
+
+void KZVanillaModeService::OnWalkMovePost()
+{
+	if (kz_vnl_enable_walkmove_logging.Get())
+	{
+		// clang-format off
+		// Tickcount, curtime, frametime, subtick fraction, old speed, new speed, delta speed, accel per second, old position (X), current position (X), hook name
+		utils::PrintConsoleAll("%i,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n", 
+			g_pKZUtils->GetGlobals()->tickcount, 
+			g_pKZUtils->GetGlobals()->curtime,
+			g_pKZUtils->GetGlobals()->frametime,
+			g_pKZUtils->GetGlobals()->m_flSubtickFraction,
+			this->currentSpeed,
+			this->player->currentMoveData->m_vecVelocity.x,
+			this->player->currentMoveData->m_vecVelocity.x - this->currentSpeed,
+			this->player->currentMoveData->m_vecAccelPerSecond.x,
+			this->player->moveDataPre.m_vecAbsOrigin.x,
+			this->player->currentMoveData->m_vecAbsOrigin.x,
+			__func__
+		);
+		// clang-format on
+	}
+}
+
+void KZVanillaModeService::OnFriction()
+{
+	if (!inFullWalkMove)
+	{
+		return;
+	}
+	this->currentSpeed = this->player->currentMoveData->m_vecVelocity.x;
+}
+
+void KZVanillaModeService::OnFrictionPost()
+{
+	if (!inFullWalkMove)
+	{
+		return;
+	}
+	if (kz_vnl_enable_walkmove_logging.Get())
+	{
+		// clang-format off
+		// Tickcount, curtime, frametime, subtick fraction, old speed, new speed, delta speed, accel per second, old position (X), current position (X), hook name
+		utils::PrintConsoleAll("%i,%f,%f,%f,%f,%f,%f,%f,%f,%f,%s\n", 
+			g_pKZUtils->GetGlobals()->tickcount, 
+			g_pKZUtils->GetGlobals()->curtime,
+			g_pKZUtils->GetGlobals()->frametime,
+			g_pKZUtils->GetGlobals()->m_flSubtickFraction,
+			this->currentSpeed,
+			this->player->currentMoveData->m_vecVelocity.x,
+			this->player->currentMoveData->m_vecVelocity.x - this->currentSpeed,
+			this->player->currentMoveData->m_vecAccelPerSecond.x,
+			this->player->moveDataPre.m_vecAbsOrigin.x,
+			this->player->currentMoveData->m_vecAbsOrigin.x,
+			__func__
+		);
+		// clang-format on
+	}
+}
+
+void KZVanillaModeService::OnFullWalkMove(bool &bAllow)
+{
+	inFullWalkMove = true;
+}
+
+void KZVanillaModeService::OnFullWalkMovePost(bool bAllow)
+{
+	inFullWalkMove = false;
 }
 
 void KZVanillaModeService::OnStartTouchGround()
