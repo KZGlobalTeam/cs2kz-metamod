@@ -8,13 +8,25 @@
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
+CConVar<bool> kz_debug_announce_global("kz_debug_announce_global", FCVAR_NONE, "Print debug info for record announcements.", false);
+
 RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	: uid(RecordAnnounce::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), userID(player->GetClient()->GetUserID()),
 	  time(player->timerService->GetTime()), teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
 	this->global = player->hasPrime && KZGlobalService::IsAvailable();
-
+	if (kz_debug_announce_global.Get() && !this->global)
+	{
+		if (!player->hasPrime)
+		{
+			META_CONPRINTF("[KZ::Global - %u] Player %s does not have Prime, will not submit globally.\n", uid, player->GetName());
+		}
+		if (!KZGlobalService::IsAvailable())
+		{
+			META_CONPRINTF("[KZ::Global - %u] Global service is not available, will not submit globally.\n", uid);
+		}
+	}
 	// Setup player
 	this->player.name = player->GetName();
 	this->player.steamid64 = player->GetSteamId64();
@@ -24,6 +36,13 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	this->mode.name = mode.shortModeName;
 	KZ::API::Mode apiMode;
 	this->global = KZ::API::DecodeModeString(this->mode.name, apiMode);
+	if (!this->global)
+	{
+		if (kz_debug_announce_global.Get())
+		{
+			META_CONPRINTF("[KZ::Global - %u] Mode '%s' is not a valid global mode, will not submit globally.\n", uid, this->mode.name.c_str());
+		}
+	}
 	this->mode.md5 = mode.md5;
 	if (mode.databaseID <= 0)
 	{
@@ -70,6 +89,16 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 
 		if (course == nullptr)
 		{
+			if (kz_debug_announce_global.Get())
+			{
+				META_CONPRINTF("[KZ::Global - %u] Course '%s' not found on global map '%s', will not submit globally.\n", uid, this->course.name.c_str(),
+							   currentMap->name.c_str());
+				META_CONPRINTF("[KZ::Global - %u] Available courses:\n", uid);
+				for (const KZ::API::Map::Course &c : currentMap->courses)
+				{
+					META_CONPRINTF(" - %s\n", c.name.c_str());
+				}
+			}
 			global = false;
 		}
 		else
@@ -124,7 +153,7 @@ void RecordAnnounce::SubmitGlobal()
 {
 	auto callback = [uid = this->uid](KZ::API::events::NewRecordAck &ack)
 	{
-		META_CONPRINTF("[KZ::Global] Record submitted under ID %d\n", ack.recordId);
+		META_CONPRINTF("[KZ::Global - %u] Record submitted under ID %d\n", uid, ack.recordId);
 
 		RecordAnnounce *rec = RecordAnnounce::Get(uid);
 		if (!rec)
@@ -154,6 +183,10 @@ void RecordAnnounce::SubmitGlobal()
 	KZGlobalService::SubmitRecordResult submissionResult = player->globalService->SubmitRecord(
 		this->globalFilterID, this->time, this->teleports, this->mode.md5, (void *)(&this->styles), this->metadata.c_str(), callback);
 
+	if (kz_debug_announce_global.Get())
+	{
+		META_CONPRINTF("[KZ::Global - %u] Global record submission result: %d\n", uid, static_cast<int>(submissionResult));
+	}
 	switch (submissionResult)
 	{
 		case KZGlobalService::SubmitRecordResult::PlayerNotAuthenticated: /* fallthrough */
