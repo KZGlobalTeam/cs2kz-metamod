@@ -2,6 +2,7 @@
 #include "utils/http.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
+#include "kz/option/kz_option.h"
 
 #include "sdk/recipientfilters.h"
 #include "public/networksystem/inetworkmessages.h"
@@ -91,8 +92,8 @@ void KZProfileService::RequestRating()
 		return;
 	}
 	this->timeToNextRatingRefresh = g_pKZUtils->GetServerGlobals()->realtime + RATING_REFRESH_PERIOD + RandomFloat(-30.0f, 30.0f);
-
-	std::string url = "https://api.cs2kz.org/players/" + std::to_string(steamID64) + "/profile?mode=" + std::to_string(static_cast<u8>(mode));
+	std::string url = std::string(KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org")) + "/players/" + std::to_string(steamID64)
+					  + "/profile?mode=" + std::to_string(static_cast<u8>(mode));
 	HTTP::Request request(HTTP::Method::GET, url);
 	auto callback = [steamID64, mode](HTTP::Response response)
 	{

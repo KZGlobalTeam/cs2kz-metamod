@@ -90,7 +90,7 @@ void KZGlobalService::Init()
 
 	META_CONPRINTF("[KZ::Global] Initializing GlobalService...\n");
 
-	std::string url = KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org");
+	std::string url = KZOptionService::GetOptionStr("apiUrl", KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org"));
 	std::string_view key = KZOptionService::GetOptionStr("apiKey");
 
 	if (url.empty())
