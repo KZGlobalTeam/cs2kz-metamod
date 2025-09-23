@@ -37,14 +37,15 @@ private:
 		NONE = 0,
 		LOCAL,
 		GLOBAL
-	} initState;
+	} dataState, currentState;
 
 	KeyValues3 prefKV = KeyValues3(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 
 public:
 	void Reset()
 	{
-		initState = NONE;
+		dataState = NONE;
+		currentState = NONE;
 		prefKV.SetToEmptyTable();
 	}
 
@@ -53,7 +54,7 @@ public:
 
 	bool IsInitialized()
 	{
-		return initState > NONE;
+		return dataState > NONE;
 	}
 
 	void SaveLocalPrefs();

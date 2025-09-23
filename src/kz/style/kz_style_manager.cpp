@@ -209,7 +209,7 @@ void KZStyleManager::Cleanup()
 	}
 }
 
-void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool silent)
+void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool silent, bool updatePreference)
 {
 	// Don't add style if it doesn't exist. Instead, print a list of styles to the client.
 	if (!styleName || !V_stricmp("", styleName))
@@ -264,8 +264,10 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 	player->styleServices.AddToTail(info.factory(player));
 	player->timerService->TimerStop();
 	player->styleServices.Tail()->Init();
-
-	player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+	if (updatePreference)
+	{
+		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+	}
 	if (!silent)
 	{
 		player->languageService->PrintChat(true, false, "Style Added", info.longName);
@@ -274,7 +276,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 	player->profileService->UpdateClantag();
 }
 
-void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool silent)
+void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool silent, bool updatePreference)
 {
 	if (!styleName || !V_stricmp("", styleName))
 	{
@@ -294,7 +296,10 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 			}
 			player->styleServices.Remove(i);
 			delete style;
-			player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+			if (updatePreference)
+			{
+				player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+			}
 			return;
 		}
 	}
@@ -306,7 +311,7 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 	player->profileService->UpdateClantag();
 }
 
-void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool silent)
+void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool silent, bool updatePreference)
 {
 	// Don't change style if it doesn't exist. Instead, print a list of styles to the client.
 	if (!styleName || !V_stricmp("", styleName))
@@ -329,7 +334,10 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 			}
 			player->styleServices.Remove(i);
 			delete style;
-			player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+			if (updatePreference)
+			{
+				player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+			}
 			return;
 		}
 	}
@@ -368,7 +376,10 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	player->styleServices.AddToTail(info.factory(player));
 	player->timerService->TimerStop();
 	player->styleServices.Tail()->Init();
-	player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+	if (updatePreference)
+	{
+		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+	}
 	if (!silent)
 	{
 		player->languageService->PrintChat(true, false, "Style Added", info.longName);
@@ -377,14 +388,17 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	player->profileService->UpdateClantag();
 }
 
-void KZStyleManager::ClearStyles(KZPlayer *player, bool silent)
+void KZStyleManager::ClearStyles(KZPlayer *player, bool silent, bool updatePreference)
 {
 	FOR_EACH_VEC(player->styleServices, i)
 	{
 		player->styleServices[i]->Cleanup();
 	}
 	player->styleServices.PurgeAndDeleteElements();
-	player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+	if (updatePreference)
+	{
+		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+	}
 	if (!silent)
 	{
 		player->languageService->PrintChat(true, false, "Styles Cleared");
@@ -393,17 +407,17 @@ void KZStyleManager::ClearStyles(KZPlayer *player, bool silent)
 	player->profileService->UpdateClantag();
 }
 
-void KZStyleManager::RefreshStyles(KZPlayer *player)
+void KZStyleManager::RefreshStyles(KZPlayer *player, bool updatePreference)
 {
 	CUtlVector<StylePluginInfo> styles;
 	FOR_EACH_VEC(player->styleServices, i)
 	{
 		styles.AddToTail(KZ::style::GetStyleInfo(player->styleServices[i]->GetStyleName()));
 	}
-	KZStyleManager::ClearStyles(player, true);
+	KZStyleManager::ClearStyles(player, true, updatePreference);
 	FOR_EACH_VEC(styles, i)
 	{
-		KZStyleManager::AddStyle(player, styles[i].longName, true);
+		KZStyleManager::AddStyle(player, styles[i].longName, true, updatePreference);
 	}
 }
 
@@ -518,12 +532,12 @@ SCMD(kz_clearstyles, SCFL_MODESTYLE)
 
 void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *player)
 {
-	const char *styles = player->optionService->GetPreferenceStr("preferredStyles", KZOptionService::GetOptionStr("defaultStyles"));
+	std::string styles = player->optionService->GetPreferenceStr("preferredStyles", KZOptionService::GetOptionStr("defaultStyles"));
 	// Give up changing styles if the player is already in the server for a while.
 	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
 	{
 		styleManager.ClearStyles(player, true);
-		CSplitString splitStyles(styles, ",");
+		CSplitString splitStyles(styles.c_str(), ",");
 		FOR_EACH_VEC(splitStyles, i)
 		{
 			styleManager.AddStyle(player, splitStyles[i]);

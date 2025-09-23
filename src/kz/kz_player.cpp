@@ -101,6 +101,7 @@ void KZPlayer::Reset()
 	this->triggerService->Reset();
 	this->measureService->Reset();
 	this->beamService->Reset();
+	this->telemetryService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
 	g_pKZStyleManager->ClearStyles(this, true);
@@ -120,8 +121,8 @@ void KZPlayer::OnPlayerActive()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	// Mode/Styles stuff must be here for convars to be properly replicated.
-	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true);
-	g_pKZStyleManager->RefreshStyles(this);
+	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true, false);
+	g_pKZStyleManager->RefreshStyles(this, false);
 
 	this->optionService->OnPlayerActive();
 }

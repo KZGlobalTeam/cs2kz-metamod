@@ -178,11 +178,11 @@ public:
 	virtual void UnregisterStyle(PluginId id);
 	void Cleanup();
 
-	void AddStyle(KZPlayer *player, const char *styleName, bool silent = false);
-	void RemoveStyle(KZPlayer *player, const char *styleName, bool silent = false);
-	void ToggleStyle(KZPlayer *player, const char *styleName, bool silent = false);
-	void ClearStyles(KZPlayer *player, bool silent = false);
-	void RefreshStyles(KZPlayer *player);
+	void AddStyle(KZPlayer *player, const char *styleName, bool silent = false, bool updatePreference = true);
+	void RemoveStyle(KZPlayer *player, const char *styleName, bool silent = false, bool updatePreference = true);
+	void ToggleStyle(KZPlayer *player, const char *styleName, bool silent = false, bool updatePreference = true);
+	void ClearStyles(KZPlayer *player, bool silent = false, bool updatePreference = true);
+	void RefreshStyles(KZPlayer *player, bool updatePreference = true);
 	CUtlString GetStylesString(KZPlayer *player);
 	void PrintActiveStyles(KZPlayer *player);
 	void PrintAllStyles(KZPlayer *player);

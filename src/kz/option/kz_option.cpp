@@ -49,7 +49,7 @@ void KZOptionService::Cleanup()
 
 void KZOptionService::InitializeLocalPrefs(CUtlString text)
 {
-	if (this->initState > LOCAL)
+	if (this->dataState > LOCAL)
 	{
 		return;
 	}
@@ -64,12 +64,13 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 		META_CONPRINTF("[KZ::DB] Error fetching local preference: %s\n", error.Get());
 		return;
 	}
-	this->initState = LOCAL;
+	this->dataState = LOCAL;
 	// Calling this before the player is ingame will create unwanted race conditions.
 	// We need to make sure the player is both authenticated and ingame.
 	if (this->player->IsInGame())
 	{
 		CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+		this->currentState = this->dataState;
 	}
 }
 
@@ -86,7 +87,7 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 		return;
 	}
 
-	this->initState = GLOBAL;
+	this->dataState = GLOBAL;
 
 	META_CONPRINTF("[KZ::Options] Loaded global preferences.\n");
 
@@ -95,6 +96,7 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 	if (this->player->IsInGame())
 	{
 		CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+		this->currentState = this->dataState;
 	}
 }
 
@@ -116,8 +118,9 @@ void KZOptionService::SaveLocalPrefs()
 
 void KZOptionService::OnPlayerActive()
 {
-	if (this->IsInitialized())
+	if (this->currentState <= this->dataState)
 	{
 		CALL_FORWARD(eventListeners, OnPlayerPreferencesLoaded, this->player);
+		this->currentState = this->dataState;
 	}
 }

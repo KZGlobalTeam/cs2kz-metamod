@@ -233,7 +233,7 @@ void KZModeManager::UnregisterMode(PluginId id)
 	}
 }
 
-bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent, bool force)
+bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent, bool force, bool updatePreference)
 {
 	// Don't change mode if it doesn't exist. Instead, print a list of modes to the client.
 	if (!modeName || !V_stricmp("", modeName))
@@ -301,7 +301,10 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	player->profileService->currentRating = -1.0f;
 	player->profileService->RequestRating();
 	player->profileService->UpdateClantag();
-	player->optionService->SetPreferenceStr("preferredMode", modeName);
+	if (updatePreference)
+	{
+		player->optionService->SetPreferenceStr("preferredMode", modeName);
+	}
 	return true;
 }
 

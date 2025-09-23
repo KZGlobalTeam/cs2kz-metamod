@@ -19,6 +19,11 @@ private:
 	} activeStats;
 
 public:
+	virtual void Reset() override
+	{
+		this->activeStats = {};
+	}
+
 	static void ActiveCheck();
 
 	f64 GetActiveTime() const

@@ -222,7 +222,7 @@ public:
 	// clang-format on
 
 	virtual void UnregisterMode(PluginId id);
-	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false, bool force = false);
+	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false, bool force = false, bool updatePreference = true);
 	void Cleanup();
 };
 
