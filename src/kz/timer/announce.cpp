@@ -162,7 +162,8 @@ void RecordAnnounce::SubmitGlobal()
 		}
 		rec->globalResponse.received = true;
 		rec->globalResponse.recordId = ack.recordId;
-		rec->globalResponse.playerRating = ack.playerRating;
+		// TODO: Remove this 0.1 when API sends the correct rating
+		rec->globalResponse.playerRating = ack.playerRating * 0.1f;
 		rec->globalResponse.overall.rank = ack.overallData.rank;
 		rec->globalResponse.overall.points = ack.overallData.points;
 		rec->globalResponse.overall.maxRank = ack.overallData.leaderboardSize;
