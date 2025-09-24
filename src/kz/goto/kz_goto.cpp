@@ -69,7 +69,11 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 
 			this->player->GetPlayerPawn()->Teleport(&origin, &angles, &NULL_VECTOR);
 			this->player->languageService->PrintChat(true, false, "Goto - Teleported", otherPlayer->GetName());
-
+			if (this->player->GetPlayerPawn()->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
+			{
+				this->player->GetPlayerPawn()->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
+				this->player->GetPlayerPawn()->CollisionRulesChanged();
+			}
 			return true;
 		}
 	}
