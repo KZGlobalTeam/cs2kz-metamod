@@ -13,25 +13,17 @@
 #include "utlvector.h"
 #include "filesystem.h"
 
-static_global class : public KZPistolServiceEventListener
-{
-	virtual void OnWeaponGiven(KZPlayer *player, CBasePlayerWeapon *weapon)
-	{
-		KZ::replaysystem::OnWeaponGiven(player, weapon);
-	}
-} pistolEventListener;
-
 struct ReplayPlayback
 {
 	bool valid;
 	ReplayHeader header;
-	i32 tickCount;
+	u32 tickCount;
 	TickData *tickData;
 	SubtickData *subtickData;
 	i32 totalWeapons;
 	i32 weaponIndex = -1;
-	WeaponChange *weaponChanges;
-	i32 currentTick;
+	WeaponSwitchEvent *weaponChanges;
+	u32 currentTick;
 	bool playingReplay;
 };
 
@@ -134,14 +126,14 @@ static_function ReplayPlayback LoadReplay(const char *path)
 	}
 	g_pFullFileSystem->Read(&result.tickCount, sizeof(result.tickCount), file);
 	result.tickData = new TickData[result.tickCount];
-	for (i32 i = 0; i < result.tickCount; i++)
+	for (u32 i = 0; i < result.tickCount; i++)
 	{
 		TickData tickData = {};
 		g_pFullFileSystem->Read(&tickData, sizeof(tickData), file);
 		result.tickData[i] = tickData;
 	}
 	result.subtickData = new SubtickData[result.tickCount];
-	for (i32 i = 0; i < result.tickCount; i++)
+	for (u32 i = 0; i < result.tickCount; i++)
 	{
 		SubtickData subtickData = {};
 		g_pFullFileSystem->Read(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
@@ -149,11 +141,11 @@ static_function ReplayPlayback LoadReplay(const char *path)
 		result.subtickData[i] = subtickData;
 	}
 	g_pFullFileSystem->Read(&result.totalWeapons, sizeof(result.totalWeapons), file);
-	result.weaponChanges = new WeaponChange[result.totalWeapons + 1];
+	result.weaponChanges = new WeaponSwitchEvent[result.totalWeapons + 1];
 	result.weaponChanges[0] = {0, result.header.firstWeapon};
 	for (i32 i = 0; i < result.totalWeapons; i++)
 	{
-		WeaponChange weaponChange = {};
+		WeaponSwitchEvent weaponChange = {};
 		g_pFullFileSystem->Read(&weaponChange.serverTick, sizeof(weaponChange.serverTick), file);
 		g_pFullFileSystem->Read(&weaponChange.econInfo.mainInfo, sizeof(weaponChange.econInfo.mainInfo), file);
 		for (i32 j = 0; j < weaponChange.econInfo.mainInfo.numAttributes; j++)
@@ -161,15 +153,96 @@ static_function ReplayPlayback LoadReplay(const char *path)
 			g_pFullFileSystem->Read(&weaponChange.econInfo.attributes[j], sizeof(weaponChange.econInfo.attributes[j]), file);
 		}
 		result.weaponChanges[i + 1] = weaponChange;
+		utils::PrintChatAll("Loaded weapon change: tick %d, itemDef %d", weaponChange.serverTick, weaponChange.econInfo.mainInfo.itemDef);
 	}
 	result.valid = true;
 	g_pFullFileSystem->Close(file);
 	return result;
 }
 
+static_function void CheckWeapon(KZPlayer &player, PlayerCommand &cmd)
+{
+	ReplayPlayback *replay = &g_replaySystem.currentReplay;
+
+	if (!replay->playingReplay)
+	{
+		return;
+	}
+	TickData *tickData = &replay->tickData[replay->currentTick];
+	TickData *finalTickData = &replay->tickData[replay->tickCount - 1];
+	// Check what the current weapon should be.
+	EconInfo desiredWeapon;
+	if (replay->weaponIndex < replay->totalWeapons && replay->weaponChanges[replay->weaponIndex + 1].serverTick <= tickData->serverTick)
+	{
+		replay->weaponIndex++;
+	}
+	desiredWeapon = replay->weaponChanges[replay->weaponIndex].econInfo;
+	utils::PrintAlertAll("index %d/%d\ntick %d/%d", replay->weaponIndex, replay->totalWeapons, tickData->serverTick, finalTickData->serverTick);
+	EconInfo activeWeapon = player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon.Get();
+
+	if (desiredWeapon != activeWeapon)
+	{
+		if (desiredWeapon.mainInfo.itemDef == 0)
+		{
+			// If weapon is 0, then remove the active weapon from the player.
+			player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon(nullptr);
+			return;
+		}
+		// Find the weapon in the player's inventory.
+		CUtlVector<CHandle<CBasePlayerWeapon>> *weapons = player.GetPlayerPawn()->m_pWeaponServices()->m_hMyWeapons();
+		for (int i = 0; i < weapons->Count(); i++)
+		{
+			CBasePlayerWeapon *invWeapon = weapons->Element(i).Get();
+			if (desiredWeapon == EconInfo(invWeapon))
+			{
+				utils::PrintChatAll("Switched to weapon %s (index %i)", KZ::replaysystem::item::GetWeaponName(desiredWeapon.mainInfo.itemDef).c_str(),
+									replay->weaponIndex);
+				cmd.mutable_base()->set_weaponselect(invWeapon->entindex());
+				return;
+			}
+		}
+		// If the weapon is not found, strip all weapons and give the desired weapon.
+		player.GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
+		std::string weaponName = KZ::replaysystem::item::GetWeaponName(desiredWeapon.mainInfo.itemDef);
+		CBasePlayerWeapon *newWeapon = player.GetPlayerPawn()->m_pItemServices()->GiveNamedItem(weaponName.c_str());
+		utils::PrintChatAll("Given weapon %s to bot (index %i)", weaponName.c_str(), replay->weaponIndex);
+		if (newWeapon)
+		{
+			KZ::replaysystem::item::ApplyItemAttributesToWeapon(*newWeapon, desiredWeapon);
+			cmd.mutable_base()->set_weaponselect(newWeapon->entindex());
+		}
+	}
+}
+
+static_function void InitializeWeapons()
+{
+	ReplayPlayback *replay = &g_replaySystem.currentReplay;
+
+	CCSPlayerController *bot = g_replaySystem.bot.Get();
+	if (!bot)
+	{
+		return;
+	}
+	CCSPlayerPawn *pawn = bot->GetPlayerPawn();
+	pawn->m_pItemServices()->StripPlayerWeapons(false);
+	u16 itemDef = replay->weaponChanges[0].econInfo.mainInfo.itemDef;
+	if (itemDef == 0)
+	{
+		return;
+	}
+	std::string weaponName = KZ::replaysystem::item::GetWeaponName(itemDef);
+	CBasePlayerWeapon *weapon = pawn->m_pItemServices()->GiveNamedItem(weaponName.c_str());
+	if (!weapon)
+	{
+		__debugbreak();
+	}
+	utils::PrintChatAll("Given weapon %s to bot", weaponName.c_str());
+	KZ::replaysystem::item::ApplyItemAttributesToWeapon(*weapon, replay->weaponChanges[0].econInfo);
+}
+
 void KZ::replaysystem::Init()
 {
-	KZPistolService::RegisterEventListener(&pistolEventListener);
+	KZ::replaysystem::item::InitItemAttributes();
 }
 
 void KZ::replaysystem::Cleanup()
@@ -307,28 +380,7 @@ void KZ::replaysystem::OnPhysicsSimulatePost(KZPlayer *player)
 	u32 playerFlagBits = (-1) & ~((u32)(FL_CLIENT | FL_FAKECLIENT | FL_BOT));
 	pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData->post.entityFlags & playerFlagBits);
 	pawn->v_angle = tickData->post.angles;
-	// If we still have pending weapon changes, check if its time to apply the next one
-	bool firstWeaponChange = replay->weaponIndex < 0;
-	if (firstWeaponChange)
-	{
-		replay->weaponIndex = 0;
-	}
-	// Update the weapon index to the most recent weapon for this tick
-	while (replay->weaponIndex < replay->totalWeapons)
-	{
-		if (replay->weaponChanges[replay->weaponIndex + 1].serverTick > tickData->serverTick)
-		{
-			break;
-		}
-		replay->weaponIndex++;
-	}
-	WeaponChange *weaponChange = &replay->weaponChanges[replay->weaponIndex];
-	i16 newPistol = KZPistolService::GetPistolIndexByItemDef(weaponChange->econInfo.mainInfo.itemDef);
-	if (player->pistolService->preferredPistol != newPistol || firstWeaponChange)
-	{
-		player->pistolService->preferredPistol = newPistol;
-		player->pistolService->UpdatePistol();
-	}
+
 	replay->currentTick++;
 	if (replay->currentTick >= replay->tickCount)
 	{
@@ -431,6 +483,7 @@ void KZ::replaysystem::OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *co
 			}
 		}
 	}
+	CheckWeapon(*player, *command);
 }
 
 SCMD(kz_replay, SCFL_REPLAY)
@@ -474,83 +527,6 @@ SCMD(kz_replay, SCFL_REPLAY)
 	g_replaySystem.currentReplay = replay;
 	g_replaySystem.currentReplay.playingReplay = true;
 	g_replaySystem.currentReplay.currentTick = 0;
-
+	InitializeWeapons();
 	return MRES_SUPERCEDE;
-}
-
-void KZ::replaysystem::OnWeaponGiven(KZPlayer *player, CBasePlayerWeapon *weapon)
-{
-	if (!player || g_replaySystem.bot != player->GetController() || !weapon || g_replaySystem.currentReplay.weaponIndex < 0)
-	{
-		return;
-	}
-	ReplayPlayback *replay = &g_replaySystem.currentReplay;
-
-	if (!replay->playingReplay)
-	{
-		return;
-	}
-	if (replay->currentTick >= replay->tickCount)
-	{
-		return;
-	}
-	EconInfo currentEconInfo = replay->weaponChanges[g_replaySystem.currentReplay.weaponIndex].econInfo;
-	if (currentEconInfo.mainInfo.itemDef == 0)
-	{
-		return;
-	}
-
-	// Knives need subclass change to properly apply attributes.
-	bool isKnife = false;
-	if (KZ_STREQI(weapon->GetClassname(), "weapon_knife") || KZ_STREQI(weapon->GetClassname(), "weapon_knife_t"))
-	{
-		// Hacky way to change subclass, but it doesn't rely on fragile signatures.
-		isKnife = true;
-		char command[64];
-		V_snprintf(command, sizeof(command), "subclass_change %i %i", currentEconInfo.mainInfo.itemDef, weapon->entindex());
-		CCommandContext ctx(CT_FIRST_SPLITSCREEN_CLIENT, player->GetPlayerSlot());
-		CCommand cmd;
-		cmd.Tokenize(command);
-		g_pCVar->FindConCommand("subclass_change").Dispatch(ctx, cmd);
-	}
-
-	// Apply skin attributes
-	CAttributeContainer &attrManager = weapon->m_AttributeManager();
-	CEconItemView &item = attrManager.m_Item();
-	CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
-	item.m_iItemDefinitionIndex(currentEconInfo.mainInfo.itemDef);
-	item.m_iEntityQuality(currentEconInfo.mainInfo.quality);
-	item.m_iEntityLevel(currentEconInfo.mainInfo.level);
-	item.m_iAccountID(currentEconInfo.mainInfo.accountID);
-	item.m_iItemID(currentEconInfo.mainInfo.itemID);
-	item.m_iItemIDHigh(currentEconInfo.mainInfo.itemID >> 32);
-	item.m_iItemIDLow((u32)currentEconInfo.mainInfo.itemID & 0xFFFFFFFF);
-	item.m_iInventoryPosition(currentEconInfo.mainInfo.inventoryPosition);
-	strncpy(item.m_szCustomName(), currentEconInfo.mainInfo.customName, sizeof(currentEconInfo.mainInfo.customName));
-	strncpy(item.m_szCustomNameOverride(), currentEconInfo.mainInfo.customNameOverride, sizeof(currentEconInfo.mainInfo.customNameOverride));
-
-	for (int i = 0; i < currentEconInfo.mainInfo.numAttributes; i++)
-	{
-		int id = currentEconInfo.attributes[i].defIndex;
-		float value = currentEconInfo.attributes[i].value;
-
-		// Compatibility for paint kits on legacy models
-		if (id == 6)
-		{
-			CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(weapon->m_CBodyComponent()->m_pSceneNode());
-			bool usesLegacyModel = utils::DoesPaintKitUseLegacyModel(value);
-			if (!isKnife)
-			{
-				pSkeleton->m_modelState().m_MeshGroupMask(usesLegacyModel ? 2 : 1);
-				pSkeleton->m_modelState().m_nBodyGroupChoices()->Element(0) = usesLegacyModel ? 1 : 0;
-				pSkeleton->m_modelState().m_nBodyGroupChoices.NetworkStateChanged();
-			}
-			else
-			{
-				pSkeleton->m_modelState().m_MeshGroupMask(-1);
-			}
-		}
-		g_pKZUtils->SetOrAddAttributeValueByName(&item.m_AttributeList(), utils::GetItemAttributeName(id).c_str(), value);
-		g_pKZUtils->SetOrAddAttributeValueByName(&attributeList, utils::GetItemAttributeName(id).c_str(), value);
-	}
 }

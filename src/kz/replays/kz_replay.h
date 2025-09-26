@@ -2,8 +2,7 @@
 #define KZ_REPLAY_H
 
 #include "common.h"
-
-#include "utils/econinfo.h"
+#include "sdk/entity/cbaseplayerweapon.h"
 // relative to csgo/
 #define KZ_REPLAY_PATH      "kzreplays"
 #define KZ_REPLAY_RUNS_PATH KZ_REPLAY_PATH "/runs"
@@ -29,7 +28,7 @@ struct RpFlags
 	bool desiresDuck: 1;
 };
 
-struct WeaponChange
+struct WeaponSwitchEvent
 {
 	u32 serverTick {};
 	EconInfo econInfo;
@@ -66,20 +65,20 @@ struct SubtickData
 
 	struct RpSubtickMove
 	{
-		float when {};
+		float when;
 		// u32 instead of u64 because buttons above 32 bits look irrelevant.
-		u32 button {};
+		u32 button;
 
 		union
 		{
-			bool pressed {};
+			bool pressed;
 
 			struct
 			{
-				float analog_forward_delta {};
-				float analog_left_delta {};
-				float analog_pitch_delta {};
-				float analog_yaw_delta {};
+				float analog_forward_delta;
+				float analog_left_delta;
+				float analog_pitch_delta;
+				float analog_yaw_delta;
 			} analogMove;
 		};
 
