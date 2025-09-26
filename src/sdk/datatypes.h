@@ -164,6 +164,8 @@ struct SubtickMove
 		{
 			float analog_forward_delta;
 			float analog_left_delta;
+			float analog_pitch_delta;
+			float analog_yaw_delta;
 		} analogMove;
 	};
 
