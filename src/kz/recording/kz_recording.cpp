@@ -143,6 +143,7 @@ void KZRecordingService::Reset()
 	this->circularRecording.subtickData->Advance(this->circularRecording.subtickData->GetReadAvailable());
 	this->circularRecording.cmdData->Advance(this->circularRecording.cmdData->GetReadAvailable());
 	this->circularRecording.cmdSubtickData->Advance(this->circularRecording.cmdSubtickData->GetReadAvailable());
+	this->circularRecording.weaponChangeEvents->Advance(this->circularRecording.weaponChangeEvents->GetReadAvailable());
 
 	this->lastCmdNumReceived = 0;
 }
@@ -270,34 +271,38 @@ void KZRecordingService::OnPhysicsSimulatePost()
 	this->circularRecording.subtickData->Write(this->currentSubtickData);
 
 	auto weapon = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon.Get();
-
-	if (this->currentWeaponEconInfo != EconInfo(weapon))
+	auto weaponEconInfo = EconInfo(weapon);
+	if (this->currentWeaponEconInfo != weaponEconInfo)
 	{
-		this->currentWeaponEconInfo = EconInfo(weapon);
-		WeaponChange event;
+		this->currentWeaponEconInfo = weaponEconInfo;
+		WeaponSwitchEvent event;
 		event.serverTick = this->currentTickData.serverTick;
-		event.econInfo = this->currentWeaponEconInfo;
+		event.econInfo = weaponEconInfo;
 		this->circularRecording.weaponChangeEvents->Write(event);
+	}
+	if (!this->circularRecording.earliestWeaponSet)
+	{
+		this->circularRecording.earliestWeapon = this->currentWeaponEconInfo;
+		this->circularRecording.earliestWeaponSet = true;
 	}
 	// Remove old events from circular buffer (keep 2 minutes)
 	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
 	i32 numToRemove = 0;
+	bool foundValidEvent = false;
 	for (i32 i = 0; i < this->circularRecording.weaponChangeEvents->GetReadAvailable(); i++)
 	{
-		WeaponChange data;
+		WeaponSwitchEvent data;
 		if (!this->circularRecording.weaponChangeEvents->Peek(&data, 1, i))
 		{
 			break;
 		}
 		if (data.serverTick + 2 * 60 * 64 < currentTick)
 		{
-			numToRemove++;
-		}
-		else
-		{
 			this->circularRecording.earliestWeapon = data.econInfo;
-			break;
+			numToRemove++;
+			continue;
 		}
+		break;
 	}
 	this->circularRecording.weaponChangeEvents->Advance(numToRemove);
 }
@@ -349,24 +354,23 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 		// write tickData
 		i32 tickdataCount = player->recordingService->circularRecording.tickData->GetReadAvailable();
 		g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
-		// circular buffer reads FIFO
 		TickData tickData = {};
-		for (i32 i = tickdataCount - 1; i >= 0; i--)
+		for (i32 i = 0; i < tickdataCount; i++)
 		{
-			player->recordingService->circularRecording.tickData->Peek(&tickData, i);
+			player->recordingService->circularRecording.tickData->Peek(&tickData, 1, i);
 			g_pFullFileSystem->Write(&tickData, sizeof(tickData), file);
 		}
 		SubtickData subtickData = {};
-		for (i32 i = tickdataCount - 1; i >= 0; i--)
+		for (i32 i = 0; i < tickdataCount; i++)
 		{
-			player->recordingService->circularRecording.subtickData->Peek(&subtickData, i);
+			player->recordingService->circularRecording.subtickData->Peek(&subtickData, 1, i);
 			g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
 			g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
 		}
 		i32 numWeaponChanges = player->recordingService->circularRecording.weaponChangeEvents->GetReadAvailable();
 		g_pFullFileSystem->Write(&numWeaponChanges, sizeof(i32), file);
 		// This struct is HUGE. Allocate it on the heap.
-		WeaponChange *event = new WeaponChange();
+		WeaponSwitchEvent *event = new WeaponSwitchEvent();
 		for (i32 i = 0; i < numWeaponChanges; i++)
 		{
 			player->recordingService->circularRecording.weaponChangeEvents->Peek(event, 1, i);

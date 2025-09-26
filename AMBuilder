@@ -124,6 +124,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'kz_profile.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'itemsystem.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replaysystem.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'saveloc', 'kz_saveloc.cpp'),

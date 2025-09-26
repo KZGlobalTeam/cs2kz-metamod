@@ -6,8 +6,6 @@
 #include "icvar.h"
 #include "sdk/cskeletoninstance.h"
 
-IMPLEMENT_CLASS_EVENT_LISTENER(KZPistolService, KZPistolServiceEventListener);
-
 static_global class : public KZOptionServiceEventListener
 {
 	void OnPlayerPreferencesLoaded(KZPlayer *player) override
@@ -63,7 +61,6 @@ void KZPistolService::UpdatePistol()
 			this->player->GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
 			auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
 				this->player->GetController()->m_iTeamNum() == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
-			CALL_FORWARD(eventListeners, OnWeaponGiven, this->player, weapon);
 		}
 		return;
 	}
@@ -118,7 +115,6 @@ void KZPistolService::UpdatePistol()
 		player->GetPlayerPawn()->m_iTeamNum(otherTeam);
 	}
 	auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(pistol.className);
-	CALL_FORWARD(eventListeners, OnWeaponGiven, this->player, weapon);
 
 	if (switchTeam)
 	{

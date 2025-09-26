@@ -1,6 +1,5 @@
 #pragma once
 #include "../kz.h"
-#include "utils/eventlisteners.h"
 
 struct PistolInfo_t
 {
@@ -9,12 +8,6 @@ struct PistolInfo_t
 	const char *name;
 	const char *className;
 	std::vector<const char *> aliases;
-};
-
-class KZPistolServiceEventListener
-{
-public:
-	virtual void OnWeaponGiven(KZPlayer *player, CBasePlayerWeapon *weapon) {}
 };
 
 class KZPistolService : public KZBaseService
@@ -71,8 +64,6 @@ public:
 	}
 
 	using KZBaseService::KZBaseService;
-
-	DECLARE_CLASS_EVENT_LISTENER(KZPistolServiceEventListener);
 
 	static void Init();
 
