@@ -473,13 +473,13 @@ void KZ::replaysystem::OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *co
 			{
 				move->set_analog_left_delta(subtickData->subtickMoves[i].analogMove.analog_left_delta);
 			}
-			if (subtickData->subtickMoves[i].analogMove.analog_pitch_delta != 0)
+			if (subtickData->subtickMoves[i].analogMove.pitch_delta != 0)
 			{
-				move->set_analog_pitch_delta(subtickData->subtickMoves[i].analogMove.analog_pitch_delta);
+				move->set_pitch_delta(subtickData->subtickMoves[i].analogMove.pitch_delta);
 			}
-			if (subtickData->subtickMoves[i].analogMove.analog_yaw_delta != 0)
+			if (subtickData->subtickMoves[i].analogMove.yaw_delta != 0)
 			{
-				move->set_analog_yaw_delta(subtickData->subtickMoves[i].analogMove.analog_yaw_delta);
+				move->set_yaw_delta(subtickData->subtickMoves[i].analogMove.yaw_delta);
 			}
 		}
 	}

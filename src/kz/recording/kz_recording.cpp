@@ -125,8 +125,8 @@ void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, int numCmds)
 			{
 				subtickData.subtickMoves[j].analogMove.analog_forward_delta = move.analog_forward_delta();
 				subtickData.subtickMoves[j].analogMove.analog_left_delta = move.analog_left_delta();
-				subtickData.subtickMoves[j].analogMove.analog_pitch_delta = move.analog_pitch_delta();
-				subtickData.subtickMoves[j].analogMove.analog_yaw_delta = move.analog_yaw_delta();
+				subtickData.subtickMoves[j].analogMove.pitch_delta = move.pitch_delta();
+				subtickData.subtickMoves[j].analogMove.yaw_delta = move.yaw_delta();
 			}
 		}
 		this->circularRecording.cmdSubtickData->Write(subtickData);
@@ -235,8 +235,8 @@ void KZRecordingService::OnSetupMove(PlayerCommand *pc)
 		{
 			this->currentSubtickData.subtickMoves[i].analogMove.analog_forward_delta = move.analog_forward_delta();
 			this->currentSubtickData.subtickMoves[i].analogMove.analog_left_delta = move.analog_left_delta();
-			this->currentSubtickData.subtickMoves[i].analogMove.analog_pitch_delta = move.analog_pitch_delta();
-			this->currentSubtickData.subtickMoves[i].analogMove.analog_yaw_delta = move.analog_yaw_delta();
+			this->currentSubtickData.subtickMoves[i].analogMove.pitch_delta = move.pitch_delta();
+			this->currentSubtickData.subtickMoves[i].analogMove.yaw_delta = move.yaw_delta();
 		}
 	}
 }
