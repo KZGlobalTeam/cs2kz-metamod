@@ -1,4 +1,4 @@
-
+#include "cs2kz.h"
 #include "kz/kz.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/mode/kz_mode.h"
@@ -8,6 +8,7 @@
 #include "kz_replay.h"
 #include "kz_replaysystem.h"
 #include "utils/simplecmds.h"
+#include "utils/ctimer.h"
 #include "sdk/usercmd.h"
 #include "sdk/cskeletoninstance.h"
 #include "utlvector.h"
@@ -37,6 +38,10 @@ struct
 
 static_function void KickBots()
 {
+	if (g_KZPlugin.unloading)
+	{
+		return;
+	}
 	auto bot = g_replaySystem.bot.Get();
 	if (!bot)
 	{
@@ -94,6 +99,8 @@ static_function void MakeBotAlive()
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(bot);
 	KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
 	player->SetName("REPLAY");
+	KZ::replaysystem::item::ApplyGloveAttributesToPawn(player->GetPlayerPawn(), g_replaySystem.currentReplay.header.gloves);
+	KZ::replaysystem::item::ApplyModelAttributesToPawn(player->GetPlayerPawn(), g_replaySystem.currentReplay.header.modelName);
 }
 
 static_function void MoveBotToSpec()

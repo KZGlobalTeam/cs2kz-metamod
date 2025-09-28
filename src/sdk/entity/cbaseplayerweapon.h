@@ -55,8 +55,27 @@ struct EconInfo
 		strncpy(mainInfo.customName, item.m_szCustomName(), sizeof(mainInfo.customName));
 		strncpy(mainInfo.customNameOverride, item.m_szCustomNameOverride(), sizeof(mainInfo.customNameOverride));
 		CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
-		mainInfo.numAttributes = attributeList.m_Attributes->Count();
-		FOR_EACH_VEC(*attributeList.m_Attributes(), i)
+		mainInfo.numAttributes = MIN(attributeList.m_Attributes->Count(), 32);
+		for (int i = 0; i < mainInfo.numAttributes; ++i)
+		{
+			CEconItemAttribute &attr = (*attributeList.m_Attributes())[i];
+			attributes[i] = {attr.m_iAttributeDefinitionIndex(), attr.m_flValue()};
+		}
+	}
+
+	EconInfo(CEconItemView &item)
+	{
+		mainInfo.itemDef = item.m_iItemDefinitionIndex();
+		mainInfo.quality = item.m_iEntityQuality();
+		mainInfo.level = item.m_iEntityLevel();
+		mainInfo.accountID = item.m_iAccountID();
+		mainInfo.itemID = item.m_iItemID();
+		mainInfo.inventoryPosition = item.m_iInventoryPosition();
+		strncpy(mainInfo.customName, item.m_szCustomName(), sizeof(mainInfo.customName));
+		strncpy(mainInfo.customNameOverride, item.m_szCustomNameOverride(), sizeof(mainInfo.customNameOverride));
+		CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
+		mainInfo.numAttributes = MIN(attributeList.m_Attributes->Count(), 32);
+		for (int i = 0; i < mainInfo.numAttributes; ++i)
 		{
 			CEconItemAttribute &attr = (*attributeList.m_Attributes())[i];
 			attributes[i] = {attr.m_iAttributeDefinitionIndex(), attr.m_flValue()};

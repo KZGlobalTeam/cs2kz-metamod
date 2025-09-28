@@ -124,73 +124,9 @@ struct TickData
 		u32 entityFlags {};
 		MoveType_t moveType = MOVETYPE_WALK;
 	} pre, post;
-
-	void PrintDebug()
-	{
-		char buf[8192];
-		int len =
-			snprintf(buf, sizeof(buf),
-					 "TickData Debug Info:\n"
-					 "  Server Tick: %d\n"
-					 "  Game Time: %f\n"
-					 "  Real Time: %f\n"
-					 "  Unix Time: %llu\n"
-					 "  Cmd Number: %d\n"
-					 "  Client Tick: %d\n"
-					 "  Forward: %f\n"
-					 "  Left: %f\n"
-					 "  Up: %f\n"
-					 "  Pre Data:\n"
-					 "    Origin: %f %f %f\n"
-					 "    Velocity: %f %f %f\n"
-					 "    Angles: %f %f %f\n"
-					 "    Buttons: %d %d %d\n"
-					 "    Jump Pressed Time: %f\n"
-					 "    Duck Speed: %f\n"
-					 "    Duck Amount: %f\n"
-					 "    Duck Offset: %f\n"
-					 "    Last Duck Time: %f\n"
-					 "    Replay Flags: %d %d %d\n"
-					 "    Entity Flags: %d\n"
-					 "    Move Type: %d\n"
-					 "  Post Data:\n"
-					 "    Origin: %f %f %f\n"
-					 "    Velocity: %f %f %f\n"
-					 "    Angles: %f %f %f\n"
-					 "    Buttons: %d %d %d\n"
-					 "    Jump Pressed Time: %f\n"
-					 "    Duck Speed: %f\n"
-					 "    Duck Amount: %f\n"
-					 "    Duck Offset: %f\n"
-					 "    Last Duck Time: %f\n"
-					 "    Replay Flags: %d %d %d\n"
-					 "    Entity Flags: %d\n"
-					 "    Move Type: %d\n",
-					 this->serverTick, this->gameTime, this->realTime, this->unixTime, this->cmdNumber, this->clientTick, this->forward, this->left,
-					 this->up, this->pre.origin.x, this->pre.origin.y, this->pre.origin.z, this->pre.velocity.x, this->pre.velocity.y,
-					 this->pre.velocity.z, this->pre.angles.x, this->pre.angles.y, this->pre.angles.z, this->pre.buttons[0], this->pre.buttons[1],
-					 this->pre.buttons[2], this->pre.jumpPressedTime, this->pre.duckSpeed, this->pre.duckAmount, this->pre.duckOffset,
-					 this->pre.lastDuckTime, this->pre.replayFlags.ducking, this->pre.replayFlags.ducked, this->pre.replayFlags.desiresDuck,
-					 this->pre.entityFlags, this->pre.moveType, this->post.origin.x, this->post.origin.y, this->post.origin.z, this->post.velocity.x,
-					 this->post.velocity.y, this->post.velocity.z, this->post.angles.x, this->post.angles.y, this->post.angles.z,
-					 this->post.buttons[0], this->post.buttons[1], this->post.buttons[2], this->post.jumpPressedTime, this->post.duckSpeed,
-					 this->post.duckAmount, this->post.duckOffset, this->post.lastDuckTime, this->post.replayFlags.ducking,
-					 this->post.replayFlags.ducked, this->post.replayFlags.desiresDuck, this->post.entityFlags, this->post.moveType);
-
-		// Print in 2048 char chunks
-		for (int i = 0; i < len; i += 2048)
-		{
-			char chunk[2049];
-			int chunkLen = (len - i > 2048) ? 2048 : (len - i);
-			memcpy(chunk, buf + i, chunkLen);
-			chunk[chunkLen] = '\0';
-			META_CONPRINTF("%s", chunk);
-		}
-	}
 };
 
 // While tick data is only recorded during certain conditions, metadata is recorded every time the server receives a move message from the client.
-// TODO
 struct CmdData
 {
 	i32 serverTick {};
@@ -235,6 +171,10 @@ struct ReplayHeader
 	} map;
 
 	EconInfo firstWeapon;
+	// Probably not worth the effort to track models and gloves over time, since this won't affect gameplay in any way that matters.
+	EconInfo gloves;
+	char modelName[256];
+
 	// TODO: styles!
 #if 0
 	i32 styleCount;
