@@ -159,7 +159,7 @@ public:
 	virtual bool GiveNamedItemBool(const char *pchName, bool keepGear) = 0;
 	virtual CBasePlayerWeapon *GiveNamedItem(const char *pchName) = 0;
 	virtual void DropActiveWeapon(CBasePlayerWeapon *pWeapon) = 0;
-	virtual void StripPlayerWeapons(bool removeSuit) = 0;
+	virtual void RemoveAllItems(bool removeSuit) = 0;
 };
 
 class CCSPlayerController_InventoryServices

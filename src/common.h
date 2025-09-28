@@ -72,3 +72,5 @@ typedef double f64;
 #define KZ_FOURCC(a, b, c, d) ((u32)(((d) << 24) | ((c) << 16) | ((b) << 8) | (a)))
 
 #define VPROF_LEVEL 1
+#define VPROF_ENTER_SCOPE_KZ(name) \
+	g_VProfCurrentProfile.EnterScope(name, false, VProfBudgetGroupCallSite {"CS2KZ", 0}, {__FILE__, __LINE__, __func__})

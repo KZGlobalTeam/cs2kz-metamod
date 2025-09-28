@@ -13,6 +13,8 @@
 #include "utlvector.h"
 #include "filesystem.h"
 
+CConVar<bool> kz_replay_playback_debug("kz_replay_playback_debug", FCVAR_NONE, "Prints debug info about replay playback.", false);
+
 struct ReplayPlayback
 {
 	bool valid;
@@ -153,7 +155,10 @@ static_function ReplayPlayback LoadReplay(const char *path)
 			g_pFullFileSystem->Read(&weaponChange.econInfo.attributes[j], sizeof(weaponChange.econInfo.attributes[j]), file);
 		}
 		result.weaponChanges[i + 1] = weaponChange;
-		utils::PrintChatAll("Loaded weapon change: tick %d, itemDef %d", weaponChange.serverTick, weaponChange.econInfo.mainInfo.itemDef);
+		if (kz_replay_playback_debug.Get())
+		{
+			utils::PrintChatAll("Loaded weapon change: tick %d, itemDef %d", weaponChange.serverTick, weaponChange.econInfo.mainInfo.itemDef);
+		}
 	}
 	result.valid = true;
 	g_pFullFileSystem->Close(file);
@@ -177,7 +182,10 @@ static_function void CheckWeapon(KZPlayer &player, PlayerCommand &cmd)
 		replay->weaponIndex++;
 	}
 	desiredWeapon = replay->weaponChanges[replay->weaponIndex].econInfo;
-	utils::PrintAlertAll("index %d/%d\ntick %d/%d", replay->weaponIndex, replay->totalWeapons, tickData->serverTick, finalTickData->serverTick);
+	if (kz_replay_playback_debug.Get())
+	{
+		utils::PrintAlertAll("index %d/%d\ntick %d/%d", replay->weaponIndex, replay->totalWeapons, tickData->serverTick, finalTickData->serverTick);
+	}
 	EconInfo activeWeapon = player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon.Get();
 
 	if (desiredWeapon != activeWeapon)
@@ -195,17 +203,34 @@ static_function void CheckWeapon(KZPlayer &player, PlayerCommand &cmd)
 			CBasePlayerWeapon *invWeapon = weapons->Element(i).Get();
 			if (desiredWeapon == EconInfo(invWeapon))
 			{
-				utils::PrintChatAll("Switched to weapon %s (index %i)", KZ::replaysystem::item::GetWeaponName(desiredWeapon.mainInfo.itemDef).c_str(),
-									replay->weaponIndex);
+				if (kz_replay_playback_debug.Get())
+				{
+					utils::PrintChatAll("Switched to weapon %s (index %i)",
+										KZ::replaysystem::item::GetWeaponName(desiredWeapon.mainInfo.itemDef).c_str(), replay->weaponIndex);
+				}
 				cmd.mutable_base()->set_weaponselect(invWeapon->entindex());
 				return;
 			}
 		}
-		// If the weapon is not found, strip all weapons and give the desired weapon.
-		player.GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
+		// Check if we can get away with not stripping all weapons here.
+		gear_slot_t desiredGearSlot = KZ::replaysystem::item::GetWeaponGearSlot(desiredWeapon.mainInfo.itemDef);
+		for (int i = 0; i < weapons->Count(); i++)
+		{
+			CBasePlayerWeapon *invWeapon = weapons->Element(i).Get();
+			gear_slot_t invGearSlot = KZ::replaysystem::item::GetWeaponGearSlot(invWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+			if (invGearSlot == desiredGearSlot)
+			{
+				// We have a weapon in the same gear slot, so we need to strip all weapons to avoid conflicts.
+				player.GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
+				break;
+			}
+		}
 		std::string weaponName = KZ::replaysystem::item::GetWeaponName(desiredWeapon.mainInfo.itemDef);
 		CBasePlayerWeapon *newWeapon = player.GetPlayerPawn()->m_pItemServices()->GiveNamedItem(weaponName.c_str());
-		utils::PrintChatAll("Given weapon %s to bot (index %i)", weaponName.c_str(), replay->weaponIndex);
+		if (kz_replay_playback_debug.Get())
+		{
+			utils::PrintChatAll("Given weapon %s to bot (index %i)", weaponName.c_str(), replay->weaponIndex);
+		}
 		if (newWeapon)
 		{
 			KZ::replaysystem::item::ApplyItemAttributesToWeapon(*newWeapon, desiredWeapon);
@@ -224,7 +249,7 @@ static_function void InitializeWeapons()
 		return;
 	}
 	CCSPlayerPawn *pawn = bot->GetPlayerPawn();
-	pawn->m_pItemServices()->StripPlayerWeapons(false);
+	pawn->m_pItemServices()->RemoveAllItems(false);
 	u16 itemDef = replay->weaponChanges[0].econInfo.mainInfo.itemDef;
 	if (itemDef == 0)
 	{
@@ -234,9 +259,12 @@ static_function void InitializeWeapons()
 	CBasePlayerWeapon *weapon = pawn->m_pItemServices()->GiveNamedItem(weaponName.c_str());
 	if (!weapon)
 	{
-		__debugbreak();
+		assert(false);
 	}
-	utils::PrintChatAll("Given weapon %s to bot", weaponName.c_str());
+	if (kz_replay_playback_debug.Get())
+	{
+		utils::PrintChatAll("Given weapon %s to bot", weaponName.c_str());
+	}
 	KZ::replaysystem::item::ApplyItemAttributesToWeapon(*weapon, replay->weaponChanges[0].econInfo);
 }
 

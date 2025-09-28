@@ -58,7 +58,7 @@ void KZPistolService::UpdatePistol()
 	{
 		if (this->NeedWeaponStripping())
 		{
-			this->player->GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
+			this->player->GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
 			auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
 				this->player->GetController()->m_iTeamNum() == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
 		}
@@ -107,7 +107,7 @@ void KZPistolService::UpdatePistol()
 			}
 		}
 	}
-	this->player->GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
+	this->player->GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
 	auto knife = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
 		this->player->GetController()->m_iTeamNum == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
 	if (switchTeam)
