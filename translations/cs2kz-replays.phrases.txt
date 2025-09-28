@@ -7,7 +7,7 @@
 	}
 	"No replay course found"
 	{
-		"en"      "{darkred}No courses found on this map."
+		"en"      "{darkred}Current course cannot be detected."
 	}
 	"No replay for course"
 	{

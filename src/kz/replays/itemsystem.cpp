@@ -5,7 +5,45 @@
 
 static_global std::unordered_map<u16, std::string> itemAttributes;
 static_global std::unordered_map<u32, bool> paintKitUsesLegacyModel;
-static_global std::unordered_map<u16, std::string> weaponNames;
+
+// Maps item definition index to weapon name and gear slot.
+
+struct ItemData
+{
+	std::string name {};
+	gear_slot_t gearSlot {};
+};
+
+static_global std::unordered_map<u16, ItemData> weaponItemMapping;
+
+static_function gear_slot_t GetGearSlot(const char *name)
+{
+	if (KZ_STREQI(name, "primary"))
+	{
+		return gear_slot_t::GEAR_SLOT_RIFLE;
+	}
+	if (KZ_STREQI(name, "secondary"))
+	{
+		return gear_slot_t::GEAR_SLOT_PISTOL;
+	}
+	if (KZ_STREQI(name, "knife"))
+	{
+		return gear_slot_t::GEAR_SLOT_KNIFE;
+	}
+	if (KZ_STREQI(name, "grenade"))
+	{
+		return gear_slot_t::GEAR_SLOT_GRENADES;
+	}
+	if (KZ_STREQI(name, "item"))
+	{
+		return gear_slot_t::GEAR_SLOT_C4;
+	}
+	if (KZ_STREQI(name, "boost"))
+	{
+		return gear_slot_t::GEAR_SLOT_BOOSTS;
+	}
+	return gear_slot_t::GEAR_SLOT_INVALID;
+}
 
 void KZ::replaysystem::item::InitItemAttributes()
 {
@@ -54,6 +92,7 @@ void KZ::replaysystem::item::InitItemAttributes()
 		paintKitUsesLegacyModel[id] = sub->GetInt("use_legacy_model", 0) != 0;
 	}
 	subKey = kv->FindKey("items");
+	KeyValues *prefabs = kv->FindKey("prefabs");
 	if (!subKey)
 	{
 		Warning("[KZ] Failed to find items key in items_game.txt!\n");
@@ -75,7 +114,27 @@ void KZ::replaysystem::item::InitItemAttributes()
 		{
 			continue;
 		}
-		weaponNames[id] = sub->GetString("name");
+		weaponItemMapping[id] = {sub->GetString("name"), gear_slot_t::GEAR_SLOT_INVALID};
+		// Try to get "item_gear_slot" from the item, if not found, find it in the prefab.
+		// Prefabs can be nested so we need to take that into account as well.
+		const char *gearSlotStr = sub->GetString("item_gear_slot", "");
+		KeyValues *current = sub;
+		while (!gearSlotStr[0])
+		{
+			const char *parentPrefabName = current->GetString("prefab", "");
+			if (!parentPrefabName[0])
+			{
+				break;
+			}
+			KeyValues *prefab = prefabs->FindKey(parentPrefabName);
+			if (!prefab)
+			{
+				break;
+			}
+			gearSlotStr = prefab->GetString("item_gear_slot", "");
+			current = prefab;
+		}
+		weaponItemMapping[id].gearSlot = GetGearSlot(gearSlotStr);
 	}
 	delete kv;
 }
@@ -87,12 +146,17 @@ std::string KZ::replaysystem::item::GetItemAttributeName(u16 id)
 
 std::string KZ::replaysystem::item::GetWeaponName(u16 id)
 {
-	std::string name = weaponNames[id];
+	std::string name = weaponItemMapping[id].name;
 	if (V_strstr(name.c_str(), "weapon_knife_") || name == "weapon_bayonet")
 	{
 		return "weapon_knife";
 	}
-	return weaponNames[id];
+	return name;
+}
+
+gear_slot_t KZ::replaysystem::item::GetWeaponGearSlot(u16 id)
+{
+	return weaponItemMapping[id].gearSlot;
 }
 
 bool KZ::replaysystem::item::DoesPaintKitUseLegacyModel(float paintKit)

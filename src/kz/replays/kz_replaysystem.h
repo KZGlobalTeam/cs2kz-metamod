@@ -1,6 +1,7 @@
 
 #ifndef KZ_REPLAYSYSTEM_H
 #define KZ_REPLAYSYSTEM_H
+#include "sdk/datatypes.h"
 
 class KZPlayer;
 class CCSPlayerPawnBase;
@@ -26,6 +27,7 @@ namespace KZ::replaysystem
 		void InitItemAttributes();
 		std::string GetItemAttributeName(u16 id);
 		std::string GetWeaponName(u16 id);
+		gear_slot_t GetWeaponGearSlot(u16 id);
 		bool DoesPaintKitUseLegacyModel(float paintKit);
 		void ApplyItemAttributesToWeapon(CBasePlayerWeapon &weapon, const EconInfo &info);
 	} // namespace item

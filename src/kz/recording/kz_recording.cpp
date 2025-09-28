@@ -5,6 +5,7 @@
 #include "utils/simplecmds.h"
 #include "sdk/usercmd.h"
 #include "filesystem.h"
+#include "vprof.h"
 
 static_global class : public KZTimerServiceEventListener
 {
@@ -333,8 +334,10 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 	g_pFullFileSystem->CreateDirHierarchy(replayPath);
 
 	FileHandle_t file = g_pFullFileSystem->Open(filename, "wb");
+
 	if (file)
 	{
+		VPROF_ENTER_SCOPE_KZ("SaveReplay (Header)");
 		ReplayHeader header = {};
 		header.magicNumber = KZ_REPLAY_MAGIC;
 		header.version = KZ_REPLAY_VERSION;
@@ -350,23 +353,35 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 
 		// TODO: styles!
 		g_pFullFileSystem->Write(&header, sizeof(header), file);
-
+		VPROF_EXIT_SCOPE();
+		VPROF_ENTER_SCOPE_KZ("SaveReplay (TickData)");
 		// write tickData
+		// TODO: investigate performance issues
 		i32 tickdataCount = player->recordingService->circularRecording.tickData->GetReadAvailable();
 		g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
 		TickData tickData = {};
 		for (i32 i = 0; i < tickdataCount; i++)
 		{
+			VPROF_ENTER_SCOPE_KZ("SaveReplay (TickData Peek)");
 			player->recordingService->circularRecording.tickData->Peek(&tickData, 1, i);
+			VPROF_EXIT_SCOPE();
+			VPROF_ENTER_SCOPE_KZ("SaveReplay (TickData Write)");
 			g_pFullFileSystem->Write(&tickData, sizeof(tickData), file);
+			VPROF_EXIT_SCOPE();
 		}
 		SubtickData subtickData = {};
 		for (i32 i = 0; i < tickdataCount; i++)
 		{
+			VPROF_ENTER_SCOPE_KZ("SaveReplay (SubtickData Peek)");
 			player->recordingService->circularRecording.subtickData->Peek(&subtickData, 1, i);
+			VPROF_EXIT_SCOPE();
+			VPROF_ENTER_SCOPE_KZ("SaveReplay (SubtickData Write)");
 			g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
 			g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
+			VPROF_EXIT_SCOPE();
 		}
+		VPROF_EXIT_SCOPE();
+		VPROF_ENTER_SCOPE_KZ("SaveReplay (WeaponData)");
 		i32 numWeaponChanges = player->recordingService->circularRecording.weaponChangeEvents->GetReadAvailable();
 		g_pFullFileSystem->Write(&numWeaponChanges, sizeof(i32), file);
 		// This struct is HUGE. Allocate it on the heap.
@@ -382,6 +397,7 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 			}
 		}
 		delete event;
+		VPROF_EXIT_SCOPE();
 		g_pFullFileSystem->Close(file);
 	}
 
