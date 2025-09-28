@@ -3,7 +3,10 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/mode/kz_mode.h"
 #include "utils/simplecmds.h"
+
+#include "sdk/cskeletoninstance.h"
 #include "sdk/usercmd.h"
+
 #include "filesystem.h"
 #include "vprof.h"
 
@@ -174,6 +177,8 @@ void KZRecordingService::OnTimerEnd()
 
 void KZRecordingService::OnPhysicsSimulate()
 {
+	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(this->player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
+	utils::PrintAlertAll("ModelState: mesh group %llu", pSkeleton->m_modelState().m_MeshGroupMask());
 	// record data for replay playback
 	if (!this->player->IsAlive() || this->player->IsFakeClient())
 	{
@@ -350,25 +355,18 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 		V_snprintf(header.map.name, sizeof(header.map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
 		g_pKZUtils->GetCurrentMapMD5(header.map.md5, sizeof(header.map.md5));
 		header.firstWeapon = player->recordingService->circularRecording.earliestWeapon;
-
+		header.gloves = player->GetPlayerPawn()->m_EconGloves();
+		CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
+		V_snprintf(header.modelName, sizeof(header.modelName), "%s", pSkeleton->m_modelState().m_ModelName().String());
 		// TODO: styles!
 		g_pFullFileSystem->Write(&header, sizeof(header), file);
 		VPROF_EXIT_SCOPE();
 		VPROF_ENTER_SCOPE_KZ("SaveReplay (TickData)");
-		// write tickData
-		// TODO: investigate performance issues
 		i32 tickdataCount = player->recordingService->circularRecording.tickData->GetReadAvailable();
 		g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
 		TickData tickData = {};
-		for (i32 i = 0; i < tickdataCount; i++)
-		{
-			VPROF_ENTER_SCOPE_KZ("SaveReplay (TickData Peek)");
-			player->recordingService->circularRecording.tickData->Peek(&tickData, 1, i);
-			VPROF_EXIT_SCOPE();
-			VPROF_ENTER_SCOPE_KZ("SaveReplay (TickData Write)");
-			g_pFullFileSystem->Write(&tickData, sizeof(tickData), file);
-			VPROF_EXIT_SCOPE();
-		}
+		player->recordingService->circularRecording.tickData->WriteToFile(g_pFullFileSystem, file, tickdataCount);
+		VPROF_EXIT_SCOPE();
 		SubtickData subtickData = {};
 		for (i32 i = 0; i < tickdataCount; i++)
 		{
@@ -397,6 +395,22 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 			}
 		}
 		delete event;
+		// Command data is always written last because playback doesn't read this part of the replay.
+		CmdData cmdData = {};
+		i32 cmddataCount = player->recordingService->circularRecording.cmdData->GetReadAvailable();
+		g_pFullFileSystem->Write(&cmddataCount, sizeof(cmddataCount), file);
+		player->recordingService->circularRecording.cmdData->WriteToFile(g_pFullFileSystem, file, cmddataCount);
+		SubtickData cmdSubtickData = {};
+		for (i32 i = 0; i < cmddataCount; i++)
+		{
+			VPROF_ENTER_SCOPE_KZ("SaveReplay (CmdSubtickData Peek)");
+			player->recordingService->circularRecording.cmdSubtickData->Peek(&cmdSubtickData, 1, i);
+			VPROF_EXIT_SCOPE();
+			VPROF_ENTER_SCOPE_KZ("SaveReplay (CmdSubtickData Write)");
+			g_pFullFileSystem->Write(&cmdSubtickData.numSubtickMoves, sizeof(cmdSubtickData.numSubtickMoves), file);
+			g_pFullFileSystem->Write(&cmdSubtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * cmdSubtickData.numSubtickMoves, file);
+			VPROF_EXIT_SCOPE();
+		}
 		VPROF_EXIT_SCOPE();
 		g_pFullFileSystem->Close(file);
 	}

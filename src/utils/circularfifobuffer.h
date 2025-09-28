@@ -2,6 +2,7 @@
 #include <memory>
 #include <algorithm>
 #include <cstring>
+#include "filesystem.h"
 #include "vprof.h"
 
 template<typename T, size_t SIZE>
@@ -145,6 +146,40 @@ public:
 	size_t GetWriteAvailable() const
 	{
 		return capacity - count;
+	}
+
+	// Write the n latest elements from the buffer to a file
+	// Returns the number of elements actually written
+	size_t WriteToFile(IFileSystem *fs, FileHandle_t file, size_t n) const
+	{
+		if (count == 0 || n == 0)
+		{
+			return 0;
+		}
+
+		size_t elementsToWrite = min(n, count);
+		size_t elementsWritten = 0;
+
+		// Calculate starting position for the n latest elements
+		// Latest elements are those closest to writePos
+		size_t startOffset = count - elementsToWrite;
+
+		for (size_t i = 0; i < elementsToWrite; ++i)
+		{
+			size_t index = (readPos + startOffset + i) % capacity;
+
+			// Use the external Write function
+			if (fs->Write(&buffer[index], sizeof(T), file))
+			{
+				++elementsWritten;
+			}
+			else
+			{
+				break; // Stop on write error
+			}
+		}
+
+		return elementsWritten;
 	}
 
 private:

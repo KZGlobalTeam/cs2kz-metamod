@@ -30,6 +30,8 @@ namespace KZ::replaysystem
 		gear_slot_t GetWeaponGearSlot(u16 id);
 		bool DoesPaintKitUseLegacyModel(float paintKit);
 		void ApplyItemAttributesToWeapon(CBasePlayerWeapon &weapon, const EconInfo &info);
+		void ApplyGloveAttributesToPawn(CCSPlayerPawn *pawn, const EconInfo &info);
+		void ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, const char *modelName);
 	} // namespace item
 
 } // namespace KZ::replaysystem

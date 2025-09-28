@@ -38,4 +38,5 @@ private:
 	std::unordered_map<std::string, void *> m_umAddresses;
 	std::unordered_map<std::string, std::string> m_umLibraries;
 	std::unordered_map<std::string, std::string> m_umPatches;
+	std::unordered_map<std::string, bool> m_umAllowMultiMatch;
 };
