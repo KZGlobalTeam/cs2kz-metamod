@@ -171,7 +171,7 @@ struct ReplayHeader
 	} map;
 
 	EconInfo firstWeapon;
-	// Probably not worth the effort to track models and gloves over time, since this won't affect gameplay in any way that matters.
+	// Probably not worth the effort to track player models and gloves over time, since this won't affect gameplay in any way that matters.
 	EconInfo gloves;
 	char modelName[256];
 

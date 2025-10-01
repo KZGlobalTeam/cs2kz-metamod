@@ -8,6 +8,7 @@
 #include "kz_replay.h"
 #include "kz_replaysystem.h"
 #include "utils/simplecmds.h"
+#include "utils/uuid.h"
 #include "utils/ctimer.h"
 #include "sdk/usercmd.h"
 #include "sdk/cskeletoninstance.h"
@@ -528,32 +529,26 @@ SCMD(kz_replay, SCFL_REPLAY)
 	{
 		return MRES_SUPERCEDE;
 	}
-
-	char replayPath[128];
-	V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_RUNS_PATH "/%s", g_pKZUtils->GetCurrentMapName().Get());
-
-	auto modeInfo = KZ::mode::GetModeInfo(player->modeService);
-
-	i32 courseId = INVALID_COURSE_NUMBER;
-	const KZCourseDescriptor *course = player->timerService->GetCourse();
-	if (course)
+	// TODO: Localize
+	if (args->ArgC() < 2)
 	{
-		courseId = course->id;
-	}
-	else
-	{
-		player->languageService->PrintChat(true, false, "No replay course found");
+		player->languageService->PrintChat(true, false, "Usage: kz_replay <ID>");
 		return MRES_SUPERCEDE;
 	}
+	UUID_t uuid;
+	if (!UUID_t::IsValid(args->Arg(1), &uuid))
+	{
+		player->languageService->PrintChat(true, false, "Invalid UUID format");
+		return MRES_SUPERCEDE;
+	}
+	// Validate uuid format
+	char replayPath[512];
+	V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_PATH "/%s.replay", uuid.ToString().c_str());
 
-	char filename[512];
-	V_snprintf(filename, sizeof(filename), "%s/%i_%s_%s.replay", replayPath, courseId, modeInfo.shortModeName.Get(),
-			   player->timerService->GetCurrentTimeType() == KZTimerService::TimeType_Pro ? "PRO" : "TP");
-
-	ReplayPlayback replay = LoadReplay(filename);
+	ReplayPlayback replay = LoadReplay(replayPath);
 	if (!replay.valid)
 	{
-		player->languageService->PrintChat(true, false, "No replay for course", course->name);
+		player->languageService->PrintChat(true, false, "Failed to load replay");
 		return MRES_SUPERCEDE;
 	}
 
