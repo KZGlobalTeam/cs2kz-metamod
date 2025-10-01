@@ -323,7 +323,7 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 
 	auto modeInfo = KZ::mode::GetModeInfo(player->modeService);
 	char replayPath[128];
-	V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_RUNS_PATH "/%s", g_pKZUtils->GetCurrentMapName().Get());
+	V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_PATH, g_pKZUtils->GetCurrentMapName().Get());
 	char filename[512];
 
 	i32 courseId = INVALID_COURSE_NUMBER;
@@ -334,8 +334,9 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 	}
 
 	// TODO: Append uuid into the file name?
-	V_snprintf(filename, sizeof(filename), "%s/%i_%s_%s.replay", replayPath, courseId, modeInfo.shortModeName.Get(),
-			   player->timerService->GetCurrentTimeType() == KZTimerService::TimeType_Pro ? "PRO" : "TP");
+	UUID_t uuid;
+	std::string uuidStr = uuid.ToString();
+	V_snprintf(filename, sizeof(filename), "%s/%s.replay", replayPath, uuidStr.c_str());
 	g_pFullFileSystem->CreateDirHierarchy(replayPath);
 
 	FileHandle_t file = g_pFullFileSystem->Open(filename, "wb");
@@ -414,6 +415,6 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 		VPROF_EXIT_SCOPE();
 		g_pFullFileSystem->Close(file);
 	}
-
+	player->PrintChat(false, false, "Saved replay to %s", filename);
 	return MRES_SUPERCEDE;
 }
