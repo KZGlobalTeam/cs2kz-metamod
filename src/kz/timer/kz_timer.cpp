@@ -201,7 +201,12 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 		return false;
 	}
 
-	this->currentTime = 0.0f;
+	// In CKZ you can touch trigger in half tick intervals, but here we are incrementing by full tick intervals only.
+	// Since the player was still in the trigger for half a tick, we need to offset by half a tick if we started in a half tick.
+	// So the current time should be subtracted by the difference between server curtime and client curtime at the moment of starting the timer,
+	// That way when we increment by full tick intervals in OnPhysicsSimulatePost, the time will be correct.
+	this->currentTime = g_pKZUtils->GetGlobals()->curtime - g_pKZUtils->GetServerGlobals()->curtime;
+	assert(this->currentTime <= 0 && this->currentTime > -ENGINE_FIXED_TICK_INTERVAL);
 	this->timerRunning = true;
 	this->currentStage = 0;
 	this->reachedCheckpoints = 0;
