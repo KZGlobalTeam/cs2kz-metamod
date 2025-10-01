@@ -2,6 +2,7 @@
 #include "kz_recording.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/style/kz_style.h"
 #include "utils/simplecmds.h"
 
 #include "sdk/cskeletoninstance.h"
@@ -42,7 +43,24 @@ public:
 	{
 		player->PrintChat(false, false, "resumepost");
 	}
+
+	virtual void OnSplitZoneTouchPost(KZPlayer *player, u32 splitZone)
+	{
+		player->PrintChat(false, false, "splitzonepost %d", splitZone);
+	}
+
+	virtual void OnCheckpointZoneTouchPost(KZPlayer *player, u32 checkpoint)
+	{
+		player->PrintChat(false, false, "checkpointzone %d", checkpoint);
+	}
+
+	virtual void OnStageZoneTouchPost(KZPlayer *player, u32 stageZone)
+	{
+		player->PrintChat(false, false, "stagezone %d", stageZone);
+	}
 } timerEventListener;
+
+CConVar<bool> kz_replay_debug_recording("kz_replay_debug_recording", FCVAR_NONE, "Debug replay recording", false);
 
 void KZRecordingService::Init()
 {
@@ -286,15 +304,34 @@ void KZRecordingService::OnPhysicsSimulatePost()
 		event.econInfo = weaponEconInfo;
 		this->circularRecording.weaponChangeEvents->Write(event);
 	}
-	if (!this->circularRecording.earliestWeaponSet)
+	if (!this->circularRecording.earliestWeapon.has_value())
 	{
 		this->circularRecording.earliestWeapon = this->currentWeaponEconInfo;
-		this->circularRecording.earliestWeaponSet = true;
+	}
+	if (!this->circularRecording.earliestMode.has_value())
+	{
+		auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService);
+		this->circularRecording.earliestMode = RpModeStyleInfo();
+		V_strncpy(this->circularRecording.earliestMode->name, modeInfo.longModeName.Get(), sizeof(this->circularRecording.earliestMode->name));
+		V_strncpy(this->circularRecording.earliestMode->md5, modeInfo.md5, sizeof(this->circularRecording.earliestMode->md5));
+	}
+	if (!this->circularRecording.earliestStyles.has_value())
+	{
+		this->circularRecording.earliestStyles = std::vector<RpModeStyleInfo>();
+
+		FOR_EACH_VEC(this->player->styleServices, i)
+		{
+			auto styleService = this->player->styleServices[i];
+			auto styleInfo = KZ::style::GetStyleInfo(styleService);
+			RpModeStyleInfo style = {};
+			V_strncpy(style.name, styleInfo.longName, sizeof(style.name));
+			V_strncpy(style.md5, styleInfo.md5, sizeof(style.md5));
+			this->circularRecording.earliestStyles->push_back(style);
+		}
 	}
 	// Remove old events from circular buffer (keep 2 minutes)
 	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
 	i32 numToRemove = 0;
-	bool foundValidEvent = false;
 	for (i32 i = 0; i < this->circularRecording.weaponChangeEvents->GetReadAvailable(); i++)
 	{
 		WeaponSwitchEvent data;
@@ -311,6 +348,64 @@ void KZRecordingService::OnPhysicsSimulatePost()
 		break;
 	}
 	this->circularRecording.weaponChangeEvents->Advance(numToRemove);
+
+	// Remove old mode and style changes from circular buffer.
+	numToRemove = 0;
+	for (i32 i = 0; i < this->circularRecording.rpEvents->GetReadAvailable(); i++)
+	{
+		RpEvent event;
+		if (!this->circularRecording.rpEvents->Peek(&event, 1, i))
+		{
+			break;
+		}
+		if (event.serverTick + 2 * 60 * 64 < currentTick)
+		{
+			if (event.type == RPEVENT_MODE_CHANGE)
+			{
+				V_strncpy(this->circularRecording.earliestMode.value().name, event.data.modeChange.name,
+						  sizeof(this->circularRecording.earliestMode.value().name));
+				V_strncpy(this->circularRecording.earliestMode.value().md5, event.data.modeChange.md5,
+						  sizeof(this->circularRecording.earliestMode.value().md5));
+			}
+			else if (event.type == RPEVENT_STYLE_ADD)
+			{
+				bool found = false;
+				// Check if we already have this style. This shouldn't happen but just in case.
+				for (auto &style : this->circularRecording.earliestStyles.value())
+				{
+					if (KZ_STREQI(style.name, event.data.styleChange.name))
+					{
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+				{
+					RpModeStyleInfo style = {};
+					V_strncpy(style.name, event.data.styleChange.name, sizeof(style.name));
+					V_strncpy(style.md5, event.data.styleChange.md5, sizeof(style.md5));
+					this->circularRecording.earliestStyles->push_back(style);
+				}
+			}
+			else if (event.type == RPEVENT_STYLE_REMOVE)
+			{
+				for (auto it = this->circularRecording.earliestStyles->begin(); it != this->circularRecording.earliestStyles->end(); ++it)
+				{
+					if (KZ_STREQI(it->name, event.data.styleChange.name))
+					{
+						this->circularRecording.earliestStyles->erase(it);
+						break;
+					}
+				}
+			}
+			// We don't care about timer events, we just do nothing during playback if they become "orphaned" from having its timer start event
+			// removed. In a run replay, the relevant timer events will always have a timer start event to refer to.
+			numToRemove++;
+			continue;
+		}
+		break;
+	}
+	this->circularRecording.rpEvents->Advance(numToRemove);
 }
 
 SCMD(kz_testsavereplay, SCFL_REPLAY)
@@ -349,25 +444,23 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 		header.version = KZ_REPLAY_VERSION;
 		V_snprintf(header.player.name, sizeof(header.player.name), "%s", player->GetName());
 		header.player.steamid64 = player->GetSteamId64();
-
-		V_snprintf(header.mode.name, sizeof(header.mode.name), "%s", modeInfo.longModeName.Get());
-		V_snprintf(header.mode.md5, sizeof(header.mode.md5), "%s", modeInfo.md5);
-
+		header.type = RP_MANUAL;
 		V_snprintf(header.map.name, sizeof(header.map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
 		g_pKZUtils->GetCurrentMapMD5(header.map.md5, sizeof(header.map.md5));
-		header.firstWeapon = player->recordingService->circularRecording.earliestWeapon;
+		header.firstWeapon = player->recordingService->circularRecording.earliestWeapon.value();
 		header.gloves = player->GetPlayerPawn()->m_EconGloves();
 		CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
 		V_snprintf(header.modelName, sizeof(header.modelName), "%s", pSkeleton->m_modelState().m_ModelName().String());
-		// TODO: styles!
 		g_pFullFileSystem->Write(&header, sizeof(header), file);
 		VPROF_EXIT_SCOPE();
+
 		VPROF_ENTER_SCOPE_KZ("SaveReplay (TickData)");
 		i32 tickdataCount = player->recordingService->circularRecording.tickData->GetReadAvailable();
 		g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
 		TickData tickData = {};
 		player->recordingService->circularRecording.tickData->WriteToFile(g_pFullFileSystem, file, tickdataCount);
 		VPROF_EXIT_SCOPE();
+
 		SubtickData subtickData = {};
 		for (i32 i = 0; i < tickdataCount; i++)
 		{
@@ -379,7 +472,7 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 			g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
 			VPROF_EXIT_SCOPE();
 		}
-		VPROF_EXIT_SCOPE();
+
 		VPROF_ENTER_SCOPE_KZ("SaveReplay (WeaponData)");
 		i32 numWeaponChanges = player->recordingService->circularRecording.weaponChangeEvents->GetReadAvailable();
 		g_pFullFileSystem->Write(&numWeaponChanges, sizeof(i32), file);
@@ -396,11 +489,30 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 			}
 		}
 		delete event;
+		VPROF_EXIT_SCOPE();
+
+		VPROF_ENTER_SCOPE_KZ("SaveReplay (RpEvents)");
+		i32 numRpEvents = player->recordingService->circularRecording.rpEvents->GetReadAvailable();
+		g_pFullFileSystem->Write(&numRpEvents, sizeof(i32), file);
+		RpEvent *rpEvent = new RpEvent();
+		for (i32 i = 0; i < numRpEvents; i++)
+		{
+			player->recordingService->circularRecording.rpEvents->Peek(rpEvent, 1, i);
+			g_pFullFileSystem->Write(&rpEvent->serverTick, sizeof(rpEvent->serverTick), file);
+			g_pFullFileSystem->Write(&rpEvent->type, sizeof(rpEvent->type), file);
+			g_pFullFileSystem->Write(&rpEvent->data, sizeof(rpEvent->data), file);
+		}
+		delete rpEvent;
+		VPROF_EXIT_SCOPE();
+
+		VPROF_ENTER_SCOPE_KZ("SaveReplay (CmdData)");
 		// Command data is always written last because playback doesn't read this part of the replay.
 		CmdData cmdData = {};
 		i32 cmddataCount = player->recordingService->circularRecording.cmdData->GetReadAvailable();
 		g_pFullFileSystem->Write(&cmddataCount, sizeof(cmddataCount), file);
 		player->recordingService->circularRecording.cmdData->WriteToFile(g_pFullFileSystem, file, cmddataCount);
+		VPROF_EXIT_SCOPE();
+
 		SubtickData cmdSubtickData = {};
 		for (i32 i = 0; i < cmddataCount; i++)
 		{
@@ -412,7 +524,6 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 			g_pFullFileSystem->Write(&cmdSubtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * cmdSubtickData.numSubtickMoves, file);
 			VPROF_EXIT_SCOPE();
 		}
-		VPROF_EXIT_SCOPE();
 		g_pFullFileSystem->Close(file);
 	}
 	player->PrintChat(false, false, "Saved replay to %s", filename);

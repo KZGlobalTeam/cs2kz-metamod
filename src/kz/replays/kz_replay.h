@@ -13,12 +13,21 @@ enum : u32
 	KZ_REPLAY_VERSION = 1,
 };
 
+enum ReplayType : u32
+{
+	RP_MANUAL = 0,
+	RP_CHEATER = 1, // Contain a ban reason
+	RP_RUN = 2,
+	RP_JUMPSTATS = 3 // Contain all jumpstats events that happen throughout the replay. Does not contain timer events.
+};
+
 enum RpEventType
 {
-	RPEVENT_TIMER_START,
-	RPEVENT_TIMER_END,
-	RPEVENT_TIMER_STOPPED,
-	RPEVENT_TIMER_PAUSE
+	RPEVENT_TIMER_EVENT,
+	RPEVENT_MODE_CHANGE,
+	RPEVENT_STYLE_ADD,
+	RPEVENT_STYLE_REMOVE,
+	RPEVENT_TELEPORT
 };
 
 struct RpFlags
@@ -34,30 +43,59 @@ struct WeaponSwitchEvent
 	EconInfo econInfo;
 };
 
+struct RpModeStyleInfo
+{
+	char name[64];
+	char md5[33];
+};
+
+struct RpStyleChangeInfo : public RpModeStyleInfo
+{
+	bool add;
+};
+
 struct RpEvent
 {
-	RpEventType eventType;
+	RpEventType type;
+	f64 serverTick; // Use f64 to avoid precision loss for large tick values.
 
 	union
 	{
 		struct
 		{
-			i32 courseId;
-		} timerStart;
+			enum
+			{
+				TIMER_START,
+				TIMER_END,
+				TIMER_STOP,
+				TIMER_PAUSE,
+				TIMER_RESUME,
+				TIMER_SPLIT,
+				TIMER_CPZ,
+				TIMER_STAGE,
+			} type;
+
+			i32 index; // Course ID for start/end, split number for split, checkpoint number for cpz, stage number for stage.
+			f32 time;  // Final time for end, time reached split/checkpoint/stage for split/cpz/stage. Current time for pause/stop/resume.
+		} timer;
+
+		RpModeStyleInfo modeChange;
+
+		RpStyleChangeInfo styleChange;
 
 		struct
 		{
-			i32 courseId;
-			f32 time;
-			u32 teleportsUsed;
-		} timerEnd;
-
-		struct
-		{
-			i32 courseId;
-		} timerStopped;
-	};
+			bool hasOrigin;
+			bool hasAngles;
+			bool hasVelocity;
+			f32 origin[3];
+			f32 angles[3];
+			f32 velocity[3];
+		} teleport;
+	} data;
 };
+
+static_assert(std::is_trivial<RpEvent>::value, "RpEvent must be a trivial type");
 
 struct SubtickData
 {
@@ -65,7 +103,7 @@ struct SubtickData
 
 	struct RpSubtickMove
 	{
-		float when;
+		f32 when;
 		// u32 instead of u64 because buttons above 32 bits look irrelevant.
 		u32 button;
 
@@ -75,10 +113,10 @@ struct SubtickData
 
 			struct
 			{
-				float analog_forward_delta;
-				float analog_left_delta;
-				float pitch_delta;
-				float yaw_delta;
+				f32 analog_forward_delta;
+				f32 analog_left_delta;
+				f32 pitch_delta;
+				f32 yaw_delta;
 			} analogMove;
 		};
 
@@ -88,6 +126,8 @@ struct SubtickData
 		}
 	} subtickMoves[64];
 };
+
+static_assert(std::is_trivial<SubtickData>::value, "SubtickData must be a trivial type");
 
 struct TickData
 {
@@ -151,6 +191,7 @@ struct ReplayHeader
 {
 	u32 magicNumber;
 	u32 version;
+	ReplayType type;
 
 	struct
 	{
@@ -162,29 +203,12 @@ struct ReplayHeader
 	{
 		char name[64];
 		char md5[33];
-	} mode;
-
-	struct
-	{
-		char name[64];
-		char md5[33];
 	} map;
 
 	EconInfo firstWeapon;
 	// Probably not worth the effort to track player models and gloves over time, since this won't affect gameplay in any way that matters.
 	EconInfo gloves;
 	char modelName[256];
-
-	// TODO: styles!
-#if 0
-	i32 styleCount;
-	struct StyleInfo;
-	{
-		char name[64];
-		char md5[33];
-	}
-	StyleInfo *styles;
-#endif
 };
 
 #endif // KZ_REPLAY_H
