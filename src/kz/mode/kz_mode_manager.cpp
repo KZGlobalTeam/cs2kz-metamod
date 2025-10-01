@@ -150,7 +150,10 @@ void KZ::mode::ApplyModeSettings(KZPlayer *player)
 
 bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const char *longModeName, ModeServiceFactory factory)
 {
-	if (!shortModeName || V_strlen(shortModeName) == 0 || !longModeName || V_strlen(longModeName) == 0)
+	// clang-format off
+	if (!shortModeName || V_strlen(shortModeName) == 0 || V_strlen(shortModeName) > 64
+	 || !longModeName || V_strlen(longModeName) == 0 || V_strlen(longModeName) > 64)
+	// clang-format on
 	{
 		return false;
 	}
