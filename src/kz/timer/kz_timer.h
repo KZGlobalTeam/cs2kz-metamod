@@ -104,6 +104,12 @@ public:
 	}
 
 	virtual void OnResumePost(KZPlayer *player) {}
+
+	virtual void OnSplitZoneTouchPost(KZPlayer *player, u32 splitZone) {}
+
+	virtual void OnCheckpointZoneTouchPost(KZPlayer *player, u32 checkpointZone) {}
+
+	virtual void OnStageZoneTouchPost(KZPlayer *player, u32 stageZone) {}
 };
 
 class KZTimerService : public KZBaseService

@@ -41,6 +41,10 @@ PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
+	if (!CommandLine()->HasParm("-dedicated"))
+	{
+		return false;
+	}
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
 

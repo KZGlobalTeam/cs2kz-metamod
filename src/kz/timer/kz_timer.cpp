@@ -123,6 +123,7 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		this->ShowSplitText(splitNumber);
 		this->lastSplit = splitNumber;
 	}
+	CALL_FORWARD(eventListeners, OnSplitZoneTouchPost, this->player, splitNumber);
 }
 
 void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, i32 cpNumber)

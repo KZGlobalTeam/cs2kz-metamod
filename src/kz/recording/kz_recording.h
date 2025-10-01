@@ -19,14 +19,17 @@ struct CircularRecorder
 	CFIFOCircularBuffer<TickData, 64 * 60 * 2> *tickData;
 	CFIFOCircularBuffer<SubtickData, 64 * 60 * 2> *subtickData;
 	CFIFOCircularBuffer<WeaponSwitchEvent, 64 * 60 * 2> *weaponChangeEvents;
-	bool earliestWeaponSet = false;
-	EconInfo earliestWeapon;
+
+	std::optional<EconInfo> earliestWeapon;
+	std::optional<RpModeStyleInfo> earliestMode;
+	std::optional<std::vector<RpModeStyleInfo>> earliestStyles;
 
 	// Extra 20 seconds for commands in case of network issues
 	// Note that command data is tracked regardless of whether the player is alive or not.
 	// This means if the player goes to spectator, the command data will no longer match the tick data.
 	CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)> *cmdData;
 	CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)> *cmdSubtickData;
+	CFIFOCircularBuffer<RpEvent, 64 * (60 * 2 + 20)> *rpEvents;
 
 	CircularRecorder()
 	{
@@ -35,6 +38,7 @@ struct CircularRecorder
 		this->weaponChangeEvents = new CFIFOCircularBuffer<WeaponSwitchEvent, 64 * 60 * 2>();
 		this->cmdData = new CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)>();
 		this->cmdSubtickData = new CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)>();
+		this->rpEvents = new CFIFOCircularBuffer<RpEvent, 64 * (60 * 2 + 20)>();
 	}
 
 	~CircularRecorder()
@@ -44,6 +48,7 @@ struct CircularRecorder
 		delete this->weaponChangeEvents;
 		delete this->cmdData;
 		delete this->cmdSubtickData;
+		delete this->rpEvents;
 	}
 };
 
