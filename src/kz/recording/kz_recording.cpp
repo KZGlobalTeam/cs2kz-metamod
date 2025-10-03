@@ -16,47 +16,47 @@ static_global class : public KZTimerServiceEventListener
 public:
 	virtual void OnTimerStartPost(KZPlayer *player, u32 courseGUID)
 	{
-		player->PrintChat(false, false, "timerstartpost");
+		player->recordingService->OnTimerStart();
 	}
 
 	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed)
 	{
-		player->PrintChat(false, false, "timerendpost");
+		player->recordingService->OnTimerEnd();
 	}
 
 	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID)
 	{
-		player->PrintChat(false, false, "timerstopped");
+		player->recordingService->OnTimerStop();
 	}
 
 	virtual void OnTimerInvalidated(KZPlayer *player)
 	{
-		player->PrintChat(false, false, "timerinvalidated");
+		// player->PrintChat(false, false, "timerinvalidated");
 	}
 
 	virtual void OnPausePost(KZPlayer *player)
 	{
-		player->PrintChat(false, false, "pausepost");
+		player->recordingService->OnPause();
 	}
 
 	virtual void OnResumePost(KZPlayer *player)
 	{
-		player->PrintChat(false, false, "resumepost");
+		player->recordingService->OnResume();
 	}
 
 	virtual void OnSplitZoneTouchPost(KZPlayer *player, u32 splitZone)
 	{
-		player->PrintChat(false, false, "splitzonepost %d", splitZone);
+		player->recordingService->OnSplit(splitZone);
 	}
 
 	virtual void OnCheckpointZoneTouchPost(KZPlayer *player, u32 checkpoint)
 	{
-		player->PrintChat(false, false, "checkpointzone %d", checkpoint);
+		player->recordingService->OnCPZ(checkpoint);
 	}
 
 	virtual void OnStageZoneTouchPost(KZPlayer *player, u32 stageZone)
 	{
-		player->PrintChat(false, false, "stagezone %d", stageZone);
+		player->recordingService->OnStage(stageZone);
 	}
 } timerEventListener;
 
@@ -160,36 +160,182 @@ void KZRecordingService::OnPlayerJoinTeam(i32 team) {}
 
 void KZRecordingService::Reset()
 {
-	this->circularRecording.events.Purge();
 	this->circularRecording.tickData->Advance(this->circularRecording.tickData->GetReadAvailable());
 	this->circularRecording.subtickData->Advance(this->circularRecording.subtickData->GetReadAvailable());
 	this->circularRecording.cmdData->Advance(this->circularRecording.cmdData->GetReadAvailable());
 	this->circularRecording.cmdSubtickData->Advance(this->circularRecording.cmdSubtickData->GetReadAvailable());
 	this->circularRecording.weaponChangeEvents->Advance(this->circularRecording.weaponChangeEvents->GetReadAvailable());
-
+	this->circularRecording.rpEvents->Advance(this->circularRecording.rpEvents->GetReadAvailable());
+	this->recorders.clear();
 	this->lastCmdNumReceived = 0;
 }
 
 void KZRecordingService::OnTimerStart()
 {
-	this->recorders.push_back(Recorder());
-	this->currentRecorder = this->recorders.back().uuid;
+	// this->recorders.push_back(Recorder());
+	// this->currentRecorder = this->recorders.back().uuid;
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Timer start");
+	}
+	// TODO: Initiate a new recorder of type RP_RUN
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_START;
+	// Mapper-defined course ID.
+	event.data.timer.index = this->player->timerService->GetCourse()->id;
+	event.data.timer.time = this->player->timerService->GetTime();
+	this->InsertEvent(event);
 }
 
 void KZRecordingService::OnTimerStop()
 {
-	this->currentRecorder = {};
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Timer stop");
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_STOP;
+	event.data.timer.time = this->player->timerService->GetTime();
+	this->InsertEvent(event);
+	// this->currentRecorder = {};
 }
 
 void KZRecordingService::OnTimerEnd()
 {
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Timer end");
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_END;
+	event.data.timer.index = this->player->timerService->GetCourse()->id;
+	event.data.timer.time = this->player->timerService->GetTime();
+	this->InsertEvent(event);
+
+	// for (auto &recorder : this->recorders)
+	// {
+	// 	if (recorder.uuid == this->currentRecorder)
+	// 	{
+	// 		recorder.desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f; // record 2 seconds after timer end
+	// 		break;
+	// 	}
+	// }
+}
+
+void KZRecordingService::OnPause()
+{
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Timer pause");
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_PAUSE;
+	event.data.timer.time = this->player->timerService->GetTimerRunning() ? this->player->timerService->GetTime() : 0.0f;
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::OnResume()
+{
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Timer resume");
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_RESUME;
+	event.data.timer.time = this->player->timerService->GetTimerRunning() ? this->player->timerService->GetTime() : 0.0f;
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::OnSplit(i32 split)
+{
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Timer split %d", split);
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_SPLIT;
+	event.data.timer.index = split;
+	event.data.timer.time = this->player->timerService->GetTime();
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::OnCPZ(i32 cpz)
+{
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Checkpoint %d", cpz);
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_CPZ;
+	event.data.timer.index = cpz;
+	event.data.timer.time = this->player->timerService->GetTime();
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::OnStage(i32 stage)
+{
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Stage %d", stage);
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_STAGE;
+	event.data.timer.index = stage;
+	event.data.timer.time = this->player->timerService->GetTime();
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	if (kz_replay_debug_recording.Get())
+	{
+		this->player->PrintChat(false, false, "Teleport");
+	}
+	RpEvent event;
+	event.type = RpEventType::RPEVENT_TELEPORT;
+	event.data.teleport.hasOrigin = origin != nullptr;
+	event.data.teleport.hasAngles = angles != nullptr;
+	event.data.teleport.hasVelocity = velocity != nullptr;
+	if (origin)
+	{
+		for (i32 i = 0; i < 3; i++)
+		{
+			event.data.teleport.origin[i] = origin->operator[](i);
+		}
+	}
+	if (angles)
+	{
+		for (i32 i = 0; i < 3; i++)
+		{
+			event.data.teleport.angles[i] = angles->operator[](i);
+		}
+	}
+	if (velocity)
+	{
+		for (i32 i = 0; i < 3; i++)
+		{
+			event.data.teleport.velocity[i] = velocity->operator[](i);
+		}
+	}
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::InsertEvent(const RpEvent &event)
+{
+	// 1. Insert into circular buffer
+	// 2. Insert into all active recorders
+	this->circularRecording.rpEvents->Write(event);
 	for (auto &recorder : this->recorders)
 	{
-		if (recorder.uuid == this->currentRecorder)
-		{
-			recorder.desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f; // record 2 seconds after timer end
-			break;
-		}
+		recorder.events.push_back(event);
 	}
 }
 

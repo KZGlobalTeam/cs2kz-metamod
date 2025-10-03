@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <optional>
 #include "kz/kz.h"
 #include "kz/replays/kz_replay.h"
 #include "circularbuffer.h"
@@ -13,8 +14,6 @@ class PlayerCommand;
 //  used for replay breather and cheater replays.
 struct CircularRecorder
 {
-	CUtlVector<RpEvent> events;
-
 	// This is only written as long as the player is alive.
 	CFIFOCircularBuffer<TickData, 64 * 60 * 2> *tickData;
 	CFIFOCircularBuffer<SubtickData, 64 * 60 * 2> *subtickData;
@@ -54,18 +53,14 @@ struct CircularRecorder
 
 struct Recorder
 {
-	Recorder()
-	{
-		uuid.Init();
-	}
-
 	UUID_t uuid;
 	f32 desiredStopTime = -1;
 	std::vector<RpEvent> events;
 	std::vector<TickData> tickData;
 	std::vector<SubtickData> subtickData;
+	std::vector<WeaponSwitchEvent> weaponChangeEvents;
+	std::vector<RpEvent> rpEvents;
 
-	// TODO
 	std::vector<CmdData> cmdData;
 	std::vector<SubtickData> cmdSubtickData;
 };
@@ -88,7 +83,17 @@ public:
 	void OnTimerStart();
 	void OnTimerStop();
 	void OnTimerEnd();
+	void OnPause();
+	void OnResume();
+	void OnSplit(i32 split);
+	void OnCPZ(i32 cpz);
+	void OnStage(i32 stage);
+	void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
 
+private:
+	void InsertEvent(const RpEvent &event);
+
+public:
 	SubtickData currentSubtickData;
 	TickData currentTickData;
 	UUID_t currentRecorder;

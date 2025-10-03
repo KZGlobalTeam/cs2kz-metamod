@@ -57,13 +57,13 @@ struct RpStyleChangeInfo : public RpModeStyleInfo
 struct RpEvent
 {
 	RpEventType type;
-	f64 serverTick; // Use f64 to avoid precision loss for large tick values.
+	u32 serverTick;
 
-	union
+	union RpEventData
 	{
-		struct
+		struct TimerEvent
 		{
-			enum
+			enum TimerEventType
 			{
 				TIMER_START,
 				TIMER_END,
