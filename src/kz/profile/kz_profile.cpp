@@ -16,6 +16,7 @@ enum Ranks
 	Regular,
 	Skilled,
 	Expert,
+	Semipro,
 	Pro,
 	Master,
 	Legend,
@@ -23,7 +24,7 @@ enum Ranks
 };
 
 static_global const char *rankNames[NUM_RANKS] = {
-	"Unknown", "New", "Beginner", "Casual", "Regular", "Skilled", "Expert", "Pro", "Master", "Legend",
+	"Unknown", "New", "Beginner", "Casual", "Regular", "Skilled", "Expert", "Semipro", "Pro", "Master", "Legend",
 };
 
 static_global const f32 rankThresholds[NUM_RANKS] = {
@@ -34,12 +35,13 @@ static_global const f32 rankThresholds[NUM_RANKS] = {
 	10000.0f,  // Regular
 	15000.0f,  // Skilled
 	20000.0f,  // Expert
-	25000.0f,  // Pro
-	30000.0f,  // Master
-	35000.0f   // Legend
+	25000.0f,  // Semipro
+	30000.0f,  // Pro
+	35000.0f,  // Master
+	37500.0f   // Legend
 };
-static_global const char *rankColors[NUM_RANKS] = {"{default}", "{grey}",   "{grey}", "{blue}", "{darkblue}",
-												   "{purple}",  "{orchid}", "{red}",  "{gold}", "{gold}"};
+static_global const char *rankColors[NUM_RANKS] = {"{default}", "{grey}", "{grey}",   "{blue}", "{darkblue}", "{purple}",
+												   "{orchid}",  "{red}",  "{yellow}", "{gold}", "{gold}"};
 
 #define RATING_REFRESH_PERIOD 120.0f // seconds
 
