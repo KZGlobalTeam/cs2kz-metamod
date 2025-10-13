@@ -498,10 +498,10 @@ void KZTriggerService::UpdatePlayerPostTouch()
 		return;
 	}
 	// Player has a modified velocity through trigger touching, take this into account.
-	bool modifiedVelocity = this->preTouchVelocity != pawn->m_vecAbsVelocity();
+	Vector pawnAbsVel = pawn->m_vecAbsVelocity();
+	bool modifiedVelocity = this->preTouchVelocity != pawnAbsVel;
 	if (player->processingMovement && modifiedVelocity)
 	{
-		player->SetVelocity(player->currentMoveData->m_vecVelocity - player->moveDataPre.m_vecVelocity + pawn->m_vecAbsVelocity());
 		this->player->jumpstatsService->InvalidateJumpstats("Externally modified");
 	}
 
