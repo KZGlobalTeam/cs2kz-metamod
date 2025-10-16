@@ -114,7 +114,7 @@
 			"MoveInit"
 			{
 				"library"	"server"
-				"windows"	"\x48\x89\x5C\x24\x18\x56\x48\x83\xEC\x30\x48\x8B\xF2"
+				"windows"	"\x48\x89\x5C\x24\x18\x56\x48\x83\xEC\x30\x48\x8B\xF2\x48\x8B\xD9\xE8"
 				"linux"		"\x55\x48\x89\xE5\x41\x55\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x48\x89\xF7\x48\x83\xEC\x58"
 			}
 			// somewhere in MoveInit. GLHF!
@@ -341,8 +341,8 @@
 			// "Player.Respawn"
 			"Respawn"
 			{
-				"windows"		"370"
-				"linux"			"371"
+				"windows"		"371"
+				"linux"			"372"
 			}
 			// Check sv_fullupdate
 			"ClientOffset"
@@ -353,23 +353,23 @@
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
-				"windows"		"150"
-				"linux"			"149"
+				"windows"		"153"
+				"linux"			"152"
 			}
 			"Touch"
 			{
-				"windows"		"151"
-				"linux"			"150"
+				"windows"		"154"
+				"linux"			"153"
 			}
 			"EndTouch"
 			{
-				"windows"		"152"
-				"linux"			"151"
+				"windows"		"155"
+				"linux"			"154"
 			}
 			"PassesTriggerFilters"
 			{
-				"windows"		"269"
-				"linux"			"270"
+				"windows"		"271"
+				"linux"			"272"
 			}
 			// In DebugDrawMesh, offset used when solid=true
 			"DebugTriangle"
