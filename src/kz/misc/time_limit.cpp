@@ -22,6 +22,7 @@ CConVarRef<float> mp_timelimit("mp_timelimit");
 CConVarRef<float> mp_roundtime("mp_roundtime");
 CConVarRef<float> mp_roundtime_defuse("mp_roundtime_defuse");
 CConVarRef<float> mp_roundtime_hostage("mp_roundtime_hostage");
+CConVarRef<CUtlString> nextlevel("nextlevel");
 ConVarRefAbstract *convars[] = {&mp_timelimit, &mp_roundtime, &mp_roundtime_defuse, &mp_roundtime_hostage};
 
 static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue, void *__unk01)
@@ -84,6 +85,7 @@ void KZ::misc::EnforceTimeLimit()
 	mp_roundtime.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
 	mp_roundtime_defuse.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
 	mp_roundtime_hostage.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
+	nextlevel.Set(g_pKZUtils->GetCurrentMapName());
 	g_pCVar->InstallGlobalChangeCallback(OnCvarChanged);
 }
 

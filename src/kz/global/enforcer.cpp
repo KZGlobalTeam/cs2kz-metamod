@@ -19,6 +19,7 @@ enum EnforcedServerCvars
 	ENFORCEDCVAR_SV_RUNCMDS,
 	ENFORCEDCVAR_MP_IGNORE_ROUND_WIN_CONDITIONS,
 	ENFORCEDCVAR_MP_MATCH_END_CHANGELEVEL,
+	ENFORCEDCVAR_MP_MATCH_END_RESTART,
 	ENFORCEDCVAR_COUNT
 };
 
@@ -40,6 +41,7 @@ static_global ConVarRefAbstract *enforcedServerCVars[] =
 	new CConVarRef<int32>("sv_cq_trim_catchup_remainder"),
 	new CConVarRef<bool>("mp_ignore_round_win_conditions"),
 	new CConVarRef<bool>("mp_match_end_changelevel"),
+	new CConVarRef<bool>("mp_match_end_restart"),
 	new CConVarRef<bool>("sv_runcmds")
 };
 static_assert(KZ_ARRAYSIZE(enforcedServerCVars) == ENFORCEDCVAR_COUNT, "Array enforcedServerCVars length is not the same as ENFORCEDCVAR_COUNT!");
@@ -51,9 +53,14 @@ void KZGlobalService::EnforceConVars()
 	for (u32 i = 0; i < ENFORCEDCVAR_COUNT; i++)
 	{
 		ConVarData *data = enforcedServerCVars[i]->GetConVarData();
+		if (i == ENFORCEDCVAR_MP_MATCH_END_CHANGELEVEL)
+		{
+			data->UpdateDefaultValueString("true");
+		}
 		data->RemoveFlags(FCVAR_COMMANDLINE_ENFORCED);
 		data->AddFlags(FCVAR_CHEAT);
 	}
+
 	g_pCVar->ResetConVarsToDefaultValuesByFlag(FCVAR_CHEAT);
 }
 
@@ -61,6 +68,11 @@ void KZGlobalService::RestoreConVars()
 {
 	for (u32 i = 0; i < ENFORCEDCVAR_COUNT; i++)
 	{
+		ConVarData *data = enforcedServerCVars[i]->GetConVarData();
+		if (i == ENFORCEDCVAR_MP_MATCH_END_CHANGELEVEL)
+		{
+			data->UpdateDefaultValueString("false");
+		}
 		enforcedServerCVars[i]->GetConVarData()->RemoveFlags(FCVAR_CHEAT);
 	}
 }
