@@ -139,16 +139,6 @@
 	{
 		"en"	"{grey}Visit official CS2KZ website for up-to-date maps, records and servers: {default}https://cs2kz.org{grey}"
 		"chi"	"{grey}访问CS2KZ官方网站以获取最新的地图、记录和服务器: {default}https://cs2kz.org{grey}"
-		"pl"	"{grey}Odwiedź oficjalną stronę CS2KZ, aby uzyskać najnowsze mapy, rekordy i serwery: {default}https://cs2kz.org{grey}"
-		"fi"	"{grey}Vieraile CS2KZ:n virallisella verkkosivustolla saadaksesi ajantasaiset kartat, ennätykset ja palvelimet: {default}https://cs2kz.org{grey}"
-		"sv"	"{grey}Besök den officiella CS2KZ-webbplatsen för de senaste kartorna, rekorden och servrarna: {default}https://cs2kz.org{grey}"
-		"ua"	"{grey}Відвідайте офіційний сайт CS2KZ, щоб отримати актуальні карти, рекорди та сервери: {default}https://cs2kz.org{grey}"
-		"tr"	"{grey}Güncel haritalar, rekorlar ve sunucular için resmi CS2KZ web sitesini ziyaret edin: {default}https://cs2kz.org{grey}"
-		"it"	"{grey}Visita il sito ufficiale di CS2KZ per mappe, record e server aggiornati: {default}https://cs2kz.org{grey}"
-		"es"	"{grey}Külastage CS2KZ ametlikku veebisaiti, et näha värskeid kaarte, rekordeid ja servereid: {default}https://cs2kz.org{grey}"
-		"de"	"{grey}Besuche die offizielle CS2KZ-Website für aktuelle Karten, Rekorde und Server: {default}https://cs2kz.org{grey}"
-		"ko"	"{grey}최신 맵, 기록 및 서버 정보를 확인하려면 공식 CS2KZ 웹사이트를 방문하세요: {default}https://cs2kz.org{grey}"
-		"lv"    "{grey}Apmeklē oficiālo CS2KZ vietni, lai iegūtu jaunākās kartes, rekordus un serverus: {default}https://cs2kz.org{grey}"
 	}
 	"Tip - bugs"
 	{
