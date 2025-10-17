@@ -135,6 +135,11 @@
 		"ko"	"{grey}다음 체크포인트로 텔레포트하려면 {default}/nextcp{grey}를 사용하세요."
 		"lv"    "{grey}Teleports uz nākamo čekpointu {default}/nextcp{grey}."
 	}
+	"Tip - website"
+	{
+		"en"	"{grey}Visit official CS2KZ website for up-to-date maps, records and servers: {default}https://cs2kz.org{grey}"
+		"chi"	"{grey}访问CS2KZ官方网站以获取最新的地图、记录和服务器: {default}https://cs2kz.org{grey}"
+	}
 	"Tip - bugs"
 	{
 		"en"	"{grey}Report issues related to CS2KZ on our GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
