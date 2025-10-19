@@ -15,13 +15,10 @@ namespace KZ::replaysystem::data
 	{
 		bool valid;
 		ReplayHeader header;
-
-		union
-		{
-			ReplayCheaterHeader cheater;
-			ReplayRunHeader run;
-			ReplayJumpHeader jump;
-		} typeHeader;
+		// Can't union this because the type will become non trivial.
+		ReplayCheaterHeader cheaterHeader;
+		ReplayRunHeader runHeader;
+		ReplayJumpHeader jumpHeader;
 
 		u32 tickCount;
 		TickData *tickData;
@@ -85,7 +82,6 @@ namespace KZ::replaysystem::data
 	};
 
 	// Data management functions
-	ReplayPlayback LoadReplay(const char *path);
 	void LoadReplayAsync(std::string path, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
 	void FreeReplayData(ReplayPlayback *replay);
 	void ResetReplayState(ReplayPlayback *replay);

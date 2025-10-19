@@ -29,7 +29,15 @@ enum RpEventType
 	RPEVENT_MODE_CHANGE,
 	RPEVENT_STYLE_CHANGE,
 	RPEVENT_TELEPORT,
-	RPEVENT_CHECKPOINT
+	RPEVENT_CHECKPOINT,
+	RPEVENT_CVAR,
+};
+
+enum RpCvar
+{
+	RPCVAR_SENSITIVITY,
+	RPCVAR_M_YAW,
+	RPCVAR_M_PITCH
 };
 
 struct RpFlags
@@ -174,6 +182,12 @@ struct RpEvent
 			i32 checkpointCount;
 			i32 teleportCount;
 		} checkpoint;
+
+		struct
+		{
+			RpCvar cvar;
+			f32 value;
+		} cvar;
 	} data;
 };
 

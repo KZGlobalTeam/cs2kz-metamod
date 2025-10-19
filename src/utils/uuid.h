@@ -12,9 +12,12 @@ struct UUID_t
 	u16 Data3 {};
 	u8 Data4[8] {};
 
-	UUID_t()
+	UUID_t(bool init = true)
 	{
-		Init();
+		if (init)
+		{
+			Init();
+		}
 	}
 
 	void Init()

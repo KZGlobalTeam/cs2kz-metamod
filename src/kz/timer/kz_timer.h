@@ -3,6 +3,7 @@
 #include "../kz.h"
 #include "../checkpoint/kz_checkpoint.h"
 #include "kz/mappingapi/kz_mappingapi.h"
+#include "utils/uuid.h"
 
 #define KZ_MAX_MODE_NAME_LENGTH 128
 
@@ -117,6 +118,7 @@ class KZTimerService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 private:
+	UUID_t currentRunUUID {UUID_t(false)};
 	bool timerRunning {};
 	f64 currentTime {};
 	u32 currentCourseGUID {};

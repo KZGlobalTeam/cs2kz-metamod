@@ -64,12 +64,33 @@ CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE,
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record", DistanceTier_Wrecker,
 											   true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 
+static_function f32 StringToFloat(const char *str)
+{
+	if (!str || str[0] == '\0')
+	{
+		return 0.0f;
+	}
+	if (KZ_STREQI(str, "inf"))
+	{
+		return FLT_MAX;
+	}
+	if (KZ_STREQI(str, "-inf"))
+	{
+		return -FLT_MAX;
+	}
+	if (KZ_STREQI(str, "nan"))
+	{
+		return 0.0f;
+	}
+	return static_cast<f32>(atof(str));
+}
+
 void KZRecordingService::Init()
 {
 	KZTimerService::RegisterEventListener(&timerEventListener);
 }
 
-void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, int numCmds)
+void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
 {
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
@@ -229,6 +250,20 @@ void KZRecordingService::OnTimerStop()
 	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_STOP;
 	event.data.timer.time = this->player->timerService->GetTime();
 	this->InsertEvent(event);
+
+	// Remove all active run recorders, which are the ones without desired stop time set.
+	auto it = this->runRecorders.begin();
+	while (it != this->runRecorders.end())
+	{
+		if (it->desiredStopTime < 0.0f)
+		{
+			it = this->runRecorders.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 
 void KZRecordingService::OnTimerEnd()
@@ -321,7 +356,7 @@ void KZRecordingService::OnCPZ(i32 cpz)
 	}
 	if (kz_replay_recording_debug.Get())
 	{
-		this->player->PrintChat(false, false, "Checkpoint %d", cpz);
+		this->player->PrintChat(false, false, "Checkpoi32 %d", cpz);
 	}
 	RpEvent event;
 	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
@@ -435,9 +470,21 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	}
 }
 
-void KZRecordingService::OnDisconnect()
+void KZRecordingService::OnClientDisconnect()
 {
-	// TODO: Save all active recordings to disk.
+	for (auto &recorder : this->runRecorders)
+	{
+		if (recorder.desiredStopTime > 0.0f)
+		{
+			recorder.WriteToFile();
+		}
+	}
+	this->runRecorders.clear();
+	for (auto &recorder : this->jumpRecorders)
+	{
+		recorder.WriteToFile();
+	}
+	this->jumpRecorders.clear();
 }
 
 void KZRecordingService::InsertEvent(const RpEvent &event)
@@ -456,6 +503,17 @@ void KZRecordingService::InsertEvent(const RpEvent &event)
 			recorder.rpEvents.push_back(event);
 		}
 	}
+}
+
+bool KZRecordingService::GetCurrentRunUUID(UUID_t &out_uuid)
+{
+	// If desiredStopTime is set, the run has ended.
+	if (!this->runRecorders.empty() && this->runRecorders.back().desiredStopTime < 0.0f)
+	{
+		out_uuid = this->runRecorders.back().uuid;
+		return true;
+	}
+	return false;
 }
 
 void KZRecordingService::OnPhysicsSimulate()
@@ -540,12 +598,50 @@ void KZRecordingService::OnSetupMove(PlayerCommand *pc)
 
 void KZRecordingService::OnPhysicsSimulatePost()
 {
-	if (KZ::replaysystem::IsReplayBot(this->player))
+	if (this->player->IsFakeClient() || KZ::replaysystem::IsReplayBot(this->player))
 	{
 		return;
 	}
+
+	// Go through all the active recorders and see if any need to be stopped.
+	for (auto it = this->runRecorders.begin(); it != this->runRecorders.end();)
+	{
+		auto &recorder = *it;
+		if (recorder.desiredStopTime >= 0.0f && g_pKZUtils->GetServerGlobals()->curtime >= recorder.desiredStopTime)
+		{
+			// Stop this recorder
+			if (kz_replay_recording_debug.Get())
+			{
+				this->player->PrintChat(false, false, "Run recorder stopped");
+			}
+			recorder.WriteToFile();
+			it = this->runRecorders.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+	for (auto it = this->jumpRecorders.begin(); it != this->jumpRecorders.end();)
+	{
+		auto &recorder = *it;
+		if (recorder.desiredStopTime >= 0.0f && g_pKZUtils->GetServerGlobals()->curtime >= recorder.desiredStopTime)
+		{
+			// Stop this recorder
+			if (kz_replay_recording_debug.Get())
+			{
+				this->player->PrintChat(false, false, "Run recorder stopped");
+			}
+			recorder.WriteToFile();
+			it = this->jumpRecorders.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 	// record data for replay playback
-	if (!this->player->IsAlive() || this->player->IsFakeClient())
+	if (!this->player->IsAlive())
 	{
 		return;
 	}
@@ -680,6 +776,54 @@ void KZRecordingService::OnPhysicsSimulatePost()
 		}
 	}
 
+	const char *sensitivityStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "sensitivity");
+	f32 sensitivity = StringToFloat(sensitivityStr);
+	if (this->lastSensitivity != sensitivity)
+	{
+		this->lastSensitivity = sensitivity;
+		RpEvent event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.type = RpEventType::RPEVENT_CVAR;
+		event.data.cvar.cvar = RPCVAR_SENSITIVITY;
+		this->InsertEvent(event);
+		if (kz_replay_recording_debug.Get())
+		{
+			this->player->PrintChat(false, false, "Sensitivity change event: %f", sensitivity);
+		}
+	}
+
+	const char *pitchStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_pitch");
+	f32 pitch = StringToFloat(pitchStr);
+	if (this->lastPitch != pitch)
+	{
+		this->lastPitch = pitch;
+		RpEvent event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.type = RpEventType::RPEVENT_CVAR;
+		event.data.cvar.cvar = RPCVAR_M_PITCH;
+		this->InsertEvent(event);
+		if (kz_replay_recording_debug.Get())
+		{
+			this->player->PrintChat(false, false, "Pitch change event: %f", pitch);
+		}
+	}
+
+	const char *yawStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_yaw");
+	f32 yaw = StringToFloat(yawStr);
+	if (this->lastYaw != yaw)
+	{
+		this->lastYaw = yaw;
+		RpEvent event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.type = RpEventType::RPEVENT_CVAR;
+		event.data.cvar.cvar = RPCVAR_M_YAW;
+		this->InsertEvent(event);
+		if (kz_replay_recording_debug.Get())
+		{
+			this->player->PrintChat(false, false, "Yaw change event: %f", yaw);
+		}
+	}
+
 	if (!this->circularRecording.earliestWeapon.has_value())
 	{
 		this->circularRecording.earliestWeapon = this->currentWeaponEconInfo;
@@ -797,30 +941,12 @@ void KZRecordingService::OnPhysicsSimulatePost()
 		break;
 	}
 	this->circularRecording.jumps->Advance(numToRemove);
-
-	// Go through all the active run recorders and see if any need to be stopped.
-	for (auto it = this->runRecorders.begin(); it != this->runRecorders.end();)
-	{
-		auto &recorder = *it;
-		if (recorder.desiredStopTime >= 0.0f && g_pKZUtils->GetServerGlobals()->curtime >= recorder.desiredStopTime)
-		{
-			// Stop this recorder
-			if (kz_replay_recording_debug.Get())
-			{
-				this->player->PrintChat(false, false, "Run recorder stopped");
-			}
-			recorder.WriteToFile();
-			it = this->runRecorders.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
 }
 
 SCMD(kz_testsavereplay, SCFL_REPLAY)
 {
+	// TODO: 1. Support saving certain parts of the circular buffer only (e.g., last 30 seconds)
+	//       2. Clean this mess up
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!g_pFullFileSystem || !player)
 	{
@@ -970,6 +1096,7 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, false, DistanceTier_None)
 {
 	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f;
+	this->baseHeader.type = RP_JUMPSTATS;
 	this->header.jumpType = jump->jumpType;
 	this->header.distance = jump->GetDistance();
 	this->header.airTime = jump->airtime;
@@ -978,14 +1105,15 @@ JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, false, Dis
 	this->header.sync = jump->GetSync();
 }
 
-void JumpRecorder::WriteHeader(FileHandle_t file)
+i32 JumpRecorder::WriteHeader(FileHandle_t file)
 {
-	Recorder::WriteHeader(file);
-	g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
+	i32 bytesWritten = Recorder::WriteHeader(file);
+	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
 }
 
 RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, true, DistanceTier_Ownage)
 {
+	this->baseHeader.type = RP_RUN;
 	this->header.courseID = player->timerService->GetCourse() ? player->timerService->GetCourse()->id : INVALID_COURSE_NUMBER;
 	V_strncpy(this->header.mode.name, KZ::mode::GetModeInfo(player->modeService).longModeName.Get(), sizeof(this->header.mode.name));
 	V_strncpy(this->header.mode.md5, KZ::mode::GetModeInfo(player->modeService).md5, sizeof(this->header.mode.md5));
@@ -1008,10 +1136,10 @@ void RunRecorder::End(f32 time, i32 numTeleports)
 	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 4.0f;
 }
 
-void RunRecorder::WriteHeader(FileHandle_t file)
+i32 RunRecorder::WriteHeader(FileHandle_t file)
 {
-	Recorder::WriteHeader(file);
-	g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
+	i32 bytesWritten = Recorder::WriteHeader(file);
+	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
 }
 
 Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps)
@@ -1040,7 +1168,7 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 		return;
 	}
 	i32 numTickData = MIN(circular.tickData->GetReadAvailable(), (i32)(numSeconds * ENGINE_FIXED_TICK_RATE));
-	i32 earliestTick = circular.tickData->PeekSingle(circular.tickData->GetReadAvailable() - numTickData)->serverTick;
+	u32 earliestTick = circular.tickData->PeekSingle(circular.tickData->GetReadAvailable() - numTickData)->serverTick;
 	for (i32 i = circular.tickData->GetReadAvailable() - numTickData; i < circular.tickData->GetReadAvailable(); i++)
 	{
 		TickData *tickData = circular.tickData->PeekSingle(i);
@@ -1212,7 +1340,7 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 			break;
 		}
 		shouldCopy = true;
-		if (cmdData->serverTick >= earliestTick)
+		if ((u32)cmdData->serverTick >= earliestTick)
 		{
 			break;
 		}
@@ -1239,106 +1367,138 @@ void Recorder::WriteToFile()
 		META_CONPRINTF("Failed to open replay file for writing: %s\n", filename);
 		return;
 	}
-	// Write the header
-	this->WriteHeader(file);
+	// Order of writing must match order of reading in kz_replaydata.cpp
+	i32 bytesWritten = 0;
+	bytesWritten += this->WriteHeader(file);
 
-	// Write the tick data
-	this->WriteTickData(file);
+	bytesWritten += this->WriteTickData(file);
 
-	// Write the events
-	this->WriteEvents(file);
+	bytesWritten += this->WriteWeaponChanges(file);
 
-	// Write the weapon changes
-	this->WriteWeaponChanges(file);
+	bytesWritten += this->WriteJumps(file);
 
-	// Write the jumps
-	this->WriteJumps(file);
+	bytesWritten += this->WriteEvents(file);
 
-	// Write the command data
-	this->WriteCmdData(file);
+	bytesWritten += this->WriteCmdData(file);
+	if (kz_replay_recording_debug.Get())
+	{
+		utils::PrintChatAll("Saved replay to %s (%d bytes)", filename, bytesWritten);
+	}
+	g_pFullFileSystem->Close(file);
 }
 
-void Recorder::WriteHeader(FileHandle_t file)
+i32 Recorder::WriteHeader(FileHandle_t file)
 {
 	// Write the base header
-	g_pFullFileSystem->Write(&this->baseHeader, sizeof(this->baseHeader), file);
+	return g_pFullFileSystem->Write(&this->baseHeader, sizeof(this->baseHeader), file);
 }
 
-void Recorder::WriteTickData(FileHandle_t file)
+i32 Recorder::WriteTickData(FileHandle_t file)
 {
+	i32 numWritten = 0;
 	i32 tickdataCount = this->tickData.size();
-	g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
+	numWritten += g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
 	for (i32 i = 0; i < tickdataCount; i++)
 	{
 		TickData &tickData = this->tickData[i];
-		g_pFullFileSystem->Write(&tickData, sizeof(TickData), file);
+		numWritten += g_pFullFileSystem->Write(&tickData, sizeof(TickData), file);
 	}
 	for (i32 i = 0; i < tickdataCount; i++)
 	{
 		SubtickData &subtickData = this->subtickData[i];
-		g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
-		g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
+		numWritten += g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
+		numWritten += g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
 	}
+	if (kz_replay_recording_debug.Get())
+	{
+		utils::PrintChatAll("Wrote %d tick data entries of %d bytes", tickdataCount, numWritten);
+	}
+	return numWritten;
 }
 
-void Recorder::WriteWeaponChanges(FileHandle_t file)
+i32 Recorder::WriteWeaponChanges(FileHandle_t file)
 {
+	i32 numWritten = 0;
 	i32 numWeaponChanges = this->weaponChangeEvents.size();
-	g_pFullFileSystem->Write(&numWeaponChanges, sizeof(numWeaponChanges), file);
+	numWritten += g_pFullFileSystem->Write(&numWeaponChanges, sizeof(numWeaponChanges), file);
 	for (i32 i = 0; i < numWeaponChanges; i++)
 	{
 		WeaponSwitchEvent &event = this->weaponChangeEvents[i];
-		g_pFullFileSystem->Write(&event.serverTick, sizeof(event.serverTick), file);
-		g_pFullFileSystem->Write(&event.econInfo.mainInfo, sizeof(event.econInfo.mainInfo), file);
+		numWritten += g_pFullFileSystem->Write(&event.serverTick, sizeof(event.serverTick), file);
+		numWritten += g_pFullFileSystem->Write(&event.econInfo.mainInfo, sizeof(event.econInfo.mainInfo), file);
 		for (i32 j = 0; j < event.econInfo.mainInfo.numAttributes; j++)
 		{
-			g_pFullFileSystem->Write(&event.econInfo.attributes[j], sizeof(event.econInfo.attributes[j]), file);
+			numWritten += g_pFullFileSystem->Write(&event.econInfo.attributes[j], sizeof(event.econInfo.attributes[j]), file);
 		}
 	}
+	if (kz_replay_recording_debug.Get())
+	{
+		utils::PrintChatAll("Wrote %d weapon change events of %d bytes", numWeaponChanges, numWritten);
+	}
+	return numWritten;
 }
 
-void Recorder::WriteJumps(FileHandle_t file)
+i32 Recorder::WriteJumps(FileHandle_t file)
 {
+	i32 numWritten = 0;
 	i32 numJumps = this->jumps.size();
-	g_pFullFileSystem->Write(&numJumps, sizeof(numJumps), file);
+	numWritten += g_pFullFileSystem->Write(&numJumps, sizeof(numJumps), file);
 	for (i32 i = 0; i < numJumps; i++)
 	{
 		RpJumpStats &jump = this->jumps[i];
 		// Write jump data
-		g_pFullFileSystem->Write(&jump.overall, sizeof(jump.overall), file);
+		numWritten += g_pFullFileSystem->Write(&jump.overall, sizeof(jump.overall), file);
 		i32 numStrafes = jump.strafes.size();
-		g_pFullFileSystem->Write(&numStrafes, sizeof(numStrafes), file);
-		g_pFullFileSystem->Write(jump.strafes.data(), sizeof(RpJumpStats::StrafeData) * numStrafes, file);
+		numWritten += g_pFullFileSystem->Write(&numStrafes, sizeof(numStrafes), file);
+		numWritten += g_pFullFileSystem->Write(jump.strafes.data(), sizeof(RpJumpStats::StrafeData) * numStrafes, file);
 		i32 numAACalls = jump.aaCalls.size();
-		g_pFullFileSystem->Write(&numAACalls, sizeof(numAACalls), file);
-		g_pFullFileSystem->Write(jump.aaCalls.data(), sizeof(RpJumpStats::AAData) * numAACalls, file);
+		numWritten += g_pFullFileSystem->Write(&numAACalls, sizeof(numAACalls), file);
+		numWritten += g_pFullFileSystem->Write(jump.aaCalls.data(), sizeof(RpJumpStats::AAData) * numAACalls, file);
 	}
+	if (kz_replay_recording_debug.Get())
+	{
+		utils::PrintChatAll("Wrote %d jumps of %d bytes", numJumps, numWritten);
+	}
+	return numWritten;
 }
 
-void Recorder::WriteEvents(FileHandle_t file)
+i32 Recorder::WriteEvents(FileHandle_t file)
 {
+	i32 numWritten = 0;
 	i32 numEvents = this->rpEvents.size();
-	g_pFullFileSystem->Write(&numEvents, sizeof(numEvents), file);
+	numWritten += g_pFullFileSystem->Write(&numEvents, sizeof(numEvents), file);
 	for (i32 i = 0; i < numEvents; i++)
 	{
 		RpEvent &event = this->rpEvents[i];
-		g_pFullFileSystem->Write(&event, sizeof(event), file);
+		numWritten += g_pFullFileSystem->Write(&event, sizeof(event), file);
 	}
+	if (kz_replay_recording_debug.Get())
+	{
+		utils::PrintChatAll("Wrote %d events of %d bytes", numEvents, numWritten);
+	}
+	return numWritten;
 }
 
-void Recorder::WriteCmdData(FileHandle_t file)
+i32 Recorder::WriteCmdData(FileHandle_t file)
 {
+	i32 numWritten = 0;
 	i32 cmddataCount = this->cmdData.size();
-	g_pFullFileSystem->Write(&cmddataCount, sizeof(cmddataCount), file);
+	numWritten += g_pFullFileSystem->Write(&cmddataCount, sizeof(cmddataCount), file);
 	for (i32 i = 0; i < cmddataCount; i++)
 	{
 		CmdData &cmdData = this->cmdData[i];
-		g_pFullFileSystem->Write(&cmdData, sizeof(CmdData), file);
+		numWritten += g_pFullFileSystem->Write(&cmdData, sizeof(CmdData), file);
 	}
 	for (i32 i = 0; i < cmddataCount; i++)
 	{
 		SubtickData &cmdSubtickData = this->cmdSubtickData[i];
-		g_pFullFileSystem->Write(&cmdSubtickData.numSubtickMoves, sizeof(cmdSubtickData.numSubtickMoves), file);
-		g_pFullFileSystem->Write(&cmdSubtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * cmdSubtickData.numSubtickMoves, file);
+		numWritten += g_pFullFileSystem->Write(&cmdSubtickData.numSubtickMoves, sizeof(cmdSubtickData.numSubtickMoves), file);
+		numWritten +=
+			g_pFullFileSystem->Write(&cmdSubtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * cmdSubtickData.numSubtickMoves, file);
 	}
+	if (kz_replay_recording_debug.Get())
+	{
+		utils::PrintChatAll("Wrote %d cmd data entries of %d bytes", cmddataCount, numWritten);
+	}
+	return numWritten;
 }

@@ -79,20 +79,22 @@ struct Recorder
 	Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps);
 
 	void WriteToFile();
-	virtual void WriteHeader(FileHandle_t file);
-	virtual void WriteTickData(FileHandle_t file);
-	virtual void WriteWeaponChanges(FileHandle_t file);
-	virtual void WriteJumps(FileHandle_t file);
-	virtual void WriteEvents(FileHandle_t file);
-	virtual void WriteCmdData(FileHandle_t file);
+	virtual i32 WriteHeader(FileHandle_t file);
+	virtual i32 WriteTickData(FileHandle_t file);
+	virtual i32 WriteWeaponChanges(FileHandle_t file);
+	virtual i32 WriteJumps(FileHandle_t file);
+	virtual i32 WriteEvents(FileHandle_t file);
+	virtual i32 WriteCmdData(FileHandle_t file);
 };
+
+constexpr int i = sizeof(ReplayHeader) + sizeof(ReplayRunHeader);
 
 struct RunRecorder : public Recorder
 {
 	ReplayRunHeader header;
 	RunRecorder(KZPlayer *player);
 	void End(f32 time, i32 numTeleports);
-	virtual void WriteHeader(FileHandle_t file) override;
+	virtual int WriteHeader(FileHandle_t file) override;
 };
 
 struct JumpRecorder : public Recorder
@@ -100,7 +102,7 @@ struct JumpRecorder : public Recorder
 	ReplayJumpHeader header;
 
 	JumpRecorder(Jump *jump);
-	virtual void WriteHeader(FileHandle_t file) override;
+	virtual int WriteHeader(FileHandle_t file) override;
 };
 
 class KZRecordingService : public KZBaseService
@@ -130,7 +132,7 @@ public:
 
 	void OnJumpFinish(Jump *jump);
 
-	void OnDisconnect();
+	void OnClientDisconnect();
 
 private:
 	void InsertEvent(const RpEvent &event);
@@ -139,6 +141,7 @@ public:
 	SubtickData currentSubtickData;
 	TickData currentTickData;
 	std::vector<RunRecorder> runRecorders;
+	bool GetCurrentRunUUID(UUID_t &out_uuid);
 	std::vector<JumpRecorder> jumpRecorders;
 	CircularRecorder circularRecording;
 	i32 lastCmdNumReceived = 0;
@@ -148,4 +151,7 @@ public:
 	KZModeManager::ModePluginInfo lastKnownMode;
 	std::vector<KZStyleManager::StylePluginInfo> lastKnownStyles;
 	EconInfo currentWeaponEconInfo;
+	f32 lastSensitivity = 1.25f;
+	f32 lastYaw = 0.022f;
+	f32 lastPitch = 0.022f;
 };

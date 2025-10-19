@@ -16,103 +16,6 @@ static std::atomic<bool> g_cancelLoad {false};
 
 namespace KZ::replaysystem::data
 {
-	ReplayPlayback LoadReplay(const char *path)
-	{
-		ReplayPlayback result = {};
-
-		FileHandle_t file = g_pFullFileSystem->Open(path, "rb");
-		if (!file)
-		{
-			return result;
-		}
-
-		g_pFullFileSystem->Read(&result.header, sizeof(result.header), file);
-		if (result.header.magicNumber != KZ_REPLAY_MAGIC)
-		{
-			return result;
-		}
-		if (result.header.version != KZ_REPLAY_VERSION)
-		{
-			return result;
-		}
-
-		// Load tick data
-		g_pFullFileSystem->Read(&result.tickCount, sizeof(result.tickCount), file);
-		result.tickData = new TickData[result.tickCount];
-		for (u32 i = 0; i < result.tickCount; i++)
-		{
-			TickData tickData = {};
-			g_pFullFileSystem->Read(&tickData, sizeof(tickData), file);
-			result.tickData[i] = tickData;
-		}
-
-		// Load subtick data
-		result.subtickData = new SubtickData[result.tickCount];
-		for (u32 i = 0; i < result.tickCount; i++)
-		{
-			SubtickData subtickData = {};
-			g_pFullFileSystem->Read(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
-			g_pFullFileSystem->Read(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
-			result.subtickData[i] = subtickData;
-		}
-
-		// Load weapon data
-		g_pFullFileSystem->Read(&result.numWeapons, sizeof(result.numWeapons), file);
-		result.weapons = new WeaponSwitchEvent[result.numWeapons + 1];
-		result.weapons[0] = {0, result.header.firstWeapon};
-		for (i32 i = 0; i < result.numWeapons; i++)
-		{
-			WeaponSwitchEvent weaponChange = {};
-			g_pFullFileSystem->Read(&weaponChange.serverTick, sizeof(weaponChange.serverTick), file);
-			g_pFullFileSystem->Read(&weaponChange.econInfo.mainInfo, sizeof(weaponChange.econInfo.mainInfo), file);
-			for (i32 j = 0; j < weaponChange.econInfo.mainInfo.numAttributes; j++)
-			{
-				g_pFullFileSystem->Read(&weaponChange.econInfo.attributes[j], sizeof(weaponChange.econInfo.attributes[j]), file);
-			}
-			result.weapons[i + 1] = weaponChange;
-			if (kz_replay_playback_debug.Get())
-			{
-				utils::PrintChatAll("Loaded weapon change: tick %d, itemDef %d", weaponChange.serverTick, weaponChange.econInfo.mainInfo.itemDef);
-			}
-		}
-
-		// Load jump stats
-		g_pFullFileSystem->Read(&result.numJumps, sizeof(result.numJumps), file);
-		result.jumps = new RpJumpStats[result.numJumps];
-		for (u32 i = 0; i < result.numJumps; i++)
-		{
-			g_pFullFileSystem->Read(&result.jumps[i].overall, sizeof(result.jumps[i].overall), file);
-			// Go through all the strafes and put them at the correct jump index.
-			i32 numStrafes = 0;
-			g_pFullFileSystem->Read(&numStrafes, sizeof(numStrafes), file);
-			result.jumps[i].strafes.resize(numStrafes);
-			for (i32 j = 0; j < numStrafes; j++)
-			{
-				g_pFullFileSystem->Read(&result.jumps[i].strafes[j], sizeof(RpJumpStats::StrafeData), file);
-			}
-			// Go through all the AA calls and put them at the correct jump index.
-			i32 numAACalls = 0;
-			g_pFullFileSystem->Read(&numAACalls, sizeof(numAACalls), file);
-			result.jumps[i].aaCalls.resize(numAACalls);
-			for (i32 j = 0; j < numAACalls; j++)
-			{
-				g_pFullFileSystem->Read(&result.jumps[i].aaCalls[j], sizeof(RpJumpStats::AAData), file);
-			}
-		}
-
-		// Load events
-		g_pFullFileSystem->Read(&result.numEvents, sizeof(result.numEvents), file);
-		result.events = new RpEvent[result.numEvents];
-		for (u32 i = 0; i < result.numEvents; i++)
-		{
-			g_pFullFileSystem->Read(&result.events[i], sizeof(result.events[i]), file);
-		}
-
-		result.valid = true;
-		g_pFullFileSystem->Close(file);
-		return result;
-	}
-
 	void FreeReplayData(ReplayPlayback *replay)
 	{
 		if (replay->tickData)
@@ -257,6 +160,10 @@ namespace KZ::replaysystem::data
 			if (fileSize > 0)
 			{
 				progress = static_cast<f32>(bytesRead) / static_cast<f32>(fileSize);
+				if (kz_replay_playback_debug.Get())
+				{
+					META_CONPRINTF("Replay load progress: %d bytes, %.2f%%\n", bytesRead, progress.load() * 100.0f);
+				}
 			}
 		};
 
@@ -268,8 +175,30 @@ namespace KZ::replaysystem::data
 			g_pFullFileSystem->Close(file);
 			return result;
 		}
+		if (kz_replay_playback_debug.Get())
+		{
+			META_CONPRINTF("Loading replay header...\n");
+		}
 		g_pFullFileSystem->Read(&result.header, sizeof(result.header), file);
 		totalBytesRead += sizeof(result.header);
+		switch (result.header.type)
+		{
+			case RP_CHEATER:
+			{
+				totalBytesRead += g_pFullFileSystem->Read(&result.cheaterHeader, sizeof(result.cheaterHeader), file);
+				break;
+			}
+			case RP_RUN:
+			{
+				totalBytesRead += g_pFullFileSystem->Read(&result.runHeader, sizeof(result.runHeader), file);
+				break;
+			}
+			case RP_JUMPSTATS:
+			{
+				totalBytesRead += g_pFullFileSystem->Read(&result.jumpHeader, sizeof(result.jumpHeader), file);
+				break;
+			}
+		}
 		updateProgress(totalBytesRead);
 
 		if (result.header.magicNumber != KZ_REPLAY_MAGIC)
@@ -291,6 +220,10 @@ namespace KZ::replaysystem::data
 		}
 		g_pFullFileSystem->Read(&result.tickCount, sizeof(result.tickCount), file);
 		totalBytesRead += sizeof(result.tickCount);
+		if (kz_replay_playback_debug.Get())
+		{
+			META_CONPRINTF("Loading %u ticks...\n", result.tickCount);
+		}
 		updateProgress(totalBytesRead);
 
 		result.tickData = new TickData[result.tickCount];
@@ -360,7 +293,10 @@ namespace KZ::replaysystem::data
 		}
 		g_pFullFileSystem->Read(&result.numWeapons, sizeof(result.numWeapons), file);
 		totalBytesRead += sizeof(result.numWeapons);
-
+		if (kz_replay_playback_debug.Get())
+		{
+			META_CONPRINTF("Loading %d weapon change events...\n", result.numWeapons);
+		}
 		result.weapons = new WeaponSwitchEvent[result.numWeapons + 1];
 		result.weapons[0] = {0, result.header.firstWeapon};
 
@@ -375,17 +311,15 @@ namespace KZ::replaysystem::data
 				return {};
 			}
 
-			WeaponSwitchEvent weaponChange = {};
-			g_pFullFileSystem->Read(&weaponChange.serverTick, sizeof(weaponChange.serverTick), file);
-			g_pFullFileSystem->Read(&weaponChange.econInfo.mainInfo, sizeof(weaponChange.econInfo.mainInfo), file);
-			totalBytesRead += sizeof(weaponChange.serverTick) + sizeof(weaponChange.econInfo.mainInfo);
+			g_pFullFileSystem->Read(&result.weapons[i + 1].serverTick, sizeof(result.weapons[i + 1].serverTick), file);
+			g_pFullFileSystem->Read(&result.weapons[i + 1].econInfo.mainInfo, sizeof(result.weapons[i + 1].econInfo.mainInfo), file);
+			totalBytesRead += sizeof(result.weapons[i + 1].serverTick) + sizeof(result.weapons[i + 1].econInfo.mainInfo);
 
-			for (i32 j = 0; j < weaponChange.econInfo.mainInfo.numAttributes; j++)
+			for (i32 j = 0; j < result.weapons[i + 1].econInfo.mainInfo.numAttributes; j++)
 			{
-				g_pFullFileSystem->Read(&weaponChange.econInfo.attributes[j], sizeof(weaponChange.econInfo.attributes[j]), file);
-				totalBytesRead += sizeof(weaponChange.econInfo.attributes[j]);
+				g_pFullFileSystem->Read(&result.weapons[i + 1].econInfo.attributes[j], sizeof(result.weapons[i + 1].econInfo.attributes[j]), file);
+				totalBytesRead += sizeof(result.weapons[i + 1].econInfo.attributes[j]);
 			}
-			result.weapons[i + 1] = weaponChange;
 		}
 		updateProgress(totalBytesRead);
 
@@ -400,7 +334,10 @@ namespace KZ::replaysystem::data
 		}
 		g_pFullFileSystem->Read(&result.numJumps, sizeof(result.numJumps), file);
 		totalBytesRead += sizeof(result.numJumps);
-
+		if (kz_replay_playback_debug.Get())
+		{
+			META_CONPRINTF("Loading %d jumps...\n", result.numJumps);
+		}
 		result.jumps = new RpJumpStats[result.numJumps];
 		for (u32 i = 0; i < result.numJumps; i++)
 		{
@@ -455,7 +392,10 @@ namespace KZ::replaysystem::data
 		}
 		g_pFullFileSystem->Read(&result.numEvents, sizeof(result.numEvents), file);
 		totalBytesRead += sizeof(result.numEvents);
-
+		if (kz_replay_playback_debug.Get())
+		{
+			META_CONPRINTF("Loading %d events...\n", result.numEvents);
+		}
 		result.events = new RpEvent[result.numEvents];
 		for (u32 i = 0; i < result.numEvents; i++)
 		{

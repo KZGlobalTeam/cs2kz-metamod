@@ -9,6 +9,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
 #include "kz/spec/kz_spec.h"
+#include "kz/recording/kz_recording.h"
 #include "announce.h"
 
 #include "utils/utils.h"
@@ -254,6 +255,8 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->guid);
 	}
+	bool success = this->player->recordingService->GetCurrentRunUUID(this->currentRunUUID);
+	assert(success);
 	return true;
 }
 
@@ -665,6 +668,7 @@ void KZTimerService::ToggleTimerStopSound()
 
 void KZTimerService::Reset()
 {
+	this->currentRunUUID = UUID_t(false);
 	this->timerRunning = {};
 	this->currentTime = {};
 	this->currentCourseGUID = 0;

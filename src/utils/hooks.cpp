@@ -26,6 +26,7 @@
 #include "kz/global/kz_global.h"
 #include "kz/profile/kz_profile.h"
 #include "kz/pistol/kz_pistol.h"
+#include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -577,6 +578,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
 	}
 	player->timerService->OnClientDisconnect();
+	player->recordingService->OnClientDisconnect();
 	player->optionService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
