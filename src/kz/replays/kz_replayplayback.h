@@ -5,7 +5,7 @@
 
 class KZPlayer;
 class PlayerCommand;
-struct CMoveData;
+class CMoveData;
 struct TickData;
 struct SubtickData;
 class CBasePlayerWeapon;

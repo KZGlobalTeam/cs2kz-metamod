@@ -306,7 +306,7 @@ struct ReplayHeader
 	EconInfo gloves;
 	char modelName[256];
 
-	i32 timestamp;
+	u64 timestamp;
 	char pluginVersion[32];
 	f32 sensitivity;
 	f32 yaw;
@@ -322,7 +322,7 @@ struct ReplayRunHeader
 {
 	i32 courseID;
 	RpModeStyleInfo mode;
-	std::vector<RpModeStyleInfo> styles;
+	i32 styleCount;
 	f32 time;
 	i32 numTeleports;
 };

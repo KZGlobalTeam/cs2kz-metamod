@@ -1,4 +1,4 @@
-
+#include "cs2kz.h"
 #include "kz_recording.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/checkpoint/kz_checkpoint.h"
@@ -61,8 +61,8 @@ public:
 } timerEventListener;
 
 CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", true);
-CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record", DistanceTier_Wrecker,
-											   true, DistanceTier_Meh, true, DistanceTier_Wrecker);
+CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
+											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 
 static_function f32 StringToFloat(const char *str)
 {
@@ -1117,16 +1117,7 @@ RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, true, Distan
 	this->header.courseID = player->timerService->GetCourse() ? player->timerService->GetCourse()->id : INVALID_COURSE_NUMBER;
 	V_strncpy(this->header.mode.name, KZ::mode::GetModeInfo(player->modeService).longModeName.Get(), sizeof(this->header.mode.name));
 	V_strncpy(this->header.mode.md5, KZ::mode::GetModeInfo(player->modeService).md5, sizeof(this->header.mode.md5));
-
-	FOR_EACH_VEC(player->styleServices, i)
-	{
-		auto styleService = player->styleServices[i];
-		auto styleInfo = KZ::style::GetStyleInfo(styleService);
-		RpModeStyleInfo style = {};
-		V_strncpy(style.name, styleInfo.longName, sizeof(style.name));
-		V_strncpy(style.md5, styleInfo.md5, sizeof(style.md5));
-		this->header.styles.push_back(style);
-	}
+	this->header.styleCount = player->styleServices.Count();
 }
 
 void RunRecorder::End(f32 time, i32 numTeleports)
@@ -1147,6 +1138,14 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	baseHeader.magicNumber = KZ_REPLAY_MAGIC;
 	baseHeader.version = KZ_REPLAY_VERSION;
 	baseHeader.type = RP_MANUAL;
+	baseHeader.sensitivity = StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "sensitivity"));
+	baseHeader.pitch = StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_pitch"));
+	baseHeader.yaw = StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_yaw"));
+
+	time_t unixTime = 0;
+	time(&unixTime);
+	baseHeader.timestamp = (u64)unixTime;
+	V_snprintf(baseHeader.pluginVersion, sizeof(baseHeader.pluginVersion), "%s", g_KZPlugin.GetVersion());
 	V_snprintf(baseHeader.player.name, sizeof(baseHeader.player.name), "%s", player->GetController()->GetPlayerName());
 	baseHeader.player.steamid64 = player->GetSteamId64();
 	V_snprintf(baseHeader.map.name, sizeof(baseHeader.map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
