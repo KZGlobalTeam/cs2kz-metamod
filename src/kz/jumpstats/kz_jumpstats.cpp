@@ -8,7 +8,8 @@
 #include "../option/kz_option.h"
 #include "../language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
-
+#include "kz/recording/kz_recording.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "tier0/memdbgon.h"
 
 // clang-format off
@@ -522,6 +523,8 @@ void Jump::End()
 			}
 		}
 	}
+	this->serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
+	this->airtime = this->player->landingTimeActual - this->player->takeoffTime;
 }
 
 Strafe *Jump::GetCurrentStrafe()
@@ -597,7 +600,7 @@ f32 Jump::GetDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
-	if (this->jumps.Count() <= 0 || this->player->JustTeleported() || this->player->triggerService->ShouldDisableJumpstats())
+	if (this->jumps.Count() <= 1 || this->player->JustTeleported() || this->player->triggerService->ShouldDisableJumpstats())
 	{
 		return JumpType_Invalid;
 	}
@@ -633,45 +636,49 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	{
 		return JumpType_Fall;
 	}
-	if (this->player->duckBugged)
+	if (this->jumps.Count() >= 2)
 	{
-		if (this->jumps.Tail().GetOffset() < JS_EPSILON && this->jumps.Tail().GetJumpType() == JumpType_LongJump)
+		Jump &previousJump = this->jumps[this->jumps.Count() - 2];
+		if (this->player->duckBugged)
 		{
-			return JumpType_Jumpbug;
-		}
-		else
-		{
-			return JumpType_Invalid;
-		}
-	}
-	if (this->HitBhop() && !this->HitDuckbugRecently())
-	{
-		// Check for no offset
-		if (this->jumps.Tail().DidHitHead() || !this->jumps.Tail().IsValid())
-		{
-			return JumpType_Invalid;
-		}
-		if (fabs(this->jumps.Tail().GetOffset()) < JS_EPSILON)
-		{
-			switch (this->jumps.Tail().GetJumpType())
+			if (previousJump.GetOffset() < JS_EPSILON && previousJump.GetJumpType() == JumpType_LongJump)
 			{
-				case JumpType_LongJump:
-					return JumpType_Bhop;
-				case JumpType_Bhop:
-					return JumpType_MultiBhop;
-				case JumpType_MultiBhop:
-					return JumpType_MultiBhop;
-				default:
-					return JumpType_Other;
+				return JumpType_Jumpbug;
+			}
+			else
+			{
+				return JumpType_Invalid;
 			}
 		}
-		// Check for weird jump
-		if (this->jumps.Tail().GetJumpType() == JumpType_Fall && this->ValidWeirdJumpDropDistance())
+		if (this->HitBhop() && !this->HitDuckbugRecently())
 		{
-			return JumpType_WeirdJump;
-		}
+			// Check for no offset
+			if (previousJump.DidHitHead() || !previousJump.IsValid())
+			{
+				return JumpType_Invalid;
+			}
+			if (fabs(previousJump.GetOffset()) < JS_EPSILON)
+			{
+				switch (previousJump.GetJumpType())
+				{
+					case JumpType_LongJump:
+						return JumpType_Bhop;
+					case JumpType_Bhop:
+						return JumpType_MultiBhop;
+					case JumpType_MultiBhop:
+						return JumpType_MultiBhop;
+					default:
+						return JumpType_Other;
+				}
+			}
+			// Check for weird jump
+			if (previousJump.GetJumpType() == JumpType_Fall && this->ValidWeirdJumpDropDistance())
+			{
+				return JumpType_WeirdJump;
+			}
 
-		return JumpType_Other;
+			return JumpType_Other;
+		}
 	}
 	if (this->HitDuckbugRecently() || !this->GroundSpeedCappedRecently())
 	{
@@ -682,11 +689,12 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 f32 KZJumpstatsService::GetLastJumpRelease()
 {
-	if (this->jumps.Count() == 0)
+	if (this->jumps.Count() <= 2)
 	{
 		return 0.0f;
 	}
-	return this->jumps.Tail().GetRelease();
+	Jump &previousJump = this->jumps[this->jumps.Count() - 2];
+	return previousJump.GetRelease();
 }
 
 void KZJumpstatsService::Reset()
@@ -766,14 +774,16 @@ void KZJumpstatsService::OnAirAccelerate()
 	{
 		return;
 	}
+	if (KZ::replaysystem::IsReplayBot(this->player))
+	{
+		return;
+	}
 	AACall call;
 	this->player->GetVelocity(&call.velocityPre);
 
 	// moveDataPost is still the movedata from last tick.
 	call.externalSpeedDiff = call.velocityPre.Length2D() - this->player->moveDataPost.m_vecVelocity.Length2D();
 	call.prevYaw = this->player->oldAngles.y;
-	call.curtime = g_pKZUtils->GetGlobals()->curtime;
-	call.tickcount = g_pKZUtils->GetGlobals()->tickcount;
 	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
 	strafe->aaCalls.AddToTail(call);
 }
@@ -784,20 +794,33 @@ void KZJumpstatsService::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 
 	{
 		return;
 	}
+	if (KZ::replaysystem::IsReplayBot(this->player))
+	{
+		return;
+	}
 	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
 }
 
 void KZJumpstatsService::AddJump()
 {
+	if (KZ::replaysystem::IsReplayBot(this->player))
+	{
+		return;
+	}
 	if (ladderHopThisMove)
 	{
 		return;
 	}
 	this->jumps.AddToTail({this->player});
+	this->jumps.Tail().Init();
 }
 
 void KZJumpstatsService::UpdateJump()
 {
+	if (KZ::replaysystem::IsReplayBot(this->player))
+	{
+		return;
+	}
 	if (this->jumps.Count() > 0)
 	{
 		this->jumps.Tail().Update();
@@ -809,22 +832,40 @@ void KZJumpstatsService::UpdateJump()
 
 void KZJumpstatsService::EndJump()
 {
-	if (this->jumps.Count() > 0)
+	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
-		Jump *jump = &this->jumps.Tail();
+		return;
+	}
+	if (this->jumps.Count() <= 0)
+	{
+		return;
+	}
+	Jump *jump = &this->jumps.Tail();
 
-		// Prevent stats being calculated twice.
-		if (jump->AlreadyEnded())
+	// Prevent stats being calculated twice.
+	if (jump->AlreadyEnded())
+	{
+		return;
+	}
+	jump->End();
+	if (jump->GetJumpType() == JumpType_FullInvalid)
+	{
+		return;
+	}
+	if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
+	{
+		if (this->ShouldDisplayJumpstats())
 		{
-			return;
+			KZJumpstatsService::PrintJumpToChat(this->player, jump);
 		}
-		jump->End();
-		if (jump->GetJumpType() == JumpType_FullInvalid)
+		DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+		if (tier >= DistanceTier_Wrecker && !jump->GetJumpPlayer()->jumpstatsService->jsAlways)
 		{
-			return;
+			KZJumpstatsService::StartDemoRecording(jump->GetJumpPlayer()->GetName());
 		}
 		KZJumpstatsService::AnnounceJump(jump);
 	}
+	this->player->recordingService->OnJumpFinish(jump);
 }
 
 void KZJumpstatsService::InvalidateJumpstats(const char *reason)

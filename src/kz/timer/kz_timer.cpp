@@ -122,8 +122,8 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		this->splitZoneTimes[splitNumber - 1] = this->GetTime();
 		this->ShowSplitText(splitNumber);
 		this->lastSplit = splitNumber;
+		CALL_FORWARD(eventListeners, OnSplitZoneTouchPost, this->player, splitNumber);
 	}
-	CALL_FORWARD(eventListeners, OnSplitZoneTouchPost, this->player, splitNumber);
 }
 
 void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, i32 cpNumber)
@@ -142,6 +142,7 @@ void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, 
 		this->ShowCheckpointText(cpNumber);
 		this->lastCheckpoint = cpNumber;
 		this->reachedCheckpoints++;
+		CALL_FORWARD(eventListeners, OnCheckpointZoneTouchPost, this->player, cpNumber);
 	}
 }
 
@@ -167,6 +168,7 @@ void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		this->PlayReachedStageSound();
 		this->ShowStageText();
 		this->currentStage++;
+		CALL_FORWARD(eventListeners, OnStageZoneTouchPost, this->player, stageNumber);
 	}
 }
 
@@ -343,7 +345,7 @@ bool KZTimerService::TimerStop(bool playSound)
 	{
 		for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
 		{
-			player->timerService->PlayTimerStopSound();
+			spec->timerService->PlayTimerStopSound();
 		}
 		this->PlayTimerStopSound();
 	}

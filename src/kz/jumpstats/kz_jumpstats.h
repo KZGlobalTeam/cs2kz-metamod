@@ -69,8 +69,6 @@ public:
 	u64 buttons[3] {};
 	Vector velocityPre;
 	Vector velocityPost;
-	f32 curtime {};
-	i32 tickcount {};
 	bool ducking {};
 
 public:
@@ -92,7 +90,6 @@ public:
 	CCopyableUtlVector<AACall> aaCalls;
 	TurnState turnstate;
 
-private:
 	f32 duration {};
 
 	f32 badAngles {};
@@ -207,9 +204,9 @@ public:
 
 class Jump
 {
-private:
+public:
 	KZPlayer *player;
-
+	u32 serverTick {}; // When the jump ended
 	Vector takeoffOrigin;
 	Vector adjustedTakeoffOrigin;
 	Vector takeoffVelocity;
@@ -239,22 +236,15 @@ private:
 
 	f32 release;
 
-public:
 	CCopyableUtlVector<Strafe> strafes;
 	f32 touchDuration {};
 	char invalidateReason[256] {};
 	bool trackingRelease = true;
 
 public:
-	Jump()
-	{
-		Init();
-	}
+	Jump() = default;
 
-	Jump(KZPlayer *player) : player(player)
-	{
-		Init();
-	}
+	Jump(KZPlayer *player) : player(player) {}
 
 	void Init();
 	void UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel);

@@ -9,18 +9,22 @@ class PlayerCommand;
 class CUserCmd;
 class CBasePlayerWeapon;
 struct EconInfo;
+class CBaseTrigger;
 
 namespace KZ::replaysystem
 {
 	void Init();
 	void Cleanup();
 	void OnRoundStart();
+	void OnGameFrame();
 	void OnPhysicsSimulate(KZPlayer *player);
 	void OnProcessMovement(KZPlayer *player);
-	void OnDuck(KZPlayer *player);
 	void OnProcessMovementPost(KZPlayer *player);
+	void OnFinishMovePre(KZPlayer *player, CMoveData *pMoveData);
 	void OnPhysicsSimulatePost(KZPlayer *player);
 	void OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command);
+	bool IsReplayBot(KZPlayer *player);
+	bool CanTouchTrigger(KZPlayer *player, CBaseTrigger *trigger);
 
 	namespace item
 	{
@@ -30,10 +34,15 @@ namespace KZ::replaysystem
 		gear_slot_t GetWeaponGearSlot(u16 id);
 		bool DoesPaintKitUseLegacyModel(float paintKit);
 		void ApplyItemAttributesToWeapon(CBasePlayerWeapon &weapon, const EconInfo &info);
-		void ApplyGloveAttributesToPawn(CCSPlayerPawn *pawn, const EconInfo &info);
-		void ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, const char *modelName);
+		void ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, const EconInfo &info, const char *modelName);
 	} // namespace item
 
+	i32 GetCurrentCpIndex();
+	i32 GetCheckpointCount();
+	i32 GetTeleportCount();
+	f32 GetTime();
+	f32 GetEndTime();
+	bool GetPaused();
 } // namespace KZ::replaysystem
 
 #endif // KZ_REPLAYSYSTEM_H

@@ -317,6 +317,7 @@ private:
 
 	bool JustEndedTimer();
 
+public:
 	void PlayTimerEndSound();
 	void PlayTimerFalseEndSound();
 	void PlayMissedZoneSound();

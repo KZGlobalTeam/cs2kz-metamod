@@ -7,6 +7,8 @@
 #define KZ_REPLAY_PATH      "kzreplays"
 #define KZ_REPLAY_RUNS_PATH KZ_REPLAY_PATH "/runs"
 
+class KZPlayer;
+
 enum : u32
 {
 	KZ_REPLAY_MAGIC = KZ_FOURCC('s', '2', 'k', 'z'),
@@ -25,9 +27,9 @@ enum RpEventType
 {
 	RPEVENT_TIMER_EVENT,
 	RPEVENT_MODE_CHANGE,
-	RPEVENT_STYLE_ADD,
-	RPEVENT_STYLE_REMOVE,
-	RPEVENT_TELEPORT
+	RPEVENT_STYLE_CHANGE,
+	RPEVENT_TELEPORT,
+	RPEVENT_CHECKPOINT
 };
 
 struct RpFlags
@@ -51,7 +53,80 @@ struct RpModeStyleInfo
 
 struct RpStyleChangeInfo : public RpModeStyleInfo
 {
-	bool add;
+	bool clearStyles;
+};
+
+class Jump;
+
+// This struct is really big, so we don't store them in run replays.
+struct RpJumpStats
+{
+	struct GeneralData
+	{
+		u32 serverTick;
+		float takeoffOrigin[3];
+		float adjustedTakeoffOrigin[3];
+		float takeoffVelocity[3];
+		float landingOrigin[3];
+		float adjustedLandingOrigin[3];
+
+		u8 jumpType;
+		u8 distanceTier;
+		f32 totalDistance;
+		f32 maxSpeed;
+		f32 maxHeight;
+		f32 airtime;
+		f32 duckDuration;
+		f32 duckEndDuration;
+		f32 release;
+		f32 block;
+		f32 edge;
+		f32 landingEdge;
+		char invalidateReason[256];
+	} overall;
+
+	struct StrafeData
+	{
+		f32 duration;
+		f32 badAngles;
+		f32 overlap;
+		f32 deadAir;
+		f32 syncDuration;
+		f32 width;
+		f32 airGain;
+		f32 maxGain;
+		f32 airLoss;
+		f32 collisionGain;
+		f32 collisionLoss;
+		f32 externalGain;
+		f32 externalLoss;
+		f32 strafeMaxSpeed;
+	};
+
+	std::vector<StrafeData> strafes;
+
+	struct AAData
+	{
+		u32 strafeIndex;
+		f32 externalSpeedDiff;
+		f32 prevYaw;
+		f32 currentYaw;
+		f32 wishDir[3];
+		f32 wishSpeed;
+		f32 accel;
+		f32 surfaceFriction;
+		f32 duration;
+		u32 buttons[3];
+		f32 velocityPre[3];
+		f32 velocityPost[3];
+		bool ducking;
+	};
+
+	std::vector<AAData> aaCalls;
+
+	static void FromJump(RpJumpStats &out, Jump *jump);
+	static void ToJump(Jump &out, RpJumpStats *js);
+	void PrintJump(KZPlayer *bot);
 };
 
 struct RpEvent
@@ -92,6 +167,13 @@ struct RpEvent
 			f32 angles[3];
 			f32 velocity[3];
 		} teleport;
+
+		struct
+		{
+			i32 index;
+			i32 checkpointCount;
+			i32 teleportCount;
+		} checkpoint;
 	} data;
 };
 
@@ -209,6 +291,37 @@ struct ReplayHeader
 	// Probably not worth the effort to track player models and gloves over time, since this won't affect gameplay in any way that matters.
 	EconInfo gloves;
 	char modelName[256];
+
+	i32 timestamp;
+	char pluginVersion[32];
+	f32 sensitivity;
+	f32 yaw;
+	f32 pitch;
+};
+
+struct ReplayCheaterHeader
+{
+	char banReason[512];
+};
+
+struct ReplayRunHeader
+{
+	i32 courseID;
+	RpModeStyleInfo mode;
+	std::vector<RpModeStyleInfo> styles;
+	f32 time;
+	i32 numTeleports;
+};
+
+struct ReplayJumpHeader
+{
+	u8 jumpType;
+	f32 distance;
+	i32 blockDistance;
+	f32 sync;
+	f32 pre;
+	f32 max;
+	f32 airTime;
 };
 
 #endif // KZ_REPLAY_H

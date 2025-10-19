@@ -7,8 +7,10 @@ DLL_IMPORT void Plat_CreateUUIDImpl(void *uuid, int (*randomFunc)(int min, int m
 
 struct UUID_t
 {
-	u64 high {};
-	u64 low {};
+	u32 Data1 {};
+	u16 Data2 {};
+	u16 Data3 {};
+	u8 Data4[8] {};
 
 	UUID_t()
 	{
@@ -22,22 +24,17 @@ struct UUID_t
 
 	bool operator==(const UUID_t &other) const
 	{
-		return low == other.low && high == other.high;
+		return Data1 == other.Data1 && Data2 == other.Data2 && Data3 == other.Data3 && memcmp(Data4, other.Data4, sizeof(Data4)) == 0;
 	}
 
 	// Convert UUID to standard string format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 	std::string ToString() const
 	{
-		return tfm::format("%08x-%04x-%04x-%04x-%012x",
-						   (u32)(high >> 32),         // First 4 bytes
-						   (u16)(high >> 16),         // Next 2 bytes
-						   (u16)(high),               // Next 2 bytes
-						   (u16)(low >> 48),          // Next 2 bytes
-						   low & 0x0000FFFFFFFFFFFF); // Last 6 bytes
+		return tfm::format("%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x", Data1, Data2, Data3, Data4[0], Data4[1], Data4[2], Data4[3], Data4[4],
+						   Data4[5], Data4[6], Data4[7]);
 	}
 
-	// Check if a UUID string is valid format and parse it
-	// Expected format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+	// Validate and optionally parse a UUID string
 	static bool IsValid(const char *uuid_str, UUID_t *out_uuid = nullptr)
 	{
 		if (!uuid_str)
@@ -45,58 +42,56 @@ struct UUID_t
 			return false;
 		}
 
-		// Check length (36 characters)
-		size_t len = strlen(uuid_str);
-		if (len != 36)
+		if (strlen(uuid_str) != 36)
 		{
 			return false;
 		}
 
-		// Check hyphens are in the right positions
+		// Check hyphen positions
 		if (uuid_str[8] != '-' || uuid_str[13] != '-' || uuid_str[18] != '-' || uuid_str[23] != '-')
 		{
 			return false;
 		}
 
-		// Check all other characters are valid hex digits
-		for (int i = 0; i < 36; i++)
+		// Validate hex digits
+		for (int i = 0; i < 36; ++i)
 		{
 			if (i == 8 || i == 13 || i == 18 || i == 23)
 			{
-				continue; // Skip hyphens
+				continue;
 			}
-
 			char c = uuid_str[i];
-			if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
+			if (!isxdigit((unsigned char)c))
 			{
 				return false;
 			}
 		}
 
-		// If caller wants to parse the UUID, do it
 		if (out_uuid)
 		{
-			u32 d1;
-			u32 d2, d3; // Using u32 for scanf but will cast to u16
-			u32 d4;     // Using u32 for scanf but will cast to u16
-			u64 d5;
+			u32 d1, d2, d3;
+			u32 d4[8];
 
-			int result = sscanf(uuid_str, "%08x-%04x-%04x-%04x-%012llx", &d1, &d2, &d3, &d4, &d5);
+			int result = sscanf(uuid_str, "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x", &d1, &d2, &d3, &d4[0], &d4[1], &d4[2], &d4[3], &d4[4],
+								&d4[5], &d4[6], &d4[7]);
 
-			if (result != 5)
+			if (result != 11)
 			{
 				return false;
 			}
 
-			// Reconstruct the high and low u64 values
-			out_uuid->high = ((u64)d1 << 32) | ((u64)(u16)d2 << 16) | (u16)d3;
-			out_uuid->low = ((u64)(u16)d4 << 48) | d5;
+			out_uuid->Data1 = d1;
+			out_uuid->Data2 = static_cast<u16>(d2);
+			out_uuid->Data3 = static_cast<u16>(d3);
+			for (int i = 0; i < 8; ++i)
+			{
+				out_uuid->Data4[i] = static_cast<u8>(d4[i]);
+			}
 		}
 
 		return true;
 	}
 
-	// Convenience overload for std::string
 	static bool IsValid(const std::string &uuid_str, UUID_t *out_uuid = nullptr)
 	{
 		return IsValid(uuid_str.c_str(), out_uuid);

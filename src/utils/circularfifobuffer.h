@@ -15,6 +15,17 @@ private:
 	size_t writePos;
 	size_t count; // Number of elements currently in buffer
 
+	// Helper to detect if T is a vector
+	template<typename U>
+	struct is_vector : std::false_type
+	{
+	};
+
+	template<typename U>
+	struct is_vector<std::vector<U>> : std::true_type
+	{
+	};
+
 public:
 	CFIFOCircularBuffer() : capacity(SIZE), readPos(0), writePos(0), count(0)
 	{
@@ -39,7 +50,7 @@ public:
 		}
 
 		auto newBuffer = std::make_unique<T[]>(newSize);
-		size_t elementsToMove = std::min(count, newSize);
+		size_t elementsToMove = MIN(count, newSize);
 
 		// Copy existing elements to new buffer
 		for (size_t i = 0; i < elementsToMove; ++i)
@@ -89,6 +100,44 @@ public:
 		}
 	}
 
+	// Get a reference to the next write position, automatically advance, and ensure it's clean
+	// The returned reference is ready for writing (vectors are cleared, objects are reset)
+	T &GetNextWriteRef()
+	{
+		T &ref = buffer[writePos];
+
+		// Clean the slot before returning reference
+		if constexpr (is_vector<T>::value)
+		{
+			// For vectors, clear them
+			ref.clear();
+		}
+		else if constexpr (std::is_trivially_copyable_v<T>)
+		{
+			// For POD types, zero them out
+			std::memset(&ref, 0, sizeof(T));
+		}
+		else
+		{
+			// For other types, use assignment to reset
+			ref = T {};
+		}
+
+		writePos = (writePos + 1) % capacity;
+
+		if (count < capacity)
+		{
+			++count;
+		}
+		else
+		{
+			// Buffer is full, advance read position (overwrite oldest)
+			readPos = (readPos + 1) % capacity;
+		}
+
+		return ref;
+	}
+
 	// Peek at up to 'count' elements of type T from the buffer, starting at 'offset'
 	// Returns the number of elements actually read
 	int Peek(T *out, size_t count = 1, int offset = 0)
@@ -99,7 +148,7 @@ public:
 		}
 
 		size_t availableFromOffset = this->count - static_cast<size_t>(offset);
-		size_t elementsToPeek = min(count, availableFromOffset);
+		size_t elementsToPeek = MIN(count, availableFromOffset);
 
 		for (size_t i = 0; i < elementsToPeek; ++i)
 		{
@@ -108,6 +157,29 @@ public:
 		}
 
 		return static_cast<int>(elementsToPeek);
+	}
+
+	// Peek at a single element, returns pointer or nullptr
+	const T *PeekSingle(int offset = 0) const
+	{
+		if (offset < 0 || static_cast<size_t>(offset) >= count)
+		{
+			return nullptr;
+		}
+
+		size_t index = (readPos + offset) % capacity;
+		return &buffer[index];
+	}
+
+	T *PeekSingle(int offset = 0)
+	{
+		if (offset < 0 || static_cast<size_t>(offset) >= count)
+		{
+			return nullptr;
+		}
+
+		size_t index = (readPos + offset) % capacity;
+		return &buffer[index];
 	}
 
 	// Read and consume a single element of type T from the buffer
@@ -130,7 +202,7 @@ public:
 	// Returns the number of elements actually advanced
 	size_t Advance(size_t count)
 	{
-		size_t elementsToAdvance = min(count, this->count);
+		size_t elementsToAdvance = MIN(count, this->count);
 		readPos = (readPos + elementsToAdvance) % capacity;
 		this->count -= elementsToAdvance;
 		return elementsToAdvance;
@@ -157,7 +229,7 @@ public:
 			return 0;
 		}
 
-		size_t elementsToWrite = min(n, count);
+		size_t elementsToWrite = MIN(n, count);
 		size_t elementsWritten = 0;
 
 		// Calculate starting position for the n latest elements

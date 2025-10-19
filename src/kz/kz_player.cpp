@@ -176,6 +176,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 		this->styleServices[i]->OnPhysicsSimulatePost();
 	}
 	this->timerService->OnPhysicsSimulatePost();
+	KZ::replaysystem::OnPhysicsSimulatePost(this);
 	if (this->specService->GetSpectatedPlayer())
 	{
 		KZHUDService::DrawPanels(this->specService->GetSpectatedPlayer(), this);
@@ -187,7 +188,6 @@ void KZPlayer::OnPhysicsSimulatePost()
 	this->measureService->OnPhysicsSimulatePost();
 	this->quietService->OnPhysicsSimulatePost();
 	this->profileService->OnPhysicsSimulatePost();
-	KZ::replaysystem::OnPhysicsSimulatePost(this);
 }
 
 void KZPlayer::OnProcessUsercmds(PlayerCommand *cmds, int numcmds)
@@ -436,7 +436,6 @@ void KZPlayer::OnDuck()
 	{
 		this->styleServices[i]->OnDuck();
 	}
-	KZ::replaysystem::OnDuck(this);
 }
 
 void KZPlayer::OnDuckPost()
@@ -777,6 +776,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	this->jumpstatsService->InvalidateJumpstats("Teleported");
 	this->modeService->OnTeleport(origin, angles, velocity);
 	this->timerService->OnTeleport(origin, angles, velocity);
+	this->recordingService->OnTeleport(origin, angles, velocity);
 	if (origin)
 	{
 		this->beamService->OnTeleport();

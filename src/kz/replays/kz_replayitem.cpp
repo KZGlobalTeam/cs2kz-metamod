@@ -1,5 +1,5 @@
 #include "common.h"
-#include "kz_replaysystem.h"
+#include "kz_replayitem.h"
 #include "sdk/entity/cbaseplayerweapon.h"
 #include "sdk/cskeletoninstance.h"
 #include "sdk/entity/ccsplayerpawn.h"
@@ -222,8 +222,12 @@ void KZ::replaysystem::item::ApplyItemAttributesToWeapon(CBasePlayerWeapon &weap
 	}
 }
 
-void KZ::replaysystem::item::ApplyGloveAttributesToPawn(CCSPlayerPawn *pawn, const EconInfo &info)
+void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, const EconInfo &info, const char *modelName)
 {
+	if (info.mainInfo.itemDef == 0)
+	{
+		return;
+	}
 	CEconItemView &item = pawn->m_EconGloves();
 	item.m_iItemDefinitionIndex(info.mainInfo.itemDef);
 	item.m_iEntityQuality(info.mainInfo.quality);
@@ -244,12 +248,8 @@ void KZ::replaysystem::item::ApplyGloveAttributesToPawn(CCSPlayerPawn *pawn, con
 		g_pKZUtils->SetOrAddAttributeValueByName(&item.m_AttributeList(), KZ::replaysystem::item::GetItemAttributeName(id).c_str(), value);
 		g_pKZUtils->SetOrAddAttributeValueByName(&attributeList, KZ::replaysystem::item::GetItemAttributeName(id).c_str(), value);
 	}
-}
-
-void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, const char *modelName)
-{
 	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(pawn->m_CBodyComponent()->m_pSceneNode());
 	g_pKZUtils->SetModel(pawn, modelName);
-	u64 mask = pSkeleton->m_modelState().m_MeshGroupMask() + 1;
+	u64 mask = pSkeleton->m_modelState().m_MeshGroupMask() & ~1 | 2;
 	pSkeleton->m_modelState().m_MeshGroupMask(mask);
 }

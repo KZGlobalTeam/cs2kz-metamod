@@ -59,7 +59,7 @@ struct EconInfo
 		for (int i = 0; i < mainInfo.numAttributes; ++i)
 		{
 			CEconItemAttribute &attr = (*attributeList.m_Attributes())[i];
-			attributes[i] = {attr.m_iAttributeDefinitionIndex(), attr.m_flValue()};
+			attributes[i] = {{attr.m_iAttributeDefinitionIndex(), attr.m_flValue()}};
 		}
 	}
 
@@ -78,7 +78,7 @@ struct EconInfo
 		for (int i = 0; i < mainInfo.numAttributes; ++i)
 		{
 			CEconItemAttribute &attr = (*attributeList.m_Attributes())[i];
-			attributes[i] = {attr.m_iAttributeDefinitionIndex(), attr.m_flValue()};
+			attributes[i] = {{attr.m_iAttributeDefinitionIndex(), attr.m_flValue()}};
 		}
 	}
 

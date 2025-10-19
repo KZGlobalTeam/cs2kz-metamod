@@ -9,6 +9,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/replays/kz_replaysystem.h"
 
 #include "tier0/memdbgon.h"
 
@@ -77,11 +78,11 @@ std::string KZHUDService::GetKeyText(const char *language)
 std::string KZHUDService::GetCheckpointText(const char *language)
 {
 	// clang-format off
-
+	
 	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Checkpoint Text",
-		this->player->checkpointService->GetCurrentCpIndex(),
-		this->player->checkpointService->GetCheckpointCount(),
-		this->player->checkpointService->GetTeleportCount()
+		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetCurrentCpIndex() : this->player->checkpointService->GetCurrentCpIndex(),
+		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetCheckpointCount() : this->player->checkpointService->GetCheckpointCount(),
+		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetTeleportCount() : this->player->checkpointService->GetTeleportCount()
 	);
 
 	// clang-format on
@@ -89,22 +90,47 @@ std::string KZHUDService::GetCheckpointText(const char *language)
 
 std::string KZHUDService::GetTimerText(const char *language)
 {
+	if (KZ::replaysystem::IsReplayBot(this->player))
+	{
+		char timeText[128];
+
+		f64 time = KZ::replaysystem::GetTime();
+		bool paused = KZ::replaysystem::GetPaused();
+		bool timerRunning = KZ::replaysystem::GetEndTime() == 0.0f;
+		// Show timer if time is not 0 or end time is not 0.
+		if (time == 0.0f && KZ::replaysystem::GetEndTime() == 0.0f)
+		{
+			return std::string("");
+		}
+		if (!timerRunning)
+		{
+			time = KZ::replaysystem::GetEndTime();
+		}
+		KZTimerService::FormatTime(time, timeText, sizeof(timeText));
+		// clang-format off
+		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
+			timeText,
+			timerRunning ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
+			paused ? KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text").c_str() : ""
+		);
+		// clang-format on
+	}
 	if (this->player->timerService->GetTimerRunning() || this->ShouldShowTimerAfterStop())
 	{
 		char timeText[128];
 
 		// clang-format off
-
 		f64 time = this->player->timerService->GetTimerRunning()
-			? player->timerService->GetTime()
-			: this->currentTimeWhenTimerStopped;
-
-
+				? player->timerService->GetTime()
+				: this->currentTimeWhenTimerStopped;
+		bool timerRunning = this->player->timerService->GetTimerRunning();
+		bool paused = this->player->timerService->GetPaused();
+		
 		KZTimerService::FormatTime(time, timeText, sizeof(timeText));
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
 			timeText,
-			player->timerService->GetTimerRunning() ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
-			player->timerService->GetPaused() ? KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text").c_str() : ""
+			timerRunning ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
+			paused ? KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text").c_str() : ""
 		);
 		// clang-format on
 	}

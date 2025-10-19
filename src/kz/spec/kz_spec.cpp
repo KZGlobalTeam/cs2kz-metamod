@@ -126,10 +126,21 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 		return MRES_SUPERCEDE;
 	}
 
+	this->SpectatePlayer(targetPlayer);
+	return true;
+}
+
+bool KZSpecService::SpectatePlayer(KZPlayer *target)
+{
+	if (!target || !this->CanSpectate())
+	{
+		return false;
+	}
 	// Join spectator team if not already in it.
+	CCSPlayerController *controller = this->player->GetController();
 	if (controller->GetTeam() != CS_TEAM_SPECTATOR)
 	{
-		KZ::misc::JoinTeam(player, CS_TEAM_SPECTATOR, true);
+		KZ::misc::JoinTeam(this->player, CS_TEAM_SPECTATOR, true);
 	}
 
 	CPlayer_ObserverServices *obsService = player->GetController()->m_hObserverPawn()->m_pObserverServices;
@@ -140,11 +151,11 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	}
 	// This needs to be set if the player spectates themself, so that the camera position is correct.
 	controller->m_DesiredObserverMode(OBS_MODE_IN_EYE);
-	controller->m_hDesiredObserverTarget(targetPlayer->GetPlayerPawn());
+	controller->m_hDesiredObserverTarget(target->GetPlayerPawn());
 
 	obsService->m_iObserverMode(OBS_MODE_IN_EYE);
 	obsService->m_iObserverLastMode(OBS_MODE_NONE);
-	obsService->m_hObserverTarget(targetPlayer->GetPlayerPawn());
+	obsService->m_hObserverTarget(target->GetPlayerPawn());
 	return true;
 }
 

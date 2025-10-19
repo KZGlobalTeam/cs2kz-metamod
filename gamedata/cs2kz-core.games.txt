@@ -431,6 +431,11 @@
 				"windows"		"19"
 				"linux"			"20"
 			}
+			"FinishMove"
+			{
+				"windows"		"30"
+				"linux"			"31"
+			}
 		}
 	}
 }

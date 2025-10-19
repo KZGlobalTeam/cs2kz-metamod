@@ -6,6 +6,7 @@
 #include "kz/noclip/kz_noclip.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
+#include "kz/replays/kz_replaysystem.h"
 
 /*
 	Note: Whether touching is allowed is set determined by the mode, while Mapping API effects will be applied after touching events.
@@ -19,6 +20,7 @@ bool KZTriggerService::OnTriggerStartTouchPre(CBaseTrigger *trigger)
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerStartTouch(trigger);
 	}
+	retValue &= KZ::replaysystem::CanTouchTrigger(this->player, trigger);
 	return retValue;
 }
 
@@ -29,6 +31,7 @@ bool KZTriggerService::OnTriggerTouchPre(CBaseTrigger *trigger, TriggerTouchTrac
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerTouch(trigger);
 	}
+	retValue &= KZ::replaysystem::CanTouchTrigger(this->player, trigger);
 	return retValue;
 }
 
@@ -39,6 +42,7 @@ bool KZTriggerService::OnTriggerEndTouchPre(CBaseTrigger *trigger, TriggerTouchT
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerEndTouch(trigger);
 	}
+	retValue &= KZ::replaysystem::CanTouchTrigger(this->player, trigger);
 	return retValue;
 }
 

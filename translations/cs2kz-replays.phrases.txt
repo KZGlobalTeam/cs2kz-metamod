@@ -14,4 +14,113 @@
 		"#format" "courseName:s"
 		"en"      "{darkred}No replay for {courseName} exists."
 	}
+	"Replay - No Replay Playing"
+	{
+		"en"		"{grey}No replay is currently playing."
+	}
+	"Replay - Usage Goto"
+	{
+		"en"		"{grey}Usage: kz_rpgoto <tick>"
+	}
+	"Replay - Usage Seek"
+	{
+		"en"		"{grey}Usage: kz_rpseek <+/-seconds>"
+	}
+	"Replay - Usage Navigation"
+	{
+		"en"		"{grey}Usage: <time/tick> (Examples: 1:23.45, +10, -5.2, 1234)"
+	}
+	"Replay - Usage Goto Time"
+	{
+		"en"		"{grey}Usage: kz_rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
+	}
+	"Replay - Usage Goto Tick"
+	{
+		"en"		"{grey}Usage: kz_rpgototick <tick> (Examples: 1234, +100, -50)"
+	}
+	"Replay - Invalid Relative Time"
+	{
+		"en"		"{darkred}Invalid time format. Examples: +10, -5.2, +1:30"
+	}
+	"Replay - Invalid Absolute Time"
+	{
+		"en"		"{darkred}Invalid time format. Examples: 1:23.45, 12:34:56.789, 45.2"
+	}
+	"Replay - Invalid Tick Number"
+	{
+		"en"		"{darkred}Invalid tick number. Must be a positive integer."
+	}
+	"Replay - Tick Out Of Range"
+	{
+		"#format"	"tick:d,maxTick:d"
+		"en"		"{grey}Tick {lime}{tick}{grey} is out of range. Maximum tick: {lime}{maxTick}"
+	}
+	"Replay - Jumped To Tick"
+	{
+		"#format"	"tick:d"
+		"en"		"{grey}Jumped to tick {lime}{tick}"
+	}
+	"Replay - Current Info"
+	{
+		"#format"	"currentTick:d,totalTicks:d,time:.3f,checkpoints:d,teleports:d"
+		"en"		"{grey}Current tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} | Time: {lime}{time}{grey}s | CPs: {lime}{checkpoints}{grey} | TPs: {lime}{teleports}"
+	}
+	"Replay - Seeked To Tick"
+	{
+		"#format"	"seekSeconds:.3f,tick:d,time:.3f"
+		"en"		"{grey}Seeked {lime}{seekSeconds}{grey}s to tick {lime}{tick}{grey} (time: {lime}{time}{grey}s)"
+	}
+	"Replay - Paused"
+	{
+		"en"		"{grey}Replay paused."
+	}
+	"Replay - Resumed"
+	{
+		"en"		"{grey}Replay resumed."
+	}
+	"Replay - Loading"
+	{
+		"en"		"{grey}Loading replay, please wait..."
+	}
+	"Replay - Loading Already"
+	{
+		"en"		"{grey}Replay is already loading, please wait..."
+	}
+	"Replay - Invalid UUID"
+	{
+		"en"		"{darkred}Invalid UUID format"
+	}
+	"Replay - Loaded Successfully"
+	{
+		"en"		"{lime}Replay loaded successfully! Starting playback..."
+	}
+	"Replay - No Loading Progress"
+	{
+		"en"		"{grey}No replay loading in progress"
+	}
+	"Replay - Loading Progress"
+	{
+		"#format"	"progress:.1f"
+		"en"		"{grey}Loading replay: {progress}%%%% complete"
+	}
+	"Replay - Loading Completed"
+	{
+		"en"		"{lime}Replay loading completed"
+	}
+	"Replay - Loading Cancelled"
+	{
+		"en"		"{grey}Replay loading cancelled"
+	}
+	"Replay - Usage Command"
+	{
+		"en"		"{grey}Usage: kz_replay <ID>"
+	}
+	"Replay - Load Cancelled"
+	{
+		"en"		"{darkred}Load cancelled by user"
+	}
+	"Replay - Invalid File Format"
+	{
+		"en"		"{darkred}Invalid replay file format"
+	}
 }
