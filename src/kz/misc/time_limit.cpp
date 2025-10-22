@@ -75,7 +75,6 @@ void KZ::misc::EnforceTimeLimit()
 	if (nextlevel.Get().IsEmpty() && !g_pKZUtils->GetCurrentMapName().IsEmpty())
 	{
 		nextlevel.Set(g_pKZUtils->GetCurrentMapName());
-		return;
 	}
 
 	if (cvarLoaded || !mp_timelimit.IsValidRef() || !mp_roundtime.IsValidRef() || !mp_roundtime_defuse.IsValidRef()
