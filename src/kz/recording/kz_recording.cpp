@@ -11,318 +11,152 @@
 #include "filesystem.h"
 #include "vprof.h"
 
-namespace
-{
-	// Helpers to reduce duplication when pushing data into all active recorders.
-	inline void PushTickToRecorders(std::vector<RunRecorder> &runs, std::vector<JumpRecorder> &jumps, const TickData &d)
-	{
-		for (auto &r : runs)
-		{
-			r.tickData.push_back(d);
-		}
-		for (auto &r : jumps)
-		{
-			r.tickData.push_back(d);
-		}
-	}
-
-	inline void PushSubtickToRecorders(std::vector<RunRecorder> &runs, std::vector<JumpRecorder> &jumps, const SubtickData &d)
-	{
-		for (auto &r : runs)
-		{
-			r.subtickData.push_back(d);
-		}
-		for (auto &r : jumps)
-		{
-			r.subtickData.push_back(d);
-		}
-	}
-
-	inline void PushWeaponToRecorders(std::vector<RunRecorder> &runs, std::vector<JumpRecorder> &jumps, const WeaponSwitchEvent &e)
-	{
-		for (auto &r : runs)
-		{
-			r.weaponChangeEvents.push_back(e);
-		}
-		for (auto &r : jumps)
-		{
-			r.weaponChangeEvents.push_back(e);
-		}
-	}
-
-	inline void PushRpEventToRunRecorders(std::vector<RunRecorder> &runs, const RpEvent &e)
-	{
-		for (auto &r : runs)
-		{
-			r.rpEvents.push_back(e);
-		}
-	}
-
-	inline void PushRpEventToJumpRecorders(std::vector<JumpRecorder> &jumps, const RpEvent &e)
-	{
-		for (auto &r : jumps)
-		{
-			r.rpEvents.push_back(e);
-		}
-	}
-
-	inline void PushCmdToRecorders(std::vector<RunRecorder> &runs, std::vector<JumpRecorder> &jumps, const CmdData &d)
-	{
-		for (auto &r : runs)
-		{
-			r.cmdData.push_back(d);
-		}
-		for (auto &r : jumps)
-		{
-			r.cmdData.push_back(d);
-		}
-	}
-
-	inline void PushCmdSubtickToRecorders(std::vector<RunRecorder> &runs, std::vector<JumpRecorder> &jumps, const SubtickData &d)
-	{
-		for (auto &r : runs)
-		{
-			r.cmdSubtickData.push_back(d);
-		}
-		for (auto &r : jumps)
-		{
-			r.cmdSubtickData.push_back(d);
-		}
-	}
-
-	// Fill a SubtickData entry from a message-like object that provides the same accessors used below.
-	template<typename Msg>
-	inline void FillSubtickMoveFromMsg(SubtickData::RpSubtickMove &dst, const Msg &move)
-	{
-		dst.when = move.when();
-		dst.button = move.button();
-		if (move.button())
-		{
-			dst.pressed = move.pressed();
-		}
-		else
-		{
-			dst.analogMove.analog_forward_delta = move.analog_forward_delta();
-			dst.analogMove.analog_left_delta = move.analog_left_delta();
-			dst.analogMove.pitch_delta = move.pitch_delta();
-			dst.analogMove.yaw_delta = move.yaw_delta();
-		}
-	}
-
-	// Trim old command entries from circular buffers (keeps ~2 minutes as before).
-	inline void TrimOldCommands(CircularRecorder &circular, i32 currentTick)
-	{
-		i32 numToRemove = 0;
-		for (i32 i = 0; i < circular.cmdData->GetReadAvailable(); i++)
-		{
-			CmdData data;
-			if (!circular.cmdData->Peek(&data, 1, i))
-			{
-				break;
-			}
-			if (data.serverTick + 2 * 60 * 64 < currentTick)
-			{
-				numToRemove++;
-			}
-			else
-			{
-				break;
-			}
-		}
-		circular.cmdData->Advance(numToRemove);
-		circular.cmdSubtickData->Advance(numToRemove);
-	}
-
-	// Trim old weapon change events and update earliest weapon
-	inline void TrimOldWeaponEvents(CircularRecorder &circular, u32 currentTick)
-	{
-		i32 numToRemove = 0;
-		for (i32 i = 0; i < circular.weaponChangeEvents->GetReadAvailable(); i++)
-		{
-			WeaponSwitchEvent data;
-			if (!circular.weaponChangeEvents->Peek(&data, 1, i))
-			{
-				break;
-			}
-			if (data.serverTick + 2 * 60 * 64 < currentTick)
-			{
-				circular.earliestWeapon = data.econInfo;
-				numToRemove++;
-				continue;
-			}
-			break;
-		}
-		circular.weaponChangeEvents->Advance(numToRemove);
-	}
-
-	// Trim old rp events and update earliest mode/style/checkpoint info
-	inline void TrimOldRpEvents(CircularRecorder &circular, u32 currentTick)
-	{
-		i32 numToRemove = 0;
-		for (i32 i = 0; i < circular.rpEvents->GetReadAvailable(); i++)
-		{
-			RpEvent event;
-			if (!circular.rpEvents->Peek(&event, 1, i))
-			{
-				break;
-			}
-			if (event.serverTick + 2 * 60 * 64 < currentTick)
-			{
-				switch (event.type)
-				{
-					case RPEVENT_MODE_CHANGE:
-					{
-						V_strncpy(circular.earliestMode.value().name, event.data.modeChange.name, sizeof(circular.earliestMode.value().name));
-						V_strncpy(circular.earliestMode.value().md5, event.data.modeChange.md5, sizeof(circular.earliestMode.value().md5));
-						break;
-					}
-					case RPEVENT_STYLE_CHANGE:
-					{
-						if (event.data.styleChange.clearStyles)
-						{
-							circular.earliestStyles.value().clear();
-						}
-						RpModeStyleInfo style = {};
-						V_strncpy(style.name, event.data.styleChange.name, sizeof(style.name));
-						V_strncpy(style.md5, event.data.styleChange.md5, sizeof(style.md5));
-						circular.earliestStyles.value().push_back(style);
-					}
-					case RPEVENT_CHECKPOINT:
-					{
-						circular.earliestCheckpointIndex = event.data.checkpoint.index;
-						circular.earliestCheckpointCount = event.data.checkpoint.checkpointCount;
-						circular.earliestTeleportCount = event.data.checkpoint.teleportCount;
-						break;
-					}
-				}
-				numToRemove++;
-				continue;
-			}
-			break;
-		}
-		circular.rpEvents->Advance(numToRemove);
-	}
-
-	// Trim old jumps
-	inline void TrimOldJumps(CircularRecorder &circular, u32 currentTick)
-	{
-		i32 numToRemove = 0;
-		for (i32 i = 0; i < circular.jumps->GetReadAvailable(); i++)
-		{
-			RpJumpStats *jump = circular.jumps->PeekSingle(i);
-			if (!jump)
-			{
-				break;
-			}
-			if (jump->overall.serverTick + 2 * 60 * 64 < currentTick)
-			{
-				numToRemove++;
-				continue;
-			}
-			break;
-		}
-		circular.jumps->Advance(numToRemove);
-	}
-
-} // namespace
-
-static_global class : public KZTimerServiceEventListener
-{
-public:
-	virtual void OnTimerStartPost(KZPlayer *player, u32 courseGUID)
-	{
-		player->recordingService->OnTimerStart();
-	}
-
-	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed)
-	{
-		player->recordingService->OnTimerEnd();
-	}
-
-	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID)
-	{
-		player->recordingService->OnTimerStop();
-	}
-
-	virtual void OnTimerInvalidated(KZPlayer *player)
-	{
-		// player->PrintChat(false, false, "timerinvalidated");
-	}
-
-	virtual void OnPausePost(KZPlayer *player)
-	{
-		player->recordingService->OnPause();
-	}
-
-	virtual void OnResumePost(KZPlayer *player)
-	{
-		player->recordingService->OnResume();
-	}
-
-	virtual void OnSplitZoneTouchPost(KZPlayer *player, u32 splitZone)
-	{
-		player->recordingService->OnSplit(splitZone);
-	}
-
-	virtual void OnCheckpointZoneTouchPost(KZPlayer *player, u32 checkpoint)
-	{
-		player->recordingService->OnCPZ(checkpoint);
-	}
-
-	virtual void OnStageZoneTouchPost(KZPlayer *player, u32 stageZone)
-	{
-		player->recordingService->OnStage(stageZone);
-	}
-} timerEventListener;
-
 CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", true);
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 
-static_function f32 StringToFloat(const char *str)
+// Not sure what's the best place to put this, so putting it here for now.
+void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 {
-	if (!str || str[0] == '\0')
+	this->when = move.when();
+	this->button = move.button();
+	if (move.button())
 	{
-		return 0.0f;
+		this->pressed = move.pressed();
 	}
-	if (KZ_STREQI(str, "inf"))
+	else
 	{
-		return FLT_MAX;
+		this->analogMove.analog_forward_delta = move.analog_forward_delta();
+		this->analogMove.analog_left_delta = move.analog_left_delta();
+		this->analogMove.pitch_delta = move.pitch_delta();
+		this->analogMove.yaw_delta = move.yaw_delta();
 	}
-	if (KZ_STREQI(str, "-inf"))
-	{
-		return -FLT_MAX;
-	}
-	if (KZ_STREQI(str, "nan"))
-	{
-		return 0.0f;
-	}
-	return static_cast<f32>(atof(str));
 }
 
-void KZRecordingService::Init()
+void GeneralReplayHeader::Init(KZPlayer *player, ReplayType desiredType)
 {
-	KZTimerService::RegisterEventListener(&timerEventListener);
+	// Non-player-specific fields
+	this->magicNumber = KZ_REPLAY_MAGIC;
+	this->version = KZ_REPLAY_VERSION;
+	this->type = desiredType;
+
+	V_snprintf(this->map.name, sizeof(this->map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
+	g_pKZUtils->GetCurrentMapMD5(this->map.md5, sizeof(this->map.md5));
+	V_snprintf(this->pluginVersion, sizeof(this->pluginVersion), "%s", g_KZPlugin.GetVersion());
+
+	time_t unixTime = 0;
+	time(&unixTime);
+	this->timestamp = (u64)unixTime;
+
+	// Player-specific fields
+	V_snprintf(this->player.name, sizeof(this->player.name), "%s", player->GetController()->GetPlayerName());
+	this->player.steamid64 = player->GetSteamId64();
+
+	this->firstWeapon = player->recordingService->circularRecording.earliestWeapon.value();
+
+	this->gloves = player->GetPlayerPawn()->m_EconGloves();
+	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
+	V_snprintf(this->modelName, sizeof(this->modelName), "%s", pSkeleton->m_modelState().m_ModelName().String());
+
+	this->sensitivity = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "sensitivity"));
+	this->yaw = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_yaw"));
+	this->pitch = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_pitch"));
 }
 
-void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
+void KZRecordingService::Reset()
 {
-	if (KZ::replaysystem::IsReplayBot(this->player))
+	this->circularRecording.tickData->Advance(this->circularRecording.tickData->GetReadAvailable());
+	this->circularRecording.subtickData->Advance(this->circularRecording.subtickData->GetReadAvailable());
+	this->circularRecording.cmdData->Advance(this->circularRecording.cmdData->GetReadAvailable());
+	this->circularRecording.cmdSubtickData->Advance(this->circularRecording.cmdSubtickData->GetReadAvailable());
+	this->circularRecording.weaponChangeEvents->Advance(this->circularRecording.weaponChangeEvents->GetReadAvailable());
+	this->circularRecording.rpEvents->Advance(this->circularRecording.rpEvents->GetReadAvailable());
+	this->runRecorders.clear();
+	this->lastCmdNumReceived = 0;
+}
+
+void KZRecordingService::RecordTickData_PhysicsSimulate()
+{
+	// Reset the tick data.
+	this->currentTickData = {};
+	this->currentSubtickData = {};
+
+	this->currentTickData.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
+	this->currentTickData.gameTime = g_pKZUtils->GetServerGlobals()->curtime;
+	this->currentTickData.realTime = g_pKZUtils->GetServerGlobals()->realtime;
+	time_t unixTime = 0;
+	time(&unixTime);
+	this->currentTickData.unixTime = (u64)unixTime;
+
+	this->player->GetOrigin(&this->currentTickData.pre.origin);
+	this->player->GetVelocity(&this->currentTickData.pre.velocity);
+	this->player->GetAngles(&this->currentTickData.pre.angles);
+	auto movementServices = this->player->GetMoveServices();
+	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
+	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
+	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.pre.jumpPressedTime = movementServices->m_flJumpPressedTime;
+	this->currentTickData.pre.duckSpeed = movementServices->m_flDuckSpeed;
+	this->currentTickData.pre.duckAmount = movementServices->m_flDuckAmount;
+	this->currentTickData.pre.duckOffset = movementServices->m_flDuckOffset;
+	this->currentTickData.pre.lastDuckTime = movementServices->m_flLastDuckTime;
+	this->currentTickData.pre.replayFlags.ducking = movementServices->m_bDucking;
+	this->currentTickData.pre.replayFlags.ducked = movementServices->m_bDucked;
+	this->currentTickData.pre.replayFlags.desiresDuck = movementServices->m_bDesiresDuck;
+
+	this->currentTickData.pre.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
+	this->currentTickData.pre.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
+}
+
+void KZRecordingService::RecordTickData_SetupMove(PlayerCommand *pc)
+{
+	this->currentTickData.cmdNumber = pc->cmdNum;
+	this->currentTickData.clientTick = pc->base().client_tick();
+	this->currentTickData.forward = pc->base().forwardmove();
+	this->currentTickData.left = pc->base().leftmove();
+	this->currentTickData.up = pc->base().upmove();
+	this->currentTickData.pre.angles = {pc->base().viewangles().x(), pc->base().viewangles().y(), pc->base().viewangles().z()};
+	this->currentTickData.leftHanded = this->player->GetPlayerPawn()->m_bLeftHanded() || pc->left_hand_desired();
+
+	this->currentSubtickData.numSubtickMoves = pc->base().subtick_moves_size();
+	for (u32 i = 0; i < this->currentSubtickData.numSubtickMoves && i < 64; i++)
 	{
-		return;
+		this->currentSubtickData.subtickMoves[i].FromMove(pc->base().subtick_moves(i));
 	}
-	if (numCmds <= 0)
-	{
-		return;
-	}
+}
+
+void KZRecordingService::RecordTickData_PhysicsSimulatePost()
+{
+	this->player->GetOrigin(&this->currentTickData.post.origin);
+	this->player->GetVelocity(&this->currentTickData.post.velocity);
+	this->player->GetAngles(&this->currentTickData.post.angles);
+	auto movementServices = this->player->GetMoveServices();
+	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
+	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
+	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.post.jumpPressedTime = movementServices->m_flJumpPressedTime;
+	this->currentTickData.post.duckSpeed = movementServices->m_flDuckSpeed;
+	this->currentTickData.post.duckAmount = movementServices->m_flDuckAmount;
+	this->currentTickData.post.duckOffset = movementServices->m_flDuckOffset;
+	this->currentTickData.post.lastDuckTime = movementServices->m_flLastDuckTime;
+	this->currentTickData.post.replayFlags.ducking = movementServices->m_bDucking;
+	this->currentTickData.post.replayFlags.ducked = movementServices->m_bDucked;
+	this->currentTickData.post.replayFlags.desiresDuck = movementServices->m_bDesiresDuck;
+
+	this->currentTickData.post.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
+	this->currentTickData.post.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
+
+	// Push the tick data to the circular buffer and recorders.
+	this->circularRecording.tickData->Write(this->currentTickData);
+	this->PushToRecorders(this->currentTickData, RecorderType::Both);
+
+	this->circularRecording.subtickData->Write(this->currentSubtickData);
+	this->PushToRecorders<Recorder::Vec::Tick>(this->currentSubtickData, RecorderType::Both);
+}
+
+void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
+{
 	i32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
-
-	TrimOldCommands(this->circularRecording, currentTick);
-	// record data for replay playback
-	if (this->player->IsFakeClient())
-	{
-		return;
-	}
 	for (i32 i = 0; i < numCmds; i++)
 	{
 		auto &pc = cmds[i];
@@ -354,418 +188,26 @@ void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
 		data.mousedx = pc.base().mousedx();
 		data.mousedy = pc.base().mousedy();
 		this->circularRecording.cmdData->Write(data);
-		PushCmdToRecorders(this->runRecorders, this->jumpRecorders, data);
+		this->PushToRecorders(data, RecorderType::Both);
+
 		SubtickData subtickData;
 		subtickData.numSubtickMoves = pc.base().subtick_moves_size();
 		for (u32 j = 0; j < subtickData.numSubtickMoves && j < 64; j++)
 		{
-			auto &move = pc.base().subtick_moves(j);
-			FillSubtickMoveFromMsg(subtickData.subtickMoves[j], move);
+			subtickData.subtickMoves[j].FromMove(pc.base().subtick_moves(j));
 		}
 		this->circularRecording.cmdSubtickData->Write(subtickData);
-		PushCmdSubtickToRecorders(this->runRecorders, this->jumpRecorders, subtickData);
+		this->PushToRecorders<Recorder::Vec::Cmd>(subtickData, RecorderType::Both);
 		this->lastCmdNumReceived = pc.cmdNum;
 	}
 }
 
-void KZRecordingService::OnPlayerJoinTeam(i32 team) {}
-
-void KZRecordingService::Reset()
+void KZRecordingService::CheckRecorders()
 {
-	this->circularRecording.tickData->Advance(this->circularRecording.tickData->GetReadAvailable());
-	this->circularRecording.subtickData->Advance(this->circularRecording.subtickData->GetReadAvailable());
-	this->circularRecording.cmdData->Advance(this->circularRecording.cmdData->GetReadAvailable());
-	this->circularRecording.cmdSubtickData->Advance(this->circularRecording.cmdSubtickData->GetReadAvailable());
-	this->circularRecording.weaponChangeEvents->Advance(this->circularRecording.weaponChangeEvents->GetReadAvailable());
-	this->circularRecording.rpEvents->Advance(this->circularRecording.rpEvents->GetReadAvailable());
-	this->runRecorders.clear();
-	this->lastCmdNumReceived = 0;
-}
-
-void KZRecordingService::OnTimerStart()
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	this->runRecorders.push_back(RunRecorder(this->player));
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Timer start\n");
-	}
-	// TODO: Initiate a new recorder of type RP_RUN
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_START;
-	// Mapper-defined course ID.
-	event.data.timer.index = this->player->timerService->GetCourse()->id;
-	event.data.timer.time = this->player->timerService->GetTime();
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::OnTimerStop()
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Timer stop\n");
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_STOP;
-	event.data.timer.time = this->player->timerService->GetTime();
-	this->InsertEvent(event);
-
-	// Remove all active run recorders, which are the ones without desired stop time set.
-	auto it = this->runRecorders.begin();
-	while (it != this->runRecorders.end())
-	{
-		if (it->desiredStopTime < 0.0f)
-		{
-			it = this->runRecorders.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
-}
-
-void KZRecordingService::OnTimerEnd()
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Timer end\n");
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_END;
-	event.data.timer.index = this->player->timerService->GetCourse()->id;
-	event.data.timer.time = this->player->timerService->GetTime();
-	this->InsertEvent(event);
-
-	for (auto &recorder : this->runRecorders)
-	{
-		if (recorder.desiredStopTime < 0.0f)
-		{
-			recorder.desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f; // record 2 seconds after timer end
-		}
-	}
-}
-
-void KZRecordingService::OnPause()
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Timer pause\n");
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_PAUSE;
-	event.data.timer.time = this->player->timerService->GetTimerRunning() ? this->player->timerService->GetTime() : 0.0f;
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::OnResume()
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Timer resume\n");
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_RESUME;
-	event.data.timer.time = this->player->timerService->GetTimerRunning() ? this->player->timerService->GetTime() : 0.0f;
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::OnSplit(i32 split)
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Timer split %d\n", split);
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_SPLIT;
-	event.data.timer.index = split;
-	event.data.timer.time = this->player->timerService->GetTime();
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::OnCPZ(i32 cpz)
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Checkpoi32 %d\n", cpz);
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_CPZ;
-	event.data.timer.index = cpz;
-	event.data.timer.time = this->player->timerService->GetTime();
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::OnStage(i32 stage)
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Stage %d\n", stage);
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
-	event.data.timer.type = RpEvent::RpEventData::TimerEvent::TIMER_STAGE;
-	event.data.timer.index = stage;
-	event.data.timer.time = this->player->timerService->GetTime();
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Teleport\n");
-	}
-	RpEvent event;
-	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	event.type = RpEventType::RPEVENT_TELEPORT;
-	event.data.teleport.hasOrigin = origin != nullptr;
-	event.data.teleport.hasAngles = angles != nullptr;
-	event.data.teleport.hasVelocity = velocity != nullptr;
-	if (origin)
-	{
-		for (i32 i = 0; i < 3; i++)
-		{
-			event.data.teleport.origin[i] = origin->operator[](i);
-		}
-	}
-	if (angles)
-	{
-		for (i32 i = 0; i < 3; i++)
-		{
-			event.data.teleport.angles[i] = angles->operator[](i);
-		}
-	}
-	if (velocity)
-	{
-		for (i32 i = 0; i < 3; i++)
-		{
-			event.data.teleport.velocity[i] = velocity->operator[](i);
-		}
-	}
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::OnJumpFinish(Jump *jump)
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	// If the player has a style, ignore it.
-	if (this->player->styleServices.Count() > 0)
-	{
-		return;
-	}
-	// If a jump is way too short, ignore it.
-	if (jump->airtime < 0.5f)
-	{
-		return;
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Jump finish\n");
-	}
-	RpJumpStats &rpJump = this->circularRecording.jumps->GetNextWriteRef();
-	RpJumpStats::FromJump(rpJump, jump);
-	// Only write the jump if it's ownage or better to save storage for run replays.
-	if (jump->IsValid() && jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= DistanceTier_Ownage)
-	{
-		for (auto &recorder : this->runRecorders)
-		{
-			recorder.jumps.push_back(rpJump);
-			break;
-		}
-	}
-	// Create a new jump recorder if the jump is good enough.
-	if (jump->IsValid()
-		&& jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= kz_replay_recording_min_jump_tier.Get())
-	{
-		this->jumpRecorders.push_back(JumpRecorder(jump));
-	}
-	// Add to all active jump recorders.
-	for (auto &recorder : this->jumpRecorders)
-	{
-		recorder.jumps.push_back(rpJump);
-	}
-}
-
-void KZRecordingService::OnClientDisconnect()
-{
-	for (auto &recorder : this->runRecorders)
-	{
-		if (recorder.desiredStopTime > 0.0f)
-		{
-			recorder.WriteToFile();
-		}
-	}
-	this->runRecorders.clear();
-	for (auto &recorder : this->jumpRecorders)
-	{
-		recorder.WriteToFile();
-	}
-	this->jumpRecorders.clear();
-}
-
-void KZRecordingService::InsertEvent(const RpEvent &event)
-{
-	// 1. Insert into circular buffer
-	// 2. Insert into all active recorders
-	this->circularRecording.rpEvents->Write(event);
-	for (auto &recorder : this->runRecorders)
-	{
-		recorder.rpEvents.push_back(event);
-	}
-	if (event.type != RpEventType::RPEVENT_TIMER_EVENT)
-	{
-		for (auto &recorder : this->jumpRecorders)
-		{
-			recorder.rpEvents.push_back(event);
-		}
-	}
-}
-
-bool KZRecordingService::GetCurrentRunUUID(UUID_t &out_uuid)
-{
-	// If desiredStopTime is set, the run has ended.
-	if (!this->runRecorders.empty() && this->runRecorders.back().desiredStopTime < 0.0f)
-	{
-		out_uuid = this->runRecorders.back().uuid;
-		return true;
-	}
-	return false;
-}
-
-void KZRecordingService::OnPhysicsSimulate()
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(this->player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
-
-	// record data for replay playback
-	if (!this->player->IsAlive() || this->player->IsFakeClient())
-	{
-		return;
-	}
-
-	this->currentTickData = {};
-	this->currentTickData.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	this->currentTickData.gameTime = g_pKZUtils->GetServerGlobals()->curtime;
-	this->currentTickData.realTime = g_pKZUtils->GetServerGlobals()->realtime;
-	time_t unixTime = 0;
-	time(&unixTime);
-	this->currentTickData.unixTime = (u64)unixTime;
-
-	this->player->GetOrigin(&this->currentTickData.pre.origin);
-	this->player->GetVelocity(&this->currentTickData.pre.velocity);
-	this->player->GetAngles(&this->currentTickData.pre.angles);
-	auto movementServices = this->player->GetMoveServices();
-	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
-	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
-	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
-	this->currentTickData.pre.jumpPressedTime = movementServices->m_flJumpPressedTime;
-	this->currentTickData.pre.duckSpeed = movementServices->m_flDuckSpeed;
-	this->currentTickData.pre.duckAmount = movementServices->m_flDuckAmount;
-	this->currentTickData.pre.duckOffset = movementServices->m_flDuckOffset;
-	this->currentTickData.pre.lastDuckTime = movementServices->m_flLastDuckTime;
-	this->currentTickData.pre.replayFlags.ducking = movementServices->m_bDucking;
-	this->currentTickData.pre.replayFlags.ducked = movementServices->m_bDucked;
-	this->currentTickData.pre.replayFlags.desiresDuck = movementServices->m_bDesiresDuck;
-
-	this->currentTickData.pre.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
-	this->currentTickData.pre.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
-}
-
-void KZRecordingService::OnSetupMove(PlayerCommand *pc)
-{
-	if (KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-	if (!this->player->IsAlive() || this->player->IsFakeClient())
-	{
-		return;
-	}
-
-	this->currentTickData.cmdNumber = pc->cmdNum;
-	this->currentTickData.clientTick = pc->base().client_tick();
-	this->currentTickData.forward = pc->base().forwardmove();
-	this->currentTickData.left = pc->base().leftmove();
-	this->currentTickData.up = pc->base().upmove();
-	this->currentTickData.pre.angles = {pc->base().viewangles().x(), pc->base().viewangles().y(), pc->base().viewangles().z()};
-	this->currentSubtickData.numSubtickMoves = pc->base().subtick_moves_size();
-	this->currentTickData.leftHanded = this->player->GetPlayerPawn()->m_bLeftHanded() || pc->left_hand_desired();
-	for (u32 i = 0; i < this->currentSubtickData.numSubtickMoves && i < 64; i++)
-	{
-		auto &move = pc->base().subtick_moves(i);
-		FillSubtickMoveFromMsg(this->currentSubtickData.subtickMoves[i], move);
-	}
-}
-
-void KZRecordingService::OnPhysicsSimulatePost()
-{
-	if (this->player->IsFakeClient() || KZ::replaysystem::IsReplayBot(this->player))
-	{
-		return;
-	}
-
-	// Go through all the active recorders and see if any need to be stopped.
 	for (auto it = this->runRecorders.begin(); it != this->runRecorders.end();)
 	{
 		auto &recorder = *it;
-		if (recorder.desiredStopTime >= 0.0f && g_pKZUtils->GetServerGlobals()->curtime >= recorder.desiredStopTime)
+		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
 			// Stop this recorder
 			if (kz_replay_recording_debug.Get())
@@ -783,12 +225,12 @@ void KZRecordingService::OnPhysicsSimulatePost()
 	for (auto it = this->jumpRecorders.begin(); it != this->jumpRecorders.end();)
 	{
 		auto &recorder = *it;
-		if (recorder.desiredStopTime >= 0.0f && g_pKZUtils->GetServerGlobals()->curtime >= recorder.desiredStopTime)
+		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
 			// Stop this recorder
 			if (kz_replay_recording_debug.Get())
 			{
-				META_CONPRINTF("kz_replay_recording_debug: Run recorder stopped\n");
+				META_CONPRINTF("kz_replay_recording_debug: Jump recorder stopped\n");
 			}
 			recorder.WriteToFile();
 			it = this->jumpRecorders.erase(it);
@@ -798,34 +240,61 @@ void KZRecordingService::OnPhysicsSimulatePost()
 			++it;
 		}
 	}
-	// record data for replay playback
-	if (!this->player->IsAlive())
+}
+
+void KZRecordingService::CheckMouseConVars()
+{
+	const char *sensitivityStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "sensitivity");
+	f32 sensitivity = utils::StringToFloat(sensitivityStr);
+	if (this->lastSensitivity != sensitivity)
 	{
-		return;
+		this->lastSensitivity = sensitivity;
+		RpEvent event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.type = RpEventType::RPEVENT_CVAR;
+		event.data.cvar.cvar = RPCVAR_SENSITIVITY;
+		this->InsertEvent(event);
+		if (kz_replay_recording_debug.Get())
+		{
+			META_CONPRINTF("kz_replay_recording_debug: Sensitivity change event: %f\n", sensitivity);
+		}
 	}
-	this->player->GetOrigin(&this->currentTickData.post.origin);
-	this->player->GetVelocity(&this->currentTickData.post.velocity);
-	this->player->GetAngles(&this->currentTickData.post.angles);
-	auto movementServices = this->player->GetMoveServices();
-	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
-	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
-	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
-	this->currentTickData.post.jumpPressedTime = movementServices->m_flJumpPressedTime;
-	this->currentTickData.post.duckSpeed = movementServices->m_flDuckSpeed;
-	this->currentTickData.post.duckAmount = movementServices->m_flDuckAmount;
-	this->currentTickData.post.duckOffset = movementServices->m_flDuckOffset;
-	this->currentTickData.post.lastDuckTime = movementServices->m_flLastDuckTime;
-	this->currentTickData.post.replayFlags.ducking = movementServices->m_bDucking;
-	this->currentTickData.post.replayFlags.ducked = movementServices->m_bDucked;
-	this->currentTickData.post.replayFlags.desiresDuck = movementServices->m_bDesiresDuck;
 
-	this->currentTickData.post.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
-	this->currentTickData.post.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
-	this->circularRecording.tickData->Write(this->currentTickData);
-	PushTickToRecorders(this->runRecorders, this->jumpRecorders, this->currentTickData);
-	this->circularRecording.subtickData->Write(this->currentSubtickData);
-	PushSubtickToRecorders(this->runRecorders, this->jumpRecorders, this->currentSubtickData);
+	const char *pitchStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_pitch");
+	f32 pitch = utils::StringToFloat(pitchStr);
+	if (this->lastPitch != pitch)
+	{
+		this->lastPitch = pitch;
+		RpEvent event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.type = RpEventType::RPEVENT_CVAR;
+		event.data.cvar.cvar = RPCVAR_M_PITCH;
+		this->InsertEvent(event);
+		if (kz_replay_recording_debug.Get())
+		{
+			META_CONPRINTF("kz_replay_recording_debug: Pitch change event: %f\n", pitch);
+		}
+	}
 
+	const char *yawStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_yaw");
+	f32 yaw = utils::StringToFloat(yawStr);
+	if (this->lastYaw != yaw)
+	{
+		this->lastYaw = yaw;
+		RpEvent event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.type = RpEventType::RPEVENT_CVAR;
+		event.data.cvar.cvar = RPCVAR_M_YAW;
+		this->InsertEvent(event);
+		if (kz_replay_recording_debug.Get())
+		{
+			META_CONPRINTF("kz_replay_recording_debug: Yaw change event: %f\n", yaw);
+		}
+	}
+}
+
+void KZRecordingService::CheckWeapons()
+{
 	auto weapon = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
 	auto weaponEconInfo = EconInfo(weapon);
 	if (this->currentWeaponEconInfo != weaponEconInfo)
@@ -835,28 +304,16 @@ void KZRecordingService::OnPhysicsSimulatePost()
 		event.serverTick = this->currentTickData.serverTick;
 		event.econInfo = weaponEconInfo;
 		this->circularRecording.weaponChangeEvents->Write(event);
-		PushWeaponToRecorders(this->runRecorders, this->jumpRecorders, event);
+		this->PushToRecorders(event, RecorderType::Both);
 	}
-	if (this->player->checkpointService->GetCheckpointCount() != this->lastKnownCheckpointCount
-		|| this->player->checkpointService->GetTeleportCount() != this->lastKnownTeleportCount
-		|| this->player->checkpointService->GetCurrentCpIndex() != this->lastKnownCheckpointIndex)
+	if (!this->circularRecording.earliestWeapon.has_value())
 	{
-		this->lastKnownCheckpointCount = this->player->checkpointService->GetCheckpointCount();
-		this->lastKnownTeleportCount = this->player->checkpointService->GetTeleportCount();
-		this->lastKnownCheckpointIndex = this->player->checkpointService->GetCurrentCpIndex();
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CHECKPOINT;
-		event.data.checkpoint.index = this->lastKnownCheckpointIndex;
-		event.data.checkpoint.checkpointCount = this->lastKnownCheckpointCount;
-		event.data.checkpoint.teleportCount = this->lastKnownTeleportCount;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Checkpoint event: #%d CP %d, teleports %d\n", this->lastKnownCheckpointIndex,
-						   this->lastKnownCheckpointCount, this->lastKnownTeleportCount);
-		}
+		this->circularRecording.earliestWeapon = this->currentWeaponEconInfo;
 	}
+}
+
+void KZRecordingService::CheckModeStyles()
+{
 	auto currentModeInfo = KZ::mode::GetModeInfo(this->player->modeService);
 	if (this->lastKnownMode.shortModeName != currentModeInfo.shortModeName || !KZ_STREQI(this->lastKnownMode.md5, currentModeInfo.md5))
 	{
@@ -913,58 +370,6 @@ void KZRecordingService::OnPhysicsSimulatePost()
 		}
 	}
 
-	const char *sensitivityStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "sensitivity");
-	f32 sensitivity = StringToFloat(sensitivityStr);
-	if (this->lastSensitivity != sensitivity)
-	{
-		this->lastSensitivity = sensitivity;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CVAR;
-		event.data.cvar.cvar = RPCVAR_SENSITIVITY;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Sensitivity change event: %f\n", sensitivity);
-		}
-	}
-
-	const char *pitchStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_pitch");
-	f32 pitch = StringToFloat(pitchStr);
-	if (this->lastPitch != pitch)
-	{
-		this->lastPitch = pitch;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CVAR;
-		event.data.cvar.cvar = RPCVAR_M_PITCH;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Pitch change event: %f\n", pitch);
-		}
-	}
-
-	const char *yawStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_yaw");
-	f32 yaw = StringToFloat(yawStr);
-	if (this->lastYaw != yaw)
-	{
-		this->lastYaw = yaw;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CVAR;
-		event.data.cvar.cvar = RPCVAR_M_YAW;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Yaw change event: %f\n", yaw);
-		}
-	}
-
-	if (!this->circularRecording.earliestWeapon.has_value())
-	{
-		this->circularRecording.earliestWeapon = this->currentWeaponEconInfo;
-	}
 	if (!this->circularRecording.earliestMode.has_value())
 	{
 		auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService);
@@ -986,20 +391,145 @@ void KZRecordingService::OnPhysicsSimulatePost()
 			this->circularRecording.earliestStyles->push_back(style);
 		}
 	}
+}
+
+void KZRecordingService::CheckCheckpoints()
+{
+	if (this->player->checkpointService->GetCheckpointCount() != this->lastKnownCheckpointCount
+		|| this->player->checkpointService->GetTeleportCount() != this->lastKnownTeleportCount
+		|| this->player->checkpointService->GetCurrentCpIndex() != this->lastKnownCheckpointIndex)
+	{
+		this->lastKnownCheckpointCount = this->player->checkpointService->GetCheckpointCount();
+		this->lastKnownTeleportCount = this->player->checkpointService->GetTeleportCount();
+		this->lastKnownCheckpointIndex = this->player->checkpointService->GetCurrentCpIndex();
+		RpEvent event;
+		event.serverTick = this->currentTickData.serverTick;
+		event.type = RpEventType::RPEVENT_CHECKPOINT;
+		event.data.checkpoint.index = this->lastKnownCheckpointIndex;
+		event.data.checkpoint.checkpointCount = this->lastKnownCheckpointCount;
+		event.data.checkpoint.teleportCount = this->lastKnownTeleportCount;
+		this->InsertEvent(event);
+		if (kz_replay_recording_debug.Get())
+		{
+			META_CONPRINTF("kz_replay_recording_debug: Checkpoint event: #%d CP %d, teleports %d\n", this->lastKnownCheckpointIndex,
+						   this->lastKnownCheckpointCount, this->lastKnownTeleportCount);
+		}
+	}
+
 	if (!this->circularRecording.earliestCheckpointCount.has_value())
 	{
 		this->circularRecording.earliestCheckpointCount = this->lastKnownCheckpointCount;
 		this->circularRecording.earliestTeleportCount = this->lastKnownTeleportCount;
 		this->circularRecording.earliestCheckpointIndex = this->lastKnownCheckpointIndex;
 	}
-	// Remove old events from circular buffer (keep 2 minutes)
-	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	TrimOldWeaponEvents(this->circularRecording, currentTick);
-	TrimOldRpEvents(this->circularRecording, currentTick);
-	TrimOldJumps(this->circularRecording, currentTick);
 }
 
-SCMD(kz_testsavereplay, SCFL_REPLAY)
+void KZRecordingService::InsertEvent(const RpEvent &event)
+{
+	this->circularRecording.rpEvents->Write(event);
+	this->PushToRecorders(event, RecorderType::Run);
+	if (event.type != RpEventType::RPEVENT_TIMER_EVENT)
+	{
+		this->PushToRecorders(event, RecorderType::Jump);
+	}
+}
+
+void KZRecordingService::InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TimerEventType type, f32 time, i32 index)
+{
+	RpEvent event;
+	event.serverTick = this->currentTickData.serverTick;
+	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	event.data.timer.type = type;
+	event.data.timer.index = index;
+	event.data.timer.time = time;
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::InsertTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	RpEvent event;
+	event.serverTick = this->currentTickData.serverTick;
+	event.type = RpEventType::RPEVENT_TELEPORT;
+	event.data.teleport.hasOrigin = origin != nullptr;
+	event.data.teleport.hasAngles = angles != nullptr;
+	event.data.teleport.hasVelocity = velocity != nullptr;
+	if (origin)
+	{
+		for (i32 i = 0; i < 3; i++)
+		{
+			event.data.teleport.origin[i] = origin->operator[](i);
+		}
+	}
+	if (angles)
+	{
+		for (i32 i = 0; i < 3; i++)
+		{
+			event.data.teleport.angles[i] = angles->operator[](i);
+		}
+	}
+	if (velocity)
+	{
+		for (i32 i = 0; i < 3; i++)
+		{
+			event.data.teleport.velocity[i] = velocity->operator[](i);
+		}
+	}
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::InsertModeChangeEvent(const char *name, const char *md5)
+{
+	RpEvent event;
+	event.serverTick = this->currentTickData.serverTick;
+	event.type = RpEventType::RPEVENT_MODE_CHANGE;
+	V_strncpy(event.data.modeChange.name, name, sizeof(event.data.modeChange.name));
+	V_strncpy(event.data.modeChange.md5, md5, sizeof(event.data.modeChange.md5));
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle)
+{
+	RpEvent event;
+	event.serverTick = this->currentTickData.serverTick;
+	event.type = RpEventType::RPEVENT_STYLE_CHANGE;
+	V_strncpy(event.data.styleChange.name, name, sizeof(event.data.styleChange.name));
+	V_strncpy(event.data.styleChange.md5, md5, sizeof(event.data.styleChange.md5));
+	event.data.styleChange.clearStyles = firstStyle;
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::InsertCheckpointEvent(i32 index, i32 checkpointCount, i32 teleportCount)
+{
+	RpEvent event;
+	event.serverTick = this->currentTickData.serverTick;
+	event.type = RpEventType::RPEVENT_CHECKPOINT;
+	event.data.checkpoint.index = index;
+	event.data.checkpoint.checkpointCount = checkpointCount;
+	event.data.checkpoint.teleportCount = teleportCount;
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::InsertCvarEvent(RpCvar cvar, f32 value)
+{
+	RpEvent event;
+	event.serverTick = this->currentTickData.serverTick;
+	event.type = RpEventType::RPEVENT_CVAR;
+	event.data.cvar.cvar = cvar;
+	this->InsertEvent(event);
+}
+
+bool KZRecordingService::GetCurrentRunUUID(UUID_t &out_uuid)
+{
+	// If desiredStopTime is set, the run has ended.
+	if (!this->runRecorders.empty() && this->runRecorders.back().desiredStopTime < 0.0f)
+	{
+		out_uuid = this->runRecorders.back().uuid;
+		return true;
+	}
+	return false;
+}
+
+SCMD(kz_savemanualreplay, SCFL_REPLAY)
 {
 	// TODO: 1. Support saving certain parts of the circular buffer only (e.g., last 30 seconds)
 	//       2. Clean this mess up
@@ -1009,551 +539,7 @@ SCMD(kz_testsavereplay, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	auto modeInfo = KZ::mode::GetModeInfo(player->modeService);
-	char filename[512];
-
-	UUID_t uuid;
-	std::string uuidStr = uuid.ToString();
-	V_snprintf(filename, sizeof(filename), "%s/%s.replay", KZ_REPLAY_PATH, uuidStr.c_str());
-	g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_PATH);
-
-	FileHandle_t file = g_pFullFileSystem->Open(filename, "wb");
-
-	if (file)
-	{
-		ReplayHeader header = {};
-		header.magicNumber = KZ_REPLAY_MAGIC;
-		header.version = KZ_REPLAY_VERSION;
-
-		V_snprintf(header.player.name, sizeof(header.player.name), "%s", player->GetController()->GetPlayerName());
-		header.player.steamid64 = player->GetSteamId64();
-
-		header.type = RP_MANUAL;
-
-		V_snprintf(header.map.name, sizeof(header.map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
-		g_pKZUtils->GetCurrentMapMD5(header.map.md5, sizeof(header.map.md5));
-
-		header.firstWeapon = player->recordingService->circularRecording.earliestWeapon.value();
-
-		header.gloves = player->GetPlayerPawn()->m_EconGloves();
-
-		CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
-		V_snprintf(header.modelName, sizeof(header.modelName), "%s", pSkeleton->m_modelState().m_ModelName().String());
-
-		g_pFullFileSystem->Write(&header, sizeof(header), file);
-
-		i32 tickdataCount = player->recordingService->circularRecording.tickData->GetReadAvailable();
-		g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
-		player->recordingService->circularRecording.tickData->WriteToFile(g_pFullFileSystem, file, tickdataCount);
-
-		for (i32 i = 0; i < tickdataCount; i++)
-		{
-			SubtickData *subtickData = player->recordingService->circularRecording.subtickData->PeekSingle(i);
-			g_pFullFileSystem->Write(&subtickData->numSubtickMoves, sizeof(subtickData->numSubtickMoves), file);
-			g_pFullFileSystem->Write(&subtickData->subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData->numSubtickMoves, file);
-		}
-
-		i32 numWeaponChanges = player->recordingService->circularRecording.weaponChangeEvents->GetReadAvailable();
-		g_pFullFileSystem->Write(&numWeaponChanges, sizeof(i32), file);
-
-		for (i32 i = 0; i < numWeaponChanges; i++)
-		{
-			WeaponSwitchEvent *event = player->recordingService->circularRecording.weaponChangeEvents->PeekSingle(i);
-			g_pFullFileSystem->Write(&event->serverTick, sizeof(event->serverTick), file);
-			g_pFullFileSystem->Write(&event->econInfo.mainInfo, sizeof(event->econInfo.mainInfo), file);
-			for (i32 j = 0; j < event->econInfo.mainInfo.numAttributes; j++)
-			{
-				g_pFullFileSystem->Write(&event->econInfo.attributes[j], sizeof(event->econInfo.attributes[j]), file);
-			}
-		}
-
-		i32 numJumps = player->recordingService->circularRecording.jumps->GetReadAvailable();
-		g_pFullFileSystem->Write(&numJumps, sizeof(i32), file);
-		for (i32 i = 0; i < numJumps; i++)
-		{
-			RpJumpStats *jump = player->recordingService->circularRecording.jumps->PeekSingle(i);
-			if (jump)
-			{
-				// Write jump data
-				g_pFullFileSystem->Write(&jump->overall, sizeof(jump->overall), file);
-				i32 numStrafes = jump->strafes.size();
-				g_pFullFileSystem->Write(&numStrafes, sizeof(numStrafes), file);
-				g_pFullFileSystem->Write(jump->strafes.data(), sizeof(RpJumpStats::StrafeData) * numStrafes, file);
-				i32 numAACalls = jump->aaCalls.size();
-				g_pFullFileSystem->Write(&numAACalls, sizeof(numAACalls), file);
-				g_pFullFileSystem->Write(jump->aaCalls.data(), sizeof(RpJumpStats::AAData) * numAACalls, file);
-				if (kz_replay_recording_debug.Get())
-				{
-					META_CONPRINTF("kz_replay_recording_debug: Saved jump %d: %f seconds, %d strafes, %d aa calls\n", i, jump->overall.airtime,
-								   numStrafes, numAACalls);
-				}
-			}
-		}
-
-		i32 numBaseModeStyleEvents = 2 + player->recordingService->circularRecording.earliestStyles.value().size();
-		i32 numRpEvents = player->recordingService->circularRecording.rpEvents->GetReadAvailable() + numBaseModeStyleEvents;
-		g_pFullFileSystem->Write(&numRpEvents, sizeof(i32), file);
-
-		RpEvent baseCheckpointEvent = {};
-		baseCheckpointEvent.serverTick = 0;
-		baseCheckpointEvent.type = RPEVENT_CHECKPOINT;
-		baseCheckpointEvent.data.checkpoint.index = player->recordingService->circularRecording.earliestCheckpointIndex.value();
-		baseCheckpointEvent.data.checkpoint.checkpointCount = player->recordingService->circularRecording.earliestCheckpointCount.value();
-		baseCheckpointEvent.data.checkpoint.teleportCount = player->recordingService->circularRecording.earliestTeleportCount.value();
-		g_pFullFileSystem->Write(&baseCheckpointEvent, sizeof(RpEvent), file);
-
-		RpEvent baseModeEvent = {};
-		baseModeEvent.serverTick = 0;
-		baseModeEvent.type = RPEVENT_MODE_CHANGE;
-		V_strncpy(baseModeEvent.data.modeChange.name, player->recordingService->circularRecording.earliestMode.value().name,
-				  sizeof(baseModeEvent.data.modeChange.name));
-		V_strncpy(baseModeEvent.data.modeChange.md5, player->recordingService->circularRecording.earliestMode.value().md5,
-				  sizeof(baseModeEvent.data.modeChange.md5));
-		g_pFullFileSystem->Write(&baseModeEvent, sizeof(RpEvent), file);
-
-		bool firstStyle = true;
-		for (auto &style : player->recordingService->circularRecording.earliestStyles.value())
-		{
-			RpEvent baseStyleEvent = {};
-			baseStyleEvent.serverTick = 0;
-			baseStyleEvent.type = RPEVENT_STYLE_CHANGE;
-			V_strncpy(baseStyleEvent.data.styleChange.name, style.name, sizeof(baseStyleEvent.data.styleChange.name));
-			V_strncpy(baseStyleEvent.data.styleChange.md5, style.md5, sizeof(baseStyleEvent.data.styleChange.md5));
-			baseStyleEvent.data.styleChange.clearStyles = firstStyle;
-			firstStyle = false;
-			g_pFullFileSystem->Write(&baseStyleEvent, sizeof(RpEvent), file);
-		}
-
-		numRpEvents = player->recordingService->circularRecording.rpEvents->GetReadAvailable();
-		for (i32 i = 0; i < numRpEvents; i++)
-		{
-			RpEvent *rpEvent = player->recordingService->circularRecording.rpEvents->PeekSingle(i);
-			g_pFullFileSystem->Write(rpEvent, sizeof(RpEvent), file);
-		}
-
-		// Command data is always written last because playback doesn't read this part of the replay.
-		CmdData cmdData = {};
-		i32 cmddataCount = player->recordingService->circularRecording.cmdData->GetReadAvailable();
-		g_pFullFileSystem->Write(&cmddataCount, sizeof(cmddataCount), file);
-		player->recordingService->circularRecording.cmdData->WriteToFile(g_pFullFileSystem, file, cmddataCount);
-
-		for (i32 i = 0; i < cmddataCount; i++)
-		{
-			SubtickData *cmdSubtickData = player->recordingService->circularRecording.cmdSubtickData->PeekSingle(i);
-			g_pFullFileSystem->Write(&cmdSubtickData->numSubtickMoves, sizeof(cmdSubtickData->numSubtickMoves), file);
-			g_pFullFileSystem->Write(&cmdSubtickData->subtickMoves, sizeof(SubtickData::RpSubtickMove) * cmdSubtickData->numSubtickMoves, file);
-		}
-		g_pFullFileSystem->Close(file);
-	}
-	player->PrintChat(false, false, "Saved replay to %s", filename);
+	f32 duration = args->ArgC() > 1 ? utils::StringToFloat(args->Arg(1)) : 120.0f;
+	player->recordingService->WriteCircularBufferToFile(duration);
 	return MRES_SUPERCEDE;
-}
-
-JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, false, DistanceTier_None)
-{
-	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f;
-	this->baseHeader.type = RP_JUMPSTATS;
-	this->header.jumpType = jump->jumpType;
-	this->header.distance = jump->GetDistance();
-	this->header.airTime = jump->airtime;
-	this->header.pre = jump->GetTakeoffSpeed();
-	this->header.max = jump->GetMaxSpeed();
-	this->header.sync = jump->GetSync();
-}
-
-i32 JumpRecorder::WriteHeader(FileHandle_t file)
-{
-	i32 bytesWritten = Recorder::WriteHeader(file);
-	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
-}
-
-RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, true, DistanceTier_Ownage)
-{
-	this->baseHeader.type = RP_RUN;
-	this->header.courseID = player->timerService->GetCourse() ? player->timerService->GetCourse()->id : INVALID_COURSE_NUMBER;
-	V_strncpy(this->header.mode.name, KZ::mode::GetModeInfo(player->modeService).longModeName.Get(), sizeof(this->header.mode.name));
-	V_strncpy(this->header.mode.md5, KZ::mode::GetModeInfo(player->modeService).md5, sizeof(this->header.mode.md5));
-	this->header.styleCount = player->styleServices.Count();
-}
-
-void RunRecorder::End(f32 time, i32 numTeleports)
-{
-	this->header.time = time;
-	this->header.numTeleports = numTeleports;
-	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 4.0f;
-}
-
-i32 RunRecorder::WriteHeader(FileHandle_t file)
-{
-	i32 bytesWritten = Recorder::WriteHeader(file);
-	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
-}
-
-Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps)
-{
-	baseHeader.magicNumber = KZ_REPLAY_MAGIC;
-	baseHeader.version = KZ_REPLAY_VERSION;
-	baseHeader.type = RP_MANUAL;
-	baseHeader.sensitivity = StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "sensitivity"));
-	baseHeader.pitch = StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_pitch"));
-	baseHeader.yaw = StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_yaw"));
-
-	time_t unixTime = 0;
-	time(&unixTime);
-	baseHeader.timestamp = (u64)unixTime;
-	V_snprintf(baseHeader.pluginVersion, sizeof(baseHeader.pluginVersion), "%s", g_KZPlugin.GetVersion());
-	V_snprintf(baseHeader.player.name, sizeof(baseHeader.player.name), "%s", player->GetController()->GetPlayerName());
-	baseHeader.player.steamid64 = player->GetSteamId64();
-	V_snprintf(baseHeader.map.name, sizeof(baseHeader.map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
-	g_pKZUtils->GetCurrentMapMD5(baseHeader.map.md5, sizeof(baseHeader.map.md5));
-	baseHeader.gloves = player->GetPlayerPawn()->m_EconGloves();
-	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
-	V_snprintf(baseHeader.modelName, sizeof(baseHeader.modelName), "%s", pSkeleton->m_modelState().m_ModelName().String());
-
-	CircularRecorder &circular = player->recordingService->circularRecording;
-	// Go through the events and fetch the first events within the time frame.
-	// Iterate backwards to find the earliest event that is still within the time frame.
-	i32 earliestWeaponIndex = -1;
-	i32 earliestModeEventIndex = -1;
-	i32 earliestStyleEventIndex = -1;
-	i32 earliestCheckpointEventIndex = -1;
-
-	if (circular.tickData->GetReadAvailable() == 0)
-	{
-		return;
-	}
-	i32 numTickData = MIN(circular.tickData->GetReadAvailable(), (i32)(numSeconds * ENGINE_FIXED_TICK_RATE));
-	u32 earliestTick = circular.tickData->PeekSingle(circular.tickData->GetReadAvailable() - numTickData)->serverTick;
-	for (i32 i = circular.tickData->GetReadAvailable() - numTickData; i < circular.tickData->GetReadAvailable(); i++)
-	{
-		TickData *tickData = circular.tickData->PeekSingle(i);
-		if (!tickData)
-		{
-			break;
-		}
-		this->tickData.push_back(*tickData);
-		this->subtickData.push_back(*circular.subtickData->PeekSingle(i));
-	}
-	i32 first = 0;
-	bool shouldCopy = false;
-	for (; first < circular.rpEvents->GetReadAvailable(); first++)
-	{
-		shouldCopy = true;
-		RpEvent *event = circular.rpEvents->PeekSingle(first);
-		if (event->serverTick >= earliestTick)
-		{
-			break;
-		}
-		if (event->type == RPEVENT_CHECKPOINT)
-		{
-			earliestCheckpointEventIndex = first;
-		}
-		else if (event->type == RPEVENT_MODE_CHANGE)
-		{
-			earliestModeEventIndex = first;
-		}
-		else if (event->type == RPEVENT_STYLE_CHANGE && event->data.styleChange.clearStyles)
-		{
-			earliestStyleEventIndex = first;
-		}
-	}
-	if (earliestCheckpointEventIndex == -1)
-	{
-		RpEvent baseCheckpointEvent = {};
-		baseCheckpointEvent.serverTick = 0;
-		baseCheckpointEvent.type = RPEVENT_CHECKPOINT;
-		baseCheckpointEvent.data.checkpoint.index = circular.earliestCheckpointIndex.value_or(0);
-		baseCheckpointEvent.data.checkpoint.checkpointCount = circular.earliestCheckpointCount.value_or(0);
-		baseCheckpointEvent.data.checkpoint.teleportCount = circular.earliestTeleportCount.value_or(0);
-		this->rpEvents.push_back(baseCheckpointEvent);
-	}
-	else
-	{
-		RpEvent baseCheckpointEvent = *circular.rpEvents->PeekSingle(earliestCheckpointEventIndex);
-		baseCheckpointEvent.serverTick = 0;
-		this->rpEvents.push_back(baseCheckpointEvent);
-	}
-	if (earliestModeEventIndex == -1)
-	{
-		RpEvent baseModeEvent = {};
-		baseModeEvent.serverTick = 0;
-		baseModeEvent.type = RPEVENT_MODE_CHANGE;
-		V_strncpy(baseModeEvent.data.modeChange.name, circular.earliestMode.value().name, sizeof(baseModeEvent.data.modeChange.name));
-		V_strncpy(baseModeEvent.data.modeChange.md5, circular.earliestMode.value().md5, sizeof(baseModeEvent.data.modeChange.md5));
-		this->rpEvents.push_back(baseModeEvent);
-	}
-	else
-	{
-		RpEvent baseModeEvent = *circular.rpEvents->PeekSingle(earliestModeEventIndex);
-		baseModeEvent.serverTick = 0;
-		this->rpEvents.push_back(baseModeEvent);
-	}
-	if (earliestStyleEventIndex == -1)
-	{
-		bool firstStyle = true;
-		for (auto &style : circular.earliestStyles.value_or(std::vector<RpModeStyleInfo>()))
-		{
-			RpEvent baseStyleEvent = {};
-			baseStyleEvent.serverTick = 0;
-			baseStyleEvent.type = RPEVENT_STYLE_CHANGE;
-			V_strncpy(baseStyleEvent.data.styleChange.name, style.name, sizeof(baseStyleEvent.data.styleChange.name));
-			V_strncpy(baseStyleEvent.data.styleChange.md5, style.md5, sizeof(baseStyleEvent.data.styleChange.md5));
-			baseStyleEvent.data.styleChange.clearStyles = firstStyle;
-			firstStyle = false;
-			this->rpEvents.push_back(baseStyleEvent);
-		}
-	}
-	else
-	{
-		RpEvent baseStyleEvent = *circular.rpEvents->PeekSingle(earliestStyleEventIndex);
-		i32 eventServerTick = baseStyleEvent.serverTick;
-		baseStyleEvent.serverTick = 0;
-		this->rpEvents.push_back(baseStyleEvent);
-		// Copy all style change events with the same server tick (they were part of the same batch)
-		for (i32 i = earliestStyleEventIndex + 1; i < circular.rpEvents->GetReadAvailable(); i++)
-		{
-			RpEvent *event = circular.rpEvents->PeekSingle(i);
-			if (!event || event->type != RPEVENT_STYLE_CHANGE || event->serverTick != eventServerTick)
-			{
-				break;
-			}
-			this->rpEvents.push_back(*event);
-		}
-	}
-	if (shouldCopy)
-	{
-		for (i32 i = first; i < circular.rpEvents->GetReadAvailable(); i++)
-		{
-			if (!copyTimerEvents && circular.rpEvents->PeekSingle(i)->type == RPEVENT_TIMER_EVENT)
-			{
-				continue;
-			}
-			this->rpEvents.push_back(*circular.rpEvents->PeekSingle(i));
-		}
-	}
-	shouldCopy = false;
-	for (first = 0; first < circular.weaponChangeEvents->GetReadAvailable(); first++)
-	{
-		shouldCopy = true;
-		WeaponSwitchEvent *event = circular.weaponChangeEvents->PeekSingle(first);
-
-		if (event->serverTick >= earliestTick)
-		{
-			break;
-		}
-		earliestWeaponIndex = first;
-	}
-	if (earliestWeaponIndex != -1)
-	{
-		this->baseHeader.firstWeapon = circular.weaponChangeEvents->PeekSingle(earliestWeaponIndex)->econInfo;
-	}
-	else
-	{
-		this->baseHeader.firstWeapon = circular.earliestWeapon.value();
-	}
-	if (shouldCopy)
-	{
-		for (i32 i = first; i < circular.weaponChangeEvents->GetReadAvailable(); i++)
-		{
-			this->weaponChangeEvents.push_back(*circular.weaponChangeEvents->PeekSingle(i));
-		}
-	}
-	shouldCopy = false;
-	for (first = 0; first < circular.jumps->GetReadAvailable(); first++)
-	{
-		RpJumpStats *jump = circular.jumps->PeekSingle(first);
-		if (!jump)
-		{
-			break;
-		}
-		shouldCopy = true;
-		if (jump->overall.serverTick >= earliestTick)
-		{
-			break;
-		}
-	}
-	if (shouldCopy)
-	{
-		for (i32 i = first; i < circular.jumps->GetReadAvailable(); i++)
-		{
-			RpJumpStats *jump = circular.jumps->PeekSingle(i);
-
-			if (jump->overall.distanceTier < copyJumps)
-			{
-				continue;
-			}
-			this->jumps.push_back(*jump);
-		}
-	}
-
-	shouldCopy = false;
-	for (first = 0; first < circular.cmdData->GetReadAvailable(); first++)
-	{
-		CmdData *cmdData = circular.cmdData->PeekSingle(first);
-		if (!cmdData)
-		{
-			break;
-		}
-		shouldCopy = true;
-		if ((u32)cmdData->serverTick >= earliestTick)
-		{
-			break;
-		}
-	}
-	if (shouldCopy)
-	{
-		for (i32 i = first; i < circular.cmdData->GetReadAvailable(); i++)
-		{
-			this->cmdData.push_back(*circular.cmdData->PeekSingle(i));
-			this->cmdSubtickData.push_back(*circular.cmdSubtickData->PeekSingle(i));
-		}
-	}
-}
-
-void Recorder::WriteToFile()
-{
-	char filename[512];
-	std::string uuidStr = this->uuid.ToString();
-	V_snprintf(filename, sizeof(filename), "%s/%s.replay", KZ_REPLAY_PATH, uuidStr.c_str());
-	g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_PATH);
-	FileHandle_t file = g_pFullFileSystem->Open(filename, "wb");
-	if (!file)
-	{
-		META_CONPRINTF("Failed to open replay file for writing: %s\n", filename);
-		return;
-	}
-	// Order of writing must match order of reading in kz_replaydata.cpp
-	i32 bytesWritten = 0;
-	bytesWritten += this->WriteHeader(file);
-
-	bytesWritten += this->WriteTickData(file);
-
-	bytesWritten += this->WriteWeaponChanges(file);
-
-	bytesWritten += this->WriteJumps(file);
-
-	bytesWritten += this->WriteEvents(file);
-
-	bytesWritten += this->WriteCmdData(file);
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%d bytes)\n", filename, bytesWritten);
-	}
-	g_pFullFileSystem->Close(file);
-}
-
-i32 Recorder::WriteHeader(FileHandle_t file)
-{
-	// Write the base header
-	return g_pFullFileSystem->Write(&this->baseHeader, sizeof(this->baseHeader), file);
-}
-
-i32 Recorder::WriteTickData(FileHandle_t file)
-{
-	i32 numWritten = 0;
-	i32 tickdataCount = this->tickData.size();
-	numWritten += g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
-	for (i32 i = 0; i < tickdataCount; i++)
-	{
-		TickData &tickData = this->tickData[i];
-		numWritten += g_pFullFileSystem->Write(&tickData, sizeof(TickData), file);
-	}
-	for (i32 i = 0; i < tickdataCount; i++)
-	{
-		SubtickData &subtickData = this->subtickData[i];
-		numWritten += g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
-		numWritten += g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d tick data entries of %d bytes\n", tickdataCount, numWritten);
-	}
-	return numWritten;
-}
-
-i32 Recorder::WriteWeaponChanges(FileHandle_t file)
-{
-	i32 numWritten = 0;
-	i32 numWeaponChanges = this->weaponChangeEvents.size();
-	numWritten += g_pFullFileSystem->Write(&numWeaponChanges, sizeof(numWeaponChanges), file);
-	for (i32 i = 0; i < numWeaponChanges; i++)
-	{
-		WeaponSwitchEvent &event = this->weaponChangeEvents[i];
-		numWritten += g_pFullFileSystem->Write(&event.serverTick, sizeof(event.serverTick), file);
-		numWritten += g_pFullFileSystem->Write(&event.econInfo.mainInfo, sizeof(event.econInfo.mainInfo), file);
-		for (i32 j = 0; j < event.econInfo.mainInfo.numAttributes; j++)
-		{
-			numWritten += g_pFullFileSystem->Write(&event.econInfo.attributes[j], sizeof(event.econInfo.attributes[j]), file);
-		}
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d weapon change events of %d bytes\n", numWeaponChanges, numWritten);
-	}
-	return numWritten;
-}
-
-i32 Recorder::WriteJumps(FileHandle_t file)
-{
-	i32 numWritten = 0;
-	i32 numJumps = this->jumps.size();
-	numWritten += g_pFullFileSystem->Write(&numJumps, sizeof(numJumps), file);
-	for (i32 i = 0; i < numJumps; i++)
-	{
-		RpJumpStats &jump = this->jumps[i];
-		// Write jump data
-		numWritten += g_pFullFileSystem->Write(&jump.overall, sizeof(jump.overall), file);
-		i32 numStrafes = jump.strafes.size();
-		numWritten += g_pFullFileSystem->Write(&numStrafes, sizeof(numStrafes), file);
-		numWritten += g_pFullFileSystem->Write(jump.strafes.data(), sizeof(RpJumpStats::StrafeData) * numStrafes, file);
-		i32 numAACalls = jump.aaCalls.size();
-		numWritten += g_pFullFileSystem->Write(&numAACalls, sizeof(numAACalls), file);
-		numWritten += g_pFullFileSystem->Write(jump.aaCalls.data(), sizeof(RpJumpStats::AAData) * numAACalls, file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d jumps of %d bytes\n", numJumps, numWritten);
-	}
-	return numWritten;
-}
-
-i32 Recorder::WriteEvents(FileHandle_t file)
-{
-	i32 numWritten = 0;
-	i32 numEvents = this->rpEvents.size();
-	numWritten += g_pFullFileSystem->Write(&numEvents, sizeof(numEvents), file);
-	for (i32 i = 0; i < numEvents; i++)
-	{
-		RpEvent &event = this->rpEvents[i];
-		numWritten += g_pFullFileSystem->Write(&event, sizeof(event), file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d events of %d bytes\n", numEvents, numWritten);
-	}
-	return numWritten;
-}
-
-i32 Recorder::WriteCmdData(FileHandle_t file)
-{
-	i32 numWritten = 0;
-	i32 cmddataCount = this->cmdData.size();
-	numWritten += g_pFullFileSystem->Write(&cmddataCount, sizeof(cmddataCount), file);
-	for (i32 i = 0; i < cmddataCount; i++)
-	{
-		CmdData &cmdData = this->cmdData[i];
-		numWritten += g_pFullFileSystem->Write(&cmdData, sizeof(CmdData), file);
-	}
-	for (i32 i = 0; i < cmddataCount; i++)
-	{
-		SubtickData &cmdSubtickData = this->cmdSubtickData[i];
-		numWritten += g_pFullFileSystem->Write(&cmdSubtickData.numSubtickMoves, sizeof(cmdSubtickData.numSubtickMoves), file);
-		numWritten +=
-			g_pFullFileSystem->Write(&cmdSubtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * cmdSubtickData.numSubtickMoves, file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d cmd data entries of %d bytes\n", cmddataCount, numWritten);
-	}
-	return numWritten;
 }

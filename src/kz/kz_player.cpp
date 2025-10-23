@@ -873,7 +873,6 @@ void KZPlayer::UpdateTriggerTouchList()
 void KZPlayer::OnChangeTeamPost(i32 team)
 {
 	this->timerService->OnPlayerJoinTeam(team);
-	this->recordingService->OnPlayerJoinTeam(team);
 }
 
 const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(const char *name)

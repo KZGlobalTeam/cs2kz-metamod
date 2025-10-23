@@ -7,6 +7,7 @@
 #define KZ_REPLAY_PATH      "kzreplays"
 #define KZ_REPLAY_RUNS_PATH KZ_REPLAY_PATH "/runs"
 
+class CSubtickMoveStep;
 class KZPlayer;
 
 enum : u32
@@ -220,6 +221,8 @@ struct SubtickData
 		{
 			return button == 0;
 		}
+
+		void FromMove(const CSubtickMoveStep &step);
 	} subtickMoves[64];
 };
 
@@ -265,7 +268,7 @@ struct TickData
 // While tick data is only recorded during certain conditions, metadata is recorded every time the server receives a move message from the client.
 struct CmdData
 {
-	i32 serverTick {};
+	u32 serverTick {};
 	f32 gameTime {};
 	f32 realTime {};
 	u64 unixTime {};
@@ -283,7 +286,7 @@ struct CmdData
 	i32 mousedy {};
 };
 
-struct ReplayHeader
+struct GeneralReplayHeader
 {
 	u32 magicNumber;
 	u32 version;
@@ -311,14 +314,16 @@ struct ReplayHeader
 	f32 sensitivity;
 	f32 yaw;
 	f32 pitch;
+
+	void Init(KZPlayer *player, ReplayType desiredType);
 };
 
-struct ReplayCheaterHeader
+struct CheaterReplayHeader
 {
 	char banReason[512];
 };
 
-struct ReplayRunHeader
+struct RunReplayHeader
 {
 	i32 courseID;
 	RpModeStyleInfo mode;
@@ -327,7 +332,7 @@ struct ReplayRunHeader
 	i32 numTeleports;
 };
 
-struct ReplayJumpHeader
+struct JumpReplayHeader
 {
 	u8 jumpType;
 	f32 distance;

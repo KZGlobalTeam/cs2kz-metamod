@@ -123,4 +123,9 @@
 	{
 		"en"		"{darkred}Invalid replay file format"
 	}
+	"Replay - Manual Replay Saved"
+	{
+		"#format"	"uuid:s,duration:.0f"
+		"en"		"{grey}Manual replay saved: {lime}{uuid}{grey} | Duration: {lime}{duration}{grey}s"
+	}
 }

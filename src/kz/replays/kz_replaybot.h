@@ -5,7 +5,7 @@
 
 class CCSPlayerController;
 class KZPlayer;
-struct ReplayHeader;
+struct GeneralReplayHeader;
 
 namespace KZ::replaysystem::bot
 {
@@ -22,7 +22,7 @@ namespace KZ::replaysystem::bot
 	KZPlayer *GetBotPlayer();
 
 	// Bot setup and configuration
-	void InitializeBotForReplay(const ReplayHeader &header);
+	void InitializeBotForReplay(const GeneralReplayHeader &header);
 
 	// Bot spectator handling
 	void SpectateBot(KZPlayer *spectator);

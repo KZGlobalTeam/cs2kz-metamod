@@ -122,4 +122,31 @@ namespace utils
 	{
 		return reinterpret_cast<T *>(g_pKZUtils->CreateEntityByName(className, -1));
 	}
+
+	inline f32 StringToFloat(const char *str)
+	{
+		if (!str || *str == '\0')
+		{
+			return 0.0f;
+		}
+
+		// Handle special string values
+		if (KZ_STREQI(str, "nan") || KZ_STREQI(str, "-nan"))
+		{
+			return FLOAT32_NAN;
+		}
+
+		if (KZ_STREQI(str, "inf"))
+		{
+			return FLT_MAX;
+		}
+
+		if (KZ_STREQI(str, "-inf"))
+		{
+			return -FLT_MAX;
+		}
+
+		// Use standard conversion
+		return (f32)atof(str);
+	}
 } // namespace utils

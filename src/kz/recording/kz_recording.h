@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <optional>
@@ -60,13 +59,30 @@ struct CircularRecorder
 		delete this->rpEvents;
 		delete this->jumps;
 	}
+
+	void TrimOldCommands(u32 currentTick);
+	// Also updates the earliest weapon info.
+	void TrimOldWeaponEvents(u32 currentTick);
+	// Also updates the earliest mode, styles info and checkpoint info.
+	void TrimOldRpEvents(u32 currentTick);
+	void TrimOldJumps(u32 currentTick);
+
+	// Convenience method to trim all old data.
+	void TrimOldData(u32 currentTick)
+	{
+		// Tick data and subtick data are automatically trimmed by the circular buffer.
+		TrimOldCommands(currentTick);
+		TrimOldWeaponEvents(currentTick);
+		TrimOldRpEvents(currentTick);
+		TrimOldJumps(currentTick);
+	}
 };
 
 struct Recorder
 {
 	UUID_t uuid;
 	f32 desiredStopTime = -1;
-	ReplayHeader baseHeader;
+	GeneralReplayHeader baseHeader;
 	std::vector<TickData> tickData;
 	std::vector<SubtickData> subtickData;
 	std::vector<RpEvent> rpEvents;
@@ -78,6 +94,11 @@ struct Recorder
 	// Copy the last numSeconds seconds of data from the circular recorder.
 	Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps);
 
+	bool ShouldStopAndSave(f32 currentTime)
+	{
+		return desiredStopTime >= 0 && currentTime >= desiredStopTime;
+	}
+
 	void WriteToFile();
 	virtual i32 WriteHeader(FileHandle_t file);
 	virtual i32 WriteTickData(FileHandle_t file);
@@ -85,13 +106,62 @@ struct Recorder
 	virtual i32 WriteJumps(FileHandle_t file);
 	virtual i32 WriteEvents(FileHandle_t file);
 	virtual i32 WriteCmdData(FileHandle_t file);
+
+	template<typename T>
+	void PushData(const T &data)
+	{
+		if constexpr (std::is_same<T, TickData>::value)
+		{
+			tickData.push_back(data);
+		}
+		else if constexpr (std::is_same<T, RpEvent>::value)
+		{
+			rpEvents.push_back(data);
+		}
+		else if constexpr (std::is_same<T, WeaponSwitchEvent>::value)
+		{
+			weaponChangeEvents.push_back(data);
+		}
+		else if constexpr (std::is_same<T, RpJumpStats>::value)
+		{
+			jumps.push_back(data);
+		}
+		else if constexpr (std::is_same<T, CmdData>::value)
+		{
+			cmdData.push_back(data);
+		}
+		else
+		{
+			static_assert(std::is_same_v<T, void>, "Unsupported data type for PushData");
+		}
+	}
+
+	// Special case for subtick structs
+	enum class Vec
+	{
+		Tick,
+		Cmd
+	};
+
+	template<Vec V>
+	void PushData(const SubtickData &data)
+	{
+		if constexpr (V == Vec::Tick)
+		{
+			subtickData.push_back(data);
+		}
+		else
+		{
+			cmdSubtickData.push_back(data);
+		}
+	}
 };
 
-constexpr int i = sizeof(ReplayHeader) + sizeof(ReplayRunHeader);
+constexpr int i = sizeof(GeneralReplayHeader) + sizeof(RunReplayHeader);
 
 struct RunRecorder : public Recorder
 {
-	ReplayRunHeader header;
+	RunReplayHeader header;
 	RunRecorder(KZPlayer *player);
 	void End(f32 time, i32 numTeleports);
 	virtual int WriteHeader(FileHandle_t file) override;
@@ -99,10 +169,22 @@ struct RunRecorder : public Recorder
 
 struct JumpRecorder : public Recorder
 {
-	ReplayJumpHeader header;
+	JumpReplayHeader header;
 
 	JumpRecorder(Jump *jump);
 	virtual int WriteHeader(FileHandle_t file) override;
+};
+
+struct CheaterRecorder : public Recorder
+{
+	CheaterReplayHeader header;
+	CheaterRecorder(KZPlayer *player, const char *reason);
+	virtual int WriteHeader(FileHandle_t file) override;
+};
+
+struct ManualRecorder : public Recorder
+{
+	ManualRecorder(KZPlayer *player, f32 duration);
 };
 
 class KZRecordingService : public KZBaseService
@@ -116,7 +198,6 @@ public:
 	void OnPhysicsSimulate();
 	void OnSetupMove(PlayerCommand *pc);
 	void OnPhysicsSimulatePost();
-	void OnPlayerJoinTeam(i32 team);
 
 	virtual void Reset() override;
 
@@ -134,15 +215,46 @@ public:
 
 	void OnClientDisconnect();
 
+	void RecordTickData_PhysicsSimulate();
+	void RecordTickData_SetupMove(PlayerCommand *pc);
+	void RecordTickData_PhysicsSimulatePost();
+
+	// Record ALL commands as received by the server.
+	void RecordCommand(PlayerCommand *cmds, i32 numCmds);
+
+	// Check all active recorders and stop those that have reached their desired stop time.
+	void CheckRecorders();
+
+	// Check a few mouse related userinfo convars and record changes.
+	void CheckMouseConVars();
+
+	// Check the player's currently held weapons and record weapon switch events. Also tracks the earliest weapon for circular recorder.
+	void CheckWeapons();
+
+	// Check the player's current mode and styles and record mode/style change events. Also tracks the earliest mode/styles for circular recorder.
+	void CheckModeStyles();
+
+	// Check the player's checkpoints/teleports and record differences. Also tracks the earliest checkpoint and teleport data for circular recorder.
+	void CheckCheckpoints();
+
 private:
+	// Insert a replay event into the circular buffer and all active recorders.
 	void InsertEvent(const RpEvent &event);
+
+	void InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TimerEventType type, f32 time, i32 index = -1);
+	void InsertTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	void InsertModeChangeEvent(const char *name, const char *md5);
+	void InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle);
+	void InsertCheckpointEvent(i32 index, i32 checkpointCount, i32 teleportCount);
+	void InsertCvarEvent(RpCvar cvar, f32 value);
+
+public:
+	// Write a replay file from the current circular buffer data.
+	void WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "");
 
 public:
 	SubtickData currentSubtickData;
 	TickData currentTickData;
-	std::vector<RunRecorder> runRecorders;
-	bool GetCurrentRunUUID(UUID_t &out_uuid);
-	std::vector<JumpRecorder> jumpRecorders;
 	CircularRecorder circularRecording;
 	i32 lastCmdNumReceived = 0;
 	i32 lastKnownCheckpointIndex = 0;
@@ -154,4 +266,49 @@ public:
 	f32 lastSensitivity = 1.25f;
 	f32 lastYaw = 0.022f;
 	f32 lastPitch = 0.022f;
+
+	// Recorders
+	std::vector<RunRecorder> runRecorders;
+	bool GetCurrentRunUUID(UUID_t &out_uuid);
+	std::vector<JumpRecorder> jumpRecorders;
+
+	enum class RecorderType
+	{
+		Run,
+		Jump,
+		Both
+	};
+
+private:
+	template<typename Func>
+	void ApplyToTarget(Func &&func, RecorderType target)
+	{
+		if (target == RecorderType::Run || target == RecorderType::Both)
+		{
+			for (auto &recorder : runRecorders)
+			{
+				func(recorder);
+			}
+		}
+		if (target == RecorderType::Jump || target == RecorderType::Both)
+		{
+			for (auto &recorder : jumpRecorders)
+			{
+				func(recorder);
+			}
+		}
+	}
+
+public:
+	template<Recorder::Vec V>
+	void PushToRecorders(const SubtickData &value, RecorderType target = RecorderType::Both)
+	{
+		ApplyToTarget([&](auto &r) { r.template PushData<V>(value); }, target);
+	}
+
+	template<typename T>
+	void PushToRecorders(const T &value, RecorderType target = RecorderType::Both)
+	{
+		ApplyToTarget([&](auto &r) { r.PushData(value); }, target);
+	}
 };

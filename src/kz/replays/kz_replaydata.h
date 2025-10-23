@@ -14,11 +14,11 @@ namespace KZ::replaysystem::data
 	struct ReplayPlayback
 	{
 		bool valid;
-		ReplayHeader header;
+		GeneralReplayHeader header;
 		// Can't union this because the type will become non trivial.
-		ReplayCheaterHeader cheaterHeader;
-		ReplayRunHeader runHeader;
-		ReplayJumpHeader jumpHeader;
+		CheaterReplayHeader cheaterHeader;
+		RunReplayHeader runHeader;
+		JumpReplayHeader jumpHeader;
 
 		u32 tickCount;
 		TickData *tickData;

@@ -16,7 +16,7 @@ static_function f64 SetBotModel()
 	{
 		return -1.0f;
 	}
-	ReplayHeader &header = KZ::replaysystem::data::GetCurrentReplay()->header;
+	GeneralReplayHeader &header = KZ::replaysystem::data::GetCurrentReplay()->header;
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(bot);
 	KZ::replaysystem::item::ApplyModelAttributesToPawn(player->GetPlayerPawn(), header.gloves, header.modelName);
 	return -1.0f;
@@ -116,7 +116,7 @@ namespace KZ::replaysystem::bot
 		return g_pKZPlayerManager->ToPlayer(bot);
 	}
 
-	void InitializeBotForReplay(const ReplayHeader &header)
+	void InitializeBotForReplay(const GeneralReplayHeader &header)
 	{
 		MakeBotAlive();
 		auto bot = g_replayBot.Get();
