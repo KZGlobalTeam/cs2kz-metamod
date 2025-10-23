@@ -247,7 +247,7 @@ public:
 
 	void ForceFullUpdate()
 	{
-		UpdateAcknowledgedFramecount(-1);
+		m_nDeltaTick = -1;
 	}
 
 	virtual bool ShouldSendMessages() = 0;

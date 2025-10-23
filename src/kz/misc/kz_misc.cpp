@@ -177,10 +177,6 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 		KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
 	}
 
-	if (player->quietService->ShouldAutoHideWeapon())
-	{
-		player->quietService->HideCurrentWeapon(true);
-	}
 	if (startPosCourse)
 	{
 		player->Teleport(&startPosCourse->startPosition, &startPosCourse->startAngles, &vec3_origin);
@@ -377,10 +373,6 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		player->specService->ResetSavedPosition();
 	}
 	player->pistolService->OnPlayerJoinTeam();
-	if (player->quietService->ShouldAutoHideWeapon())
-	{
-		player->quietService->HideCurrentWeapon(true);
-	}
 	player->tipService->OnPlayerJoinTeam(newTeam);
 }
 

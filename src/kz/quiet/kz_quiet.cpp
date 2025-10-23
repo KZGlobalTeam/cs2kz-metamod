@@ -73,6 +73,20 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			 pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
 		// clang-format on
 		{
+			if (targetPlayerPawn == pawn && targetPlayer->quietService->ShouldHideWeapon())
+			{
+				auto pVecWeapons = pawn->m_pWeaponServices->m_hMyWeapons();
+
+				FOR_EACH_VEC(*pVecWeapons, i)
+				{
+					auto pWeapon = (*pVecWeapons)[i].Get();
+
+					if (pWeapon)
+					{
+						pTransmitInfo->m_pTransmitEdict->Clear(pWeapon->entindex());
+					}
+				}
+			}
 			// Bit is not even set, don't bother.
 			if (!pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
 			{
@@ -206,7 +220,7 @@ void KZQuietService::Init()
 void KZQuietService::Reset()
 {
 	this->hideOtherPlayers = this->player->optionService->GetPreferenceBool("hideOtherPlayers", false);
-	this->autoHideWeapon = this->player->optionService->GetPreferenceBool("autoHideWeapon", false);
+	this->hideWeapon = this->player->optionService->GetPreferenceBool("hideWeapon", false);
 }
 
 void KZQuietService::SendFullUpdate()
@@ -251,50 +265,27 @@ bool KZQuietService::ShouldHideIndex(u32 targetIndex)
 SCMD(kz_hideweapon, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->quietService->HideCurrentWeapon();
+	player->quietService->ToggleHideWeapon();
 	return MRES_SUPERCEDE;
 }
 
-SCMD(kz_autohideweapon, SCFL_PLAYER | SCFL_PREFERENCE)
+void KZQuietService::ToggleHideWeapon()
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->quietService->ToggleAutoHideWeapon();
-	return MRES_SUPERCEDE;
-}
-
-void KZQuietService::ToggleAutoHideWeapon()
-{
-	this->autoHideWeapon = !this->autoHideWeapon;
-	this->player->optionService->SetPreferenceBool("autoHideWeapon", this->autoHideWeapon);
-	this->player->languageService->PrintChat(
-		true, false, this->autoHideWeapon ? "Quiet Option - Auto Hide Weapon - Enable" : "Quiet Option - Auto Hide Weapon - Disable");
-}
-
-void KZQuietService::HideCurrentWeapon(bool silent)
-{
-	if (!this->player->GetPlayerPawn() || !this->player->GetPlayerPawn()->m_pWeaponServices())
-	{
-		return;
-	}
-	CBaseModelEntity *activeWeapon = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
-	if (activeWeapon)
-	{
-		this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon(nullptr);
-		if (!silent)
-		{
-			this->player->languageService->PrintChat(true, false, "Quiet Option - Show Weapon - Disable");
-		}
-	}
+	this->hideWeapon = !this->hideWeapon;
+	this->SendFullUpdate();
+	this->player->optionService->SetPreferenceBool("hideWeapon", this->hideWeapon);
+	this->player->languageService->PrintChat(true, false,
+											 this->hideWeapon ? "Quiet Option - Show Weapon - Enable" : "Quiet Option - Show Weapon - Disable");
 }
 
 void KZQuietService::OnPhysicsSimulatePost() {}
 
 void KZQuietService::OnPlayerPreferencesLoaded()
 {
-	this->autoHideWeapon = this->player->optionService->GetPreferenceBool("autoHideWeapon", false);
-	if (this->autoHideWeapon)
+	this->hideWeapon = this->player->optionService->GetPreferenceBool("hideWeapon", false);
+	if (this->hideWeapon)
 	{
-		this->HideCurrentWeapon();
+		this->SendFullUpdate();
 	}
 	bool newShouldHide = this->player->optionService->GetPreferenceBool("hideOtherPlayers", false);
 	if (!newShouldHide && this->hideOtherPlayers && this->player->IsInGame())
