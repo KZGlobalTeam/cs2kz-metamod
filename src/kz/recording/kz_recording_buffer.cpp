@@ -115,23 +115,25 @@ void CircularRecorder::TrimOldJumps(u32 currentTick)
 	this->jumps->Advance(numToRemove);
 }
 
-std::string KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason)
+f32 KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason, std::string *out_uuid)
 {
+	std::unique_ptr<Recorder> recorder;
 	if (strlen(cheaterReason) > 0)
 	{
-		CheaterRecorder recorder(this->player, cheaterReason);
-		if (recorder.WriteToFile())
-		{
-			return recorder.uuid.ToString();
-		}
+		recorder = std::make_unique<CheaterRecorder>(this->player, cheaterReason);
 	}
 	else
 	{
-		ManualRecorder recorder(this->player, duration);
-		if (recorder.WriteToFile())
-		{
-			return recorder.uuid.ToString();
-		}
+		recorder = std::make_unique<ManualRecorder>(this->player, duration);
 	}
-	return "";
+
+	if (recorder->WriteToFile())
+	{
+		if (out_uuid != nullptr)
+		{
+			*out_uuid = recorder->uuid.ToString();
+		}
+		return recorder->cmdData.size() * ENGINE_FIXED_TICK_INTERVAL;
+	}
+	return 0.0f;
 }

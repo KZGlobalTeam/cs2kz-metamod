@@ -250,7 +250,7 @@ private:
 
 public:
 	// Write a replay file from the current circular buffer data.
-	std::string WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "");
+	f32 WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "", std::string *out_uuid = nullptr);
 
 public:
 	SubtickData currentSubtickData;

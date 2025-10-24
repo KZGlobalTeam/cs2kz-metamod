@@ -179,6 +179,6 @@
 	"Replay - Manual Replay Saved"
 	{
 		"#format"	"uuid:s,duration:.0f"
-		"en"		"{grey}Manual replay saved: {lime}{uuid}{grey} | Duration: {lime}{duration}{grey}s"
+		"en"		"{grey}Replay saved: {lime}{uuid}{grey} ({lime}{duration}{grey}s)" 
 	}
 }

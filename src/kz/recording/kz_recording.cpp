@@ -4,6 +4,7 @@
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/language/kz_language.h"
+#include "kz/spec/kz_spec.h"
 #include "utils/simplecmds.h"
 
 #include "sdk/cskeletoninstance.h"
@@ -535,7 +536,13 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 	}
 
 	f32 duration = args->ArgC() > 1 ? utils::StringToFloat(args->Arg(1)) : 120.0f;
-	std::string uuid = player->recordingService->WriteCircularBufferToFile(duration);
+	std::string uuid;
+	KZPlayer *target = player->IsAlive() ? player : player->specService->GetSpectatedPlayer();
+	if (!target)
+	{
+		return MRES_SUPERCEDE;
+	}
+	duration = target->recordingService->WriteCircularBufferToFile(duration, "", &uuid);
 	if (uuid.empty())
 	{
 		player->languageService->PrintChat(true, false, "Replay - Manual Replay Failed");
