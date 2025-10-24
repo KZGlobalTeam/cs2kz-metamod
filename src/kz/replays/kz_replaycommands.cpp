@@ -2,6 +2,8 @@
 #include "kz/kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/language/kz_language.h"
+#include "kz/mode/kz_mode.h"
+#include "kz/style/kz_style.h"
 #include "kz_replaycommands.h"
 #include "kz_replaydata.h"
 #include "kz_replaybot.h"
@@ -76,18 +78,47 @@ namespace KZ::replaysystem::commands
 			// Success callback (runs on main thread via ProcessAsyncLoadCompletion)
 			data::LoadSuccessCallback([playerUserID]() {
 				KZPlayer* player = g_pKZPlayerManager->ToPlayer(playerUserID);
-				if (player)
+				if (!player)
 				{
-					player->languageService->PrintChat(true, false, "Replay - Loaded Successfully");
-					
-					// Initialize bot and start playback (safe to call on main thread)
-					// The replay data is already stored in the global g_currentReplay
-					auto replay = data::GetCurrentReplay();
-					bot::InitializeBotForReplay(replay->header);
-					playback::StartReplay();
-					playback::InitializeWeapons();
-					bot::SpectateBot(player);
+					return;
 				}
+				if (!KZ_STREQI(data::GetCurrentReplay()->header.map.name, g_pKZUtils->GetCurrentMapName().Get()))
+				{
+					player->languageService->PrintChat(true, false, "Replay - Wrong Map");
+					return;
+				}
+				for (u32 i = 0; i < data::GetCurrentReplay()->numEvents; i++)
+				{
+					auto& event = data::GetCurrentReplay()->events[i];
+					switch (event.type)
+					{
+						case RPEVENT_MODE_CHANGE:
+						{
+							if (KZ::mode::GetModeInfo(CUtlString(event.data.modeChange.name)).id < 0)
+							{
+								player->languageService->PrintChat(true, false, "Replay - Unknown Mode", event.data.modeChange.name);
+							}
+							break;
+						}
+						case RPEVENT_STYLE_CHANGE:
+						{
+							if (KZ::style::GetStyleInfo(CUtlString(event.data.styleChange.name)).id < 0)
+							{
+								player->languageService->PrintChat(true, false, "Replay - Unknown Style", event.data.styleChange.name);
+							}
+							break;
+						}
+					}
+				}
+				player->languageService->PrintChat(true, false, "Replay - Loaded Successfully");
+
+				// Initialize bot and start playback (safe to call on main thread)
+				// The replay data is already stored in the global g_currentReplay
+				auto replay = data::GetCurrentReplay();
+				bot::InitializeBotForReplay(replay->header);
+				playback::StartReplay();
+				playback::InitializeWeapons();
+				bot::SpectateBot(player);
 			}),
 			// Failure callback (runs on main thread via ProcessAsyncLoadCompletion)
 			data::LoadFailureCallback([playerUserID](const char* error) {

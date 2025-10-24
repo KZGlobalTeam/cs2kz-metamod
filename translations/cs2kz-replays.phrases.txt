@@ -1,19 +1,5 @@
 "Phrases"
 {
-	"Invalid replay course name"
-	{
-		"#format"	"courseName:s"
-		"en"		"{darkred}Course name {courseName} doesn't exist!"
-	}
-	"No replay course found"
-	{
-		"en"		"{darkred}Current course cannot be detected."
-	}
-	"No replay for course"
-	{
-		"#format"	"courseName:s"
-		"en"		"{darkred}No replay for {courseName} exists."
-	}
 	"Replay - No Replay Playing"
 	{
 		"en"		"{grey}No replay is currently playing."
@@ -180,5 +166,19 @@
 	{
 		"#format"	"uuid:s,duration:.0f"
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey} ({lime}{duration}{grey}s)" 
+	}
+	"Replay - Wrong Map"
+	{
+		"en"		"{darkred}Replay map does not match current map."
+	}
+	"Replay - Unknown Mode"
+	{
+		"#format"	"modeName:s"
+		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
+	}
+	"Replay - Unknown Style"
+	{
+		"#format"	"modeName:s"
+		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
 	}
 }
