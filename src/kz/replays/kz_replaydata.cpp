@@ -8,6 +8,8 @@
 #include <atomic>
 
 CConVar<bool> kz_replay_playback_debug("kz_replay_playback_debug", FCVAR_NONE, "Prints debug info about replay playback.", true);
+CConVar<bool> kz_replay_playback_skins_enable("kz_replay_playback_skins_enable", FCVAR_NONE, "Enables applying player skins during replay playback.",
+											  true);
 
 static KZ::replaysystem::data::ReplayPlayback g_currentReplay = {};
 static KZ::replaysystem::data::AsyncLoadStatus g_loadStatus = {};
@@ -414,7 +416,8 @@ namespace KZ::replaysystem::data
 			totalBytesRead += sizeof(result.events[i]);
 		}
 
-		result.valid = true;
+		result.valid = UUID_t::IsValid(CUtlString(path).GetBaseFilename().StripExtension().Get(), &result.uuid);
+		assert(result.valid);
 		g_pFullFileSystem->Close(file);
 		progress = 1.0f;
 		return result;

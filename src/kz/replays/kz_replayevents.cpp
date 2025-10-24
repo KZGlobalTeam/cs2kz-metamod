@@ -109,7 +109,7 @@ namespace KZ::replaysystem::events
 				}
 
 				char formattedTime[32];
-				KZTimerService::FormatTime(event->data.timer.time, formattedTime, sizeof(formattedTime));
+				utils::FormatTime(event->data.timer.time, formattedTime, sizeof(formattedTime));
 
 				CUtlString combinedModeStyleText;
 				combinedModeStyleText.Format("{purple}%s{grey}", player.modeService->GetModeName());
@@ -170,7 +170,7 @@ namespace KZ::replaysystem::events
 					break;
 				}
 
-				CUtlString time = KZTimerService::FormatTime(event->data.timer.time);
+				CUtlString time = utils::FormatTime(event->data.timer.time);
 				if (replay->lastSplitTime != 0)
 				{
 					f64 diff = event->data.timer.time - replay->lastSplitTime;
@@ -196,7 +196,7 @@ namespace KZ::replaysystem::events
 					break;
 				}
 
-				CUtlString time = KZTimerService::FormatTime(event->data.timer.time);
+				CUtlString time = utils::FormatTime(event->data.timer.time);
 				if (replay->lastCPZTime != 0)
 				{
 					f64 diff = event->data.timer.time - replay->lastCPZTime;
@@ -217,7 +217,7 @@ namespace KZ::replaysystem::events
 
 			case RpEvent::RpEventData::TimerEvent::TIMER_STAGE:
 			{
-				CUtlString time = KZTimerService::FormatTime(event->data.timer.time);
+				CUtlString time = utils::FormatTime(event->data.timer.time);
 				if (replay->lastStageTime != 0)
 				{
 					f64 diff = event->data.timer.time - replay->lastStageTime;

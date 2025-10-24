@@ -4,6 +4,8 @@
 #include "sdk/cskeletoninstance.h"
 #include "sdk/entity/ccsplayerpawn.h"
 
+extern CConVar<bool> kz_replay_playback_skins_enable;
+
 static_global std::unordered_map<u16, std::string> itemAttributes;
 static_global std::unordered_map<u32, bool> paintKitUsesLegacyModel;
 
@@ -167,6 +169,10 @@ bool KZ::replaysystem::item::DoesPaintKitUseLegacyModel(float paintKit)
 
 void KZ::replaysystem::item::ApplyItemAttributesToWeapon(CBasePlayerWeapon &weapon, const EconInfo &info)
 {
+	if (!kz_replay_playback_skins_enable.Get())
+	{
+		return;
+	}
 	// Knives need subclass change to properly apply attributes.
 	bool isKnife = false;
 	if (KZ_STREQI(weapon.GetClassname(), "weapon_knife") || KZ_STREQI(weapon.GetClassname(), "weapon_knife_t"))

@@ -106,7 +106,7 @@ std::string KZHUDService::GetTimerText(const char *language)
 		{
 			time = KZ::replaysystem::GetEndTime();
 		}
-		KZTimerService::FormatTime(time, timeText, sizeof(timeText));
+		utils::FormatTime(time, timeText, sizeof(timeText));
 		// clang-format off
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
 			timeText,
@@ -126,7 +126,7 @@ std::string KZHUDService::GetTimerText(const char *language)
 		bool timerRunning = this->player->timerService->GetTimerRunning();
 		bool paused = this->player->timerService->GetPaused();
 		
-		KZTimerService::FormatTime(time, timeText, sizeof(timeText));
+		utils::FormatTime(time, timeText, sizeof(timeText));
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
 			timeText,
 			timerRunning ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),

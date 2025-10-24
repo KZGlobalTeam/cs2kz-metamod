@@ -8,6 +8,7 @@
 #include "utils/ctimer.h"
 
 static CHandle<CCSPlayerController> g_replayBot;
+extern CConVar<bool> kz_replay_playback_skins_enable;
 
 static_function f64 SetBotModel()
 {
@@ -126,7 +127,10 @@ namespace KZ::replaysystem::bot
 		}
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(bot);
 		player->SetName(header.player.name);
-		StartTimer(SetBotModel, 0.05, false);
+		if (kz_replay_playback_skins_enable.Get())
+		{
+			StartTimer(SetBotModel, 0.05, false);
+		}
 	}
 
 	void SpectateBot(KZPlayer *spectator)

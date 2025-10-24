@@ -141,7 +141,7 @@ void KZRecordingService::OnTimerEnd()
 	{
 		if (recorder.desiredStopTime < 0.0f)
 		{
-			recorder.desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f; // record 2 seconds after timer end
+			recorder.End(this->player->timerService->GetTime(), this->player->checkpointService->GetTeleportCount());
 		}
 	}
 }

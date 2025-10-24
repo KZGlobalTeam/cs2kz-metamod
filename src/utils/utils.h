@@ -123,7 +123,7 @@ namespace utils
 		return reinterpret_cast<T *>(g_pKZUtils->CreateEntityByName(className, -1));
 	}
 
-	inline f32 StringToFloat(const char *str)
+	inline f64 StringToFloat(const char *str)
 	{
 		if (!str || *str == '\0')
 		{
@@ -147,6 +147,170 @@ namespace utils
 		}
 
 		// Use standard conversion
-		return (f32)atof(str);
+		return atof(str);
+	}
+
+	inline void FormatTime(f64 time, char *output, u32 length, bool precise = true)
+	{
+		i32 roundedTime = RoundFloatToInt(time * 1000); // Time rounded to number of ms
+
+		i32 milliseconds = roundedTime % 1000;
+		roundedTime = (roundedTime - milliseconds) / 1000;
+		i32 seconds = roundedTime % 60;
+		roundedTime = (roundedTime - seconds) / 60;
+		i32 minutes = roundedTime % 60;
+		roundedTime = (roundedTime - minutes) / 60;
+		i32 hours = roundedTime;
+
+		if (hours == 0)
+		{
+			if (precise)
+			{
+				snprintf(output, length, "%02i:%02i.%03i", minutes, seconds, milliseconds);
+			}
+			else
+			{
+				snprintf(output, length, "%i:%02i", minutes, seconds);
+			}
+		}
+		else
+		{
+			if (precise)
+			{
+				snprintf(output, length, "%i:%02i:%02i.%03i", hours, minutes, seconds, milliseconds);
+			}
+			else
+			{
+				snprintf(output, length, "%i:%02i:%02i", hours, minutes, seconds);
+			}
+		}
+	}
+
+	inline CUtlString FormatTime(f64 time, bool precise = true)
+	{
+		char temp[32];
+		FormatTime(time, temp, sizeof(temp), precise);
+		return CUtlString(temp);
+	}
+
+	inline bool ParseTimeString(const char *timeStr, f64 *outSeconds)
+	{
+		if (!timeStr || !outSeconds)
+		{
+			return false;
+		}
+
+		// Skip leading whitespace
+		while (*timeStr && isspace(*timeStr))
+		{
+			timeStr++;
+		}
+
+		if (*timeStr == '\0')
+		{
+			return false;
+		}
+
+		f64 parts[3] = {0.0, 0.0, 0.0};
+		i32 partCount = 0;
+		const char *ptr = timeStr;
+
+		// Parse up to 3 colon-separated parts
+		while (partCount < 3)
+		{
+			// Parse the integer part
+			if (!isdigit(*ptr))
+			{
+				return false;
+			}
+
+			i32 intPart = 0;
+			while (isdigit(*ptr))
+			{
+				intPart = intPart * 10 + (*ptr - '0');
+				ptr++;
+			}
+
+			parts[partCount] = (float)intPart;
+
+			// Check for decimal part
+			if (*ptr == '.')
+			{
+				ptr++;
+				if (!isdigit(*ptr))
+				{
+					return false;
+				}
+
+				f64 fracPart = 0.0;
+				f64 divisor = 10.0;
+				while (isdigit(*ptr))
+				{
+					fracPart += (*ptr - '0') / divisor;
+					divisor *= 10.0;
+					ptr++;
+				}
+
+				parts[partCount] += fracPart;
+			}
+
+			partCount++;
+
+			// Check what comes next
+			if (*ptr == ':')
+			{
+				ptr++;
+				if (partCount >= 3)
+				{
+					return false; // Too many colons
+				}
+			}
+			else
+			{
+				break; // End of parsing
+			}
+		}
+
+		// Skip trailing whitespace
+		while (*ptr && isspace(*ptr))
+		{
+			ptr++;
+		}
+
+		// Should be at end of string
+		if (*ptr != '\0')
+		{
+			return false;
+		}
+
+		// Validate ranges and convert to seconds
+		f64 totalSeconds = 0.0;
+
+		if (partCount == 1)
+		{
+			// Just seconds: 12 or 12.5
+			totalSeconds = parts[0];
+		}
+		else if (partCount == 2)
+		{
+			// Minutes:seconds: 12:34
+			if (parts[1] >= 60.0f)
+			{
+				return false;
+			}
+			totalSeconds = parts[0] * 60.0f + parts[1];
+		}
+		else if (partCount == 3)
+		{
+			// Hours:minutes:seconds: 12:34:45
+			if (parts[1] >= 60.0f || parts[2] >= 60.0f)
+			{
+				return false;
+			}
+			totalSeconds = parts[0] * 3600.0f + parts[1] * 60.0f + parts[2];
+		}
+
+		*outSeconds = totalSeconds;
+		return true;
 	}
 } // namespace utils

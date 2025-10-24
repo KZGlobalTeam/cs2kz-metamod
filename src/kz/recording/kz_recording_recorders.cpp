@@ -19,7 +19,7 @@ ManualRecorder::ManualRecorder(KZPlayer *player, f32 duration) : Recorder(player
 CheaterRecorder::CheaterRecorder(KZPlayer *player, const char *reason) : Recorder(player, 120.0f, true, DistanceTier_None)
 {
 	this->baseHeader.type = RP_CHEATER;
-	V_strncpy(this->header.banReason, reason, sizeof(this->header.banReason));
+	V_strncpy(this->header.reason, reason, sizeof(this->header.reason));
 }
 
 i32 CheaterRecorder::WriteHeader(FileHandle_t file)
@@ -73,12 +73,7 @@ i32 RunRecorder::WriteHeader(FileHandle_t file)
 // Recorder Implementation
 Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps)
 {
-	baseHeader.magicNumber = KZ_REPLAY_MAGIC;
-	baseHeader.version = KZ_REPLAY_VERSION;
-	baseHeader.type = RP_MANUAL;
-	baseHeader.sensitivity = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "sensitivity"));
-	baseHeader.pitch = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_pitch"));
-	baseHeader.yaw = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_yaw"));
+	baseHeader.Init(player);
 
 	time_t unixTime = 0;
 	time(&unixTime);
@@ -292,8 +287,13 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	}
 }
 
-void Recorder::WriteToFile()
+bool Recorder::WriteToFile()
 {
+	// Update the replay timestamp before writing.
+	time_t unixTime = 0;
+	time(&unixTime);
+	this->baseHeader.timestamp = (u64)unixTime;
+
 	char filename[512];
 	std::string uuidStr = this->uuid.ToString();
 	V_snprintf(filename, sizeof(filename), "%s/%s.replay", KZ_REPLAY_PATH, uuidStr.c_str());
@@ -302,7 +302,7 @@ void Recorder::WriteToFile()
 	if (!file)
 	{
 		META_CONPRINTF("Failed to open replay file for writing: %s\n", filename);
-		return;
+		return false;
 	}
 	// Order of writing must match order of reading in kz_replaydata.cpp
 	i32 bytesWritten = 0;
@@ -322,6 +322,7 @@ void Recorder::WriteToFile()
 		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%d bytes)\n", filename, bytesWritten);
 	}
 	g_pFullFileSystem->Close(file);
+	return true;
 }
 
 i32 Recorder::WriteHeader(FileHandle_t file)

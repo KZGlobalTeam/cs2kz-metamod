@@ -2,17 +2,17 @@
 {
 	"Invalid replay course name"
 	{
-		"#format" "courseName:s"
-		"en"      "{darkred}Course name {courseName} doesn't exist!"
+		"#format"	"courseName:s"
+		"en"		"{darkred}Course name {courseName} doesn't exist!"
 	}
 	"No replay course found"
 	{
-		"en"      "{darkred}Current course cannot be detected."
+		"en"		"{darkred}Current course cannot be detected."
 	}
 	"No replay for course"
 	{
-		"#format" "courseName:s"
-		"en"      "{darkred}No replay for {courseName} exists."
+		"#format"	"courseName:s"
+		"en"		"{darkred}No replay for {courseName} exists."
 	}
 	"Replay - No Replay Playing"
 	{
@@ -55,21 +55,70 @@
 		"#format"	"tick:d,maxTick:d"
 		"en"		"{grey}Tick {lime}{tick}{grey} is out of range. Maximum tick: {lime}{maxTick}"
 	}
+	"Replay - Time Out Of Range"
+	{
+		"#format"	"time:s,maxTime:s"
+		"en"		"{grey}Time {lime}{time}{grey} is out of range. Maximum time: {lime}{maxTime}"
+	}
 	"Replay - Jumped To Tick"
 	{
-		"#format"	"tick:d"
-		"en"		"{grey}Jumped to tick {lime}{tick}"
+		"#format"	"tick:d,time:s"
+		"en"		"{grey}Jumped to tick {lime}{tick} ({lime}{time}{grey})"
 	}
 	"Replay - Current Info"
 	{
-		"#format"	"currentTick:d,totalTicks:d,time:.3f,checkpoints:d,teleports:d"
-		"en"		"{grey}Current tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} | Time: {lime}{time}{grey}s | CPs: {lime}{checkpoints}{grey} | TPs: {lime}{teleports}"
+		// Current tick: 1234/5678 (12:34/23:45). Check console for details!
+		"#format"	"currentTick:d,totalTicks:d,time:s,maxTime:s"
+		"en"		"{grey}Current tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Check console for details!"
+	}
+	"Replay - General Info Console"
+	{
+		// Replay 123e4567-e89b-12d3-a456-426614174000
+		// Player: Bob (765612345678901)
+		// Created On: 2024-01-01 12:34:56
+		// Server Version: 2000648
+		// Plugin Version: 1.2.3
+		"#format"	"uuid:s,playerName:s,playerSteamID:llu,createdOn:s,serverVersion:lu,pluginVersion:s"
+		"en"		"Replay {uuid}\nPlayer: {playerName} ({playerSteamID})\nCreated On: {createdOn}\nServer Version: {serverVersion}\nPlugin Version: {pluginVersion}"
+	}
+	"Replay - Cheater Info Console"
+	{
+		// Replay Type: Cheater
+		// Suspect Reason: abcdef
+		"#format"	"reason:s"
+		"en"		"Replay Type: Cheater\nSuspect Reason: {reason}"
+	}
+	"Replay - Run Info Console"
+	{
+		// Replay Type: Run
+		// Course ID: 42
+		// Mode: Classic*
+		// Time: 12:34.567
+		// Teleports: 0
+		"#format"	"id:d,mode:s,time:s,teleports:d"
+		"en"		"Replay Type: Run\nCourse ID: {id}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
+	}
+	"Replay - Jump Info Console"
+	{
+		// Replay Type: Long Jump
+		// Distance: 123.45 | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
+		"#format"	"type:s,distance:.2f,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
+		"en"		"Replay Type: {type}\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+	}
+	"Replay - Jump Info Console (Block)"
+	{
+		// Replay Type: Long Jump
+		// Distance: 123.45 | 250 Block | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
+		"#format"	"type:s,distance:.2f,blockDistance:d,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
+		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
 	}
 	"Replay - Seeked To Tick"
 	{
-		"#format"	"seekSeconds:.3f,tick:d,time:.3f"
-		"en"		"{grey}Seeked {lime}{seekSeconds}{grey}s to tick {lime}{tick}{grey} (time: {lime}{time}{grey}s)"
+		// Seeked 12.345s to tick 6789 (12:34)
+		"#format"	"seekSeconds:.3f,tick:d,time:s"
+		"en"		"{grey}Seeked {lime}{seekSeconds}{grey}s to tick {lime}{tick}{grey} ({lime}{time}{grey})"
 	}
+
 	"Replay - Paused"
 	{
 		"en"		"{grey}Replay paused."
@@ -122,6 +171,10 @@
 	"Replay - Invalid File Format"
 	{
 		"en"		"{darkred}Invalid replay file format"
+	}
+	"Replay - Manual Replay Failed"
+	{
+		"en"		"{darkred}Failed to save manual replay."
 	}
 	"Replay - Manual Replay Saved"
 	{

@@ -1236,5 +1236,36 @@
 		"ua"		"Змінити або видалити поточний пістолет."
 		"sv"		"Byt eller ta bort den nuvarande pistolen."
 	}
-	
+	"Command Description - kz_rpsave"
+	{
+		"en"		"Manually save past gameplay into a replay."
+	}
+	"Command Description - kz_replay"
+	{
+		"en"		"Play a previously saved replay."
+	}
+  	"Command Description - kz_rpgoto"
+	{
+		"en"		"Go to a specific time in the replay. (hh:mm:ss)"
+	}
+  	"Command Description - kz_rpgototick"
+	{
+		"en"		"Go to a specific tick in the replay."
+	}
+  	"Command Description - kz_rpinfo"
+	{
+		"en"		"Display information about the current replay."
+	}
+  	"Command Description - kz_rppause"
+	{
+		"en"		"Pause or resume the current replay."
+	}
+  	"Command Description - kz_rploadprogress"
+	{
+		"en"		"Display the loading progress of the replay."
+	}
+  	"Command Description - kz_rpcancelload"
+	{
+		"en"		"Cancel the loading of the replay."
+	}
 }

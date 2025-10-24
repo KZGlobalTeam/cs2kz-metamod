@@ -3,6 +3,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/language/kz_language.h"
 #include "utils/simplecmds.h"
 
 #include "sdk/cskeletoninstance.h"
@@ -33,20 +34,16 @@ void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 	}
 }
 
-void GeneralReplayHeader::Init(KZPlayer *player, ReplayType desiredType)
+void GeneralReplayHeader::Init(KZPlayer *player)
 {
 	// Non-player-specific fields
 	this->magicNumber = KZ_REPLAY_MAGIC;
 	this->version = KZ_REPLAY_VERSION;
-	this->type = desiredType;
 
 	V_snprintf(this->map.name, sizeof(this->map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
 	g_pKZUtils->GetCurrentMapMD5(this->map.md5, sizeof(this->map.md5));
 	V_snprintf(this->pluginVersion, sizeof(this->pluginVersion), "%s", g_KZPlugin.GetVersion());
-
-	time_t unixTime = 0;
-	time(&unixTime);
-	this->timestamp = (u64)unixTime;
+	this->serverVersion = utils::GetServerVersion();
 
 	// Player-specific fields
 	V_snprintf(this->player.name, sizeof(this->player.name), "%s", player->GetController()->GetPlayerName());
@@ -529,10 +526,8 @@ bool KZRecordingService::GetCurrentRunUUID(UUID_t &out_uuid)
 	return false;
 }
 
-SCMD(kz_savemanualreplay, SCFL_REPLAY)
+SCMD(kz_rpsave, SCFL_REPLAY)
 {
-	// TODO: 1. Support saving certain parts of the circular buffer only (e.g., last 30 seconds)
-	//       2. Clean this mess up
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!g_pFullFileSystem || !player)
 	{
@@ -540,6 +535,14 @@ SCMD(kz_savemanualreplay, SCFL_REPLAY)
 	}
 
 	f32 duration = args->ArgC() > 1 ? utils::StringToFloat(args->Arg(1)) : 120.0f;
-	player->recordingService->WriteCircularBufferToFile(duration);
+	std::string uuid = player->recordingService->WriteCircularBufferToFile(duration);
+	if (uuid.empty())
+	{
+		player->languageService->PrintChat(true, false, "Replay - Manual Replay Failed");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Replay - Manual Replay Saved", uuid.c_str(), duration);
+	}
 	return MRES_SUPERCEDE;
 }

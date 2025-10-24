@@ -460,42 +460,6 @@ void KZTimerService::PlayMissedTimeSound()
 	}
 }
 
-void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise)
-{
-	int roundedTime = RoundFloatToInt(time * 1000); // Time rounded to number of ms
-
-	int milliseconds = roundedTime % 1000;
-	roundedTime = (roundedTime - milliseconds) / 1000;
-	int seconds = roundedTime % 60;
-	roundedTime = (roundedTime - seconds) / 60;
-	int minutes = roundedTime % 60;
-	roundedTime = (roundedTime - minutes) / 60;
-	int hours = roundedTime;
-
-	if (hours == 0)
-	{
-		if (precise)
-		{
-			snprintf(output, length, "%02i:%02i.%03i", minutes, seconds, milliseconds);
-		}
-		else
-		{
-			snprintf(output, length, "%i:%02i", minutes, seconds);
-		}
-	}
-	else
-	{
-		if (precise)
-		{
-			snprintf(output, length, "%i:%02i:%02i.%03i", hours, minutes, seconds, milliseconds);
-		}
-		else
-		{
-			snprintf(output, length, "%i:%02i:%02i", hours, minutes, seconds);
-		}
-	}
-}
-
 static_function std::string GetTeleportCountText(int tpCount, const char *language)
 {
 	return tpCount == 1 ? KZLanguageService::PrepareMessageWithLang(language, "1 Teleport Text")
@@ -1239,13 +1203,13 @@ void KZTimerService::CheckMissedTime()
 		// Check if they share the same time.
 		if (this->shouldAnnounceMissedTime && pb->overall.pbTime == pb->pro.pbTime)
 		{
-			CUtlString timeText = KZTimerService::FormatTime(pb->overall.pbTime);
+			CUtlString timeText = utils::FormatTime(pb->overall.pbTime);
 			this->player->languageService->PrintChat(true, false, missedTimeKeysBoth[this->currentCompareType], timeText.Get());
 			this->shouldAnnounceMissedTime = false;
 		}
 		else
 		{
-			CUtlString timeText = KZTimerService::FormatTime(pb->pro.pbTime);
+			CUtlString timeText = utils::FormatTime(pb->pro.pbTime);
 			this->player->languageService->PrintChat(true, false, missedTimeKeysPro[this->currentCompareType], timeText.Get());
 		}
 		this->shouldAnnounceMissedProTime = false;
@@ -1254,7 +1218,7 @@ void KZTimerService::CheckMissedTime()
 
 	if (this->shouldAnnounceMissedTime && pb->overall.pbTime > 0 && this->GetTime() > pb->overall.pbTime)
 	{
-		CUtlString timeText = KZTimerService::FormatTime(pb->overall.pbTime);
+		CUtlString timeText = utils::FormatTime(pb->overall.pbTime);
 		this->player->languageService->PrintChat(true, false, missedTimeKeys[this->currentCompareType], timeText.Get());
 		this->shouldAnnounceMissedTime = false;
 		this->PlayMissedTimeSound();
@@ -1278,7 +1242,7 @@ void KZTimerService::ShowSplitText(u32 currentSplit)
 	CUtlString time;
 	std::string pbDiff, pbDiffPro = "";
 
-	time = KZTimerService::FormatTime(this->splitZoneTimes[currentSplit - 1]);
+	time = utils::FormatTime(this->splitZoneTimes[currentSplit - 1]);
 	if (this->lastSplit != 0)
 	{
 		f64 diff = this->splitZoneTimes[currentSplit - 1] - this->splitZoneTimes[this->lastSplit - 1];
@@ -1331,7 +1295,7 @@ void KZTimerService::ShowCheckpointText(u32 currentCheckpoint)
 	CUtlString time;
 	std::string pbDiff, pbDiffPro = "";
 
-	time = KZTimerService::FormatTime(this->cpZoneTimes[currentCheckpoint - 1]);
+	time = utils::FormatTime(this->cpZoneTimes[currentCheckpoint - 1]);
 	if (this->lastCheckpoint != 0)
 	{
 		f64 diff = this->cpZoneTimes[currentCheckpoint - 1] - this->cpZoneTimes[this->lastCheckpoint - 1];
@@ -1384,7 +1348,7 @@ void KZTimerService::ShowStageText()
 	CUtlString time;
 	std::string pbDiff, pbDiffPro = "";
 
-	time = KZTimerService::FormatTime(this->stageZoneTimes[this->currentStage]);
+	time = utils::FormatTime(this->stageZoneTimes[this->currentStage]);
 	if (this->currentStage > 0)
 	{
 		f64 diff = this->stageZoneTimes[this->currentStage] - this->stageZoneTimes[this->currentStage - 1];

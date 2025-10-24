@@ -180,9 +180,9 @@ struct TopRecordRequest : public BaseRequest
 		}
 
 		char standardTime[32];
-		KZTimerService::FormatTime(wrData.runTime, standardTime, sizeof(standardTime));
+		utils::FormatTime(wrData.runTime, standardTime, sizeof(standardTime));
 		char proTime[32];
-		KZTimerService::FormatTime(wrData.runTimePro, proTime, sizeof(proTime));
+		utils::FormatTime(wrData.runTimePro, proTime, sizeof(proTime));
 
 		// Global Records on kz_map (Main) [VNL]
 		player->languageService->PrintChat(true, false, "WR Header", mapName.Get(), courseName.Get(), modeName.Get());
@@ -222,9 +222,9 @@ struct TopRecordRequest : public BaseRequest
 		}
 
 		char standardTime[32];
-		KZTimerService::FormatTime(srData.runTime, standardTime, sizeof(standardTime));
+		utils::FormatTime(srData.runTime, standardTime, sizeof(standardTime));
 		char proTime[32];
-		KZTimerService::FormatTime(srData.runTimePro, proTime, sizeof(proTime));
+		utils::FormatTime(srData.runTimePro, proTime, sizeof(proTime));
 
 		// Server Records on kz_map (Main) [VNL]
 		player->languageService->PrintChat(true, false, "SR Header", mapName.Get(), courseName.Get(), modeName.Get());

@@ -3,6 +3,7 @@
 
 #include "sdk/datatypes.h"
 #include "kz_replay.h"
+#include "utils/uuid.h"
 #include <thread>
 #include <mutex>
 #include <atomic>
@@ -13,6 +14,7 @@ namespace KZ::replaysystem::data
 	// Replay data structure
 	struct ReplayPlayback
 	{
+		UUID_t uuid;
 		bool valid;
 		GeneralReplayHeader header;
 		// Can't union this because the type will become non trivial.

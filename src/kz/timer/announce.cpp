@@ -325,7 +325,7 @@ void RecordAnnounce::UpdateLocalCache()
 void RecordAnnounce::AnnounceRun()
 {
 	char formattedTime[32];
-	KZTimerService::FormatTime(time, formattedTime, sizeof(formattedTime));
+	utils::FormatTime(time, formattedTime, sizeof(formattedTime));
 
 	CUtlString combinedModeStyleText;
 	combinedModeStyleText.Format("{purple}%s{grey}", this->mode.name.c_str());

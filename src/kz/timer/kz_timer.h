@@ -220,26 +220,17 @@ public:
 		return currentTime;
 	}
 
-	static void FormatTime(f64 time, char *output, u32 length, bool precise = true);
-
-	static CUtlString FormatTime(f64 time, bool precise = true)
-	{
-		char temp[32];
-		FormatTime(time, temp, sizeof(temp), precise);
-		return CUtlString(temp);
-	}
-
 	static void FormatDiffTime(f64 time, char *output, u32 length, bool precise = true)
 	{
 		char temp[32];
 		if (time > 0)
 		{
-			FormatTime(time, temp, sizeof(temp), precise);
+			utils::FormatTime(time, temp, sizeof(temp), precise);
 			V_snprintf(output, length, "+%s", temp);
 		}
 		else
 		{
-			FormatTime(-time, temp, sizeof(temp), precise);
+			utils::FormatTime(-time, temp, sizeof(temp), precise);
 			V_snprintf(output, length, "-%s", temp);
 		}
 	}

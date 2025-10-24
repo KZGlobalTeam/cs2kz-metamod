@@ -115,18 +115,23 @@ void CircularRecorder::TrimOldJumps(u32 currentTick)
 	this->jumps->Advance(numToRemove);
 }
 
-void KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason)
+std::string KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason)
 {
 	if (strlen(cheaterReason) > 0)
 	{
 		CheaterRecorder recorder(this->player, cheaterReason);
-		recorder.WriteToFile();
-		META_CONPRINTF("[KZ] Cheater replay saved: %s\n", recorder.uuid.ToString().c_str());
+		if (recorder.WriteToFile())
+		{
+			return recorder.uuid.ToString();
+		}
 	}
 	else
 	{
 		ManualRecorder recorder(this->player, duration);
-		recorder.WriteToFile();
-		player->languageService->PrintChat(true, false, "Replay - Manual Replay Saved", recorder.uuid.ToString().c_str());
+		if (recorder.WriteToFile())
+		{
+			return recorder.uuid.ToString();
+		}
 	}
+	return "";
 }

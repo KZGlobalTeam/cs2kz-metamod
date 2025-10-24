@@ -86,7 +86,7 @@ struct CourseTopRequest : public BaseRequest
 
 		CUtlString GetTime()
 		{
-			return KZTimerService::FormatTime(time);
+			return utils::FormatTime(time);
 		}
 
 		CUtlString GetSteamID64()

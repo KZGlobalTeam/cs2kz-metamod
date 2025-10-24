@@ -311,16 +311,17 @@ struct GeneralReplayHeader
 
 	u64 timestamp;
 	char pluginVersion[32];
+	u32 serverVersion;
 	f32 sensitivity;
 	f32 yaw;
 	f32 pitch;
 
-	void Init(KZPlayer *player, ReplayType desiredType);
+	void Init(KZPlayer *player);
 };
 
 struct CheaterReplayHeader
 {
-	char banReason[512];
+	char reason[512];
 };
 
 struct RunReplayHeader

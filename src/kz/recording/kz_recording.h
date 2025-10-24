@@ -99,7 +99,7 @@ struct Recorder
 		return desiredStopTime >= 0 && currentTime >= desiredStopTime;
 	}
 
-	void WriteToFile();
+	bool WriteToFile();
 	virtual i32 WriteHeader(FileHandle_t file);
 	virtual i32 WriteTickData(FileHandle_t file);
 	virtual i32 WriteWeaponChanges(FileHandle_t file);
@@ -250,7 +250,7 @@ private:
 
 public:
 	// Write a replay file from the current circular buffer data.
-	void WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "");
+	std::string WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "");
 
 public:
 	SubtickData currentSubtickData;

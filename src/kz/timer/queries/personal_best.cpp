@@ -209,9 +209,9 @@ struct PBRequest : public BaseRequest
 		}
 
 		char overallTime[32];
-		KZTimerService::FormatTime(this->gpbData.runTime, overallTime, sizeof(overallTime));
+		utils::FormatTime(this->gpbData.runTime, overallTime, sizeof(overallTime));
 		char proTime[32];
-		KZTimerService::FormatTime(this->gpbData.runTimePro, proTime, sizeof(proTime));
+		utils::FormatTime(this->gpbData.runTimePro, proTime, sizeof(proTime));
 
 		if (!globallyBanned)
 		{
@@ -268,9 +268,9 @@ struct PBRequest : public BaseRequest
 		}
 
 		char overallTime[32];
-		KZTimerService::FormatTime(this->pbData.runTime, overallTime, sizeof(overallTime));
+		utils::FormatTime(this->pbData.runTime, overallTime, sizeof(overallTime));
 		char proTime[32];
-		KZTimerService::FormatTime(this->pbData.runTimePro, proTime, sizeof(proTime));
+		utils::FormatTime(this->pbData.runTimePro, proTime, sizeof(proTime));
 
 		if (!globallyBanned)
 		{

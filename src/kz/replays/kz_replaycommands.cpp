@@ -1,5 +1,6 @@
 #include "cs2kz.h"
 #include "kz/kz.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/language/kz_language.h"
 #include "kz_replaycommands.h"
 #include "kz_replaydata.h"
@@ -9,137 +10,6 @@
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"
 #include <functional>
-
-static_function bool IsValidTimeString(const char *timeStr, f32 *outSeconds)
-{
-	if (!timeStr || !outSeconds)
-	{
-		return false;
-	}
-
-	// Skip leading whitespace
-	while (*timeStr && isspace(*timeStr))
-	{
-		timeStr++;
-	}
-
-	if (*timeStr == '\0')
-	{
-		return false;
-	}
-
-	f32 parts[3] = {0.0f, 0.0f, 0.0f};
-	i32 partCount = 0;
-	const char *ptr = timeStr;
-
-	// Parse up to 3 colon-separated parts
-	while (partCount < 3)
-	{
-		// Parse the integer part
-		if (!isdigit(*ptr))
-		{
-			return false;
-		}
-
-		i32 intPart = 0;
-		while (isdigit(*ptr))
-		{
-			intPart = intPart * 10 + (*ptr - '0');
-			ptr++;
-		}
-
-		parts[partCount] = (float)intPart;
-
-		// Check for decimal part
-		if (*ptr == '.')
-		{
-			ptr++;
-			if (!isdigit(*ptr))
-			{
-				return false;
-			}
-
-			f32 fracPart = 0.0f;
-			f32 divisor = 10.0f;
-			while (isdigit(*ptr))
-			{
-				fracPart += (*ptr - '0') / divisor;
-				divisor *= 10.0f;
-				ptr++;
-			}
-
-			parts[partCount] += fracPart;
-		}
-
-		partCount++;
-
-		// Check what comes next
-		if (*ptr == ':')
-		{
-			ptr++;
-			if (partCount >= 3)
-			{
-				return false; // Too many colons
-			}
-		}
-		else
-		{
-			break; // End of parsing
-		}
-	}
-
-	// Skip trailing whitespace
-	while (*ptr && isspace(*ptr))
-	{
-		ptr++;
-	}
-
-	// Should be at end of string
-	if (*ptr != '\0')
-	{
-		return false;
-	}
-
-	// Validate ranges and convert to seconds
-	f32 totalSeconds = 0.0f;
-
-	if (partCount == 1)
-	{
-		// Just seconds: 12 or 12.5
-		totalSeconds = parts[0];
-	}
-	else if (partCount == 2)
-	{
-		// Minutes:seconds: 12:34
-		if (parts[1] >= 60.0f)
-		{
-			return false;
-		}
-		totalSeconds = parts[0] * 60.0f + parts[1];
-	}
-	else if (partCount == 3)
-	{
-		// Hours:minutes:seconds: 12:34:45
-		if (parts[1] >= 60.0f || parts[2] >= 60.0f)
-		{
-			return false;
-		}
-		totalSeconds = parts[0] * 3600.0f + parts[1] * 60.0f + parts[2];
-	}
-
-	*outSeconds = totalSeconds;
-	return true;
-}
-
-static_function f32 ParseTimeString(const char *timeStr)
-{
-	f32 seconds;
-	if (IsValidTimeString(timeStr, &seconds))
-	{
-		return seconds;
-	}
-	return -1.0f; // Invalid input
-}
 
 namespace KZ::replaysystem::commands
 {
@@ -251,8 +121,9 @@ namespace KZ::replaysystem::commands
 		if (isRelative)
 		{
 			// Relative time seeking
-			f32 seekSeconds = ParseTimeString(input + 1); // Skip the +/- sign
-			if (seekSeconds < 0.0f)
+			f64 seekSeconds = -1.0;
+
+			if (!utils::ParseTimeString(input + 1, &seekSeconds)) // Skip the +/- sign
 			{
 				player->languageService->PrintChat(true, false, "Replay - Invalid Relative Time");
 				return;
@@ -284,8 +155,8 @@ namespace KZ::replaysystem::commands
 		else
 		{
 			// Absolute time navigation
-			f32 targetSeconds = ParseTimeString(input);
-			if (targetSeconds < 0.0f)
+			f64 targetSeconds = -1.0f;
+			if (!utils::ParseTimeString(input, &targetSeconds))
 			{
 				player->languageService->PrintChat(true, false, "Replay - Invalid Absolute Time");
 				return;
@@ -293,27 +164,31 @@ namespace KZ::replaysystem::commands
 			targetTick = (u32)(targetSeconds / ENGINE_FIXED_TICK_INTERVAL);
 		}
 
+		char time[32];
+		utils::FormatTime(targetTick, time, sizeof(time), false);
+		char maxTime[32];
+		utils::FormatTime((replay->tickCount - 1), maxTime, sizeof(maxTime), false);
 		if (targetTick >= replay->tickCount)
 		{
-			player->languageService->PrintChat(true, false, "Replay - Tick Out Of Range", targetTick, replay->tickCount - 1);
+			player->languageService->PrintChat(true, false, "Replay - Time Out Of Range", time, maxTime);
 			return;
 		}
 
 		NavigateReplay(player, targetTick);
 
-		f32 currentTime = data::GetReplayTime();
 		if (isRelative)
 		{
-			f32 seekSeconds = ParseTimeString(input + 1);
+			f64 seekSeconds = -1.0f;
+			utils::ParseTimeString(input + 1, &seekSeconds);
 			if (input[0] == '-')
 			{
 				seekSeconds = -seekSeconds;
 			}
-			player->languageService->PrintChat(true, false, "Replay - Seeked To Tick", seekSeconds, targetTick, currentTime);
+			player->languageService->PrintChat(true, false, "Replay - Seeked To Tick", seekSeconds, targetTick, time);
 		}
 		else
 		{
-			player->languageService->PrintChat(true, false, "Replay - Jumped To Tick", targetTick);
+			player->languageService->PrintChat(true, false, "Replay - Jumped To Tick", targetTick, time);
 		}
 	}
 
@@ -387,7 +262,9 @@ namespace KZ::replaysystem::commands
 		}
 
 		NavigateReplay(player, targetTick);
-		player->languageService->PrintChat(true, false, "Replay - Jumped To Tick", targetTick);
+		char time[32];
+		utils::FormatTime(targetTick, time, sizeof(time), false);
+		player->languageService->PrintChat(true, false, "Replay - Jumped To Tick", targetTick, time);
 	}
 
 	void HandleInfoCommand(KZPlayer *player)
@@ -404,10 +281,51 @@ namespace KZ::replaysystem::commands
 		}
 
 		auto replay = data::GetCurrentReplay();
-		f32 currentTime = data::GetReplayTime();
 
-		player->languageService->PrintChat(true, false, "Replay - Current Info", replay->currentTick, replay->tickCount - 1, currentTime,
-										   replay->currentCheckpoint, replay->currentTeleport);
+		char timeStr[64], maxTime[64];
+		utils::FormatTime(replay->currentTick, timeStr, sizeof(timeStr), false);
+		utils::FormatTime(replay->tickCount - 1, maxTime, sizeof(maxTime), false);
+		char timestamp[64];
+		time_t time = replay->header.timestamp;
+		strftime(timestamp, 64, "%Y-%m-%d %H:%M:%S", localtime(&time));
+		player->languageService->PrintChat(true, false, "Replay - Current Info", replay->currentTick, replay->tickCount - 1, timeStr, maxTime);
+		player->languageService->PrintConsole(false, false, "Replay - General Info Console", replay->uuid.ToString().c_str(),
+											  replay->header.player.name, replay->header.player.steamid64, timestamp, replay->header.serverVersion,
+											  replay->header.pluginVersion);
+		switch (replay->header.type)
+		{
+			case ReplayType::RP_CHEATER:
+			{
+				player->languageService->PrintConsole(false, false, "Replay - Cheater Info Console", replay->cheaterHeader.reason);
+				break;
+			}
+			case ReplayType::RP_RUN:
+			{
+				char modeStr[128];
+				V_snprintf(modeStr, sizeof(modeStr), "%s%s", replay->runHeader.mode.name, replay->runHeader.styleCount ? "*" : "");
+				CUtlString timeString = utils::FormatTime(replay->runHeader.time);
+				player->languageService->PrintConsole(false, false, "Replay - Run Info Console", replay->runHeader.courseID, modeStr,
+													  timeString.Get(), replay->runHeader.numTeleports);
+				break;
+			}
+			case ReplayType::RP_JUMPSTATS:
+			{
+				if (replay->jumpHeader.blockDistance <= 0)
+				{
+					player->languageService->PrintConsole(false, false, "Replay - Jump Info Console", jumpTypeStr[replay->jumpHeader.jumpType],
+														  replay->jumpHeader.distance, replay->jumpHeader.sync * 100.0f, replay->jumpHeader.pre,
+														  replay->jumpHeader.max, replay->jumpHeader.airTime);
+				}
+				else
+				{
+					player->languageService->PrintConsole(false, false, "Replay - Jump Info Console", jumpTypeStr[replay->jumpHeader.jumpType],
+														  replay->jumpHeader.distance, replay->jumpHeader.blockDistance,
+														  replay->jumpHeader.sync * 100.0f, replay->jumpHeader.pre, replay->jumpHeader.max,
+														  replay->jumpHeader.airTime);
+				}
+				break;
+			}
+		}
 	}
 
 	void HandlePauseCommand(KZPlayer *player)
