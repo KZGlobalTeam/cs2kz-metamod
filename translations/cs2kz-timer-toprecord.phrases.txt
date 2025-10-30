@@ -154,7 +154,7 @@
 		"sv"		"Användande: kz_wr/kz_sr <c/course/map/mode=...>\nExempel: \"kz_wr map=kz_map c=Main\"."
 		"ua"		"Використання: kz_wr/kz_sr <c/course/map/mode=...>\nНаприклад: \"kz_wr map=kz_map c=Main\"."
 		"tr"		"Kullanım: kz_wr/kz_sr <c/course/map/mode=...>\nÖrnek: \"kz_wr map=kz_map c=Main\"."
-		"it"		"Utilizzo: kz_wr/kz_sr <c/course/map/mode=...>\nEsempio: \"kz_wr map=kz_mappa c=Main\"."
+		"it"		"Utilizzo: kz_wr/kz_sr <c/course/map/mode=...>\nEsempio: \"kz_wr map=kz_map c=Main\"."
 		"es"		"Usa: kz_wr/kz_sr <c/course/map/mode=...>\nEjemplo: \"kz_wr map=kz_map c=Main\"."
 		"pl"		"Użycie: kz_wr/kz_sr <c/course/map/mode=...>\nPrzykład: \"kz_wr map=kz_map c=Main\"."
 		"de"		"Verwendung: kz_wr/kz_sr <c/course/map/mode=...>\nBeispiel: \"kz_wr map=kz_map c=Main\"."
