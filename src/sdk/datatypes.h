@@ -239,8 +239,9 @@ public:
 
 	Vector m_outWishVel;
 	QAngle m_vecOldAngles;
-	Vector m_vecAccelPerSecond; // related to accel and friction
 	Vector m_vecInputRotated;
+	Vector m_vecUnknown2;
+	Vector m_vecAccelPerSecond;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
 	float m_flFrictionDecel;
@@ -248,7 +249,7 @@ public:
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
 
-static_assert(sizeof(CMoveData) == 296, "Class didn't match expected size");
+static_assert(sizeof(CMoveData) == 312, "Class didn't match expected size");
 
 // Custom data types goes here.
 
