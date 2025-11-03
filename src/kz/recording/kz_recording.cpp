@@ -10,12 +10,14 @@
 #include "sdk/cskeletoninstance.h"
 #include "sdk/usercmd.h"
 
+#include "steam/steam_gameserver.h"
 #include "filesystem.h"
 #include "vprof.h"
 
 CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", true);
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
+extern CSteamGameServerAPIContext g_steamAPI;
 
 // Not sure what's the best place to put this, so putting it here for now.
 void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
@@ -45,6 +47,12 @@ void GeneralReplayHeader::Init(KZPlayer *player)
 	g_pKZUtils->GetCurrentMapMD5(this->map.md5, sizeof(this->map.md5));
 	V_snprintf(this->pluginVersion, sizeof(this->pluginVersion), "%s", g_KZPlugin.GetVersion());
 	this->serverVersion = utils::GetServerVersion();
+
+	time_t unixTime = 0;
+	time(&unixTime);
+	this->timestamp = (u64)unixTime;
+
+	this->serverIP = g_steamAPI.SteamGameServer() ? g_steamAPI.SteamGameServer()->GetPublicIP().m_unIPv4 : 0;
 
 	// Player-specific fields
 	V_snprintf(this->player.name, sizeof(this->player.name), "%s", player->GetController()->GetPlayerName());
@@ -542,7 +550,7 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 	{
 		return MRES_SUPERCEDE;
 	}
-	duration = target->recordingService->WriteCircularBufferToFile(duration, "", &uuid);
+	duration = target->recordingService->WriteCircularBufferToFile(duration, "", &uuid, player);
 	if (uuid.empty())
 	{
 		player->languageService->PrintChat(true, false, "Replay - Manual Replay Failed");

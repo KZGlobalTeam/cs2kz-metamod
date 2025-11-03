@@ -36,6 +36,9 @@
 	// Whether we override chat processing or not.
 	"overridePlayerChat"		"true"
 	
+	// Maximum amount of manually saved replays allowed per player.
+	"maxManualReplays"			"5"
+	
 	// Local database configurations.
 	"db"
 	{

@@ -43,6 +43,9 @@ namespace KZ::replaysystem
 	f32 GetTime();
 	f32 GetEndTime();
 	bool GetPaused();
+
+	void InitWatcher();
+	void CleanupWatcher();
 } // namespace KZ::replaysystem
 
 #endif // KZ_REPLAYSYSTEM_H

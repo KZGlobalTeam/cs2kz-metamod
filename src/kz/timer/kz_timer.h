@@ -220,6 +220,11 @@ public:
 		return currentTime;
 	}
 
+	const UUID_t &GetCurrentRunUUID() const
+	{
+		return currentRunUUID;
+	}
+
 	static void FormatDiffTime(f64 time, char *output, u32 length, bool precise = true)
 	{
 		char temp[32];

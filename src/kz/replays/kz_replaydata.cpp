@@ -61,7 +61,7 @@ namespace KZ::replaysystem::data
 		replay->currentTeleport = 0;
 
 		// Reset timer state
-		replay->courseID = -1;
+		replay->courseName[0] = '\0';
 		replay->startTime = 0.0f;
 		replay->paused = false;
 		replay->endTime = 0.0f;
@@ -193,11 +193,22 @@ namespace KZ::replaysystem::data
 			case RP_RUN:
 			{
 				totalBytesRead += g_pFullFileSystem->Read(&result.runHeader, sizeof(result.runHeader), file);
+				// Just to advance the reader.
+				for (i32 i = 0; i < result.runHeader.styleCount; i++)
+				{
+					RpModeStyleInfo style = {};
+					totalBytesRead += g_pFullFileSystem->Read(&style, sizeof(style), file);
+				}
 				break;
 			}
 			case RP_JUMPSTATS:
 			{
 				totalBytesRead += g_pFullFileSystem->Read(&result.jumpHeader, sizeof(result.jumpHeader), file);
+				break;
+			}
+			case RP_MANUAL:
+			{
+				totalBytesRead += g_pFullFileSystem->Read(&result.manualHeader, sizeof(result.manualHeader), file);
 				break;
 			}
 		}
@@ -416,7 +427,7 @@ namespace KZ::replaysystem::data
 			totalBytesRead += sizeof(result.events[i]);
 		}
 
-		result.valid = UUID_t::IsValid(CUtlString(path).GetBaseFilename().StripExtension().Get(), &result.uuid);
+		result.valid = UUID_t::FromString(CUtlString(path).GetBaseFilename().StripExtension().Get(), &result.uuid);
 		assert(result.valid);
 		g_pFullFileSystem->Close(file);
 		progress = 1.0f;

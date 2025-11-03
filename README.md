@@ -56,3 +56,23 @@ docker run --rm -v ./build:/app/build cs2kz-linux-builder
 Note: does not work with gcc!
 
 Copy the contents of `build/package/` to your server's `csgo/` directory.
+
+# Project Architecture
+This is a CS2 KZ Metamod C++ plugin with:
+
+- Source code files in `src` directory
+  - KZ related functionalities in `src/kz` subdirectory
+    - Distinct functionalities are usually split into services in its own subdirectory (eg. `src/kz/language` for localization code)
+  - Reverse engineered and SDK code in `src/sdk` subdirectory
+  - General movement related code in `src/movement` subdirectory
+  - General player related code in `src/player` subdirectory
+- Additional SDK files are in `hl2sdk-cs2/public` subdirectory
+- Some code is generated from protobuf files, they are located in `build/cs2kz/windows-x86_64`
+- Config files are found in `cfg` and `gamedata`
+- Localization texts are found in `translations`
+- Third party dependencies are found in `vendor`
+- `AMBuilder` is used to declare the list of translation units to add into the build. See [AMBuild](https://github.com/alliedmodders/ambuild) for more information.
+
+## Coding standards
+- Follow the existing naming conventions.
+- Prefer short types defined in `common.h` (eg. `u32`, `u64`, `f32`,... ) unless it is code related to reverse engineering/SDK.

@@ -58,7 +58,7 @@ struct CourseTopRequest : public BaseRequest
 
 	struct RunStats
 	{
-		u64 runID;
+		CUtlString runID;
 		CUtlString name;
 		u64 teleportsUsed;
 		f64 time;
@@ -72,9 +72,7 @@ struct CourseTopRequest : public BaseRequest
 
 		CUtlString GetRunID()
 		{
-			CUtlString fmt;
-			fmt.Format("%llu", runID);
-			return fmt;
+			return runID;
 		}
 
 		CUtlString GetTeleportCount()
@@ -156,8 +154,8 @@ struct CourseTopRequest : public BaseRequest
 				{
 					while (result->FetchRow())
 					{
-						req->srData.overallData.AddToTail({(u64)result->GetInt64(0), result->GetString(2), (u64)result->GetInt64(4),
-														   result->GetFloat(3), (u64)result->GetInt64(1)});
+						req->srData.overallData.AddToTail(
+							{result->GetString(0), result->GetString(2), (u64)result->GetInt64(4), result->GetFloat(3), (u64)result->GetInt64(1)});
 					}
 				}
 
@@ -165,8 +163,7 @@ struct CourseTopRequest : public BaseRequest
 				{
 					while (result->FetchRow())
 					{
-						req->srData.proData.AddToTail(
-							{(u64)result->GetInt64(0), result->GetString(2), 0, result->GetFloat(3), (u64)result->GetInt64(1)});
+						req->srData.proData.AddToTail({result->GetString(0), result->GetString(2), 0, result->GetFloat(3), (u64)result->GetInt64(1)});
 					}
 				}
 			};
@@ -213,16 +210,18 @@ struct CourseTopRequest : public BaseRequest
 					req->globalStatus = ResponseStatus::DISABLED;
 					return;
 				}
-
 				for (const auto &record : ctops.overall)
 				{
+					CUtlString id;
+					id.Format("%llu", record.id);
 					req->wrData.overallData.AddToTail(
-						{record.id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
+						{id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
 				}
 				for (const auto &record : ctops.pro)
 				{
-					req->wrData.proData.AddToTail(
-						{record.id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
+					CUtlString id;
+					id.Format("%llu", record.id);
+					req->wrData.proData.AddToTail({id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
 				}
 			};
 			this->globalStatus = ResponseStatus::PENDING;

@@ -255,7 +255,10 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->guid);
 	}
+
+	// Generate a new UUID for this run
 	bool success = this->player->recordingService->GetCurrentRunUUID(this->currentRunUUID);
+
 	assert(success);
 	return true;
 }

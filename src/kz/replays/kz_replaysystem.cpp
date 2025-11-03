@@ -18,6 +18,7 @@ namespace KZ::replaysystem
 	void Cleanup()
 	{
 		bot::KickBot();
+		CleanupWatcher();
 	}
 
 	void OnRoundStart()

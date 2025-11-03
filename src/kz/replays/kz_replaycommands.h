@@ -11,13 +11,14 @@ namespace KZ::replaysystem::commands
 	void NavigateReplay(KZPlayer *player, u32 targetTick);
 
 	// Command handlers
-	void HandleReplayCommand(KZPlayer *player, const char *uuid);
-	void HandleLoadProgressCommand(KZPlayer *player);
-	void HandleCancelLoadCommand(KZPlayer *player);
-	void HandleGotoCommand(KZPlayer *player, const char *input);
-	void HandleGotoTickCommand(KZPlayer *player, const char *input);
-	void HandleInfoCommand(KZPlayer *player);
-	void HandlePauseCommand(KZPlayer *player);
+	void LoadReplay(KZPlayer *player, const char *uuid);
+	void CheckReplayLoadProgress(KZPlayer *player);
+	void CancelReplayLoad(KZPlayer *player);
+	void JumpToReplayTime(KZPlayer *player, const char *input);
+	void JumpToReplayTick(KZPlayer *player, const char *input);
+	void GetReplayInfo(KZPlayer *player);
+	void ToggleReplayPause(KZPlayer *player);
+	void ListReplays(KZPlayer *player, const char *input);
 } // namespace KZ::replaysystem::commands
 
 #endif // KZ_REPLAYCOMMANDS_H

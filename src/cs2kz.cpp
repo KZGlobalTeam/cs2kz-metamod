@@ -88,6 +88,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		utils::ResetMap();
 		KZ::replaysystem::Init();
 	}
+
+	KZ::replaysystem::InitWatcher();
 	return true;
 }
 

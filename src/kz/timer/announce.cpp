@@ -12,7 +12,8 @@ CConVar<bool> kz_debug_announce_global("kz_debug_announce_global", FCVAR_NONE, "
 
 RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	: uid(RecordAnnounce::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), userID(player->GetClient()->GetUserID()),
-	  time(player->timerService->GetTime()), teleports(player->checkpointService->GetTeleportCount())
+	  time(player->timerService->GetTime()), runUUID(player->timerService->GetCurrentRunUUID().ToString()),
+	  teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
 	this->global = player->hasPrime && KZGlobalService::IsAvailable();
@@ -308,8 +309,8 @@ void RecordAnnounce::SubmitLocal()
 		}
 		rec->UpdateLocalCache();
 	};
-	KZDatabaseService::SaveTime(this->player.steamid64, this->course.localID, this->mode.localID, this->time, this->teleports, this->styleIDs,
-								this->metadata, onSuccess, onFailure);
+	KZDatabaseService::SaveTime(this->runUUID.c_str(), this->player.steamid64, this->course.localID, this->mode.localID, this->time, this->teleports,
+								this->styleIDs, this->metadata, onSuccess, onFailure);
 }
 
 void RecordAnnounce::UpdateLocalCache()

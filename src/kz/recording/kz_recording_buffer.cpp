@@ -64,6 +64,7 @@ void CircularRecorder::TrimOldRpEvents(u32 currentTick)
 				case RPEVENT_MODE_CHANGE:
 				{
 					V_strncpy(this->earliestMode.value().name, event.data.modeChange.name, sizeof(this->earliestMode.value().name));
+					V_strncpy(this->earliestMode.value().shortName, event.data.modeChange.shortName, sizeof(this->earliestMode.value().shortName));
 					V_strncpy(this->earliestMode.value().md5, event.data.modeChange.md5, sizeof(this->earliestMode.value().md5));
 					break;
 				}
@@ -75,6 +76,7 @@ void CircularRecorder::TrimOldRpEvents(u32 currentTick)
 					}
 					RpModeStyleInfo style = {};
 					V_strncpy(style.name, event.data.styleChange.name, sizeof(style.name));
+					V_strncpy(style.shortName, event.data.styleChange.shortName, sizeof(style.shortName));
 					V_strncpy(style.md5, event.data.styleChange.md5, sizeof(style.md5));
 					this->earliestStyles.value().push_back(style);
 					break;
@@ -115,16 +117,16 @@ void CircularRecorder::TrimOldJumps(u32 currentTick)
 	this->jumps->Advance(numToRemove);
 }
 
-f32 KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason, std::string *out_uuid)
+f32 KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason, std::string *out_uuid, KZPlayer *saver)
 {
 	std::unique_ptr<Recorder> recorder;
 	if (strlen(cheaterReason) > 0)
 	{
-		recorder = std::make_unique<CheaterRecorder>(this->player, cheaterReason);
+		recorder = std::make_unique<CheaterRecorder>(this->player, cheaterReason, saver);
 	}
 	else
 	{
-		recorder = std::make_unique<ManualRecorder>(this->player, duration);
+		recorder = std::make_unique<ManualRecorder>(this->player, duration, saver);
 	}
 
 	if (recorder->WriteToFile())
@@ -133,7 +135,7 @@ f32 KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *chea
 		{
 			*out_uuid = recorder->uuid.ToString();
 		}
-		return recorder->cmdData.size() * ENGINE_FIXED_TICK_INTERVAL;
+		return recorder->tickData.size() * ENGINE_FIXED_TICK_INTERVAL;
 	}
 	return 0.0f;
 }

@@ -57,6 +57,7 @@ struct WeaponSwitchEvent
 struct RpModeStyleInfo
 {
 	char name[64];
+	char shortName[64];
 	char md5[33];
 };
 
@@ -312,6 +313,7 @@ struct GeneralReplayHeader
 	u64 timestamp;
 	char pluginVersion[32];
 	u32 serverVersion;
+	u32 serverIP;
 	f32 sensitivity;
 	f32 yaw;
 	f32 pitch;
@@ -322,11 +324,18 @@ struct GeneralReplayHeader
 struct CheaterReplayHeader
 {
 	char reason[512];
+
+	// Empty if this is an automated submission.
+	struct
+	{
+		char name[128];
+		u64 steamid64;
+	} reporter;
 };
 
 struct RunReplayHeader
 {
-	i32 courseID;
+	char courseName[256];
 	RpModeStyleInfo mode;
 	i32 styleCount;
 	f32 time;
@@ -335,13 +344,23 @@ struct RunReplayHeader
 
 struct JumpReplayHeader
 {
+	RpModeStyleInfo mode;
 	u8 jumpType;
 	f32 distance;
 	i32 blockDistance;
+	u32 numStrafes;
 	f32 sync;
 	f32 pre;
 	f32 max;
 	f32 airTime;
 };
 
+struct ManualReplayHeader
+{
+	struct
+	{
+		char name[128];
+		u64 steamid64;
+	} savedBy;
+};
 #endif // KZ_REPLAY_H

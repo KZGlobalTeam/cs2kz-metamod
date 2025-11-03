@@ -4,12 +4,13 @@
 #include "kz/timer/kz_timer.h"
 #include "queries/save_time.h"
 #include "queries/times.h"
+#include "utils/uuid.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
 using namespace KZ::Database;
 
-void KZDatabaseService::SaveTime(u64 steamID, u32 courseID, i32 modeID, f64 time, u64 teleportsUsed, u64 styleIDs, std::string_view metadata,
-								 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
+void KZDatabaseService::SaveTime(const char *runUUID, u64 steamID, u32 courseID, i32 modeID, f64 time, u64 teleportsUsed, u64 styleIDs,
+								 std::string_view metadata, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
 {
 	if (!KZDatabaseService::IsReady())
 	{
@@ -18,7 +19,9 @@ void KZDatabaseService::SaveTime(u64 steamID, u32 courseID, i32 modeID, f64 time
 
 	char query[1024];
 	Transaction txn;
-	V_snprintf(query, sizeof(query), sql_times_insert, steamID, courseID, modeID, styleIDs, time, teleportsUsed, metadata.data());
+
+	// Always use UUID insert since all migrations must be applied for the plugin to run
+	V_snprintf(query, sizeof(query), sql_times_insert, runUUID, steamID, courseID, modeID, styleIDs, time, teleportsUsed, metadata.data());
 	txn.queries.push_back(query);
 	if (styleIDs != 0)
 	{

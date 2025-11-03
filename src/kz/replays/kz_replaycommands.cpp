@@ -9,9 +9,12 @@
 #include "kz_replaybot.h"
 #include "kz_replayevents.h"
 #include "kz_replayplayback.h"
+#include "kz_replaywatcher.h"
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"
 #include <functional>
+
+extern ReplayWatcher g_ReplayWatcher;
 
 namespace KZ::replaysystem::commands
 {
@@ -40,7 +43,7 @@ namespace KZ::replaysystem::commands
 		}
 	}
 
-	void HandleReplayCommand(KZPlayer *player, const char *uuid)
+	void LoadReplay(KZPlayer *player, const char *uuid)
 	{
 		if (!player)
 		{
@@ -55,7 +58,7 @@ namespace KZ::replaysystem::commands
 		}
 
 		UUID_t parsedUuid;
-		if (!UUID_t::IsValid(uuid, &parsedUuid))
+		if (!UUID_t::FromString(uuid, &parsedUuid))
 		{
 			player->languageService->PrintChat(true, false, "Replay - Invalid UUID");
 			return;
@@ -132,7 +135,7 @@ namespace KZ::replaysystem::commands
 		// clang-format on
 	}
 
-	void HandleGotoCommand(KZPlayer *player, const char *input)
+	void JumpToReplayTime(KZPlayer *player, const char *input)
 	{
 		if (!player)
 		{
@@ -198,7 +201,7 @@ namespace KZ::replaysystem::commands
 		char time[32];
 		utils::FormatTime(targetTick, time, sizeof(time), false);
 		char maxTime[32];
-		utils::FormatTime((replay->tickCount - 1), maxTime, sizeof(maxTime), false);
+		utils::FormatTime((replay->tickCount - 1) * ENGINE_FIXED_TICK_INTERVAL, maxTime, sizeof(maxTime), false);
 		if (targetTick >= replay->tickCount)
 		{
 			player->languageService->PrintChat(true, false, "Replay - Time Out Of Range", time, maxTime);
@@ -223,7 +226,7 @@ namespace KZ::replaysystem::commands
 		}
 	}
 
-	void HandleGotoTickCommand(KZPlayer *player, const char *input)
+	void JumpToReplayTick(KZPlayer *player, const char *input)
 	{
 		if (!player)
 		{
@@ -298,7 +301,7 @@ namespace KZ::replaysystem::commands
 		player->languageService->PrintChat(true, false, "Replay - Jumped To Tick", targetTick, time);
 	}
 
-	void HandleInfoCommand(KZPlayer *player)
+	void GetReplayInfo(KZPlayer *player)
 	{
 		if (!player)
 		{
@@ -314,8 +317,8 @@ namespace KZ::replaysystem::commands
 		auto replay = data::GetCurrentReplay();
 
 		char timeStr[64], maxTime[64];
-		utils::FormatTime(replay->currentTick, timeStr, sizeof(timeStr), false);
-		utils::FormatTime(replay->tickCount - 1, maxTime, sizeof(maxTime), false);
+		utils::FormatTime(replay->currentTick * ENGINE_FIXED_TICK_INTERVAL, timeStr, sizeof(timeStr), false);
+		utils::FormatTime((replay->tickCount - 1) * ENGINE_FIXED_TICK_INTERVAL, maxTime, sizeof(maxTime), false);
 		char timestamp[64];
 		time_t time = replay->header.timestamp;
 		strftime(timestamp, 64, "%Y-%m-%d %H:%M:%S", localtime(&time));
@@ -335,7 +338,7 @@ namespace KZ::replaysystem::commands
 				char modeStr[128];
 				V_snprintf(modeStr, sizeof(modeStr), "%s%s", replay->runHeader.mode.name, replay->runHeader.styleCount ? "*" : "");
 				CUtlString timeString = utils::FormatTime(replay->runHeader.time);
-				player->languageService->PrintConsole(false, false, "Replay - Run Info Console", replay->runHeader.courseID, modeStr,
+				player->languageService->PrintConsole(false, false, "Replay - Run Info Console", replay->runHeader.courseName, modeStr,
 													  timeString.Get(), replay->runHeader.numTeleports);
 				break;
 			}
@@ -356,10 +359,16 @@ namespace KZ::replaysystem::commands
 				}
 				break;
 			}
+			case ReplayType::RP_MANUAL:
+			{
+				player->languageService->PrintConsole(false, false, "Replay - Manual Info Console", replay->manualHeader.savedBy.name,
+													  replay->manualHeader.savedBy.steamid64);
+				break;
+			}
 		}
 	}
 
-	void HandlePauseCommand(KZPlayer *player)
+	void ToggleReplayPause(KZPlayer *player)
 	{
 		if (!player)
 		{
@@ -387,7 +396,7 @@ namespace KZ::replaysystem::commands
 		}
 	}
 
-	void HandleLoadProgressCommand(KZPlayer *player)
+	void CheckReplayLoadProgress(KZPlayer *player)
 	{
 		if (!player)
 		{
@@ -422,7 +431,7 @@ namespace KZ::replaysystem::commands
 		}
 	}
 
-	void HandleCancelLoadCommand(KZPlayer *player)
+	void CancelReplayLoad(KZPlayer *player)
 	{
 		if (!player)
 		{
@@ -439,6 +448,18 @@ namespace KZ::replaysystem::commands
 		player->languageService->PrintChat(true, false, "Replay - Loading Cancelled");
 	}
 
+	void ListReplays(KZPlayer *player, const char *filter)
+	{
+		if (!player)
+		{
+			return;
+		}
+		if (!filter || filter[0] == '\0')
+		{
+			g_ReplayWatcher.PrintUsage(player);
+		}
+		g_ReplayWatcher.FindReplaysMatchingCriteria(filter, player);
+	}
 } // namespace KZ::replaysystem::commands
 
 // Command implementations using the new modules
@@ -456,7 +477,7 @@ SCMD(kz_replay, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	KZ::replaysystem::commands::HandleReplayCommand(player, args->Arg(1));
+	KZ::replaysystem::commands::LoadReplay(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
@@ -474,7 +495,7 @@ SCMD(kz_rpgoto, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	KZ::replaysystem::commands::HandleGotoCommand(player, args->ArgS());
+	KZ::replaysystem::commands::JumpToReplayTime(player, args->ArgS());
 	return MRES_SUPERCEDE;
 }
 
@@ -492,7 +513,7 @@ SCMD(kz_rpgototick, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	KZ::replaysystem::commands::HandleGotoTickCommand(player, args->Arg(1));
+	KZ::replaysystem::commands::JumpToReplayTick(player, args->Arg(1));
 	return MRES_SUPERCEDE;
 }
 
@@ -504,7 +525,7 @@ SCMD(kz_rpinfo, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	KZ::replaysystem::commands::HandleInfoCommand(player);
+	KZ::replaysystem::commands::GetReplayInfo(player);
 	return MRES_SUPERCEDE;
 }
 
@@ -518,7 +539,7 @@ SCMD(kz_rppause, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	KZ::replaysystem::commands::HandlePauseCommand(player);
+	KZ::replaysystem::commands::ToggleReplayPause(player);
 	return MRES_SUPERCEDE;
 }
 
@@ -530,7 +551,7 @@ SCMD(kz_rploadprogress, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	KZ::replaysystem::commands::HandleLoadProgressCommand(player);
+	KZ::replaysystem::commands::CheckReplayLoadProgress(player);
 	return MRES_SUPERCEDE;
 }
 
@@ -542,6 +563,18 @@ SCMD(kz_rpcancelload, SCFL_REPLAY)
 		return MRES_SUPERCEDE;
 	}
 
-	KZ::replaysystem::commands::HandleCancelLoadCommand(player);
+	KZ::replaysystem::commands::CancelReplayLoad(player);
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_replays, SCFL_REPLAY)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!player)
+	{
+		return MRES_SUPERCEDE;
+	}
+
+	KZ::replaysystem::commands::ListReplays(player, args->ArgS());
 	return MRES_SUPERCEDE;
 }

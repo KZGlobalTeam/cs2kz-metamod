@@ -162,9 +162,10 @@ constexpr int i = sizeof(GeneralReplayHeader) + sizeof(RunReplayHeader);
 struct RunRecorder : public Recorder
 {
 	RunReplayHeader header;
+	std::vector<RpModeStyleInfo> styles;
 	RunRecorder(KZPlayer *player);
 	void End(f32 time, i32 numTeleports);
-	virtual int WriteHeader(FileHandle_t file) override;
+	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct JumpRecorder : public Recorder
@@ -172,19 +173,21 @@ struct JumpRecorder : public Recorder
 	JumpReplayHeader header;
 
 	JumpRecorder(Jump *jump);
-	virtual int WriteHeader(FileHandle_t file) override;
+	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct CheaterRecorder : public Recorder
 {
 	CheaterReplayHeader header;
-	CheaterRecorder(KZPlayer *player, const char *reason);
-	virtual int WriteHeader(FileHandle_t file) override;
+	CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer *savedBy);
+	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct ManualRecorder : public Recorder
 {
-	ManualRecorder(KZPlayer *player, f32 duration);
+	ManualReplayHeader header;
+	ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy);
+	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 class KZRecordingService : public KZBaseService
@@ -250,7 +253,7 @@ private:
 
 public:
 	// Write a replay file from the current circular buffer data.
-	f32 WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "", std::string *out_uuid = nullptr);
+	f32 WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "", std::string *out_uuid = nullptr, KZPlayer *saver = nullptr);
 
 public:
 	SubtickData currentSubtickData;

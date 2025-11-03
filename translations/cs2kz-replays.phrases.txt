@@ -77,12 +77,12 @@
 	"Replay - Run Info Console"
 	{
 		// Replay Type: Run
-		// Course ID: 42
+		// Course: Main
 		// Mode: Classic*
 		// Time: 12:34.567
 		// Teleports: 0
-		"#format"	"id:d,mode:s,time:s,teleports:d"
-		"en"		"Replay Type: Run\nCourse ID: {id}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
+		"#format"	"name:s,mode:s,time:s,teleports:d"
+		"en"		"Replay Type: Run\nCourse: {name}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
 	}
 	"Replay - Jump Info Console"
 	{
@@ -97,6 +97,13 @@
 		// Distance: 123.45 | 250 Block | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,blockDistance:d,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+	}
+	"Replay - Manual Info Console"
+	{
+		// Replay Type: Manual
+		// Saved By: Alice (765498765432109)
+		"#format"	"playerName:s,playerSteamID:llu"
+		"en"		"Replay Type: Manual\nSaved By: {playerName} ({playerSteamID})"
 	}
 	"Replay - Seeked To Tick"
 	{
@@ -180,5 +187,119 @@
 	{
 		"#format"	"modeName:s"
 		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
+	}
+	
+	"Replay List - Check Console"
+	{
+		"en"		"{grey}Check console for info!"
+	}
+	
+	"Replay List - Usage Title"
+	{
+		// Usage: !replays [type=run/r/jump/j/manual/m] [options...]
+		"en"		"Usage: !replays [type=run/r/jump/j/manual/m] [options...]"
+	}
+
+	"Replay List - Usage General Options"
+	{
+		// General Options:
+		//	player=<name> - Filter by player name
+		//	steamid=<id> - Filter by Steam ID
+		//	map=<name> - Filter by map name (default: current map)
+		//	offset=<num> - Skip first N results
+		//	limit=<num> - Limit results (max 20)
+		"en"		"\nGeneral Options:\n\tplayer=<name> - Filter by player name\n\tsteamid=<id> - Filter by Steam ID\n\tmap=<name> - Filter by map name (default: current map)\n\toffset=<num> - Skip first N results\n\tlimit=<num> - Limit results (max 20)"
+	}
+
+	"Replay List - Usage Type Options"
+	{
+		// Type-specific Options:
+		//	Run: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>
+		//	Jump: mode=<mode> jumptype=<type> mindistance=<dist>
+		//	Manual: saver=<name> ssid=<steamid>
+		"en"		"\nType Options:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
+	}
+
+
+	"Replay List - No Matching Replays"
+	{
+		"en"		"{grey}No matching replays found."
+	}
+	
+	"Cheater Replays - Table Name"
+	{
+		"en"		"Cheater Replays"
+	}
+	
+	"Run Replays - Table Name"
+	{
+		"en"		"Run Replays"
+	}
+	
+	"Jump Replays - Table Name"
+	{
+		"en"		"Jump Replays"
+	}
+	
+	"Manual Replays - Table Name"
+	{
+		"en"		"Manual Replays"
+	}
+	
+	"Replay Table Header - Player"
+	{
+		"en"		"Player"
+	}
+	"Replay Table Header - Map"
+	{
+		"en"		"Map"
+	}
+	"Replay Table Header - Reason"
+	{
+		"en"		"Reason"
+	}
+	"Replay Table Header - SteamID"
+	{
+		"en"		"SteamID"
+	}
+	"Replay Table Header - UUID"
+	{
+		"en"		"UUID"
+	}
+	"Replay Table Header - Course"
+	{
+		"en"		"Course"
+	}
+	"Replay Table Header - Mode"
+	{
+		"en"		"Mode"
+	}
+	"Replay Table Header - Time"
+	{
+		"en"		"Time"
+	}
+	"Replay Table Header - Teleports"
+	{
+		"en"		"Teleports"
+	}
+	"Replay Table Header - Jump Type"
+	{
+		"en"		"Jump Type"
+	}
+	"Replay Table Header - Distance"
+	{
+		"en"		"Distance"
+	}
+	"Replay Table Header - Block"
+	{
+		"en"		"Block"
+	}
+	"Replay Table Header - Strafes"
+	{
+		"en"		"Strafes"
+	}
+	"Replay Table Header - Saved By"
+	{
+		"en"		"Saved By"
 	}
 }

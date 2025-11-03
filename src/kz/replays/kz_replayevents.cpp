@@ -90,20 +90,31 @@ namespace KZ::replaysystem::events
 		{
 			case RpEvent::RpEventData::TimerEvent::TIMER_START:
 			{
+				const KZCourseDescriptor *course = KZ::course::GetCourseByCourseID(event->data.timer.index);
+				if (!course || course->GetName().IsEmpty())
+				{
+					break;
+				}
+
 				replay->startTime = g_pKZUtils->GetServerGlobals()->curtime - event->data.timer.time;
 				replay->endTime = 0.0f;
 				replay->lastSplitTime = 0.0f;
 				replay->lastCPZTime = 0.0f;
 				replay->lastStageTime = 0.0f;
 				replay->stopTick = 0;
-				replay->courseID = event->data.timer.index;
+				V_snprintf(replay->courseName, sizeof(replay->courseName), "%s", course->GetName().Get());
 				replay->paused = false;
 				break;
 			}
 
 			case RpEvent::RpEventData::TimerEvent::TIMER_END:
 			{
-				if (replay->startTime == 0.0f || replay->courseID != event->data.timer.index)
+				const KZCourseDescriptor *courseDesc = KZ::course::GetCourseByCourseID(event->data.timer.index);
+				if (!courseDesc || courseDesc->GetName().IsEmpty())
+				{
+					break;
+				}
+				if (replay->startTime == 0.0f || !courseDesc->GetName().IsEqual_FastCaseInsensitive(replay->courseName))
 				{
 					break;
 				}
@@ -122,7 +133,6 @@ namespace KZ::replaysystem::events
 				}
 
 				replay->endTime = event->data.timer.time;
-				const KZCourseDescriptor *courseDesc = KZ::course::GetCourseByCourseID(replay->courseID);
 				std::string teleportText = "{blue}PRO{grey}";
 				if (replay->currentTeleport > 0)
 				{
@@ -140,7 +150,7 @@ namespace KZ::replaysystem::events
 												  formattedTime, combinedModeStyleText.Get(), teleportText.c_str());
 				replay->startTime = 0.0f;
 				replay->stopTick = replay->currentTick;
-				replay->courseID = 0;
+				replay->courseName[0] = '\0';
 				break;
 			}
 
@@ -159,7 +169,7 @@ namespace KZ::replaysystem::events
 				replay->endTime = event->data.timer.time;
 				replay->stopTick = replay->currentTick;
 				replay->startTime = 0.0f;
-				replay->courseID = 0;
+				replay->courseName[0] = '\0';
 				break;
 			}
 
@@ -350,7 +360,7 @@ namespace KZ::replaysystem::events
 			replay->currentTeleport = 0;
 
 			// Reset timer state
-			replay->courseID = -1;
+			replay->courseName[0] = '\0';
 			replay->startTime = 0.0f;
 			replay->paused = false;
 			replay->endTime = 0.0f;
@@ -404,7 +414,12 @@ namespace KZ::replaysystem::events
 					{
 						case RpEvent::RpEventData::TimerEvent::TIMER_START:
 						{
-							replay->courseID = event->data.timer.index;
+							const KZCourseDescriptor *courseDesc = KZ::course::GetCourseByCourseID(event->data.timer.index);
+							if (!courseDesc || courseDesc->GetName().IsEmpty())
+							{
+								break;
+							}
+							V_snprintf(replay->courseName, sizeof(replay->courseName), "%s", courseDesc->GetName().Get());
 							replay->paused = false;
 							replay->endTime = 0.0f;
 							replay->stopTick = 0;
@@ -433,7 +448,7 @@ namespace KZ::replaysystem::events
 							replay->endTime = event->data.timer.time;
 							replay->stopTick = event->serverTick;
 							replay->startTime = 0.0f;
-							replay->courseID = 0;
+							replay->courseName[0] = '\0';
 							inActiveTimerRun = false;
 							inPause = false;
 							break;

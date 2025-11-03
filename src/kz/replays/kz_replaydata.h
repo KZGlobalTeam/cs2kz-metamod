@@ -21,6 +21,7 @@ namespace KZ::replaysystem::data
 		CheaterReplayHeader cheaterHeader;
 		RunReplayHeader runHeader;
 		JumpReplayHeader jumpHeader;
+		ManualReplayHeader manualHeader;
 
 		u32 tickCount;
 		TickData *tickData;
@@ -41,7 +42,7 @@ namespace KZ::replaysystem::data
 		i32 currentTeleport;
 
 		// Timer stuff
-		i32 courseID;
+		char courseName[256];
 		f32 startTime;
 		bool paused;
 		f32 endTime;
