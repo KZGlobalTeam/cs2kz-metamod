@@ -238,7 +238,7 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	{
 		return;
 	}
-	this->lastJumpUUID = this->jumpRecorders.back().uuid;
+	this->lastJumpUUID = UUID_t(true);
 	// If the player has a style, ignore it.
 	if (this->player->styleServices.Count() > 0)
 	{
@@ -260,14 +260,15 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	{
 		this->PushToRecorders(rpJump, RecorderType::Run);
 	}
+	// Add to all active jump recorders.
+	this->PushToRecorders(rpJump, RecorderType::Jump);
 	// Create a new jump recorder if the jump is good enough.
 	if (jump->IsValid()
 		&& jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= kz_replay_recording_min_jump_tier.Get())
 	{
 		this->jumpRecorders.push_back(JumpRecorder(jump));
+		this->jumpRecorders.back().uuid = this->lastJumpUUID;
 	}
-	// Add to all active jump recorders.
-	this->PushToRecorders(rpJump, RecorderType::Jump);
 }
 
 void KZRecordingService::OnClientDisconnect()

@@ -3,6 +3,7 @@
 #include "sdk/entity/cbaseplayerweapon.h"
 #include "sdk/cskeletoninstance.h"
 #include "sdk/entity/ccsplayerpawn.h"
+#include "filesystem.h"
 
 extern CConVar<bool> kz_replay_playback_skins_enable;
 
@@ -255,7 +256,15 @@ void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, con
 		g_pKZUtils->SetOrAddAttributeValueByName(&attributeList, KZ::replaysystem::item::GetItemAttributeName(id).c_str(), value);
 	}
 	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(pawn->m_CBodyComponent()->m_pSceneNode());
-	g_pKZUtils->SetModel(pawn, modelName);
+	// Don't set model if it doesn't exist.
+	CUtlString modelStr = modelName;
+	modelStr = modelStr.StripExtension();
+	modelStr.Append(".vmdl_c");
+	if (g_pFullFileSystem->FileExists(modelStr.Get()))
+	{
+		g_pKZUtils->SetModel(pawn, modelName);
+	}
+	// This might not work with custom models, but oh well.
 	u64 mask = pSkeleton->m_modelState().m_MeshGroupMask() & ~1 | 2;
 	pSkeleton->m_modelState().m_MeshGroupMask(mask);
 }
