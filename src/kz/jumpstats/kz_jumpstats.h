@@ -175,8 +175,8 @@ public:
 	}
 
 	// Calculate the ratio for each strafe.
-	// The ratio is 0 if the angle is perfect, closer to -100 if it's too slow
-	// Closer to 100 if it passes the optimal value.
+	// The ratio is 0 if the angle is perfect, closer to -1 if it's too slow
+	// Closer to 1 if it passes the optimal value.
 	// Note: if the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
 	// Returns false if there is no available stats.
 	static int SortFloat(const f32 *a, const f32 *b)
