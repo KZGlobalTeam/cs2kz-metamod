@@ -146,8 +146,9 @@ namespace KZ::replaysystem::events
 					spec->timerService->PlayTimerEndSound();
 				}
 
-				player.languageService->PrintChat(true, true, "Beat Course Info - Basic", "REPLAY", courseDesc ? courseDesc->GetName() : "unknown",
-												  formattedTime, combinedModeStyleText.Get(), teleportText.c_str());
+				player.languageService->PrintChat(true, true, "Beat Course Info - Basic", replay->header.player.name,
+												  courseDesc ? courseDesc->GetName() : "unknown", formattedTime, combinedModeStyleText.Get(),
+												  teleportText.c_str());
 				replay->startTime = 0.0f;
 				replay->stopTick = replay->currentTick;
 				replay->courseName[0] = '\0';
