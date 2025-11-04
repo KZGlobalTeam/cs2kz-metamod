@@ -272,8 +272,22 @@ public:
 
 	// Recorders
 	std::vector<RunRecorder> runRecorders;
-	bool GetCurrentRunUUID(UUID_t &out_uuid);
 	std::vector<JumpRecorder> jumpRecorders;
+
+	// Generated at timer end
+	UUID_t currentRunUUID;
+
+	const UUID_t &GetCurrentRunUUID() const
+	{
+		return currentRunUUID;
+	}
+
+	UUID_t lastJumpUUID;
+
+	UUID_t GetLastJumpUUID() const
+	{
+		return lastJumpUUID;
+	}
 
 	enum class RecorderType
 	{

@@ -95,6 +95,8 @@ void KZRecordingService::OnTimerStart()
 	}
 	this->InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TIMER_START, this->player->timerService->GetTime(),
 						   this->player->timerService->GetCourse()->id);
+	// Reset currentRunUUID to invalid state at timer start
+	this->currentRunUUID = UUID_t(false);
 }
 
 void KZRecordingService::OnTimerStop()
@@ -142,6 +144,10 @@ void KZRecordingService::OnTimerEnd()
 		if (recorder.desiredStopTime < 0.0f)
 		{
 			recorder.End(this->player->timerService->GetTime(), this->player->checkpointService->GetTeleportCount());
+			// Generate UUID now (at timer end) so it's available for RecordAnnounce
+			// File will be written later after breather time
+			recorder.uuid = UUID_t(true);
+			this->currentRunUUID = recorder.uuid;
 		}
 	}
 }
@@ -232,6 +238,7 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	{
 		return;
 	}
+	this->lastJumpUUID = this->jumpRecorders.back().uuid;
 	// If the player has a style, ignore it.
 	if (this->player->styleServices.Count() > 0)
 	{

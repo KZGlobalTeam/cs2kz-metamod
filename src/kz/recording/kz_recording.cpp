@@ -83,6 +83,7 @@ void KZRecordingService::Reset()
 	this->circularRecording.jumps->Advance(this->circularRecording.jumps->GetReadAvailable());
 	this->runRecorders.clear();
 	this->lastCmdNumReceived = 0;
+	this->currentRunUUID = UUID_t(false);
 }
 
 void KZRecordingService::RecordTickData_PhysicsSimulate()
@@ -526,17 +527,6 @@ void KZRecordingService::InsertCvarEvent(RpCvar cvar, f32 value)
 	event.type = RpEventType::RPEVENT_CVAR;
 	event.data.cvar.cvar = cvar;
 	this->InsertEvent(event);
-}
-
-bool KZRecordingService::GetCurrentRunUUID(UUID_t &out_uuid)
-{
-	// If desiredStopTime is set, the run has ended.
-	if (!this->runRecorders.empty() && this->runRecorders.back().desiredStopTime < 0.0f)
-	{
-		out_uuid = this->runRecorders.back().uuid;
-		return true;
-	}
-	return false;
 }
 
 SCMD(kz_rpsave, SCFL_REPLAY)

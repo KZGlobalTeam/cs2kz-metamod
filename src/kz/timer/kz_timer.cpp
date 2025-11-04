@@ -255,11 +255,6 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->guid);
 	}
-
-	// Generate a new UUID for this run
-	bool success = this->player->recordingService->GetCurrentRunUUID(this->currentRunUUID);
-
-	assert(success);
 	return true;
 }
 
@@ -327,14 +322,14 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	}
 	this->PlayTimerEndSound();
 
-	if (!this->player->GetPlayerPawn()->IsBot())
-	{
-		RecordAnnounce::Create(this->player);
-	}
-
 	FOR_EACH_VEC(eventListeners, i)
 	{
 		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed);
+	}
+	// This must be called after OnTimerEndPost so that the run UUID is set correctly.
+	if (!this->player->GetPlayerPawn()->IsBot())
+	{
+		RecordAnnounce::Create(this->player);
 	}
 
 	return true;
@@ -635,7 +630,6 @@ void KZTimerService::ToggleTimerStopSound()
 
 void KZTimerService::Reset()
 {
-	this->currentRunUUID = UUID_t(false);
 	this->timerRunning = {};
 	this->currentTime = {};
 	this->currentCourseGUID = 0;

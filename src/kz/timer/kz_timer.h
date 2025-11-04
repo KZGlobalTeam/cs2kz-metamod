@@ -118,7 +118,6 @@ class KZTimerService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 private:
-	UUID_t currentRunUUID {UUID_t(false)};
 	bool timerRunning {};
 	f64 currentTime {};
 	u32 currentCourseGUID {};
@@ -218,11 +217,6 @@ public:
 	f64 GetTime()
 	{
 		return currentTime;
-	}
-
-	const UUID_t &GetCurrentRunUUID() const
-	{
-		return currentRunUUID;
 	}
 
 	static void FormatDiffTime(f64 time, char *output, u32 length, bool precise = true)

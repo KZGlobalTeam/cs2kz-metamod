@@ -4,6 +4,7 @@
 #include "kz/global/events.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/recording/kz_recording.h"
 #include "kz/style/kz_style.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
@@ -12,7 +13,7 @@ CConVar<bool> kz_debug_announce_global("kz_debug_announce_global", FCVAR_NONE, "
 
 RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	: uid(RecordAnnounce::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), userID(player->GetClient()->GetUserID()),
-	  time(player->timerService->GetTime()), runUUID(player->timerService->GetCurrentRunUUID().ToString()),
+	  time(player->timerService->GetTime()), runUUID(player->recordingService->GetCurrentRunUUID().ToString()),
 	  teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
