@@ -67,6 +67,9 @@ void GeneralReplayHeader::Init(KZPlayer *player)
 	this->sensitivity = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "sensitivity"));
 	this->yaw = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_yaw"));
 	this->pitch = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_pitch"));
+
+	// Initialize archival timestamp to 0 (not archived)
+	this->archivedTimestamp = 0;
 }
 
 void KZRecordingService::Reset()
@@ -77,6 +80,7 @@ void KZRecordingService::Reset()
 	this->circularRecording.cmdSubtickData->Advance(this->circularRecording.cmdSubtickData->GetReadAvailable());
 	this->circularRecording.weaponChangeEvents->Advance(this->circularRecording.weaponChangeEvents->GetReadAvailable());
 	this->circularRecording.rpEvents->Advance(this->circularRecording.rpEvents->GetReadAvailable());
+	this->circularRecording.jumps->Advance(this->circularRecording.jumps->GetReadAvailable());
 	this->runRecorders.clear();
 	this->lastCmdNumReceived = 0;
 }

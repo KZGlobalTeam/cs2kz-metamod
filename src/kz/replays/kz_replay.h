@@ -318,6 +318,10 @@ struct GeneralReplayHeader
 	f32 yaw;
 	f32 pitch;
 
+	// Timestamp when the replay was marked as archived. 0 means not archived.
+	// Archived replays older than 14 days will be deleted by the replay watcher.
+	u64 archivedTimestamp;
+
 	void Init(KZPlayer *player);
 };
 

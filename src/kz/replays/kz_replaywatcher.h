@@ -146,6 +146,15 @@ class ReplayWatcher
 
 	void ScanReplays();
 
+	void UpdateArchivedReplayOnDisk(const UUID_t &uuid, GeneralReplayHeader &header, u64 archiveTimestamp);
+	void ProcessCheaterReplays(std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, CheaterReplayHeader>> &cheaterReplays, u64 currentTime);
+	void ProcessRunReplays(std::vector<std::tuple<UUID_t, GeneralReplayHeader, RunReplayHeader>> &tempRunReplays,
+						   std::map<UUID_t, std::pair<GeneralReplayHeader, RunReplayHeader>> &runReplays, u64 currentTime);
+	void ProcessJumpReplays(std::vector<std::tuple<UUID_t, GeneralReplayHeader, JumpReplayHeader>> &tempJumpReplays,
+							std::map<UUID_t, std::pair<GeneralReplayHeader, JumpReplayHeader>> &jumpReplays, u64 currentTime);
+	void CleanupManualReplays(std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, ManualReplayHeader>> &manualReplays,
+							  std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &manualReplaysBySteamID);
+
 public:
 	void Start()
 	{

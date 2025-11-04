@@ -601,6 +601,237 @@ bool ReplayFilterCriteria::PassManualFilters(const ManualReplayHeader &header) c
 	return true;
 }
 
+void ReplayWatcher::UpdateArchivedReplayOnDisk(const UUID_t &uuid, GeneralReplayHeader &header, u64 archiveTimestamp)
+{
+	header.archivedTimestamp = archiveTimestamp;
+
+	char fullPath[MAX_PATH];
+	V_snprintf(fullPath, sizeof(fullPath), "%s/%s.replay", KZ_REPLAY_PATH, uuid.ToString().c_str());
+	FileHandle_t file = g_pFullFileSystem->Open(fullPath, "r+b", "GAME");
+	if (file)
+	{
+		g_pFullFileSystem->Write(&header, sizeof(header), file);
+		g_pFullFileSystem->Close(file);
+	}
+}
+
+void ReplayWatcher::ProcessCheaterReplays(std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, CheaterReplayHeader>> &cheaterReplays,
+										  u64 currentTime)
+{
+	// Mark as archived if reporter steamid is not 0 (server)
+	for (auto &[uuid, pair] : cheaterReplays)
+	{
+		auto &[generalHeader, specificHeader] = pair;
+		if (specificHeader.reporter.steamid64 != 0 && generalHeader.archivedTimestamp == 0)
+		{
+			UpdateArchivedReplayOnDisk(uuid, generalHeader, currentTime);
+		}
+	}
+}
+
+void ReplayWatcher::ProcessRunReplays(std::vector<std::tuple<UUID_t, GeneralReplayHeader, RunReplayHeader>> &tempRunReplays,
+									  std::map<UUID_t, std::pair<GeneralReplayHeader, RunReplayHeader>> &runReplays, u64 currentTime)
+{
+	// Group by steamid, course, mode, and map
+	struct RunReplayKey
+	{
+		u64 steamid64;
+		std::string mapName;
+		std::string modeName;
+		std::string courseName;
+
+		bool operator==(const RunReplayKey &other) const
+		{
+			return steamid64 == other.steamid64 && V_stricmp(mapName.c_str(), other.mapName.c_str()) == 0
+				   && V_stricmp(modeName.c_str(), other.modeName.c_str()) == 0 && V_stricmp(courseName.c_str(), other.courseName.c_str()) == 0;
+		}
+	};
+
+	struct RunReplayKeyHasher
+	{
+		std::size_t operator()(const RunReplayKey &k) const
+		{
+			std::size_t h1 = std::hash<u64> {}(k.steamid64);
+			std::size_t h2 = std::hash<std::string> {}(k.mapName);
+			std::size_t h3 = std::hash<std::string> {}(k.modeName);
+			std::size_t h4 = std::hash<std::string> {}(k.courseName);
+			return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3);
+		}
+	};
+
+	std::unordered_map<RunReplayKey, std::vector<std::tuple<UUID_t, GeneralReplayHeader, RunReplayHeader>>, RunReplayKeyHasher> runReplayGroups;
+
+	for (auto &replay : tempRunReplays)
+	{
+		auto &[uuid, generalHeader, specificHeader] = replay;
+
+		// Styled runs (styleCount > 0) are marked as archived immediately
+		if (specificHeader.styleCount > 0 && generalHeader.archivedTimestamp == 0)
+		{
+			UpdateArchivedReplayOnDisk(uuid, generalHeader, currentTime);
+		}
+
+		// Group non-styled runs by steamid, course, mode, and map
+		if (specificHeader.styleCount == 0)
+		{
+			RunReplayKey key;
+			key.steamid64 = generalHeader.player.steamid64;
+			key.mapName = generalHeader.map.name;
+			key.modeName = specificHeader.mode.name;
+			key.courseName = specificHeader.courseName;
+
+			runReplayGroups[key].push_back(replay);
+		}
+
+		runReplays[uuid] = {generalHeader, specificHeader};
+	}
+
+	// For each group, keep top N by time + top N by time with 0 teleports, archive the rest
+	i32 maxRunReplaysPerGroup = MAX(KZOptionService::GetOptionInt("maxRunReplaysPerGroup", 3), 2);
+	for (auto &[key, replays] : runReplayGroups)
+	{
+		std::set<UUID_t> keepReplays;
+
+		// Sort by time (fastest first) and keep top N
+		std::sort(replays.begin(), replays.end(), [](const auto &a, const auto &b) { return std::get<2>(a).time < std::get<2>(b).time; });
+		for (size_t i = 0; i < MIN((size_t)maxRunReplaysPerGroup, replays.size()); i++)
+		{
+			keepReplays.insert(std::get<0>(replays[i]));
+		}
+
+		// Filter to only runs with 0 teleports, sort by time (fastest first), and keep top N
+		std::vector<std::tuple<UUID_t, GeneralReplayHeader, RunReplayHeader>> zeroTeleportReplays;
+		for (auto &replay : replays)
+		{
+			if (std::get<2>(replay).numTeleports == 0)
+			{
+				zeroTeleportReplays.push_back(replay);
+			}
+		}
+		std::sort(zeroTeleportReplays.begin(), zeroTeleportReplays.end(),
+				  [](const auto &a, const auto &b) { return std::get<2>(a).time < std::get<2>(b).time; });
+		for (size_t i = 0; i < MIN((size_t)maxRunReplaysPerGroup, zeroTeleportReplays.size()); i++)
+		{
+			keepReplays.insert(std::get<0>(zeroTeleportReplays[i]));
+		}
+
+		// Archive replays not in the keep set
+		for (auto &[uuid, generalHeader, specificHeader] : replays)
+		{
+			if (keepReplays.find(uuid) == keepReplays.end() && generalHeader.archivedTimestamp == 0)
+			{
+				UpdateArchivedReplayOnDisk(uuid, generalHeader, currentTime);
+
+				// Update in the map
+				runReplays[uuid].first.archivedTimestamp = currentTime;
+			}
+		}
+	}
+}
+
+void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, GeneralReplayHeader, JumpReplayHeader>> &tempJumpReplays,
+									   std::map<UUID_t, std::pair<GeneralReplayHeader, JumpReplayHeader>> &jumpReplays, u64 currentTime)
+{
+	// Group by steamid, jump type, and mode
+	struct JumpReplayKey
+	{
+		u64 steamid64;
+		u8 jumpType;
+		std::string modeName;
+
+		bool operator==(const JumpReplayKey &other) const
+		{
+			return steamid64 == other.steamid64 && jumpType == other.jumpType && V_stricmp(modeName.c_str(), other.modeName.c_str()) == 0;
+		}
+	};
+
+	struct JumpReplayKeyHasher
+	{
+		std::size_t operator()(const JumpReplayKey &k) const
+		{
+			std::size_t h1 = std::hash<u64> {}(k.steamid64);
+			std::size_t h2 = std::hash<u8> {}(k.jumpType);
+			std::size_t h3 = std::hash<std::string> {}(k.modeName);
+			return h1 ^ (h2 << 1) ^ (h3 << 2);
+		}
+	};
+
+	std::unordered_map<JumpReplayKey, std::vector<std::tuple<UUID_t, GeneralReplayHeader, JumpReplayHeader>>, JumpReplayKeyHasher> jumpReplayGroups;
+
+	for (auto &replay : tempJumpReplays)
+	{
+		auto &[uuid, generalHeader, specificHeader] = replay;
+
+		JumpReplayKey key;
+		key.steamid64 = generalHeader.player.steamid64;
+		key.jumpType = specificHeader.jumpType;
+		key.modeName = specificHeader.mode.name;
+
+		jumpReplayGroups[key].push_back(replay);
+		jumpReplays[uuid] = {generalHeader, specificHeader};
+	}
+
+	// For each group, keep top N by block distance + top N by distance, archive the rest
+	i32 maxJumpReplaysPerCategory = MAX(KZOptionService::GetOptionInt("maxJumpReplaysPerCategory", 3), 2);
+	for (auto &[key, replays] : jumpReplayGroups)
+	{
+		std::set<UUID_t> keepReplays;
+
+		// Sort by block distance (descending) and keep top N
+		std::sort(replays.begin(), replays.end(),
+				  [](const auto &a, const auto &b) { return std::get<2>(a).blockDistance > std::get<2>(b).blockDistance; });
+		for (size_t i = 0; i < MIN((size_t)maxJumpReplaysPerCategory, replays.size()); i++)
+		{
+			keepReplays.insert(std::get<0>(replays[i]));
+		}
+
+		// Sort by distance (descending) and keep top N
+		std::sort(replays.begin(), replays.end(), [](const auto &a, const auto &b) { return std::get<2>(a).distance > std::get<2>(b).distance; });
+		for (size_t i = 0; i < MIN((size_t)maxJumpReplaysPerCategory, replays.size()); i++)
+		{
+			keepReplays.insert(std::get<0>(replays[i]));
+		}
+
+		// Archive replays not in the keep set
+		for (auto &[uuid, generalHeader, specificHeader] : replays)
+		{
+			if (keepReplays.find(uuid) == keepReplays.end() && generalHeader.archivedTimestamp == 0)
+			{
+				UpdateArchivedReplayOnDisk(uuid, generalHeader, currentTime);
+
+				// Update in the map
+				jumpReplays[uuid].first.archivedTimestamp = currentTime;
+			}
+		}
+	}
+}
+
+void ReplayWatcher::CleanupManualReplays(std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, ManualReplayHeader>> &manualReplays,
+										 std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &manualReplaysBySteamID)
+{
+	// Clean up excess manual replays (keep only N most recent per steam ID)
+	i32 maxManualReplays = MAX(KZOptionService::GetOptionInt("maxManualReplays", 2), 2);
+	for (auto &[steamID, replays] : manualReplaysBySteamID)
+	{
+		if (replays.size() > maxManualReplays)
+		{
+			// Sort by timestamp (newest first)
+			std::sort(replays.begin(), replays.end(), [](const auto &a, const auto &b) { return a.second > b.second; });
+
+			// Delete files beyond the N most recent
+			for (size_t i = maxManualReplays; i < replays.size(); i++)
+			{
+				char fullPath[MAX_PATH];
+				V_snprintf(fullPath, sizeof(fullPath), "%s/%s.replay", KZ_REPLAY_PATH, replays[i].first.ToString().c_str());
+				g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+
+				// Remove from the map we're about to store
+				manualReplays.erase(replays[i].first);
+			}
+		}
+	}
+}
+
 void ReplayWatcher::WatchLoop()
 {
 	// Initial scan
@@ -634,15 +865,14 @@ void ReplayWatcher::ScanReplays()
 	std::vector<std::tuple<UUID_t, GeneralReplayHeader, RunReplayHeader>> tempRunReplays;
 	std::vector<std::tuple<UUID_t, GeneralReplayHeader, JumpReplayHeader>> tempJumpReplays;
 
-	// Track manual replays per steam ID for cleanup
-	struct ManualReplayInfo
-	{
-		UUID_t uuid;
-		u64 timestamp;
-		std::string filename;
-	};
+	std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> manualReplaysBySteamID;
 
-	std::unordered_map<u64, std::vector<ManualReplayInfo>> manualReplaysBySteamID;
+	// Get current unix time for archival checks
+	time_t currentUnixTime = 0;
+	time(&currentUnixTime);
+	i32 archiveRetentionDays = MAX(KZOptionService::GetOptionInt("archiveRetentionDays", 14), 5);
+	u64 archiveRetentionSeconds = 60; // archiveRetentionDays * 24 * 60 * 60;
+
 	while (pFileName)
 	{
 		if (!g_pFullFileSystem->FindIsDirectory(findHandle))
@@ -669,6 +899,19 @@ void ReplayWatcher::ScanReplays()
 					GeneralReplayHeader generalHeader;
 					if (g_pFullFileSystem->Read(&generalHeader, sizeof(generalHeader), file) == sizeof(generalHeader))
 					{
+						// Check if archived replay is older than 14 days and should be deleted
+						if (generalHeader.archivedTimestamp != 0)
+						{
+							u64 archiveAge = currentUnixTime - generalHeader.archivedTimestamp;
+							if (archiveAge >= archiveRetentionSeconds)
+							{
+								g_pFullFileSystem->Close(file);
+								g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+								pFileName = g_pFullFileSystem->FindNext(findHandle);
+								continue;
+							}
+						}
+
 						switch (generalHeader.type)
 						{
 							case RP_CHEATER:
@@ -685,7 +928,7 @@ void ReplayWatcher::ScanReplays()
 								RunReplayHeader specificHeader;
 								if (g_pFullFileSystem->Read(&specificHeader, sizeof(specificHeader), file) == sizeof(specificHeader))
 								{
-									newRunReplays[uuid] = {generalHeader, specificHeader};
+									tempRunReplays.push_back({uuid, generalHeader, specificHeader});
 								}
 								break;
 							}
@@ -694,7 +937,7 @@ void ReplayWatcher::ScanReplays()
 								JumpReplayHeader specificHeader;
 								if (g_pFullFileSystem->Read(&specificHeader, sizeof(specificHeader), file) == sizeof(specificHeader))
 								{
-									newJumpReplays[uuid] = {generalHeader, specificHeader};
+									tempJumpReplays.push_back({uuid, generalHeader, specificHeader});
 								}
 								break;
 							}
@@ -706,11 +949,7 @@ void ReplayWatcher::ScanReplays()
 									newManualReplays[uuid] = {generalHeader, specificHeader};
 
 									// Track for potential cleanup
-									ManualReplayInfo info;
-									info.uuid = uuid;
-									info.timestamp = generalHeader.timestamp;
-									info.filename = pFileName;
-									manualReplaysBySteamID[generalHeader.player.steamid64].push_back(info);
+									manualReplaysBySteamID[generalHeader.player.steamid64].push_back({uuid, generalHeader.timestamp});
 								}
 								break;
 							}
@@ -725,53 +964,11 @@ void ReplayWatcher::ScanReplays()
 
 	g_pFullFileSystem->FindClose(findHandle);
 
-	// Sort and insert run replays
-	std::sort(tempRunReplays.begin(), tempRunReplays.end(),
-			  [](const auto &a, const auto &b)
-			  {
-				  RunReplayComparator comp;
-				  return comp({std::get<1>(a), std::get<2>(a)}, {std::get<1>(b), std::get<2>(b)});
-			  });
-
-	for (const auto &[uuid, general, specific] : tempRunReplays)
-	{
-		newRunReplays[uuid] = {general, specific};
-	}
-
-	// Sort and insert jump replays
-	std::sort(tempJumpReplays.begin(), tempJumpReplays.end(),
-			  [](const auto &a, const auto &b)
-			  {
-				  JumpReplayComparator comp;
-				  return comp({std::get<1>(a), std::get<2>(a)}, {std::get<1>(b), std::get<2>(b)});
-			  });
-
-	for (const auto &[uuid, general, specific] : tempJumpReplays)
-	{
-		newJumpReplays[uuid] = {general, specific};
-	}
-
-	// Clean up excess manual replays (keep only N most recent per steam ID)
-	i32 maxManualReplays = KZOptionService::GetOptionInt("maxManualReplays", 5);
-	for (auto &[steamID, replays] : manualReplaysBySteamID)
-	{
-		if (replays.size() > maxManualReplays)
-		{
-			// Sort by timestamp (newest first)
-			std::sort(replays.begin(), replays.end(), [](const ManualReplayInfo &a, const ManualReplayInfo &b) { return a.timestamp > b.timestamp; });
-
-			// Delete files beyond the N most recent
-			for (size_t i = maxManualReplays; i < replays.size(); i++)
-			{
-				char fullPath[MAX_PATH];
-				V_snprintf(fullPath, sizeof(fullPath), "%s/%s", KZ_REPLAY_PATH, replays[i].filename.c_str());
-				g_pFullFileSystem->RemoveFile(fullPath, "GAME");
-
-				// Remove from the map we're about to store
-				newManualReplays.erase(replays[i].uuid);
-			}
-		}
-	}
+	// Process each replay type with dedicated functions
+	ProcessCheaterReplays(newCheaterReplays, currentUnixTime);
+	ProcessRunReplays(tempRunReplays, newRunReplays, currentUnixTime);
+	ProcessJumpReplays(tempJumpReplays, newJumpReplays, currentUnixTime);
+	CleanupManualReplays(newManualReplays, manualReplaysBySteamID);
 
 	// Atomically swap the maps
 	{
