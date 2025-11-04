@@ -111,6 +111,10 @@ struct RpJumpStats
 		f32 externalGain;
 		f32 externalLoss;
 		f32 strafeMaxSpeed;
+		bool hasArStats;
+		f32 arMax;
+		f32 arMedian;
+		f32 arAverage;
 	};
 
 	std::vector<StrafeData> strafes;

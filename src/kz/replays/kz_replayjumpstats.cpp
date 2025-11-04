@@ -59,6 +59,11 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 		strafe.externalGain = s.externalGain;
 		strafe.externalLoss = s.externalLoss;
 		strafe.strafeMaxSpeed = s.GetStrafeMaxSpeed();
+		// AR stats
+		strafe.hasArStats = s.arStats.available;
+		strafe.arMax = s.arStats.max;
+		strafe.arMedian = s.arStats.median;
+		strafe.arAverage = s.arStats.average;
 		stats.strafes.push_back(strafe);
 
 		// AACall stats
@@ -143,7 +148,10 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 		strafe->externalGain = strafeData.externalGain;
 		strafe->externalLoss = strafeData.externalLoss;
 		strafe->strafeMaxSpeed = strafeData.strafeMaxSpeed;
-
+		strafe->arStats.available = strafeData.hasArStats;
+		strafe->arStats.max = strafeData.arMax;
+		strafe->arStats.median = strafeData.arMedian;
+		strafe->arStats.average = strafeData.arAverage;
 		// Add AACall data for this strafe
 		for (size_t j = 0; j < js->aaCalls.size(); j++)
 		{

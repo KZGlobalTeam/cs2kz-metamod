@@ -382,7 +382,7 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 	{
 		criteria.mapName = kv->GetString();
 	}
-	else
+	else if (criteria.type == RP_RUN)
 	{
 		criteria.mapName = g_pKZUtils->GetCurrentMapName().Get();
 	}
@@ -527,7 +527,7 @@ bool ReplayFilterCriteria::PassGeneralFilters(const GeneralReplayHeader &header)
 	{
 		return false;
 	}
-	if (!V_stristr(header.map.name, mapName.c_str()))
+	if (mapName != "*" && !V_stristr(header.map.name, mapName.c_str()))
 	{
 		return false;
 	}
