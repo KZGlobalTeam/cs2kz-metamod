@@ -233,8 +233,8 @@ public:
 
 	CMoveData(const CMoveData &source)
 		: CMoveDataBase(source), m_outWishVel {source.m_outWishVel}, m_vecOldAngles {source.m_vecOldAngles},
-		  m_vecContinousAcceleration {source.m_vecContinousAcceleration}, m_vecFrameVelocityDelta {source.m_vecFrameVelocityDelta},
-		  m_vecInputRotated {source.m_vecInputRotated}, m_flMaxSpeed {source.m_flMaxSpeed}
+		  m_vecInputRotated {source.m_vecInputRotated}, m_vecContinousAcceleration {source.m_vecContinousAcceleration},
+		  m_vecFrameVelocityDelta {source.m_vecFrameVelocityDelta}, m_flMaxSpeed {source.m_flMaxSpeed}
 	{
 	}
 
@@ -253,9 +253,11 @@ public:
 	bool m_bInAir;
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
-
+#ifdef _WIN32
 static_assert(sizeof(CMoveData) == 312, "Class didn't match expected size");
-
+#else
+static_assert(sizeof(CMoveData) == 304, "Class didn't match expected size");
+#endif
 // Custom data types goes here.
 
 enum TurnState

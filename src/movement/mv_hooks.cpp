@@ -33,6 +33,7 @@ void movement::InitDetours()
 	INIT_DETOUR(g_pGameConfig, CheckJumpButton);
 	INIT_DETOUR(g_pGameConfig, OnJump);
 	INIT_DETOUR(g_pGameConfig, AirMove);
+	INIT_DETOUR(g_pGameConfig, AirAccelerate);
 	INIT_DETOUR(g_pGameConfig, Friction);
 	INIT_DETOUR(g_pGameConfig, WalkMove);
 	INIT_DETOUR(g_pGameConfig, TryPlayerMove);
@@ -287,6 +288,7 @@ void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData
 
 void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)
 {
+	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnAirAccelerate(wishdir, wishspeed, accel);
 	AirAccelerate(ms, mv, wishdir, wishspeed, accel);
