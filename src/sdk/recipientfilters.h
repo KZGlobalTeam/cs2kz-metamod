@@ -126,10 +126,17 @@ public:
 		m_Recipients.ClearAll();
 	}
 
+	virtual CPlayerSlot GetExcludedPlayerDueToPrediction() const
+	{
+		return m_slotPlayerExcludedDueToPrediction;
+	}
+
 protected:
 	CPlayerBitVec m_Recipients;
-	NetChannelBufType_t m_nBufType;
+	CPlayerSlot m_slotPlayerExcludedDueToPrediction = -1;
+	NetChannelBufType_t m_nBufType = BUF_DEFAULT;
 	bool m_bInitMessage;
+	bool m_bDoNotSuppressPrediction; // unused
 };
 
 class CBroadcastRecipientFilter : public CRecipientFilter
