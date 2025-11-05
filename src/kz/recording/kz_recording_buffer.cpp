@@ -129,13 +129,41 @@ f32 KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *chea
 		recorder = std::make_unique<ManualRecorder>(this->player, duration, saver);
 	}
 
-	if (recorder->WriteToFile())
+	if (out_uuid != nullptr)
 	{
-		if (out_uuid != nullptr)
-		{
-			*out_uuid = recorder->uuid.ToString();
-		}
-		return recorder->tickData.size() * ENGINE_FIXED_TICK_INTERVAL;
+		*out_uuid = recorder->uuid.ToString();
 	}
-	return 0.0f;
+	f32 replayDuration = recorder->tickData.size() * ENGINE_FIXED_TICK_INTERVAL;
+
+	// Queue for async write
+	if (s_fileWriter)
+	{
+		s_fileWriter->QueueWrite(std::move(recorder));
+	}
+
+	return replayDuration;
+}
+
+void KZRecordingService::WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, WriteSuccessCallback onSuccess,
+														WriteFailureCallback onFailure)
+{
+	std::unique_ptr<Recorder> recorder;
+	if (strlen(cheaterReason) > 0)
+	{
+		recorder = std::make_unique<CheaterRecorder>(this->player, cheaterReason, saver);
+	}
+	else
+	{
+		recorder = std::make_unique<ManualRecorder>(this->player, duration, saver);
+	}
+
+	// Queue for async write with callbacks
+	if (s_fileWriter)
+	{
+		s_fileWriter->QueueWrite(std::move(recorder), onSuccess, onFailure);
+	}
+	else if (onFailure)
+	{
+		onFailure("File writer not initialized");
+	}
 }

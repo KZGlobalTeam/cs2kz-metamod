@@ -97,6 +97,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
 	KZ::misc::UnrestrictTimeLimit();
+	KZRecordingService::Shutdown();
 	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();

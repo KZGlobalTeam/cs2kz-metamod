@@ -137,6 +137,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording_events.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording_buffer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording_recorders.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording_filewriter.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'saveloc', 'kz_saveloc.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'spec', 'kz_spec.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'goto', 'kz_goto.cpp'),

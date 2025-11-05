@@ -740,6 +740,7 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszNam
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
 {
 	ProcessTimers();
+	KZRecordingService::ProcessFileWriteCompletion();
 	KZGlobalService::OnServerGamePostSimulate();
 }
 

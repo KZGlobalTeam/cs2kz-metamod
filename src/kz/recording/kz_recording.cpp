@@ -19,6 +19,8 @@ CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tie
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 extern CSteamGameServerAPIContext g_steamAPI;
 
+ReplayFileWriter *KZRecordingService::s_fileWriter = nullptr;
+
 // Not sure what's the best place to put this, so putting it here for now.
 void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 {
@@ -220,12 +222,15 @@ void KZRecordingService::CheckRecorders()
 		auto &recorder = *it;
 		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
-			// Stop this recorder
+			// Stop this recorder and queue for async write
 			if (kz_replay_recording_debug.Get())
 			{
 				META_CONPRINTF("kz_replay_recording_debug: Run recorder stopped\n");
 			}
-			recorder.WriteToFile();
+			if (s_fileWriter)
+			{
+				s_fileWriter->QueueWrite(std::make_unique<RunRecorder>(std::move(recorder)));
+			}
 			it = this->runRecorders.erase(it);
 		}
 		else
@@ -238,12 +243,15 @@ void KZRecordingService::CheckRecorders()
 		auto &recorder = *it;
 		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
-			// Stop this recorder
+			// Stop this recorder and queue for async write
 			if (kz_replay_recording_debug.Get())
 			{
 				META_CONPRINTF("kz_replay_recording_debug: Jump recorder stopped\n");
 			}
-			recorder.WriteToFile();
+			if (s_fileWriter)
+			{
+				s_fileWriter->QueueWrite(std::make_unique<JumpRecorder>(std::move(recorder)));
+			}
 			it = this->jumpRecorders.erase(it);
 		}
 		else
@@ -538,20 +546,35 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 	}
 
 	f32 duration = args->ArgC() > 1 ? utils::StringToFloat(args->Arg(1)) : 120.0f;
-	std::string uuid;
 	KZPlayer *target = player->IsAlive() ? player : player->specService->GetSpectatedPlayer();
 	if (!target)
 	{
 		return MRES_SUPERCEDE;
 	}
-	duration = target->recordingService->WriteCircularBufferToFile(duration, "", &uuid, player);
-	if (uuid.empty())
-	{
-		player->languageService->PrintChat(true, false, "Replay - Manual Replay Failed");
-	}
-	else
-	{
-		player->languageService->PrintChat(true, false, "Replay - Manual Replay Saved", uuid.c_str(), duration);
-	}
+
+	// Capture player userid for the callback (don't capture player pointer as it may be invalid)
+	CPlayerUserId userID = player->GetClient()->GetUserID();
+
+	target->recordingService->WriteCircularBufferToFileAsync(
+		duration, "", player,
+		// Success callback
+		[userID](const UUID_t &uuid, f32 replayDuration)
+		{
+			KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
+			if (callbackPlayer)
+			{
+				callbackPlayer->languageService->PrintChat(true, false, "Replay - Manual Replay Saved", uuid.ToString().c_str(), replayDuration);
+			}
+		},
+		// Failure callback
+		[userID](const char *error)
+		{
+			KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
+			if (callbackPlayer)
+			{
+				callbackPlayer->languageService->PrintChat(true, false, "Replay - Manual Replay Failed");
+			}
+		});
+
 	return MRES_SUPERCEDE;
 }

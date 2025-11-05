@@ -1,6 +1,10 @@
 #pragma once
 
 #include <optional>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <queue>
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
@@ -159,6 +163,64 @@ struct Recorder
 
 constexpr int i = sizeof(GeneralReplayHeader) + sizeof(RunReplayHeader);
 
+// Forward declarations
+class KZRecordingService;
+class KZPlayer;
+
+// Callback types for write completion
+using WriteSuccessCallback = std::function<void(const UUID_t &uuid, f32 duration)>;
+using WriteFailureCallback = std::function<void(const char *error)>;
+
+// Write task with optional callbacks
+struct WriteTask
+{
+	std::unique_ptr<Recorder> recorder;
+	WriteSuccessCallback onSuccess;
+	WriteFailureCallback onFailure;
+};
+
+// Completed write result
+struct WriteResult
+{
+	bool success;
+	UUID_t uuid;
+	f32 duration;
+	std::string errorMessage;
+	WriteSuccessCallback onSuccess;
+	WriteFailureCallback onFailure;
+};
+
+// Thread-safe file writer for async replay file writing
+class ReplayFileWriter
+{
+public:
+	ReplayFileWriter();
+	~ReplayFileWriter();
+
+	void Start();
+	void Stop();
+
+	// Queue a recorder for async file writing (fire-and-forget)
+	void QueueWrite(std::unique_ptr<Recorder> recorder);
+
+	// Queue a recorder with callbacks
+	void QueueWrite(std::unique_ptr<Recorder> recorder, WriteSuccessCallback onSuccess, WriteFailureCallback onFailure);
+
+	// Run frame - process any completed writes and invoke callbacks on main thread
+	void RunFrame();
+
+private:
+	void ThreadRun();
+
+	std::unique_ptr<std::thread> m_thread;
+	std::queue<WriteTask> m_writeQueue;
+	std::queue<WriteResult> m_completedWrites;
+	std::mutex m_queueLock;
+	std::mutex m_completedLock;
+	std::condition_variable m_queueCV;
+	bool m_terminate = false;
+};
+
 struct RunRecorder : public Recorder
 {
 	RunReplayHeader header;
@@ -196,6 +258,8 @@ class KZRecordingService : public KZBaseService
 
 public:
 	static void Init();
+	static void Shutdown();
+	static void ProcessFileWriteCompletion();
 	void OnProcessUsercmds(PlayerCommand *base, int numCmds);
 
 	void OnPhysicsSimulate();
@@ -254,6 +318,10 @@ private:
 public:
 	// Write a replay file from the current circular buffer data.
 	f32 WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "", std::string *out_uuid = nullptr, KZPlayer *saver = nullptr);
+
+	// Write a replay file with completion callbacks
+	void WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, WriteSuccessCallback onSuccess,
+										WriteFailureCallback onFailure);
 
 public:
 	SubtickData currentSubtickData;
@@ -328,4 +396,7 @@ public:
 	{
 		ApplyToTarget([&](auto &r) { r.PushData(value); }, target);
 	}
+
+private:
+	static ReplayFileWriter *s_fileWriter;
 };

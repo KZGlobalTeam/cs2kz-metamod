@@ -60,6 +60,29 @@ public:
 void KZRecordingService::Init()
 {
 	KZTimerService::RegisterEventListener(&timerEventListener);
+	if (!s_fileWriter)
+	{
+		s_fileWriter = new ReplayFileWriter();
+		s_fileWriter->Start();
+	}
+}
+
+void KZRecordingService::Shutdown()
+{
+	if (s_fileWriter)
+	{
+		s_fileWriter->Stop();
+		delete s_fileWriter;
+		s_fileWriter = nullptr;
+	}
+}
+
+void KZRecordingService::ProcessFileWriteCompletion()
+{
+	if (s_fileWriter)
+	{
+		s_fileWriter->RunFrame();
+	}
 }
 
 void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
@@ -275,15 +298,18 @@ void KZRecordingService::OnClientDisconnect()
 {
 	for (auto &recorder : this->runRecorders)
 	{
-		if (recorder.desiredStopTime > 0.0f)
+		if (recorder.desiredStopTime > 0.0f && s_fileWriter)
 		{
-			recorder.WriteToFile();
+			s_fileWriter->QueueWrite(std::make_unique<RunRecorder>(std::move(recorder)));
 		}
 	}
 	this->runRecorders.clear();
 	for (auto &recorder : this->jumpRecorders)
 	{
-		recorder.WriteToFile();
+		if (s_fileWriter)
+		{
+			s_fileWriter->QueueWrite(std::make_unique<JumpRecorder>(std::move(recorder)));
+		}
 	}
 	this->jumpRecorders.clear();
 }
