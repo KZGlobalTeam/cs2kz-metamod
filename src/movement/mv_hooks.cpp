@@ -285,6 +285,14 @@ void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData
 	player->OnAirMovePost();
 }
 
+void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)
+{
+	MovementPlayer *player = playerManager->ToPlayer(ms);
+	player->OnAirAccelerate(wishdir, wishspeed, accel);
+	AirAccelerate(ms, mv, wishdir, wishspeed, accel);
+	player->OnAirAcceleratePost(wishdir, wishspeed, accel);
+}
+
 void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");

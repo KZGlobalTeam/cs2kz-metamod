@@ -524,7 +524,6 @@ void KZPlayer::OnAirMove()
 	{
 		this->styleServices[i]->OnAirMove();
 	}
-	this->jumpstatsService->OnAirMove();
 }
 
 void KZPlayer::OnAirMovePost()
@@ -535,7 +534,26 @@ void KZPlayer::OnAirMovePost()
 	{
 		this->styleServices[i]->OnAirMovePost();
 	}
-	this->jumpstatsService->OnAirMovePost();
+}
+
+void KZPlayer::OnAirAccelerate(Vector &wishdir, f32 &wishspeed, f32 &accel)
+{
+	this->modeService->OnAirAccelerate(wishdir, wishspeed, accel);
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnAirAccelerate(wishdir, wishspeed, accel);
+	}
+	this->jumpstatsService->OnAirAccelerate();
+}
+
+void KZPlayer::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
+{
+	this->modeService->OnAirAcceleratePost(wishdir, wishspeed, accel);
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnAirAcceleratePost(wishdir, wishspeed, accel);
+	}
+	this->jumpstatsService->OnAirAcceleratePost(wishdir, wishspeed, accel);
 }
 
 void KZPlayer::OnFriction()

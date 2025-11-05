@@ -211,14 +211,14 @@ public:
 	float m_flUpMove;
 	Vector m_vecVelocity;
 	QAngle m_vecAngles;
-	Vector m_vecUnknown;
+	Vector m_vecUnknown; // Unused. Probably pulled from engine upstream.
 	CUtlVector<SubtickMove> m_SubtickMoves;
 	CUtlVector<SubtickMove> m_AttackSubtickMoves;
 	bool m_bHasSubtickInputs;
 	float unknown; // Set to 1.0 during SetupMove, never change during gameplay. Is apparently used for weapon services stuff.
 	CUtlVector<touchlist_t> m_TouchList;
 	Vector m_collisionNormal;
-	Vector m_groundNormal; // unsure
+	Vector m_groundNormal;
 	Vector m_vecAbsOrigin;
 	int32_t m_nTickCount;
 	int32_t m_nTargetTick;
@@ -233,14 +233,20 @@ public:
 
 	CMoveData(const CMoveData &source)
 		: CMoveDataBase(source), m_outWishVel {source.m_outWishVel}, m_vecOldAngles {source.m_vecOldAngles},
-		  m_vecAccelPerSecond {source.m_vecAccelPerSecond}, m_vecInputRotated {source.m_vecInputRotated}, m_flMaxSpeed {source.m_flMaxSpeed}
+		  m_vecContinousAcceleration {source.m_vecContinousAcceleration}, m_vecFrameVelocityDelta {source.m_vecFrameVelocityDelta},
+		  m_vecInputRotated {source.m_vecInputRotated}, m_flMaxSpeed {source.m_flMaxSpeed}
 	{
 	}
 
 	Vector m_outWishVel;
 	QAngle m_vecOldAngles;
-	Vector m_vecAccelPerSecond; // related to accel and friction
+	// World space input vector. Used to compare against last the movement services' previous rotation for ground movement stuff.
 	Vector m_vecInputRotated;
+	// u/s^2.
+	Vector m_vecContinousAcceleration;
+	// Immediate delta in u/s. Air acceleration bypasses per second acceleration, applies up to half of its impulse to the velocity and the rest goes
+	// straight into this.
+	Vector m_vecFrameVelocityDelta;
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
 	float m_flFrictionDecel;
@@ -248,7 +254,7 @@ public:
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
 
-static_assert(sizeof(CMoveData) == 296, "Class didn't match expected size");
+static_assert(sizeof(CMoveData) == 312, "Class didn't match expected size");
 
 // Custom data types goes here.
 

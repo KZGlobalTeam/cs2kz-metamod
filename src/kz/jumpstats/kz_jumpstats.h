@@ -447,8 +447,8 @@ public:
 	void UpdateJump();
 	void EndJump();
 	void InvalidateJumpstats(const char *reason = NULL);
-	void OnAirMove();
-	void OnAirMovePost();
+	void OnAirAccelerate();
+	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 	void UpdateAACallPost();
 
 	void CheckValidMoveType();
