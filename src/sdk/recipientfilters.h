@@ -42,6 +42,11 @@ public:
 		return m_Recipients;
 	}
 
+	virtual CPlayerSlot GetPredictedPlayerSlot() const override
+	{
+		return m_slotPlayerExcludedDueToPrediction;
+	}
+
 	void SetRecipients(uint64 nRecipients)
 	{
 		m_Recipients.Set(0UL, static_cast<uint32>(nRecipients & 0xFFFFFFFF));
@@ -124,11 +129,6 @@ public:
 	void RemoveAllRecipients(void)
 	{
 		m_Recipients.ClearAll();
-	}
-
-	virtual CPlayerSlot GetExcludedPlayerDueToPrediction() const
-	{
-		return m_slotPlayerExcludedDueToPrediction;
 	}
 
 protected:
