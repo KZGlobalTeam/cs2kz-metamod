@@ -213,14 +213,14 @@ struct CourseTopRequest : public BaseRequest
 				for (const auto &record : ctops.overall)
 				{
 					CUtlString id;
-					id.Format("%llu", record.id);
+					id.Format("%u", record.id);
 					req->wrData.overallData.AddToTail(
 						{id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
 				}
 				for (const auto &record : ctops.pro)
 				{
 					CUtlString id;
-					id.Format("%llu", record.id);
+					id.Format("%u", record.id);
 					req->wrData.proData.AddToTail({id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
 				}
 			};
