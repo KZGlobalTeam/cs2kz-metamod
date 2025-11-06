@@ -161,6 +161,14 @@ namespace KZ::replaysystem::playback
 		// Restore normal gravity when not paused
 		pawn->SetGravityScale(1.0f);
 
+		// Update checkpoint state from current tick data
+		if (tickData->checkpoint.index != 0 || tickData->checkpoint.checkpointCount != 0 || tickData->checkpoint.teleportCount != 0)
+		{
+			replay->currentCpIndex = tickData->checkpoint.index;
+			replay->currentCheckpoint = tickData->checkpoint.checkpointCount;
+			replay->currentTeleport = tickData->checkpoint.teleportCount;
+		}
+
 		// Process jumps and events after physics simulation
 		events::CheckJumps(*player);
 		events::CheckEvents(*player);

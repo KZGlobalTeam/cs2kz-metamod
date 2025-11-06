@@ -28,9 +28,6 @@ struct CircularRecorder
 	std::optional<EconInfo> earliestWeapon;
 	std::optional<RpModeStyleInfo> earliestMode;
 	std::optional<std::vector<RpModeStyleInfo>> earliestStyles;
-	std::optional<i32> earliestCheckpointIndex;
-	std::optional<i32> earliestCheckpointCount;
-	std::optional<i32> earliestTeleportCount;
 	// Extra 20 seconds for commands in case of network issues
 	// Note that command data is tracked regardless of whether the player is alive or not.
 	// This means if the player goes to spectator, the command data will no longer match the tick data.
@@ -67,8 +64,8 @@ struct CircularRecorder
 	void TrimOldCommands(u32 currentTick);
 	// Also updates the earliest weapon info.
 	void TrimOldWeaponEvents(u32 currentTick);
-	// Also updates the earliest mode, styles info and checkpoint info.
-	void TrimOldRpEvents(u32 currentTick);
+	// Also updates the earliest mode and styles info.
+	void TrimOldEvents(u32 currentTick);
 	void TrimOldJumps(u32 currentTick);
 
 	// Convenience method to trim all old data.
@@ -77,7 +74,7 @@ struct CircularRecorder
 		// Tick data and subtick data are automatically trimmed by the circular buffer.
 		TrimOldCommands(currentTick);
 		TrimOldWeaponEvents(currentTick);
-		TrimOldRpEvents(currentTick);
+		TrimOldEvents(currentTick);
 		TrimOldJumps(currentTick);
 	}
 };
@@ -292,16 +289,13 @@ public:
 	// Check all active recorders and stop those that have reached their desired stop time.
 	void CheckRecorders();
 
-	// Check a few mouse related userinfo convars and record changes.
-	void CheckMouseConVars();
-
 	// Check the player's currently held weapons and record weapon switch events. Also tracks the earliest weapon for circular recorder.
 	void CheckWeapons();
 
 	// Check the player's current mode and styles and record mode/style change events. Also tracks the earliest mode/styles for circular recorder.
 	void CheckModeStyles();
 
-	// Check the player's checkpoints/teleports and record differences. Also tracks the earliest checkpoint and teleport data for circular recorder.
+	// Check the player's checkpoints/teleports and embed in tick data.
 	void CheckCheckpoints();
 
 private:
@@ -312,8 +306,6 @@ private:
 	void InsertTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity);
 	void InsertModeChangeEvent(const char *name, const char *md5);
 	void InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle);
-	void InsertCheckpointEvent(i32 index, i32 checkpointCount, i32 teleportCount);
-	void InsertCvarEvent(RpCvar cvar, f32 value);
 
 public:
 	// Write a replay file from the current circular buffer data.
@@ -328,15 +320,9 @@ public:
 	TickData currentTickData;
 	CircularRecorder circularRecording;
 	i32 lastCmdNumReceived = 0;
-	i32 lastKnownCheckpointIndex = 0;
-	i32 lastKnownCheckpointCount = 0;
-	i32 lastKnownTeleportCount = 0;
 	KZModeManager::ModePluginInfo lastKnownMode;
 	std::vector<KZStyleManager::StylePluginInfo> lastKnownStyles;
 	EconInfo currentWeaponEconInfo;
-	f32 lastSensitivity = 1.25f;
-	f32 lastYaw = 0.022f;
-	f32 lastPitch = 0.022f;
 
 	// Recorders
 	std::vector<RunRecorder> runRecorders;

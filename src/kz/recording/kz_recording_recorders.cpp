@@ -145,11 +145,7 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 		{
 			break;
 		}
-		if (event->type == RPEVENT_CHECKPOINT)
-		{
-			earliestCheckpointEventIndex = first;
-		}
-		else if (event->type == RPEVENT_MODE_CHANGE)
+		if (event->type == RPEVENT_MODE_CHANGE)
 		{
 			earliestModeEventIndex = first;
 		}
@@ -158,22 +154,7 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 			earliestStyleEventIndex = first;
 		}
 	}
-	if (earliestCheckpointEventIndex == -1)
-	{
-		RpEvent baseCheckpointEvent = {};
-		baseCheckpointEvent.serverTick = 0;
-		baseCheckpointEvent.type = RPEVENT_CHECKPOINT;
-		baseCheckpointEvent.data.checkpoint.index = circular.earliestCheckpointIndex.value_or(0);
-		baseCheckpointEvent.data.checkpoint.checkpointCount = circular.earliestCheckpointCount.value_or(0);
-		baseCheckpointEvent.data.checkpoint.teleportCount = circular.earliestTeleportCount.value_or(0);
-		this->rpEvents.push_back(baseCheckpointEvent);
-	}
-	else
-	{
-		RpEvent baseCheckpointEvent = *circular.rpEvents->PeekSingle(earliestCheckpointEventIndex);
-		baseCheckpointEvent.serverTick = 0;
-		this->rpEvents.push_back(baseCheckpointEvent);
-	}
+
 	if (earliestModeEventIndex == -1)
 	{
 		RpEvent baseModeEvent = {};

@@ -200,6 +200,12 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 		data.angles = {pc.base().viewangles().x(), pc.base().viewangles().y(), pc.base().viewangles().z()};
 		data.mousedx = pc.base().mousedx();
 		data.mousedy = pc.base().mousedy();
+
+		// Record cvar values every tick (compression will handle optimization)
+		data.sensitivity = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "sensitivity"));
+		data.m_yaw = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_yaw"));
+		data.m_pitch = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_pitch"));
+
 		this->circularRecording.cmdData->Write(data);
 		this->PushToRecorders(data, RecorderType::Both);
 
@@ -257,57 +263,6 @@ void KZRecordingService::CheckRecorders()
 		else
 		{
 			++it;
-		}
-	}
-}
-
-void KZRecordingService::CheckMouseConVars()
-{
-	const char *sensitivityStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "sensitivity");
-	f32 sensitivity = utils::StringToFloat(sensitivityStr);
-	if (this->lastSensitivity != sensitivity)
-	{
-		this->lastSensitivity = sensitivity;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CVAR;
-		event.data.cvar.cvar = RPCVAR_SENSITIVITY;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Sensitivity change event: %f\n", sensitivity);
-		}
-	}
-
-	const char *pitchStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_pitch");
-	f32 pitch = utils::StringToFloat(pitchStr);
-	if (this->lastPitch != pitch)
-	{
-		this->lastPitch = pitch;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CVAR;
-		event.data.cvar.cvar = RPCVAR_M_PITCH;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Pitch change event: %f\n", pitch);
-		}
-	}
-
-	const char *yawStr = interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_yaw");
-	f32 yaw = utils::StringToFloat(yawStr);
-	if (this->lastYaw != yaw)
-	{
-		this->lastYaw = yaw;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CVAR;
-		event.data.cvar.cvar = RPCVAR_M_YAW;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Yaw change event: %f\n", yaw);
 		}
 	}
 }
@@ -414,33 +369,9 @@ void KZRecordingService::CheckModeStyles()
 
 void KZRecordingService::CheckCheckpoints()
 {
-	if (this->player->checkpointService->GetCheckpointCount() != this->lastKnownCheckpointCount
-		|| this->player->checkpointService->GetTeleportCount() != this->lastKnownTeleportCount
-		|| this->player->checkpointService->GetCurrentCpIndex() != this->lastKnownCheckpointIndex)
-	{
-		this->lastKnownCheckpointCount = this->player->checkpointService->GetCheckpointCount();
-		this->lastKnownTeleportCount = this->player->checkpointService->GetTeleportCount();
-		this->lastKnownCheckpointIndex = this->player->checkpointService->GetCurrentCpIndex();
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_CHECKPOINT;
-		event.data.checkpoint.index = this->lastKnownCheckpointIndex;
-		event.data.checkpoint.checkpointCount = this->lastKnownCheckpointCount;
-		event.data.checkpoint.teleportCount = this->lastKnownTeleportCount;
-		this->InsertEvent(event);
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Checkpoint event: #%d CP %d, teleports %d\n", this->lastKnownCheckpointIndex,
-						   this->lastKnownCheckpointCount, this->lastKnownTeleportCount);
-		}
-	}
-
-	if (!this->circularRecording.earliestCheckpointCount.has_value())
-	{
-		this->circularRecording.earliestCheckpointCount = this->lastKnownCheckpointCount;
-		this->circularRecording.earliestTeleportCount = this->lastKnownTeleportCount;
-		this->circularRecording.earliestCheckpointIndex = this->lastKnownCheckpointIndex;
-	}
+	this->currentTickData.checkpoint.index = this->player->checkpointService->GetCurrentCpIndex();
+	this->currentTickData.checkpoint.checkpointCount = this->player->checkpointService->GetCheckpointCount();
+	this->currentTickData.checkpoint.teleportCount = this->player->checkpointService->GetTeleportCount();
 }
 
 void KZRecordingService::InsertEvent(const RpEvent &event)
@@ -514,26 +445,6 @@ void KZRecordingService::InsertStyleChangeEvent(const char *name, const char *md
 	V_strncpy(event.data.styleChange.name, name, sizeof(event.data.styleChange.name));
 	V_strncpy(event.data.styleChange.md5, md5, sizeof(event.data.styleChange.md5));
 	event.data.styleChange.clearStyles = firstStyle;
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::InsertCheckpointEvent(i32 index, i32 checkpointCount, i32 teleportCount)
-{
-	RpEvent event;
-	event.serverTick = this->currentTickData.serverTick;
-	event.type = RpEventType::RPEVENT_CHECKPOINT;
-	event.data.checkpoint.index = index;
-	event.data.checkpoint.checkpointCount = checkpointCount;
-	event.data.checkpoint.teleportCount = teleportCount;
-	this->InsertEvent(event);
-}
-
-void KZRecordingService::InsertCvarEvent(RpCvar cvar, f32 value)
-{
-	RpEvent event;
-	event.serverTick = this->currentTickData.serverTick;
-	event.type = RpEventType::RPEVENT_CVAR;
-	event.data.cvar.cvar = cvar;
 	this->InsertEvent(event);
 }
 

@@ -47,7 +47,7 @@ void CircularRecorder::TrimOldWeaponEvents(u32 currentTick)
 	this->weaponChangeEvents->Advance(numToRemove);
 }
 
-void CircularRecorder::TrimOldRpEvents(u32 currentTick)
+void CircularRecorder::TrimOldEvents(u32 currentTick)
 {
 	i32 numToRemove = 0;
 	for (i32 i = 0; i < this->rpEvents->GetReadAvailable(); i++)
@@ -79,13 +79,6 @@ void CircularRecorder::TrimOldRpEvents(u32 currentTick)
 					V_strncpy(style.shortName, event.data.styleChange.shortName, sizeof(style.shortName));
 					V_strncpy(style.md5, event.data.styleChange.md5, sizeof(style.md5));
 					this->earliestStyles.value().push_back(style);
-					break;
-				}
-				case RPEVENT_CHECKPOINT:
-				{
-					this->earliestCheckpointIndex = event.data.checkpoint.index;
-					this->earliestCheckpointCount = event.data.checkpoint.checkpointCount;
-					this->earliestTeleportCount = event.data.checkpoint.teleportCount;
 					break;
 				}
 			}

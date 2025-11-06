@@ -34,10 +34,6 @@ namespace KZ::replaysystem::events
 					HandleTimerEvent(player, event, replay);
 					break;
 
-				case RPEVENT_CHECKPOINT:
-					HandleCheckpointEvent(event, replay);
-					break;
-
 				case RPEVENT_MODE_CHANGE:
 					HandleModeChangeEvent(player, event);
 					break;
@@ -264,19 +260,6 @@ namespace KZ::replaysystem::events
 				break;
 			}
 		}
-	}
-
-	void HandleCheckpointEvent(const RpEvent *event, data::ReplayPlayback *replay)
-	{
-		if (kz_replay_playback_debug.Get())
-		{
-			utils::PrintChatAll("Checkpoint event: tick %d, #%d checkpointCount %d, teleportCount %d", event->serverTick,
-								event->data.checkpoint.index, event->data.checkpoint.checkpointCount, event->data.checkpoint.teleportCount);
-		}
-
-		replay->currentCpIndex = event->data.checkpoint.index;
-		replay->currentCheckpoint = event->data.checkpoint.checkpointCount;
-		replay->currentTeleport = event->data.checkpoint.teleportCount;
 	}
 
 	void HandleModeChangeEvent(KZPlayer &player, const RpEvent *event)
@@ -535,18 +518,11 @@ namespace KZ::replaysystem::events
 					g_pKZStyleManager->AddStyle(player, event->data.styleChange.name, true, false);
 					break;
 				}
-				case RPEVENT_CHECKPOINT:
-				{
-					replay->currentCpIndex = event->data.checkpoint.index;
-					replay->currentCheckpoint = event->data.checkpoint.checkpointCount;
-					replay->currentTeleport = event->data.checkpoint.teleportCount;
-					break;
-				}
 				case RPEVENT_TELEPORT:
 				{
 					// This event is only for interrupting interpolation during playback
 					// For seeking, we don't need to do anything here since teleport count
-					// is tracked via RPEVENT_CHECKPOINT events
+					// is tracked via checkpoint data in tickData
 					break;
 				}
 			}
@@ -629,6 +605,12 @@ namespace KZ::replaysystem::events
 				}
 			}
 		}
+
+		// Update checkpoint state from target tick data
+		TickData *targetTickData = &replay->tickData[targetTick];
+		replay->currentCpIndex = targetTickData->checkpoint.index;
+		replay->currentCheckpoint = targetTickData->checkpoint.checkpointCount;
+		replay->currentTeleport = targetTickData->checkpoint.teleportCount;
 	}
 
 } // namespace KZ::replaysystem::events

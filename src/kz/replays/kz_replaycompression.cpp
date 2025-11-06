@@ -103,6 +103,8 @@ enum TickDataChangeFlags : u64
 	CHANGED_POST_REPLAY_FLAGS = (1ULL << 35),
 	CHANGED_POST_ENTITY_FLAGS = (1ULL << 36),
 	CHANGED_POST_MOVE_TYPE = (1ULL << 37),
+
+	CHANGED_CHECKPOINT = (1ULL << 38),
 };
 
 // Compare pre or post data and build change flags
@@ -214,6 +216,15 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 		// Build change flags for pre/post
 		flags |= BuildPreChangeFlags(current.pre, prevPre);
 		flags |= BuildPostChangeFlags(current.post, prevPost);
+
+		// Check for checkpoint data changes
+		if (i == 0 || 
+			current.checkpoint.index != tickData[i - 1].checkpoint.index ||
+			current.checkpoint.checkpointCount != tickData[i - 1].checkpoint.checkpointCount ||
+			current.checkpoint.teleportCount != tickData[i - 1].checkpoint.teleportCount)
+		{
+			flags |= CHANGED_CHECKPOINT;
+		}
 		
 		// Write change flags (single u64)
 		AppendToBuffer(buffer, &flags, sizeof(flags));
@@ -261,6 +272,14 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 		if (flags & CHANGED_POST_REPLAY_FLAGS) AppendToBuffer(buffer, &current.post.replayFlags, sizeof(current.post.replayFlags));
 		if (flags & CHANGED_POST_ENTITY_FLAGS) AppendToBuffer(buffer, &current.post.entityFlags, sizeof(current.post.entityFlags));
 		if (flags & CHANGED_POST_MOVE_TYPE) AppendToBuffer(buffer, &current.post.moveType, sizeof(current.post.moveType));
+
+		// Write checkpoint and cvar data if present
+		if (flags & CHANGED_CHECKPOINT)
+		{
+			AppendToBuffer(buffer, &current.checkpoint.index, sizeof(current.checkpoint.index));
+			AppendToBuffer(buffer, &current.checkpoint.checkpointCount, sizeof(current.checkpoint.checkpointCount));
+			AppendToBuffer(buffer, &current.checkpoint.teleportCount, sizeof(current.checkpoint.teleportCount));
+		}
 		// clang-format on
 	}
 
@@ -429,6 +448,14 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 		if (flags & CHANGED_POST_REPLAY_FLAGS) { memcpy(&current.post.replayFlags, readPtr, sizeof(current.post.replayFlags)); readPtr += sizeof(current.post.replayFlags); }
 		if (flags & CHANGED_POST_ENTITY_FLAGS) { memcpy(&current.post.entityFlags, readPtr, sizeof(current.post.entityFlags)); readPtr += sizeof(current.post.entityFlags); }
 		if (flags & CHANGED_POST_MOVE_TYPE) { memcpy(&current.post.moveType, readPtr, sizeof(current.post.moveType)); readPtr += sizeof(current.post.moveType); }
+
+		// Read checkpoint and cvar data if present
+		if (flags & CHANGED_CHECKPOINT)
+		{
+			memcpy(&current.checkpoint.index, readPtr, sizeof(current.checkpoint.index)); readPtr += sizeof(current.checkpoint.index);
+			memcpy(&current.checkpoint.checkpointCount, readPtr, sizeof(current.checkpoint.checkpointCount)); readPtr += sizeof(current.checkpoint.checkpointCount);
+			memcpy(&current.checkpoint.teleportCount, readPtr, sizeof(current.checkpoint.teleportCount)); readPtr += sizeof(current.checkpoint.teleportCount);
+		}
 		// clang-format on
 	}
 
@@ -802,6 +829,9 @@ enum CmdDataChangeFlags : u64
 	CHANGED_CMD_ANGLES = (1ULL << 15),
 	CHANGED_CMD_MOUSEDX = (1ULL << 16),
 	CHANGED_CMD_MOUSEDY = (1ULL << 17),
+	CHANGED_CMD_SENSITIVITY = (1ULL << 18),
+	CHANGED_CMD_M_YAW = (1ULL << 19),
+	CHANGED_CMD_M_PITCH = (1ULL << 20),
 };
 
 bool KZ::replaysystem::compression::ReadCmdDataCompressed(FileHandle_t file, std::vector<CmdData> &outCmdData,
@@ -876,6 +906,9 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(FileHandle_t file, std
 			if (!(flags & CHANGED_CMD_ANGLES)) current.angles = outCmdData[i - 1].angles;
 			if (!(flags & CHANGED_CMD_MOUSEDX)) current.mousedx = outCmdData[i - 1].mousedx;
 			if (!(flags & CHANGED_CMD_MOUSEDY)) current.mousedy = outCmdData[i - 1].mousedy;
+			if (!(flags & CHANGED_CMD_SENSITIVITY)) current.sensitivity = outCmdData[i - 1].sensitivity;
+			if (!(flags & CHANGED_CMD_M_YAW)) current.m_yaw = outCmdData[i - 1].m_yaw;
+			if (!(flags & CHANGED_CMD_M_PITCH)) current.m_pitch = outCmdData[i - 1].m_pitch;
 			// clang-format on
 		}
 
@@ -899,6 +932,9 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(FileHandle_t file, std
 		if (flags & CHANGED_CMD_ANGLES) { memcpy(&current.angles, readPtr, sizeof(current.angles)); readPtr += sizeof(current.angles); }
 		if (flags & CHANGED_CMD_MOUSEDX) { memcpy(&current.mousedx, readPtr, sizeof(current.mousedx)); readPtr += sizeof(current.mousedx); }
 		if (flags & CHANGED_CMD_MOUSEDY) { memcpy(&current.mousedy, readPtr, sizeof(current.mousedy)); readPtr += sizeof(current.mousedy); }
+		if (flags & CHANGED_CMD_SENSITIVITY) { memcpy(&current.sensitivity, readPtr, sizeof(current.sensitivity)); readPtr += sizeof(current.sensitivity); }
+		if (flags & CHANGED_CMD_M_YAW) { memcpy(&current.m_yaw, readPtr, sizeof(current.m_yaw)); readPtr += sizeof(current.m_yaw); }
+		if (flags & CHANGED_CMD_M_PITCH) { memcpy(&current.m_pitch, readPtr, sizeof(current.m_pitch)); readPtr += sizeof(current.m_pitch); }
 		// clang-format on
 	}
 
@@ -964,6 +1000,9 @@ i32 KZ::replaysystem::compression::WriteCmdDataCompressed(FileHandle_t file, con
 		if (i == 0 || current.angles != cmdData[i - 1].angles) flags |= CHANGED_CMD_ANGLES;
 		if (i == 0 || current.mousedx != cmdData[i - 1].mousedx) flags |= CHANGED_CMD_MOUSEDX;
 		if (i == 0 || current.mousedy != cmdData[i - 1].mousedy) flags |= CHANGED_CMD_MOUSEDY;
+		if (i == 0 || current.sensitivity != cmdData[i - 1].sensitivity) flags |= CHANGED_CMD_SENSITIVITY;
+		if (i == 0 || current.m_yaw != cmdData[i - 1].m_yaw) flags |= CHANGED_CMD_M_YAW;
+		if (i == 0 || current.m_pitch != cmdData[i - 1].m_pitch) flags |= CHANGED_CMD_M_PITCH;
 
 		// Write change flags
 		AppendToBuffer(buffer, &flags, sizeof(flags));
@@ -987,6 +1026,9 @@ i32 KZ::replaysystem::compression::WriteCmdDataCompressed(FileHandle_t file, con
 		if (flags & CHANGED_CMD_ANGLES) AppendToBuffer(buffer, &current.angles, sizeof(current.angles));
 		if (flags & CHANGED_CMD_MOUSEDX) AppendToBuffer(buffer, &current.mousedx, sizeof(current.mousedx));
 		if (flags & CHANGED_CMD_MOUSEDY) AppendToBuffer(buffer, &current.mousedy, sizeof(current.mousedy));
+		if (flags & CHANGED_CMD_SENSITIVITY) AppendToBuffer(buffer, &current.sensitivity, sizeof(current.sensitivity));
+		if (flags & CHANGED_CMD_M_YAW) AppendToBuffer(buffer, &current.m_yaw, sizeof(current.m_yaw));
+		if (flags & CHANGED_CMD_M_PITCH) AppendToBuffer(buffer, &current.m_pitch, sizeof(current.m_pitch));
 		// clang-format on
 	}
 

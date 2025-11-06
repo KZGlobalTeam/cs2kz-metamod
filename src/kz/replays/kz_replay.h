@@ -30,15 +30,6 @@ enum RpEventType
 	RPEVENT_MODE_CHANGE,
 	RPEVENT_STYLE_CHANGE,
 	RPEVENT_TELEPORT,
-	RPEVENT_CHECKPOINT,
-	RPEVENT_CVAR,
-};
-
-enum RpCvar
-{
-	RPCVAR_SENSITIVITY,
-	RPCVAR_M_YAW,
-	RPCVAR_M_PITCH
 };
 
 struct RpFlags
@@ -181,19 +172,6 @@ struct RpEvent
 			f32 angles[3];
 			f32 velocity[3];
 		} teleport;
-
-		struct
-		{
-			i32 index;
-			i32 checkpointCount;
-			i32 teleportCount;
-		} checkpoint;
-
-		struct
-		{
-			RpCvar cvar;
-			f32 value;
-		} cvar;
 	} data;
 };
 
@@ -252,6 +230,13 @@ struct TickData
 	f32 up {};
 	bool leftHanded {};
 
+	struct
+	{
+		i32 index;
+		i32 checkpointCount;
+		i32 teleportCount;
+	} checkpoint {};
+
 	struct MovementData
 	{
 		Vector origin;
@@ -289,6 +274,9 @@ struct CmdData
 	QAngle angles {};
 	i32 mousedx {};
 	i32 mousedy {};
+	f32 sensitivity {};
+	f32 m_yaw {};
+	f32 m_pitch {};
 };
 
 struct GeneralReplayHeader
