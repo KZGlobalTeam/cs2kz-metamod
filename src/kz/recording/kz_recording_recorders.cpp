@@ -225,9 +225,14 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 		}
 		earliestWeaponIndex = first;
 	}
+
+	// Copy the weapon table from circular recorder
+	this->weaponTable = circular.weaponTable;
+
 	if (earliestWeaponIndex != -1)
 	{
-		this->baseHeader.firstWeapon = circular.weaponChangeEvents->PeekSingle(earliestWeaponIndex)->econInfo;
+		u16 weaponIndex = circular.weaponChangeEvents->PeekSingle(earliestWeaponIndex)->weaponIndex;
+		this->baseHeader.firstWeapon = circular.weaponTable[weaponIndex];
 	}
 	else
 	{
@@ -315,7 +320,7 @@ bool Recorder::WriteToFile()
 
 	bytesWritten += KZ::replaysystem::compression::WriteTickDataCompressed(file, this->tickData, this->subtickData);
 
-	bytesWritten += KZ::replaysystem::compression::WriteWeaponChangesCompressed(file, this->weaponChangeEvents);
+	bytesWritten += KZ::replaysystem::compression::WriteWeaponChangesCompressed(file, this->weaponChangeEvents, this->weaponTable);
 
 	bytesWritten += KZ::replaysystem::compression::WriteJumpsCompressed(file, this->jumps);
 
@@ -343,7 +348,7 @@ i32 Recorder::WriteTickData(FileHandle_t file)
 
 i32 Recorder::WriteWeaponChanges(FileHandle_t file)
 {
-	return KZ::replaysystem::compression::WriteWeaponChangesCompressed(file, this->weaponChangeEvents);
+	return KZ::replaysystem::compression::WriteWeaponChangesCompressed(file, this->weaponChangeEvents, this->weaponTable);
 }
 
 i32 Recorder::WriteJumps(FileHandle_t file)

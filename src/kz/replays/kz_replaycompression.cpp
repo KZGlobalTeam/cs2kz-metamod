@@ -486,9 +486,69 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 // Weapon changes compression
 // ========================================
 
-bool KZ::replaysystem::compression::ReadWeaponChangesCompressed(FileHandle_t file, std::vector<WeaponSwitchEvent> &outWeaponEvents)
+bool KZ::replaysystem::compression::ReadWeaponChangesCompressed(FileHandle_t file, std::vector<WeaponSwitchEvent> &outWeaponEvents,
+																std::vector<EconInfo> &outWeaponTable)
 {
-	// Read section header
+	// Read section header for weapon table
+	CompressedSectionHeader weaponTableHeader;
+	g_pFullFileSystem->Read(&weaponTableHeader, sizeof(weaponTableHeader), file);
+
+	// Allocate buffer for compressed weapon table data
+	char *compressedTableData = new char[weaponTableHeader.compressedSize];
+	if (!compressedTableData)
+	{
+		return false;
+	}
+
+	// Read compressed weapon table data
+	g_pFullFileSystem->Read(compressedTableData, weaponTableHeader.compressedSize, file);
+
+	// Allocate buffer for decompressed weapon table data
+	char *decompressedTableData = new char[weaponTableHeader.uncompressedSize];
+	if (!decompressedTableData)
+	{
+		delete[] compressedTableData;
+		return false;
+	}
+
+	// Decompress weapon table
+	bool success = Decompress(compressedTableData, weaponTableHeader.compressedSize, decompressedTableData, weaponTableHeader.uncompressedSize);
+
+	delete[] compressedTableData;
+
+	if (!success)
+	{
+		delete[] decompressedTableData;
+		return false;
+	}
+
+	// Deserialize weapon table from buffer
+	outWeaponTable.clear();
+	outWeaponTable.reserve(weaponTableHeader.elementCount);
+
+	const char *readPtr = decompressedTableData;
+	i32 numWeapons;
+	memcpy(&numWeapons, readPtr, sizeof(numWeapons));
+	readPtr += sizeof(numWeapons);
+
+	for (i32 i = 0; i < numWeapons; i++)
+	{
+		EconInfo weaponInfo = {};
+		memcpy(&weaponInfo.mainInfo, readPtr, sizeof(weaponInfo.mainInfo));
+		readPtr += sizeof(weaponInfo.mainInfo);
+
+		for (i32 j = 0; j < weaponInfo.mainInfo.numAttributes; j++)
+		{
+			memcpy(&weaponInfo.attributes[j], readPtr, sizeof(weaponInfo.attributes[j]));
+			readPtr += sizeof(weaponInfo.attributes[j]);
+		}
+
+		outWeaponTable.push_back(weaponInfo);
+	}
+
+	delete[] decompressedTableData;
+
+	// Read section header for weapon events
 	CompressedSectionHeader header;
 	g_pFullFileSystem->Read(&header, sizeof(header), file);
 
@@ -511,7 +571,7 @@ bool KZ::replaysystem::compression::ReadWeaponChangesCompressed(FileHandle_t fil
 	}
 
 	// Decompress
-	bool success = Decompress(compressedData, header.compressedSize, decompressedData, header.uncompressedSize);
+	success = Decompress(compressedData, header.compressedSize, decompressedData, header.uncompressedSize);
 
 	delete[] compressedData;
 
@@ -525,24 +585,18 @@ bool KZ::replaysystem::compression::ReadWeaponChangesCompressed(FileHandle_t fil
 	outWeaponEvents.clear();
 	outWeaponEvents.reserve(header.elementCount);
 
-	const char *readPtr = decompressedData;
-	i32 numWeapons;
-	memcpy(&numWeapons, readPtr, sizeof(numWeapons));
-	readPtr += sizeof(numWeapons);
+	readPtr = decompressedData;
+	i32 numEvents;
+	memcpy(&numEvents, readPtr, sizeof(numEvents));
+	readPtr += sizeof(numEvents);
 
-	for (i32 i = 0; i < numWeapons; i++)
+	for (i32 i = 0; i < numEvents; i++)
 	{
 		WeaponSwitchEvent event = {};
 		memcpy(&event.serverTick, readPtr, sizeof(event.serverTick));
 		readPtr += sizeof(event.serverTick);
-		memcpy(&event.econInfo.mainInfo, readPtr, sizeof(event.econInfo.mainInfo));
-		readPtr += sizeof(event.econInfo.mainInfo);
-
-		for (i32 j = 0; j < event.econInfo.mainInfo.numAttributes; j++)
-		{
-			memcpy(&event.econInfo.attributes[j], readPtr, sizeof(event.econInfo.attributes[j]));
-			readPtr += sizeof(event.econInfo.attributes[j]);
-		}
+		memcpy(&event.weaponIndex, readPtr, sizeof(event.weaponIndex));
+		readPtr += sizeof(event.weaponIndex);
 
 		outWeaponEvents.push_back(event);
 	}
@@ -551,55 +605,91 @@ bool KZ::replaysystem::compression::ReadWeaponChangesCompressed(FileHandle_t fil
 	return true;
 }
 
-i32 KZ::replaysystem::compression::WriteWeaponChangesCompressed(FileHandle_t file, const std::vector<WeaponSwitchEvent> &weaponEvents)
+i32 KZ::replaysystem::compression::WriteWeaponChangesCompressed(FileHandle_t file, const std::vector<WeaponSwitchEvent> &weaponEvents,
+																const std::vector<EconInfo> &weaponTable)
 {
 	i32 bytesWritten = 0;
 
-	// Serialize weapon events to a buffer first
-	std::vector<char> buffer;
-	i32 numWeapons = weaponEvents.size();
+	// First, serialize and compress the weapon table
+	std::vector<char> weaponTableBuffer;
+	i32 numWeapons = weaponTable.size();
 
-	// Reserve approximate size
-	size_t approxSize = sizeof(numWeapons);
-	for (const auto &event : weaponEvents)
+	// Reserve approximate size for weapon table
+	size_t approxTableSize = sizeof(numWeapons);
+	for (const auto &weapon : weaponTable)
 	{
-		approxSize +=
-			sizeof(event.serverTick) + sizeof(event.econInfo.mainInfo) + event.econInfo.mainInfo.numAttributes * sizeof(event.econInfo.attributes[0]);
+		approxTableSize += sizeof(weapon.mainInfo) + weapon.mainInfo.numAttributes * sizeof(weapon.attributes[0]);
 	}
-	buffer.reserve(approxSize);
+	weaponTableBuffer.reserve(approxTableSize);
 
-	// Serialize to buffer
-	AppendToBuffer(buffer, &numWeapons, sizeof(numWeapons));
-	for (const auto &event : weaponEvents)
+	// Serialize weapon table to buffer
+	AppendToBuffer(weaponTableBuffer, &numWeapons, sizeof(numWeapons));
+	for (const auto &weapon : weaponTable)
 	{
-		AppendToBuffer(buffer, &event.serverTick, sizeof(event.serverTick));
-		AppendToBuffer(buffer, &event.econInfo.mainInfo, sizeof(event.econInfo.mainInfo));
-		for (i32 j = 0; j < event.econInfo.mainInfo.numAttributes; j++)
+		AppendToBuffer(weaponTableBuffer, &weapon.mainInfo, sizeof(weapon.mainInfo));
+		for (i32 j = 0; j < weapon.mainInfo.numAttributes; j++)
 		{
-			AppendToBuffer(buffer, &event.econInfo.attributes[j], sizeof(event.econInfo.attributes[j]));
+			AppendToBuffer(weaponTableBuffer, &weapon.attributes[j], sizeof(weapon.attributes[j]));
 		}
 	}
 
-	// Compress
-	void *compressedData = nullptr;
-	size_t compressedSize = 0;
+	// Compress weapon table
+	void *compressedTableData = nullptr;
+	size_t compressedTableSize = 0;
 
-	bool success = Compress(buffer.data(), buffer.size(), &compressedData, &compressedSize);
+	bool success = Compress(weaponTableBuffer.data(), weaponTableBuffer.size(), &compressedTableData, &compressedTableSize);
 	if (!success)
 	{
 		return 0;
 	}
 
-	// Write header and compressed data
-	CompressedSectionHeader header;
-	header.compressedSize = (u32)compressedSize;
-	header.uncompressedSize = (u32)buffer.size();
-	header.elementCount = (u32)weaponEvents.size();
+	// Write weapon table header and compressed data
+	CompressedSectionHeader weaponTableHeader;
+	weaponTableHeader.compressedSize = (u32)compressedTableSize;
+	weaponTableHeader.uncompressedSize = (u32)weaponTableBuffer.size();
+	weaponTableHeader.elementCount = (u32)weaponTable.size();
 
-	bytesWritten += g_pFullFileSystem->Write(&header, sizeof(header), file);
-	bytesWritten += g_pFullFileSystem->Write(compressedData, compressedSize, file);
+	bytesWritten += g_pFullFileSystem->Write(&weaponTableHeader, sizeof(weaponTableHeader), file);
+	bytesWritten += g_pFullFileSystem->Write(compressedTableData, compressedTableSize, file);
 
-	delete[] static_cast<char *>(compressedData);
+	delete[] static_cast<char *>(compressedTableData);
+
+	// Now serialize and compress weapon events (which just reference the table)
+	std::vector<char> eventsBuffer;
+	i32 numEvents = weaponEvents.size();
+
+	// Reserve approximate size for events
+	size_t approxEventsSize = sizeof(numEvents) + weaponEvents.size() * (sizeof(u32) + sizeof(u16));
+	eventsBuffer.reserve(approxEventsSize);
+
+	// Serialize events to buffer
+	AppendToBuffer(eventsBuffer, &numEvents, sizeof(numEvents));
+	for (const auto &event : weaponEvents)
+	{
+		AppendToBuffer(eventsBuffer, &event.serverTick, sizeof(event.serverTick));
+		AppendToBuffer(eventsBuffer, &event.weaponIndex, sizeof(event.weaponIndex));
+	}
+
+	// Compress events
+	void *compressedEventsData = nullptr;
+	size_t compressedEventsSize = 0;
+
+	success = Compress(eventsBuffer.data(), eventsBuffer.size(), &compressedEventsData, &compressedEventsSize);
+	if (!success)
+	{
+		return 0;
+	}
+
+	// Write events header and compressed data
+	CompressedSectionHeader eventsHeader;
+	eventsHeader.compressedSize = (u32)compressedEventsSize;
+	eventsHeader.uncompressedSize = (u32)eventsBuffer.size();
+	eventsHeader.elementCount = (u32)weaponEvents.size();
+
+	bytesWritten += g_pFullFileSystem->Write(&eventsHeader, sizeof(eventsHeader), file);
+	bytesWritten += g_pFullFileSystem->Write(compressedEventsData, compressedEventsSize, file);
+
+	delete[] static_cast<char *>(compressedEventsData);
 
 	return bytesWritten;
 }

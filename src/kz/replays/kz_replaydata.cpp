@@ -36,6 +36,11 @@ namespace KZ::replaysystem::data
 			delete[] replay->weapons;
 			replay->weapons = nullptr;
 		}
+		if (replay->weaponTable)
+		{
+			delete[] replay->weaponTable;
+			replay->weaponTable = nullptr;
+		}
 		if (replay->jumps)
 		{
 			delete[] replay->jumps;
@@ -274,8 +279,9 @@ namespace KZ::replaysystem::data
 		}
 
 		std::vector<WeaponSwitchEvent> weaponEventsVec;
+		std::vector<EconInfo> weaponTableVec;
 
-		if (!KZ::replaysystem::compression::ReadWeaponChangesCompressed(file, weaponEventsVec))
+		if (!KZ::replaysystem::compression::ReadWeaponChangesCompressed(file, weaponEventsVec, weaponTableVec))
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;
@@ -283,11 +289,29 @@ namespace KZ::replaysystem::data
 			return {};
 		}
 
-		result.numWeapons = weaponEventsVec.size();
-		result.weapons = new WeaponSwitchEvent[result.numWeapons + 1];
-		result.weapons[0] = {0, result.header.firstWeapon};
+		// Store weapon table
+		result.weaponTableSize = static_cast<u32>(weaponTableVec.size());
+		weaponTableVec.shrink_to_fit();
+		result.weaponTable = weaponTableVec.data();
+		new (&weaponTableVec) std::vector<EconInfo>();
 
-		// Can't really do the vector transfer trick here since we need to add an extra initial entry.
+		// Store weapon events, adding initial weapon at index 0
+		result.numWeapons = static_cast<i32>(weaponEventsVec.size());
+		result.weapons = new WeaponSwitchEvent[result.numWeapons + 1];
+
+		// Find the weapon index for firstWeapon in the weapon table
+		u16 firstWeaponIndex = 0;
+		for (u32 i = 0; i < result.weaponTableSize; i++)
+		{
+			if (result.weaponTable[i] == result.header.firstWeapon)
+			{
+				firstWeaponIndex = i;
+				break;
+			}
+		}
+		result.weapons[0] = {0, firstWeaponIndex};
+
+		// Copy the rest of the weapon events
 		for (i32 i = 0; i < result.numWeapons; i++)
 		{
 			result.weapons[i + 1] = weaponEventsVec[i];
@@ -300,6 +324,7 @@ namespace KZ::replaysystem::data
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;
+			delete[] result.weaponTable;
 			delete[] result.weapons;
 			g_pFullFileSystem->Close(file);
 			return {};
@@ -315,6 +340,7 @@ namespace KZ::replaysystem::data
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;
+			delete[] result.weaponTable;
 			delete[] result.weapons;
 			g_pFullFileSystem->Close(file);
 			return {};
@@ -334,6 +360,7 @@ namespace KZ::replaysystem::data
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;
+			delete[] result.weaponTable;
 			delete[] result.weapons;
 			delete[] result.jumps;
 			g_pFullFileSystem->Close(file);
@@ -350,6 +377,7 @@ namespace KZ::replaysystem::data
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;
+			delete[] result.weaponTable;
 			delete[] result.weapons;
 			delete[] result.jumps;
 			g_pFullFileSystem->Close(file);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <unordered_map>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -24,6 +25,10 @@ struct CircularRecorder
 	CFIFOCircularBuffer<TickData, 64 * 60 * 2> *tickData;
 	CFIFOCircularBuffer<SubtickData, 64 * 60 * 2> *subtickData;
 	CFIFOCircularBuffer<WeaponSwitchEvent, 64 * 60 * 2> *weaponChangeEvents;
+	// Track unique weapons for deduplication
+	std::vector<EconInfo> weaponTable;
+	// Map EconInfo to weapon table index for fast lookup
+	std::unordered_map<EconInfo, u16> weaponIndexMap;
 
 	std::optional<EconInfo> earliestWeapon;
 	std::optional<RpModeStyleInfo> earliestMode;
@@ -88,6 +93,7 @@ struct Recorder
 	std::vector<SubtickData> subtickData;
 	std::vector<RpEvent> rpEvents;
 	std::vector<WeaponSwitchEvent> weaponChangeEvents;
+	std::vector<EconInfo> weaponTable;
 	std::vector<RpJumpStats> jumps;
 	std::vector<CmdData> cmdData;
 	std::vector<SubtickData> cmdSubtickData;

@@ -274,9 +274,26 @@ void KZRecordingService::CheckWeapons()
 	if (this->currentWeaponEconInfo != weaponEconInfo)
 	{
 		this->currentWeaponEconInfo = weaponEconInfo;
+
+		// Find or add weapon to the table
+		u16 weaponIndex = 0;
+		auto it = this->circularRecording.weaponIndexMap.find(weaponEconInfo);
+		if (it != this->circularRecording.weaponIndexMap.end())
+		{
+			// Weapon already in table, use existing index
+			weaponIndex = it->second;
+		}
+		else
+		{
+			// New weapon, add to table
+			weaponIndex = static_cast<u16>(this->circularRecording.weaponTable.size());
+			this->circularRecording.weaponTable.push_back(weaponEconInfo);
+			this->circularRecording.weaponIndexMap[weaponEconInfo] = weaponIndex;
+		}
+
 		WeaponSwitchEvent event;
 		event.serverTick = this->currentTickData.serverTick;
-		event.econInfo = weaponEconInfo;
+		event.weaponIndex = weaponIndex;
 		this->circularRecording.weaponChangeEvents->Write(event);
 		this->PushToRecorders(event, RecorderType::Both);
 	}

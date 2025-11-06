@@ -42,7 +42,7 @@ struct RpFlags
 struct WeaponSwitchEvent
 {
 	u32 serverTick {};
-	EconInfo econInfo;
+	u16 weaponIndex {}; // Index into the weapon table
 };
 
 struct RpModeStyleInfo

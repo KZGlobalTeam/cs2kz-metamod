@@ -174,3 +174,31 @@ inline EconInfo CBasePlayerWeapon::GetEconInfo()
 {
 	return EconInfo(this);
 }
+
+// Hash function for EconInfo to use with unordered_map
+namespace std
+{
+	template<>
+	struct hash<EconInfo>
+	{
+		size_t operator()(const EconInfo &info) const noexcept
+		{
+			size_t h = 0;
+			// Hash the main fields that identify a unique weapon
+			h ^= hash<i32>()(info.mainInfo.itemDef) + 0x9e3779b9 + (h << 6) + (h >> 2);
+			h ^= hash<i32>()(info.mainInfo.quality) + 0x9e3779b9 + (h << 6) + (h >> 2);
+			h ^= hash<i32>()(info.mainInfo.accountID) + 0x9e3779b9 + (h << 6) + (h >> 2);
+			h ^= hash<i64>()(info.mainInfo.itemID) + 0x9e3779b9 + (h << 6) + (h >> 2);
+			h ^= hash<i32>()(info.mainInfo.numAttributes) + 0x9e3779b9 + (h << 6) + (h >> 2);
+
+			// Hash attributes
+			for (int i = 0; i < info.mainInfo.numAttributes && i < 32; i++)
+			{
+				h ^= hash<i32>()(info.attributes[i].defIndex) + 0x9e3779b9 + (h << 6) + (h >> 2);
+				h ^= hash<f32>()(info.attributes[i].value) + 0x9e3779b9 + (h << 6) + (h >> 2);
+			}
+
+			return h;
+		}
+	};
+} // namespace std

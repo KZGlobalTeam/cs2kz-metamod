@@ -306,7 +306,8 @@ namespace KZ::replaysystem::playback
 		{
 			replay->currentWeapon++;
 		}
-		desiredWeapon = replay->weapons[replay->currentWeapon].econInfo;
+		u16 weaponIndex = replay->weapons[replay->currentWeapon].weaponIndex;
+		desiredWeapon = replay->weaponTable[weaponIndex];
 
 		EconInfo activeWeapon = player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
 
@@ -367,7 +368,8 @@ namespace KZ::replaysystem::playback
 
 		CCSPlayerPawn *pawn = bot->GetPlayerPawn();
 		pawn->m_pItemServices()->RemoveAllItems(false);
-		u16 itemDef = replay->weapons[0].econInfo.mainInfo.itemDef;
+		u16 weaponIndex = replay->weapons[0].weaponIndex;
+		u16 itemDef = replay->weaponTable[weaponIndex].mainInfo.itemDef;
 		if (itemDef == 0)
 		{
 			return;
@@ -380,7 +382,7 @@ namespace KZ::replaysystem::playback
 			assert(false);
 		}
 
-		KZ::replaysystem::item::ApplyItemAttributesToWeapon(*weapon, replay->weapons[0].econInfo);
+		KZ::replaysystem::item::ApplyItemAttributesToWeapon(*weapon, replay->weaponTable[weaponIndex]);
 	}
 
 	void StartReplay()

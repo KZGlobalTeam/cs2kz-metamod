@@ -1,5 +1,6 @@
 #include "kz_recording.h"
 #include "kz/language/kz_language.h"
+#include <unordered_set>
 extern CConVar<bool> kz_replay_recording_debug;
 
 // CircularRecorder method implementations
@@ -29,6 +30,7 @@ void CircularRecorder::TrimOldCommands(u32 currentTick)
 void CircularRecorder::TrimOldWeaponEvents(u32 currentTick)
 {
 	i32 numToRemove = 0;
+	u16 earliestWeaponIndex = 0;
 	for (i32 i = 0; i < this->weaponChangeEvents->GetReadAvailable(); i++)
 	{
 		WeaponSwitchEvent data;
@@ -38,13 +40,72 @@ void CircularRecorder::TrimOldWeaponEvents(u32 currentTick)
 		}
 		if (data.serverTick + 2 * 60 * 64 < currentTick)
 		{
-			this->earliestWeapon = data.econInfo;
+			earliestWeaponIndex = data.weaponIndex;
 			numToRemove++;
 			continue;
 		}
 		break;
 	}
 	this->weaponChangeEvents->Advance(numToRemove);
+
+	// Rebuild weapon table from remaining events to avoid keeping unused weapons
+	if (numToRemove > 0)
+	{
+		// Collect all unique weapon indices still in use
+		std::unordered_set<u16> usedIndices;
+		for (i32 i = 0; i < this->weaponChangeEvents->GetReadAvailable(); i++)
+		{
+			WeaponSwitchEvent *event = this->weaponChangeEvents->PeekSingle(i);
+			if (event)
+			{
+				usedIndices.insert(event->weaponIndex);
+			}
+		}
+
+		// Build new weapon table with only used weapons
+		std::vector<EconInfo> newWeaponTable;
+		std::unordered_map<u16, u16> oldToNewIndexMap;
+
+		for (u16 oldIndex : usedIndices)
+		{
+			if (oldIndex < this->weaponTable.size())
+			{
+				u16 newIndex = static_cast<u16>(newWeaponTable.size());
+				newWeaponTable.push_back(this->weaponTable[oldIndex]);
+				oldToNewIndexMap[oldIndex] = newIndex;
+			}
+		}
+
+		// Update weapon indices in the circular buffer
+		for (i32 i = 0; i < this->weaponChangeEvents->GetReadAvailable(); i++)
+		{
+			WeaponSwitchEvent *event = this->weaponChangeEvents->PeekSingle(i);
+			if (event)
+			{
+				auto it = oldToNewIndexMap.find(event->weaponIndex);
+				if (it != oldToNewIndexMap.end())
+				{
+					event->weaponIndex = it->second;
+				}
+			}
+		}
+
+		// Rebuild the weapon index map
+		this->weaponIndexMap.clear();
+		for (size_t i = 0; i < newWeaponTable.size(); i++)
+		{
+			this->weaponIndexMap[newWeaponTable[i]] = static_cast<u16>(i);
+		}
+
+		// Replace the weapon table
+		this->weaponTable = std::move(newWeaponTable);
+
+		// Update earliestWeapon
+		if (earliestWeaponIndex < this->weaponTable.size())
+		{
+			this->earliestWeapon = this->weaponTable[earliestWeaponIndex];
+		}
+	}
 }
 
 void CircularRecorder::TrimOldEvents(u32 currentTick)
