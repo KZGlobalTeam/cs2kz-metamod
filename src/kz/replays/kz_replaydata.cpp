@@ -3,6 +3,7 @@
 #include "filesystem.h"
 #include "utils/utils.h"
 #include "utils/uuid.h"
+#include "kz_replaycompression.h"
 #include <thread>
 #include <mutex>
 #include <atomic>
@@ -142,8 +143,21 @@ namespace KZ::replaysystem::data
 		return g_currentReplay.paused;
 	}
 
+	static_function void UpdateProgress(FileHandle_t file, size_t fileSize, std::atomic<f32> &progress)
+	{
+		if (fileSize > 0)
+		{
+			size_t bytesRead = g_pFullFileSystem->Tell(file);
+			progress = static_cast<f32>(bytesRead) / static_cast<f32>(fileSize);
+			if (kz_replay_playback_debug.Get())
+			{
+				META_CONPRINTF("Replay load progress: %zu bytes, %.2f%%\n", bytesRead, progress.load() * 100.0f);
+			}
+		}
+	}
+
 	// Helper function to load replay data with progress reporting
-	static ReplayPlayback LoadReplayWithProgress(const char *path, std::atomic<f32> &progress, std::atomic<bool> &shouldCancel)
+	static_function ReplayPlayback LoadReplayWithProgress(const char *path, std::atomic<f32> &progress, std::atomic<bool> &shouldCancel)
 	{
 		ReplayPlayback result = {};
 		progress = 0.0f;
@@ -157,20 +171,6 @@ namespace KZ::replaysystem::data
 		// Get file size for progress calculation
 		size_t fileSize = g_pFullFileSystem->Size(file);
 
-		auto updateProgress = [&](size_t bytesRead)
-		{
-			if (fileSize > 0)
-			{
-				progress = static_cast<f32>(bytesRead) / static_cast<f32>(fileSize);
-				if (kz_replay_playback_debug.Get())
-				{
-					META_CONPRINTF("Replay load progress: %d bytes, %.2f%%\n", bytesRead, progress.load() * 100.0f);
-				}
-			}
-		};
-
-		size_t totalBytesRead = 0;
-
 		// Read header
 		if (shouldCancel)
 		{
@@ -182,37 +182,36 @@ namespace KZ::replaysystem::data
 			META_CONPRINTF("Loading replay header...\n");
 		}
 		g_pFullFileSystem->Read(&result.header, sizeof(result.header), file);
-		totalBytesRead += sizeof(result.header);
 		switch (result.header.type)
 		{
 			case RP_CHEATER:
 			{
-				totalBytesRead += g_pFullFileSystem->Read(&result.cheaterHeader, sizeof(result.cheaterHeader), file);
+				g_pFullFileSystem->Read(&result.cheaterHeader, sizeof(result.cheaterHeader), file);
 				break;
 			}
 			case RP_RUN:
 			{
-				totalBytesRead += g_pFullFileSystem->Read(&result.runHeader, sizeof(result.runHeader), file);
+				g_pFullFileSystem->Read(&result.runHeader, sizeof(result.runHeader), file);
 				// Just to advance the reader.
 				for (i32 i = 0; i < result.runHeader.styleCount; i++)
 				{
 					RpModeStyleInfo style = {};
-					totalBytesRead += g_pFullFileSystem->Read(&style, sizeof(style), file);
+					g_pFullFileSystem->Read(&style, sizeof(style), file);
 				}
 				break;
 			}
 			case RP_JUMPSTATS:
 			{
-				totalBytesRead += g_pFullFileSystem->Read(&result.jumpHeader, sizeof(result.jumpHeader), file);
+				g_pFullFileSystem->Read(&result.jumpHeader, sizeof(result.jumpHeader), file);
 				break;
 			}
 			case RP_MANUAL:
 			{
-				totalBytesRead += g_pFullFileSystem->Read(&result.manualHeader, sizeof(result.manualHeader), file);
+				g_pFullFileSystem->Read(&result.manualHeader, sizeof(result.manualHeader), file);
 				break;
 			}
 		}
-		updateProgress(totalBytesRead);
+		UpdateProgress(file, fileSize, progress);
 
 		if (result.header.magicNumber != KZ_REPLAY_MAGIC)
 		{
@@ -231,70 +230,35 @@ namespace KZ::replaysystem::data
 			g_pFullFileSystem->Close(file);
 			return result;
 		}
-		g_pFullFileSystem->Read(&result.tickCount, sizeof(result.tickCount), file);
-		totalBytesRead += sizeof(result.tickCount);
 		if (kz_replay_playback_debug.Get())
 		{
-			META_CONPRINTF("Loading %u ticks...\n", result.tickCount);
+			META_CONPRINTF("Loading compressed tick data...\n");
 		}
-		updateProgress(totalBytesRead);
 
-		result.tickData = new TickData[result.tickCount];
-		for (u32 i = 0; i < result.tickCount; i++)
+		std::vector<TickData> tickDataVec;
+		std::vector<SubtickData> subtickDataVec;
+
+		if (!KZ::replaysystem::compression::ReadTickDataCompressed(file, tickDataVec, subtickDataVec))
 		{
-			if (shouldCancel)
-			{
-				delete[] result.tickData;
-				g_pFullFileSystem->Close(file);
-				return {};
-			}
-
-			TickData tickData = {};
-			g_pFullFileSystem->Read(&tickData, sizeof(tickData), file);
-			result.tickData[i] = tickData;
-			totalBytesRead += sizeof(tickData);
-
-			// Update progress every 1000 ticks to avoid too frequent updates
-			if (i % 1000 == 0)
-			{
-				updateProgress(totalBytesRead);
-			}
-		}
-		updateProgress(totalBytesRead);
-
-		// Load subtick data
-		if (shouldCancel)
-		{
-			delete[] result.tickData;
 			g_pFullFileSystem->Close(file);
-			return {};
+			return result;
 		}
-		result.subtickData = new SubtickData[result.tickCount];
-		for (u32 i = 0; i < result.tickCount; i++)
-		{
-			if (shouldCancel)
-			{
-				delete[] result.tickData;
-				delete[] result.subtickData;
-				g_pFullFileSystem->Close(file);
-				return {};
-			}
 
-			SubtickData subtickData = {};
-			g_pFullFileSystem->Read(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
-			totalBytesRead += sizeof(subtickData.numSubtickMoves);
+		result.tickCount = tickDataVec.size();
 
-			g_pFullFileSystem->Read(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
-			totalBytesRead += sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves;
+		// Shrink to fit to ensure contiguous allocation
+		tickDataVec.shrink_to_fit();
+		subtickDataVec.shrink_to_fit();
 
-			result.subtickData[i] = subtickData;
+		// Transfer ownership - extract pointer and prevent deallocation
+		result.tickData = tickDataVec.data();
+		result.subtickData = subtickDataVec.data();
 
-			if (i % 1000 == 0)
-			{
-				updateProgress(totalBytesRead);
-			}
-		}
-		updateProgress(totalBytesRead);
+		// Null out the vector's internal pointers so it doesn't free the memory
+		new (&tickDataVec) std::vector<TickData>();
+		new (&subtickDataVec) std::vector<SubtickData>();
+
+		UpdateProgress(file, fileSize, progress);
 
 		// Load weapon data
 		if (shouldCancel)
@@ -304,37 +268,32 @@ namespace KZ::replaysystem::data
 			g_pFullFileSystem->Close(file);
 			return {};
 		}
-		g_pFullFileSystem->Read(&result.numWeapons, sizeof(result.numWeapons), file);
-		totalBytesRead += sizeof(result.numWeapons);
 		if (kz_replay_playback_debug.Get())
 		{
-			META_CONPRINTF("Loading %d weapon change events...\n", result.numWeapons);
+			META_CONPRINTF("Loading compressed weapon change events...\n");
 		}
+
+		std::vector<WeaponSwitchEvent> weaponEventsVec;
+
+		if (!KZ::replaysystem::compression::ReadWeaponChangesCompressed(file, weaponEventsVec))
+		{
+			delete[] result.tickData;
+			delete[] result.subtickData;
+			g_pFullFileSystem->Close(file);
+			return {};
+		}
+
+		result.numWeapons = weaponEventsVec.size();
 		result.weapons = new WeaponSwitchEvent[result.numWeapons + 1];
 		result.weapons[0] = {0, result.header.firstWeapon};
 
+		// Can't really do the vector transfer trick here since we need to add an extra initial entry.
 		for (i32 i = 0; i < result.numWeapons; i++)
 		{
-			if (shouldCancel)
-			{
-				delete[] result.tickData;
-				delete[] result.subtickData;
-				delete[] result.weapons;
-				g_pFullFileSystem->Close(file);
-				return {};
-			}
-
-			g_pFullFileSystem->Read(&result.weapons[i + 1].serverTick, sizeof(result.weapons[i + 1].serverTick), file);
-			g_pFullFileSystem->Read(&result.weapons[i + 1].econInfo.mainInfo, sizeof(result.weapons[i + 1].econInfo.mainInfo), file);
-			totalBytesRead += sizeof(result.weapons[i + 1].serverTick) + sizeof(result.weapons[i + 1].econInfo.mainInfo);
-
-			for (i32 j = 0; j < result.weapons[i + 1].econInfo.mainInfo.numAttributes; j++)
-			{
-				g_pFullFileSystem->Read(&result.weapons[i + 1].econInfo.attributes[j], sizeof(result.weapons[i + 1].econInfo.attributes[j]), file);
-				totalBytesRead += sizeof(result.weapons[i + 1].econInfo.attributes[j]);
-			}
+			result.weapons[i + 1] = weaponEventsVec[i];
 		}
-		updateProgress(totalBytesRead);
+
+		UpdateProgress(file, fileSize, progress);
 
 		// Load jump stats
 		if (shouldCancel)
@@ -345,53 +304,30 @@ namespace KZ::replaysystem::data
 			g_pFullFileSystem->Close(file);
 			return {};
 		}
-		g_pFullFileSystem->Read(&result.numJumps, sizeof(result.numJumps), file);
-		totalBytesRead += sizeof(result.numJumps);
 		if (kz_replay_playback_debug.Get())
 		{
-			META_CONPRINTF("Loading %d jumps...\n", result.numJumps);
+			META_CONPRINTF("Loading compressed jump stats...\n");
 		}
-		result.jumps = new RpJumpStats[result.numJumps];
-		for (u32 i = 0; i < result.numJumps; i++)
+
+		std::vector<RpJumpStats> jumpsVec;
+
+		if (!KZ::replaysystem::compression::ReadJumpsCompressed(file, jumpsVec))
 		{
-			if (shouldCancel)
-			{
-				delete[] result.tickData;
-				delete[] result.subtickData;
-				delete[] result.weapons;
-				delete[] result.jumps;
-				g_pFullFileSystem->Close(file);
-				return {};
-			}
-
-			g_pFullFileSystem->Read(&result.jumps[i].overall, sizeof(result.jumps[i].overall), file);
-			totalBytesRead += sizeof(result.jumps[i].overall);
-
-			// Load strafes
-			i32 numStrafes = 0;
-			g_pFullFileSystem->Read(&numStrafes, sizeof(numStrafes), file);
-			totalBytesRead += sizeof(numStrafes);
-
-			result.jumps[i].strafes.resize(numStrafes);
-			for (i32 j = 0; j < numStrafes; j++)
-			{
-				g_pFullFileSystem->Read(&result.jumps[i].strafes[j], sizeof(RpJumpStats::StrafeData), file);
-				totalBytesRead += sizeof(RpJumpStats::StrafeData);
-			}
-
-			// Load AA calls
-			i32 numAACalls = 0;
-			g_pFullFileSystem->Read(&numAACalls, sizeof(numAACalls), file);
-			totalBytesRead += sizeof(numAACalls);
-
-			result.jumps[i].aaCalls.resize(numAACalls);
-			for (i32 j = 0; j < numAACalls; j++)
-			{
-				g_pFullFileSystem->Read(&result.jumps[i].aaCalls[j], sizeof(RpJumpStats::AAData), file);
-				totalBytesRead += sizeof(RpJumpStats::AAData);
-			}
+			delete[] result.tickData;
+			delete[] result.subtickData;
+			delete[] result.weapons;
+			g_pFullFileSystem->Close(file);
+			return {};
 		}
-		updateProgress(totalBytesRead);
+
+		result.numJumps = jumpsVec.size();
+
+		// Shrink and extract
+		jumpsVec.shrink_to_fit();
+		result.jumps = jumpsVec.data();
+		new (&jumpsVec) std::vector<RpJumpStats>();
+
+		UpdateProgress(file, fileSize, progress);
 
 		// Load events
 		if (shouldCancel)
@@ -403,29 +339,31 @@ namespace KZ::replaysystem::data
 			g_pFullFileSystem->Close(file);
 			return {};
 		}
-		g_pFullFileSystem->Read(&result.numEvents, sizeof(result.numEvents), file);
-		totalBytesRead += sizeof(result.numEvents);
 		if (kz_replay_playback_debug.Get())
 		{
-			META_CONPRINTF("Loading %d events...\n", result.numEvents);
+			META_CONPRINTF("Loading compressed events...\n");
 		}
-		result.events = new RpEvent[result.numEvents];
-		for (u32 i = 0; i < result.numEvents; i++)
-		{
-			if (shouldCancel)
-			{
-				delete[] result.tickData;
-				delete[] result.subtickData;
-				delete[] result.weapons;
-				delete[] result.jumps;
-				delete[] result.events;
-				g_pFullFileSystem->Close(file);
-				return {};
-			}
 
-			g_pFullFileSystem->Read(&result.events[i], sizeof(result.events[i]), file);
-			totalBytesRead += sizeof(result.events[i]);
+		std::vector<RpEvent> eventsVec;
+
+		if (!KZ::replaysystem::compression::ReadEventsCompressed(file, eventsVec))
+		{
+			delete[] result.tickData;
+			delete[] result.subtickData;
+			delete[] result.weapons;
+			delete[] result.jumps;
+			g_pFullFileSystem->Close(file);
+			return {};
 		}
+
+		result.numEvents = eventsVec.size();
+
+		// Shrink and extract
+		eventsVec.shrink_to_fit();
+		result.events = eventsVec.data();
+		new (&eventsVec) std::vector<RpEvent>();
+
+		UpdateProgress(file, fileSize, progress);
 
 		result.valid = UUID_t::FromString(CUtlString(path).GetBaseFilename().StripExtension().Get(), &result.uuid);
 		assert(result.valid);

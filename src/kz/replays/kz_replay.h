@@ -18,8 +18,8 @@ enum : u32
 
 enum ReplayType : u32
 {
-	RP_MANUAL = 0,
-	RP_CHEATER = 1, // Contain a ban reason
+	RP_MANUAL = 0,  // Contain who saved the replay.
+	RP_CHEATER = 1, // Contain a reason and a reporter.
 	RP_RUN = 2,
 	RP_JUMPSTATS = 3 // Contain all jumpstats events that happen throughout the replay. Does not contain timer events.
 };
@@ -243,8 +243,8 @@ struct TickData
 		Pre data is obtained at the start of physics simulation, post data is obtained at the end.
 		Current input represents a simple version of CUserCmd, and is obtained on SetupMove/CreateMove pre hook.
 	*/
-	// This can change multiple times in a tick, for the sake of playback we just store and use the very last input (which should have a non zero
-	// frametime).
+	// This can change multiple times in a tick.
+	// For the sake of playback we just store and use the very last input (which should have a non zero frametime).
 	u32 cmdNumber {};
 	u32 clientTick {};
 	f32 forward {};
@@ -252,7 +252,7 @@ struct TickData
 	f32 up {};
 	bool leftHanded {};
 
-	struct
+	struct MovementData
 	{
 		Vector origin;
 		Vector velocity;

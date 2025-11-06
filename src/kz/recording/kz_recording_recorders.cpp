@@ -8,6 +8,7 @@
 #include "common.h"
 #include "sdk/cskeletoninstance.h"
 #include "sdk/usercmd.h"
+#include "kz/replays/kz_replaycompression.h"
 
 extern CConVar<bool> kz_replay_recording_debug;
 
@@ -331,15 +332,15 @@ bool Recorder::WriteToFile()
 	i32 bytesWritten = 0;
 	bytesWritten += this->WriteHeader(file);
 
-	bytesWritten += this->WriteTickData(file);
+	bytesWritten += KZ::replaysystem::compression::WriteTickDataCompressed(file, this->tickData, this->subtickData);
 
-	bytesWritten += this->WriteWeaponChanges(file);
+	bytesWritten += KZ::replaysystem::compression::WriteWeaponChangesCompressed(file, this->weaponChangeEvents);
 
-	bytesWritten += this->WriteJumps(file);
+	bytesWritten += KZ::replaysystem::compression::WriteJumpsCompressed(file, this->jumps);
 
-	bytesWritten += this->WriteEvents(file);
+	bytesWritten += KZ::replaysystem::compression::WriteEventsCompressed(file, this->rpEvents);
 
-	bytesWritten += this->WriteCmdData(file);
+	bytesWritten += KZ::replaysystem::compression::WriteCmdDataCompressed(file, this->cmdData, this->cmdSubtickData);
 	if (kz_replay_recording_debug.Get())
 	{
 		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%d bytes)\n", filename, bytesWritten);
@@ -356,110 +357,25 @@ i32 Recorder::WriteHeader(FileHandle_t file)
 
 i32 Recorder::WriteTickData(FileHandle_t file)
 {
-	i32 numWritten = 0;
-	i32 tickdataCount = this->tickData.size();
-	numWritten += g_pFullFileSystem->Write(&tickdataCount, sizeof(tickdataCount), file);
-	for (i32 i = 0; i < tickdataCount; i++)
-	{
-		TickData &tickData = this->tickData[i];
-		numWritten += g_pFullFileSystem->Write(&tickData, sizeof(TickData), file);
-	}
-	for (i32 i = 0; i < tickdataCount; i++)
-	{
-		SubtickData &subtickData = this->subtickData[i];
-		numWritten += g_pFullFileSystem->Write(&subtickData.numSubtickMoves, sizeof(subtickData.numSubtickMoves), file);
-		numWritten += g_pFullFileSystem->Write(&subtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * subtickData.numSubtickMoves, file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d tick data entries of %d bytes\n", tickdataCount, numWritten);
-	}
-	return numWritten;
+	return KZ::replaysystem::compression::WriteTickDataCompressed(file, this->tickData, this->subtickData);
 }
 
 i32 Recorder::WriteWeaponChanges(FileHandle_t file)
 {
-	i32 numWritten = 0;
-	i32 numWeaponChanges = this->weaponChangeEvents.size();
-	numWritten += g_pFullFileSystem->Write(&numWeaponChanges, sizeof(numWeaponChanges), file);
-	for (i32 i = 0; i < numWeaponChanges; i++)
-	{
-		WeaponSwitchEvent &event = this->weaponChangeEvents[i];
-		numWritten += g_pFullFileSystem->Write(&event.serverTick, sizeof(event.serverTick), file);
-		numWritten += g_pFullFileSystem->Write(&event.econInfo.mainInfo, sizeof(event.econInfo.mainInfo), file);
-		for (i32 j = 0; j < event.econInfo.mainInfo.numAttributes; j++)
-		{
-			numWritten += g_pFullFileSystem->Write(&event.econInfo.attributes[j], sizeof(event.econInfo.attributes[j]), file);
-		}
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d weapon change events of %d bytes\n", numWeaponChanges, numWritten);
-	}
-	return numWritten;
+	return KZ::replaysystem::compression::WriteWeaponChangesCompressed(file, this->weaponChangeEvents);
 }
 
 i32 Recorder::WriteJumps(FileHandle_t file)
 {
-	i32 numWritten = 0;
-	i32 numJumps = this->jumps.size();
-	numWritten += g_pFullFileSystem->Write(&numJumps, sizeof(numJumps), file);
-	for (i32 i = 0; i < numJumps; i++)
-	{
-		RpJumpStats &jump = this->jumps[i];
-		// Write jump data
-		numWritten += g_pFullFileSystem->Write(&jump.overall, sizeof(jump.overall), file);
-		i32 numStrafes = jump.strafes.size();
-		numWritten += g_pFullFileSystem->Write(&numStrafes, sizeof(numStrafes), file);
-		numWritten += g_pFullFileSystem->Write(jump.strafes.data(), sizeof(RpJumpStats::StrafeData) * numStrafes, file);
-		i32 numAACalls = jump.aaCalls.size();
-		numWritten += g_pFullFileSystem->Write(&numAACalls, sizeof(numAACalls), file);
-		numWritten += g_pFullFileSystem->Write(jump.aaCalls.data(), sizeof(RpJumpStats::AAData) * numAACalls, file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d jumps of %d bytes\n", numJumps, numWritten);
-	}
-	return numWritten;
+	return KZ::replaysystem::compression::WriteJumpsCompressed(file, this->jumps);
 }
 
 i32 Recorder::WriteEvents(FileHandle_t file)
 {
-	i32 numWritten = 0;
-	i32 numEvents = this->rpEvents.size();
-	numWritten += g_pFullFileSystem->Write(&numEvents, sizeof(numEvents), file);
-	for (i32 i = 0; i < numEvents; i++)
-	{
-		RpEvent &event = this->rpEvents[i];
-		numWritten += g_pFullFileSystem->Write(&event, sizeof(event), file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d events of %d bytes\n", numEvents, numWritten);
-	}
-	return numWritten;
+	return KZ::replaysystem::compression::WriteEventsCompressed(file, this->rpEvents);
 }
 
 i32 Recorder::WriteCmdData(FileHandle_t file)
 {
-	i32 numWritten = 0;
-	i32 cmddataCount = this->cmdData.size();
-	numWritten += g_pFullFileSystem->Write(&cmddataCount, sizeof(cmddataCount), file);
-	for (i32 i = 0; i < cmddataCount; i++)
-	{
-		CmdData &cmdData = this->cmdData[i];
-		numWritten += g_pFullFileSystem->Write(&cmdData, sizeof(CmdData), file);
-	}
-	for (i32 i = 0; i < cmddataCount; i++)
-	{
-		SubtickData &cmdSubtickData = this->cmdSubtickData[i];
-		numWritten += g_pFullFileSystem->Write(&cmdSubtickData.numSubtickMoves, sizeof(cmdSubtickData.numSubtickMoves), file);
-		numWritten +=
-			g_pFullFileSystem->Write(&cmdSubtickData.subtickMoves, sizeof(SubtickData::RpSubtickMove) * cmdSubtickData.numSubtickMoves, file);
-	}
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote %d cmd data entries of %d bytes\n", cmddataCount, numWritten);
-	}
-	return numWritten;
+	return KZ::replaysystem::compression::WriteCmdDataCompressed(file, this->cmdData, this->cmdSubtickData);
 }
