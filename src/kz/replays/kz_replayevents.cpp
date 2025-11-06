@@ -96,6 +96,11 @@ namespace KZ::replaysystem::events
 					break;
 				}
 
+				for (KZPlayer *spec = player.specService->GetNextSpectator(NULL); spec != NULL; spec = player.specService->GetNextSpectator(spec))
+				{
+					spec->timerService->PlayTimerStartSound();
+				}
+
 				replay->startTime = g_pKZUtils->GetServerGlobals()->curtime - event->data.timer.time;
 				replay->endTime = 0.0f;
 				replay->lastSplitTime = 0.0f;
