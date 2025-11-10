@@ -56,6 +56,9 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 		this->customStartPosition.slopeDropHeight = startPos->FindMember("slopeDropHeight")->GetFloat();
 		this->hasCustomStartPosition = true;
 	}
+
+	player->checkpointService->checkpointSound = player->optionService->GetPreferenceBool("checkpointSound", true);
+	player->checkpointService->teleportSound = player->optionService->GetPreferenceBool("teleportSound", true);
 }
 
 void KZCheckpointService::ResetCheckpoints(bool playSound, bool resetTeleports)
@@ -414,12 +417,18 @@ void KZCheckpointService::TpToStartPosition()
 
 void KZCheckpointService::PlayCheckpointSound()
 {
-	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_SET_CP);
+	if (this->checkpointSound)
+	{
+		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_SET_CP);
+	}
 }
 
 void KZCheckpointService::PlayTeleportSound()
 {
-	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_DO_TP);
+	if (this->teleportSound)
+	{
+		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_DO_TP);
+	}
 }
 
 void KZCheckpointService::PlayCheckpointResetSound()

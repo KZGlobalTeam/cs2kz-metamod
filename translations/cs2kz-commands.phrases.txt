@@ -387,6 +387,14 @@
 		"ko"		"사용자 지정 시작 위치를 초기화합니다."
 		"lv"		"Notīrīt savu pielāgoto starta pozīciju."
 	}
+	"Command Description - kz_cpsound"
+	{
+		"en"		"Toggle checkpoint sound effect."
+	}
+	"Command Description - kz_tpsound"
+	{
+		"en"		"Toggle teleport sound effect."
+	}
 	"Command Description - kz_panel"
 	{
 		"en"		"Toggle centre panel display."

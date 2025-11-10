@@ -265,4 +265,20 @@
 		"es"		"{darkred}El mapa ha limpiado tus checkpoints."
 		"lv"		"{darkred}Karte ir notīrījusi tavus kontrolpunktus."
 	}
+	"Checkpoint Options - Checkpoint Sound - Enable"
+	{
+		"en"		"{grey}You have enabled checkpoint sound."
+	}
+	"Checkpoint Options - Checkpoint Sound - Disable"
+	{
+		"en"		"{grey}You have disabled checkpoint sound."
+	}
+	"Checkpoint Options - Teleport Sound - Enable"
+	{
+		"en"		"{grey}You have enabled teleport sound."
+	}
+	"Checkpoint Options - Teleport Sound - Disable"
+	{
+		"en"		"{grey}You have disabled teleport sound."
+	}
 }

@@ -1,5 +1,7 @@
 #include "kz_checkpoint.h"
 #include "utils/simplecmds.h"
+#include "kz/language/kz_language.h"
+#include "kz/option/kz_option.h"
 
 SCMD(kz_checkpoint, SCFL_CHECKPOINT)
 {
@@ -61,3 +63,34 @@ SCMD(kz_clearstartpos, SCFL_CHECKPOINT)
 }
 
 SCMD_LINK(kz_csp, kz_clearstartpos);
+
+SCMD(kz_cpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->checkpointService->checkpointSound = !player->checkpointService->checkpointSound;
+	player->optionService->SetPreferenceBool("checkpointSound", player->checkpointService->checkpointSound);
+	if (player->checkpointService->checkpointSound)
+	{
+		player->languageService->PrintChat(true, false, "Checkpoint Options - Checkpoint Sound - Enable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Checkpoint Options - Checkpoint Sound - Disable");
+	}
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_tpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->checkpointService->teleportSound = !player->checkpointService->teleportSound;
+	if (player->checkpointService->teleportSound)
+	{
+		player->languageService->PrintChat(true, false, "Checkpoint Options - Teleport Sound - Enable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Checkpoint Options - Teleport Sound - Disable");
+	}
+	return MRES_SUPERCEDE;
+}

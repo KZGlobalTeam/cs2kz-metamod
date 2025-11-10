@@ -92,4 +92,7 @@ public:
 	void PlayCheckpointSound();
 	void PlayTeleportSound();
 	void PlayCheckpointResetSound();
+
+	bool checkpointSound {};
+	bool teleportSound {};
 };
