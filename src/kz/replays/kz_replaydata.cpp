@@ -348,10 +348,19 @@ namespace KZ::replaysystem::data
 
 		result.numJumps = jumpsVec.size();
 
-		// Shrink and extract
-		jumpsVec.shrink_to_fit();
-		result.jumps = jumpsVec.data();
-		new (&jumpsVec) std::vector<RpJumpStats>();
+		// Allocate and move data (can't use the pointer trick because RpJumpStats has non-trivial destructors)
+		if (result.numJumps > 0)
+		{
+			result.jumps = new RpJumpStats[result.numJumps];
+			for (size_t i = 0; i < result.numJumps; i++)
+			{
+				result.jumps[i] = std::move(jumpsVec[i]);
+			}
+		}
+		else
+		{
+			result.jumps = nullptr;
+		}
 
 		UpdateProgress(file, fileSize, progress);
 
