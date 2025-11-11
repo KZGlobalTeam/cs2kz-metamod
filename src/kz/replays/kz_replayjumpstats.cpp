@@ -2,6 +2,7 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/language/kz_language.h"
 #include "kz/spec/kz_spec.h"
+#include "kz/option/kz_option.h"
 #include "kz_replay.h"
 
 void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
@@ -233,7 +234,7 @@ void RpJumpStats::PrintJump(KZPlayer *bot)
 	bool valid = jump.GetOffset() > -JS_EPSILON && jump.IsValid();
 	for (KZPlayer *pl = bot->specService->GetNextSpectator(nullptr); pl != nullptr; pl = bot->specService->GetNextSpectator(pl))
 	{
-		if (!valid && !pl->jumpstatsService->jsAlways)
+		if (!valid && !pl->optionService->GetPreferenceBool("jsAlways", false))
 		{
 			continue;
 		}

@@ -297,7 +297,7 @@ namespace KZ::replaysystem::commands
 
 		NavigateReplay(player, targetTick);
 		char time[32];
-		utils::FormatTime(targetTick, time, sizeof(time), false);
+		utils::FormatTime(targetTick * ENGINE_FIXED_TICK_INTERVAL, time, sizeof(time), false);
 		player->languageService->PrintChat(true, false, "Replay - Jumped To Tick", targetTick, time);
 	}
 
