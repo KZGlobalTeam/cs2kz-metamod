@@ -36,7 +36,7 @@
 	}
 	"Tip - kz_rpseek"
 	{
-		"en"		"{grey}Type {default}!rpseek <time> {grey}to seek to a specific time in the replay."
+		"en"		"{grey}Type {default}!rpseek <time> {grey}to relatively seek to a time in the replay."
 	}
 	"Tip - kz_rpsave"
 	{

@@ -199,7 +199,7 @@ namespace KZ::replaysystem::commands
 		}
 
 		char time[32];
-		utils::FormatTime(targetTick, time, sizeof(time), false);
+		utils::FormatTime(targetTick * ENGINE_FIXED_TICK_INTERVAL, time, sizeof(time), false);
 		char maxTime[32];
 		utils::FormatTime((replay->tickCount - 1) * ENGINE_FIXED_TICK_INTERVAL, maxTime, sizeof(maxTime), false);
 		if (targetTick >= replay->tickCount)
