@@ -485,6 +485,18 @@
 		"ko"		"점프 통계를 전환합니다."
 		"lv"		"Ieslēgt/Izslēgt always-on jumpstats."
 	}
+    "Command Description - kz_jstier"
+    {
+        "en"        "Set your minimum jumpstats reporting tier."
+    }
+    "Command Description - kz_jstierconsole"
+    {
+        "en"        "Set your minimum jumpstats console reporting tier."
+    }
+    "Command Description - kz_jsbroadcastsound"
+    {
+        "en"        "Set the minimum tier for jumpstats sound broadcast."
+    }
 	"Command Description - kz_mode"
 	{
 		"en"		"List or change mode."
@@ -1192,4 +1204,5 @@
 		"chi"		"更改或移除当前手枪."
 		"ua"		"Змінити або видалити поточний пістолет."
 	}
+	
 }

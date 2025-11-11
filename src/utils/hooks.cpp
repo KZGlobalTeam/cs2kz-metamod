@@ -671,7 +671,6 @@ static_function bool Hook_ActivateServer()
 
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size);
 
-	KZJumpstatsService::OnServerActivate();
 	RecordAnnounce::Clear();
 	KZ::misc::OnServerActivate();
 	KZDatabaseService::SetupMap();

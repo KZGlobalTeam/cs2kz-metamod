@@ -380,14 +380,6 @@ public:
 	}
 
 	// Jumpstats
-
-private:
-	DistanceTier broadcastMinTier {};
-	DistanceTier soundMinTier {};
-
-	bool jsAlways {};
-	bool showJumpstats {}; // Need change to type
-
 	CUtlVector<Jump> jumps;
 	f32 lastJumpButtonTime {};
 	f32 lastNoclipTime {};
@@ -400,30 +392,24 @@ private:
 	bool ladderHopThisMove {};
 
 public:
-	static void StartDemoRecording(CUtlString playerName);
-	static void OnServerActivate();
-	static DistanceTier GetDistTierFromString(const char *tierString);
 
+private:
+	DistanceTier broadcastMinTier = DistanceTier_Godlike;
+	DistanceTier broadcastSoundMinTier = DistanceTier_Godlike;
+	DistanceTier minTier = DistanceTier_Impressive;
+	DistanceTier minTierConsole = DistanceTier_Impressive;
+	DistanceTier soundMinTier = DistanceTier_Impressive;
+	bool jsAlways {};
+
+public:
+	bool GetDistTierFromString(const char *tierString, DistanceTier &outTier);
 	void SetBroadcastMinTier(const char *tierString);
+	void SetBroadcastSoundMinTier(const char *tierString);
+	void SetMinTier(const char *tierString);
+	void SetMinTierConsole(const char *tierString);
 	void SetSoundMinTier(const char *tierString);
 
-	DistanceTier GetBroadcastMinTier()
-	{
-		return this->broadcastMinTier;
-	};
-
-	DistanceTier GetSoundMinTier()
-	{
-		return this->soundMinTier;
-	}
-
 	void ToggleJSAlways();
-	void ToggleJumpstatsReporting();
-
-	bool ShouldDisplayJumpstats()
-	{
-		return this->showJumpstats;
-	} // TODO: Use DistanceTier type instead
 
 	virtual void Reset() override;
 	void OnProcessMovement();
@@ -459,10 +445,12 @@ public:
 	void DetectExternalModifications();
 	void DetectWater();
 
-	static void BroadcastJumpToChat(Jump *jump);
-	static void PlayJumpstatSound(KZPlayer *target, Jump *jump);
-	static void PrintJumpToChat(KZPlayer *target, Jump *jump);
+	static void BroadcastJumpToChat(KZPlayer *target, Jump *jump);
+	static void PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast = false);
+	static void PrintJumpToChat(KZPlayer *target, Jump *jump, bool advanced = false);
 	static void PrintJumpToConsole(KZPlayer *target, Jump *jump);
+
+	static void AnnounceJump(Jump *jump);
 
 	f32 GetLastWPressedTime()
 	{

@@ -601,6 +601,10 @@
 		"es"		"{grey}Has desactivado las estadísticas de salto siempre activas."
 		"lv"		"{grey}Tu esi atspējojis vienmēr ieslēgto lēcienu statistiku."
 	}
+	"Jumpstats Option - Tier Hint"
+	{
+		"en"		"{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
 		"en"		"{grey}Usage: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
@@ -728,7 +732,23 @@
 		"es"		"({reason})"
 		"lv"		"({reason})"
 	}
-	
+		
+	"Jumpstats Report - Chat Summary (Simple)"
+	{
+		// LJ: 258.1 | 6 Strafes | 79% Sync | 275.81 Pre | 346.98 Max
+		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,deviation:.1f,width:.1f,height:.2f"
+		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max"
+		"chi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}同步 | {olive}{pre} {grey}地速 | {olive}{max} {grey}空速"
+		"pl"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max"
+		"fi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Synkki | {olive}{pre} {grey}Edeltävä | {olive}{max} {grey}Maks"
+		"sv"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Synk | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max"
+		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр. | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс."
+		"tr"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max"
+		"it"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max"
+		"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대"
+		"es"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sinc | {olive}{pre} {grey}Pre | {olive}{max} {grey}Máx"
+		"lv"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max"
+	}
 	"Jumpstats Report - Chat Summary"
 	{
 		// LJ: 258.1 | 6 Strafes | 79% Sync | 275.81 Pre | 346.98 Max
@@ -793,5 +813,32 @@
 		"ko"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
 		"es"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Desviación | {width} Ancho | {air_time} Tiempo en el aire | {offset} Desplazamiento | {duck_end_time}/{duck_total_time} Agachado"
 		"lv"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+	}
+	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
+	{
+		"en"		"{grey}Jumpstats chat reporting disabled."
+	}
+	"Jumpstats Option - Jumpstats Minimum Tier - Response"
+	{
+		"#format"	"tier:s"
+		"en"		"{grey}Jumpstats chat reporting threshold is now {default}{tier}."
+	}
+	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
+	{
+		"en"		"{grey}Jumpstats console reporting disabled."
+	}
+	"Jumpstats Option - Jumpstats Minimum Console Tier - Response"
+	{
+		"#format"	"tier:s"
+		"en"		"{grey}Jumpstats console reporting threshold is now {default}{tier}."
+	}
+	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
+	{
+		"en"		"{grey}Jumpstats sound broadcast disabled."
+	}
+	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
+	{
+		"#format"	"tier:s"
+		"en"		"{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
 	}
 }

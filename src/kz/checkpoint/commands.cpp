@@ -80,6 +80,8 @@ SCMD(kz_cpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
 	return MRES_SUPERCEDE;
 }
 
+SCMD_LINK(kz_checkpointsound, kz_cpsound);
+
 SCMD(kz_tpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -94,3 +96,5 @@ SCMD(kz_tpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
 	}
 	return MRES_SUPERCEDE;
 }
+
+SCMD_LINK(kz_teleportsound, kz_tpsound);

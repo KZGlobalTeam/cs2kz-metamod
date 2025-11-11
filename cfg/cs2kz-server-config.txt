@@ -3,7 +3,7 @@
 	// Default mode for players.
 	"defaultMode"				"Classic"
 	
-	// Default style for players.
+	// Default style(s) for players.
 	"defaultStyles"				""
 	
 	// How long should a map run for before it must be reloaded in minutes (maximum 24 hours)
@@ -15,18 +15,21 @@
 	// Interval between tips.
 	"tipInterval"				"75"
 	
-	// Minimum jumpstat tier for broadcasting.
-	"defaultJSBroadcastMinTier"	"4"
-	
 	// Minimum jumpstat tier for sound effect.
 	"defaultJSSoundMinTier"		"4"
 	
-	// Whether jumpstats should be enabled by default.
-	"defaultShowJS"				"true"
+	// Minimum jumpstat tier for showing jumpstats.
+	"defaultJSMinTier"			"2"
+
+	// Minimum jumpstat tier for showing jumpstats in console.
+	"defaultJSMinTierConsole"	"1"
+
+	// Minimum jumpstat tier for broadcasting.
+	"defaultJSBroadcastMinTier"	"4"
 	
-	// Enable this to automatically record a one minute long demo of players when someone hits a wrecker jumpstat.
-	"autoDemoRecording"			"false"
-	
+	// Minimum jumpstat tier for broadcasting sound effect.
+	"defaultJSBroadcastSoundMinTier"	"2"
+
 	// Default chat prefix.
 	"chatPrefix"				"{lime}KZ {grey}|{default}"
 	
