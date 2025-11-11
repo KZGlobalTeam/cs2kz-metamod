@@ -394,12 +394,6 @@ public:
 public:
 
 private:
-	DistanceTier broadcastMinTier = DistanceTier_Godlike;
-	DistanceTier broadcastSoundMinTier = DistanceTier_Godlike;
-	DistanceTier minTier = DistanceTier_Impressive;
-	DistanceTier minTierConsole = DistanceTier_Impressive;
-	DistanceTier soundMinTier = DistanceTier_Impressive;
-	bool jsAlways {};
 
 public:
 	bool GetDistTierFromString(const char *tierString, DistanceTier &outTier);
@@ -408,8 +402,9 @@ public:
 	void SetMinTier(const char *tierString);
 	void SetMinTierConsole(const char *tierString);
 	void SetSoundMinTier(const char *tierString);
-
+	void ToggleExtendedChatStats();
 	void ToggleJSAlways();
+	void SetJumpstatsVolume(f32 volume);
 
 	virtual void Reset() override;
 	void OnProcessMovement();
@@ -447,7 +442,7 @@ public:
 
 	static void BroadcastJumpToChat(KZPlayer *target, Jump *jump);
 	static void PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast = false);
-	static void PrintJumpToChat(KZPlayer *target, Jump *jump, bool advanced = false);
+	static void PrintJumpToChat(KZPlayer *target, Jump *jump, bool extended = false);
 	static void PrintJumpToConsole(KZPlayer *target, Jump *jump);
 
 	static void AnnounceJump(Jump *jump);

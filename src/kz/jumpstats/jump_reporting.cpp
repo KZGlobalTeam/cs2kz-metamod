@@ -35,7 +35,7 @@ std::string Jump::GetInvalidationReasonString(const char *reason, const char *la
 	return std::string(KZLanguageService::PrepareMessageWithLang(lang, "Jumpstats Report - Invalidation Reason", reasonText.c_str()));
 }
 
-void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool advanced)
+void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool extended)
 {
 	if (!target || !target->IsInGame())
 	{
@@ -43,7 +43,8 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool adva
 	}
 	const char *language = target->languageService->GetLanguage();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->jumpstatsService->minTier == DistanceTier_None || color < target->jumpstatsService->minTier)
+	if (target->optionService->GetPreferenceInt("jsMinTier", DistanceTier_Impressive) == DistanceTier_None
+		|| color < target->optionService->GetPreferenceInt("jsMinTier", DistanceTier_Impressive))
 	{
 		return;
 	}
@@ -55,7 +56,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool adva
 
 	f32 flooredDist = floor(jump->GetDistance() * 10) / 10;
 
-	if (!advanced)
+	if (!extended)
 	{
 		// clang-format off
 		target->languageService->PrintChat(true, false, "Jumpstats Report - Chat Summary (Simple)", 
@@ -97,7 +98,8 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 	}
 
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->jumpstatsService->minTierConsole == DistanceTier_None || color < target->jumpstatsService->minTierConsole)
+	if (target->optionService->GetPreferenceInt("jsMinTierConsole", DistanceTier_Impressive) == DistanceTier_None
+		|| color < target->optionService->GetPreferenceInt("jsMinTierConsole", DistanceTier_Impressive))
 	{
 		if (!target->IsCSTV())
 		{
@@ -222,8 +224,9 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[tier];
 
-	bool broadcastEnabled = target->jumpstatsService->broadcastMinTier != DistanceTier_None;
-	bool validBroadcastTier = tier >= target->jumpstatsService->broadcastMinTier;
+	DistanceTier broadcastTier = static_cast<DistanceTier>(target->optionService->GetOptionInt("jsBroadcastMinTier", DistanceTier_Godlike));
+	bool broadcastEnabled = broadcastTier != DistanceTier_None;
+	bool validBroadcastTier = tier >= broadcastTier;
 	if (broadcastEnabled && validBroadcastTier)
 	{
 		// clang-format off
@@ -243,13 +246,15 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast)
 {
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	DistanceTier soundMinTier = broadcast ? target->jumpstatsService->broadcastSoundMinTier : target->jumpstatsService->soundMinTier;
+	DistanceTier soundMinTier =
+		broadcast ? static_cast<DistanceTier>(target->optionService->GetPreferenceInt("jsBroadcastSoundMinTier", DistanceTier_Godlike))
+				  : static_cast<DistanceTier>(target->optionService->GetPreferenceInt("jsSoundMinTier", DistanceTier_Impressive));
 	if (soundMinTier > tier || tier <= DistanceTier_Meh || soundMinTier == DistanceTier_None)
 	{
 		return;
 	}
 
-	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[tier], 0.75f);
+	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[tier], target->optionService->GetPreferenceFloat("jsVolume", 0.75f));
 }
 
 void KZJumpstatsService::AnnounceJump(Jump *jump)
@@ -268,12 +273,11 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
 		if (player == jump->GetJumpPlayer() || jump->GetJumpPlayer()->specService->GetSpectatedPlayer() == player)
 		{
-			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->jumpstatsService->jsAlways)
+			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->optionService->GetPreferenceBool("jsAlways", false))
 			{
 				continue;
 			}
-			bool advancedReporting = player->optionService->GetPreferenceBool("jsAdvancedChatReporting", false);
-			KZJumpstatsService::PrintJumpToChat(player, jump, advancedReporting);
+			KZJumpstatsService::PrintJumpToChat(player, jump, player->optionService->GetPreferenceBool("jsExtendedChatStats", false));
 			KZJumpstatsService::PrintJumpToConsole(player, jump);
 			KZJumpstatsService::PlayJumpstatSound(player, jump);
 		}
@@ -286,7 +290,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player has broadcasting enabled, we show a brief summary in chat and play a sound.
 		else
 		{
-			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->jumpstatsService->jsAlways)
+			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->optionService->GetPreferenceBool("jsAlways", false))
 			{
 				continue;
 			}

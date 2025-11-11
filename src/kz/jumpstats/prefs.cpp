@@ -70,12 +70,12 @@ void KZJumpstatsService::SetBroadcastMinTier(const char *tierString)
 		return;
 	}
 
-	if (tier == this->broadcastMinTier)
+	if (tier == this->player->optionService->GetPreferenceInt("jsBroadcastMinTier", DistanceTier_Godlike))
 	{
 		return;
 	}
 
-	this->broadcastMinTier = tier;
+	this->player->optionService->SetPreferenceInt("jsBroadcastMinTier", tier);
 	if (tier == 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled");
@@ -95,12 +95,12 @@ void KZJumpstatsService::SetBroadcastSoundMinTier(const char *tierString)
 		return;
 	}
 
-	if (tier == this->broadcastSoundMinTier)
+	if (tier == this->player->optionService->GetPreferenceInt("jsBroadcastSoundMinTier", DistanceTier_Godlike))
 	{
 		return;
 	}
 
-	this->broadcastSoundMinTier = tier;
+	this->player->optionService->SetPreferenceInt("jsBroadcastSoundMinTier", tier);
 	if (tier == 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled");
@@ -120,12 +120,12 @@ void KZJumpstatsService::SetMinTier(const char *tierString)
 		return;
 	}
 
-	if (tier == this->minTier)
+	if (tier == this->player->optionService->GetPreferenceInt("jsMinTier", DistanceTier_Impressive))
 	{
 		return;
 	}
 
-	this->minTier = tier;
+	this->player->optionService->SetPreferenceInt("jsMinTier", tier);
 	if (tier == 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Tier - Disabled");
@@ -145,12 +145,12 @@ void KZJumpstatsService::SetMinTierConsole(const char *tierString)
 		return;
 	}
 
-	if (tier == this->minTierConsole)
+	if (tier == this->player->optionService->GetPreferenceInt("jsMinTierConsole", DistanceTier_Impressive))
 	{
 		return;
 	}
 
-	this->minTierConsole = tier;
+	this->player->optionService->SetPreferenceInt("jsMinTierConsole", tier);
 	if (tier == 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled");
@@ -159,6 +159,26 @@ void KZJumpstatsService::SetMinTierConsole(const char *tierString)
 	{
 		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Console Tier - Response", tierString);
 	}
+}
+
+void KZJumpstatsService::ToggleExtendedChatStats()
+{
+	this->player->optionService->SetPreferenceBool("jsExtendedChatStats",
+												   !this->player->optionService->GetPreferenceBool("jsExtendedChatStats", false));
+	if (this->player->optionService->GetPreferenceBool("jsExtendedChatStats", false))
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Extended Chat Stats - Enable");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Extended Chat Stats - Disable");
+	}
+}
+
+void KZJumpstatsService::SetJumpstatsVolume(f32 volume)
+{
+	this->player->optionService->SetPreferenceFloat("jsVolume", volume);
+	this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Volume - Response", volume);
 }
 
 void KZJumpstatsService::SetSoundMinTier(const char *tierString)
@@ -170,12 +190,12 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 		return;
 	}
 
-	if (tier == this->soundMinTier)
+	if (tier == this->player->optionService->GetPreferenceInt("jsSoundMinTier", DistanceTier_Impressive))
 	{
 		return;
 	}
 
-	this->soundMinTier = tier;
+	this->player->optionService->SetPreferenceInt("jsSoundMinTier", tier);
 	if (tier == 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled");
@@ -188,8 +208,8 @@ void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 
 void KZJumpstatsService::ToggleJSAlways()
 {
-	this->jsAlways = !this->jsAlways;
-	if (this->jsAlways)
+	this->player->optionService->SetPreferenceBool("jsAlways", !this->player->optionService->GetPreferenceBool("jsAlways", false));
+	if (this->player->optionService->GetPreferenceBool("jsAlways", false))
 	{
 		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Always - Enable");
 	}
@@ -238,5 +258,21 @@ SCMD(kz_jsalways, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleJSAlways();
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_jsextend, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleExtendedChatStats();
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_jsvolume, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	f32 volume = Clamp(static_cast<f32>(V_atof(args->Arg(1))), 0.0f, 1.0f);
+
+	player->jumpstatsService->SetJumpstatsVolume(volume);
 	return MRES_SUPERCEDE;
 }
