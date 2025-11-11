@@ -1,0 +1,45 @@
+"Phrases"
+{
+	"Tip - kz_replay"
+	{
+		"en"		"{grey}Type {default}!replay {grey}to watch the server's fastest runs."
+		"chi"		"{grey}在聊天框中输入 {default}!replay {grey}以观察最快纪录视角."
+		"ru"		"{grey}Напишите {default}!replay {grey}для просмотра лучшего прохождения карты на этом сервере."
+	}
+	"Tip - kz_replays"
+	{
+		"en"		"{grey}Type {default}!replays {grey}to list available replays in the server."
+	}
+	"Tip - kz_rpgoto"
+	{
+		"en"		"{grey}Type {default}!rpgoto <time> {grey}to jump to a specific time in the replay. Example: !rpgoto 1:23."
+	}
+	"Tip - kz_rpgototick"
+	{
+		"en"		"{grey}Type {default}!rpgototick <tick> {grey}to jump to a specific tick in the replay."
+	}
+	"Tip - kz_rpinfo"
+	{
+		"en"		"{grey}Type {default}!rpinfo {grey}to show information about the current replay."
+	}
+	"Tip - kz_rppause"
+	{
+		"en"		"{grey}Type {default}!rppause {grey}to pause or resume the replay playback."
+	}
+	"Tip - kz_rploadprogress"
+	{
+		"en"		"{grey}Type {default}!rploadprogress {grey}to check the loading progress of a replay."
+	}
+	"Tip - kz_rpcancelload"
+	{
+		"en"		"{grey}Type {default}!rpcancelload {grey}to cancel loading a replay."
+	}
+	"Tip - kz_rpseek"
+	{
+		"en"		"{grey}Type {default}!rpseek <time> {grey}to seek to a specific time in the replay."
+	}
+	"Tip - kz_rpsave"
+	{
+		"en"		"{grey}Type {default}!rpsave <seconds> {grey}to save a manual replay of up to the specified duration."
+	}
+}
