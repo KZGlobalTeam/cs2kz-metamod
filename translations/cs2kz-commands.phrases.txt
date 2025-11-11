@@ -505,7 +505,7 @@
     {
         "en"        "Set the minimum tier for jumpstats sound broadcast."
         "ua"        "Встановити мінімальний рівень для звукових ефектів під час стрибків."
-		"sv"        "Ställ in miniminivån för jumpstats-ljudsändning."
+		"sv"        "Ange miniminivån för jumpstats-ljudsändning."
     }
 	"Command Description - kz_jsextend"
 	{
@@ -517,7 +517,7 @@
 	{
 		"en"		"Set jumpstats sound effect volume."
 		"ua"		"Встановити гучність ефектів стрибків."
-		"sv"		"Ställ in volymen för jumpstats-ljudeffekter."
+		"sv"		"Ange volymen för jumpstats-ljudeffekter."
 	}
 	"Command Description - kz_mode"
 	{
