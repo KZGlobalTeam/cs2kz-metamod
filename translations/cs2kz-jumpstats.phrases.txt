@@ -605,6 +605,7 @@
 	{
 		"en"		"{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"ua"		"{grey}Існуючі тіри стрибків: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+		"sv"		"{grey}Giltiga jumpstats nivåer: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -832,38 +833,45 @@
 	{
 		"en"		"{grey}Jumpstats console reporting disabled."
 		"ua"		"{grey}Відображення статистики стрибків у консолі вимкнено."
+		"sv"		"{grey}Jumpstats konsolrapportering inaktiverad."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats console reporting threshold is now {default}{tier}."
 		"ua"		"{grey}Поріг відображення статистики стрибків у консолі встановлено на {default}{tier}."
+		"sv"		"{grey}Jumpstats konsolrapportering tröskeln är nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats sound broadcast disabled."
 		"ua"		"{grey}Звукові ефекти для стрибків вимкнено."
+		"sv"		"{grey}Jumpstats ljudsändning inaktiverad."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
 		"ua"		"{grey}Поріг звукових ефектів для стрибків встановлено на {default}{tier}."
+		"sv"		"{grey}Jumpstats ljudsändning tröskeln är nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Volume - Response"
 	{
 		"#format"	"volume:.1f"
 		"en"		"{grey}Jumpstats volume set to {default}{volume}."
 		"ua"		"{grey}Гучність звукових ефектів стрибків встановлено на {default}{volume}."
+		"sv"		"{grey}Jumpstats volymen är nu {default}{volume}."
 	}
 	"Jumpstats Option - Extended Chat Stats - Enable"
 	{
 		"en"		"{grey}Extended jumpstats chat reporting enabled."
 		"ua"		"{grey}Увімкнено розширену статистику стрибків."
+		"sv"		"{grey}Utökad jumpstats chattrapportering aktiverat."
 	}
 	"Jumpstats Option - Extended Chat Stats - Disable"
 	{
 		"en"		"{grey}Extended jumpstats chat reporting disabled."
 		"ua"		"{grey}Розширену статистику стрибків вимкнуто."
+		"sv"		"{grey}Utökad jumpstats chattrapportering inaktiverat."
 	}
 }
