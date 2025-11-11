@@ -511,7 +511,7 @@
 	{
 		"en"		"Toggle extended jumpstats reporting in chat."
 		"ua"		"Перемикання розширеної статистики стрибків у чаті."
-		"sv"		"På/Av utökad jumpstatsrapportering i chatten."
+		"sv"		"Aktivera/Inaktivera utökad jumpstatsrapportering i chatten."
 	}
 	"Command Description - kz_jsvolume"
 	{
@@ -1213,7 +1213,7 @@
 		"en"		"Toggle the timer stop sound."
 		"chi"		"切换计时器停止音效."
 		"ua"		"Увімк./вимк. звук зупинки таймера."
-		"sv"		"På/av timerstoppljud."
+		"sv"		"Aktivera/Inaktivera timerstoppljud."
 	}
 	"Command Description - kz_autohideweapon"
 	{
