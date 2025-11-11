@@ -160,7 +160,7 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 {
 	// Manual override > Loaded preference > Queried ConVar
 	auto &langInfo = KZLanguageService::clientLanguageInfos[xuid];
-	const char *addon = addonsKV->GetString(langKey, addonsKV->GetString(KZ_DEFAULT_LANGUAGE));
+	const char *addon = addonsKV->GetString(langKey, addonsKV->GetString(KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE)));
 	if (langInfo.cacheLevel > cacheLevel)
 	{
 		return;
