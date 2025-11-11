@@ -382,10 +382,6 @@ public:
 	bool ladderHopThisMove {};
 
 public:
-
-private:
-
-public:
 	bool GetDistTierFromString(const char *tierString, DistanceTier &outTier);
 	void SetBroadcastMinTier(const char *tierString);
 	void SetBroadcastSoundMinTier(const char *tierString);

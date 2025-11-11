@@ -852,19 +852,7 @@ void KZJumpstatsService::EndJump()
 	{
 		return;
 	}
-	if ((jump->GetOffset() > -JS_EPSILON && jump->IsValid()) || this->jsAlways)
-	{
-		if (this->ShouldDisplayJumpstats())
-		{
-			KZJumpstatsService::PrintJumpToChat(this->player, jump);
-		}
-		DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-		if (tier >= DistanceTier_Wrecker && !jump->GetJumpPlayer()->jumpstatsService->jsAlways)
-		{
-			KZJumpstatsService::StartDemoRecording(jump->GetJumpPlayer()->GetName());
-		}
-		KZJumpstatsService::AnnounceJump(jump);
-	}
+	KZJumpstatsService::AnnounceJump(jump);
 	this->player->recordingService->OnJumpFinish(jump);
 }
 
