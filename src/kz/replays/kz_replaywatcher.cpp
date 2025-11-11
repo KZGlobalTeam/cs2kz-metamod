@@ -382,7 +382,7 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 	{
 		criteria.mapName = kv->GetString();
 	}
-	else if (criteria.type == RP_RUN)
+	else
 	{
 		criteria.mapName = g_pKZUtils->GetCurrentMapName().Get();
 	}
@@ -464,6 +464,10 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 			if (kv)
 			{
 				criteria.modeNameSubString = kv->GetString();
+			}
+			else
+			{
+				criteria.modeNameSubString = player->modeService->GetModeName();
 			}
 			kv = params.FindMember("mindistance");
 			if (!kv)

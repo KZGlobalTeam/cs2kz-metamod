@@ -70,7 +70,7 @@ struct ReplayFilterCriteria
 		std::optional<u64> steamID;
 	} player, savedBy; // savedBy is only for manual replays.
 
-	// Current map name by default.
+	// Current map name by default. * means any map.
 	std::string mapName;
 
 	i32 offset = 0;
