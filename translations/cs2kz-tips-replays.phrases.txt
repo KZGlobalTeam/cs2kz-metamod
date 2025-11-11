@@ -42,4 +42,8 @@
 	{
 		"en"		"{grey}Type {default}!rpsave <seconds> {grey}to save a manual replay of up to the specified duration."
 	}
+    "Tip - Replay Storage Policy"
+    {
+	    "en"        "{grey}Older or less important replays may be automatically removed over time to free up server space. Saving new manual replays can overwrite previous ones."
+    }
 }

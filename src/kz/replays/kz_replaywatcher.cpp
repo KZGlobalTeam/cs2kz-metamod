@@ -874,8 +874,8 @@ void ReplayWatcher::ScanReplays()
 	// Get current unix time for archival checks
 	time_t currentUnixTime = 0;
 	time(&currentUnixTime);
-	i32 archiveRetentionDays = MAX(KZOptionService::GetOptionInt("archiveRetentionDays", 14), 5);
-	u64 archiveRetentionSeconds = 60; // archiveRetentionDays * 24 * 60 * 60;
+	u32 archiveRetentionMinutes = MAX(KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880), 1440);
+	u64 archiveRetentionSeconds = archiveRetentionMinutes * 60;
 
 	while (pFileName)
 	{

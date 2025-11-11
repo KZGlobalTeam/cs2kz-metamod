@@ -1,52 +1,52 @@
 "ServerCfg"
 {
 	// Default mode for players.
-	"defaultMode"				"Classic"
+	"defaultMode"						"Classic"
 	
 	// Default style(s) for players.
-	"defaultStyles"				""
+	"defaultStyles"						""
 	
 	// How long should a map run for before it must be reloaded in minutes (maximum 24 hours)
-	"defaultTimeLimit"			"60.0"
+	"defaultTimeLimit"					"60.0"
 	
 	// Default language to be used if client does not set a language/language is not supported
-	"defaultLanguage"			"en"
+	"defaultLanguage"					"en"
 	
 	// Interval between tips.
-	"tipInterval"				"75"
+	"tipInterval"						"75"
 	
 	// Minimum jumpstat tier for sound effect.
-	"defaultJSSoundMinTier"		"4"
+	"defaultJSSoundMinTier"				"4"
 	
 	// Minimum jumpstat tier for showing jumpstats.
-	"defaultJSMinTier"			"2"
+	"defaultJSMinTier"					"2"
 
 	// Minimum jumpstat tier for showing jumpstats in console.
-	"defaultJSMinTierConsole"	"1"
+	"defaultJSMinTierConsole"			"1"
 
 	// Minimum jumpstat tier for broadcasting.
-	"defaultJSBroadcastMinTier"	"4"
+	"defaultJSBroadcastMinTier"			"4"
 	
 	// Minimum jumpstat tier for broadcasting sound effect.
 	"defaultJSBroadcastSoundMinTier"	"2"
 
 	// Default chat prefix.
-	"chatPrefix"				"{lime}KZ {grey}|{default}"
+	"chatPrefix"						"{lime}KZ {grey}|{default}"
 	
 	// Whether we override chat processing or not.
-	"overridePlayerChat"		"true"
+	"overridePlayerChat"				"true"
 	
 	// Maximum amount of manually saved replays allowed per player (minimum 2).
-	"maxManualReplays"			"2"
+	"maxManualReplays"					"2"
 	
 	// Maximum amount of run replays to keep per category (top N by time + top N by time with 0 teleports, minimum 2).
-	"maxRunReplaysPerGroup"		"3"
+	"maxRunReplaysPerGroup"				"3"
 	
 	// Maximum amount of jump replays to keep per category (top N by block distance + top N by distance, minimum 2).
-	"maxJumpReplaysPerCategory"	"3"
+	"maxJumpReplaysPerCategory"			"3"
 	
-	// Number of days to keep archived replays before deletion (minimum 5).
-	"archiveRetentionDays"		"14"
+	// Number of minutes to keep archived replays before deletion (minimum 24 hours, default 48 hours).
+	"archiveRetentionMinutes"			"2880"
 	
 	// Local database configurations.
 	"db"
@@ -64,6 +64,6 @@
 		//"port"			"3306"
 	}
 
-	"apiUrl" "https://api.cs2kz.org"
-	"apiKey" ""
+	"apiUrl"	"https://api.cs2kz.org"
+	"apiKey"	""
 }
