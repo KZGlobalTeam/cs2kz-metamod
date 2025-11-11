@@ -74,6 +74,11 @@ void KZLanguageService::Cleanup()
 	}
 }
 
+const char *KZLanguageService::GetBaseAddon()
+{
+	return addonsKV->GetString(KZ_BASE_ADDON_KEY, KZ_WORKSHOP_ADDON_ID);
+}
+
 void KZLanguageService::LoadLanguages()
 {
 	char fullPath[1024];
@@ -163,7 +168,7 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 	langInfo.cacheLevel = cacheLevel;
 	if (!KZ_STREQILEN(langInfo.lastAddon, addon, sizeof(langInfo.lastAddon)))
 	{
-		if (KZ_STREQI(langInfo.lastAddon, KZ_WORKSHOP_ADDON_ID))
+		if (KZ_STREQI(langInfo.lastAddon, KZLanguageService::GetBaseAddon()))
 		{
 			META_CONPRINTF("[KZ::Language] Adding %s for client %lli\n", addon, xuid);
 		}

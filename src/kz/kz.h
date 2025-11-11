@@ -22,6 +22,7 @@
 #define KZ_DEFAULT_LANGUAGE     "en"
 #define KZ_DEFAULT_STYLE        "Normal"
 #define KZ_DEFAULT_MODE         "Classic"
+#define KZ_BASE_ADDON_KEY       "default"
 
 #define KZ_RECENT_TELEPORT_THRESHOLD 0.05f
 

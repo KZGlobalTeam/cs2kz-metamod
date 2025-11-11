@@ -15,6 +15,7 @@ public:
 	static void LoadLanguages();
 	static void LoadTranslations();
 	static void Cleanup();
+	static const char *GetBaseAddon();
 
 	struct LanguageInfo
 	{
