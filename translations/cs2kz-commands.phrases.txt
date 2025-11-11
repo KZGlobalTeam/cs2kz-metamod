@@ -505,10 +505,12 @@
 	"Command Description - kz_jsextend"
 	{
 		"en"		"Toggle extended jumpstats reporting in chat."
+		"ua"		"Перемикання розширеної статистики стрибків у чаті."
 	}
 	"Command Description - kz_jsvolume"
 	{
 		"en"		"Set jumpstats sound effect volume."
+		"ua"		"Встановити гучність ефектів стрибків."
 	}
 	"Command Description - kz_mode"
 	{
