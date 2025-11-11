@@ -691,13 +691,7 @@ f32 KZJumpstatsService::GetLastJumpRelease()
 
 void KZJumpstatsService::Reset()
 {
-	this->broadcastMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSBroadcastMinTier", DistanceTier_Godlike));
-	this->soundMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSSoundMinTier", DistanceTier_Godlike));
-	this->minTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSMinTier", DistanceTier_Impressive));
-	this->minTierConsole = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSMinTierConsole", DistanceTier_Meh));
-	this->soundMinTier = static_cast<DistanceTier>(KZOptionService::GetOptionInt("defaultJSSoundMinTier", DistanceTier_Impressive));
 	this->jumps.Purge();
-	this->jsAlways = {};
 	this->lastJumpButtonTime = {};
 	this->lastNoclipTime = {};
 	this->lastDuckbugTime = {};
