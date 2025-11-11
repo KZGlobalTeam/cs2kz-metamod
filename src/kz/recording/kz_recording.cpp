@@ -14,7 +14,7 @@
 #include "filesystem.h"
 #include "vprof.h"
 
-CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", true);
+CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", false);
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 extern CSteamGameServerAPIContext g_steamAPI;
@@ -235,7 +235,27 @@ void KZRecordingService::CheckRecorders()
 			}
 			if (s_fileWriter)
 			{
-				s_fileWriter->QueueWrite(std::make_unique<RunRecorder>(std::move(recorder)));
+				CPlayerUserId userID = this->player->GetClient()->GetUserID();
+				s_fileWriter->QueueWrite(
+					std::make_unique<RunRecorder>(std::move(recorder)),
+					// Success callback
+					[userID](const UUID_t &uuid, f32 replayDuration)
+					{
+						KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
+						if (callbackPlayer)
+						{
+							callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", uuid.ToString().c_str());
+						}
+					},
+					// Failure callback
+					[userID](const char *error)
+					{
+						KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
+						if (callbackPlayer)
+						{
+							callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
+						}
+					});
 			}
 			it = this->runRecorders.erase(it);
 		}
