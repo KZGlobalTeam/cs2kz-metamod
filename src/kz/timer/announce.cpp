@@ -420,7 +420,24 @@ void RecordAnnounce::AnnounceGlobal()
             ? player->languageService->PrepareMessage("Personal Best Difference", nubPbDiff < 0 ? "{green}" : "{red}", formattedDiffTime)
             : "";
 		// clang-format on
-
+		bool beatWR = false;
+		bool beatWRPro = false;
+		if (hasOldPB)
+		{
+			beatWR = this->time < this->oldGPB.overall.time && this->globalResponse.overall.rank == 1;
+		}
+		else if (this->globalResponse.overall.rank == 1)
+		{
+			beatWR = true;
+		}
+		if (hasOldPBPro)
+		{
+			beatWRPro = this->time < this->oldGPB.pro.time && this->globalResponse.pro.rank == 1;
+		}
+		else if (this->globalResponse.pro.rank == 1)
+		{
+			beatWRPro = true;
+		}
 		if (this->teleports)
 		{
 			player->languageService->PrintChat(true, false, "Beat Course Info - Global (TP)", this->globalResponse.overall.rank,
@@ -443,13 +460,30 @@ void RecordAnnounce::AnnounceGlobal()
                 ? player->languageService->PrepareMessage("Personal Best Difference", proPbDiff < 0 ? "{green}" : "{red}", formattedDiffTimePro)
                 : "";
 			// clang-format on
-
 			player->languageService->PrintChat(true, false, "Beat Course Info - Global (PRO)", this->globalResponse.overall.rank,
 											   this->globalResponse.overall.maxRank, diffText.c_str(), this->globalResponse.pro.rank,
 											   this->globalResponse.pro.maxRank, diffTextPro.c_str());
 
 			player->languageService->PrintChat(true, false, "Beat Course Info - Global Points (PRO)", this->globalResponse.overall.points,
 											   nubPointsDiff, this->globalResponse.pro.points, proPointsDiff, this->globalResponse.playerRating);
+		}
+
+		if (beatWR)
+		{
+			player->languageService->PrintChat(true, false, "Beat Course Info - New World Record", this->player.name.c_str(),
+											   this->mode.name.c_str());
+		}
+		if (beatWRPro)
+		{
+			player->languageService->PrintChat(true, false, "Beat Course Info - New World Record (PRO)", this->player.name.c_str(),
+											   this->mode.name.c_str());
+		}
+		if (beatWR || beatWRPro)
+		{
+			for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+			{
+				utils::PlaySoundToClient(CPlayerSlot(i), "kz.holyshit");
+			}
 		}
 	}
 }

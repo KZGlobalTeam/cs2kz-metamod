@@ -157,7 +157,19 @@
 		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
 		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey}) | Spēlētāja reitings: {purple}{player_rating}{grey}"
 	}
-	
+	"Beat Course Info - New World Record"
+	{
+		// Bill set a new GLOBAL RECORD [Mode]
+		"#format"	"player_name:s,mode:s"
+		"en"		"{lime}{player_name}{grey} set a new {red}GLOBAL RECORD {grey}[{purple}{mode}{grey}]"
+	}
+	"Beat Course Info - New World Record (PRO)"
+	{
+		// Bill set a new GLOBAL PRO RECORD [Mode]
+		"#format"	"player_name:s,mode:s"
+		"en"		"{lime}{player_name}{grey} set a new {darkred}GLOBAL PRO RECORD{grey}[{purple}{mode}{grey}]!"
+	}
+
 	"Can't Pause (Generic)"
 	{
 		"en"		"{darkred}You can't pause right now."
