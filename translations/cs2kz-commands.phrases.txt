@@ -390,10 +390,12 @@
 	"Command Description - kz_cpsound"
 	{
 		"en"		"Toggle checkpoint sound effect."
+		"ua"		"Перемикання звуку чекпоінту."
 	}
 	"Command Description - kz_tpsound"
 	{
 		"en"		"Toggle teleport sound effect."
+		"ua"		"Перемикання звуку телепорту."
 	}
 	"Command Description - kz_panel"
 	{
@@ -488,14 +490,17 @@
     "Command Description - kz_jstier"
     {
         "en"        "Set your minimum jumpstats reporting tier."
+        "ua"        "Встановити мінімальний рівень для відображення статистики стрибків."
     }
     "Command Description - kz_jstierconsole"
     {
         "en"        "Set your minimum jumpstats console reporting tier."
+        "ua"        "Встановити мінімальний рівень для відображення статистики стрибків в консолі."
     }
     "Command Description - kz_jsbroadcastsound"
     {
         "en"        "Set the minimum tier for jumpstats sound broadcast."
+        "ua"        "Встановити мінімальний рівень для звукових ефектів під час стрибків."
     }
 	"Command Description - kz_mode"
 	{

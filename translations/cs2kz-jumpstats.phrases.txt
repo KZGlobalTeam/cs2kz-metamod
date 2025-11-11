@@ -604,6 +604,7 @@
 	"Jumpstats Option - Tier Hint"
 	{
 		"en"		"{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+		"ua"		"{grey}Існуючі тіри стрибків: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -817,28 +818,34 @@
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats chat reporting disabled."
+		"ua"		"{grey}Відображення статистики стрибків у чаті вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats chat reporting threshold is now {default}{tier}."
+		"ua"		"{grey}Поріг відображення статистики стрибків встановлено на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats console reporting disabled."
+		"ua"		"{grey}Відображення статистики стрибків у консолі вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats console reporting threshold is now {default}{tier}."
+		"ua"		"{grey}Поріг відображення статистики стрибків у консолі встановлено на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats sound broadcast disabled."
+		"ua"		"{grey}Звукові ефекти для стрибків вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
+		"ua"		"{grey}Поріг звукових ефектів для стрибків встановлено на {default}{tier}."
 	}
 }
