@@ -493,7 +493,7 @@
     {
         "en"        "Set your minimum jumpstats reporting tier."
         "ua"        "Встановити мінімальний рівень для відображення статистики стрибків."
-		"sv"        "Ställ din miniminivå för jumpstatsrapportering."
+		"sv"        "Ange din miniminivå för jumpstatsrapportering."
     }
     "Command Description - kz_jstierconsole"
     {
