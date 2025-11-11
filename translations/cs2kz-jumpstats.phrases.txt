@@ -852,13 +852,16 @@
 	{
 		"#format"	"volume:.1f"
 		"en"		"{grey}Jumpstats volume set to {default}{volume}."
+		"ua"		"{grey}Гучність звукових ефектів стрибків встановлено на {default}{volume}."
 	}
 	"Jumpstats Option - Extended Chat Stats - Enable"
 	{
 		"en"		"{grey}Extended jumpstats chat reporting enabled."
+		"ua"		"{grey}Увімкнено розширену статистику стрибків."
 	}
 	"Jumpstats Option - Extended Chat Stats - Disable"
 	{
 		"en"		"{grey}Extended jumpstats chat reporting disabled."
+		"ua"		"{grey}Розширену статистику стрибків вимкнуто."
 	}
 }
