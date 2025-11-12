@@ -391,11 +391,13 @@
 	{
 		"en"		"Toggle checkpoint sound effect."
 		"ua"		"Перемикання звуку чекпоінту."
+		"sv"		"Aktivera/inaktivera checkpoint ljudeffekt."
 	}
 	"Command Description - kz_tpsound"
 	{
 		"en"		"Toggle teleport sound effect."
 		"ua"		"Перемикання звуку телепорту."
+		"sv"		"Aktivera/inaktivera teleport ljudeffekt."
 	}
 	"Command Description - kz_panel"
 	{
@@ -491,26 +493,31 @@
     {
         "en"        "Set your minimum jumpstats reporting tier."
         "ua"        "Встановити мінімальний рівень для відображення статистики стрибків."
+		"sv"        "Ange din miniminivå för jumpstatsrapportering."
     }
     "Command Description - kz_jstierconsole"
     {
         "en"        "Set your minimum jumpstats console reporting tier."
         "ua"        "Встановити мінімальний рівень для відображення статистики стрибків в консолі."
+		"sv"        "Ange din lägsta rapporteringsnivå för jumpstats i konsolen."
     }
     "Command Description - kz_jsbroadcastsound"
     {
         "en"        "Set the minimum tier for jumpstats sound broadcast."
         "ua"        "Встановити мінімальний рівень для звукових ефектів під час стрибків."
+		"sv"        "Ange miniminivån för jumpstats-ljudsändning."
     }
 	"Command Description - kz_jsextend"
 	{
 		"en"		"Toggle extended jumpstats reporting in chat."
 		"ua"		"Перемикання розширеної статистики стрибків у чаті."
+		"sv"		"Aktivera/Inaktivera utökad jumpstatsrapportering i chatten."
 	}
 	"Command Description - kz_jsvolume"
 	{
 		"en"		"Set jumpstats sound effect volume."
 		"ua"		"Встановити гучність ефектів стрибків."
+		"sv"		"Ange volymen för jumpstats-ljudeffekter."
 	}
 	"Command Description - kz_mode"
 	{
@@ -1206,18 +1213,21 @@
 		"en"		"Toggle the timer stop sound."
 		"chi"		"切换计时器停止音效."
 		"ua"		"Увімк./вимк. звук зупинки таймера."
+		"sv"		"Aktivera/Inaktivera timerstoppljud."
 	}
 	"Command Description - kz_autohideweapon"
 	{
 		"en"		"Toggle the automatic hiding of weapon viewmodel."
 		"chi"		"切换武器视图模型的自动隐藏."
 		"ua"		"Увімк./вимк. автоматичне приховування зброї."
+		"sv"		"Aktivera/inaktivera automatisk vapendöljning."
 	}
 	"Command Description - kz_pistol"
 	{
 		"en"		"Change or remove the current pistol."
 		"chi"		"更改或移除当前手枪."
 		"ua"		"Змінити або видалити поточний пістолет."
+		"sv"		"Byt eller ta bort den nuvarande pistolen."
 	}
 	
 }
