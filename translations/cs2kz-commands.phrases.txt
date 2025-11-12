@@ -1239,41 +1239,73 @@
 	"Command Description - kz_rpsave"
 	{
 		"en"		"Manually save past gameplay into a replay."
+<<<<<<< HEAD
 		"chi"		"手动将过往游戏数据保存为回放."
+=======
+		"ua"		"Вручну зберегти попередній геймплей як повтор."
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
 	"Command Description - kz_replay"
 	{
 		"en"		"Play a previously saved replay."
+<<<<<<< HEAD
 		"chi"		"播放之前保存的回放."
+=======
+		"ua"		"Відтворити раніше збережений повтор."
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
   	"Command Description - kz_rpgoto"
 	{
 		"en"		"Go to a specific time in the replay. (hh:mm:ss)"
+<<<<<<< HEAD
 		"chi"		"跳转到回放中的特定时间点. (hh:mm:ss)"
+=======
+		"ua"		"Перейти до конкретного моменту в повторі. (hh:mm:ss)"
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
   	"Command Description - kz_rpgototick"
 	{
 		"en"		"Go to a specific tick in the replay."
+<<<<<<< HEAD
 		"chi"		"跳转到回放中的特定的Tick."
+=======
+		"ua"		"Перейти до конкретного тіку в повторі."
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
   	"Command Description - kz_rpinfo"
 	{
 		"en"		"Display information about the current replay."
+<<<<<<< HEAD
 		"chi"		"显示当前回放的信息."
+=======
+		"ua"		"Відобразити інформацію про поточний повтор."
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
   	"Command Description - kz_rppause"
 	{
 		"en"		"Pause or resume the current replay."
+<<<<<<< HEAD
 		"chi"		"暂停或继续当前回放."
+=======
+		"ua"		"Поставити на паузу або продовжити відтворення поточного повтору."
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
   	"Command Description - kz_rploadprogress"
 	{
 		"en"		"Display the loading progress of the replay."
+<<<<<<< HEAD
 		"chi"		"显示回放的加载进度."
+=======
+		"ua"		"Показати прогрес завантаження повтору."
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
   	"Command Description - kz_rpcancelload"
 	{
 		"en"		"Cancel the loading of the replay."
+<<<<<<< HEAD
 		"chi"		"取消加载回放."
+=======
+		"ua"		"Скасувати завантаження повтору."
+>>>>>>> 8a962553a0a7d74dedd03e807524ff6eea5e7172
 	}
 }
