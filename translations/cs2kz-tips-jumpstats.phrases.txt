@@ -30,4 +30,14 @@
 		"ko"	"{grey}항상 활성화된 점프 통계 모드를 전환하려면 {default}/jsalways{grey}를 사용하세요."
 		"lv"	"{grey}Izmanto {default}/jsalways {grey}, lai jumpstatu reporti vienmēr būtu ieslēgti."
 	}
+	"Tip - kz_jstier"
+	{
+		"en"	"{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
+		"chi"	"{grey}使用 {default}/jstier {grey}设置显示你的跳跃数据的最低等级."
+	}
+	"Tip - kz_jsextend"
+	{
+		"en"	"{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
+		"chi"	"{grey}使用 {default}/jsextend {grey}可以切换是否在聊天框展示详细跳跃数据."
+	}
 }
