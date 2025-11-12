@@ -834,7 +834,7 @@
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats console reporting disabled."
-		"chi"		"{grey}J已关闭控制台的跳跃数据显示."
+		"chi"		"{grey}已关闭控制台的跳跃数据显示."
 		"ua"		"{grey}Відображення статистики стрибків у консолі вимкнено."
 		"sv"		"{grey}Jumpstats konsol rapportering inaktiverad."
 	}
