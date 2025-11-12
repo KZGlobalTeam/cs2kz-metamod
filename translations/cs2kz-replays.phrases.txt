@@ -3,59 +3,72 @@
 	"Replay - No Replay Playing"
 	{
 		"en"		"{grey}No replay is currently playing."
+		"chi"		"{grey}当前没有回放正在播放."
 	}
 	"Replay - Usage Goto"
 	{
 		"en"		"{grey}Usage: kz_rpgoto <tick>"
+		"chi"		"{grey}用法: kz_rpgoto <tick>"
 	}
 	"Replay - Usage Seek"
 	{
 		"en"		"{grey}Usage: kz_rpseek <+/-seconds>"
+		"chi"		"{grey}用法: kz_rpseek <+/-seconds>"
 	}
 	"Replay - Usage Navigation"
 	{
 		"en"		"{grey}Usage: <time/tick> (Examples: 1:23.45, +10, -5.2, 1234)"
+		"chi"		"{grey}用法: <time/tick> (示例: 1:23.45, +10, -5.2, 1234)"
 	}
 	"Replay - Usage Goto Time"
 	{
 		"en"		"{grey}Usage: kz_rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
+		"chi"		"{grey}用法: kz_rpgoto <time> (示例: 1:23.45, +10, -5.2)"
 	}
 	"Replay - Usage Goto Tick"
 	{
 		"en"		"{grey}Usage: kz_rpgototick <tick> (Examples: 1234, +100, -50)"
+		"chi"		"{grey}用法: kz_rpgototick <tick> (示例: 1234, +100, -50)"
 	}
 	"Replay - Invalid Relative Time"
 	{
 		"en"		"{darkred}Invalid time format. Examples: +10, -5.2, +1:30"
+		"chi"		"{darkred}无效的时间格式. 示例: +10, -5.2, +1:30"
 	}
 	"Replay - Invalid Absolute Time"
 	{
 		"en"		"{darkred}Invalid time format. Examples: 1:23.45, 12:34:56.789, 45.2"
+		"chi"		"{darkred}无效的时间格式. 示例: 1:23.45, 12:34:56.789, 45.2"
 	}
 	"Replay - Invalid Tick Number"
 	{
 		"en"		"{darkred}Invalid tick number. Must be a positive integer."
+		"chi"		"{darkred}无效的Tick数字. 必须为正整数."
 	}
 	"Replay - Tick Out Of Range"
 	{
 		"#format"	"tick:d,maxTick:d"
 		"en"		"{grey}Tick {lime}{tick}{grey} is out of range. Maximum tick: {lime}{maxTick}"
+		"chi"		"{grey}Tick {lime}{tick}{grey} 超出范围. 最大 tick 值: {lime}{maxTick}."
 	}
 	"Replay - Time Out Of Range"
 	{
 		"#format"	"time:s,maxTime:s"
 		"en"		"{grey}Time {lime}{time}{grey} is out of range. Maximum time: {lime}{maxTime}"
+		"chi"		"{grey}时间 {lime}{tick}{grey} 超出范围. 最大时间值: {lime}{maxTime}."
 	}
 	"Replay - Jumped To Tick"
 	{
 		"#format"	"tick:d,time:s"
 		"en"		"{grey}Jumped to tick {lime}{tick} ({lime}{time}{grey})"
+		"chi"		"{grey}跳转到 tick {lime}{tick} ({lime}{time}{grey})"
 	}
 	"Replay - Current Info"
 	{
 		// Current tick: 1234/5678 (12:34/23:45). Check console for details!
 		"#format"	"currentTick:d,totalTicks:d,time:s,maxTime:s"
 		"en"		"{grey}Current tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Check console for details!"
+		"chi"		"{grey}当前 tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). 在控制台中查看具体细节!"
 	}
 	"Replay - General Info Console"
 	{
@@ -66,6 +79,7 @@
 		// Plugin Version: 1.2.3
 		"#format"	"uuid:s,playerName:s,playerSteamID:llu,createdOn:s,serverVersion:lu,pluginVersion:s"
 		"en"		"Replay {uuid}\nPlayer: {playerName} ({playerSteamID})\nCreated On: {createdOn}\nServer Version: {serverVersion}\nPlugin Version: {pluginVersion}"
+		"chi"		"回放 {uuid}\n玩家: {playerName} ({playerSteamID})\n创建于: {createdOn}\n服务器版本: {serverVersion}\n插件版本: {pluginVersion}"
 	}
 	"Replay - Cheater Info Console"
 	{
@@ -73,6 +87,7 @@
 		// Suspect Reason: abcdef
 		"#format"	"reason:s"
 		"en"		"Replay Type: Cheater\nSuspect Reason: {reason}"
+		"chi"		"回放类型: 作弊者\n疑因: {reason}"
 	}
 	"Replay - Run Info Console"
 	{
@@ -83,6 +98,7 @@
 		// Teleports: 0
 		"#format"	"name:s,mode:s,time:s,teleports:d"
 		"en"		"Replay Type: Run\nCourse: {name}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
+		"chi"		"回放类型: Run\nCourse: {name}\n模式 + 风格: {mode}\n时长: {time}\n传送次数: {teleports}"
 	}
 	"Replay - Jump Info Console"
 	{
@@ -90,6 +106,7 @@
 		// Distance: 123.45 | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"chi"		"回放类型: {type}\n距离: {distance} | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
 	}
 	"Replay - Jump Info Console (Block)"
 	{
@@ -97,6 +114,7 @@
 		// Distance: 123.45 | 250 Block | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,blockDistance:d,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"chi"		"回放类型: {type}\n距离: {distance} | {blockDistance} 板子 | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
 	}
 	"Replay - Manual Info Console"
 	{
@@ -104,110 +122,134 @@
 		// Saved By: Alice (765498765432109)
 		"#format"	"playerName:s,playerSteamID:llu"
 		"en"		"Replay Type: Manual\nSaved By: {playerName} ({playerSteamID})"
+		"chi"		"回放类型: 手动\n保存自: {playerName} ({playerSteamID})"
 	}
 	"Replay - Seeked To Tick"
 	{
 		// Seeked 12.345s to tick 6789 (12:34)
 		"#format"	"seekSeconds:.3f,tick:d,time:s"
 		"en"		"{grey}Seeked {lime}{seekSeconds}{grey}s to tick {lime}{tick}{grey} ({lime}{time}{grey})"
+		"chi"		"{grey}寻找 {lime}{seekSeconds}{grey}s 到 tick {lime}{tick}{grey} ({lime}{time}{grey})"
 	}
 
 	"Replay - Paused"
 	{
 		"en"		"{grey}Replay paused."
+		"chi"		"{grey}回放暂停."
 	}
 	"Replay - Resumed"
 	{
 		"en"		"{grey}Replay resumed."
+		"chi"		"{grey}回放继续."
 	}
 	"Replay - Loading"
 	{
 		"en"		"{grey}Loading replay, please wait..."
+		"chi"		"{grey}回放加载中, 请稍等..."
 	}
 	"Replay - Loading Already"
 	{
 		"en"		"{grey}Replay is already loading, please wait..."
+		"chi"		"{grey}回放已加载中, 请稍等..."
 	}
 	"Replay - Invalid UUID"
 	{
 		"en"		"{darkred}Invalid UUID format"
+		"chi"		"{darkred}无效的 UUID 格式"
 	}
 	"Replay - Loaded Successfully"
 	{
 		"en"		"{lime}Replay loaded successfully! Starting playback..."
+		"chi"		"{lime}回放成功加载! 开始播放..."
 	}
 	"Replay - No Loading Progress"
 	{
 		"en"		"{grey}No replay loading in progress"
+		"chi"		"{grey}没有回放正在加载"
 	}
 	"Replay - Loading Progress"
 	{
 		"#format"	"progress:.1f"
 		"en"		"{grey}Loading replay: {progress}%%%% complete"
+		"chi"		"{grey}加载回放中: {progress}%%%% 完成度"
 	}
 	"Replay - Loading Completed"
 	{
 		"en"		"{lime}Replay loading completed"
+		"chi"		"{lime}回放加载完成"
 	}
 	"Replay - Loading Cancelled"
 	{
 		"en"		"{grey}Replay loading cancelled"
+		"chi"		"{grey}回放取消加载"
 	}
 	"Replay - Usage Command"
 	{
 		"en"		"{grey}Usage: kz_replay <ID>"
+		"chi"		"{grey}用法: kz_replay <ID>"
 	}
 	"Replay - Load Cancelled"
 	{
 		"en"		"{darkred}Load cancelled by user"
+		"chi"		"{darkred}加载被用户取消"
 	}
 	"Replay - Invalid File Format"
 	{
 		"en"		"{darkred}Invalid replay file format"
+		"chi"		"{darkred}无效的回放文件格式"
 	}
 	"Replay - Manual Replay Failed"
 	{
 		"en"		"{darkred}Failed to save manual replay."
+		"chi"		"{darkred}手动保存回放失败."
 	}
 	"Replay - Manual Replay Saved"
 	{
 		"#format"	"uuid:s,duration:.0f"
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey} ({lime}{duration}{grey}s)" 
+		"chi"		"{grey}回放已保存: {lime}{uuid}{grey} ({lime}{duration}{grey}s)" 
 	}
 	"Replay - Run Replay Failed"
 	{
 		"en"		"{darkred}Failed to save run replay."
+		"chi"		"{darkred}保存跑图回放失败."
 	}
 	"Replay - Run Replay Saved"
 	{
 		"#format"	"uuid:s"
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey}"
+		"chi"		"{grey}回放已保存: {lime}{uuid}{grey}"
 	}
 	"Replay - Wrong Map"
 	{
 		"#format"	"replayMap:s,currentMap:s"
 		"en"		"{darkred}Replay map does not match current map.{grey} (Replay: {default}{replayMap}{grey}, Current: {default}{currentMap}{grey})"
+		"chi"		"{darkred}此回放并非当前地图.{grey} (Replay: {default}{replayMap}{grey}, 当前地图: {default}{currentMap}{grey})"
 	}
 	"Replay - Unknown Mode"
 	{
 		"#format"	"modeName:s"
 		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
+		"chi"		"{darkred}模式 {default}{modeName}{darkred} 不可用. 回放可能不准确."
 	}
 	"Replay - Unknown Style"
 	{
-		"#format"	"modeName:s"
-		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
+		"#format"	"styleName:s"
+		"en"		"{darkred}Style {default}{styleName}{darkred} is not available. Playback might be inaccurate."
+		"chi"		"{darkred}风格 {default}{styleName}{darkred} 不可用. 回放可能不准确."
 	}
 	
 	"Replay List - Check Console"
 	{
 		"en"		"{grey}Check console for info!"
+		"chi"		"{grey}在控制台中查看信息!"
 	}
 	
 	"Replay List - Usage Title"
 	{
 		// Usage: !replays [type=run/r/jump/j/manual/m] [options...]
 		"en"		"Usage: !replays [type=run/r/jump/j/manual/m] [options...]"
+		"chi"		"用法: !replays [type=run/r/jump/j/manual/m] [options...]"
 	}
 
 	"Replay List - Usage General Options"
@@ -219,6 +261,7 @@
 		//	offset=<num> - Skip first N results
 		//	limit=<num> - Limit results (max 20)
 		"en"		"\nGeneral Options:\n\tplayer=<name> - Filter by player name\n\tsteamid=<id> - Filter by Steam ID\n\tmap=<name> - Filter by map name (default: current map)\n\toffset=<num> - Skip first N results\n\tlimit=<num> - Limit results (max 20)"
+		"chi"		"\n常规选项:\n\tplayer=<name> - 过滤玩家名称\n\tsteamid=<id> - 过滤Steam ID\n\tmap=<name> - 过滤地图名字 (default: current map)\n\toffset=<num> - 跳过第几个结果\n\tlimit=<num> - 最大结果数 (max 20)"
 	}
 
 	"Replay List - Usage Type Options"
@@ -228,88 +271,108 @@
 		//	Jump: mode=<mode> jumptype=<type> mindistance=<dist>
 		//	Manual: saver=<name> ssid=<steamid>
 		"en"		"\nType Options:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
+		"chi"		"\n类型选项:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
 	}
 
 
 	"Replay List - No Matching Replays"
 	{
 		"en"		"{grey}No matching replays found."
+		"chi"		"{grey}没有找到匹配的回放."
 	}
 	
 	"Cheater Replays - Table Name"
 	{
 		"en"		"Cheater Replays"
+		"chi"		"作弊者的回放"
 	}
 	
 	"Run Replays - Table Name"
 	{
 		"en"		"Run Replays"
+		"chi"		"跑图回放"
 	}
 	
 	"Jump Replays - Table Name"
 	{
 		"en"		"Jump Replays"
+		"chi"		"跳跃回放"
 	}
 	
 	"Manual Replays - Table Name"
 	{
 		"en"		"Manual Replays"
+		"chi"		"手动回放"
 	}
 	
 	"Replay Table Header - Player"
 	{
 		"en"		"Player"
+		"chi"		"玩家"
 	}
 	"Replay Table Header - Map"
 	{
 		"en"		"Map"
+		"chi"		"地图"
 	}
 	"Replay Table Header - Reason"
 	{
 		"en"		"Reason"
+		"chi"		"原因"
 	}
 	"Replay Table Header - SteamID"
 	{
 		"en"		"SteamID"
+		"chi"		"SteamID"
 	}
 	"Replay Table Header - UUID"
 	{
 		"en"		"UUID"
+		"chi"		"UUID"
 	}
 	"Replay Table Header - Course"
 	{
 		"en"		"Course"
+		"chi"		"关卡"
 	}
 	"Replay Table Header - Mode"
 	{
 		"en"		"Mode"
+		"chi"		"模式"
 	}
 	"Replay Table Header - Time"
 	{
 		"en"		"Time"
+		"chi"		"时长"
 	}
 	"Replay Table Header - Teleports"
 	{
 		"en"		"Teleports"
+		"chi"		"传送"
 	}
 	"Replay Table Header - Jump Type"
 	{
 		"en"		"Jump Type"
+		"chi"		"跳跃类型"
 	}
 	"Replay Table Header - Distance"
 	{
 		"en"		"Distance"
+		"chi"		"距离"
 	}
 	"Replay Table Header - Block"
 	{
 		"en"		"Block"
+		"chi"		"板子"
 	}
 	"Replay Table Header - Strafes"
 	{
 		"en"		"Strafes"
+		"chi"		"加速"
 	}
 	"Replay Table Header - Saved By"
 	{
 		"en"		"Saved By"
+		"chi"		"保存自"
 	}
 }
