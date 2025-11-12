@@ -5,12 +5,14 @@
 		"en"		"{grey}Usage: {default}kz_pistol <name|off>{grey}."
 		"chi"		"{grey}用法: {default}kz_pistol <name|off>{grey}."
 		"ua"		"{grey}Використання: {default}kz_pistol <name|off>{grey}."
+		"sv"		"{grey}Användning: {default}kz_pistol <name|off>{grey}."
 	}
 	"Pistol Disabled"
 	{
 		"en"		"{grey}You have disabled your pistol."
 		"chi"		"{grey}你已禁用手枪."
 		"ua"		"{grey}Ви вимкнули пістолет."
+		"sv"		"{grey}Du har döljt pistolen."
 	}
 	"Pistol Changed"
 	{
@@ -18,6 +20,7 @@
 		"en"		"{grey}You have changed your pistol to {default}{pistol}{grey}."
 		"chi"		"{grey}你已将手枪更换为 {default}{pistol}{grey}."
 		"ua"		"{grey}Ви змінили пістолет на {default}{pistol}{grey}."
+		"sv"		"{grey}Du har ändrat din pistol till {default}{pistol}{grey}."
 	}
 	"Pistol Unknown"
 	{
@@ -25,5 +28,6 @@
 		"en"		"{darkred}Unknown pistol: {default}{pistol}{grey}."
 		"chi"		"{darkred}未知手枪: {default}{pistol}{grey}."
 		"ua"		"{darkred}Невідомий пістолет: {default}{pistol}{grey}."
+		"sv"		"{darkred}Okänd pistol: {default}{pistol}{grey}."
 	}
 }
