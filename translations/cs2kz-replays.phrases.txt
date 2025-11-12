@@ -276,7 +276,7 @@
 		"#format"	"styleName:s"
 		"en"		"{darkred}Style {default}{styleName}{darkred} is not available. Playback might be inaccurate."
 		"chi"		"{darkred}风格 {default}{styleName}{darkred} 不可用. 回放可能不准确."
-		"ua"		"{darkred}Режим {default}{styleName}{darkred} недоступний. Відтворення може бути неточним."
+		"ua"		"{darkred}Стиль {default}{styleName}{darkred} недоступний. Відтворення може бути неточним."
 	}
 	
 	"Replay List - Check Console"
