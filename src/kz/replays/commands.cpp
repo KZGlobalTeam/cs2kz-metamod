@@ -87,7 +87,7 @@ namespace KZ::replaysystem::commands
 				}
 				if (!KZ_STREQI(data::GetCurrentReplay()->header.map.name, g_pKZUtils->GetCurrentMapName().Get()))
 				{
-					player->languageService->PrintChat(true, false, "Replay - Wrong Map");
+					player->languageService->PrintChat(true, false, "Replay - Wrong Map", data::GetCurrentReplay()->header.map.name, g_pKZUtils->GetCurrentMapName().Get());
 					return;
 				}
 				for (u32 i = 0; i < data::GetCurrentReplay()->numEvents; i++)

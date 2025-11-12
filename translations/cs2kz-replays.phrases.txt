@@ -185,7 +185,8 @@
 	}
 	"Replay - Wrong Map"
 	{
-		"en"		"{darkred}Replay map does not match current map."
+		"#format"	"replayMap:s,currentMap:s"
+		"en"		"{darkred}Replay map does not match current map.{grey} (Replay: {default}{replayMap}{grey}, Current: {default}{currentMap}{grey})"
 	}
 	"Replay - Unknown Mode"
 	{
