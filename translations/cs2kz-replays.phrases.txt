@@ -269,6 +269,7 @@
 		"#format"	"modeName:s"
 		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
 		"chi"		"{darkred}模式 {default}{modeName}{darkred} 不可用. 回放可能不准确."
+		"ua"		"{darkred}Режим {default}{modeName}{darkred} недоступний. Відтворення може бути неточним."
 	}
 	"Replay - Unknown Style"
 	{
