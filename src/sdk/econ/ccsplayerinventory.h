@@ -27,8 +27,9 @@ struct CCSPlayerInventory
 	} m_Items;
 
 	int m_iPendingRequests;
-	bool m_bGotItemsFromSteamAtLeastOnce, m_bCurrentlySubscribedToSteam;
-
+	bool m_bGotItemsFromSteam;
+	bool m_bHasTestItems;
+	bool m_bIsListeningToSOCache;
 	void *m_pSOCache;
 
 	CUtlVector<void *> m_vecListeners;

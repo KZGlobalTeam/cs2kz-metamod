@@ -122,7 +122,10 @@ KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(CUtlString styleName)
 bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory,
 								   const char **incompatibleStyles, u32 incompatibleStylesCount)
 {
-	if (!shortName || V_strlen(shortName) == 0 || !shortName || V_strlen(longName) == 0)
+	// clang-format off
+	if (!shortName || V_strlen(shortName) == 0  || V_strlen(shortName) > 64
+		|| !longName || V_strlen(longName) == 0 || V_strlen(longName) > 64)
+	// clang-format on
 	{
 		return false;
 	}

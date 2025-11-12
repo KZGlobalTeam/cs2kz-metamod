@@ -11,7 +11,7 @@ class CPlayer_WeaponServices;
 class CBasePlayerPawn : public CBaseModelEntity
 {
 public:
-	DECLARE_SCHEMA_CLASS(CBasePlayerPawn);
+	DECLARE_SCHEMA_CLASS_ENTITY(CBasePlayerPawn);
 
 	SCHEMA_FIELD(CPlayer_MovementServices *, m_pMovementServices)
 	SCHEMA_FIELD(CHandle<CBasePlayerController>, m_hController)
@@ -19,6 +19,7 @@ public:
 	SCHEMA_FIELD(CPlayer_ObserverServices *, m_pObserverServices)
 	SCHEMA_FIELD(CPlayer_WeaponServices *, m_pWeaponServices)
 	SCHEMA_FIELD(CCSPlayer_WaterServices *, m_pWaterServices)
+	SCHEMA_FIELD(QAngle, v_angle)
 
 	void CommitSuicide(bool bExplode, bool bForce)
 	{

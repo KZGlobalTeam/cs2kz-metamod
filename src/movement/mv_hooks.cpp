@@ -60,7 +60,7 @@ void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 	g_KZPlugin.simulatingPhysics = false;
 }
 
-i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, void *cmds, int numcmds, bool paused, float margin)
+i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, PlayerCommand *cmds, int numcmds, bool paused, float margin)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(controller);

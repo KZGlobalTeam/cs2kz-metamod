@@ -52,6 +52,7 @@ class KZTimerService;
 class KZTipService;
 class KZTriggerService;
 class KZPistolService;
+class KZRecordingService;
 
 class KZPlayer : public MovementPlayer
 {
@@ -71,8 +72,8 @@ public:
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
-	virtual void OnProcessUsercmds(void *, int) override;
-	virtual void OnProcessUsercmdsPost(void *, int) override;
+	virtual void OnProcessUsercmds(PlayerCommand *, int) override;
+	virtual void OnProcessUsercmdsPost(PlayerCommand *, int) override;
 	virtual void OnSetupMove(PlayerCommand *) override;
 	virtual void OnSetupMovePost(PlayerCommand *) override;
 	virtual void OnProcessMovement() override;
@@ -167,6 +168,7 @@ public:
 	KZTipService *tipService {};
 	KZTriggerService *triggerService {};
 	KZPistolService *pistolService {};
+	KZRecordingService *recordingService {};
 
 	void DisableTurnbinds();
 	void EnableGodMode();

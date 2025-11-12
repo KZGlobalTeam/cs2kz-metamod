@@ -68,6 +68,11 @@ typedef double f64;
 #define KZ_STREQLEN(a, b, maxlen)  (V_strncmp(a, b, maxlen) == 0)
 #define KZ_STREQILEN(a, b, maxlen) (V_strnicmp(a, b, maxlen) == 0)
 // ARRAYSIZE gets undef'd if metamod_oslink is included after commonmacros.h. We can use our own implementation instead.
-#define KZ_ARRAYSIZE(a) ((sizeof(a) / sizeof(*(a))) / static_cast<size_t>(!(sizeof(a) % sizeof(*(a)))))
+#define KZ_ARRAYSIZE(a)       ((sizeof(a) / sizeof(*(a))) / static_cast<size_t>(!(sizeof(a) % sizeof(*(a)))))
+#define KZ_FOURCC(a, b, c, d) ((u32)(((d) << 24) | ((c) << 16) | ((b) << 8) | (a)))
 
 #define VPROF_LEVEL 1
+
+// clang-format off
+#define VPROF_SCOPE_BEGIN_KZ(tag) do { VPROF_(tag, 1, "CS2KZ", false, 0)
+// clang-format on

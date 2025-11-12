@@ -43,6 +43,7 @@ def configure_main(sdk_target, sdk, cxx):
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
       os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket'),
+      os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib'),
   ]
   
   binary.sources += [
@@ -124,7 +125,24 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'kz_profile.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replays.cpp'),
+
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'item.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'jumpstats.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'bot.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'data.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'events.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'commands.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'playback.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'watcher.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replaysystem.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'compression.cpp'),
+    
+    os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'events.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'buffer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'recorders.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'filewriter.cpp'),
+
     os.path.join(builder.sourcePath, 'src', 'kz', 'saveloc', 'kz_saveloc.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'spec', 'kz_spec.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'goto', 'kz_goto.cpp'),
@@ -145,6 +163,33 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'callbacks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'kz_trigger.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'mapping_api.cpp'),
+
+    # zstd compression library
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'debug.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'entropy_common.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'error_private.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'fse_decompress.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'pool.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'threading.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'xxhash.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'common', 'zstd_common.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'fse_compress.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'hist.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'huf_compress.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_compress.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_compress_literals.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_compress_sequences.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_compress_superblock.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_double_fast.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_fast.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_lazy.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_ldm.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_opt.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'compress', 'zstd_preSplit.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'decompress', 'huf_decompress.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'decompress', 'zstd_ddict.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'decompress', 'zstd_decompress.c'),
+    os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib', 'decompress', 'zstd_decompress_block.c'),
   ]
 
 
@@ -155,6 +200,8 @@ def configure_main(sdk_target, sdk, cxx):
       binary.sources.append(os.path.join(ws_dir, file))
  
   if binary.compiler.target.platform == 'linux':
+    # Linux PIC stuff breaks if this isn't defined.
+    binary.compiler.defines += ['ZSTD_DISABLE_ASM']
     binary.compiler.postlink += [
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
@@ -293,7 +340,7 @@ style_nodes = builder.Add(abh_binary)
 if builder.options.generator == 'vs':
   binary.sources += ckz_binary.sources
   binary.sources += abh_binary.sources
-  binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.plugin_name, f'{binary.compiler.target.platform}-{cxx.target.arch}')]
+  binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.metadata['name'], f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
 
 MMSPlugin.binaries += [nodes]

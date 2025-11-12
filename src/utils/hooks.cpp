@@ -26,8 +26,11 @@
 #include "kz/global/kz_global.h"
 #include "kz/profile/kz_profile.h"
 #include "kz/pistol/kz_pistol.h"
+#include "kz/recording/kz_recording.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
+#include "sdk/usercmd.h"
 
 #include "vprof.h"
 
@@ -162,6 +165,15 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 
 static_global bool ignoreTouchEvent {};
 
+// CCSPlayer_MovementServices
+static_global int playerRunCommandHook {};
+SH_DECL_MANUALHOOK1_void(PlayerRunCommand, 0, 0, 0, PlayerCommand *);
+static_function void Hook_OnPlayerRunCommand(PlayerCommand *pCmd);
+
+static_global int finishMoveHook {};
+SH_DECL_MANUALHOOK2_void(FinishMove, 0, 0, 0, PlayerCommand *, CMoveData *);
+static_function void Hook_OnFinishMove(PlayerCommand *pCmd, CMoveData *pMoveData);
+
 void hooks::Initialize()
 {
 	SH_MANUALHOOK_RECONFIGURE(StartTouch, g_pGameConfig->GetOffset("StartTouch"), 0, 0);
@@ -170,6 +182,9 @@ void hooks::Initialize()
 	SH_MANUALHOOK_RECONFIGURE(Teleport, g_pGameConfig->GetOffset("Teleport"), 0, 0);
 
 	SH_MANUALHOOK_RECONFIGURE(ChangeTeam, g_pGameConfig->GetOffset("ControllerChangeTeam"), 0, 0);
+
+	SH_MANUALHOOK_RECONFIGURE(PlayerRunCommand, g_pGameConfig->GetOffset("PlayerRunCommand"), 0, 0);
+	SH_MANUALHOOK_RECONFIGURE(FinishMove, g_pGameConfig->GetOffset("FinishMove"), 0, 0);
 
 	SH_ADD_HOOK(ISource2GameEntities, CheckTransmit, g_pSource2GameEntities, SH_STATIC(Hook_CheckTransmit), true);
 
@@ -246,7 +261,20 @@ void hooks::Initialize()
 		SH_STATIC(Hook_OnCreateLoadingSpawnGroupHook), 
 		false
 	);
+	CCSPlayer_MovementServices *moveServicesVtbl = (CCSPlayer_MovementServices *)modules::server->FindVirtualTable("CCSPlayer_MovementServices");
+	playerRunCommandHook = SH_ADD_MANUALDVPHOOK(
+	 	PlayerRunCommand, 
+	 	moveServicesVtbl, 
+	 	SH_STATIC(Hook_OnPlayerRunCommand), 
+	 	false
+	);
 
+	finishMoveHook = SH_ADD_MANUALDVPHOOK(
+		FinishMove,
+		moveServicesVtbl,
+		SH_STATIC(Hook_OnFinishMove),
+		false
+	);
 	// clang-format on
 }
 
@@ -287,6 +315,9 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK_ID(entitySystemHook);
 
 	SH_REMOVE_HOOK_ID(createLoadingSpawnGroupHook);
+
+	SH_REMOVE_HOOK_ID(playerRunCommandHook);
+	SH_REMOVE_HOOK_ID(finishMoveHook);
 
 	if (GameEntitySystem())
 	{
@@ -474,6 +505,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	KZTelemetryService::ActiveCheck();
 	KZBeamService::UpdateBeams();
 	KZProfileService::OnGameFrame();
+	KZ::replaysystem::OnGameFrame();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -546,6 +578,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
 	}
 	player->timerService->OnClientDisconnect();
+	player->recordingService->OnClientDisconnect();
 	player->optionService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
@@ -577,6 +610,7 @@ static_function void Hook_StartupServer(const GameSessionConfiguration_t &config
 	g_KZPlugin.AddonInit();
 	KZ::course::ClearCourses();
 	KZ::mapapi::Init();
+	KZ::replaysystem::Init();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -606,6 +640,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 			KZTimerService::OnRoundStart();
 			KZ::misc::OnRoundStart();
 			KZ::mapapi::OnRoundStart();
+			KZ::replaysystem::OnRoundStart();
 		}
 		else if (KZ_STREQI(event->GetName(), "player_team"))
 		{
@@ -705,6 +740,7 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszNam
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
 {
 	ProcessTimers();
+	KZRecordingService::ProcessFileWriteCompletion();
 	KZGlobalService::OnServerGamePostSimulate();
 }
 
@@ -727,4 +763,20 @@ static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGrou
 {
 	KZ::mapapi::OnCreateLoadingSpawnGroupHook(pKeyValues);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
+}
+
+static_function void Hook_OnPlayerRunCommand(PlayerCommand *pCmd)
+{
+	CCSPlayer_MovementServices *pThis = META_IFACEPTR(CCSPlayer_MovementServices);
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
+	KZ::replaysystem::OnPlayerRunCommandPre(player, pCmd);
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_OnFinishMove(PlayerCommand *pCmd, CMoveData *pMoveData)
+{
+	CCSPlayer_MovementServices *pThis = META_IFACEPTR(CCSPlayer_MovementServices);
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
+	KZ::replaysystem::OnFinishMovePre(player, pMoveData);
+	RETURN_META(MRES_IGNORED);
 }

@@ -24,6 +24,8 @@ struct RecordAnnounce
 
 	const f64 time;
 
+	std::string runUUID;
+
 	// We need to store the previous global PBs because the player might be gone before the announcement is made.
 	struct
 	{

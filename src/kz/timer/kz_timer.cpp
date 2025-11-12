@@ -9,6 +9,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
 #include "kz/spec/kz_spec.h"
+#include "kz/recording/kz_recording.h"
 #include "announce.h"
 
 #include "utils/utils.h"
@@ -122,6 +123,7 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		this->splitZoneTimes[splitNumber - 1] = this->GetTime();
 		this->ShowSplitText(splitNumber);
 		this->lastSplit = splitNumber;
+		CALL_FORWARD(eventListeners, OnSplitZoneTouchPost, this->player, splitNumber);
 	}
 }
 
@@ -141,6 +143,7 @@ void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, 
 		this->ShowCheckpointText(cpNumber);
 		this->lastCheckpoint = cpNumber;
 		this->reachedCheckpoints++;
+		CALL_FORWARD(eventListeners, OnCheckpointZoneTouchPost, this->player, cpNumber);
 	}
 }
 
@@ -166,6 +169,7 @@ void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		this->PlayReachedStageSound();
 		this->ShowStageText();
 		this->currentStage++;
+		CALL_FORWARD(eventListeners, OnStageZoneTouchPost, this->player, stageNumber);
 	}
 }
 
@@ -201,7 +205,12 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 		return false;
 	}
 
-	this->currentTime = 0.0f;
+	// In CKZ you can touch trigger in half tick intervals, but here we are incrementing by full tick intervals only.
+	// Since the player was still in the trigger for half a tick, we need to offset by half a tick if we started in a half tick.
+	// So the current time should be subtracted by the difference between server curtime and client curtime at the moment of starting the timer,
+	// That way when we increment by full tick intervals in OnPhysicsSimulatePost, the time will be correct.
+	this->currentTime = g_pKZUtils->GetGlobals()->curtime - g_pKZUtils->GetServerGlobals()->curtime;
+	assert(this->currentTime <= 0 && this->currentTime > -ENGINE_FIXED_TICK_INTERVAL);
 	this->timerRunning = true;
 	this->currentStage = 0;
 	this->reachedCheckpoints = 0;
@@ -313,14 +322,14 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	}
 	this->PlayTimerEndSound();
 
-	if (!this->player->GetPlayerPawn()->IsBot())
-	{
-		RecordAnnounce::Create(this->player);
-	}
-
 	FOR_EACH_VEC(eventListeners, i)
 	{
 		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed);
+	}
+	// This must be called after OnTimerEndPost so that the run UUID is set correctly.
+	if (!this->player->GetPlayerPawn()->IsBot())
+	{
+		RecordAnnounce::Create(this->player);
 	}
 
 	return true;
@@ -337,7 +346,7 @@ bool KZTimerService::TimerStop(bool playSound)
 	{
 		for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
 		{
-			player->timerService->PlayTimerStopSound();
+			spec->timerService->PlayTimerStopSound();
 		}
 		this->PlayTimerStopSound();
 	}
@@ -446,42 +455,6 @@ void KZTimerService::PlayMissedTimeSound()
 	{
 		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_MISSED_TIME);
 		this->lastMissedTimeSoundTime = g_pKZUtils->GetServerGlobals()->curtime;
-	}
-}
-
-void KZTimerService::FormatTime(f64 time, char *output, u32 length, bool precise)
-{
-	int roundedTime = RoundFloatToInt(time * 1000); // Time rounded to number of ms
-
-	int milliseconds = roundedTime % 1000;
-	roundedTime = (roundedTime - milliseconds) / 1000;
-	int seconds = roundedTime % 60;
-	roundedTime = (roundedTime - seconds) / 60;
-	int minutes = roundedTime % 60;
-	roundedTime = (roundedTime - minutes) / 60;
-	int hours = roundedTime;
-
-	if (hours == 0)
-	{
-		if (precise)
-		{
-			snprintf(output, length, "%02i:%02i.%03i", minutes, seconds, milliseconds);
-		}
-		else
-		{
-			snprintf(output, length, "%i:%02i", minutes, seconds);
-		}
-	}
-	else
-	{
-		if (precise)
-		{
-			snprintf(output, length, "%i:%02i:%02i.%03i", hours, minutes, seconds, milliseconds);
-		}
-		else
-		{
-			snprintf(output, length, "%i:%02i:%02i", hours, minutes, seconds);
-		}
 	}
 }
 
@@ -1227,13 +1200,13 @@ void KZTimerService::CheckMissedTime()
 		// Check if they share the same time.
 		if (this->shouldAnnounceMissedTime && pb->overall.pbTime == pb->pro.pbTime)
 		{
-			CUtlString timeText = KZTimerService::FormatTime(pb->overall.pbTime);
+			CUtlString timeText = utils::FormatTime(pb->overall.pbTime);
 			this->player->languageService->PrintChat(true, false, missedTimeKeysBoth[this->currentCompareType], timeText.Get());
 			this->shouldAnnounceMissedTime = false;
 		}
 		else
 		{
-			CUtlString timeText = KZTimerService::FormatTime(pb->pro.pbTime);
+			CUtlString timeText = utils::FormatTime(pb->pro.pbTime);
 			this->player->languageService->PrintChat(true, false, missedTimeKeysPro[this->currentCompareType], timeText.Get());
 		}
 		this->shouldAnnounceMissedProTime = false;
@@ -1242,7 +1215,7 @@ void KZTimerService::CheckMissedTime()
 
 	if (this->shouldAnnounceMissedTime && pb->overall.pbTime > 0 && this->GetTime() > pb->overall.pbTime)
 	{
-		CUtlString timeText = KZTimerService::FormatTime(pb->overall.pbTime);
+		CUtlString timeText = utils::FormatTime(pb->overall.pbTime);
 		this->player->languageService->PrintChat(true, false, missedTimeKeys[this->currentCompareType], timeText.Get());
 		this->shouldAnnounceMissedTime = false;
 		this->PlayMissedTimeSound();
@@ -1266,7 +1239,7 @@ void KZTimerService::ShowSplitText(u32 currentSplit)
 	CUtlString time;
 	std::string pbDiff, pbDiffPro = "";
 
-	time = KZTimerService::FormatTime(this->splitZoneTimes[currentSplit - 1]);
+	time = utils::FormatTime(this->splitZoneTimes[currentSplit - 1]);
 	if (this->lastSplit != 0)
 	{
 		f64 diff = this->splitZoneTimes[currentSplit - 1] - this->splitZoneTimes[this->lastSplit - 1];
@@ -1319,7 +1292,7 @@ void KZTimerService::ShowCheckpointText(u32 currentCheckpoint)
 	CUtlString time;
 	std::string pbDiff, pbDiffPro = "";
 
-	time = KZTimerService::FormatTime(this->cpZoneTimes[currentCheckpoint - 1]);
+	time = utils::FormatTime(this->cpZoneTimes[currentCheckpoint - 1]);
 	if (this->lastCheckpoint != 0)
 	{
 		f64 diff = this->cpZoneTimes[currentCheckpoint - 1] - this->cpZoneTimes[this->lastCheckpoint - 1];
@@ -1372,7 +1345,7 @@ void KZTimerService::ShowStageText()
 	CUtlString time;
 	std::string pbDiff, pbDiffPro = "";
 
-	time = KZTimerService::FormatTime(this->stageZoneTimes[this->currentStage]);
+	time = utils::FormatTime(this->stageZoneTimes[this->currentStage]);
 	if (this->currentStage > 0)
 	{
 		f64 diff = this->stageZoneTimes[this->currentStage] - this->stageZoneTimes[this->currentStage - 1];

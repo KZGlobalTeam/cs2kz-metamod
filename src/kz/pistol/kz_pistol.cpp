@@ -3,7 +3,8 @@
 #include "kz/language/kz_language.h"
 
 #include "utils/simplecmds.h"
-#include "kz_pistol.h"
+#include "icvar.h"
+#include "sdk/cskeletoninstance.h"
 
 static_global class : public KZOptionServiceEventListener
 {
@@ -57,8 +58,8 @@ void KZPistolService::UpdatePistol()
 	{
 		if (this->NeedWeaponStripping())
 		{
-			this->player->GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
-			this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
+			this->player->GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
+			auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
 				this->player->GetController()->m_iTeamNum() == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
 		}
 		return;
@@ -79,7 +80,7 @@ void KZPistolService::UpdatePistol()
 	{
 		switchTeam = true;
 	}
-	else if (pistol.team == CS_TEAM_NONE)
+	else if (pistol.team == CS_TEAM_NONE && !this->player->IsFakeClient())
 	{
 		// Check the player's inventory. If there's a skin on this current team, don't switch. Otherwise, switch team.
 		bool checkOtherTeam = true;
@@ -106,14 +107,15 @@ void KZPistolService::UpdatePistol()
 			}
 		}
 	}
-	this->player->GetPlayerPawn()->m_pItemServices()->StripPlayerWeapons(false);
-	this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(this->player->GetController()->m_iTeamNum == CS_TEAM_CT ? "weapon_knife"
-																															: "weapon_knife_t");
+	this->player->GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
+	auto knife = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
+		this->player->GetController()->m_iTeamNum == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
 	if (switchTeam)
 	{
 		player->GetPlayerPawn()->m_iTeamNum(otherTeam);
 	}
-	this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(pistol.className);
+	auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(pistol.className);
+
 	if (switchTeam)
 	{
 		player->GetPlayerPawn()->m_iTeamNum(originalTeam);

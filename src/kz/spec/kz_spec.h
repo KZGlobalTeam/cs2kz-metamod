@@ -21,6 +21,7 @@ public:
 
 	bool IsSpectating(KZPlayer *target);
 	bool SpectatePlayer(const char *playerName);
+	bool SpectatePlayer(KZPlayer *target);
 	bool CanSpectate();
 
 	void GetSpectatorList(CUtlVector<CUtlString> &spectatorList);

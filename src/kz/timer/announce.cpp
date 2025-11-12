@@ -4,6 +4,7 @@
 #include "kz/global/events.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/recording/kz_recording.h"
 #include "kz/style/kz_style.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
@@ -12,7 +13,8 @@ CConVar<bool> kz_debug_announce_global("kz_debug_announce_global", FCVAR_NONE, "
 
 RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	: uid(RecordAnnounce::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), userID(player->GetClient()->GetUserID()),
-	  time(player->timerService->GetTime()), teleports(player->checkpointService->GetTeleportCount())
+	  time(player->timerService->GetTime()), runUUID(player->recordingService->GetCurrentRunUUID().ToString()),
+	  teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
 	this->global = player->hasPrime && KZGlobalService::IsAvailable();
@@ -308,8 +310,8 @@ void RecordAnnounce::SubmitLocal()
 		}
 		rec->UpdateLocalCache();
 	};
-	KZDatabaseService::SaveTime(this->player.steamid64, this->course.localID, this->mode.localID, this->time, this->teleports, this->styleIDs,
-								this->metadata, onSuccess, onFailure);
+	KZDatabaseService::SaveTime(this->runUUID.c_str(), this->player.steamid64, this->course.localID, this->mode.localID, this->time, this->teleports,
+								this->styleIDs, this->metadata, onSuccess, onFailure);
 }
 
 void RecordAnnounce::UpdateLocalCache()
@@ -325,7 +327,7 @@ void RecordAnnounce::UpdateLocalCache()
 void RecordAnnounce::AnnounceRun()
 {
 	char formattedTime[32];
-	KZTimerService::FormatTime(time, formattedTime, sizeof(formattedTime));
+	utils::FormatTime(time, formattedTime, sizeof(formattedTime));
 
 	CUtlString combinedModeStyleText;
 	combinedModeStyleText.Format("{purple}%s{grey}", this->mode.name.c_str());

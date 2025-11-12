@@ -24,6 +24,8 @@
 #include "kz/global/kz_global.h"
 #include "kz/beam/kz_beam.h"
 #include "kz/pistol/kz_pistol.h"
+#include "kz/recording/kz_recording.h"
+#include "kz/replays/kz_replaysystem.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
@@ -39,6 +41,10 @@ PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
 bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
+	if (!CommandLine()->HasParm("-dedicated"))
+	{
+		return false;
+	}
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
 
@@ -59,6 +65,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZPistolService::Init();
 	KZ::misc::Init();
 	KZQuietService::Init();
+	KZRecordingService::Init();
 	if (!KZ::mode::CheckModeCvars())
 	{
 		return false;
@@ -79,7 +86,10 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		g_pKZPlayerManager->OnLateLoad();
 		// We need to reset the map for mapping api to properly load in.
 		utils::ResetMap();
+		KZ::replaysystem::Init();
 	}
+
+	KZ::replaysystem::InitWatcher();
 	return true;
 }
 
@@ -87,6 +97,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
 	KZ::misc::UnrestrictTimeLimit();
+	KZRecordingService::Shutdown();
 	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
@@ -97,6 +108,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZGlobalService::Cleanup();
 	KZLanguageService::Cleanup();
 	KZOptionService::Cleanup();
+	KZ::replaysystem::Cleanup();
 	ConVar_Unregister();
 	return true;
 }

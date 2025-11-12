@@ -51,6 +51,7 @@ bool CGameConfig::Init(IFileSystem *filesystem, char *conf_error, int conf_error
 			{
 				m_umLibraries[it->GetName()] = std::string(it->GetString("library"));
 				m_umSignatures[it->GetName()] = std::string(it->GetString(platform));
+				m_umAllowMultiMatch[it->GetName()] = it->GetBool("allow_multi_match", false);
 			}
 		}
 
@@ -206,7 +207,7 @@ void *CGameConfig::ResolveSignature(const char *name)
 			return nullptr;
 		}
 		address = (*module)->FindSignature(pSignature, iLength, error);
-		if (error == SIG_FOUND_MULTIPLE)
+		if (error == SIG_FOUND_MULTIPLE && !m_umAllowMultiMatch[name])
 		{
 			Warning("Multiple addresses found for %s, defaulting to nullptr\n", name);
 			return nullptr;
