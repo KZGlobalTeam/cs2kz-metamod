@@ -268,21 +268,25 @@
 	"Checkpoint Options - Checkpoint Sound - Enable"
 	{
 		"en"		"{grey}You have enabled checkpoint sound."
+		"chi"		"{grey}你开启了存点音效."
 		"sv"		"{grey}Du har aktiverat checkpointljuden."
 	}
 	"Checkpoint Options - Checkpoint Sound - Disable"
 	{
 		"en"		"{grey}You have disabled checkpoint sound."
+		"chi"		"{grey}你禁用了存点音效."
 		"sv"		"{grey}Du har inaktiverat checkpointljuden."
 	}
 	"Checkpoint Options - Teleport Sound - Enable"
 	{
 		"en"		"{grey}You have enabled teleport sound."
+		"chi"		"{grey}你开启了传送音效."
 		"sv"		"{grey}Du har aktiverat teleportljuden."
 	}
 	"Checkpoint Options - Teleport Sound - Disable"
 	{
 		"en"		"{grey}You have disabled teleport sound."
+		"chi"		"{grey}你禁用了传送音效."
 		"sv"		"{grey}Du har inaktiverat teleportljuden."
 	}
 }
