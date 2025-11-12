@@ -818,50 +818,59 @@
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats chat reporting disabled."
+		"chi"		"{grey}已关闭聊天框内的跳跃数据."
 		"ua"		"{grey}Відображення статистики стрибків у чаті вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats chat reporting threshold is now {default}{tier}."
+		"chi"		"{grey}显示聊天框内的跳跃数据的起始等级为 {default}{tier}."
 		"ua"		"{grey}Поріг відображення статистики стрибків встановлено на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats console reporting disabled."
+		"chi"		"{grey}J已关闭控制台的跳跃数据显示."
 		"ua"		"{grey}Відображення статистики стрибків у консолі вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats console reporting threshold is now {default}{tier}."
+		"chi"		"{grey}显示控制台内的跳跃数据的起始等级为 {default}{tier}."
 		"ua"		"{grey}Поріг відображення статистики стрибків у консолі встановлено на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats sound broadcast disabled."
+		"chi"		"{grey}已禁用广播跳跃数据音效."
 		"ua"		"{grey}Звукові ефекти для стрибків вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
+		"chi"		"{grey}广播跳跃数据音效的起始等级为 {default}{tier}."
 		"ua"		"{grey}Поріг звукових ефектів для стрибків встановлено на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Volume - Response"
 	{
 		"#format"	"volume:.1f"
 		"en"		"{grey}Jumpstats volume set to {default}{volume}."
+		"chi"		"{grey}跳跃数据音效的音量设置为 {default}{volume}."
 		"ua"		"{grey}Гучність звукових ефектів стрибків встановлено на {default}{volume}."
 	}
 	"Jumpstats Option - Extended Chat Stats - Enable"
 	{
 		"en"		"{grey}Extended jumpstats chat reporting enabled."
+		"chi"		"{grey}已启用在聊天框展示详细跳跃数据."
 		"ua"		"{grey}Увімкнено розширену статистику стрибків."
 	}
 	"Jumpstats Option - Extended Chat Stats - Disable"
 	{
 		"en"		"{grey}Extended jumpstats chat reporting disabled."
+		"chi"		"{grey}已禁用在聊天框展示详细跳跃数据."
 		"ua"		"{grey}Розширену статистику стрибків вимкнуто."
 	}
 }
