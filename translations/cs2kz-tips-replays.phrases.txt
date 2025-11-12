@@ -12,7 +12,7 @@
 	}
 	"Tip - kz_rpgoto"
 	{
-		"en"		"{grey}Type {default}!rpgoto <time> {grey}to jump to a specific time in the replay. Example: !rpgoto 1:23."
+		"en"		"{grey}Type {default}!rpgoto <time> {grey}to jump to a specific time in the replay."
 	}
 	"Tip - kz_rpgototick"
 	{
@@ -36,7 +36,7 @@
 	}
 	"Tip - kz_rpseek"
 	{
-		"en"		"{grey}Type {default}!rpseek <time> {grey}to relatively seek to a time in the replay."
+		"en"		"{grey}Type {default}!rpseek <+/-time> {grey}to relatively seek to a time in the replay."
 	}
 	"Tip - kz_rpsave"
 	{
