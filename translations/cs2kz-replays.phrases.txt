@@ -3,59 +3,72 @@
 	"Replay - No Replay Playing"
 	{
 		"en"		"{grey}No replay is currently playing."
+		"ua"		"{grey}Наразі не відтворюється жоден повтор."
 	}
 	"Replay - Usage Goto"
 	{
 		"en"		"{grey}Usage: kz_rpgoto <tick>"
+		"ua"		"{grey}Використання: kz_rpgoto <тік>"
 	}
 	"Replay - Usage Seek"
 	{
 		"en"		"{grey}Usage: kz_rpseek <+/-seconds>"
+		"ua"		"{grey}Використання: kz_rpseek <+/-секунди>"
 	}
 	"Replay - Usage Navigation"
 	{
 		"en"		"{grey}Usage: <time/tick> (Examples: 1:23.45, +10, -5.2, 1234)"
+		"ua"		"{grey}Використання: <час/тік> (Приклади: 1:23.45, +10, -5.2, 1234)"
 	}
 	"Replay - Usage Goto Time"
 	{
 		"en"		"{grey}Usage: kz_rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
+		"ua"		"{grey}Використання: kz_rpgoto <час> (Приклади: 1:23.45, +10, -5.2)"
 	}
 	"Replay - Usage Goto Tick"
 	{
 		"en"		"{grey}Usage: kz_rpgototick <tick> (Examples: 1234, +100, -50)"
+		"ua"		"{grey}Використання: kz_rpgototick <тік> (Приклади: 1234, +100, -50)"
 	}
 	"Replay - Invalid Relative Time"
 	{
 		"en"		"{darkred}Invalid time format. Examples: +10, -5.2, +1:30"
+		"ua"		"{darkred}Невірний формат часу. Приклади: +10, -5.2, +1:30"
 	}
 	"Replay - Invalid Absolute Time"
 	{
 		"en"		"{darkred}Invalid time format. Examples: 1:23.45, 12:34:56.789, 45.2"
+		"ua"		"{darkred}Невірний формат часу. Приклади: 1:23.45, 12:34:56.789, 45.2"
 	}
 	"Replay - Invalid Tick Number"
 	{
 		"en"		"{darkred}Invalid tick number. Must be a positive integer."
+		"ua"		"{darkred}Невірне число тіку. Повинно бути додатним цілим числом."
 	}
 	"Replay - Tick Out Of Range"
 	{
 		"#format"	"tick:d,maxTick:d"
 		"en"		"{grey}Tick {lime}{tick}{grey} is out of range. Maximum tick: {lime}{maxTick}"
+		"ua"		"{grey}Тік {lime}{tick}{grey} виходить за межі діапазону. Максимальний тік: {lime}{maxTick}"
 	}
 	"Replay - Time Out Of Range"
 	{
 		"#format"	"time:s,maxTime:s"
 		"en"		"{grey}Time {lime}{time}{grey} is out of range. Maximum time: {lime}{maxTime}"
+		"ua"		"{grey}Час {lime}{time}{grey} виходить за межі діапазону. Максимальний час: {lime}{maxTime}"
 	}
 	"Replay - Jumped To Tick"
 	{
 		"#format"	"tick:d,time:s"
 		"en"		"{grey}Jumped to tick {lime}{tick} ({lime}{time}{grey})"
+		"ua"		"{grey}Ви перемотали до тіку {lime}{tick} ({lime}{time}{grey})"
 	}
 	"Replay - Current Info"
 	{
 		// Current tick: 1234/5678 (12:34/23:45). Check console for details!
 		"#format"	"currentTick:d,totalTicks:d,time:s,maxTime:s"
 		"en"		"{grey}Current tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Check console for details!"
+		"ua"		"{grey}Поточний тік: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Перевірте консоль щодо деталей!"
 	}
 	"Replay - General Info Console"
 	{
@@ -66,6 +79,7 @@
 		// Plugin Version: 1.2.3
 		"#format"	"uuid:s,playerName:s,playerSteamID:llu,createdOn:s,serverVersion:lu,pluginVersion:s"
 		"en"		"Replay {uuid}\nPlayer: {playerName} ({playerSteamID})\nCreated On: {createdOn}\nServer Version: {serverVersion}\nPlugin Version: {pluginVersion}"
+		"ua"		"Повтор {uuid}\nГравець: {playerName} ({playerSteamID})\nСтворено: {createdOn}\nВерсія серверу: {serverVersion}\nВерсія плагіна: {pluginVersion}"
 	}
 	"Replay - Cheater Info Console"
 	{
@@ -73,6 +87,7 @@
 		// Suspect Reason: abcdef
 		"#format"	"reason:s"
 		"en"		"Replay Type: Cheater\nSuspect Reason: {reason}"
+		"ua"		"Тип повтору: Чітер\nПричина підозри: {reason}"
 	}
 	"Replay - Run Info Console"
 	{
@@ -83,6 +98,7 @@
 		// Teleports: 0
 		"#format"	"name:s,mode:s,time:s,teleports:d"
 		"en"		"Replay Type: Run\nCourse: {name}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
+		"ua"		"Тип повтору: Проходження\nКурс: {name}\nРежим + Стилі: {mode}\nЧас: {time}\nТелепорти: {teleports}"
 	}
 	"Replay - Jump Info Console"
 	{
@@ -90,6 +106,7 @@
 		// Distance: 123.45 | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 	}
 	"Replay - Jump Info Console (Block)"
 	{
@@ -97,6 +114,7 @@
 		// Distance: 123.45 | 250 Block | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,blockDistance:d,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"ua"		":Тип повтору {type}\nДистанція: {distance} | {blockDistance} Блок | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 	}
 	"Replay - Manual Info Console"
 	{
@@ -104,110 +122,134 @@
 		// Saved By: Alice (765498765432109)
 		"#format"	"playerName:s,playerSteamID:llu"
 		"en"		"Replay Type: Manual\nSaved By: {playerName} ({playerSteamID})"
+		"ua"		"Тип повтору: Ручний\nЗбережено: {playerName} ({playerSteamID})"
 	}
 	"Replay - Seeked To Tick"
 	{
 		// Seeked 12.345s to tick 6789 (12:34)
 		"#format"	"seekSeconds:.3f,tick:d,time:s"
 		"en"		"{grey}Seeked {lime}{seekSeconds}{grey}s to tick {lime}{tick}{grey} ({lime}{time}{grey})"
+		"ua"		"{grey}Перемотано {lime}{seekSeconds}{grey}с. до тіку {lime}{tick}{grey} ({lime}{time}{grey})"
 	}
 
 	"Replay - Paused"
 	{
 		"en"		"{grey}Replay paused."
+		"ua"		"{grey}Повтор на паузі."
 	}
 	"Replay - Resumed"
 	{
 		"en"		"{grey}Replay resumed."
+		"ua"		"{grey}Повтор продовжено."
 	}
 	"Replay - Loading"
 	{
 		"en"		"{grey}Loading replay, please wait..."
+		"ua"		"{grey}Завантаження повтору, будь ласка, зачекайте..."
 	}
 	"Replay - Loading Already"
 	{
 		"en"		"{grey}Replay is already loading, please wait..."
+		"ua"		"{grey}Повтор вже завантажується, будь ласка, зачекайте..."
 	}
 	"Replay - Invalid UUID"
 	{
 		"en"		"{darkred}Invalid UUID format"
+		"ua"		"{darkred}Невірний UUID формат"
 	}
 	"Replay - Loaded Successfully"
 	{
 		"en"		"{lime}Replay loaded successfully! Starting playback..."
+		"ua"		"{lime}Повтор завантажено успішно! Починається відтворення..."
 	}
 	"Replay - No Loading Progress"
 	{
 		"en"		"{grey}No replay loading in progress"
+		"ua"		"{grey}Завантаження повтору не відбувається"
 	}
 	"Replay - Loading Progress"
 	{
 		"#format"	"progress:.1f"
 		"en"		"{grey}Loading replay: {progress}%%%% complete"
+		"ua"		"{grey}Завантаження повтору: {progress}%%%% виконано"
 	}
 	"Replay - Loading Completed"
 	{
 		"en"		"{lime}Replay loading completed"
+		"ua"		"{lime}Завантаження повтору виконано"
 	}
 	"Replay - Loading Cancelled"
 	{
 		"en"		"{grey}Replay loading cancelled"
+		"ua"		"{grey}Завантаження повтору скасовано"
 	}
 	"Replay - Usage Command"
 	{
 		"en"		"{grey}Usage: kz_replay <ID>"
+		"ua"		"{grey}Використання: kz_replay <ID>"
 	}
 	"Replay - Load Cancelled"
 	{
 		"en"		"{darkred}Load cancelled by user"
+		"ua"		"{darkred}Завантаження скасовано користувачем"
 	}
 	"Replay - Invalid File Format"
 	{
 		"en"		"{darkred}Invalid replay file format"
+		"ua"		"{darkred}Невірний формат файлу повтору"
 	}
 	"Replay - Manual Replay Failed"
 	{
 		"en"		"{darkred}Failed to save manual replay."
+		"ua"		"{darkred}Не вдалося зберегти ручний повтор."
 	}
 	"Replay - Manual Replay Saved"
 	{
 		"#format"	"uuid:s,duration:.0f"
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey} ({lime}{duration}{grey}s)" 
+		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey} ({lime}{duration}{grey}с.)" 
 	}
 	"Replay - Run Replay Failed"
 	{
 		"en"		"{darkred}Failed to save run replay."
+		"ua"		"{darkred}Не вдалося зберегти повтор проходження."
 	}
 	"Replay - Run Replay Saved"
 	{
 		"#format"	"uuid:s"
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey}"
+		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey}"
 	}
 	"Replay - Wrong Map"
 	{
 		"#format"	"replayMap:s,currentMap:s"
 		"en"		"{darkred}Replay map does not match current map.{grey} (Replay: {default}{replayMap}{grey}, Current: {default}{currentMap}{grey})"
+		"ua"		"{darkred}Мапа на повторі не співпадає з поточною мапою.{grey} (На повторі: {default}{replayMap}{grey}, Поточна: {default}{currentMap}{grey})"
 	}
 	"Replay - Unknown Mode"
 	{
 		"#format"	"modeName:s"
 		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
+		"ua"		"{darkred}Режим {default}{modeName}{darkred} недоступний. Відтворення може бути неточним."
 	}
 	"Replay - Unknown Style"
 	{
 		"#format"	"modeName:s"
 		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
+		"ua"		"{darkred}Режим {default}{modeName}{darkred} недоступний. Відтворення може бути неточним."
 	}
 	
 	"Replay List - Check Console"
 	{
 		"en"		"{grey}Check console for info!"
+		"ua"		"{grey}Перевірте консоль щодо деталей!"
 	}
 	
 	"Replay List - Usage Title"
 	{
 		// Usage: !replays [type=run/r/jump/j/manual/m] [options...]
 		"en"		"Usage: !replays [type=run/r/jump/j/manual/m] [options...]"
+		"ua"		"Використання: !replays [type=run/r/jump/j/manual/m] [параметри...]"
 	}
 
 	"Replay List - Usage General Options"
@@ -219,6 +261,7 @@
 		//	offset=<num> - Skip first N results
 		//	limit=<num> - Limit results (max 20)
 		"en"		"\nGeneral Options:\n\tplayer=<name> - Filter by player name\n\tsteamid=<id> - Filter by Steam ID\n\tmap=<name> - Filter by map name (default: current map)\n\toffset=<num> - Skip first N results\n\tlimit=<num> - Limit results (max 20)"
+		"ua"		"\nЗагальні параметри:\n\tplayer=<ім'я> - Фільтрувати за іменем гравця\n\tsteamid=<id> - Фільтрувати за Steam ID\n\tmap=<назва> - Фільтрувати за мапою (за замовчуванням: поточна мапа)\n\toffset=<число> - Пропустити перші N результатів\n\tlimit=<число> - Ліміт результатів (максимум 20)"
 	}
 
 	"Replay List - Usage Type Options"
@@ -228,88 +271,108 @@
 		//	Jump: mode=<mode> jumptype=<type> mindistance=<dist>
 		//	Manual: saver=<name> ssid=<steamid>
 		"en"		"\nType Options:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
+		"ua"		"\nПараметри типу повтору:\n\tПроходження: mode=<назва режиму> course=<назва курсу> maxtime=<секунди> maxteleports=<число> numstyles=<число>\n\tСтрибок: jumptype=<тип стрибка> mindistance=<дистанція>\n\tРучний повтор: saver=<ім'я> ssid=<steamid>"
 	}
 
 
 	"Replay List - No Matching Replays"
 	{
 		"en"		"{grey}No matching replays found."
+		"ua"		"{grey}Не знайдено відповідних повторів."
 	}
 	
 	"Cheater Replays - Table Name"
 	{
 		"en"		"Cheater Replays"
+		"ua"		"Повтори Чітерів"
 	}
 	
 	"Run Replays - Table Name"
 	{
 		"en"		"Run Replays"
+		"ua"		"Повтори проходжень"
 	}
 	
 	"Jump Replays - Table Name"
 	{
 		"en"		"Jump Replays"
+		"ua"		"Повтори стрибків"
 	}
 	
 	"Manual Replays - Table Name"
 	{
 		"en"		"Manual Replays"
+		"ua"		"Ручні повтори"
 	}
 	
 	"Replay Table Header - Player"
 	{
 		"en"		"Player"
+		"ua"		"Гравець"
 	}
 	"Replay Table Header - Map"
 	{
 		"en"		"Map"
+		"ua"		"Мапа"
 	}
 	"Replay Table Header - Reason"
 	{
 		"en"		"Reason"
+		"ua"		"Причина"
 	}
 	"Replay Table Header - SteamID"
 	{
 		"en"		"SteamID"
+		"ua"		"SteamID"
 	}
 	"Replay Table Header - UUID"
 	{
 		"en"		"UUID"
+		"ua"		"UUID"
 	}
 	"Replay Table Header - Course"
 	{
 		"en"		"Course"
+		"ua"		"Курс"
 	}
 	"Replay Table Header - Mode"
 	{
 		"en"		"Mode"
+		"ua"		"Режим"
 	}
 	"Replay Table Header - Time"
 	{
 		"en"		"Time"
+		"ua"		"Час"
 	}
 	"Replay Table Header - Teleports"
 	{
 		"en"		"Teleports"
+		"ua"		"Телепорти"
 	}
 	"Replay Table Header - Jump Type"
 	{
 		"en"		"Jump Type"
+		"ua"		"Тип стрибка"
 	}
 	"Replay Table Header - Distance"
 	{
 		"en"		"Distance"
+		"ua"		"Дистанція"
 	}
 	"Replay Table Header - Block"
 	{
 		"en"		"Block"
+		"ua"		"Блок"
 	}
 	"Replay Table Header - Strafes"
 	{
 		"en"		"Strafes"
+		"ua"		"Стрейфи"
 	}
 	"Replay Table Header - Saved By"
 	{
 		"en"		"Saved By"
+		"ua"		"Збережено"
 	}
 }

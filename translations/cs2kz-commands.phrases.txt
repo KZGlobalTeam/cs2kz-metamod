@@ -1239,33 +1239,41 @@
 	"Command Description - kz_rpsave"
 	{
 		"en"		"Manually save past gameplay into a replay."
+		"ua"		"Вручну зберегти попередній геймплей як повтор."
 	}
 	"Command Description - kz_replay"
 	{
 		"en"		"Play a previously saved replay."
+		"ua"		"Відтворити раніше збережений повтор."
 	}
   	"Command Description - kz_rpgoto"
 	{
 		"en"		"Go to a specific time in the replay. (hh:mm:ss)"
+		"ua"		"Перейти до конкретного моменту в повторі. (hh:mm:ss)"
 	}
   	"Command Description - kz_rpgototick"
 	{
 		"en"		"Go to a specific tick in the replay."
+		"ua"		"Перейти до конкретного тіку в повторі."
 	}
   	"Command Description - kz_rpinfo"
 	{
 		"en"		"Display information about the current replay."
+		"ua"		"Відобразити інформацію про поточний повтор."
 	}
   	"Command Description - kz_rppause"
 	{
 		"en"		"Pause or resume the current replay."
+		"ua"		"Поставити на паузу або продовжити відтворення поточного повтору."
 	}
   	"Command Description - kz_rploadprogress"
 	{
 		"en"		"Display the loading progress of the replay."
+		"ua"		"Показати прогрес завантаження повтору."
 	}
   	"Command Description - kz_rpcancelload"
 	{
 		"en"		"Cancel the loading of the replay."
+		"ua"		"Скасувати завантаження повтору."
 	}
 }
