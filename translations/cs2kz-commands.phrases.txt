@@ -390,11 +390,13 @@
 	"Command Description - kz_cpsound"
 	{
 		"en"		"Toggle checkpoint sound effect."
+		"chi"		"切换存点音效."
 		"ua"		"Перемикання звуку чекпоінту."
 	}
 	"Command Description - kz_tpsound"
 	{
 		"en"		"Toggle teleport sound effect."
+		"chi"		"切换读点音效."
 		"ua"		"Перемикання звуку телепорту."
 	}
 	"Command Description - kz_panel"
@@ -490,26 +492,31 @@
     "Command Description - kz_jstier"
     {
         "en"        "Set your minimum jumpstats reporting tier."
+		"chi"       "设置显示你的跳跃数据的最低等级."
         "ua"        "Встановити мінімальний рівень для відображення статистики стрибків."
     }
     "Command Description - kz_jstierconsole"
     {
         "en"        "Set your minimum jumpstats console reporting tier."
+		"chi"		"设置在控制台显示你的跳跃数据的最低等级."
         "ua"        "Встановити мінімальний рівень для відображення статистики стрибків в консолі."
     }
     "Command Description - kz_jsbroadcastsound"
     {
         "en"        "Set the minimum tier for jumpstats sound broadcast."
+		"chi"		"设置广播跳跃数据音效的最低等级."
         "ua"        "Встановити мінімальний рівень для звукових ефектів під час стрибків."
     }
 	"Command Description - kz_jsextend"
 	{
 		"en"		"Toggle extended jumpstats reporting in chat."
+		"chi"		"切换是否在聊天框展示详细跳跃数据."
 		"ua"		"Перемикання розширеної статистики стрибків у чаті."
 	}
 	"Command Description - kz_jsvolume"
 	{
 		"en"		"Set jumpstats sound effect volume."
+		"chi"		"设置跳跃数据音效的音量."
 		"ua"		"Встановити гучність ефектів стрибків."
 	}
 	"Command Description - kz_mode"
