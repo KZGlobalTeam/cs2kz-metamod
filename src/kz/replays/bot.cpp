@@ -1,9 +1,9 @@
 #include "cs2kz.h"
 #include "kz/kz.h"
-#include "kz_replaybot.h"
+#include "bot.h"
 #include "kz_replay.h"
-#include "kz_replaydata.h"
-#include "kz_replayitem.h"
+#include "data.h"
+#include "item.h"
 #include "kz/spec/kz_spec.h"
 #include "utils/ctimer.h"
 

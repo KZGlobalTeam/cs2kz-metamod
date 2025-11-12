@@ -1,4 +1,4 @@
-#include "kz_replaywatcher.h"
+#include "watcher.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/language/kz_language.h"

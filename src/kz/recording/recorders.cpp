@@ -8,7 +8,7 @@
 #include "common.h"
 #include "sdk/cskeletoninstance.h"
 #include "sdk/usercmd.h"
-#include "kz/replays/kz_replaycompression.h"
+#include "kz/replays/compression.h"
 
 extern CConVar<bool> kz_replay_recording_debug;
 

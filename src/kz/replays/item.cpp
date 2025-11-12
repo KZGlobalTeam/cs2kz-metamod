@@ -1,5 +1,5 @@
 #include "common.h"
-#include "kz_replayitem.h"
+#include "item.h"
 #include "sdk/entity/cbaseplayerweapon.h"
 #include "sdk/cskeletoninstance.h"
 #include "sdk/entity/ccsplayerpawn.h"

@@ -2,7 +2,7 @@
 #define KZ_REPLAYEVENTS_H
 
 #include "sdk/datatypes.h"
-#include "kz_replaydata.h"
+#include "data.h"
 
 class KZPlayer;
 

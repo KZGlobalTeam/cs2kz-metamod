@@ -1,5 +1,5 @@
 #include "kz_replay.h"
-#include "kz_replaycompression.h"
+#include "compression.h"
 #include "filesystem.h"
 #include "vendor/zstd/lib/zstd.h"
 

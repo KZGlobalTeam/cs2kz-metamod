@@ -4,9 +4,9 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/language/kz_language.h"
-#include "kz_replayevents.h"
-#include "kz_replaydata.h"
-#include "kz_replaybot.h"
+#include "events.h"
+#include "data.h"
+#include "bot.h"
 
 extern CConVar<bool> kz_replay_playback_debug;
 

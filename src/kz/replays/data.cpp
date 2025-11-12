@@ -1,9 +1,9 @@
 #include "cs2kz.h"
-#include "kz_replaydata.h"
+#include "data.h"
 #include "filesystem.h"
 #include "utils/utils.h"
 #include "utils/uuid.h"
-#include "kz_replaycompression.h"
+#include "compression.h"
 #include <thread>
 #include <mutex>
 #include <atomic>

@@ -1,11 +1,11 @@
 #include "cs2kz.h"
 #include "kz/kz.h"
 #include "kz_replay.h"
-#include "kz_replayplayback.h"
-#include "kz_replaydata.h"
-#include "kz_replaybot.h"
-#include "kz_replayitem.h"
-#include "kz_replayevents.h"
+#include "playback.h"
+#include "data.h"
+#include "bot.h"
+#include "item.h"
+#include "events.h"
 #include "sdk/usercmd.h"
 
 namespace KZ::replaysystem::playback
