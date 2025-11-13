@@ -173,12 +173,6 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 	for (i32 i = 0; i < numCmds; i++)
 	{
 		auto &pc = cmds[i];
-		// For whatever reason, numCmds is always 4 on linux servers, even if only 1 command is sent.
-		// TODO: Investigate further why this is the case.
-		if (pc.cmdNum < 0 || pc.cmdNum > currentTick + 200)
-		{
-			break;
-		}
 		if (pc.cmdNum <= this->lastCmdNumReceived)
 		{
 			continue;
