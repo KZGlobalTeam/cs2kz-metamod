@@ -276,7 +276,8 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	{
 		META_CONPRINTF("kz_replay_recording_debug: Jump finish\n");
 	}
-	RpJumpStats &rpJump = this->circularRecording.jumps->GetNextWriteRef();
+	this->EnsureCircularRecorderInitialized();
+	RpJumpStats &rpJump = this->circularRecording->jumps->GetNextWriteRef();
 	RpJumpStats::FromJump(rpJump, jump);
 	// Only write the jump if it's ownage or better to save storage for run replays.
 	if (jump->IsValid() && jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= DistanceTier_Ownage)
@@ -312,6 +313,10 @@ void KZRecordingService::OnClientDisconnect()
 		}
 	}
 	this->jumpRecorders.clear();
+
+	// Clean up circular recorder when player disconnects
+	delete this->circularRecording;
+	this->circularRecording = nullptr;
 }
 
 void KZRecordingService::OnPhysicsSimulate()
@@ -364,5 +369,8 @@ void KZRecordingService::OnPhysicsSimulatePost()
 
 	// Remove old events from circular buffer (keep 2 minutes)
 	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	this->circularRecording.TrimOldData(currentTick);
+	if (this->circularRecording)
+	{
+		this->circularRecording->TrimOldData(currentTick);
+	}
 }

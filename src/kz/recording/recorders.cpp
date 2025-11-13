@@ -111,7 +111,12 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 {
 	baseHeader.Init(player);
 
-	CircularRecorder &circular = player->recordingService->circularRecording;
+	CircularRecorder *circular = player->recordingService->circularRecording;
+	if (!circular)
+	{
+		// No circular recorder initialized, nothing to copy
+		return;
+	}
 	// Go through the events and fetch the first events within the time frame.
 	// Iterate backwards to find the earliest event that is still within the time frame.
 	i32 earliestWeaponIndex = -1;
@@ -119,28 +124,28 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	i32 earliestStyleEventIndex = -1;
 	i32 earliestCheckpointEventIndex = -1;
 
-	if (circular.tickData->GetReadAvailable() == 0)
+	if (circular->tickData->GetReadAvailable() == 0)
 	{
 		return;
 	}
-	i32 numTickData = MIN(circular.tickData->GetReadAvailable(), (i32)(numSeconds * ENGINE_FIXED_TICK_RATE));
-	u32 earliestTick = circular.tickData->PeekSingle(circular.tickData->GetReadAvailable() - numTickData)->serverTick;
-	for (i32 i = circular.tickData->GetReadAvailable() - numTickData; i < circular.tickData->GetReadAvailable(); i++)
+	i32 numTickData = MIN(circular->tickData->GetReadAvailable(), (i32)(numSeconds * ENGINE_FIXED_TICK_RATE));
+	u32 earliestTick = circular->tickData->PeekSingle(circular->tickData->GetReadAvailable() - numTickData)->serverTick;
+	for (i32 i = circular->tickData->GetReadAvailable() - numTickData; i < circular->tickData->GetReadAvailable(); i++)
 	{
-		TickData *tickData = circular.tickData->PeekSingle(i);
+		TickData *tickData = circular->tickData->PeekSingle(i);
 		if (!tickData)
 		{
 			break;
 		}
 		this->tickData.push_back(*tickData);
-		this->subtickData.push_back(*circular.subtickData->PeekSingle(i));
+		this->subtickData.push_back(*circular->subtickData->PeekSingle(i));
 	}
 	i32 first = 0;
 	bool shouldCopy = false;
-	for (; first < circular.rpEvents->GetReadAvailable(); first++)
+	for (; first < circular->rpEvents->GetReadAvailable(); first++)
 	{
 		shouldCopy = true;
-		RpEvent *event = circular.rpEvents->PeekSingle(first);
+		RpEvent *event = circular->rpEvents->PeekSingle(first);
 		if (event->serverTick >= earliestTick)
 		{
 			break;
@@ -160,20 +165,20 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 		RpEvent baseModeEvent = {};
 		baseModeEvent.serverTick = 0;
 		baseModeEvent.type = RPEVENT_MODE_CHANGE;
-		V_strncpy(baseModeEvent.data.modeChange.name, circular.earliestMode.value().name, sizeof(baseModeEvent.data.modeChange.name));
-		V_strncpy(baseModeEvent.data.modeChange.md5, circular.earliestMode.value().md5, sizeof(baseModeEvent.data.modeChange.md5));
+		V_strncpy(baseModeEvent.data.modeChange.name, circular->earliestMode.value().name, sizeof(baseModeEvent.data.modeChange.name));
+		V_strncpy(baseModeEvent.data.modeChange.md5, circular->earliestMode.value().md5, sizeof(baseModeEvent.data.modeChange.md5));
 		this->rpEvents.push_back(baseModeEvent);
 	}
 	else
 	{
-		RpEvent baseModeEvent = *circular.rpEvents->PeekSingle(earliestModeEventIndex);
+		RpEvent baseModeEvent = *circular->rpEvents->PeekSingle(earliestModeEventIndex);
 		baseModeEvent.serverTick = 0;
 		this->rpEvents.push_back(baseModeEvent);
 	}
 	if (earliestStyleEventIndex == -1)
 	{
 		bool firstStyle = true;
-		for (auto &style : circular.earliestStyles.value_or(std::vector<RpModeStyleInfo>()))
+		for (auto &style : circular->earliestStyles.value_or(std::vector<RpModeStyleInfo>()))
 		{
 			RpEvent baseStyleEvent = {};
 			baseStyleEvent.serverTick = 0;
@@ -187,14 +192,14 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	}
 	else
 	{
-		RpEvent baseStyleEvent = *circular.rpEvents->PeekSingle(earliestStyleEventIndex);
+		RpEvent baseStyleEvent = *circular->rpEvents->PeekSingle(earliestStyleEventIndex);
 		i32 eventServerTick = baseStyleEvent.serverTick;
 		baseStyleEvent.serverTick = 0;
 		this->rpEvents.push_back(baseStyleEvent);
 		// Copy all style change events with the same server tick (they were part of the same batch)
-		for (i32 i = earliestStyleEventIndex + 1; i < circular.rpEvents->GetReadAvailable(); i++)
+		for (i32 i = earliestStyleEventIndex + 1; i < circular->rpEvents->GetReadAvailable(); i++)
 		{
-			RpEvent *event = circular.rpEvents->PeekSingle(i);
+			RpEvent *event = circular->rpEvents->PeekSingle(i);
 			if (!event || event->type != RPEVENT_STYLE_CHANGE || event->serverTick != eventServerTick)
 			{
 				break;
@@ -204,20 +209,20 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	}
 	if (shouldCopy)
 	{
-		for (i32 i = first; i < circular.rpEvents->GetReadAvailable(); i++)
+		for (i32 i = first; i < circular->rpEvents->GetReadAvailable(); i++)
 		{
-			if (!copyTimerEvents && circular.rpEvents->PeekSingle(i)->type == RPEVENT_TIMER_EVENT)
+			if (!copyTimerEvents && circular->rpEvents->PeekSingle(i)->type == RPEVENT_TIMER_EVENT)
 			{
 				continue;
 			}
-			this->rpEvents.push_back(*circular.rpEvents->PeekSingle(i));
+			this->rpEvents.push_back(*circular->rpEvents->PeekSingle(i));
 		}
 	}
 	shouldCopy = false;
-	for (first = 0; first < circular.weaponChangeEvents->GetReadAvailable(); first++)
+	for (first = 0; first < circular->weaponChangeEvents->GetReadAvailable(); first++)
 	{
 		shouldCopy = true;
-		WeaponSwitchEvent *event = circular.weaponChangeEvents->PeekSingle(first);
+		WeaponSwitchEvent *event = circular->weaponChangeEvents->PeekSingle(first);
 
 		if (event->serverTick >= earliestTick)
 		{
@@ -227,20 +232,20 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	}
 
 	// Copy the weapon table from circular recorder
-	this->weaponTable = circular.weaponTable;
+	this->weaponTable = circular->weaponTable;
 
 	// Determine the initial weapon and ensure there's a weapon event at tick 0
 	u16 initialWeaponIndex = 0;
 	if (earliestWeaponIndex != -1)
 	{
-		initialWeaponIndex = circular.weaponChangeEvents->PeekSingle(earliestWeaponIndex)->weaponIndex;
+		initialWeaponIndex = circular->weaponChangeEvents->PeekSingle(earliestWeaponIndex)->weaponIndex;
 	}
-	else if (circular.earliestWeapon.has_value())
+	else if (circular->earliestWeapon.has_value())
 	{
 		// Find the index for the earliest weapon in the table
-		for (size_t i = 0; i < circular.weaponTable.size(); i++)
+		for (size_t i = 0; i < circular->weaponTable.size(); i++)
 		{
-			if (circular.weaponTable[i] == circular.earliestWeapon.value())
+			if (circular->weaponTable[i] == circular->earliestWeapon.value())
 			{
 				initialWeaponIndex = static_cast<u16>(i);
 				break;
@@ -253,15 +258,15 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 
 	if (shouldCopy)
 	{
-		for (i32 i = first; i < circular.weaponChangeEvents->GetReadAvailable(); i++)
+		for (i32 i = first; i < circular->weaponChangeEvents->GetReadAvailable(); i++)
 		{
-			this->weaponChangeEvents.push_back(*circular.weaponChangeEvents->PeekSingle(i));
+			this->weaponChangeEvents.push_back(*circular->weaponChangeEvents->PeekSingle(i));
 		}
 	}
 	shouldCopy = false;
-	for (first = 0; first < circular.jumps->GetReadAvailable(); first++)
+	for (first = 0; first < circular->jumps->GetReadAvailable(); first++)
 	{
-		RpJumpStats *jump = circular.jumps->PeekSingle(first);
+		RpJumpStats *jump = circular->jumps->PeekSingle(first);
 		if (!jump)
 		{
 			break;
@@ -274,9 +279,9 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	}
 	if (shouldCopy)
 	{
-		for (i32 i = first; i < circular.jumps->GetReadAvailable(); i++)
+		for (i32 i = first; i < circular->jumps->GetReadAvailable(); i++)
 		{
-			RpJumpStats *jump = circular.jumps->PeekSingle(i);
+			RpJumpStats *jump = circular->jumps->PeekSingle(i);
 
 			if (jump->overall.distanceTier < copyJumps)
 			{
@@ -287,9 +292,9 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	}
 
 	shouldCopy = false;
-	for (first = 0; first < circular.cmdData->GetReadAvailable(); first++)
+	for (first = 0; first < circular->cmdData->GetReadAvailable(); first++)
 	{
-		CmdData *cmdData = circular.cmdData->PeekSingle(first);
+		CmdData *cmdData = circular->cmdData->PeekSingle(first);
 		if (!cmdData)
 		{
 			break;
@@ -302,10 +307,10 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	}
 	if (shouldCopy)
 	{
-		for (i32 i = first; i < circular.cmdData->GetReadAvailable(); i++)
+		for (i32 i = first; i < circular->cmdData->GetReadAvailable(); i++)
 		{
-			this->cmdData.push_back(*circular.cmdData->PeekSingle(i));
-			this->cmdSubtickData.push_back(*circular.cmdSubtickData->PeekSingle(i));
+			this->cmdData.push_back(*circular->cmdData->PeekSingle(i));
+			this->cmdSubtickData.push_back(*circular->cmdSubtickData->PeekSingle(i));
 		}
 	}
 }

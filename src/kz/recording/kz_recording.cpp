@@ -74,13 +74,16 @@ void GeneralReplayHeader::Init(KZPlayer *player)
 
 void KZRecordingService::Reset()
 {
-	this->circularRecording.tickData->Advance(this->circularRecording.tickData->GetReadAvailable());
-	this->circularRecording.subtickData->Advance(this->circularRecording.subtickData->GetReadAvailable());
-	this->circularRecording.cmdData->Advance(this->circularRecording.cmdData->GetReadAvailable());
-	this->circularRecording.cmdSubtickData->Advance(this->circularRecording.cmdSubtickData->GetReadAvailable());
-	this->circularRecording.weaponChangeEvents->Advance(this->circularRecording.weaponChangeEvents->GetReadAvailable());
-	this->circularRecording.rpEvents->Advance(this->circularRecording.rpEvents->GetReadAvailable());
-	this->circularRecording.jumps->Advance(this->circularRecording.jumps->GetReadAvailable());
+	if (this->circularRecording)
+	{
+		this->circularRecording->tickData->Advance(this->circularRecording->tickData->GetReadAvailable());
+		this->circularRecording->subtickData->Advance(this->circularRecording->subtickData->GetReadAvailable());
+		this->circularRecording->cmdData->Advance(this->circularRecording->cmdData->GetReadAvailable());
+		this->circularRecording->cmdSubtickData->Advance(this->circularRecording->cmdSubtickData->GetReadAvailable());
+		this->circularRecording->weaponChangeEvents->Advance(this->circularRecording->weaponChangeEvents->GetReadAvailable());
+		this->circularRecording->rpEvents->Advance(this->circularRecording->rpEvents->GetReadAvailable());
+		this->circularRecording->jumps->Advance(this->circularRecording->jumps->GetReadAvailable());
+	}
 	this->runRecorders.clear();
 	this->lastCmdNumReceived = 0;
 	this->currentRunUUID = UUID_t(false);
@@ -138,6 +141,8 @@ void KZRecordingService::RecordTickData_SetupMove(PlayerCommand *pc)
 
 void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 {
+	this->EnsureCircularRecorderInitialized();
+
 	this->player->GetOrigin(&this->currentTickData.post.origin);
 	this->player->GetVelocity(&this->currentTickData.post.velocity);
 	this->player->GetAngles(&this->currentTickData.post.angles);
@@ -158,15 +163,17 @@ void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 	this->currentTickData.post.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
 
 	// Push the tick data to the circular buffer and recorders.
-	this->circularRecording.tickData->Write(this->currentTickData);
+	this->circularRecording->tickData->Write(this->currentTickData);
 	this->PushToRecorders(this->currentTickData, RecorderType::Both);
 
-	this->circularRecording.subtickData->Write(this->currentSubtickData);
+	this->circularRecording->subtickData->Write(this->currentSubtickData);
 	this->PushToRecorders<Recorder::Vec::Tick>(this->currentSubtickData, RecorderType::Both);
 }
 
 void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 {
+	this->EnsureCircularRecorderInitialized();
+
 	i32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
 	for (i32 i = 0; i < numCmds; i++)
 	{
@@ -203,7 +210,7 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 		data.m_yaw = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_yaw"));
 		data.m_pitch = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(this->player->GetPlayerSlot(), "m_pitch"));
 
-		this->circularRecording.cmdData->Write(data);
+		this->circularRecording->cmdData->Write(data);
 		this->PushToRecorders(data, RecorderType::Both);
 
 		SubtickData subtickData;
@@ -212,7 +219,7 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 		{
 			subtickData.subtickMoves[j].FromMove(pc.base().subtick_moves(j));
 		}
-		this->circularRecording.cmdSubtickData->Write(subtickData);
+		this->circularRecording->cmdSubtickData->Write(subtickData);
 		this->PushToRecorders<Recorder::Vec::Cmd>(subtickData, RecorderType::Both);
 		this->lastCmdNumReceived = pc.cmdNum;
 	}
@@ -286,6 +293,8 @@ void KZRecordingService::CheckRecorders()
 
 void KZRecordingService::CheckWeapons()
 {
+	this->EnsureCircularRecorderInitialized();
+
 	auto weapon = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
 	auto weaponEconInfo = EconInfo(weapon);
 	if (this->currentWeaponEconInfo != weaponEconInfo)
@@ -294,8 +303,8 @@ void KZRecordingService::CheckWeapons()
 
 		// Find or add weapon to the table
 		u16 weaponIndex = 0;
-		auto it = this->circularRecording.weaponIndexMap.find(weaponEconInfo);
-		if (it != this->circularRecording.weaponIndexMap.end())
+		auto it = this->circularRecording->weaponIndexMap.find(weaponEconInfo);
+		if (it != this->circularRecording->weaponIndexMap.end())
 		{
 			// Weapon already in table, use existing index
 			weaponIndex = it->second;
@@ -303,35 +312,37 @@ void KZRecordingService::CheckWeapons()
 		else
 		{
 			// New weapon, add to table
-			weaponIndex = static_cast<u16>(this->circularRecording.weaponTable.size());
-			this->circularRecording.weaponTable.push_back(weaponEconInfo);
-			this->circularRecording.weaponIndexMap[weaponEconInfo] = weaponIndex;
+			weaponIndex = static_cast<u16>(this->circularRecording->weaponTable.size());
+			this->circularRecording->weaponTable.push_back(weaponEconInfo);
+			this->circularRecording->weaponIndexMap[weaponEconInfo] = weaponIndex;
 		}
 
 		WeaponSwitchEvent event;
 		event.serverTick = this->currentTickData.serverTick;
 		event.weaponIndex = weaponIndex;
-		this->circularRecording.weaponChangeEvents->Write(event);
+		this->circularRecording->weaponChangeEvents->Write(event);
 		this->PushToRecorders(event, RecorderType::Both);
 	}
 
 	// Ensure the earliest/initial weapon is tracked
-	if (!this->circularRecording.earliestWeapon.has_value())
+	if (!this->circularRecording->earliestWeapon.has_value())
 	{
-		this->circularRecording.earliestWeapon = this->currentWeaponEconInfo;
+		this->circularRecording->earliestWeapon = this->currentWeaponEconInfo;
 
 		// Also ensure it's in the weapon table even if we never switched weapons
-		if (this->circularRecording.weaponIndexMap.find(this->currentWeaponEconInfo) == this->circularRecording.weaponIndexMap.end())
+		if (this->circularRecording->weaponIndexMap.find(this->currentWeaponEconInfo) == this->circularRecording->weaponIndexMap.end())
 		{
-			u16 weaponIndex = static_cast<u16>(this->circularRecording.weaponTable.size());
-			this->circularRecording.weaponTable.push_back(this->currentWeaponEconInfo);
-			this->circularRecording.weaponIndexMap[this->currentWeaponEconInfo] = weaponIndex;
+			u16 weaponIndex = static_cast<u16>(this->circularRecording->weaponTable.size());
+			this->circularRecording->weaponTable.push_back(this->currentWeaponEconInfo);
+			this->circularRecording->weaponIndexMap[this->currentWeaponEconInfo] = weaponIndex;
 		}
 	}
 }
 
 void KZRecordingService::CheckModeStyles()
 {
+	this->EnsureCircularRecorderInitialized();
+
 	auto currentModeInfo = KZ::mode::GetModeInfo(this->player->modeService);
 	if (this->lastKnownMode.shortModeName != currentModeInfo.shortModeName || !KZ_STREQI(this->lastKnownMode.md5, currentModeInfo.md5))
 	{
@@ -388,16 +399,16 @@ void KZRecordingService::CheckModeStyles()
 		}
 	}
 
-	if (!this->circularRecording.earliestMode.has_value())
+	if (!this->circularRecording->earliestMode.has_value())
 	{
 		auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService);
-		this->circularRecording.earliestMode = RpModeStyleInfo();
-		V_strncpy(this->circularRecording.earliestMode->name, modeInfo.longModeName.Get(), sizeof(this->circularRecording.earliestMode->name));
-		V_strncpy(this->circularRecording.earliestMode->md5, modeInfo.md5, sizeof(this->circularRecording.earliestMode->md5));
+		this->circularRecording->earliestMode = RpModeStyleInfo();
+		V_strncpy(this->circularRecording->earliestMode->name, modeInfo.longModeName.Get(), sizeof(this->circularRecording->earliestMode->name));
+		V_strncpy(this->circularRecording->earliestMode->md5, modeInfo.md5, sizeof(this->circularRecording->earliestMode->md5));
 	}
-	if (!this->circularRecording.earliestStyles.has_value())
+	if (!this->circularRecording->earliestStyles.has_value())
 	{
-		this->circularRecording.earliestStyles = std::vector<RpModeStyleInfo>();
+		this->circularRecording->earliestStyles = std::vector<RpModeStyleInfo>();
 
 		FOR_EACH_VEC(this->player->styleServices, i)
 		{
@@ -406,7 +417,7 @@ void KZRecordingService::CheckModeStyles()
 			RpModeStyleInfo style = {};
 			V_strncpy(style.name, styleInfo.longName, sizeof(style.name));
 			V_strncpy(style.md5, styleInfo.md5, sizeof(style.md5));
-			this->circularRecording.earliestStyles->push_back(style);
+			this->circularRecording->earliestStyles->push_back(style);
 		}
 	}
 }
@@ -420,7 +431,8 @@ void KZRecordingService::CheckCheckpoints()
 
 void KZRecordingService::InsertEvent(const RpEvent &event)
 {
-	this->circularRecording.rpEvents->Write(event);
+	this->EnsureCircularRecorderInitialized();
+	this->circularRecording->rpEvents->Write(event);
 	this->PushToRecorders(event, RecorderType::Run);
 	if (event.type != RpEventType::RPEVENT_TIMER_EVENT)
 	{

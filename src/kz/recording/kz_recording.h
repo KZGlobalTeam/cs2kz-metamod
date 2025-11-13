@@ -305,6 +305,15 @@ public:
 	void CheckCheckpoints();
 
 private:
+	// Ensure circular recorder is initialized (lazy initialization)
+	void EnsureCircularRecorderInitialized()
+	{
+		if (!this->circularRecording)
+		{
+			this->circularRecording = new CircularRecorder();
+		}
+	}
+
 	// Insert a replay event into the circular buffer and all active recorders.
 	void InsertEvent(const RpEvent &event);
 
@@ -324,7 +333,7 @@ public:
 public:
 	SubtickData currentSubtickData;
 	TickData currentTickData;
-	CircularRecorder circularRecording;
+	CircularRecorder *circularRecording = nullptr;
 	i32 lastCmdNumReceived = 0;
 	KZModeManager::ModePluginInfo lastKnownMode;
 	std::vector<KZStyleManager::StylePluginInfo> lastKnownStyles;
