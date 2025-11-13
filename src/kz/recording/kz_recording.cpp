@@ -170,6 +170,7 @@ void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 {
 	i32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
+	META_CONPRINTF("Recording %d commands, lastCmdNumReceived=%d\n", numCmds, this->lastCmdNumReceived);
 	for (i32 i = 0; i < numCmds; i++)
 	{
 		auto &pc = cmds[i];
@@ -178,6 +179,7 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 		{
 			continue;
 		}
+		META_CONPRINTF(" Recording cmdNum=%d\n", pc.cmdNum);
 		CmdData data;
 		data.serverTick = currentTick;
 		data.gameTime = g_pKZUtils->GetServerGlobals()->curtime;
