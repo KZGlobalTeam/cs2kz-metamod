@@ -64,6 +64,11 @@ i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, P
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(controller);
+	META_CONPRINTF("Processing %d usercmds for player %s (paused=%d, margin=%.2f)\n", numcmds, controller->GetPlayerName(), paused ? 1 : 0, margin);
+	for (int i = 0; i < numcmds; i++)
+	{
+		META_CONPRINTF("  cmd[%d]: cmdNum=%d\n", i, cmds[i].cmdNum);
+	}
 	player->OnProcessUsercmds(cmds, numcmds);
 	auto retValue = ProcessUsercmds(controller, cmds, numcmds, paused, margin);
 	player->OnProcessUsercmdsPost(cmds, numcmds);
