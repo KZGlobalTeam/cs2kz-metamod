@@ -224,6 +224,14 @@ void KZGlobalService::OnActivateServer()
 				if (mapInfo.data.has_value())
 				{
 					META_CONPRINTF("[KZ::Global] %s is approved.\n", mapInfo.data->name.c_str());
+					if (mapInfo.data->name == currentMapName.Get())
+					{
+						for (const auto &course : mapInfo.data->courses)
+						{
+							KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
+							META_CONPRINTF("[KZ::Global] Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
+						}
+					}
 				}
 				else
 				{
@@ -591,6 +599,14 @@ void KZGlobalService::CompleteHandshake(KZ::API::handshake::HelloAck &ack)
 	}).detach();
 	// clang-format on
 
+	if (ack.mapInfo.has_value() && ack.mapInfo->name == g_pKZUtils->GetCurrentMapName().Get())
+	{
+		for (const auto &course : ack.mapInfo->courses)
+		{
+			KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
+			META_CONPRINTF("[KZ::Global] Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
+		}
+	}
 	{
 		std::unique_lock lock(KZGlobalService::currentMap.mutex);
 		KZGlobalService::currentMap.data = std::move(ack.mapInfo);
