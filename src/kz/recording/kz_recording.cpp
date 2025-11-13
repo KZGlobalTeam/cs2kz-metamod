@@ -60,8 +60,6 @@ void GeneralReplayHeader::Init(KZPlayer *player)
 	V_snprintf(this->player.name, sizeof(this->player.name), "%s", player->GetController()->GetPlayerName());
 	this->player.steamid64 = player->GetSteamId64();
 
-	this->firstWeapon = player->recordingService->circularRecording.earliestWeapon.value();
-
 	this->gloves = player->GetPlayerPawn()->m_EconGloves();
 	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
 	V_snprintf(this->modelName, sizeof(this->modelName), "%s", pSkeleton->m_modelState().m_ModelName().String());
@@ -316,9 +314,19 @@ void KZRecordingService::CheckWeapons()
 		this->circularRecording.weaponChangeEvents->Write(event);
 		this->PushToRecorders(event, RecorderType::Both);
 	}
+
+	// Ensure the earliest/initial weapon is tracked
 	if (!this->circularRecording.earliestWeapon.has_value())
 	{
 		this->circularRecording.earliestWeapon = this->currentWeaponEconInfo;
+
+		// Also ensure it's in the weapon table even if we never switched weapons
+		if (this->circularRecording.weaponIndexMap.find(this->currentWeaponEconInfo) == this->circularRecording.weaponIndexMap.end())
+		{
+			u16 weaponIndex = static_cast<u16>(this->circularRecording.weaponTable.size());
+			this->circularRecording.weaponTable.push_back(this->currentWeaponEconInfo);
+			this->circularRecording.weaponIndexMap[this->currentWeaponEconInfo] = weaponIndex;
+		}
 	}
 }
 

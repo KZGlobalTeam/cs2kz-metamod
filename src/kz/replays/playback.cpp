@@ -8,6 +8,8 @@
 #include "events.h"
 #include "sdk/usercmd.h"
 
+extern CConVar<bool> kz_replay_playback_debug;
+
 namespace KZ::replaysystem::playback
 {
 
@@ -307,6 +309,18 @@ namespace KZ::replaysystem::playback
 			replay->currentWeapon++;
 		}
 		u16 weaponIndex = replay->weapons[replay->currentWeapon].weaponIndex;
+
+		// Safety check: ensure weaponIndex is valid
+		if (weaponIndex >= replay->weaponTableSize)
+		{
+			if (kz_replay_playback_debug.Get())
+			{
+				META_CONPRINTF("Error: Invalid weapon index %u at tick %u (table size: %u)\n", weaponIndex, tickData->serverTick,
+							   replay->weaponTableSize);
+			}
+			return;
+		}
+
 		desiredWeapon = replay->weaponTable[weaponIndex];
 
 		EconInfo activeWeapon = player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
@@ -369,6 +383,17 @@ namespace KZ::replaysystem::playback
 		CCSPlayerPawn *pawn = bot->GetPlayerPawn();
 		pawn->m_pItemServices()->RemoveAllItems(false);
 		u16 weaponIndex = replay->weapons[0].weaponIndex;
+
+		// Safety check: ensure weaponIndex is valid
+		if (weaponIndex >= replay->weaponTableSize)
+		{
+			if (kz_replay_playback_debug.Get())
+			{
+				META_CONPRINTF("Error: Invalid weapon index %u (table size: %u)\n", weaponIndex, replay->weaponTableSize);
+			}
+			return;
+		}
+
 		u16 itemDef = replay->weaponTable[weaponIndex].mainInfo.itemDef;
 		if (itemDef == 0)
 		{

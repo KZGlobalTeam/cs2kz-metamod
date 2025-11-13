@@ -13,7 +13,7 @@ class KZPlayer;
 enum : u32
 {
 	KZ_REPLAY_MAGIC = KZ_FOURCC('s', '2', 'k', 'z'),
-	KZ_REPLAY_VERSION = 1,
+	KZ_REPLAY_VERSION = 2,
 };
 
 enum ReplayType : u32
@@ -297,7 +297,6 @@ struct GeneralReplayHeader
 		char md5[33];
 	} map;
 
-	EconInfo firstWeapon;
 	// Probably not worth the effort to track player models and gloves over time, since this won't affect gameplay in any way that matters.
 	EconInfo gloves;
 	char modelName[256];

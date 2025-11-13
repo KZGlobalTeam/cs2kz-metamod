@@ -295,26 +295,30 @@ namespace KZ::replaysystem::data
 		result.weaponTable = weaponTableVec.data();
 		new (&weaponTableVec) std::vector<EconInfo>();
 
-		// Store weapon events, adding initial weapon at index 0
+		// Store weapon events (first event should be at tick 0 with initial weapon)
 		result.numWeapons = static_cast<i32>(weaponEventsVec.size());
-		result.weapons = new WeaponSwitchEvent[result.numWeapons + 1];
+		result.weapons = new WeaponSwitchEvent[result.numWeapons];
 
-		// Find the weapon index for firstWeapon in the weapon table
-		u16 firstWeaponIndex = 0;
-		for (u32 i = 0; i < result.weaponTableSize; i++)
-		{
-			if (result.weaponTable[i] == result.header.firstWeapon)
-			{
-				firstWeaponIndex = i;
-				break;
-			}
-		}
-		result.weapons[0] = {0, firstWeaponIndex};
-
-		// Copy the rest of the weapon events
+		// Copy the weapon events
 		for (i32 i = 0; i < result.numWeapons; i++)
 		{
-			result.weapons[i + 1] = weaponEventsVec[i];
+			result.weapons[i] = weaponEventsVec[i];
+		}
+
+		// Safety check: ensure we have at least one weapon event and weapon table is not empty
+		if (result.numWeapons == 0 || result.weaponTableSize == 0)
+		{
+			if (kz_replay_playback_debug.Get())
+			{
+				META_CONPRINTF("Warning: Invalid replay - no weapons (events: %d, table size: %u)\n", result.numWeapons, result.weaponTableSize);
+			}
+			// Clean up and return invalid replay
+			delete[] result.tickData;
+			delete[] result.subtickData;
+			delete[] result.weaponTable;
+			delete[] result.weapons;
+			g_pFullFileSystem->Close(file);
+			return {};
 		}
 
 		UpdateProgress(file, fileSize, progress);

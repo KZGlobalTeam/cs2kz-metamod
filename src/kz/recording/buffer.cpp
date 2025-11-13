@@ -100,10 +100,16 @@ void CircularRecorder::TrimOldWeaponEvents(u32 currentTick)
 		// Replace the weapon table
 		this->weaponTable = std::move(newWeaponTable);
 
-		// Update earliestWeapon
-		if (earliestWeaponIndex < this->weaponTable.size())
+		// Update earliestWeapon using the remapped index
+		auto remapIt = oldToNewIndexMap.find(earliestWeaponIndex);
+		if (remapIt != oldToNewIndexMap.end() && remapIt->second < this->weaponTable.size())
 		{
-			this->earliestWeapon = this->weaponTable[earliestWeaponIndex];
+			this->earliestWeapon = this->weaponTable[remapIt->second];
+		}
+		else if (!this->weaponTable.empty())
+		{
+			// Fallback: if the earliest weapon was removed, use the first weapon in the new table
+			this->earliestWeapon = this->weaponTable[0];
 		}
 	}
 }

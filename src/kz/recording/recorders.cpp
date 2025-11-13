@@ -229,15 +229,28 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 	// Copy the weapon table from circular recorder
 	this->weaponTable = circular.weaponTable;
 
+	// Determine the initial weapon and ensure there's a weapon event at tick 0
+	u16 initialWeaponIndex = 0;
 	if (earliestWeaponIndex != -1)
 	{
-		u16 weaponIndex = circular.weaponChangeEvents->PeekSingle(earliestWeaponIndex)->weaponIndex;
-		this->baseHeader.firstWeapon = circular.weaponTable[weaponIndex];
+		initialWeaponIndex = circular.weaponChangeEvents->PeekSingle(earliestWeaponIndex)->weaponIndex;
 	}
-	else
+	else if (circular.earliestWeapon.has_value())
 	{
-		this->baseHeader.firstWeapon = circular.earliestWeapon.value();
+		// Find the index for the earliest weapon in the table
+		for (size_t i = 0; i < circular.weaponTable.size(); i++)
+		{
+			if (circular.weaponTable[i] == circular.earliestWeapon.value())
+			{
+				initialWeaponIndex = static_cast<u16>(i);
+				break;
+			}
+		}
 	}
+
+	// Always insert a weapon event at tick 0 with the initial weapon
+	this->weaponChangeEvents.push_back({0, initialWeaponIndex});
+
 	if (shouldCopy)
 	{
 		for (i32 i = first; i < circular.weaponChangeEvents->GetReadAvailable(); i++)
