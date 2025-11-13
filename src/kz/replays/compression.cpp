@@ -5,6 +5,8 @@
 
 using namespace KZ::replaysystem::compression;
 
+extern CConVar<bool> kz_replay_playback_debug;
+
 // ========================================
 // Helper functions
 // ========================================
@@ -602,6 +604,11 @@ bool KZ::replaysystem::compression::ReadWeaponChangesCompressed(FileHandle_t fil
 	}
 
 	delete[] decompressedData;
+
+	if (kz_replay_playback_debug.Get())
+	{
+		META_CONPRINTF("Loaded %zu weapon events and %zu weapons in table\n", outWeaponEvents.size(), outWeaponTable.size());
+	}
 	return true;
 }
 
