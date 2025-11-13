@@ -17,6 +17,7 @@
 CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", false);
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
+
 extern CSteamGameServerAPIContext g_steamAPI;
 
 ReplayFileWriter *KZRecordingService::s_fileWriter = nullptr;
@@ -177,6 +178,7 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 
 		if (pc.cmdNum <= this->lastCmdNumReceived)
 		{
+			META_CONPRINTF(" Skipping cmdNum=%d\n", pc.cmdNum);
 			continue;
 		}
 		META_CONPRINTF(" Recording cmdNum=%d\n", pc.cmdNum);
