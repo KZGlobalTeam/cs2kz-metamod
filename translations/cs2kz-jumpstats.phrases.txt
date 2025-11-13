@@ -865,6 +865,7 @@
 	{
 		"#format"	"volume:.1f"
 		"en"		"{grey}Current jumpstats volume is {default}{volume}."
+		"chi"		"{grey}当前数据音效的音量为 {default}{volume}."
 	}
 	"Jumpstats Option - Jumpstats Volume - Response"
 	{
