@@ -5,6 +5,64 @@ static_global KeyValues *pServerCfgKeyValues;
 
 IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 
+// Helper function to merge loaded preferences with existing ones
+// Source values overwrite target values, except for keys in excludeKeys
+// excludeKeys: list of keys to never overwrite (user-set preferences)
+static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, const CUtlVector<CUtlString> *excludeKeys = nullptr)
+{
+	if (!source || !target)
+	{
+		return;
+	}
+
+	// Iterate through all members in the source
+	int memberCount = source->GetMemberCount();
+	for (int i = 0; i < memberCount; i++)
+	{
+		const char *name = source->GetMemberName(i);
+
+		// Skip if this key is in the exclude list (user-set)
+		if (excludeKeys && excludeKeys->Find(name) != excludeKeys->InvalidIndex())
+		{
+			continue;
+		}
+
+		KeyValues3 *sourceMember = source->GetMember(i);
+		KeyValues3 *targetMember = target->FindOrCreateMember(name);
+
+		// Copy the value based on type
+		KV3TypeEx_t type = sourceMember->GetTypeEx();
+		KV3Type_t baseType = (KV3Type_t)(type & 0x0F);
+
+		switch (baseType)
+		{
+			case KV3_TYPE_BOOL:
+				targetMember->SetBool(sourceMember->GetBool());
+				break;
+			case KV3_TYPE_INT:
+				targetMember->SetInt(sourceMember->GetInt());
+				break;
+			case KV3_TYPE_UINT:
+				targetMember->SetUInt(sourceMember->GetUInt());
+				break;
+			case KV3_TYPE_DOUBLE:
+				targetMember->SetDouble(sourceMember->GetDouble());
+				break;
+			case KV3_TYPE_STRING:
+				targetMember->SetString(sourceMember->GetString());
+				break;
+			case KV3_TYPE_TABLE:
+				// Recursively merge tables
+				targetMember->SetToEmptyTable();
+				MergePreferences(targetMember, sourceMember, excludeKeys);
+				break;
+			// For other types (arrays, etc.), we can add support later if needed
+			default:
+				break;
+		}
+	}
+}
+
 void KZOptionService::LoadDefaultOptions()
 {
 	char serverCfgPath[1024];
@@ -57,13 +115,20 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 	{
 		text = "{\n}";
 	}
+
+	// Load the preferences from the database into a temporary KV
+	KeyValues3 loadedPrefs(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error;
-	LoadKV3FromJSON(&this->prefKV, &error, text.Get(), "");
+	LoadKV3FromJSON(&loadedPrefs, &error, text.Get(), "");
 	if (!error.IsEmpty())
 	{
 		META_CONPRINTF("[KZ::DB] Error fetching local preference: %s\n", error.Get());
 		return;
 	}
+
+	// Merge loaded preferences, excluding user-set preferences
+	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
+
 	this->dataState = LOCAL;
 	// Calling this before the player is ingame will create unwanted race conditions.
 	// We need to make sure the player is both authenticated and ingame.
@@ -78,14 +143,20 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 {
 	assert(!json.empty() && "API always sends at least an empty object");
 
+	// Load the preferences from the API into a temporary KV
+	KeyValues3 loadedPrefs(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error;
-	LoadKV3FromJSON(&this->prefKV, &error, json.c_str(), "");
+	LoadKV3FromJSON(&loadedPrefs, &error, json.c_str(), "");
 
 	if (!error.IsEmpty())
 	{
 		META_CONPRINTF("[KZ::Options] Error loading global preferences: %s\n", error.Get());
 		return;
 	}
+
+	// Merge loaded preferences, excluding user-set preferences
+	// Global preferences override local preferences, but not user-set ones
+	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
 
 	this->dataState = GLOBAL;
 

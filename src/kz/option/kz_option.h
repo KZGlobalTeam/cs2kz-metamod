@@ -40,6 +40,7 @@ private:
 	} dataState, currentState;
 
 	KeyValues3 prefKV = KeyValues3(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
+	CUtlVector<CUtlString> userSetPrefs; // Track user-modified preferences
 
 public:
 	void Reset()
@@ -47,15 +48,11 @@ public:
 		dataState = NONE;
 		currentState = NONE;
 		prefKV.SetToEmptyTable();
+		userSetPrefs.Purge();
 	}
 
 	void InitializeLocalPrefs(CUtlString text);
 	void InitializeGlobalPrefs(std::string json);
-
-	bool IsInitialized()
-	{
-		return dataState > NONE;
-	}
 
 	void SaveLocalPrefs();
 
@@ -77,9 +74,9 @@ public:
 	// Due to the way keyvalues3.h is written, we can't template these functions.
 	void SetPreferenceBool(const char *optionName, bool value)
 	{
-		if (!IsInitialized())
+		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
 		{
-			return;
+			userSetPrefs.AddToTail(optionName); // Mark as user-set
 		}
 		prefKV.FindOrCreateMember(optionName)->SetBool(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
@@ -87,24 +84,19 @@ public:
 
 	bool GetPreferenceBool(const char *optionName, bool defaultValue = false)
 	{
-		if (!IsInitialized())
+		KeyValues3 *option = prefKV.FindMember(optionName);
+		if (!option)
 		{
 			return defaultValue;
-		}
-		bool created = false;
-		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
-		if (created)
-		{
-			option->SetBool(defaultValue);
 		}
 		return option->GetBool(defaultValue);
 	}
 
 	void SetPreferenceFloat(const char *optionName, f64 value)
 	{
-		if (!IsInitialized())
+		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
 		{
-			return;
+			userSetPrefs.AddToTail(optionName); // Mark as user-set
 		}
 		prefKV.FindOrCreateMember(optionName)->SetDouble(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
@@ -112,24 +104,19 @@ public:
 
 	f64 GetPreferenceFloat(const char *optionName, f64 defaultValue = 0.0)
 	{
-		if (!IsInitialized())
+		KeyValues3 *option = prefKV.FindMember(optionName);
+		if (!option)
 		{
 			return defaultValue;
-		}
-		bool created = false;
-		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
-		if (created)
-		{
-			option->SetDouble(defaultValue);
 		}
 		return option->GetDouble(defaultValue);
 	}
 
 	void SetPreferenceInt(const char *optionName, i64 value)
 	{
-		if (!IsInitialized())
+		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
 		{
-			return;
+			userSetPrefs.AddToTail(optionName); // Mark as user-set
 		}
 		prefKV.FindOrCreateMember(optionName)->SetInt64(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
@@ -137,24 +124,19 @@ public:
 
 	i64 GetPreferenceInt(const char *optionName, i64 defaultValue = 0)
 	{
-		if (!IsInitialized())
+		KeyValues3 *option = prefKV.FindMember(optionName);
+		if (!option)
 		{
 			return defaultValue;
-		}
-		bool created = false;
-		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
-		if (created)
-		{
-			option->SetInt64(defaultValue);
 		}
 		return option->GetInt64(defaultValue);
 	}
 
 	void SetPreferenceStr(const char *optionName, const char *value)
 	{
-		if (!IsInitialized())
+		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
 		{
-			return;
+			userSetPrefs.AddToTail(optionName); // Mark as user-set
 		}
 		prefKV.FindOrCreateMember(optionName)->SetString(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
@@ -162,24 +144,19 @@ public:
 
 	const char *GetPreferenceStr(const char *optionName, const char *defaultValue = "")
 	{
-		if (!IsInitialized())
+		KeyValues3 *option = prefKV.FindMember(optionName);
+		if (!option)
 		{
 			return defaultValue;
-		}
-		bool created = false;
-		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
-		if (created)
-		{
-			option->SetString(defaultValue);
 		}
 		return option->GetString(defaultValue);
 	}
 
 	void SetPreferenceVector(const char *optionName, const Vector &value)
 	{
-		if (!IsInitialized())
+		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
 		{
-			return;
+			userSetPrefs.AddToTail(optionName); // Mark as user-set
 		}
 		prefKV.FindOrCreateMember(optionName)->SetVector(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
@@ -187,24 +164,19 @@ public:
 
 	Vector GetPreferenceVector(const char *optionName, const Vector &defaultValue = Vector(0.0f, 0.0f, 0.0f))
 	{
-		if (!IsInitialized())
+		KeyValues3 *option = prefKV.FindMember(optionName);
+		if (!option)
 		{
 			return defaultValue;
-		}
-		bool created = false;
-		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
-		if (created)
-		{
-			option->SetVector(defaultValue);
 		}
 		return option->GetVector(defaultValue);
 	}
 
 	void SetPreferenceTable(const char *optionName, const KeyValues3 &value)
 	{
-		if (!IsInitialized())
+		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
 		{
-			return;
+			userSetPrefs.AddToTail(optionName); // Mark as user-set
 		}
 		KeyValues3 *option = prefKV.FindOrCreateMember(optionName);
 		option->SetToEmptyTable();
@@ -214,17 +186,11 @@ public:
 
 	void GetPreferenceTable(const char *optionName, KeyValues3 &output, const KeyValues3 &defaultValue = KeyValues3())
 	{
-		if (!IsInitialized())
+		KeyValues3 *option = prefKV.FindMember(optionName);
+		if (!option)
 		{
 			output = defaultValue;
 			return;
-		}
-
-		bool created = false;
-		KeyValues3 *option = prefKV.FindOrCreateMember(optionName, &created);
-		if (created)
-		{
-			*option = defaultValue;
 		}
 		output = *option;
 	}

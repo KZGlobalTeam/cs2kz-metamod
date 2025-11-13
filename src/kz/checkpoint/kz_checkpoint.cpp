@@ -366,26 +366,23 @@ void KZCheckpointService::SetStartPosition()
 	this->customStartPosition.slopeDropHeight = pawn->m_flSlopeDropHeight();
 	this->customStartPosition.slopeDropOffset = pawn->m_flSlopeDropOffset();
 	this->customStartPosition.groundEnt = pawn->m_hGroundEntity();
-	if (player->optionService->IsInitialized())
+	bool hasMapName = false;
+	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+	if (hasMapName)
 	{
-		bool hasMapName = false;
-		CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
-		if (hasMapName)
-		{
-			KeyValues3 ssps;
-			player->optionService->GetPreferenceTable("startPositions", ssps);
-			KeyValues3 *startPos = ssps.FindOrCreateMember(currentMap.Get());
+		KeyValues3 ssps;
+		player->optionService->GetPreferenceTable("startPositions", ssps);
+		KeyValues3 *startPos = ssps.FindOrCreateMember(currentMap.Get());
 
-			startPos->FindOrCreateMember("origin")->SetVector(this->customStartPosition.origin);
-			startPos->FindOrCreateMember("angles")->SetQAngle(this->customStartPosition.angles);
-			startPos->FindOrCreateMember("ladderNormal")->SetVector(this->customStartPosition.ladderNormal);
-			startPos->FindOrCreateMember("onLadder")->SetBool(this->customStartPosition.onLadder);
-			startPos->FindOrCreateMember("groundEnt")->SetUInt(this->customStartPosition.groundEnt.ToInt());
-			startPos->FindOrCreateMember("slopeDropOffset")->SetFloat(this->customStartPosition.slopeDropOffset);
-			startPos->FindOrCreateMember("slopeDropHeight")->SetFloat(this->customStartPosition.slopeDropHeight);
+		startPos->FindOrCreateMember("origin")->SetVector(this->customStartPosition.origin);
+		startPos->FindOrCreateMember("angles")->SetQAngle(this->customStartPosition.angles);
+		startPos->FindOrCreateMember("ladderNormal")->SetVector(this->customStartPosition.ladderNormal);
+		startPos->FindOrCreateMember("onLadder")->SetBool(this->customStartPosition.onLadder);
+		startPos->FindOrCreateMember("groundEnt")->SetUInt(this->customStartPosition.groundEnt.ToInt());
+		startPos->FindOrCreateMember("slopeDropOffset")->SetFloat(this->customStartPosition.slopeDropOffset);
+		startPos->FindOrCreateMember("slopeDropHeight")->SetFloat(this->customStartPosition.slopeDropHeight);
 
-			player->optionService->SetPreferenceTable("startPositions", ssps);
-		}
+		player->optionService->SetPreferenceTable("startPositions", ssps);
 	}
 	this->player->languageService->PrintChat(true, false, "Set Custom Start Position");
 }
@@ -394,17 +391,14 @@ void KZCheckpointService::ClearStartPosition()
 {
 	this->hasCustomStartPosition = false;
 
-	if (player->optionService->IsInitialized())
+	bool hasMapName = false;
+	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+	if (hasMapName)
 	{
-		bool hasMapName = false;
-		CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
-		if (hasMapName)
-		{
-			KeyValues3 ssps;
-			player->optionService->GetPreferenceTable("startPositions", ssps);
-			ssps.RemoveMember(currentMap.Get());
-			player->optionService->SetPreferenceTable("startPositions", ssps);
-		}
+		KeyValues3 ssps;
+		player->optionService->GetPreferenceTable("startPositions", ssps);
+		ssps.RemoveMember(currentMap.Get());
+		player->optionService->SetPreferenceTable("startPositions", ssps);
 	}
 
 	this->player->languageService->PrintChat(true, false, "Cleared Custom Start Position");

@@ -271,6 +271,12 @@ SCMD(kz_jsextend, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 SCMD(kz_jsvolume, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (args->ArgC() < 2)
+	{
+		player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Volume - Current",
+										   player->optionService->GetPreferenceFloat("jsVolume", 0.75f));
+		return MRES_SUPERCEDE;
+	}
 	f32 volume = Clamp(static_cast<f32>(V_atof(args->Arg(1))), 0.0f, 1.0f);
 
 	player->jumpstatsService->SetJumpstatsVolume(volume);

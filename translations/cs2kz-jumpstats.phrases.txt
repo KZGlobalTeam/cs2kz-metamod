@@ -861,6 +861,11 @@
 		"ua"		"{grey}Поріг звукових ефектів для стрибків встановлено на {default}{tier}."
 		"sv"		"{grey}Jumpstats ljudsändnings gränsen är nu {default}{tier}."
 	}
+	"Jumpstats Option - Jumpstats Volume - Current"
+	{
+		"#format"	"volume:.1f"
+		"en"		"{grey}Current jumpstats volume is {default}{volume}."
+	}
 	"Jumpstats Option - Jumpstats Volume - Response"
 	{
 		"#format"	"volume:.1f"
