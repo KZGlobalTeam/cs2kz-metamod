@@ -30,7 +30,7 @@ class CUserCmd : public CUserCmdBaseHost<CSGOUserCmdPB>
 {
 };
 
-class PlayerCommand : public CUserCmd
+class CUserCmdExtended : public CUserCmd
 {
 public:
 	struct
@@ -40,8 +40,19 @@ public:
 	} buttonstates;
 
 	// Not part of the player message
-	uint32_t unknown[2];
-	u64 flags;
+	uint32_t unknown;
+};
+
+class PlayerCommand : public CUserCmdExtended
+{
+public:
+	uint32_t flags;
 	PlayerCommand *unknowncmd;
 	PlayerCommand *parentcmd;
 };
+
+#ifndef _WIN32
+static_assert(sizeof(PlayerCommand) == 144, "Size of PlayerCommand is incorrect");
+#else
+static_assert(sizeof(PlayerCommand) == 152, "Size of PlayerCommand is incorrect");
+#endif
