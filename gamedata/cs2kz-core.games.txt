@@ -426,15 +426,17 @@
 				"linux"			"3"
 			}
 			// CCSPlayer_MovementServices
+			// Check for sv_runcmds
 			"PlayerRunCommand" 
 			{
-				"windows"		"19"
-				"linux"			"20"
+				"windows"		"20"
+				"linux"			"21"
 			}
+			// The function *after* the one containing sv_subtick_movement_view_angles 
 			"FinishMove"
 			{
-				"windows"		"30"
-				"linux"			"31"
+				"windows"		"31"
+				"linux"			"32"
 			}
 		}
 	}
