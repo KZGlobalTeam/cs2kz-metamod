@@ -84,6 +84,8 @@ namespace KZ::replaysystem::bot
 		}
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(bot);
 		KZ::misc::JoinTeam(player, CS_TEAM_CT, false);
+		// CS2 will kick bots that don't have spectator pending team when another player joins.
+		player->GetController()->m_iPendingTeamNum(1);
 	}
 
 	void MoveBotToSpec()

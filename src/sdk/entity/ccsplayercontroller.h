@@ -37,6 +37,7 @@ public:
 	SCHEMA_FIELD(int32, m_iCompetitiveRanking)
 	SCHEMA_FIELD(int8, m_iCompetitiveRankType)
 	SCHEMA_FIELD(CCSPlayerController_InventoryServices *, m_pInventoryServices)
+	SCHEMA_FIELD(uint8, m_iPendingTeamNum)
 
 	void SetClan(const char *clan)
 	{
