@@ -260,6 +260,15 @@ class KZRecordingService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 public:
+	~KZRecordingService()
+	{
+		if (circularRecording)
+		{
+			delete circularRecording;
+		}
+		circularRecording = nullptr;
+	}
+
 	static void Init();
 	static void Shutdown();
 	static void ProcessFileWriteCompletion();
@@ -304,16 +313,10 @@ public:
 	// Check the player's checkpoints/teleports and embed in tick data.
 	void CheckCheckpoints();
 
-private:
 	// Ensure circular recorder is initialized (lazy initialization)
-	void EnsureCircularRecorderInitialized()
-	{
-		if (!this->circularRecording)
-		{
-			this->circularRecording = new CircularRecorder();
-		}
-	}
+	void EnsureCircularRecorderInitialized();
 
+private:
 	// Insert a replay event into the circular buffer and all active recorders.
 	void InsertEvent(const RpEvent &event);
 

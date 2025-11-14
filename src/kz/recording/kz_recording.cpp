@@ -429,6 +429,15 @@ void KZRecordingService::CheckCheckpoints()
 	this->currentTickData.checkpoint.teleportCount = this->player->checkpointService->GetTeleportCount();
 }
 
+void KZRecordingService::EnsureCircularRecorderInitialized()
+{
+	if (!this->circularRecording)
+	{
+		this->circularRecording = new CircularRecorder();
+		META_CONPRINTF("[KZ] Initialized circular recorder for player %s\n", this->player->GetController()->GetPlayerName());
+	}
+}
+
 void KZRecordingService::InsertEvent(const RpEvent &event)
 {
 	this->EnsureCircularRecorderInitialized();

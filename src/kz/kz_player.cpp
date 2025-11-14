@@ -130,6 +130,7 @@ void KZPlayer::OnPlayerActive()
 	g_pKZStyleManager->RefreshStyles(this, false);
 
 	this->optionService->OnPlayerActive();
+	this->recordingService->EnsureCircularRecorderInitialized();
 }
 
 void KZPlayer::OnPlayerFullyConnect()
