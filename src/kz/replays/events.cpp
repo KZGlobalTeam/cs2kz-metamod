@@ -124,7 +124,7 @@ namespace KZ::replaysystem::events
 				utils::FormatTime(event->data.timer.time, formattedTime, sizeof(formattedTime));
 
 				CUtlString combinedModeStyleText;
-				combinedModeStyleText.Format("{purple}%s{grey}", player.modeService->GetModeName());
+				combinedModeStyleText.Format("{purple}%s{grey}", player.modeService->GetModeShortName());
 				FOR_EACH_VEC(player.styleServices, i)
 				{
 					KZStyleService *style = player.styleServices[i];
