@@ -158,8 +158,8 @@ class ReplayWatcher
 public:
 	void Start()
 	{
-		running = true;
-		watcherThread = std::thread(&ReplayWatcher::WatchLoop, this);
+		// running = true;
+		// watcherThread = std::thread(&ReplayWatcher::WatchLoop, this);
 	}
 
 	void Stop()
