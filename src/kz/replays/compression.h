@@ -25,7 +25,7 @@ namespace KZ::replaysystem::compression
 	bool ReadTickDataCompressed(FileHandle_t file, std::vector<TickData> &outTickData, std::vector<SubtickData> &outSubtickData);
 
 	// Read compressed weapon changes
-	bool ReadWeaponChangesCompressed(FileHandle_t file, std::vector<WeaponSwitchEvent> &outWeaponEvents, std::vector<EconInfo> &outWeaponTable);
+	bool ReadWeaponsCompressed(FileHandle_t file, std::vector<std::pair<i32, EconInfo>> &outWeaponTable);
 
 	// Read compressed events
 	bool ReadEventsCompressed(FileHandle_t file, std::vector<RpEvent> &outEvents);
@@ -37,7 +37,7 @@ namespace KZ::replaysystem::compression
 	bool ReadCmdDataCompressed(FileHandle_t file, std::vector<CmdData> &outCmdData, std::vector<SubtickData> &outCmdSubtickData);
 
 	// Write compressed weapon changes
-	i32 WriteWeaponChangesCompressed(FileHandle_t file, const std::vector<WeaponSwitchEvent> &weaponEvents, const std::vector<EconInfo> &weaponTable);
+	i32 WriteWeaponsCompressed(FileHandle_t file, const std::vector<std::pair<i32, EconInfo>> &weaponTable);
 
 	// Write compressed events
 	i32 WriteEventsCompressed(FileHandle_t file, const std::vector<RpEvent> &events);

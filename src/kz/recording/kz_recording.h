@@ -25,13 +25,7 @@ struct CircularRecorder
 	// This is only written as long as the player is alive.
 	CFIFOCircularBuffer<TickData, 64 * 60 * 2> *tickData;
 	CFIFOCircularBuffer<SubtickData, 64 * 60 * 2> *subtickData;
-	CFIFOCircularBuffer<WeaponSwitchEvent, 64 * 60 * 2> *weaponChangeEvents;
-	// Track unique weapons for deduplication
-	std::vector<EconInfo> weaponTable;
-	// Map EconInfo to weapon table index for fast lookup
-	std::unordered_map<EconInfo, u16> weaponIndexMap;
 
-	std::optional<EconInfo> earliestWeapon;
 	std::optional<RpModeStyleInfo> earliestMode;
 	std::optional<std::vector<RpModeStyleInfo>> earliestStyles;
 	// Extra 20 seconds for commands in case of network issues
@@ -47,7 +41,6 @@ struct CircularRecorder
 	{
 		this->tickData = new CFIFOCircularBuffer<TickData, 64 * 60 * 2>();
 		this->subtickData = new CFIFOCircularBuffer<SubtickData, 64 * 60 * 2>();
-		this->weaponChangeEvents = new CFIFOCircularBuffer<WeaponSwitchEvent, 64 * 60 * 2>();
 		this->cmdData = new CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)>();
 		this->cmdSubtickData = new CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)>();
 		this->rpEvents = new CFIFOCircularBuffer<RpEvent, 64 * (60 * 2 + 20)>();
@@ -57,15 +50,12 @@ struct CircularRecorder
 	{
 		delete this->tickData;
 		delete this->subtickData;
-		delete this->weaponChangeEvents;
 		delete this->cmdData;
 		delete this->cmdSubtickData;
 		delete this->rpEvents;
 	}
 
 	void TrimOldCommands(u32 currentTick);
-	// Also updates the earliest weapon info.
-	void TrimOldWeaponEvents(u32 currentTick);
 	// Also updates the earliest mode and styles info.
 	void TrimOldEvents(u32 currentTick);
 	void TrimOldJumps(u32 currentTick);
@@ -75,7 +65,6 @@ struct CircularRecorder
 	{
 		// Tick data and subtick data are automatically trimmed by the circular buffer.
 		TrimOldCommands(currentTick);
-		TrimOldWeaponEvents(currentTick);
 		TrimOldEvents(currentTick);
 		TrimOldJumps(currentTick);
 	}
@@ -89,12 +78,13 @@ struct Recorder
 	std::vector<TickData> tickData;
 	std::vector<SubtickData> subtickData;
 	std::vector<RpEvent> rpEvents;
-	std::vector<WeaponSwitchEvent> weaponChangeEvents;
-	std::vector<EconInfo> weaponTable;
+
+	// Empty until the replay is queued for writing.
+	std::vector<std::pair<i32, EconInfo>> weaponTable;
+
 	std::vector<RpJumpStats> jumps;
 	std::vector<CmdData> cmdData;
 	std::vector<SubtickData> cmdSubtickData;
-
 	// Copy the last numSeconds seconds of data from the circular recorder.
 	Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps);
 
@@ -106,7 +96,7 @@ struct Recorder
 	bool WriteToFile();
 	virtual i32 WriteHeader(FileHandle_t file);
 	virtual i32 WriteTickData(FileHandle_t file);
-	virtual i32 WriteWeaponChanges(FileHandle_t file);
+	virtual i32 WriteWeapons(FileHandle_t file);
 	virtual i32 WriteJumps(FileHandle_t file);
 	virtual i32 WriteEvents(FileHandle_t file);
 	virtual i32 WriteCmdData(FileHandle_t file);
@@ -121,10 +111,6 @@ struct Recorder
 		else if constexpr (std::is_same<T, RpEvent>::value)
 		{
 			rpEvents.push_back(data);
-		}
-		else if constexpr (std::is_same<T, WeaponSwitchEvent>::value)
-		{
-			weaponChangeEvents.push_back(data);
 		}
 		else if constexpr (std::is_same<T, RpJumpStats>::value)
 		{
@@ -323,9 +309,6 @@ private:
 	void InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle);
 
 public:
-	// Write a replay file from the current circular buffer data.
-	f32 WriteCircularBufferToFile(f32 duration = 0.0f, const char *cheaterReason = "", std::string *out_uuid = nullptr, KZPlayer *saver = nullptr);
-
 	// Write a replay file with completion callbacks
 	void WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, WriteSuccessCallback onSuccess,
 										WriteFailureCallback onFailure);
@@ -337,7 +320,8 @@ public:
 	i32 lastCmdNumReceived = 0;
 	KZModeManager::ModePluginInfo lastKnownMode;
 	std::vector<KZStyleManager::StylePluginInfo> lastKnownStyles;
-	EconInfo currentWeaponEconInfo;
+	i32 currentWeaponID = -1;
+	std::vector<EconInfo> weapons;
 
 	// Recorders
 	std::vector<RunRecorder> runRecorders;
@@ -366,6 +350,9 @@ public:
 	};
 
 private:
+	// Helper function to copy weapons from recording service to recorder before queuing
+	void CopyWeaponsToRecorder(Recorder *recorder);
+
 	template<typename Func>
 	void ApplyToTarget(Func &&func, RecorderType target)
 	{

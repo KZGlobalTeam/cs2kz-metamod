@@ -303,7 +303,9 @@ void KZRecordingService::OnClientDisconnect()
 	{
 		if (recorder.desiredStopTime > 0.0f && s_fileWriter)
 		{
-			s_fileWriter->QueueWrite(std::make_unique<RunRecorder>(std::move(recorder)));
+			auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
+			this->CopyWeaponsToRecorder(recorderPtr.get());
+			s_fileWriter->QueueWrite(std::move(recorderPtr));
 		}
 	}
 	this->runRecorders.clear();
@@ -311,7 +313,9 @@ void KZRecordingService::OnClientDisconnect()
 	{
 		if (s_fileWriter)
 		{
-			s_fileWriter->QueueWrite(std::make_unique<JumpRecorder>(std::move(recorder)));
+			auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
+			this->CopyWeaponsToRecorder(recorderPtr.get());
+			s_fileWriter->QueueWrite(std::move(recorderPtr));
 		}
 	}
 	this->jumpRecorders.clear();
@@ -364,8 +368,8 @@ void KZRecordingService::OnPhysicsSimulatePost()
 	{
 		return;
 	}
-	this->RecordTickData_PhysicsSimulatePost();
 	this->CheckWeapons();
+	this->RecordTickData_PhysicsSimulatePost();
 	this->CheckModeStyles();
 	this->CheckCheckpoints();
 

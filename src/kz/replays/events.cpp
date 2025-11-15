@@ -322,14 +322,12 @@ namespace KZ::replaysystem::events
 		// Optimization: If seeking forward, we only need to process events from current position
 		bool isSeekingForward = (targetTick > replay->currentTick) && replay->currentTick > 0;
 		u32 startEventIndex = 0;
-		u32 startWeaponIndex = 0;
 		u32 startJumpIndex = 0;
 
 		if (isSeekingForward)
 		{
 			// Start from current positions when seeking forward
 			startEventIndex = replay->currentEvent;
-			startWeaponIndex = replay->currentWeapon;
 			startJumpIndex = replay->currentJump;
 		}
 		else
@@ -339,7 +337,6 @@ namespace KZ::replaysystem::events
 			g_pKZStyleManager->ClearStyles(player, true, false);
 
 			// Reset all tracking indices
-			replay->currentWeapon = 0;
 			replay->currentJump = 0;
 			replay->currentEvent = 0;
 
@@ -538,39 +535,6 @@ namespace KZ::replaysystem::events
 		if (replay->startTime > 0.0f)
 		{
 			replay->startTime += totalPauseTime;
-		}
-
-		// Update weapon tracking - optimize for forward seeking
-		if (isSeekingForward)
-		{
-			// Continue from current weapon position
-			for (i32 i = startWeaponIndex; i < replay->numWeapons; i++)
-			{
-				if (replay->weapons[i + 1].serverTick <= targetServerTick)
-				{
-					replay->currentWeapon = i + 1;
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
-		else
-		{
-			// Full reprocess from beginning
-			replay->currentWeapon = 0;
-			for (i32 i = 0; i < replay->numWeapons; i++)
-			{
-				if (replay->weapons[i + 1].serverTick <= targetServerTick)
-				{
-					replay->currentWeapon = i + 1;
-				}
-				else
-				{
-					break;
-				}
-			}
 		}
 
 		// Update jump tracking - optimize for forward seeking

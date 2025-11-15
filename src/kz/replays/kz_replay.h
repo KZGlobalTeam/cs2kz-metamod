@@ -13,7 +13,7 @@ class KZPlayer;
 enum : u32
 {
 	KZ_REPLAY_MAGIC = KZ_FOURCC('s', '2', 'k', 'z'),
-	KZ_REPLAY_VERSION = 2,
+	KZ_REPLAY_VERSION = 3,
 };
 
 enum ReplayType : u32
@@ -37,12 +37,6 @@ struct RpFlags
 	bool ducking: 1;
 	bool ducked: 1;
 	bool desiresDuck: 1;
-};
-
-struct WeaponSwitchEvent
-{
-	u32 serverTick {};
-	u16 weaponIndex {}; // Index into the weapon table
 };
 
 struct RpModeStyleInfo
@@ -229,6 +223,7 @@ struct TickData
 	f32 left {};
 	f32 up {};
 	bool leftHanded {};
+	i32 weapon; // -1 if no weapon
 
 	struct
 	{

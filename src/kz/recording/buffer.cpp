@@ -27,93 +27,6 @@ void CircularRecorder::TrimOldCommands(u32 currentTick)
 	this->cmdSubtickData->Advance(numToRemove);
 }
 
-void CircularRecorder::TrimOldWeaponEvents(u32 currentTick)
-{
-	i32 numToRemove = 0;
-	u16 earliestWeaponIndex = 0;
-	for (i32 i = 0; i < this->weaponChangeEvents->GetReadAvailable(); i++)
-	{
-		WeaponSwitchEvent data;
-		if (!this->weaponChangeEvents->Peek(&data, 1, i))
-		{
-			break;
-		}
-		if (data.serverTick + 2 * 60 * 64 < currentTick)
-		{
-			earliestWeaponIndex = data.weaponIndex;
-			numToRemove++;
-			continue;
-		}
-		break;
-	}
-	this->weaponChangeEvents->Advance(numToRemove);
-
-	// Rebuild weapon table from remaining events to avoid keeping unused weapons
-	if (numToRemove > 0)
-	{
-		// Collect all unique weapon indices still in use
-		std::unordered_set<u16> usedIndices;
-		for (i32 i = 0; i < this->weaponChangeEvents->GetReadAvailable(); i++)
-		{
-			WeaponSwitchEvent *event = this->weaponChangeEvents->PeekSingle(i);
-			if (event)
-			{
-				usedIndices.insert(event->weaponIndex);
-			}
-		}
-
-		// Build new weapon table with only used weapons
-		std::vector<EconInfo> newWeaponTable;
-		std::unordered_map<u16, u16> oldToNewIndexMap;
-
-		for (u16 oldIndex : usedIndices)
-		{
-			if (oldIndex < this->weaponTable.size())
-			{
-				u16 newIndex = static_cast<u16>(newWeaponTable.size());
-				newWeaponTable.push_back(this->weaponTable[oldIndex]);
-				oldToNewIndexMap[oldIndex] = newIndex;
-			}
-		}
-
-		// Update weapon indices in the circular buffer
-		for (i32 i = 0; i < this->weaponChangeEvents->GetReadAvailable(); i++)
-		{
-			WeaponSwitchEvent *event = this->weaponChangeEvents->PeekSingle(i);
-			if (event)
-			{
-				auto it = oldToNewIndexMap.find(event->weaponIndex);
-				if (it != oldToNewIndexMap.end())
-				{
-					event->weaponIndex = it->second;
-				}
-			}
-		}
-
-		// Rebuild the weapon index map
-		this->weaponIndexMap.clear();
-		for (size_t i = 0; i < newWeaponTable.size(); i++)
-		{
-			this->weaponIndexMap[newWeaponTable[i]] = static_cast<u16>(i);
-		}
-
-		// Replace the weapon table
-		this->weaponTable = std::move(newWeaponTable);
-
-		// Update earliestWeapon using the remapped index
-		auto remapIt = oldToNewIndexMap.find(earliestWeaponIndex);
-		if (remapIt != oldToNewIndexMap.end() && remapIt->second < this->weaponTable.size())
-		{
-			this->earliestWeapon = this->weaponTable[remapIt->second];
-		}
-		else if (!this->weaponTable.empty())
-		{
-			// Fallback: if the earliest weapon was removed, use the first weapon in the new table
-			this->earliestWeapon = this->weaponTable[0];
-		}
-	}
-}
-
 void CircularRecorder::TrimOldEvents(u32 currentTick)
 {
 	i32 numToRemove = 0;
@@ -179,33 +92,6 @@ void CircularRecorder::TrimOldJumps(u32 currentTick)
 	}
 }
 
-f32 KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason, std::string *out_uuid, KZPlayer *saver)
-{
-	std::unique_ptr<Recorder> recorder;
-	if (strlen(cheaterReason) > 0)
-	{
-		recorder = std::make_unique<CheaterRecorder>(this->player, cheaterReason, saver);
-	}
-	else
-	{
-		recorder = std::make_unique<ManualRecorder>(this->player, duration, saver);
-	}
-
-	if (out_uuid != nullptr)
-	{
-		*out_uuid = recorder->uuid.ToString();
-	}
-	f32 replayDuration = recorder->tickData.size() * ENGINE_FIXED_TICK_INTERVAL;
-
-	// Queue for async write
-	if (s_fileWriter)
-	{
-		s_fileWriter->QueueWrite(std::move(recorder));
-	}
-
-	return replayDuration;
-}
-
 void KZRecordingService::WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, WriteSuccessCallback onSuccess,
 														WriteFailureCallback onFailure)
 {
@@ -218,6 +104,9 @@ void KZRecordingService::WriteCircularBufferToFileAsync(f32 duration, const char
 	{
 		recorder = std::make_unique<ManualRecorder>(this->player, duration, saver);
 	}
+
+	// Copy weapons before queuing to another thread
+	this->CopyWeaponsToRecorder(recorder.get());
 
 	// Queue for async write with callbacks
 	if (s_fileWriter)

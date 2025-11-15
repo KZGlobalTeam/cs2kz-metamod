@@ -26,12 +26,9 @@ namespace KZ::replaysystem::data
 		u32 tickCount;
 		TickData *tickData;
 		SubtickData *subtickData;
-		i32 currentWeapon = -1;
-		i32 numWeapons;
-		WeaponSwitchEvent *weapons;
-		// Weapon table mapping indices to actual weapon info
-		u32 weaponTableSize;
-		EconInfo *weaponTable;
+		i32 weaponTableSize;
+		i32 *weaponIndices;
+		EconInfo *weapons;
 		u32 currentJump;
 		u32 numJumps;
 		RpJumpStats *jumps;

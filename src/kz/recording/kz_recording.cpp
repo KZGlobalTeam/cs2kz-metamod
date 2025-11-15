@@ -14,6 +14,8 @@
 #include "filesystem.h"
 #include "vprof.h"
 
+#include <set>
+
 CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", false);
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
@@ -80,7 +82,6 @@ void KZRecordingService::Reset()
 		this->circularRecording->subtickData->Advance(this->circularRecording->subtickData->GetReadAvailable());
 		this->circularRecording->cmdData->Advance(this->circularRecording->cmdData->GetReadAvailable());
 		this->circularRecording->cmdSubtickData->Advance(this->circularRecording->cmdSubtickData->GetReadAvailable());
-		this->circularRecording->weaponChangeEvents->Advance(this->circularRecording->weaponChangeEvents->GetReadAvailable());
 		this->circularRecording->rpEvents->Advance(this->circularRecording->rpEvents->GetReadAvailable());
 		this->circularRecording->jumps.clear();
 	}
@@ -161,7 +162,7 @@ void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 
 	this->currentTickData.post.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
 	this->currentTickData.post.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
-
+	this->currentTickData.weapon = this->currentWeaponID;
 	// Push the tick data to the circular buffer and recorders.
 	this->circularRecording->tickData->Write(this->currentTickData);
 	this->PushToRecorders(this->currentTickData, RecorderType::Both);
@@ -240,8 +241,10 @@ void KZRecordingService::CheckRecorders()
 			if (s_fileWriter)
 			{
 				CPlayerUserId userID = this->player->GetClient()->GetUserID();
+				auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
+				this->CopyWeaponsToRecorder(recorderPtr.get());
 				s_fileWriter->QueueWrite(
-					std::make_unique<RunRecorder>(std::move(recorder)),
+					std::move(recorderPtr),
 					// Success callback
 					[userID](const UUID_t &uuid, f32 replayDuration)
 					{
@@ -280,7 +283,9 @@ void KZRecordingService::CheckRecorders()
 			}
 			if (s_fileWriter)
 			{
-				s_fileWriter->QueueWrite(std::make_unique<JumpRecorder>(std::move(recorder)));
+				auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
+				this->CopyWeaponsToRecorder(recorderPtr.get());
+				s_fileWriter->QueueWrite(std::move(recorderPtr));
 			}
 			it = this->jumpRecorders.erase(it);
 		}
@@ -294,49 +299,24 @@ void KZRecordingService::CheckRecorders()
 void KZRecordingService::CheckWeapons()
 {
 	this->EnsureCircularRecorderInitialized();
-
+	this->currentWeaponID = -1;
 	auto weapon = this->player->GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
+	if (!weapon)
+	{
+		return;
+	}
 	auto weaponEconInfo = EconInfo(weapon);
-	if (this->currentWeaponEconInfo != weaponEconInfo)
+	for (i32 i = 0; i < this->weapons.size(); i++)
 	{
-		this->currentWeaponEconInfo = weaponEconInfo;
-
-		// Find or add weapon to the table
-		u16 weaponIndex = 0;
-		auto it = this->circularRecording->weaponIndexMap.find(weaponEconInfo);
-		if (it != this->circularRecording->weaponIndexMap.end())
+		if (weaponEconInfo == this->weapons[i])
 		{
-			// Weapon already in table, use existing index
-			weaponIndex = it->second;
-		}
-		else
-		{
-			// New weapon, add to table
-			weaponIndex = static_cast<u16>(this->circularRecording->weaponTable.size());
-			this->circularRecording->weaponTable.push_back(weaponEconInfo);
-			this->circularRecording->weaponIndexMap[weaponEconInfo] = weaponIndex;
-		}
-
-		WeaponSwitchEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.weaponIndex = weaponIndex;
-		this->circularRecording->weaponChangeEvents->Write(event);
-		this->PushToRecorders(event, RecorderType::Both);
-	}
-
-	// Ensure the earliest/initial weapon is tracked
-	if (!this->circularRecording->earliestWeapon.has_value())
-	{
-		this->circularRecording->earliestWeapon = this->currentWeaponEconInfo;
-
-		// Also ensure it's in the weapon table even if we never switched weapons
-		if (this->circularRecording->weaponIndexMap.find(this->currentWeaponEconInfo) == this->circularRecording->weaponIndexMap.end())
-		{
-			u16 weaponIndex = static_cast<u16>(this->circularRecording->weaponTable.size());
-			this->circularRecording->weaponTable.push_back(this->currentWeaponEconInfo);
-			this->circularRecording->weaponIndexMap[this->currentWeaponEconInfo] = weaponIndex;
+			this->currentWeaponID = i;
+			return;
 		}
 	}
+	// New weapon, record it
+	this->weapons.push_back(weaponEconInfo);
+	this->currentWeaponID = static_cast<i16>(this->weapons.size() - 1);
 }
 
 void KZRecordingService::CheckModeStyles()
@@ -511,6 +491,36 @@ void KZRecordingService::InsertStyleChangeEvent(const char *name, const char *md
 	V_strncpy(event.data.styleChange.md5, md5, sizeof(event.data.styleChange.md5));
 	event.data.styleChange.clearStyles = firstStyle;
 	this->InsertEvent(event);
+}
+
+void KZRecordingService::CopyWeaponsToRecorder(Recorder *recorder)
+{
+	if (!recorder)
+	{
+		return;
+	}
+
+	// Copy weapons that are referenced in the tick data
+	std::set<i32> referencedWeaponIndices;
+	for (const auto &tick : recorder->tickData)
+	{
+		if (tick.weapon >= 0)
+		{
+			referencedWeaponIndices.insert(tick.weapon);
+		}
+	}
+
+	if (kz_replay_recording_debug.Get())
+	{
+		META_CONPRINTF("kz_replay_recording_debug: Copying %u referenced weapons to recorder\n", referencedWeaponIndices.size());
+	}
+
+	for (i32 weaponIndex : referencedWeaponIndices)
+	{
+		META_CONPRINTF("Pushing weapon index %d to recorder\n", weaponIndex);
+		auto weapon = this->weapons[weaponIndex];
+		recorder->weaponTable.push_back({weaponIndex, weapon});
+	}
 }
 
 SCMD(kz_rpsave, SCFL_REPLAY)
