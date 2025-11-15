@@ -277,8 +277,10 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 		META_CONPRINTF("kz_replay_recording_debug: Jump finish\n");
 	}
 	this->EnsureCircularRecorderInitialized();
-	RpJumpStats &rpJump = this->circularRecording->jumps->GetNextWriteRef();
+	RpJumpStats rpJump;
 	RpJumpStats::FromJump(rpJump, jump);
+	this->circularRecording->jumps.push_back(rpJump);
+
 	// Only write the jump if it's ownage or better to save storage for run replays.
 	if (jump->IsValid() && jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= DistanceTier_Ownage)
 	{

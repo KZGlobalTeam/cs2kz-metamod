@@ -28,8 +28,6 @@ namespace KZ::replaysystem
 
 	void OnGameFrame()
 	{
-		bot::CheckBots();
-		// Process any completed async loads on the main thread
 		data::ProcessAsyncLoadCompletion();
 	}
 

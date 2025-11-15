@@ -82,7 +82,7 @@ void KZRecordingService::Reset()
 		this->circularRecording->cmdSubtickData->Advance(this->circularRecording->cmdSubtickData->GetReadAvailable());
 		this->circularRecording->weaponChangeEvents->Advance(this->circularRecording->weaponChangeEvents->GetReadAvailable());
 		this->circularRecording->rpEvents->Advance(this->circularRecording->rpEvents->GetReadAvailable());
-		this->circularRecording->jumps->Advance(this->circularRecording->jumps->GetReadAvailable());
+		this->circularRecording->jumps.clear();
 	}
 	this->runRecorders.clear();
 	this->lastCmdNumReceived = 0;

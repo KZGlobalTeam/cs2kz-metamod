@@ -8,6 +8,11 @@
 template<typename T, size_t SIZE>
 struct CFIFOCircularBuffer
 {
+	// Compile-time check: T must be trivially destructible
+	// This prevents using types with std::vector, std::string, std::unique_ptr, etc. that manage resources
+	// Types like Vector, QAngle are fine (non-trivial copy but trivial destruction)
+	static_assert(std::is_trivially_destructible_v<T>, "CFIFOCircularBuffer requires trivially destructible types.");
+
 private:
 	std::unique_ptr<T[]> buffer;
 	size_t capacity;

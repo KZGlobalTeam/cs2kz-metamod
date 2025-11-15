@@ -231,31 +231,34 @@ void KZ::replaysystem::item::ApplyItemAttributesToWeapon(CBasePlayerWeapon &weap
 
 void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, const EconInfo &info, const char *modelName)
 {
-	if (info.mainInfo.itemDef == 0)
+	bool setGloves = false;
+	if (info.mainInfo.itemDef != 0)
 	{
-		return;
+		setGloves = true;
 	}
-	CEconItemView &item = pawn->m_EconGloves();
-	item.m_iItemDefinitionIndex(info.mainInfo.itemDef);
-	item.m_iEntityQuality(info.mainInfo.quality);
-	item.m_iEntityLevel(info.mainInfo.level);
-	item.m_iAccountID(info.mainInfo.accountID);
-	item.m_iItemID(info.mainInfo.itemID);
-	item.m_iItemIDHigh(info.mainInfo.itemID >> 32);
-	item.m_iItemIDLow((u32)info.mainInfo.itemID & 0xFFFFFFFF);
-	item.m_iInventoryPosition(info.mainInfo.inventoryPosition);
-	item.m_bInitialized = true;
-	strncpy(item.m_szCustomName(), info.mainInfo.customName, sizeof(info.mainInfo.customName));
-	strncpy(item.m_szCustomNameOverride(), info.mainInfo.customNameOverride, sizeof(info.mainInfo.customNameOverride));
-	CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
-	for (int i = 0; i < info.mainInfo.numAttributes; i++)
+	if (setGloves)
 	{
-		int id = info.attributes[i].defIndex;
-		float value = info.attributes[i].value;
-		g_pKZUtils->SetOrAddAttributeValueByName(&item.m_AttributeList(), KZ::replaysystem::item::GetItemAttributeName(id).c_str(), value);
-		g_pKZUtils->SetOrAddAttributeValueByName(&attributeList, KZ::replaysystem::item::GetItemAttributeName(id).c_str(), value);
+		CEconItemView &item = pawn->m_EconGloves();
+		item.m_iItemDefinitionIndex(info.mainInfo.itemDef);
+		item.m_iEntityQuality(info.mainInfo.quality);
+		item.m_iEntityLevel(info.mainInfo.level);
+		item.m_iAccountID(info.mainInfo.accountID);
+		item.m_iItemID(info.mainInfo.itemID);
+		item.m_iItemIDHigh(info.mainInfo.itemID >> 32);
+		item.m_iItemIDLow((u32)info.mainInfo.itemID & 0xFFFFFFFF);
+		item.m_iInventoryPosition(info.mainInfo.inventoryPosition);
+		item.m_bInitialized = true;
+		strncpy(item.m_szCustomName(), info.mainInfo.customName, sizeof(info.mainInfo.customName));
+		strncpy(item.m_szCustomNameOverride(), info.mainInfo.customNameOverride, sizeof(info.mainInfo.customNameOverride));
+		CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
+		for (int i = 0; i < info.mainInfo.numAttributes; i++)
+		{
+			int id = info.attributes[i].defIndex;
+			float value = info.attributes[i].value;
+			g_pKZUtils->SetOrAddAttributeValueByName(&item.m_AttributeList(), KZ::replaysystem::item::GetItemAttributeName(id).c_str(), value);
+			g_pKZUtils->SetOrAddAttributeValueByName(&attributeList, KZ::replaysystem::item::GetItemAttributeName(id).c_str(), value);
+		}
 	}
-	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(pawn->m_CBodyComponent()->m_pSceneNode());
 	// Don't set model if it doesn't exist.
 	CUtlString modelStr = modelName;
 	modelStr = modelStr.StripExtension();
@@ -264,7 +267,15 @@ void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, con
 	{
 		g_pKZUtils->SetModel(pawn, modelName);
 	}
+	else
+	{
+		META_CONPRINTF("[KZ] Model '%s' does not exist, skipping model application.\n", modelName);
+	}
 	// This might not work with custom models, but oh well.
-	u64 mask = pSkeleton->m_modelState().m_MeshGroupMask() & ~1 | 2;
-	pSkeleton->m_modelState().m_MeshGroupMask(mask);
+	if (setGloves)
+	{
+		CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(pawn->m_CBodyComponent()->m_pSceneNode());
+		u64 mask = pSkeleton->m_modelState().m_MeshGroupMask() & ~1 | 2;
+		pSkeleton->m_modelState().m_MeshGroupMask(mask);
+	}
 }

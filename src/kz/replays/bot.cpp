@@ -38,18 +38,6 @@ namespace KZ::replaysystem::bot
 		}
 		interfaces::pEngine->KickClient(bot->GetPlayerSlot(), "bye bot", NETWORK_DISCONNECT_KICKED);
 		g_replayBot.Term();
-		CConVarRef<int> bot_quota("bot_quota");
-		bot_quota.Set(bot_quota.Get() - 1);
-	}
-
-	void CheckBots()
-	{
-		// Make sure to kick bots that aren't ours.
-		CConVarRef<int> bot_quota("bot_quota");
-		if (!g_replayBot.Get() && bot_quota.Get() > 0)
-		{
-			bot_quota.Set(0);
-		}
 	}
 
 	void SpawnBot()

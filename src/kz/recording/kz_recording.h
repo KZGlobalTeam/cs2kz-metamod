@@ -6,6 +6,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
+#include <deque>
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
@@ -39,10 +40,8 @@ struct CircularRecorder
 	CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)> *cmdData;
 	CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)> *cmdSubtickData;
 	CFIFOCircularBuffer<RpEvent, 64 * (60 * 2 + 20)> *rpEvents;
-	// Players can only do so many jumps in 2 minutes, let's just say... 2 jumps per seconds max.
-	// This should probably never be resized.
-	// TODO: there's std::vector inside RpJumpStats, does this kill performance?
-	CFIFOCircularBuffer<RpJumpStats, 60 * 2 * 2> *jumps;
+	// Using std::deque because RpJumpStats contains std::vector (non-trivially copyable)
+	std::deque<RpJumpStats> jumps;
 
 	CircularRecorder()
 	{
@@ -52,7 +51,6 @@ struct CircularRecorder
 		this->cmdData = new CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)>();
 		this->cmdSubtickData = new CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)>();
 		this->rpEvents = new CFIFOCircularBuffer<RpEvent, 64 * (60 * 2 + 20)>();
-		this->jumps = new CFIFOCircularBuffer<RpJumpStats, 60 * 2 * 2>();
 	}
 
 	~CircularRecorder()
@@ -63,7 +61,6 @@ struct CircularRecorder
 		delete this->cmdData;
 		delete this->cmdSubtickData;
 		delete this->rpEvents;
-		delete this->jumps;
 	}
 
 	void TrimOldCommands(u32 currentTick);

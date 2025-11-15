@@ -160,21 +160,23 @@ void CircularRecorder::TrimOldEvents(u32 currentTick)
 void CircularRecorder::TrimOldJumps(u32 currentTick)
 {
 	i32 numToRemove = 0;
-	for (i32 i = 0; i < this->jumps->GetReadAvailable(); i++)
+	for (const auto &jump : this->jumps)
 	{
-		RpJumpStats *jump = this->jumps->PeekSingle(i);
-		if (!jump)
+		if (jump.overall.serverTick + 2 * 60 * 64 < currentTick)
+		{
+			numToRemove++;
+		}
+		else
 		{
 			break;
 		}
-		if (jump->overall.serverTick + 2 * 60 * 64 < currentTick)
-		{
-			numToRemove++;
-			continue;
-		}
-		break;
 	}
-	this->jumps->Advance(numToRemove);
+
+	// Remove old jumps from front of deque
+	if (numToRemove > 0)
+	{
+		this->jumps.erase(this->jumps.begin(), this->jumps.begin() + numToRemove);
+	}
 }
 
 f32 KZRecordingService::WriteCircularBufferToFile(f32 duration, const char *cheaterReason, std::string *out_uuid, KZPlayer *saver)

@@ -10,7 +10,6 @@ struct GeneralReplayHeader;
 namespace KZ::replaysystem::bot
 {
 	// Bot lifecycle management
-	void CheckBots();
 	void SpawnBot();
 	void KickBot();
 	void MakeBotAlive();

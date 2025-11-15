@@ -264,30 +264,26 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, Dista
 		}
 	}
 	shouldCopy = false;
-	for (first = 0; first < circular->jumps->GetReadAvailable(); first++)
+	for (first = 0; first < circular->jumps.size(); first++)
 	{
-		RpJumpStats *jump = circular->jumps->PeekSingle(first);
-		if (!jump)
-		{
-			break;
-		}
+		const RpJumpStats &jump = circular->jumps[first];
 		shouldCopy = true;
-		if (jump->overall.serverTick >= earliestTick)
+		if (jump.overall.serverTick >= earliestTick)
 		{
 			break;
 		}
 	}
 	if (shouldCopy)
 	{
-		for (i32 i = first; i < circular->jumps->GetReadAvailable(); i++)
+		for (i32 i = first; i < circular->jumps.size(); i++)
 		{
-			RpJumpStats *jump = circular->jumps->PeekSingle(i);
+			const RpJumpStats &jump = circular->jumps[i];
 
-			if (jump->overall.distanceTier < copyJumps)
+			if (jump.overall.distanceTier < copyJumps)
 			{
 				continue;
 			}
-			this->jumps.push_back(*jump);
+			this->jumps.push_back(jump);
 		}
 	}
 
