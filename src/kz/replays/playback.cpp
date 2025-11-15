@@ -319,7 +319,7 @@ namespace KZ::replaysystem::playback
 		}
 		EconInfo desiredWeapon = replay->weapons[found];
 		EconInfo activeWeapon = player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
-		utils::PrintAlertAll("%d", weaponIndex);
+
 		if (desiredWeapon != activeWeapon)
 		{
 			if (desiredWeapon.mainInfo.itemDef == 0)
