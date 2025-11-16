@@ -25,10 +25,13 @@
 	"defaultJSMinTierConsole"			"1"
 
 	// Minimum jumpstat tier for broadcasting.
-	"defaultJSBroadcastMinTier"			"4"
+	"defaultJSBroadcastMinTier"			"5"
+	
+	// Minimum jumpstat tier for broadcasting in console.
+	"defaultJSBroadcastMinTierConsole"	"5"
 	
 	// Minimum jumpstat tier for broadcasting sound effect.
-	"defaultJSBroadcastSoundMinTier"	"2"
+	"defaultJSBroadcastSoundMinTier"	"5"
 
 	// Default chat prefix.
 	"chatPrefix"						"{lime}KZ {grey}|{default}"
@@ -64,6 +67,6 @@
 		//"port"			"3306"
 	}
 
-	"apiUrl"	"https://api.cs2kz.org"
-	"apiKey"	""
+	"apiUrl"	"http://127.0.0.1:42069"
+	"apiKey"	"01KA567EG21CNA5C9YEKSNDJNG"
 }

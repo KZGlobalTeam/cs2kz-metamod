@@ -384,6 +384,7 @@ public:
 public:
 	bool GetDistTierFromString(const char *tierString, DistanceTier &outTier);
 	void SetBroadcastMinTier(const char *tierString);
+	void SetBroadcastMinTierConsole(const char *tierString);
 	void SetBroadcastSoundMinTier(const char *tierString);
 	void SetMinTier(const char *tierString);
 	void SetMinTierConsole(const char *tierString);
@@ -429,7 +430,7 @@ public:
 	static void BroadcastJumpToChat(KZPlayer *target, Jump *jump);
 	static void PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast = false);
 	static void PrintJumpToChat(KZPlayer *target, Jump *jump, bool extended = false);
-	static void PrintJumpToConsole(KZPlayer *target, Jump *jump);
+	static void PrintJumpToConsole(KZPlayer *target, Jump *jump, bool broadcast = false);
 
 	static void AnnounceJump(Jump *jump);
 

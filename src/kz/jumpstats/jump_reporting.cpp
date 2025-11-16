@@ -43,8 +43,9 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	}
 	const char *language = target->languageService->GetLanguage();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->optionService->GetPreferenceInt("jsMinTier", DistanceTier_Impressive) == DistanceTier_None
-		|| color < target->optionService->GetPreferenceInt("jsMinTier", DistanceTier_Impressive))
+	DistanceTier minTier = static_cast<DistanceTier>(
+		target->optionService->GetPreferenceInt("jsMinTier", KZOptionService::GetOptionInt("defaultJSMinTier", DistanceTier_Impressive)));
+	if (minTier == DistanceTier_None || color < minTier)
 	{
 		return;
 	}
@@ -90,7 +91,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	// clang-format on
 }
 
-void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
+void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool broadcast)
 {
 	if (!target || !target->IsInGame())
 	{
@@ -98,8 +99,12 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump)
 	}
 
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (target->optionService->GetPreferenceInt("jsMinTierConsole", DistanceTier_Impressive) == DistanceTier_None
-		|| color < target->optionService->GetPreferenceInt("jsMinTierConsole", DistanceTier_Impressive))
+	DistanceTier minTier = static_cast<DistanceTier>(
+		broadcast ? target->optionService->GetPreferenceInt("jsBroadcastMinTierConsole",
+															KZOptionService::GetOptionInt("defaultJSBroadcastMinTierConsole", DistanceTier_Ownage))
+				  : target->optionService->GetPreferenceInt("jsMinTierConsole",
+															KZOptionService::GetOptionInt("defaultJSMinTierConsole", DistanceTier_Impressive)));
+	if (minTier == DistanceTier_None || color < minTier)
 	{
 		if (!target->IsCSTV())
 		{
@@ -271,7 +276,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 			continue;
 		}
 		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
-		if (player == jump->GetJumpPlayer() || jump->GetJumpPlayer()->specService->GetSpectatedPlayer() == player)
+		if (player == jump->GetJumpPlayer() || jump->GetJumpPlayer()->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
 		{
 			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->optionService->GetPreferenceBool("jsAlways", false))
 			{
@@ -295,7 +300,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 				continue;
 			}
 			KZJumpstatsService::BroadcastJumpToChat(player, jump);
-			KZJumpstatsService::PrintJumpToConsole(player, jump);
+			KZJumpstatsService::PrintJumpToConsole(player, jump, true);
 			KZJumpstatsService::PlayJumpstatSound(player, jump, true);
 		}
 	}

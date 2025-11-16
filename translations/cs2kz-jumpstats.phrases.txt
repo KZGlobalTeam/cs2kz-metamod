@@ -653,6 +653,15 @@
 		"es"		"{grey}El límite de difusión de estadísticas de saltos es ahora {default}{tier}."
 		"lv"		"{grey}Lēcienu statistikas pārraides slieksnis tagad ir {default}{tier}."
 	}
+	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
+	{
+		"en"		"{grey}Jumpstats console broadcasting disabled."
+	}
+	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
+	{
+		"#format"	"tier:s"
+		"en"		"{grey}Jumpstats console broadcast threshold is now {default}{tier}."
+	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
 		"en"		"{grey}Usage: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."

@@ -512,6 +512,10 @@
         "ua"        "Встановити мінімальний рівень для звукових ефектів під час стрибків."
 		"sv"        "Ange miniminivån för jumpstats-ljudsändning."
     }
+	"Command Description - kz_jsbroadcastsoundconsole"
+	{
+		"en"		"Set the minimum tier for jumpstats console sound broadcast."
+	}
 	"Command Description - kz_jsextend"
 	{
 		"en"		"Toggle extended jumpstats reporting in chat."
