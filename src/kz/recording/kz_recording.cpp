@@ -252,6 +252,7 @@ void KZRecordingService::CheckRecorders()
 						if (callbackPlayer)
 						{
 							callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", uuid.ToString().c_str());
+							callbackPlayer->languageService->PrintConsole(true, "Replay - Run Replay Saved (Console)", uuid.ToString().c_str());
 						}
 					},
 					// Failure callback
@@ -550,6 +551,8 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 			if (callbackPlayer)
 			{
 				callbackPlayer->languageService->PrintChat(true, false, "Replay - Manual Replay Saved", uuid.ToString().c_str(), replayDuration);
+				callbackPlayer->languageService->PrintConsole(true, "Replay - Manual Replay Saved (Console)", uuid.ToString().c_str(),
+															  replayDuration);
 			}
 		},
 		// Failure callback

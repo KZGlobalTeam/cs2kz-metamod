@@ -244,6 +244,13 @@
 		"chi"		"{grey}回放已保存: {lime}{uuid}{grey} ({lime}{duration}{grey}s)" 
 		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey} ({lime}{duration}{grey}с.)" 
 	}
+	"Replay - Manual Replay Saved (Console)"
+	{
+		"#format"	"uuid:s,duration:.0f"
+		"en"		"Replay saved: {uuid} ({duration}s)" 
+		"chi"		"回放已保存: {uuid} ({duration}s)" 
+		"ua"		"Повтор збережено: {uuid} ({duration}с.)" 
+	}
 	"Replay - Run Replay Failed"
 	{
 		"en"		"{darkred}Failed to save run replay."
@@ -256,6 +263,13 @@
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey}"
 		"chi"		"{grey}回放已保存: {lime}{uuid}{grey}"
 		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey}"
+	}
+	"Replay - Run Replay Saved (Console)"
+	{
+		"#format"	"uuid:s"
+		"en"		"Replay saved: {uuid}"
+		"chi"		"回放已保存: {uuid}"
+		"ua"		"Повтор збережено: {uuid}"
 	}
 	"Replay - Wrong Map"
 	{
