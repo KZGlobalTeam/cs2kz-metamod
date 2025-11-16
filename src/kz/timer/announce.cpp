@@ -217,15 +217,12 @@ void RecordAnnounce::UpdateGlobalCache()
 		auto mode = KZ::mode::GetModeInfo(this->mode.name.c_str());
 		if (mode.id > -2)
 		{
-			META_CONPRINTF("this->time=%f this->oldGPB.overall.time=%f, this->oldGPB.pro.time=%f", this->time, this->oldGPB.overall.time,
-						   this->oldGPB.pro.time);
-
-			if (this->time < this->oldGPB.overall.time)
+			if (this->time < this->oldGPB.overall.time || this->oldGPB.overall.time == 0)
 			{
 				player->timerService->InsertPBToCache(this->time, course, mode.id, true, true, this->metadata.c_str(),
 													  this->globalResponse.overall.points);
 			}
-			if (this->time < this->oldGPB.pro.time)
+			if (this->time < this->oldGPB.pro.time || this->oldGPB.pro.time == 0)
 			{
 				player->timerService->InsertPBToCache(this->time, course, mode.id, false, true, this->metadata.c_str(),
 													  this->globalResponse.pro.points);
