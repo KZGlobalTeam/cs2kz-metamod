@@ -975,6 +975,14 @@ void KZTimerService::ClearRecordCache()
 {
 	KZTimerService::srCache.clear();
 	KZTimerService::wrCache.clear();
+	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+		if (player && player->timerService)
+		{
+			player->timerService->ClearPBCache();
+		}
+	}
 }
 
 void KZTimerService::UpdateLocalRecordCache()
@@ -1088,6 +1096,7 @@ void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *cou
 void KZTimerService::ClearPBCache()
 {
 	this->localPBCache.clear();
+	this->globalPBCache.clear();
 }
 
 const PBData *KZTimerService::GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID)
