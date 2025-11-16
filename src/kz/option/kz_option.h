@@ -149,6 +149,7 @@ public:
 		{
 			return defaultValue;
 		}
+		DebugPrintKV3(&prefKV);
 		return option->GetString(defaultValue);
 	}
 

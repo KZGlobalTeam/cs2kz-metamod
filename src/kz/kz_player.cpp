@@ -108,8 +108,8 @@ void KZPlayer::Reset()
 	this->telemetryService->Reset();
 	this->recordingService->Reset();
 
-	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true);
-	g_pKZStyleManager->ClearStyles(this, true);
+	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true, false);
+	g_pKZStyleManager->ClearStyles(this, true, false);
 	CSplitString styles(KZOptionService::GetOptionStr("defaultStyles"), ",");
 	FOR_EACH_VEC(styles, i)
 	{

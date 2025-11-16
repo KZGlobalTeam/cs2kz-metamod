@@ -539,7 +539,7 @@ void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *pl
 	// Give up changing styles if the player is already in the server for a while.
 	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
 	{
-		styleManager.ClearStyles(player, true);
+		styleManager.ClearStyles(player, true, false);
 		CSplitString splitStyles(styles.c_str(), ",");
 		FOR_EACH_VEC(splitStyles, i)
 		{
