@@ -220,7 +220,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	f64 invalidTime = -1;
 	this->splitZoneTimes.SetSize(courseDesc->splitCount);
 	this->cpZoneTimes.SetSize(courseDesc->checkpointCount);
-	this->stageZoneTimes.SetSize(courseDesc->checkpointCount);
+	this->stageZoneTimes.SetSize(courseDesc->stageCount);
 
 	this->splitZoneTimes.FillWithValue(invalidTime);
 	this->cpZoneTimes.FillWithValue(invalidTime);
