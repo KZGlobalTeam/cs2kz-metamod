@@ -604,6 +604,7 @@
 	"Jumpstats Option - Tier Hint"
 	{
 		"en"		"{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+		"chi"		"{grey}有效的Tier范围: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"ua"		"{grey}Існуючі тіри стрибків: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"sv"		"{grey}Giltiga jumpstats nivåer: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 	}
@@ -656,12 +657,14 @@
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats console broadcasting disabled."
+		"chi"		"{grey}控制台广播跳跃提示禁用中."
 		"ua"		"{grey}Трансляція статистики стрибків у консолі вимкнута."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats console broadcast threshold is now {default}{tier}."
+		"chi"		"{grey}控制台广播跳跃提示阈值现在为 {default}{tier}."
 		"ua"		"{grey}Мінмальний поріг трансляції статистики стрибків у консолі — {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
