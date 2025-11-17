@@ -656,11 +656,13 @@
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats console broadcasting disabled."
+		"ua"		"{grey}Трансляція статистики стрибків у консолі вимкнута."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats console broadcast threshold is now {default}{tier}."
+		"ua"		"{grey}Мінмальний поріг трансляції статистики стрибків у консолі — {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
