@@ -67,6 +67,6 @@
 		//"port"			"3306"
 	}
 
-	"apiUrl"	"http://127.0.0.1:42069"
-	"apiKey"	"01KA567EG21CNA5C9YEKSNDJNG"
+	"apiUrl"	"https://api.cs2kz.org"
+	"apiKey"	""
 }
