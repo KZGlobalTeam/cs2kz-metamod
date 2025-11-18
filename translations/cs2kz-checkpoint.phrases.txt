@@ -289,4 +289,12 @@
 		"chi"		"{grey}你禁用了传送音效."
 		"sv"		"{grey}Du har inaktiverat teleportljuden."
 	}
+	"Checkpoint Options - Checkpoint Message - Enable"
+	{
+		"en"		"{grey}You have enabled checkpoint messages."
+	}
+	"Checkpoint Options - Checkpoint Message - Disable"
+	{
+		"en"		"{grey}You have disabled checkpoint messages."
+	}
 }
