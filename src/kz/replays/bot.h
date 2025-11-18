@@ -2,10 +2,10 @@
 #define KZ_REPLAYBOT_H
 
 #include "sdk/datatypes.h"
+#include "kz_replay.h"
 
 class CCSPlayerController;
 class KZPlayer;
-struct GeneralReplayHeader;
 
 namespace KZ::replaysystem::bot
 {
@@ -21,7 +21,7 @@ namespace KZ::replaysystem::bot
 	KZPlayer *GetBotPlayer();
 
 	// Bot setup and configuration
-	void InitializeBotForReplay(const GeneralReplayHeader &header);
+	void InitializeBotForReplay(const ReplayHeader &header);
 
 	// Bot spectator handling
 	void SpectateBot(KZPlayer *spectator);

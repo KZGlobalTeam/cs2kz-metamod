@@ -7,57 +7,7 @@
 
 class KZPlayer;
 
-// Comparator for run replays: mode -> course -> time (ascending)
-struct RunReplayComparator
-{
-	bool operator()(const std::pair<GeneralReplayHeader, RunReplayHeader> &a, const std::pair<GeneralReplayHeader, RunReplayHeader> &b) const
-	{
-		// Compare map name
-		i32 mapCompare = V_stricmp(a.first.map.name, b.first.map.name);
-		if (mapCompare != 0)
-		{
-			return mapCompare < 0;
-		}
-		// Compare mode name
-		i32 modeCompare = V_stricmp(a.second.mode.name, b.second.mode.name);
-		if (modeCompare != 0)
-		{
-			return modeCompare < 0;
-		}
-
-		// Compare course name
-		i32 courseCompare = V_stricmp(a.second.courseName, b.second.courseName);
-		if (courseCompare != 0)
-		{
-			return courseCompare < 0;
-		}
-
-		// Compare time (faster times first)
-		return a.second.time < b.second.time;
-	}
-};
-
-// Comparator for jump replays: type -> distance (descending) -> block (descending)
-struct JumpReplayComparator
-{
-	bool operator()(const std::pair<GeneralReplayHeader, JumpReplayHeader> &a, const std::pair<GeneralReplayHeader, JumpReplayHeader> &b) const
-	{
-		// Compare jump type
-		if (a.second.jumpType != b.second.jumpType)
-		{
-			return a.second.jumpType < b.second.jumpType;
-		}
-
-		// Compare distance (larger distances first)
-		if (a.second.distance != b.second.distance)
-		{
-			return a.second.distance > b.second.distance;
-		}
-
-		// Compare block distance (larger blocks first)
-		return a.second.blockDistance > b.second.blockDistance;
-	}
-};
+// (Legacy comparators removed; ordering handled during filtering when needed.)
 
 struct ReplayFilterCriteria
 {
@@ -92,41 +42,13 @@ struct ReplayFilterCriteria
 	u8 jumpType = 0; // LJ by default
 	f32 minDistance = 0.0f;
 
-	bool PassGeneralFilters(const GeneralReplayHeader &header) const;
-	bool PassCheaterFilters(const CheaterReplayHeader &header) const;
-	bool PassRunFilters(const RunReplayHeader &header) const;
-	bool PassJumpFilters(const JumpReplayHeader &header) const;
-	bool PassManualFilters(const ManualReplayHeader &header) const;
+	bool PassGeneralFilters(const ReplayHeader &header) const;
+	bool PassCheaterFilters(const ReplayHeader &header) const;
+	bool PassRunFilters(const ReplayHeader &header) const;
+	bool PassJumpFilters(const ReplayHeader &header) const;
+	bool PassManualFilters(const ReplayHeader &header) const;
 
-	template<typename T>
-	bool PassFilters(const GeneralReplayHeader &header, const T &specificHeader) const
-	{
-		if (!PassGeneralFilters(header))
-		{
-			return false;
-		}
-		if constexpr (std::is_same_v<T, CheaterReplayHeader>)
-		{
-			return PassCheaterFilters(specificHeader);
-		}
-		else if constexpr (std::is_same_v<T, RunReplayHeader>)
-		{
-			return PassRunFilters(specificHeader);
-		}
-		else if constexpr (std::is_same_v<T, JumpReplayHeader>)
-		{
-			return PassJumpFilters(specificHeader);
-		}
-		else if constexpr (std::is_same_v<T, ManualReplayHeader>)
-		{
-			return PassManualFilters(specificHeader);
-		}
-		else
-		{
-			static_assert(std::is_same_v<T, void>, "Unsupported header type for PassFilters");
-			return false;
-		}
-	}
+	bool PassFilters(const ReplayHeader &header) const;
 };
 
 // Keep track of replays on disk and their headers.
@@ -135,24 +57,27 @@ class ReplayWatcher
 	std::mutex replayMapsMutex;
 	std::thread watcherThread;
 	std::atomic<bool> running;
-	std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, CheaterReplayHeader>> cheaterReplays;
-	std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, ManualReplayHeader>> manualReplays;
-
-	// Sorted containers for run and jump replays
-	std::map<UUID_t, std::pair<GeneralReplayHeader, RunReplayHeader>> runReplays;
-	std::map<UUID_t, std::pair<GeneralReplayHeader, JumpReplayHeader>> jumpReplays;
+	std::unordered_map<UUID_t, ReplayHeader> cheaterReplays;
+	std::unordered_map<UUID_t, ReplayHeader> manualReplays;
+	std::map<UUID_t, ReplayHeader> runReplays;
+	std::map<UUID_t, ReplayHeader> jumpReplays;
+	// External archival index: uuid -> archived unix timestamp
+	std::unordered_map<UUID_t, u64> archivedIndex;
+	bool archiveDirty = false;
 
 	void WatchLoop();
 
 	void ScanReplays();
 
-	void UpdateArchivedReplayOnDisk(const UUID_t &uuid, GeneralReplayHeader &header, u64 archiveTimestamp);
-	void ProcessCheaterReplays(std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, CheaterReplayHeader>> &cheaterReplays, u64 currentTime);
-	void ProcessRunReplays(std::vector<std::tuple<UUID_t, GeneralReplayHeader, RunReplayHeader>> &tempRunReplays,
-						   std::map<UUID_t, std::pair<GeneralReplayHeader, RunReplayHeader>> &runReplays, u64 currentTime);
-	void ProcessJumpReplays(std::vector<std::tuple<UUID_t, GeneralReplayHeader, JumpReplayHeader>> &tempJumpReplays,
-							std::map<UUID_t, std::pair<GeneralReplayHeader, JumpReplayHeader>> &jumpReplays, u64 currentTime);
-	void CleanupManualReplays(std::unordered_map<UUID_t, std::pair<GeneralReplayHeader, ManualReplayHeader>> &manualReplays,
+	void MarkArchived(const UUID_t &uuid, u64 archiveTimestamp);
+	void LoadArchiveIndex();
+	void SaveArchiveIndex();
+	void ProcessCheaterReplays(std::unordered_map<UUID_t, ReplayHeader> &cheaterReplays, u64 currentTime);
+	void ProcessRunReplays(std::vector<std::tuple<UUID_t, ReplayHeader>> &tempRunReplays, std::map<UUID_t, ReplayHeader> &runReplays,
+						   u64 currentTime);
+	void ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHeader>> &tempJumpReplays, std::map<UUID_t, ReplayHeader> &jumpReplays,
+							u64 currentTime);
+	void CleanupManualReplays(std::unordered_map<UUID_t, ReplayHeader> &manualReplays,
 							  std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &manualReplaysBySteamID);
 
 public:

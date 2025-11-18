@@ -1,0 +1,115 @@
+syntax = "proto2";
+
+package cs2kz.replay;
+
+// Replay type enumeration
+enum ReplayType {
+	RP_MANUAL = 0;      // Contains who saved the replay
+	RP_CHEATER = 1;     // Contains a reason and a reporter
+	RP_RUN = 2;         // Run replay
+	RP_JUMPSTATS = 3;   // Contains all jumpstats events
+}
+
+// Player information
+message PlayerInfo {
+	optional string name = 1;
+	optional uint64 steamid64 = 2;
+}
+
+// Map information
+message MapInfo {
+	optional string name = 1;
+	optional string md5 = 2;
+}
+
+// Mode/Style information
+message ModeStyleInfo {
+	optional string name = 1;
+	optional string short_name = 2;
+	optional string md5 = 3;
+}
+
+// EconInfo for weapons/gloves
+message EconInfo {
+	message MainInfo {
+		optional int32 item_def = 1;
+		optional int32 quality = 2;
+		optional int32 level = 3;
+		optional int32 account_id = 4;
+		optional int64 item_id = 5;
+		optional int32 inventory_position = 6;
+		optional string custom_name = 7;
+		optional string custom_name_override = 8;
+	}
+	
+	message Attribute {
+		optional int32 def_index = 1;
+		optional float value = 2;
+	}
+	
+	optional MainInfo main_info = 1;
+	repeated Attribute attributes = 2;
+}
+
+// Type-specific replay data
+message CheaterReplayData {
+	optional string reason = 1;
+	optional PlayerInfo reporter = 2;  // Empty if automated detection
+}
+
+message RunReplayData {
+	optional string course_name = 1;
+	optional ModeStyleInfo mode = 2;
+	repeated ModeStyleInfo styles = 3;  // Array of styles
+	optional float time = 4;
+	optional int32 num_teleports = 5;
+}
+
+message JumpReplayData {
+	optional ModeStyleInfo mode = 1;
+	optional uint32 jump_type = 2;
+	optional float distance = 3;
+	optional int32 block_distance = 4;
+	optional uint32 num_strafes = 5;
+	optional float sync = 6;
+	optional float pre = 7;
+	optional float max = 8;
+	optional float air_time = 9;
+}
+
+message ManualReplayData {
+	optional PlayerInfo saved_by = 1;
+}
+
+// Complete replay header (all-in-one)
+message ReplayHeader {
+	optional uint32 version = 1;
+	optional ReplayType type = 2;
+
+	optional PlayerInfo player = 3;
+	optional MapInfo map = 4;
+
+	optional EconInfo gloves = 5;
+	optional string model_name = 6;
+
+	optional uint64 timestamp = 7;
+	optional string plugin_version = 8;
+	optional uint32 server_version = 9;
+	optional uint32 server_ip = 10;
+	optional float sensitivity = 11 [default = 1.25];
+	optional float yaw = 12 [default = 0.022];
+	optional float pitch = 13 [default = 0.022];
+	
+	// Type-specific data (only one will be set based on 'type')
+	oneof type_specific {
+		ManualReplayData manual = 14;
+		CheaterReplayData cheater = 15;
+		RunReplayData run = 16;
+		JumpReplayData jump = 17;
+	}
+
+	optional float viewmodel_offset_x = 18 [default = 1];
+	optional float viewmodel_offset_y = 19 [default = 1];
+	optional float viewmodel_offset_z = 20 [default = -1];
+	optional float viewmodel_fov = 21 [default = 60];
+}

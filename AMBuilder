@@ -17,6 +17,7 @@ def get_proto_builder(builder, sdk_target, sdk):
     os.path.join(builder.sourcePath, 'protobuf', 'cs_gameevents.proto'),
     os.path.join(builder.sourcePath, 'protobuf', 'cs_usercmd.proto'),
     os.path.join(builder.sourcePath, 'protobuf', 'networksystem_protomessages.proto'),
+    os.path.join(builder.sourcePath, 'protobuf', 'kz_replay.proto'),
   ])
 
   protoc_builder.protoc.includes += [

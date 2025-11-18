@@ -12,104 +12,100 @@
 
 extern CConVar<bool> kz_replay_recording_debug;
 
-ManualRecorder::ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy) : Recorder(player, duration, true, DistanceTier_None)
+ManualRecorder::ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy) : Recorder(player, duration, RP_MANUAL, true, DistanceTier_None)
 {
-	this->baseHeader.type = RP_MANUAL;
 	if (savedBy)
 	{
-		V_strncpy(this->header.savedBy.name, savedBy->GetName(), sizeof(this->header.savedBy.name));
-		this->header.savedBy.steamid64 = savedBy->GetSteamId64();
+		auto *manual = replayHeader.mutable_manual();
+		auto *savedByMsg = manual->mutable_saved_by();
+		savedByMsg->set_name(savedBy->GetName());
+		savedByMsg->set_steamid64(savedBy->GetSteamId64());
 	}
 }
 
 i32 ManualRecorder::WriteHeader(FileHandle_t file)
 {
-	i32 bytesWritten = Recorder::WriteHeader(file);
-	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
+	return Recorder::WriteHeader(file);
 }
 
-CheaterRecorder::CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer *savedBy) : Recorder(player, 120.0f, true, DistanceTier_None)
+CheaterRecorder::CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer *savedBy)
+	: Recorder(player, 120.0f, RP_CHEATER, true, DistanceTier_None)
 {
-	this->baseHeader.type = RP_CHEATER;
-	V_strncpy(this->header.reason, reason, sizeof(this->header.reason));
+	auto *cheater = replayHeader.mutable_cheater();
+	cheater->set_reason(reason);
 	if (savedBy)
 	{
-		V_strncpy(this->header.reporter.name, savedBy->GetName(), sizeof(this->header.reporter.name));
-		this->header.reporter.steamid64 = savedBy->GetSteamId64();
+		auto *reporter = cheater->mutable_reporter();
+		reporter->set_name(savedBy->GetName());
+		reporter->set_steamid64(savedBy->GetSteamId64());
 	}
 }
 
 i32 CheaterRecorder::WriteHeader(FileHandle_t file)
 {
-	i32 bytesWritten = Recorder::WriteHeader(file);
-	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
+	return Recorder::WriteHeader(file);
 }
 
 // JumpRecorder Implementation
-JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, false, DistanceTier_None)
+JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, RP_JUMPSTATS, false, DistanceTier_None)
 {
 	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f;
-	this->baseHeader.type = RP_JUMPSTATS;
-	V_strncpy(this->header.mode.name, KZ::mode::GetModeInfo(jump->player->modeService).longModeName.Get(), sizeof(this->header.mode.name));
-	V_strncpy(this->header.mode.shortName, KZ::mode::GetModeInfo(jump->player->modeService).shortModeName.Get(), sizeof(this->header.mode.shortName));
-	V_strncpy(this->header.mode.md5, KZ::mode::GetModeInfo(jump->player->modeService).md5, sizeof(this->header.mode.md5));
-	this->header.jumpType = jump->jumpType;
-	this->header.distance = jump->GetDistance();
-	this->header.blockDistance = -1;
-	this->header.numStrafes = jump->strafes.Count();
-	this->header.airTime = jump->airtime;
-	this->header.pre = jump->GetTakeoffSpeed();
-	this->header.max = jump->GetMaxSpeed();
-	this->header.sync = jump->GetSync();
+	auto *jumpProto = replayHeader.mutable_jump();
+	auto modeInfo = KZ::mode::GetModeInfo(jump->player->modeService);
+	jumpProto->mutable_mode()->set_name(modeInfo.longModeName.Get());
+	jumpProto->mutable_mode()->set_short_name(modeInfo.shortModeName.Get());
+	jumpProto->mutable_mode()->set_md5(modeInfo.md5);
+	jumpProto->set_jump_type(jump->jumpType);
+	jumpProto->set_distance(jump->GetDistance());
+	jumpProto->set_block_distance(-1);
+	jumpProto->set_num_strafes(jump->strafes.Count());
+	jumpProto->set_air_time(jump->airtime);
+	jumpProto->set_pre(jump->GetTakeoffSpeed());
+	jumpProto->set_max(jump->GetMaxSpeed());
+	jumpProto->set_sync(jump->GetSync());
 }
 
 i32 JumpRecorder::WriteHeader(FileHandle_t file)
 {
-	i32 bytesWritten = Recorder::WriteHeader(file);
-	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
+	return Recorder::WriteHeader(file);
 }
 
 // RunRecorder Implementation
-RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, true, DistanceTier_Ownage)
+RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, RP_RUN, true, DistanceTier_Ownage)
 {
-	this->baseHeader.type = RP_RUN;
-	V_strncpy(this->header.courseName, player->timerService->GetCourse()->GetName().Get(), sizeof(this->header.courseName));
-	V_strncpy(this->header.mode.name, KZ::mode::GetModeInfo(player->modeService).longModeName.Get(), sizeof(this->header.mode.name));
-	V_strncpy(this->header.mode.shortName, KZ::mode::GetModeInfo(player->modeService).shortModeName.Get(), sizeof(this->header.mode.shortName));
-	V_strncpy(this->header.mode.md5, KZ::mode::GetModeInfo(player->modeService).md5, sizeof(this->header.mode.md5));
+	auto *runProto = replayHeader.mutable_run();
+	runProto->set_course_name(player->timerService->GetCourse()->GetName().Get());
+	auto modeInfo = KZ::mode::GetModeInfo(player->modeService);
+	runProto->mutable_mode()->set_name(modeInfo.longModeName.Get());
+	runProto->mutable_mode()->set_short_name(modeInfo.shortModeName.Get());
+	runProto->mutable_mode()->set_md5(modeInfo.md5);
 	FOR_EACH_VEC(player->styleServices, i)
 	{
 		auto styleInfo = KZ::style::GetStyleInfo(player->styleServices[i]);
-		RpModeStyleInfo style = {};
-		V_strncpy(style.name, styleInfo.longName, sizeof(style.name));
-		V_strncpy(style.shortName, styleInfo.shortName, sizeof(style.shortName));
-		V_strncpy(style.md5, styleInfo.md5, sizeof(style.md5));
-		this->styles.push_back(style);
+		auto *styleMsg = runProto->add_styles();
+		styleMsg->set_name(styleInfo.longName);
+		styleMsg->set_short_name(styleInfo.shortName);
+		styleMsg->set_md5(styleInfo.md5);
 	}
-	this->header.styleCount = player->styleServices.Count();
 }
 
 void RunRecorder::End(f32 time, i32 numTeleports)
 {
-	this->header.time = time;
-	this->header.numTeleports = numTeleports;
+	auto *runProto = replayHeader.mutable_run();
+	runProto->set_time(time);
+	runProto->set_num_teleports(numTeleports);
 	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 4.0f;
 }
 
 i32 RunRecorder::WriteHeader(FileHandle_t file)
 {
-	i32 bytesWritten = Recorder::WriteHeader(file);
-	for (auto &style : styles)
-	{
-		bytesWritten += g_pFullFileSystem->Write(&style, sizeof(style), file);
-	}
-	return bytesWritten + g_pFullFileSystem->Write(&this->header, sizeof(this->header), file);
+	return Recorder::WriteHeader(file);
 }
 
 // Recorder Implementation
-Recorder::Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps)
+Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyTimerEvents, DistanceTier copyJumps)
 {
-	baseHeader.Init(player);
+	Recorder::Init(replayHeader, player, type);
 
 	CircularRecorder *circular = player->recordingService->circularRecording;
 	if (!circular)
@@ -272,7 +268,7 @@ bool Recorder::WriteToFile()
 	// Update the replay timestamp before writing.
 	time_t unixTime = 0;
 	time(&unixTime);
-	this->baseHeader.timestamp = (u64)unixTime;
+	replayHeader.set_timestamp((u64)unixTime);
 
 	char filename[512];
 	std::string uuidStr = this->uuid.ToString();
@@ -307,8 +303,18 @@ bool Recorder::WriteToFile()
 
 i32 Recorder::WriteHeader(FileHandle_t file)
 {
-	// Write the base header
-	return g_pFullFileSystem->Write(&this->baseHeader, sizeof(this->baseHeader), file);
+	// Serialize unified protobuf header with length prefix
+	std::string serialized;
+	if (!this->replayHeader.SerializeToString(&serialized))
+	{
+		META_CONPRINTF("[KZ] Failed to serialize replay header protobuf\n");
+		return 0;
+	}
+	u32 size = static_cast<u32>(serialized.size());
+	i32 written = 0;
+	written += g_pFullFileSystem->Write(&size, sizeof(size), file);
+	written += g_pFullFileSystem->Write(serialized.data(), size, file);
+	return written;
 }
 
 i32 Recorder::WriteTickData(FileHandle_t file)

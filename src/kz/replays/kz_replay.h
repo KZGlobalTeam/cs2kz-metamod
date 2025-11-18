@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "sdk/entity/cbaseplayerweapon.h"
+#include "kz_replay.pb.h" // Protobuf definitions for replay header
 // relative to csgo/
 #define KZ_REPLAY_PATH      "kzreplays"
 #define KZ_REPLAY_RUNS_PATH KZ_REPLAY_PATH "/runs"
@@ -12,8 +13,7 @@ class KZPlayer;
 
 enum : u32
 {
-	KZ_REPLAY_MAGIC = KZ_FOURCC('s', '2', 'k', 'z'),
-	KZ_REPLAY_VERSION = 3,
+	KZ_REPLAY_VERSION = 1,
 };
 
 enum ReplayType : u32
@@ -234,9 +234,9 @@ struct TickData
 
 	struct MovementData
 	{
-		Vector origin;
-		Vector velocity;
-		QAngle angles;
+		Vector origin = vec3_origin;
+		Vector velocity = vec3_origin;
+		QAngle angles = vec3_angle;
 		u32 buttons[3] {};
 		f32 jumpPressedTime {};
 		// Quack
@@ -274,83 +274,7 @@ struct CmdData
 	f32 m_pitch {};
 };
 
-struct GeneralReplayHeader
-{
-	u32 magicNumber;
-	u32 version;
-	ReplayType type;
+// Unified protobuf header type
+using ReplayHeader = cs2kz::replay::ReplayHeader;
 
-	struct
-	{
-		char name[128];
-		u64 steamid64;
-	} player;
-
-	struct
-	{
-		char name[64];
-		char md5[33];
-	} map;
-
-	// Probably not worth the effort to track player models and gloves over time, since this won't affect gameplay in any way that matters.
-	EconInfo gloves;
-	char modelName[256];
-
-	u64 timestamp;
-	char pluginVersion[32];
-	u32 serverVersion;
-	u32 serverIP;
-	f32 sensitivity;
-	f32 yaw;
-	f32 pitch;
-
-	// Timestamp when the replay was marked as archived. 0 means not archived.
-	// Archived replays older than 14 days will be deleted by the replay watcher.
-	u64 archivedTimestamp;
-
-	void Init(KZPlayer *player);
-};
-
-struct CheaterReplayHeader
-{
-	char reason[512];
-
-	// Empty if this is an automated submission.
-	struct
-	{
-		char name[128];
-		u64 steamid64;
-	} reporter;
-};
-
-struct RunReplayHeader
-{
-	char courseName[256];
-	RpModeStyleInfo mode;
-	i32 styleCount;
-	f32 time;
-	i32 numTeleports;
-};
-
-struct JumpReplayHeader
-{
-	RpModeStyleInfo mode;
-	u8 jumpType;
-	f32 distance;
-	i32 blockDistance;
-	u32 numStrafes;
-	f32 sync;
-	f32 pre;
-	f32 max;
-	f32 airTime;
-};
-
-struct ManualReplayHeader
-{
-	struct
-	{
-		char name[128];
-		u64 steamid64;
-	} savedBy;
-};
 #endif // KZ_REPLAY_H

@@ -1,3 +1,5 @@
+
+#define NOMINMAX
 #include "cs2kz.h"
 #include "kz/kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
@@ -13,7 +15,6 @@
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"
 #include <functional>
-
 extern ReplayWatcher g_ReplayWatcher;
 
 namespace KZ::replaysystem::commands
@@ -85,9 +86,9 @@ namespace KZ::replaysystem::commands
 				{
 					return;
 				}
-				if (!KZ_STREQI(data::GetCurrentReplay()->header.map.name, g_pKZUtils->GetCurrentMapName().Get()))
+				if (!KZ_STREQI(data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().Get()))
 				{
-					player->languageService->PrintChat(true, false, "Replay - Wrong Map", data::GetCurrentReplay()->header.map.name, g_pKZUtils->GetCurrentMapName().Get());
+					player->languageService->PrintChat(true, false, "Replay - Wrong Map", data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().Get());
 					return;
 				}
 				for (u32 i = 0; i < data::GetCurrentReplay()->numEvents; i++)
@@ -320,49 +321,66 @@ namespace KZ::replaysystem::commands
 		utils::FormatTime(replay->currentTick * ENGINE_FIXED_TICK_INTERVAL, timeStr, sizeof(timeStr), false);
 		utils::FormatTime((replay->tickCount - 1) * ENGINE_FIXED_TICK_INTERVAL, maxTime, sizeof(maxTime), false);
 		char timestamp[64];
-		time_t time = replay->header.timestamp;
+		time_t time = replay->header.timestamp();
 		strftime(timestamp, 64, "%Y-%m-%d %H:%M:%S", localtime(&time));
 		player->languageService->PrintChat(true, false, "Replay - Current Info", replay->currentTick, replay->tickCount - 1, timeStr, maxTime);
 		player->languageService->PrintConsole(false, false, "Replay - General Info Console", replay->uuid.ToString().c_str(),
-											  replay->header.player.name, replay->header.player.steamid64, timestamp, replay->header.serverVersion,
-											  replay->header.pluginVersion);
-		switch (replay->header.type)
+											  replay->header.player().name().c_str(), replay->header.player().steamid64(), timestamp,
+											  replay->header.server_version(), replay->header.plugin_version());
+		switch (static_cast<ReplayType>(replay->header.type()))
 		{
 			case ReplayType::RP_CHEATER:
 			{
-				player->languageService->PrintConsole(false, false, "Replay - Cheater Info Console", replay->cheaterHeader.reason);
+				if (replay->header.has_cheater())
+				{
+					player->languageService->PrintConsole(false, false, "Replay - Cheater Info Console", replay->header.cheater().reason().c_str());
+				}
 				break;
 			}
 			case ReplayType::RP_RUN:
 			{
-				char modeStr[128];
-				V_snprintf(modeStr, sizeof(modeStr), "%s%s", replay->runHeader.mode.name, replay->runHeader.styleCount ? "*" : "");
-				CUtlString timeString = utils::FormatTime(replay->runHeader.time);
-				player->languageService->PrintConsole(false, false, "Replay - Run Info Console", replay->runHeader.courseName, modeStr,
-													  timeString.Get(), replay->runHeader.numTeleports);
+				if (replay->header.has_run())
+				{
+					char modeStr[128];
+					auto &run = replay->header.run();
+					i32 styleCount = run.styles_size();
+					V_snprintf(modeStr, sizeof(modeStr), "%s%s", run.mode().name().c_str(), styleCount ? "*" : "");
+					CUtlString timeString = utils::FormatTime(run.time());
+					player->languageService->PrintConsole(false, false, "Replay - Run Info Console", run.course_name().c_str(), modeStr,
+														  timeString.Get(), run.num_teleports());
+				}
 				break;
 			}
 			case ReplayType::RP_JUMPSTATS:
 			{
-				if (replay->jumpHeader.blockDistance <= 0)
+				if (replay->header.has_jump())
 				{
-					player->languageService->PrintConsole(false, false, "Replay - Jump Info Console", jumpTypeStr[replay->jumpHeader.jumpType],
-														  replay->jumpHeader.distance, replay->jumpHeader.sync * 100.0f, replay->jumpHeader.pre,
-														  replay->jumpHeader.max, replay->jumpHeader.airTime);
-				}
-				else
-				{
-					player->languageService->PrintConsole(false, false, "Replay - Jump Info Console", jumpTypeStr[replay->jumpHeader.jumpType],
-														  replay->jumpHeader.distance, replay->jumpHeader.blockDistance,
-														  replay->jumpHeader.sync * 100.0f, replay->jumpHeader.pre, replay->jumpHeader.max,
-														  replay->jumpHeader.airTime);
+					auto &jump = replay->header.jump();
+					u8 jt = static_cast<u8>(jump.jump_type());
+					if (jump.block_distance() <= 0)
+					{
+						player->languageService->PrintConsole(false, false, "Replay - Jump Info Console", jumpTypeStr[jt], jump.distance(),
+															  jump.sync() * 100.0f, jump.pre(), jump.max(), jump.air_time());
+					}
+					else
+					{
+						player->languageService->PrintConsole(false, false, "Replay - Jump Info Console", jumpTypeStr[jt], jump.distance(),
+															  jump.block_distance(), jump.sync() * 100.0f, jump.pre(), jump.max(), jump.air_time());
+					}
 				}
 				break;
 			}
 			case ReplayType::RP_MANUAL:
 			{
-				player->languageService->PrintConsole(false, false, "Replay - Manual Info Console", replay->manualHeader.savedBy.name,
-													  replay->manualHeader.savedBy.steamid64);
+				if (replay->header.has_manual())
+				{
+					auto &manual = replay->header.manual();
+					if (manual.has_saved_by())
+					{
+						player->languageService->PrintConsole(false, false, "Replay - Manual Info Console", manual.saved_by().name().c_str(),
+															  manual.saved_by().steamid64());
+					}
+				}
 				break;
 			}
 		}
