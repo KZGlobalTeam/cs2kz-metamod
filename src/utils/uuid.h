@@ -99,7 +99,14 @@ struct UUID_t
 			return false;
 		}
 
-		if (strlen(uuid_str) != 36)
+		// Strip trailing whitespace
+		size_t len = strlen(uuid_str);
+		while (len > 0 && isspace((unsigned char)uuid_str[len - 1]))
+		{
+			len--;
+		}
+
+		if (len != 36)
 		{
 			return false;
 		}
