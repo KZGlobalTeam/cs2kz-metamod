@@ -25,6 +25,11 @@ public:
 	SCHEMA_FIELD(CEconItemView, m_EconGloves);
 	SCHEMA_FIELD(uint8, m_nEconGlovesChanged);
 
+	SCHEMA_FIELD(float, m_flViewmodelOffsetX);
+	SCHEMA_FIELD(float, m_flViewmodelOffsetY);
+	SCHEMA_FIELD(float, m_flViewmodelOffsetZ);
+	SCHEMA_FIELD(float, m_flViewmodelFOV);
+
 	void Respawn()
 	{
 		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("Respawn"), this);

@@ -74,7 +74,7 @@ struct Recorder
 {
 	UUID_t uuid;
 	f32 desiredStopTime = -1;
-	GeneralReplayHeader baseHeader;
+	ReplayHeader replayHeader; // Unified protobuf header
 	std::vector<TickData> tickData;
 	std::vector<SubtickData> subtickData;
 	std::vector<RpEvent> rpEvents;
@@ -86,7 +86,7 @@ struct Recorder
 	std::vector<CmdData> cmdData;
 	std::vector<SubtickData> cmdSubtickData;
 	// Copy the last numSeconds seconds of data from the circular recorder.
-	Recorder(KZPlayer *player, f32 numSeconds, bool copyTimerEvents, DistanceTier copyJumps);
+	Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyTimerEvents, DistanceTier copyJumps);
 
 	bool ShouldStopAndSave(f32 currentTime)
 	{
@@ -145,9 +145,9 @@ struct Recorder
 			cmdSubtickData.push_back(data);
 		}
 	}
-};
 
-constexpr int i = sizeof(GeneralReplayHeader) + sizeof(RunReplayHeader);
+	static void Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type);
+};
 
 // Forward declarations
 class KZRecordingService;
@@ -209,8 +209,6 @@ private:
 
 struct RunRecorder : public Recorder
 {
-	RunReplayHeader header;
-	std::vector<RpModeStyleInfo> styles;
 	RunRecorder(KZPlayer *player);
 	void End(f32 time, i32 numTeleports);
 	virtual i32 WriteHeader(FileHandle_t file) override;
@@ -218,22 +216,18 @@ struct RunRecorder : public Recorder
 
 struct JumpRecorder : public Recorder
 {
-	JumpReplayHeader header;
-
 	JumpRecorder(Jump *jump);
 	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct CheaterRecorder : public Recorder
 {
-	CheaterReplayHeader header;
 	CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer *savedBy);
 	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct ManualRecorder : public Recorder
 {
-	ManualReplayHeader header;
 	ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy);
 	virtual i32 WriteHeader(FileHandle_t file) override;
 };

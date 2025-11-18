@@ -175,7 +175,7 @@ namespace KZ::replaysystem::data
 		// Get file size for progress calculation
 		size_t fileSize = g_pFullFileSystem->Size(file);
 
-		// Read header
+		// Read length-prefixed protobuf header
 		if (shouldCancel)
 		{
 			g_pFullFileSystem->Close(file);
@@ -183,46 +183,34 @@ namespace KZ::replaysystem::data
 		}
 		if (kz_replay_playback_debug.Get())
 		{
-			META_CONPRINTF("Loading replay header...\n");
+			META_CONPRINTF("Loading replay protobuf header...\n");
 		}
-		g_pFullFileSystem->Read(&result.header, sizeof(result.header), file);
-		switch (result.header.type)
-		{
-			case RP_CHEATER:
-			{
-				g_pFullFileSystem->Read(&result.cheaterHeader, sizeof(result.cheaterHeader), file);
-				break;
-			}
-			case RP_RUN:
-			{
-				g_pFullFileSystem->Read(&result.runHeader, sizeof(result.runHeader), file);
-				// Just to advance the reader.
-				for (i32 i = 0; i < result.runHeader.styleCount; i++)
-				{
-					RpModeStyleInfo style = {};
-					g_pFullFileSystem->Read(&style, sizeof(style), file);
-				}
-				break;
-			}
-			case RP_JUMPSTATS:
-			{
-				g_pFullFileSystem->Read(&result.jumpHeader, sizeof(result.jumpHeader), file);
-				break;
-			}
-			case RP_MANUAL:
-			{
-				g_pFullFileSystem->Read(&result.manualHeader, sizeof(result.manualHeader), file);
-				break;
-			}
-		}
-		UpdateProgress(file, fileSize, progress);
-
-		if (result.header.magicNumber != KZ_REPLAY_MAGIC)
+		u32 headerSize = 0;
+		if (g_pFullFileSystem->Read(&headerSize, sizeof(headerSize), file) != sizeof(headerSize))
 		{
 			g_pFullFileSystem->Close(file);
 			return result;
 		}
-		if (result.header.version != KZ_REPLAY_VERSION)
+		if (headerSize == 0 || headerSize > 5 * 1024 * 1024) // sanity limit 5MB
+		{
+			g_pFullFileSystem->Close(file);
+			return result;
+		}
+		std::string serialized;
+		serialized.resize(headerSize);
+		if (g_pFullFileSystem->Read(serialized.data(), headerSize, file) != headerSize)
+		{
+			g_pFullFileSystem->Close(file);
+			return result;
+		}
+		if (!result.header.ParseFromString(serialized))
+		{
+			g_pFullFileSystem->Close(file);
+			return result;
+		}
+		UpdateProgress(file, fileSize, progress);
+
+		if (result.header.version() != KZ_REPLAY_VERSION)
 		{
 			g_pFullFileSystem->Close(file);
 			return result;

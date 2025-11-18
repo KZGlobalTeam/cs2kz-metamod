@@ -16,12 +16,7 @@ namespace KZ::replaysystem::data
 	{
 		UUID_t uuid;
 		bool valid;
-		GeneralReplayHeader header;
-		// Can't union this because the type will become non trivial.
-		CheaterReplayHeader cheaterHeader;
-		RunReplayHeader runHeader;
-		JumpReplayHeader jumpHeader;
-		ManualReplayHeader manualHeader;
+		ReplayHeader header;
 
 		u32 tickCount;
 		TickData *tickData;

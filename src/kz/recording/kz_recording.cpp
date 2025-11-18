@@ -41,37 +41,42 @@ void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 	}
 }
 
-void GeneralReplayHeader::Init(KZPlayer *player)
+void Recorder::Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type)
 {
-	// Non-player-specific fields
-	this->magicNumber = KZ_REPLAY_MAGIC;
-	this->version = KZ_REPLAY_VERSION;
+	hdr.set_version(KZ_REPLAY_VERSION);
+	hdr.set_type(static_cast<cs2kz::replay::ReplayType>(type));
 
-	V_snprintf(this->map.name, sizeof(this->map.name), "%s", g_pKZUtils->GetCurrentMapName().Get());
-	g_pKZUtils->GetCurrentMapMD5(this->map.md5, sizeof(this->map.md5));
-	V_snprintf(this->pluginVersion, sizeof(this->pluginVersion), "%s", g_KZPlugin.GetVersion());
-	this->serverVersion = utils::GetServerVersion();
+	// Map info
+	hdr.mutable_map()->set_name(g_pKZUtils->GetCurrentMapName().Get());
+	char md5[33] = {};
+	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
+	hdr.mutable_map()->set_md5(md5);
+
+	hdr.set_plugin_version(g_KZPlugin.GetVersion());
+	hdr.set_server_version(utils::GetServerVersion());
 
 	time_t unixTime = 0;
 	time(&unixTime);
-	this->timestamp = (u64)unixTime;
+	hdr.set_timestamp((u64)unixTime);
 
-	this->serverIP = g_steamAPI.SteamGameServer() ? g_steamAPI.SteamGameServer()->GetPublicIP().m_unIPv4 : 0;
+	hdr.set_server_ip(g_steamAPI.SteamGameServer() ? g_steamAPI.SteamGameServer()->GetPublicIP().m_unIPv4 : 0);
 
-	// Player-specific fields
-	V_snprintf(this->player.name, sizeof(this->player.name), "%s", player->GetController()->GetPlayerName());
-	this->player.steamid64 = player->GetSteamId64();
+	// Player info
+	auto *playerMsg = hdr.mutable_player();
+	playerMsg->set_name(player->GetController()->GetPlayerName());
+	playerMsg->set_steamid64(player->GetSteamId64());
 
-	this->gloves = player->GetPlayerPawn()->m_EconGloves();
+	// Model name
 	CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(player->GetPlayerPawn()->m_CBodyComponent()->m_pSceneNode());
-	V_snprintf(this->modelName, sizeof(this->modelName), "%s", pSkeleton->m_modelState().m_ModelName().String());
+	hdr.set_model_name(pSkeleton->m_modelState().m_ModelName().String());
 
-	this->sensitivity = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "sensitivity"));
-	this->yaw = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_yaw"));
-	this->pitch = utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_pitch"));
-
-	// Initialize archival timestamp to 0 (not archived)
-	this->archivedTimestamp = 0;
+	hdr.set_sensitivity(utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "sensitivity")));
+	hdr.set_yaw(utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_yaw")));
+	hdr.set_pitch(utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "m_pitch")));
+	hdr.set_viewmodel_offset_x(utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "viewmodel_offset_x")));
+	hdr.set_viewmodel_offset_y(utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "viewmodel_offset_y")));
+	hdr.set_viewmodel_offset_z(utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "viewmodel_offset_z")));
+	hdr.set_viewmodel_fov(utils::StringToFloat(interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), "viewmodel_fov")));
 }
 
 void KZRecordingService::Reset()
@@ -252,7 +257,8 @@ void KZRecordingService::CheckRecorders()
 						if (callbackPlayer)
 						{
 							callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", uuid.ToString().c_str());
-							callbackPlayer->languageService->PrintConsole(true, "Replay - Run Replay Saved (Console)", uuid.ToString().c_str());
+							callbackPlayer->languageService->PrintConsole(false, false, "Replay - Run Replay Saved (Console)",
+																		  uuid.ToString().c_str());
 						}
 					},
 					// Failure callback
@@ -551,7 +557,7 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 			if (callbackPlayer)
 			{
 				callbackPlayer->languageService->PrintChat(true, false, "Replay - Manual Replay Saved", uuid.ToString().c_str(), replayDuration);
-				callbackPlayer->languageService->PrintConsole(true, "Replay - Manual Replay Saved (Console)", uuid.ToString().c_str(),
+				callbackPlayer->languageService->PrintConsole(false, false, "Replay - Manual Replay Saved (Console)", uuid.ToString().c_str(),
 															  replayDuration);
 			}
 		},
