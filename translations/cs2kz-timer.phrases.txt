@@ -741,4 +741,9 @@
 		"ua"		"{grey}Ви вимкнули звук зупинки таймера."
 		"sv"		"{grey}Du har inaktiverat timerstoppljud."
 	}
+	"Record Volume Set"
+	{
+		"#format"	"volume:.1f"
+		"en"		"{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+	}
 }

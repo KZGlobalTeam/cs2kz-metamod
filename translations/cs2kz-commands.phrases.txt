@@ -1295,4 +1295,8 @@
 		"chi"		"取消加载回放."
 		"ua"		"Скасувати завантаження повтору."
 	}
+	"Command Description - kz_recordvolume"
+	{
+		"en"		"Set the volume of the world record sound effect."
+	}
 }

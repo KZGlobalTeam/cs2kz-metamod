@@ -1508,3 +1508,12 @@ void KZDatabaseServiceEventListener_Timer::OnClientSetup(Player *player, u64 ste
 	KZPlayer *kzPlayer = g_pKZPlayerManager->ToKZPlayer(player);
 	kzPlayer->timerService->UpdateLocalPBCache();
 }
+
+SCMD(kz_recordvolume, SCFL_TIMER | SCFL_GLOBAL | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	f32 volume = Clamp((f32)utils::StringToFloat(args->Arg(1)), 0.0f, 2.0f);
+	player->optionService->SetPreferenceFloat("recordVolume", volume);
+	player->languageService->PrintChat(true, false, "Timer Preference - Record Volume Set", volume);
+	return MRES_SUPERCEDE;
+}

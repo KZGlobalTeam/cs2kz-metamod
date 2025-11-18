@@ -6,6 +6,7 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/style/kz_style.h"
+#include "kz/option/kz_option.h"
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
@@ -481,7 +482,8 @@ void RecordAnnounce::AnnounceGlobal()
 		{
 			for (i32 i = 0; i < MAXPLAYERS + 1; i++)
 			{
-				utils::PlaySoundToClient(CPlayerSlot(i), "kz.holyshit");
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+				utils::PlaySoundToClient(player->GetPlayerSlot(), "kz.holyshit", player->optionService->GetPreferenceFloat("recordVolume", 1.0f));
 			}
 		}
 	}
