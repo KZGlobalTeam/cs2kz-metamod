@@ -9,6 +9,7 @@ class KZHUDService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 private:
+	bool jumpedThisTick {};
 	bool showPanel {};
 	f64 timerStoppedTime {};
 	f64 currentTimeWhenTimerStopped {};
@@ -22,6 +23,16 @@ public:
 
 	void ResetShowPanel();
 	void TogglePanel();
+
+	void OnPhysicsSimulate()
+	{
+		jumpedThisTick = false;
+	}
+
+	void OnJump()
+	{
+		jumpedThisTick = true;
+	}
 
 	bool IsShowingPanel()
 	{

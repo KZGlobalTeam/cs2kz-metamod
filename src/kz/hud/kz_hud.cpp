@@ -62,14 +62,13 @@ std::string KZHUDService::GetSpeedText(const char *language)
 std::string KZHUDService::GetKeyText(const char *language)
 {
 	// clang-format off
-
 	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Key Text",
 		this->player->IsButtonPressed(IN_MOVELEFT) ? 'A' : '_',
 		this->player->IsButtonPressed(IN_FORWARD) ? 'W' : '_',
 		this->player->IsButtonPressed(IN_BACK) ? 'S' : '_',
 		this->player->IsButtonPressed(IN_MOVERIGHT) ? 'D' : '_',
 		this->player->IsButtonPressed(IN_DUCK) ? 'C' : '_',
-		this->player->IsButtonPressed(IN_JUMP) ? 'J' : '_'
+		this->jumpedThisTick ? 'J' : '_'
 	);
 
 	// clang-format on
