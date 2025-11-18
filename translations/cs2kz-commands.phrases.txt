@@ -1255,6 +1255,10 @@
 		"chi"		"播放之前保存的回放."
 		"ua"		"Відтворити раніше збережений повтор."
 	}
+	"Command Description - kz_replays"
+	{
+		"en"		"List saved replays."
+	}
   	"Command Description - kz_rpgoto"
 	{
 		"en"		"Go to a specific time in the replay. (hh:mm:ss)"
