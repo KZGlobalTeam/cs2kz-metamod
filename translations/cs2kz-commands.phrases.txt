@@ -1299,4 +1299,8 @@
 	{
 		"en"		"Set the volume of the world record sound effect."
 	}
+	"Command Description - kz_cpmessage"
+	{
+		"en"		"Toggle checkpoint messages."
+	} 
 }

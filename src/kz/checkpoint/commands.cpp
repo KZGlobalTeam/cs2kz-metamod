@@ -98,3 +98,21 @@ SCMD(kz_tpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
 }
 
 SCMD_LINK(kz_teleportsound, kz_tpsound);
+
+SCMD(kz_cpmessage, SCFL_CHECKPOINT | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	bool current = player->optionService->GetPreferenceBool("checkpointMessage", true);
+	player->optionService->SetPreferenceBool("checkpointMessage", !current);
+	if (!current)
+	{
+		player->languageService->PrintChat(true, false, "Checkpoint Options - Checkpoint Message - Enable");
+	}
+	else
+	{
+		player->languageService->PrintChat(true, false, "Checkpoint Options - Checkpoint Message - Disable");
+	}
+	return MRES_SUPERCEDE;
+}
+
+SCMD_LINK(kz_cpmsg, kz_cpmessage);
