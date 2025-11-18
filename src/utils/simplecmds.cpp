@@ -71,24 +71,28 @@ static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool pr
 
 	u32 cmdCount = 0;
 	CUtlVector<CUtlString> uniqueCallbacks;
+	CUtlVector<i32> callbackRowIndices;
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
 		if (cmds[i].flags & (1ull << category))
 		{
-			if (uniqueCallbacks.Find(cmds[i].descKey) == -1)
+			i32 existingIndex = uniqueCallbacks.Find(cmds[i].descKey);
+			if (existingIndex == -1)
 			{
 				uniqueCallbacks.AddToTail(cmds[i].descKey);
+				callbackRowIndices.AddToTail(cmdCount);
 				table.SetRow(cmdCount, cmds[i].name, player->languageService->PrepareMessage(cmds[i].descKey).c_str());
 				cmdCount++;
 			}
 			else
 			{
-				CUtlString newEntry = table.GetEntry(cmdCount - 1).data[0];
+				i32 rowIndex = callbackRowIndices[existingIndex];
+				CUtlString newEntry = table.GetEntry(rowIndex).data[0];
 				// Remove the trailing space that exists in each column
 				newEntry.SetLength(newEntry.Length() - strlen("ᅟ"));
 				newEntry.Append("/");
 				newEntry.Append(cmds[i].name);
-				table.Set(cmdCount - 1, 0, newEntry);
+				table.Set(rowIndex, 0, newEntry);
 			}
 		}
 	}
