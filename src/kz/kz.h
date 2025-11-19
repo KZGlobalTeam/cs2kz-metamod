@@ -138,7 +138,6 @@ public:
 	void PlayErrorSound();
 
 private:
-	bool hideLegs {};
 	f64 lastTeleportTime {};
 	f32 lastValidYaw {};
 	bool oldUsingTurnbinds {};
@@ -175,11 +174,6 @@ public:
 
 	// Leg stuff
 	void ToggleHideLegs();
-
-	bool HidingLegs()
-	{
-		return this->hideLegs;
-	}
 
 	void UpdatePlayerModelAlpha();
 	// Teleport checking, used for multiple services

@@ -31,29 +31,17 @@
 #define RESTART_CHECK_INTERVAL 1800.0f
 static_global CTimer<> *mapRestartTimer;
 
-static_global class KZOptionServiceEventListener_Misc : public KZOptionServiceEventListener
-{
-	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
-	{
-		bool hideLegs = player->optionService->GetPreferenceBool("hideLegs", false);
-		if (player->HidingLegs() != hideLegs)
-		{
-			player->ToggleHideLegs();
-		}
-	}
-} optionEventListener;
-
 SCMD(kz_hidelegs, SCFL_PLAYER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->ToggleHideLegs();
-	if (player->HidingLegs())
+	if (player->optionService->GetPreferenceBool("hideLegs"))
 	{
-		player->languageService->PrintChat(true, false, "Quiet Option - Show Player Legs - Disable");
+		player->languageService->PrintChat(true, false, "Quiet Option - Hide Player Legs - Enable");
 	}
 	else
 	{
-		player->languageService->PrintChat(true, false, "Quiet Option - Show Player Legs - Enable");
+		player->languageService->PrintChat(true, false, "Quiet Option - Hide Player Legs - Disable");
 	}
 	return MRES_SUPERCEDE;
 }
@@ -299,7 +287,6 @@ static_function f64 CheckRestart()
 
 void KZ::misc::Init()
 {
-	KZOptionService::RegisterEventListener(&optionEventListener);
 	KZ::misc::EnforceTimeLimit();
 	mapRestartTimer = StartTimer(CheckRestart, RESTART_CHECK_INTERVAL, true, true);
 	CConVarRef<int32> sv_infinite_ammo("sv_infinite_ammo");

@@ -7,7 +7,7 @@
 #include "kz/spec/kz_spec.h"
 #include "utils/ctimer.h"
 
-static CHandle<CCSPlayerController> g_replayBot;
+static_global CHandle<CCSPlayerController> g_replayBot;
 extern CConVar<bool> kz_replay_playback_skins_enable;
 
 static_function f64 SetBotModel()

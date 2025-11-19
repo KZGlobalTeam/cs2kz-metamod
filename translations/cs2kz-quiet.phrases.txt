@@ -1,6 +1,6 @@
 "Phrases"
 {
-	"Quiet Option - Show Player Legs - Enable"
+	"Quiet Option - Hide Player Legs - Disable"
 	{
 		"en"		"{grey}Your player's legs are now visible."
 		"chi"		"{grey}你现在能看到你的腿部了."
@@ -15,7 +15,7 @@
 		"ko"		"{grey}플레이어의 다리가 이제 표시됩니다."
 		"lv"		"{grey}Tava spēlētāja kājas tagad ir redzamas."
 	}
-	"Quiet Option - Show Player Legs - Disable"
+	"Quiet Option - Hide Player Legs - Enable"
 	{
 		"en"		"{grey}Your player's legs are now hidden."
 		"chi"		"{grey}你现在隐藏了你的腿部."

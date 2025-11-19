@@ -6,6 +6,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
+#include "kz/option/kz_option.h"
 #include "commands.h"
 #include "data.h"
 #include "bot.h"
@@ -478,6 +479,28 @@ namespace KZ::replaysystem::commands
 		}
 		g_ReplayWatcher.FindReplaysMatchingCriteria(filter, player);
 	}
+
+	void ToggleLegsVisibility(KZPlayer *player)
+	{
+		if (!player)
+		{
+			return;
+		}
+		if (!data::IsReplayPlaying())
+		{
+			player->languageService->PrintChat(true, false, "Replay - No Replay Playing");
+			return;
+		}
+		bot::GetBotPlayer()->ToggleHideLegs();
+		if (bot::GetBotPlayer()->optionService->GetPreferenceBool("hideLegs"))
+		{
+			player->languageService->PrintChat(true, false, "Replay - Hide Player Legs - Enable");
+		}
+		else
+		{
+			player->languageService->PrintChat(true, false, "Replay - Hide Player Legs - Disable");
+		}
+	}
 } // namespace KZ::replaysystem::commands
 
 // Command implementations using the new modules
@@ -594,5 +617,16 @@ SCMD(kz_replays, SCFL_REPLAY)
 	}
 
 	KZ::replaysystem::commands::ListReplays(player, args->ArgS());
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_rphidelegs, SCFL_REPLAY)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!player)
+	{
+		return MRES_SUPERCEDE;
+	}
+	KZ::replaysystem::commands::ToggleLegsVisibility(player);
 	return MRES_SUPERCEDE;
 }

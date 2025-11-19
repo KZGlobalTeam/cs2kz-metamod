@@ -1308,4 +1308,8 @@
 		"chi"		"切换检查点消息是否显示."
 		"ua"        "Увімк./вимк. повідомлення про чекпоінт."
 	} 
+	"Command Description - kz_rphidelegs"
+	{
+		"en"		"Toggle replay bot's first person legs visibility."
+	}
 }

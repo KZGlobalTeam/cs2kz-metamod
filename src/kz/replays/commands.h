@@ -19,6 +19,7 @@ namespace KZ::replaysystem::commands
 	void GetReplayInfo(KZPlayer *player);
 	void ToggleReplayPause(KZPlayer *player);
 	void ListReplays(KZPlayer *player, const char *input);
+	void ToggleLegsVisibility(KZPlayer *player);
 } // namespace KZ::replaysystem::commands
 
 #endif // KZ_REPLAYCOMMANDS_H

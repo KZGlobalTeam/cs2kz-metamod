@@ -61,10 +61,14 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rpsave <seconds> {grey}以手动保存一段指定具体时长的回放."
 		"ua"		"{grey}Напишіть {default}!rpsave <секунди> {grey}, щоб вручну зберегти повтор тривалістю до вказаної кількості секунд."
 	}
-    "Tip - Replay Storage Policy"
-    {
-	    "en"        "{grey}Older or less important replays may be automatically removed over time to free up server space. Saving new manual replays can overwrite previous ones."
-	    "chi"        "{grey}较旧或不太重要的回放可能会随着时间的推移被自动删除以释放服务器空间. 手动保存新的回放会覆盖之前的回放."
-	    "ua"        "{grey}Старі або менш важливі повтори можуть бути автоматично видалені з часом, щоб звільнити місце на сервері. Збереження нових повторів вручну може перезаписати попередні."
-    }
+	"Tip - Replay Storage Policy"
+	{
+		"en"		"{grey}Older or less important replays may be automatically removed over time to free up server space. Saving new manual replays can overwrite previous ones."
+		"chi"		"{grey}较旧或不太重要的回放可能会随着时间的推移被自动删除以释放服务器空间. 手动保存新的回放会覆盖之前的回放."
+		"ua"		"{grey}Старі або менш важливі повтори можуть бути автоматично видалені з часом, щоб звільнити місце на сервері. Збереження нових повторів вручну може перезаписати попередні."
+	}
+	"Tip - kz_rphidelegs"
+	{
+		"en"		"{grey}Type {default}!rphidelegs {grey}to toggle the visibility of the replay bot's first person legs."
+	}
 }

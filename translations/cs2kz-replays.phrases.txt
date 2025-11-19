@@ -151,7 +151,14 @@
 		"chi"		"{grey}寻找 {lime}{seekSeconds}{grey}s 到 tick {lime}{tick}{grey} ({lime}{time}{grey})"
 		"ua"		"{grey}Перемотано {lime}{seekSeconds}{grey}с. до тіку {lime}{tick}{grey} ({lime}{time}{grey})"
 	}
-
+	"Replay - Hide Player Legs - Enable"
+	{
+		"en"		"{grey}Replay bot's legs are now hidden."
+	}
+	"Replay - Hide Player Legs - Disable"
+	{
+		"en"		"{grey}Replay bot's legs are now visible."
+	}
 	"Replay - Paused"
 	{
 		"en"		"{grey}Replay paused."
