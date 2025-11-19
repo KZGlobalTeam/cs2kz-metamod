@@ -155,11 +155,13 @@
 	{
 		"en"		"{grey}Replay bot's legs are now hidden."
 		"chi"		"{grey}回放bot的腿部现在已隐藏."
+		"ua"		"{grey}Ви вимкнули відображення ніг для бота повтору."
 	}
 	"Replay - Hide Player Legs - Disable"
 	{
 		"en"		"{grey}Replay bot's legs are now visible."
 		"chi"		"{grey}回放bot的腿部现在已恢复显示."
+		"ua"		"{grey}Ви увімкнули відображення ніг для бота повтору."
 	}
 	"Replay - Paused"
 	{
