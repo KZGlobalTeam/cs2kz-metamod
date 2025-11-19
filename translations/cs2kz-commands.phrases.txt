@@ -1311,5 +1311,6 @@
 	"Command Description - kz_rphidelegs"
 	{
 		"en"		"Toggle replay bot's first person legs visibility."
+		"chi"		"切换回放bot的第一人称腿部是否显示."
 	}
 }
