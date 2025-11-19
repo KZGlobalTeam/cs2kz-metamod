@@ -22,7 +22,7 @@
 		"pl"	"{grey}Użyj {default}/jsalways {grey} aby włączyć lub wyłączyć wyświetlanie dystansu dla każdego skoku."
 		"fi"	"{grey}Käytä {default}/jsalways {grey}komentoa vaihtaaksesi \"aina-päällä\" jumpstattien asetuksen tilaa."
 		"sv"	"{grey}Använd {default}/jsalways {grey}för att toggla alla egna jumpstats."
-		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}щоб увімк./вимк. постійне відображення статистики стрибків."
+		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}, щоб увімк./вимк. постійне відображення статистики стрибків."
 		"tr"	"{grey}{default}/jsalways {grey}kullanarak tüm zıplama istatistiklerinin sohbette gözükmesini açabilirsin."
 		"it"	"{grey}Scrivi {default}/jsalways {grey}per mostrare sempre le statistiche dei salti."
 		"es"	"{grey}Usa {default}/jsalways {grey}para alternar el modo de estadísticas de salto siempre activas."
@@ -34,10 +34,12 @@
 	{
 		"en"	"{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
 		"chi"	"{grey}使用 {default}/jstier {grey}设置显示你的跳跃数据的最低等级."
+		"ua"	"{grey}Використання {default}/jstier {grey}, щоб встановити мінімальний тір статистики стрибків."
 	}
 	"Tip - kz_jsextend"
 	{
 		"en"	"{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
 		"chi"	"{grey}使用 {default}/jsextend {grey}可以切换是否在聊天框展示详细跳跃数据."
+		"ua"	"{grey}Використання {default}/jsextend {grey}, щоб увімк./вимк. розширену статистику стрибків у чаті."
 	}
 }
