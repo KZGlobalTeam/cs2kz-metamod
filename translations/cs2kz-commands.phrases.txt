@@ -1258,6 +1258,7 @@
 	"Command Description - kz_replays"
 	{
 		"en"		"List saved replays."
+		"ua"        "Показати список збережених повторів."
 	}
   	"Command Description - kz_rpgoto"
 	{
@@ -1298,9 +1299,11 @@
 	"Command Description - kz_recordvolume"
 	{
 		"en"		"Set the volume of the world record sound effect."
+		"ua"        "Встановити гучність звукового ефекту світового рекорду."
 	}
 	"Command Description - kz_cpmessage"
 	{
 		"en"		"Toggle checkpoint messages."
+		"ua"        "Увімк./вимк. повідомлення про чекпоінт."
 	} 
 }
