@@ -745,6 +745,7 @@
 	{
 		"#format"	"volume:.1f"
 		"en"		"{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+		"chi"		"{grey}你已将世界纪录的广播音量设置为 {default}{volume}%%%%{grey}."
 		"ua"        "{grey}Ви встановили гучність оголошення світового рекорду на {default}{volume}%%%%{grey}."
 	}
 }
