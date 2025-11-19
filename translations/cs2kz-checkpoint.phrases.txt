@@ -296,11 +296,13 @@
 	"Checkpoint Options - Checkpoint Message - Enable"
 	{
 		"en"		"{grey}You have enabled checkpoint messages."
+		"chi"		"{grey}你开启了传送消息."
 		"ua"        "{grey}Ви увімкнули повідомлення про зроблений чекпоінт."
 	}
 	"Checkpoint Options - Checkpoint Message - Disable"
 	{
 		"en"		"{grey}You have disabled checkpoint messages."
+		"chi"		"{grey}你禁用了传送消息."
 		"ua"        "{grey}Ви вимкнули повідомлення про зроблений чекпоінт."
 	}
 }
