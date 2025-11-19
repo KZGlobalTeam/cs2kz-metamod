@@ -176,6 +176,8 @@ public:
 	void TouchAll();
 	void EndTouchAll();
 
+	// Return true if it's a trigger that we care about.
+	static bool IsValidTrigger(CBaseEntity *entity);
 	static bool IsPossibleLegacyBhopTrigger(CTriggerMultiple *trigger);
 	// Return true if this interaction is managed by TriggerFix.
 	static bool IsManagedByTriggerService(CBaseEntity *toucher, CBaseEntity *touched);

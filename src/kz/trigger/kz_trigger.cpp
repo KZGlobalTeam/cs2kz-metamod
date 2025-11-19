@@ -158,7 +158,7 @@ void KZTriggerService::TouchTriggersAlongPath(const Vector &start, const Vector 
 	{
 		CEntityHandle handle = filter.hitTriggerHandles[i];
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
+		if (!trigger || !KZTriggerService::IsValidTrigger(trigger))
 		{
 			continue;
 		}
@@ -224,7 +224,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 	{
 		CEntityHandle handle = filter.hitTriggerHandles[i];
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
-		if (!trigger || !V_strstr(trigger->GetClassname(), "trigger_"))
+		if (!trigger || !KZTriggerService::IsValidTrigger(trigger))
 		{
 			continue;
 		}
@@ -263,6 +263,16 @@ void KZTriggerService::EndTouchAll()
 		}
 		this->EndTouch(trigger);
 	}
+}
+
+bool KZTriggerService::IsValidTrigger(CBaseEntity *entity)
+{
+	// All trigger_ entities are valid except trigger_push.
+	if (entity && V_strstr(entity->GetClassname(), "trigger_") && !KZ_STREQI(entity->GetClassname(), "trigger_push"))
+	{
+		return true;
+	}
+	return false;
 }
 
 bool KZTriggerService::IsPossibleLegacyBhopTrigger(CTriggerMultiple *trigger)
@@ -318,12 +328,12 @@ bool KZTriggerService::IsManagedByTriggerService(CBaseEntity *toucher, CBaseEnti
 	{
 		return false;
 	}
-	if (V_stricmp(toucher->GetClassname(), "player") == 0 && V_strstr(touched->GetClassname(), "trigger_"))
+	if (V_stricmp(toucher->GetClassname(), "player") == 0 && KZTriggerService::IsValidTrigger(touched))
 	{
 		player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(toucher));
 		trigger = static_cast<CBaseTrigger *>(touched);
 	}
-	if (V_stricmp(touched->GetClassname(), "player") == 0 && V_strstr(toucher->GetClassname(), "trigger_"))
+	if (V_stricmp(touched->GetClassname(), "player") == 0 && KZTriggerService::IsValidTrigger(toucher))
 	{
 		player = g_pKZPlayerManager->ToPlayer(static_cast<CCSPlayerPawn *>(touched));
 		trigger = static_cast<CBaseTrigger *>(toucher);

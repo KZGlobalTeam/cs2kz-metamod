@@ -332,7 +332,7 @@ static_function void AddEntityHooks(CBaseEntity *entity)
 	{
 		changeTeamHook = SH_ADD_MANUALVPHOOK(ChangeTeam, entity, SH_STATIC(Hook_OnChangeTeamPost), true);
 	}
-	else if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
+	else if (KZTriggerService::IsValidTrigger(entity) || !V_stricmp(entity->GetClassname(), "player"))
 	{
 		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(StartTouch, entity, SH_STATIC(Hook_OnStartTouch), false));
 		hooks::entityTouchHooks.AddToTail(SH_ADD_MANUALHOOK(Touch, entity, SH_STATIC(Hook_OnTouch), false));
@@ -350,7 +350,7 @@ static_function void AddEntityHooks(CBaseEntity *entity)
 
 static_function void RemoveEntityHooks(CBaseEntity *entity)
 {
-	if (V_strstr(entity->GetClassname(), "trigger_") || !V_stricmp(entity->GetClassname(), "player"))
+	if (KZTriggerService::IsValidTrigger(entity) || !V_stricmp(entity->GetClassname(), "player"))
 	{
 		SH_REMOVE_MANUALHOOK(StartTouch, entity, SH_STATIC(Hook_OnStartTouch), false);
 		SH_REMOVE_MANUALHOOK(Touch, entity, SH_STATIC(Hook_OnTouch), false);
@@ -358,7 +358,7 @@ static_function void RemoveEntityHooks(CBaseEntity *entity)
 		SH_REMOVE_MANUALHOOK(StartTouch, entity, SH_STATIC(Hook_OnStartTouchPost), true);
 		SH_REMOVE_MANUALHOOK(Touch, entity, SH_STATIC(Hook_OnTouchPost), true);
 		SH_REMOVE_MANUALHOOK(EndTouch, entity, SH_STATIC(Hook_OnEndTouchPost), true);
-		if (!V_strstr(entity->GetClassname(), "trigger_"))
+		if (!KZTriggerService::IsValidTrigger(entity))
 		{
 			SH_REMOVE_MANUALHOOK(Teleport, static_cast<CCSPlayerPawn *>(entity), SH_STATIC(Hook_OnTeleport), false);
 		}
@@ -369,7 +369,7 @@ void EntListener::OnEntityCreated(CEntityInstance *pEntity) {}
 
 void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 {
-	if (V_strstr(pEntity->GetClassname(), "trigger_"))
+	if (KZTriggerService::IsValidTrigger(static_cast<CBaseEntity *>(pEntity)))
 	{
 		CBaseTrigger *trigger = static_cast<CBaseTrigger *>(pEntity);
 		trigger->m_fEffects() &= ~EF_NODRAW;
@@ -380,7 +380,7 @@ void EntListener::OnEntitySpawned(CEntityInstance *pEntity)
 
 void EntListener::OnEntityDeleted(CEntityInstance *pEntity)
 {
-	if (V_strstr(pEntity->GetClassname(), "trigger_"))
+	if (KZTriggerService::IsValidTrigger(static_cast<CBaseEntity *>(pEntity)))
 	{
 		RemoveEntityHooks(static_cast<CBaseEntity *>(pEntity));
 	}
