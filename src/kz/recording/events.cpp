@@ -369,9 +369,9 @@ void KZRecordingService::OnPhysicsSimulatePost()
 		return;
 	}
 	this->CheckWeapons();
+	this->CheckCheckpoints();
 	this->RecordTickData_PhysicsSimulatePost();
 	this->CheckModeStyles();
-	this->CheckCheckpoints();
 
 	// Remove old events from circular buffer (keep 2 minutes)
 	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
