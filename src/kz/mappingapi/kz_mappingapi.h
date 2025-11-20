@@ -216,6 +216,11 @@ namespace KZ::mapapi
 	{
 		return triggerType == KZTRIGGER_PUSH;
 	}
+
+	inline bool IsTeleportTrigger(KzTriggerType triggerType)
+	{
+		return triggerType == KZTRIGGER_TELEPORT;
+	}
 } // namespace KZ::mapapi
 
 // Exposed interface to modes.
