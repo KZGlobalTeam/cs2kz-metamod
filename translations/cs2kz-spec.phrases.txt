@@ -7,6 +7,7 @@
 		"ua"		"{grey}Використання: {default}kz_spec <@me/нікнейм>{grey}."
 		"sv"		"{grey}Användning: {default}kz_spec <@me/name>{grey}."
 		"ko"		"{grey}사용법: {default}kz_spec <@me/name>{grey}."
+		"de"		"{grey}Verwendung: {default}kz_spec <@me/name>{grey}."
 	}
 	"Spectator List (None)"
 	{
@@ -16,6 +17,7 @@
 		"sv"		"{grey}Finns ingen åskådare just nu."
 		"ru"		"{grey}Сейчас никто не наблюдает."
 		"ko"		"{grey}지금은 관전중인 인원이 없습니다."
+		"de"		"{grey}Derzeit beobachtet dich niemand."
 	}
 	"Spectator List"
 	{
@@ -27,6 +29,7 @@
 		"sv"		"{grey}Alla åskådare ({default}{count}{grey}) - {players}"
 		"ru"		"{grey}Все наблюдатели ({default}{count}{grey}) - {players}"
 		"ko"		"{grey}관전중인 인원 ({default}{count}{grey}) - {players}"
+		"de"		"{grey}Alle Zuschauer ({default}{count}{grey}) - {players}"
 	}
 	"Target Spectator List (None)"
 	{
@@ -38,6 +41,7 @@
 		"sv"		"{grey}Ingen åskådar {lime}{name}{grey} just nu."
 		"ru"		"{grey}Сейчас никто не наблюдает за {lime}{name}{grey}."
 		"ko"		"{grey}지금은 {lime}{name}{grey} 님을 관전중인 인원이 없습니다."
+		"de"		"{grey}Derzeit beobachtet niemand {lime}{name}{grey}."
 	}
 	"Target Spectator List"
 	{
@@ -49,6 +53,7 @@
 		"sv"		"{grey}Åskådar {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"ru"		"{grey}Наблюдатели {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"ko"		"{lime}{name}{grey} 님을 관전중인 인원 ({default}{count}{grey}) - {players}"
+		"de"		"{grey}Zuschauer von {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 	}
 	"Spectate Failure (Generic)"
 	{
@@ -57,6 +62,7 @@
 		"ua"		"{darkred}Ви не можете зараз перейти в режим спостерігача."
 		"sv"		"{darkred}Du kan inte gå i åskådarläge just nu."
 		"ko"		"{darkred}지금은 관전 모드로 전환할 수 없습니다."
+		"de"		"{darkred}Du kannst derzeit nicht in den Zuschauermodus wechseln."
 	}
 	"Spectate Failure (Dead)"
 	{
@@ -66,6 +72,7 @@
 		"sv"		"{darkred}Spelaren du har angett lever inte."
 		"ru"		"{darkred}Указанный вами игрок не живой."
 		"ko"		"{darkred}해당 플레이어는 살아있는 상태가 아닙니다."
+		"de"		"{darkred}Der von dir angegebene Spieler ist nicht am Leben."
 	}
 	"Spectate Failure (Player Not Found)"
 	{
@@ -74,5 +81,6 @@
 		"ua"		"{darkred}Вказаного вами гравця не знайдено."
 		"sv"		"{darkred}Spelaren du har angett kan inte hittas."
 		"ko"		"{darkred}해당하는 플레이어를 찾지 못하였습니다."
+		"de"		"{darkred}Der von dir angegebene Spieler konnte nicht gefunden werden."
 	}
 }

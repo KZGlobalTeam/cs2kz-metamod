@@ -7,6 +7,7 @@
 		"ru"		"{darkred}Вы не целитесь на что-то твердое!"
 		"sv"		"{darkred}Du siktar inte på något fast!"
 		"ua"		"{darkred}Ви не націлюєтеся на щось тверде!"
+		"de"		"{darkred}Du zielst auf nichts Festes!"
 	}
 	"Measure - Start Position Set"
 	{
@@ -14,6 +15,7 @@
 		"chi"		"{grey}你已设置测量的起始位置."
 		"sv"		"{grey}Du har ställt in din första position för mätning."
 		"ua"		"{grey}Ви встановили першу позицію для вимірювання."
+		"de"		"{grey}Du hast deine erste Position für die Messung gesetzt."
 	}
 	"Measure - Points Not Set"
 	{
@@ -22,6 +24,7 @@
 		"ru"		"{darkred}Вы должны установить обе точки для измерения расстояния."
 		"sv"		"{darkred}Du måste ställa in båda punkterna för att mäta ett avstånd."
 		"ua"		"{darkred}Ви повинні встановити обидві точки для вимірювання відстані."
+		"de"		"{darkred}Du musst beide Punkte setzen, um eine Entfernung zu messen."
 	}
 	"Measure - Blocks Not Aligned"
 	{
@@ -30,6 +33,7 @@
 		"ru"		"{darkred}Вы не целитесь в переднюю часть блока!"
 		"sv"		"{darkred}Du siktar inte på framsidan av ett block!"
 		"ua"		"{darkred}Ви не цілитеся у передню частину блоку!"
+		"de"		"{darkred}Du zielst nicht auf die Vorderseite eines Blocks!"
 	}
 	"Measure - Start Position Timeout"
 	{
@@ -37,6 +41,7 @@
 		"chi"		"{grey}你的起始测量点已过期."
 		"sv"		"{grey}Din första mätposition har gått ut."
 		"ua"		"{grey}Час очікування першої точки вимірювання вичерпано."
+		"de"		"{grey}Deine erste Messposition ist abgelaufen."
 	}
 	"Measure - Result"
 	{
@@ -47,6 +52,7 @@
 		"ru"		"{default}Дистация{grey} - Горизонтальная: {default}{horizontal}{grey} ({default}{effective}{grey}), Вертикальная: {default}{vertical}{grey}"
 		"sv"		"{default}Avstånd{grey} - Horisontellt: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertikalt: {default}{vertical}{grey}"
 		"ua"		"{default}Відстань{grey} - Горизонтальна: {default}{horizontal}{grey} ({default}{effective}{grey}), Вертикальна: {default}{vertical}{grey}"
+		"de"		"{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertikal: {default}{vertical}{grey}"
 	}
 	"Measure - Block Result"
 	{
@@ -57,5 +63,6 @@
 		"ru"		"{default}Дистанция блока{grey} - Горизонтальная: {default}{block}{grey}"
 		"sv"		"{default}Blockavstånd{grey} - Horisontellt: {default}{block}{grey}"
 		"ua"		"{default}Відстань між блоками{grey} - Горизонтальна: {default}{block}{grey}"
+		"de"		"{default}Block-Distanz{grey} - Horizontal: {default}{block}{grey}"
 	}
 }

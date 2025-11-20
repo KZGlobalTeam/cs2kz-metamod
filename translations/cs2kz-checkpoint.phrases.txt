@@ -264,6 +264,7 @@
 		"ko"		"{darkred}맵에서 체크포인트를 초기화했습니다."
 		"es"		"{darkred}El mapa ha limpiado tus checkpoints."
 		"lv"		"{darkred}Karte ir notīrījusi tavus kontrolpunktus."
+		"de"		"{darkred}Die Map hat deine Checkpoints zurückgesetzt."
 	}
 	"Checkpoint Options - Checkpoint Sound - Enable"
 	{
@@ -271,6 +272,7 @@
 		"chi"		"{grey}你开启了存点音效."
 		"sv"		"{grey}Du har aktiverat checkpointljuden."
 		"ua"		"{grey}Ви увімкнули звук чекпоінту."
+		"de"		"{grey}Du hast Checkpoint-Sounds aktiviert."
 	}
 	"Checkpoint Options - Checkpoint Sound - Disable"
 	{
@@ -278,6 +280,7 @@
 		"chi"		"{grey}你禁用了存点音效."
 		"sv"		"{grey}Du har inaktiverat checkpointljuden."
 		"ua"		"{grey}Ви вимкнули звук чекпоінту."
+		"de"		"{grey}Du hast Checkpoint-Sounds deaktiviert."
 	}
 	"Checkpoint Options - Teleport Sound - Enable"
 	{
@@ -285,6 +288,7 @@
 		"chi"		"{grey}你开启了传送音效."
 		"sv"		"{grey}Du har aktiverat teleportljuden."
 		"ua"		"{grey}Ви увімкнули звук телепорту."
+		"de"		"{grey}Du hast Teleport-Sounds aktiviert."
 	}
 	"Checkpoint Options - Teleport Sound - Disable"
 	{
@@ -292,17 +296,20 @@
 		"chi"		"{grey}你禁用了传送音效."
 		"sv"		"{grey}Du har inaktiverat teleportljuden."
 		"ua"		"{grey}Ви вимкнули звук телепорту."
+		"de"		"{grey}Du hast Teleport-Sounds deaktiviert."
 	}
 	"Checkpoint Options - Checkpoint Message - Enable"
 	{
 		"en"		"{grey}You have enabled checkpoint messages."
 		"chi"		"{grey}你开启了传送消息."
 		"ua"        "{grey}Ви увімкнули повідомлення про зроблений чекпоінт."
+		"de"		"{grey}Du hast Checkpoint-Nachrichten aktiviert."
 	}
 	"Checkpoint Options - Checkpoint Message - Disable"
 	{
 		"en"		"{grey}You have disabled checkpoint messages."
 		"chi"		"{grey}你禁用了传送消息."
 		"ua"        "{grey}Ви вимкнули повідомлення про зроблений чекпоінт."
+		"de"		"{grey}Du hast Checkpoint-Nachrichten deaktiviert."
 	}
 }
