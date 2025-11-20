@@ -89,6 +89,7 @@
 	}
 	"Replay - Current Info"
 	{
+		// Current tick: 1234/5678 (12:34/23:45). Check console for details!
 		"#format"	"currentTick:d,totalTicks:d,time:s,maxTime:s"
 		"en"		"{grey}Current tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Check console for details!"
 		"chi"		"{grey}当前 tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). 在控制台中查看具体细节!"
@@ -97,6 +98,11 @@
 	}
 	"Replay - General Info Console"
 	{
+		// Replay 123e4567-e89b-12d3-a456-426614174000
+		// Player: Bob (765612345678901)
+		// Created On: 2024-01-01 12:34:56
+		// Server Version: 2000648
+		// Plugin Version: 1.2.3
 		"#format"	"uuid:s,playerName:s,playerSteamID:llu,createdOn:s,serverVersion:lu,pluginVersion:s"
 		"en"		"Replay {uuid}\nPlayer: {playerName} ({playerSteamID})\nCreated On: {createdOn}\nServer Version: {serverVersion}\nPlugin Version: {pluginVersion}"
 		"chi"		"回放 {uuid}\n玩家: {playerName} ({playerSteamID})\n创建于: {createdOn}\n服务器版本: {serverVersion}\n插件版本: {pluginVersion}"
@@ -105,6 +111,8 @@
 	}
 	"Replay - Cheater Info Console"
 	{
+		// Replay Type: Cheater
+    	// Suspect Reason: abcdef
 		"#format"	"reason:s"
 		"en"		"Replay Type: Cheater\nSuspect Reason: {reason}"
 		"chi"		"回放类型: 作弊者\n疑因: {reason}"
@@ -113,6 +121,11 @@
 	}
 	"Replay - Run Info Console"
 	{
+		// Replay Type: Run
+		// Course: Main
+		// Mode: Classic*
+		// Time: 12:34.567
+		// Teleports: 0
 		"#format"	"name:s,mode:s,time:s,teleports:d"
 		"en"		"Replay Type: Run\nCourse: {name}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
 		"chi"		"回放类型: Run\nCourse: {name}\n模式 + 风格: {mode}\n时长: {time}\n传送次数: {teleports}"
@@ -121,6 +134,8 @@
 	}
 	"Replay - Jump Info Console"
 	{
+		// Replay Type: Long Jump
+		// Distance: 123.45 | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
 		"chi"		"回放类型: {type}\n距离: {distance} | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
@@ -129,6 +144,8 @@
 	}
 	"Replay - Jump Info Console (Block)"
 	{
+		// Replay Type: Long Jump
+		// Distance: 123.45 | 250 Block | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,blockDistance:d,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
 		"chi"		"回放类型: {type}\n距离: {distance} | {blockDistance} 板子 | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
@@ -137,6 +154,8 @@
 	}
 	"Replay - Manual Info Console"
 	{
+		// Replay Type: Manual
+		// Saved By: Alice (765498765432109)
 		"#format"	"playerName:s,playerSteamID:llu"
 		"en"		"Replay Type: Manual\nSaved By: {playerName} ({playerSteamID})"
 		"chi"		"回放类型: 手动\n保存自: {playerName} ({playerSteamID})"
@@ -145,6 +164,7 @@
 	}
 	"Replay - Seeked To Tick"
 	{
+		// Seeked 12.345s to tick 6789 (12:34)
 		"#format"	"seekSeconds:.3f,tick:d,time:s"
 		"en"		"{grey}Seeked {lime}{seekSeconds}{grey}s to tick {lime}{tick}{grey} ({lime}{time}{grey})"
 		"chi"		"{grey}寻找 {lime}{seekSeconds}{grey}s 到 tick {lime}{tick}{grey} ({lime}{time}{grey})"
@@ -327,7 +347,6 @@
 		"ua"		"{darkred}Стиль {default}{styleName}{darkred} недоступний. Відтворення може бути неточним."
 		"de"		"{darkred}Style {default}{styleName}{darkred} ist nicht verfügbar. Wiedergabe könnte ungenau sein."
 	}
-
 	"Replay List - Check Console"
 	{
 		"en"		"{grey}Check console for info!"
@@ -335,31 +354,38 @@
 		"ua"		"{grey}Перевірте консоль щодо деталей!"
 		"de"		"{grey}Infos in der Konsole ansehen!"
 	}
-
 	"Replay List - Usage Title"
 	{
+		// Usage: !replays [type=run/r/jump/j/manual/m] [options...]
 		"en"		"Usage: !replays [type=run/r/jump/j/manual/m] [options...]"
 		"chi"		"用法: !replays [type=run/r/jump/j/manual/m] [options...]"
 		"ua"		"Використання: !replays [type=run/r/jump/j/manual/m] [параметри...]"
 		"de"		"Verwendung: !replays [type=run/r/jump/j/manual/m] [Optionen...]"
 	}
-
 	"Replay List - Usage General Options"
 	{
+		// General Options:
+    	//	player=<name> - Filter by player name
+        //	steamid=<id> - Filter by Steam ID
+ 		//	map=<name> - Filter by map name (default: current map)
+      	//	offset=<num> - Skip first N results
+		//	limit=<num> - Limit results (max 20)
 		"en"		"\nGeneral Options:\n\tplayer=<name> - Filter by player name\n\tsteamid=<id> - Filter by Steam ID\n\tmap=<name> - Filter by map name (default: current map)\n\toffset=<num> - Skip first N results\n\tlimit=<num> - Limit results (max 20)"
 		"chi"		"\n常规选项:\n\tplayer=<name> - 过滤玩家名称\n\tsteamid=<id> - 过滤Steam ID\n\tmap=<name> - 过滤地图名字 (default: current map)\n\toffset=<num> - 跳过第几个结果\n\tlimit=<num> - 最大结果数 (max 20)"
 		"ua"		"\nЗагальні параметри:\n\tplayer=<ім'я> - Фільтрувати за іменем гравця\n\tsteamid=<id> - Фільтрувати за Steam ID\n\tmap=<назва> - Фільтрувати за мапою (за замовчуванням: поточна мапа)\n\toffset=<число> - Пропустити перші N результатів\n\tlimit=<число> - Ліміт результатів (максимум 20)"
 		"de"		"\nAllgemeine Optionen:\n\tplayer=<name> - Nach Spieler filtern\n\tsteamid=<id> - Nach SteamID filtern\n\tmap=<name> - Nach Map filtern (Standard: aktuelle Map)\n\toffset=<num> - Erste N Ergebnisse überspringen\n\tlimit=<num> - Ergebnisse begrenzen (max. 20)"
 	}
-
 	"Replay List - Usage Type Options"
 	{
+		// Type-specific Options:
+		//	Run: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>
+		//	Jump: mode=<mode> jumptype=<type> mindistance=<dist>
+		//	Manual: saver=<name> ssid=<steamid>
 		"en"		"\nType Options:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
 		"chi"		"\n类型选项:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
 		"ua"		"\nПараметри типу повтору:\n\tПроходження: mode=<назва режиму> course=<назва курсу> maxtime=<секунди> maxteleports=<число> numstyles=<число>\n\tСтрибок: jumptype=<тип стрибка> mindistance=<дистанція>\n\tРучний повтор: saver=<ім'я> ssid=<steamid>"
 		"de"		"\nTypoptionen:\n\tRun: mode=<Modus> course=<Kurs> maxtime=<Sek> maxteleports=<Anzahl> numstyles=<Anzahl>\n\tJump: jumptype=<Typ> mindistance=<Distanz>\n\tManual: saver=<Name> ssid=<SteamID>"
 	}
-
 	"Replay List - No Matching Replays"
 	{
 		"en"		"{grey}No matching replays found."
@@ -367,7 +393,6 @@
 		"ua"		"{grey}Не знайдено відповідних повторів."
 		"de"		"{grey}Keine passenden Wiederholungen gefunden."
 	}
-
 	"Cheater Replays - Table Name"
 	{
 		"en"		"Cheater Replays"
@@ -375,7 +400,6 @@
 		"ua"		"Повтори Чітерів"
 		"de"		"Cheater-Wiederholungen"
 	}
-
 	"Run Replays - Table Name"
 	{
 		"en"		"Run Replays"
@@ -383,7 +407,6 @@
 		"ua"		"Повтори проходжень"
 		"de"		"Run-Wiederholungen"
 	}
-
 	"Jump Replays - Table Name"
 	{
 		"en"		"Jump Replays"
@@ -391,7 +414,6 @@
 		"ua"		"Повтори стрибків"
 		"de"		"Jump-Wiederholungen"
 	}
-
 	"Manual Replays - Table Name"
 	{
 		"en"		"Manual Replays"
@@ -399,7 +421,6 @@
 		"ua"		"Ручні повтори"
 		"de"		"Manuelle Wiederholungen"
 	}
-
 	"Replay Table Header - Player"
 	{
 		"en"		"Player"
