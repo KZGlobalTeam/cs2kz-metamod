@@ -1369,11 +1369,12 @@
 		"chi"		"切换检查点消息是否显示."
 		"ua"        "Увімк./вимк. повідомлення про чекпоінт."
 		"de"		"Aktiviere/Deaktiviere Checkpoint-Nachrichten."
-	} 
+	}
 	"Command Description - kz_rphidelegs"
 	{
 		"en"		"Toggle replay bot's first person legs visibility."
 		"chi"		"切换回放bot的第一人称腿部是否显示."
+		"ua"		"Увімк./вимк. відображення ніг бота повтору від першої особи."
 		"de"		"Schalte die Sichtbarkeit der Beine des Replay-Bots in der Ego-Perspektive um."
 	}
 }

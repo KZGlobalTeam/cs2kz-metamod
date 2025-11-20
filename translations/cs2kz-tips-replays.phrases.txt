@@ -82,6 +82,7 @@
 	{
 		"en"		"{grey}Type {default}!rphidelegs {grey}to toggle the visibility of the replay bot's first person legs."
 		"chi"		"{grey}在聊天框中输入 {default}!rphidelegs {grey}来切换是否显示回放bot第一人称视角的腿部."
+		"ua"		"{grey}Напишіть {default}!rphidelegs {grey}, щоб перемикнути відображення ніг бота повтору від першої особи."
 		"de"		"{grey}Gib {default}!rphidelegs {grey}ein, um die Sichtbarkeit der Beine des Replay-Bots (1st Person) umzuschalten."
 	}
 }
