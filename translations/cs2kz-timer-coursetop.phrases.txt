@@ -9,6 +9,7 @@
 		"sv"		"{map_name} ({course_name}) {mode_name} Allmän Server Top"
 		"fi"		"{map_name} ({course_name}) {mode_name} Palvelimen Top"
 		"lv"		"{map_name} ({course_name}) {mode_name} Servera Kopvērtējums"
+		"de"		"{map_name} ({course_name}) {mode_name} Overall Server Top"
 	}
 	"Course Top - Table Name (Server Pro)"
 	{
@@ -19,6 +20,7 @@
 		"sv"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
 		"fi"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
 		"lv"		"{map_name} ({course_name}) {mode_name} PRO Servera Top"
+		"de"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
 	}
 	"Course Top - Table Name (Global Overall)"
 	{
@@ -29,6 +31,7 @@
 		"sv"		"{map_name} ({course_name}) {mode_name} Allmän Global Top"
 		"fi"		"{map_name} ({course_name}) {mode_name} Kaikkien aikojen Global Top"
 		"lv"		"{map_name} ({course_name}) {mode_name} Globālais Kopvērtējums"
+		"de"		"{map_name} ({course_name}) {mode_name} Overall Global Top"
 	}
 	"Course Top - Table Name (Global Pro)"
 	{
@@ -39,6 +42,7 @@
 		"sv"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 		"fi"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 		"lv"		"{map_name} ({course_name}) {mode_name} PRO Globālais Top"
+		"de"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 	}
 	"Course Top Header - Player Alias"
 	{
@@ -122,6 +126,7 @@
 		"sv"		"Poäng"
 		"fi"		"Pisteet"
 		"lv"		"Punkti"
+		"de"		"Punkte"
 	}
 	"Course Top Request - Failed (Generic)"
 	{

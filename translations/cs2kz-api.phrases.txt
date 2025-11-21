@@ -10,5 +10,6 @@
 		"fi"	"API {api} {grey}| {default} Palvelin {server} {grey}| {default} Kartta {map} {grey}| {default} Sinä {player} {grey}| {default} Tila {mode} {grey}| {default} Tyyli {styles}"
 		"ko"	"API {api} {grey}| {default} 서버 {server} {grey}| {default} 맵 {map} {grey}| {default} 당신 {player} {grey}| {default} 모드 {mode} {grey}| {default} 스타일 {styles}"
 		"lv"	"API {api} {grey}| {default} Serveris {server} {grey}| {default} Karte {map} {grey}| {default} Tu {player} {grey}| {default} Režīms {mode} {grey}| {default} Stili {styles}"
+		"de"	"API {api} {grey}| {default} Server {server} {grey}| {default} Map {map} {grey}| {default} Du {player} {grey}| {default} Modus {mode} {grey}| {default} Styles {styles}"
 	}
 }

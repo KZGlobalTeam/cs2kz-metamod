@@ -27,6 +27,7 @@
 		"ua"		"{grey}Світові рекорди на мапі {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"sv"		"{grey}Globala Rekord på {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"lv"  		"{grey}Globālie rekordi kartē {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"de"		"{grey}Globale Rekorde auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"No Times"
 	{

@@ -35,11 +35,13 @@
 		"en"	"{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
 		"chi"	"{grey}使用 {default}/jstier {grey}设置显示你的跳跃数据的最低等级."
 		"ua"	"{grey}Використання {default}/jstier {grey}, щоб встановити мінімальний тір статистики стрибків."
+		"de"	"{grey}Benutze {default}/jstier {grey} um dein minimales Level für Jumpstat-Benachrichtigungen zu setzen."
 	}
 	"Tip - kz_jsextend"
 	{
 		"en"	"{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
 		"chi"	"{grey}使用 {default}/jsextend {grey}可以切换是否在聊天框展示详细跳跃数据."
 		"ua"	"{grey}Використання {default}/jsextend {grey}, щоб увімк./вимк. розширену статистику стрибків у чаті."
+		"de"	"{grey}Benutze {default}/jsextend {grey}um erweitertes Jumpstats-Feedback im Chat zu erhalten.."
 	}
 }

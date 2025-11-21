@@ -27,6 +27,7 @@
 		"sv"		"{lime}Menyer är nu tillgängliga via dina radiokommandon, eller {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} konsolkommandon!"
 		"ko"		"{lime}라디오키를 사용하거나, 콘솔에 {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} 를 입력하여 메뉴를 사용할 수 있습니다!"
 		"lv"		"{lime}{lime}Menu tagad ir pieejams, izmantojot radio taustiņu īsceļus vai {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} konsoles komandas!"
+		"de"		"{lime}Menüs sind jetzt über deine Radio-Hotkeys oder die Konsolenbefehle {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} verfügbar!"
 	}
 
 	"Language Change - Manual Menu Change Required"
@@ -37,5 +38,6 @@
 		"sv"		"{yellow}Vänligen återanslut till servern för att tillämpa ändringar i menyn."
 		"ko"		"{yellow}서버에 재 접속하시면 변경된 설정이 적용됩니다."
 		"lv"		"{yellow}Lūdzu, pārslēdzies atpakaļ uz serveri, lai piemērotu izvēlnes izmaiņas."
+		"de"		"{yellow}Bitte verbinde dich erneut mit dem Server, um die Änderungen am Menü zu übernehmen."
 	}
 }

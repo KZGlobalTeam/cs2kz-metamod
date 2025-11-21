@@ -11,6 +11,7 @@
 		"es"		"{grey}No tiene un recorrido actual. ¡Mire la consola para ver una lista de los recorridos disponibles!"
 		"fi"		"{grey}Sinulla ei ole valittua rataa. Tarkista konsolista valittavien ratojen lista."
 		"lv"		"{grey}Tev nav aktīva trases. Pārbaudi konsoli, lai redzētu pieejamo trašu sarakstu!"
+		"de"		"{grey}Du hast derzeit keine Route ausgewählt. Überprüfe die Konsole für eine Liste verfügbarer Routen!"
 	}
 	"Current Course"
 	{
@@ -24,6 +25,7 @@
 		"es"		"{grey}Su recorrido actual es {default}{course}{grey}. ¡Mire la consola para ver una lista de los recorridos disponibles!"
 		"fi"		"{grey}Sinun valittu rata on {default}{course}{grey}. Tarkista konsolista valittavien ratojen lista."
 		"lv"		"{grey}Tava pašreizējā trase ir {default}{course}{grey}. Pārbaudi konsoli, lai redzētu pieejamo trašu sarakstu!"
+		"de"		"{grey}Deine derzeitige Route ist {default}{course}{grey}. Überprüfe die Konsole für eine Liste verfügbarer Routen!"
 	}
 	"Course List Header"
 	{
@@ -36,5 +38,6 @@
 		"es"		"Lista de recorridos disponibles (usa kz_r <nombre del recorrido> para teleportarte a un recorrido):"
 		"fi"		"Valittavien ratojen lista (käytä kz_r <course name> teleporttaaksesi radalle): "
 		"lv"		"Pieejamo trašu saraksts (izmanto kz_r <trases nosaukums>, lai teleportētos uz trasi):"
+		"de"		"Liste aller verfügbaren Routen (benutze kz_r <Routenname> für Teleport zur Route):"
 	}
 }
