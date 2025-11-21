@@ -64,10 +64,11 @@ void KZPistolService::UpdatePistol()
 		}
 		return;
 	}
-	if (this->HasCorrectPistolEquipped())
-	{
-		return;
-	}
+
+	// if another plugin modifies weapons they may be in a bad state
+	// just force remove everything and always regive weapons
+	this->player->GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
+
 	const PistolInfo_t &pistol = pistols[preferredPistol];
 	i32 originalTeam = player->GetController()->m_iTeamNum();
 	i32 otherTeam = originalTeam == CS_TEAM_CT ? CS_TEAM_T : CS_TEAM_CT;
@@ -107,7 +108,6 @@ void KZPistolService::UpdatePistol()
 			}
 		}
 	}
-	this->player->GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
 	auto knife = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
 		this->player->GetController()->m_iTeamNum == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
 	if (switchTeam)
@@ -120,25 +120,6 @@ void KZPistolService::UpdatePistol()
 	{
 		player->GetPlayerPawn()->m_iTeamNum(originalTeam);
 	}
-}
-
-bool KZPistolService::HasCorrectPistolEquipped()
-{
-	if (!player->IsAlive() || !player->IsInGame())
-	{
-		return false;
-	}
-
-	auto weapons = player->GetPlayerPawn()->m_pWeaponServices()->m_hMyWeapons();
-	FOR_EACH_VEC(*weapons, i)
-	{
-		CBaseModelEntity *weapon = (*weapons)[i].Get();
-		if (KZ_STREQI(weapon->GetClassname(), pistols[preferredPistol].className))
-		{
-			return true;
-		}
-	}
-	return false;
 }
 
 bool KZPistolService::NeedWeaponStripping()
