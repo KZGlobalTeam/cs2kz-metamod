@@ -126,8 +126,6 @@ void KZGlobalService::Init()
 		url += "auth/cs2";
 	}
 
-	ix::initNetSystem();
-
 	KZGlobalService::socket = new ix::WebSocket();
 	KZGlobalService::socket->setUrl(url);
 
@@ -165,8 +163,6 @@ void KZGlobalService::Cleanup()
 	}
 
 	KZGlobalService::state.store(KZGlobalService::State::Uninitialized);
-
-	ix::uninitNetSystem();
 }
 
 void KZGlobalService::OnServerGamePostSimulate()
