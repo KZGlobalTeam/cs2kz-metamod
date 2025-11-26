@@ -67,6 +67,7 @@
 		//"port"			"3306"
 	}
 
-	"apiUrl"	"https://api.cs2kz.org"
-	"apiKey"	""
+
+	"racingCoordinatorUrl"		""
+	"racingSecret"				""
 }
