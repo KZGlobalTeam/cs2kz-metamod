@@ -42,8 +42,6 @@ void KZRacingService::Init()
 		return;
 	}
 
-	ix::initNetSystem();
-
 	KZRacingService::socket = std::make_unique<ix::WebSocket>();
 	KZRacingService::socket->setUrl(url);
 	KZRacingService::socket->setExtraHeaders({{"Authorization", std::string("Bearer ") + key}});
@@ -60,8 +58,6 @@ void KZRacingService::Cleanup()
 		KZRacingService::socket->stop();
 		KZRacingService::state.store(KZRacingService::State::Disconnected);
 		KZRacingService::socket.reset(nullptr);
-
-		ix::uninitNetSystem();
 	}
 
 	{
