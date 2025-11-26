@@ -112,7 +112,7 @@ def configure_main(sdk_target, sdk, cxx):
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
 
-    os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
+  os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'jump_reporting.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'jump_validating.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'prefs.cpp'),
@@ -126,7 +126,13 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'pistol', 'kz_pistol.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'kz_profile.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
+
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'coordinator.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'events.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'map.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'serializer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'ui.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'item.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'jumpstats.cpp'),

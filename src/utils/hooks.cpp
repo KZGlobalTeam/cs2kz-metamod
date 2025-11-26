@@ -28,6 +28,7 @@
 #include "kz/pistol/kz_pistol.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/racing/kz_racing.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "sdk/usercmd.h"
@@ -743,6 +744,7 @@ static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimula
 	ProcessTimers();
 	KZRecordingService::ProcessFileWriteCompletion();
 	KZGlobalService::OnServerGamePostSimulate();
+	KZRacingService::OnServerGamePostSimulate();
 }
 
 static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg)

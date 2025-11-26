@@ -25,6 +25,29 @@ public:
 		return this->inner.dump();
 	}
 
+	bool ContainsKey(const std::string &key) const
+	{
+		if (!this->inner.is_object())
+		{
+			META_CONPRINTF("[JSON] Cannot extract value from non-object.\n");
+			return false;
+		}
+
+		if (!this->inner.contains(key))
+		{
+			META_CONPRINTF("[JSON] Key `%s` does not exist.\n", key.c_str());
+			return false;
+		}
+
+		if (this->inner[key].is_null())
+		{
+			META_CONPRINTF("[JSON] Key `%s` is null.\n", key.c_str());
+			return false;
+		}
+
+		return true;
+	}
+
 	template<typename T>
 	bool Set(const std::string &key, const T &value)
 	{
@@ -101,6 +124,17 @@ public:
 	}
 
 	bool Set(const std::string &key, const u64 &value)
+	{
+		if (!this->inner.is_object())
+		{
+			return false;
+		}
+
+		this->inner[key] = value;
+		return true;
+	}
+
+	bool Set(const std::string &key, const f32 &value)
 	{
 		if (!this->inner.is_object())
 		{
@@ -289,6 +323,23 @@ public:
 		return true;
 	}
 
+	bool Get(const std::string &key, f32 &out) const
+	{
+		if (!this->ContainsKey(key))
+		{
+			return false;
+		}
+
+		if (!this->inner[key].is_number_float())
+		{
+			META_CONPRINTF("[JSON] Key `%s` is not a float.\n", key.c_str());
+			return false;
+		}
+
+		out = this->inner[key];
+		return true;
+	}
+
 	bool Get(const std::string &key, f64 &out) const
 	{
 		if (!this->ContainsKey(key))
@@ -389,27 +440,4 @@ private:
 	nlohmann::json inner;
 
 	Json(nlohmann::json json) : inner(json) {}
-
-	bool ContainsKey(const std::string &key) const
-	{
-		if (!this->inner.is_object())
-		{
-			META_CONPRINTF("[JSON] Cannot extract value from non-object.\n");
-			return false;
-		}
-
-		if (!this->inner.contains(key))
-		{
-			META_CONPRINTF("[JSON] Key `%s` does not exist.\n", key.c_str());
-			return false;
-		}
-
-		if (this->inner[key].is_null())
-		{
-			META_CONPRINTF("[JSON] Key `%s` is null.\n", key.c_str());
-			return false;
-		}
-
-		return true;
-	}
 };
