@@ -1,0 +1,81 @@
+"Phrases"
+{
+	"Racing - Race Countdown"
+	{
+		"#format"	"time:d"
+		"en"		"{yellow} Race is starting in {time} seconds!"
+	}
+	"Racing - Player Forfeit"
+	{
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} has surrendered!"
+	}
+	"Racing - Player Finish (1 Teleport)"
+	{
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} has finished the race in {time}! [{yellow}1{grey} TP]"
+	}
+	"Racing - Player Finish (2+ Teleports)"
+	{
+		"#format"	"player:s,time:s,teleport_count:d"
+		"en"		"{lime}{player}{grey} has finished the race in {time}! [{yellow}{teleport_count}{grey} TPs]"
+	}
+	"Racing - Player Finish (PRO)"
+	{
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} has finished the race in {time}! [{blue}PRO{grey}]"
+	}
+	"Racing - End Results Header"
+	{
+		"en"		"{default}Race Results:"
+	}
+	"Racing - End Results First Place"
+	{
+		// Alice has won the race! (00:45.32)
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} has won the race! ({time})"
+	}
+	"Racing - End Results Last Place"
+	{
+		// Bob came last in the race. (01:30.45)
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} came last in the race. ({time})"
+	}
+	"Racing - End Results Finisher"
+	{
+		// Charlie finished #2 in the race. (00:55.12)
+		"#format"	"position:d,player:s,time:s"
+		"en"		"{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
+	}
+	"Racing - End Results Non-Finisher"
+	{
+		// Dave did not finish the race.
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} did not finish the race."
+	}
+	"Racing - No Time Limit"
+	{
+		"en"		"No time limit"
+	}
+	"Racing - Time Limit"
+	{
+		"#format"	"time:s"
+		"en"		"Time limit: {time}"
+	}
+	"Racing - Race Info"
+	{
+		// Race on kz_map - Course Main
+		// CKZ - Max TPs : 2 - Time limit : 01:30.00
+		"#format"	"map:s,course:s,mode:s,teleport_count:d,time_limit:s"
+		"en"		"Race on {map} - Course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
+	}
+	"Racing - Go!"
+	{
+		"en"		"GO!"
+	}
+	"Racing - Race Starting In"
+	{
+		"#format"	"time:d"
+		"en"		"Race starting in {time}s!"
+	}
+}
