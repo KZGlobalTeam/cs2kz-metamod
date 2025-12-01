@@ -173,7 +173,22 @@ void KZRacingService::OnPlayerForfeit(const KZ::racing::events::PlayerForfeit &p
 
 void KZRacingService::OnPlayerFinish(const KZ::racing::events::PlayerFinish &playerFinish)
 {
-	KZLanguageService::PrintChatAll(false, "Racing - Player Finish", playerFinish.player.name.c_str(), playerFinish.time, playerFinish.teleportsUsed);
+	CUtlString timeStr = utils::FormatTime(playerFinish.time);
+	if (playerFinish.teleportsUsed > 1)
+	{
+		KZLanguageService::PrintChatAll(false, "Racing - Player Finish (2+ Teleports)", playerFinish.player.name.c_str(), timeStr.Get(),
+										playerFinish.teleportsUsed);
+	}
+	else if (playerFinish.teleportsUsed == 1)
+	{
+		KZLanguageService::PrintChatAll(false, "Racing - Player Finish (1 Teleport)", playerFinish.player.name.c_str(), timeStr.Get(),
+										playerFinish.teleportsUsed);
+	}
+	else
+	{
+		KZLanguageService::PrintChatAll(false, "Racing - Player Finish (PRO)", playerFinish.player.name.c_str(), timeStr.Get(),
+										playerFinish.teleportsUsed);
+	}
 }
 
 void KZRacingService::OnRaceEnd(const KZ::racing::events::RaceEnd &raceEnd)
@@ -211,18 +226,15 @@ void KZRacingService::OnRaceResult(const KZ::racing::events::RaceResult &raceRes
 		{
 			if (position == 1)
 			{
-				KZLanguageService::PrintChatAll(false, "Racing - End Results First Place", finisher.player.name.c_str(), finisher.time,
-												finisher.teleportsUsed);
+				KZLanguageService::PrintChatAll(false, "Racing - End Results First Place", finisher.player.name.c_str(), finisher.time);
 			}
 			else if (position == finishers.size())
 			{
-				KZLanguageService::PrintChatAll(false, "Racing - End Results Last Place", position, finisher.player.name.c_str(), finisher.time,
-												finisher.teleportsUsed);
+				KZLanguageService::PrintChatAll(false, "Racing - End Results Last Place", finisher.player.name.c_str(), finisher.time);
 			}
 			else
 			{
-				KZLanguageService::PrintChatAll(false, "Racing - End Results Finisher", position, finisher.player.name.c_str(), finisher.time,
-												finisher.teleportsUsed);
+				KZLanguageService::PrintChatAll(false, "Racing - End Results Finisher", position, finisher.player.name.c_str(), finisher.time);
 			}
 			position++;
 		}
@@ -247,15 +259,32 @@ void KZRacingService::BroadcastRaceInfo()
 	{
 		case RaceInfo::RACE_INIT:
 		{
-			// clang-format off
-			KZLanguageService::PrintAlertAll(false, "Racing - Race Info",
-				KZRacingService::currentRace.data.raceInfo.mapName.c_str(),
-				KZRacingService::currentRace.data.raceInfo.courseName.c_str(),
-				KZRacingService::currentRace.data.raceInfo.modeName.c_str(),
-				KZRacingService::currentRace.data.raceInfo.maxTeleports,
-				KZRacingService::currentRace.data.raceInfo.duration
-			);
-			// clang-format on
+			// Broadcast the race info to all players.
+			for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+			{
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+				if (player)
+				{
+					std::string timeLimitString;
+					if (KZRacingService::currentRace.data.raceInfo.duration > 0.0f)
+					{
+						auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.raceInfo.duration);
+						timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
+					}
+					else
+					{
+						timeLimitString = player->languageService->PrepareMessage("Racing - No Time Limit");
+					}
+					// clang-format off
+					player->languageService->PrintAlert(false, false, "Racing - Race Info",
+														KZRacingService::currentRace.data.raceInfo.mapName.c_str(),
+														KZRacingService::currentRace.data.raceInfo.courseName.c_str(),
+														KZRacingService::currentRace.data.raceInfo.modeName.c_str(),
+														KZRacingService::currentRace.data.raceInfo.maxTeleports,
+														timeLimitString.c_str());
+					// clang-format on
+				}
+			}
 			break;
 		}
 		case RaceInfo::RACE_ONGOING:
@@ -339,6 +368,11 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 	}
 	// Can't start before the earliest start tick.
 	if (g_pKZUtils->GetServerGlobals()->tickcount < KZRacingService::currentRace.earliestStartTick)
+	{
+		return false;
+	}
+	// Styles are not supported.
+	if (this->player->styleServices.Count() > 0)
 	{
 		return false;
 	}
