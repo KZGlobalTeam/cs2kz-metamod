@@ -11,6 +11,7 @@
 		"es"		"{darkred}Atención{grey}: Actualmente no estás autenticado con Steam. Tu carrera podría no guardarse. Escribe {default}!pc{grey} para comprobar tu estado de autenticación actual."
 		"fi"		"{darkred}Varoitus{grey}: Sinä et ole autentikoitu Steamin kanssa. Suoritusta ei välttämättä tallenneta. Kirjoita {default}!pc{grey} tarkistaaksesi nykyisen autentikointi statuksen."
 		"lv"		"{darkred}Brīdinājums{grey}: Tu neesi autentificējies ar Steam. Tavs skrējiens var netikt saglabāts. Ieraksti {default}!pc{grey}, lai pārbaudītu savu pašreizējo autentifikācijas statusu."
+		"de"		"{darkred}Warning{grey}: Du bist derzeit nicht bei Steam authentifiziert. Dein Lauf wird möglicherweise nicht gespeichert. Tippe {default}!pc{grey}, um deinen aktuellen Authentifizierungsstatus zu überprüfen.."
 	}
 	"No Prime Warning"
 	{
@@ -22,6 +23,7 @@
 		"fi"		"{darkred}Varoitus{grey}: Sinulla ei ole Prime Status -päivitystä. Tulostasi ei tallenneta maailmanlaajuisesti."
 		"ko"		"{darkred}경고{grey}: 프라임 계정이 아닙니다. 공식 기록이 저장되지 않습니다."
 		"lv"		"{darkred}Brīdinājums{grey}: Tev nav Prime Status jauninājuma. Tavs skrējiens globāli netiks saglabāts."
+		"de"		"{darkred}Warnung{grey}: Du hast keinen Prime-Status. Dein Run wird nicht global gespeichert."
 	}
 	"Player Authenticated (Steam)"
 	{
@@ -35,6 +37,7 @@
 		"es"		"{grey}El jugador {default}{player}{grey} está autenticado con Steam."
 		"fi"		"{grey}Pelaajaa {default}{player}{grey} on autentikoitu Steamin kanssa."
 		"lv"		"{grey}Spēlētājs {default}{player}{grey} ir autentificēts ar Steam."
+		"de"		"{grey}Spieler {default}{player}{grey} is bei Steam authentifiziert."
 	}
 	"Player Not Authenticated (Steam)"
 	{
@@ -48,6 +51,7 @@
 		"es"		"{grey}El jugador {default}{player}{grey} está actualmente {yellow}no{grey} autenticado con Steam."
 		"fi"		"{grey}Pelaajaa {default}{player}{grey} {yellow}ei ole{grey} autentikoitu Steamin kanssa."
 		"lv"		"{grey}Spēlētājs {default}{player}{grey} pašlaik {yellow}nav{grey} autentificēts ar Steam."
+		"de"		"{grey}Spieler {default}{player}{grey} ist derzeit {yellow}nicht{grey} bei Steam authentifiziert."
 	}
 	"Error Message (Player Not Found)"
 	{
@@ -65,6 +69,7 @@
 		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\"."
 		"ko"		"{darkred}\"{player}\" 해당 플레이어를 찾을 수 없습니다."
 		"lv"		"{darkred}Neizdevās atrast spēlētāju ar vārdu \"{player}\"."
+		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\" finden."
 	}
 	"Command Cooldown"
 	{
@@ -73,5 +78,6 @@
 		"ru"		"{grey}Пожалуйста, подождите, прежде чем использовать эту команду снова."
 		"sv"		"{grey}Vänligen vänta innan du använder kommandot igen."
 		"ua"		"{grey}Будь ласка, зачекайте, перш ніж використовувати цю команду знову."
+		"de"		"{grey}Bitte warte, bevor du diesen Befehl erneut verwendest."
 	}
 }
