@@ -289,7 +289,7 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	// Add to all active jump recorders.
 	this->PushToRecorders(rpJump, RecorderType::Jump);
 	// Create a new jump recorder if the jump is good enough.
-	if (jump->IsValid()
+	if (jump->IsValid() && jump->GetOffset() >= -JS_EPSILON
 		&& jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= kz_replay_recording_min_jump_tier.Get())
 	{
 		this->jumpRecorders.push_back(JumpRecorder(jump));
