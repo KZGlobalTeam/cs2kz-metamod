@@ -45,12 +45,12 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	DistanceTier minTier = static_cast<DistanceTier>(
 		target->optionService->GetPreferenceInt("jsMinTier", KZOptionService::GetOptionInt("defaultJSMinTier", DistanceTier_Impressive)));
-	if (minTier == DistanceTier_None || color < minTier)
+	if (!target->optionService->GetPreferenceBool("jsAlways", false) && (minTier == DistanceTier_None || color < minTier))
 	{
 		return;
 	}
 	const char *jumpColor = distanceTierColors[color];
-	if (jump->GetOffset() <= -JS_EPSILON || !jump->IsValid())
+	if (jump->GetOffset() <= -JS_EPSILON || !jump->IsValid() || target->optionService->GetPreferenceBool("jsAlways", false))
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
 	}
@@ -254,7 +254,8 @@ void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool br
 	DistanceTier soundMinTier =
 		broadcast ? static_cast<DistanceTier>(target->optionService->GetPreferenceInt("jsBroadcastSoundMinTier", DistanceTier_Godlike))
 				  : static_cast<DistanceTier>(target->optionService->GetPreferenceInt("jsSoundMinTier", DistanceTier_Impressive));
-	if (soundMinTier > tier || tier <= DistanceTier_Meh || soundMinTier == DistanceTier_None)
+	if (soundMinTier > tier || tier <= DistanceTier_Meh || soundMinTier == DistanceTier_None
+		|| target->optionService->GetPreferenceBool("jsAlways", false))
 	{
 		return;
 	}
@@ -295,7 +296,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player has broadcasting enabled, we show a brief summary in chat and play a sound.
 		else
 		{
-			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->optionService->GetPreferenceBool("jsAlways", false))
+			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()))
 			{
 				continue;
 			}
