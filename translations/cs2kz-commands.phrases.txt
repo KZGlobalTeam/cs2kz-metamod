@@ -538,12 +538,12 @@
 		"sv"        "Ange miniminivån för jumpstats-ljudsändning."
 		"de"		"Setze minimales Jumpstats-Soundlevel für fremde Jumpstats im Chat."
     }
-	"Command Description - kz_jsbroadcastsoundconsole"
+	"Command Description - kz_jsbroadcastconsole"
 	{
-		"en"		"Set the minimum tier for jumpstats console sound broadcast."
+		"en"		"Set the minimum tier for jumpstats console broadcast."
 		"chi"		"设置在控制台广播跳跃数据的最低等级."
-		"ua"		"Встановити мінімальний тір для трансляції звукових ефектів стрибків у консолі."
-		"de"		"Setze dein minimales Jumpstats-Soundlevel für fremde Jumpstats in der Konsole."
+		"ua"		"Встановити мінімальний тір статистики стрибків для трансляції в консолі."
+		"de"		"Setze dein minimales Jumpstats-Level für fremde Jumpstats in der Konsole."
 	}
 	"Command Description - kz_jsextend"
 	{
