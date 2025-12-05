@@ -15,9 +15,25 @@ on:
       - 'scripts/**'
 
 jobs:
-  check-quotes:
-    name: Check quotes in translations
+  lint-translations:
+    name: Lint Translation Files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: ./scripts/check-quotes.sh
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Run translation linter
+        run: python scripts/check_translations.py translations
+
+      - name: Upload linter results
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: translation-lint-results
+          path: translations/
+          retention-days: 7
