@@ -30,7 +30,7 @@
 		"chi"		"{grey}用法: {default}kz_beamoffset <x> <y> <z>"
 		"sv"		"{grey}Användning: {default}kz_beamoffset <x> <y> <z>"
 		"ua"		"{grey}Використання: {default}kz_beamoffset <x> <y> <z>"
-		"en"		"{grey}Verwendung: {default}kz_beamoffset <x> <y> <z>"
+		"de"		"{grey}Verwendung: {default}kz_beamoffset <x> <y> <z>"
 	}
 	"Beam Command Usage"
 	{

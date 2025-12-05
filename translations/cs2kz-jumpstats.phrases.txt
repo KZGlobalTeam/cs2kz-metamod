@@ -717,7 +717,6 @@
 		"ko"		"{grey}점프 통계 사운드 효과 임계값이 이제 {default}{tier}로 설정되었습니다."
 		"es"		"{grey}El límite de efectos de sonidos de estadísticas de salto es ahora {default}{tier}."
 		"lv"		"{grey}Lēcienu statistikas skaņas efekta slieksnis tagad ir {default}{tier}."
-		"de"		"{grey}Schwellwert für Jumpstats-Sounds ist nun {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"

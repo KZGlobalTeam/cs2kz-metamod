@@ -48,7 +48,7 @@
 		"sv"		"Namn"
 		"ua"		"Назва"
 		"lv"		"Nosaukums"
-		"en"		"Name"
+		"de"		"Name"
 	}
 	"Command List Header - Description"
 	{
@@ -66,7 +66,7 @@
 		"sv"		"Checkpointkommandon:"
 		"ua"		"Команди Чекпоінтів:"
 		"lv"		"Checkpoint Komandas:"
-		"en"		"Checkpoint-Befehle:"
+		"de"		"Checkpoint-Befehle:"
 	}
 	"Command List - Record"
 	{
@@ -227,7 +227,6 @@
 		"de"		"Teleport rückgängig machen."
 		"ko"		"텔레포트를 취소합니다."
 		"lv"		"Atcelt teleportēšanu."
-		"de"		"Teleport rückgängig machen."
 	}
 	"Command Description - kz_checkpoint"
 	{
