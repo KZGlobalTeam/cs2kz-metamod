@@ -28,12 +28,19 @@ jobs:
           python-version: '3.11'
 
       - name: Run translation linter
-        run: python scripts/check_translations.py translations
+        id: lint
+        run: |
+          python scripts/check_translations.py translations 2>&1 | tee translation-lint-results.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
 
       - name: Upload linter results
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: translation-lint-results
-          path: translations/
-          retention-days: 7
+          name: translation-lint-results.txt
+          path: translation-lint-results.txt
+          retention-days: 30
+
+      - name: Check for errors
+        if: steps.lint.outputs.exit_code != '0'
+        run: exit 1
