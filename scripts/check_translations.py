@@ -631,8 +631,6 @@ class TranslationLinter:
 
         report_content = output.getvalue()
 
-        print(report_content)
-
         if output_file:
             try:
                 with open(output_file, "w", encoding="utf-8") as f:
