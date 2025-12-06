@@ -351,7 +351,7 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"pl"		"Ustaw własną pozycję startową."	
+		"pl"		"Ustaw własną pozycję startową."
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 		"sv"		"Skapa ny startposition på nuvarande position."
 		"ua"		"Встановити поточну позицію як стартову."
@@ -366,7 +366,7 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"pl"		"Ustaw własną pozycję startową."	
+		"pl"		"Ustaw własną pozycję startową."
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 		"sv"		"Skapa ny startposition på nuvarande position."
 		"ua"		"Встановити поточну позицію як стартову."
@@ -381,7 +381,7 @@
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"pl"		"Usuń własną pozycję startową."	
+		"pl"		"Usuń własną pozycję startową."
 		"fi"		"Tyhjennä custom aloituspisteesi."
 		"sv"		"Rensa justerad startposition."
 		"ua"		"Очистити власну стартову позицію."
@@ -396,7 +396,7 @@
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"pl"		"Usuń własną pozycję startową."	
+		"pl"		"Usuń własną pozycję startową."
 		"fi"		"Tyhjennä custom aloituspisteesi."
 		"sv"		"Rensa justerad startposition."
 		"ua"		"Очистити власну стартову позицію."
@@ -427,7 +427,7 @@
 	{
 		"en"		"Toggle centre panel display."
 		"chi"		"切换中心面板的显示."
-		"pl"		"Wyświetlanie panelu środkowego."	
+		"pl"		"Wyświetlanie panelu środkowego."
 		"fi"		"Vaihda keskipaneelin näyttämisen asetusta."
 		"sv"		"Toggla mittpanelen."
 		"ua"		"Перемикання відображення центральної панелі."
@@ -442,7 +442,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."	
+		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."
 		"fi"		"Muuta muiden pelaajien chatissä näkyvien jumpstattien minimi kynnysarvoa."
 		"sv"		"Ändra minimigräns för sändning av andra spelares jumpstat."
 		"ua"		"Змінити мінімальний поріг стрибків інших гравців для відображення в чаті."
@@ -457,7 +457,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for sound effects."
 		"chi"		"更改播放跳跃提示音的最小阈值."
-		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."	
+		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."
 		"fi"		"Muuta jumpstattien äänitehosteiden minimi kynnysarvoa."
 		"sv"		"Ändra minimigräns för ljudeffekter av jumpstats."
 		"ua"		"Змінити мінімальний поріг для звукових ефектів під час стрибків."
@@ -472,7 +472,7 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换是否显示起跳提示报告"
-		"pl"		"Przełącz wykaz jumpstatów."	
+		"pl"		"Przełącz wykaz jumpstatów."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
@@ -487,7 +487,7 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换是否显示起跳提示报告"
-		"pl"		"Przełącz wykaz jumpstatów."	
+		"pl"		"Przełącz wykaz jumpstatów."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
@@ -502,7 +502,7 @@
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换是否总是显示跳跃数据"
-		"pl"		"Zawsze pokazuj jumpstaty."	
+		"pl"		"Zawsze pokazuj jumpstaty."
 		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla alla (egna) jumpstats i chatten."
 		"ua"		"Перемикання відображення статистики для будь-яких стрибків."
@@ -564,7 +564,7 @@
 	{
 		"en"		"List or change mode."
 		"chi"		"列出或更改模式."
-		"pl"		"Lista trybów gry bądź jego zmiana."	
+		"pl"		"Lista trybów gry bądź jego zmiana."
 		"fi"		"Listaa tai vaihda moodia."
 		"sv"		"Lista eller ändra KZ mode."
 		"ua"		"Відобразити чи змінити KZ режим."
@@ -579,7 +579,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."	
+		"pl"		"Włącz lub wyłącz noclipa."
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
@@ -594,7 +594,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."	
+		"pl"		"Włącz lub wyłącz noclipa."
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
@@ -609,7 +609,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."	
+		"pl"		"Włącz lub wyłącz noclipa."
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
@@ -743,7 +743,7 @@
 	{
 		"en"		"Stop timer."
 		"chi"		"停止计时."
-		"pl"		"Wyłącz timer."	
+		"pl"		"Wyłącz timer."
 		"fi"		"Pysäytä ajastin."
 		"sv"		"Stoppa timer."
 		"ua"		"Зупинити таймер."
@@ -758,7 +758,7 @@
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"pl"		"Przełącz pauzę timera."	
+		"pl"		"Przełącz pauzę timera."
 		"fi"		"Vaihda ajastimen keskeytyksen asetusta."
 		"sv"		"Pausa timer."
 		"ua"		"Перемикання таймера на паузу."
@@ -773,7 +773,7 @@
 	{
 		"en"		"Toggle tips."
 		"chi"		"开关提示."
-		"pl"		"Włącz lub wyłącz wskazówki."	
+		"pl"		"Włącz lub wyłącz wskazówki."
 		"fi"		"Vaihda vihjeiden asetusta."
 		"sv"		"Toggla tips."
 		"ua"		"Перемикання відображення підказок."
@@ -788,7 +788,7 @@
 	{
 		"en"		"Hide your legs in first person."
 		"chi"		"在第一人称中隐藏腿部."
-		"pl"		"Ukryj nogi w pierwszej osobie."	
+		"pl"		"Ukryj nogi w pierwszej osobie."
 		"fi"		"Piilota omat jalkasi ensimmäisessä persoonassa."
 		"sv"		"Toggla egna bens synlighet i första person."
 		"ua"		"Приховати свої ноги від першої особи."
@@ -803,7 +803,7 @@
 	{
 		"en"		"Hide other players."
 		"chi"		"隐藏其他的玩家."
-		"pl"		"Ukryj innych graczy."	
+		"pl"		"Ukryj innych graczy."
 		"fi"		"Piilota muut pelaajat."
 		"sv"		"Dölj/visa andra spelare."
 		"ua"		"Приховати інших гравців."
@@ -818,7 +818,7 @@
 	{
 		"en"		"Restart."
 		"chi"		"重新开始."
-		"pl"		"Restart."	
+		"pl"		"Restart."
 		"fi"		"Aloita alusta."
 		"sv"		"Starta om."
 		"ua"		"Рестарт."

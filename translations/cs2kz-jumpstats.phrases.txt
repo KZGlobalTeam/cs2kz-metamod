@@ -345,7 +345,7 @@
 		"de"		"Verlust"
 		"ko"		"손실"
 		"es"		"Pérdida"
-		"lv"		"Loss"	
+		"lv"		"Loss"
 	}
 	"Average Gain (Short)"
 	{

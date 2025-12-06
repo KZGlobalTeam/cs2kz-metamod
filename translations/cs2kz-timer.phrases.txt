@@ -230,7 +230,7 @@
 	"Can't Pause (Just Landed)"
 	{
 		"en"		"{darkred}You can't pause because you just landed."
-		"chi"		"{darkred}你不能暂停, 因为你还没有站稳."	
+		"chi"		"{darkred}你不能暂停, 因为你还没有站稳."
 		"ru"		"{darkred}Вы не можете поставить паузу после приземления."
 		"pl"		"{darkred}Nie możesz zapauzować, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi keskeyttää ajastinta, sillä laskeuduit juuri."
