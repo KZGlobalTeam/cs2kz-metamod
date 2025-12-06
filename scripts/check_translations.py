@@ -153,7 +153,7 @@ class TranslationLinter:
         self.issues: list[Issue] = []
         self.all_phrase_blocks: dict[str, list[PhraseBlock]] = {}
         self.ignore_trackers: dict[str, IgnoreTracker] = {}
-        self.global_languages: set[str] = set()  # All languages used across all files
+        self.global_languages: set[str] = set()
 
     def _add_issue(self, filename: str, line: int, issue_type: str,
                    category: str, message: str, context: Optional[str] = None) -> None:
@@ -179,6 +179,31 @@ class TranslationLinter:
             if tag.lower() not in self.KNOWN_COLOR_TAGS and not tag.startswith("#")
         }
 
+    def _strip_strings_from_line(self, line: str) -> str:
+        """Remove quoted strings from a line, preserving structure for brace matching.
+        
+        """
+        result = []
+        i = 0
+        in_string = False
+        
+        while i < len(line):
+            char = line[i]
+            
+            if char == '\\' and in_string and i + 1 < len(line):
+                i += 2
+                continue
+            elif char == '"':
+                in_string = not in_string
+                i += 1
+                continue
+            elif not in_string:
+                result.append(char)
+            
+            i += 1
+        
+        return ''.join(result)
+
     def lint_all(self) -> list[Issue]:
         """Lint all cs2kz-*.phrases.txt files in the translations directory."""
         if not self.translations_dir.exists():
@@ -197,9 +222,7 @@ class TranslationLinter:
         for filepath in files:
             self.lint_file(filepath)
 
-        # Collect all languages used globally
         self._collect_global_languages()
-
         self._check_language_consistency()
 
         return self.issues
@@ -238,11 +261,8 @@ class TranslationLinter:
 
         self.ignore_trackers[filepath.name] = IgnoreTracker(lines)
 
-        # Parse phrases first to know valid placeholders
         phrase_blocks = self._parse_phrases(filepath.name, lines)
         self.all_phrase_blocks[filepath.name] = phrase_blocks
-
-        # Now check format issues with knowledge of all phrase blocks
         self._check_format_issues(filepath.name, lines, phrase_blocks)
         self._check_phrase_blocks(filepath.name, phrase_blocks)
 
@@ -280,7 +300,6 @@ class TranslationLinter:
     def _check_format_issues(self, filename: str, lines: list[str], phrase_blocks: list[PhraseBlock]) -> None:
         """Check for general formatting issues."""
         brace_stack = []
-        in_string = False
         prev_line_empty = False
 
         for line_num, line in enumerate(lines, 1):
@@ -315,26 +334,23 @@ class TranslationLinter:
             else:
                 prev_line_empty = False
 
-            for i, char in enumerate(stripped):
-                if char == '"':
-                    in_string = not in_string
-                elif not in_string:
-                    if char == '{':
-                        brace_stack.append((line_num, '{'))
-                    elif char == '}':
-                        if not brace_stack:
-                            self._add_issue(
-                                filename, line_num, "error", "Syntax",
-                                "Unmatched closing brace '}'",
-                                stripped[:60]
-                            )
-                        else:
-                            brace_stack.pop()
+            stripped_no_strings = self._strip_strings_from_line(stripped)
+            
+            for char in stripped_no_strings:
+                if char == '{':
+                    brace_stack.append((line_num, '{'))
+                elif char == '}':
+                    if not brace_stack:
+                        self._add_issue(
+                            filename, line_num, "error", "Syntax",
+                            "Unmatched closing brace '}'",
+                            stripped[:60]
+                        )
+                    else:
+                        brace_stack.pop()
 
-            quote_count = stripped.count('"')
-            escaped_quotes = stripped.count('\\"')
-            effective_quotes = quote_count - escaped_quotes
-            if effective_quotes % 2 != 0:
+            quote_count = stripped.count('"') - stripped.count('\\"')
+            if quote_count % 2 != 0:
                 self._add_issue(
                     filename, line_num, "warning", "Syntax",
                     "Odd number of quotes - possible unclosed string",
@@ -515,7 +531,7 @@ class TranslationLinter:
     def print_summary(self) -> None:
         """Print a summary of all issues found."""
         if not self.issues:
-            print("✅ No issues found!")
+            print("No issues found!")
             return
 
         by_file: dict[str, list[Issue]] = defaultdict(list)
@@ -543,14 +559,7 @@ class TranslationLinter:
         print("=" * 70)
 
     def generate_missing_languages_report(self, output_file: Optional[str] = None) -> str:
-        """Generate a report of missing language translations using global language set.
-
-        Args:
-            output_file: If provided, write report to this file path.
-
-        Returns:
-            The report content as a string.
-        """
+        """Generate a report of missing language translations using global language set."""
         output = StringIO()
 
         sorted_languages = sorted(self.global_languages)
@@ -566,7 +575,6 @@ class TranslationLinter:
         total_phrases = 0
         phrases_with_missing = 0
 
-        # Track missing count per language globally
         missing_per_language: dict[str, int] = defaultdict(int)
 
         for filename, blocks in sorted(self.all_phrase_blocks.items()):
@@ -579,7 +587,7 @@ class TranslationLinter:
                 if block.ignored:
                     continue
                 if "en" not in block.languages:
-                    continue  # Skip phrases without English
+                    continue
 
                 total_phrases += 1
                 missing = self.global_languages - set(block.languages.keys())
@@ -623,17 +631,15 @@ class TranslationLinter:
 
         report_content = output.getvalue()
 
-        # Print to console
         print(report_content)
 
-        # Write to file if specified
         if output_file:
             try:
                 with open(output_file, "w", encoding="utf-8") as f:
                     f.write(report_content)
-                print(f"\n Missing translations report written to: {output_file}")
+                print(f"\nMissing translations report written to: {output_file}")
             except Exception as e:
-                print(f"\n  Failed to write report to {output_file}: {e}")
+                print(f"\nFailed to write report to {output_file}: {e}")
 
         return report_content
 
