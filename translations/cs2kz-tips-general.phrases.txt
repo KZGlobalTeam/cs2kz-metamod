@@ -141,7 +141,7 @@
 		"chi"	"{grey}访问CS2KZ官方网站以获取最新的地图、记录和服务器: {default}https://cs2kz.org{grey}"
 		"ua"	"{grey}Відвідайте офіційний веб-сайт CS2KZ, щоб ознайомитися з актуальними мапами, рекордами та серверами: {default}https://cs2kz.org{grey}"
 		"sv"	"{grey}Besök den officiella CS2KZ-webbplatsen för uppdaterade kartor, rekord och servrar: {default}https://cs2kz.org{grey}"
-		"en"	"{grey}Besuche die offizielle CS2KZ-Webseite für aktuelle Maps, Rekorde und KZServer: {default}https://cs2kz.org{grey}"
+		"de"	"{grey}Besuche die offizielle CS2KZ-Webseite für aktuelle Maps, Rekorde und KZServer: {default}https://cs2kz.org{grey}"
 	}
 	"Tip - bugs"
 	{
