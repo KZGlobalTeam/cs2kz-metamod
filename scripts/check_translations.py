@@ -90,18 +90,18 @@ class IgnoreTracker:
             # Check for block ignore comments
             if self.IGNORE_START in stripped:
                 in_ignored_block = True
-                self.ignored_lines.add(line_num)  # Ignore the comment line itself
+                self.ignored_lines.add(line_num)
                 continue
 
             if self.IGNORE_END in stripped:
                 in_ignored_block = False
-                self.ignored_lines.add(line_num)  # Ignore the comment line itself
+                self.ignored_lines.add(line_num)
                 continue
 
             # Check for ignore-next comment
             if self.IGNORE_NEXT in stripped and self.IGNORE_START not in stripped:
                 ignore_next = True
-                self.ignored_lines.add(line_num)  # Ignore the comment line itself
+                self.ignored_lines.add(line_num)
                 continue
 
             # If we're in an ignored block, ignore this line
@@ -117,7 +117,6 @@ class IgnoreTracker:
 
             # Check for inline ignore comment
             if self.IGNORE_LINE in stripped:
-                # Make sure it's not part of ignore-start/end/next
                 comment_part = stripped.split("//")[-1] if "//" in stripped else ""
                 if self.IGNORE_LINE in comment_part:
                     if (self.IGNORE_START not in comment_part and
@@ -159,8 +158,8 @@ class TranslationLinter:
     def __init__(self, translations_dir: str = "./translations"):
         self.translations_dir = Path(translations_dir)
         self.issues: list[Issue] = []
-        self.all_phrase_blocks: dict[str, list[PhraseBlock]] = {}  # file -> blocks
-        self.ignore_trackers: dict[str, IgnoreTracker] = {}  # file -> tracker
+        self.all_phrase_blocks: dict[str, list[PhraseBlock]] = {}
+        self.ignore_trackers: dict[str, IgnoreTracker] = {}
 
     def _add_issue(self, filename: str, line: int, issue_type: str,
                    category: str, message: str, context: Optional[str] = None) -> None:
@@ -177,6 +176,14 @@ class TranslationLinter:
             message=message,
             context=context
         ))
+
+    def _extract_placeholders(self, value: str) -> set[str]:
+        """Extract placeholder names from a translation value, excluding color tags."""
+        tags = set(re.findall(r'\{([^}]+)\}', value))
+        return {
+            tag for tag in tags
+            if tag.lower() not in self.KNOWN_COLOR_TAGS and not tag.startswith("#")
+        }
 
     def lint_all(self) -> list[Issue]:
         """Lint all cs2kz-*.phrases.txt files in the translations directory."""
@@ -252,7 +259,6 @@ class TranslationLinter:
                 if name:
                     placeholders.add(name)
             elif part:
-                # Handle format without type specifier
                 placeholders.add(part)
 
         return placeholders
@@ -306,7 +312,7 @@ class TranslationLinter:
             else:
                 prev_line_empty = False
 
-            # Track brace matching (always do this, even for ignored lines, to maintain state)
+            # Track brace matching
             for i, char in enumerate(stripped):
                 if char == '"':
                     in_string = not in_string
@@ -390,7 +396,6 @@ class TranslationLinter:
                 brace_depth -= 1
                 if current_block and brace_depth == 1:
                     current_block.end_line = line_num
-                    # Check if the entire block is ignored
                     if ignore_tracker and ignore_tracker.is_range_ignored(
                             current_block.start_line, current_block.end_line):
                         current_block.ignored = True
@@ -415,7 +420,6 @@ class TranslationLinter:
                     key = match.group(1)
                     value = match.group(2)
 
-                    # Check if this is a #format directive
                     if key == "#format":
                         current_block.format_spec = value
                         current_block.format_line = line_num
@@ -423,7 +427,6 @@ class TranslationLinter:
                     elif key in self.SPECIAL_DIRECTIVES:
                         pass
                     else:
-                        # It's a language entry
                         if key in current_block.languages:
                             prev_line = current_block.languages[key][0]
                             self._add_issue(
@@ -446,7 +449,6 @@ class TranslationLinter:
     def _check_phrase_blocks(self, filename: str, blocks: list[PhraseBlock]) -> None:
         """Check phrase blocks for issues."""
         phrase_names = {}
-        ignore_tracker = self.ignore_trackers.get(filename)
 
         for block in blocks:
             # Skip entirely ignored blocks
@@ -487,23 +489,22 @@ class TranslationLinter:
                         value[:60] + "..."
                     )
 
-            # Check placeholder consistency
-            if block.format_spec and "en" in block.languages:
-                expected_placeholders = block.placeholders
+            # Check placeholder consistency against English translation (not #format)
+            if "en" in block.languages:
+                en_value = block.languages["en"][1]
+                en_placeholders = self._extract_placeholders(en_value)
 
                 for lang, (line_num, value) in block.languages.items():
-                    used_tags = set(re.findall(r'\{([^}]+)\}', value))
-                    used_placeholders = {
-                        tag for tag in used_tags
-                        if tag.lower() not in self.KNOWN_COLOR_TAGS and not tag.startswith("#")
-                    }
+                    if lang == "en":
+                        continue
 
-                    missing = expected_placeholders - used_placeholders
+                    lang_placeholders = self._extract_placeholders(value)
+                    missing = en_placeholders - lang_placeholders
 
                     if missing:
                         self._add_issue(
                             filename, line_num, "warning", "Placeholder",
-                            f"Missing placeholder(s) {{{', '.join(sorted(missing))}}} in '{lang}' translation for '{block.name}'"
+                            f"Missing placeholder(s) {{{', '.join(sorted(missing))}}} in '{lang}' translation for '{block.name}' (present in 'en')"
                         )
 
     def _check_language_consistency(self) -> None:
@@ -574,7 +575,6 @@ class TranslationLinter:
             if not blocks:
                 continue
 
-            # Get all languages used in this file (excluding ignored blocks)
             file_langs = set()
             for block in blocks:
                 if not block.ignored:
