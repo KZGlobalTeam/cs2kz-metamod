@@ -26,7 +26,7 @@
 		"tr"		"Bu komutları kullanmak için konsola \"bind <tuş> kz_<komut ismi>\"veya konuşma satırına !<komut ismi> ya da /<komut ismi> yazabilirsin. Örnek olarak: \"bind 1 kz_cp\" veya \"!cp\" or \"/cp\""
 		"it"		"Per usare questi comandi scrivi \"bind <tasto> kz_<nome comando>\" nella console, oppure !<nome comando> o /<nome comando> in chat.\nEsempio: \"bind 1 kz_cp\" o \"!cp\" o \"/cp\""
 		"es"		"Para usar estos comandos, puedes escribir \"bind <key> kz_<command name>\" en tu consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
-		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: \„bind 1 kz_cp\" oder \„!cp\" oder \„/cp\""
+		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: „bind 1 kz_cp\" oder „!cp\" oder „/cp\""
 		"ko"		"이 명령어를 사용하려면 콘솔에 \"bind <key> kz_<명령어 이름>\"을 입력하거나, 채팅창에 !<명령어 이름> 또는 /<명령어 이름>을 입력하세요. 예시: \"bind 1 kz_cp\" 또는 \"!cp\" 또는 \"/cp\""
 		"lv"		"Lai pielietotu šīs komandas, tu vari ierakstīt \"bind <taustiņš> kz_<komandas nosaukums>\" konsolē, vai ierakstīt !<komandas nosaukums> vai /<komandas nosaukums> čatā.\nPiemēram: \"bind 1 kz_cp\" vai \"!cp\" vai \"/cp\""
 	}
