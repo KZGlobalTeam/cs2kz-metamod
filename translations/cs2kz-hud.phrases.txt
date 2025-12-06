@@ -151,6 +151,7 @@
 		"lv"		"{checkpoint_text}\n{timer_text}"
 	}
 	// This text is actually "more" center.
+	// lint-ignore-start
 	"HUD - Alert Text"
 	{
 		// Unused
@@ -168,6 +169,7 @@
 		"ko"		""
 		"lv"		""
 	}
+	// lint-ignore-end
 	"HUD - HTML Center Text"
 	{
 		// Speed: 234 (200)
