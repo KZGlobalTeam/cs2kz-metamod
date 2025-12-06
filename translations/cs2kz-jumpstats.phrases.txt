@@ -345,7 +345,7 @@
 		"de"		"Verlust"
 		"ko"		"손실"
 		"es"		"Pérdida"
-		"lv"		"Loss"	
+		"lv"		"Loss"
 	}
 	"Average Gain (Short)"
 	{
@@ -736,7 +736,7 @@
 		"es"		"{default}{player} {grey}saltó {color}{distance} {grey}unidades con un {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"lv"		"{default}{player} {grey}ieleca {color}{distance} {grey}vienības ar {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 	}
-	
+
 	"Jumpstats Report - Invalidation Reason"
 	{
 		// (Just noclipped)
@@ -754,7 +754,7 @@
 		"lv"		"({reason})"
 		"de"		"({reason})"
 	}
-		
+
 	"Jumpstats Report - Chat Summary (Simple)"
 	{
 		// LJ: 258.1 | 6 Strafes | 79% Sync | 275.81 Pre | 346.98 Max

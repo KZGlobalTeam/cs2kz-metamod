@@ -75,7 +75,7 @@
 	{
 		"#format"	"time:s,maxTime:s"
 		"en"		"{grey}Time {lime}{time}{grey} is out of range. Maximum time: {lime}{maxTime}"
-		"chi"		"{grey}时间 {lime}{tick}{grey} 超出范围. 最大时间值: {lime}{maxTime}."
+		"chi"		"{grey}时间 {lime}{time}{grey} 超出范围. 最大时间值: {lime}{maxTime}."
 		"ua"		"{grey}Час {lime}{time}{grey} виходить за межі діапазону. Максимальний час: {lime}{maxTime}"
 		"de"		"{grey}Zeit {lime}{time}{grey} liegt außerhalb des Bereichs. Maximale Zeit: {lime}{maxTime}"
 	}

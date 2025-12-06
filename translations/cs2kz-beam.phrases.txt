@@ -46,7 +46,7 @@
 		"#format"	"x:.2f,y:.2f,z:.2f"
 		"en"		"{grey}Current beam offset: {default}{x} {y} {z}"
 		"chi"		"{grey}当前光束偏移：{default}{x} {y} {z}"
-		"sv"		"{grey}Nuvarande stråloffset: {default}{x} {y} {x}"
+		"sv"		"{grey}Nuvarande stråloffset: {default}{x} {y} {z}"
 		"ua"		"{grey}Поточне зміщення променя: {default}{x} {y} {z}"
 		"de"		"{grey}Aktueller Spielerstrahl-Offset: {default}{x} {y} {z}"
 	}
