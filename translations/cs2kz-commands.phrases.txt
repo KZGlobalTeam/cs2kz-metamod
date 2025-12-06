@@ -39,7 +39,7 @@
 		"lv"		"Tu vari pielietot \"kz_help <kategorija>\", lai iegūtu komandu sarakstu, kas saistītas ar konkrētu kategoriju (piem. kz_help checkpoint misc).\nPieejamo kategoriju saraksts: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"de"		"Du kannst \"kz_help <category>\" benutzen um eine Liste von Befehlen einer bestimmten Kategorie zu bekommen (zB. kz_help checkpoint misc).\nListe der verfügbaren Kategorien: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 	}
-	
+
 	// Categories
 	"Command List Header - Name"
 	{

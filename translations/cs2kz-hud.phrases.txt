@@ -188,7 +188,7 @@
 		"ko"		"{speed_text}<br>{key_text}"
 		"lv"		"{speed_text}<br>{key_text}"
 	}
-	
+
 	"HUD - HTML Panel Disabled"
 	{
 		"en"		"Panel disabled."

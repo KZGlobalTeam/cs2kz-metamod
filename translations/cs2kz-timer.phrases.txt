@@ -31,7 +31,7 @@
 		"ko"		"{yellow}{tp_count}{grey} TPs"
 		"lv"		"{yellow}{tp_count}{grey} TPs"
 	}
-	
+
 	"Personal Best Difference"
 	{
 		// Must have a space here!
@@ -68,7 +68,7 @@
 		"ko"		"{lime}{player_name} {grey}님이 {default}{course_name}{grey} 코스를 {default}{time}{grey} 동안 완료했습니다 | {mode_style_text} | {tp_count_text}"
 		"lv"		"{lime}{player_name} {grey}pabeidza {default}{course_name}{grey} {default}{time}{grey} laikā | {mode_style_text} | {tp_count_text}"
 	}
-	
+
 	"Beat Course Info - Local (TP)"
 	{
 		// Server: #1/24 Overall (-1:00.00)
@@ -103,7 +103,7 @@
 		"ko"		"{grey}서버 순위: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 		"lv"		"{grey}Serveris: #{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopvērtējums{grey}{pb_diff_text} | #{rank_pro}/{max_rank_pro} {blue}PRO{grey}{pb_diff_text_pro}"
 	}
-	
+
 	"Beat Course Info - Global (TP)"
 	{
 		// Global: #1/24 Overall (-1:00.00)
@@ -376,7 +376,7 @@
 		"lv"		"{darkred}Pagrieziena taustiņi ir atspējoti."
 		"de"		"{darkred}Turnbinds sind deaktiviert."
 	}
-	
+
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
 	"Course Split Reached"
 	{
