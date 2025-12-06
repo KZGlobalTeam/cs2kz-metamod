@@ -34,6 +34,7 @@ from pathlib import Path
 from dataclasses import dataclass, field
 from typing import Optional
 from collections import defaultdict
+from io import StringIO
 
 
 @dataclass
@@ -229,7 +230,7 @@ class TranslationLinter:
         # Parse phrases first to know valid placeholders
         phrase_blocks = self._parse_phrases(filepath.name, lines)
         self.all_phrase_blocks[filepath.name] = phrase_blocks
-        
+
         # Now check format issues with knowledge of all phrase blocks
         self._check_format_issues(filepath.name, lines, phrase_blocks)
         self._check_phrase_blocks(filepath.name, phrase_blocks)
@@ -252,22 +253,16 @@ class TranslationLinter:
         return placeholders
 
     def _get_valid_placeholders_for_line(self, line_num: int, phrase_blocks: list[PhraseBlock]) -> set[str]:
-        """Get the valid placeholders for a given line number.
-        
-        Valid placeholders are:
-        1.Those defined in #format directive
-        2.Those used in the English translation (implicit definition)
-        """
+        """Get the valid placeholders for a given line number."""
         for block in phrase_blocks:
             if block.start_line <= line_num <= block.end_line:
                 valid = set(block.placeholders)
-                
-                # Also add placeholders from English translation as valid
+
                 if "en" in block.languages:
                     en_value = block.languages["en"][1]
                     en_placeholders = self._extract_placeholders(en_value)
                     valid.update(en_placeholders)
-                
+
                 return valid
         return set()
 
@@ -474,7 +469,6 @@ class TranslationLinter:
                         value[:60] + "..."
                     )
 
-            # Check placeholder consistency against English translation
             if "en" in block.languages:
                 en_value = block.languages["en"][1]
                 en_placeholders = self._extract_placeholders(en_value)
@@ -549,11 +543,24 @@ class TranslationLinter:
         print(f"TOTAL: {errors} error(s), {warnings} warning(s) in {len(by_file)} file(s)")
         print("=" * 70)
 
-    def generate_missing_languages_report(self) -> None:
-        """Generate a report of missing language translations."""
-        print("\n" + "=" * 70)
-        print("MISSING TRANSLATIONS REPORT")
-        print("=" * 70)
+    def generate_missing_languages_report(self, output_file: Optional[str] = None) -> str:
+        """Generate a report of missing language translations.
+        
+        Args:
+            output_file: If provided, write report to this file path.
+            
+        Returns:
+            The report content as a string.
+        """
+        output = StringIO()
+        
+        output.write("=" * 70 + "\n")
+        output.write("MISSING TRANSLATIONS REPORT\n")
+        output.write(f"Generated for: {self.translations_dir}\n")
+        output.write("=" * 70 + "\n")
+
+        total_missing = 0
+        files_with_missing = 0
 
         for filename, blocks in sorted(self.all_phrase_blocks.items()):
             if not blocks:
@@ -573,11 +580,37 @@ class TranslationLinter:
                     missing_report.append((block.name, block.start_line, sorted(missing)))
 
             if missing_report:
-                print(f"\n📄 {filename}")
-                print("-" * 50)
+                files_with_missing += 1
+                output.write(f"\n{'=' * 70}\n")
+                output.write(f"{filename}\n")
+                output.write(f"   Languages in file: {', '.join(sorted(file_langs))}\n")
+                output.write(f"   Phrases with missing translations: {len(missing_report)}\n")
+                output.write("-" * 70 + "\n")
+                
                 for phrase_name, line_num, missing_langs in missing_report:
-                    print(f"  Line {line_num}: '{phrase_name}'")
-                    print(f"    Missing: {', '.join(missing_langs)}")
+                    total_missing += len(missing_langs)
+                    output.write(f"\n  Line {line_num}: \"{phrase_name}\"\n")
+                    output.write(f"    Missing ({len(missing_langs)}): {', '.join(missing_langs)}\n")
+
+        output.write("\n" + "=" * 70 + "\n")
+        output.write("SUMMARY\n")
+        output.write("=" * 70 + "\n")
+        output.write(f"Files with missing translations: {files_with_missing}\n")
+        output.write(f"Total missing translation entries: {total_missing}\n")
+        output.write("=" * 70 + "\n")
+
+        report_content = output.getvalue()
+        print(report_content)
+
+        if output_file:
+            try:
+                with open(output_file, "w", encoding="utf-8") as f:
+                    f.write(report_content)
+                print(f"\n Missing translations report written to: {output_file}")
+            except Exception as e:
+                print(f"\n  Failed to write report to {output_file}: {e}")
+        
+        return report_content
 
 
 def main():
@@ -587,7 +620,9 @@ def main():
     linter = TranslationLinter(translations_dir)
     issues = linter.lint_all()
     linter.print_summary()
-    linter.generate_missing_languages_report()
+    
+    missing_report_file = "missing-translations.txt"
+    linter.generate_missing_languages_report(missing_report_file)
 
     errors = sum(1 for i in issues if i.issue_type == "error")
     sys.exit(1 if errors > 0 else 0)
