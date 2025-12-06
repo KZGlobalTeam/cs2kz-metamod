@@ -21,18 +21,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.11'
-
       - name: Run translation linter
         id: lint
         run: |
           python scripts/check_translations.py translations 2>&1 | tee translation-lint-results.txt
           echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
-
       - name: Upload linter results
         if: always()
         uses: actions/upload-artifact@v5
@@ -40,7 +37,13 @@ jobs:
           name: translation-lint-results.txt
           path: translation-lint-results.txt
           retention-days: 30
-
+      - name: Upload missing translations report
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: missing-translations.txt
+          path: missing-translations.txt
+          retention-days: 30
       - name: Check for errors
         if: steps.lint.outputs.exit_code != '0'
         run: exit 1
