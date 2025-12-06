@@ -515,26 +515,26 @@
 	}
     "Command Description - kz_jstier"
     {
-        "en"        "Set your minimum jumpstats reporting tier."
-		"chi"       "设置显示你的跳跃数据的最低等级."
-        "ua"        "Встановити мінімальний рівень для відображення статистики стрибків."
-		"sv"        "Ange din miniminivå för jumpstatsrapportering."
+        "en"		"Set your minimum jumpstats reporting tier."
+		"chi"		"设置显示你的跳跃数据的最低等级."
+        "ua"		"Встановити мінімальний рівень для відображення статистики стрибків."
+		"sv"		"Ange din miniminivå för jumpstatsrapportering."
 		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel."
     }
     "Command Description - kz_jstierconsole"
     {
-        "en"        "Set your minimum jumpstats console reporting tier."
+        "en"		"Set your minimum jumpstats console reporting tier."
 		"chi"		"设置在控制台显示你的跳跃数据的最低等级."
-        "ua"        "Встановити мінімальний рівень для відображення статистики стрибків в консолі."
-		"sv"        "Ange din lägsta rapporteringsnivå för jumpstats i konsolen."
+        "ua"		"Встановити мінімальний рівень для відображення статистики стрибків в консолі."
+		"sv"		"Ange din lägsta rapporteringsnivå för jumpstats i konsolen."
 		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel für die Konsole."
     }
     "Command Description - kz_jsbroadcastsound"
     {
-        "en"        "Set the minimum tier for jumpstats sound broadcast."
+        "en"		"Set the minimum tier for jumpstats sound broadcast."
 		"chi"		"设置广播跳跃数据音效的最低等级."
-        "ua"        "Встановити мінімальний рівень для звукових ефектів під час стрибків."
-		"sv"        "Ange miniminivån för jumpstats-ljudsändning."
+        "ua"		"Встановити мінімальний рівень для звукових ефектів під час стрибків."
+		"sv"		"Ange miniminivån för jumpstats-ljudsändning."
 		"de"		"Setze minimales Jumpstats-Soundlevel für fremde Jumpstats im Chat."
     }
 	"Command Description - kz_jsbroadcastconsole"
@@ -1310,7 +1310,7 @@
 	"Command Description - kz_replays"
 	{
 		"en"		"List saved replays."
-		"ua"        "Показати список збережених повторів."
+		"ua"		"Показати список збережених повторів."
 		"de"		"Liste die gespeicherten Wiederholungen auf."
 	}
   	"Command Description - kz_rpgoto"
@@ -1359,14 +1359,14 @@
 	{
 		"en"		"Set the volume of the world record sound effect."
 		"chi"		"设置世界纪录音效的音量."
-		"ua"        "Встановити гучність звукового ефекту світового рекорду."
+		"ua"		"Встановити гучність звукового ефекту світового рекорду."
 		"de"		"Setze die Lautstärke des Weltrekord-Sounds fest."
 	}
 	"Command Description - kz_cpmessage"
 	{
 		"en"		"Toggle checkpoint messages."
 		"chi"		"切换检查点消息是否显示."
-		"ua"        "Увімк./вимк. повідомлення про чекпоінт."
+		"ua"		"Увімк./вимк. повідомлення про чекпоінт."
 		"de"		"Aktiviere/Deaktiviere Checkpoint-Nachrichten."
 	}
 	"Command Description - kz_rphidelegs"

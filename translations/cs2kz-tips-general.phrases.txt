@@ -108,7 +108,7 @@
 	"Tip - kz_prevcp"
 	{
 		"en"	"{grey}Teleport to the previous checkpoint with {default}/prevcp{grey}."
-		"chi" 	"{grey}传送到上一个存点请使用 {default}/prevcp{grey}."
+		"chi"	"{grey}传送到上一个存点请使用 {default}/prevcp{grey}."
 		"pl"	"{grey}Aby wrócić poprzedniego checkpointu wpisz{default}/prevcp{grey}."
 		"fi"	"{grey}Teleporttaa edelliseen tarkistuspisteeseen {default}/prevcp{grey} komennolla."
 		"sv"	"{grey}Teleportera till föregående checkpoint med {default}/prevcp{grey}."
@@ -133,7 +133,7 @@
 		"es"	"{grey}Teleportar al checkpoint siguiente con {default}/nextcp{grey}."
 		"de"	"{grey}Teleportiere zum nächsten Kontrollpunkt mit {default}/nextcp{grey}."
 		"ko"	"{grey}다음 체크포인트로 텔레포트하려면 {default}/nextcp{grey}를 사용하세요."
-		"lv"    "{grey}Teleports uz nākamo čekpointu {default}/nextcp{grey}."
+		"lv"	"{grey}Teleports uz nākamo čekpointu {default}/nextcp{grey}."
 	}
 	"Tip - website"
 	{
@@ -156,7 +156,7 @@
 		"es"	"{grey}Reporta problemas relacionados al CS2KZ en nuestro GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"de"	"{grey}Melde Probleme im Zusammenhang mit CS2KZ auf unserem GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"ko"	"{grey}CS2KZ 관련 문제를 GitHub에서 신고하세요: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
-		"lv"    "{grey}Ziņojiet par CS2KZ problēmām mūsu GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"lv"	"{grey}Ziņojiet par CS2KZ problēmām mūsu GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 	}
 	"Tip - kz_jssound"
 	{
@@ -171,7 +171,7 @@
 		"es"	"{grey}Puedes controlar qué estadísticas de salto reproducen un sonido usando {default}/jssound{grey}."
 		"de"	"{grey}Du kannst festlegen, welche Jumpstats einen Sound abspielen, indem du {default}/jssound{grey} verwendest."
 		"ko"	"{grey}어떤 점프 통계 사운드를 제어하려면 {default}/jssound{grey}를 사용하세요."
-		"lv"    "{grey}Jūs varat kontrolēt, kuriem lēcienu statistikas datiem tiek atskaņota skaņa, izmantojot {default}/jssound{grey}."
+		"lv"	"{grey}Jūs varat kontrolēt, kuriem lēcienu statistikas datiem tiek atskaņota skaņa, izmantojot {default}/jssound{grey}."
 	}
 	"Tip - kz_jsbroadcast"
 	{
@@ -186,6 +186,6 @@
 		"es"	"{grey}Usa {default}/jsbroadcast {grey}para cambiar qué estadísticas de salto de otros jugadores se te muestran."
 		"de"	"{grey}Verwende {default}/jsbroadcast {grey}, um zu ändern, welche Jumpstats von anderen Spielern dir angezeigt werden."
 		"ko"	"{grey}다른 플레이어의 점프 통계가 표시되는 방식을 변경하려면 {default}/jsbroadcast{grey}를 사용하세요."
-		"lv"    "{grey}Izmanto {default}/jsbroadcast {grey}lai mainītu, kādus jumpstats paziņojumus saņemsi par citiem spēlētājiem"
+		"lv"	"{grey}Izmanto {default}/jsbroadcast {grey}lai mainītu, kādus jumpstats paziņojumus saņemsi par citiem spēlētājiem"
 	}
 }
