@@ -153,6 +153,7 @@ class TranslationLinter:
         self.issues: list[Issue] = []
         self.all_phrase_blocks: dict[str, list[PhraseBlock]] = {}
         self.ignore_trackers: dict[str, IgnoreTracker] = {}
+        self.global_languages: set[str] = set()  # All languages used across all files
 
     def _add_issue(self, filename: str, line: int, issue_type: str,
                    category: str, message: str, context: Optional[str] = None) -> None:
@@ -196,9 +197,19 @@ class TranslationLinter:
         for filepath in files:
             self.lint_file(filepath)
 
+        # Collect all languages used globally
+        self._collect_global_languages()
+
         self._check_language_consistency()
 
         return self.issues
+
+    def _collect_global_languages(self) -> None:
+        """Collect all languages used across all files."""
+        for filename, blocks in self.all_phrase_blocks.items():
+            for block in blocks:
+                if not block.ignored:
+                    self.global_languages.update(block.languages.keys())
 
     def lint_file(self, filepath: Path) -> None:
         """Lint a single translation file."""
@@ -330,7 +341,6 @@ class TranslationLinter:
                     stripped[:80]
                 )
 
-            # Check for format tags in translation lines
             if re.match(r'^\s*"[^"]+"\s+".*"', stripped):
                 valid_placeholders = self._get_valid_placeholders_for_line(line_num, phrase_blocks)
 
@@ -488,18 +498,7 @@ class TranslationLinter:
 
     def _check_language_consistency(self) -> None:
         """Check for language consistency across all files."""
-        all_languages: set[str] = set()
-        file_languages: dict[str, set[str]] = {}
-
-        for filename, blocks in self.all_phrase_blocks.items():
-            file_langs = set()
-            for block in blocks:
-                if not block.ignored:
-                    file_langs.update(block.languages.keys())
-            file_languages[filename] = file_langs
-            all_languages.update(file_langs)
-
-        print(f"Languages found across all files: {sorted(all_languages)}\n")
+        print(f"Languages found across all files: {sorted(self.global_languages)}\n")
 
         for filename, blocks in self.all_phrase_blocks.items():
             for block in blocks:
@@ -544,64 +543,90 @@ class TranslationLinter:
         print("=" * 70)
 
     def generate_missing_languages_report(self, output_file: Optional[str] = None) -> str:
-        """Generate a report of missing language translations.
-        
+        """Generate a report of missing language translations using global language set.
+
         Args:
             output_file: If provided, write report to this file path.
-            
+
         Returns:
             The report content as a string.
         """
         output = StringIO()
-        
+
+        sorted_languages = sorted(self.global_languages)
+
         output.write("=" * 70 + "\n")
         output.write("MISSING TRANSLATIONS REPORT\n")
         output.write(f"Generated for: {self.translations_dir}\n")
-        output.write("=" * 70 + "\n")
+        output.write("=" * 70 + "\n\n")
+        output.write(f"Global languages ({len(sorted_languages)}): {', '.join(sorted_languages)}\n")
+        output.write("\n" + "=" * 70 + "\n")
 
         total_missing = 0
-        files_with_missing = 0
+        total_phrases = 0
+        phrases_with_missing = 0
+
+        # Track missing count per language globally
+        missing_per_language: dict[str, int] = defaultdict(int)
 
         for filename, blocks in sorted(self.all_phrase_blocks.items()):
             if not blocks:
                 continue
 
-            file_langs = set()
-            for block in blocks:
-                if not block.ignored:
-                    file_langs.update(block.languages.keys())
+            file_missing_report = []
 
-            missing_report = []
             for block in blocks:
                 if block.ignored:
                     continue
-                missing = file_langs - set(block.languages.keys())
-                if missing and "en" in block.languages:
-                    missing_report.append((block.name, block.start_line, sorted(missing)))
+                if "en" not in block.languages:
+                    continue  # Skip phrases without English
 
-            if missing_report:
-                files_with_missing += 1
-                output.write(f"\n{'=' * 70}\n")
-                output.write(f"{filename}\n")
-                output.write(f"   Languages in file: {', '.join(sorted(file_langs))}\n")
-                output.write(f"   Phrases with missing translations: {len(missing_report)}\n")
+                total_phrases += 1
+                missing = self.global_languages - set(block.languages.keys())
+
+                if missing:
+                    phrases_with_missing += 1
+                    sorted_missing = sorted(missing)
+                    file_missing_report.append((block.name, block.start_line, sorted_missing))
+
+                    for lang in missing:
+                        missing_per_language[lang] += 1
+
+            if file_missing_report:
+                output.write(f"\n{filename}\n")
                 output.write("-" * 70 + "\n")
-                
-                for phrase_name, line_num, missing_langs in missing_report:
+
+                for phrase_name, line_num, missing_langs in file_missing_report:
                     total_missing += len(missing_langs)
-                    output.write(f"\n  Line {line_num}: \"{phrase_name}\"\n")
+                    output.write(f"  Line {line_num}: \"{phrase_name}\"\n")
                     output.write(f"    Missing ({len(missing_langs)}): {', '.join(missing_langs)}\n")
+
+        output.write("\n" + "=" * 70 + "\n")
+        output.write("LANGUAGE COVERAGE\n")
+        output.write("=" * 70 + "\n\n")
+
+        for lang in sorted_languages:
+            missing_count = missing_per_language.get(lang, 0)
+            coverage = ((total_phrases - missing_count) / total_phrases * 100) if total_phrases > 0 else 0
+            bar_length = int(coverage / 5)
+            bar = "█" * bar_length + "░" * (20 - bar_length)
+            output.write(f"  {lang:5} [{bar}] {coverage:5.1f}% ({total_phrases - missing_count}/{total_phrases})\n")
 
         output.write("\n" + "=" * 70 + "\n")
         output.write("SUMMARY\n")
         output.write("=" * 70 + "\n")
-        output.write(f"Files with missing translations: {files_with_missing}\n")
+        output.write(f"Total languages: {len(self.global_languages)}\n")
+        output.write(f"Total phrases: {total_phrases}\n")
+        output.write(f"Phrases with missing translations: {phrases_with_missing}\n")
         output.write(f"Total missing translation entries: {total_missing}\n")
         output.write("=" * 70 + "\n")
 
         report_content = output.getvalue()
+
+        # Print to console
         print(report_content)
 
+        # Write to file if specified
         if output_file:
             try:
                 with open(output_file, "w", encoding="utf-8") as f:
@@ -609,7 +634,7 @@ class TranslationLinter:
                 print(f"\n Missing translations report written to: {output_file}")
             except Exception as e:
                 print(f"\n  Failed to write report to {output_file}: {e}")
-        
+
         return report_content
 
 
@@ -620,7 +645,7 @@ def main():
     linter = TranslationLinter(translations_dir)
     issues = linter.lint_all()
     linter.print_summary()
-    
+
     missing_report_file = "missing-translations.txt"
     linter.generate_missing_languages_report(missing_report_file)
 
