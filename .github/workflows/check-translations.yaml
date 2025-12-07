@@ -22,16 +22,24 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.event.push.head.sha || github.sha }}
           fetch-depth: 0
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.11'
+      - name: Get source commit info
+        id: source
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "message=$(git log -1 --pretty=%s | tr -d '"' | tr -d "'" | tr -d '`' | cut -c1-80)" >> "$GITHUB_OUTPUT"
+
       - name: Run translation linter
         id: lint
         run: |
@@ -50,34 +58,43 @@ jobs:
 
       - name: Push results to translation-reports branch
         if: always() && github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          COMMIT_SHA_FULL: ${{ steps.source.outputs.sha }}
+          COMMIT_SHA: ${{ steps.source.outputs.sha_short }}
+          COMMIT_MSG: ${{ steps.source.outputs.message }}
         run: |
           # Configure git
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Get current commit info
-          COMMIT_SHA=$(git rev-parse --short HEAD)
-          COMMIT_MSG=$(git log -1 --pretty=%B | head -1)
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
           # Extract stats from missing-translations.txt
-          TOTAL_LANGUAGES=$(grep "Total languages:" missing-translations.txt | awk '{print $NF}' || echo "0")
-          TOTAL_PHRASES=$(grep "Total phrases:" missing-translations.txt | awk '{print $NF}' || echo "0")
-          PHRASES_MISSING=$(grep "Phrases with missing translations:" missing-translations.txt | awk '{print $NF}' || echo "0")
-          TOTAL_MISSING=$(grep "Total missing translation entries:" missing-translations.txt | awk '{print $NF}' || echo "0")
+          TOTAL_LANGUAGES=$(grep "Total languages:" missing-translations.txt 2>/dev/null | awk '{print $NF}' || echo "0")
+          TOTAL_PHRASES=$(grep "Total phrases:" missing-translations.txt 2>/dev/null | awk '{print $NF}' || echo "0")
+          PHRASES_MISSING=$(grep "Phrases with missing translations:" missing-translations.txt 2>/dev/null | awk '{print $NF}' || echo "0")
+          TOTAL_MISSING=$(grep "Total missing translation entries:" missing-translations.txt 2>/dev/null | awk '{print $NF}' || echo "0")
 
           # Extract coverage section
-          COVERAGE_SECTION=$(sed -n '/LANGUAGE COVERAGE/,/Global languages/p' missing-translations.txt | grep -E '^\s+\w+' || echo "No coverage data")
+          awk '/^LANGUAGE COVERAGE$/,/^Global languages/' missing-translations.txt | grep -E '^\s+\S+.*\[' > /tmp/coverage.txt 2>/dev/null || true
+          
+          if [ !   -s /tmp/coverage.txt ]; then
+            echo "  No coverage data available" > /tmp/coverage.txt
+          fi
 
-          # Count errors and warnings from lint results
-          ERRORS=$(grep -c "\[ERROR\]" translation-lint-results.txt || echo "0")
-          WARNINGS=$(grep -c "\[WARNING\]" translation-lint-results.txt || echo "0")
+          # Count errors and warnings
+          ERRORS=$(grep -c "\[ERROR\]" translation-lint-results.txt 2>/dev/null || true)
+          if [ -z "$ERRORS" ]; then ERRORS=0; fi
+          
+          WARNINGS=$(grep -c "\[WARNING\]" translation-lint-results.txt 2>/dev/null || true)
+          if [ -z "$WARNINGS" ]; then WARNINGS=0; fi
 
-          # Save report files
+          # Move report files to temp directory BEFORE switching branches
           mkdir -p /tmp/reports
-          cp translation-lint-results.txt /tmp/reports/
-          cp missing-translations.txt /tmp/reports/
-          cp missing-translations.json /tmp/reports/
+          mv translation-lint-results.txt /tmp/reports/
+          mv missing-translations.txt /tmp/reports/
+          mv missing-translations.json /tmp/reports/
 
           # Switch to reports branch
           if git ls-remote --exit-code --heads origin translation-reports > /dev/null 2>&1; then
@@ -88,12 +105,15 @@ jobs:
             git rm -rf . > /dev/null 2>&1 || true
           fi
 
-          # Clean and copy reports
+          # Clean working directory and copy reports back
           rm -rf ./* 2>/dev/null || true
           cp /tmp/reports/* .
 
+          # Read coverage into variable
+          COVERAGE_SECTION=$(cat /tmp/coverage.txt)
+
           # Create README with stats and graphs
-          cat > README.md << 'HEREDOC_END'
+          cat > README.md << EOF
           # Translation Reports
 
           Automated translation linter reports for cs2kz-metamod.
@@ -102,18 +122,18 @@ jobs:
 
           | Metric | Value |
           |--------|-------|
-          | **Linter Errors** | ERRORS_PLACEHOLDER |
-          | **Linter Warnings** | WARNINGS_PLACEHOLDER |
-          | **Total Languages** | TOTAL_LANGUAGES_PLACEHOLDER |
-          | **Total Phrases** | TOTAL_PHRASES_PLACEHOLDER |
-          | **Phrases Missing Translations** | PHRASES_MISSING_PLACEHOLDER |
-          | **Total Missing Entries** | TOTAL_MISSING_PLACEHOLDER |
+          | **Linter Errors** | ${ERRORS} |
+          | **Linter Warnings** | ${WARNINGS} |
+          | **Total Languages** | ${TOTAL_LANGUAGES} |
+          | **Total Phrases** | ${TOTAL_PHRASES} |
+          | **Phrases Missing Translations** | ${PHRASES_MISSING} |
+          | **Total Missing Entries** | ${TOTAL_MISSING} |
 
           ## Language Coverage
 
-          ```
-          COVERAGE_PLACEHOLDER
-          ```
+          \`\`\`
+          ${COVERAGE_SECTION}
+          \`\`\`
 
           ## Reports
 
@@ -125,38 +145,20 @@ jobs:
 
           ## Last Updated
 
-          - **Commit:** [`COMMIT_SHA_PLACEHOLDER`](https://github.com/REPO_PLACEHOLDER/commit/COMMIT_SHA_FULL_PLACEHOLDER)
-          - **Time:** TIMESTAMP_PLACEHOLDER
-          - **Message:** COMMIT_MSG_PLACEHOLDER
+          - **Commit:** [\`${COMMIT_SHA}\`](https://github.com/${GITHUB_REPOSITORY}/commit/${COMMIT_SHA_FULL})
+          - **Time:** ${TIMESTAMP}
+          - **Message:** ${COMMIT_MSG}
 
           ---
 
           *This report is automatically generated on each push to master.*
-          HEREDOC_END
-
-          # Replace placeholders
-          sed -i "s/ERRORS_PLACEHOLDER/${ERRORS}/g" README.md
-          sed -i "s/WARNINGS_PLACEHOLDER/${WARNINGS}/g" README.md
-          sed -i "s/TOTAL_LANGUAGES_PLACEHOLDER/${TOTAL_LANGUAGES}/g" README.md
-          sed -i "s/TOTAL_PHRASES_PLACEHOLDER/${TOTAL_PHRASES}/g" README.md
-          sed -i "s/PHRASES_MISSING_PLACEHOLDER/${PHRASES_MISSING}/g" README.md
-          sed -i "s/TOTAL_MISSING_PLACEHOLDER/${TOTAL_MISSING}/g" README.md
-          sed -i "s/COMMIT_SHA_PLACEHOLDER/${COMMIT_SHA}/g" README.md
-          sed -i "s/COMMIT_SHA_FULL_PLACEHOLDER/$(git rev-parse HEAD)/g" README.md
-          sed -i "s|REPO_PLACEHOLDER|${{ github.repository }}|g" README.md
-          sed -i "s/TIMESTAMP_PLACEHOLDER/${TIMESTAMP}/g" README.md
-          sed -i "s/COMMIT_MSG_PLACEHOLDER/${COMMIT_MSG}/g" README.md
-
-          # Replace coverage placeholder with actual coverage
-          echo "${COVERAGE_SECTION}" > /tmp/coverage.txt
-          sed -i '/COVERAGE_PLACEHOLDER/{
-            r /tmp/coverage.txt
-            d
-          }' README.md
+          EOF
 
           # Commit and push
           git add -A
-          git commit -m "Update translation reports for ${COMMIT_SHA}" || echo "No changes to commit"
+          git commit -m "Update translation reports
+
+          Source: ${COMMIT_SHA} - ${COMMIT_MSG}" || echo "No changes to commit"
           git push origin translation-reports --force
 
       - name: Check for errors
