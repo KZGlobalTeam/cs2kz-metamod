@@ -2,8 +2,6 @@ name: Translations checks
 
 on:
   push:
-    branches:
-      - master
     paths:
       - 'translations/cs2kz-*.phrases.txt'
       - 'translations/config.txt'
