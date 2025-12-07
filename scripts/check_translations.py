@@ -27,6 +27,7 @@ Ignoring sections:
         "en"    "Ignore this specific line"  // lint-ignore
 """
 
+import json
 import os
 import re
 import sys
@@ -180,9 +181,7 @@ class TranslationLinter:
         }
 
     def _strip_strings_from_line(self, line: str) -> str:
-        """Remove quoted strings from a line, preserving structure for brace matching.
-        
-        """
+        """Remove quoted strings from a line, preserving structure for brace matching."""
         result = []
         i = 0
         in_string = False
@@ -558,24 +557,17 @@ class TranslationLinter:
         print(f"TOTAL: {errors} error(s), {warnings} warning(s) in {len(by_file)} file(s)")
         print("=" * 70)
 
-    def generate_missing_languages_report(self, output_file: Optional[str] = None) -> str:
-        """Generate a report of missing language translations using global language set."""
-        output = StringIO()
-
-        sorted_languages = sorted(self.global_languages)
-
-        output.write("=" * 70 + "\n")
-        output.write("MISSING TRANSLATIONS REPORT\n")
-        output.write(f"Generated for: {self.translations_dir}\n")
-        output.write("=" * 70 + "\n\n")
-        output.write(f"Global languages ({len(sorted_languages)}): {', '.join(sorted_languages)}\n")
-        output.write("\n" + "=" * 70 + "\n")
-
+    def _collect_missing_data(self) -> tuple[dict, dict, int, int, int]:
+        """Collect missing translation data for reports.
+        
+        Returns:
+            Tuple of (missing_by_file, missing_per_language, total_missing, total_phrases, phrases_with_missing)
+        """
         total_missing = 0
         total_phrases = 0
         phrases_with_missing = 0
-
         missing_per_language: dict[str, int] = defaultdict(int)
+        missing_by_file: dict[str, list] = {}
 
         for filename, blocks in sorted(self.all_phrase_blocks.items()):
             if not blocks:
@@ -595,23 +587,44 @@ class TranslationLinter:
                 if missing:
                     phrases_with_missing += 1
                     sorted_missing = sorted(missing)
-                    file_missing_report.append((block.name, block.start_line, sorted_missing))
+                    file_missing_report.append({
+                        "phrase": block.name,
+                        "line": block.start_line,
+                        "missing_languages": sorted_missing,
+                        "existing_languages": sorted(block.languages.keys()),
+                        "english_text": block.languages.get("en", (0, ""))[1]
+                    })
 
                     for lang in missing:
                         missing_per_language[lang] += 1
+                    total_missing += len(missing)
 
             if file_missing_report:
-                output.write(f"\n{filename}\n")
-                output.write("-" * 70 + "\n")
+                missing_by_file[filename] = file_missing_report
 
-                for phrase_name, line_num, missing_langs in file_missing_report:
-                    total_missing += len(missing_langs)
-                    output.write(f"  Line {line_num}: \"{phrase_name}\"\n")
-                    output.write(f"    Missing ({len(missing_langs)}): {', '.join(missing_langs)}\n")
+        return missing_by_file, dict(missing_per_language), total_missing, total_phrases, phrases_with_missing
 
-        output.write("\n" + "=" * 70 + "\n")
-        output.write("LANGUAGE COVERAGE\n")
+    def generate_missing_languages_report(self, output_file: Optional[str] = None) -> str:
+        """Generate a report of missing language translations using global language set."""
+        output = StringIO()
+        sorted_languages = sorted(self.global_languages)
+
+        missing_by_file, missing_per_language, total_missing, total_phrases, phrases_with_missing = self._collect_missing_data()
+
+        output.write("=" * 70 + "\n")
+        output.write("MISSING TRANSLATIONS REPORT\n")
+        output.write(f"Generated for: {self.translations_dir}\n")
         output.write("=" * 70 + "\n\n")
+
+        output.write("SUMMARY\n")
+        output.write("-" * 70 + "\n")
+        output.write(f"Total languages: {len(self.global_languages)}\n")
+        output.write(f"Total phrases: {total_phrases}\n")
+        output.write(f"Phrases with missing translations: {phrases_with_missing}\n")
+        output.write(f"Total missing translation entries: {total_missing}\n\n")
+
+        output.write("LANGUAGE COVERAGE\n")
+        output.write("-" * 70 + "\n\n")
 
         for lang in sorted_languages:
             missing_count = missing_per_language.get(lang, 0)
@@ -620,14 +633,22 @@ class TranslationLinter:
             bar = "█" * bar_length + "░" * (20 - bar_length)
             output.write(f"  {lang:5} [{bar}] {coverage:5.1f}% ({total_phrases - missing_count}/{total_phrases})\n")
 
+        output.write("\n")
+        output.write(f"Global languages ({len(sorted_languages)}): {', '.join(sorted_languages)}\n")
+
         output.write("\n" + "=" * 70 + "\n")
-        output.write("SUMMARY\n")
+        output.write("DETAILED MISSING TRANSLATIONS\n")
         output.write("=" * 70 + "\n")
-        output.write(f"Total languages: {len(self.global_languages)}\n")
-        output.write(f"Total phrases: {total_phrases}\n")
-        output.write(f"Phrases with missing translations: {phrases_with_missing}\n")
-        output.write(f"Total missing translation entries: {total_missing}\n")
-        output.write("=" * 70 + "\n")
+
+        for filename, file_report in missing_by_file.items():
+            output.write(f"\n{filename}\n")
+            output.write("-" * 70 + "\n")
+
+            for item in file_report:
+                output.write(f"Line {item['line']}: \"{item['phrase']}\"\n")
+                output.write(f"Missing ({len(item['missing_languages'])}): {', '.join(item['missing_languages'])}\n")
+
+        output.write("\n" + "=" * 70 + "\n")
 
         report_content = output.getvalue()
 
@@ -635,11 +656,104 @@ class TranslationLinter:
             try:
                 with open(output_file, "w", encoding="utf-8") as f:
                     f.write(report_content)
-                print(f"\nMissing translations report written to: {output_file}")
+                print(f"Missing translations report written to: {output_file}")
             except Exception as e:
-                print(f"\nFailed to write report to {output_file}: {e}")
+                print(f"Failed to write report to {output_file}: {e}")
 
         return report_content
+
+    def generate_missing_languages_json(self, output_file: Optional[str] = None) -> dict:
+        """Generate a JSON export of missing translations for easy processing.
+        
+        Structure:
+        {
+            "summary": { ... },
+            "languages": {
+                "lang_code": {
+                    "coverage_percent": 95.5,
+                    "translated": 150,
+                    "missing": 7,
+                    "missing_phrases": [
+                        {
+                            "file": "cs2kz-commands.phrases.txt",
+                            "phrase": "Command Description",
+                            "line": 42,
+                            "english_text": "Original English text"
+                        }
+                    ]
+                }
+            },
+            "files": {
+                "filename.txt": {
+                    "phrases_with_missing": 5,
+                    "phrases": [...]
+                }
+            }
+        }
+        """
+        sorted_languages = sorted(self.global_languages)
+        missing_by_file, missing_per_language, total_missing, total_phrases, phrases_with_missing = self._collect_missing_data()
+
+        languages_data = {}
+        for lang in sorted_languages:
+            missing_count = missing_per_language.get(lang, 0)
+            coverage = ((total_phrases - missing_count) / total_phrases * 100) if total_phrases > 0 else 0
+            
+            missing_phrases = []
+            for filename, file_report in missing_by_file.items():
+                for item in file_report:
+                    if lang in item["missing_languages"]:
+                        missing_phrases.append({
+                            "file": filename,
+                            "phrase": item["phrase"],
+                            "line": item["line"],
+                            "english_text": item["english_text"]
+                        })
+
+            languages_data[lang] = {
+                "coverage_percent": round(coverage, 2),
+                "translated": total_phrases - missing_count,
+                "missing": missing_count,
+                "missing_phrases": missing_phrases
+            }
+
+        files_data = {}
+        for filename, file_report in missing_by_file.items():
+            files_data[filename] = {
+                "phrases_with_missing": len(file_report),
+                "phrases": [
+                    {
+                        "name": item["phrase"],
+                        "line": item["line"],
+                        "english_text": item["english_text"],
+                        "existing_languages": item["existing_languages"],
+                        "missing_languages": item["missing_languages"]
+                    }
+                    for item in file_report
+                ]
+            }
+
+        json_data = {
+            "summary": {
+                "total_languages": len(self.global_languages),
+                "total_phrases": total_phrases,
+                "phrases_with_missing": phrases_with_missing,
+                "total_missing_entries": total_missing,
+                "all_languages": sorted_languages
+            },
+            "languages": languages_data,
+            "files": files_data
+        }
+
+        if output_file:
+            try:
+                with open(output_file, "w", encoding="utf-8") as f:
+                    json.dump(json_data, f, indent=2, ensure_ascii=False)
+                print(f"Missing translations JSON written to: {output_file}")
+            except Exception as e:
+                print(f"Failed to write JSON to {output_file}: {e}")
+
+        return json_data
 
 
 def main():
@@ -650,8 +764,8 @@ def main():
     issues = linter.lint_all()
     linter.print_summary()
 
-    missing_report_file = "missing-translations.txt"
-    linter.generate_missing_languages_report(missing_report_file)
+    linter.generate_missing_languages_report("missing-translations.txt")
+    linter.generate_missing_languages_json("missing-translations.json")
 
     errors = sum(1 for i in issues if i.issue_type == "error")
     sys.exit(1 if errors > 0 else 0)

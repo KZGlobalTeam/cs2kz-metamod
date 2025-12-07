@@ -44,6 +44,13 @@ jobs:
           name: missing-translations.txt
           path: missing-translations.txt
           retention-days: 30
+      - name: Upload missing translations JSON
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: missing-translations.json
+          path: missing-translations.json
+          retention-days: 30
       - name: Check for errors
         if: steps.lint.outputs.exit_code != '0'
         run: exit 1
