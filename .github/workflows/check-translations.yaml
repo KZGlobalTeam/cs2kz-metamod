@@ -1,26 +1,34 @@
 name: Translations checks
 
 on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'translations/cs2kz-*.phrases.txt'
+      - 'translations/config.txt'
+      - 'scripts/check_translations.py'
+      - '.github/workflows/check-translations.yaml'
   pull_request:
     paths:
-      - '.github/workflows/**'
-      - 'translations/**'
-      - 'menu/**'
-      - 'scripts/**'
-  push:
-    paths:
-      - '.github/workflows/**'
-      - 'translations/**'
-      - 'menu/**'
-      - 'scripts/**'
+      - 'translations/cs2kz-*.phrases.txt'
+      - 'translations/config.txt'
+      - 'scripts/check_translations.py'
+      - '.github/workflows/check-translations.yaml'
 
 jobs:
   lint-translations:
     name: Lint Translation Files
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -30,27 +38,128 @@ jobs:
         run: |
           python scripts/check_translations.py translations 2>&1 | tee translation-lint-results.txt
           echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
-      - name: Upload linter results
+      - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: translation-lint-results.txt
-          path: translation-lint-results.txt
+          name: translation-reports
+          path: |
+            translation-lint-results.txt
+            missing-translations.txt
+            missing-translations.json
           retention-days: 30
-      - name: Upload missing translations report
-        if: always()
-        uses: actions/upload-artifact@v5
-        with:
-          name: missing-translations.txt
-          path: missing-translations.txt
-          retention-days: 30
-      - name: Upload missing translations JSON
-        if: always()
-        uses: actions/upload-artifact@v5
-        with:
-          name: missing-translations.json
-          path: missing-translations.json
-          retention-days: 30
+
+      - name: Push results to translation-reports branch
+        if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+        run: |
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Get current commit info
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+          COMMIT_MSG=$(git log -1 --pretty=%B | head -1)
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+
+          # Extract stats from missing-translations.txt
+          TOTAL_LANGUAGES=$(grep "Total languages:" missing-translations.txt | awk '{print $NF}' || echo "0")
+          TOTAL_PHRASES=$(grep "Total phrases:" missing-translations.txt | awk '{print $NF}' || echo "0")
+          PHRASES_MISSING=$(grep "Phrases with missing translations:" missing-translations.txt | awk '{print $NF}' || echo "0")
+          TOTAL_MISSING=$(grep "Total missing translation entries:" missing-translations.txt | awk '{print $NF}' || echo "0")
+
+          # Extract coverage section
+          COVERAGE_SECTION=$(sed -n '/LANGUAGE COVERAGE/,/Global languages/p' missing-translations.txt | grep -E '^\s+\w+' || echo "No coverage data")
+
+          # Count errors and warnings from lint results
+          ERRORS=$(grep -c "\[ERROR\]" translation-lint-results.txt || echo "0")
+          WARNINGS=$(grep -c "\[WARNING\]" translation-lint-results.txt || echo "0")
+
+          # Save report files
+          mkdir -p /tmp/reports
+          cp translation-lint-results.txt /tmp/reports/
+          cp missing-translations.txt /tmp/reports/
+          cp missing-translations.json /tmp/reports/
+
+          # Switch to reports branch
+          if git ls-remote --exit-code --heads origin translation-reports > /dev/null 2>&1; then
+            git fetch origin translation-reports
+            git checkout translation-reports
+          else
+            git checkout --orphan translation-reports
+            git rm -rf . > /dev/null 2>&1 || true
+          fi
+
+          # Clean and copy reports
+          rm -rf ./* 2>/dev/null || true
+          cp /tmp/reports/* .
+
+          # Create README with stats and graphs
+          cat > README.md << 'HEREDOC_END'
+          # Translation Reports
+
+          Automated translation linter reports for cs2kz-metamod.
+
+          ## Status
+
+          | Metric | Value |
+          |--------|-------|
+          | **Linter Errors** | ERRORS_PLACEHOLDER |
+          | **Linter Warnings** | WARNINGS_PLACEHOLDER |
+          | **Total Languages** | TOTAL_LANGUAGES_PLACEHOLDER |
+          | **Total Phrases** | TOTAL_PHRASES_PLACEHOLDER |
+          | **Phrases Missing Translations** | PHRASES_MISSING_PLACEHOLDER |
+          | **Total Missing Entries** | TOTAL_MISSING_PLACEHOLDER |
+
+          ## Language Coverage
+
+          ```
+          COVERAGE_PLACEHOLDER
+          ```
+
+          ## Reports
+
+          | File | Description |
+          |------|-------------|
+          | [translation-lint-results.txt](translation-lint-results.txt) | Linter errors and warnings |
+          | [missing-translations.txt](missing-translations.txt) | Detailed missing translations report |
+          | [missing-translations.json](missing-translations.json) | Machine-readable JSON export |
+
+          ## Last Updated
+
+          - **Commit:** [`COMMIT_SHA_PLACEHOLDER`](https://github.com/REPO_PLACEHOLDER/commit/COMMIT_SHA_FULL_PLACEHOLDER)
+          - **Time:** TIMESTAMP_PLACEHOLDER
+          - **Message:** COMMIT_MSG_PLACEHOLDER
+
+          ---
+
+          *This report is automatically generated on each push to master.*
+          HEREDOC_END
+
+          # Replace placeholders
+          sed -i "s/ERRORS_PLACEHOLDER/${ERRORS}/g" README.md
+          sed -i "s/WARNINGS_PLACEHOLDER/${WARNINGS}/g" README.md
+          sed -i "s/TOTAL_LANGUAGES_PLACEHOLDER/${TOTAL_LANGUAGES}/g" README.md
+          sed -i "s/TOTAL_PHRASES_PLACEHOLDER/${TOTAL_PHRASES}/g" README.md
+          sed -i "s/PHRASES_MISSING_PLACEHOLDER/${PHRASES_MISSING}/g" README.md
+          sed -i "s/TOTAL_MISSING_PLACEHOLDER/${TOTAL_MISSING}/g" README.md
+          sed -i "s/COMMIT_SHA_PLACEHOLDER/${COMMIT_SHA}/g" README.md
+          sed -i "s/COMMIT_SHA_FULL_PLACEHOLDER/$(git rev-parse HEAD)/g" README.md
+          sed -i "s|REPO_PLACEHOLDER|${{ github.repository }}|g" README.md
+          sed -i "s/TIMESTAMP_PLACEHOLDER/${TIMESTAMP}/g" README.md
+          sed -i "s/COMMIT_MSG_PLACEHOLDER/${COMMIT_MSG}/g" README.md
+
+          # Replace coverage placeholder with actual coverage
+          echo "${COVERAGE_SECTION}" > /tmp/coverage.txt
+          sed -i '/COVERAGE_PLACEHOLDER/{
+            r /tmp/coverage.txt
+            d
+          }' README.md
+
+          # Commit and push
+          git add -A
+          git commit -m "Update translation reports for ${COMMIT_SHA}" || echo "No changes to commit"
+          git push origin translation-reports --force
+
       - name: Check for errors
         if: steps.lint.outputs.exit_code != '0'
         run: exit 1
