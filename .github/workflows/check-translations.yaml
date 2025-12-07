@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - main
     paths:
       - 'translations/cs2kz-*.phrases.txt'
       - 'translations/config.txt'
@@ -50,7 +49,7 @@ jobs:
           retention-days: 30
 
       - name: Push results to translation-reports branch
-        if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           # Configure git
           git config user.name "github-actions[bot]"
