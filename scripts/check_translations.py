@@ -133,10 +133,11 @@ class IgnoreTracker:
 class TranslationLinter:
     """Linter for cs2kz translation phrase files."""
 
-    KNOWN_LANGUAGES = {
+    DEFAULT_KNOWN_LANGUAGES = {
         "en", "chi", "ua", "sv", "fi", "ko", "lv", "de", "ru", "pl",
         "pt", "es", "fr", "it", "nl", "tr", "hu", "cs", "da", "no",
-        "jp", "tw", "br", "bg", "ro", "el", "th", "vi", "id", "ms"
+        "jp", "tw", "br", "bg", "ro", "el", "th", "vi", "id", "ms",
+        "ar", "cze", "he", "lt", "pt_p", "sk", "zho"
     }
 
     KNOWN_COLOR_TAGS = {
@@ -155,6 +156,90 @@ class TranslationLinter:
         self.all_phrase_blocks: dict[str, list[PhraseBlock]] = {}
         self.ignore_trackers: dict[str, IgnoreTracker] = {}
         self.global_languages: set[str] = set()
+        
+        self.known_languages = self._parse_config_languages()
+        self.language_names = self._parse_config_language_names()
+
+    def _parse_config_languages(self) -> set[str]:
+        """Parse config.txt to extract known language codes.
+        
+        Returns:
+            Set of language codes from config.txt, or default set if not found.
+        """
+        config_path = self.translations_dir / "config.txt"
+        
+        if not config_path.exists():
+            print(f"config.txt not found in {self.translations_dir}, using default language list")
+            return self.DEFAULT_KNOWN_LANGUAGES.copy()
+
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                content = f.read()
+        except Exception as e:
+            print(f"Failed to read config.txt: {e}, using default language list")
+            return self.DEFAULT_KNOWN_LANGUAGES.copy()
+
+        languages = set()
+        
+        # Parse the KeyValues format: "language_name"    "code"
+        for line in content.splitlines():
+            stripped = line.strip()
+            
+            if not stripped or stripped.startswith("//") or stripped in ["{", "}", '"Languages"']:
+                continue
+            
+            match = re.match(r'^"([^"]+)"\s+"([^"]+)"', stripped)
+            if match:
+                lang_code = match.group(2)
+                languages.add(lang_code)
+
+        if languages:
+            print(f"Loaded {len(languages)} language codes from config.txt")
+            return languages
+        else:
+            print(f"No languages found in config.txt, using default language list")
+            return self.DEFAULT_KNOWN_LANGUAGES.copy()
+
+    def _parse_config_language_names(self) -> dict[str, str]:
+        """Parse config.txt to extract language code to name mapping.
+        
+        Returns:
+            Dict mapping language codes to full names.
+        """
+        config_path = self.translations_dir / "config.txt"
+        
+        if not config_path.exists():
+            return {}
+
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                content = f.read()
+        except Exception:
+            return {}
+
+        names = {}
+        
+        for line in content.splitlines():
+            stripped = line.strip()
+            
+            if not stripped or stripped.startswith("//") or stripped in ["{", "}", '"Languages"']:
+                continue
+            
+            match = re.match(r'^"([^"]+)"\s+"([^"]+)"', stripped)
+            if match:
+                lang_name = match.group(1)
+                lang_code = match.group(2)
+                # Don't overwrite if code already exists (handles duplicates like korean/koreana)
+                if lang_code not in names:
+                    names[lang_code] = lang_name
+
+        return names
+
+    def _get_language_display_name(self, code: str) -> str:
+        """Get display name for a language code."""
+        if code in self.language_names:
+            return f"{code} ({self.language_names[code]})"
+        return code
 
     def _add_issue(self, filename: str, line: int, issue_type: str,
                    category: str, message: str, context: Optional[str] = None) -> None:
@@ -520,11 +605,11 @@ class TranslationLinter:
                 if block.ignored:
                     continue
                 for lang in block.languages:
-                    if lang not in self.KNOWN_LANGUAGES:
+                    if lang not in self.known_languages:
                         line_num = block.languages[lang][0]
                         self._add_issue(
                             filename, line_num, "warning", "Unknown",
-                            f"Unknown language code '{lang}' in phrase '{block.name}'"
+                            f"Unknown language code '{lang}' in phrase '{block.name}' (not in config.txt)"
                         )
 
     def print_summary(self) -> None:
@@ -558,11 +643,7 @@ class TranslationLinter:
         print("=" * 70)
 
     def _collect_missing_data(self) -> tuple[dict, dict, int, int, int]:
-        """Collect missing translation data for reports.
-        
-        Returns:
-            Tuple of (missing_by_file, missing_per_language, total_missing, total_phrases, phrases_with_missing)
-        """
+        """Collect missing translation data for reports."""
         total_missing = 0
         total_phrases = 0
         phrases_with_missing = 0
@@ -631,7 +712,8 @@ class TranslationLinter:
             coverage = ((total_phrases - missing_count) / total_phrases * 100) if total_phrases > 0 else 0
             bar_length = int(coverage / 5)
             bar = "█" * bar_length + "░" * (20 - bar_length)
-            output.write(f"  {lang:5} [{bar}] {coverage:5.1f}% ({total_phrases - missing_count}/{total_phrases})\n")
+            lang_display = self._get_language_display_name(lang)
+            output.write(f"  {lang_display:20} [{bar}] {coverage:5.1f}% ({total_phrases - missing_count}/{total_phrases})\n")
 
         output.write("\n")
         output.write(f"Global languages ({len(sorted_languages)}): {', '.join(sorted_languages)}\n")
@@ -645,8 +727,8 @@ class TranslationLinter:
             output.write("-" * 70 + "\n")
 
             for item in file_report:
-                output.write(f"Line {item['line']}: \"{item['phrase']}\"\n")
-                output.write(f"Missing ({len(item['missing_languages'])}): {', '.join(item['missing_languages'])}\n")
+                output.write(f"  Line {item['line']}: \"{item['phrase']}\"\n")
+                output.write(f"    Missing ({len(item['missing_languages'])}): {', '.join(item['missing_languages'])}\n")
 
         output.write("\n" + "=" * 70 + "\n")
 
@@ -698,7 +780,6 @@ class TranslationLinter:
         for lang in sorted_languages:
             missing_count = missing_per_language.get(lang, 0)
             coverage = ((total_phrases - missing_count) / total_phrases * 100) if total_phrases > 0 else 0
-            
             missing_phrases = []
             for filename, file_report in missing_by_file.items():
                 for item in file_report:
@@ -711,6 +792,7 @@ class TranslationLinter:
                         })
 
             languages_data[lang] = {
+                "name": self.language_names.get(lang, lang),
                 "coverage_percent": round(coverage, 2),
                 "translated": total_phrases - missing_count,
                 "missing": missing_count,
@@ -739,7 +821,8 @@ class TranslationLinter:
                 "total_phrases": total_phrases,
                 "phrases_with_missing": phrases_with_missing,
                 "total_missing_entries": total_missing,
-                "all_languages": sorted_languages
+                "all_languages": sorted_languages,
+                "known_languages_from_config": sorted(self.known_languages)
             },
             "languages": languages_data,
             "files": files_data
