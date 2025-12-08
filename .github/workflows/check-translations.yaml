@@ -5,12 +5,14 @@ on:
     paths:
       - 'translations/cs2kz-*.phrases.txt'
       - 'translations/config.txt'
+      - 'menu/*.txt'
       - 'scripts/check_translations.py'
       - '.github/workflows/check-translations.yaml'
   pull_request:
     paths:
       - 'translations/cs2kz-*.phrases.txt'
       - 'translations/config.txt'
+      - 'menu/*.txt'
       - 'scripts/check_translations.py'
       - '.github/workflows/check-translations.yaml'
 
@@ -25,7 +27,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -40,7 +41,7 @@ jobs:
       - name: Run translation linter
         id: lint
         run: |
-          python scripts/check_translations.py translations 2>&1 | tee translation-lint-results.txt
+          python scripts/check_translations.py . 2>&1 | tee translation-lint-results.txt
           echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Upload artifacts
         if: always()
@@ -73,17 +74,29 @@ jobs:
           PHRASES_MISSING=$(grep "Phrases with missing translations:" missing-translations.txt 2>/dev/null | awk '{print $NF}' || echo "0")
           TOTAL_MISSING=$(grep "Total missing translation entries:" missing-translations.txt 2>/dev/null | awk '{print $NF}' || echo "0")
 
-          # Extract coverage section
-          awk '/^LANGUAGE COVERAGE$/,/^Global languages/' missing-translations.txt | grep -E '^\s+\S+.*\[' > /tmp/coverage.txt 2>/dev/null || true
-          
+          # Extract phrase coverage section
+          awk '/^LANGUAGE COVERAGE \(Phrases\)$/,/^Global languages/' missing-translations.txt | grep -E '^\s+\S+.*\[' > /tmp/coverage.txt 2>/dev/null || true
+
           if [ ! -s /tmp/coverage.txt ]; then
             echo "  No coverage data available" > /tmp/coverage.txt
           fi
 
+          # Extract menu status section
+          awk '/^MENU TRANSLATION STATUS$/,/^=/' missing-translations.txt | grep -E '^\s+\S+' > /tmp/menu_status.txt 2>/dev/null || true
+
+          if [ ! -s /tmp/menu_status.txt ]; then
+            echo "  No menu data available" > /tmp/menu_status.txt
+          fi
+
+          # Count menu stats from JSON
+          MENU_COMPLETE=$(grep -c '"file_exists": true' missing-translations.json 2>/dev/null || echo "0")
+          MENU_MISSING=$(grep -c '"file_exists": false' missing-translations.json 2>/dev/null || echo "0")
+          MENU_TOTAL=$(ls -1 menu/*.txt 2>/dev/null | wc -l || echo "0")
+
           # Count errors and warnings
           ERRORS=$(grep -c "\[ERROR\]" translation-lint-results.txt 2>/dev/null || true)
           if [ -z "$ERRORS" ]; then ERRORS=0; fi
-          
+
           WARNINGS=$(grep -c "\[WARNING\]" translation-lint-results.txt 2>/dev/null || true)
           if [ -z "$WARNINGS" ]; then WARNINGS=0; fi
 
@@ -106,10 +119,11 @@ jobs:
           rm -rf ./* 2>/dev/null || true
           cp /tmp/reports/* .
 
-          # Read coverage into variable
+          # Read coverage and menu status into variables
           COVERAGE_SECTION=$(cat /tmp/coverage.txt)
+          MENU_STATUS_SECTION=$(cat /tmp/menu_status.txt)
 
-          # Create README with stats and graphs
+          # Create README with stats, graphs, and menu status
           cat > README.md << EOF
           # Translation Reports
 
@@ -125,11 +139,18 @@ jobs:
           | **Total Phrases** | ${TOTAL_PHRASES} |
           | **Phrases Missing Translations** | ${PHRASES_MISSING} |
           | **Total Missing Entries** | ${TOTAL_MISSING} |
+          | **Menu Files** | ${MENU_TOTAL} |
 
-          ## Language Coverage
+          ## Language Coverage (Phrases)
 
           \`\`\`
           ${COVERAGE_SECTION}
+          \`\`\`
+
+          ## Menu Translation Status
+
+          \`\`\`
+          ${MENU_STATUS_SECTION}
           \`\`\`
 
           ## Reports
