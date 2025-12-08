@@ -62,7 +62,7 @@
 					"label"		"텔레포트"
 					"cmd"		"kz_tp; radio1"
 				}
-				
+
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
@@ -121,7 +121,7 @@
 					"label"		"커스텀 시작 지점 설정"
 					"cmd"		"kz_ssp"
 				}
-				
+
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
