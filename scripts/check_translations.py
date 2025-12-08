@@ -748,7 +748,7 @@ class TranslationLinter:
                     section_stack.pop()
                 continue
 
-            match = re.match(r'^"([^"]+)"\s*(? :"([^"]*)")?$', stripped)
+            match = re.match(r'^"([^"]+)"\s*(?:"([^"]*)")?$', stripped)
             if match:
                 key = match.group(1)
                 value = match.group(2)
