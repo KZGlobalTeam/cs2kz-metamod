@@ -6,7 +6,7 @@ RadioPanel.txt
 		{
 			"hotkey"	"0"
 			"title"		"TP Menu (Eenvoudig)"
-			"timeout"   "100000"
+			"timeout"	"100000"
 
 			"Commands"
 			{
