@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Translation file linter for cs2kz-metamod phrase files.
-Checks for format issues and missing/duplicate language entries in cs2kz-*.phrases.txt files.
+Translation file linter for cs2kz-metamod phrase files and menu files.
+Checks for format issues and missing/duplicate language entries.
 
 Usage:
     python check_translations.py [translations_directory]
@@ -40,10 +40,9 @@ from io import StringIO
 
 @dataclass
 class Issue:
-    """Represents a single issue found in a translation file."""
     file: str
     line: int
-    issue_type: str  # 'error' or 'warning'
+    issue_type: str
     category: str
     message: str
     context: Optional[str] = None
@@ -58,19 +57,38 @@ class Issue:
 
 @dataclass
 class PhraseBlock:
-    """Represents a parsed phrase block with its translations."""
     name: str
     start_line: int
     end_line: int
-    languages: dict = field(default_factory=dict)  # lang_code -> (line_number, value)
-    format_spec: Optional[str] = None  # The #format directive value
-    format_line: int = 0  # Line number of #format directive
-    placeholders: set = field(default_factory=set)  # Parsed placeholder names from #format
-    ignored: bool = False  # Whether this block is ignored by linter
+    languages: dict = field(default_factory=dict)
+    format_spec: Optional[str] = None
+    format_line: int = 0
+    placeholders: set = field(default_factory=set)
+    ignored: bool = False
+
+
+@dataclass
+class MenuCommand:
+    name: str
+    start_line: int
+    end_line: int
+    hotkey: Optional[str] = None
+    label: Optional[str] = None
+    cmd: Optional[str] = None
+
+
+@dataclass
+class MenuGroup:
+    name: str
+    start_line: int
+    end_line: int
+    hotkey: Optional[str] = None
+    title: Optional[str] = None
+    timeout: Optional[str] = None
+    commands: list = field(default_factory=list)
 
 
 class IgnoreTracker:
-    """Tracks which lines should be ignored based on lint-ignore comments."""
 
     IGNORE_START = "lint-ignore-start"
     IGNORE_END = "lint-ignore-end"
@@ -82,7 +100,6 @@ class IgnoreTracker:
         self._parse_ignore_comments(lines)
 
     def _parse_ignore_comments(self, lines: list[str]) -> None:
-        """Parse all lines and determine which should be ignored."""
         in_ignored_block = False
         ignore_next = False
 
@@ -122,16 +139,13 @@ class IgnoreTracker:
                         self.ignored_lines.add(line_num)
 
     def is_ignored(self, line_num: int) -> bool:
-        """Check if a line number should be ignored."""
         return line_num in self.ignored_lines
 
     def is_range_ignored(self, start_line: int, end_line: int) -> bool:
-        """Check if an entire range of lines is ignored."""
         return all(self.is_ignored(ln) for ln in range(start_line, end_line + 1))
 
 
 class TranslationLinter:
-    """Linter for cs2kz translation phrase files."""
 
     DEFAULT_KNOWN_LANGUAGES = {
         "en", "chi", "ua", "sv", "fi", "ko", "lv", "de", "ru", "pl",
@@ -150,8 +164,45 @@ class TranslationLinter:
 
     SPECIAL_DIRECTIVES = {"#format"}
 
-    def __init__(self, translations_dir: str = "./translations"):
+    MENU_LANGUAGE_MAP = {
+        "english": "en",
+        "arabic": "ar",
+        "brazilian": "pt",
+        "bulgarian": "bg",
+        "czech": "cze",
+        "danish": "da",
+        "dutch": "nl",
+        "finnish": "fi",
+        "french": "fr",
+        "german": "de",
+        "greek": "el",
+        "hebrew": "he",
+        "hungarian": "hu",
+        "italian": "it",
+        "japanese": "jp",
+        "koreana": "ko",
+        "korean": "ko",
+        "latvian": "lv",
+        "lithuanian": "lt",
+        "norwegian": "no",
+        "polish": "pl",
+        "portuguese": "pt_p",
+        "romanian": "ro",
+        "russian": "ru",
+        "schinese": "chi",
+        "slovak": "sk",
+        "spanish": "es",
+        "swedish": "sv",
+        "tchinese": "zho",
+        "thai": "th",
+        "turkish": "tr",
+        "ukrainian": "ua",
+        "vietnamese": "vi",
+    }
+
+    def __init__(self, translations_dir: str = "./translations", menu_dir: str = "./menu"):
         self.translations_dir = Path(translations_dir)
+        self.menu_dir = Path(menu_dir)
         self.issues: list[Issue] = []
         self.all_phrase_blocks: dict[str, list[PhraseBlock]] = {}
         self.ignore_trackers: dict[str, IgnoreTracker] = {}
@@ -159,13 +210,11 @@ class TranslationLinter:
         
         self.known_languages = self._parse_config_languages()
         self.language_names = self._parse_config_language_names()
+        
+        self.menu_files: dict[str, list[MenuGroup]] = {}
+        self.menu_languages: set[str] = set()
 
     def _parse_config_languages(self) -> set[str]:
-        """Parse config.txt to extract known language codes.
-        
-        Returns:
-            Set of language codes from config.txt, or default set if not found.
-        """
         config_path = self.translations_dir / "config.txt"
         
         if not config_path.exists():
@@ -181,7 +230,6 @@ class TranslationLinter:
 
         languages = set()
         
-        # Parse the KeyValues format: "language_name"    "code"
         for line in content.splitlines():
             stripped = line.strip()
             
@@ -201,11 +249,6 @@ class TranslationLinter:
             return self.DEFAULT_KNOWN_LANGUAGES.copy()
 
     def _parse_config_language_names(self) -> dict[str, str]:
-        """Parse config.txt to extract language code to name mapping.
-        
-        Returns:
-            Dict mapping language codes to full names.
-        """
         config_path = self.translations_dir / "config.txt"
         
         if not config_path.exists():
@@ -229,21 +272,18 @@ class TranslationLinter:
             if match:
                 lang_name = match.group(1)
                 lang_code = match.group(2)
-                # Don't overwrite if code already exists (handles duplicates like korean/koreana)
                 if lang_code not in names:
                     names[lang_code] = lang_name
 
         return names
 
     def _get_language_display_name(self, code: str) -> str:
-        """Get display name for a language code."""
         if code in self.language_names:
             return f"{code} ({self.language_names[code]})"
         return code
 
     def _add_issue(self, filename: str, line: int, issue_type: str,
                    category: str, message: str, context: Optional[str] = None) -> None:
-        """Add an issue if the line is not ignored."""
         if filename in self.ignore_trackers:
             if self.ignore_trackers[filename].is_ignored(line):
                 return
@@ -258,7 +298,6 @@ class TranslationLinter:
         ))
 
     def _extract_placeholders(self, value: str) -> set[str]:
-        """Extract placeholder names from a translation value, excluding color tags."""
         tags = set(re.findall(r'\{([^}]+)\}', value))
         return {
             tag for tag in tags
@@ -266,7 +305,6 @@ class TranslationLinter:
         }
 
     def _strip_strings_from_line(self, line: str) -> str:
-        """Remove quoted strings from a line, preserving structure for brace matching."""
         result = []
         i = 0
         in_string = False
@@ -289,37 +327,37 @@ class TranslationLinter:
         return ''.join(result)
 
     def lint_all(self) -> list[Issue]:
-        """Lint all cs2kz-*.phrases.txt files in the translations directory."""
-        if not self.translations_dir.exists():
-            print(f"Error: Directory '{self.translations_dir}' does not exist.")
-            sys.exit(1)
+        """Lint all translation files and menu files."""
+        if self.translations_dir.exists():
+            pattern = "cs2kz-*.phrases.txt"
+            files = sorted(self.translations_dir.glob(pattern))
 
-        pattern = "cs2kz-*.phrases.txt"
-        files = sorted(self.translations_dir.glob(pattern))
-
-        if not files:
-            print(f"No files matching '{pattern}' found in '{self.translations_dir}'")
-            sys.exit(1)
-
-        print(f"Checking {len(files)} translation files in '{self.translations_dir}'...\n")
-
-        for filepath in files:
-            self.lint_file(filepath)
+            if files:
+                print(f"Checking {len(files)} translation files in '{self.translations_dir}'...\n")
+                for filepath in files:
+                    self.lint_file(filepath)
+            else:
+                print(f"No files matching '{pattern}' found in '{self.translations_dir}'")
+        else:
+            print(f"Warning: Directory '{self.translations_dir}' does not exist.")
 
         self._collect_global_languages()
         self._check_language_consistency()
 
+        if self.menu_dir.exists():
+            self._lint_menu_files()
+        else:
+            print(f"Warning: Menu directory '{self.menu_dir}' does not exist.")
+
         return self.issues
 
     def _collect_global_languages(self) -> None:
-        """Collect all languages used across all files."""
         for filename, blocks in self.all_phrase_blocks.items():
             for block in blocks:
                 if not block.ignored:
                     self.global_languages.update(block.languages.keys())
 
     def lint_file(self, filepath: Path) -> None:
-        """Lint a single translation file."""
         try:
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
@@ -351,7 +389,6 @@ class TranslationLinter:
         self._check_phrase_blocks(filepath.name, phrase_blocks)
 
     def _parse_format_spec(self, format_value: str) -> set[str]:
-        """Parse a #format directive and extract placeholder names."""
         placeholders = set()
         if not format_value:
             return placeholders
@@ -368,7 +405,6 @@ class TranslationLinter:
         return placeholders
 
     def _get_valid_placeholders_for_line(self, line_num: int, phrase_blocks: list[PhraseBlock]) -> set[str]:
-        """Get the valid placeholders for a given line number."""
         for block in phrase_blocks:
             if block.start_line <= line_num <= block.end_line:
                 valid = set(block.placeholders)
@@ -382,7 +418,6 @@ class TranslationLinter:
         return set()
 
     def _check_format_issues(self, filename: str, lines: list[str], phrase_blocks: list[PhraseBlock]) -> None:
-        """Check for general formatting issues."""
         brace_stack = []
         prev_line_empty = False
 
@@ -468,7 +503,6 @@ class TranslationLinter:
             )
 
     def _parse_phrases(self, filename: str, lines: list[str]) -> list[PhraseBlock]:
-        """Parse the file and extract phrase blocks."""
         phrase_blocks = []
         current_block: Optional[PhraseBlock] = None
         brace_depth = 0
@@ -542,7 +576,6 @@ class TranslationLinter:
         return phrase_blocks
 
     def _check_phrase_blocks(self, filename: str, blocks: list[PhraseBlock]) -> None:
-        """Check phrase blocks for issues."""
         phrase_names = {}
 
         for block in blocks:
@@ -597,7 +630,6 @@ class TranslationLinter:
                         )
 
     def _check_language_consistency(self) -> None:
-        """Check for language consistency across all files."""
         print(f"Languages found across all files: {sorted(self.global_languages)}\n")
 
         for filename, blocks in self.all_phrase_blocks.items():
@@ -612,8 +644,287 @@ class TranslationLinter:
                             f"Unknown language code '{lang}' in phrase '{block.name}' (not in config.txt)"
                         )
 
+    # ==================== MENU FILE LINTING ====================
+
+    def _lint_menu_files(self) -> None:
+        menu_files = list(self.menu_dir.glob("*.txt"))
+        
+        if not menu_files:
+            print(f"No menu files found in '{self.menu_dir}'")
+            return
+
+        print(f"\nChecking {len(menu_files)} menu files in '{self.menu_dir}'...\n")
+
+        english_file = self.menu_dir / "english.txt"
+        if not english_file.exists():
+            self._add_issue(
+                "menu/",
+                0,
+                "error",
+                "Missing",
+                "Missing english.txt - this is the reference file for menu translations"
+            )
+            return
+
+        english_groups = self._parse_menu_file(english_file)
+        if english_groups is None:
+            return
+
+        self.menu_files["english.txt"] = english_groups
+        self.menu_languages.add("english")
+
+        for menu_file in sorted(menu_files):
+            if menu_file.name == "english.txt":
+                continue
+
+            lang_name = menu_file.stem
+            self.menu_languages.add(lang_name)
+
+            lang_groups = self._parse_menu_file(menu_file)
+            if lang_groups is None:
+                continue
+
+            self.menu_files[menu_file.name] = lang_groups
+            self._compare_menu_to_english(menu_file.name, lang_groups, english_groups)
+
+        self._check_missing_menu_languages()
+
+    def _parse_menu_file(self, filepath: Path) -> Optional[list[MenuGroup]]:
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+                lines = content.splitlines()
+        except UnicodeDecodeError:
+            self._add_issue(
+                f"menu/{filepath.name}",
+                0,
+                "error",
+                "Encoding",
+                "File is not valid UTF-8"
+            )
+            return None
+        except Exception as e:
+            self._add_issue(
+                f"menu/{filepath.name}",
+                0,
+                "error",
+                "File",
+                f"Could not read file: {e}"
+            )
+            return None
+
+        self.ignore_trackers[f"menu/{filepath.name}"] = IgnoreTracker(lines)
+
+        self._check_menu_format_issues(f"menu/{filepath.name}", lines)
+
+        groups = []
+        current_group: Optional[MenuGroup] = None
+        current_command: Optional[MenuCommand] = None
+        brace_depth = 0
+        section_stack = []
+
+        for line_num, line in enumerate(lines, 1):
+            stripped = line.strip()
+
+            if not stripped or stripped.startswith("//"):
+                continue
+
+            if stripped == "{":
+                brace_depth += 1
+                continue
+
+            if stripped == "}":
+                brace_depth -= 1
+                if current_command and brace_depth == 3:
+                    current_command.end_line = line_num
+                    if current_group:
+                        current_group.commands.append(current_command)
+                    current_command = None
+                elif current_group and brace_depth == 2:
+                    current_group.end_line = line_num
+                    groups.append(current_group)
+                    current_group = None
+                elif section_stack and brace_depth == len(section_stack) - 1:
+                    section_stack.pop()
+                continue
+
+            match = re.match(r'^"([^"]+)"\s*(? :"([^"]*)")?$', stripped)
+            if match:
+                key = match.group(1)
+                value = match.group(2)
+
+                if value is None:
+                    if key == "Groups":
+                        section_stack.append("Groups")
+                    elif key == "Commands":
+                        section_stack.append("Commands")
+                    elif "Groups" in section_stack and "Commands" not in section_stack and brace_depth == 2:
+                        current_group = MenuGroup(
+                            name=key,
+                            start_line=line_num,
+                            end_line=line_num
+                        )
+                    elif "Commands" in section_stack and brace_depth == 4:
+                        current_command = MenuCommand(
+                            name=key,
+                            start_line=line_num,
+                            end_line=line_num
+                        )
+                else:
+                    if current_command:
+                        if key == "hotkey":
+                            current_command.hotkey = value
+                        elif key == "label":
+                            current_command.label = value
+                        elif key == "cmd":
+                            current_command.cmd = value
+                    elif current_group:
+                        if key == "hotkey":
+                            current_group.hotkey = value
+                        elif key == "title":
+                            current_group.title = value
+                        elif key == "timeout":
+                            current_group.timeout = value
+
+        return groups
+
+    def _check_menu_format_issues(self, filename: str, lines: list[str]) -> None:
+        brace_stack = []
+        prev_line_empty = False
+
+        for line_num, line in enumerate(lines, 1):
+            stripped = line.strip()
+
+            if line != line.rstrip():
+                self._add_issue(
+                    filename, line_num, "warning", "Formatting",
+                    "Line has trailing whitespace"
+                )
+
+            if stripped == "":
+                if prev_line_empty:
+                    self._add_issue(
+                        filename, line_num, "warning", "Formatting",
+                        "Multiple consecutive empty lines"
+                    )
+                prev_line_empty = True
+            else:
+                prev_line_empty = False
+
+            if stripped.startswith("//"):
+                continue
+
+            stripped_no_strings = self._strip_strings_from_line(stripped)
+
+            for char in stripped_no_strings:
+                if char == '{':
+                    brace_stack.append((line_num, '{'))
+                elif char == '}':
+                    if not brace_stack:
+                        self._add_issue(
+                            filename, line_num, "error", "Syntax",
+                            "Unmatched closing brace '}'",
+                            stripped[:60]
+                        )
+                    else:
+                        brace_stack.pop()
+
+        for line_num, brace in brace_stack:
+            self._add_issue(
+                filename, line_num, "error", "Syntax",
+                "Unclosed opening brace '{'"
+            )
+
+    def _compare_menu_to_english(self, filename: str, lang_groups: list[MenuGroup], 
+                                  english_groups: list[MenuGroup]) -> None:
+        english_group_map = {g.name: g for g in english_groups}
+        lang_group_map = {g.name: g for g in lang_groups}
+
+        for en_group_name, en_group in english_group_map.items():
+            if en_group_name not in lang_group_map:
+                self._add_issue(
+                    f"menu/{filename}",
+                    0,
+                    "warning",
+                    "Missing",
+                    f"Missing menu group '{en_group_name}' (exists in english.txt)"
+                )
+                continue
+
+            lang_group = lang_group_map[en_group_name]
+
+            en_commands = {c.name: c for c in en_group.commands}
+            lang_commands = {c.name: c for c in lang_group.commands}
+
+            for en_cmd_name, en_cmd in en_commands.items():
+                if en_cmd_name not in lang_commands:
+                    self._add_issue(
+                        f"menu/{filename}",
+                        lang_group.start_line,
+                        "warning",
+                        "Missing",
+                        f"Missing command '{en_cmd_name}' in group '{en_group_name}' (exists in english.txt)"
+                    )
+                    continue
+
+                lang_cmd = lang_commands[en_cmd_name]
+
+                if en_cmd.label and not lang_cmd.label:
+                    self._add_issue(
+                        f"menu/{filename}",
+                        lang_cmd.start_line,
+                        "warning",
+                        "Missing",
+                        f"Missing label for command '{en_cmd_name}' in group '{en_group_name}'"
+                    )
+
+                if en_cmd.hotkey != lang_cmd.hotkey:
+                    self._add_issue(
+                        f"menu/{filename}",
+                        lang_cmd.start_line,
+                        "warning",
+                        "Mismatch",
+                        f"Hotkey mismatch for '{en_cmd_name}': english='{en_cmd.hotkey}', {filename}='{lang_cmd.hotkey}'"
+                    )
+
+                if en_cmd.cmd != lang_cmd.cmd:
+                    self._add_issue(
+                        f"menu/{filename}",
+                        lang_cmd.start_line,
+                        "warning",
+                        "Mismatch",
+                        f"Command mismatch for '{en_cmd_name}': english='{en_cmd.cmd}', {filename}='{lang_cmd.cmd}'"
+                    )
+
+        for lang_group_name in lang_group_map:
+            if lang_group_name not in english_group_map:
+                self._add_issue(
+                    f"menu/{filename}",
+                    lang_group_map[lang_group_name].start_line,
+                    "warning",
+                    "Extra",
+                    f"Extra menu group '{lang_group_name}' not in english.txt"
+                )
+
+    def _check_missing_menu_languages(self) -> None:
+        code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
+        
+        for lang_code in self.known_languages:
+            lang_name = code_to_name.get(lang_code)
+            if lang_name and lang_name not in self.menu_languages:
+                menu_file = self.menu_dir / f"{lang_name}.txt"
+                if not menu_file.exists():
+                    self._add_issue(
+                        "menu/",
+                        0,
+                        "warning",
+                        "Missing",
+                        f"Missing menu translation file: {lang_name}.txt (for language code '{lang_code}')"
+                    )
+
+    # ==================== REPORTING ====================
+
     def print_summary(self) -> None:
-        """Print a summary of all issues found."""
         if not self.issues:
             print("No issues found!")
             return
@@ -633,7 +944,7 @@ class TranslationLinter:
             issues = by_file[filename]
             file_errors = sum(1 for i in issues if i.issue_type == "error")
             file_warnings = sum(1 for i in issues if i.issue_type == "warning")
-            print(f"\n📄 {filename} ({file_errors} errors, {file_warnings} warnings)")
+            print(f"\n{filename} ({file_errors} errors, {file_warnings} warnings)")
             print("-" * 50)
             for issue in sorted(issues, key=lambda x: x.line):
                 print(f"  {issue}")
@@ -643,7 +954,6 @@ class TranslationLinter:
         print("=" * 70)
 
     def _collect_missing_data(self) -> tuple[dict, dict, int, int, int]:
-        """Collect missing translation data for reports."""
         total_missing = 0
         total_phrases = 0
         phrases_with_missing = 0
@@ -685,12 +995,66 @@ class TranslationLinter:
 
         return missing_by_file, dict(missing_per_language), total_missing, total_phrases, phrases_with_missing
 
+    def _collect_missing_menu_data(self) -> dict:
+        if "english.txt" not in self.menu_files:
+            return {}
+
+        english_groups = self.menu_files["english.txt"]
+        missing_data = {}
+
+        code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
+
+        for lang_code in sorted(self.known_languages):
+            lang_name = code_to_name.get(lang_code)
+            if not lang_name:
+                continue
+
+            menu_file = f"{lang_name}.txt"
+            
+            if menu_file not in self.menu_files:
+                missing_data[lang_code] = {
+                    "name": lang_name,
+                    "file_exists": False,
+                    "missing_groups": [g.name for g in english_groups],
+                    "missing_commands": []
+                }
+            else:
+                lang_groups = self.menu_files[menu_file]
+                lang_group_map = {g.name: g for g in lang_groups}
+                
+                missing_groups = []
+                missing_commands = []
+
+                for en_group in english_groups:
+                    if en_group.name not in lang_group_map:
+                        missing_groups.append(en_group.name)
+                    else:
+                        lang_group = lang_group_map[en_group.name]
+                        lang_cmd_names = {c.name for c in lang_group.commands}
+                        
+                        for en_cmd in en_group.commands:
+                            if en_cmd.name not in lang_cmd_names:
+                                missing_commands.append({
+                                    "group": en_group.name,
+                                    "command": en_cmd.name
+                                })
+
+                if missing_groups or missing_commands:
+                    missing_data[lang_code] = {
+                        "name": lang_name,
+                        "file_exists": True,
+                        "missing_groups": missing_groups,
+                        "missing_commands": missing_commands
+                    }
+
+        return missing_data
+
     def generate_missing_languages_report(self, output_file: Optional[str] = None) -> str:
-        """Generate a report of missing language translations using global language set."""
         output = StringIO()
         sorted_languages = sorted(self.global_languages)
 
         missing_by_file, missing_per_language, total_missing, total_phrases, phrases_with_missing = self._collect_missing_data()
+        missing_menu_data = self._collect_missing_menu_data()
 
         output.write("=" * 70 + "\n")
         output.write("MISSING TRANSLATIONS REPORT\n")
@@ -704,7 +1068,7 @@ class TranslationLinter:
         output.write(f"Phrases with missing translations: {phrases_with_missing}\n")
         output.write(f"Total missing translation entries: {total_missing}\n\n")
 
-        output.write("LANGUAGE COVERAGE\n")
+        output.write("LANGUAGE COVERAGE (Phrases)\n")
         output.write("-" * 70 + "\n\n")
 
         for lang in sorted_languages:
@@ -718,8 +1082,28 @@ class TranslationLinter:
         output.write("\n")
         output.write(f"Global languages ({len(sorted_languages)}): {', '.join(sorted_languages)}\n")
 
+        if missing_menu_data or self.menu_files:
+            output.write("\n" + "=" * 70 + "\n")
+            output.write("MENU TRANSLATION STATUS\n")
+            output.write("-" * 70 + "\n\n")
+
+            code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
+            
+            for lang_code in sorted(self.known_languages):
+                lang_name = code_to_name.get(lang_code, lang_code)
+                
+                if lang_code in missing_menu_data:
+                    data = missing_menu_data[lang_code]
+                    if not data["file_exists"]:
+                        output.write(f"  {lang_code:5} ({lang_name:12}): File missing\n")
+                    else:
+                        issues = len(data["missing_groups"]) + len(data["missing_commands"])
+                        output.write(f"  {lang_code:5} ({lang_name:12}): {issues} missing items\n")
+                elif f"{lang_name}.txt" in self.menu_files:
+                    output.write(f"  {lang_code:5} ({lang_name:12}): Complete\n")
+
         output.write("\n" + "=" * 70 + "\n")
-        output.write("DETAILED MISSING TRANSLATIONS\n")
+        output.write("DETAILED MISSING TRANSLATIONS (Phrases)\n")
         output.write("=" * 70 + "\n")
 
         for filename, file_report in missing_by_file.items():
@@ -729,6 +1113,24 @@ class TranslationLinter:
             for item in file_report:
                 output.write(f"  Line {item['line']}: \"{item['phrase']}\"\n")
                 output.write(f"    Missing ({len(item['missing_languages'])}): {', '.join(item['missing_languages'])}\n")
+
+        if missing_menu_data:
+            output.write("\n" + "=" * 70 + "\n")
+            output.write("DETAILED MISSING MENU TRANSLATIONS\n")
+            output.write("=" * 70 + "\n")
+
+            for lang_code, data in sorted(missing_menu_data.items()):
+                output.write(f"\n{data['name']}.txt ({lang_code})\n")
+                output.write("-" * 70 + "\n")
+
+                if not data["file_exists"]:
+                    output.write("  Entire file is missing\n")
+                else:
+                    if data["missing_groups"]:
+                        output.write(f"  Missing groups: {', '.join(data['missing_groups'])}\n")
+                    if data["missing_commands"]:
+                        for cmd in data["missing_commands"]:
+                            output.write(f"  Missing command: {cmd['command']} (in group {cmd['group']})\n")
 
         output.write("\n" + "=" * 70 + "\n")
 
@@ -745,36 +1147,9 @@ class TranslationLinter:
         return report_content
 
     def generate_missing_languages_json(self, output_file: Optional[str] = None) -> dict:
-        """Generate a JSON export of missing translations for easy processing.
-        
-        Structure:
-        {
-            "summary": { ... },
-            "languages": {
-                "lang_code": {
-                    "coverage_percent": 95.5,
-                    "translated": 150,
-                    "missing": 7,
-                    "missing_phrases": [
-                        {
-                            "file": "cs2kz-commands.phrases.txt",
-                            "phrase": "Command Description",
-                            "line": 42,
-                            "english_text": "Original English text"
-                        }
-                    ]
-                }
-            },
-            "files": {
-                "filename.txt": {
-                    "phrases_with_missing": 5,
-                    "phrases": [...]
-                }
-            }
-        }
-        """
         sorted_languages = sorted(self.global_languages)
         missing_by_file, missing_per_language, total_missing, total_phrases, phrases_with_missing = self._collect_missing_data()
+        missing_menu_data = self._collect_missing_menu_data()
 
         languages_data = {}
         for lang in sorted_languages:
@@ -796,7 +1171,8 @@ class TranslationLinter:
                 "coverage_percent": round(coverage, 2),
                 "translated": total_phrases - missing_count,
                 "missing": missing_count,
-                "missing_phrases": missing_phrases
+                "missing_phrases": missing_phrases,
+                "menu": missing_menu_data.get(lang, {"file_exists": True, "missing_groups": [], "missing_commands": []})
             }
 
         files_data = {}
@@ -825,7 +1201,11 @@ class TranslationLinter:
                 "known_languages_from_config": sorted(self.known_languages)
             },
             "languages": languages_data,
-            "files": files_data
+            "files": files_data,
+            "menu": {
+                "languages_with_menu": sorted(self.menu_languages),
+                "missing": missing_menu_data
+            }
         }
 
         if output_file:
@@ -840,10 +1220,16 @@ class TranslationLinter:
 
 
 def main():
-    """Main entry point."""
-    translations_dir = sys.argv[1] if len(sys.argv) > 1 else "./translations"
+    base_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
+    
+    if base_dir.name == "translations":
+        translations_dir = base_dir
+        menu_dir = base_dir.parent / "menu"
+    else:
+        translations_dir = base_dir / "translations"
+        menu_dir = base_dir / "menu"
 
-    linter = TranslationLinter(translations_dir)
+    linter = TranslationLinter(str(translations_dir), str(menu_dir))
     issues = linter.lint_all()
     linter.print_summary()
 
