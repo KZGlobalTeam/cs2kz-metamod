@@ -61,7 +61,7 @@
 					"label"		"Teleportēties"
 					"cmd"		"kz_tp; radio1"
 				}
-				
+
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
@@ -120,7 +120,7 @@
 					"label"		"Iestatīt pielāgoto starta pozīciju"
 					"cmd"		"kz_ssp"
 				}
-				
+
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
