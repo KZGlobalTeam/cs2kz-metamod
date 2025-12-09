@@ -63,7 +63,7 @@
 					"label"		"Teleportera"
 					"cmd"		"kz_tp; radio1"
 				}
-				
+
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
@@ -122,7 +122,7 @@
 					"label"		"Skapa Justerad Startposition"
 					"cmd"		"kz_ssp"
 				}
-				
+
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
