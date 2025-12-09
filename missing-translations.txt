@@ -1,0 +1,1116 @@
+======================================================================
+MISSING TRANSLATIONS REPORT
+Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
+======================================================================
+
+SUMMARY
+----------------------------------------------------------------------
+Total languages: 13
+Total phrases: 497
+Phrases with missing translations: 431
+Total missing translation entries: 2125
+
+LANGUAGE COVERAGE (Phrases)
+----------------------------------------------------------------------
+
+  chi (schinese)       [███████████████████░]  99.6% (495/497)
+  de (german)          [████████████████████] 100.0% (497/497)
+  en (english)         [████████████████████] 100.0% (497/497)
+  es (spanish)         [███████████░░░░░░░░░]  57.9% (288/497)
+  fi (finnish)         [█████████░░░░░░░░░░░]  47.9% (238/497)
+  it (italian)         [█████████░░░░░░░░░░░]  46.3% (230/497)
+  ko (koreana)         [███████████░░░░░░░░░]  58.6% (291/497)
+  lv (latvian)         [█████████████░░░░░░░]  67.0% (333/497)
+  pl (polish)          [████████░░░░░░░░░░░░]  43.1% (214/497)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  18.5% (92/497)
+  sv (swedish)         [███████████████░░░░░]  79.9% (397/497)
+  tr (turkish)         [██████████░░░░░░░░░░]  53.7% (267/497)
+  ua (ukrainian)       [████████████████████] 100.0% (497/497)
+
+Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+
+======================================================================
+MENU TRANSLATION STATUS
+----------------------------------------------------------------------
+
+  ar    (arabic      ): File missing
+  bg    (bulgarian   ): File missing
+  chi   (schinese    ): File missing
+  cze   (czech       ): File missing
+  da    (danish      ): File missing
+  de    (german      ): Complete
+  el    (greek       ): File missing
+  en    (english     ): Complete
+  es    (spanish     ): File missing
+  fi    (finnish     ): File missing
+  fr    (french      ): File missing
+  he    (hebrew      ): File missing
+  hu    (hungarian   ): File missing
+  it    (italian     ): File missing
+  jp    (japanese    ): File missing
+  ko    (korean      ): Complete
+  lt    (lithuanian  ): File missing
+  lv    (latvian     ): Complete
+  nl    (dutch       ): Complete
+  no    (norwegian   ): File missing
+  pl    (polish      ): Complete
+  pt    (brazilian   ): File missing
+  pt_p  (portuguese  ): File missing
+  ro    (romanian    ): File missing
+  ru    (russian     ): File missing
+  sk    (slovak      ): File missing
+  sv    (swedish     ): Complete
+  th    (thai        ): File missing
+  tr    (turkish     ): File missing
+  ua    (ukrainian   ): Complete
+  vi    (vietnamese  ): File missing
+  zho   (tchinese    ): File missing
+
+======================================================================
+DETAILED MISSING TRANSLATIONS (Phrases)
+======================================================================
+
+cs2kz-anticheat.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Kick Player m_yaw"
+    Missing (5): es, it, pl, ru, tr
+  Line 14: "Kick Player m_yaw (Console)"
+    Missing (5): es, it, pl, ru, tr
+  Line 25: "Kick Player fps_max"
+    Missing (5): es, it, pl, ru, tr
+  Line 36: "Kick Player fps_max (Console)"
+    Missing (5): es, it, pl, ru, tr
+
+cs2kz-api.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Global Check"
+    Missing (5): es, it, pl, ru, tr
+
+cs2kz-beam.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Beam Changed (None)"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 11: "Beam Changed (Ground)"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 19: "Beam Changed (Feet)"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 27: "Beam Offset Command Usage"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 35: "Beam Command Usage"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 43: "Current Beam Offset"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+
+cs2kz-checkpoint.phrases.txt
+----------------------------------------------------------------------
+  Line 21: "Anti Checkpoint Area Warning"
+    Missing (1): ru
+  Line 68: "Can't Checkpoint (Anti Checkpoint Area)"
+    Missing (1): ru
+  Line 195: "Can't Undo (AntiCp)"
+    Missing (1): ru
+  Line 210: "Can't Set Custom Start Position (Generic)"
+    Missing (1): ru
+  Line 257: "Checkpoints Cleared By Map"
+    Missing (4): fi, it, pl, ru
+  Line 269: "Checkpoint Options - Checkpoint Sound - Enable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 277: "Checkpoint Options - Checkpoint Sound - Disable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 285: "Checkpoint Options - Teleport Sound - Enable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 293: "Checkpoint Options - Teleport Sound - Disable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 301: "Checkpoint Options - Checkpoint Message - Enable"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 308: "Checkpoint Options - Checkpoint Message - Disable"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+
+cs2kz-commands.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Command Help Response (Chat)"
+    Missing (1): ru
+  Line 18: "Command Help Response (Console)"
+    Missing (1): ru
+  Line 33: "Command Help Response Category Hint (Console)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 44: "Command List Header - Name"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 53: "Command List Header - Description"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 62: "Command List - Checkpoint"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 71: "Command List - Record"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 80: "Command List - Jumpstats"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 89: "Command List - Measure"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 98: "Command List - ModeStyle"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 107: "Command List - Preference"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 116: "Command List - Racing"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 125: "Command List - Replay"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 134: "Command List - Saveloc"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 143: "Command List - Spec"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 152: "Command List - Status"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 161: "Command List - Timer"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 170: "Command List - Player"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 179: "Command List - Global"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 188: "Command List - Misc"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 197: "Command List - Map"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 206: "Command List - HUD"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 216: "Command Description - kz_undo"
+    Missing (1): ru
+  Line 231: "Command Description - kz_checkpoint"
+    Missing (1): ru
+  Line 246: "Command Description - kz_cp"
+    Missing (1): ru
+  Line 261: "Command Description - kz_teleport"
+    Missing (1): ru
+  Line 276: "Command Description - kz_tp"
+    Missing (1): ru
+  Line 291: "Command Description - kz_prevcp"
+    Missing (1): ru
+  Line 306: "Command Description - kz_pcp"
+    Missing (1): ru
+  Line 321: "Command Description - kz_nextcp"
+    Missing (2): ko, ru
+  Line 335: "Command Description - kz_ncp"
+    Missing (1): ru
+  Line 350: "Command Description - kz_setstartpos"
+    Missing (1): ru
+  Line 365: "Command Description - kz_ssp"
+    Missing (1): ru
+  Line 380: "Command Description - kz_clearstartpos"
+    Missing (1): ru
+  Line 395: "Command Description - kz_csp"
+    Missing (1): ru
+  Line 410: "Command Description - kz_cpsound"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 418: "Command Description - kz_tpsound"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 426: "Command Description - kz_panel"
+    Missing (1): ru
+  Line 441: "Command Description - kz_jsbroadcast"
+    Missing (1): ru
+  Line 456: "Command Description - kz_jssound"
+    Missing (1): ru
+  Line 471: "Command Description - kz_togglestats"
+    Missing (1): ru
+  Line 486: "Command Description - kz_togglejs"
+    Missing (1): ru
+  Line 501: "Command Description - kz_jsalways"
+    Missing (1): ru
+  Line 516: "Command Description - kz_jstier"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 524: "Command Description - kz_jstierconsole"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 532: "Command Description - kz_jsbroadcastsound"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 540: "Command Description - kz_jsbroadcastconsole"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 547: "Command Description - kz_jsextend"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 555: "Command Description - kz_jsvolume"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 563: "Command Description - kz_mode"
+    Missing (1): ru
+  Line 578: "Command Description - kz_noclip"
+    Missing (1): ru
+  Line 593: "Command Description - kz_nc"
+    Missing (1): ru
+  Line 608: "Command Description - noclip"
+    Missing (1): ru
+  Line 623: "Command Description - kz_spec"
+    Missing (1): ru
+  Line 638: "Command Description - kz_specs"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 742: "Command Description - kz_stop"
+    Missing (1): ru
+  Line 757: "Command Description - kz_pause"
+    Missing (1): ru
+  Line 772: "Command Description - kz_tips"
+    Missing (1): ru
+  Line 787: "Command Description - kz_hidelegs"
+    Missing (1): ru
+  Line 802: "Command Description - kz_hide"
+    Missing (1): ru
+  Line 817: "Command Description - kz_restart"
+    Missing (1): ru
+  Line 832: "Command Description - kz_r"
+    Missing (1): ru
+  Line 847: "Command Description - kz_lj"
+    Missing (5): fi, it, pl, ru, tr
+  Line 858: "Command Description - kz_ljarea"
+    Missing (5): fi, it, pl, ru, tr
+  Line 869: "Command Description - kz_jsarea"
+    Missing (5): fi, it, pl, ru, tr
+  Line 880: "Command Description - kz_end"
+    Missing (5): fi, it, pl, ru, tr
+  Line 891: "Command Description - kz_hideweapon"
+    Missing (1): ru
+  Line 906: "Command Description - kz_help"
+    Missing (1): ru
+  Line 921: "Command Description - kz_language"
+    Missing (1): ru
+  Line 936: "Command Description - kz_vnl"
+    Missing (1): ru
+  Line 951: "Command Description - kz_ckz"
+    Missing (1): ru
+  Line 1014: "Command Description - kz_ctop"
+    Missing (2): fi, ru
+  Line 1028: "Command Description - kz_coursetop"
+    Missing (2): fi, ru
+  Line 1042: "Command Description - kz_maptop"
+    Missing (2): fi, ru
+  Line 1056: "Command Description - kz_gctop"
+    Missing (2): fi, ru
+  Line 1070: "Command Description - kz_gcoursetop"
+    Missing (2): fi, ru
+  Line 1085: "Command Description - kz_gmaptop"
+    Missing (2): fi, ru
+  Line 1099: "Command Description - kz_sctop"
+    Missing (2): fi, ru
+  Line 1113: "Command Description - kz_scoursetop"
+    Missing (2): fi, ru
+  Line 1127: "Command Description - kz_smaptop"
+    Missing (2): fi, ru
+  Line 1141: "Command Description - kz_comparelevel"
+    Missing (5): fi, it, pl, ru, tr
+  Line 1152: "Command Description - kz_playercheck"
+    Missing (4): fi, it, pl, ru
+  Line 1164: "Command Description - kz_pc"
+    Missing (4): fi, it, pl, ru
+  Line 1176: "Command Description - kz_course"
+    Missing (4): fi, it, pl, ru
+  Line 1188: "Command Description - kz_spb"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1197: "Command Description - kz_gpb"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1206: "Command Description - kz_globalcheck"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1215: "Command Description - kz_gc"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1224: "Command Description - kz_beam"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1232: "Command Description - kz_beamoffset"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1240: "Command Description - kz_measure"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1248: "Command Description - kz_measurestart"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1256: "Command Description - kz_measureend"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1264: "Command Description - kz_measureblock"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1272: "Command Description - kz_timerstopsound"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1280: "Command Description - kz_autohideweapon"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1288: "Command Description - kz_pistol"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1296: "Command Description - kz_rpsave"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1303: "Command Description - kz_replay"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1310: "Command Description - kz_replays"
+    Missing (10): chi, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1316: "Command Description - kz_rpgoto"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1323: "Command Description - kz_rpgototick"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1330: "Command Description - kz_rpinfo"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1337: "Command Description - kz_rppause"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1344: "Command Description - kz_rploadprogress"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1351: "Command Description - kz_rpcancelload"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1358: "Command Description - kz_recordvolume"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1365: "Command Description - kz_cpmessage"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1372: "Command Description - kz_rphidelegs"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+
+cs2kz-common.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "No Steam Authentication Warning"
+    Missing (3): it, pl, ru
+  Line 16: "No Prime Warning"
+    Missing (4): it, pl, ru, tr
+  Line 28: "Player Authenticated (Steam)"
+    Missing (3): it, pl, ru
+  Line 42: "Player Not Authenticated (Steam)"
+    Missing (3): it, pl, ru
+  Line 73: "Command Cooldown"
+    Missing (7): es, fi, it, ko, lv, pl, tr
+
+cs2kz-course.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "No Current Course"
+    Missing (3): it, pl, ru
+  Line 16: "Current Course"
+    Missing (3): it, pl, ru
+  Line 30: "Course List Header"
+    Missing (3): it, pl, ru
+
+cs2kz-hud.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Speed"
+    Missing (1): ru
+  Line 18: "HUD - Stopped Text"
+    Missing (1): ru
+  Line 34: "HUD - Paused Text"
+    Missing (1): ru
+  Line 50: "HUD - Speed Text"
+    Missing (1): ru
+  Line 67: "HUD - Speed Text (Takeoff)"
+    Missing (1): ru
+  Line 84: "HUD - Key Text"
+    Missing (1): ru
+  Line 101: "HUD - Checkpoint Text"
+    Missing (1): ru
+  Line 118: "HUD - Timer Text"
+    Missing (1): ru
+  Line 135: "HUD - Center Text"
+    Missing (1): ru
+  Line 173: "HUD - HTML Center Text"
+    Missing (1): ru
+
+cs2kz-jumpstats.phrases.txt
+----------------------------------------------------------------------
+  Line 164: "Bad Angles (Short)"
+    Missing (1): ru
+  Line 275: "Gain Efficiency (Short)"
+    Missing (1): ru
+  Line 290: "Air Path"
+    Missing (1): ru
+  Line 305: "Angle Ratio"
+    Missing (1): ru
+  Line 320: "Gain"
+    Missing (1): ru
+  Line 335: "Loss"
+    Missing (1): ru
+  Line 350: "Average Gain (Short)"
+    Missing (1): ru
+  Line 367: "First jump"
+    Missing (1): ru
+  Line 382: "Invalid movetype change"
+    Missing (1): ru
+  Line 397: "Invalid movetype"
+    Missing (1): ru
+  Line 412: "Just noclipped"
+    Missing (1): ru
+  Line 427: "Invalid collisions"
+    Missing (1): ru
+  Line 442: "Base velocity detected"
+    Missing (1): ru
+  Line 458: "Player gravity scale changed"
+    Missing (5): fi, it, pl, ru, tr
+  Line 469: "Invalid gains"
+    Missing (1): ru
+  Line 484: "Externally modified"
+    Missing (1): ru
+  Line 499: "Edgebugged"
+    Missing (1): ru
+  Line 514: "Teleported"
+    Missing (1): ru
+  Line 529: "Disabled By Map"
+    Missing (5): fi, it, pl, ru, tr
+  Line 606: "Jumpstats Option - Tier Hint"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 614: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
+    Missing (1): ru
+  Line 629: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
+    Missing (1): ru
+  Line 644: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
+    Missing (1): ru
+  Line 660: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 667: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 675: "Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
+    Missing (1): ru
+  Line 690: "Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
+    Missing (1): ru
+  Line 705: "Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
+    Missing (1): ru
+  Line 722: "Broadcast Jumpstat Chat Report"
+    Missing (1): ru
+  Line 740: "Jumpstats Report - Invalidation Reason"
+    Missing (1): ru
+  Line 758: "Jumpstats Report - Chat Summary (Simple)"
+    Missing (1): ru
+  Line 775: "Jumpstats Report - Chat Summary"
+    Missing (1): ru
+  Line 793: "Jumpstats Report - Console Summary"
+    Missing (1): ru
+  Line 810: "Jumpstat Report - Console Details 1"
+    Missing (1): ru
+  Line 827: "Jumpstat Report - Console Details 2"
+    Missing (1): ru
+  Line 844: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 852: "Jumpstats Option - Jumpstats Minimum Tier - Response"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 861: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 869: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 878: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 886: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 895: "Jumpstats Option - Jumpstats Volume - Current"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 903: "Jumpstats Option - Jumpstats Volume - Response"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 912: "Jumpstats Option - Extended Chat Stats - Enable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 920: "Jumpstats Option - Extended Chat Stats - Disable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+
+cs2kz-language.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Switch Language"
+    Missing (1): ru
+  Line 21: "Menu Hint"
+    Missing (6): es, fi, it, pl, ru, tr
+  Line 33: "Language Change - Manual Menu Change Required"
+    Missing (6): es, fi, it, pl, ru, tr
+
+cs2kz-measure.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Measure - Non Solid Position"
+    Missing (7): es, fi, it, ko, lv, pl, tr
+  Line 12: "Measure - Start Position Set"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 20: "Measure - Points Not Set"
+    Missing (7): es, fi, it, ko, lv, pl, tr
+  Line 29: "Measure - Blocks Not Aligned"
+    Missing (7): es, fi, it, ko, lv, pl, tr
+  Line 38: "Measure - Start Position Timeout"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 46: "Measure - Result"
+    Missing (7): es, fi, it, ko, lv, pl, tr
+  Line 57: "Measure - Block Result"
+    Missing (7): es, fi, it, ko, lv, pl, tr
+
+cs2kz-modes.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Mode Command Usage"
+    Missing (1): ru
+  Line 18: "Possible & Current Modes"
+    Missing (1): ru
+
+cs2kz-noclip.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Noclip - Enable"
+    Missing (1): ru
+  Line 18: "Noclip - Disable"
+    Missing (1): ru
+
+cs2kz-pistol.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Pistol Command Usage"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 11: "Pistol Disabled"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 19: "Pistol Changed"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 28: "Pistol Unknown"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+
+cs2kz-quiet.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Quiet Option - Hide Player Legs - Disable"
+    Missing (1): ru
+  Line 18: "Quiet Option - Hide Player Legs - Enable"
+    Missing (1): ru
+  Line 97: "Quiet Option - Auto Hide Weapon - Enable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 105: "Quiet Option - Auto Hide Weapon - Disable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+
+cs2kz-replays.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Replay - No Replay Playing"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 10: "Replay - Usage Goto"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 17: "Replay - Usage Seek"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 24: "Replay - Usage Navigation"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 31: "Replay - Usage Goto Time"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 38: "Replay - Usage Goto Tick"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 45: "Replay - Invalid Relative Time"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 52: "Replay - Invalid Absolute Time"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 59: "Replay - Invalid Tick Number"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 66: "Replay - Tick Out Of Range"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 74: "Replay - Time Out Of Range"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 82: "Replay - Jumped To Tick"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 90: "Replay - Current Info"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 99: "Replay - General Info Console"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 112: "Replay - Cheater Info Console"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 122: "Replay - Run Info Console"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 135: "Replay - Jump Info Console"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 145: "Replay - Jump Info Console (Block)"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 155: "Replay - Manual Info Console"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 165: "Replay - Seeked To Tick"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 174: "Replay - Hide Player Legs - Enable"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 181: "Replay - Hide Player Legs - Disable"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 188: "Replay - Paused"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 195: "Replay - Resumed"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 202: "Replay - Loading"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 209: "Replay - Loading Already"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 216: "Replay - Invalid UUID"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 223: "Replay - Loaded Successfully"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 230: "Replay - No Loading Progress"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 237: "Replay - Loading Progress"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 245: "Replay - Loading Completed"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 252: "Replay - Loading Cancelled"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 259: "Replay - Usage Command"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 266: "Replay - Load Cancelled"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 273: "Replay - Invalid File Format"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 280: "Replay - Manual Replay Failed"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 287: "Replay - Manual Replay Saved"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 295: "Replay - Manual Replay Saved (Console)"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 303: "Replay - Run Replay Failed"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 310: "Replay - Run Replay Saved"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 318: "Replay - Run Replay Saved (Console)"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 326: "Replay - Wrong Map"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 334: "Replay - Unknown Mode"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 342: "Replay - Unknown Style"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 350: "Replay List - Check Console"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 357: "Replay List - Usage Title"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 365: "Replay List - Usage General Options"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 378: "Replay List - Usage Type Options"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 389: "Replay List - No Matching Replays"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 396: "Cheater Replays - Table Name"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 403: "Run Replays - Table Name"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 410: "Jump Replays - Table Name"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 417: "Manual Replays - Table Name"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 424: "Replay Table Header - Player"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 431: "Replay Table Header - Map"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 438: "Replay Table Header - Reason"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 445: "Replay Table Header - SteamID"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 452: "Replay Table Header - UUID"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 459: "Replay Table Header - Course"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 466: "Replay Table Header - Mode"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 473: "Replay Table Header - Time"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 480: "Replay Table Header - Teleports"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 487: "Replay Table Header - Jump Type"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 494: "Replay Table Header - Distance"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 501: "Replay Table Header - Block"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 508: "Replay Table Header - Strafes"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 515: "Replay Table Header - Saved By"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+
+cs2kz-spec.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Spec Command Usage"
+    Missing (7): es, fi, it, lv, pl, ru, tr
+  Line 12: "Spectator List (None)"
+    Missing (6): es, fi, it, lv, pl, tr
+  Line 22: "Spectator List"
+    Missing (6): es, fi, it, lv, pl, tr
+  Line 34: "Target Spectator List (None)"
+    Missing (6): es, fi, it, lv, pl, tr
+  Line 46: "Target Spectator List"
+    Missing (6): es, fi, it, lv, pl, tr
+  Line 58: "Spectate Failure (Generic)"
+    Missing (7): es, fi, it, lv, pl, ru, tr
+  Line 67: "Spectate Failure (Dead)"
+    Missing (6): es, fi, it, lv, pl, tr
+  Line 77: "Spectate Failure (Player Not Found)"
+    Missing (7): es, fi, it, lv, pl, ru, tr
+
+cs2kz-styles.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Style Command Usage"
+    Missing (1): pl
+  Line 18: "Add Style Command Usage"
+    Missing (1): pl
+  Line 33: "Remove Style Command Usage"
+    Missing (1): pl
+  Line 48: "Toggle Style Command Usage"
+    Missing (1): ru
+  Line 63: "Current Styles"
+    Missing (1): pl
+  Line 78: "Possible Styles"
+    Missing (1): ru
+  Line 93: "Style Not Available"
+    Missing (1): ru
+  Line 110: "Styles Cleared"
+    Missing (1): pl
+  Line 125: "Style Removed"
+    Missing (1): pl
+  Line 141: "Style Added"
+    Missing (1): pl
+  Line 157: "Style Already Active"
+    Missing (1): pl
+  Line 173: "Style Not Active"
+    Missing (1): pl
+  Line 190: "Style Conflict"
+    Missing (1): pl
+
+cs2kz-timer-coursetop.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Course Top - Table Name (Server Overall)"
+    Missing (6): es, it, ko, pl, ru, tr
+  Line 14: "Course Top - Table Name (Server Pro)"
+    Missing (6): es, it, ko, pl, ru, tr
+  Line 25: "Course Top - Table Name (Global Overall)"
+    Missing (6): es, it, ko, pl, ru, tr
+  Line 36: "Course Top - Table Name (Global Pro)"
+    Missing (6): es, it, ko, pl, ru, tr
+  Line 47: "Course Top Header - Player Alias"
+    Missing (1): ru
+  Line 62: "Course Top Header - Time"
+    Missing (1): ru
+  Line 77: "Course Top Header - Teleports"
+    Missing (1): ru
+  Line 92: "Course Top Header - SteamID64"
+    Missing (1): ru
+  Line 107: "Course Top Header - Run ID"
+    Missing (1): ru
+  Line 122: "Course Top Header - Points"
+    Missing (7): chi, es, it, ko, pl, ru, tr
+  Line 131: "Course Top Request - Failed (Generic)"
+    Missing (1): ru
+  Line 146: "Course Top Request - Invalid Course Name"
+    Missing (1): ru
+  Line 161: "Course Top - Check Console"
+    Missing (1): ru
+  Line 176: "Course Top Command Usage"
+    Missing (1): ru
+  Line 191: "Course Top Command Usage - Console"
+    Missing (1): ru
+
+cs2kz-timer-personalbest.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "PB Header"
+    Missing (1): ru
+  Line 20: "PB Time - No Times"
+    Missing (1): ru
+  Line 35: "PB Time - Overall (Server)"
+    Missing (1): ru
+  Line 52: "PB Time - Combined (Server)"
+    Missing (1): ru
+  Line 69: "PB Time - Split (Server)"
+    Missing (1): ru
+  Line 86: "PB Time - Overall Rankless (Server)"
+    Missing (1): ru
+  Line 103: "PB Time - Combined Rankless (Server)"
+    Missing (1): ru
+  Line 120: "PB Time - Split Rankless (Server)"
+    Missing (1): ru
+  Line 137: "PB Time - Overall (Global)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 148: "PB Time - Combined (Global)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 159: "PB Time - Split (Global)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 170: "PB Time - Overall Rankless (Global)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 181: "PB Time - Combined Rankless (Global)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 192: "PB Time - Split Rankless (Global)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 203: "PB Request - Failed (Generic)"
+    Missing (1): ru
+  Line 218: "PB Request - Invalid Course Name"
+    Missing (1): ru
+  Line 234: "PB Command Usage"
+    Missing (1): ru
+  Line 249: "PB Command Usage - Console"
+    Missing (1): ru
+
+cs2kz-timer-toprecord.phrases.txt
+----------------------------------------------------------------------
+  Line 21: "WR Header"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 135: "WR/SR Command Usage"
+    Missing (1): ru
+  Line 150: "WR/SR Command Usage - Console"
+    Missing (1): ru
+
+cs2kz-timer.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "1 Teleport Text"
+    Missing (1): ru
+  Line 18: "2+ Teleports Text"
+    Missing (1): ru
+  Line 35: "Personal Best Difference"
+    Missing (1): pl
+  Line 54: "Beat Course Info - Basic"
+    Missing (1): pl
+  Line 72: "Beat Course Info - Local (TP)"
+    Missing (1): pl
+  Line 89: "Beat Course Info - Local (PRO)"
+    Missing (1): pl
+  Line 107: "Beat Course Info - Global (TP)"
+    Missing (2): pl, ru
+  Line 123: "Beat Course Info - Global (PRO)"
+    Missing (2): pl, ru
+  Line 140: "Beat Course Info - Global Points (TP)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 151: "Beat Course Info - Global Points (PRO)"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 162: "Beat Course Info - New World Record"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 172: "Beat Course Info - New World Record (PRO)"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 183: "Can't Pause (Generic)"
+    Missing (1): ru
+  Line 246: "Can't Pause (Anti Pause Area)"
+    Missing (1): ru
+  Line 261: "Can't Resume (Generic)"
+    Missing (1): ru
+  Line 292: "Can't Finish Run (Missed a Checkpoint Zone)"
+    Missing (4): fi, it, pl, ru
+  Line 304: "Can't Finish Run (Missed Checkpoint Zones)"
+    Missing (4): fi, it, pl, ru
+  Line 317: "Can't Finish Run (Missed Stage)"
+    Missing (4): fi, it, pl, ru
+  Line 330: "Touched too high stage number (Missed stage)"
+    Missing (4): fi, it, pl, ru
+  Line 343: "No Start Position For Course"
+    Missing (4): fi, it, pl, ru
+  Line 356: "No Jumpstat Area Found"
+    Missing (4): fi, it, pl, ru
+  Line 368: "Turnbinds Disabled"
+    Missing (5): fi, it, pl, ru, tr
+  Line 381: "Course Split Reached"
+    Missing (4): fi, it, pl, ru
+  Line 394: "Course Checkpoint Reached"
+    Missing (5): fi, it, pl, ru, tr
+  Line 406: "Course Stage Reached"
+    Missing (4): fi, it, pl, ru
+  Line 421: "Server PB Diff (Overall)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 432: "Global PB Diff (Overall)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 443: "SR Diff (Overall)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 454: "WR Diff (Overall)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 465: "Server PB Diff (Pro)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 476: "Global PB Diff (Pro)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 487: "SR Diff (Pro)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 498: "WR Diff (Pro)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 511: "Missed Server PB (Overall)"
+    Missing (4): fi, it, pl, ru
+  Line 524: "Missed Global PB (Overall)"
+    Missing (4): fi, it, pl, ru
+  Line 537: "Missed SR (Overall)"
+    Missing (4): fi, it, pl, ru
+  Line 550: "Missed WR (Overall)"
+    Missing (4): fi, it, pl, ru
+  Line 563: "Missed Server PB (Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 576: "Missed Global PB (Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 589: "Missed SR (Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 602: "Missed WR (Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 615: "Missed Server PB (Overall+Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 628: "Missed Global PB (Overall+Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 641: "Missed SR (Overall+Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 654: "Missed WR (Overall+Pro)"
+    Missing (4): fi, it, pl, ru
+  Line 668: "Compare Command Usage"
+    Missing (4): fi, it, pl, ru
+  Line 680: "Compare Disabled"
+    Missing (4): fi, it, pl, ru
+  Line 692: "Compare Server PB"
+    Missing (4): fi, it, pl, ru
+  Line 704: "Compare Global PB"
+    Missing (4): fi, it, pl, ru
+  Line 716: "Compare Server Record"
+    Missing (4): fi, it, pl, ru
+  Line 728: "Compare World Record"
+    Missing (4): fi, it, pl, ru
+  Line 741: "Request - Failed (Invalid Map)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 751: "Request - Failed (Generic)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 761: "Request - Failed (No Course in Current Map)"
+    Missing (6): fi, it, ko, pl, ru, tr
+  Line 773: "Timer Stop Sound Enabled"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 781: "Timer Stop Sound Disabled"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 789: "Record Volume Set"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+
+cs2kz-tips-general.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Tip - kz_help"
+    Missing (1): ru
+  Line 18: "Tip - kz_mode"
+    Missing (1): ru
+  Line 33: "Tip - kz_restart"
+    Missing (1): ru
+  Line 48: "Tip - kz_ssp"
+    Missing (1): ru
+  Line 63: "Tip - stretch"
+    Missing (1): ru
+  Line 78: "Tip - kz_tips"
+    Missing (1): ru
+  Line 93: "Tip - bind"
+    Missing (1): ru
+  Line 108: "Tip - kz_prevcp"
+    Missing (1): ru
+  Line 123: "Tip - kz_nextcp"
+    Missing (1): ru
+  Line 138: "Tip - website"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 146: "Tip - bugs"
+    Missing (1): ru
+  Line 161: "Tip - kz_jssound"
+    Missing (1): ru
+  Line 176: "Tip - kz_jsbroadcast"
+    Missing (1): ru
+
+cs2kz-tips-jumpstats.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Tip - kz_togglejs"
+    Missing (1): ru
+  Line 18: "Tip - kz_jsalways"
+    Missing (1): ru
+  Line 33: "Tip - kz_jstier"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 40: "Tip - kz_jsextend"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+
+cs2kz-tips-replays.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Tip - kz_replay"
+    Missing (8): es, fi, it, ko, lv, pl, sv, tr
+  Line 11: "Tip - kz_replays"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 18: "Tip - kz_rpgoto"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 25: "Tip - kz_rpgototick"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 32: "Tip - kz_rpinfo"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 39: "Tip - kz_rppause"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 46: "Tip - kz_rploadprogress"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 53: "Tip - kz_rpcancelload"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 60: "Tip - kz_rpseek"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 67: "Tip - kz_rpsave"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 74: "Tip - Replay Storage Policy"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 81: "Tip - kz_rphidelegs"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+
+cs2kz-tips-timer.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Tip - kz_comparelevel"
+    Missing (4): fi, it, pl, ru
+
+cs2kz-tips-visual.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Tip - kz_panel"
+    Missing (1): ru
+  Line 18: "Tip - kz_hidelegs"
+    Missing (1): ru
+  Line 33: "Tip - kz_hide"
+    Missing (1): ru
+  Line 48: "Tip - kz_hideweapon"
+    Missing (1): ru
+
+======================================================================
+DETAILED MISSING MENU TRANSLATIONS
+======================================================================
+
+arabic.txt (ar)
+----------------------------------------------------------------------
+ Entire file is missing
+
+bulgarian.txt (bg)
+----------------------------------------------------------------------
+ Entire file is missing
+
+schinese.txt (chi)
+----------------------------------------------------------------------
+ Entire file is missing
+
+czech.txt (cze)
+----------------------------------------------------------------------
+ Entire file is missing
+
+danish.txt (da)
+----------------------------------------------------------------------
+ Entire file is missing
+
+greek.txt (el)
+----------------------------------------------------------------------
+ Entire file is missing
+
+spanish.txt (es)
+----------------------------------------------------------------------
+ Entire file is missing
+
+finnish.txt (fi)
+----------------------------------------------------------------------
+ Entire file is missing
+
+french.txt (fr)
+----------------------------------------------------------------------
+ Entire file is missing
+
+hebrew.txt (he)
+----------------------------------------------------------------------
+ Entire file is missing
+
+hungarian.txt (hu)
+----------------------------------------------------------------------
+ Entire file is missing
+
+italian.txt (it)
+----------------------------------------------------------------------
+ Entire file is missing
+
+japanese.txt (jp)
+----------------------------------------------------------------------
+ Entire file is missing
+
+lithuanian.txt (lt)
+----------------------------------------------------------------------
+ Entire file is missing
+
+norwegian.txt (no)
+----------------------------------------------------------------------
+ Entire file is missing
+
+brazilian.txt (pt)
+----------------------------------------------------------------------
+ Entire file is missing
+
+portuguese.txt (pt_p)
+----------------------------------------------------------------------
+ Entire file is missing
+
+romanian.txt (ro)
+----------------------------------------------------------------------
+ Entire file is missing
+
+russian.txt (ru)
+----------------------------------------------------------------------
+ Entire file is missing
+
+slovak.txt (sk)
+----------------------------------------------------------------------
+ Entire file is missing
+
+thai.txt (th)
+----------------------------------------------------------------------
+ Entire file is missing
+
+turkish.txt (tr)
+----------------------------------------------------------------------
+ Entire file is missing
+
+vietnamese.txt (vi)
+----------------------------------------------------------------------
+ Entire file is missing
+
+tchinese.txt (zho)
+----------------------------------------------------------------------
+ Entire file is missing
+
+======================================================================
