@@ -145,19 +145,20 @@ void KZRacingService::OnRaceResult(const KZ::racing::events::RaceResult &raceRes
 	u32 position = 1;
 	for (const auto &finisher : raceResult.finishers)
 	{
+		std::string timeStr = utils::FormatTime(finisher.time);
 		if (finisher.completed)
 		{
 			if (position == 1)
 			{
-				KZLanguageService::PrintChatAll(false, "Racing - End Results First Place", finisher.player.name.c_str(), finisher.time);
+				KZLanguageService::PrintChatAll(false, "Racing - End Results First Place", finisher.player.name.c_str(), timeStr.c_str());
 			}
 			else if (position == finishers.size())
 			{
-				KZLanguageService::PrintChatAll(false, "Racing - End Results Last Place", finisher.player.name.c_str(), finisher.time);
+				KZLanguageService::PrintChatAll(false, "Racing - End Results Last Place", finisher.player.name.c_str(), timeStr.c_str());
 			}
 			else
 			{
-				KZLanguageService::PrintChatAll(false, "Racing - End Results Finisher", position, finisher.player.name.c_str(), finisher.time);
+				KZLanguageService::PrintChatAll(false, "Racing - End Results Finisher", position, finisher.player.name.c_str(), timeStr.c_str());
 			}
 			position++;
 		}
