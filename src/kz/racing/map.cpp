@@ -14,10 +14,8 @@ void KZRacingService::CheckMap()
 	}
 	else if (KZRacingService::IsMapReadyForChange(KZRacingService::currentRace.data.raceInfo.workshopID))
 	{
-		// map <map name> customgamemode=<workshop ID> nomapvalidation=true
-		std::string command = "map " + KZRacingService::currentRace.data.raceInfo.mapName
-							  + " customgamemode=" + std::to_string(KZRacingService::currentRace.data.raceInfo.workshopID) + " nomapvalidation=true";
-
+		// host_workshop_map <workshop ID>
+		std::string command = "host_workshop_map " + std::to_string(KZRacingService::currentRace.data.raceInfo.workshopID);
 		interfaces::pEngine->ServerCommand(command.c_str());
 	}
 	else if (!KZRacingService::IsMapQueuedForDownload(KZRacingService::currentRace.data.raceInfo.workshopID))
@@ -29,9 +27,7 @@ void KZRacingService::CheckMap()
 bool KZRacingService::IsMapCorrectForRace()
 {
 	u32 currentWorkshopID = g_pKZUtils->GetCurrentMapWorkshopID();
-
-	return (g_pKZUtils->GetCurrentMapName().IsEqual_FastCaseInsensitive(KZRacingService::currentRace.data.raceInfo.mapName.c_str()))
-		   && currentWorkshopID == KZRacingService::currentRace.data.raceInfo.workshopID;
+	return currentWorkshopID == KZRacingService::currentRace.data.raceInfo.workshopID;
 }
 
 bool KZRacingService::IsMapReadyForChange(u64 workshopID)
