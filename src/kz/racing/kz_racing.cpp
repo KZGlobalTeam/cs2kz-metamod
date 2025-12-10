@@ -212,7 +212,7 @@ void KZRacingService::BroadcastRaceInfo()
 		case RaceInfo::RACE_ONGOING:
 		{
 			// Broadcast to all participants that the race will start in X seconds.
-			i32 countdownSeconds =
+			f32 countdownSeconds =
 				(KZRacingService::currentRace.earliestStartTick - g_pKZUtils->GetServerGlobals()->tickcount) * ENGINE_FIXED_TICK_INTERVAL;
 			if (countdownSeconds < 0)
 			{
