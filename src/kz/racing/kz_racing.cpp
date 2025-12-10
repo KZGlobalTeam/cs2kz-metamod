@@ -313,6 +313,7 @@ bool KZRacingService::CanTeleport()
 	{
 		return false;
 	}
+	return true;
 }
 
 bool KZRacingService::OnTimerStart(u32 courseGUID)
