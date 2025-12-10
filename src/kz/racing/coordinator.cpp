@@ -220,6 +220,24 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 					KZRacingService::mainThreadCallbacks.queue.emplace_back([raceStart]() { KZRacingService::OnRaceStart(raceStart); });
 				}
 			}
+			else if (event == "add_race_participant")
+			{
+				KZ::racing::events::PlayerAccept playerAccept;
+				if (playerAccept.FromJson(data))
+				{
+					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([playerAccept]() { KZRacingService::OnPlayerAccept(playerAccept); });
+				}
+			}
+			else if (event == "remove_race_participant")
+			{
+				KZ::racing::events::PlayerUnregister playerUnreg;
+				if (playerUnreg.FromJson(data))
+				{
+					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([playerUnreg]() { KZRacingService::OnPlayerUnregister(playerUnreg); });
+				}
+			}
 			else if (event == "player_forfeit")
 			{
 				KZ::racing::events::PlayerForfeit playerForfeit;
