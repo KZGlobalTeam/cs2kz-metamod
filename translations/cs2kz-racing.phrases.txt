@@ -87,7 +87,7 @@
 	}
 	"Racing - Race Starting In"
 	{
-		"#format"	"time:d"
+		"#format"	"time:.1f"
 		"en"		"Race starting in {time}s!"
 	}
 	"Racing - Player Accepted"
