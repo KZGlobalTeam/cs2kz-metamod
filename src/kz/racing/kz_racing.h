@@ -15,17 +15,9 @@ namespace KZ::racing
 		bool FromJson(const Json &json);
 	};
 
-	struct MapInfo
-	{
-		std::string mapName;
-		u64 workshopID;
-
-		bool ToJson(Json &json) const;
-	};
-
 	struct RaceInfo
 	{
-		std::string mapName;
+		// std::string mapName;
 		u64 workshopID;
 		std::string courseName;
 		std::string modeName;
@@ -33,26 +25,8 @@ namespace KZ::racing
 		f32 duration;
 
 		bool ToJson(Json &json) const;
+		bool FromJson(const Json &json);
 	};
-
-	namespace handshake
-	{
-		struct Hello
-		{
-			MapInfo mapInfo;
-
-			bool ToJson(Json &json) const;
-		};
-
-		struct HelloAck
-		{
-			std::optional<RaceInfo> raceInfo {};
-			// seconds
-			f64 heartbeatInterval {};
-
-			bool FromJson(const Json &json);
-		};
-	}; // namespace handshake
 
 	namespace events
 	{
@@ -64,16 +38,54 @@ namespace KZ::racing
 			bool FromJson(const Json &json);
 		};
 
-		struct MapUpdated
+		struct RaceCancel
 		{
-			MapInfo mapInfo;
+			bool ToJson(Json &json) const
+			{
+				return true;
+			}
 
-			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json)
+			{
+				return true;
+			}
 		};
 
 		struct RaceStart
 		{
-			u32 countdownSeconds;
+			f32 countdownSeconds;
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct JoinRace
+		{
+			bool ToJson(Json &json) const
+			{
+				return true;
+			}
+		};
+
+		struct LeaveRace
+		{
+			bool ToJson(Json &json) const
+			{
+				return true;
+			}
+		};
+
+		struct PlayerAccept
+		{
+			PlayerInfo player;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerUnregister
+		{
+			PlayerInfo player;
+
 			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
 		};
@@ -81,7 +93,6 @@ namespace KZ::racing
 		struct PlayerForfeit
 		{
 			PlayerInfo player;
-			bool manual;
 
 			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
@@ -114,7 +125,7 @@ namespace KZ::racing
 				PlayerInfo player;
 				f32 time;
 				u32 teleportsUsed;
-				bool completed;
+				bool completed = false;
 
 				bool FromJson(const Json &json);
 			};
@@ -169,9 +180,6 @@ public:
 		Configured,
 		Connecting,
 		Connected,
-		HandshakeInitiated,
-		HandshakeCompleted,
-		Reconnecting,
 		Disconnected,
 	};
 
@@ -183,28 +191,6 @@ public:
 	// INVARIANT: should be `nullptr` when `state == Uninitialized`, and a valid pointer otherwise
 	static inline std::unique_ptr<ix::WebSocket> socket = nullptr;
 
-	/**
-	 * The ID we'll use for the next message we send to the coordinator.
-	 */
-	static inline std::atomic<u32> nextMessageID = 1;
-
-	/**
-	 * A handle to the thread that continuously sends 'ping' messages to the coordinator, so we don't get disconnected for inactivity.
-	 */
-	static inline struct
-	{
-		// protects `handle`
-		std::mutex mutex;
-		std::thread handle;
-
-		// used for waiting for heartbeat timeout and shutdown at the same time
-		struct
-		{
-			std::mutex mutex;
-			std::condition_variable cv;
-		} shutdownNotification;
-	} heartbeatThread;
-
 	static void Init();
 	static void Cleanup();
 	static void OnActivateServer();
@@ -215,13 +201,14 @@ public:
 	// Note that unlike the global service, these functions do not have callbacks from the coordinator.
 	// The server only acts upon receiving broadcasted messages from the coordinator.
 
-	static void SendRaceInit(std::string mapName, u64 workshopID, std::string courseName, std::string modeName, u32 maxTeleports, f32 duration);
-	static void SendMapUpdate(std::string mapName, u64 workshopID);
-	static void SendRaceStart(u32 countdownSeconds);
-	void SendPlayerRegistration();
+	static void SendRaceInit(u64 workshopID, std::string courseName, std::string modeName, u32 maxTeleports, f32 duration);
+	static void SendRaceCancel();
+	static void SendRaceJoin();
+	static void SendRaceLeave();
+	static void SendRaceStart(f32 countdownSeconds);
 	void SendPlayerUnregistration();
 	void SendAcceptRace();
-	void SendForfeitRace(bool manual);
+	void SendForfeitRace();
 	void SendRaceFinish(f32 time, u32 teleportsUsed);
 	static void SendRaceEnd(bool manual);
 
@@ -232,6 +219,7 @@ public:
 	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
 	// Called on the main thread.
 	static void OnRaceInit(const KZ::racing::events::RaceInit &raceInit);
+	static void OnRaceCancel(const KZ::racing::events::RaceCancel &raceCancel);
 	static void OnRaceStart(const KZ::racing::events::RaceStart &raceStart);
 	static void OnPlayerForfeit(const KZ::racing::events::PlayerForfeit &playerForfeit);
 	static void OnPlayerFinish(const KZ::racing::events::PlayerFinish &playerFinish);
@@ -261,21 +249,6 @@ private:
 	 */
 	static void WS_OnErrorMessage(const ix::WebSocketErrorInfo &errorInfo);
 
-	/**
-	 * Initiates the WebSocket handshake with the coordinator.
-	 */
-	static void WS_InitiateHandshake();
-
-	/**
-	 * Completes the WebSocket handshake with the coordinator.
-	 */
-	static void WS_CompleteHandshake(KZ::racing::handshake::HelloAck &&ack);
-
-	/**
-	 * The function given to `heartbeatThread` to execute.
-	 */
-	static void WS_Heartbeat(u64 intervalInSeconds);
-
 public:
 	/* ===== Map management ===== */
 
@@ -297,6 +270,7 @@ public:
 
 	// Race participation
 	void AcceptRace();
+	void ForfeitRace();
 	bool IsRaceParticipant();
 	static void RemoveLocalRaceParticipant(u64 steamID);
 	// Return false if a race is active, the player is one of the participants and the start time hasn't arrived yet.
@@ -307,26 +281,16 @@ public:
 	// Notify the coordinator about the end of the run.
 	void OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed);
 
-	void OnPlayerDisconnect();
+	void OnClientDisconnect();
 
 private:
 	/**
 	 * Prepares a message to be sent to the API.
 	 */
 	template<typename T>
-	static bool PrepareMessage(std::string_view event, u32 messageID, const T &data, Json &payload)
+	static bool PrepareMessage(std::string_view event, const T &data, Json &payload)
 	{
-		if (KZRacingService::state.load() != State::HandshakeCompleted)
-		{
-			META_CONPRINTF("[KZ::Racing] WARN: called `SendMessage()` before handshake has completed (state=%i)\n", KZRacingService::state.load());
-			return false;
-		}
-
-		// clang-format off
-		bool success = payload.Set("id", messageID)
-			&& payload.Set("event", event)
-			&& payload.Set("data", data);
-		// clang-format on
+		bool success = payload.Set("event", event) && payload.Set("data", data);
 
 		if (!success)
 		{
@@ -344,7 +308,7 @@ private:
 	{
 		Json payload;
 
-		if (!KZRacingService::PrepareMessage(event, KZRacingService::nextMessageID++, data, payload))
+		if (!KZRacingService::PrepareMessage(event, data, payload))
 		{
 			return false;
 		}

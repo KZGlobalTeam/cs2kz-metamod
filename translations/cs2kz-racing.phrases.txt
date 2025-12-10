@@ -64,10 +64,14 @@
 	}
 	"Racing - Race Info"
 	{
-		// Race on kz_map - Course Main
+		// Race on Course Main
 		// CKZ - Max TPs : 2 - Time limit : 01:30.00
-		"#format"	"map:s,course:s,mode:s,teleport_count:d,time_limit:s"
-		"en"		"Race on {map} - Course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
+		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
+		"en"		"Race on Course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
+	}
+	"Racing - Race Cancelled"
+	{
+		"en"		"{darkred}Race has been cancelled!"
 	}
 	"Racing - Go!"
 	{
