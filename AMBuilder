@@ -132,7 +132,6 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'events.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'map.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'serializer.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'ui.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'item.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'jumpstats.cpp'),

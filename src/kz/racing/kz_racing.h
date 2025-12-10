@@ -221,6 +221,8 @@ public:
 	static void OnRaceInit(const KZ::racing::events::RaceInit &raceInit);
 	static void OnRaceCancel(const KZ::racing::events::RaceCancel &raceCancel);
 	static void OnRaceStart(const KZ::racing::events::RaceStart &raceStart);
+	static void OnPlayerAccept(const KZ::racing::events::PlayerAccept &playerAccept);
+	static void OnPlayerUnregister(const KZ::racing::events::PlayerUnregister &playerUnregister);
 	static void OnPlayerForfeit(const KZ::racing::events::PlayerForfeit &playerForfeit);
 	static void OnPlayerFinish(const KZ::racing::events::PlayerFinish &playerFinish);
 	static void OnRaceEnd(const KZ::racing::events::RaceEnd &raceEnd);

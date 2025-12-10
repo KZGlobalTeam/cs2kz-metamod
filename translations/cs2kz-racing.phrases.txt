@@ -82,4 +82,14 @@
 		"#format"	"time:d"
 		"en"		"Race starting in {time}s!"
 	}
+	"Racing - Player Accepted"
+	{
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} has accepted the race."
+	}
+	"Racing - Player Unregistered"
+	{
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} has unregistered from the race."
+	}
 }
