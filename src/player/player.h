@@ -77,7 +77,9 @@ public:
 
 	const char *GetName()
 	{
-		return GetClient() ? GetClient()->GetClientName() : "<blank>";
+		CUtlString name = GetClient() ? GetClient()->GetClientName() : "<blank>";
+		name.Trim();
+		return name.Get();
 	}
 
 	void SetName(const char *name);

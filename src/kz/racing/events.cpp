@@ -13,20 +13,45 @@ void KZRacingService::OnRaceInit(const KZ::racing::events::RaceInit &raceInit)
 	if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.raceInfo.workshopID)
 	{
 		KZRacingService::SendRaceJoin();
+		// Broadcast the race info to all players.
+		for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+		{
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+			if (player)
+			{
+				std::string timeLimitString;
+				if (KZRacingService::currentRace.data.raceInfo.duration > 0.0f)
+				{
+					auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.raceInfo.duration);
+					timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
+				}
+				else
+				{
+					timeLimitString = player->languageService->PrepareMessage("Racing - No Time Limit");
+				}
+				// clang-format off
+				player->languageService->PrintChat(true, false, "Racing - Race Info (Chat)",
+													KZRacingService::currentRace.data.raceInfo.courseName.c_str(),
+													KZRacingService::currentRace.data.raceInfo.modeName.c_str(),
+													KZRacingService::currentRace.data.raceInfo.maxTeleports,
+													timeLimitString.c_str());
+				// clang-format on
+			}
+		}
 	}
 }
 
 void KZRacingService::OnRaceCancel(const KZ::racing::events::RaceCancel &raceCancel)
 {
 	KZRacingService::currentRace = {};
-	KZLanguageService::PrintChatAll(false, "Racing - Race Cancelled");
+	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
 }
 
 void KZRacingService::OnRaceStart(const KZ::racing::events::RaceStart &raceStart)
 {
 	KZRacingService::currentRace.state = RaceInfo::RACE_ONGOING;
 	KZRacingService::currentRace.earliestStartTick = g_pKZUtils->GetServerGlobals()->tickcount + raceStart.countdownSeconds * ENGINE_FIXED_TICK_RATE;
-	KZLanguageService::PrintChatAll(false, "Racing - Race Countdown", raceStart.countdownSeconds);
+	KZLanguageService::PrintChatAll(true, "Racing - Race Countdown", raceStart.countdownSeconds);
 	for (const auto &participant : KZRacingService::currentRace.localParticipants)
 	{
 		KZPlayer *player = g_pKZPlayerManager->SteamIdToPlayer(participant.id);
@@ -39,17 +64,17 @@ void KZRacingService::OnRaceStart(const KZ::racing::events::RaceStart &raceStart
 
 void KZRacingService::OnPlayerAccept(const KZ::racing::events::PlayerAccept &playerAccept)
 {
-	KZLanguageService::PrintChatAll(false, "Racing - Player Accepted", playerAccept.player.name.c_str());
+	KZLanguageService::PrintChatAll(true, "Racing - Player Accepted", playerAccept.player.name.c_str());
 }
 
 void KZRacingService::OnPlayerUnregister(const KZ::racing::events::PlayerUnregister &playerUnregister)
 {
-	KZLanguageService::PrintChatAll(false, "Racing - Player Unregistered", playerUnregister.player.name.c_str());
+	KZLanguageService::PrintChatAll(true, "Racing - Player Unregistered", playerUnregister.player.name.c_str());
 }
 
 void KZRacingService::OnPlayerForfeit(const KZ::racing::events::PlayerForfeit &playerForfeit)
 {
-	KZLanguageService::PrintChatAll(false, "Racing - Player Forfeit", playerForfeit.player.name.c_str());
+	KZLanguageService::PrintChatAll(true, "Racing - Player Forfeit", playerForfeit.player.name.c_str());
 }
 
 void KZRacingService::OnPlayerFinish(const KZ::racing::events::PlayerFinish &playerFinish)
@@ -57,17 +82,17 @@ void KZRacingService::OnPlayerFinish(const KZ::racing::events::PlayerFinish &pla
 	CUtlString timeStr = utils::FormatTime(playerFinish.time);
 	if (playerFinish.teleportsUsed > 1)
 	{
-		KZLanguageService::PrintChatAll(false, "Racing - Player Finish (2+ Teleports)", playerFinish.player.name.c_str(), timeStr.Get(),
+		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (2+ Teleports)", playerFinish.player.name.c_str(), timeStr.Get(),
 										playerFinish.teleportsUsed);
 	}
 	else if (playerFinish.teleportsUsed == 1)
 	{
-		KZLanguageService::PrintChatAll(false, "Racing - Player Finish (1 Teleport)", playerFinish.player.name.c_str(), timeStr.Get(),
+		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (1 Teleport)", playerFinish.player.name.c_str(), timeStr.Get(),
 										playerFinish.teleportsUsed);
 	}
 	else
 	{
-		KZLanguageService::PrintChatAll(false, "Racing - Player Finish (PRO)", playerFinish.player.name.c_str(), timeStr.Get(),
+		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (PRO)", playerFinish.player.name.c_str(), timeStr.Get(),
 										playerFinish.teleportsUsed);
 	}
 }
@@ -98,7 +123,7 @@ void KZRacingService::OnRaceResult(const KZ::racing::events::RaceResult &raceRes
 	std::vector<KZ::racing::PlayerInfo> finishers;
 	std::vector<KZ::racing::PlayerInfo> nonFinishers;
 	GetRaceInfo(raceResult, finishers, nonFinishers);
-	KZLanguageService::PrintChatAll(false, "Racing - End Results Header");
+	KZLanguageService::PrintChatAll(true, "Racing - End Results Header");
 	// Print first place to last place, then non-finishers.
 	u32 position = 1;
 	for (const auto &finisher : raceResult.finishers)
