@@ -64,11 +64,19 @@
 	}
 	"Racing - Race Info"
 	{
-		// Race on Course Main
+		// Race on course Main
 		// CKZ - Max TPs : 2 - Time limit : 01:30.00
 		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
-		"en"		"Race on Course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
+		"en"		"Race on course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
 	}
+	"Racing - Race Info (Chat)"
+	{
+		// A new race has been started!
+		// Course Main | Max TPs: 0 | No time limit0
+		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
+		"en"		"{default}A new race has been started!\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
+	}
+	
 	"Racing - Race Cancelled"
 	{
 		"en"		"{darkred}Race has been cancelled!"
