@@ -312,6 +312,11 @@ private:
 	template<typename T>
 	static bool SendMessage(std::string_view event, const T &data)
 	{
+		if (KZRacingService::state.load() != KZRacingService::State::Connected)
+		{
+			return false;
+		}
+
 		Json payload;
 
 		if (!KZRacingService::PrepareMessage(event, data, payload))
