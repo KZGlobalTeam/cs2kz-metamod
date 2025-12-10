@@ -5,6 +5,7 @@
 #include "../noclip/kz_noclip.h"
 #include "../language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
+#include "kz/racing/kz_racing.h"
 #include "utils/utils.h"
 
 static_global class KZOptionServiceEventListener_Checkpoint : public KZOptionServiceEventListener
@@ -170,6 +171,12 @@ void KZCheckpointService::DoTeleport(i32 index)
 	if (this->checkpoints.Count() <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
+		this->player->PlayErrorSound();
+		return;
+	}
+	if (!this->player->racingService->CanTeleport())
+	{
+		this->player->languageService->PrintChat(true, false, "Can't Teleport (Limit Reached)");
 		this->player->PlayErrorSound();
 		return;
 	}

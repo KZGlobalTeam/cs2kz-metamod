@@ -75,6 +75,15 @@ void KZRacingService::OnPlayerUnregister(const KZ::racing::events::PlayerUnregis
 void KZRacingService::OnPlayerForfeit(const KZ::racing::events::PlayerForfeit &playerForfeit)
 {
 	KZLanguageService::PrintChatAll(true, "Racing - Player Forfeit", playerForfeit.player.name.c_str());
+	// Add to local finishers list to avoid showing go message.
+	for (auto it = KZRacingService::currentRace.localParticipants.begin(); it != KZRacingService::currentRace.localParticipants.end(); ++it)
+	{
+		if (it->id == playerForfeit.player.id)
+		{
+			KZRacingService::currentRace.localFinishers.push_back(*it);
+			break;
+		}
+	}
 }
 
 void KZRacingService::OnPlayerFinish(const KZ::racing::events::PlayerFinish &playerFinish)
@@ -94,6 +103,14 @@ void KZRacingService::OnPlayerFinish(const KZ::racing::events::PlayerFinish &pla
 	{
 		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (PRO)", playerFinish.player.name.c_str(), timeStr.Get(),
 										playerFinish.teleportsUsed);
+	}
+	for (auto it = KZRacingService::currentRace.localParticipants.begin(); it != KZRacingService::currentRace.localParticipants.end(); ++it)
+	{
+		if (it->id == playerFinish.player.id)
+		{
+			KZRacingService::currentRace.localFinishers.push_back(*it);
+			break;
+		}
 	}
 }
 

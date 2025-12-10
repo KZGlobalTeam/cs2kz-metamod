@@ -3,7 +3,7 @@
 	"Racing - Race Countdown"
 	{
 		"#format"	"time:d"
-		"en"		"{yellow} Race is starting in {time} seconds!"
+		"en"		"{yellow}Race is starting in {time} seconds!"
 	}
 	"Racing - Player Forfeit"
 	{

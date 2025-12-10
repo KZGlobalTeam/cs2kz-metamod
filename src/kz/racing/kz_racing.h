@@ -157,6 +157,8 @@ struct RaceInfo
 	State state;
 	KZ::racing::events::RaceInit data;
 	std::vector<KZ::racing::PlayerInfo> localParticipants;
+	// This also includes people who surrendered.
+	std::vector<KZ::racing::PlayerInfo> localFinishers;
 	// Server-side only
 	i32 earliestStartTick;
 };
@@ -275,6 +277,8 @@ public:
 	void ForfeitRace();
 	bool IsRaceParticipant();
 	static void RemoveLocalRaceParticipant(u64 steamID);
+
+	bool CanTeleport();
 	// Return false if a race is active, the player is one of the participants and the start time hasn't arrived yet.
 	// Also returns false if the mode or the course is invalid, or if the player has any active style.
 	bool OnTimerStart(u32 courseGUID);
