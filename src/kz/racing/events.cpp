@@ -22,7 +22,7 @@ void KZRacingService::OnRaceInit(const KZ::racing::events::RaceInit &raceInit)
 				std::string timeLimitString;
 				if (KZRacingService::currentRace.data.raceInfo.duration > 0.0f)
 				{
-					auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.raceInfo.duration);
+					auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.raceInfo.duration, false);
 					timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
 				}
 				else
