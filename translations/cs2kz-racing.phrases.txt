@@ -13,17 +13,17 @@
 	"Racing - Player Finish (1 Teleport)"
 	{
 		"#format"	"player:s,time:s"
-		"en"		"{lime}{player}{grey} has finished the race in {time}! [{yellow}1{grey} TP]"
+		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | [{yellow}1{grey} TP]"
 	}
 	"Racing - Player Finish (2+ Teleports)"
 	{
 		"#format"	"player:s,time:s,teleport_count:d"
-		"en"		"{lime}{player}{grey} has finished the race in {time}! [{yellow}{teleport_count}{grey} TPs]"
+		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | [{yellow}{teleport_count}{grey} TPs]"
 	}
 	"Racing - Player Finish (PRO)"
 	{
 		"#format"	"player:s,time:s"
-		"en"		"{lime}{player}{grey} has finished the race in {time}! [{blue}PRO{grey}]"
+		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | [{blue}PRO{grey}]"
 	}
 	"Racing - End Results Header"
 	{
