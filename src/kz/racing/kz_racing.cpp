@@ -2,6 +2,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
+#include "kz/mode/kz_mode.h"
 #include "utils/argparse.h"
 #include "utils/simplecmds.h"
 
@@ -190,7 +191,7 @@ void KZRacingService::BroadcastRaceInfo()
 					std::string timeLimitString;
 					if (KZRacingService::currentRace.data.raceInfo.duration > 0.0f)
 					{
-						auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.raceInfo.duration);
+						auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.raceInfo.duration, false);
 						timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
 					}
 					else
@@ -225,6 +226,13 @@ void KZRacingService::BroadcastRaceInfo()
 				{
 					if (countdownSeconds <= 0)
 					{
+						for (auto &finisher : KZRacingService::currentRace.localFinishers)
+						{
+							if (finisher.id == player->GetSteamId64())
+							{
+								continue;
+							}
+						}
 						player->languageService->PrintAlert(false, true, "Racing - Go!");
 					}
 					else
@@ -290,6 +298,23 @@ void KZRacingService::RemoveLocalRaceParticipant(u64 steamID)
 					   participants.end());
 }
 
+bool KZRacingService::CanTeleport()
+{
+	if (!KZRacingService::currentRace.state)
+	{
+		return true;
+	}
+	if (!this->IsRaceParticipant())
+	{
+		return true;
+	}
+	// Can't teleport if max teleports reached.
+	if (this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.data.raceInfo.maxTeleports)
+	{
+		return false;
+	}
+}
+
 bool KZRacingService::OnTimerStart(u32 courseGUID)
 {
 	if (!KZRacingService::currentRace.state)
@@ -313,6 +338,12 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 	}
 	// Styles are not supported.
 	if (this->player->styleServices.Count() > 0)
+	{
+		return false;
+	}
+	// Mode mismatches are not supported.
+	if (!KZ_STREQI(KZRacingService::currentRace.data.raceInfo.modeName.c_str(), this->player->modeService->GetModeName())
+		&& !KZ_STREQI(KZRacingService::currentRace.data.raceInfo.modeName.c_str(), this->player->modeService->GetModeShortName()))
 	{
 		return false;
 	}
