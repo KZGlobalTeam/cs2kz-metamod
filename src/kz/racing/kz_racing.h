@@ -15,30 +15,38 @@ namespace KZ::racing
 		bool FromJson(const Json &json);
 	};
 
-	struct RaceInfo
-	{
-		// std::string mapName;
-		u64 workshopID;
-		std::string courseName;
-		std::string modeName;
-		u32 maxTeleports;
-		f32 duration;
-
-		bool ToJson(Json &json) const;
-		bool FromJson(const Json &json);
-	};
-
 	namespace events
 	{
-		struct RaceInit
+		struct ChatMessage
 		{
-			RaceInfo raceInfo;
+			PlayerInfo player;
+			std::string content;
 
 			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
 		};
 
-		struct RaceCancel
+		struct InitRace
+		{
+			u64 workshopID;
+			std::string courseName;
+			std::string modeName;
+			f64 maxDurationSeconds;
+			u32 maxTeleports;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct BeginRace
+		{
+			f64 countdownSeconds;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct CancelRace
 		{
 			bool ToJson(Json &json) const
 			{
@@ -51,14 +59,35 @@ namespace KZ::racing
 			}
 		};
 
-		struct RaceStart
+		struct RaceResults
 		{
-			f32 countdownSeconds;
-			bool ToJson(Json &json) const;
+			struct Participant
+			{
+				enum class State
+				{
+					Disconnected,
+					Surrendered,
+					DidNotFinish,
+					Finished,
+				};
+
+				u64 id;
+				std::string name;
+				State state;
+
+				// These are only initialized when `state == State::Finished`.
+				u32 teleports;
+				f64 timeSeconds;
+
+				bool FromJson(const Json &json);
+			};
+
+			std::vector<Participant> participants;
+
 			bool FromJson(const Json &json);
 		};
 
-		struct JoinRace
+		struct Ready
 		{
 			bool ToJson(Json &json) const
 			{
@@ -66,7 +95,7 @@ namespace KZ::racing
 			}
 		};
 
-		struct LeaveRace
+		struct Unready
 		{
 			bool ToJson(Json &json) const
 			{
@@ -74,7 +103,41 @@ namespace KZ::racing
 			}
 		};
 
-		struct PlayerAccept
+		struct EndRace
+		{
+			enum class Reason
+			{
+				/**
+				 * The race's `max_duration` expired.
+				 */
+				Timeout,
+
+				/**
+				 * An admin used `kz_race_end`.
+				 */
+				Forced,
+			};
+
+			Reason reason;
+
+			bool ToJson(Json &json) const;
+		};
+
+		struct ServerJoinRace
+		{
+			std::string name;
+
+			bool FromJson(const Json &json);
+		};
+
+		struct ServerLeaveRace
+		{
+			std::string name;
+
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerJoinRace
 		{
 			PlayerInfo player;
 
@@ -82,15 +145,7 @@ namespace KZ::racing
 			bool FromJson(const Json &json);
 		};
 
-		struct PlayerUnregister
-		{
-			PlayerInfo player;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerForfeit
+		struct PlayerLeaveRace
 		{
 			PlayerInfo player;
 
@@ -101,61 +156,43 @@ namespace KZ::racing
 		struct PlayerFinish
 		{
 			PlayerInfo player;
-			f32 time;
-			u32 teleportsUsed;
+			u32 teleports;
+			f64 timeSeconds;
 
 			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
 		};
 
-		struct RaceEnd
-		{
-			// Time expired if not true.
-			// If manual is true, coordinator should force all other servers to terminate the race.
-			bool manual;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct RaceResult
-		{
-			struct Finisher
-			{
-				PlayerInfo player;
-				f32 time;
-				u32 teleportsUsed;
-				bool completed = false;
-
-				bool FromJson(const Json &json);
-			};
-
-			std::vector<Finisher> finishers;
-			bool FromJson(const Json &json);
-		};
-
-		struct ChatMessage
+		struct PlayerDisconnect
 		{
 			PlayerInfo player;
-			std::string message;
 
 			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
 		};
+
+		struct PlayerSurrender
+		{
+			PlayerInfo player;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
 	}; // namespace events
 }; // namespace KZ::racing
 
 struct RaceInfo
 {
-	enum State
+	enum class State
 	{
-		RACE_NONE,
-		RACE_INIT,
-		RACE_ONGOING
+		None,
+		Init,
+		Ongoing
 	};
 
-	State state;
-	KZ::racing::events::RaceInit data;
+	State state = State::None;
+	KZ::racing::events::InitRace data;
 	std::vector<KZ::racing::PlayerInfo> localParticipants;
 	// This also includes people who surrendered.
 	std::vector<KZ::racing::PlayerInfo> localFinishers;
@@ -203,16 +240,17 @@ public:
 	// Note that unlike the global service, these functions do not have callbacks from the coordinator.
 	// The server only acts upon receiving broadcasted messages from the coordinator.
 
-	static void SendRaceInit(u64 workshopID, std::string courseName, std::string modeName, u32 maxTeleports, f32 duration);
-	static void SendRaceCancel();
-	static void SendRaceJoin();
-	static void SendRaceLeave();
-	static void SendRaceStart(f32 countdownSeconds);
-	void SendPlayerUnregistration();
-	void SendAcceptRace();
-	void SendForfeitRace();
-	void SendRaceFinish(f32 time, u32 teleportsUsed);
-	static void SendRaceEnd(bool manual);
+	static void SendInitRace(u64 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports);
+	static void SendCancelRace();
+	static void SendReady();
+	static void SendUnready();
+	static void SendBeginRace(f64 countdownSeconds);
+	void SendJoinRace();
+	void SendLeaveRace();
+	void SendDisconnect();
+	void SendSurrenderRace();
+	void SendFinishRace(f64 timeSeconds, u32 teleports);
+	static void SendEndRace(bool forced);
 
 	void SendChatMessage(const std::string &message);
 
@@ -220,16 +258,18 @@ public:
 	// Called on the WS thread and is therefore async.
 	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
 	// Called on the main thread.
-	static void OnRaceInit(const KZ::racing::events::RaceInit &raceInit);
-	static void OnRaceCancel(const KZ::racing::events::RaceCancel &raceCancel);
-	static void OnRaceStart(const KZ::racing::events::RaceStart &raceStart);
-	static void OnPlayerAccept(const KZ::racing::events::PlayerAccept &playerAccept);
-	static void OnPlayerUnregister(const KZ::racing::events::PlayerUnregister &playerUnregister);
-	static void OnPlayerForfeit(const KZ::racing::events::PlayerForfeit &playerForfeit);
-	static void OnPlayerFinish(const KZ::racing::events::PlayerFinish &playerFinish);
-	static void OnRaceEnd(const KZ::racing::events::RaceEnd &raceEnd);
-	static void OnRaceResult(const KZ::racing::events::RaceResult &raceResult);
-	static void OnChatMessage(const KZ::racing::events::ChatMessage &chatMessage);
+	static void OnChatMessage(const KZ::racing::events::ChatMessage &message);
+	static void OnInitRace(const KZ::racing::events::InitRace &message);
+	static void OnBeginRace(const KZ::racing::events::BeginRace &message);
+	static void OnCancelRace(const KZ::racing::events::CancelRace &message);
+	static void OnRaceResults(const KZ::racing::events::RaceResults &message);
+	static void OnServerJoinRace(const KZ::racing::events::ServerJoinRace &message);
+	static void OnServerLeaveRace(const KZ::racing::events::ServerLeaveRace &message);
+	static void OnPlayerJoinRace(const KZ::racing::events::PlayerJoinRace &message);
+	static void OnPlayerLeaveRace(const KZ::racing::events::PlayerLeaveRace &message);
+	static void OnPlayerFinish(const KZ::racing::events::PlayerFinish &message);
+	static void OnPlayerDisconnect(const KZ::racing::events::PlayerDisconnect &message);
+	static void OnPlayerSurrender(const KZ::racing::events::PlayerSurrender &message);
 
 	/**
 	 * Process queued callbacks on the main thread.
@@ -274,7 +314,7 @@ public:
 
 	// Race participation
 	void AcceptRace();
-	void ForfeitRace();
+	void SurrenderRace();
 	bool IsRaceParticipant();
 	static void RemoveLocalRaceParticipant(u64 steamID);
 

@@ -3,7 +3,7 @@ extern CSteamGameServerAPIContext g_steamAPI;
 
 void KZRacingService::CheckMap()
 {
-	if (!KZRacingService::currentRace.state)
+	if (KZRacingService::currentRace.state == RaceInfo::State::None)
 	{
 		return;
 	}
@@ -12,22 +12,22 @@ void KZRacingService::CheckMap()
 	{
 		return;
 	}
-	else if (KZRacingService::IsMapReadyForChange(KZRacingService::currentRace.data.raceInfo.workshopID))
+	else if (KZRacingService::IsMapReadyForChange(KZRacingService::currentRace.data.workshopID))
 	{
 		// host_workshop_map <workshop ID>
-		std::string command = "host_workshop_map " + std::to_string(KZRacingService::currentRace.data.raceInfo.workshopID);
+		std::string command = "host_workshop_map " + std::to_string(KZRacingService::currentRace.data.workshopID);
 		interfaces::pEngine->ServerCommand(command.c_str());
 	}
-	else if (!KZRacingService::IsMapQueuedForDownload(KZRacingService::currentRace.data.raceInfo.workshopID))
+	else if (!KZRacingService::IsMapQueuedForDownload(KZRacingService::currentRace.data.workshopID))
 	{
-		KZRacingService::TriggerWorkshopDownload(KZRacingService::currentRace.data.raceInfo.workshopID);
+		KZRacingService::TriggerWorkshopDownload(KZRacingService::currentRace.data.workshopID);
 	}
 }
 
 bool KZRacingService::IsMapCorrectForRace()
 {
 	u32 currentWorkshopID = g_pKZUtils->GetCurrentMapWorkshopID();
-	return currentWorkshopID == KZRacingService::currentRace.data.raceInfo.workshopID;
+	return currentWorkshopID == KZRacingService::currentRace.data.workshopID;
 }
 
 bool KZRacingService::IsMapReadyForChange(u64 workshopID)

@@ -17,7 +17,7 @@ CON_COMMAND_F(kz_race_init, "Initialize a race", FCVAR_NONE)
 					   "0/infinite>] [tp=<number of max teleports, default to 0>]\n");
 		return;
 	}
-	if (KZRacingService::currentRace.state > RaceInfo::RACE_NONE)
+	if (KZRacingService::currentRace.state > RaceInfo::State::None)
 	{
 		META_CONPRINTF("[KZ::Racing] Another race is already active, cannot initialize a new one.\n");
 		return;
@@ -30,40 +30,37 @@ CON_COMMAND_F(kz_race_init, "Initialize a race", FCVAR_NONE)
 	std::string courseName = params.GetMemberString("course", "");
 	std::string modeName = params.GetMemberString("mode", "");
 	u32 maxTeleports = static_cast<u32>(params.GetMemberInt("tp", 0));
-	f32 duration = static_cast<f32>(params.GetMemberFloat("duration", 0.0f));
-	KZRacingService::SendRaceInit(g_pKZUtils->GetCurrentMapWorkshopID(), courseName, modeName, maxTeleports, duration);
+	f64 maxDuration = static_cast<f32>(params.GetMemberFloat("duration", 0.0f));
+	KZRacingService::SendInitRace(g_pKZUtils->GetCurrentMapWorkshopID(), courseName, modeName, maxDuration, maxTeleports);
 }
 
 CON_COMMAND_F(kz_race_cancel, "Cancel a race", FCVAR_NONE)
 {
-	KZRacingService::SendRaceCancel();
+	KZRacingService::SendCancelRace();
 }
 
 CON_COMMAND_F(kz_race_start, "Start the race", FCVAR_NONE)
 {
-	if (utils::IsNumeric(args.Arg(1)))
-	{
-		f32 countdownSeconds = static_cast<f32>(V_atoi(args.Arg(1)));
-		KZRacingService::SendRaceStart(countdownSeconds);
-	}
-	else
+	if (!utils::IsNumeric(args.Arg(1)))
 	{
 		META_CONPRINTF("[KZ::Racing] Invalid argument, usage: kz_race_start <countdown_seconds>\n");
+		return;
 	}
 
-	if (KZRacingService::currentRace.state != RaceInfo::RACE_INIT)
+	if (KZRacingService::currentRace.state != RaceInfo::State::Init)
 	{
 		META_CONPRINTF("[KZ::Racing] No race initialized, cannot start the race.\n");
+		return;
 	}
 
-	f32 countdownSeconds = static_cast<f32>(V_atoi(args.Arg(1)));
-	KZRacingService::SendRaceStart(countdownSeconds);
+	f64 countdownSeconds = V_atof(args.Arg(1));
+	KZRacingService::SendBeginRace(countdownSeconds);
 	META_CONPRINTF("[KZ::Racing] Requested race start with a countdown of %.2f seconds.\n", countdownSeconds);
 }
 
 CON_COMMAND_F(kz_race_end, "Manually end the race", FCVAR_NONE)
 {
-	KZRacingService::SendRaceEnd(true);
+	KZRacingService::SendEndRace(/* forced: */ true);
 }
 
 SCMD(kz_accept, SCFL_RACING)
@@ -78,7 +75,7 @@ SCMD(kz_accept, SCFL_RACING)
 	return MRES_SUPERCEDE;
 }
 
-SCMD(kz_forfeit, SCFL_RACING)
+SCMD(kz_surrender, SCFL_RACING)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
@@ -86,101 +83,109 @@ SCMD(kz_forfeit, SCFL_RACING)
 		return MRES_SUPERCEDE;
 	}
 
-	player->racingService->ForfeitRace();
+	player->racingService->SurrenderRace();
 	return MRES_SUPERCEDE;
 }
 
-void KZRacingService::SendRaceInit(u64 workshopID, std::string courseName, std::string modeName, u32 maxTeleports, f32 duration)
+void KZRacingService::SendInitRace(u64 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports)
 {
-	KZ::racing::events::RaceInit raceInit;
-	raceInit.raceInfo.workshopID = workshopID;
-	raceInit.raceInfo.courseName = courseName;
-	raceInit.raceInfo.modeName = modeName;
-	raceInit.raceInfo.maxTeleports = maxTeleports;
-	raceInit.raceInfo.duration = duration;
-	KZRacingService::SendMessage("init_race", raceInit);
+	KZ::racing::events::InitRace data;
+	data.workshopID = workshopID;
+	data.courseName = courseName;
+	data.modeName = modeName;
+	data.maxDurationSeconds = maxDurationSeconds;
+	data.maxTeleports = maxTeleports;
+	KZRacingService::SendMessage("init_race", data);
 }
 
-void KZRacingService::SendRaceCancel()
+void KZRacingService::SendCancelRace()
 {
-	KZ::racing::events::RaceCancel raceCancel;
-	KZRacingService::SendMessage("cancel_race", raceCancel);
+	KZ::racing::events::CancelRace data;
+	KZRacingService::SendMessage("cancel_race", data);
 }
 
-void KZRacingService::SendRaceJoin()
+void KZRacingService::SendReady()
 {
-	KZ::racing::events::JoinRace data;
-	KZRacingService::SendMessage("join_race", data);
+	KZ::racing::events::Ready data;
+	KZRacingService::SendMessage("ready", data);
 }
 
-void KZRacingService::SendRaceLeave()
+void KZRacingService::SendUnready()
 {
-	KZ::racing::events::LeaveRace data;
-	KZRacingService::SendMessage("leave_race", data);
+	KZ::racing::events::Unready data;
+	KZRacingService::SendMessage("unready", data);
 }
 
-void KZRacingService::SendRaceStart(f32 countdownSeconds)
+void KZRacingService::SendBeginRace(f64 countdownSeconds)
 {
-	KZ::racing::events::RaceStart raceStart;
-	raceStart.countdownSeconds = countdownSeconds;
-	KZRacingService::SendMessage("start_race", raceStart);
+	KZ::racing::events::BeginRace data;
+	data.countdownSeconds = countdownSeconds;
+	KZRacingService::SendMessage("begin_race", data);
 }
 
-void KZRacingService::SendPlayerUnregistration()
+void KZRacingService::SendJoinRace()
 {
-	KZ::racing::events::PlayerUnregister data;
+	KZ::racing::events::PlayerJoinRace data;
 	data.player.id = this->player->GetSteamId64();
 	data.player.name = this->player->GetName();
-	KZRacingService::SendMessage("remove_race_participant", data);
+	KZRacingService::SendMessage("player_join_race", data);
 }
 
-void KZRacingService::SendAcceptRace()
+void KZRacingService::SendLeaveRace()
 {
-	KZ::racing::events::PlayerAccept data;
+	KZ::racing::events::PlayerLeaveRace data;
 	data.player.id = this->player->GetSteamId64();
 	data.player.name = this->player->GetName();
-	KZRacingService::SendMessage("add_race_participant", data);
+	KZRacingService::SendMessage("player_leave_race", data);
 }
 
-void KZRacingService::SendForfeitRace()
+void KZRacingService::SendDisconnect()
 {
-	KZ::racing::events::PlayerForfeit playerForfeit;
-	playerForfeit.player.id = this->player->GetSteamId64();
-	playerForfeit.player.name = this->player->GetName();
-	KZRacingService::SendMessage("player_forfeit", playerForfeit);
+	KZ::racing::events::PlayerDisconnect data;
+	data.player.id = this->player->GetSteamId64();
+	data.player.name = this->player->GetName();
+	KZRacingService::SendMessage("player_disconnect", data);
 }
 
-void KZRacingService::SendRaceFinish(f32 time, u32 teleportsUsed)
+void KZRacingService::SendSurrenderRace()
 {
-	KZ::racing::events::PlayerFinish playerFinish;
-	playerFinish.player.id = this->player->GetSteamId64();
-	playerFinish.player.name = this->player->GetName();
-	playerFinish.time = time;
-	playerFinish.teleportsUsed = teleportsUsed;
-	KZRacingService::SendMessage("player_finished", playerFinish);
+	KZ::racing::events::PlayerSurrender data;
+	data.player.id = this->player->GetSteamId64();
+	data.player.name = this->player->GetName();
+	KZRacingService::SendMessage("player_surrender", data);
 }
 
-void KZRacingService::SendRaceEnd(bool manual)
+void KZRacingService::SendFinishRace(f64 timeSeconds, u32 teleports)
 {
-	KZ::racing::events::RaceEnd raceEnd;
-	raceEnd.manual = manual;
-	KZRacingService::SendMessage("end_race", raceEnd);
+	KZ::racing::events::PlayerFinish data;
+	data.player.id = this->player->GetSteamId64();
+	data.player.name = this->player->GetName();
+	data.timeSeconds = timeSeconds;
+	data.teleports = teleports;
+	KZRacingService::SendMessage("player_finish", data);
+}
+
+void KZRacingService::SendEndRace(bool forced)
+{
+	KZ::racing::events::EndRace data;
+	data.reason = forced ? KZ::racing::events::EndRace::Reason::Forced : KZ::racing::events::EndRace::Reason::Timeout;
+	KZRacingService::SendMessage("end_race", data);
 }
 
 void KZRacingService::SendChatMessage(const std::string &message)
 {
-	KZ::racing::events::ChatMessage chatMessage;
-	chatMessage.player.id = this->player->GetSteamId64();
-	chatMessage.player.name = this->player->GetName();
-	chatMessage.message = message;
-	KZRacingService::SendMessage("chat_message", chatMessage);
+	KZ::racing::events::ChatMessage data;
+	data.player.id = this->player->GetSteamId64();
+	data.player.name = this->player->GetName();
+	data.content = message;
+	KZRacingService::SendMessage("chat_message", data);
 }
 
 void KZRacingService::BroadcastRaceInfo()
 {
 	switch (KZRacingService::currentRace.state)
 	{
-		case RaceInfo::RACE_INIT:
+		case RaceInfo::State::Init:
 		{
 			// Broadcast the race info to all players.
 			for (i32 i = 0; i < MAXPLAYERS + 1; i++)
@@ -189,9 +194,9 @@ void KZRacingService::BroadcastRaceInfo()
 				if (player)
 				{
 					std::string timeLimitString;
-					if (KZRacingService::currentRace.data.raceInfo.duration > 0.0f)
+					if (KZRacingService::currentRace.data.maxDurationSeconds > 0.0f)
 					{
-						auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.raceInfo.duration, false);
+						auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.maxDurationSeconds, false);
 						timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
 					}
 					else
@@ -200,16 +205,16 @@ void KZRacingService::BroadcastRaceInfo()
 					}
 					// clang-format off
 					player->languageService->PrintAlert(false, false, "Racing - Race Info",
-														KZRacingService::currentRace.data.raceInfo.courseName.c_str(),
-														KZRacingService::currentRace.data.raceInfo.modeName.c_str(),
-														KZRacingService::currentRace.data.raceInfo.maxTeleports,
+														KZRacingService::currentRace.data.courseName.c_str(),
+														KZRacingService::currentRace.data.modeName.c_str(),
+														KZRacingService::currentRace.data.maxTeleports,
 														timeLimitString.c_str());
 					// clang-format on
 				}
 			}
 			break;
 		}
-		case RaceInfo::RACE_ONGOING:
+		case RaceInfo::State::Ongoing:
 		{
 			// Broadcast to all participants that the race will start in X seconds.
 			f32 countdownSeconds =
@@ -248,21 +253,21 @@ void KZRacingService::BroadcastRaceInfo()
 
 void KZRacingService::AcceptRace()
 {
-	if (KZRacingService::currentRace.state == RaceInfo::RACE_INIT && !this->IsRaceParticipant()
-		&& g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.raceInfo.workshopID)
+	if (KZRacingService::currentRace.state == RaceInfo::State::Init && !this->IsRaceParticipant()
+		&& g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.workshopID)
 	{
 		this->player->timerService->TimerStop();
-		this->SendAcceptRace();
+		this->SendJoinRace();
 		KZRacingService::currentRace.localParticipants.push_back({this->player->GetSteamId64(), this->player->GetName()});
 	}
 }
 
-void KZRacingService::ForfeitRace()
+void KZRacingService::SurrenderRace()
 {
-	if (KZRacingService::currentRace.state == RaceInfo::RACE_ONGOING && this->IsRaceParticipant())
+	if (KZRacingService::currentRace.state == RaceInfo::State::Ongoing && this->IsRaceParticipant())
 	{
 		this->player->timerService->TimerStop();
-		this->SendForfeitRace();
+		this->SendSurrenderRace();
 
 		auto &localParticipants = KZRacingService::currentRace.localParticipants;
 		for (auto it = localParticipants.begin(); it != localParticipants.end();)
@@ -300,7 +305,7 @@ void KZRacingService::RemoveLocalRaceParticipant(u64 steamID)
 
 bool KZRacingService::CanTeleport()
 {
-	if (!KZRacingService::currentRace.state)
+	if (KZRacingService::currentRace.state == RaceInfo::State::None)
 	{
 		return true;
 	}
@@ -309,7 +314,7 @@ bool KZRacingService::CanTeleport()
 		return true;
 	}
 	// Can't teleport if max teleports reached.
-	if (this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.data.raceInfo.maxTeleports)
+	if (this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.data.maxTeleports)
 	{
 		return false;
 	}
@@ -318,7 +323,7 @@ bool KZRacingService::CanTeleport()
 
 bool KZRacingService::OnTimerStart(u32 courseGUID)
 {
-	if (!KZRacingService::currentRace.state)
+	if (KZRacingService::currentRace.state == RaceInfo::State::None)
 	{
 		return true;
 	}
@@ -328,7 +333,7 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 	}
 	// Check map and course match.
 	if (!KZ::course::GetCourseByCourseID(courseGUID)
-		|| KZRacingService::currentRace.data.raceInfo.courseName != KZ::course::GetCourseByCourseID(courseGUID)->name)
+		|| KZRacingService::currentRace.data.courseName != KZ::course::GetCourseByCourseID(courseGUID)->name)
 	{
 		return false;
 	}
@@ -343,8 +348,8 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 		return false;
 	}
 	// Mode mismatches are not supported.
-	if (!KZ_STREQI(KZRacingService::currentRace.data.raceInfo.modeName.c_str(), this->player->modeService->GetModeName())
-		&& !KZ_STREQI(KZRacingService::currentRace.data.raceInfo.modeName.c_str(), this->player->modeService->GetModeShortName()))
+	if (!KZ_STREQI(KZRacingService::currentRace.data.modeName.c_str(), this->player->modeService->GetModeName())
+		&& !KZ_STREQI(KZRacingService::currentRace.data.modeName.c_str(), this->player->modeService->GetModeShortName()))
 	{
 		return false;
 	}
@@ -354,7 +359,7 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 
 void KZRacingService::OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed)
 {
-	if (!KZRacingService::currentRace.state)
+	if (KZRacingService::currentRace.state == RaceInfo::State::None)
 	{
 		return;
 	}
@@ -362,7 +367,7 @@ void KZRacingService::OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed
 	{
 		return;
 	}
-	this->SendRaceFinish(time + ((this->timerStartTickServer - KZRacingService::currentRace.earliestStartTick) * ENGINE_FIXED_TICK_INTERVAL),
+	this->SendFinishRace(time + ((this->timerStartTickServer - KZRacingService::currentRace.earliestStartTick) * ENGINE_FIXED_TICK_INTERVAL),
 						 teleportsUsed);
 }
 
@@ -370,24 +375,24 @@ void KZRacingService::OnClientDisconnect()
 {
 	switch (KZRacingService::currentRace.state)
 	{
-		case RaceInfo::RACE_INIT:
+		case RaceInfo::State::Init:
 		{
 			// Unregister from the race if registered.
 			if (this->IsRaceParticipant())
 			{
-				this->SendPlayerUnregistration();
+				this->SendLeaveRace();
 				KZRacingService::RemoveLocalRaceParticipant(this->player->GetSteamId64());
 			}
 			break;
 		}
-		case RaceInfo::RACE_ONGOING:
+		case RaceInfo::State::Ongoing:
 		{
 			if (!this->IsRaceParticipant())
 			{
 				return;
 			}
 
-			this->SendForfeitRace();
+			this->SendDisconnect();
 			break;
 		}
 		default:
