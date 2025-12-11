@@ -97,15 +97,15 @@ void KZRacingService::OnActivateServer()
 		KZRacingService::state.store(KZRacingService::State::Connecting);
 	}
 
-	if (KZRacingService::state.load() == KZRacingService::State::Connected && KZRacingService::currentRace.state == RaceInfo::RACE_INIT)
+	if (KZRacingService::state.load() == KZRacingService::State::Connected && KZRacingService::currentRace.state == RaceInfo::State::Init)
 	{
-		if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.raceInfo.workshopID)
+		if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.workshopID)
 		{
-			KZRacingService::SendRaceJoin();
+			KZRacingService::SendReady();
 		}
 		else
 		{
-			KZRacingService::SendRaceLeave();
+			KZRacingService::SendUnready();
 		}
 	}
 }
@@ -113,14 +113,14 @@ void KZRacingService::OnActivateServer()
 void KZRacingService::OnServerGamePostSimulate()
 {
 	KZRacingService::ProcessMainThreadCallbacks();
-	if (KZRacingService::currentRace.data.raceInfo.duration > 0
-		&& (KZRacingService::currentRace.earliestStartTick + KZRacingService::currentRace.data.raceInfo.duration * ENGINE_FIXED_TICK_RATE
+	if (KZRacingService::currentRace.data.maxDurationSeconds > 0
+		&& (KZRacingService::currentRace.earliestStartTick + KZRacingService::currentRace.data.maxDurationSeconds * ENGINE_FIXED_TICK_RATE
 				<= g_pKZUtils->GetServerGlobals()->tickcount
-			&& KZRacingService::currentRace.state == RaceInfo::RACE_ONGOING))
+			&& KZRacingService::currentRace.state == RaceInfo::State::Ongoing))
 	{
 		META_CONPRINTF("[KZ::Racing] Race duration expired.\n");
-		KZRacingService::SendRaceEnd(false);
-		KZRacingService::currentRace.state = RaceInfo::RACE_NONE;
+		KZRacingService::SendEndRace(/* forced: */ false);
+		KZRacingService::currentRace.state = RaceInfo::State::None;
 	}
 }
 
@@ -193,94 +193,112 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 			}
 
 			// Dispatch based on event type
-			if (event == "init_race")
+			if (event == "chat_message")
 			{
-				KZ::racing::events::RaceInit raceInit;
-				if (raceInit.FromJson(data))
+				KZ::racing::events::ChatMessage event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([raceInit]() { KZRacingService::OnRaceInit(raceInit); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnChatMessage(event); });
+				}
+			}
+			else if (event == "init_race")
+			{
+				KZ::racing::events::InitRace event;
+				if (event.FromJson(data))
+				{
+					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnInitRace(event); });
+				}
+			}
+			else if (event == "begin_race")
+			{
+				KZ::racing::events::BeginRace event;
+				if (event.FromJson(data))
+				{
+					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnBeginRace(event); });
 				}
 			}
 			else if (event == "cancel_race")
 			{
-				KZ::racing::events::RaceCancel raceCancel;
-				if (raceCancel.FromJson(data))
+				KZ::racing::events::CancelRace event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([raceCancel]() { KZRacingService::OnRaceCancel(raceCancel); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnCancelRace(event); });
 				}
 			}
-			else if (event == "start_race")
+			else if (event == "race_results")
 			{
-				KZ::racing::events::RaceStart raceStart;
-				if (raceStart.FromJson(data))
+				KZ::racing::events::RaceResults event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([raceStart]() { KZRacingService::OnRaceStart(raceStart); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceResults(event); });
 				}
 			}
-			else if (event == "add_race_participant")
+			else if (event == "server_join_race")
 			{
-				KZ::racing::events::PlayerAccept playerAccept;
-				if (playerAccept.FromJson(data))
+				KZ::racing::events::ServerJoinRace event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([playerAccept]() { KZRacingService::OnPlayerAccept(playerAccept); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnServerJoinRace(event); });
 				}
 			}
-			else if (event == "remove_race_participant")
+			else if (event == "server_leave_race")
 			{
-				KZ::racing::events::PlayerUnregister playerUnreg;
-				if (playerUnreg.FromJson(data))
+				KZ::racing::events::ServerLeaveRace event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([playerUnreg]() { KZRacingService::OnPlayerUnregister(playerUnreg); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnServerLeaveRace(event); });
 				}
 			}
-			else if (event == "player_forfeit")
+			else if (event == "player_join_race")
 			{
-				KZ::racing::events::PlayerForfeit playerForfeit;
-				if (playerForfeit.FromJson(data))
+				KZ::racing::events::PlayerJoinRace event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([playerForfeit]() { KZRacingService::OnPlayerForfeit(playerForfeit); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerJoinRace(event); });
 				}
 			}
-			else if (event == "player_finished")
+			else if (event == "player_leave_race")
 			{
-				KZ::racing::events::PlayerFinish playerFinish;
-				if (playerFinish.FromJson(data))
+				KZ::racing::events::PlayerLeaveRace event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([playerFinish]() { KZRacingService::OnPlayerFinish(playerFinish); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerLeaveRace(event); });
 				}
 			}
-			else if (event == "end_race")
+			else if (event == "player_finish")
 			{
-				KZ::racing::events::RaceEnd raceEnd;
-				if (raceEnd.FromJson(data))
+				KZ::racing::events::PlayerFinish event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([raceEnd]() { KZRacingService::OnRaceEnd(raceEnd); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerFinish(event); });
 				}
 			}
-			else if (event == "race_finished")
+			else if (event == "player_disconnect")
 			{
-				KZ::racing::events::RaceResult raceResult;
-				if (raceResult.FromJson(data))
+				KZ::racing::events::PlayerDisconnect event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([raceResult]() { KZRacingService::OnRaceResult(raceResult); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerDisconnect(event); });
 				}
 			}
-			else if (event == "chat_message")
+			else if (event == "player_surrender")
 			{
-				KZ::racing::events::ChatMessage chatMessage;
-				if (chatMessage.FromJson(data))
+				KZ::racing::events::PlayerSurrender event;
+				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([chatMessage]() { KZRacingService::OnChatMessage(chatMessage); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerSurrender(event); });
 				}
 			}
 			else
