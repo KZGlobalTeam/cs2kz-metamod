@@ -104,7 +104,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 															KZOptionService::GetOptionInt("defaultJSBroadcastMinTierConsole", DistanceTier_Ownage))
 				  : target->optionService->GetPreferenceInt("jsMinTierConsole",
 															KZOptionService::GetOptionInt("defaultJSMinTierConsole", DistanceTier_Impressive)));
-	if (minTier == DistanceTier_None || color < minTier)
+	if (!target->optionService->GetPreferenceBool("jsAlways", false) && (minTier == DistanceTier_None || color < minTier))
 	{
 		if (!target->IsCSTV())
 		{
