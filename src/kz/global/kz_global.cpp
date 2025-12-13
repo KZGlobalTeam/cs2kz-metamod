@@ -656,6 +656,18 @@ void KZGlobalService::PrintAnnouncements()
 	std::unique_lock lock(KZGlobalService::announcements.mutex);
 	for (const KZ::API::handshake::HelloAck::Announcement &announcement : KZGlobalService::announcements.data)
 	{
-		this->player->PrintChat(false, false, "{yellow}GLOBAL {grey}| %s", announcement.body.c_str());
+		time_t now = std::time(nullptr);
+		if (announcement.startsAt > now || announcement.expiresAt < now)
+		{
+			continue;
+		}
+		if (!announcement.title.empty())
+		{
+			this->player->PrintChat(false, false, "{yellow}GLOBAL {grey}| %s", announcement.title.c_str());
+		}
+		if (!announcement.body.empty())
+		{
+			this->player->PrintChat(false, false, "%s", announcement.body.c_str());
+		}
 	}
 }

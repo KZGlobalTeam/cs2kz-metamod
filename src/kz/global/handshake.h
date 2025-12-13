@@ -57,6 +57,8 @@ namespace KZ::API::handshake
 			u64 id;
 			std::string title;
 			std::string body;
+			u64 startsAt;
+			u64 expiresAt;
 
 			bool FromJson(const Json &json);
 		};

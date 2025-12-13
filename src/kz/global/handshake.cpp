@@ -66,5 +66,11 @@ bool KZ::API::handshake::HelloAck::StyleInfo::FromJson(const Json &json)
 
 bool KZ::API::handshake::HelloAck::Announcement::FromJson(const Json &json)
 {
-	return json.Get("id", this->id) && json.Get("title", this->title) && json.Get("body", this->body);
+	// clang-format off
+	return json.Get("id", this->id)
+		&& json.Get("title", this->title)
+		&& json.Get("body", this->body)
+		&& json.Get("starts_at", this->startsAt)
+		&& json.Get("expires_at", this->expiresAt);
+	// clang-format on
 }
