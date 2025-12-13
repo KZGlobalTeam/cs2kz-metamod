@@ -112,6 +112,10 @@
 		"ko"		"{darkred}이 구역에서는 체크포인트로 텔레포트할 수 없습니다."
 		"lv"		"{darkred}Tu nevari teleportēties uz saviem kontrolpunktiem šajā zonā."
 	}
+	"Can't Teleport (Limit Reached)"
+	{
+		"en"		"{darkred}You can't teleport because you have reached your teleport limit."
+	}
 	"Can't Prev CP (No Checkpoints)"
 	{
 		"en"		"{darkred}You have no checkpoints to go back to."

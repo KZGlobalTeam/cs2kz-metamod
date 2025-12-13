@@ -29,6 +29,7 @@
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
+#include <vendor/ixwebsocket/ixwebsocket/IXNetSystem.h>
 
 #include "tier0/memdbgon.h"
 KZPlugin g_KZPlugin;
@@ -50,6 +51,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	}
 	ConVar_Register();
 	hooks::Initialize();
+	ix::initNetSystem();
 	movement::InitDetours();
 	KZCheckpointService::Init();
 	KZTimerService::Init();
@@ -94,6 +96,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	this->unloading = true;
 	KZ::misc::UnrestrictTimeLimit();
 	KZRecordingService::Shutdown();
+	ix::uninitNetSystem();
 	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();

@@ -1,0 +1,108 @@
+"Phrases"
+{
+	"Racing - Race Countdown"
+	{
+		"#format"	"time:d"
+		"en"		"{yellow}Race is starting in {time} seconds!"
+	}
+	"Racing - Player Disconnect"
+	{
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} has disconnected!"
+	}
+	"Racing - Player Surrender"
+	{
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} has surrendered!"
+	}
+	"Racing - Player Finish (1 Teleport)"
+	{
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
+	}
+	"Racing - Player Finish (2+ Teleports)"
+	{
+		"#format"	"player:s,time:s,teleport_count:d"
+		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
+	}
+	"Racing - Player Finish (PRO)"
+	{
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
+	}
+	"Racing - End Results Header"
+	{
+		"en"		"{default}Race Results:"
+	}
+	"Racing - End Results First Place"
+	{
+		// Alice has won the race! (00:45.32)
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} has won the race! ({time})"
+	}
+	"Racing - End Results Last Place"
+	{
+		// Bob came last in the race. (01:30.45)
+		"#format"	"player:s,time:s"
+		"en"		"{lime}{player}{grey} came last in the race. ({time})"
+	}
+	"Racing - End Results Finisher"
+	{
+		// Charlie finished #2 in the race. (00:55.12)
+		"#format"	"position:d,player:s,time:s"
+		"en"		"{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
+	}
+	"Racing - End Results Non-Finisher"
+	{
+		// Dave did not finish the race.
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} did not finish the race."
+	}
+	"Racing - No Time Limit"
+	{
+		"en"		"No time limit"
+	}
+	"Racing - Time Limit"
+	{
+		"#format"	"time:s"
+		"en"		"Time limit: {time}"
+	}
+	"Racing - Race Info"
+	{
+		// Race on course Main
+		// CKZ - Max TPs : 2 - Time limit : 01:30.00
+		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
+		"en"		"Race on course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
+	}
+	"Racing - Race Info (Chat)"
+	{
+		// A new race has been started!
+		// Course Main | Max TPs: 0 | No time limit0
+		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
+		"en"		"{default}A new race has been started!\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
+	}
+	
+	"Racing - Race Cancelled"
+	{
+		"en"		"{darkred}Race has been cancelled!"
+	}
+	"Racing - Go!"
+	{
+		"en"		"GO!"
+	}
+	"Racing - Race Starting In"
+	{
+		"#format"	"time:.1f"
+		"en"		"Race starting in {time}s!"
+	}
+	"Racing - Player Accepted"
+	{
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} has accepted the race."
+	}
+	"Racing - Player Unregistered"
+	{
+		"#format"	"player:s"
+		"en"		"{lime}{player}{grey} has unregistered from the race."
+	}
+}
