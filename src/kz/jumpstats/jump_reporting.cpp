@@ -57,6 +57,11 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 
 	f32 flooredDist = floor(jump->GetDistance() * 10) / 10;
 
+	std::string releaseString = "";
+	if (jump->GetJumpType() == JumpType_LongJump || jump->GetJumpType() == JumpType_LadderJump || jump->GetJumpType() == JumpType_WeirdJump)
+	{
+		releaseString = jump->GetReleaseString(true);
+	}
 	if (!extended)
 	{
 		// clang-format off
@@ -68,7 +73,9 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 			KZLanguageService::PrepareMessageWithLang(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
 			jump->GetSync() * 100.0f,
 			jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
-			jump->GetMaxSpeed());
+			jump->GetMaxSpeed(),
+			releaseString.c_str()
+		);
 		// clang-format on
 		return;
 	}
@@ -82,12 +89,14 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		jump->GetSync() * 100.0f,
 		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
 		jump->GetMaxSpeed(),
+		releaseString.c_str(),
 		jump->GetBadAngles() * 100,
 		jump->GetOverlap() * 100,
 		jump->GetDeadAir() * 100,
 		jump->GetDeviation(),
 		jump->GetWidth(),
-		jump->GetMaxHeight());
+		jump->GetMaxHeight()
+	);
 	// clang-format on
 }
 
@@ -125,6 +134,11 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		modeStyleNames += " +";
 		modeStyleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();
 	}
+	std::string releaseString = "";
+	if (jump->GetJumpType() == JumpType_LongJump || jump->GetJumpType() == JumpType_LadderJump || jump->GetJumpType() == JumpType_WeirdJump)
+	{
+		releaseString = jump->GetReleaseString(false);
+	}
 	target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Details 1",
 		modeStyleNames.c_str(),
 		jump->strafes.Count(),
@@ -135,7 +149,8 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		jump->GetBadAngles() * 100.0f,
 		jump->GetOverlap() * 100.0f,
 		jump->GetDeadAir() * 100.0f,
-		jump->GetMaxHeight()
+		jump->GetMaxHeight(),
+		releaseString.c_str()
 	);
 
 	target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Details 2",

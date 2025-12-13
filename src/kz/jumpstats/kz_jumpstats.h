@@ -354,7 +354,31 @@ public:
 
 	f32 GetRelease()
 	{
-		return this->release;
+		return this->release * ENGINE_FIXED_TICK_RATE;
+	}
+
+	std::string GetReleaseString(bool colored = true)
+	{
+		char releaseString[64];
+		if (this->GetRelease() > 10)
+		{
+			return colored ? "| {red}✗{grey} W" : "| ✗ W";
+		}
+		else if (this->GetRelease() > 0)
+		{
+			V_snprintf(releaseString, sizeof(releaseString), "%s| %s+%.1f%s W", colored ? "{grey}" : "", colored ? "{red}" : "", this->GetRelease(),
+					   colored ? "{grey}" : "");
+		}
+		else if (this->GetRelease() == 0)
+		{
+			return colored ? "| {green}✓{grey} W" : "| ✓ W";
+		}
+		else
+		{
+			V_snprintf(releaseString, sizeof(releaseString), "%s| %s%.1f%s W", colored ? "{grey}" : "", colored ? "{blue}" : "", this->GetRelease(),
+					   colored ? "{grey}" : "");
+		}
+		return releaseString;
 	}
 
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
