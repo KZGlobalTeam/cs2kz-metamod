@@ -26,7 +26,8 @@ bool KZ::API::handshake::HelloAck::FromJson(const Json &json)
 
 	this->heartbeatInterval = heartbeatInterval;
 
-	return json.Get("map", this->mapInfo) && json.Get("modes", this->modes) && json.Get("styles", this->styles);
+	return json.Get("map", this->mapInfo) && json.Get("modes", this->modes) && json.Get("styles", this->styles)
+		   && json.Get("announcements", this->announcements);
 }
 
 bool KZ::API::handshake::HelloAck::ModeInfo::FromJson(const Json &json)
@@ -61,4 +62,9 @@ bool KZ::API::handshake::HelloAck::StyleInfo::FromJson(const Json &json)
 	}
 
 	return json.Get("linux_checksum", this->linuxChecksum) && json.Get("windows_checksum", this->windowsChecksum);
+}
+
+bool KZ::API::handshake::HelloAck::Announcement::FromJson(const Json &json)
+{
+	return json.Get("id", this->id) && json.Get("title", this->title) && json.Get("body", this->body);
 }

@@ -622,6 +622,11 @@ void KZGlobalService::CompleteHandshake(KZ::API::handshake::HelloAck &ack)
 		KZGlobalService::globalStyles.data = std::move(ack.styles);
 	}
 
+	{
+		std::unique_lock lock(KZGlobalService::announcements.mutex);
+		KZGlobalService::announcements.data = std::move(ack.announcements);
+	}
+
 	META_CONPRINTF("[KZ::Global] Completed handshake!\n");
 }
 
@@ -643,5 +648,14 @@ void KZGlobalService::ExecuteMessageCallback(u32 messageID, const Json &payload)
 	{
 		META_CONPRINTF("[KZ::Global] Executing callback #%i\n", messageID);
 		callback(messageID, payload);
+	}
+}
+
+void KZGlobalService::PrintAnnouncements()
+{
+	std::unique_lock lock(KZGlobalService::announcements.mutex);
+	for (const KZ::API::handshake::HelloAck::Announcement &announcement : KZGlobalService::announcements.data)
+	{
+		this->player->PrintChat(false, false, "{yellow}GLOBAL {grey}| %s", announcement.body.c_str());
 	}
 }

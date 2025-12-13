@@ -343,6 +343,16 @@ private:
 		std::vector<KZ::API::handshake::HelloAck::StyleInfo> data;
 	} globalStyles;
 
+	static inline struct
+	{
+		std::mutex mutex;
+		std::vector<KZ::API::handshake::HelloAck::Announcement> data;
+	} announcements;
+
+public:
+	void PrintAnnouncements();
+
+private:
 	static void EnforceConVars();
 	static void RestoreConVars();
 
