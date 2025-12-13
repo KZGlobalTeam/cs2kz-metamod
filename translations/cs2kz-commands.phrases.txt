@@ -26,7 +26,7 @@
 		"tr"		"Bu komutları kullanmak için konsola \"bind <tuş> kz_<komut ismi>\"veya konuşma satırına !<komut ismi> ya da /<komut ismi> yazabilirsin. Örnek olarak: \"bind 1 kz_cp\" veya \"!cp\" or \"/cp\""
 		"it"		"Per usare questi comandi scrivi \"bind <tasto> kz_<nome comando>\" nella console, oppure !<nome comando> o /<nome comando> in chat.\nEsempio: \"bind 1 kz_cp\" o \"!cp\" o \"/cp\""
 		"es"		"Para usar estos comandos, puedes escribir \"bind <key> kz_<command name>\" en tu consola, o escribir !<command name> o /<command name> en el chat.\nPor ejemplo: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
-		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: \„bind 1 kz_cp\" oder \„!cp\" oder \„/cp\""
+		"de"		"Um diese Befehle zu verwenden, kannst du \"bind <Taste> kz_<Befehlsname>\" in Deiner Konsole eingeben, oder !<Befehlsname> oder /<Befehlsname> im Chat eingeben.\nZum Beispiel: „bind 1 kz_cp\" oder „!cp\" oder „/cp\""
 		"ko"		"이 명령어를 사용하려면 콘솔에 \"bind <key> kz_<명령어 이름>\"을 입력하거나, 채팅창에 !<명령어 이름> 또는 /<명령어 이름>을 입력하세요. 예시: \"bind 1 kz_cp\" 또는 \"!cp\" 또는 \"/cp\""
 		"lv"		"Lai pielietotu šīs komandas, tu vari ierakstīt \"bind <taustiņš> kz_<komandas nosaukums>\" konsolē, vai ierakstīt !<komandas nosaukums> vai /<komandas nosaukums> čatā.\nPiemēram: \"bind 1 kz_cp\" vai \"!cp\" vai \"/cp\""
 	}
@@ -37,8 +37,9 @@
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"ua"		"Ви можете використати \"kz_help <категорія>\", щоб отримати список команд, пов'язаних з певною категорією (наприклад, kz_help checkpoint misc).\nСписок доступних категорій: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"lv"		"Tu vari pielietot \"kz_help <kategorija>\", lai iegūtu komandu sarakstu, kas saistītas ar konkrētu kategoriju (piem. kz_help checkpoint misc).\nPieejamo kategoriju saraksts: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
+		"de"		"Du kannst \"kz_help <category>\" benutzen um eine Liste von Befehlen einer bestimmten Kategorie zu bekommen (zB. kz_help checkpoint misc).\nListe der verfügbaren Kategorien: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 	}
-	
+
 	// Categories
 	"Command List Header - Name"
 	{
@@ -47,6 +48,7 @@
 		"sv"		"Namn"
 		"ua"		"Назва"
 		"lv"		"Nosaukums"
+		"de"		"Name"
 	}
 	"Command List Header - Description"
 	{
@@ -55,6 +57,7 @@
 		"sv"		"Beskrivning"
 		"ua"		"Опис"
 		"lv"		"Apraksts"
+		"de"		"Beschreibung"
 	}
 	"Command List - Checkpoint"
 	{
@@ -63,6 +66,7 @@
 		"sv"		"Checkpointkommandon:"
 		"ua"		"Команди Чекпоінтів:"
 		"lv"		"Checkpoint Komandas:"
+		"de"		"Checkpoint-Befehle:"
 	}
 	"Command List - Record"
 	{
@@ -71,6 +75,7 @@
 		"sv"		"Rekordkommandon:"
 		"ua"		"Команди Рекордів:"
 		"lv"		"Record Komandas:"
+		"de"		"Rekord-Befehle:"
 	}
 	"Command List - Jumpstats"
 	{
@@ -79,6 +84,7 @@
 		"sv"		"Jumpstatkommandon:"
 		"ua"		"Команди Статистики стрибків:"
 		"lv"		"Jumpstats Komandas:"
+		"de"		"Jumpstats-Befehle:"
 	}
 	"Command List - Measure"
 	{
@@ -87,6 +93,7 @@
 		"sv"		"Mätningskommandon:"
 		"ua"		"Команди Вимірювання:"
 		"lv"		"Measure Komandas:"
+		"de"		"Mess-Befehle:"
 	}
 	"Command List - ModeStyle"
 	{
@@ -95,6 +102,7 @@
 		"sv"		"Mode/Stilkommandon:"
 		"ua"		"Команди Режиму/Стилю:"
 		"lv"		"Režīma/Stila Komandas:"
+		"de"		"Modus/Style-Befehle:"
 	}
 	"Command List - Preference"
 	{
@@ -103,6 +111,7 @@
 		"sv"		"Preferenskommandon:"
 		"ua"		"Команди Налаштувань:"
 		"lv"		"Preferenču Komandas:"
+		"de"		"Präferenz-Befehle:"
 	}
 	"Command List - Racing"
 	{
@@ -111,6 +120,7 @@
 		"sv"		"Racingkommandon:"
 		"ua"		"Команди Гонки:"
 		"lv"		"Racing Komandas:"
+		"de"		"Racing-Befehle:"
 	}
 	"Command List - Replay"
 	{
@@ -119,6 +129,7 @@
 		"sv"		"Repriskommandon:"
 		"ua"		"Команди Повтору:"
 		"lv"		"Replay Komandas:"
+		"de"		"Replay-Befehle:"
 	}
 	"Command List - Saveloc"
 	{
@@ -127,6 +138,7 @@
 		"sv"		"Saveloc kommandon:"
 		"ua"		"Команди Saveloc:"
 		"lv"		"Saveloc Komandas:"
+		"de"		"Saveloc-Befehle:"
 	}
 	"Command List - Spec"
 	{
@@ -135,6 +147,7 @@
 		"sv"		"Åskådningskommandon:"
 		"ua"		"Команди Спостерігання:"
 		"lv"		"Skatītāja Komandas:"
+		"de"		"Zuschau-Befehle:"
 	}
 	"Command List - Status"
 	{
@@ -143,6 +156,7 @@
 		"sv"		"Statuskommandon:"
 		"ua"		"Команди Статусу:"
 		"lv"		"Statusa Komandas:"
+		"de"		"Status-Befehle:"
 	}
 	"Command List - Timer"
 	{
@@ -151,6 +165,7 @@
 		"sv"		"Timerkommandon:"
 		"ua"		"Команди Таймера:"
 		"lv"		"Taimera Komandas:"
+		"de"		"Timer-Befehle:"
 	}
 	"Command List - Player"
 	{
@@ -159,6 +174,7 @@
 		"sv"		"Spelarkommandon:"
 		"ua"		"Команди Гравця:"
 		"lv"		"Spēlētāja Komandas:"
+		"de"		"Spieler-Befehle:"
 	}
 	"Command List - Global"
 	{
@@ -167,6 +183,7 @@
 		"sv"		"Globala Kommandon:"
 		"ua"		"Глобальні Команди:"
 		"lv"		"Globālās Komandas:"
+		"de"		"Globale-Befehle:"
 	}
 	"Command List - Misc"
 	{
@@ -175,6 +192,7 @@
 		"sv"		"Blandade Kommandon:"
 		"ua"		"Інші Команди:"
 		"lv"		"Miscellaneous Komandas:"
+		"de"		"Sonstige-Befehle:"
 	}
 	"Command List - Map"
 	{
@@ -183,6 +201,7 @@
 		"sv"		"Kartkommandon:"
 		"ua"		"Команди Мапи:"
 		"lv"		"Kartes Kmandas:"
+		"de"		"Map-Befehle:"
 	}
 	"Command List - HUD"
 	{
@@ -191,6 +210,7 @@
 		"sv"		"HUD Kommandon:"
 		"ua"		"Команди HUD:"
 		"lv"		"HUD Komandas:"
+		"de"		"HUD-Befehle:"
 	}
 	// Commands
 	"Command Description - kz_undo"
@@ -331,7 +351,7 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"pl"		"Ustaw własną pozycję startową."	
+		"pl"		"Ustaw własną pozycję startową."
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 		"sv"		"Skapa ny startposition på nuvarande position."
 		"ua"		"Встановити поточну позицію як стартову."
@@ -346,7 +366,7 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"pl"		"Ustaw własną pozycję startową."	
+		"pl"		"Ustaw własną pozycję startową."
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
 		"sv"		"Skapa ny startposition på nuvarande position."
 		"ua"		"Встановити поточну позицію як стартову."
@@ -361,7 +381,7 @@
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"pl"		"Usuń własną pozycję startową."	
+		"pl"		"Usuń własną pozycję startową."
 		"fi"		"Tyhjennä custom aloituspisteesi."
 		"sv"		"Rensa justerad startposition."
 		"ua"		"Очистити власну стартову позицію."
@@ -376,7 +396,7 @@
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"pl"		"Usuń własną pozycję startową."	
+		"pl"		"Usuń własną pozycję startową."
 		"fi"		"Tyhjennä custom aloituspisteesi."
 		"sv"		"Rensa justerad startposition."
 		"ua"		"Очистити власну стартову позицію."
@@ -393,6 +413,7 @@
 		"chi"		"切换存点音效是否播放."
 		"ua"		"Перемикання звуку чекпоінту."
 		"sv"		"Aktivera/inaktivera checkpoint ljudeffekt."
+		"de"		"Aktiviere/Deactiviere Checkpoint-Sound"
 	}
 	"Command Description - kz_tpsound"
 	{
@@ -400,12 +421,13 @@
 		"chi"		"切换读点音效是否播放."
 		"ua"		"Перемикання звуку телепорту."
 		"sv"		"Aktivera/inaktivera teleport ljudeffekt."
+		"de"		"Aktiviere/Deactiviere Teleport-Sound"
 	}
 	"Command Description - kz_panel"
 	{
 		"en"		"Toggle centre panel display."
 		"chi"		"切换中心面板的显示."
-		"pl"		"Wyświetlanie panelu środkowego."	
+		"pl"		"Wyświetlanie panelu środkowego."
 		"fi"		"Vaihda keskipaneelin näyttämisen asetusta."
 		"sv"		"Toggla mittpanelen."
 		"ua"		"Перемикання відображення центральної панелі."
@@ -420,7 +442,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."	
+		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."
 		"fi"		"Muuta muiden pelaajien chatissä näkyvien jumpstattien minimi kynnysarvoa."
 		"sv"		"Ändra minimigräns för sändning av andra spelares jumpstat."
 		"ua"		"Змінити мінімальний поріг стрибків інших гравців для відображення в чаті."
@@ -435,7 +457,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for sound effects."
 		"chi"		"更改播放跳跃提示音的最小阈值."
-		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."	
+		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."
 		"fi"		"Muuta jumpstattien äänitehosteiden minimi kynnysarvoa."
 		"sv"		"Ändra minimigräns för ljudeffekter av jumpstats."
 		"ua"		"Змінити мінімальний поріг для звукових ефектів під час стрибків."
@@ -450,7 +472,7 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换是否显示起跳提示报告"
-		"pl"		"Przełącz wykaz jumpstatów."	
+		"pl"		"Przełącz wykaz jumpstatów."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
@@ -465,7 +487,7 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换是否显示起跳提示报告"
-		"pl"		"Przełącz wykaz jumpstatów."	
+		"pl"		"Przełącz wykaz jumpstatów."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
@@ -480,7 +502,7 @@
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换是否总是显示跳跃数据"
-		"pl"		"Zawsze pokazuj jumpstaty."	
+		"pl"		"Zawsze pokazuj jumpstaty."
 		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla alla (egna) jumpstats i chatten."
 		"ua"		"Перемикання відображення статистики для будь-яких стрибків."
@@ -493,30 +515,34 @@
 	}
     "Command Description - kz_jstier"
     {
-        "en"        "Set your minimum jumpstats reporting tier."
-		"chi"       "设置显示你的跳跃数据的最低等级."
-        "ua"        "Встановити мінімальний рівень для відображення статистики стрибків."
-		"sv"        "Ange din miniminivå för jumpstatsrapportering."
+        "en"		"Set your minimum jumpstats reporting tier."
+		"chi"		"设置显示你的跳跃数据的最低等级."
+        "ua"		"Встановити мінімальний рівень для відображення статистики стрибків."
+		"sv"		"Ange din miniminivå för jumpstatsrapportering."
+		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel."
     }
     "Command Description - kz_jstierconsole"
     {
-        "en"        "Set your minimum jumpstats console reporting tier."
+        "en"		"Set your minimum jumpstats console reporting tier."
 		"chi"		"设置在控制台显示你的跳跃数据的最低等级."
-        "ua"        "Встановити мінімальний рівень для відображення статистики стрибків в консолі."
-		"sv"        "Ange din lägsta rapporteringsnivå för jumpstats i konsolen."
+        "ua"		"Встановити мінімальний рівень для відображення статистики стрибків в консолі."
+		"sv"		"Ange din lägsta rapporteringsnivå för jumpstats i konsolen."
+		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel für die Konsole."
     }
     "Command Description - kz_jsbroadcastsound"
     {
-        "en"        "Set the minimum tier for jumpstats sound broadcast."
+        "en"		"Set the minimum tier for jumpstats sound broadcast."
 		"chi"		"设置广播跳跃数据音效的最低等级."
-        "ua"        "Встановити мінімальний рівень для звукових ефектів під час стрибків."
-		"sv"        "Ange miniminivån för jumpstats-ljudsändning."
+        "ua"		"Встановити мінімальний рівень для звукових ефектів під час стрибків."
+		"sv"		"Ange miniminivån för jumpstats-ljudsändning."
+		"de"		"Setze minimales Jumpstats-Soundlevel für fremde Jumpstats im Chat."
     }
-	"Command Description - kz_jsbroadcastsoundconsole"
+	"Command Description - kz_jsbroadcastconsole"
 	{
-		"en"		"Set the minimum tier for jumpstats console sound broadcast."
+		"en"		"Set the minimum tier for jumpstats console broadcast."
 		"chi"		"设置在控制台广播跳跃数据的最低等级."
-		"ua"		"Встановити мінімальний тір для трансляції звукових ефектів стрибків у консолі."
+		"ua"		"Встановити мінімальний тір статистики стрибків для трансляції в консолі."
+		"de"		"Setze dein minimales Jumpstats-Level für fremde Jumpstats in der Konsole."
 	}
 	"Command Description - kz_jsextend"
 	{
@@ -524,6 +550,7 @@
 		"chi"		"切换是否在聊天框展示详细跳跃数据."
 		"ua"		"Перемикання розширеної статистики стрибків у чаті."
 		"sv"		"Aktivera/Inaktivera utökad jumpstatsrapportering i chatten."
+		"de"		"Aktiviere/Deaktiviere erweiterte Jumpstats-Benachrichtigungen im Chat."
 	}
 	"Command Description - kz_jsvolume"
 	{
@@ -531,12 +558,13 @@
 		"chi"		"设置跳跃数据音效的音量."
 		"ua"		"Встановити гучність ефектів стрибків."
 		"sv"		"Ange volymen för jumpstats-ljudeffekter."
+		"de"		"Setze Jumpstat-Sound Lautstärke."
 	}
 	"Command Description - kz_mode"
 	{
 		"en"		"List or change mode."
 		"chi"		"列出或更改模式."
-		"pl"		"Lista trybów gry bądź jego zmiana."	
+		"pl"		"Lista trybów gry bądź jego zmiana."
 		"fi"		"Listaa tai vaihda moodia."
 		"sv"		"Lista eller ändra KZ mode."
 		"ua"		"Відобразити чи змінити KZ режим."
@@ -551,7 +579,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."	
+		"pl"		"Włącz lub wyłącz noclipa."
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
@@ -566,7 +594,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."	
+		"pl"		"Włącz lub wyłącz noclipa."
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
@@ -581,7 +609,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"pl"		"Włącz lub wyłącz noclipa."	
+		"pl"		"Włącz lub wyłącz noclipa."
 		"fi"		"Vaiha noclip:n tilaa."
 		"sv"		"Toggla noclip."
 		"ua"		"Перемикання noclip."
@@ -613,6 +641,7 @@
 		"chi"		"在聊天栏列出当前观看中的玩家."
 		"ua"		"Показати в чаті список спостерігачів."
 		"sv"		"Lista närvarande åskådare i chatten."
+		"de"		"Liste derzeitige Zuschauer im Chat auf."
 	}
 	"Command Description - kz_goto"
 	{
@@ -714,7 +743,7 @@
 	{
 		"en"		"Stop timer."
 		"chi"		"停止计时."
-		"pl"		"Wyłącz timer."	
+		"pl"		"Wyłącz timer."
 		"fi"		"Pysäytä ajastin."
 		"sv"		"Stoppa timer."
 		"ua"		"Зупинити таймер."
@@ -729,7 +758,7 @@
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"pl"		"Przełącz pauzę timera."	
+		"pl"		"Przełącz pauzę timera."
 		"fi"		"Vaihda ajastimen keskeytyksen asetusta."
 		"sv"		"Pausa timer."
 		"ua"		"Перемикання таймера на паузу."
@@ -744,7 +773,7 @@
 	{
 		"en"		"Toggle tips."
 		"chi"		"开关提示."
-		"pl"		"Włącz lub wyłącz wskazówki."	
+		"pl"		"Włącz lub wyłącz wskazówki."
 		"fi"		"Vaihda vihjeiden asetusta."
 		"sv"		"Toggla tips."
 		"ua"		"Перемикання відображення підказок."
@@ -759,7 +788,7 @@
 	{
 		"en"		"Hide your legs in first person."
 		"chi"		"在第一人称中隐藏腿部."
-		"pl"		"Ukryj nogi w pierwszej osobie."	
+		"pl"		"Ukryj nogi w pierwszej osobie."
 		"fi"		"Piilota omat jalkasi ensimmäisessä persoonassa."
 		"sv"		"Toggla egna bens synlighet i första person."
 		"ua"		"Приховати свої ноги від першої особи."
@@ -774,7 +803,7 @@
 	{
 		"en"		"Hide other players."
 		"chi"		"隐藏其他的玩家."
-		"pl"		"Ukryj innych graczy."	
+		"pl"		"Ukryj innych graczy."
 		"fi"		"Piilota muut pelaajat."
 		"sv"		"Dölj/visa andra spelare."
 		"ua"		"Приховати інших гравців."
@@ -789,7 +818,7 @@
 	{
 		"en"		"Restart."
 		"chi"		"重新开始."
-		"pl"		"Restart."	
+		"pl"		"Restart."
 		"fi"		"Aloita alusta."
 		"sv"		"Starta om."
 		"ua"		"Рестарт."
@@ -824,6 +853,7 @@
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
 		"es"		"Teleportar a la zona de saltos."
 		"lv"		"Teleportēt uz jumpstat zonu."
+		"de"		"Teleportiert zum Jumpstat-Bereich."
 	}
 	"Command Description - kz_ljarea"
 	{
@@ -834,6 +864,7 @@
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
 		"es"		"Teleportar a la zona de saltos."
 		"lv"		"Teleportēt uz jumpstat zonu."
+		"de"		"Teleportiert zum Jumpstat-Bereich."
 	}
 	"Command Description - kz_jsarea"
 	{
@@ -844,6 +875,7 @@
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
 		"es"		"Teleportar a la zona de saltos."
 		"lv"		"Teleportēt uz jumpstat zonu."
+		"de"		"Teleportiert zum Jumpstat-Bereich."
 	}
 	"Command Description - kz_end"
 	{
@@ -854,6 +886,7 @@
 		"ko"		"종료 지점으로 텔레포트합니다."
 		"es"		"Teleportar al final."
 		"lv"		"Teleportēt līdz beigām."
+		"de"		"Teleportiert zum Ende."
 	}
 	"Command Description - kz_hideweapon"
 	{
@@ -1114,6 +1147,7 @@
 		"ko"		"기록 비교 시 선호하는 최대 비교 수준을 설정하는 기능입니다."
 		"es"		"Establecer el nivel máximo preferido de comparación de carreras."
 		"lv"		"iestatīt maksimālo vēlamo līmeni skrējienu salīdzināšanai."
+		"de"		"Setze maximales Vergleichslevel für Runs."
 	}
 	"Command Description - kz_playercheck"
 	{
@@ -1125,6 +1159,7 @@
 		"ko"		"지정된 플레이어의 상태를 확인합니다. (기본값: 본인)"
 		"es"		"Comprobar el estado del jugador especificado (por defecto es uno mismo)."
 		"lv"		"Pārbaudīt norādītā spēlētāja statusu (pēc noklusējuma – sevi)."
+		"de"		"."
 	}
 	"Command Description - kz_pc"
 	{
@@ -1136,6 +1171,7 @@
 		"ko"		"지정된 플레이어의 상태를 확인합니다. (기본값: 본인)"
 		"es"		"Comprobar el estado del jugador especificado (por defecto es uno mismo)."
 		"lv"		"Pārbaudīt norādītā spēlētāja statusu (pēc noklusējuma – sevi)."
+		"de"		"Überprüfe den Status des angegebenen Spielers (standardmäßig sich selbst)."
 	}
 	"Command Description - kz_course"
 	{
@@ -1147,6 +1183,7 @@
 		"ko"		"현재 코스와 맵에 있는 모든 코스 목록을 표시합니다."
 		"es"		"Mostrar el recorrido actual y la lista de todos los recorridos en el mapa."
 		"lv"		"Parādīt pašreizējo trasi un visu karšu trašu sarakstu."
+		"de"		"Die aktuelle Routen und die Liste aller Routen auf der Map anzeigen."
 	}
 	"Command Description - kz_spb"
 	{
@@ -1155,6 +1192,7 @@
 		"ua"		"Показати персональний найкращий час на сервері."
 		"sv"		"Hämta personlig bästa statistik på servern."
 		"lv"		"Saņemt servera personīgos labākos rezultātus."
+		"de"		"Abrufen von Server-Bestenliste."
 	}
 	"Command Description - kz_gpb"
 	{
@@ -1163,6 +1201,7 @@
 		"ua"		"Показати глобальний персональний найкращий час."
 		"sv"		"Hämta personlig bästa statistik globalt."
 		"lv"		"Saņemt globālos personīgos labākos rezultātus."
+		"de"		"Abrufen von eigenem globalen Rekord"
 	}
 	"Command Description - kz_globalcheck"
 	{
@@ -1171,6 +1210,7 @@
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 		"lv"		"Parādīt GlobalAPI statusu."
+		"de"		"Status der GlobalAPI anzeigen."
 	}
 	"Command Description - kz_gc"
 	{
@@ -1179,6 +1219,7 @@
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 		"lv"		"Parādīt GlobalAPI statusu."
+		"de"		"Status der GlobalAPI anzeigen."
 	}
 	"Command Description - kz_beam"
 	{
@@ -1186,6 +1227,7 @@
 		"chi"		"设置或关闭玩家的光束类型 (关闭/地面/脚下)."
 		"sv"		"Ställ in eller växla spelarens stråltyp (av/mark/fötter)."
 		"ua"		"Встановити або перемикнути тип променя руху (вимкнути/по землі/від ніг)."
+		"de"		"Setze oder schalte durch die Spielerstrahl-Typen (off/ground/feet)."
 	}
 	"Command Description - kz_beamoffset"
 	{
@@ -1193,6 +1235,7 @@
 		"chi"		"设置或获取玩家光束的偏移值."
 		"sv"		"Ställ in eller hämta spelarens stråloffset."
 		"ua"		"Встановити або отримати значення зміщення променя руху."
+		"de"		"Spielerstrahl-Offset einstellen oder abrufen."
 	}
 	"Command Description - kz_measure"
 	{
@@ -1200,6 +1243,7 @@
 		"chi"		"测量两个点之间的距离, 或当两个点相同时测量方块距离."
 		"sv"		"Mät avståndet mellan två punkter, eller mät blockavståndet om två punkter är på samma plats."
 		"ua"		"Виміряти відстань між двома точками або відстань між блоками, якщо дві точки знаходяться на одному рівні."
+		"de"		"Miss den Abstand zwischen zwei Punkten, oder miss die Distanz eines Jumpstat-Blocks, wenn die zwei Punkte am selben Ort sind."
 	}
 	"Command Description - kz_measurestart"
 	{
@@ -1207,6 +1251,7 @@
 		"chi"		"设置测量的起始位置."
 		"sv"		"Ställ in startpositionen för mätningen."
 		"ua"		"Встановити початкову позицію для вимірювання."
+		"de"		"Setze den Startpunkt der Messung."
 	}
 	"Command Description - kz_measureend"
 	{
@@ -1214,6 +1259,7 @@
 		"chi"		"设置测量的结束位置并计算距离."
 		"sv"		"Ställ in mätningens slutposition och beräkna avståndet."
 		"ua"		"Встановити кінцеве положення для вимірювання та обчислити відстань."
+		"de"		"Setze den Endpunkt der Messung. Gibt darauf die Distanz zurück."
 	}
 	"Command Description - kz_measureblock"
 	{
@@ -1221,6 +1267,7 @@
 		"chi"		"测量方块之间的距离."
 		"sv"		"Mät blockavståndet."
 		"ua"		"Виміряти відстань між блоками."
+		"de"		"Miss die Distanz des Jumpstat-Blocks."
 	}
 	"Command Description - kz_timerstopsound"
 	{
@@ -1228,6 +1275,7 @@
 		"chi"		"开关计时器停止音效."
 		"ua"		"Увімк./вимк. звук зупинки таймера."
 		"sv"		"Aktivera/Inaktivera timerstoppljud."
+		"de"		"Aktiviere/Deaktiviere den Timer-Stop-Sound."
 	}
 	"Command Description - kz_autohideweapon"
 	{
@@ -1235,6 +1283,7 @@
 		"chi"		"切换武器视图模型的自动隐藏."
 		"ua"		"Увімк./вимк. автоматичне приховування зброї."
 		"sv"		"Aktivera/inaktivera automatisk vapendöljning."
+		"de"		"Aktiviere/Deaktiviere das automatische Verstecken des Waffen-Viewmodels."
 	}
 	"Command Description - kz_pistol"
 	{
@@ -1242,76 +1291,89 @@
 		"chi"		"更改或移除当前手枪."
 		"ua"		"Змінити або видалити поточний пістолет."
 		"sv"		"Byt eller ta bort den nuvarande pistolen."
+		"de"		"Änder oder entferne die derzeitige Pistole."
 	}
 	"Command Description - kz_rpsave"
 	{
 		"en"		"Manually save past gameplay into a replay."
 		"chi"		"手动将过往游戏数据保存为回放."
 		"ua"		"Вручну зберегти попередній геймплей як повтор."
+		"de"		"Speicher vergangenes Gameplay manuell als Wiederholung."
 	}
 	"Command Description - kz_replay"
 	{
 		"en"		"Play a previously saved replay."
 		"chi"		"播放之前保存的回放."
 		"ua"		"Відтворити раніше збережений повтор."
+		"de"		"Spiele die zuvor gespeicherte Wiederholung ab."
 	}
 	"Command Description - kz_replays"
 	{
 		"en"		"List saved replays."
-		"ua"        "Показати список збережених повторів."
+		"ua"		"Показати список збережених повторів."
+		"de"		"Liste die gespeicherten Wiederholungen auf."
 	}
   	"Command Description - kz_rpgoto"
 	{
 		"en"		"Go to a specific time in the replay. (hh:mm:ss)"
 		"chi"		"跳转到回放中的特定时间点. (hh:mm:ss)"
 		"ua"		"Перейти до конкретного моменту в повторі. (hh:mm:ss)"
+		"de"		"Springe zu einem bestimmten Zeitpunkt in der Wiederholung. (hh:mm:ss)"
 	}
   	"Command Description - kz_rpgototick"
 	{
 		"en"		"Go to a specific tick in the replay."
 		"chi"		"跳转到回放中的特定的Tick."
 		"ua"		"Перейти до конкретного тіку в повторі."
+		"de"		"Springe zu einem bestimmten Tick in der Widerholung."
 	}
   	"Command Description - kz_rpinfo"
 	{
 		"en"		"Display information about the current replay."
 		"chi"		"显示当前回放的信息."
 		"ua"		"Відобразити інформацію про поточний повтор."
+		"de"		"Zeige Informationen über die aktuelle Wiederholung an."
 	}
   	"Command Description - kz_rppause"
 	{
 		"en"		"Pause or resume the current replay."
 		"chi"		"暂停或继续当前回放."
 		"ua"		"Поставити на паузу або продовжити відтворення поточного повтору."
+		"de"		"Pausieren/Fortsetzen der aktuellen Wiederholung."
 	}
   	"Command Description - kz_rploadprogress"
 	{
 		"en"		"Display the loading progress of the replay."
 		"chi"		"显示回放的加载进度."
 		"ua"		"Показати прогрес завантаження повтору."
+		"de"		"Zeige den Ladefortschritt der Wiederholung an."
 	}
   	"Command Description - kz_rpcancelload"
 	{
 		"en"		"Cancel the loading of the replay."
 		"chi"		"取消加载回放."
 		"ua"		"Скасувати завантаження повтору."
+		"de"		"Brich das Laden der Wiederholung ab."
 	}
 	"Command Description - kz_recordvolume"
 	{
 		"en"		"Set the volume of the world record sound effect."
 		"chi"		"设置世界纪录音效的音量."
-		"ua"        "Встановити гучність звукового ефекту світового рекорду."
+		"ua"		"Встановити гучність звукового ефекту світового рекорду."
+		"de"		"Setze die Lautstärke des Weltrekord-Sounds fest."
 	}
 	"Command Description - kz_cpmessage"
 	{
 		"en"		"Toggle checkpoint messages."
 		"chi"		"切换检查点消息是否显示."
-		"ua"        "Увімк./вимк. повідомлення про чекпоінт."
-	} 
+		"ua"		"Увімк./вимк. повідомлення про чекпоінт."
+		"de"		"Aktiviere/Deaktiviere Checkpoint-Nachrichten."
+	}
 	"Command Description - kz_rphidelegs"
 	{
 		"en"		"Toggle replay bot's first person legs visibility."
 		"chi"		"切换回放bot的第一人称腿部是否显示."
 		"ua"		"Увімк./вимк. відображення ніг бота повтору від першої особи."
+		"de"		"Schalte die Sichtbarkeit der Beine des Replay-Bots in der Ego-Perspektive um."
 	}
 }

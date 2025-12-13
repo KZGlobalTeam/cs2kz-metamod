@@ -1,6 +1,7 @@
 #include "kz_tip.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
+#include "kz/global/kz_global.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
@@ -128,6 +129,8 @@ void KZTipService::OnPlayerJoinTeam(i32 team)
 	{
 		this->player->languageService->PrintChat(true, false, "Menu Hint");
 	}
+
+	this->player->globalService->PrintAnnouncements();
 	this->QueryBeamCvar();
 }
 

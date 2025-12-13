@@ -760,7 +760,12 @@ bool KZJumpstatsService::HitDuckbugRecently()
 
 bool KZJumpstatsService::ValidWeirdJumpDropDistance()
 {
-	return this->jumps.Tail().GetOffset() > -1 * JS_MAX_WEIRDJUMP_FALL_OFFSET;
+	if (this->jumps.Count() <= 2)
+	{
+		return false;
+	}
+	Jump &previousJump = this->jumps[this->jumps.Count() - 2];
+	return previousJump.GetOffset() > -1 * JS_MAX_WEIRDJUMP_FALL_OFFSET;
 }
 
 bool KZJumpstatsService::GroundSpeedCappedRecently()
