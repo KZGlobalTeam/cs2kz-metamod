@@ -10,7 +10,7 @@ If no directory is specified, defaults to current directory.
 The script will look for:
   - translations/ folder for phrase files and config.txt
   - menu/ folder for menu translation files
-  
+
 Ignoring sections:
     Use // lint-ignore-start and // lint-ignore-end comments to ignore sections.
     Use // lint-ignore-next to ignore the next line.
@@ -31,7 +31,6 @@ Ignoring sections:
 """
 
 import json
-import os
 import re
 import sys
 from pathlib import Path
@@ -168,13 +167,13 @@ class TranslationLinter:
     SPECIAL_DIRECTIVES = {"#format"}
 
     MENU_LANGUAGE_MAP = {
-        "english": "en",
         "arabic": "ar",
         "brazilian": "pt",
         "bulgarian": "bg",
         "czech": "cze",
         "danish": "da",
         "dutch": "nl",
+        "english": "en",
         "finnish": "fi",
         "french": "fr",
         "german": "de",
@@ -207,7 +206,7 @@ class TranslationLinter:
         self.base_dir = Path(base_dir).resolve()
         self.translations_dir = self.base_dir / "translations"
         self.menu_dir = self.base_dir / "menu"
-        
+
         self.issues: list[Issue] = []
         self.all_phrase_blocks: dict[str, list[PhraseBlock]] = {}
         self.ignore_trackers: dict[str, IgnoreTracker] = {}
@@ -218,7 +217,7 @@ class TranslationLinter:
 
         self.menu_files: dict[str, list[MenuGroup]] = {}
         self.menu_languages: set[str] = set()
-        
+
         print(f"Base directory: {self.base_dir}")
         print(f"Translations directory: {self.translations_dir}")
         print(f"Menu directory: {self.menu_dir}\n")
@@ -641,11 +640,11 @@ class TranslationLinter:
         if self.global_languages:
             print(f"Languages found across all files: {sorted(self.global_languages)}\n")
 
-        for filename, blocks in self.all_phrase_blocks.items():
+        for filename, blocks in sorted(self.all_phrase_blocks.items()):
             for block in blocks:
                 if block.ignored:
                     continue
-                for lang in block.languages:
+                for lang in sorted(block.languages.keys()):
                     if lang not in self.known_languages:
                         line_num = block.languages[lang][0]
                         self._add_issue(
@@ -854,7 +853,9 @@ class TranslationLinter:
         english_group_map = {g.name: g for g in english_groups}
         lang_group_map = {g.name: g for g in lang_groups}
 
-        for en_group_name, en_group in english_group_map.items():
+        for en_group_name in sorted(english_group_map.keys()):
+            en_group = english_group_map[en_group_name]
+
             if en_group_name not in lang_group_map:
                 self._add_issue(
                     f"menu/{filename}",
@@ -870,7 +871,9 @@ class TranslationLinter:
             en_commands = {c.name: c for c in en_group.commands}
             lang_commands = {c.name: c for c in lang_group.commands}
 
-            for en_cmd_name, en_cmd in en_commands.items():
+            for en_cmd_name in sorted(en_commands.keys()):
+                en_cmd = en_commands[en_cmd_name]
+
                 if en_cmd_name not in lang_commands:
                     self._add_issue(
                         f"menu/{filename}",
@@ -910,7 +913,7 @@ class TranslationLinter:
                         f"Command mismatch for '{en_cmd_name}': english='{en_cmd.cmd}', {filename}='{lang_cmd.cmd}'"
                     )
 
-        for lang_group_name in lang_group_map:
+        for lang_group_name in sorted(lang_group_map.keys()):
             if lang_group_name not in english_group_map:
                 self._add_issue(
                     f"menu/{filename}",
@@ -923,18 +926,24 @@ class TranslationLinter:
     def _check_missing_menu_languages(self) -> None:
         code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
 
+        missing_menus = []
+
         for lang_code in self.known_languages:
             lang_name = code_to_name.get(lang_code)
             if lang_name and lang_name not in self.menu_languages:
                 menu_file = self.menu_dir / f"{lang_name}.txt"
                 if not menu_file.exists():
-                    self._add_issue(
-                        "menu/",
-                        0,
-                        "warning",
-                        "Missing",
-                        f"Missing menu translation file: {lang_name}.txt (for language code '{lang_code}')"
-                    )
+                    missing_menus.append((lang_name, lang_code))
+
+
+        for lang_name, lang_code in sorted(missing_menus, key=lambda x: x[0]):
+            self._add_issue(
+                "menu/",
+                0,
+                "warning",
+                "Missing",
+                f"Missing menu translation file: {lang_name}.txt (for language code '{lang_code}')"
+            )
 
     # ==================== REPORTING ====================
 
@@ -960,7 +969,7 @@ class TranslationLinter:
             file_warnings = sum(1 for i in issues if i.issue_type == "warning")
             print(f"\n{filename} ({file_errors} errors, {file_warnings} warnings)")
             print("-" * 50)
-            for issue in sorted(issues, key=lambda x: x.line):
+            for issue in sorted(issues, key=lambda x: (x.line, x.message)):
                 print(f"  {issue}")
 
         print("\n" + "=" * 70)
@@ -1030,7 +1039,7 @@ class TranslationLinter:
                     missing_data[lang_code] = {
                         "name": lang_name,
                         "file_exists": False,
-                        "missing_groups": [g.name for g in english_groups],
+                        "missing_groups": sorted([g.name for g in english_groups]),
                         "missing_commands": []
                     }
             else:
@@ -1058,8 +1067,8 @@ class TranslationLinter:
                     missing_data[lang_code] = {
                         "name": lang_name,
                         "file_exists": True,
-                        "missing_groups": missing_groups,
-                        "missing_commands": missing_commands
+                        "missing_groups": sorted(missing_groups),
+                        "missing_commands": sorted(missing_commands, key=lambda x: (x["group"], x["command"]))
                     }
 
         return missing_data
@@ -1121,11 +1130,11 @@ class TranslationLinter:
         output.write("DETAILED MISSING TRANSLATIONS (Phrases)\n")
         output.write("=" * 70 + "\n")
 
-        for filename, file_report in missing_by_file.items():
+        for filename, file_report in sorted(missing_by_file.items()):
             output.write(f"\n{filename}\n")
             output.write("-" * 70 + "\n")
 
-            for item in file_report:
+            for item in sorted(file_report, key=lambda x: x["line"]):
                 output.write(f"  Line {item['line']}: \"{item['phrase']}\"\n")
                 output.write(f"    Missing ({len(item['missing_languages'])}): {', '.join(item['missing_languages'])}\n")
 
@@ -1172,7 +1181,7 @@ class TranslationLinter:
             coverage = ((total_phrases - missing_count) / total_phrases * 100) if total_phrases > 0 else 0
 
             missing_phrases = []
-            for filename, file_report in missing_by_file.items():
+            for filename, file_report in sorted(missing_by_file.items()):
                 for item in file_report:
                     if lang in item["missing_languages"]:
                         missing_phrases.append({
@@ -1192,7 +1201,7 @@ class TranslationLinter:
             }
 
         files_data = {}
-        for filename, file_report in missing_by_file.items():
+        for filename, file_report in sorted(missing_by_file.items()):
             files_data[filename] = {
                 "phrases_with_missing": len(file_report),
                 "phrases": [
@@ -1203,7 +1212,7 @@ class TranslationLinter:
                         "existing_languages": item["existing_languages"],
                         "missing_languages": item["missing_languages"]
                     }
-                    for item in file_report
+                    for item in sorted(file_report, key=lambda x: x["line"])
                 ]
             }
 
@@ -1237,7 +1246,7 @@ class TranslationLinter:
 
 def main():
     base_dir = sys.argv[1] if len(sys.argv) > 1 else "."
-    
+
     linter = TranslationLinter(base_dir)
     issues = linter.lint_all()
     linter.print_summary()
