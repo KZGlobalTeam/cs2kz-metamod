@@ -78,7 +78,6 @@ public:
 	}
 
 	void UpdatePistol();
-	bool HasCorrectPistolEquipped();
 	// Return true if the player has a weapon that isn't a knife.
 	bool NeedWeaponStripping();
 	i16 preferredPistol = 8; // Default to USP-S

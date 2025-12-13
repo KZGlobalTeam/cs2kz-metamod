@@ -159,6 +159,7 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 			player->noclipService->HandleNoclip();
 		}
 		player->GetPlayerPawn()->Respawn();
+		player->pistolService->UpdatePistol();
 	}
 	else
 	{
