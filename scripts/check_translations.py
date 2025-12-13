@@ -1236,7 +1236,7 @@ class TranslationLinter:
         if output_file:
             try:
                 with open(output_file, "w", encoding="utf-8") as f:
-                    json.dump(json_data, f, indent=2, ensure_ascii=False, sort_keys=True)
+                    json.dump(json_data, f, indent=2, ensure_ascii=False)
                 print(f"Missing translations JSON written to: {output_file}")
             except Exception as e:
                 print(f"Failed to write JSON to {output_file}: {e}")
