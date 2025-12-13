@@ -52,11 +52,23 @@ namespace KZ::API::handshake
 			bool FromJson(const Json &json);
 		};
 
+		struct Announcement
+		{
+			u64 id;
+			std::string title;
+			std::string body;
+			u64 startsAt;
+			u64 expiresAt;
+
+			bool FromJson(const Json &json);
+		};
+
 		// seconds
 		f64 heartbeatInterval {};
 		std::optional<KZ::API::Map> mapInfo {};
 		std::vector<ModeInfo> modes {};
 		std::vector<StyleInfo> styles {};
+		std::vector<Announcement> announcements {};
 
 		bool FromJson(const Json &json);
 	};
