@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`74a96f0`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/74a96f011e01b2924cbb9a80c4503ffbc6d5c394)
-- **Time:** 2025-12-13 21:45:42 UTC
-- **Message:** Add W release
+- **Commit:** [`cebaca5`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/cebaca5e91e96d9462fc29aea06b19e693a31217)
+- **Time:** 2025-12-14 22:45:31 UTC
+- **Message:** Sort missing menus and other warnings for consistent results (#455)
 
 ---
 
