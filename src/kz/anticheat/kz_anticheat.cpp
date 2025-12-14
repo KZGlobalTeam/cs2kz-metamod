@@ -209,3 +209,8 @@ void KZAnticheatService::PrintCheaterMessage()
 		this->printedCheaterMessage = true;
 	}
 }
+
+void KZAnticheatService::OnSetupMove(PlayerCommand *pc)
+{
+    strafeOptDetector.DetectOptimization(this->player, pc);
+}

@@ -90,7 +90,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'nulls.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'cvars.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'jumps.cpp'),
-    
+		os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'strafe_optimizer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'beam', 'kz_beam.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'commands.cpp'),
