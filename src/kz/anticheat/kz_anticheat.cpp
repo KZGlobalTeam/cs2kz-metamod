@@ -73,3 +73,8 @@ void KZAnticheatService::OnPlayerFullyConnect()
 	StartTimer<CPlayerUserId>(CheckClientCvars, this->player->GetClient()->GetUserID(),
 							  RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL), true, true);
 }
+
+void KZAnticheatService::OnSetupMove(PlayerCommand *pc)
+{
+    strafeOptDetector.DetectOptimization(this->player, pc);
+}
