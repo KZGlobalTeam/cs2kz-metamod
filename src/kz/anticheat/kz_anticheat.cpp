@@ -76,5 +76,5 @@ void KZAnticheatService::OnPlayerFullyConnect()
 
 void KZAnticheatService::OnSetupMove(PlayerCommand *pc)
 {
-    strafeOptDetector.DetectOptimization(this->player, pc);
+	strafeOptDetector.DetectOptimization(this->player, pc);
 }

@@ -27,5 +27,4 @@ public:
 	void OnPlayerFullyConnect();
 
 	virtual void OnSetupMove(PlayerCommand *);
-
 };
