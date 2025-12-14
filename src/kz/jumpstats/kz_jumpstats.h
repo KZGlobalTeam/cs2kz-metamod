@@ -352,7 +352,7 @@ public:
 
 	f32 GetDeviation();
 
-	f32 GetRelease()
+	f32 GetReleaseInTick()
 	{
 		return this->release * ENGINE_FIXED_TICK_RATE;
 	}
@@ -360,23 +360,23 @@ public:
 	std::string GetReleaseString(bool colored = true)
 	{
 		char releaseString[64];
-		if (this->GetRelease() > 10)
+		if (this->GetReleaseInTick() > 10)
 		{
 			return colored ? "| {red}✗{grey} W" : "| ✗ W";
 		}
-		else if (this->GetRelease() > 0)
+		else if (this->GetReleaseInTick() > 0)
 		{
-			V_snprintf(releaseString, sizeof(releaseString), "%s| %s+%.1f%s W", colored ? "{grey}" : "", colored ? "{red}" : "", this->GetRelease(),
-					   colored ? "{grey}" : "");
+			V_snprintf(releaseString, sizeof(releaseString), "%s| %s+%.1f%s W", colored ? "{grey}" : "", colored ? "{red}" : "",
+					   this->GetReleaseInTick(), colored ? "{grey}" : "");
 		}
-		else if (this->GetRelease() == 0)
+		else if (this->GetReleaseInTick() == 0)
 		{
 			return colored ? "| {green}✓{grey} W" : "| ✓ W";
 		}
 		else
 		{
-			V_snprintf(releaseString, sizeof(releaseString), "%s| %s%.1f%s W", colored ? "{grey}" : "", colored ? "{blue}" : "", this->GetRelease(),
-					   colored ? "{grey}" : "");
+			V_snprintf(releaseString, sizeof(releaseString), "%s| %s%.1f%s W", colored ? "{grey}" : "", colored ? "{blue}" : "",
+					   this->GetReleaseInTick(), colored ? "{grey}" : "");
 		}
 		return releaseString;
 	}
@@ -407,15 +407,6 @@ public:
 
 public:
 	bool GetDistTierFromString(const char *tierString, DistanceTier &outTier);
-	void SetBroadcastMinTier(const char *tierString);
-	void SetBroadcastMinTierConsole(const char *tierString);
-	void SetBroadcastSoundMinTier(const char *tierString);
-	void SetMinTier(const char *tierString);
-	void SetMinTierConsole(const char *tierString);
-	void SetSoundMinTier(const char *tierString);
-	void ToggleExtendedChatStats();
-	void ToggleJSAlways();
-	void SetJumpstatsVolume(f32 volume);
 
 	virtual void Reset() override;
 	void OnProcessMovement();
@@ -426,7 +417,11 @@ public:
 
 	JumpType DetermineJumpType();
 	f32 GetLastJumpRelease();
-	f32 GetLastJumpReleaseDuration();
+
+	f32 GetLastWPressedTime()
+	{
+		return lastWPressedTime;
+	}
 
 	bool HitBhop();
 	bool HitDuckbugRecently();
@@ -441,8 +436,8 @@ public:
 	void InvalidateJumpstats(const char *reason = NULL);
 	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
-	void UpdateAACallPost();
 
+	// Jump validation
 	void CheckValidMoveType();
 	void DetectNoclip();
 	void DetectEdgebug();
@@ -451,15 +446,21 @@ public:
 	void DetectExternalModifications();
 	void DetectWater();
 
+	// Jump reporting
+	static void AnnounceJump(Jump *jump);
 	static void BroadcastJumpToChat(KZPlayer *target, Jump *jump);
 	static void PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast = false);
 	static void PrintJumpToChat(KZPlayer *target, Jump *jump, bool extended = false);
 	static void PrintJumpToConsole(KZPlayer *target, Jump *jump, bool broadcast = false);
 
-	static void AnnounceJump(Jump *jump);
-
-	f32 GetLastWPressedTime()
-	{
-		return lastWPressedTime;
-	}
+	// Jump reporting preferences
+	void SetBroadcastMinTier(const char *tierString);
+	void SetBroadcastMinTierConsole(const char *tierString);
+	void SetBroadcastSoundMinTier(const char *tierString);
+	void SetMinTier(const char *tierString);
+	void SetMinTierConsole(const char *tierString);
+	void SetSoundMinTier(const char *tierString);
+	void ToggleExtendedChatStats();
+	void ToggleJSAlways();
+	void SetJumpstatsVolume(f32 volume);
 };
