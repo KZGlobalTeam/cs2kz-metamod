@@ -248,8 +248,9 @@ public:
 
 	static void Init();
 	static void Shutdown();
+	static void OnActivateServer();
 	static void ProcessFileWriteCompletion();
-	void OnProcessUsercmds(PlayerCommand *base, int numCmds);
+	void OnProcessUsercmds(PlayerCommand *base, i32 numCmds);
 
 	void OnPhysicsSimulate();
 	void OnSetupMove(PlayerCommand *pc);

@@ -707,9 +707,10 @@ static_function bool Hook_ActivateServer()
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size);
 
 	RecordAnnounce::Clear();
-	KZ::misc::OnServerActivate();
+	KZ::misc::OnActivateServer();
 	KZDatabaseService::SetupMap();
 	KZGlobalService::OnActivateServer();
+	KZRecordingService::OnActivateServer();
 
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));

@@ -691,7 +691,7 @@ void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
 	}
 }
 
-void KZ::misc::OnServerActivate()
+void KZ::misc::OnActivateServer()
 {
 	KZ::misc::EnforceTimeLimit();
 	g_pKZUtils->UpdateCurrentMapMD5();

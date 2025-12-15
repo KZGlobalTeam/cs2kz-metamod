@@ -77,6 +77,18 @@ void KZRecordingService::Shutdown()
 	}
 }
 
+void KZRecordingService::OnActivateServer()
+{
+	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+		if (player && player->recordingService)
+		{
+			player->recordingService->Reset();
+		}
+	}
+}
+
 void KZRecordingService::ProcessFileWriteCompletion()
 {
 	if (s_fileWriter)

@@ -251,7 +251,7 @@ namespace KZ
 	namespace misc
 	{
 		void Init();
-		void OnServerActivate();
+		void OnActivateServer();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 		void ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
 		META_RES CheckBlockedRadioCommands(const char *cmd);
