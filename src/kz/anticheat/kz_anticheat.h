@@ -22,4 +22,11 @@ public:
 	}
 
 	void OnPlayerFullyConnect();
+
+	static f64 KickPlayerInvalidSettings(CPlayerUserId userID);
 };
+
+namespace KZ::anticheat
+{
+	void InitCvarChecker();
+}

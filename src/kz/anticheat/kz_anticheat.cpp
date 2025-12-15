@@ -14,7 +14,7 @@ extern IClientCvarValue *g_pClientCvarValue;
 #define MINIMUM_FPS_MAX              64.0f
 #define MAXIMUM_M_YAW                0.3f
 
-static_function f64 KickPlayerInvalidSettings(CPlayerUserId userID)
+f64 KZAnticheatService::KickPlayerInvalidSettings(CPlayerUserId userID)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
 	if (player)
@@ -39,7 +39,7 @@ static_function void ValidateCvar(CPlayerSlot nSlot, ECvarValueStatus eStatus, c
 			player->languageService->PrintConsole(false, false, "Kick Player m_yaw (Console)");
 			player->anticheatService->MarkHasInvalidCvars();
 			player->timerService->TimerStop();
-			StartTimer<CPlayerUserId>(KickPlayerInvalidSettings, player->GetClient()->GetUserID(), KICK_DELAY, true, true);
+			StartTimer<CPlayerUserId>(KZAnticheatService::KickPlayerInvalidSettings, player->GetClient()->GetUserID(), KICK_DELAY, true, true);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "fps_max"))
@@ -50,7 +50,7 @@ static_function void ValidateCvar(CPlayerSlot nSlot, ECvarValueStatus eStatus, c
 			player->languageService->PrintConsole(false, false, "Kick Player fps_max (Console)");
 			player->anticheatService->MarkHasInvalidCvars();
 			player->timerService->TimerStop();
-			StartTimer<CPlayerUserId>(KickPlayerInvalidSettings, player->GetClient()->GetUserID(), KICK_DELAY, true, true);
+			StartTimer<CPlayerUserId>(KZAnticheatService::KickPlayerInvalidSettings, player->GetClient()->GetUserID(), KICK_DELAY, true, true);
 		}
 	}
 }
