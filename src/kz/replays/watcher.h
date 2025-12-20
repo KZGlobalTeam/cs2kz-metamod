@@ -7,8 +7,6 @@
 
 class KZPlayer;
 
-// (Legacy comparators removed; ordering handled during filtering when needed.)
-
 struct ReplayFilterCriteria
 {
 	// General filters

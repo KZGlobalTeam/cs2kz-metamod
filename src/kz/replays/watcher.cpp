@@ -915,6 +915,13 @@ void ReplayWatcher::ScanReplays()
 	{
 		if (!g_pFullFileSystem->FindIsDirectory(findHandle))
 		{
+			// Skip temporary files that are still being written
+			if (V_strstr(pFileName, ".replay.tmp"))
+			{
+				pFileName = g_pFullFileSystem->FindNext(findHandle);
+				continue;
+			}
+
 			char uuidStr[64];
 			V_strncpy(uuidStr, pFileName, sizeof(uuidStr));
 			char *ext = V_strstr(uuidStr, ".replay");

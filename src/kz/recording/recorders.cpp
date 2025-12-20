@@ -270,16 +270,22 @@ bool Recorder::WriteToFile()
 	time(&unixTime);
 	replayHeader.set_timestamp((u64)unixTime);
 
-	char filename[512];
 	std::string uuidStr = this->uuid.ToString();
-	V_snprintf(filename, sizeof(filename), "%s/%s.replay", KZ_REPLAY_PATH, uuidStr.c_str());
+	char tempFilename[512];
+	char finalFilename[512];
+	V_snprintf(tempFilename, sizeof(tempFilename), "%s/%s.replay.tmp", KZ_REPLAY_PATH, uuidStr.c_str());
+	V_snprintf(finalFilename, sizeof(finalFilename), "%s/%s.replay", KZ_REPLAY_PATH, uuidStr.c_str());
+
 	g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_PATH);
-	FileHandle_t file = g_pFullFileSystem->Open(filename, "wb");
+
+	// Write to temporary file first
+	FileHandle_t file = g_pFullFileSystem->Open(tempFilename, "wb");
 	if (!file)
 	{
-		META_CONPRINTF("Failed to open replay file for writing: %s\n", filename);
+		META_CONPRINTF("Failed to open replay file for writing: %s\n", tempFilename);
 		return false;
 	}
+
 	// Order of writing must match order of reading in kz_replaydata.cpp
 	i32 bytesWritten = 0;
 	bytesWritten += this->WriteHeader(file);
@@ -293,11 +299,23 @@ bool Recorder::WriteToFile()
 	bytesWritten += KZ::replaysystem::compression::WriteEventsCompressed(file, this->rpEvents);
 
 	bytesWritten += KZ::replaysystem::compression::WriteCmdDataCompressed(file, this->cmdData, this->cmdSubtickData);
+
+	// Close the file before renaming
+	g_pFullFileSystem->Close(file);
+
+	// Rename temp file to final name
+	if (!g_pFullFileSystem->RenameFile(tempFilename, finalFilename, "GAME"))
+	{
+		META_CONPRINTF("Failed to rename replay file from %s to %s\n", tempFilename, finalFilename);
+		g_pFullFileSystem->RemoveFile(tempFilename, "GAME");
+		return false;
+	}
+
 	if (kz_replay_recording_debug.Get())
 	{
-		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%d bytes)\n", filename, bytesWritten);
+		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%d bytes)\n", finalFilename, bytesWritten);
 	}
-	g_pFullFileSystem->Close(file);
+
 	return true;
 }
 
