@@ -757,6 +757,7 @@ void KZPlayer::OnStopTouchGround()
 	}
 	this->jumpstatsService->AddJump();
 	this->triggerService->OnStopTouchGround();
+	this->hudService->OnStopTouchGround();
 }
 
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)

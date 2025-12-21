@@ -266,11 +266,10 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnJump();
 	Vector oldOutWishVel = mv->m_outWishVel;
-	MoveType_t oldMoveType = player->GetPlayerPawn()->m_MoveType();
 	OnJump(ms, mv);
 	if (mv->m_outWishVel != oldOutWishVel)
 	{
-		player->inPerf = (oldMoveType != MOVETYPE_LADDER && !player->oldWalkMoved);
+		player->inPerf = (!player->takeoffFromLadder && !player->oldWalkMoved);
 		player->RegisterTakeoff(true);
 		player->OnStopTouchGround();
 	}

@@ -10,6 +10,7 @@ class KZHUDService : public KZBaseService
 
 private:
 	bool jumpedThisTick {};
+	bool fromDuckbug {};
 	bool showPanel {};
 	f64 timerStoppedTime {};
 	f64 currentTimeWhenTimerStopped {};
@@ -29,9 +30,25 @@ public:
 		jumpedThisTick = false;
 	}
 
+	void OnProcessMovementPost()
+	{
+		if (this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND)
+		{
+			fromDuckbug = false;
+		}
+	}
+
 	void OnJump()
 	{
 		jumpedThisTick = true;
+	}
+
+	void OnStopTouchGround()
+	{
+		if (jumpedThisTick)
+		{
+			fromDuckbug = player->duckBugged;
+		}
 	}
 
 	bool IsShowingPanel()
