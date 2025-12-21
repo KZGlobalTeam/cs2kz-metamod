@@ -9384,7 +9384,7 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Speed Text (Takeoff)",
           "line": 67,
-          "english_text": "Speed: {speed} ({takeoff_speed})"
+          "english_text": "Speed: {speed} ({color}{takeoff_speed}</font>)"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
@@ -16178,7 +16178,7 @@
         {
           "name": "HUD - Speed Text (Takeoff)",
           "line": 67,
-          "english_text": "Speed: {speed} ({takeoff_speed})",
+          "english_text": "Speed: {speed} ({color}{takeoff_speed}</font>)",
           "existing_languages": [
             "chi",
             "de",

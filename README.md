@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`cebaca5`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/cebaca5e91e96d9462fc29aea06b19e693a31217)
-- **Time:** 2025-12-14 22:45:31 UTC
-- **Message:** Sort missing menus and other warnings for consistent results (#455)
+- **Commit:** [`8907ce8`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/8907ce854b586ea7f84b7fc9648bee54c72ceb94)
+- **Time:** 2025-12-21 02:09:06 UTC
+- **Message:** Add perf + jb speed color to speed hud
 
 ---
 
