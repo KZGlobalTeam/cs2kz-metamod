@@ -8,12 +8,12 @@ SUMMARY
 Total languages: 13
 Total phrases: 519
 Phrases with missing translations: 453
-Total missing translation entries: 2389
+Total missing translation entries: 2367
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  95.4% (495/519)
+  chi (schinese)       [███████████████████░]  99.6% (517/519)
   de (german)          [███████████████████░]  95.8% (497/519)
   en (english)         [████████████████████] 100.0% (519/519)
   es (spanish)         [███████████░░░░░░░░░]  55.5% (288/519)
@@ -108,24 +108,24 @@ cs2kz-checkpoint.phrases.txt
   Line 68: "Can't Checkpoint (Anti Checkpoint Area)"
     Missing (1): ru
   Line 115: "Can't Teleport (Limit Reached)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 199: "Can't Undo (AntiCp)"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 200: "Can't Undo (AntiCp)"
     Missing (1): ru
-  Line 214: "Can't Set Custom Start Position (Generic)"
+  Line 215: "Can't Set Custom Start Position (Generic)"
     Missing (1): ru
-  Line 261: "Checkpoints Cleared By Map"
+  Line 262: "Checkpoints Cleared By Map"
     Missing (4): fi, it, pl, ru
-  Line 273: "Checkpoint Options - Checkpoint Sound - Enable"
+  Line 274: "Checkpoint Options - Checkpoint Sound - Enable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 281: "Checkpoint Options - Checkpoint Sound - Disable"
+  Line 282: "Checkpoint Options - Checkpoint Sound - Disable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 289: "Checkpoint Options - Teleport Sound - Enable"
+  Line 290: "Checkpoint Options - Teleport Sound - Enable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 297: "Checkpoint Options - Teleport Sound - Disable"
+  Line 298: "Checkpoint Options - Teleport Sound - Disable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 305: "Checkpoint Options - Checkpoint Message - Enable"
+  Line 306: "Checkpoint Options - Checkpoint Message - Enable"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 312: "Checkpoint Options - Checkpoint Message - Disable"
+  Line 313: "Checkpoint Options - Checkpoint Message - Disable"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-commands.phrases.txt
@@ -554,45 +554,45 @@ cs2kz-quiet.phrases.txt
 cs2kz-racing.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Racing - Race Countdown"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 8: "Racing - Player Disconnect"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 13: "Racing - Player Surrender"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 18: "Racing - Player Finish (1 Teleport)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 23: "Racing - Player Finish (2+ Teleports)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 28: "Racing - Player Finish (PRO)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 33: "Racing - End Results Header"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 37: "Racing - End Results First Place"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 43: "Racing - End Results Last Place"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 49: "Racing - End Results Finisher"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 55: "Racing - End Results Non-Finisher"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 61: "Racing - No Time Limit"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 65: "Racing - Time Limit"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 70: "Racing - Race Info"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 77: "Racing - Race Info (Chat)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 85: "Racing - Race Cancelled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 89: "Racing - Go!"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 93: "Racing - Race Starting In"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 98: "Racing - Player Accepted"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 103: "Racing - Player Unregistered"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 9: "Racing - Player Disconnect"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 15: "Racing - Player Surrender"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 21: "Racing - Player Finish (1 Teleport)"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 27: "Racing - Player Finish (2+ Teleports)"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 33: "Racing - Player Finish (PRO)"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 39: "Racing - End Results Header"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 44: "Racing - End Results First Place"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 51: "Racing - End Results Last Place"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 58: "Racing - End Results Finisher"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 65: "Racing - End Results Non-Finisher"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 72: "Racing - No Time Limit"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 77: "Racing - Time Limit"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 83: "Racing - Race Info"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 91: "Racing - Race Info (Chat)"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 100: "Racing - Race Cancelled"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 105: "Racing - Go!"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 110: "Racing - Race Starting In"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 116: "Racing - Player Accepted"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 122: "Racing - Player Unregistered"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-replays.phrases.txt
 ----------------------------------------------------------------------
@@ -800,16 +800,16 @@ cs2kz-timer-coursetop.phrases.txt
   Line 107: "Course Top Header - Run ID"
     Missing (1): ru
   Line 122: "Course Top Header - Points"
-    Missing (7): chi, es, it, ko, pl, ru, tr
-  Line 131: "Course Top Request - Failed (Generic)"
+    Missing (6): es, it, ko, pl, ru, tr
+  Line 132: "Course Top Request - Failed (Generic)"
     Missing (1): ru
-  Line 146: "Course Top Request - Invalid Course Name"
+  Line 147: "Course Top Request - Invalid Course Name"
     Missing (1): ru
-  Line 161: "Course Top - Check Console"
+  Line 162: "Course Top - Check Console"
     Missing (1): ru
-  Line 176: "Course Top Command Usage"
+  Line 177: "Course Top Command Usage"
     Missing (1): ru
-  Line 191: "Course Top Command Usage - Console"
+  Line 192: "Course Top Command Usage - Console"
     Missing (1): ru
 
 cs2kz-timer-personalbest.phrases.txt

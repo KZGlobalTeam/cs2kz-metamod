@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 519,
     "phrases_with_missing": 453,
-    "total_missing_entries": 2389,
+    "total_missing_entries": 2367,
     "all_languages": [
       "chi",
       "de",
@@ -57,16 +57,10 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 95.38,
-      "translated": 495,
-      "missing": 24,
+      "coverage_percent": 99.61,
+      "translated": 517,
+      "missing": 2,
       "missing_phrases": [
-        {
-          "file": "cs2kz-checkpoint.phrases.txt",
-          "phrase": "Can't Teleport (Limit Reached)",
-          "line": 115,
-          "english_text": "{darkred}You can't teleport because you have reached your teleport limit."
-        },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
@@ -78,132 +72,6 @@
           "phrase": "Command Description - kz_replays",
           "line": 1314,
           "english_text": "List saved replays."
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Countdown",
-          "line": 3,
-          "english_text": "{yellow}Race is starting in {time} seconds!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Disconnect",
-          "line": 8,
-          "english_text": "{lime}{player}{grey} has disconnected!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Surrender",
-          "line": 13,
-          "english_text": "{lime}{player}{grey} has surrendered!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
-          "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
-          "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
-          "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Header",
-          "line": 33,
-          "english_text": "{default}Race Results:"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results First Place",
-          "line": 37,
-          "english_text": "{lime}{player}{grey} has won the race! ({time})"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Last Place",
-          "line": 43,
-          "english_text": "{lime}{player}{grey} came last in the race. ({time})"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Finisher",
-          "line": 49,
-          "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
-          "english_text": "{lime}{player}{grey} did not finish the race."
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - No Time Limit",
-          "line": 61,
-          "english_text": "No time limit"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Time Limit",
-          "line": 65,
-          "english_text": "Time limit: {time}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
-          "line": 70,
-          "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
-          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Cancelled",
-          "line": 85,
-          "english_text": "{darkred}Race has been cancelled!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Go!",
-          "line": 89,
-          "english_text": "GO!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Starting In",
-          "line": 93,
-          "english_text": "Race starting in {time}s!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Accepted",
-          "line": 98,
-          "english_text": "{lime}{player}{grey} has accepted the race."
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Unregistered",
-          "line": 103,
-          "english_text": "{lime}{player}{grey} has unregistered from the race."
-        },
-        {
-          "file": "cs2kz-timer-coursetop.phrases.txt",
-          "phrase": "Course Top Header - Points",
-          "line": 122,
-          "english_text": "Points"
         }
       ],
       "menu": {
@@ -242,115 +110,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         }
       ],
@@ -453,37 +321,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -999,115 +867,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -1825,43 +1693,43 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 261,
+          "line": 262,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -2491,115 +2359,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -3557,43 +3425,43 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 261,
+          "line": 262,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -4211,115 +4079,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -5277,37 +5145,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -5817,115 +5685,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -6658,37 +6526,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -7048,115 +6916,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -7817,43 +7685,43 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 261,
+          "line": 262,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -8471,115 +8339,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -9672,55 +9540,55 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Can't Undo (AntiCp)",
-          "line": 199,
+          "line": 200,
           "english_text": "{darkred}You can't undo because you teleported while in an anti-checkpoint zone."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Can't Set Custom Start Position (Generic)",
-          "line": 214,
+          "line": 215,
           "english_text": "{grey}Failed to set your custom start position!"
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 261,
+          "line": 262,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -10866,115 +10734,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -11478,31 +11346,31 @@
         {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top Request - Failed (Generic)",
-          "line": 131,
+          "line": 132,
           "english_text": "{darkred}Failed to retrieve course top information."
         },
         {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top Request - Invalid Course Name",
-          "line": 146,
+          "line": 147,
           "english_text": "{darkred}Failed to retrieve course top information. {grey}(Invalid course name {default}{course_name}{grey})"
         },
         {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top - Check Console",
-          "line": 161,
+          "line": 162,
           "english_text": "{grey}Course top data retrieved. Check console for details!"
         },
         {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top Command Usage",
-          "line": 176,
+          "line": 177,
           "english_text": "{grey}Usage: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Check console for details!"
         },
         {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top Command Usage - Console",
-          "line": 191,
+          "line": 192,
           "english_text": "Usage: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\\nExample: \\\"kz_ctop map=kz_map c=Main o=10 l=20\\\". Add 'g' or 's' to the start before the 'top' suffix to specify global/server only (eg. kz_gctop)."
         },
         {
@@ -12172,13 +12040,13 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -12292,115 +12160,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -12983,37 +12851,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -13577,115 +13445,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -14457,115 +14325,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         }
       ],
@@ -14886,10 +14754,10 @@
           "line": 115,
           "english_text": "{darkred}You can't teleport because you have reached your teleport limit.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -14905,7 +14773,7 @@
         },
         {
           "name": "Can't Undo (AntiCp)",
-          "line": 199,
+          "line": 200,
           "english_text": "{darkred}You can't undo because you teleported while in an anti-checkpoint zone.",
           "existing_languages": [
             "chi",
@@ -14927,7 +14795,7 @@
         },
         {
           "name": "Can't Set Custom Start Position (Generic)",
-          "line": 214,
+          "line": 215,
           "english_text": "{grey}Failed to set your custom start position!",
           "existing_languages": [
             "chi",
@@ -14949,7 +14817,7 @@
         },
         {
           "name": "Checkpoints Cleared By Map",
-          "line": 261,
+          "line": 262,
           "english_text": "{darkred}The map has cleared your checkpoints.",
           "existing_languages": [
             "chi",
@@ -14971,7 +14839,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 273,
+          "line": 274,
           "english_text": "{grey}You have enabled checkpoint sound.",
           "existing_languages": [
             "chi",
@@ -14993,7 +14861,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 281,
+          "line": 282,
           "english_text": "{grey}You have disabled checkpoint sound.",
           "existing_languages": [
             "chi",
@@ -15015,7 +14883,7 @@
         },
         {
           "name": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 289,
+          "line": 290,
           "english_text": "{grey}You have enabled teleport sound.",
           "existing_languages": [
             "chi",
@@ -15037,7 +14905,7 @@
         },
         {
           "name": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 297,
+          "line": 298,
           "english_text": "{grey}You have disabled teleport sound.",
           "existing_languages": [
             "chi",
@@ -15059,7 +14927,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 305,
+          "line": 306,
           "english_text": "{grey}You have enabled checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -15081,7 +14949,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 312,
+          "line": 313,
           "english_text": "{grey}You have disabled checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -19456,10 +19324,10 @@
           "line": 3,
           "english_text": "{yellow}Race is starting in {time} seconds!",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19475,13 +19343,13 @@
         },
         {
           "name": "Racing - Player Disconnect",
-          "line": 8,
+          "line": 9,
           "english_text": "{lime}{player}{grey} has disconnected!",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19497,13 +19365,13 @@
         },
         {
           "name": "Racing - Player Surrender",
-          "line": 13,
+          "line": 15,
           "english_text": "{lime}{player}{grey} has surrendered!",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19519,13 +19387,13 @@
         },
         {
           "name": "Racing - Player Finish (1 Teleport)",
-          "line": 18,
+          "line": 21,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19541,13 +19409,13 @@
         },
         {
           "name": "Racing - Player Finish (2+ Teleports)",
-          "line": 23,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19563,13 +19431,13 @@
         },
         {
           "name": "Racing - Player Finish (PRO)",
-          "line": 28,
+          "line": 33,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19585,13 +19453,13 @@
         },
         {
           "name": "Racing - End Results Header",
-          "line": 33,
+          "line": 39,
           "english_text": "{default}Race Results:",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19607,13 +19475,13 @@
         },
         {
           "name": "Racing - End Results First Place",
-          "line": 37,
+          "line": 44,
           "english_text": "{lime}{player}{grey} has won the race! ({time})",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19629,13 +19497,13 @@
         },
         {
           "name": "Racing - End Results Last Place",
-          "line": 43,
+          "line": 51,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19651,13 +19519,13 @@
         },
         {
           "name": "Racing - End Results Finisher",
-          "line": 49,
+          "line": 58,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19673,13 +19541,13 @@
         },
         {
           "name": "Racing - End Results Non-Finisher",
-          "line": 55,
+          "line": 65,
           "english_text": "{lime}{player}{grey} did not finish the race.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19695,13 +19563,13 @@
         },
         {
           "name": "Racing - No Time Limit",
-          "line": 61,
+          "line": 72,
           "english_text": "No time limit",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19717,13 +19585,13 @@
         },
         {
           "name": "Racing - Time Limit",
-          "line": 65,
+          "line": 77,
           "english_text": "Time limit: {time}",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19739,13 +19607,13 @@
         },
         {
           "name": "Racing - Race Info",
-          "line": 70,
+          "line": 83,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19761,13 +19629,13 @@
         },
         {
           "name": "Racing - Race Info (Chat)",
-          "line": 77,
+          "line": 91,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19783,13 +19651,13 @@
         },
         {
           "name": "Racing - Race Cancelled",
-          "line": 85,
+          "line": 100,
           "english_text": "{darkred}Race has been cancelled!",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19805,13 +19673,13 @@
         },
         {
           "name": "Racing - Go!",
-          "line": 89,
+          "line": 105,
           "english_text": "GO!",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19827,13 +19695,13 @@
         },
         {
           "name": "Racing - Race Starting In",
-          "line": 93,
+          "line": 110,
           "english_text": "Race starting in {time}s!",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19849,13 +19717,13 @@
         },
         {
           "name": "Racing - Player Accepted",
-          "line": 98,
+          "line": 116,
           "english_text": "{lime}{player}{grey} has accepted the race.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -19871,13 +19739,13 @@
         },
         {
           "name": "Racing - Player Unregistered",
-          "line": 103,
+          "line": 122,
           "english_text": "{lime}{player}{grey} has unregistered from the race.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -22050,6 +21918,7 @@
           "line": 122,
           "english_text": "Points",
           "existing_languages": [
+            "chi",
             "de",
             "en",
             "fi",
@@ -22058,7 +21927,6 @@
             "ua"
           ],
           "missing_languages": [
-            "chi",
             "es",
             "it",
             "ko",
@@ -22069,7 +21937,7 @@
         },
         {
           "name": "Course Top Request - Failed (Generic)",
-          "line": 131,
+          "line": 132,
           "english_text": "{darkred}Failed to retrieve course top information.",
           "existing_languages": [
             "chi",
@@ -22091,7 +21959,7 @@
         },
         {
           "name": "Course Top Request - Invalid Course Name",
-          "line": 146,
+          "line": 147,
           "english_text": "{darkred}Failed to retrieve course top information. {grey}(Invalid course name {default}{course_name}{grey})",
           "existing_languages": [
             "chi",
@@ -22113,7 +21981,7 @@
         },
         {
           "name": "Course Top - Check Console",
-          "line": 161,
+          "line": 162,
           "english_text": "{grey}Course top data retrieved. Check console for details!",
           "existing_languages": [
             "chi",
@@ -22135,7 +22003,7 @@
         },
         {
           "name": "Course Top Command Usage",
-          "line": 176,
+          "line": 177,
           "english_text": "{grey}Usage: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Check console for details!",
           "existing_languages": [
             "chi",
@@ -22157,7 +22025,7 @@
         },
         {
           "name": "Course Top Command Usage - Console",
-          "line": 191,
+          "line": 192,
           "english_text": "Usage: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\\nExample: \\\"kz_ctop map=kz_map c=Main o=10 l=20\\\". Add 'g' or 's' to the start before the 'top' suffix to specify global/server only (eg. kz_gctop).",
           "existing_languages": [
             "chi",
