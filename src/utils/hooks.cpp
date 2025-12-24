@@ -28,6 +28,7 @@
 #include "kz/pistol/kz_pistol.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/racing/kz_racing.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "sdk/usercmd.h"
@@ -506,6 +507,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	KZBeamService::UpdateBeams();
 	KZProfileService::OnGameFrame();
 	KZ::replaysystem::OnGameFrame();
+	KZRacingService::BroadcastRaceInfo();
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -581,6 +583,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->recordingService->OnClientDisconnect();
 	player->optionService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
+	player->racingService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -711,6 +714,7 @@ static_function bool Hook_ActivateServer()
 	KZDatabaseService::SetupMap();
 	KZGlobalService::OnActivateServer();
 	KZRecordingService::OnActivateServer();
+	KZRacingService::OnActivateServer();
 
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
@@ -743,6 +747,7 @@ static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimula
 	ProcessTimers();
 	KZRecordingService::ProcessFileWriteCompletion();
 	KZGlobalService::OnServerGamePostSimulate();
+	KZRacingService::OnServerGamePostSimulate();
 }
 
 static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg)

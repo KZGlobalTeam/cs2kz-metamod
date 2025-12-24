@@ -22,6 +22,7 @@
 #include "kz/global/kz_global.h"
 #include "kz/profile/kz_profile.h"
 #include "kz/pistol/kz_pistol.h"
+#include "kz/racing/kz_racing.h"
 
 #include "sdk/gamerules.h"
 #include "sdk/physicsgamesystem.h"
@@ -456,12 +457,14 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 			utils::SayChat(player->GetController(), "%s {lime}%s{default}: %s", coloredPrefix.c_str(), name, msg);
 			utils::PrintConsoleAll("%s %s: %s", prefix.c_str(), name, msg);
 			META_CONPRINTF("%s %s: %s\n", prefix.c_str(), name, msg);
+			player->racingService->SendChatMessage(msg);
 		}
 		else
 		{
 			utils::SayChat(player->GetController(), "{grey}* %s {lime}%s{default}: %s", coloredPrefix.c_str(), name, msg);
 			utils::PrintConsoleAll("* %s %s: %s", prefix.c_str(), name, msg);
 			META_CONPRINTF("* %s %s: %s\n", prefix.c_str(), name, msg);
+			player->racingService->SendChatMessage(msg);
 		}
 	}
 
