@@ -1176,6 +1176,7 @@
 	"Command Description - kz_course"
 	{
 		"en"		"Teleport to a course, or display the current course and the list of all courses in the map."
+		"ua"		"Телепортуватися до курсу або показати поточний курс та список всіх курсів на мапі."
 	}
 	"Command Description - kz_courses"
 	{
