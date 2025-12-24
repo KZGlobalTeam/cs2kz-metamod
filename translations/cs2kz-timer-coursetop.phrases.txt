@@ -122,6 +122,7 @@
 	"Course Top Header - Points"
 	{
 		"en"		"Points"
+		"en"		"分数"
 		"ua"		"Очки"
 		"sv"		"Poäng"
 		"fi"		"Pisteet"
