@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 519 |
 | **Phrases Missing Translations** | 453 |
-| **Total Missing Entries** | 2367 |
+| **Total Missing Entries** | 2345 |
 | **Menu Files** | 9 |
 
 ## Language Coverage (Phrases)
@@ -29,7 +29,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [███░░░░░░░░░░░░░░░░░]  17.7% (92/519)
   sv (swedish)         [███████████████░░░░░]  76.5% (397/519)
   tr (turkish)         [██████████░░░░░░░░░░]  51.4% (267/519)
-  ua (ukrainian)       [███████████████████░]  95.8% (497/519)
+  ua (ukrainian)       [████████████████████] 100.0% (519/519)
 ```
 
 ## Menu Translation Status
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`fb48d10`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/fb48d104502936c6f07cc46bf4daa43ec1b3c739)
-- **Time:** 2025-12-24 09:15:24 UTC
-- **Message:** Add new schinese translations and fill in the missing schinese translations (#46
+- **Commit:** [`e2ed986`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/e2ed9864a1e0203c9f384cad2ac8cc6fd134d191)
+- **Time:** 2025-12-24 17:53:18 UTC
+- **Message:** Ukrainian translation — Racing, general fixes (#464)
 
 ---
 

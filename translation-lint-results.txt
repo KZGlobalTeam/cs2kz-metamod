@@ -15,7 +15,7 @@ SUMMARY: 0 error(s), 25 warning(s)
 
 cs2kz-racing.phrases.txt (0 errors, 1 warnings)
 --------------------------------------------------
-  cs2kz-racing.phrases.txt:99: [WARNING] Formatting: Line has trailing whitespace
+  cs2kz-racing.phrases.txt:114: [WARNING] Formatting: Line has trailing whitespace
 
 menu/ (0 errors, 24 warnings)
 --------------------------------------------------
