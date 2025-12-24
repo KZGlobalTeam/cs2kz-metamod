@@ -242,15 +242,16 @@ SCMD(kz_spec, SCFL_SPEC)
 		}
 	}
 
+	if (numAlivePlayers == 0 && args->ArgC() == 1)
+	{
+		player->specService->SpectatePlayer("@me");
+		return MRES_SUPERCEDE;
+	}
+
 	// Handle automatic spectating
 	if (numAlivePlayers == 1)
 	{
 		player->specService->SpectatePlayer(firstAlivePlayer);
-		return MRES_SUPERCEDE;
-	}
-	if (numAlivePlayers == 0 && args->ArgC() == 1)
-	{
-		player->specService->SpectatePlayer("@me");
 		return MRES_SUPERCEDE;
 	}
 
