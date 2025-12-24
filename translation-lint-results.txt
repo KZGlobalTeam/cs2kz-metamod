@@ -3,15 +3,19 @@ Base directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 Translations directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/translations
 Menu directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/menu
 
-Checking 29 translation files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/translations'...
+Checking 30 translation files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/translations'...
 
 Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'lv', 'pl', 'ru', 'sv', 'tr', 'ua']
 
 Checking 9 menu files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/menu'...
 
 ======================================================================
-SUMMARY: 0 error(s), 24 warning(s)
+SUMMARY: 0 error(s), 25 warning(s)
 ======================================================================
+
+cs2kz-racing.phrases.txt (0 errors, 1 warnings)
+--------------------------------------------------
+  cs2kz-racing.phrases.txt:84: [WARNING] Formatting: Line has trailing whitespace
 
 menu/ (0 errors, 24 warnings)
 --------------------------------------------------
@@ -41,7 +45,7 @@ menu/ (0 errors, 24 warnings)
   menu/:0: [WARNING] Missing: Missing menu translation file: vietnamese.txt (for language code 'vi')
 
 ======================================================================
-TOTAL: 0 error(s), 24 warning(s) in 1 file(s)
+TOTAL: 0 error(s), 25 warning(s) in 2 file(s)
 ======================================================================
 Missing translations report written to: missing-translations.txt
 Missing translations JSON written to: missing-translations.json

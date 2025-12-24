@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 498
-Phrases with missing translations: 432
-Total missing translation entries: 2137
+Total phrases: 519
+Phrases with missing translations: 453
+Total missing translation entries: 2389
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  99.4% (495/498)
-  de (german)          [███████████████████░]  99.8% (497/498)
-  en (english)         [████████████████████] 100.0% (498/498)
-  es (spanish)         [███████████░░░░░░░░░]  57.8% (288/498)
-  fi (finnish)         [█████████░░░░░░░░░░░]  47.8% (238/498)
-  it (italian)         [█████████░░░░░░░░░░░]  46.2% (230/498)
-  ko (koreana)         [███████████░░░░░░░░░]  58.4% (291/498)
-  lv (latvian)         [█████████████░░░░░░░]  66.9% (333/498)
-  pl (polish)          [████████░░░░░░░░░░░░]  43.0% (214/498)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  18.5% (92/498)
-  sv (swedish)         [███████████████░░░░░]  79.7% (397/498)
-  tr (turkish)         [██████████░░░░░░░░░░]  53.6% (267/498)
-  ua (ukrainian)       [███████████████████░]  99.8% (497/498)
+  chi (schinese)       [███████████████████░]  95.4% (495/519)
+  de (german)          [███████████████████░]  95.8% (497/519)
+  en (english)         [████████████████████] 100.0% (519/519)
+  es (spanish)         [███████████░░░░░░░░░]  55.5% (288/519)
+  fi (finnish)         [█████████░░░░░░░░░░░]  45.9% (238/519)
+  it (italian)         [████████░░░░░░░░░░░░]  44.3% (230/519)
+  ko (koreana)         [███████████░░░░░░░░░]  56.1% (291/519)
+  lv (latvian)         [████████████░░░░░░░░]  64.2% (333/519)
+  pl (polish)          [████████░░░░░░░░░░░░]  41.2% (214/519)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  17.7% (92/519)
+  sv (swedish)         [███████████████░░░░░]  76.5% (397/519)
+  tr (turkish)         [██████████░░░░░░░░░░]  51.4% (267/519)
+  ua (ukrainian)       [███████████████████░]  95.8% (497/519)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -107,23 +107,25 @@ cs2kz-checkpoint.phrases.txt
     Missing (1): ru
   Line 68: "Can't Checkpoint (Anti Checkpoint Area)"
     Missing (1): ru
-  Line 195: "Can't Undo (AntiCp)"
+  Line 115: "Can't Teleport (Limit Reached)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 199: "Can't Undo (AntiCp)"
     Missing (1): ru
-  Line 210: "Can't Set Custom Start Position (Generic)"
+  Line 214: "Can't Set Custom Start Position (Generic)"
     Missing (1): ru
-  Line 257: "Checkpoints Cleared By Map"
+  Line 261: "Checkpoints Cleared By Map"
     Missing (4): fi, it, pl, ru
-  Line 269: "Checkpoint Options - Checkpoint Sound - Enable"
+  Line 273: "Checkpoint Options - Checkpoint Sound - Enable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 277: "Checkpoint Options - Checkpoint Sound - Disable"
+  Line 281: "Checkpoint Options - Checkpoint Sound - Disable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 285: "Checkpoint Options - Teleport Sound - Enable"
+  Line 289: "Checkpoint Options - Teleport Sound - Enable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 293: "Checkpoint Options - Teleport Sound - Disable"
+  Line 297: "Checkpoint Options - Teleport Sound - Disable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 301: "Checkpoint Options - Checkpoint Message - Enable"
+  Line 305: "Checkpoint Options - Checkpoint Message - Enable"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 308: "Checkpoint Options - Checkpoint Message - Disable"
+  Line 312: "Checkpoint Options - Checkpoint Message - Disable"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-commands.phrases.txt
@@ -548,6 +550,49 @@ cs2kz-quiet.phrases.txt
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
   Line 105: "Quiet Option - Auto Hide Weapon - Disable"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
+
+cs2kz-racing.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Racing - Race Countdown"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 8: "Racing - Player Disconnect"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 13: "Racing - Player Surrender"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 18: "Racing - Player Finish (1 Teleport)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 23: "Racing - Player Finish (2+ Teleports)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 28: "Racing - Player Finish (PRO)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 33: "Racing - End Results Header"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 37: "Racing - End Results First Place"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 43: "Racing - End Results Last Place"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 49: "Racing - End Results Finisher"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 55: "Racing - End Results Non-Finisher"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 61: "Racing - No Time Limit"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 65: "Racing - Time Limit"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 70: "Racing - Race Info"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 77: "Racing - Race Info (Chat)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 85: "Racing - Race Cancelled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 89: "Racing - Go!"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 93: "Racing - Race Starting In"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 98: "Racing - Player Accepted"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 103: "Racing - Player Unregistered"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-replays.phrases.txt
 ----------------------------------------------------------------------
