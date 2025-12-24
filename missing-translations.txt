@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 497
-Phrases with missing translations: 431
-Total missing translation entries: 2125
+Total phrases: 498
+Phrases with missing translations: 432
+Total missing translation entries: 2137
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  99.6% (495/497)
-  de (german)          [████████████████████] 100.0% (497/497)
-  en (english)         [████████████████████] 100.0% (497/497)
-  es (spanish)         [███████████░░░░░░░░░]  57.9% (288/497)
-  fi (finnish)         [█████████░░░░░░░░░░░]  47.9% (238/497)
-  it (italian)         [█████████░░░░░░░░░░░]  46.3% (230/497)
-  ko (koreana)         [███████████░░░░░░░░░]  58.6% (291/497)
-  lv (latvian)         [█████████████░░░░░░░]  67.0% (333/497)
-  pl (polish)          [████████░░░░░░░░░░░░]  43.1% (214/497)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  18.5% (92/497)
-  sv (swedish)         [███████████████░░░░░]  79.9% (397/497)
-  tr (turkish)         [██████████░░░░░░░░░░]  53.7% (267/497)
-  ua (ukrainian)       [████████████████████] 100.0% (497/497)
+  chi (schinese)       [███████████████████░]  99.4% (495/498)
+  de (german)          [███████████████████░]  99.8% (497/498)
+  en (english)         [████████████████████] 100.0% (498/498)
+  es (spanish)         [███████████░░░░░░░░░]  57.8% (288/498)
+  fi (finnish)         [█████████░░░░░░░░░░░]  47.8% (238/498)
+  it (italian)         [█████████░░░░░░░░░░░]  46.2% (230/498)
+  ko (koreana)         [███████████░░░░░░░░░]  58.4% (291/498)
+  lv (latvian)         [█████████████░░░░░░░]  66.9% (333/498)
+  pl (polish)          [████████░░░░░░░░░░░░]  43.0% (214/498)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  18.5% (92/498)
+  sv (swedish)         [███████████████░░░░░]  79.7% (397/498)
+  tr (turkish)         [██████████░░░░░░░░░░]  53.6% (267/498)
+  ua (ukrainian)       [███████████████████░]  99.8% (497/498)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -295,56 +295,58 @@ cs2kz-commands.phrases.txt
   Line 1164: "Command Description - kz_pc"
     Missing (4): fi, it, pl, ru
   Line 1176: "Command Description - kz_course"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1180: "Command Description - kz_courses"
     Missing (4): fi, it, pl, ru
-  Line 1188: "Command Description - kz_spb"
+  Line 1192: "Command Description - kz_spb"
     Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1197: "Command Description - kz_gpb"
+  Line 1201: "Command Description - kz_gpb"
     Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1206: "Command Description - kz_globalcheck"
+  Line 1210: "Command Description - kz_globalcheck"
     Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1215: "Command Description - kz_gc"
+  Line 1219: "Command Description - kz_gc"
     Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1224: "Command Description - kz_beam"
+  Line 1228: "Command Description - kz_beam"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1232: "Command Description - kz_beamoffset"
+  Line 1236: "Command Description - kz_beamoffset"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1240: "Command Description - kz_measure"
+  Line 1244: "Command Description - kz_measure"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1248: "Command Description - kz_measurestart"
+  Line 1252: "Command Description - kz_measurestart"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1256: "Command Description - kz_measureend"
+  Line 1260: "Command Description - kz_measureend"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1264: "Command Description - kz_measureblock"
+  Line 1268: "Command Description - kz_measureblock"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1272: "Command Description - kz_timerstopsound"
+  Line 1276: "Command Description - kz_timerstopsound"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1280: "Command Description - kz_autohideweapon"
+  Line 1284: "Command Description - kz_autohideweapon"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1288: "Command Description - kz_pistol"
+  Line 1292: "Command Description - kz_pistol"
     Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1296: "Command Description - kz_rpsave"
+  Line 1300: "Command Description - kz_rpsave"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1303: "Command Description - kz_replay"
+  Line 1307: "Command Description - kz_replay"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1310: "Command Description - kz_replays"
+  Line 1314: "Command Description - kz_replays"
     Missing (10): chi, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1316: "Command Description - kz_rpgoto"
+  Line 1320: "Command Description - kz_rpgoto"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1323: "Command Description - kz_rpgototick"
+  Line 1327: "Command Description - kz_rpgototick"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1330: "Command Description - kz_rpinfo"
+  Line 1334: "Command Description - kz_rpinfo"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1337: "Command Description - kz_rppause"
+  Line 1341: "Command Description - kz_rppause"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1344: "Command Description - kz_rploadprogress"
+  Line 1348: "Command Description - kz_rploadprogress"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1351: "Command Description - kz_rpcancelload"
+  Line 1355: "Command Description - kz_rpcancelload"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1358: "Command Description - kz_recordvolume"
+  Line 1362: "Command Description - kz_recordvolume"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1365: "Command Description - kz_cpmessage"
+  Line 1369: "Command Description - kz_cpmessage"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1372: "Command Description - kz_rphidelegs"
+  Line 1376: "Command Description - kz_rphidelegs"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-common.phrases.txt

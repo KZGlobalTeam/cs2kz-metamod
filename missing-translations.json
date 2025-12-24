@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 497,
-    "phrases_with_missing": 431,
-    "total_missing_entries": 2125,
+    "total_phrases": 498,
+    "phrases_with_missing": 432,
+    "total_missing_entries": 2137,
     "all_languages": [
       "chi",
       "de",
@@ -57,14 +57,20 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 99.6,
+      "coverage_percent": 99.4,
       "translated": 495,
-      "missing": 2,
+      "missing": 3,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
@@ -85,10 +91,17 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.8,
       "translated": 497,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 1,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -98,7 +111,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 497,
+      "translated": 498,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -109,9 +122,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 57.95,
+      "coverage_percent": 57.83,
       "translated": 288,
-      "missing": 209,
+      "missing": 210,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -391,152 +404,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -1379,9 +1398,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 47.89,
+      "coverage_percent": 47.79,
       "translated": 238,
-      "missing": 259,
+      "missing": 260,
       "missing_phrases": [
         {
           "file": "cs2kz-beam.phrases.txt",
@@ -1735,156 +1754,162 @@
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
           "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_courses",
+          "line": 1180,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -2949,9 +2974,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 46.28,
+      "coverage_percent": 46.18,
       "translated": 230,
-      "missing": 267,
+      "missing": 268,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -3281,156 +3306,162 @@
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
           "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_courses",
+          "line": 1180,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -4567,9 +4598,9 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 58.55,
+      "coverage_percent": 58.43,
       "translated": 291,
-      "missing": 206,
+      "missing": 207,
       "missing_phrases": [
         {
           "file": "cs2kz-beam.phrases.txt",
@@ -4825,152 +4856,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -5816,9 +5853,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 67.0,
+      "coverage_percent": 66.87,
       "translated": 333,
-      "missing": 164,
+      "missing": 165,
       "missing_phrases": [
         {
           "file": "cs2kz-beam.phrases.txt",
@@ -5948,128 +5985,134 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -6813,9 +6856,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 43.06,
+      "coverage_percent": 42.97,
       "translated": 214,
-      "missing": 283,
+      "missing": 284,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -7145,156 +7188,162 @@
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
           "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_courses",
+          "line": 1180,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -8524,9 +8573,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 18.51,
+      "coverage_percent": 18.47,
       "translated": 92,
-      "missing": 405,
+      "missing": 406,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9162,156 +9211,162 @@
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
           "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_courses",
+          "line": 1180,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -10970,9 +11025,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 79.88,
+      "coverage_percent": 79.72,
       "translated": 397,
-      "missing": 100,
+      "missing": 101,
       "missing_phrases": [
         {
           "file": "cs2kz-checkpoint.phrases.txt",
@@ -10994,74 +11049,80 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -11583,9 +11644,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 53.72,
+      "coverage_percent": 53.61,
       "translated": 267,
-      "missing": 230,
+      "missing": 231,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -11895,152 +11956,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -12979,10 +13046,17 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.8,
       "translated": 497,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 1,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_course",
+          "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -13496,7 +13570,7 @@
       ]
     },
     "cs2kz-commands.phrases.txt": {
-      "phrases_with_missing": 109,
+      "phrases_with_missing": 110,
       "phrases": [
         {
           "name": "Command Help Response (Chat)",
@@ -15327,6 +15401,28 @@
         {
           "name": "Command Description - kz_course",
           "line": 1176,
+          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_courses",
+          "line": 1180,
           "english_text": "Display the current course and the list of all courses in the map.",
           "existing_languages": [
             "chi",
@@ -15348,7 +15444,7 @@
         },
         {
           "name": "Command Description - kz_spb",
-          "line": 1188,
+          "line": 1192,
           "english_text": "Retrieve server personal best statistics.",
           "existing_languages": [
             "chi",
@@ -15370,7 +15466,7 @@
         },
         {
           "name": "Command Description - kz_gpb",
-          "line": 1197,
+          "line": 1201,
           "english_text": "Retrieve global personal best statistics.",
           "existing_languages": [
             "chi",
@@ -15392,7 +15488,7 @@
         },
         {
           "name": "Command Description - kz_globalcheck",
-          "line": 1206,
+          "line": 1210,
           "english_text": "Display the status of the GlobalAPI.",
           "existing_languages": [
             "chi",
@@ -15414,7 +15510,7 @@
         },
         {
           "name": "Command Description - kz_gc",
-          "line": 1215,
+          "line": 1219,
           "english_text": "Display the status of the GlobalAPI.",
           "existing_languages": [
             "chi",
@@ -15436,7 +15532,7 @@
         },
         {
           "name": "Command Description - kz_beam",
-          "line": 1224,
+          "line": 1228,
           "english_text": "Set or toggle player beam type (off/ground/feet).",
           "existing_languages": [
             "chi",
@@ -15458,7 +15554,7 @@
         },
         {
           "name": "Command Description - kz_beamoffset",
-          "line": 1232,
+          "line": 1236,
           "english_text": "Set or get player beam offset.",
           "existing_languages": [
             "chi",
@@ -15480,7 +15576,7 @@
         },
         {
           "name": "Command Description - kz_measure",
-          "line": 1240,
+          "line": 1244,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place.",
           "existing_languages": [
             "chi",
@@ -15502,7 +15598,7 @@
         },
         {
           "name": "Command Description - kz_measurestart",
-          "line": 1248,
+          "line": 1252,
           "english_text": "Set the start position of the measurement.",
           "existing_languages": [
             "chi",
@@ -15524,7 +15620,7 @@
         },
         {
           "name": "Command Description - kz_measureend",
-          "line": 1256,
+          "line": 1260,
           "english_text": "Set the end position of the measurement and calculate the distance.",
           "existing_languages": [
             "chi",
@@ -15546,7 +15642,7 @@
         },
         {
           "name": "Command Description - kz_measureblock",
-          "line": 1264,
+          "line": 1268,
           "english_text": "Measure the block distance.",
           "existing_languages": [
             "chi",
@@ -15568,7 +15664,7 @@
         },
         {
           "name": "Command Description - kz_timerstopsound",
-          "line": 1272,
+          "line": 1276,
           "english_text": "Toggle the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -15590,7 +15686,7 @@
         },
         {
           "name": "Command Description - kz_autohideweapon",
-          "line": 1280,
+          "line": 1284,
           "english_text": "Toggle the automatic hiding of weapon viewmodel.",
           "existing_languages": [
             "chi",
@@ -15612,7 +15708,7 @@
         },
         {
           "name": "Command Description - kz_pistol",
-          "line": 1288,
+          "line": 1292,
           "english_text": "Change or remove the current pistol.",
           "existing_languages": [
             "chi",
@@ -15634,7 +15730,7 @@
         },
         {
           "name": "Command Description - kz_rpsave",
-          "line": 1296,
+          "line": 1300,
           "english_text": "Manually save past gameplay into a replay.",
           "existing_languages": [
             "chi",
@@ -15656,7 +15752,7 @@
         },
         {
           "name": "Command Description - kz_replay",
-          "line": 1303,
+          "line": 1307,
           "english_text": "Play a previously saved replay.",
           "existing_languages": [
             "chi",
@@ -15678,7 +15774,7 @@
         },
         {
           "name": "Command Description - kz_replays",
-          "line": 1310,
+          "line": 1314,
           "english_text": "List saved replays.",
           "existing_languages": [
             "de",
@@ -15700,7 +15796,7 @@
         },
         {
           "name": "Command Description - kz_rpgoto",
-          "line": 1316,
+          "line": 1320,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)",
           "existing_languages": [
             "chi",
@@ -15722,7 +15818,7 @@
         },
         {
           "name": "Command Description - kz_rpgototick",
-          "line": 1323,
+          "line": 1327,
           "english_text": "Go to a specific tick in the replay.",
           "existing_languages": [
             "chi",
@@ -15744,7 +15840,7 @@
         },
         {
           "name": "Command Description - kz_rpinfo",
-          "line": 1330,
+          "line": 1334,
           "english_text": "Display information about the current replay.",
           "existing_languages": [
             "chi",
@@ -15766,7 +15862,7 @@
         },
         {
           "name": "Command Description - kz_rppause",
-          "line": 1337,
+          "line": 1341,
           "english_text": "Pause or resume the current replay.",
           "existing_languages": [
             "chi",
@@ -15788,7 +15884,7 @@
         },
         {
           "name": "Command Description - kz_rploadprogress",
-          "line": 1344,
+          "line": 1348,
           "english_text": "Display the loading progress of the replay.",
           "existing_languages": [
             "chi",
@@ -15810,7 +15906,7 @@
         },
         {
           "name": "Command Description - kz_rpcancelload",
-          "line": 1351,
+          "line": 1355,
           "english_text": "Cancel the loading of the replay.",
           "existing_languages": [
             "chi",
@@ -15832,7 +15928,7 @@
         },
         {
           "name": "Command Description - kz_recordvolume",
-          "line": 1358,
+          "line": 1362,
           "english_text": "Set the volume of the world record sound effect.",
           "existing_languages": [
             "chi",
@@ -15854,7 +15950,7 @@
         },
         {
           "name": "Command Description - kz_cpmessage",
-          "line": 1365,
+          "line": 1369,
           "english_text": "Toggle checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -15876,7 +15972,7 @@
         },
         {
           "name": "Command Description - kz_rphidelegs",
-          "line": 1372,
+          "line": 1376,
           "english_text": "Toggle replay bot's first person legs visibility.",
           "existing_languages": [
             "chi",
