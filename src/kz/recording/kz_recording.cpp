@@ -63,7 +63,7 @@ void Recorder::Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type)
 
 	// Player info
 	auto *playerMsg = hdr.mutable_player();
-	playerMsg->set_name(player->GetController()->GetPlayerName());
+	playerMsg->set_name(player->GetName());
 	playerMsg->set_steamid64(player->GetSteamId64());
 
 	// Model name
@@ -421,7 +421,7 @@ void KZRecordingService::EnsureCircularRecorderInitialized()
 	if (!this->circularRecording)
 	{
 		this->circularRecording = new CircularRecorder();
-		META_CONPRINTF("[KZ] Initialized circular recorder for player %s\n", this->player->GetController()->GetPlayerName());
+		META_CONPRINTF("[KZ] Initialized circular recorder for player %s\n", this->player->GetName());
 	}
 }
 

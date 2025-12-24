@@ -360,6 +360,11 @@ public:
 	std::string GetReleaseString(bool colored = true)
 	{
 		char releaseString[64];
+		// Don't show anything for large negative values (W released long ago)
+		if (this->GetReleaseInTick() < -20)
+		{
+			return "";
+		}
 		if (this->GetReleaseInTick() > 10)
 		{
 			return colored ? "| {red}✗{grey} W" : "| ✗ W";

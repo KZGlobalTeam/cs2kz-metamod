@@ -75,9 +75,13 @@ public:
 
 	void Kick(const char *internalReason = "", ENetworkDisconnectionReason reason = NETWORK_DISCONNECT_KICKED);
 
+	CUtlString sanitizedName;
+
 	const char *GetName()
 	{
-		return GetClient() ? GetClient()->GetClientName() : "<blank>";
+		sanitizedName = GetClient() ? GetClient()->GetClientName() : "<blank>";
+		sanitizedName.Trim();
+		return sanitizedName.Get();
 	}
 
 	void SetName(const char *name);

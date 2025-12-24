@@ -260,5 +260,6 @@ namespace KZ
 		void EnforceTimeLimit();
 		void UnrestrictTimeLimit();
 		void OnPhysicsGameSystemFrameBoundary(void *pThis);
+		void HandleTeleportToCourse(KZPlayer *player, const CCommand *args);
 	} // namespace misc
 }; // namespace KZ

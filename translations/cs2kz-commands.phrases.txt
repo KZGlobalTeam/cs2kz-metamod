@@ -1175,6 +1175,10 @@
 	}
 	"Command Description - kz_course"
 	{
+		"en"		"Teleport to a course, or display the current course and the list of all courses in the map."
+	}
+	"Command Description - kz_courses"
+	{
 		"en"		"Display the current course and the list of all courses in the map."
 		"chi"		"显示当前关卡与当前地图的关卡列表."
 		"sv"		"Visa tillfälliga banan och lista alla tillgängliga banor på kartan."

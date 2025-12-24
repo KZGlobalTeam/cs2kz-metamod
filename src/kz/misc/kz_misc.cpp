@@ -133,9 +133,8 @@ SCMD(kz_end, SCFL_MAP)
 	return MRES_SUPERCEDE;
 }
 
-SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
+void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	const KZCourseDescriptor *startPosCourse = nullptr;
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
@@ -145,7 +144,7 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 		if (!startPosCourse || !startPosCourse || !startPosCourse->hasStartPosition)
 		{
 			player->languageService->PrintChat(true, false, "No Start Position For Course", args->ArgS());
-			return MRES_SUPERCEDE;
+			return;
 		}
 	}
 
@@ -169,14 +168,14 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 	if (startPosCourse)
 	{
 		player->Teleport(&startPosCourse->startPosition, &startPosCourse->startAngles, &vec3_origin);
-		return MRES_SUPERCEDE;
+		return;
 	}
 
 	// Then prioritize custom start position.
 	if (player->checkpointService->HasCustomStartPosition())
 	{
 		player->checkpointService->TpToStartPosition();
-		return MRES_SUPERCEDE;
+		return;
 	}
 
 	// If we have no custom start position, we try to get the start position of the current course.
@@ -186,7 +185,7 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 		{
 			player->Teleport(&player->timerService->GetCourse()->startPosition, &player->timerService->GetCourse()->startAngles, &vec3_origin);
 		}
-		return MRES_SUPERCEDE;
+		return;
 	}
 
 	// If we have no active course the map only has one course, !r should send the player to that course.
@@ -196,10 +195,15 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 		if (descriptor && descriptor->hasStartPosition)
 		{
 			player->Teleport(&descriptor->startPosition, &descriptor->startAngles, &vec3_origin);
-			return MRES_SUPERCEDE;
+			return;
 		}
 	}
+}
 
+SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	KZ::misc::HandleTeleportToCourse(player, args);
 	return MRES_SUPERCEDE;
 }
 
@@ -246,7 +250,7 @@ SCMD(kz_playercheck, SCFL_PLAYER)
 				continue;
 			}
 
-			if (V_strstr(V_strlower((char *)controller->GetPlayerName()), V_strlower((char *)args->ArgS())))
+			if (V_strstr(V_strlower((char *)g_pKZPlayerManager->players[i]->GetName()), V_strlower((char *)args->ArgS())))
 			{
 				targetPlayer = g_pKZPlayerManager->ToPlayer(i);
 				break;

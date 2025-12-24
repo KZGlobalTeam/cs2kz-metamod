@@ -89,13 +89,13 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		jump->GetSync() * 100.0f,
 		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
 		jump->GetMaxSpeed(),
-		releaseString.c_str(),
 		jump->GetBadAngles() * 100,
 		jump->GetOverlap() * 100,
 		jump->GetDeadAir() * 100,
 		jump->GetDeviation(),
 		jump->GetWidth(),
-		jump->GetMaxHeight()
+		jump->GetMaxHeight(),
+		releaseString.c_str()
 	);
 	// clang-format on
 }
@@ -244,7 +244,7 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[tier];
 
-	DistanceTier broadcastTier = static_cast<DistanceTier>(target->optionService->GetOptionInt("jsBroadcastMinTier", DistanceTier_Godlike));
+	DistanceTier broadcastTier = static_cast<DistanceTier>(target->optionService->GetPreferenceInt("jsBroadcastMinTier", DistanceTier_Godlike));
 	bool broadcastEnabled = broadcastTier != DistanceTier_None;
 	bool validBroadcastTier = tier >= broadcastTier;
 	if (broadcastEnabled && validBroadcastTier)
@@ -292,7 +292,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 			continue;
 		}
 		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
-		if (player == jump->GetJumpPlayer() || jump->GetJumpPlayer()->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
+		if (player == jump->GetJumpPlayer() || player->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
 		{
 			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->optionService->GetPreferenceBool("jsAlways", false))
 			{

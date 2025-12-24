@@ -910,9 +910,8 @@ bool KZ::course::UpdateCourseGlobalID(const char *courseName, u32 globalID)
 	return false;
 }
 
-SCMD(kz_course, SCFL_MAP)
+static void ListCourses(KZPlayer *player)
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (player->timerService->GetCourse())
 	{
 		player->languageService->PrintChat(true, false, "Current Course", player->timerService->GetCourse()->name);
@@ -926,5 +925,25 @@ SCMD(kz_course, SCFL_MAP)
 	{
 		player->PrintConsole(false, false, "%s", g_sortedCourses[i]->name);
 	}
+}
+
+SCMD(kz_courses, SCFL_MAP)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	ListCourses(player);
 	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_course, SCFL_MAP)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (args->ArgC() < 2)
+	{
+		ListCourses(player);
+		return MRES_SUPERCEDE;
+	}
+	else
+	{
+		KZ::misc::HandleTeleportToCourse(player, args);
+	}
 }

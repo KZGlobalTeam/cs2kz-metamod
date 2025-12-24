@@ -123,7 +123,7 @@ void KZBeamService::Update()
 		if ((this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND && this->player->GetMoveType() == MOVETYPE_WALK)
 			|| this->player->GetMoveType() == MOVETYPE_LADDER)
 		{
-			this->validBeam = g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime >= 0.04f;
+			this->validBeam |= g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime >= 0.04f;
 		}
 
 		if (this->player->noclipService->JustNoclipped() || this->teleportedThisTick)
@@ -176,6 +176,7 @@ void KZBeamService::UpdatePlayerBeam()
 		pKeyValues->SetVector("origin", origin);
 		pKeyValues->SetBool("start_active", true);
 
+		beam->m_iTeamNum(CUSTOM_PARTICLE_SYSTEM_TEAM);
 		beam->DispatchSpawn(pKeyValues);
 		this->playerBeam = beam->GetRefEHandle();
 	}
@@ -194,8 +195,8 @@ void KZBeamService::UpdatePlayerBeam()
 			pKeyValues->SetVector("origin", origin);
 			pKeyValues->SetBool("start_active", true);
 
-			newBeam->DispatchSpawn(pKeyValues);
 			newBeam->m_iTeamNum(CUSTOM_PARTICLE_SYSTEM_TEAM);
+			newBeam->DispatchSpawn(pKeyValues);
 			this->playerBeamNew = newBeam->GetRefEHandle();
 		}
 		else if (g_pKZUtils->GetServerGlobals()->curtime - beam->m_flStartTime().GetTime() > 3.2f)
