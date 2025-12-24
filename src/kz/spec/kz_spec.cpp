@@ -225,20 +225,36 @@ SCMD(kz_spec, SCFL_SPEC)
 		player->languageService->PrintChat(true, false, "Spectate Failure (Generic)");
 		return MRES_SUPERCEDE;
 	}
+
+	// Count alive players and find first alive player
 	u32 numAlivePlayers = 0;
+	KZPlayer *firstAlivePlayer = nullptr;
 	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
 		if (otherPlayer && otherPlayer->IsAlive() && otherPlayer != player)
 		{
 			numAlivePlayers++;
+			if (!firstAlivePlayer)
+			{
+				firstAlivePlayer = otherPlayer;
+			}
 		}
+	}
+
+	// Handle automatic spectating
+	if (numAlivePlayers == 1)
+	{
+		player->specService->SpectatePlayer(firstAlivePlayer);
+		return MRES_SUPERCEDE;
 	}
 	if (numAlivePlayers == 0 && args->ArgC() == 1)
 	{
 		player->specService->SpectatePlayer("@me");
 		return MRES_SUPERCEDE;
 	}
+
+	// Handle explicit target
 	if (args->ArgC() < 2)
 	{
 		player->languageService->PrintChat(true, false, "Spec Command Usage", args->ArgS());
@@ -246,7 +262,6 @@ SCMD(kz_spec, SCFL_SPEC)
 	}
 
 	player->specService->SpectatePlayer(args->Arg(1));
-
 	return MRES_SUPERCEDE;
 }
 

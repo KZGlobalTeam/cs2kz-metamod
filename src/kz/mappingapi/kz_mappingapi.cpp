@@ -940,10 +940,10 @@ SCMD(kz_course, SCFL_MAP)
 	if (args->ArgC() < 2)
 	{
 		ListCourses(player);
-		return MRES_SUPERCEDE;
 	}
 	else
 	{
 		KZ::misc::HandleTeleportToCourse(player, args);
 	}
+	return MRES_SUPERCEDE;
 }
