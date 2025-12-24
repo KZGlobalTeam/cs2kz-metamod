@@ -4,68 +4,81 @@
 	{
 		"#format"	"time:d"
 		"en"		"{yellow}Race is starting in {time} seconds!"
+		"chi"		"{yellow}比赛将在 {time} 秒后开始!"
 	}
 	"Racing - Player Disconnect"
 	{
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has disconnected!"
+		"chi"		"{lime}{player}{grey} 已断开连接!"
 	}
 	"Racing - Player Surrender"
 	{
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has surrendered!"
+		"chi"		"{lime}{player}{grey} 已投降!"
 	}
 	"Racing - Player Finish (1 Teleport)"
 	{
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
+		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {yellow}1{grey} TP"
 	}
 	"Racing - Player Finish (2+ Teleports)"
 	{
 		"#format"	"player:s,time:s,teleport_count:d"
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
+		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 	}
 	"Racing - Player Finish (PRO)"
 	{
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
+		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {blue}PRO{grey}"
 	}
 	"Racing - End Results Header"
 	{
 		"en"		"{default}Race Results:"
+		"chi"		"{default}比赛结果："
 	}
 	"Racing - End Results First Place"
 	{
 		// Alice has won the race! (00:45.32)
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} has won the race! ({time})"
+		"chi"		"{lime}{player}{grey} 赢得比赛!({time})"
 	}
 	"Racing - End Results Last Place"
 	{
 		// Bob came last in the race. (01:30.45)
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} came last in the race. ({time})"
+		"chi"		"{lime}{player}{grey} 在比赛中排名最后.({time})"
 	}
 	"Racing - End Results Finisher"
 	{
 		// Charlie finished #2 in the race. (00:55.12)
 		"#format"	"position:d,player:s,time:s"
 		"en"		"{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
+		"chi"		"{lime}{player}{grey} 在比赛中排名第 {default}#{position}{grey}.({time})"
 	}
 	"Racing - End Results Non-Finisher"
 	{
 		// Dave did not finish the race.
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} did not finish the race."
+		"chi"		"{lime}{player}{grey} 未完成比赛."
 	}
 	"Racing - No Time Limit"
 	{
 		"en"		"No time limit"
+		"chi"		"无时间限制"
 	}
 	"Racing - Time Limit"
 	{
 		"#format"	"time:s"
 		"en"		"Time limit: {time}"
+		"chi"		"时间限制：{time}"
 	}
 	"Racing - Race Info"
 	{
@@ -73,6 +86,7 @@
 		// CKZ - Max TPs : 2 - Time limit : 01:30.00
 		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
 		"en"		"Race on course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
+		"chi"		"比赛路线 {course}\n{mode} - 最大传送数：{teleport_count} - {time_limit}"
 	}
 	"Racing - Race Info (Chat)"
 	{
@@ -80,29 +94,35 @@
 		// Course Main | Max TPs: 0 | No time limit0
 		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
 		"en"		"{default}A new race has been started!\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
+		"chi"		"{default}新比赛已启动!\n{grey}路线：{default}{course}{grey} | 最大传送数：{yellow}{teleport_count}{grey} | {time_limit}"
 	}
 	
 	"Racing - Race Cancelled"
 	{
 		"en"		"{darkred}Race has been cancelled!"
+		"chi"		"{darkred}比赛已取消!"
 	}
 	"Racing - Go!"
 	{
 		"en"		"GO!"
+		"chi"		"开始!"
 	}
 	"Racing - Race Starting In"
 	{
 		"#format"	"time:.1f"
 		"en"		"Race starting in {time}s!"
+		"chi"		"比赛将在 {time}秒后开始!"
 	}
 	"Racing - Player Accepted"
 	{
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has accepted the race."
+		"chi"		"{lime}{player}{grey} 已接受比赛."
 	}
 	"Racing - Player Unregistered"
 	{
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has unregistered from the race."
+		"chi"		"{lime}{player}{grey} 已取消比赛注册."
 	}
 }

@@ -115,6 +115,7 @@
 	"Can't Teleport (Limit Reached)"
 	{
 		"en"		"{darkred}You can't teleport because you have reached your teleport limit."
+		"chi"		"{darkred}你已达到传送限制,无法继续传送."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
