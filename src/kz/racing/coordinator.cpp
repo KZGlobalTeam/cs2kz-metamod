@@ -65,6 +65,8 @@ void KZRacingService::Init()
 
 	KZRacingService::state.store(KZRacingService::State::Configured);
 	META_CONPRINTF("[KZ::Racing] RacingService configured.\n");
+	KZRacingService::itemDownloadHandler.m_CallbackDownloadItemResult.Register(&KZRacingService::itemDownloadHandler,
+																			   &KZRacingService::ItemDownloadHandler::OnAddonDownloaded);
 
 	KZTimerService::RegisterEventListener(&timerEventListener);
 }
@@ -78,6 +80,8 @@ void KZRacingService::Cleanup()
 		KZRacingService::socket.reset(nullptr);
 	}
 
+	KZTimerService::UnregisterEventListener(&timerEventListener);
+	KZRacingService::itemDownloadHandler.m_CallbackDownloadItemResult.Unregister();
 	KZRacingService::state.store(KZRacingService::State::Uninitialized);
 	META_CONPRINTF("[KZ::Racing] RacingService cleaned up.\n");
 }
