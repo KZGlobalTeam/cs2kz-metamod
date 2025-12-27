@@ -4,7 +4,7 @@
 	{
 		"en"		"{grey}Look in your console for a list of commands!"
 		"chi"		"{grey}请在控制台中查看指令列表!"
-		"pl"		"{grey}Spójrz do konsoli po listę komend!"
+		"pl"		"{grey}Otwórz konsolę, by zobaczyć listę dostępnych komend!"
 		"fi"		"{grey}Löydät komentolistan katsomalla konsoliisi!"
 		"sv"		"{grey}Kolla i konsolen för en lista av kommandon!"
 		"ua"		"{grey}Перегляньте список доступних команд у консолі!"
@@ -34,6 +34,7 @@
 	{
 		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"chi"		"您可以使用 \"kz_help <类别>\" 获取特定类别的命令列表 (例如：kz_help checkpoint misc).\n可用类别列表: checkpoint(存点), record(记录), jumpstats(跳跃统计), measure(测量), modestyle(模式风格), preference(偏好设置), racing(竞速), replay(重播), saveloc(保存位置), spec(观察), status(状态), timer(计时器), player(玩家), global(全球), misc(杂项), map(地图)"
+		"pl"		"Możesz użyć \"kz_help <kategoria>\", aby uzyskać listę komend dla danej kategorii (np. kz_help checkpoint misc).\nLista dostępnych kategorii: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"ua"		"Ви можете використати \"kz_help <категорія>\", щоб отримати список команд, пов'язаних з певною категорією (наприклад, kz_help checkpoint misc).\nСписок доступних категорій: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"lv"		"Tu vari pielietot \"kz_help <kategorija>\", lai iegūtu komandu sarakstu, kas saistītas ar konkrētu kategoriju (piem. kz_help checkpoint misc).\nPieejamo kategoriju saraksts: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
@@ -45,6 +46,7 @@
 	{
 		"en"		"Name"
 		"chi"		"名称"
+		"pl"		"Nazwa"
 		"sv"		"Namn"
 		"ua"		"Назва"
 		"lv"		"Nosaukums"
@@ -54,6 +56,7 @@
 	{
 		"en"		"Description"
 		"chi"		"描述"
+		"pl"		"Opis"
 		"sv"		"Beskrivning"
 		"ua"		"Опис"
 		"lv"		"Apraksts"
@@ -63,6 +66,7 @@
 	{
 		"en"		"Checkpoint Commands:"
 		"chi"		"存点 命令:"
+		"pl"		"Komendy Checkpoint:"
 		"sv"		"Checkpointkommandon:"
 		"ua"		"Команди Чекпоінтів:"
 		"lv"		"Checkpoint Komandas:"
@@ -72,6 +76,7 @@
 	{
 		"en"		"Record Commands:"
 		"chi"		"记录 命令:"
+		"pl"		"Komendy Rekordów:"
 		"sv"		"Rekordkommandon:"
 		"ua"		"Команди Рекордів:"
 		"lv"		"Record Komandas:"
@@ -81,6 +86,7 @@
 	{
 		"en"		"Jumpstats Commands:"
 		"chi"		"起跳数据 命令:"
+		"pl"		"Komendy Jumpstats:"
 		"sv"		"Jumpstatkommandon:"
 		"ua"		"Команди Статистики стрибків:"
 		"lv"		"Jumpstats Komandas:"
@@ -90,6 +96,7 @@
 	{
 		"en"		"Measure Commands:"
 		"chi"		"测量 命令:"
+		"pl"		"Komendy Mierzenia:"
 		"sv"		"Mätningskommandon:"
 		"ua"		"Команди Вимірювання:"
 		"lv"		"Measure Komandas:"
@@ -99,6 +106,7 @@
 	{
 		"en"		"Mode/Style Commands:"
 		"chi"		"模式/风格 命令:"
+		"pl"		"Komendy Trybu/Stylu:"
 		"sv"		"Mode/Stilkommandon:"
 		"ua"		"Команди Режиму/Стилю:"
 		"lv"		"Režīma/Stila Komandas:"
@@ -108,6 +116,7 @@
 	{
 		"en"		"Preference Commands:"
 		"chi"		"偏好设置 命令:"
+		"en"		"Komendy Ustawień:"
 		"sv"		"Preferenskommandon:"
 		"ua"		"Команди Налаштувань:"
 		"lv"		"Preferenču Komandas:"
@@ -117,6 +126,7 @@
 	{
 		"en"		"Racing Commands:"
 		"chi"		"竞速 命令:"
+		"pl"		"Komendy Wyścigu:"
 		"sv"		"Racingkommandon:"
 		"ua"		"Команди Гонки:"
 		"lv"		"Racing Komandas:"
@@ -126,6 +136,7 @@
 	{
 		"en"		"Replay Commands:"
 		"chi"		"重播 命令:"
+		"pl"		"Komendy Powtórek:"
 		"sv"		"Repriskommandon:"
 		"ua"		"Команди Повтору:"
 		"lv"		"Replay Komandas:"
@@ -135,6 +146,7 @@
 	{
 		"en"		"Saveloc Commands:"
 		"chi"		"保存位置 命令:"
+		"pl"		"Komendy Saveloc:"
 		"sv"		"Saveloc kommandon:"
 		"ua"		"Команди Saveloc:"
 		"lv"		"Saveloc Komandas:"
@@ -144,6 +156,7 @@
 	{
 		"en"		"Spectate Commands:"
 		"chi"		"观察 命令:"
+		"pl"		"Komendy Obserwatora:"
 		"sv"		"Åskådningskommandon:"
 		"ua"		"Команди Спостерігання:"
 		"lv"		"Skatītāja Komandas:"
@@ -153,6 +166,7 @@
 	{
 		"en"		"Status Commands:"
 		"chi"		"状态 命令:"
+		"pl"		"Komendy Statusu:"
 		"sv"		"Statuskommandon:"
 		"ua"		"Команди Статусу:"
 		"lv"		"Statusa Komandas:"
@@ -162,6 +176,7 @@
 	{
 		"en"		"Timer Commands:"
 		"chi"		"计时器 命令:"
+		"pl"		"Komendy Timera:"
 		"sv"		"Timerkommandon:"
 		"ua"		"Команди Таймера:"
 		"lv"		"Taimera Komandas:"
@@ -171,6 +186,7 @@
 	{
 		"en"		"Player Commands:"
 		"chi"		"玩家 命令:"
+		"pl"		"Komendy Gracza:"
 		"sv"		"Spelarkommandon:"
 		"ua"		"Команди Гравця:"
 		"lv"		"Spēlētāja Komandas:"
@@ -180,6 +196,7 @@
 	{
 		"en"		"Global Commands:"
 		"chi"		"全球 命令:"
+		"pl"		"Komendy Globalne:"
 		"sv"		"Globala Kommandon:"
 		"ua"		"Глобальні Команди:"
 		"lv"		"Globālās Komandas:"
@@ -189,6 +206,7 @@
 	{
 		"en"		"Miscellaneous Commands:"
 		"chi"		"杂项 命令:"
+		"pl"		"Inne Komendy:"
 		"sv"		"Blandade Kommandon:"
 		"ua"		"Інші Команди:"
 		"lv"		"Miscellaneous Komandas:"
@@ -198,6 +216,7 @@
 	{
 		"en"		"Map Commands:"
 		"chi"		"地图 命令:"
+		"pl"		"Komendy Mapy:"
 		"sv"		"Kartkommandon:"
 		"ua"		"Команди Мапи:"
 		"lv"		"Kartes Kmandas:"
@@ -207,6 +226,7 @@
 	{
 		"en"		"HUD Commands:"
 		"chi"		"HUD 命令:"
+		"pl"		"Komendy HUDa:"
 		"sv"		"HUD Kommandon:"
 		"ua"		"Команди HUD:"
 		"lv"		"HUD Komandas:"
@@ -411,6 +431,7 @@
 	{
 		"en"		"Toggle checkpoint sound effect."
 		"chi"		"切换存点音效是否播放."
+		"pl"		"Włącz/wyłącz dźwięk checkpointa."
 		"ua"		"Перемикання звуку чекпоінту."
 		"sv"		"Aktivera/inaktivera checkpoint ljudeffekt."
 		"de"		"Aktiviere/Deactiviere Checkpoint-Sound"
@@ -419,6 +440,7 @@
 	{
 		"en"		"Toggle teleport sound effect."
 		"chi"		"切换读点音效是否播放."
+		"pl"		"Włącz/wyłącz dźwięk teleportu."
 		"ua"		"Перемикання звуку телепорту."
 		"sv"		"Aktivera/inaktivera teleport ljudeffekt."
 		"de"		"Aktiviere/Deactiviere Teleport-Sound"
@@ -427,7 +449,7 @@
 	{
 		"en"		"Toggle centre panel display."
 		"chi"		"切换中心面板的显示."
-		"pl"		"Wyświetlanie panelu środkowego."
+		"pl"		"Włącz/wyłącz wyświetlanie panelu środkowego."
 		"fi"		"Vaihda keskipaneelin näyttämisen asetusta."
 		"sv"		"Toggla mittpanelen."
 		"ua"		"Перемикання відображення центральної панелі."
@@ -472,7 +494,7 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换是否显示起跳提示报告"
-		"pl"		"Przełącz wykaz jumpstatów."
+		"pl"		"Włącz/wyłącz raportowanie jumpstatów."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
@@ -487,7 +509,7 @@
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换是否显示起跳提示报告"
-		"pl"		"Przełącz wykaz jumpstatów."
+		"pl"		"Włącz/wyłącz raportowanie jumpstatów."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla chatmeddelanden för jumpstats."
 		"ua"		"Перемикання відображення статистики стрибків."
@@ -502,7 +524,7 @@
 	{
 		"en"		"Toggle the always-on jumpstats."
 		"chi"		"切换是否总是显示跳跃数据"
-		"pl"		"Zawsze pokazuj jumpstaty."
+		"pl"		"Włącz/wyłącz stałe wyświetlanie jumpstatów."
 		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
 		"sv"		"Toggla alla (egna) jumpstats i chatten."
 		"ua"		"Перемикання відображення статистики для будь-яких стрибків."
@@ -517,6 +539,7 @@
     {
         "en"		"Set your minimum jumpstats reporting tier."
 		"chi"		"设置显示你的跳跃数据的最低等级."
+        "pl"		"Ustaw minimalny poziom wyświetlania jumpstatów."
         "ua"		"Встановити мінімальний рівень для відображення статистики стрибків."
 		"sv"		"Ange din miniminivå för jumpstatsrapportering."
 		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel."
@@ -525,6 +548,7 @@
     {
         "en"		"Set your minimum jumpstats console reporting tier."
 		"chi"		"设置在控制台显示你的跳跃数据的最低等级."
+        "pl"		"Ustaw minimalny poziom wyświetlania jumpstatów w konsoli."
         "ua"		"Встановити мінімальний рівень для відображення статистики стрибків в консолі."
 		"sv"		"Ange din lägsta rapporteringsnivå för jumpstats i konsolen."
 		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel für die Konsole."
@@ -533,6 +557,7 @@
     {
         "en"		"Set the minimum tier for jumpstats sound broadcast."
 		"chi"		"设置广播跳跃数据音效的最低等级."
+        "pl"		"Ustaw minimalny poziom dla odtwarzania dźwięków jumpstat."
         "ua"		"Встановити мінімальний рівень для звукових ефектів під час стрибків."
 		"sv"		"Ange miniminivån för jumpstats-ljudsändning."
 		"de"		"Setze minimales Jumpstats-Soundlevel für fremde Jumpstats im Chat."
@@ -541,6 +566,7 @@
 	{
 		"en"		"Set the minimum tier for jumpstats console broadcast."
 		"chi"		"设置在控制台广播跳跃数据的最低等级."
+		"pl"		"Ustaw minimalny tier transmitowania jumpstatów w konsoli."
 		"ua"		"Встановити мінімальний тір статистики стрибків для трансляції в консолі."
 		"de"		"Setze dein minimales Jumpstats-Level für fremde Jumpstats in der Konsole."
 	}
@@ -548,6 +574,7 @@
 	{
 		"en"		"Toggle extended jumpstats reporting in chat."
 		"chi"		"切换是否在聊天框展示详细跳跃数据."
+		"pl"		"Włącz/wyłącz rozszerzone raportowanie jumpstatów na czacie."
 		"ua"		"Перемикання розширеної статистики стрибків у чаті."
 		"sv"		"Aktivera/Inaktivera utökad jumpstatsrapportering i chatten."
 		"de"		"Aktiviere/Deaktiviere erweiterte Jumpstats-Benachrichtigungen im Chat."
@@ -556,6 +583,7 @@
 	{
 		"en"		"Set jumpstats sound effect volume."
 		"chi"		"设置跳跃数据音效的音量."
+		"pl"		"Ustaw głośność efektów dźwiękowych jumpstatów."
 		"ua"		"Встановити гучність ефектів стрибків."
 		"sv"		"Ange volymen för jumpstats-ljudeffekter."
 		"de"		"Setze Jumpstat-Sound Lautstärke."
@@ -564,7 +592,7 @@
 	{
 		"en"		"List or change mode."
 		"chi"		"列出或更改模式."
-		"pl"		"Lista trybów gry bądź jego zmiana."
+		"pl"		"Wyświetl listę lub zmień tryb."
 		"fi"		"Listaa tai vaihda moodia."
 		"sv"		"Lista eller ändra KZ mode."
 		"ua"		"Відобразити чи змінити KZ режим."
@@ -639,6 +667,7 @@
 	{
 		"en"		"List currently spectating players in chat."
 		"chi"		"在聊天栏列出当前观看中的玩家."
+		"pl"		"Wyświetl na czacie listę obserwujących graczy."
 		"ua"		"Показати в чаті список спостерігачів."
 		"sv"		"Lista närvarande åskådare i chatten."
 		"de"		"Liste derzeitige Zuschauer im Chat auf."
@@ -679,7 +708,7 @@
 	{
 		"en"		"List or add style."
 		"chi"		"列出或添加风格."
-		"pl"		"Dodaj styl."
+		"pl"		"Wyświetl listę lub dodaj styl."
 		"ru"		"Показать или добавить стиль"
 		"fi"		"Listaa tai lisää tyyli."
 		"sv"		"Lista eller lägg till style."
@@ -695,7 +724,7 @@
 	{
 		"en"		"List active styles or remove style."
 		"chi"		"列出已激活风格或移除风格."
-		"pl"		"Usuń styl."
+		"pl"		"Wyświetl listę aktywnych stylów lub usuń styl."
 		"ru"		"Показать активные стили или удалить стиль."
 		"fi"		"Listaa aktiiviset tyylit tai poista tyyli."
 		"sv"		"Lista aktiva styles eller ta bort style."
@@ -727,7 +756,7 @@
 	{
 		"en"		"Clear all styles."
 		"chi"		"清除所有风格."
-		"pl"		"Usuń style."
+		"pl"		"Wyczyść wszystkie style."
 		"ru"		"Очистить все стили."
 		"fi"		"Tyhjennä kaikki tyylit."
 		"sv"		"Rensa alla styles."
@@ -758,7 +787,7 @@
 	{
 		"en"		"Toggle timer pause."
 		"chi"		"暂停计时."
-		"pl"		"Przełącz pauzę timera."
+		"pl"		"Włącz/Wyłącz pauzę timera."
 		"fi"		"Vaihda ajastimen keskeytyksen asetusta."
 		"sv"		"Pausa timer."
 		"ua"		"Перемикання таймера на паузу."
@@ -788,7 +817,7 @@
 	{
 		"en"		"Hide your legs in first person."
 		"chi"		"在第一人称中隐藏腿部."
-		"pl"		"Ukryj nogi w pierwszej osobie."
+		"pl"		"Nie pokazuj nóg w pierwszej osobie."
 		"fi"		"Piilota omat jalkasi ensimmäisessä persoonassa."
 		"sv"		"Toggla egna bens synlighet i första person."
 		"ua"		"Приховати свої ноги від першої особи."
@@ -848,6 +877,7 @@
 	{
 		"en"		"Teleport to the jumpstat area."
 		"chi"		"传送到LJ房间."
+		"pl"		"Teleportuj do strefy jumpstatów LJ."
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
@@ -859,6 +889,7 @@
 	{
 		"en"		"Teleport to the jumpstat area."
 		"chi"		"传送到LJ房间."
+		"pl"		"Teleportuj do strefy jumpstatów LJ."
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
@@ -870,6 +901,7 @@
 	{
 		"en"		"Teleport to the jumpstat area."
 		"chi"		"传送到LJ房间."
+		"pl"		"Teleportuj do strefy jumpstatów LJ."
 		"sv"		"Teleportera till jumpstat-området"
 		"ua"		"Телепортуватися до зони тренування стрибків."
 		"ko"		"롱 점프 구역으로 텔레포트합니다."
@@ -881,6 +913,7 @@
 	{
 		"en"		"Teleport to the end."
 		"chi"		"传送到了终点."
+		"pl"		"Teleportuj na koniec mapy."
 		"sv"		"Teleportera till slutet."
 		"ua"		"Телепортуватися до кінця."
 		"ko"		"종료 지점으로 텔레포트합니다."
@@ -907,7 +940,7 @@
 	{
 		"en"		"Show this help message."
 		"chi"		"显示帮助信息."
-		"pl"		"Pokaż tą pomocną wiadomość."
+		"pl"		"Wyświetl ten komunikat pomocy."
 		"fi"		"Näytä tämä apuviesti."
 		"sv"		"Visa detta hjälpmeddelandet."
 		"ua"		"Показати це довідкове повідомлення."
@@ -967,7 +1000,7 @@
 	{
 		"en"		"Retrieve personal best statistics."
 		"chi"		"查询个人最佳数据."
-		"pl"		"Uzyskaj statystyki najlepszych wyników."
+		"pl"		"Wyświetl statystyki rekordów życiowych."
 		"ru"		"Показать личный рекорд."
 		"fi"		"Hae henkilökohtaiset parhaat statistiikat."
 		"sv"		"Hämta personlig bästa statistik."
@@ -983,7 +1016,7 @@
 	{
 		"en"		"Retrieve server and world records."
 		"chi"		"查询服务器记录和世界记录."
-		"pl"		"Uzyskaj rekordy serwera i świata."
+		"pl"		"Wyświetl rekordy serwera i świata."
 		"ru"		"Показать рекорд сервера и мировой рекорд."
 		"fi"		"Hae palvelimen ja maailman ennätykset."
 		"sv"		"Hämta server och världsrekord."
@@ -999,7 +1032,7 @@
 	{
 		"en"		"Retrieve server records."
 		"chi"		"查询服务器记录."
-		"pl"		"Uzyskaj rekordy serwera."
+		"pl"		"Wyświetl rekordy serwera."
 		"ru"		"Показать рекорд сервера."
 		"fi"		"Hae palvelimen ennätykset."
 		"sv"		"Hämta server rekord."
@@ -1015,7 +1048,7 @@
 	{
 		"en"		"Retrieve top course times of a map."
 		"chi"		"查询地图的排行榜前列."
-		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
+		"pl"		"Wyświetl najlepsze czasy trasy na danej mapie."
 		"sv"		"Hämta topptider av en karta."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
@@ -1029,7 +1062,7 @@
 	{
 		"en"		"Retrieve top course times of a map."
 		"chi"		"查询地图的排行榜前列."
-		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
+		"pl"		"Wyświetl najlepsze czasy trasy na danej mapie."
 		"sv"		"Hämta topptider av en karta."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
@@ -1043,7 +1076,7 @@
 	{
 		"en"		"Retrieve top course times of a map."
 		"chi"		"查询地图的排行榜前列."
-		"pl"		"Uzyskaj najlepsze czasy kursów mapy."
+		"pl"		"Wyświetl najlepsze czasy trasy na danej mapie."
 		"sv"		"Hämta topptider av en karta."
 		"tr"		"Haritadaki en iyi süreyi göster."
 		"ua"		"Показати топ проходжень курсу на мапі."
@@ -1057,7 +1090,7 @@
 	{
 		"en"		"Retrieve global top course times of a map."
 		"chi"		"查询地图的全球排行榜前列."
-		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
+		"pl"		"Wyświetl globalne najlepsze czasy trasy na danej mapie."
 		"sv"		"Hämta globala topptider av en karta."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
@@ -1071,7 +1104,7 @@
 	{
 		"en"		"Retrieve global top course times of a map."
 		"chi"		"查询地图的全球排行榜前列."
-		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
+		"pl"		"Wyświetl globalne najlepsze czasy trasy na danej mapie."
 		"sv"		"Hämta globala topptider av en karta."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
@@ -1086,7 +1119,7 @@
 	{
 		"en"		"Retrieve global top course times of a map."
 		"chi"		"查询地图的全球排行榜前列."
-		"pl"		"Uzyskaj globalne najlepsze czasy kursów mapy."
+		"pl"		"Wyświetl globalne najlepsze czasy trasy na danej mapie."
 		"sv"		"Hämta globala topptider av en karta."
 		"tr"		"Haritadaki en iyi global süreyi göster."
 		"ua"		"Показати світовий топ проходжень курсу на мапі."
@@ -1100,7 +1133,7 @@
 	{
 		"en"		"Retrieve server top course times of a map."
 		"chi"		"查询地图的服务器排行榜前列."
-		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
+		"pl"		"Wyświetl najlepsze czasy trasy serwera na danej mapie."
 		"sv"		"Hämta server topptider av en karta."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
@@ -1114,7 +1147,7 @@
 	{
 		"en"		"Retrieve server top course times of a map."
 		"chi"		"查询地图的服务器排行榜前列."
-		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
+		"pl"		"Wyświetl najlepsze czasy trasy serwera na danej mapie."
 		"sv"		"Hämta server topptider av en karta."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
@@ -1128,7 +1161,7 @@
 	{
 		"en"		"Retrieve server top course times of a map."
 		"chi"		"查询地图的服务器排行榜前列."
-		"pl"		"Uzyskaj najlepsze czasy kursów serwera mapy."
+		"pl"		"Wyświetl najlepsze czasy trasy serwera na danej mapie."
 		"sv"		"Hämta server topptider av en karta."
 		"tr"		"Haritadaki en iyi sunucu süresini göster."
 		"ua"		"Показати топ сервера проходжень курсу на мапі."
@@ -1142,6 +1175,7 @@
 	{
 		"en"		"Set the maximum preferred level of run comparison."
 		"chi"		"设置比较记录时的最大首选级别."
+		"pl"		"Ustaw maksymalny preferowany poziom porównywania przebiegów."
 		"sv"		"Ställ in den högsta önskade nivån för run jämförelse."
 		"ua"		"Встановіть максимальний бажаний рівень порівняння проходжень."
 		"ko"		"기록 비교 시 선호하는 최대 비교 수준을 설정하는 기능입니다."
@@ -1153,6 +1187,7 @@
 	{
 		"en"		"Check the status of the specified player (default to self)."
 		"chi"		"检查指定玩家的状态 (默认为自己)."
+		"pl"		"Sprawdź status gracza (domyślnie: siebie)."
 		"sv"		"Kolla status av en specifik spelare (förinställt på dig själv)."
 		"ua"		"Перевірити статус вибраного гравця (за замовчуванням себе)."
 		"tr"		"Belirli bir oyuncunun statüsünü kontrol et (varsayılan kendin)."
@@ -1165,6 +1200,7 @@
 	{
 		"en"		"Check the status of the specified player (default to self)."
 		"chi"		"检查指定玩家的状态 (默认为自己)."
+		"pl"		"Sprawdź status gracza (domyślnie: siebie)."
 		"sv"		"Kolla status av en specifik spelare (förinställt på dig själv)."
 		"ua"		"Перевірити статус вибраного гравця (за замовчуванням себе)."
 		"tr"		"Belirli bir oyuncunun statüsünü kontrol et (varsayılan kendin)."
@@ -1176,12 +1212,14 @@
 	"Command Description - kz_course"
 	{
 		"en"		"Teleport to a course, or display the current course and the list of all courses in the map."
+		"pl"		"Teleportuj się do trasy lub wyświetl aktualną trasę i listę wszystkich tras na mapie."
 		"ua"		"Телепортуватися до курсу або показати поточний курс та список всіх курсів на мапі."
 	}
 	"Command Description - kz_courses"
 	{
 		"en"		"Display the current course and the list of all courses in the map."
 		"chi"		"显示当前关卡与当前地图的关卡列表."
+		"pl"		"Wyświetl aktualną trasę i listę wszystkich tras na mapie."
 		"sv"		"Visa tillfälliga banan och lista alla tillgängliga banor på kartan."
 		"ua"		"Показати поточний курс, а також список всіх доступних курсів на мапі."
 		"tr"		"Şuanki rotayı ve haritadaki tüm rotaları göster."
@@ -1194,6 +1232,7 @@
 	{
 		"en"		"Retrieve server personal best statistics."
 		"chi"		"获取服务器个人最佳数据."
+		"pl"		"Wyświetl moje rekordy życiowe na tym serwerze."
 		"ua"		"Показати персональний найкращий час на сервері."
 		"sv"		"Hämta personlig bästa statistik på servern."
 		"lv"		"Saņemt servera personīgos labākos rezultātus."
@@ -1203,6 +1242,7 @@
 	{
 		"en"		"Retrieve global personal best statistics."
 		"chi"		"获取全球个人最佳数据."
+		"pl"		"Wyświetl moje globalne rekordy życiowe."
 		"ua"		"Показати глобальний персональний найкращий час."
 		"sv"		"Hämta personlig bästa statistik globalt."
 		"lv"		"Saņemt globālos personīgos labākos rezultātus."
@@ -1212,6 +1252,7 @@
 	{
 		"en"		"Display the status of the GlobalAPI."
 		"chi"		"显示 全球API 的状态."
+		"pl"		"Wyświetl status GlobalAPI."
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 		"lv"		"Parādīt GlobalAPI statusu."
@@ -1221,6 +1262,7 @@
 	{
 		"en"		"Display the status of the GlobalAPI."
 		"chi"		"显示 全球API 的状态."
+		"pl"		"Wyświetl status GlobalAPI."
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 		"lv"		"Parādīt GlobalAPI statusu."
@@ -1230,6 +1272,7 @@
 	{
 		"en"		"Set or toggle player beam type (off/ground/feet)."
 		"chi"		"设置或关闭玩家的光束类型 (关闭/地面/脚下)."
+		"pl"		"Ustaw lub Włącz/Wyłącz rodzaj smugi (off/ground/feet)."
 		"sv"		"Ställ in eller växla spelarens stråltyp (av/mark/fötter)."
 		"ua"		"Встановити або перемикнути тип променя руху (вимкнути/по землі/від ніг)."
 		"de"		"Setze oder schalte durch die Spielerstrahl-Typen (off/ground/feet)."
@@ -1238,6 +1281,7 @@
 	{
 		"en"		"Set or get player beam offset."
 		"chi"		"设置或获取玩家光束的偏移值."
+		"pl"		"Ustaw lub wyświetl przesunięcie smugi."
 		"sv"		"Ställ in eller hämta spelarens stråloffset."
 		"ua"		"Встановити або отримати значення зміщення променя руху."
 		"de"		"Spielerstrahl-Offset einstellen oder abrufen."
@@ -1246,6 +1290,7 @@
 	{
 		"en"		"Measure the distance between two points, or measure the block distance if two points are at the same place."
 		"chi"		"测量两个点之间的距离, 或当两个点相同时测量方块距离."
+		"pl"		"Zmierz odległość między dwoma punktami lub długość bloku, jeśli punkty znajdują się w tym samym miejscu."
 		"sv"		"Mät avståndet mellan två punkter, eller mät blockavståndet om två punkter är på samma plats."
 		"ua"		"Виміряти відстань між двома точками або відстань між блоками, якщо дві точки знаходяться на одному рівні."
 		"de"		"Miss den Abstand zwischen zwei Punkten, oder miss die Distanz eines Jumpstat-Blocks, wenn die zwei Punkte am selben Ort sind."
@@ -1254,6 +1299,7 @@
 	{
 		"en"		"Set the start position of the measurement."
 		"chi"		"设置测量的起始位置."
+		"pl"		"Ustaw pozycję startową pomiaru."
 		"sv"		"Ställ in startpositionen för mätningen."
 		"ua"		"Встановити початкову позицію для вимірювання."
 		"de"		"Setze den Startpunkt der Messung."
@@ -1262,6 +1308,7 @@
 	{
 		"en"		"Set the end position of the measurement and calculate the distance."
 		"chi"		"设置测量的结束位置并计算距离."
+		"pl"		"Ustaw pozycję końcową pomiaru i policz odległość."
 		"sv"		"Ställ in mätningens slutposition och beräkna avståndet."
 		"ua"		"Встановити кінцеве положення для вимірювання та обчислити відстань."
 		"de"		"Setze den Endpunkt der Messung. Gibt darauf die Distanz zurück."
@@ -1270,6 +1317,7 @@
 	{
 		"en"		"Measure the block distance."
 		"chi"		"测量方块之间的距离."
+		"pl"		"Zmierz długość bloku."
 		"sv"		"Mät blockavståndet."
 		"ua"		"Виміряти відстань між блоками."
 		"de"		"Miss die Distanz des Jumpstat-Blocks."
@@ -1278,6 +1326,7 @@
 	{
 		"en"		"Toggle the timer stop sound."
 		"chi"		"开关计时器停止音效."
+		"pl"		"Włącz/Wyłącz dźwięk zatrzymania timera."
 		"ua"		"Увімк./вимк. звук зупинки таймера."
 		"sv"		"Aktivera/Inaktivera timerstoppljud."
 		"de"		"Aktiviere/Deaktiviere den Timer-Stop-Sound."
@@ -1286,6 +1335,7 @@
 	{
 		"en"		"Toggle the automatic hiding of weapon viewmodel."
 		"chi"		"切换武器视图模型的自动隐藏."
+		"pl"		"Włącz/wyłącz automatyczne ukrywanie modelu broni."
 		"ua"		"Увімк./вимк. автоматичне приховування зброї."
 		"sv"		"Aktivera/inaktivera automatisk vapendöljning."
 		"de"		"Aktiviere/Deaktiviere das automatische Verstecken des Waffen-Viewmodels."
@@ -1294,6 +1344,7 @@
 	{
 		"en"		"Change or remove the current pistol."
 		"chi"		"更改或移除当前手枪."
+		"pl"		"Zmień lub usuń obecny pistolet."
 		"ua"		"Змінити або видалити поточний пістолет."
 		"sv"		"Byt eller ta bort den nuvarande pistolen."
 		"de"		"Änder oder entferne die derzeitige Pistole."
@@ -1302,6 +1353,7 @@
 	{
 		"en"		"Manually save past gameplay into a replay."
 		"chi"		"手动将过往游戏数据保存为回放."
+		"pl"		"Ręcznie zapisz ostatni przebieg jako powtórkę."
 		"ua"		"Вручну зберегти попередній геймплей як повтор."
 		"de"		"Speicher vergangenes Gameplay manuell als Wiederholung."
 	}
@@ -1309,12 +1361,14 @@
 	{
 		"en"		"Play a previously saved replay."
 		"chi"		"播放之前保存的回放."
+		"pl"		"Odtwórz wcześniej zapisaną powtórkę."
 		"ua"		"Відтворити раніше збережений повтор."
 		"de"		"Spiele die zuvor gespeicherte Wiederholung ab."
 	}
 	"Command Description - kz_replays"
 	{
 		"en"		"List saved replays."
+		"pl"		"Wyświetl listę zapisanych powtórek."
 		"ua"		"Показати список збережених повторів."
 		"de"		"Liste die gespeicherten Wiederholungen auf."
 	}
@@ -1322,6 +1376,7 @@
 	{
 		"en"		"Go to a specific time in the replay. (hh:mm:ss)"
 		"chi"		"跳转到回放中的特定时间点. (hh:mm:ss)"
+		"pl"		"Przejdź do konkretnego czasu w powtórce (gg:mm:ss)."
 		"ua"		"Перейти до конкретного моменту в повторі. (hh:mm:ss)"
 		"de"		"Springe zu einem bestimmten Zeitpunkt in der Wiederholung. (hh:mm:ss)"
 	}
@@ -1329,6 +1384,7 @@
 	{
 		"en"		"Go to a specific tick in the replay."
 		"chi"		"跳转到回放中的特定的Tick."
+		"pl"		"Przejdź do konkretnego ticku w powtórce."
 		"ua"		"Перейти до конкретного тіку в повторі."
 		"de"		"Springe zu einem bestimmten Tick in der Widerholung."
 	}
@@ -1336,6 +1392,7 @@
 	{
 		"en"		"Display information about the current replay."
 		"chi"		"显示当前回放的信息."
+		"pl"		"Wyświetl informacje o obecnej powtórce."
 		"ua"		"Відобразити інформацію про поточний повтор."
 		"de"		"Zeige Informationen über die aktuelle Wiederholung an."
 	}
@@ -1343,6 +1400,7 @@
 	{
 		"en"		"Pause or resume the current replay."
 		"chi"		"暂停或继续当前回放."
+		"pl"		"Wstrzymaj lub wznów obecną powtórkę."
 		"ua"		"Поставити на паузу або продовжити відтворення поточного повтору."
 		"de"		"Pausieren/Fortsetzen der aktuellen Wiederholung."
 	}
@@ -1350,6 +1408,7 @@
 	{
 		"en"		"Display the loading progress of the replay."
 		"chi"		"显示回放的加载进度."
+		"pl"		"Wyświetl postęp ładowania powtórki."
 		"ua"		"Показати прогрес завантаження повтору."
 		"de"		"Zeige den Ladefortschritt der Wiederholung an."
 	}
@@ -1357,6 +1416,7 @@
 	{
 		"en"		"Cancel the loading of the replay."
 		"chi"		"取消加载回放."
+		"pl"		"Anuluj ładowanie powtórki."
 		"ua"		"Скасувати завантаження повтору."
 		"de"		"Brich das Laden der Wiederholung ab."
 	}
@@ -1364,6 +1424,7 @@
 	{
 		"en"		"Set the volume of the world record sound effect."
 		"chi"		"设置世界纪录音效的音量."
+		"pl"		"Ustaw głośność efektu dźwiękowego rekordu świata."
 		"ua"		"Встановити гучність звукового ефекту світового рекорду."
 		"de"		"Setze die Lautstärke des Weltrekord-Sounds fest."
 	}
@@ -1371,6 +1432,7 @@
 	{
 		"en"		"Toggle checkpoint messages."
 		"chi"		"切换检查点消息是否显示."
+		"pl"		"Włącz/wyłącz wiadomości o checkpointach."
 		"ua"		"Увімк./вимк. повідомлення про чекпоінт."
 		"de"		"Aktiviere/Deaktiviere Checkpoint-Nachrichten."
 	}
@@ -1378,6 +1440,7 @@
 	{
 		"en"		"Toggle replay bot's first person legs visibility."
 		"chi"		"切换回放bot的第一人称腿部是否显示."
+		"pl"		"Włącz/wyłącz widoczność nóg bota w powtórce (w pierwszej osobie)."
 		"ua"		"Увімк./вимк. відображення ніг бота повтору від першої особи."
 		"de"		"Schalte die Sichtbarkeit der Beine des Replay-Bots in der Ego-Perspektive um."
 	}
