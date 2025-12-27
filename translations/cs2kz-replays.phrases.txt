@@ -130,7 +130,7 @@
 		"en"		"Replay Type: Run\nCourse: {name}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
 		"chi"		"回放类型: Run\nCourse: {name}\n模式 + 风格: {mode}\n时长: {time}\n传送次数: {teleports}"
 		"ua"		"Тип повтору: Проходження\nКурс: {name}\nРежим + Стилі: {mode}\nЧас: {time}\nТелепорти: {teleports}"
-		"de"		"Wiederholungstyp: Run\nKurs: {name}\nModus + Styles: {mode}\nZeit: {time}\nTeleports: {teleports}"
+		"de"		"Wiederholungstyp: Run\nRoute: {name}\nModus + Styles: {mode}\nZeit: {time}\nTeleports: {teleports}"
 	}
 	"Replay - Jump Info Console"
 	{
@@ -384,7 +384,7 @@
 		"en"		"\nType Options:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
 		"chi"		"\n类型选项:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
 		"ua"		"\nПараметри типу повтору:\n\tПроходження: mode=<назва режиму> course=<назва курсу> maxtime=<секунди> maxteleports=<число> numstyles=<число>\n\tСтрибок: jumptype=<тип стрибка> mindistance=<дистанція>\n\tРучний повтор: saver=<ім'я> ssid=<steamid>"
-		"de"		"\nTypoptionen:\n\tRun: mode=<Modus> course=<Kurs> maxtime=<Sek> maxteleports=<Anzahl> numstyles=<Anzahl>\n\tJump: jumptype=<Typ> mindistance=<Distanz>\n\tManual: saver=<Name> ssid=<SteamID>"
+		"de"		"\nTypoptionen:\n\tRun: mode=<Modus> course=<Route> maxtime=<Sek> maxteleports=<Anzahl> numstyles=<Anzahl>\n\tJump: jumptype=<Typ> mindistance=<Distanz>\n\tManual: saver=<Name> ssid=<SteamID>"
 	}
 	"Replay List - No Matching Replays"
 	{
