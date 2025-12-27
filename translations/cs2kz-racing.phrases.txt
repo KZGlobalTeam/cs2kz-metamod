@@ -6,6 +6,7 @@
 		"en"		"{yellow}Race is starting in {time} seconds!"
 		"chi"		"{yellow}比赛将在 {time} 秒后开始!"
 		"ua"		"{yellow}Гонка розпочнеться через {time} секунд!"
+		"de"		"{yellow}Das Rennen beginnt in {time} Sekunden!"
 	}
 	"Racing - Player Disconnect"
 	{
@@ -13,6 +14,7 @@
 		"en"		"{lime}{player}{grey} has disconnected!"
 		"chi"		"{lime}{player}{grey} 已断开连接!"
 		"ua"		"{lime}{player}{grey} від'єднався!"
+		"de"		"{lime}{player}{grey} hat die Verbindung getrennt!"
 	}
 	"Racing - Player Surrender"
 	{
@@ -20,6 +22,7 @@
 		"en"		"{lime}{player}{grey} has surrendered!"
 		"chi"		"{lime}{player}{grey} 已投降!"
 		"ua"		"{lime}{player}{grey} здався!"
+		"de"		"{lime}{player}{grey} hat aufgegeben!"
 	}
 	"Racing - Player Finish (1 Teleport)"
 	{
@@ -27,6 +30,7 @@
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
 		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {yellow}1{grey} TP"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {yellow}1{grey} TP"
+		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {yellow}1{grey} TP"
 	}
 	"Racing - Player Finish (2+ Teleports)"
 	{
@@ -34,6 +38,7 @@
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
+		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 	}
 	"Racing - Player Finish (PRO)"
 	{
@@ -41,12 +46,14 @@
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
 		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {blue}PRO{grey}"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {blue}PRO{grey}"
+		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {blue}PRO{grey}"
 	}
 	"Racing - End Results Header"
 	{
 		"en"		"{default}Race Results:"
 		"chi"		"{default}比赛结果："
 		"ua"		"{default}Результати гонки:"
+		"de"		"{default}Renn-Ergebnisse:"
 	}
 	"Racing - End Results First Place"
 	{
@@ -55,6 +62,7 @@
 		"en"		"{lime}{player}{grey} has won the race! ({time})"
 		"chi"		"{lime}{player}{grey} 赢得比赛!({time})"
 		"ua"		"{lime}{player}{grey} переміг у гонці! ({time})"
+		"de"		"{lime}{player}{grey} hat das Rennen gewonnen! ({time})"
 	}
 	"Racing - End Results Last Place"
 	{
@@ -63,6 +71,7 @@
 		"en"		"{lime}{player}{grey} came last in the race. ({time})"
 		"chi"		"{lime}{player}{grey} 在比赛中排名最后.({time})"
 		"ua"		"{lime}{player}{grey} фінішував останнім у гонці. ({time})"
+		"de"		"{lime}{player}{grey} ist als letzter im Rennen angekommen. ({time})"
 	}
 	"Racing - End Results Finisher"
 	{
@@ -71,6 +80,7 @@
 		"en"		"{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
 		"chi"		"{lime}{player}{grey} 在比赛中排名第 {default}#{position}{grey}.({time})"
 		"ua"		"{lime}{player}{grey} фінішував {default}#{position}{grey}. ({time})"
+		"de"		"{lime}{player}{grey} hat Platz {default}#{position}{grey} im Rennen erreicht. ({time})"
 	}
 	"Racing - End Results Non-Finisher"
 	{
@@ -79,12 +89,14 @@
 		"en"		"{lime}{player}{grey} did not finish the race."
 		"chi"		"{lime}{player}{grey} 未完成比赛."
 		"ua"		"{lime}{player}{grey} не завершив гонку."
+		"de"		"{lime}{player}{grey} hat das Rennen nicht beendet."
 	}
 	"Racing - No Time Limit"
 	{
 		"en"		"No time limit"
 		"chi"		"无时间限制"
 		"ua"		"Без обмеження за часом"
+		"de"		"Kein Zeitlimit"
 	}
 	"Racing - Time Limit"
 	{
@@ -92,6 +104,7 @@
 		"en"		"Time limit: {time}"
 		"chi"		"时间限制：{time}"
 		"ua"		"Обмеження за часом: {time}"
+		"de"		"Zeitlimit: {time}"
 	}
 	"Racing - Race Info"
 	{
@@ -101,6 +114,7 @@
 		"en"		"Race on course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
 		"chi"		"比赛路线 {course}\n{mode} - 最大传送数：{teleport_count} - {time_limit}"
 		"ua"		"Гонка на курсі {course}\n{mode} - Макс. TPs: {teleport_count} - {time_limit}"
+		"de"		"Rennen auf Route {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
 	}
 	"Racing - Race Info (Chat)"
 	{
@@ -110,6 +124,7 @@
 		"en"		"{default}A new race has been started!\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"chi"		"{default}新比赛已启动!\n{grey}路线：{default}{course}{grey} | 最大传送数：{yellow}{teleport_count}{grey} | {time_limit}"
 		"ua"		"{default}Нова гонка розпочалася!\n{grey}Курс: {default}{course}{grey} | Макс. TPs: {yellow}{teleport_count}{grey} | {time_limit}"
+		"de"		"{default}Ein neues Rennen wurde gestartet!\n{grey}Route: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 	}
 	
 	"Racing - Race Cancelled"
@@ -117,12 +132,14 @@
 		"en"		"{darkred}Race has been cancelled!"
 		"chi"		"{darkred}比赛已取消!"
 		"ua"		"{darkred}Гонка скасована!"
+		"de"		"{darkred}Das Rennen wurde abgebrochen!"
 	}
 	"Racing - Go!"
 	{
 		"en"		"GO!"
 		"chi"		"开始!"
 		"ua"		"ВПЕРЕД!"
+		"de"		"LOS!"
 	}
 	"Racing - Race Starting In"
 	{
@@ -130,6 +147,7 @@
 		"en"		"Race starting in {time}s!"
 		"chi"		"比赛将在 {time}秒后开始!"
 		"ua"		"Гонка розпочнеться через {time}c!"
+		"de"		"Das Rennen beginnt in {time}s!"
 	}
 	"Racing - Player Accepted"
 	{
@@ -137,6 +155,7 @@
 		"en"		"{lime}{player}{grey} has accepted the race."
 		"chi"		"{lime}{player}{grey} 已接受比赛."
 		"ua"		"{lime}{player}{grey} погодився на участь у гонці."
+		"de"		"{lime}{player}{grey} hat das Rennen akzeptiert."
 	}
 	"Racing - Player Unregistered"
 	{
@@ -144,5 +163,6 @@
 		"en"		"{lime}{player}{grey} has unregistered from the race."
 		"chi"		"{lime}{player}{grey} 已取消比赛注册."
 		"ua"		"{lime}{player}{grey} скасував свою участь у гонці."
+		"de"		"{lime}{player}{grey} hat sich vom Rennen abgemeldet."
 	}
 }

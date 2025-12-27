@@ -117,6 +117,7 @@
 		"en"		"{darkred}You can't teleport because you have reached your teleport limit."
 		"chi"		"{darkred}你已达到传送限制,无法继续传送."
 		"ua"		"{darkred}Ви не можете телепортуватися, оскільки ви досягли свого ліміту телепортів."
+		"de"		"{darkred}Du kannst nicht teleportieren, weil du dein Teleportationslimit erreicht hast."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
