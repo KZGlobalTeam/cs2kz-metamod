@@ -11,14 +11,14 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 519 |
 | **Phrases Missing Translations** | 453 |
-| **Total Missing Entries** | 2345 |
+| **Total Missing Entries** | 2323 |
 | **Menu Files** | 9 |
 
 ## Language Coverage (Phrases)
 
 ```
   chi (schinese)       [███████████████████░]  99.6% (517/519)
-  de (german)          [███████████████████░]  95.8% (497/519)
+  de (german)          [████████████████████] 100.0% (519/519)
   en (english)         [████████████████████] 100.0% (519/519)
   es (spanish)         [███████████░░░░░░░░░]  55.5% (288/519)
   fi (finnish)         [█████████░░░░░░░░░░░]  45.9% (238/519)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`e2ed986`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/e2ed9864a1e0203c9f384cad2ac8cc6fd134d191)
-- **Time:** 2025-12-24 17:53:18 UTC
-- **Message:** Ukrainian translation — Racing, general fixes (#464)
+- **Commit:** [`6275883`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/62758834a93c4a9189f5eb94baadd568ab290745)
+- **Time:** 2025-12-27 22:30:12 UTC
+- **Message:** Added german(DE) translations for racing-phrases and kz_course command + adjuste
 
 ---
 

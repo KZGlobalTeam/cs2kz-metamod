@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 519,
     "phrases_with_missing": 453,
-    "total_missing_entries": 2345,
+    "total_missing_entries": 2323,
     "all_languages": [
       "chi",
       "de",
@@ -70,7 +70,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         }
       ],
@@ -85,143 +85,10 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 95.76,
-      "translated": 497,
-      "missing": 22,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-checkpoint.phrases.txt",
-          "phrase": "Can't Teleport (Limit Reached)",
-          "line": 115,
-          "english_text": "{darkred}You can't teleport because you have reached your teleport limit."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_course",
-          "line": 1176,
-          "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Countdown",
-          "line": 3,
-          "english_text": "{yellow}Race is starting in {time} seconds!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Disconnect",
-          "line": 10,
-          "english_text": "{lime}{player}{grey} has disconnected!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Surrender",
-          "line": 17,
-          "english_text": "{lime}{player}{grey} has surrendered!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
-          "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
-          "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
-          "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Header",
-          "line": 45,
-          "english_text": "{default}Race Results:"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results First Place",
-          "line": 51,
-          "english_text": "{lime}{player}{grey} has won the race! ({time})"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Last Place",
-          "line": 59,
-          "english_text": "{lime}{player}{grey} came last in the race. ({time})"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Finisher",
-          "line": 67,
-          "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
-          "english_text": "{lime}{player}{grey} did not finish the race."
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - No Time Limit",
-          "line": 83,
-          "english_text": "No time limit"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Time Limit",
-          "line": 89,
-          "english_text": "Time limit: {time}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
-          "line": 96,
-          "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
-          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Cancelled",
-          "line": 115,
-          "english_text": "{darkred}Race has been cancelled!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Go!",
-          "line": 121,
-          "english_text": "GO!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Starting In",
-          "line": 127,
-          "english_text": "Race starting in {time}s!"
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Accepted",
-          "line": 134,
-          "english_text": "{lime}{player}{grey} has accepted the race."
-        },
-        {
-          "file": "cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Player Unregistered",
-          "line": 141,
-          "english_text": "{lime}{player}{grey} has unregistered from the race."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 519,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -321,37 +188,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -537,151 +404,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -867,115 +734,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -1693,43 +1560,43 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 263,
+          "line": 264,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -2011,157 +1878,157 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_courses",
-          "line": 1181,
+          "line": 1182,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -2359,115 +2226,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -3425,43 +3292,43 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 263,
+          "line": 264,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -3689,157 +3556,157 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_courses",
-          "line": 1181,
+          "line": 1182,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -4079,115 +3946,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -5145,37 +5012,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -5367,151 +5234,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -5685,115 +5552,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -6526,37 +6393,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -6622,127 +6489,127 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -6916,115 +6783,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -7685,43 +7552,43 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 263,
+          "line": 264,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -7949,157 +7816,157 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_courses",
-          "line": 1181,
+          "line": 1182,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -8339,115 +8206,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -9540,55 +9407,55 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Can't Undo (AntiCp)",
-          "line": 201,
+          "line": 202,
           "english_text": "{darkred}You can't undo because you teleported while in an anti-checkpoint zone."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Can't Set Custom Start Position (Generic)",
-          "line": 216,
+          "line": 217,
           "english_text": "{grey}Failed to set your custom start position!"
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoints Cleared By Map",
-          "line": 263,
+          "line": 264,
           "english_text": "{darkred}The map has cleared your checkpoints."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -10098,157 +9965,157 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_courses",
-          "line": 1181,
+          "line": 1182,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -10734,115 +10601,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -12040,13 +11907,13 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -12064,73 +11931,73 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -12160,115 +12027,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -12851,37 +12718,37 @@
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages."
         },
         {
           "file": "cs2kz-checkpoint.phrases.txt",
           "phrase": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages."
         },
         {
@@ -13097,151 +12964,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
@@ -13445,115 +13312,115 @@
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -14622,11 +14489,11 @@
           "english_text": "{darkred}You can't teleport because you have reached your teleport limit.",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -14640,7 +14507,7 @@
         },
         {
           "name": "Can't Undo (AntiCp)",
-          "line": 201,
+          "line": 202,
           "english_text": "{darkred}You can't undo because you teleported while in an anti-checkpoint zone.",
           "existing_languages": [
             "chi",
@@ -14662,7 +14529,7 @@
         },
         {
           "name": "Can't Set Custom Start Position (Generic)",
-          "line": 216,
+          "line": 217,
           "english_text": "{grey}Failed to set your custom start position!",
           "existing_languages": [
             "chi",
@@ -14684,7 +14551,7 @@
         },
         {
           "name": "Checkpoints Cleared By Map",
-          "line": 263,
+          "line": 264,
           "english_text": "{darkred}The map has cleared your checkpoints.",
           "existing_languages": [
             "chi",
@@ -14706,7 +14573,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Sound - Enable",
-          "line": 275,
+          "line": 276,
           "english_text": "{grey}You have enabled checkpoint sound.",
           "existing_languages": [
             "chi",
@@ -14728,7 +14595,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Sound - Disable",
-          "line": 283,
+          "line": 284,
           "english_text": "{grey}You have disabled checkpoint sound.",
           "existing_languages": [
             "chi",
@@ -14750,7 +14617,7 @@
         },
         {
           "name": "Checkpoint Options - Teleport Sound - Enable",
-          "line": 291,
+          "line": 292,
           "english_text": "{grey}You have enabled teleport sound.",
           "existing_languages": [
             "chi",
@@ -14772,7 +14639,7 @@
         },
         {
           "name": "Checkpoint Options - Teleport Sound - Disable",
-          "line": 299,
+          "line": 300,
           "english_text": "{grey}You have disabled teleport sound.",
           "existing_languages": [
             "chi",
@@ -14794,7 +14661,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Message - Enable",
-          "line": 307,
+          "line": 308,
           "english_text": "{grey}You have enabled checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -14816,7 +14683,7 @@
         },
         {
           "name": "Checkpoint Options - Checkpoint Message - Disable",
-          "line": 314,
+          "line": 315,
           "english_text": "{grey}You have disabled checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -16672,12 +16539,12 @@
           "line": 1176,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map.",
           "existing_languages": [
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
             "chi",
-            "de",
             "es",
             "fi",
             "it",
@@ -16691,7 +16558,7 @@
         },
         {
           "name": "Command Description - kz_courses",
-          "line": 1181,
+          "line": 1182,
           "english_text": "Display the current course and the list of all courses in the map.",
           "existing_languages": [
             "chi",
@@ -16713,7 +16580,7 @@
         },
         {
           "name": "Command Description - kz_spb",
-          "line": 1193,
+          "line": 1194,
           "english_text": "Retrieve server personal best statistics.",
           "existing_languages": [
             "chi",
@@ -16735,7 +16602,7 @@
         },
         {
           "name": "Command Description - kz_gpb",
-          "line": 1202,
+          "line": 1203,
           "english_text": "Retrieve global personal best statistics.",
           "existing_languages": [
             "chi",
@@ -16757,7 +16624,7 @@
         },
         {
           "name": "Command Description - kz_globalcheck",
-          "line": 1211,
+          "line": 1212,
           "english_text": "Display the status of the GlobalAPI.",
           "existing_languages": [
             "chi",
@@ -16779,7 +16646,7 @@
         },
         {
           "name": "Command Description - kz_gc",
-          "line": 1220,
+          "line": 1221,
           "english_text": "Display the status of the GlobalAPI.",
           "existing_languages": [
             "chi",
@@ -16801,7 +16668,7 @@
         },
         {
           "name": "Command Description - kz_beam",
-          "line": 1229,
+          "line": 1230,
           "english_text": "Set or toggle player beam type (off/ground/feet).",
           "existing_languages": [
             "chi",
@@ -16823,7 +16690,7 @@
         },
         {
           "name": "Command Description - kz_beamoffset",
-          "line": 1237,
+          "line": 1238,
           "english_text": "Set or get player beam offset.",
           "existing_languages": [
             "chi",
@@ -16845,7 +16712,7 @@
         },
         {
           "name": "Command Description - kz_measure",
-          "line": 1245,
+          "line": 1246,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place.",
           "existing_languages": [
             "chi",
@@ -16867,7 +16734,7 @@
         },
         {
           "name": "Command Description - kz_measurestart",
-          "line": 1253,
+          "line": 1254,
           "english_text": "Set the start position of the measurement.",
           "existing_languages": [
             "chi",
@@ -16889,7 +16756,7 @@
         },
         {
           "name": "Command Description - kz_measureend",
-          "line": 1261,
+          "line": 1262,
           "english_text": "Set the end position of the measurement and calculate the distance.",
           "existing_languages": [
             "chi",
@@ -16911,7 +16778,7 @@
         },
         {
           "name": "Command Description - kz_measureblock",
-          "line": 1269,
+          "line": 1270,
           "english_text": "Measure the block distance.",
           "existing_languages": [
             "chi",
@@ -16933,7 +16800,7 @@
         },
         {
           "name": "Command Description - kz_timerstopsound",
-          "line": 1277,
+          "line": 1278,
           "english_text": "Toggle the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -16955,7 +16822,7 @@
         },
         {
           "name": "Command Description - kz_autohideweapon",
-          "line": 1285,
+          "line": 1286,
           "english_text": "Toggle the automatic hiding of weapon viewmodel.",
           "existing_languages": [
             "chi",
@@ -16977,7 +16844,7 @@
         },
         {
           "name": "Command Description - kz_pistol",
-          "line": 1293,
+          "line": 1294,
           "english_text": "Change or remove the current pistol.",
           "existing_languages": [
             "chi",
@@ -16999,7 +16866,7 @@
         },
         {
           "name": "Command Description - kz_rpsave",
-          "line": 1301,
+          "line": 1302,
           "english_text": "Manually save past gameplay into a replay.",
           "existing_languages": [
             "chi",
@@ -17021,7 +16888,7 @@
         },
         {
           "name": "Command Description - kz_replay",
-          "line": 1308,
+          "line": 1309,
           "english_text": "Play a previously saved replay.",
           "existing_languages": [
             "chi",
@@ -17043,7 +16910,7 @@
         },
         {
           "name": "Command Description - kz_replays",
-          "line": 1315,
+          "line": 1316,
           "english_text": "List saved replays.",
           "existing_languages": [
             "de",
@@ -17065,7 +16932,7 @@
         },
         {
           "name": "Command Description - kz_rpgoto",
-          "line": 1321,
+          "line": 1322,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)",
           "existing_languages": [
             "chi",
@@ -17087,7 +16954,7 @@
         },
         {
           "name": "Command Description - kz_rpgototick",
-          "line": 1328,
+          "line": 1329,
           "english_text": "Go to a specific tick in the replay.",
           "existing_languages": [
             "chi",
@@ -17109,7 +16976,7 @@
         },
         {
           "name": "Command Description - kz_rpinfo",
-          "line": 1335,
+          "line": 1336,
           "english_text": "Display information about the current replay.",
           "existing_languages": [
             "chi",
@@ -17131,7 +16998,7 @@
         },
         {
           "name": "Command Description - kz_rppause",
-          "line": 1342,
+          "line": 1343,
           "english_text": "Pause or resume the current replay.",
           "existing_languages": [
             "chi",
@@ -17153,7 +17020,7 @@
         },
         {
           "name": "Command Description - kz_rploadprogress",
-          "line": 1349,
+          "line": 1350,
           "english_text": "Display the loading progress of the replay.",
           "existing_languages": [
             "chi",
@@ -17175,7 +17042,7 @@
         },
         {
           "name": "Command Description - kz_rpcancelload",
-          "line": 1356,
+          "line": 1357,
           "english_text": "Cancel the loading of the replay.",
           "existing_languages": [
             "chi",
@@ -17197,7 +17064,7 @@
         },
         {
           "name": "Command Description - kz_recordvolume",
-          "line": 1363,
+          "line": 1364,
           "english_text": "Set the volume of the world record sound effect.",
           "existing_languages": [
             "chi",
@@ -17219,7 +17086,7 @@
         },
         {
           "name": "Command Description - kz_cpmessage",
-          "line": 1370,
+          "line": 1371,
           "english_text": "Toggle checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -17241,7 +17108,7 @@
         },
         {
           "name": "Command Description - kz_rphidelegs",
-          "line": 1377,
+          "line": 1378,
           "english_text": "Toggle replay bot's first person legs visibility.",
           "existing_languages": [
             "chi",
@@ -19192,11 +19059,11 @@
           "english_text": "{yellow}Race is starting in {time} seconds!",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19210,15 +19077,15 @@
         },
         {
           "name": "Racing - Player Disconnect",
-          "line": 10,
+          "line": 11,
           "english_text": "{lime}{player}{grey} has disconnected!",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19232,15 +19099,15 @@
         },
         {
           "name": "Racing - Player Surrender",
-          "line": 17,
+          "line": 19,
           "english_text": "{lime}{player}{grey} has surrendered!",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19254,15 +19121,15 @@
         },
         {
           "name": "Racing - Player Finish (1 Teleport)",
-          "line": 24,
+          "line": 27,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19276,15 +19143,15 @@
         },
         {
           "name": "Racing - Player Finish (2+ Teleports)",
-          "line": 31,
+          "line": 35,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19298,15 +19165,15 @@
         },
         {
           "name": "Racing - Player Finish (PRO)",
-          "line": 38,
+          "line": 43,
           "english_text": "{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19320,15 +19187,15 @@
         },
         {
           "name": "Racing - End Results Header",
-          "line": 45,
+          "line": 51,
           "english_text": "{default}Race Results:",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19342,15 +19209,15 @@
         },
         {
           "name": "Racing - End Results First Place",
-          "line": 51,
+          "line": 58,
           "english_text": "{lime}{player}{grey} has won the race! ({time})",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19364,15 +19231,15 @@
         },
         {
           "name": "Racing - End Results Last Place",
-          "line": 59,
+          "line": 67,
           "english_text": "{lime}{player}{grey} came last in the race. ({time})",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19386,15 +19253,15 @@
         },
         {
           "name": "Racing - End Results Finisher",
-          "line": 67,
+          "line": 76,
           "english_text": "{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19408,15 +19275,15 @@
         },
         {
           "name": "Racing - End Results Non-Finisher",
-          "line": 75,
+          "line": 85,
           "english_text": "{lime}{player}{grey} did not finish the race.",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19430,15 +19297,15 @@
         },
         {
           "name": "Racing - No Time Limit",
-          "line": 83,
+          "line": 94,
           "english_text": "No time limit",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19452,15 +19319,15 @@
         },
         {
           "name": "Racing - Time Limit",
-          "line": 89,
+          "line": 101,
           "english_text": "Time limit: {time}",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19474,15 +19341,15 @@
         },
         {
           "name": "Racing - Race Info",
-          "line": 96,
+          "line": 109,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19496,15 +19363,15 @@
         },
         {
           "name": "Racing - Race Info (Chat)",
-          "line": 105,
+          "line": 119,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19518,15 +19385,15 @@
         },
         {
           "name": "Racing - Race Cancelled",
-          "line": 115,
+          "line": 130,
           "english_text": "{darkred}Race has been cancelled!",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19540,15 +19407,15 @@
         },
         {
           "name": "Racing - Go!",
-          "line": 121,
+          "line": 137,
           "english_text": "GO!",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19562,15 +19429,15 @@
         },
         {
           "name": "Racing - Race Starting In",
-          "line": 127,
+          "line": 144,
           "english_text": "Race starting in {time}s!",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19584,15 +19451,15 @@
         },
         {
           "name": "Racing - Player Accepted",
-          "line": 134,
+          "line": 152,
           "english_text": "{lime}{player}{grey} has accepted the race.",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",
@@ -19606,15 +19473,15 @@
         },
         {
           "name": "Racing - Player Unregistered",
-          "line": 141,
+          "line": 160,
           "english_text": "{lime}{player}{grey} has unregistered from the race.",
           "existing_languages": [
             "chi",
+            "de",
             "en",
             "ua"
           ],
           "missing_languages": [
-            "de",
             "es",
             "fi",
             "it",

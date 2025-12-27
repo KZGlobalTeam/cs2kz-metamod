@@ -8,13 +8,13 @@ SUMMARY
 Total languages: 13
 Total phrases: 519
 Phrases with missing translations: 453
-Total missing translation entries: 2345
+Total missing translation entries: 2323
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
   chi (schinese)       [███████████████████░]  99.6% (517/519)
-  de (german)          [███████████████████░]  95.8% (497/519)
+  de (german)          [████████████████████] 100.0% (519/519)
   en (english)         [████████████████████] 100.0% (519/519)
   es (spanish)         [███████████░░░░░░░░░]  55.5% (288/519)
   fi (finnish)         [█████████░░░░░░░░░░░]  45.9% (238/519)
@@ -108,24 +108,24 @@ cs2kz-checkpoint.phrases.txt
   Line 68: "Can't Checkpoint (Anti Checkpoint Area)"
     Missing (1): ru
   Line 115: "Can't Teleport (Limit Reached)"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 201: "Can't Undo (AntiCp)"
-    Missing (1): ru
-  Line 216: "Can't Set Custom Start Position (Generic)"
-    Missing (1): ru
-  Line 263: "Checkpoints Cleared By Map"
-    Missing (4): fi, it, pl, ru
-  Line 275: "Checkpoint Options - Checkpoint Sound - Enable"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 283: "Checkpoint Options - Checkpoint Sound - Disable"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 291: "Checkpoint Options - Teleport Sound - Enable"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 299: "Checkpoint Options - Teleport Sound - Disable"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 307: "Checkpoint Options - Checkpoint Message - Enable"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 314: "Checkpoint Options - Checkpoint Message - Disable"
+  Line 202: "Can't Undo (AntiCp)"
+    Missing (1): ru
+  Line 217: "Can't Set Custom Start Position (Generic)"
+    Missing (1): ru
+  Line 264: "Checkpoints Cleared By Map"
+    Missing (4): fi, it, pl, ru
+  Line 276: "Checkpoint Options - Checkpoint Sound - Enable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 284: "Checkpoint Options - Checkpoint Sound - Disable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 292: "Checkpoint Options - Teleport Sound - Enable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 300: "Checkpoint Options - Teleport Sound - Disable"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 308: "Checkpoint Options - Checkpoint Message - Enable"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 315: "Checkpoint Options - Checkpoint Message - Disable"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-commands.phrases.txt
@@ -297,58 +297,58 @@ cs2kz-commands.phrases.txt
   Line 1164: "Command Description - kz_pc"
     Missing (4): fi, it, pl, ru
   Line 1176: "Command Description - kz_course"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1181: "Command Description - kz_courses"
-    Missing (4): fi, it, pl, ru
-  Line 1193: "Command Description - kz_spb"
-    Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1202: "Command Description - kz_gpb"
-    Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1211: "Command Description - kz_globalcheck"
-    Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1220: "Command Description - kz_gc"
-    Missing (7): es, fi, it, ko, pl, ru, tr
-  Line 1229: "Command Description - kz_beam"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1237: "Command Description - kz_beamoffset"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1245: "Command Description - kz_measure"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1253: "Command Description - kz_measurestart"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1261: "Command Description - kz_measureend"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1269: "Command Description - kz_measureblock"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1277: "Command Description - kz_timerstopsound"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1285: "Command Description - kz_autohideweapon"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1293: "Command Description - kz_pistol"
-    Missing (8): es, fi, it, ko, lv, pl, ru, tr
-  Line 1301: "Command Description - kz_rpsave"
-    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1308: "Command Description - kz_replay"
-    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1315: "Command Description - kz_replays"
     Missing (10): chi, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1321: "Command Description - kz_rpgoto"
+  Line 1182: "Command Description - kz_courses"
+    Missing (4): fi, it, pl, ru
+  Line 1194: "Command Description - kz_spb"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1203: "Command Description - kz_gpb"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1212: "Command Description - kz_globalcheck"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1221: "Command Description - kz_gc"
+    Missing (7): es, fi, it, ko, pl, ru, tr
+  Line 1230: "Command Description - kz_beam"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1238: "Command Description - kz_beamoffset"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1246: "Command Description - kz_measure"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1254: "Command Description - kz_measurestart"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1262: "Command Description - kz_measureend"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1270: "Command Description - kz_measureblock"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1278: "Command Description - kz_timerstopsound"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1286: "Command Description - kz_autohideweapon"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1294: "Command Description - kz_pistol"
+    Missing (8): es, fi, it, ko, lv, pl, ru, tr
+  Line 1302: "Command Description - kz_rpsave"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1328: "Command Description - kz_rpgototick"
+  Line 1309: "Command Description - kz_replay"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1335: "Command Description - kz_rpinfo"
+  Line 1316: "Command Description - kz_replays"
+    Missing (10): chi, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1322: "Command Description - kz_rpgoto"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1342: "Command Description - kz_rppause"
+  Line 1329: "Command Description - kz_rpgototick"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1349: "Command Description - kz_rploadprogress"
+  Line 1336: "Command Description - kz_rpinfo"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1356: "Command Description - kz_rpcancelload"
+  Line 1343: "Command Description - kz_rppause"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1363: "Command Description - kz_recordvolume"
+  Line 1350: "Command Description - kz_rploadprogress"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1370: "Command Description - kz_cpmessage"
+  Line 1357: "Command Description - kz_rpcancelload"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1377: "Command Description - kz_rphidelegs"
+  Line 1364: "Command Description - kz_recordvolume"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1371: "Command Description - kz_cpmessage"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1378: "Command Description - kz_rphidelegs"
     Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-common.phrases.txt
@@ -554,45 +554,45 @@ cs2kz-quiet.phrases.txt
 cs2kz-racing.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Racing - Race Countdown"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 10: "Racing - Player Disconnect"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 17: "Racing - Player Surrender"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 24: "Racing - Player Finish (1 Teleport)"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 31: "Racing - Player Finish (2+ Teleports)"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 38: "Racing - Player Finish (PRO)"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 45: "Racing - End Results Header"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 51: "Racing - End Results First Place"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 59: "Racing - End Results Last Place"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 67: "Racing - End Results Finisher"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 75: "Racing - End Results Non-Finisher"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 83: "Racing - No Time Limit"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 89: "Racing - Time Limit"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 96: "Racing - Race Info"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 105: "Racing - Race Info (Chat)"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 115: "Racing - Race Cancelled"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 121: "Racing - Go!"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 127: "Racing - Race Starting In"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 134: "Racing - Player Accepted"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 141: "Racing - Player Unregistered"
-    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 11: "Racing - Player Disconnect"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 19: "Racing - Player Surrender"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 27: "Racing - Player Finish (1 Teleport)"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 35: "Racing - Player Finish (2+ Teleports)"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 43: "Racing - Player Finish (PRO)"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 51: "Racing - End Results Header"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 58: "Racing - End Results First Place"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 67: "Racing - End Results Last Place"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 76: "Racing - End Results Finisher"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 85: "Racing - End Results Non-Finisher"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 94: "Racing - No Time Limit"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 101: "Racing - Time Limit"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 109: "Racing - Race Info"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 119: "Racing - Race Info (Chat)"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 130: "Racing - Race Cancelled"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 137: "Racing - Go!"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 144: "Racing - Race Starting In"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 152: "Racing - Player Accepted"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 160: "Racing - Player Unregistered"
+    Missing (9): es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-replays.phrases.txt
 ----------------------------------------------------------------------
