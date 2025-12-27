@@ -20,7 +20,7 @@
 		// (STOPPED)
 		"en"		" (STOPPED)"
 		"chi"		" (停止)"
-		"pl"		" (PRZERWANY)"
+		"pl"		" (ZATRZYMANY)"
 		"fi"		" (PYSÄYTETTY)"
 		"sv"		" (STOPPAD)"
 		"ua"		" (ЗУПИНЕНО)"
