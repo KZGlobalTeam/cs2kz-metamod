@@ -128,7 +128,7 @@
 		"it"		"{darkred}Impossibile recuperare informazioni sui record. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
 		"es"		"{darkred}Fallo al recuperar la información del récord. {grey}(Nombre de recorrido no válido {default}{course_name}{grey})"
 		"pl"		"{darkred}Nie udało się pobrać informacji o rekordzie. {grey}(Nieprawidłowa nazwa kursu {default}{course_name}{grey})"
-		"de"		"{darkred}Abruf von Rekordinformationen fehlgeschlagen. {grey}(Ungültiger Kursname {default}{course_name}{grey})"
+		"de"		"{darkred}Abruf von Rekordinformationen fehlgeschlagen. {grey}(Ungültiger Routenname {default}{course_name}{grey})"
 		"ko"		"{darkred}기록 정보를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
 		"lv"		"{darkred}Neizdevās iegūt rekorda informāciju. {grey}(Nederīgs kursa nosaukums {default}{course_name}{grey})"
 	}
