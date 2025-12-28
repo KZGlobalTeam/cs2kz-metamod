@@ -4,6 +4,7 @@
 	{
 		"en"		"{grey}You have no current course. Check console for list of available courses!"
 		"chi"		"{grey}你当前没有关卡. 控制台可查看可用关卡列表!"
+		"pl"		"{grey}Nie masz aktualnej trasy. Otwórz konsolę, by zobaczyć listę dostępnych tras!"
 		"sv"		"{grey}Du har inte valt en bana. Kolla konsolen för en lista av tillgängliga banor!"
 		"ua"		"{grey}У вас немає поточного курсу. Перевірте в консолі список доступних курсів!"
 		"tr"		"{grey}Şu an bir rotan yok. Mevcut rotaları görmek için konsola bak!"
@@ -18,6 +19,7 @@
 		"#format"	"course:s"
 		"en"		"{grey}Your current course is {default}{course}{grey}. Check console for list of available courses!"
 		"chi"		"{grey}你当前关卡为 {default}{course}{grey}. 控制台可查看可用关卡列表!"
+		"pl"		"{grey}Twoja aktualna trasa to {default}{course}{grey}. Otwórz konsolę, by zobaczyć listę dostępnych tras!"
 		"sv"		"{grey}Din nuvarande bana är {default}{course}{grey}. Kolla konsolen för en lista av tillgängliga banor!"
 		"ua"		"{grey}Ваш поточний курс це {default}{course}{grey}. Перевірте в консолі список доступних курсів!"
 		"tr"		"{grey}Şuanki rotan {default}{course}{grey}.  Mevcut rotaları görmek için konsola bak!"
@@ -31,6 +33,7 @@
 	{
 		"en"		"List of available courses (use kz_r <course name> to teleport to course):"
 		"chi"		"关卡列表 (使用 kz_r <关卡名称> 传送到该关卡):"
+		"pl"		"Lista dostępnych trash (użyj komendy kz_r <nazwa trasy> do teleportacji na wybraną trasę):"
 		"sv"		"Lista av möjliga banor (använd kz_r <banans namn> för att teleportera till banan):"
 		"ua"		"Список доступних курсів (використовуйте kz_r <назва курсу> для телепортації до курсу):"
 		"tr"		"Mevcut rotaların listesi için ( kz_r <course name> yazarak rotaya ışınlanabilirsin):"

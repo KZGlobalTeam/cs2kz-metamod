@@ -22,7 +22,7 @@
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
-		"pl"		"{yellow}UWAGA!{grey}: Ustawiłeś checkpoint w niedozwolonym miejscu."
+		"pl"		"{yellow}Ostrzeżenie{grey}: Ustawiłeś checkpoint w niedozwolonym miejscu."
 		"fi"		"{yellow}Varoitus{grey}: tallennuspiste asetettu kieltoalueelle."
 		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på otillåtet område."
 		"ua"		"{yellow}Увага{grey}: Чекпоінт був зроблений у забороненій зоні."
@@ -116,6 +116,7 @@
 	{
 		"en"		"{darkred}You can't teleport because you have reached your teleport limit."
 		"chi"		"{darkred}你已达到传送限制,无法继续传送."
+		"pl"		"{darkred}Nie możesz już się teleportować, ponieważ wykorzystałeś już cały limit."
 		"ua"		"{darkred}Ви не можете телепортуватися, оскільки ви досягли свого ліміту телепортів."
 		"de"		"{darkred}Du kannst nicht teleportieren, weil du dein Teleportationslimit erreicht hast."
 	}
@@ -218,7 +219,7 @@
 	{
 		"en"		"{grey}Failed to set your custom start position!"
 		"chi"		"{grey}设置你的自定义起点失败!"
-		"pl"		"{grey}Nie udało się tobie ustawić własnego miejsca startu!"
+		"pl"		"{grey}Nie udało się ustawić własnej pozycji startowej!"
 		"fi"		"{grey}Custom aloituspisteen asettaminen epäonnistui!"
 		"sv"		"{grey}Misslyckades med att skapa din startposition!"
 		"ua"		"{grey}Не вдалося встановити власну стартову позицію!"
@@ -234,7 +235,7 @@
 		"en"		"{grey}You have set your custom start position."
 		"chi"		"{grey}你设置了自定义起点."
 		"ru"		"{grey}Вы установили свою стартовую позицию."
-		"pl"		"{grey}Ustawiłeś własne miejsce startu."
+		"pl"		"{grey}Ustawiłeś własną pozycję startową."
 		"fi"		"{grey}Olet asettanut custom aloituspisteen."
 		"sv"		"{grey}Du har skapat din startposition."
 		"ua"		"{grey}Ви встановили власну стартову позицію."
@@ -250,7 +251,7 @@
 		"en"		"{grey}You have cleared your custom start position."
 		"chi"		"{grey}你清除了自定义起点."
 		"ru"		"{grey}Вы очистили свою стартовую позицию."
-		"pl"		"{grey}Usunąłeś własne miejsce startu."
+		"pl"		"{grey}Usunąłeś własną pozycję startową."
 		"fi"		"{grey}Olet tyhjentänyt custom aloituspisteesi."
 		"sv"		"{grey}Du har rensat din startposition."
 		"ua"		"{grey}Ви очистили власну стартову позицію."
@@ -265,6 +266,7 @@
 	{
 		"en"		"{darkred}The map has cleared your checkpoints."
 		"chi"		"{darkred}该地图清除了你的存点."
+		"pl"		"{darkred}Twoje checkpointy zostały usunięte przez mapę."
 		"sv"		"{darkred}Kartan har rensat dina checkpoints."
 		"ua"		"{darkred}Ваші чекпоінти були стерті мапою."
 		"tr"		"{darkred}Kontrol noktaları harita tarafından temizlendi."
@@ -277,6 +279,7 @@
 	{
 		"en"		"{grey}You have enabled checkpoint sound."
 		"chi"		"{grey}你开启了存点音效."
+		"pl"		"{grey}Aktywowałeś dźwięk checkpointu."
 		"sv"		"{grey}Du har aktiverat checkpointljuden."
 		"ua"		"{grey}Ви увімкнули звук чекпоінту."
 		"de"		"{grey}Du hast Checkpoint-Sounds aktiviert."
@@ -285,6 +288,7 @@
 	{
 		"en"		"{grey}You have disabled checkpoint sound."
 		"chi"		"{grey}你禁用了存点音效."
+		"pl"		"{grey}Wyłączyłeś dźwięk checkpointu."
 		"sv"		"{grey}Du har inaktiverat checkpointljuden."
 		"ua"		"{grey}Ви вимкнули звук чекпоінту."
 		"de"		"{grey}Du hast Checkpoint-Sounds deaktiviert."
@@ -293,6 +297,7 @@
 	{
 		"en"		"{grey}You have enabled teleport sound."
 		"chi"		"{grey}你开启了传送音效."
+		"pl"		"{grey}Aktywowałeś dźwięk teleportu."
 		"sv"		"{grey}Du har aktiverat teleportljuden."
 		"ua"		"{grey}Ви увімкнули звук телепорту."
 		"de"		"{grey}Du hast Teleport-Sounds aktiviert."
@@ -301,6 +306,7 @@
 	{
 		"en"		"{grey}You have disabled teleport sound."
 		"chi"		"{grey}你禁用了传送音效."
+		"pl"		"{grey}Wyłączyłeś dźwięk teleportu."
 		"sv"		"{grey}Du har inaktiverat teleportljuden."
 		"ua"		"{grey}Ви вимкнули звук телепорту."
 		"de"		"{grey}Du hast Teleport-Sounds deaktiviert."
@@ -309,6 +315,7 @@
 	{
 		"en"		"{grey}You have enabled checkpoint messages."
 		"chi"		"{grey}你开启了传送消息."
+		"pl"		"{grey}Aktywowałeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви увімкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten aktiviert."
 	}
@@ -316,6 +323,7 @@
 	{
 		"en"		"{grey}You have disabled checkpoint messages."
 		"chi"		"{grey}你禁用了传送消息."
+		"pl"		"{grey}Wyłączyłeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви вимкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten deaktiviert."
 	}
