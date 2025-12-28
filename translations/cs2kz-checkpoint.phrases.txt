@@ -22,7 +22,7 @@
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
-		"pl"		"{yellow}Ostrzeżenie{grey}: Ustawiłeś checkpoint w niedozwolonym miejscu."
+		"pl"		"{yellow}UWAGA!{grey}: Ustawiłeś checkpoint w niedozwolonym miejscu."
 		"fi"		"{yellow}Varoitus{grey}: tallennuspiste asetettu kieltoalueelle."
 		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på otillåtet område."
 		"ua"		"{yellow}Увага{grey}: Чекпоінт був зроблений у забороненій зоні."
