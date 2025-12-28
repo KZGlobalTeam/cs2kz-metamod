@@ -653,7 +653,7 @@ void KZGlobalService::PrintAnnouncements()
 	for (const KZ::API::handshake::HelloAck::Announcement &announcement : KZGlobalService::announcements.data)
 	{
 		time_t now = std::time(nullptr);
-		if (announcement.startsAt > now || announcement.expiresAt < now)
+		if (announcement.startsAt > (u64)now || announcement.expiresAt < (u64)now)
 		{
 			continue;
 		}

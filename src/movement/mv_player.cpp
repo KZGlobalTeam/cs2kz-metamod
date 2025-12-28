@@ -10,6 +10,7 @@ void MovementPlayer::OnProcessMovement()
 	this->processingMovement = true;
 	this->walkMoved = false;
 	this->takeoffFromLadder = false;
+	this->possibleLadderHop = false;
 	this->collidingWithWorld = false;
 
 	bool onGround = this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND;
@@ -393,6 +394,7 @@ void MovementPlayer::Reset()
 	this->inPerf = false;
 	this->jumped = false;
 	this->takeoffFromLadder = false;
+	this->possibleLadderHop = false;
 	this->lastValidLadderOrigin.Init();
 	this->takeoffOrigin.Init();
 	this->takeoffVelocity.Init();

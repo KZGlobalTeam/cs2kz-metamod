@@ -175,7 +175,7 @@ void KZClassicModeService::OnStopTouchGround()
 
 	f32 timeOnGround = this->player->takeoffTime - this->player->landingTime;
 	// Perf
-	if (timeOnGround <= BH_PERF_WINDOW)
+	if (timeOnGround <= BH_PERF_WINDOW && !this->player->possibleLadderHop)
 	{
 		this->player->inPerf = true;
 		// Perf speed
