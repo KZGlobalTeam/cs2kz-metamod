@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 519,
-    "phrases_with_missing": 453,
-    "total_missing_entries": 2218,
+    "total_phrases": 521,
+    "phrases_with_missing": 455,
+    "total_missing_entries": 2242,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 99.61,
+      "coverage_percent": 99.23,
       "translated": 517,
-      "missing": 2,
+      "missing": 4,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -72,6 +72,18 @@
           "phrase": "Command Description - kz_replays",
           "line": 1369,
           "english_text": "List saved replays."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
         }
       ],
       "menu": {
@@ -85,10 +97,23 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.62,
       "translated": 519,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 2,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -98,7 +123,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 519,
+      "translated": 521,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -109,9 +134,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 55.49,
+      "coverage_percent": 55.28,
       "translated": 288,
-      "missing": 231,
+      "missing": 233,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -552,9 +577,21 @@
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
-          "line": 78,
+          "line": 77,
           "english_text": "{grey}Please wait before using that command again."
         },
         {
@@ -1511,9 +1548,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 45.86,
+      "coverage_percent": 45.68,
       "translated": 238,
-      "missing": 281,
+      "missing": 283,
       "missing_phrases": [
         {
           "file": "cs2kz-beam.phrases.txt",
@@ -2032,9 +2069,21 @@
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
-          "line": 78,
+          "line": 77,
           "english_text": "{grey}Please wait before using that command again."
         },
         {
@@ -3213,9 +3262,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 44.32,
+      "coverage_percent": 44.15,
       "translated": 230,
-      "missing": 289,
+      "missing": 291,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -3710,6 +3759,18 @@
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Steam Authentication Warning",
           "line": 3,
@@ -3718,25 +3779,25 @@
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Prime Warning",
-          "line": 18,
+          "line": 17,
           "english_text": "{darkred}Warning{grey}: You do not have Prime Status upgrade. Your run will not be saved globally."
         },
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Player Authenticated (Steam)",
-          "line": 31,
+          "line": 30,
           "english_text": "{grey}Player {default}{player}{grey} is authenticated with Steam."
         },
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Player Not Authenticated (Steam)",
-          "line": 46,
+          "line": 45,
           "english_text": "{grey}Player {default}{player}{grey} is currently {yellow}not{grey} authenticated with Steam."
         },
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
-          "line": 78,
+          "line": 77,
           "english_text": "{grey}Please wait before using that command again."
         },
         {
@@ -4963,9 +5024,9 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 56.07,
+      "coverage_percent": 55.85,
       "translated": 291,
-      "missing": 228,
+      "missing": 230,
       "missing_phrases": [
         {
           "file": "cs2kz-beam.phrases.txt",
@@ -5382,9 +5443,21 @@
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
-          "line": 78,
+          "line": 77,
           "english_text": "{grey}Please wait before using that command again."
         },
         {
@@ -6344,9 +6417,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 64.16,
+      "coverage_percent": 63.92,
       "translated": 333,
-      "missing": 186,
+      "missing": 188,
       "missing_phrases": [
         {
           "file": "cs2kz-beam.phrases.txt",
@@ -6613,9 +6686,21 @@
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
-          "line": 78,
+          "line": 77,
           "english_text": "{grey}Please wait before using that command again."
         },
         {
@@ -7473,10 +7558,22 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 61.46,
+      "coverage_percent": 61.23,
       "translated": 319,
-      "missing": 200,
+      "missing": 202,
       "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
         {
           "file": "cs2kz-language.phrases.txt",
           "phrase": "Menu Hint",
@@ -8686,9 +8783,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 17.73,
+      "coverage_percent": 17.66,
       "translated": 92,
-      "missing": 427,
+      "missing": 429,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9489,6 +9586,18 @@
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Steam Authentication Warning",
           "line": 3,
@@ -9497,19 +9606,19 @@
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Prime Warning",
-          "line": 18,
+          "line": 17,
           "english_text": "{darkred}Warning{grey}: You do not have Prime Status upgrade. Your run will not be saved globally."
         },
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Player Authenticated (Steam)",
-          "line": 31,
+          "line": 30,
           "english_text": "{grey}Player {default}{player}{grey} is authenticated with Steam."
         },
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Player Not Authenticated (Steam)",
-          "line": 46,
+          "line": 45,
           "english_text": "{grey}Player {default}{player}{grey} is currently {yellow}not{grey} authenticated with Steam."
         },
         {
@@ -11264,9 +11373,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 76.49,
+      "coverage_percent": 76.2,
       "translated": 397,
-      "missing": 122,
+      "missing": 124,
       "missing_phrases": [
         {
           "file": "cs2kz-checkpoint.phrases.txt",
@@ -11369,6 +11478,18 @@
           "phrase": "Command Description - kz_rphidelegs",
           "line": 1440,
           "english_text": "Toggle replay bot's first person legs visibility."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -12009,9 +12130,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 51.45,
+      "coverage_percent": 51.25,
       "translated": 267,
-      "missing": 252,
+      "missing": 254,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -12482,15 +12603,27 @@
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Prime Warning",
-          "line": 18,
+          "line": 17,
           "english_text": "{darkred}Warning{grey}: You do not have Prime Status upgrade. Your run will not be saved globally."
         },
         {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
-          "line": 78,
+          "line": 77,
           "english_text": "{grey}Please wait before using that command again."
         },
         {
@@ -13537,10 +13670,23 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.62,
       "translated": 519,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 2,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race."
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -14076,7 +14222,7 @@
       ]
     },
     "cs2kz-commands.phrases.txt": {
-      "phrases_with_missing": 110,
+      "phrases_with_missing": 112,
       "phrases": [
         {
           "name": "Command Help Response (Chat)",
@@ -16497,6 +16643,50 @@
             "sv",
             "tr"
           ]
+        },
+        {
+          "name": "Command Description - kz_accept",
+          "line": 1448,
+          "english_text": "Accept an incoming race.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_surrender",
+          "line": 1452,
+          "english_text": "Surrender an ongoing race.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
         }
       ]
     },
@@ -16527,7 +16717,7 @@
         },
         {
           "name": "No Prime Warning",
-          "line": 18,
+          "line": 17,
           "english_text": "{darkred}Warning{grey}: You do not have Prime Status upgrade. Your run will not be saved globally.",
           "existing_languages": [
             "chi",
@@ -16549,7 +16739,7 @@
         },
         {
           "name": "Player Authenticated (Steam)",
-          "line": 31,
+          "line": 30,
           "english_text": "{grey}Player {default}{player}{grey} is authenticated with Steam.",
           "existing_languages": [
             "chi",
@@ -16571,7 +16761,7 @@
         },
         {
           "name": "Player Not Authenticated (Steam)",
-          "line": 46,
+          "line": 45,
           "english_text": "{grey}Player {default}{player}{grey} is currently {yellow}not{grey} authenticated with Steam.",
           "existing_languages": [
             "chi",
@@ -16593,7 +16783,7 @@
         },
         {
           "name": "Command Cooldown",
-          "line": 78,
+          "line": 77,
           "english_text": "{grey}Please wait before using that command again.",
           "existing_languages": [
             "chi",

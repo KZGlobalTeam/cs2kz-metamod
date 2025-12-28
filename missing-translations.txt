@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 519
-Phrases with missing translations: 453
-Total missing translation entries: 2218
+Total phrases: 521
+Phrases with missing translations: 455
+Total missing translation entries: 2242
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  99.6% (517/519)
-  de (german)          [████████████████████] 100.0% (519/519)
-  en (english)         [████████████████████] 100.0% (519/519)
-  es (spanish)         [███████████░░░░░░░░░]  55.5% (288/519)
-  fi (finnish)         [█████████░░░░░░░░░░░]  45.9% (238/519)
-  it (italian)         [████████░░░░░░░░░░░░]  44.3% (230/519)
-  ko (koreana)         [███████████░░░░░░░░░]  56.1% (291/519)
-  lv (latvian)         [████████████░░░░░░░░]  64.2% (333/519)
-  pl (polish)          [████████████░░░░░░░░]  61.5% (319/519)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  17.7% (92/519)
-  sv (swedish)         [███████████████░░░░░]  76.5% (397/519)
-  tr (turkish)         [██████████░░░░░░░░░░]  51.4% (267/519)
-  ua (ukrainian)       [████████████████████] 100.0% (519/519)
+  chi (schinese)       [███████████████████░]  99.2% (517/521)
+  de (german)          [███████████████████░]  99.6% (519/521)
+  en (english)         [████████████████████] 100.0% (521/521)
+  es (spanish)         [███████████░░░░░░░░░]  55.3% (288/521)
+  fi (finnish)         [█████████░░░░░░░░░░░]  45.7% (238/521)
+  it (italian)         [████████░░░░░░░░░░░░]  44.1% (230/521)
+  ko (koreana)         [███████████░░░░░░░░░]  55.9% (291/521)
+  lv (latvian)         [████████████░░░░░░░░]  63.9% (333/521)
+  pl (polish)          [████████████░░░░░░░░]  61.2% (319/521)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  17.7% (92/521)
+  sv (swedish)         [███████████████░░░░░]  76.2% (397/521)
+  tr (turkish)         [██████████░░░░░░░░░░]  51.2% (267/521)
+  ua (ukrainian)       [███████████████████░]  99.6% (519/521)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -350,18 +350,22 @@ cs2kz-commands.phrases.txt
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
   Line 1440: "Command Description - kz_rphidelegs"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
+  Line 1448: "Command Description - kz_accept"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1452: "Command Description - kz_surrender"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "No Steam Authentication Warning"
     Missing (2): it, ru
-  Line 18: "No Prime Warning"
+  Line 17: "No Prime Warning"
     Missing (3): it, ru, tr
-  Line 31: "Player Authenticated (Steam)"
+  Line 30: "Player Authenticated (Steam)"
     Missing (2): it, ru
-  Line 46: "Player Not Authenticated (Steam)"
+  Line 45: "Player Not Authenticated (Steam)"
     Missing (2): it, ru
-  Line 78: "Command Cooldown"
+  Line 77: "Command Cooldown"
     Missing (6): es, fi, it, ko, lv, tr
 
 cs2kz-course.phrases.txt
