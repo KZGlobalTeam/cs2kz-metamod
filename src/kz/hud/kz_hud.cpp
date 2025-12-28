@@ -56,7 +56,7 @@ std::string KZHUDService::GetSpeedText(const char *language)
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", velocity.Length2D());
 	}
 	std::string color = "<font color='#ffffff'>";
-	if (this->player->IsPerfing())
+	if (this->player->IsPerfing() && !this->player->possibleLadderHop && !this->player->takeoffFromLadder)
 	{
 		color = this->fromDuckbug ? "<font color='#ffff20'>" : "<font color='#40ff40'>";
 	}

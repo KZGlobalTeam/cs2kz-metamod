@@ -230,6 +230,7 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	else if (result && oldMoveType == MOVETYPE_LADDER && player->GetPlayerPawn()->m_MoveType() == MOVETYPE_WALK)
 	{
 		player->RegisterTakeoff(player->IsButtonPressed(IN_JUMP), true);
+		player->possibleLadderHop = true;
 		player->OnChangeMoveType(MOVETYPE_LADDER);
 	}
 
@@ -270,7 +271,7 @@ void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData 
 	if (mv->m_outWishVel != oldOutWishVel)
 	{
 		player->inPerf = (!player->takeoffFromLadder && !player->oldWalkMoved);
-		player->RegisterTakeoff(true);
+		player->RegisterTakeoff(true, player->possibleLadderHop);
 		player->OnStopTouchGround();
 	}
 	player->OnJumpPost();

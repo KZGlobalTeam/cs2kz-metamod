@@ -289,6 +289,7 @@ public:
 
 	bool jumped {};
 	bool takeoffFromLadder {};
+	bool possibleLadderHop {};
 	Vector lastValidLadderOrigin;
 
 	Vector takeoffOrigin;

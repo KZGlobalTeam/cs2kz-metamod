@@ -226,7 +226,7 @@
 		"tr"		"{grey}(Invalid course name {default}{course_name}{grey}){darkred} Haritasında kişisel rekor bilgilerine erişilemedi. "
 		"it"		"{darkred}Impossibile recuperare le statistiche dei record personali. {grey}(Nome della mappa non valido {default}{course_name}{grey})"
 		"es"		"{darkred}Fallo al recuperar las mejores estadísticas personales. {grey}(Nombre de recorrido no válido {default}{course_name}{grey})"
-		"de"		"{darkred}Persönliche PBs konnten nicht abgerufen werden. {grey} (Ungültiger Kursname {default}{course_name}{grey})"
+		"de"		"{darkred}Persönliche PBs konnten nicht abgerufen werden. {grey} (Ungültiger Routenname {default}{course_name}{grey})"
 		"pl"		"{darkred}Fallo al recuperar las mejores estadísticas personales. {grey}(Nombre de curso no válido {default}{course_name}{grey})"
 		"ko"		"{darkred}개인 최고 기록 통계를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
 		"lv"		"{darkred}Neizdevās iegūt personīgos rekorda datus. {grey}(Nederīgs trases nosaukums {default}{course_name}{grey})"
