@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`59be605`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/59be60570d1137dca2f99bde3a004e1701001bc1)
-- **Time:** 2025-12-28 16:17:39 UTC
-- **Message:** Updated polish translations (#465)
+- **Commit:** [`9b43291`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/9b43291b8f0dd653f9a10ef610933d4aceac8cab)
+- **Time:** 2025-12-28 19:40:19 UTC
+- **Message:** Update Polish translations to convey more urgency for warnings
 
 ---
 
