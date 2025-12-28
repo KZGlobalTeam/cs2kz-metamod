@@ -116,7 +116,7 @@
 	{
 		"en"		"Preference Commands:"
 		"chi"		"偏好设置 命令:"
-		"en"		"Komendy Ustawień:"
+		"pl"		"Komendy Ustawień:"
 		"sv"		"Preferenskommandon:"
 		"ua"		"Команди Налаштувань:"
 		"lv"		"Preferenču Komandas:"
