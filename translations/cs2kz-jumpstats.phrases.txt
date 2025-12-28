@@ -897,7 +897,7 @@
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
-		"chi"		"{grey}广播跳跃数据音效的起始等级为 {default}{tier}."c
+		"chi"		"{grey}广播跳跃数据音效的起始等级为 {default}{tier}."
 		"pl"		"{grey}Próg dźwięków jumpstatów jest ustawiony na {default}{tier}."
 		"ua"		"{grey}Поріг звукових ефектів для стрибків встановлено на {default}{tier}."
 		"sv"		"{grey}Jumpstats ljudsändnings gränsen är nu {default}{tier}."
