@@ -253,6 +253,12 @@ void KZRacingService::BroadcastRaceInfo()
 
 void KZRacingService::AcceptRace()
 {
+	if (!this->player->IsAuthenticated())
+	{
+		this->player->languageService->PrintAlert(false, true, "Player Not Authenticated (Steam)", this->player->GetName());
+		return;
+	}
+
 	if (KZRacingService::currentRace.state == RaceInfo::State::Init && !this->IsRaceParticipant()
 		&& g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.workshopID)
 	{
