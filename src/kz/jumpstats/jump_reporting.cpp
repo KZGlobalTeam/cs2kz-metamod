@@ -113,12 +113,16 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 															KZOptionService::GetOptionInt("defaultJSBroadcastMinTierConsole", DistanceTier_Ownage))
 				  : target->optionService->GetPreferenceInt("jsMinTierConsole",
 															KZOptionService::GetOptionInt("defaultJSMinTierConsole", DistanceTier_Impressive)));
-	if (!target->optionService->GetPreferenceBool("jsAlways", false) && (minTier == DistanceTier_None || color < minTier))
+	// We only print if the jump meets one of these requirements:
+	// - The jump tier is equal or higher than the minimum tier set in preferences
+	// - The "jsAlways" option is enabled and this is not a broadcasted jump
+	// - The target is a CSTV (HLTV) client
+	bool shouldPrint = minTier != DistanceTier_None && color >= minTier;
+	shouldPrint |= !broadcast && target->optionService->GetPreferenceBool("jsAlways", false);
+	shouldPrint |= target->IsCSTV();
+	if (!shouldPrint)
 	{
-		if (!target->IsCSTV())
-		{
-			return;
-		}
+		return;
 	}
 	const char *language = target->languageService->GetLanguage();
 	// clang-format off
@@ -272,12 +276,17 @@ void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool br
 						"jsBroadcastSoundMinTier", KZOptionService::GetOptionInt("defaultJSBroadcastSoundMinTier", DistanceTier_Ownage)))
 				  : static_cast<DistanceTier>(target->optionService->GetPreferenceInt(
 						"jsSoundMinTier", KZOptionService::GetOptionInt("defaultJSSoundMinTier", DistanceTier_Impressive)));
-	if (soundMinTier > tier || tier <= DistanceTier_Meh || soundMinTier == DistanceTier_None
-		|| target->optionService->GetPreferenceBool("jsAlways", false))
+	// We only print if the jump meets one of these requirements:
+	// - The jump tier is equal or higher than the minimum tier set in preferences
+	// - The "jsAlways" option is not enabled
+	// - The target is a CSTV (HLTV) client
+	bool shouldPlay = soundMinTier != DistanceTier_None && tier >= soundMinTier && tier > DistanceTier_Meh;
+	shouldPlay |= !target->optionService->GetPreferenceBool("jsAlways", false);
+	shouldPlay |= target->IsCSTV();
+	if (!shouldPlay)
 	{
 		return;
 	}
-
 	utils::PlaySoundToClient(target->GetPlayerSlot(), distanceTierSounds[tier], target->optionService->GetPreferenceFloat("jsVolume", 0.75f));
 }
 
