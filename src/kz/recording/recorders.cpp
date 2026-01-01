@@ -276,10 +276,10 @@ bool Recorder::WriteToFile()
 	V_snprintf(tempFilename, sizeof(tempFilename), "%s/%s.replay.tmp", KZ_REPLAY_PATH, uuidStr.c_str());
 	V_snprintf(finalFilename, sizeof(finalFilename), "%s/%s.replay", KZ_REPLAY_PATH, uuidStr.c_str());
 
-	g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_PATH);
+	g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_PATH, "GAME");
 
 	// Write to temporary file first
-	FileHandle_t file = g_pFullFileSystem->Open(tempFilename, "wb");
+	FileHandle_t file = g_pFullFileSystem->Open(tempFilename, "wb", "GAME");
 	if (!file)
 	{
 		META_CONPRINTF("Failed to open replay file for writing: %s\n", tempFilename);

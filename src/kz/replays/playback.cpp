@@ -288,6 +288,10 @@ namespace KZ::replaysystem::playback
 				}
 			}
 		}
+		if (kz_replay_playback_debug.Get())
+		{
+			META_CONPRINTF("%s\n", command->DebugString().c_str());
+		}
 		CheckWeapon(*player, *command);
 	}
 

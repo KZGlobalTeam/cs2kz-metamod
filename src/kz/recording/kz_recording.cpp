@@ -132,9 +132,9 @@ void KZRecordingService::RecordTickData_SetupMove(PlayerCommand *pc)
 {
 	this->currentTickData.cmdNumber = pc->cmdNum;
 	this->currentTickData.clientTick = pc->base().client_tick();
-	this->currentTickData.forward = pc->base().forwardmove();
-	this->currentTickData.left = pc->base().leftmove();
-	this->currentTickData.up = pc->base().upmove();
+	this->currentTickData.forward = pc->base().has_forwardmove() ? pc->base().forwardmove() : 0;
+	this->currentTickData.left = pc->base().has_leftmove() ? pc->base().leftmove() : 0;
+	this->currentTickData.up = pc->base().has_upmove() ? pc->base().upmove() : 0;
 	this->currentTickData.pre.angles = {pc->base().viewangles().x(), pc->base().viewangles().y(), pc->base().viewangles().z()};
 	this->currentTickData.leftHanded = this->player->GetPlayerPawn()->m_bLeftHanded() || pc->left_hand_desired();
 
@@ -201,9 +201,9 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 		data.avgLoss = netchan->GetAvgLoss(FLOW_INCOMING) + netchan->GetAvgChoke(FLOW_INCOMING);
 		data.cmdNumber = pc.cmdNum;
 		data.clientTick = pc.base().client_tick();
-		data.forward = pc.base().forwardmove();
-		data.left = pc.base().leftmove();
-		data.up = pc.base().upmove();
+		data.forward = pc.base().has_forwardmove() ? pc.base().forwardmove() : 0;
+		data.left = pc.base().has_leftmove() ? pc.base().leftmove() : 0;
+		data.up = pc.base().has_upmove() ? pc.base().upmove() : 0;
 		data.buttons[0] = pc.base().buttons_pb().buttonstate1();
 		data.buttons[1] = pc.base().buttons_pb().buttonstate2();
 		data.buttons[2] = pc.base().buttons_pb().buttonstate3();
