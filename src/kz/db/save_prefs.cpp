@@ -7,7 +7,7 @@
 
 void KZDatabaseService::SavePrefs(CUtlString prefs)
 {
-	if (!KZDatabaseService::IsReady() || !this->IsSetup())
+	if (!KZDatabaseService::IsReady() || !this->isSetUp)
 	{
 		return;
 	}

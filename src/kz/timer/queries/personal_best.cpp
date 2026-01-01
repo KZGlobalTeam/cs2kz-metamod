@@ -2,6 +2,7 @@
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
 #include "kz/global/events.h"
+#include "kz/anticheat/kz_anticheat.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -47,7 +48,7 @@ struct PBRequest : public BaseRequest
 				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
 				if (this->targetSteamID64 == player->GetSteamId64())
 				{
-					if (player->databaseService->isCheater)
+					if (player->anticheatService->isBanned)
 					{
 						this->queryLocalRanking = false;
 					}

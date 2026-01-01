@@ -380,6 +380,6 @@ public:
 		ApplyToTarget([&](auto &r) { r.PushData(value); }, target);
 	}
 
-private:
-	static ReplayFileWriter *s_fileWriter;
+	static ReplayFileWriter *fileWriter;
+	static inline std::vector<UUID_t> globalUploadQueue;
 };

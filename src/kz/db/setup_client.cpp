@@ -3,6 +3,7 @@
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
 #include "queries/players.h"
+#include "queries/bans.h"
 
 using namespace KZ::Database;
 
@@ -50,6 +51,10 @@ void KZDatabaseService::SetupClient()
 
 	V_snprintf(query, sizeof(query), sql_players_get_infos, steamID64);
 	txn.queries.push_back(query);
+
+	V_snprintf(query, sizeof(query), sql_bans_get_active, steamID64);
+	txn.queries.push_back(query);
+
 	CPlayerUserId userID = this->player->GetClient()->GetUserID();
 
 	GetDatabaseConnection()->ExecuteTransaction(
@@ -62,26 +67,33 @@ void KZDatabaseService::SetupClient()
 				return;
 			}
 			ISQLResult *result = NULL;
+			ISQLResult *banResult = NULL;
 			switch (GetDatabaseType())
 			{
 				case DatabaseType::SQLite:
 				{
 					result = queries[2]->GetResultSet();
+					banResult = queries[3]->GetResultSet();
 					break;
 				}
 				case DatabaseType::MySQL:
 				{
 					result = queries[1]->GetResultSet();
+					banResult = queries[2]->GetResultSet();
 					break;
 				}
 			}
 			if (result)
 			{
-				bool isCheater = (result->FetchRow() && result->GetInt(0) == 1);
-				const char *prefs = result->GetString(1);
+				bool isBanned = false;
+				if (banResult && banResult->FetchRow())
+				{
+					isBanned = true;
+				}
+				const char *prefs = result->FetchRow() ? result->GetString(0) : "";
 				this->isSetUp = true;
 				pl->optionService->InitializeLocalPrefs(prefs);
-				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isCheater);
+				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isBanned);
 			}
 		},
 		OnGenericTxnFailure);

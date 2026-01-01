@@ -1,0 +1,116 @@
+/*
+	Detect cheats related to subtick inputs.
+*/
+#include "kz/anticheat/kz_anticheat.h"
+#include "sdk/usercmd.h"
+#include "kz/telemetry/kz_telemetry.h"
+
+// Every command should have all button presses/releases accounted for in subtick moves.
+// Only cheats that modify buttons without updating subtick moves would fail this.
+static_global bool VerifyCommand(const PlayerCommand &cmd)
+{
+	// Expect a press/release this tick
+	u64 expectedButtons = cmd.base().buttons_pb().buttonstate2() | cmd.base().buttons_pb().buttonstate3();
+	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
+	{
+		expectedButtons & ~cmd.base().subtick_moves(i).button();
+	}
+	return expectedButtons == 0;
+}
+
+// Yaw/pitch alias abuse detection: If there's too many subtick moves with the same button + timing and non-zero angles, flag it.
+static_global bool HasExcessiveSubtickMovesWithAngles(const PlayerCommand &cmd)
+{
+	if (cmd.base().subtick_moves_size() < 2)
+	{
+		return false;
+	}
+	std::set<std::pair<u64, f32>> buttonTimes;
+	// Get a list of all button presses with timings
+	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
+	{
+		const CSubtickMoveStep &step = cmd.base().subtick_moves(i);
+		if (!step.pressed() || !step.has_button())
+		{
+			continue;
+		}
+		// Ignore attack buttons and turn binds (since they wouldn't work anyway)
+		if (step.button() == IN_ATTACK || step.button() == IN_ATTACK2 || step.button() == IN_USE || step.button() == IN_RELOAD
+			|| step.button() == IN_TURNLEFT || step.button() == IN_TURNRIGHT)
+		{
+			continue;
+		}
+		if (step.has_pitch_delta() || step.has_yaw_delta())
+		{
+			buttonTimes.insert({step.button(), step.when()});
+		}
+	}
+	// Go through the list again. If we find the same button + timing again on release, it's suspicious.
+	i32 numSuspicious = 0;
+	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
+	{
+		const CSubtickMoveStep &step = cmd.base().subtick_moves(i);
+		if (step.pressed() || !step.has_button())
+		{
+			continue;
+		}
+		auto it = buttonTimes.find({step.button(), step.when()});
+		if (it != buttonTimes.end())
+		{
+			numSuspicious++;
+			if (numSuspicious >= 2)
+			{
+				return true;
+			}
+		}
+	}
+}
+
+void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
+{
+	// Verify all button presses/releases are accounted for in subtick moves
+	if (!VerifyCommand(*cmd))
+	{
+		invalidCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
+		return;
+	}
+	// Check for excessive subtick moves with angles
+	if (HasExcessiveSubtickMovesWithAngles(*cmd))
+	{
+		suspiciousSubtickMoveTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
+		return;
+	}
+}
+
+void KZAnticheatService::CheckSuspiciousSubtickCommands()
+{
+	if (this->player->telemetryService->GetTimeInServer() < 10.0f)
+	{
+		// Don't check for the first 10 seconds to avoid false positives on connect... just in case.
+		return;
+	}
+	f32 currentTime = g_pKZUtils->GetServerGlobals()->curtime;
+
+	// Clear out invalid commands within 5 seconds
+	while (!invalidCommandTimes.empty() && currentTime - invalidCommandTimes.front() > 5.0f)
+	{
+		invalidCommandTimes.pop_front();
+	}
+	if (invalidCommandTimes.size() >= 5)
+	{
+		MarkDetection("Excessive invalid commands detected", true, BAN_DURATION_EXTERNAL_DESUBTICK);
+		invalidCommandTimes.clear();
+	}
+
+	// Clear out old entries beyond 500ms
+	while (!suspiciousSubtickMoveTimes.empty() && currentTime - suspiciousSubtickMoveTimes.front() > 0.5f)
+	{
+		suspiciousSubtickMoveTimes.pop_front();
+	}
+	// If there are too many within the timeframe, ban
+	if (suspiciousSubtickMoveTimes.size() >= 8)
+	{
+		MarkDetection("Excessive subtick moves with angles detected", true, BAN_DURATION_SUBTICK_SPAM);
+		suspiciousSubtickMoveTimes.clear();
+	}
+}

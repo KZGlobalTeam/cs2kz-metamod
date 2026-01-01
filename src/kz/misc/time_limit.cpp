@@ -118,7 +118,7 @@ void KZ::misc::EnforceTimeLimit()
 	mp_roundtime.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
 	mp_roundtime_defuse.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
 	mp_roundtime_hostage.GetConVarData()->SetMaxValue(&hardcodedTimeLimit);
-	g_pCVar->InstallGlobalChangeCallback(OnCvarChanged);
+	// g_pCVar->InstallGlobalChangeCallback(OnCvarChanged);
 }
 
 void KZ::misc::UnrestrictTimeLimit()
@@ -132,7 +132,7 @@ void KZ::misc::UnrestrictTimeLimit()
 	mp_roundtime.GetConVarData()->SetMaxValue(mp_roundtime_cvvalue_max);
 	mp_roundtime_defuse.GetConVarData()->SetMaxValue(mp_roundtime_defuse_cvvalue_max);
 	mp_roundtime_hostage.GetConVarData()->SetMaxValue(mp_roundtime_hostage_cvvalue_max);
-	g_pCVar->RemoveGlobalChangeCallback(OnCvarChanged);
+	// g_pCVar->RemoveGlobalChangeCallback(OnCvarChanged);
 }
 
 void KZ::misc::InitTimeLimit()

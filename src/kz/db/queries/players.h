@@ -45,7 +45,7 @@ constexpr char mysql_players_upsert[] = R"(
 )";
 
 constexpr char sql_players_get_infos[] = R"(
-    SELECT Cheater, Preferences
+    SELECT Preferences
         FROM Players 
         WHERE SteamID64=%lld
 )";
@@ -56,12 +56,6 @@ constexpr char sql_players_set_prefs[] = R"(
         WHERE SteamID64=%lld
 )";
 
-constexpr char sql_players_set_cheater[] = R"(
-    UPDATE Players 
-        SET Cheater=%lld 
-        WHERE SteamID64=%lld
-)";
-
 constexpr char sql_players_getalias[] = R"(
     SELECT Alias 
         FROM Players 
@@ -69,9 +63,10 @@ constexpr char sql_players_getalias[] = R"(
 )";
 
 constexpr char sql_players_searchbyalias[] = R"(
-    SELECT SteamID64, Alias 
+    SELECT Players.SteamID64, Players.Alias 
         FROM Players 
-        WHERE LOWER(Alias) LIKE '%%%s%%' 
-        ORDER BY (Players.Cheater=0) DESC, (LOWER(Alias)='%s') DESC, LastPlayed DESC 
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE LOWER(Players.Alias) LIKE '%%%s%%' 
+        ORDER BY (Bans.ID IS NULL) DESC, (LOWER(Players.Alias)='%s') DESC, Players.LastPlayed DESC 
         LIMIT 1
 )";

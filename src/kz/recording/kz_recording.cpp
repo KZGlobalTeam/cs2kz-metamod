@@ -21,7 +21,7 @@ CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tie
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 extern CSteamGameServerAPIContext g_steamAPI;
 
-ReplayFileWriter *KZRecordingService::s_fileWriter = nullptr;
+ReplayFileWriter *KZRecordingService::fileWriter = nullptr;
 
 // Not sure what's the best place to put this, so putting it here for now.
 void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
@@ -254,12 +254,12 @@ void KZRecordingService::CheckRecorders()
 			{
 				META_CONPRINTF("kz_replay_recording_debug: Run recorder stopped\n");
 			}
-			if (s_fileWriter)
+			if (fileWriter)
 			{
 				CPlayerUserId userID = this->player->GetClient()->GetUserID();
 				auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
 				this->CopyWeaponsToRecorder(recorderPtr.get());
-				s_fileWriter->QueueWrite(
+				fileWriter->QueueWrite(
 					std::move(recorderPtr),
 					// Success callback
 					[userID](const UUID_t &uuid, f32 replayDuration)
@@ -299,11 +299,11 @@ void KZRecordingService::CheckRecorders()
 			{
 				META_CONPRINTF("kz_replay_recording_debug: Jump recorder stopped\n");
 			}
-			if (s_fileWriter)
+			if (fileWriter)
 			{
 				auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
 				this->CopyWeaponsToRecorder(recorderPtr.get());
-				s_fileWriter->QueueWrite(std::move(recorderPtr));
+				fileWriter->QueueWrite(std::move(recorderPtr));
 			}
 			it = this->jumpRecorders.erase(it);
 		}

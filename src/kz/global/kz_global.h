@@ -97,6 +97,7 @@ public:
 public:
 	void OnPlayerAuthorized();
 	void OnClientDisconnect();
+	void SubmitBan(std::string reason, UUID_t replayUUID);
 
 	/**
 	 * Information about the current player we received from the API when the player connected.

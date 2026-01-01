@@ -400,6 +400,11 @@ void KZGlobalService::OnClientDisconnect()
 	}
 }
 
+void KZGlobalService::SubmitBan(std::string reason, UUID_t replayUUID)
+{
+	// TODO Anticheat: Implement this!
+}
+
 void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 {
 	switch (message->type)
