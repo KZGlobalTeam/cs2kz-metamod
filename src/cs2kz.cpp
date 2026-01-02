@@ -26,6 +26,7 @@
 #include "kz/pistol/kz_pistol.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/racing/kz_racing.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
@@ -96,6 +97,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	this->unloading = true;
 	KZ::misc::UnrestrictTimeLimit();
 	KZRecordingService::Shutdown();
+	KZRacingService::Cleanup();
 	ix::uninitNetSystem();
 	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
