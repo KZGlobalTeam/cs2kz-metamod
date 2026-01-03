@@ -36,6 +36,7 @@
 	{
 		"en"		"{grey}Usage: kz_rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
 		"chi"		"{grey}用法: kz_rpgoto <time> (示例: 1:23.45, +10, -5.2)"
+		"pl"		"{grey}Użycie: kz_rpgoto <time> (Przykłady: 1:23.45, +10, -5.2)"
 		"ua"		"{grey}Використання: kz_rpgoto <час> (Приклади: 1:23.45, +10, -5.2)"
 		"de"		"{grey}Verwendung: kz_rpgoto <time> (Beispiele: 1:23.45, +10, -5.2)"
 	}
