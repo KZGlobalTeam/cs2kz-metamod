@@ -1448,9 +1448,11 @@
 	"Command Description - kz_accept"
 	{
 		"en"		"Accept an incoming race."
+		"pl"		"Zaakceptuj nadchodzący wyścig."
 	}
 	"Command Description - kz_surrender"
 	{
 		"en"		"Surrender an ongoing race."
+		"pl"		"Poddaj nadchodzący wyścig."
 	}
 }
