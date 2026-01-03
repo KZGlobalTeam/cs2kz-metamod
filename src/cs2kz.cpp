@@ -27,6 +27,7 @@
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
+#include "utils/memtracker.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
@@ -50,6 +51,10 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	{
 		return false;
 	}
+
+#if defined(POSIX)
+	memtracker::Init();
+#endif
 	ConVar_Register();
 	hooks::Initialize();
 	ix::initNetSystem();
@@ -100,6 +105,9 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZRacingService::Cleanup();
 	ix::uninitNetSystem();
 	hooks::Cleanup();
+#if defined(POSIX)
+	memtracker::Shutdown();
+#endif
 	KZ::mode::EnableReplicatedModeCvars();
 	utils::Cleanup();
 	g_pKZModeManager->Cleanup();

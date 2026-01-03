@@ -711,3 +711,22 @@ void KZ::misc::OnActivateServer()
 	kz_showplayerclips.Set(false);
 	kz_showtriggers.Set(false);
 }
+
+extern void PrintTopAllocatingStacks(i32);
+extern void PrintTopAllocatingStacksDelta(i32);
+extern void SetAllocCheckpoint();
+
+CON_COMMAND_F(kz_memcheckpoint, "", FCVAR_NONE)
+{
+	SetAllocCheckpoint();
+}
+
+CON_COMMAND_F(kz_memdelta, "", FCVAR_NONE)
+{
+	PrintTopAllocatingStacksDelta(10);
+}
+
+CON_COMMAND_F(kz_meminfo, "", FCVAR_NONE)
+{
+	PrintTopAllocatingStacks(10);
+}
