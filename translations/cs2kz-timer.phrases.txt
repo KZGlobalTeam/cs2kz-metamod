@@ -39,6 +39,7 @@
 		"#format"	"color:s,diff_text:s"
 		"en"		" ({color}{diff_text}{grey})"
 		"chi"		" ({color}{diff_text}{grey})"
+		"pl"		" ({color}{diff_text}{grey})"
 		"ru"		" ({color}{diff_text}{grey})"
 		"fi"		" ({color}{diff_text}{grey})"
 		"sv"		" ({color}{diff_text}{grey})"
