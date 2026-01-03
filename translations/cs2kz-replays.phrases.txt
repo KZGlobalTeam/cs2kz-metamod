@@ -4,6 +4,7 @@
 	{
 		"en"		"{grey}No replay is currently playing."
 		"chi"		"{grey}当前没有回放正在播放."
+		"pl"		"{grey}Obecnie żadna powtórka nie jest odtwarzana."
 		"ua"		"{grey}Наразі не відтворюється жоден повтор."
 		"de"		"{grey}Derzeit wird keine Wiederholung abgespielt."
 	}
@@ -11,6 +12,7 @@
 	{
 		"en"		"{grey}Usage: kz_rpgoto <tick>"
 		"chi"		"{grey}用法: kz_rpgoto <tick>"
+		"pl"		"{grey}Użycie: kz_rpgoto <tick>"
 		"ua"		"{grey}Використання: kz_rpgoto <тік>"
 		"de"		"{grey}Verwendung: kz_rpgoto <tick>"
 	}
@@ -18,6 +20,7 @@
 	{
 		"en"		"{grey}Usage: kz_rpseek <+/-seconds>"
 		"chi"		"{grey}用法: kz_rpseek <+/-seconds>"
+		"pl"		"{grey}Użycie: kz_rpseek <+/-sekundy>"
 		"ua"		"{grey}Використання: kz_rpseek <+/-секунди>"
 		"de"		"{grey}Verwendung: kz_rpseek <+/-Sekunden>"
 	}
@@ -25,6 +28,7 @@
 	{
 		"en"		"{grey}Usage: <time/tick> (Examples: 1:23.45, +10, -5.2, 1234)"
 		"chi"		"{grey}用法: <time/tick> (示例: 1:23.45, +10, -5.2, 1234)"
+		"pl"		"{grey}Użycie: <czas/tick> (Przykłady: 1:23.45, +10, -5.2, 1234)"
 		"ua"		"{grey}Використання: <час/тік> (Приклади: 1:23.45, +10, -5.2, 1234)"
 		"de"		"{grey}Verwendung: <time/tick> (Beispiele: 1:23.45, +10, -5.2, 1234)"
 	}
@@ -39,6 +43,7 @@
 	{
 		"en"		"{grey}Usage: kz_rpgototick <tick> (Examples: 1234, +100, -50)"
 		"chi"		"{grey}用法: kz_rpgototick <tick> (示例: 1234, +100, -50)"
+		"pl"		"{grey}Użycie: kz_rpgoto <czas> (Przykłady: 1:23.45, +10, -5.2)"
 		"ua"		"{grey}Використання: kz_rpgototick <тік> (Приклади: 1234, +100, -50)"
 		"de"		"{grey}Verwendung: kz_rpgototick <tick> (Beispiele: 1234, +100, -50)"
 	}
@@ -46,6 +51,7 @@
 	{
 		"en"		"{darkred}Invalid time format. Examples: +10, -5.2, +1:30"
 		"chi"		"{darkred}无效的时间格式. 示例: +10, -5.2, +1:30"
+		"pl"		"{grey}Użycie: kz_rpgototick <tick> (Przykłady: 1234, +100, -50)"
 		"ua"		"{darkred}Невірний формат часу. Приклади: +10, -5.2, +1:30"
 		"de"		"{darkred}Ungültiges Zeitformat. Beispiele: +10, -5.2, +1:30"
 	}
@@ -53,6 +59,7 @@
 	{
 		"en"		"{darkred}Invalid time format. Examples: 1:23.45, 12:34:56.789, 45.2"
 		"chi"		"{darkred}无效的时间格式. 示例: 1:23.45, 12:34:56.789, 45.2"
+		"pl"		"{darkred}Nieprawidłowy format czasu. Przykłady: +10, -5.2, +1:30"
 		"ua"		"{darkred}Невірний формат часу. Приклади: 1:23.45, 12:34:56.789, 45.2"
 		"de"		"{darkred}Ungültiges Zeitformat. Beispiele: 1:23.45, 12:34:56.789, 45.2"
 	}
@@ -60,6 +67,7 @@
 	{
 		"en"		"{darkred}Invalid tick number. Must be a positive integer."
 		"chi"		"{darkred}无效的Tick数字. 必须为正整数."
+		"pl"		"{darkred}Nieprawidłowa liczba ticków. Musisz podać dodatnią liczbą całkowitą."
 		"ua"		"{darkred}Невірне число тіку. Повинно бути додатним цілим числом."
 		"de"		"{darkred}Ungültige Tickzahl. Muss eine positive ganze Zahl sein."
 	}
@@ -68,6 +76,7 @@
 		"#format"	"tick:d,maxTick:d"
 		"en"		"{grey}Tick {lime}{tick}{grey} is out of range. Maximum tick: {lime}{maxTick}"
 		"chi"		"{grey}Tick {lime}{tick}{grey} 超出范围. 最大 tick 值: {lime}{maxTick}."
+		"pl"		"{grey}Tick {lime}{tick}{grey} jest poza zakresem. Maksymalny tick: {lime}{maxTick}"
 		"ua"		"{grey}Тік {lime}{tick}{grey} виходить за межі діапазону. Максимальний тік: {lime}{maxTick}"
 		"de"		"{grey}Tick {lime}{tick}{grey} liegt außerhalb des Bereichs. Maximaler Tick: {lime}{maxTick}"
 	}
@@ -76,6 +85,7 @@
 		"#format"	"time:s,maxTime:s"
 		"en"		"{grey}Time {lime}{time}{grey} is out of range. Maximum time: {lime}{maxTime}"
 		"chi"		"{grey}时间 {lime}{time}{grey} 超出范围. 最大时间值: {lime}{maxTime}."
+		"pl"		"{grey}Czas {lime}{time}{grey} jest poza zakresem. Maksymalny czas: {lime}{maxTime}"
 		"ua"		"{grey}Час {lime}{time}{grey} виходить за межі діапазону. Максимальний час: {lime}{maxTime}"
 		"de"		"{grey}Zeit {lime}{time}{grey} liegt außerhalb des Bereichs. Maximale Zeit: {lime}{maxTime}"
 	}
@@ -84,6 +94,7 @@
 		"#format"	"tick:d,time:s"
 		"en"		"{grey}Jumped to tick {lime}{tick} ({lime}{time}{grey})"
 		"chi"		"{grey}跳转到 tick {lime}{tick} ({lime}{time}{grey})"
+		"pl"		"{grey}Przeskoczono do ticka {lime}{tick} ({lime}{time}{grey})"
 		"ua"		"{grey}Ви перемотали до тіку {lime}{tick} ({lime}{time}{grey})"
 		"de"		"{grey}Zu Tick {lime}{tick} ({lime}{time}{grey}) gesprungen"
 	}
@@ -92,6 +103,7 @@
 		// Current tick: 1234/5678 (12:34/23:45). Check console for details!
 		"#format"	"currentTick:d,totalTicks:d,time:s,maxTime:s"
 		"en"		"{grey}Current tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Check console for details!"
+		"pl"		"{grey}Aktualny tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Sprawdź konsolę po szczegóły!"
 		"chi"		"{grey}当前 tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). 在控制台中查看具体细节!"
 		"ua"		"{grey}Поточний тік: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Перевірте консоль щодо деталей!"
 		"de"		"{grey}Aktueller Tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Details in der Konsole!"
@@ -106,6 +118,7 @@
 		"#format"	"uuid:s,playerName:s,playerSteamID:llu,createdOn:s,serverVersion:lu,pluginVersion:s"
 		"en"		"Replay {uuid}\nPlayer: {playerName} ({playerSteamID})\nCreated On: {createdOn}\nServer Version: {serverVersion}\nPlugin Version: {pluginVersion}"
 		"chi"		"回放 {uuid}\n玩家: {playerName} ({playerSteamID})\n创建于: {createdOn}\n服务器版本: {serverVersion}\n插件版本: {pluginVersion}"
+		"pl"		"Powtórka {uuid}\nGracz: {playerName} ({playerSteamID})\nUtworzono: {createdOn}\nWersja serwera: {serverVersion}\nWersja wtyczki: {pluginVersion}"
 		"ua"		"Повтор {uuid}\nГравець: {playerName} ({playerSteamID})\nСтворено: {createdOn}\nВерсія серверу: {serverVersion}\nВерсія плагіна: {pluginVersion}"
 		"de"		"Wiederholung {uuid}\nSpieler: {playerName} ({playerSteamID})\nErstellt am: {createdOn}\nServer-Version: {serverVersion}\nPlugin-Version: {pluginVersion}"
 	}
@@ -116,6 +129,7 @@
 		"#format"	"reason:s"
 		"en"		"Replay Type: Cheater\nSuspect Reason: {reason}"
 		"chi"		"回放类型: 作弊者\n疑因: {reason}"
+		"pl"		"Typ powtórki: Oszust\nPowód podejrzenia: {reason}"
 		"ua"		"Тип повтору: Чітер\nПричина підозри: {reason}"
 		"de"		"Wiederholungstyp: Cheater\nVerdachtsgrund: {reason}"
 	}
@@ -129,6 +143,7 @@
 		"#format"	"name:s,mode:s,time:s,teleports:d"
 		"en"		"Replay Type: Run\nCourse: {name}\nMode + Styles: {mode}\nTime: {time}\nTeleports: {teleports}"
 		"chi"		"回放类型: Run\nCourse: {name}\n模式 + 风格: {mode}\n时长: {time}\n传送次数: {teleports}"
+		"pl"		"Typ powtórki: Przejście\nTrasa: {name}\nTryb + Style: {mode}\nCzas: {time}\nTeleporty: {teleports}"
 		"ua"		"Тип повтору: Проходження\nКурс: {name}\nРежим + Стилі: {mode}\nЧас: {time}\nТелепорти: {teleports}"
 		"de"		"Wiederholungstyp: Run\nRoute: {name}\nModus + Styles: {mode}\nZeit: {time}\nTeleports: {teleports}"
 	}
@@ -139,6 +154,7 @@
 		"#format"	"type:s,distance:.2f,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
 		"chi"		"回放类型: {type}\n距离: {distance} | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
+		"pl"		"Typ powtórki: {type}\nDystans: {distance} | {syncPercent}%%%% synchronizacji | {preDistance} pre | {maxDistance} max | {airTime} w powietrzu"
 		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
 	}
@@ -149,6 +165,7 @@
 		"#format"	"type:s,distance:.2f,blockDistance:d,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
 		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
 		"chi"		"回放类型: {type}\n距离: {distance} | {blockDistance} 板子 | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
+		"pl"		"Typ powtórki: {type}\nDystans: {distance} | {blockDistance} blok | {syncPercent}%%%% synchronizacji | {preDistance} pre | {maxDistance} max | {airTime} w powietrzu"
 		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {blockDistance} Блок | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
 	}
@@ -159,6 +176,7 @@
 		"#format"	"playerName:s,playerSteamID:llu"
 		"en"		"Replay Type: Manual\nSaved By: {playerName} ({playerSteamID})"
 		"chi"		"回放类型: 手动\n保存自: {playerName} ({playerSteamID})"
+		"pl"		"Typ powtórki: Ręczna\nZapisano przez: {playerName} ({playerSteamID})"
 		"ua"		"Тип повтору: Ручний\nЗбережено: {playerName} ({playerSteamID})"
 		"de"		"Wiederholungstyp: Manuell\nGespeichert von: {playerName} ({playerSteamID})"
 	}
@@ -168,6 +186,7 @@
 		"#format"	"seekSeconds:.3f,tick:d,time:s"
 		"en"		"{grey}Seeked {lime}{seekSeconds}{grey}s to tick {lime}{tick}{grey} ({lime}{time}{grey})"
 		"chi"		"{grey}寻找 {lime}{seekSeconds}{grey}s 到 tick {lime}{tick}{grey} ({lime}{time}{grey})"
+		"pl"		"{grey}Przewinięto {lime}{seekSeconds}{grey}s do ticka {lime}{tick}{grey} ({lime}{time}{grey})"
 		"ua"		"{grey}Перемотано {lime}{seekSeconds}{grey}с. до тіку {lime}{tick}{grey} ({lime}{time}{grey})"
 		"de"		"{grey}{lime}{seekSeconds}{grey}s zu Tick {lime}{tick}{grey} ({lime}{time}{grey}) gespult"
 	}
@@ -175,6 +194,7 @@
 	{
 		"en"		"{grey}Replay bot's legs are now hidden."
 		"chi"		"{grey}回放bot的腿部现在已隐藏."
+		"pl"		"{grey}Nogi bota powtórki są teraz ukryte."
 		"de"		"{grey}Die Beine des Replay-Bots sind jetzt ausgeblendet."
 		"ua"		"{grey}Ви вимкнули відображення ніг для бота повтору."
 	}
@@ -182,6 +202,7 @@
 	{
 		"en"		"{grey}Replay bot's legs are now visible."
 		"chi"		"{grey}回放bot的腿部现在已恢复显示."
+		"pl"		"{grey}Nogi bota powtórki są teraz widoczne."
 		"de"		"{grey}Die Beine des Replay-Bots sind jetzt sichtbar."
 		"ua"		"{grey}Ви увімкнули відображення ніг для бота повтору."
 	}
@@ -189,6 +210,7 @@
 	{
 		"en"		"{grey}Replay paused."
 		"chi"		"{grey}回放暂停."
+		"pl"		"{grey}Powtórka wstrzymana."
 		"ua"		"{grey}Повтор на паузі."
 		"de"		"{grey}Wiederholung pausiert."
 	}
@@ -196,6 +218,7 @@
 	{
 		"en"		"{grey}Replay resumed."
 		"chi"		"{grey}回放继续."
+		"pl"		"{grey}Powtórka wznowiona."
 		"ua"		"{grey}Повтор продовжено."
 		"de"		"{grey}Wiederholung fortgesetzt."
 	}
@@ -203,6 +226,7 @@
 	{
 		"en"		"{grey}Loading replay, please wait..."
 		"chi"		"{grey}回放加载中, 请稍等..."
+		"pl"		"{grey}Ładowanie powtórki, proszę czekać..."
 		"ua"		"{grey}Завантаження повтору, будь ласка, зачекайте..."
 		"de"		"{grey}Wiederholung wird geladen, bitte warten..."
 	}
@@ -210,6 +234,7 @@
 	{
 		"en"		"{grey}Replay is already loading, please wait..."
 		"chi"		"{grey}回放已加载中, 请稍等..."
+		"pl"		"{grey}Powtórka jest już ładowana, proszę czekać..."
 		"ua"		"{grey}Повтор вже завантажується, будь ласка, зачекайте..."
 		"de"		"{grey}Wiederholung wird bereits geladen, bitte warten..."
 	}
@@ -217,6 +242,7 @@
 	{
 		"en"		"{darkred}Invalid UUID format"
 		"chi"		"{darkred}无效的 UUID 格式"
+		"pl"		"{darkred}Nieprawidłowy format UUID"
 		"ua"		"{darkred}Невірний UUID формат"
 		"de"		"{darkred}Ungültiges UUID-Format"
 	}
@@ -224,6 +250,7 @@
 	{
 		"en"		"{lime}Replay loaded successfully! Starting playback..."
 		"chi"		"{lime}回放成功加载! 开始播放..."
+		"pl"		"{lime}Powtórka została pomyślnie załadowana! Rozpoczynam odtwarzanie..."
 		"ua"		"{lime}Повтор завантажено успішно! Починається відтворення..."
 		"de"		"{lime}Wiederholung erfolgreich geladen! Starte Wiedergabe..."
 	}
@@ -231,6 +258,7 @@
 	{
 		"en"		"{grey}No replay loading in progress"
 		"chi"		"{grey}没有回放正在加载"
+		"pl"		"{grey}Brak postępu ładowania powtórki"
 		"ua"		"{grey}Завантаження повтору не відбувається"
 		"de"		"{grey}Es wird derzeit keine Wiederholung geladen"
 	}
@@ -239,6 +267,7 @@
 		"#format"	"progress:.1f"
 		"en"		"{grey}Loading replay: {progress}%%%% complete"
 		"chi"		"{grey}加载回放中: {progress}%%%% 完成度"
+		"pl"		"{grey}Ładowanie powtórki: {progress}%%%% ukończono"
 		"ua"		"{grey}Завантаження повтору: {progress}%%%% виконано"
 		"de"		"{grey}Lade Wiederholung: {progress}%%%% abgeschlossen"
 	}
@@ -246,6 +275,7 @@
 	{
 		"en"		"{lime}Replay loading completed"
 		"chi"		"{lime}回放加载完成"
+		"pl"		"{lime}Ładowanie powtórki zakończone"
 		"ua"		"{lime}Завантаження повтору виконано"
 		"de"		"{lime}Ladevorgang der Wiederholung abgeschlossen"
 	}
@@ -253,6 +283,7 @@
 	{
 		"en"		"{grey}Replay loading cancelled"
 		"chi"		"{grey}回放取消加载"
+		"pl"		"{grey}Ładowanie powtórki anulowane"
 		"ua"		"{grey}Завантаження повтору скасовано"
 		"de"		"{grey}Laden der Wiederholung abgebrochen"
 	}
@@ -260,6 +291,7 @@
 	{
 		"en"		"{grey}Usage: kz_replay <ID>"
 		"chi"		"{grey}用法: kz_replay <ID>"
+		"pl"		"{grey}Użycie: kz_replay <ID>"
 		"ua"		"{grey}Використання: kz_replay <ID>"
 		"de"		"{grey}Verwendung: kz_replay <ID>"
 	}
@@ -267,6 +299,7 @@
 	{
 		"en"		"{darkred}Load cancelled by user"
 		"chi"		"{darkred}加载被用户取消"
+		"pl"		"{darkred}Ładowanie anulowane przez użytkownika"
 		"ua"		"{darkred}Завантаження скасовано користувачем"
 		"de"		"{darkred}Laden vom Benutzer abgebrochen"
 	}
@@ -274,6 +307,7 @@
 	{
 		"en"		"{darkred}Invalid replay file format"
 		"chi"		"{darkred}无效的回放文件格式"
+		"pl"		"{darkred}Nieprawidłowy format pliku powtórki"
 		"ua"		"{darkred}Невірний формат файлу повтору"
 		"de"		"{darkred}Ungültiges Wiederholungsdateiformat"
 	}
@@ -281,6 +315,7 @@
 	{
 		"en"		"{darkred}Failed to save manual replay."
 		"chi"		"{darkred}手动保存回放失败."
+		"pl"		"{darkred}Nie udało się zapisać ręcznej powtórki."
 		"ua"		"{darkred}Не вдалося зберегти ручний повтор."
 		"de"		"{darkred}Manuelle Wiederholung konnte nicht gespeichert werden."
 	}
@@ -289,6 +324,7 @@
 		"#format"	"uuid:s,duration:.0f"
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey} ({lime}{duration}{grey}s)"
 		"chi"		"{grey}回放已保存: {lime}{uuid}{grey} ({lime}{duration}{grey}s)"
+		"pl"		"{grey}Powtórka zapisana: {lime}{uuid}{grey} ({lime}{duration}{grey}s)"
 		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey} ({lime}{duration}{grey}с.)"
 		"de"		"{grey}Wiederholung gespeichert: {lime}{uuid}{grey} ({lime}{duration}{grey}s)"
 	}
@@ -297,6 +333,7 @@
 		"#format"	"uuid:s,duration:.0f"
 		"en"		"Replay saved: {uuid} ({duration}s)"
 		"chi"		"回放已保存: {uuid} ({duration}s)"
+		"pl"		"Powtórka zapisana: {uuid} ({duration}s)"
 		"ua"		"Повтор збережено: {uuid} ({duration}с.)"
 		"de"		"Wiederholung gespeichert: {uuid} ({duration}s)"
 	}
@@ -304,6 +341,7 @@
 	{
 		"en"		"{darkred}Failed to save run replay."
 		"chi"		"{darkred}保存跑图回放失败."
+		"pl"		"{darkred}Nie udało się zapisać powtórki przejścia."
 		"ua"		"{darkred}Не вдалося зберегти повтор проходження."
 		"de"		"{darkred}Run-Wiederholung konnte nicht gespeichert werden."
 	}
@@ -312,6 +350,7 @@
 		"#format"	"uuid:s"
 		"en"		"{grey}Replay saved: {lime}{uuid}{grey}"
 		"chi"		"{grey}回放已保存: {lime}{uuid}{grey}"
+		"pl"		"{grey}Powtórka zapisana: {lime}{uuid}{grey}"
 		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey}"
 		"de"		"{grey}Wiederholung gespeichert: {lime}{uuid}{grey}"
 	}
@@ -320,6 +359,7 @@
 		"#format"	"uuid:s"
 		"en"		"Replay saved: {uuid}"
 		"chi"		"回放已保存: {uuid}"
+		"pl"		"Powtórka zapisana: {uuid}"
 		"ua"		"Повтор збережено: {uuid}"
 		"de"		"Wiederholung gespeichert: {uuid}"
 	}
@@ -328,6 +368,7 @@
 		"#format"	"replayMap:s,currentMap:s"
 		"en"		"{darkred}Replay map does not match current map.{grey} (Replay: {default}{replayMap}{grey}, Current: {default}{currentMap}{grey})"
 		"chi"		"{darkred}此回放并非当前地图.{grey} (Replay: {default}{replayMap}{grey}, 当前地图: {default}{currentMap}{grey})"
+		"pl"		"{darkred}Mapa powtórki nie pasuje do aktualnej mapy.{grey} (Powtórka: {default}{replayMap}{grey}, Aktualna: {default}{currentMap}{grey})"
 		"ua"		"{darkred}Мапа на повторі не співпадає з поточною мапою.{grey} (На повторі: {default}{replayMap}{grey}, Поточна: {default}{currentMap}{grey})"
 		"de"		"{darkred}Die Map der Wiederholungs stimmt nicht mit der aktuellen Map überein.{grey} (Replay: {default}{replayMap}{grey}, Aktuell: {default}{currentMap}{grey})"
 	}
@@ -336,6 +377,7 @@
 		"#format"	"modeName:s"
 		"en"		"{darkred}Mode {default}{modeName}{darkred} is not available. Playback might be inaccurate."
 		"chi"		"{darkred}模式 {default}{modeName}{darkred} 不可用. 回放可能不准确."
+		"pl"		"{darkred}Tryb {default}{modeName}{darkred} jest niedostępny. Odtwarzanie może być niedokładne."
 		"ua"		"{darkred}Режим {default}{modeName}{darkred} недоступний. Відтворення може бути неточним."
 		"de"		"{darkred}Modus {default}{modeName}{darkred} ist nicht verfügbar. Wiedergabe könnte ungenau sein."
 	}
@@ -344,6 +386,7 @@
 		"#format"	"styleName:s"
 		"en"		"{darkred}Style {default}{styleName}{darkred} is not available. Playback might be inaccurate."
 		"chi"		"{darkred}风格 {default}{styleName}{darkred} 不可用. 回放可能不准确."
+		"pl"		"{darkred}Styl {default}{styleName}{darkred} jest niedostępny. Odtwarzanie może być niedokładne."
 		"ua"		"{darkred}Стиль {default}{styleName}{darkred} недоступний. Відтворення може бути неточним."
 		"de"		"{darkred}Style {default}{styleName}{darkred} ist nicht verfügbar. Wiedergabe könnte ungenau sein."
 	}
@@ -351,6 +394,7 @@
 	{
 		"en"		"{grey}Check console for info!"
 		"chi"		"{grey}在控制台中查看信息!"
+		"pl"		"{grey}Sprawdź konsolę, by uzyskać więcej informacji!"
 		"ua"		"{grey}Перевірте консоль щодо деталей!"
 		"de"		"{grey}Infos in der Konsole ansehen!"
 	}
@@ -359,6 +403,7 @@
 		// Usage: !replays [type=run/r/jump/j/manual/m] [options...]
 		"en"		"Usage: !replays [type=run/r/jump/j/manual/m] [options...]"
 		"chi"		"用法: !replays [type=run/r/jump/j/manual/m] [options...]"
+		"pl"		"Użycie: !replays [type=run/r/jump/j/manual/m] [opcje...]"
 		"ua"		"Використання: !replays [type=run/r/jump/j/manual/m] [параметри...]"
 		"de"		"Verwendung: !replays [type=run/r/jump/j/manual/m] [Optionen...]"
 	}
@@ -372,6 +417,7 @@
 		//	limit=<num> - Limit results (max 20)
 		"en"		"\nGeneral Options:\n\tplayer=<name> - Filter by player name\n\tsteamid=<id> - Filter by Steam ID\n\tmap=<name> - Filter by map name (default: current map)\n\toffset=<num> - Skip first N results\n\tlimit=<num> - Limit results (max 20)"
 		"chi"		"\n常规选项:\n\tplayer=<name> - 过滤玩家名称\n\tsteamid=<id> - 过滤Steam ID\n\tmap=<name> - 过滤地图名字 (default: current map)\n\toffset=<num> - 跳过第几个结果\n\tlimit=<num> - 最大结果数 (max 20)"
+		"pl"		"\nOpcje ogólne:\n\tplayer=<nazwa> - Filtruj po nazwie gracza\n\tsteamid=<id> - Filtruj po Steam ID\n\tmap=<nazwa> - Filtruj po mapie (domyślnie: aktualna mapa)\n\toffset=<liczba> - Pomija pierwsze N wyników\n\tlimit=<liczba> - Limit wyników (maks. 20)"
 		"ua"		"\nЗагальні параметри:\n\tplayer=<ім'я> - Фільтрувати за іменем гравця\n\tsteamid=<id> - Фільтрувати за Steam ID\n\tmap=<назва> - Фільтрувати за мапою (за замовчуванням: поточна мапа)\n\toffset=<число> - Пропустити перші N результатів\n\tlimit=<число> - Ліміт результатів (максимум 20)"
 		"de"		"\nAllgemeine Optionen:\n\tplayer=<name> - Nach Spieler filtern\n\tsteamid=<id> - Nach SteamID filtern\n\tmap=<name> - Nach Map filtern (Standard: aktuelle Map)\n\toffset=<num> - Erste N Ergebnisse überspringen\n\tlimit=<num> - Ergebnisse begrenzen (max. 20)"
 	}
@@ -383,6 +429,7 @@
 		//	Manual: saver=<name> ssid=<steamid>
 		"en"		"\nType Options:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
 		"chi"		"\n类型选项:\n\tRun: mode=<mode> course=<name> maxtime=<sec> maxteleports=<num> numstyles=<num>\n\tJump: jumptype=<type> mindistance=<dist>\n\tManual: saver=<name> ssid=<steamid>"
+		"pl"		"\nOpcje typu powtórki:\n\tPrzejście: mode=<nazwa trybu> course=<nazwa trasy> maxtime=<sekundy> maxteleports=<liczba> numstyles=<liczba>\n\tSkok: jumptype=<typ skoku> mindistance=<dystans>\n\tRęczna powtórka: saver=<nazwa> ssid=<steamid>"
 		"ua"		"\nПараметри типу повтору:\n\tПроходження: mode=<назва режиму> course=<назва курсу> maxtime=<секунди> maxteleports=<число> numstyles=<число>\n\tСтрибок: jumptype=<тип стрибка> mindistance=<дистанція>\n\tРучний повтор: saver=<ім'я> ssid=<steamid>"
 		"de"		"\nTypoptionen:\n\tRun: mode=<Modus> course=<Route> maxtime=<Sek> maxteleports=<Anzahl> numstyles=<Anzahl>\n\tJump: jumptype=<Typ> mindistance=<Distanz>\n\tManual: saver=<Name> ssid=<SteamID>"
 	}
@@ -390,6 +437,7 @@
 	{
 		"en"		"{grey}No matching replays found."
 		"chi"		"{grey}没有找到匹配的回放."
+		"pl"		"{grey}Nie znaleziono pasujących powtórek."
 		"ua"		"{grey}Не знайдено відповідних повторів."
 		"de"		"{grey}Keine passenden Wiederholungen gefunden."
 	}
@@ -397,6 +445,7 @@
 	{
 		"en"		"Cheater Replays"
 		"chi"		"作弊者的回放"
+		"pl"		"Powtórki oszustów"
 		"ua"		"Повтори Чітерів"
 		"de"		"Cheater-Wiederholungen"
 	}
@@ -404,6 +453,7 @@
 	{
 		"en"		"Run Replays"
 		"chi"		"跑图回放"
+		"pl"		"Powtórki przejść"
 		"ua"		"Повтори проходжень"
 		"de"		"Run-Wiederholungen"
 	}
@@ -411,6 +461,7 @@
 	{
 		"en"		"Jump Replays"
 		"chi"		"跳跃回放"
+		"pl"		"Powtórki skoków"
 		"ua"		"Повтори стрибків"
 		"de"		"Jump-Wiederholungen"
 	}
@@ -418,6 +469,7 @@
 	{
 		"en"		"Manual Replays"
 		"chi"		"手动回放"
+		"pl"		"Ręczne powtórki"
 		"ua"		"Ручні повтори"
 		"de"		"Manuelle Wiederholungen"
 	}
@@ -425,6 +477,7 @@
 	{
 		"en"		"Player"
 		"chi"		"玩家"
+		"pl"		"Gracz"
 		"ua"		"Гравець"
 		"de"		"Spieler"
 	}
@@ -432,6 +485,7 @@
 	{
 		"en"		"Map"
 		"chi"		"地图"
+		"pl"		"Mapa"
 		"ua"		"Мапа"
 		"de"		"Map"
 	}
@@ -439,6 +493,7 @@
 	{
 		"en"		"Reason"
 		"chi"		"原因"
+		"pl"		"Powód"
 		"ua"		"Причина"
 		"de"		"Grund"
 	}
@@ -446,6 +501,7 @@
 	{
 		"en"		"SteamID"
 		"chi"		"SteamID"
+		"pl"		"SteamID"
 		"ua"		"SteamID"
 		"de"		"SteamID"
 	}
@@ -453,6 +509,7 @@
 	{
 		"en"		"UUID"
 		"chi"		"UUID"
+		"pl"		"UUID"
 		"ua"		"UUID"
 		"de"		"UUID"
 	}
@@ -460,6 +517,7 @@
 	{
 		"en"		"Course"
 		"chi"		"关卡"
+		"pl"		"Trasa"
 		"ua"		"Курс"
 		"de"		"Route"
 	}
@@ -467,6 +525,7 @@
 	{
 		"en"		"Mode"
 		"chi"		"模式"
+		"pl"		"Tryb"
 		"ua"		"Режим"
 		"de"		"Modus"
 	}
@@ -474,6 +533,7 @@
 	{
 		"en"		"Time"
 		"chi"		"时长"
+		"pl"		"Czas"
 		"ua"		"Час"
 		"de"		"Zeit"
 	}
@@ -481,6 +541,7 @@
 	{
 		"en"		"Teleports"
 		"chi"		"传送"
+		"pl"		"Teleporty"
 		"ua"		"Телепорти"
 		"de"		"Teleports"
 	}
@@ -488,6 +549,7 @@
 	{
 		"en"		"Jump Type"
 		"chi"		"跳跃类型"
+		"pl"		"Typ skoku"
 		"ua"		"Тип стрибка"
 		"de"		"Jump-Typ"
 	}
@@ -495,6 +557,7 @@
 	{
 		"en"		"Distance"
 		"chi"		"距离"
+		"pl"		"Dystans"
 		"ua"		"Дистанція"
 		"de"		"Distanz"
 	}
@@ -502,6 +565,7 @@
 	{
 		"en"		"Block"
 		"chi"		"板子"
+		"pl"		"Blok"
 		"ua"		"Блок"
 		"de"		"Block"
 	}
@@ -509,6 +573,7 @@
 	{
 		"en"		"Strafes"
 		"chi"		"加速"
+		"pl"		"Strejfy"
 		"ua"		"Стрейфи"
 		"de"		"Strafes"
 	}
@@ -516,6 +581,7 @@
 	{
 		"en"		"Saved By"
 		"chi"		"保存自"
+		"pl"		"Zapisane przez"
 		"ua"		"Збережено"
 		"de"		"Gespeichert von"
 	}
