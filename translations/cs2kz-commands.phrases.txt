@@ -1453,6 +1453,6 @@
 	"Command Description - kz_surrender"
 	{
 		"en"		"Surrender an ongoing race."
-		"pl"		"Poddaj nadchodzący wyścig."
+		"pl"		"Poddaj bieżący wyścig."
 	}
 }
