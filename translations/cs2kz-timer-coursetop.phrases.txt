@@ -118,7 +118,7 @@
 		"it"		"ID Run"
 		"es"		"ID del Run"
 		"de"		"ID des Runs"
-		"pl"		"ID Przebiegu"
+		"pl"		"ID Runu"
 		"ko"		"Run ID"
 		"fi"		"Run ID"
 		"lv"		"Run ID"
