@@ -19,7 +19,7 @@
 	{
 		"en"		"{grey}Your player's legs are now hidden."
 		"chi"		"{grey}你现在隐藏了你的腿部."
-		"pl"		"{grey}Twoje nogi nie są już widoczne."
+		"pl"		"{grey}Twoje nogi są ukryte."
 		"fi"		"{grey}Pelaajasi jalat ovat nyt piilossa."
 		"sv"		"{grey}Nu är dina ben osynliga."
 		"ua"		"{grey}Ви приховали свої ноги."
@@ -51,7 +51,7 @@
 		"en"		"{grey}You are now hiding other players."
 		"chi"		"{grey}已隐藏其他玩家模型."
 		"ru"		"{grey}Теперь вы не видите остальных игроков."
-		"pl"		"{grey}Inni gracze nie są już widoczni."
+		"pl"		"{grey}Inni gracze są ukryci."
 		"fi"		"{grey}Nyt et näe muita pelaajia."
 		"sv"		"{grey}Nu kan du inte se andra spelare."
 		"ua"		"{grey}Ви приховали інших гравців."
@@ -83,7 +83,7 @@
 		"en"		"{grey}You are now hiding your weapon."
 		"chi"		"{grey}你现在隐藏了你的武器."
 		"ru"		"{grey}Теперь вы скрыли свое оружие."
-		"pl"		"{grey}Twoja broń nie jest już widoczna."
+		"pl"		"{grey}Twoja broń jest ukryta."
 		"fi"		"{grey}Pelaajasi ase on nyt piilossa."
 		"sv"		"{grey}Nu kan du inte se ditt vapen."
 		"ua"		"{grey}Ви приховали свою зброю."
@@ -98,6 +98,7 @@
 	{
 		"en"		"{grey}You will now automatically hide your weapon upon spawning."
 		"chi"		"{grey}你现在会在重生时自动隐藏武器."
+		"pl" 		"{grey}Twoja broń będzie teraz automatycznie ukrywana po odrodzeniu."
 		"ua"		"{grey}Тепер зброю буде автоматично приховано після відродження."
 		"sv"		"{grey}Du kommer att automatiskt dölja ditt vapen när du spawnar."
 		"de"		"{grey}Deine Waffe wird nun beim Spawnen automatisch versteckt."
@@ -106,6 +107,7 @@
 	{
 		"en"		"{grey}You will no longer automatically hide your weapon upon spawning."
 		"chi"		"{grey}你将不再在重生时自动隐藏武器."
+		"pl" 		"{grey}Twoja broń nie będzie już automatycznie ukrywana po odrodzeniu."
 		"ua"		"{grey}Зброю більше не буде автоматично приховано після відродження."
 		"sv"		"{grey}Du kommer inte att automatiskt dölja ditt vapen när du spawnar."
 		"de"		"{grey}Deine Waffe wird beim Spawnen nicht mehr automatisch versteckt."

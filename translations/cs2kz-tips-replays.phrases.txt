@@ -7,6 +7,7 @@
 		"ru"		"{grey}Напишите {default}!replay {grey}для просмотра лучшего прохождения карты на этом сервере."
 		"ua"		"{grey}Напишіть {default}!replay {grey}, щоб переглянути найкраще проходження мапи на цьому сервері."
 		"de"		"{grey}Gib {default}!replay {grey}ein, um die schnellsten Runs des Servers anzusehen."
+		"pl"		"{grey}Wpisz {default}!replay {grey}, aby obejrzeć najszybsze przejazdy serwera."
 	}
 	"Tip - kz_replays"
 	{
@@ -14,6 +15,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!replays {grey}以列出服务器中可用的回放."
 		"ua"		"{grey}Напишіть {default}!replays {grey}, щоб переглянути список доступних повторів на сервері."
 		"de"		"{grey}Gib {default}!replays {grey}ein, um alle verfügbaren Replays auf dem Server anzuzeigen."
+		"pl"		"{grey}Wpisz {default}!replays {grey}, aby wyświetlić dostępne powtórki na serwerze."
 	}
 	"Tip - kz_rpgoto"
 	{
@@ -21,6 +23,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rpgoto {grey}跳转到回放中的特定时间点."
 		"ua"		"{grey}Напишіть {default}!rpgoto <час> {grey}, щоб перейти до конкретного моменту в повторі."
 		"de"		"{grey}Gib {default}!rpgoto <time> {grey}ein, um zu einer bestimmten Zeit im Replay zu springen."
+		"pl"		"{grey}Wpisz {default}!rpgoto <czas> {grey}, aby przejść do określonego momentu w powtórce."
 	}
 	"Tip - kz_rpgototick"
 	{
@@ -28,6 +31,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rpgototick {grey}跳转到回放中的特定的某一Tick."
 		"ua"		"{grey}Напишіть {default}!rpgototick <тік> {grey}, щоб перейти до конкретного тіку в повторі."
 		"de"		"{grey}Gib {default}!rpgototick <tick> {grey}ein, um zu einem bestimmten Tick im Replay zu springen."
+		"pl"		"{grey}Wpisz {default}!rpgototick <tick> {grey}, aby przejść do określonego ticka w powtórce."
 	}
 	"Tip - kz_rpinfo"
 	{
@@ -35,6 +39,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rpinfo {grey}以获取当前回放的信息."
 		"ua"		"{grey}Напишіть {default}!rpinfo {grey}, щоб відобразити інформацію про поточний повтор."
 		"de"		"{grey}Gib {default}!rpinfo {grey}ein, um Informationen zum aktuellen Replay anzuzeigen."
+		"pl"		"{grey}Wpisz {default}!rpinfo {grey}, aby wyświetlić informacje o aktualnej powtórce."
 	}
 	"Tip - kz_rppause"
 	{
@@ -42,6 +47,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rppause {grey}暂停或继续当前回放."
 		"ua"		"{grey}Напишіть {default}!rppause {grey}, щоб поставити на паузу або продовжити відтворення повтору."
 		"de"		"{grey}Gib {default}!rppause {grey}ein, um das Replay zu pausieren oder fortzusetzen."
+		"pl"		"{grey}Wpisz {default}!rppause {grey}, aby wstrzymać lub wznowić odtwarzanie powtórki."
 	}
 	"Tip - kz_rploadprogress"
 	{
@@ -49,6 +55,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rploadprogress {grey}检查回放的加载进度."
 		"ua"		"{grey}Напишіть {default}!rploadprogress {grey}, щоб перевірити прогрес завантаження повтору."
 		"de"		"{grey}Gib {default}!rploadprogress {grey}ein, um den Ladefortschritt eines Replays zu prüfen."
+		"pl"		"{grey}Wpisz {default}!rploadprogress {grey}, aby sprawdzić postęp ładowania powtórki."
 	}
 	"Tip - kz_rpcancelload"
 	{
@@ -56,6 +63,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rpcancelload {grey}来取消加载回放."
 		"ua"		"{grey}Напишіть {default}!rpcancelload {grey}, щоб скасувати завантаження повторy."
 		"de"		"{grey}Gib {default}!rpcancelload {grey}ein, um das Laden eines Replays abzubrechen."
+		"pl"		"{grey}Wpisz {default}!rpcancelload {grey}, aby anulować ładowanie powtórki."
 	}
 	"Tip - kz_rpseek"
 	{
@@ -63,6 +71,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rpseek <+/-time> {grey}在回放中相对地寻找某个时间点."
 		"ua"		"{grey}Напишіть {default}!rpseek <+/-час> {grey}, щоб приблизно перейти до певного моменту в повторі."
 		"de"		"{grey}Gib {default}!rpseek <+/-time> {grey}ein, um relativ im Replay vor- oder zurückzuspringen."
+		"pl"		"{grey}Wpisz {default}!rpseek <+/-czas> {grey}, aby względnie przeskoczyć do określonego momentu w powtórce."
 	}
 	"Tip - kz_rpsave"
 	{
@@ -70,6 +79,7 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rpsave <seconds> {grey}以手动保存一段指定具体时长的回放."
 		"ua"		"{grey}Напишіть {default}!rpsave <секунди> {grey}, щоб вручну зберегти повтор тривалістю до вказаної кількості секунд."
 		"de"		"{grey}Gib {default}!rpsave <seconds> {grey}ein, um ein manuelles Replay bis zur angegebenen Länge zu speichern."
+		"pl"		"{grey}Wpisz {default}!rpsave <sekundy> {grey}, aby zapisać ręcznie powtórkę o określonej długości."
 	}
 	"Tip - Replay Storage Policy"
 	{
@@ -77,6 +87,7 @@
 		"chi"		"{grey}较旧或不太重要的回放可能会随着时间的推移被自动删除以释放服务器空间. 手动保存新的回放会覆盖之前的回放."
 		"ua"		"{grey}Старі або менш важливі повтори можуть бути автоматично видалені з часом, щоб звільнити місце на сервері. Збереження нових повторів вручну може перезаписати попередні."
 		"de"		"{grey}Ältere oder weniger wichtige Replays können automatisch gelöscht werden, um Speicherplatz freizugeben. Neue manuelle Replays können ältere überschreiben."
+		"pl"		"{grey}Starsze lub mniej ważne powtórki mogą być automatycznie usuwane, aby zwolnić miejsce na serwerze. Zapisanie nowych powtórek ręcznie może nadpisać poprzednie."
 	}
 	"Tip - kz_rphidelegs"
 	{
@@ -84,5 +95,6 @@
 		"chi"		"{grey}在聊天框中输入 {default}!rphidelegs {grey}来切换是否显示回放bot第一人称视角的腿部."
 		"ua"		"{grey}Напишіть {default}!rphidelegs {grey}, щоб перемикнути відображення ніг бота повтору від першої особи."
 		"de"		"{grey}Gib {default}!rphidelegs {grey}ein, um die Sichtbarkeit der Beine des Replay-Bots (1st Person) umzuschalten."
+		"pl"		"{grey}Wpisz {default}!rphidelegs {grey}, aby przełączać widoczność nóg bota powtórki w widoku z pierwszej osoby."
 	}
 }

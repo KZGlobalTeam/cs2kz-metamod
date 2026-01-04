@@ -4,6 +4,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_pistol <name|off>{grey}."
 		"chi"		"{grey}用法: {default}kz_pistol <name|off>{grey}."
+		"pl"		"{grey}Użycie: {default}kz_pistol <name|off>{grey}."
 		"ua"		"{grey}Використання: {default}kz_pistol <name|off>{grey}."
 		"sv"		"{grey}Användning: {default}kz_pistol <name|off>{grey}."
 		"de"		"{grey}Anwendung: {default}kz_pistol <name|off>{grey}."
@@ -12,6 +13,7 @@
 	{
 		"en"		"{grey}You have disabled your pistol."
 		"chi"		"{grey}你已禁用手枪."
+		"pl"		"{grey}Wyłączyłeś swój pistolet."
 		"ua"		"{grey}Ви вимкнули пістолет."
 		"sv"		"{grey}Du har döljt pistolen."
 		"de"		"{grey}Du hast deine Pistole deaktiviert."
@@ -21,6 +23,7 @@
 		"#format"	"pistol:s"
 		"en"		"{grey}You have changed your pistol to {default}{pistol}{grey}."
 		"chi"		"{grey}你已将手枪更换为 {default}{pistol}{grey}."
+		"pl" 		"{grey}Zmieniłeś swój pistolet na {default}{pistol}{grey}."
 		"ua"		"{grey}Ви змінили пістолет на {default}{pistol}{grey}."
 		"sv"		"{grey}Du har ändrat din pistol till {default}{pistol}{grey}."
 		"de"		"{grey}Du hast deine Pistole zu {default}{pistol}{grey} gewechselt."
@@ -30,6 +33,7 @@
 		"#format"	"pistol:s"
 		"en"		"{darkred}Unknown pistol: {default}{pistol}{grey}."
 		"chi"		"{darkred}未知手枪: {default}{pistol}{grey}."
+		"pl" 		"{darkred}Nieznany pistolet: {default}{pistol}{grey}."
 		"ua"		"{darkred}Невідомий пістолет: {default}{pistol}{grey}."
 		"sv"		"{darkred}Okänd pistol: {default}{pistol}{grey}."
 		"de"		"{darkred}Unbekannte Pistole: {default}{pistol}{grey}."

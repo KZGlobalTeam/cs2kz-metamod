@@ -20,7 +20,7 @@
 		"#format"	"mode:s"
 		"en"		"Possible modes: (Current mode is {mode})"
 		"chi"		"可用模式: (当前模式为 {mode})"
-		"pl"		"Możliwe tryby: (Obecny tryb gry to {mode})"
+		"pl"		"Dostępne tryby: (Obecny tryb gry to {mode})"
 		"fi"		"Mahdolliset moodit: (Tämänhetkinen moodi on {mode})"
 		"sv"		"Möjliga modes: (Nuvarande mode är {mode})"
 		"ua"		"Доступні режими: (Поточний режим — {mode})"
