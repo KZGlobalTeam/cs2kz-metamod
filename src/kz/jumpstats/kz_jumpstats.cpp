@@ -415,6 +415,12 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	call->duration = g_pKZUtils->GetGlobals()->frametime;
 	call->ducking = this->player->GetMoveServices()->m_bDucked;
 	this->player->GetVelocity(&call->velocityPost);
+
+	// AA only applies at most half of the acceleration to the velocity after AACall.
+	// The rest is applied in TryPlayerMove, but let's just add it here for simplicity.
+	// Technically this is not 100% accurate if the player collides with something,
+	// but it should be close enough.
+	call->velocityPost += this->player->currentMoveData->m_vecFrameVelocityDelta;
 	strafe->UpdateStrafeMaxSpeed(call->velocityPost.Length2D());
 
 	// Check if we are still tracking release for the strafe.
