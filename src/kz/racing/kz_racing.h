@@ -15,6 +15,18 @@ namespace KZ::racing
 		bool FromJson(const Json &json);
 	};
 
+	struct RaceSpec
+	{
+		u32 workshopID;
+		std::string courseName;
+		std::string modeName;
+		f64 maxDurationSeconds;
+		u32 maxTeleports;
+
+		bool ToJson(Json &json) const;
+		bool FromJson(const Json &json);
+	};
+
 	namespace events
 	{
 		struct ChatMessage
@@ -26,37 +38,90 @@ namespace KZ::racing
 			bool FromJson(const Json &json);
 		};
 
-		struct InitRace
+		struct RaceInitialized
 		{
-			u64 workshopID;
-			std::string courseName;
-			std::string modeName;
-			f64 maxDurationSeconds;
-			u32 maxTeleports;
+			RaceSpec spec;
 
-			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
 		};
 
-		struct BeginRace
-		{
-			f64 countdownSeconds;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct CancelRace
+		struct Ready
 		{
 			bool ToJson(Json &json) const
 			{
 				return true;
 			}
+		};
 
-			bool FromJson(const Json &json)
+		struct ServerJoinRace
+		{
+			std::string name;
+
+			bool FromJson(const Json &json);
+		};
+
+		struct Unready
+		{
+			bool ToJson(Json &json) const
 			{
 				return true;
 			}
+		};
+
+		struct ServerLeaveRace
+		{
+			std::string name;
+
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerJoinRace
+		{
+			PlayerInfo player;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerLeaveRace
+		{
+			PlayerInfo player;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct StartRace
+		{
+			f64 countdownSeconds;
+
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerFinish
+		{
+			PlayerInfo player;
+			u32 teleports;
+			f64 timeSeconds;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerDisconnect
+		{
+			PlayerInfo player;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerSurrender
+		{
+			PlayerInfo player;
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
 		};
 
 		struct RaceResults
@@ -87,7 +152,19 @@ namespace KZ::racing
 			bool FromJson(const Json &json);
 		};
 
-		struct Ready
+		struct RaceFinished
+		{
+			RaceResults results;
+
+			bool ToJson(Json &json) const
+			{
+				return true;
+			}
+
+			bool FromJson(const Json &json);
+		};
+
+		struct CancelRace
 		{
 			bool ToJson(Json &json) const
 			{
@@ -95,88 +172,12 @@ namespace KZ::racing
 			}
 		};
 
-		struct Unready
+		struct RaceCancelled
 		{
-			bool ToJson(Json &json) const
+			bool FromJson(const Json &json)
 			{
 				return true;
 			}
-		};
-
-		struct EndRace
-		{
-			enum class Reason
-			{
-				/**
-				 * The race's `max_duration` expired.
-				 */
-				Timeout,
-
-				/**
-				 * An admin used `kz_race_end`.
-				 */
-				Forced,
-			};
-
-			Reason reason;
-
-			bool ToJson(Json &json) const;
-		};
-
-		struct ServerJoinRace
-		{
-			std::string name;
-
-			bool FromJson(const Json &json);
-		};
-
-		struct ServerLeaveRace
-		{
-			std::string name;
-
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerJoinRace
-		{
-			PlayerInfo player;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerLeaveRace
-		{
-			PlayerInfo player;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerFinish
-		{
-			PlayerInfo player;
-			u32 teleports;
-			f64 timeSeconds;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerDisconnect
-		{
-			PlayerInfo player;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerSurrender
-		{
-			PlayerInfo player;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
 		};
 
 	}; // namespace events
@@ -192,7 +193,7 @@ struct RaceInfo
 	};
 
 	State state = State::None;
-	KZ::racing::events::InitRace data;
+	KZ::racing::RaceSpec spec;
 	std::vector<KZ::racing::PlayerInfo> localParticipants;
 	// This also includes people who surrendered.
 	std::vector<KZ::racing::PlayerInfo> localFinishers;
@@ -240,17 +241,16 @@ public:
 	// Note that unlike the global service, these functions do not have callbacks from the coordinator.
 	// The server only acts upon receiving broadcasted messages from the coordinator.
 
-	static void SendInitRace(u64 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports);
+	static void SendInitRace(u32 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports);
 	static void SendCancelRace();
 	static void SendReady();
 	static void SendUnready();
-	static void SendBeginRace(f64 countdownSeconds);
 	void SendJoinRace();
 	void SendLeaveRace();
 	void SendDisconnect();
 	void SendSurrenderRace();
 	void SendFinishRace(f64 timeSeconds, u32 teleports);
-	static void SendEndRace(bool forced);
+	static void SendRaceFinished();
 
 	void SendChatMessage(const std::string &message);
 
@@ -259,10 +259,10 @@ public:
 	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
 	// Called on the main thread.
 	static void OnChatMessage(const KZ::racing::events::ChatMessage &message);
-	static void OnInitRace(const KZ::racing::events::InitRace &message);
-	static void OnBeginRace(const KZ::racing::events::BeginRace &message);
-	static void OnCancelRace(const KZ::racing::events::CancelRace &message);
-	static void OnRaceResults(const KZ::racing::events::RaceResults &message);
+	static void OnRaceInitialized(const KZ::racing::events::RaceInitialized &message);
+	static void OnStartRace(const KZ::racing::events::StartRace &message);
+	static void OnRaceCancelled(const KZ::racing::events::RaceCancelled &message);
+	static void OnRaceFinished(const KZ::racing::events::RaceFinished &message);
 	static void OnServerJoinRace(const KZ::racing::events::ServerJoinRace &message);
 	static void OnServerLeaveRace(const KZ::racing::events::ServerLeaveRace &message);
 	static void OnPlayerJoinRace(const KZ::racing::events::PlayerJoinRace &message);
