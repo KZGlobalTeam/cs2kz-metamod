@@ -298,7 +298,7 @@ namespace
 			}
 
 			LockGuard lock(m_lock);
-			printf("[alloc-tracker] total_current=%zu frees=%llu\n", m_totalCurrentBytes, static_cast<unsigned long long>(m_totalFrees));
+			META_CONPRINTF("[alloc-tracker] total_current=%zu frees=%llu\n", m_totalCurrentBytes, static_cast<unsigned long long>(m_totalFrees));
 			bool visited[kMaxTrackedStacks] = {};
 
 			for (int rank = 0; rank < topCount; ++rank)
@@ -326,8 +326,8 @@ namespace
 
 				visited[bestIndex] = true;
 				const StackStat &stat = m_stats[bestIndex];
-				printf("[alloc-tracker] #%d bytes=%zu allocs=%llu\n", rank + 1, stat.currentBytes,
-					   static_cast<unsigned long long>(stat.allocationCount));
+				META_CONPRINTF("[alloc-tracker] #%d bytes=%zu allocs=%llu\n", rank + 1, stat.currentBytes,
+							   static_cast<unsigned long long>(stat.allocationCount));
 				PrintStack(stat.key);
 			}
 		}
@@ -360,14 +360,15 @@ namespace
 			}
 			if (!m_hasCheckpoint)
 			{
-				printf("[alloc-tracker] no checkpoint set\n");
+				META_CONPRINTF("[alloc-tracker] no checkpoint set\n");
 				return;
 			}
 
 			LockGuard lock(m_lock);
 			long long deltaTotal = static_cast<long long>(m_totalCurrentBytes) - static_cast<long long>(m_checkpointTotalCurrent);
 			long long deltaFrees = static_cast<long long>(m_totalFrees) - static_cast<long long>(m_checkpointTotalFrees);
-			printf("[alloc-tracker][delta] total_current=%lld frees=%lld\n", static_cast<long long>(deltaTotal), static_cast<long long>(deltaFrees));
+			META_CONPRINTF("[alloc-tracker][delta] total_current=%lld frees=%lld\n", static_cast<long long>(deltaTotal),
+						   static_cast<long long>(deltaFrees));
 
 			bool visited[kMaxTrackedStacks] = {};
 			for (int rank = 0; rank < topCount; ++rank)
@@ -398,7 +399,8 @@ namespace
 				const StackStat &stat = m_stats[bestIndex];
 				const StackCheckpoint &chk = m_checkpoint[bestIndex];
 				uint64_t deltaAllocs = (stat.allocationCount > chk.allocationCount) ? (stat.allocationCount - chk.allocationCount) : 0;
-				printf("[alloc-tracker][delta] #%d bytes=%zu allocs=%llu\n", rank + 1, bestDelta, static_cast<unsigned long long>(deltaAllocs));
+				META_CONPRINTF("[alloc-tracker][delta] #%d bytes=%zu allocs=%llu\n", rank + 1, bestDelta,
+							   static_cast<unsigned long long>(deltaAllocs));
 				PrintStack(stat.key);
 			}
 		}
@@ -587,12 +589,12 @@ namespace
 					}
 				}
 
-				printf("    frame[%d]: %p %s+0x%lx", i, addr, mod, static_cast<unsigned long>(modOff));
+				META_CONPRINTF("    frame[%d]: %p %s+0x%lx", i, addr, mod, static_cast<unsigned long>(modOff));
 				if (sym)
 				{
-					printf(" (%s+0x%lx)", sym, static_cast<unsigned long>(symOff));
+					META_CONPRINTF(" (%s+0x%lx)", sym, static_cast<unsigned long>(symOff));
 				}
-				printf("\n");
+				META_CONPRINTF("\n");
 			}
 		}
 
