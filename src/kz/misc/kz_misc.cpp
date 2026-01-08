@@ -158,8 +158,6 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 			player->noclipService->DisableNoclip();
 			player->noclipService->HandleNoclip();
 		}
-		player->GetPlayerPawn()->Respawn();
-		player->pistolService->UpdatePistol();
 	}
 	else
 	{
@@ -199,6 +197,20 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 			return;
 		}
 	}
+
+	// If this fails, we just try to find any valid spawn.
+	Vector spawnOrigin;
+	QAngle spawnAngles;
+	if (utils::FindValidSpawn(spawnOrigin, spawnAngles))
+	{
+		auto pawn = player->GetPlayerPawn();
+		pawn->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
+		return;
+	}
+
+	// Last resort, just respawn the player.
+	player->GetPlayerPawn()->Respawn();
+	player->pistolService->UpdatePistol();
 }
 
 SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
