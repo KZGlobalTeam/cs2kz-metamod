@@ -10,8 +10,8 @@ Automated translation linter reports for cs2kz-metamod.
 | **Linter Warnings** | 25 |
 | **Total Languages** | 13 |
 | **Total Phrases** | 521 |
-| **Phrases Missing Translations** | 455 |
-| **Total Missing Entries** | 2242 |
+| **Phrases Missing Translations** | 441 |
+| **Total Missing Entries** | 2040 |
 | **Menu Files** | 9 |
 
 ## Language Coverage (Phrases)
@@ -25,7 +25,7 @@ Automated translation linter reports for cs2kz-metamod.
   it (italian)         [████████░░░░░░░░░░░░]  44.1% (230/521)
   ko (koreana)         [███████████░░░░░░░░░]  55.9% (291/521)
   lv (latvian)         [████████████░░░░░░░░]  63.9% (333/521)
-  pl (polish)          [████████████░░░░░░░░]  61.2% (319/521)
+  pl (polish)          [████████████████████] 100.0% (521/521)
   ru (russian)         [███░░░░░░░░░░░░░░░░░]  17.7% (92/521)
   sv (swedish)         [███████████████░░░░░]  76.2% (397/521)
   tr (turkish)         [██████████░░░░░░░░░░]  51.2% (267/521)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`d0f1b0c`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/d0f1b0ce0e6473cd7a21be789d55725466551251)
-- **Time:** 2025-12-28 19:50:27 UTC
-- **Message:** Fix !accept still working for user with invalid steam authentication
+- **Commit:** [`3839bd0`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/3839bd0050cfd0ab6a651bf44f4da4e6e92e4055)
+- **Time:** 2026-01-08 21:24:42 UTC
+- **Message:** Add and update Polish translations (#470)
 
 ---
 
