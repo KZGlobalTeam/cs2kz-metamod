@@ -64,7 +64,7 @@
 	{
 		"en"	"{grey}Look after yourself. Take regular breaks to stretch and stay hydrated."
 		"chi"	"{grey}照顾好自己，定期休息，伸展身体，保持水分充足."
-		"pl"	"{grey}Dbaj o siebie. Pamiętaj o regularnych przerwach i nawodnieniu."
+		"pl"	"{grey}Dbaj o siebie. Pamiętaj o regularnych przerwach, ćwiczeniach i nawodnieniu."
 		"fi"	"{grey}Pidä itsestäsi huolta. Pidä taukoja säännöllisesti venytelläksesi ja juo vettä."
 		"sv"	"{grey}Ta hand om dig själv. Ta regelbundna pauser för att stretcha och dricka vatten."
 		"ua"	"{grey}Слідкуйте за собою. Робіть регулярні перерви, щоб розминатись і підтримувати водний баланс."
@@ -79,7 +79,7 @@
 	{
 		"en"	"{grey}Don't need tips like this showing up in chat? You can toggle them with {default}/tips{grey}."
 		"chi"	"{grey}不需要这些提示? 可以使用 {default}/tips{grey} 切换开关."
-		"pl"	"{grey}Nie potrzebujesz wskazówek na czacie? Możesz je wyłączyć używając {default}/tips{grey}."
+		"pl"	"{grey}Nie potrzebujesz wskazówek na czacie? Możesz je wyłączyć używając komendy {default}/tips{grey}."
 		"fi"	"{grey}Etkö tarvitse vihejeitä kuten tämä chatissasi? Voit muuttaa niiden asetusta {default}/tips{grey} komennolla."
 		"sv"	"{grey}Vill du inte se tips som dessa i chatten? Du kan ändra det med {default}/tips{grey}."
 		"ua"	"{grey}Якщо ви не хочете бачити такі поради в чаті, то вимкніть їх написавши {default}/tips{grey}."
@@ -139,6 +139,7 @@
 	{
 		"en"	"{grey}Visit official CS2KZ website for up-to-date maps, records and servers: {default}https://cs2kz.org{grey}"
 		"chi"	"{grey}访问CS2KZ官方网站以获取最新的地图、记录和服务器: {default}https://cs2kz.org{grey}"
+		"pl"	"{grey}Odwiedź oficjalną stronę CS2KZ, aby zobaczyć aktualne mapy, rekordy i serwery: {default}https://cs2kz.org{grey}"
 		"ua"	"{grey}Відвідайте офіційний веб-сайт CS2KZ, щоб ознайомитися з актуальними мапами, рекордами та серверами: {default}https://cs2kz.org{grey}"
 		"sv"	"{grey}Besök den officiella CS2KZ-webbplatsen för uppdaterade kartor, rekord och servrar: {default}https://cs2kz.org{grey}"
 		"de"	"{grey}Besuche die offizielle CS2KZ-Webseite für aktuelle Maps, Rekorde und KZServer: {default}https://cs2kz.org{grey}"
@@ -147,7 +148,7 @@
 	{
 		"en"	"{grey}Report issues related to CS2KZ on our GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"chi"	"{grey}遇到问题可以访问CS2KZ的仓库: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey} 进行反馈"
-		"pl"	"{grey}Wszystkie problemy związane z CS2KZ zgłoś na GitHubie: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
+		"pl"	"{grey}Wszystkie problemy związane z CS2KZ możesz zgłosić na GitHubie: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"fi"	"{grey}Reportoi ongelmia CS2KZ liittyen meidän GitHub sivuilla: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"sv"	"{grey}Anmäl problem angående CS2KZ på vår GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"
 		"ua"	"{grey}Повідомляйте про проблеми, пов'язані з CS2KZ, на нашому GitHub: {default}https://github.com/KZGlobalTeam/cs2kz-metamod/issues{grey}"

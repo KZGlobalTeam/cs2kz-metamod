@@ -5,6 +5,7 @@
 		"#format"	"time:d"
 		"en"		"{yellow}Race is starting in {time} seconds!"
 		"chi"		"{yellow}比赛将在 {time} 秒后开始!"
+    	"pl" 		"{yellow}Wyścig rozpocznie się za {time} sekund!"
 		"ua"		"{yellow}Гонка розпочнеться через {time} секунд!"
 		"de"		"{yellow}Das Rennen beginnt in {time} Sekunden!"
 	}
@@ -13,6 +14,7 @@
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has disconnected!"
 		"chi"		"{lime}{player}{grey} 已断开连接!"
+    	"pl" 		"{lime}{player}{grey} rozłączył się!"
 		"ua"		"{lime}{player}{grey} від'єднався!"
 		"de"		"{lime}{player}{grey} hat die Verbindung getrennt!"
 	}
@@ -21,6 +23,7 @@
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has surrendered!"
 		"chi"		"{lime}{player}{grey} 已投降!"
+   	 	"pl" 		"{lime}{player}{grey} poddał się!"
 		"ua"		"{lime}{player}{grey} здався!"
 		"de"		"{lime}{player}{grey} hat aufgegeben!"
 	}
@@ -29,6 +32,7 @@
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}1{grey} TP"
 		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {yellow}1{grey} TP"
+    	"pl" 		"{lime}{player}{grey} ukończył wyścig w czasie {default}{time}{grey} | {yellow}1{grey} TP"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {yellow}1{grey} TP"
 		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {yellow}1{grey} TP"
 	}
@@ -37,6 +41,7 @@
 		"#format"	"player:s,time:s,teleport_count:d"
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
+    	"pl" 		"{lime}{player}{grey} ukończył wyścig w czasie {default}{time}{grey} | {yellow}{teleport_count}{grey} TP"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 	}
@@ -45,6 +50,7 @@
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} has finished the race in {default}{time}{grey} | {blue}PRO{grey}"
 		"chi"		"{lime}{player}{grey} 完成比赛,用时 {default}{time}{grey} | {blue}PRO{grey}"
+    	"pl" 		"{lime}{player}{grey} ukończył wyścig w czasie {default}{time}{grey} | {blue}PRO{grey}"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {blue}PRO{grey}"
 		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {blue}PRO{grey}"
 	}
@@ -52,6 +58,7 @@
 	{
 		"en"		"{default}Race Results:"
 		"chi"		"{default}比赛结果："
+    	"pl" 		"{default}Wyniki wyścigu:"
 		"ua"		"{default}Результати гонки:"
 		"de"		"{default}Renn-Ergebnisse:"
 	}
@@ -61,6 +68,7 @@
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} has won the race! ({time})"
 		"chi"		"{lime}{player}{grey} 赢得比赛!({time})"
+    	"pl" 		"{lime}{player}{grey} wygrał wyścig! ({time})"
 		"ua"		"{lime}{player}{grey} переміг у гонці! ({time})"
 		"de"		"{lime}{player}{grey} hat das Rennen gewonnen! ({time})"
 	}
@@ -70,6 +78,7 @@
 		"#format"	"player:s,time:s"
 		"en"		"{lime}{player}{grey} came last in the race. ({time})"
 		"chi"		"{lime}{player}{grey} 在比赛中排名最后.({time})"
+    	"pl" 		"{lime}{player}{grey} zajął ostatnie miejsce. ({time})"
 		"ua"		"{lime}{player}{grey} фінішував останнім у гонці. ({time})"
 		"de"		"{lime}{player}{grey} ist als letzter im Rennen angekommen. ({time})"
 	}
@@ -79,6 +88,7 @@
 		"#format"	"position:d,player:s,time:s"
 		"en"		"{lime}{player}{grey} finished {default}#{position}{grey} in the race. ({time})"
 		"chi"		"{lime}{player}{grey} 在比赛中排名第 {default}#{position}{grey}.({time})"
+    	"pl" 		"{lime}{player}{grey} ukończył wyścig na {default}#{position}{grey} miejscu. ({time})"
 		"ua"		"{lime}{player}{grey} фінішував {default}#{position}{grey}. ({time})"
 		"de"		"{lime}{player}{grey} hat Platz {default}#{position}{grey} im Rennen erreicht. ({time})"
 	}
@@ -88,6 +98,7 @@
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} did not finish the race."
 		"chi"		"{lime}{player}{grey} 未完成比赛."
+    	"pl" 		"{lime}{player}{grey} nie ukończył wyścigu."
 		"ua"		"{lime}{player}{grey} не завершив гонку."
 		"de"		"{lime}{player}{grey} hat das Rennen nicht beendet."
 	}
@@ -95,6 +106,7 @@
 	{
 		"en"		"No time limit"
 		"chi"		"无时间限制"
+    	"pl" 		"Brak limitu czasu"
 		"ua"		"Без обмеження за часом"
 		"de"		"Kein Zeitlimit"
 	}
@@ -103,6 +115,7 @@
 		"#format"	"time:s"
 		"en"		"Time limit: {time}"
 		"chi"		"时间限制：{time}"
+    	"pl" 		"Limit czasu: {time}"
 		"ua"		"Обмеження за часом: {time}"
 		"de"		"Zeitlimit: {time}"
 	}
@@ -113,6 +126,7 @@
 		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
 		"en"		"Race on course {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
 		"chi"		"比赛路线 {course}\n{mode} - 最大传送数：{teleport_count} - {time_limit}"
+    	"pl" 		"Wyścig na trasie {course}\n{mode} - Maks. TP: {teleport_count} - {time_limit}"
 		"ua"		"Гонка на курсі {course}\n{mode} - Макс. TPs: {teleport_count} - {time_limit}"
 		"de"		"Rennen auf Route {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
 	}
@@ -123,6 +137,7 @@
 		"#format"	"course:s,mode:s,teleport_count:d,time_limit:s"
 		"en"		"{default}A new race has been started!\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"chi"		"{default}新比赛已启动!\n{grey}路线：{default}{course}{grey} | 最大传送数：{yellow}{teleport_count}{grey} | {time_limit}"
+    	"pl" 		"{default}Rozpoczęto nowy wyścig!\n{grey}Trasa: {default}{course}{grey} | Maks. TP: {yellow}{teleport_count}{grey} | {time_limit}"
 		"ua"		"{default}Нова гонка розпочалася!\n{grey}Курс: {default}{course}{grey} | Макс. TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"de"		"{default}Ein neues Rennen wurde gestartet!\n{grey}Route: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 	}
@@ -131,6 +146,7 @@
 	{
 		"en"		"{darkred}Race has been cancelled!"
 		"chi"		"{darkred}比赛已取消!"
+    	"pl" 		"{darkred}Wyścig został anulowany!"
 		"ua"		"{darkred}Гонка скасована!"
 		"de"		"{darkred}Das Rennen wurde abgebrochen!"
 	}
@@ -138,6 +154,7 @@
 	{
 		"en"		"GO!"
 		"chi"		"开始!"
+    	"pl" 		"START!"
 		"ua"		"ВПЕРЕД!"
 		"de"		"LOS!"
 	}
@@ -146,6 +163,7 @@
 		"#format"	"time:.1f"
 		"en"		"Race starting in {time}s!"
 		"chi"		"比赛将在 {time}秒后开始!"
+    	"pl" 		"Wyścig rozpocznie się za {time}s!"
 		"ua"		"Гонка розпочнеться через {time}c!"
 		"de"		"Das Rennen beginnt in {time}s!"
 	}
@@ -154,6 +172,7 @@
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has accepted the race."
 		"chi"		"{lime}{player}{grey} 已接受比赛."
+    	"pl" 		"{lime}{player}{grey} zaakceptował wyścig."
 		"ua"		"{lime}{player}{grey} погодився на участь у гонці."
 		"de"		"{lime}{player}{grey} hat das Rennen akzeptiert."
 	}
@@ -162,6 +181,7 @@
 		"#format"	"player:s"
 		"en"		"{lime}{player}{grey} has unregistered from the race."
 		"chi"		"{lime}{player}{grey} 已取消比赛注册."
+    	"pl" 		"{lime}{player}{grey} zrezygnował z udziału w wyścigu."
 		"ua"		"{lime}{player}{grey} скасував свою участь у гонці."
 		"de"		"{lime}{player}{grey} hat sich vom Rennen abgemeldet."
 	}

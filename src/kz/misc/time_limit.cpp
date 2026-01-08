@@ -25,6 +25,27 @@ CConVarRef<float> mp_roundtime_hostage("mp_roundtime_hostage");
 CConVarRef<CUtlString> nextlevel("nextlevel");
 ConVarRefAbstract *convars[] = {&mp_timelimit, &mp_roundtime, &mp_roundtime_defuse, &mp_roundtime_hostage};
 
+static_global std::string GetDefaultMapName()
+{
+	// Most if not all servers are launched with +map <mapname> in the command line: eg +map de_dust2 +host_workshop_map 123456789
+	std::string commandLine = CommandLine()->GetCmdLine();
+	size_t pos = commandLine.find("+map ");
+	if (pos != std::string::npos)
+	{
+		size_t start = pos + 5; // length of "+map "
+		size_t end = commandLine.find(' ', start);
+		if (end == std::string::npos)
+		{
+			end = commandLine.length();
+		}
+		return commandLine.substr(start, end - start);
+	}
+	else
+	{
+		return "de_dust2"; // Fallback to a common map
+	}
+}
+
 static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue, void *__unk01)
 {
 	assert(mp_timelimit.IsValidRef() && mp_timelimit.IsConVarDataAvailable());
@@ -35,9 +56,10 @@ static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot,
 	u16 refIndex = ref->GetAccessIndex();
 	bool replicate = false;
 
-	if (nextlevel.GetAccessIndex() == ref->GetAccessIndex() && nextlevel.Get().IsEmpty() && !g_pKZUtils->GetCurrentMapName().IsEmpty())
+	if (nextlevel.GetAccessIndex() == ref->GetAccessIndex() && nextlevel.Get().IsEmpty())
 	{
-		nextlevel.Set(g_pKZUtils->GetCurrentMapName());
+		// The addon will be unloaded upon map change, so we need to set a valid nextlevel.
+		nextlevel.Set(GetDefaultMapName().c_str());
 		return;
 	}
 
@@ -72,9 +94,9 @@ static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot,
 
 void KZ::misc::EnforceTimeLimit()
 {
-	if (nextlevel.Get().IsEmpty() && !g_pKZUtils->GetCurrentMapName().IsEmpty())
+	if (nextlevel.Get().IsEmpty())
 	{
-		nextlevel.Set(g_pKZUtils->GetCurrentMapName());
+		nextlevel.Set(GetDefaultMapName().c_str());
 	}
 
 	if (cvarLoaded || !mp_timelimit.IsValidRef() || !mp_roundtime.IsValidRef() || !mp_roundtime_defuse.IsValidRef()

@@ -121,32 +121,44 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 	}
 }
 
+static void FilterQuietClients(const uint64 *clients, u32 emitterPlayerIndex = 0)
+{
+	for (i32 recipientPlayerIndex = 1; recipientPlayerIndex < MAXPLAYERS + 1; recipientPlayerIndex++)
+	{
+		KZPlayer *recipient = g_pKZPlayerManager->ToPlayer(recipientPlayerIndex);
+		if (recipient->quietService->ShouldHide() && (emitterPlayerIndex == 0 || recipient->quietService->ShouldHideIndex(emitterPlayerIndex)))
+		{
+			*(uint64 *)clients &= ~(1ull << (recipientPlayerIndex - 1));
+		}
+	}
+}
+
 void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *pData, const uint64 *clients)
 {
 	NetMessageInfo_t *info = pEvent->GetNetMessageInfo();
-	u32 entIndex, playerIndex;
 
+	u32 emitterEntIndex = 0;
 	switch (info->m_MessageId)
 	{
 		// Hide bullet decals, and sound.
 		case GE_FireBulletsId:
 		{
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgTEFireBullets>();
-			entIndex = msg->player() & 0x3FFF;
+			emitterEntIndex = msg->player() & 0x3FFF;
 			break;
 		}
 		// Hide reload sounds.
 		case CS_UM_WeaponSound:
 		{
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CCSUsrMsg_WeaponSound>();
-			entIndex = msg->entidx();
+			emitterEntIndex = msg->entidx();
 			break;
 		}
 		// Hide other sounds from player (eg. armor equipping)
 		case GE_SosStartSoundEvent:
 		{
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgSosStartSoundEvent>();
-			entIndex = msg->source_entity_index();
+			emitterEntIndex = msg->source_entity_index();
 			break;
 		}
 		// Used by kz_misc to block valve's player say messages.
@@ -179,36 +191,38 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			return;
 		}
 	}
-	CBaseEntity *ent = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(entIndex)));
-	if (!ent)
+	CBaseEntity *emitterEnt = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(CEntityIndex(emitterEntIndex)));
+	if (emitterEntIndex == 0 || !emitterEnt)
 	{
 		return;
 	}
 
 	// Convert this entindex into the index in the player controller.
-	if (ent->IsPawn())
+	if (emitterEnt->IsPawn())
 	{
-		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(ent);
-		playerIndex = g_pKZPlayerManager->ToPlayer(utils::GetController(pawn))->index;
-		for (int i = 0; i < MAXPLAYERS; i++)
+		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(emitterEnt);
+		u32 emitterPlayerIndex = g_pKZPlayerManager->ToPlayer(utils::GetController(pawn))->index;
+		FilterQuietClients(clients, emitterPlayerIndex);
+	}
+	else if (V_strstr(emitterEnt->GetClassname(), "weapon_"))
+	{
+		// Find the owner of the weapon if possible.
+		if (emitterEnt->m_hOwnerEntity().IsValid() && emitterEnt->m_hOwnerEntity.Get()->IsPawn())
 		{
-			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide()
-				&& g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHideIndex(playerIndex))
-			{
-				*(uint64 *)clients &= ~i;
-			}
+			CBasePlayerPawn *ownerPawn = static_cast<CBasePlayerPawn *>(emitterEnt->m_hOwnerEntity().Get());
+			u32 emitterPlayerIndex = g_pKZPlayerManager->ToPlayer(ownerPawn)->index;
+			FilterQuietClients(clients, emitterPlayerIndex);
+		}
+		// Otherwise just hide from everyone having !hide enabled.
+		else
+		{
+			FilterQuietClients(clients);
 		}
 	}
-	// Special case for the armor sound upon spawning/respawning.
-	else if (V_strcmp(ent->GetClassname(), "item_assaultsuit") == 0 || V_strstr(ent->GetClassname(), "weapon_"))
+	// Special case for the armor sound upon spawning/respawning, because the emitter player is not yet known.
+	else if (V_strcmp(emitterEnt->GetClassname(), "item_assaultsuit") == 0)
 	{
-		for (int i = 0; i < MAXPLAYERS; i++)
-		{
-			if (g_pKZPlayerManager->ToPlayer(i)->quietService->ShouldHide())
-			{
-				*(uint64 *)clients &= ~i;
-			}
-		}
+		FilterQuietClients(clients);
 	}
 }
 
@@ -242,8 +256,8 @@ bool KZQuietService::ShouldHide()
 		return false;
 	}
 
-	// If the player is not alive, don't hide other players.
-	if (!this->player->IsAlive())
+	// If the player is not alive and not spectating another player, don't hide other players.
+	if (!this->player->IsAlive() && !this->player->specService->GetSpectatedPlayer())
 	{
 		return false;
 	}
@@ -255,6 +269,12 @@ bool KZQuietService::ShouldHideIndex(u32 targetIndex)
 {
 	// Don't self-hide.
 	if (this->player->index == targetIndex)
+	{
+		return false;
+	}
+
+	// Don't hide the player being spectated.
+	if (this->player->specService->GetSpectatedPlayer() && this->player->specService->GetSpectatedPlayer()->index == targetIndex)
 	{
 		return false;
 	}
