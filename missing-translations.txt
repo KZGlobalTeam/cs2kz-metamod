@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 521
 Phrases with missing translations: 441
-Total missing translation entries: 2040
+Total missing translation entries: 2038
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [███░░░░░░░░░░░░░░░░░]  17.7% (92/521)
   sv (swedish)         [███████████████░░░░░]  76.2% (397/521)
   tr (turkish)         [██████████░░░░░░░░░░]  51.2% (267/521)
-  ua (ukrainian)       [███████████████████░]  99.6% (519/521)
+  ua (ukrainian)       [████████████████████] 100.0% (521/521)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -351,9 +351,9 @@ cs2kz-commands.phrases.txt
   Line 1440: "Command Description - kz_rphidelegs"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
   Line 1448: "Command Description - kz_accept"
-    Missing (11): chi, de, es, fi, it, ko, lv, ru, sv, tr, ua
-  Line 1453: "Command Description - kz_surrender"
-    Missing (11): chi, de, es, fi, it, ko, lv, ru, sv, tr, ua
+    Missing (10): chi, de, es, fi, it, ko, lv, ru, sv, tr
+  Line 1454: "Command Description - kz_surrender"
+    Missing (10): chi, de, es, fi, it, ko, lv, ru, sv, tr
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------

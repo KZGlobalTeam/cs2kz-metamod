@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 521,
     "phrases_with_missing": 441,
-    "total_missing_entries": 2040,
+    "total_missing_entries": 2038,
     "all_languages": [
       "chi",
       "de",
@@ -82,7 +82,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         }
       ],
@@ -110,7 +110,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         }
       ],
@@ -585,7 +585,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -2077,7 +2077,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -3767,7 +3767,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -5451,7 +5451,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -6694,7 +6694,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -8381,7 +8381,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -10275,7 +10275,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -11398,7 +11398,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race."
         },
         {
@@ -12457,23 +12457,10 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 99.62,
-      "translated": 519,
-      "missing": 2,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_accept",
-          "line": 1448,
-          "english_text": "Accept an incoming race."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_surrender",
-          "line": 1453,
-          "english_text": "Surrender an ongoing race."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 521,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -15437,7 +15424,8 @@
           "english_text": "Accept an incoming race.",
           "existing_languages": [
             "en",
-            "pl"
+            "pl",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -15449,17 +15437,17 @@
             "lv",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Command Description - kz_surrender",
-          "line": 1453,
+          "line": 1454,
           "english_text": "Surrender an ongoing race.",
           "existing_languages": [
             "en",
-            "pl"
+            "pl",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -15471,8 +15459,7 @@
             "lv",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
