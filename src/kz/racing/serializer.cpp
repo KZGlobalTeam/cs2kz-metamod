@@ -22,9 +22,7 @@ bool KZ::racing::PlayerInfo::FromJson(const Json &json)
 	return json.Get("name", this->name);
 }
 
-// ===== Events =====
-
-bool KZ::racing::events::InitRace::ToJson(Json &json) const
+bool KZ::racing::RaceSpec::ToJson(Json &json) const
 {
 	// clang-format off
 	return json.Set("map_id", this->workshopID)
@@ -35,7 +33,7 @@ bool KZ::racing::events::InitRace::ToJson(Json &json) const
 	// clang-format on
 }
 
-bool KZ::racing::events::InitRace::FromJson(const Json &json)
+bool KZ::racing::RaceSpec::FromJson(const Json &json)
 {
 	// clang-format off
 	return json.Get("map_id", this->workshopID)
@@ -46,14 +44,21 @@ bool KZ::racing::events::InitRace::FromJson(const Json &json)
 	// clang-format on
 }
 
-bool KZ::racing::events::BeginRace::ToJson(Json &json) const
+// ===== Events =====
+
+bool KZ::racing::events::ChatMessage::ToJson(Json &json) const
 {
-	return json.Set("countdown_duration", this->countdownSeconds);
+	return json.Set("player", this->player) && json.Set("content", this->content);
 }
 
-bool KZ::racing::events::BeginRace::FromJson(const Json &json)
+bool KZ::racing::events::ChatMessage::FromJson(const Json &json)
 {
-	return json.Get("countdown_duration", this->countdownSeconds);
+	return json.Get("player", this->player) && json.Get("content", this->content);
+}
+
+bool KZ::racing::events::RaceInitialized::FromJson(const Json &json)
+{
+	return this->spec.FromJson(json);
 }
 
 bool KZ::racing::events::ServerJoinRace::FromJson(const Json &json)
@@ -86,10 +91,15 @@ bool KZ::racing::events::PlayerLeaveRace::FromJson(const Json &json)
 	return this->player.FromJson(json);
 }
 
+bool KZ::racing::events::StartRace::FromJson(const Json &json)
+{
+	return json.Get("countdown_duration", this->countdownSeconds);
+}
+
 bool KZ::racing::events::PlayerFinish::ToJson(Json &json) const
 {
 	// clang-format off
-	return json.Set("player", this->player)
+	return this->player.ToJson(json)
 		&& json.Set("teleports", this->teleports)
 		&& json.Set("time", this->timeSeconds);
 	// clang-format on
@@ -98,7 +108,7 @@ bool KZ::racing::events::PlayerFinish::ToJson(Json &json) const
 bool KZ::racing::events::PlayerFinish::FromJson(const Json &json)
 {
 	// clang-format off
-	return json.Get("player", this->player)
+	return this->player.FromJson(json)
 		&& json.Get("teleports", this->teleports)
 		&& json.Get("time", this->timeSeconds);
 	// clang-format on
@@ -122,18 +132,6 @@ bool KZ::racing::events::PlayerSurrender::ToJson(Json &json) const
 bool KZ::racing::events::PlayerSurrender::FromJson(const Json &json)
 {
 	return this->player.FromJson(json);
-}
-
-bool KZ::racing::events::EndRace::ToJson(Json &json) const
-{
-	switch (this->reason)
-	{
-		case Reason::Timeout:
-			return json.Set("reason", "timeout");
-
-		case Reason::Forced:
-			return json.Set("reason", "forced");
-	}
 }
 
 bool KZ::racing::events::RaceResults::FromJson(const Json &json)
@@ -185,12 +183,7 @@ bool KZ::racing::events::RaceResults::Participant::FromJson(const Json &json)
 	return true;
 }
 
-bool KZ::racing::events::ChatMessage::ToJson(Json &json) const
+bool KZ::racing::events::RaceFinished::FromJson(const Json &json)
 {
-	return json.Set("player", this->player) && json.Set("content", this->content);
-}
-
-bool KZ::racing::events::ChatMessage::FromJson(const Json &json)
-{
-	return json.Get("player", this->player) && json.Get("content", this->content);
+	return this->results.FromJson(json);
 }

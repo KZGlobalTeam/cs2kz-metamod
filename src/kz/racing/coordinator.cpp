@@ -5,8 +5,10 @@
 #endif
 
 #include "kz_racing.h"
+#include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
+#include <ixwebsocket/IXBase64.h>
 #include <ixwebsocket/IXNetSystem.h>
 
 static_global class KZTimerServiceEventListener_Racing : public KZTimerServiceEventListener
@@ -60,7 +62,8 @@ void KZRacingService::Init()
 
 	KZRacingService::socket = std::make_unique<ix::WebSocket>();
 	KZRacingService::socket->setUrl(url);
-	KZRacingService::socket->setExtraHeaders({{"Authorization", std::string("Bearer ") + key}});
+	// KZRacingService::socket->setExtraHeaders({{"Authorization", std::string("Bearer ") + key}});
+	KZRacingService::socket->addSubProtocol(std::string("base64url.bearer.phx.") + macaron::Base64::Encode(key));
 	KZRacingService::socket->setOnMessageCallback(KZRacingService::OnWebSocketMessage);
 
 	KZRacingService::state.store(KZRacingService::State::Configured);
@@ -103,7 +106,7 @@ void KZRacingService::OnActivateServer()
 
 	if (KZRacingService::state.load() == KZRacingService::State::Connected && KZRacingService::currentRace.state == RaceInfo::State::Init)
 	{
-		if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.workshopID)
+		if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.spec.workshopID)
 		{
 			KZRacingService::SendReady();
 		}
@@ -117,13 +120,13 @@ void KZRacingService::OnActivateServer()
 void KZRacingService::OnServerGamePostSimulate()
 {
 	KZRacingService::ProcessMainThreadCallbacks();
-	if (KZRacingService::currentRace.data.maxDurationSeconds > 0
-		&& (KZRacingService::currentRace.earliestStartTick + KZRacingService::currentRace.data.maxDurationSeconds * ENGINE_FIXED_TICK_RATE
+	if (KZRacingService::currentRace.spec.maxDurationSeconds > 0
+		&& (KZRacingService::currentRace.earliestStartTick + KZRacingService::currentRace.spec.maxDurationSeconds * ENGINE_FIXED_TICK_RATE
 				<= g_pKZUtils->GetServerGlobals()->tickcount
 			&& KZRacingService::currentRace.state == RaceInfo::State::Ongoing))
 	{
 		META_CONPRINTF("[KZ::Racing] Race duration expired.\n");
-		KZRacingService::SendEndRace(/* forced: */ false);
+		KZRacingService::SendRaceFinished();
 		KZRacingService::currentRace.state = RaceInfo::State::None;
 	}
 }
@@ -206,40 +209,13 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnChatMessage(event); });
 				}
 			}
-			else if (event == "init_race")
+			else if (event == "race_initialized")
 			{
-				KZ::racing::events::InitRace event;
+				KZ::racing::events::RaceInitialized event;
 				if (event.FromJson(data))
 				{
 					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnInitRace(event); });
-				}
-			}
-			else if (event == "begin_race")
-			{
-				KZ::racing::events::BeginRace event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnBeginRace(event); });
-				}
-			}
-			else if (event == "cancel_race")
-			{
-				KZ::racing::events::CancelRace event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnCancelRace(event); });
-				}
-			}
-			else if (event == "race_results")
-			{
-				KZ::racing::events::RaceResults event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceResults(event); });
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceInitialized(event); });
 				}
 			}
 			else if (event == "server_join_race")
@@ -278,6 +254,15 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerLeaveRace(event); });
 				}
 			}
+			else if (event == "start_race")
+			{
+				KZ::racing::events::StartRace event;
+				if (event.FromJson(data))
+				{
+					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnStartRace(event); });
+				}
+			}
 			else if (event == "player_finish")
 			{
 				KZ::racing::events::PlayerFinish event;
@@ -305,6 +290,24 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerSurrender(event); });
 				}
 			}
+			else if (event == "race_finished")
+			{
+				KZ::racing::events::RaceFinished event;
+				if (event.FromJson(data))
+				{
+					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceFinished(event); });
+				}
+			}
+			else if (event == "race_cancelled")
+			{
+				KZ::racing::events::RaceCancelled event;
+				if (event.FromJson(data))
+				{
+					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
+					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceCancelled(event); });
+				}
+			}
 			else
 			{
 				META_CONPRINTF("[KZ::Racing] Incoming WebSocket message contained an unknown `event` field: `%s`\n", event.c_str());
@@ -327,7 +330,8 @@ void KZRacingService::WS_OnCloseMessage(const ix::WebSocketCloseInfo &closeInfo)
 {
 	META_CONPRINTF("[KZ::Racing] WebSocket connection closed (%i): %s\n", closeInfo.code, closeInfo.reason.c_str());
 
-	// TODO: cleanup race state
+	KZRacingService::currentRace = {};
+	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
 
 	switch (closeInfo.code)
 	{

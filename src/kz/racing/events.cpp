@@ -12,15 +12,15 @@ void KZRacingService::OnChatMessage(const KZ::racing::events::ChatMessage &messa
 	utils::CPrintChatAll("{yellow}%s{default}: %s", message.player.name.c_str(), message.content.c_str());
 }
 
-void KZRacingService::OnInitRace(const KZ::racing::events::InitRace &message)
+void KZRacingService::OnRaceInitialized(const KZ::racing::events::RaceInitialized &message)
 {
 	KZRacingService::currentRace.state = RaceInfo::State::Init;
-	KZRacingService::currentRace.data = message;
+	KZRacingService::currentRace.spec = message.spec;
 	KZRacingService::currentRace.earliestStartTick = {};
 
 	KZRacingService::CheckMap();
 
-	if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.workshopID)
+	if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.spec.workshopID)
 	{
 		KZRacingService::SendReady();
 		// Broadcast the race info to all players.
@@ -30,9 +30,9 @@ void KZRacingService::OnInitRace(const KZ::racing::events::InitRace &message)
 			if (player)
 			{
 				std::string timeLimitString;
-				if (KZRacingService::currentRace.data.maxDurationSeconds > 0.0f)
+				if (KZRacingService::currentRace.spec.maxDurationSeconds > 0.0f)
 				{
-					auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.maxDurationSeconds, false);
+					auto timeStr = utils::FormatTime(KZRacingService::currentRace.spec.maxDurationSeconds, false);
 					timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
 				}
 				else
@@ -41,9 +41,9 @@ void KZRacingService::OnInitRace(const KZ::racing::events::InitRace &message)
 				}
 				// clang-format off
 				player->languageService->PrintChat(true, false, "Racing - Race Info (Chat)",
-													KZRacingService::currentRace.data.courseName.c_str(),
-													KZRacingService::currentRace.data.modeName.c_str(),
-													KZRacingService::currentRace.data.maxTeleports,
+													KZRacingService::currentRace.spec.courseName.c_str(),
+													KZRacingService::currentRace.spec.modeName.c_str(),
+													KZRacingService::currentRace.spec.maxTeleports,
 													timeLimitString.c_str());
 				// clang-format on
 			}
@@ -51,7 +51,7 @@ void KZRacingService::OnInitRace(const KZ::racing::events::InitRace &message)
 	}
 }
 
-void KZRacingService::OnBeginRace(const KZ::racing::events::BeginRace &message)
+void KZRacingService::OnStartRace(const KZ::racing::events::StartRace &message)
 {
 	KZRacingService::currentRace.state = RaceInfo::State::Ongoing;
 	KZRacingService::currentRace.earliestStartTick = g_pKZUtils->GetServerGlobals()->tickcount + message.countdownSeconds * ENGINE_FIXED_TICK_RATE;
@@ -66,18 +66,18 @@ void KZRacingService::OnBeginRace(const KZ::racing::events::BeginRace &message)
 	}
 }
 
-void KZRacingService::OnCancelRace(const KZ::racing::events::CancelRace &message)
+void KZRacingService::OnRaceCancelled(const KZ::racing::events::RaceCancelled &message)
 {
 	KZRacingService::currentRace = {};
 	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
 }
 
-void KZRacingService::OnRaceResults(const KZ::racing::events::RaceResults &message)
+void KZRacingService::OnRaceFinished(const KZ::racing::events::RaceFinished &message)
 {
 	std::vector<KZ::racing::PlayerInfo> finishers;
 	std::vector<KZ::racing::PlayerInfo> nonFinishers;
 
-	for (const KZ::racing::events::RaceResults::Participant &participant : message.participants)
+	for (const KZ::racing::events::RaceResults::Participant &participant : message.results.participants)
 	{
 		switch (participant.state)
 		{
@@ -101,7 +101,7 @@ void KZRacingService::OnRaceResults(const KZ::racing::events::RaceResults &messa
 
 	// Print first place to last place, then non-finishers.
 	u32 position = 1;
-	for (const KZ::racing::events::RaceResults::Participant &participant : message.participants)
+	for (const KZ::racing::events::RaceResults::Participant &participant : message.results.participants)
 	{
 		if (participant.state != KZ::racing::events::RaceResults::Participant::State::Finished)
 		{
@@ -126,7 +126,7 @@ void KZRacingService::OnRaceResults(const KZ::racing::events::RaceResults &messa
 		position++;
 	}
 
-	for (const KZ::racing::events::RaceResults::Participant &participant : message.participants)
+	for (const KZ::racing::events::RaceResults::Participant &participant : message.results.participants)
 	{
 		if (participant.state != KZ::racing::events::RaceResults::Participant::State::Finished)
 		{

@@ -6,63 +6,6 @@
 #include "utils/argparse.h"
 #include "utils/simplecmds.h"
 
-CON_COMMAND_F(kz_race_init, "Initialize a race", FCVAR_NONE)
-{
-	// kz_race_init course=<course name> mode=<mode> [duration=<race duration, default to 0/infinite>] [tp=<number of max teleports, default to 0>]
-	constexpr const char *paramKeys[] = {"course", "mode", "duration", "tp"};
-	KeyValues3 params;
-	if (!utils::ParseArgsToKV3(args.ArgS(), params, const_cast<const char **>(paramKeys), KZ_ARRAYSIZE(paramKeys)))
-	{
-		META_CONPRINTF("[KZ::Racing] Invalid arguments, usage: kz_race_init course=<course name> mode=<mode> [duration=<race duration, default to "
-					   "0/infinite>] [tp=<number of max teleports, default to 0>]\n");
-		return;
-	}
-	if (KZRacingService::currentRace.state > RaceInfo::State::None)
-	{
-		META_CONPRINTF("[KZ::Racing] Another race is already active, cannot initialize a new one.\n");
-		return;
-	}
-	if (!params.FindMember("course") || !params.FindMember("mode"))
-	{
-		META_CONPRINTF("[KZ::Racing] Missing required arguments 'course' or 'mode'.\n");
-		return;
-	}
-	std::string courseName = params.GetMemberString("course", "");
-	std::string modeName = params.GetMemberString("mode", "");
-	u32 maxTeleports = static_cast<u32>(params.GetMemberInt("tp", 0));
-	f64 maxDuration = static_cast<f32>(params.GetMemberFloat("duration", 0.0f));
-	KZRacingService::SendInitRace(g_pKZUtils->GetCurrentMapWorkshopID(), courseName, modeName, maxDuration, maxTeleports);
-}
-
-CON_COMMAND_F(kz_race_cancel, "Cancel a race", FCVAR_NONE)
-{
-	KZRacingService::SendCancelRace();
-}
-
-CON_COMMAND_F(kz_race_start, "Start the race", FCVAR_NONE)
-{
-	if (!utils::IsNumeric(args.Arg(1)))
-	{
-		META_CONPRINTF("[KZ::Racing] Invalid argument, usage: kz_race_start <countdown_seconds>\n");
-		return;
-	}
-
-	if (KZRacingService::currentRace.state != RaceInfo::State::Init)
-	{
-		META_CONPRINTF("[KZ::Racing] No race initialized, cannot start the race.\n");
-		return;
-	}
-
-	f64 countdownSeconds = V_atof(args.Arg(1));
-	KZRacingService::SendBeginRace(countdownSeconds);
-	META_CONPRINTF("[KZ::Racing] Requested race start with a countdown of %.2f seconds.\n", countdownSeconds);
-}
-
-CON_COMMAND_F(kz_race_end, "Manually end the race", FCVAR_NONE)
-{
-	KZRacingService::SendEndRace(/* forced: */ true);
-}
-
 SCMD(kz_accept, SCFL_RACING)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -87,9 +30,9 @@ SCMD(kz_surrender, SCFL_RACING)
 	return MRES_SUPERCEDE;
 }
 
-void KZRacingService::SendInitRace(u64 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports)
+void KZRacingService::SendInitRace(u32 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports)
 {
-	KZ::racing::events::InitRace data;
+	KZ::racing::RaceSpec data;
 	data.workshopID = workshopID;
 	data.courseName = courseName;
 	data.modeName = modeName;
@@ -114,13 +57,6 @@ void KZRacingService::SendUnready()
 {
 	KZ::racing::events::Unready data;
 	KZRacingService::SendMessage("unready", data);
-}
-
-void KZRacingService::SendBeginRace(f64 countdownSeconds)
-{
-	KZ::racing::events::BeginRace data;
-	data.countdownSeconds = countdownSeconds;
-	KZRacingService::SendMessage("begin_race", data);
 }
 
 void KZRacingService::SendJoinRace()
@@ -165,11 +101,10 @@ void KZRacingService::SendFinishRace(f64 timeSeconds, u32 teleports)
 	KZRacingService::SendMessage("player_finish", data);
 }
 
-void KZRacingService::SendEndRace(bool forced)
+void KZRacingService::SendRaceFinished()
 {
-	KZ::racing::events::EndRace data;
-	data.reason = forced ? KZ::racing::events::EndRace::Reason::Forced : KZ::racing::events::EndRace::Reason::Timeout;
-	KZRacingService::SendMessage("end_race", data);
+	KZ::racing::events::RaceFinished data;
+	KZRacingService::SendMessage("race_finished", data);
 }
 
 void KZRacingService::SendChatMessage(const std::string &message)
@@ -194,9 +129,9 @@ void KZRacingService::BroadcastRaceInfo()
 				if (player)
 				{
 					std::string timeLimitString;
-					if (KZRacingService::currentRace.data.maxDurationSeconds > 0.0f)
+					if (KZRacingService::currentRace.spec.maxDurationSeconds > 0.0f)
 					{
-						auto timeStr = utils::FormatTime(KZRacingService::currentRace.data.maxDurationSeconds, false);
+						auto timeStr = utils::FormatTime(KZRacingService::currentRace.spec.maxDurationSeconds, false);
 						timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
 					}
 					else
@@ -205,9 +140,9 @@ void KZRacingService::BroadcastRaceInfo()
 					}
 					// clang-format off
 					player->languageService->PrintAlert(false, false, "Racing - Race Info",
-														KZRacingService::currentRace.data.courseName.c_str(),
-														KZRacingService::currentRace.data.modeName.c_str(),
-														KZRacingService::currentRace.data.maxTeleports,
+														KZRacingService::currentRace.spec.courseName.c_str(),
+														KZRacingService::currentRace.spec.modeName.c_str(),
+														KZRacingService::currentRace.spec.maxTeleports,
 														timeLimitString.c_str());
 					// clang-format on
 				}
@@ -260,7 +195,7 @@ void KZRacingService::AcceptRace()
 	}
 
 	if (KZRacingService::currentRace.state == RaceInfo::State::Init && !this->IsRaceParticipant()
-		&& g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.data.workshopID)
+		&& g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.spec.workshopID)
 	{
 		this->player->timerService->TimerStop();
 		this->SendJoinRace();
@@ -320,7 +255,7 @@ bool KZRacingService::CanTeleport()
 		return true;
 	}
 	// Can't teleport if max teleports reached.
-	if (this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.data.maxTeleports)
+	if (this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.spec.maxTeleports)
 	{
 		return false;
 	}
@@ -339,7 +274,7 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 	}
 	// Check map and course match.
 	if (!KZ::course::GetCourseByCourseID(courseGUID)
-		|| KZRacingService::currentRace.data.courseName != KZ::course::GetCourseByCourseID(courseGUID)->name)
+		|| KZRacingService::currentRace.spec.courseName != KZ::course::GetCourseByCourseID(courseGUID)->name)
 	{
 		return false;
 	}
@@ -354,8 +289,8 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 		return false;
 	}
 	// Mode mismatches are not supported.
-	if (!KZ_STREQI(KZRacingService::currentRace.data.modeName.c_str(), this->player->modeService->GetModeName())
-		&& !KZ_STREQI(KZRacingService::currentRace.data.modeName.c_str(), this->player->modeService->GetModeShortName()))
+	if (!KZ_STREQI(KZRacingService::currentRace.spec.modeName.c_str(), this->player->modeService->GetModeName())
+		&& !KZ_STREQI(KZRacingService::currentRace.spec.modeName.c_str(), this->player->modeService->GetModeShortName()))
 	{
 		return false;
 	}

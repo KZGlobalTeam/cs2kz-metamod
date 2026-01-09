@@ -330,7 +330,7 @@ public:
 			return false;
 		}
 
-		if (!this->inner[key].is_number_float())
+		if (!this->inner[key].is_number())
 		{
 			META_CONPRINTF("[JSON] Key `%s` is not a float.\n", key.c_str());
 			return false;
@@ -347,7 +347,7 @@ public:
 			return false;
 		}
 
-		if (!this->inner[key].is_number_float())
+		if (!this->inner[key].is_number())
 		{
 			META_CONPRINTF("[JSON] Key `%s` is not a float.\n", key.c_str());
 			return false;
