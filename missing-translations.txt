@@ -8,12 +8,12 @@ SUMMARY
 Total languages: 13
 Total phrases: 521
 Phrases with missing translations: 441
-Total missing translation entries: 2038
+Total missing translation entries: 2036
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  99.2% (517/521)
+  chi (schinese)       [███████████████████░]  99.6% (519/521)
   de (german)          [███████████████████░]  99.6% (519/521)
   en (english)         [████████████████████] 100.0% (521/521)
   es (spanish)         [███████████░░░░░░░░░]  55.3% (288/521)
@@ -351,9 +351,9 @@ cs2kz-commands.phrases.txt
   Line 1440: "Command Description - kz_rphidelegs"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
   Line 1448: "Command Description - kz_accept"
-    Missing (10): chi, de, es, fi, it, ko, lv, ru, sv, tr
-  Line 1454: "Command Description - kz_surrender"
-    Missing (10): chi, de, es, fi, it, ko, lv, ru, sv, tr
+    Missing (9): de, es, fi, it, ko, lv, ru, sv, tr
+  Line 1455: "Command Description - kz_surrender"
+    Missing (9): de, es, fi, it, ko, lv, ru, sv, tr
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
