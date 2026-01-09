@@ -281,7 +281,7 @@ void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool br
 	// - The "jsAlways" option is not enabled
 	// - The target is a CSTV (HLTV) client
 	bool shouldPlay = soundMinTier != DistanceTier_None && tier >= soundMinTier && tier > DistanceTier_Meh;
-	shouldPlay |= !target->optionService->GetPreferenceBool("jsAlways", false);
+	shouldPlay |= target->optionService->GetPreferenceBool("jsAlways", false);
 	shouldPlay |= target->IsCSTV();
 	if (!shouldPlay)
 	{
