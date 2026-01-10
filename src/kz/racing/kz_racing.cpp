@@ -211,7 +211,7 @@ void KZRacingService::SurrenderRace()
 		this->SendSurrenderRace();
 
 		auto &localParticipants = KZRacingService::currentRace.localParticipants;
-		for (auto it = localParticipants.begin(); it != localParticipants.end();)
+		for (auto it = localParticipants.begin(); it != localParticipants.end(); it++)
 		{
 			if (it->id == this->player->GetSteamId64())
 			{
