@@ -174,6 +174,16 @@ void KZRacingService::OnPlayerFinish(const KZ::racing::events::PlayerFinish &mes
 		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (PRO)", message.player.name.c_str(), timeStr.Get(), message.teleports);
 	}
 
+	// Check if they are already in the local finishers list.
+	for (const auto &finisher : KZRacingService::currentRace.localFinishers)
+	{
+		if (finisher.id == message.player.id)
+		{
+			return;
+		}
+	}
+
+	// Add to local finishers list to avoid showing go message.
 	for (auto it = KZRacingService::currentRace.localParticipants.begin(); it != KZRacingService::currentRace.localParticipants.end(); ++it)
 	{
 		if (it->id == message.player.id)

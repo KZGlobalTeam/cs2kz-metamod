@@ -166,14 +166,19 @@ void KZRacingService::BroadcastRaceInfo()
 				{
 					if (countdownSeconds <= 0)
 					{
+						bool shouldAnnounce = true;
 						for (auto &finisher : KZRacingService::currentRace.localFinishers)
 						{
 							if (finisher.id == player->GetSteamId64())
 							{
+								shouldAnnounce = false;
 								continue;
 							}
 						}
-						player->languageService->PrintAlert(false, true, "Racing - Go!");
+						if (shouldAnnounce)
+						{
+							player->languageService->PrintAlert(false, true, "Racing - Go!");
+						}
 					}
 					else
 					{
@@ -254,6 +259,16 @@ bool KZRacingService::CanTeleport()
 	{
 		return true;
 	}
+	if (KZRacingService::currentRace.localFinishers.size() > 0)
+	{
+		for (const auto &finisher : KZRacingService::currentRace.localFinishers)
+		{
+			if (finisher.id == this->player->GetSteamId64())
+			{
+				return true;
+			}
+		}
+	}
 	// Can't teleport if max teleports reached.
 	if (this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.spec.maxTeleports)
 	{
@@ -274,7 +289,7 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 	}
 	// Check map and course match.
 	if (!KZ::course::GetCourseByCourseID(courseGUID)
-		|| KZRacingService::currentRace.spec.courseName != KZ::course::GetCourseByCourseID(courseGUID)->name)
+		|| !KZ_STREQI(KZ::course::GetCourseByCourseID(courseGUID)->name, KZRacingService::currentRace.spec.courseName.c_str()))
 	{
 		return false;
 	}
@@ -310,6 +325,15 @@ void KZRacingService::OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed
 	}
 	this->SendFinishRace(time + ((this->timerStartTickServer - KZRacingService::currentRace.earliestStartTick) * ENGINE_FIXED_TICK_INTERVAL),
 						 teleportsUsed);
+	// We do this in advance to avoid having to go text showing up for just finished players.
+	for (auto it = KZRacingService::currentRace.localParticipants.begin(); it != KZRacingService::currentRace.localParticipants.end(); ++it)
+	{
+		if (it->id == this->player->GetSteamId64())
+		{
+			KZRacingService::currentRace.localFinishers.push_back(*it);
+			break;
+		}
+	}
 }
 
 void KZRacingService::OnClientDisconnect()
