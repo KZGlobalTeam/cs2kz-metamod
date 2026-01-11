@@ -478,9 +478,10 @@ bool utils::IsSpawnValid(const Vector &origin)
 	return true;
 }
 
-bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
+bool utils::FindValidSpawn(Vector &origin, QAngle &angles, bool ignoreStuckCheck)
 {
 	bool foundValidSpawn = false;
+	bool foundAnySpawn = false;
 	bool searchCT = false;
 	Vector spawnOrigin;
 	QAngle spawnAngles;
@@ -505,6 +506,14 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
 				origin = spawnOrigin;
 				angles = spawnAngles;
 				foundValidSpawn = true;
+				break;
+			}
+			// Just set the spawn to a found spawn even if it's stuck, if we're ignoring stuck checks.
+			if (ignoreStuckCheck)
+			{
+				origin = spawnOrigin;
+				angles = spawnAngles;
+				foundAnySpawn = true;
 			}
 		}
 		else if (!searchCT)
@@ -516,7 +525,7 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles)
 			break;
 		}
 	}
-	return foundValidSpawn;
+	return foundValidSpawn || foundAnySpawn;
 }
 
 bool utils::CanSeeBox(Vector origin, Vector mins, Vector maxs)

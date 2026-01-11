@@ -183,8 +183,8 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 		if (player->timerService->GetCourse()->hasStartPosition)
 		{
 			player->Teleport(&player->timerService->GetCourse()->startPosition, &player->timerService->GetCourse()->startAngles, &vec3_origin);
+			return;
 		}
-		return;
 	}
 
 	// If we have no active course the map only has one course, !r should send the player to that course.
@@ -203,8 +203,14 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 	QAngle spawnAngles;
 	if (utils::FindValidSpawn(spawnOrigin, spawnAngles))
 	{
-		auto pawn = player->GetPlayerPawn();
-		pawn->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
+		player->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
+		return;
+	}
+
+	// Attempt to just find any spawn at all, ignoring stuck checks.
+	if (utils::FindValidSpawn(spawnOrigin, spawnAngles, true))
+	{
+		player->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
 		return;
 	}
 

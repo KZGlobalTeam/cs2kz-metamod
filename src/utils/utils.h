@@ -70,7 +70,7 @@ namespace utils
 
 	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
 	bool IsSpawnValid(const Vector &origin);
-	bool FindValidSpawn(Vector &origin, QAngle &angles);
+	bool FindValidSpawn(Vector &origin, QAngle &angles, bool ignoreStuckCheck = false);
 
 	// Return true if there's a direct line of sight from the box with specified bounds.
 	bool CanSeeBox(Vector origin, Vector mins, Vector maxs);
