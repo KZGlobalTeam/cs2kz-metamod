@@ -612,6 +612,18 @@ bool KZTimerService::CanResume(bool showError)
 	return true;
 }
 
+void KZTimerService::TogglePause()
+{
+	if (!this->player->IsAlive())
+	{
+		KZ::misc::JoinTeam(player, CS_TEAM_CT);
+	}
+	else
+	{
+		paused ? Resume() : Pause();
+	}
+}
+
 SCMD(kz_timerstopsound, SCFL_TIMER | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
