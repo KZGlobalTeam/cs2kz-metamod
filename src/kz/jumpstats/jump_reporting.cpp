@@ -309,6 +309,10 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 			{
 				continue;
 			}
+			if (!player->optionService->GetPreferenceBool("jsReporting", true))
+			{
+				continue;
+			}
 			KZJumpstatsService::PrintJumpToChat(player, jump, player->optionService->GetPreferenceBool("jsExtendedChatStats", false));
 			KZJumpstatsService::PrintJumpToConsole(player, jump);
 			KZJumpstatsService::PlayJumpstatSound(player, jump);
@@ -323,6 +327,10 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		else
 		{
 			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()))
+			{
+				continue;
+			}
+			if (!player->optionService->GetPreferenceBool("jsReporting", true))
 			{
 				continue;
 			}

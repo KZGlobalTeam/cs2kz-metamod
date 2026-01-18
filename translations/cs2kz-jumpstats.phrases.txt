@@ -940,4 +940,12 @@
 		"sv"		"{grey}Utökad jumpstats chattrapportering inaktiverat."
 		"de"		"{grey}Erweiterte Jumpstats-Benachrichtigungen im Chat deaktiviert."
 	}
+	"Jumpstats Option - Jumpstats Reporting - Enable"
+	{
+		"en"		"{grey}Jumpstats reporting enabled."
+	}
+	"Jumpstats Option - Jumpstats Reporting - Disable"
+	{
+		"en"		"{grey}Jumpstats reporting disabled."
+	}
 }

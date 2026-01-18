@@ -206,6 +206,19 @@ void KZJumpstatsService::SetJumpstatsVolume(f32 volume)
 	this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Volume - Response", volume);
 }
 
+void KZJumpstatsService::ToggleJumpstatsReporting()
+{
+	this->player->optionService->SetPreferenceBool("jsReporting", !this->player->optionService->GetPreferenceBool("jsReporting", true));
+	if (this->player->optionService->GetPreferenceBool("jsReporting", true))
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Reporting - Enable");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Reporting - Disable");
+	}
+}
+
 void KZJumpstatsService::SetSoundMinTier(const char *tierString)
 {
 	DistanceTier tier;
@@ -314,3 +327,12 @@ SCMD(kz_jsvolume, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 	player->jumpstatsService->SetJumpstatsVolume(volume);
 	return MRES_SUPERCEDE;
 }
+
+SCMD(kz_jumpstats, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleJumpstatsReporting();
+	return MRES_SUPERCEDE;
+}
+
+SCMD_LINK(kz_js, kz_jumpstats);

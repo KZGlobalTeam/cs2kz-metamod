@@ -505,7 +505,7 @@
 		"ko"		"점프 통계 보고를 전환합니다."
 		"lv"		"Ieslēgt/izslēgt jumpstats ziņošanu."
 	}
-	"Command Description - kz_togglejs"
+	"Command Description - kz_jumpstats"
 	{
 		"en"		"Toggle jumpstats reporting."
 		"chi"		"切换是否显示起跳提示报告"

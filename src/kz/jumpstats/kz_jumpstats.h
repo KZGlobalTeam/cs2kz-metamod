@@ -468,4 +468,5 @@ public:
 	void ToggleExtendedChatStats();
 	void ToggleJSAlways();
 	void SetJumpstatsVolume(f32 volume);
+	void ToggleJumpstatsReporting();
 };
