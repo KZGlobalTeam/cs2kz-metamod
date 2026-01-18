@@ -56,7 +56,59 @@ static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, co
 				targetMember->SetToEmptyTable();
 				MergePreferences(targetMember, sourceMember, excludeKeys);
 				break;
-			// For other types (arrays, etc.), we can add support later if needed
+			case KV3_TYPE_ARRAY:
+			{
+				// Copy arrays
+				int arrayCount = sourceMember->GetArrayElementCount();
+				targetMember->SetArrayElementCount(arrayCount);
+				for (int j = 0; j < arrayCount; j++)
+				{
+					KeyValues3 *sourceElement = sourceMember->GetArrayElement(j);
+					KeyValues3 *targetElement = targetMember->GetArrayElement(j);
+					if (sourceElement && targetElement)
+					{
+						KV3TypeEx_t elemType = sourceElement->GetTypeEx();
+						KV3Type_t elemBaseType = (KV3Type_t)(elemType & 0x0F);
+
+						switch (elemBaseType)
+						{
+							case KV3_TYPE_BOOL:
+								targetElement->SetBool(sourceElement->GetBool());
+								break;
+							case KV3_TYPE_INT:
+								targetElement->SetInt(sourceElement->GetInt());
+								break;
+							case KV3_TYPE_UINT:
+								targetElement->SetUInt(sourceElement->GetUInt());
+								break;
+							case KV3_TYPE_DOUBLE:
+								targetElement->SetDouble(sourceElement->GetDouble());
+								break;
+							case KV3_TYPE_STRING:
+								targetElement->SetString(sourceElement->GetString());
+								break;
+							case KV3_TYPE_TABLE:
+								targetElement->SetToEmptyTable();
+								MergePreferences(targetElement, sourceElement, excludeKeys);
+								break;
+							default:
+								break;
+						}
+					}
+				}
+				break;
+			}
+			case KV3_TYPE_BINARY_BLOB:
+			{
+				// Copy binary blobs
+				const byte *blob = sourceMember->GetBinaryBlob();
+				int size = sourceMember->GetBinaryBlobSize();
+				if (blob && size > 0)
+				{
+					targetMember->SetToBinaryBlob(blob, size);
+				}
+				break;
+			}
 			default:
 				break;
 		}
