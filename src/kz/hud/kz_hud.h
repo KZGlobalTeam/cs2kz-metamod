@@ -11,6 +11,7 @@ class KZHUDService : public KZBaseService
 private:
 	bool jumpedThisTick {};
 	bool fromDuckbug {};
+	bool crouchJumping {};
 	bool showPanel {};
 	f64 timerStoppedTime {};
 	f64 currentTimeWhenTimerStopped {};
@@ -36,6 +37,10 @@ public:
 		{
 			fromDuckbug = false;
 		}
+		if (this->player->GetMoveType() == MOVETYPE_LADDER)
+		{
+			fromDuckbug = false;
+		}
 	}
 
 	void OnJump()
@@ -48,6 +53,7 @@ public:
 		if (jumpedThisTick)
 		{
 			fromDuckbug = player->duckBugged;
+			crouchJumping = player->GetPlayerPawn()->m_fFlags() & FL_DUCKING || player->GetMoveServices()->m_bDucking();
 		}
 	}
 

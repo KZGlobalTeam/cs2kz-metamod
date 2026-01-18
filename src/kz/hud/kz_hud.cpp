@@ -60,8 +60,9 @@ std::string KZHUDService::GetSpeedText(const char *language)
 	{
 		color = this->fromDuckbug ? "<font color='#ffff20'>" : "<font color='#40ff40'>";
 	}
+	std::string crouchJumpingText = this->crouchJumping ? " <font color='#71eeb8'>C</font>" : "";
 	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text (Takeoff)", velocity.Length2D(), color.c_str(),
-													 this->player->takeoffVelocity.Length2D());
+													 this->player->takeoffVelocity.Length2D(), crouchJumpingText.c_str());
 }
 
 std::string KZHUDService::GetKeyText(const char *language)

@@ -66,20 +66,20 @@
 	}
 	"HUD - Speed Text (Takeoff)"
 	{
-		// Speed: 234 (200)
-		"#format"	"speed:.0f,color:s,takeoff_speed:.0f"
-		"en"		"Speed: {speed} ({color}{takeoff_speed}</font>)"
-		"chi"		"速度: {speed} ({color}{takeoff_speed}</font>)"
-		"pl"		"Prędkość: {speed} ({color}{takeoff_speed}</font>)"
-		"fi"		"Nopeus: {speed} ({color}{takeoff_speed}</font>)"
-		"sv"		"Hastighet: {speed} ({color}{takeoff_speed}</font>)"
-		"ua"		"Швидкість: {speed} ({color}{takeoff_speed}</font>)"
-		"tr"		"Hız: {speed} ({color}{takeoff_speed}</font>)"
-		"it"		"Vel: {speed} ({color}{takeoff_speed}</font>)"
-		"es"		"Velocidad: {speed} ({color}{takeoff_speed}</font>)"
-		"de"		"Geschwindigkeit: {speed} ({color}{takeoff_speed}</font>)"
-		"ko"		"속도: {speed} ({color}{takeoff_speed}</font>)"
-		"lv"		"Ātrums: {speed} ({color}{takeoff_speed}</font>)"
+		// Speed: 234 (200) C
+		"#format"	"speed:.0f,color:s,takeoff_speed:.0f,crouch_jump:s"
+		"en"		"Speed: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"chi"		"速度: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"pl"		"Prędkość: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"fi"		"Nopeus: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"sv"		"Hastighet: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"ua"		"Швидкість: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"tr"		"Hız: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"it"		"Vel: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"es"		"Velocidad: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"de"		"Geschwindigkeit: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"ko"		"속도: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"lv"		"Ātrums: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 	}
 	"HUD - Key Text"
 	{
