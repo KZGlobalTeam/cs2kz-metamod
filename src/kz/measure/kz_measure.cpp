@@ -130,7 +130,7 @@ void KZMeasureService::MeasureBlock()
 		this->player->languageService->PrintChat(true, false, "Measure - Non Solid Position");
 		return;
 	}
-	if ((start.normal + end.normal).Length() > EPSILON)
+	if ((start.normal + end.normal).Length() > 0.03125f)
 	{
 		this->player->languageService->PrintChat(true, false, "Measure - Blocks Not Aligned");
 		return;
