@@ -251,7 +251,7 @@ namespace KZ::course
 	const KZCourseDescriptor *GetCourseByGlobalCourseID(u32 id);
 
 	// Get a course's information given its name.
-	const KZCourseDescriptor *GetCourse(const char *courseName, bool caseSensitive = true);
+	const KZCourseDescriptor *GetCourse(const char *courseName, bool caseSensitive = true, bool matchPartial = false);
 
 	// Get a course's information given its GUID.
 	const KZCourseDescriptor *GetCourse(u32 guid);

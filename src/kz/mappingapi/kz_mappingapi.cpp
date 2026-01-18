@@ -842,7 +842,7 @@ const KZCourseDescriptor *KZ::course::GetCourseByGlobalCourseID(u32 id)
 	return nullptr;
 }
 
-const KZCourseDescriptor *KZ::course::GetCourse(const char *courseName, bool caseSensitive)
+const KZCourseDescriptor *KZ::course::GetCourse(const char *courseName, bool caseSensitive, bool matchPartial)
 {
 	FOR_EACH_VEC(g_sortedCourses, i)
 	{
@@ -850,6 +850,17 @@ const KZCourseDescriptor *KZ::course::GetCourse(const char *courseName, bool cas
 		if (caseSensitive ? KZ_STREQ(name, courseName) : KZ_STREQI(name, courseName))
 		{
 			return g_sortedCourses[i];
+		}
+	}
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		const char *name = g_sortedCourses[i]->name;
+		if (matchPartial)
+		{
+			if (caseSensitive ? V_strstr(name, courseName) : V_stristr(name, courseName))
+			{
+				return g_sortedCourses[i];
+			}
 		}
 	}
 	return nullptr;

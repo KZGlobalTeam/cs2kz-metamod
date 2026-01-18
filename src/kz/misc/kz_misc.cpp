@@ -69,7 +69,7 @@ SCMD(kz_end, SCFL_MAP)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		const KZCourseDescriptor *course = KZ::course::GetCourse(args->ArgS(), false);
+		const KZCourseDescriptor *course = KZ::course::GetCourse(args->ArgS(), false, true);
 
 		if (!course || !course || !course->hasEndPosition)
 		{
@@ -140,7 +140,7 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		startPosCourse = KZ::course::GetCourse(args->ArgS(), false);
+		startPosCourse = KZ::course::GetCourse(args->ArgS(), false, true);
 
 		if (!startPosCourse || !startPosCourse || !startPosCourse->hasStartPosition)
 		{
