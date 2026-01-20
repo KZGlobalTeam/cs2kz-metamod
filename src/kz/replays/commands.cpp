@@ -62,8 +62,20 @@ namespace KZ::replaysystem::commands
 		UUID_t parsedUuid;
 		if (!UUID_t::FromString(uuid, &parsedUuid))
 		{
-			player->languageService->PrintChat(true, false, "Replay - Invalid UUID");
-			return;
+			// Try to find replays matching the UUID substring
+			auto matches = g_ReplayWatcher.FindReplaysByUUIDSubstring(uuid);
+			if (matches.empty())
+			{
+				player->languageService->PrintChat(true, false, "Replay - Invalid UUID");
+				return;
+			}
+			else if (matches.size() > 1)
+			{
+				player->languageService->PrintChat(true, false, "Replay - Multiple Matches", uuid);
+				return;
+			}
+			// Exactly one match found
+			parsedUuid = matches[0];
 		}
 
 		// Validate uuid format

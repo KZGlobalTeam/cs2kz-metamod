@@ -1010,6 +1010,35 @@ void ReplayWatcher::ScanReplays()
 
 ReplayWatcher g_ReplayWatcher;
 
+std::vector<UUID_t> ReplayWatcher::FindReplaysByUUIDSubstring(const char *uuidSubstring)
+{
+	std::vector<UUID_t> matches;
+	if (!uuidSubstring || !uuidSubstring[0])
+	{
+		return matches;
+	}
+
+	std::lock_guard<std::mutex> lock(this->replayMapsMutex);
+
+	auto checkMap = [&](const auto &replayMap)
+	{
+		for (const auto &[uuid, header] : replayMap)
+		{
+			if (V_stristr(uuid.ToString().c_str(), uuidSubstring))
+			{
+				matches.push_back(uuid);
+			}
+		}
+	};
+
+	checkMap(this->cheaterReplays);
+	checkMap(this->runReplays);
+	checkMap(this->jumpReplays);
+	checkMap(this->manualReplays);
+
+	return matches;
+}
+
 void KZ::replaysystem::InitWatcher()
 {
 	g_ReplayWatcher.Start();

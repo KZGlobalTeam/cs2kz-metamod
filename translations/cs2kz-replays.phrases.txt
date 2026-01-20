@@ -247,6 +247,11 @@
 		"ua"		"{darkred}Невірний UUID формат"
 		"de"		"{darkred}Ungültiges UUID-Format"
 	}
+	"Replay - Multiple Matches"
+	{
+		"#format"	"uuid:s"
+		"en"		"{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
+	}
 	"Replay - Loaded Successfully"
 	{
 		"en"		"{lime}Replay loaded successfully! Starting playback..."

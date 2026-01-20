@@ -114,4 +114,7 @@ public:
 	void FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &criteria, KZPlayer *player);
 
 	void FindReplaysMatchingCriteria(const char *inputs, KZPlayer *player);
+
+	// Find replays by UUID substring. Returns matching UUIDs.
+	std::vector<UUID_t> FindReplaysByUUIDSubstring(const char *uuidSubstring);
 };
