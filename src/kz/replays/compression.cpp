@@ -456,7 +456,15 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 		if (flags & CHANGED_POST_ENTITY_FLAGS) { memcpy(&current.post.entityFlags, readPtr, sizeof(current.post.entityFlags)); readPtr += sizeof(current.post.entityFlags); }
 		if (flags & CHANGED_POST_MOVE_TYPE) { memcpy(&current.post.moveType, readPtr, sizeof(current.post.moveType)); readPtr += sizeof(current.post.moveType); }
 
-		// Read checkpoint and cvar data if present
+		// Reconstruct checkpoint data (compare with previous)
+		if (i > 0)
+		{
+			current.checkpoint = outTickData[i - 1].checkpoint;
+		}
+		else
+		{
+			current.checkpoint = {};
+		}
 		if (flags & CHANGED_CHECKPOINT)
 		{
 			memcpy(&current.checkpoint.index, readPtr, sizeof(current.checkpoint.index)); readPtr += sizeof(current.checkpoint.index);
