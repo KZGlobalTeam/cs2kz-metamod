@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 521
-Phrases with missing translations: 441
-Total missing translation entries: 2036
+Total phrases: 553
+Phrases with missing translations: 473
+Total missing translation entries: 2420
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  99.6% (519/521)
-  de (german)          [███████████████████░]  99.6% (519/521)
-  en (english)         [████████████████████] 100.0% (521/521)
-  es (spanish)         [███████████░░░░░░░░░]  55.3% (288/521)
-  fi (finnish)         [█████████░░░░░░░░░░░]  45.7% (238/521)
-  it (italian)         [████████░░░░░░░░░░░░]  44.1% (230/521)
-  ko (koreana)         [███████████░░░░░░░░░]  55.9% (291/521)
-  lv (latvian)         [████████████░░░░░░░░]  63.9% (333/521)
-  pl (polish)          [████████████████████] 100.0% (521/521)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  17.7% (92/521)
-  sv (swedish)         [███████████████░░░░░]  76.2% (397/521)
-  tr (turkish)         [██████████░░░░░░░░░░]  51.2% (267/521)
-  ua (ukrainian)       [████████████████████] 100.0% (521/521)
+  chi (schinese)       [██████████████████░░]  93.9% (519/553)
+  de (german)          [██████████████████░░]  93.9% (519/553)
+  en (english)         [████████████████████] 100.0% (553/553)
+  es (spanish)         [██████████░░░░░░░░░░]  52.1% (288/553)
+  fi (finnish)         [████████░░░░░░░░░░░░]  43.0% (238/553)
+  it (italian)         [████████░░░░░░░░░░░░]  41.6% (230/553)
+  ko (koreana)         [██████████░░░░░░░░░░]  52.6% (291/553)
+  lv (latvian)         [████████████░░░░░░░░]  60.2% (333/553)
+  pl (polish)          [██████████████████░░]  94.2% (521/553)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.6% (92/553)
+  sv (swedish)         [██████████████░░░░░░]  71.8% (397/553)
+  tr (turkish)         [█████████░░░░░░░░░░░]  48.3% (267/553)
+  ua (ukrainian)       [██████████████████░░]  94.2% (521/553)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -85,6 +85,8 @@ cs2kz-api.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Global Check"
     Missing (4): es, it, ru, tr
+  Line 16: "Non Global Map Warning"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-beam.phrases.txt
 ----------------------------------------------------------------------
@@ -212,7 +214,7 @@ cs2kz-commands.phrases.txt
     Missing (1): ru
   Line 493: "Command Description - kz_togglestats"
     Missing (1): ru
-  Line 508: "Command Description - kz_togglejs"
+  Line 508: "Command Description - kz_jumpstats"
     Missing (1): ru
   Line 523: "Command Description - kz_jsalways"
     Missing (1): ru
@@ -354,6 +356,10 @@ cs2kz-commands.phrases.txt
     Missing (9): de, es, fi, it, ko, lv, ru, sv, tr
   Line 1455: "Command Description - kz_surrender"
     Missing (9): de, es, fi, it, ko, lv, ru, sv, tr
+  Line 1462: "Command Description - kz_mapinfo"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1466: "Command Description - kz_tier"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -376,6 +382,56 @@ cs2kz-course.phrases.txt
     Missing (2): it, ru
   Line 32: "Course List Header"
     Missing (2): it, ru
+  Line 47: "Map Info - No API Connection (Short)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 51: "Map Info - No API Connection"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 55: "Map Info - No API Map Data (Short)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 59: "Map Info - No API Map Data"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 63: "Map Info - Check Console"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 67: "Map Info - Map In Testing"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 72: "Map Info - Map Info Header"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 77: "Map Info - Mappers"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 82: "Map Info - State"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 87: "Map Info - Description"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 92: "Map Info - Invalid"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 96: "Map Info - In Testing"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 100: "Map Info - Approved"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 105: "Course Info - Unranked"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 109: "Course Info - Pending"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 113: "Course Info - Ranked"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 117: "Courses - Table Name"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 121: "Course Info Header - Name"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 125: "Course Info Header - Mappers"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 129: "Course Info Header - Tier (Vanilla)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 133: "Course Info Header - Tier (Classic)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 137: "Course Info Header - State (Vanilla)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 141: "Course Info Header - State (Classic)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 146: "Course Data Unavailable"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 152: "Tier Info"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-hud.phrases.txt
 ----------------------------------------------------------------------
@@ -492,6 +548,10 @@ cs2kz-jumpstats.phrases.txt
     Missing (7): es, fi, it, ko, lv, ru, tr
   Line 934: "Jumpstats Option - Extended Chat Stats - Disable"
     Missing (7): es, fi, it, ko, lv, ru, tr
+  Line 943: "Jumpstats Option - Jumpstats Reporting - Enable"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 947: "Jumpstats Option - Jumpstats Reporting - Disable"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-language.phrases.txt
 ----------------------------------------------------------------------
@@ -952,6 +1012,10 @@ cs2kz-timer.phrases.txt
     Missing (7): es, fi, it, ko, lv, ru, tr
   Line 840: "Record Volume Set"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
+  Line 849: "Started Run on Course"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 855: "Started Run on Non Ranked Course"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-tips-general.phrases.txt
 ----------------------------------------------------------------------
@@ -984,7 +1048,7 @@ cs2kz-tips-general.phrases.txt
 
 cs2kz-tips-jumpstats.phrases.txt
 ----------------------------------------------------------------------
-  Line 3: "Tip - kz_togglejs"
+  Line 3: "Tip - kz_js"
     Missing (1): ru
   Line 18: "Tip - kz_jsalways"
     Missing (1): ru
