@@ -943,9 +943,11 @@
 	"Jumpstats Option - Jumpstats Reporting - Enable"
 	{
 		"en"		"{grey}Jumpstats reporting enabled."
+		"ua"		"{grey}Відображення статистики стрибків увімкнено."
 	}
 	"Jumpstats Option - Jumpstats Reporting - Disable"
 	{
 		"en"		"{grey}Jumpstats reporting disabled."
+		"ua"		"{grey}Відображення статистики стрибків вимкнено."
 	}
 }
