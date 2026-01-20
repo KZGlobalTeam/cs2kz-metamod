@@ -16,8 +16,8 @@ SUMMARY: 0 error(s), 28 warning(s)
 cs2kz-course.phrases.txt (0 errors, 3 warnings)
 --------------------------------------------------
   cs2kz-course.phrases.txt:46: [WARNING] Formatting: Line has trailing whitespace
-  cs2kz-course.phrases.txt:145: [WARNING] Formatting: Line has trailing whitespace
-  cs2kz-course.phrases.txt:151: [WARNING] Formatting: Line has trailing whitespace
+  cs2kz-course.phrases.txt:168: [WARNING] Formatting: Line has trailing whitespace
+  cs2kz-course.phrases.txt:175: [WARNING] Formatting: Line has trailing whitespace
 
 cs2kz-racing.phrases.txt (0 errors, 1 warnings)
 --------------------------------------------------

@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 553 |
 | **Phrases Missing Translations** | 473 |
-| **Total Missing Entries** | 2420 |
+| **Total Missing Entries** | 2388 |
 | **Menu Files** | 9 |
 
 ## Language Coverage (Phrases)
@@ -29,7 +29,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.6% (92/553)
   sv (swedish)         [██████████████░░░░░░]  71.8% (397/553)
   tr (turkish)         [█████████░░░░░░░░░░░]  48.3% (267/553)
-  ua (ukrainian)       [██████████████████░░]  94.2% (521/553)
+  ua (ukrainian)       [████████████████████] 100.0% (553/553)
 ```
 
 ## Menu Translation Status
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`e7b4a87`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/e7b4a8748665fb4e4d4773afa2ef873b4fc69d2f)
-- **Time:** 2026-01-20 04:37:54 UTC
-- **Message:** Fix issues with checkpoint replay playback
+- **Commit:** [`5a0f8b5`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/5a0f8b554d76f7fbf394fb001091a3e549e520c9)
+- **Time:** 2026-01-20 22:13:04 UTC
+- **Message:** Ukrainian translation — course info from api (#485)
 
 ---
 

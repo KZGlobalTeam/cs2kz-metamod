@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 553,
     "phrases_with_missing": 473,
-    "total_missing_entries": 2420,
+    "total_missing_entries": 2388,
     "all_languages": [
       "chi",
       "de",
@@ -88,7 +88,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -100,145 +100,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -250,7 +250,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -262,7 +262,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         }
       ],
@@ -308,7 +308,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -320,145 +320,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -470,7 +470,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -482,7 +482,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         }
       ],
@@ -975,7 +975,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -993,145 +993,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -1221,7 +1221,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -2007,7 +2007,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -2659,7 +2659,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -2677,145 +2677,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -2917,7 +2917,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -3907,7 +3907,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -4541,7 +4541,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -4601,145 +4601,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -4841,7 +4841,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -5861,7 +5861,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -6417,7 +6417,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -6435,145 +6435,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -6663,7 +6663,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -7455,7 +7455,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -7852,7 +7852,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -7870,145 +7870,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -8098,7 +8098,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -8788,7 +8788,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -8909,7 +8909,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -8921,145 +8921,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -9071,7 +9071,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -9083,7 +9083,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         }
       ],
@@ -9924,7 +9924,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -9978,145 +9978,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -10458,7 +10458,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -11664,7 +11664,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -12010,7 +12010,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -12022,145 +12022,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -12190,7 +12190,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -12730,7 +12730,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -13325,7 +13325,7 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
@@ -13349,145 +13349,145 @@
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)"
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
         },
         {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
@@ -13589,7 +13589,7 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -14453,7 +14453,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -14558,203 +14558,10 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 94.21,
-      "translated": 521,
-      "missing": 32,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-api.phrases.txt",
-          "phrase": "Non Global Map Warning",
-          "line": 16,
-          "english_text": "{yellow}Warning{grey}: The current map is not globally approved. Runs on this map will not be globally submitted."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_mapinfo",
-          "line": 1462,
-          "english_text": "Display information about the current map."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_tier",
-          "line": 1466,
-          "english_text": "Display the tier of the current course or a specified course."
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - No API Connection (Short)",
-          "line": 47,
-          "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API."
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - No API Connection",
-          "line": 51,
-          "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - No API Map Data (Short)",
-          "line": 55,
-          "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - No API Map Data",
-          "line": 59,
-          "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - Check Console",
-          "line": 63,
-          "english_text": "{grey}Check console for details!"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - Map In Testing",
-          "line": 67,
-          "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}."
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - Map Info Header",
-          "line": 72,
-          "english_text": "{map} Map Information"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - Mappers",
-          "line": 77,
-          "english_text": "Mappers: {mappers}"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - State",
-          "line": 82,
-          "english_text": "State: {state}"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - Description",
-          "line": 87,
-          "english_text": "Description: {description}"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - Invalid",
-          "line": 92,
-          "english_text": "N/A"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - In Testing",
-          "line": 96,
-          "english_text": "In Testing"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Map Info - Approved",
-          "line": 100,
-          "english_text": "Approved ({date})"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info - Unranked",
-          "line": 105,
-          "english_text": "Unranked"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info - Pending",
-          "line": 109,
-          "english_text": "Pending"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info - Ranked",
-          "line": 113,
-          "english_text": "Ranked"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Courses - Table Name",
-          "line": 117,
-          "english_text": "Courses"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info Header - Name",
-          "line": 121,
-          "english_text": "Name"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info Header - Mappers",
-          "line": 125,
-          "english_text": "Mappers"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
-          "english_text": "Tier (Vanilla)"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info Header - Tier (Classic)",
-          "line": 133,
-          "english_text": "Tier (Classic)"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info Header - State (Vanilla)",
-          "line": 137,
-          "english_text": "State (Vanilla)"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Info Header - State (Classic)",
-          "line": 141,
-          "english_text": "State (Classic)"
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Course Data Unavailable",
-          "line": 146,
-          "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
-        },
-        {
-          "file": "cs2kz-course.phrases.txt",
-          "phrase": "Tier Info",
-          "line": 152,
-          "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 943,
-          "english_text": "{grey}Jumpstats reporting enabled."
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
-          "english_text": "{grey}Jumpstats reporting disabled."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
-          "line": 849,
-          "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Non Ranked Course",
-          "line": 855,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 553,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -14886,7 +14693,8 @@
           "line": 16,
           "english_text": "{yellow}Warning{grey}: The current map is not globally approved. Runs on this map will not be globally submitted.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -14899,8 +14707,7 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -17783,7 +17590,8 @@
           "line": 1462,
           "english_text": "Display information about the current map.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17796,16 +17604,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Command Description - kz_tier",
-          "line": 1466,
+          "line": 1467,
           "english_text": "Display the tier of the current course or a specified course.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17818,8 +17626,7 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -18013,7 +17820,8 @@
           "line": 47,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18026,16 +17834,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - No API Connection",
-          "line": 51,
+          "line": 52,
           "english_text": "{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18048,16 +17856,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - No API Map Data (Short)",
-          "line": 55,
+          "line": 57,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18070,16 +17878,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - No API Map Data",
-          "line": 59,
+          "line": 62,
           "english_text": "{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18092,16 +17900,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - Check Console",
-          "line": 63,
+          "line": 67,
           "english_text": "{grey}Check console for details!",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18114,16 +17922,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - Map In Testing",
-          "line": 67,
+          "line": 72,
           "english_text": "{default}{map} {grey}is currently {yellow}in testing{grey}.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18136,16 +17944,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - Map Info Header",
-          "line": 72,
+          "line": 78,
           "english_text": "{map} Map Information",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18158,16 +17966,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - Mappers",
-          "line": 77,
+          "line": 84,
           "english_text": "Mappers: {mappers}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18180,16 +17988,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - State",
-          "line": 82,
+          "line": 90,
           "english_text": "State: {state}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18202,16 +18010,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - Description",
-          "line": 87,
+          "line": 96,
           "english_text": "Description: {description}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18224,16 +18032,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - Invalid",
-          "line": 92,
+          "line": 102,
           "english_text": "N/A",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18246,16 +18054,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - In Testing",
-          "line": 96,
+          "line": 107,
           "english_text": "In Testing",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18268,16 +18076,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Info - Approved",
-          "line": 100,
+          "line": 112,
           "english_text": "Approved ({date})",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18290,16 +18098,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info - Unranked",
-          "line": 105,
+          "line": 118,
           "english_text": "Unranked",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18312,16 +18120,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info - Pending",
-          "line": 109,
+          "line": 123,
           "english_text": "Pending",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18334,16 +18142,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info - Ranked",
-          "line": 113,
+          "line": 128,
           "english_text": "Ranked",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18356,16 +18164,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Courses - Table Name",
-          "line": 117,
+          "line": 133,
           "english_text": "Courses",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18378,16 +18186,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info Header - Name",
-          "line": 121,
+          "line": 138,
           "english_text": "Name",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18400,16 +18208,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info Header - Mappers",
-          "line": 125,
+          "line": 143,
           "english_text": "Mappers",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18422,16 +18230,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info Header - Tier (Vanilla)",
-          "line": 129,
+          "line": 148,
           "english_text": "Tier (Vanilla)",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18444,16 +18252,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info Header - Tier (Classic)",
-          "line": 133,
+          "line": 153,
           "english_text": "Tier (Classic)",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18466,16 +18274,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info Header - State (Vanilla)",
-          "line": 137,
+          "line": 158,
           "english_text": "State (Vanilla)",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18488,16 +18296,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Info Header - State (Classic)",
-          "line": 141,
+          "line": 163,
           "english_text": "State (Classic)",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18510,16 +18318,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Course Data Unavailable",
-          "line": 146,
+          "line": 169,
           "english_text": "{darkred}Data for course {default}{course}{darkred} cannot be retrieved.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18532,16 +18340,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Tier Info",
-          "line": 152,
+          "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18554,8 +18362,7 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -19783,7 +19590,8 @@
           "line": 943,
           "english_text": "{grey}Jumpstats reporting enabled.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -19796,16 +19604,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 947,
+          "line": 948,
           "english_text": "{grey}Jumpstats reporting disabled.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -19818,8 +19626,7 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -24495,7 +24302,8 @@
           "line": 849,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -24508,16 +24316,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Started Run on Non Ranked Course",
-          "line": 855,
+          "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -24530,8 +24338,7 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
