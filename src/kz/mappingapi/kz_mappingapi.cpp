@@ -1157,22 +1157,25 @@ SCMD_LINK(kz_mi, kz_mapinfo)
 
 static_function void PrintCourseTier(KZPlayer *player, const CCommand *args)
 {
-	if (args->ArgC() < 2 && player->timerService->GetCourse() == nullptr)
+	const KZCourseDescriptor *course = player->timerService->GetCourse();
+	if (args->ArgC() < 2 && course == nullptr)
 	{
 		player->languageService->PrintChat(true, false, "No Current Course");
 		KZ::course::PrintCourses(player);
 		return;
 	}
 	const char *courseName = args->ArgS();
-	const KZCourseDescriptor *course = nullptr;
-	if (utils::IsNumeric(courseName))
+	if (!course)
 	{
-		i32 courseID = atoi(courseName);
-		course = KZ::course::GetCourseByCourseID(courseID);
-	}
-	else
-	{
-		course = KZ::course::GetCourse(courseName, false, true);
+		if (utils::IsNumeric(courseName))
+		{
+			i32 courseID = atoi(courseName);
+			course = KZ::course::GetCourseByCourseID(courseID);
+		}
+		else
+		{
+			course = KZ::course::GetCourse(courseName, false, true);
+		}
 	}
 	if (!course)
 	{
