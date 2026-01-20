@@ -846,4 +846,16 @@
 		"ua"		"{grey}Ви встановили гучність оголошення світового рекорду на {default}{volume}%%%%{grey}."
 		"de"		"{grey}Du hast die Lautstärke der Weltrekordansage auf {default}{volume}%%%%{grey} gesetzt."
 	}
+	"Started Run on Course"
+	{
+		// You have started a run on new course: Main
+		"#format"	"course_name:s"
+		"en"		"{grey}You have started a run on a new course: {default}{course_name}{grey}"
+	}
+	"Started Run on Non Ranked Course"
+	{
+		// Warning:  Course Main is not ranked. Runs on this course will not affect your global player rating.
+		"#format"	"course_name:s"
+		"en"		"{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+	}
 }

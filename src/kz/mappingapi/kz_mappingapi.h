@@ -268,4 +268,7 @@ namespace KZ::course
 	// Update the course's global ID given its map-defined name and ID.
 	bool UpdateCourseGlobalID(const char *courseName, u32 globalID);
 
+	// Print the list of courses to the console.
+	void PrintCourses(KZPlayer *player);
+
 }; // namespace KZ::course

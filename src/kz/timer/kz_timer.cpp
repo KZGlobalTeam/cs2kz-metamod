@@ -226,7 +226,49 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	this->cpZoneTimes.FillWithValue(invalidTime);
 	this->stageZoneTimes.FillWithValue(invalidTime);
 
-	SetCourse(courseDesc->guid);
+	// Print course change message if needed
+	if (this->currentCourseGUID != courseDesc->guid)
+	{
+		this->player->languageService->PrintChat(true, false, "Started Run on Course", courseDesc->name);
+		// First run of a course on any map. We can use this to print out a one-time message if the map is not global.
+		if (KZGlobalService::IsAvailable() && this->currentCourseGUID == 0)
+		{
+			const KZ::API::Map *apiMap = nullptr;
+			KZGlobalService::WithCurrentMap([&](const KZ::API::Map *map) { apiMap = map; });
+
+			if (!apiMap || apiMap->state != KZ::API::Map::State::Approved)
+			{
+				this->player->languageService->PrintChat(true, false, "Non Global Map Warning");
+			}
+		}
+		else if (KZGlobalService::IsAvailable() && this->player->styleServices.Count() > 0)
+		{
+			bool ranked = false;
+			const KZ::API::Map *apiMap = nullptr;
+			KZGlobalService::WithCurrentMap([&](const KZ::API::Map *map) { apiMap = map; });
+
+			if (apiMap && apiMap->state == KZ::API::Map::State::Approved)
+			{
+				for (const auto &apiCourse : apiMap->courses)
+				{
+					if (apiCourse.id == courseDesc->globalDatabaseID)
+					{
+						ranked = (KZ_STREQI(this->player->modeService->GetModeName(), "Classic")
+								  && apiCourse.filters.classic.state == KZ::API::Map::Course::Filter::State::Ranked)
+								 || (KZ_STREQI(this->player->modeService->GetModeName(), "Vanilla")
+									 && apiCourse.filters.vanilla.state == KZ::API::Map::Course::Filter::State::Ranked);
+						break;
+					}
+				}
+				if (!ranked)
+				{
+					this->player->languageService->PrintChat(true, false, "Started Run on Non Ranked Course", courseDesc->name);
+				}
+			}
+		}
+		SetCourse(courseDesc->guid);
+	}
+
 	this->validTime = true;
 	this->shouldAnnounceMissedTime = true;
 	this->shouldAnnounceMissedProTime = true;

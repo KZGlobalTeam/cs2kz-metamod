@@ -5,6 +5,7 @@
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/trigger/kz_trigger.h"
+#include "kz/global/kz_global.h"
 #include "movement/movement.h"
 #include "kz_mappingapi.h"
 #include "entity2/entitykeyvalues.h"
@@ -13,6 +14,7 @@
 #include "kz/db/kz_db.h"
 #include "kz/language/kz_language.h"
 #include "utils/simplecmds.h"
+#include "utils/tables.h"
 #include "UtlSortVector.h"
 
 #include "tier0/memdbgon.h"
@@ -931,11 +933,7 @@ static void ListCourses(KZPlayer *player)
 	{
 		player->languageService->PrintChat(true, false, "No Current Course");
 	}
-	player->languageService->PrintConsole(false, false, "Course List Header");
-	for (u32 i = 0; i < KZ::course::GetCourseCount(); i++)
-	{
-		player->PrintConsole(false, false, "%s", g_sortedCourses[i]->name);
-	}
+	KZ::course::PrintCourses(player);
 }
 
 SCMD(kz_courses, SCFL_MAP)
@@ -956,5 +954,271 @@ SCMD(kz_course, SCFL_MAP)
 	{
 		KZ::misc::HandleTeleportToCourse(player, args);
 	}
+	return MRES_SUPERCEDE;
+}
+
+// TODO: Does this *really* belong here?
+// clang-format off
+#define COURSE_TABLE_NAME "Courses - Table Name"
+static_global const char *columnKeysWithAPI[] = {
+	"#.",
+	"Course Info Header - Name",
+	"Course Info Header - Mappers",
+	"Course Info Header - State (Classic)",
+	"Course Info Header - Tier (Classic)",
+	"Course Info Header - State (Vanilla)",
+	"Course Info Header - Tier (Vanilla)"
+};
+static_global const char *columnKeysWithoutAPI[] = {
+	"#.",
+	"Course Info Header - Name",
+};
+static_global const char *courseStateKeys[] = {
+	"Course Info - Unranked",
+	"Course Info - Pending",
+	"Course Info - Ranked"
+};
+// clang-format on
+
+void KZ::course::PrintCourses(KZPlayer *player)
+{
+	// If we have API map data, that means we have information about individual mappers for each course, along with tiers for both modes.
+	// Otherwise, the only course information we have is the course ID and the course name.
+	const KZ::API::Map *map = KZGlobalService::WithCurrentMap([](const KZ::API::Map *currentMap) { return currentMap; });
+	if (map)
+	{
+		CUtlString headers[KZ_ARRAYSIZE(columnKeysWithAPI)];
+		for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithAPI); col++)
+		{
+			headers[col] = player->languageService->PrepareMessage(columnKeysWithAPI[col]).c_str();
+		}
+		utils::Table<KZ_ARRAYSIZE(columnKeysWithAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
+		FOR_EACH_VEC(g_sortedCourses, i)
+		{
+			KZCourseDescriptor *course = g_sortedCourses[i];
+			const KZ::API::Map::Course *apiCourse = nullptr;
+			for (auto &c : map->courses)
+			{
+				if (c.id == course->globalDatabaseID)
+				{
+					apiCourse = &c;
+					break;
+				}
+			}
+			std::string tierClassic {}, tierVanilla {}, stateClassic {}, stateVanilla {}, mappers {};
+			if (apiCourse)
+			{
+				// Mappers
+				for (u32 m = 0; m < apiCourse->mappers.size(); m++)
+				{
+					mappers += apiCourse->mappers[m].name;
+					if (m < apiCourse->mappers.size() - 1)
+					{
+						mappers += ", ";
+					}
+				}
+				// Tiers
+				tierClassic = std::to_string((u8)apiCourse->filters.classic.nubTier) + "/" + std::to_string((u8)apiCourse->filters.classic.proTier);
+				tierVanilla = std::to_string((u8)apiCourse->filters.vanilla.nubTier) + "/" + std::to_string((u8)apiCourse->filters.vanilla.proTier);
+				// States
+				stateClassic = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.classic.state + 1]);
+				stateVanilla = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.vanilla.state + 1]);
+			}
+			else
+			{
+				META_CONPRINTF("Warning: Course ID %i not found in API map data!\n", course->globalDatabaseID);
+			}
+			// clang-format off
+			table.SetRow(
+				i,
+				std::to_string(course->id).c_str(),
+				course->name,
+				mappers.c_str(),
+				stateClassic.c_str(),
+				tierClassic.c_str(),
+				stateVanilla.c_str(),
+				tierVanilla.c_str()
+			);
+			// clang-format on
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+		player->PrintConsole(false, false, table.GetTitle());
+		player->PrintConsole(false, false, table.GetHeader());
+		for (u32 i = 0; i < table.GetNumEntries(); i++)
+		{
+			player->PrintConsole(false, false, table.GetLine(i));
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+	}
+	else
+	{
+		CUtlString headers[KZ_ARRAYSIZE(columnKeysWithoutAPI)];
+		for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithoutAPI); col++)
+		{
+			headers[col] = player->languageService->PrepareMessage(columnKeysWithoutAPI[col]).c_str();
+		}
+		utils::Table<KZ_ARRAYSIZE(columnKeysWithoutAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
+		FOR_EACH_VEC(g_sortedCourses, i)
+		{
+			KZCourseDescriptor *course = g_sortedCourses[i];
+			// clang-format off
+			table.SetRow(
+				i,
+				std::to_string(course->id).c_str(),
+				course->name
+			);
+			// clang-format on
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+		player->PrintConsole(false, false, table.GetTitle());
+		player->PrintConsole(false, false, table.GetHeader());
+		for (u32 i = 0; i < table.GetNumEntries(); i++)
+		{
+			player->PrintConsole(false, false, table.GetLine(i));
+		}
+		player->PrintConsole(false, false, table.GetSeparator("="));
+	}
+}
+
+static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
+{
+	if (!KZGlobalService::IsAvailable())
+	{
+		player->languageService->PrintChat(true, false, "Map Info - No API Connection");
+	}
+
+	const KZ::API::Map *map = KZGlobalService::WithCurrentMap([](const KZ::API::Map *currentMap) { return currentMap; });
+
+	if (!map)
+	{
+		player->languageService->PrintChat(true, false, "Map Info - No API Map Data");
+	}
+	player->languageService->PrintChat(true, false, "Map Info - Check Console");
+	CUtlString mapName = g_pKZUtils->GetCurrentMapName();
+
+	// Map name
+	if (g_pKZUtils->GetCurrentMapWorkshopID())
+	{
+		char workshopID[16];
+		V_snprintf(workshopID, sizeof(workshopID), " (%llu)", g_pKZUtils->GetCurrentMapWorkshopID());
+		mapName += workshopID;
+	}
+	player->languageService->PrintConsole(false, false, "Map Info - Map Info Header", mapName.Get());
+
+	if (map)
+	{
+		// Mappers
+		if (map->mappers.size() > 0)
+		{
+			std::string mappers;
+			for (u32 i = 0; i < map->mappers.size(); i++)
+			{
+				mappers += map->mappers[i].name;
+				if (i < map->mappers.size() - 1)
+				{
+					mappers += ", ";
+				}
+			}
+			player->languageService->PrintConsole(false, false, "Map Info - Mappers", mappers.c_str());
+		}
+		// Map state
+		std::string stateStr;
+		switch (map->state)
+		{
+			case KZ::API::Map::State::Approved:
+				stateStr = player->languageService->PrepareMessage("Map Info - Approved", map->approvedAt.c_str());
+				break;
+			case KZ::API::Map::State::InTesting:
+				stateStr = player->languageService->PrepareMessage("Map Info - In Testing");
+				break;
+			default:
+				stateStr = player->languageService->PrepareMessage("Map Info - Invalid");
+				break;
+		}
+		player->languageService->PrintConsole(false, false, "Map Info - State", stateStr.c_str());
+		// Map description
+		if (map->description && map->description.value().length() > 0)
+		{
+			player->languageService->PrintConsole(false, false, "Map Info - Description", map->description.value().c_str());
+		}
+	}
+	// Courses
+	KZ::course::PrintCourses(player);
+}
+
+SCMD(kz_mapinfo, SCFL_MAP | SCFL_GLOBAL)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	PrintCurrentMapCoursesInfo(player);
+	return MRES_SUPERCEDE;
+}
+
+SCMD_LINK(kz_mi, kz_mapinfo)
+
+static_function void PrintCourseTier(KZPlayer *player, const CCommand *args)
+{
+	if (args->ArgC() < 2 && player->timerService->GetCourse() == nullptr)
+	{
+		player->languageService->PrintChat(true, false, "No Current Course");
+		KZ::course::PrintCourses(player);
+		return;
+	}
+	const char *courseName = args->ArgS();
+	const KZCourseDescriptor *course = nullptr;
+	if (utils::IsNumeric(courseName))
+	{
+		i32 courseID = atoi(courseName);
+		course = KZ::course::GetCourseByCourseID(courseID);
+	}
+	else
+	{
+		course = KZ::course::GetCourse(courseName, false, true);
+	}
+	if (!course)
+	{
+		player->languageService->PrintChat(true, false, "Course Data Unavailable", courseName);
+		return;
+	}
+	if (!KZGlobalService::IsAvailable())
+	{
+		player->languageService->PrintChat(true, false, "Map Info - No API Connection (Short)");
+		return;
+	}
+	const KZ::API::Map *map = KZGlobalService::WithCurrentMap([](const KZ::API::Map *currentMap) { return currentMap; });
+	if (!map)
+	{
+		player->languageService->PrintChat(true, false, "Map Info - No API Map Data (Short)");
+		return;
+	}
+	const KZ::API::Map::Course *apiCourse = nullptr;
+	for (auto &c : map->courses)
+	{
+		if (c.id == course->globalDatabaseID)
+		{
+			apiCourse = &c;
+			break;
+		}
+	}
+	// If the course isn't found in the API map data or the player's current mode isn't Classic or Vanilla, we can't show tier info.
+	if (!apiCourse || (!KZ_STREQI(player->modeService->GetModeName(), "Classic") && (!KZ_STREQI(player->modeService->GetModeName(), "Vanilla"))))
+	{
+		player->languageService->PrintChat(true, false, "Course Data Unavailable", courseName);
+		return;
+	}
+	u8 nubTier =
+		u8(KZ_STREQI(player->modeService->GetModeName(), "Classic") ? apiCourse->filters.classic.nubTier : apiCourse->filters.vanilla.nubTier);
+	u8 proTier =
+		u8(KZ_STREQI(player->modeService->GetModeName(), "Classic") ? apiCourse->filters.classic.proTier : apiCourse->filters.vanilla.proTier);
+	std::string state = KZ_STREQI(player->modeService->GetModeName(), "Classic")
+							? player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.classic.state + 1])
+							: player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.vanilla.state + 1]);
+	std::string description = apiCourse->description ? ": " + apiCourse->description.value() : "";
+	player->languageService->PrintChat(true, false, "Tier Info", course->name, nubTier, proTier, state.c_str(), description.c_str());
+}
+
+SCMD(kz_tier, SCFL_MAP | SCFL_GLOBAL)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	PrintCourseTier(player, args);
 	return MRES_SUPERCEDE;
 }

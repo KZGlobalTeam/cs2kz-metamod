@@ -140,7 +140,15 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		startPosCourse = KZ::course::GetCourse(args->ArgS(), false, true);
+		if (utils::IsNumeric(args->ArgS()))
+		{
+			i32 courseID = atoi(args->ArgS());
+			startPosCourse = KZ::course::GetCourseByCourseID(courseID);
+		}
+		else
+		{
+			startPosCourse = KZ::course::GetCourse(args->ArgS(), false, true);
+		}
 
 		if (!startPosCourse || !startPosCourse || !startPosCourse->hasStartPosition)
 		{

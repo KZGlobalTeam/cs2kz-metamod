@@ -43,4 +43,116 @@
 		"lv"		"Pieejamo trašu saraksts (izmanto kz_r <trases nosaukums>, lai teleportētos uz trasi):"
 		"de"		"Liste aller verfügbaren Routen (benutze kz_r <Routenname> für Teleport zur Route):"
 	}
+	
+	"Map Info - No API Connection (Short)"
+	{
+		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API."
+	}
+	"Map Info - No API Connection"
+	{
+		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
+	}
+	"Map Info - No API Map Data (Short)"
+	{
+		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
+	}
+	"Map Info - No API Map Data"
+	{
+		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
+	}
+	"Map Info - Check Console"
+	{
+		"en"		"{grey}Check console for details!"
+	}
+	"Map Info - Map In Testing"
+	{
+		"#format"	"map:s"
+		"en"		"{default}{map} {grey}is currently {yellow}in testing{grey}."
+	}
+	"Map Info - Map Info Header"
+	{
+		"#format"	"map:s"
+		"en"		"{map} Map Information"
+	}
+	"Map Info - Mappers"
+	{
+		"#format"	"mappers:s"
+		"en"		"Mappers: {mappers}"
+	}
+	"Map Info - State"
+	{
+		"#format"	"state:s"
+		"en"		"State: {state}"
+	}
+	"Map Info - Description"
+	{
+		"#format"	"description:s"
+		"en"		"Description: {description}"
+	}
+	"Map Info - Invalid"
+	{
+		"en"		"N/A"
+	}
+	"Map Info - In Testing"
+	{
+		"en"		"In Testing"
+	}
+	"Map Info - Approved"
+	{
+		"#format"	"date:s"
+		"en"		"Approved ({date})"
+	}
+	"Course Info - Unranked"
+	{
+		"en"		"Unranked"
+	}
+	"Course Info - Pending"
+	{
+		"en"		"Pending"
+	}
+	"Course Info - Ranked"
+	{
+		"en"		"Ranked"
+	}
+	"Courses - Table Name"
+	{
+		"en"		"Courses"
+	}
+	"Course Info Header - Name"
+	{
+		"en"		"Name"
+	}
+	"Course Info Header - Mappers"
+	{
+		"en"		"Mappers"
+	}
+	"Course Info Header - Tier (Vanilla)"
+	{
+		"en"		"Tier (Vanilla)"
+	}
+	"Course Info Header - Tier (Classic)"
+	{
+		"en"		"Tier (Classic)"
+	}
+	"Course Info Header - State (Vanilla)"
+	{
+		"en"		"State (Vanilla)"
+	}
+	"Course Info Header - State (Classic)"
+	{
+		"en"		"State (Classic)"
+	}
+	
+	"Course Data Unavailable"
+	{
+		"#format"	"course:s"
+		"en"		"{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
+	}
+	
+	"Tier Info"
+	{
+		// Main (Ranked) - Tier 1/2: Simple jumps all around.
+		"#format"	"course:s,tier_nub:d,tier_pro:d,state:s,description:s"
+		"en"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+	}
 }

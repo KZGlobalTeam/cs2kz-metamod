@@ -1459,4 +1459,12 @@
 		"ua"		"Здатися в поточній гонці."
 		"pl"		"Poddaj bieżący wyścig."
 	}
+	"Command Description - kz_mapinfo"
+	{
+		"en"		"Display information about the current map."
+	}
+	"Command Description - kz_tier"
+	{
+		"en"		"Display the tier of the current course or a specified course."
+	}
 }
