@@ -169,7 +169,15 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			{
 				return;
 			}
-			*(uint64 *)clients = 0;
+			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CUserMessageSayText>();
+			i32 index = msg->playerindex();
+			if (index == -1)
+			{
+				return;
+			}
+			{
+				*(uint64 *)clients = 0;
+			}
 			return;
 		}
 		case CS_UM_SayText2:
@@ -180,6 +188,11 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 				return;
 			}
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CUserMessageSayText2>();
+			i32 index = msg->entityindex();
+			if (index == -1)
+			{
+				return;
+			}
 			if (!msg->mutable_param1()->empty() || !msg->mutable_param2()->empty())
 			{
 				*(uint64 *)clients = 0;
