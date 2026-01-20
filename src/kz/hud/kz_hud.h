@@ -55,6 +55,11 @@ public:
 			fromDuckbug = player->duckBugged;
 			crouchJumping = player->GetPlayerPawn()->m_fFlags() & FL_DUCKING || player->GetMoveServices()->m_bDucking();
 		}
+		else
+		{
+			fromDuckbug = false;
+			crouchJumping = false;
+		}
 	}
 
 	bool IsShowingPanel()
