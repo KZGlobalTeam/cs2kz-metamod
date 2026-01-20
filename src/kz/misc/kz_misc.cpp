@@ -474,23 +474,30 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 		CUtlString message;
 		message.SetDirect(p, strlen(p) - wrappedInQuotes);
 		auto name = player->GetName();
-		auto msg = message.Get();
+		std::string text = message.Get();
+
+		// We have to replace these CS2 quotes with normal quotes.
+		size_t pos = 0;
+		while ((pos = text.find("\xE2\x80\x8B", pos)) != std::string::npos)
+		{
+			text.replace(pos, 3, "\"");
+		}
 
 		std::string coloredPrefix = player->profileService->GetPrefix(true);
 		std::string prefix = player->profileService->GetPrefix(false);
 		if (player->IsAlive())
 		{
-			utils::SayChat(player->GetController(), "%s {lime}%s{default}: %s", coloredPrefix.c_str(), name, msg);
-			utils::PrintConsoleAll("%s %s: %s", prefix.c_str(), name, msg);
-			META_CONPRINTF("%s %s: %s\n", prefix.c_str(), name, msg);
-			player->racingService->SendChatMessage(msg);
+			utils::SayChat(player->GetController(), "%s {lime}%s{default}: %s", coloredPrefix.c_str(), name, text.c_str());
+			utils::PrintConsoleAll("%s %s: %s", prefix.c_str(), name, text.c_str());
+			META_CONPRINTF("%s %s: %s\n", prefix.c_str(), name, text.c_str());
+			player->racingService->SendChatMessage(text.c_str());
 		}
 		else
 		{
-			utils::SayChat(player->GetController(), "{grey}* %s {lime}%s{default}: %s", coloredPrefix.c_str(), name, msg);
-			utils::PrintConsoleAll("* %s %s: %s", prefix.c_str(), name, msg);
-			META_CONPRINTF("* %s %s: %s\n", prefix.c_str(), name, msg);
-			player->racingService->SendChatMessage(msg);
+			utils::SayChat(player->GetController(), "{grey}* %s {lime}%s{default}: %s", coloredPrefix.c_str(), name, text.c_str());
+			utils::PrintConsoleAll("* %s %s: %s", prefix.c_str(), name, text.c_str());
+			META_CONPRINTF("* %s %s: %s\n", prefix.c_str(), name, text.c_str());
+			player->racingService->SendChatMessage(text.c_str());
 		}
 	}
 
