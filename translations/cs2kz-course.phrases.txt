@@ -47,106 +47,130 @@
 	"Map Info - No API Connection (Short)"
 	{
 		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API."
+		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API."
 	}
 	"Map Info - No API Connection"
 	{
 		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
+		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API. Деяка інформація про мапу може бути недоступною."
 	}
 	"Map Info - No API Map Data (Short)"
 	{
 		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
+		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API."
 	}
 	"Map Info - No API Map Data"
 	{
 		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
+		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API. Деяка інформація про мапу може бути недоступною."
 	}
 	"Map Info - Check Console"
 	{
 		"en"		"{grey}Check console for details!"
+		"ua"		"{grey}Перевірте консоль для детальної інформації!"
 	}
 	"Map Info - Map In Testing"
 	{
 		"#format"	"map:s"
 		"en"		"{default}{map} {grey}is currently {yellow}in testing{grey}."
+		"ua"		"{default}{map} {grey}наразі {yellow}перебуває на стадії тестування{grey}."
 	}
 	"Map Info - Map Info Header"
 	{
 		"#format"	"map:s"
 		"en"		"{map} Map Information"
+		"ua"		"{map} Інформація про мапу"
 	}
 	"Map Info - Mappers"
 	{
 		"#format"	"mappers:s"
 		"en"		"Mappers: {mappers}"
+		"ua"		"Мапери: {mappers}"
 	}
 	"Map Info - State"
 	{
 		"#format"	"state:s"
 		"en"		"State: {state}"
+		"ua"		"Статус: {state}"
 	}
 	"Map Info - Description"
 	{
 		"#format"	"description:s"
 		"en"		"Description: {description}"
+		"ua"		"Опис: {description}"
 	}
 	"Map Info - Invalid"
 	{
 		"en"		"N/A"
+		"ua"		"Н/Д"
 	}
 	"Map Info - In Testing"
 	{
 		"en"		"In Testing"
+		"ua"		"На стадії тестування"
 	}
 	"Map Info - Approved"
 	{
 		"#format"	"date:s"
 		"en"		"Approved ({date})"
+		"ua"		"Схвалено ({date})"
 	}
 	"Course Info - Unranked"
 	{
 		"en"		"Unranked"
+		"ua"		"Без рейтингу"
 	}
 	"Course Info - Pending"
 	{
 		"en"		"Pending"
+		"ua"		"На розгляді"
 	}
 	"Course Info - Ranked"
 	{
 		"en"		"Ranked"
+		"ua"		"Рейтинговий"
 	}
 	"Courses - Table Name"
 	{
 		"en"		"Courses"
+		"ua"		"Курси"
 	}
 	"Course Info Header - Name"
 	{
 		"en"		"Name"
+		"ua"		"Назва"
 	}
 	"Course Info Header - Mappers"
 	{
 		"en"		"Mappers"
+		"ua"		"Мапери"
 	}
 	"Course Info Header - Tier (Vanilla)"
 	{
 		"en"		"Tier (Vanilla)"
+		"ua"		"Складність (Vanilla)"
 	}
 	"Course Info Header - Tier (Classic)"
 	{
 		"en"		"Tier (Classic)"
+		"ua"		"Складність (Classic)"
 	}
 	"Course Info Header - State (Vanilla)"
 	{
 		"en"		"State (Vanilla)"
+		"ua"		"Статус (Vanilla)"
 	}
 	"Course Info Header - State (Classic)"
 	{
 		"en"		"State (Classic)"
+		"ua"		"Статус (Classic)"
 	}
 	
 	"Course Data Unavailable"
 	{
 		"#format"	"course:s"
 		"en"		"{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
+		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
 	}
 	
 	"Tier Info"
@@ -154,5 +178,6 @@
 		// Main (Ranked) - Tier 1/2: Simple jumps all around.
 		"#format"	"course:s,tier_nub:d,tier_pro:d,state:s,description:s"
 		"en"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Складність {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 	}
 }
