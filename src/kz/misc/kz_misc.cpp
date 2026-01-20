@@ -140,19 +140,22 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		if (utils::IsNumeric(args->ArgS()))
+		CUtlString courseArg = args->ArgS();
+		// Trim whitespace
+		courseArg.Trim();
+		if (utils::IsNumeric(courseArg.Get()))
 		{
-			i32 courseID = atoi(args->ArgS());
+			i32 courseID = atoi(courseArg.Get());
 			startPosCourse = KZ::course::GetCourseByCourseID(courseID);
 		}
 		else
 		{
-			startPosCourse = KZ::course::GetCourse(args->ArgS(), false, true);
+			startPosCourse = KZ::course::GetCourse(courseArg.Get(), false, true);
 		}
 
 		if (!startPosCourse || !startPosCourse || !startPosCourse->hasStartPosition)
 		{
-			player->languageService->PrintChat(true, false, "No Start Position For Course", args->ArgS());
+			player->languageService->PrintChat(true, false, "No Start Position For Course", courseArg.Get());
 			return;
 		}
 	}
