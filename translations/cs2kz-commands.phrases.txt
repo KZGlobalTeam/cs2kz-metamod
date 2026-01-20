@@ -1462,9 +1462,11 @@
 	"Command Description - kz_mapinfo"
 	{
 		"en"		"Display information about the current map."
+		"ua"		"Показати інформацію про поточну мапу."
 	}
 	"Command Description - kz_tier"
 	{
 		"en"		"Display the tier of the current course or a specified course."
+		"ua"		"Показати складнісь поточного курсу або вказаного курсу."
 	}
 }
