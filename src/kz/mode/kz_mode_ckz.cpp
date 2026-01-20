@@ -728,12 +728,14 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 				// Player won't hit anything, nothing to do.
 				break;
 			}
-			if (this->lastValidPlane.Length() > FLT_EPSILON
-				&& (!IsValidMovementTrace(pm, bounds, &filter) || pm.m_vHitNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD
-					|| (potentiallyStuck && pm.m_flFraction == 0.0f)))
+			bool normalChanged = pm.m_vHitNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD;
+			bool stuck = potentiallyStuck && pm.m_flFraction == 0.0f;
+			bool lastValidPlaneWasStraightWall = this->lastValidPlane.z < 0.03125f;
+			bool shouldConsiderRampbug = (normalChanged && !lastValidPlaneWasStraightWall) || stuck;
+			if (this->lastValidPlane.Length() > FLT_EPSILON && shouldConsiderRampbug)
 			{
-				// We hit a plane that will significantly change our velocity. Make sure that this plane is significant
-				// enough.
+				// We hit a plane that will significantly change our velocity.
+				// Make sure that this plane is significant enough.
 				Vector direction = velocity.Normalized();
 				Vector offsetDirection;
 				f32 offsets[] = {0.0f, -1.0f, 1.0f};
