@@ -623,7 +623,8 @@ void KZGlobalService::CompleteHandshake(KZ::API::handshake::HelloAck &ack)
 		KZGlobalService::announcements.data = std::move(ack.announcements);
 	}
 
-	META_CONPRINTF("[KZ::Global] Completed handshake!\n");
+	META_CONPRINTF("[KZ::Global] Completed handshake, activating server...\n");
+	KZGlobalService::OnActivateServer();
 }
 
 void KZGlobalService::ExecuteMessageCallback(u32 messageID, const Json &payload)
