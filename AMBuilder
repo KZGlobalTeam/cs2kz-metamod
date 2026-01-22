@@ -6,7 +6,7 @@ def get_proto_builder(builder, sdk_target, sdk):
     os.path.join(sdk['path'], 'common', 'netmessages.proto'),
     os.path.join(sdk['path'], 'game', 'shared', 'usermessages.proto'),
     os.path.join(sdk['path'], 'common', 'network_connection.proto'),
-		os.path.join(sdk['path'], 'common', 'source2_steam_stats.proto'),
+    os.path.join(sdk['path'], 'common', 'source2_steam_stats.proto'),
     os.path.join(sdk['path'], 'common', 'networkbasetypes.proto'),
     os.path.join(sdk['path'], 'common', 'engine_gcmessages.proto'),
     os.path.join(sdk['path'], 'gcsdk', 'steammessages.proto'),
