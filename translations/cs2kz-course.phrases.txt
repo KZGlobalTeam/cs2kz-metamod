@@ -43,7 +43,7 @@
 		"lv"		"Pieejamo trašu saraksts (izmanto kz_r <trases nosaukums>, lai teleportētos uz trasi):"
 		"de"		"Liste aller verfügbaren Routen (benutze kz_r <Routenname> für Teleport zur Route):"
 	}
-	
+
 	"Map Info - No API Connection (Short)"
 	{
 		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API."
@@ -165,14 +165,14 @@
 		"en"		"State (Classic)"
 		"ua"		"Статус (Classic)"
 	}
-	
+
 	"Course Data Unavailable"
 	{
 		"#format"	"course:s"
 		"en"		"{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
 		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
 	}
-	
+
 	"Tier Info"
 	{
 		// Main (Ranked) - Tier 1/2: Simple jumps all around.

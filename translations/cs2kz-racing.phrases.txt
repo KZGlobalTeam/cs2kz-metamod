@@ -141,7 +141,7 @@
 		"ua"		"{default}Нова гонка розпочалася!\n{grey}Курс: {default}{course}{grey} | Макс. TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"de"		"{default}Ein neues Rennen wurde gestartet!\n{grey}Route: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 	}
-	
+
 	"Racing - Race Cancelled"
 	{
 		"en"		"{darkred}Race has been cancelled!"
