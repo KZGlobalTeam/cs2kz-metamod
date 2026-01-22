@@ -327,45 +327,45 @@
 			}
 			"Teleport"
 			{
-				"windows"		"168"
-				"linux"			"167"
+				"windows"		"162"
+				"linux"			"161"
 			}
 			// 2 functions after one with "targethealthfrac"
 			"CollisionRulesChanged"
 			{
-				"windows"		"191"
+				"windows"		"185"
 				"linux"			"184"
 			}
 			// 11 functions after one with "CBasePlayerPawn::PhysicsSimulate"
 			"IsEntityPawn"
 			{
-				"windows"		"174"
-				"linux"			"173"
+				"windows"		"168"
+				"linux"			"167"
 			}
 			// Right after IsEntityPawn
 			"IsEntityController"
 			{
-				"windows"		"175"
-				"linux"			"174"
+				"windows"		"169"
+				"linux"			"168"
 			}
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"ControllerChangeTeam"
 			{
-				"windows"		"109"
-				"linux"			"108"
+				"windows"		"102"
+				"linux"			"101"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2832LL))(v9, v27, 0LL);
 			// 2832 (354 * 8) is the offset
 			"CommitSuicide"
 			{
-				"windows"		"408"
-				"linux"			"408"
+				"windows"		"400"
+				"linux"			"400"
 			}
 			"ControllerRespawn"
 			{
-				"windows"		"277"
-				"linux"			"279"
+				"windows"		"272"
+				"linux"			"274"
 			}
 			// "Player.Respawn"
 			"Respawn"
@@ -382,23 +382,23 @@
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
-				"windows"		"153"
-				"linux"			"152"
+				"windows"		"147"
+				"linux"			"146"
 			}
 			"Touch"
 			{
-				"windows"		"154"
-				"linux"			"153"
+				"windows"		"148"
+				"linux"			"147"
 			}
 			"EndTouch"
 			{
-				"windows"		"155"
-				"linux"			"154"
+				"windows"		"149"
+				"linux"			"148"
 			}
 			"PassesTriggerFilters"
 			{
-				"windows"		"271"
-				"linux"			"272"
+				"windows"		"266"
+				"linux"			"267"
 			}
 			// In DebugDrawMesh, offset used when solid=true
 			"DebugTriangle"
