@@ -264,6 +264,14 @@ namespace KZ::replaysystem::playback
 			if (!subtickData->subtickMoves[i].IsAnalogInput())
 			{
 				move->set_pressed(subtickData->subtickMoves[i].pressed);
+				if (subtickData->subtickMoves[i].analogMove.pitch_delta != 0)
+				{
+					move->set_pitch_delta(subtickData->subtickMoves[i].analogMove.pitch_delta);
+				}
+				if (subtickData->subtickMoves[i].analogMove.yaw_delta != 0)
+				{
+					move->set_yaw_delta(subtickData->subtickMoves[i].analogMove.yaw_delta);
+				}
 			}
 			else
 			{
@@ -274,14 +282,6 @@ namespace KZ::replaysystem::playback
 				if (subtickData->subtickMoves[i].analogMove.analog_left_delta != 0)
 				{
 					move->set_analog_left_delta(subtickData->subtickMoves[i].analogMove.analog_left_delta);
-				}
-				if (subtickData->subtickMoves[i].analogMove.pitch_delta != 0)
-				{
-					move->set_pitch_delta(subtickData->subtickMoves[i].analogMove.pitch_delta);
-				}
-				if (subtickData->subtickMoves[i].analogMove.yaw_delta != 0)
-				{
-					move->set_yaw_delta(subtickData->subtickMoves[i].analogMove.yaw_delta);
 				}
 			}
 		}

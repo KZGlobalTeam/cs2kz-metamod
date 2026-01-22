@@ -31,13 +31,13 @@ void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 	if (move.button())
 	{
 		this->pressed = move.pressed();
+		this->analogMove.pitch_delta = move.pitch_delta();
+		this->analogMove.yaw_delta = move.yaw_delta();
 	}
 	else
 	{
 		this->analogMove.analog_forward_delta = move.analog_forward_delta();
 		this->analogMove.analog_left_delta = move.analog_left_delta();
-		this->analogMove.pitch_delta = move.pitch_delta();
-		this->analogMove.yaw_delta = move.yaw_delta();
 	}
 }
 
