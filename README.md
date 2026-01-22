@@ -7,7 +7,7 @@ Automated translation linter reports for cs2kz-metamod.
 | Metric | Value |
 |--------|-------|
 | **Linter Errors** | 0 |
-| **Linter Warnings** | 28 |
+| **Linter Warnings** | 24 |
 | **Total Languages** | 13 |
 | **Total Phrases** | 554 |
 | **Phrases Missing Translations** | 474 |
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`9c74892`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/9c748922192f779929f242d7be29b0cc5625d0a5)
-- **Time:** 2026-01-20 22:34:58 UTC
-- **Message:** Add substring match to !replay
+- **Commit:** [`0fccc08`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/0fccc08e545995a770aafefea4e0ffe207157993)
+- **Time:** 2026-01-22 23:28:23 UTC
+- **Message:** Misc updates (#488)
 
 ---
 
