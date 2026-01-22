@@ -39,12 +39,13 @@ private:
 	virtual void unk_18() = 0;
 
 public:
-	uint8 chainEntity[0x28]; // Unused
-	CBasePlayerPawn *pawn;   // 0x16
-	uint8 __pad0030[0x6];    // 0x0
+	CNetworkVarChainer chainEntity;
+	uint8 __pad0028[0x8];
+	CBasePlayerPawn *pawn;
+	uint8 __pad0038[0x8];
 };
 
-static_assert(sizeof(CPlayerPawnComponent) == 0x40);
+static_assert(sizeof(CPlayerPawnComponent) == 0x48);
 
 class CPlayer_WeaponServices : public CPlayerPawnComponent
 {
