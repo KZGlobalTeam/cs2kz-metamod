@@ -36,6 +36,7 @@ private:
 	virtual void unk_15() = 0;
 	virtual void unk_16() = 0;
 	virtual void unk_17() = 0;
+	virtual void unk_18() = 0;
 
 public:
 	uint8 chainEntity[0x28]; // Unused
