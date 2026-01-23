@@ -257,8 +257,7 @@ struct TickData
 		f32 lastUsableJumpPressFrac {};
 		i32 lastLandedTick {};
 		f32 lastLandedFrac {};
-		f32 lastLandedVelocityX {};
-		f32 lastLandedVelocityY {};
+		Vector lastLandedVelocity {};
 	} modernJump {};
 };
 

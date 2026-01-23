@@ -112,7 +112,7 @@ enum TickDataChangeFlags : u64
 	// 2026 ModernJump fields
 	CHANGED_MODERN_JUMP_ACTUAL_PRESS = (1ULL << 39), // lastActualJumpPressTick + lastActualJumpPressFrac
 	CHANGED_MODERN_JUMP_USABLE_PRESS = (1ULL << 40), // lastUsableJumpPressTick + lastUsableJumpPressFrac
-	CHANGED_MODERN_JUMP_LANDED = (1ULL << 41),       // lastLandedTick + lastLandedFrac + lastLandedVelocityX + lastLandedVelocityY
+	CHANGED_MODERN_JUMP_LANDED = (1ULL << 41),       // lastLandedTick + lastLandedFrac + lastLandedVelocity (Vector)
 };
 
 // Compare pre or post data and build change flags
@@ -251,8 +251,7 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 		if (i == 0 || 
 			current.modernJump.lastLandedTick != tickData[i - 1].modernJump.lastLandedTick ||
 			current.modernJump.lastLandedFrac != tickData[i - 1].modernJump.lastLandedFrac ||
-			current.modernJump.lastLandedVelocityX != tickData[i - 1].modernJump.lastLandedVelocityX ||
-			current.modernJump.lastLandedVelocityY != tickData[i - 1].modernJump.lastLandedVelocityY)
+			current.modernJump.lastLandedVelocity != tickData[i - 1].modernJump.lastLandedVelocity)
 		{
 			flags |= CHANGED_MODERN_JUMP_LANDED;
 		}
@@ -328,8 +327,7 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 		{
 			AppendToBuffer(buffer, &current.modernJump.lastLandedTick, sizeof(current.modernJump.lastLandedTick));
 			AppendToBuffer(buffer, &current.modernJump.lastLandedFrac, sizeof(current.modernJump.lastLandedFrac));
-			AppendToBuffer(buffer, &current.modernJump.lastLandedVelocityX, sizeof(current.modernJump.lastLandedVelocityX));
-			AppendToBuffer(buffer, &current.modernJump.lastLandedVelocityY, sizeof(current.modernJump.lastLandedVelocityY));
+			AppendToBuffer(buffer, &current.modernJump.lastLandedVelocity, sizeof(current.modernJump.lastLandedVelocity));
 		}
 		// clang-format on
 	}
@@ -548,10 +546,8 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 			readPtr += sizeof(current.modernJump.lastLandedTick);
 			memcpy(&current.modernJump.lastLandedFrac, readPtr, sizeof(current.modernJump.lastLandedFrac));
 			readPtr += sizeof(current.modernJump.lastLandedFrac);
-			memcpy(&current.modernJump.lastLandedVelocityX, readPtr, sizeof(current.modernJump.lastLandedVelocityX));
-			readPtr += sizeof(current.modernJump.lastLandedVelocityX);
-			memcpy(&current.modernJump.lastLandedVelocityY, readPtr, sizeof(current.modernJump.lastLandedVelocityY));
-			readPtr += sizeof(current.modernJump.lastLandedVelocityY);
+			memcpy(&current.modernJump.lastLandedVelocity, readPtr, sizeof(current.modernJump.lastLandedVelocity));
+			readPtr += sizeof(current.modernJump.lastLandedVelocity);
 		}
 		// clang-format on
 	}

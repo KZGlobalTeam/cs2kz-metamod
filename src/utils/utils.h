@@ -313,4 +313,11 @@ namespace utils
 		*outSeconds = totalSeconds;
 		return true;
 	}
+
+	// Quantize a float to the nearest 1/64
+	inline float QuantizeFloat(f32 value)
+	{
+		volatile f32 temp = value + 131072.0f;
+		return temp - 131072.0f;
+	}
 } // namespace utils

@@ -137,6 +137,7 @@ public:
 	SCHEMA_FIELD(float, m_flLastLandedFrac)
 	SCHEMA_FIELD(float, m_flLastLandedVelocityX)
 	SCHEMA_FIELD(float, m_flLastLandedVelocityY)
+	SCHEMA_FIELD(float, m_flLastLandedVelocityZ)
 };
 
 class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid

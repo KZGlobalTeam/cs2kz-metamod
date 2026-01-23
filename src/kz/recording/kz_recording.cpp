@@ -134,8 +134,9 @@ void KZRecordingService::RecordTickData_PhysicsSimulate()
 	this->currentTickData.modernJump.lastUsableJumpPressFrac = movementServices->m_ModernJump().m_flLastUsableJumpPressFrac();
 	this->currentTickData.modernJump.lastLandedTick = movementServices->m_ModernJump().m_nLastLandedTick();
 	this->currentTickData.modernJump.lastLandedFrac = movementServices->m_ModernJump().m_flLastLandedFrac();
-	this->currentTickData.modernJump.lastLandedVelocityX = movementServices->m_ModernJump().m_flLastLandedVelocityX();
-	this->currentTickData.modernJump.lastLandedVelocityY = movementServices->m_ModernJump().m_flLastLandedVelocityY();
+	this->currentTickData.modernJump.lastLandedVelocity = {movementServices->m_ModernJump().m_flLastLandedVelocityX(),
+														   movementServices->m_ModernJump().m_flLastLandedVelocityY(),
+														   movementServices->m_ModernJump().m_flLastLandedVelocityZ()};
 }
 
 void KZRecordingService::RecordTickData_SetupMove(PlayerCommand *pc)

@@ -56,8 +56,9 @@ namespace KZ::replaysystem::playback
 		moveServices->m_ModernJump().m_nLastLandedTick =
 			g_pKZUtils->GetServerGlobals()->tickcount + tickData->modernJump.lastLandedTick - tickData->serverTick;
 		moveServices->m_ModernJump().m_flLastLandedFrac = tickData->modernJump.lastLandedFrac;
-		moveServices->m_ModernJump().m_flLastLandedVelocityX = tickData->modernJump.lastLandedVelocityX;
-		moveServices->m_ModernJump().m_flLastLandedVelocityY = tickData->modernJump.lastLandedVelocityY;
+		moveServices->m_ModernJump().m_flLastLandedVelocityX = tickData->modernJump.lastLandedVelocity.x;
+		moveServices->m_ModernJump().m_flLastLandedVelocityY = tickData->modernJump.lastLandedVelocity.y;
+		moveServices->m_ModernJump().m_flLastLandedVelocityZ = tickData->modernJump.lastLandedVelocity.z;
 
 		u32 playerFlagBits = (-1) & ~((u32)(FL_CLIENT | FL_BOT));
 		pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData->pre.entityFlags & playerFlagBits);
