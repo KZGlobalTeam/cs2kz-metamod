@@ -35,7 +35,8 @@ namespace KZ::replaysystem::playback
 		pawn->m_vecAbsVelocity(tickData->pre.velocity);
 
 		auto moveServices = player->GetMoveServices();
-		moveServices->m_flJumpPressedTime = tickData->pre.jumpPressedTime;
+		moveServices->m_LegacyJump().m_flJumpPressedTime =
+			g_pKZUtils->GetServerGlobals()->curtime + tickData->pre.jumpPressedTime - tickData->gameTime;
 
 		moveServices->m_flDuckSpeed = tickData->pre.duckSpeed;
 		moveServices->m_flDuckAmount = tickData->pre.duckAmount;
@@ -44,6 +45,19 @@ namespace KZ::replaysystem::playback
 		moveServices->m_bDucking = tickData->pre.replayFlags.ducking;
 		moveServices->m_bDucked = tickData->pre.replayFlags.ducked;
 		moveServices->m_bDesiresDuck = tickData->pre.replayFlags.desiresDuck;
+
+		// Apply modern jump data with tick offset
+		moveServices->m_ModernJump().m_nLastActualJumpPressTick =
+			g_pKZUtils->GetServerGlobals()->tickcount + tickData->modernJump.lastActualJumpPressTick - tickData->serverTick;
+		moveServices->m_ModernJump().m_flLastActualJumpPressFrac = tickData->modernJump.lastActualJumpPressFrac;
+		moveServices->m_ModernJump().m_nLastUsableJumpPressTick =
+			g_pKZUtils->GetServerGlobals()->tickcount + tickData->modernJump.lastUsableJumpPressTick - tickData->serverTick;
+		moveServices->m_ModernJump().m_flLastUsableJumpPressFrac = tickData->modernJump.lastUsableJumpPressFrac;
+		moveServices->m_ModernJump().m_nLastLandedTick =
+			g_pKZUtils->GetServerGlobals()->tickcount + tickData->modernJump.lastLandedTick - tickData->serverTick;
+		moveServices->m_ModernJump().m_flLastLandedFrac = tickData->modernJump.lastLandedFrac;
+		moveServices->m_ModernJump().m_flLastLandedVelocityX = tickData->modernJump.lastLandedVelocityX;
+		moveServices->m_ModernJump().m_flLastLandedVelocityY = tickData->modernJump.lastLandedVelocityY;
 
 		u32 playerFlagBits = (-1) & ~((u32)(FL_CLIENT | FL_BOT));
 		pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData->pre.entityFlags & playerFlagBits);
@@ -131,7 +145,8 @@ namespace KZ::replaysystem::playback
 		moveServices->m_nButtons()->m_pButtonStates[0] = tickData->post.buttons[0];
 		moveServices->m_nButtons()->m_pButtonStates[1] = tickData->post.buttons[1];
 		moveServices->m_nButtons()->m_pButtonStates[2] = tickData->post.buttons[2];
-		moveServices->m_flJumpPressedTime = tickData->post.jumpPressedTime;
+		moveServices->m_LegacyJump().m_flJumpPressedTime =
+			g_pKZUtils->GetServerGlobals()->curtime + tickData->post.jumpPressedTime - tickData->gameTime;
 
 		moveServices->m_flDuckSpeed = tickData->post.duckSpeed;
 		moveServices->m_flDuckAmount = tickData->post.duckAmount;

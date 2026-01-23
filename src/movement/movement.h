@@ -58,8 +58,10 @@ namespace movement
 	void FASTCALL Detour_Duck(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_CanUnduck(CCSPlayer_MovementServices *, CMoveData *);
 	bool FASTCALL Detour_LadderMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_CheckJumpButton(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_OnJump(CCSPlayer_MovementServices *, CMoveData *);
+	void FASTCALL Detour_CheckJumpButtonLegacy(CCSPlayerLegacyJump *, CMoveData *);
+	void FASTCALL Detour_CheckJumpButtonModern(CCSPlayerModernJump *, CMoveData *);
+	void FASTCALL Detour_OnJumpLegacy(CCSPlayerLegacyJump *, CMoveData *);
+	void FASTCALL Detour_OnJumpModern(CCSPlayerModernJump *, CMoveData *);
 	void FASTCALL Detour_AirMove(CCSPlayer_MovementServices *, CMoveData *);
 	void FASTCALL Detour_AirAccelerate(CCSPlayer_MovementServices *, CMoveData *, Vector &, f32, f32);
 	void FASTCALL Detour_Friction(CCSPlayer_MovementServices *, CMoveData *);
@@ -164,13 +166,21 @@ public:
 
 	virtual void OnLadderMovePost() {}
 
-	virtual void OnCheckJumpButton() {}
+	virtual void OnCheckJumpButtonLegacy() {}
 
-	virtual void OnCheckJumpButtonPost() {}
+	virtual void OnCheckJumpButtonLegacyPost() {}
 
-	virtual void OnJump() {}
+	virtual void OnCheckJumpButtonModern() {}
 
-	virtual void OnJumpPost() {}
+	virtual void OnCheckJumpButtonModernPost() {}
+
+	virtual void OnJumpLegacy() {}
+
+	virtual void OnJumpLegacyPost() {}
+
+	virtual void OnJumpModern() {}
+
+	virtual void OnJumpModernPost() {}
 
 	virtual void OnAirMove() {}
 

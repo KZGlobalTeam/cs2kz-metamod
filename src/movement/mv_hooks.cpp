@@ -30,8 +30,10 @@ void movement::InitDetours()
 	INIT_DETOUR(g_pGameConfig, Duck);
 	INIT_DETOUR(g_pGameConfig, CanUnduck);
 	INIT_DETOUR(g_pGameConfig, LadderMove);
-	INIT_DETOUR(g_pGameConfig, CheckJumpButton);
-	INIT_DETOUR(g_pGameConfig, OnJump);
+	INIT_DETOUR(g_pGameConfig, CheckJumpButtonLegacy);
+	INIT_DETOUR(g_pGameConfig, CheckJumpButtonModern);
+	INIT_DETOUR(g_pGameConfig, OnJumpLegacy);
+	INIT_DETOUR(g_pGameConfig, OnJumpModern);
 	INIT_DETOUR(g_pGameConfig, AirMove);
 	INIT_DETOUR(g_pGameConfig, AirAccelerate);
 	INIT_DETOUR(g_pGameConfig, Friction);
@@ -243,9 +245,10 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 	return result;
 }
 
-void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, CMoveData *mv)
+void FASTCALL movement::Detour_CheckJumpButtonLegacy(CCSPlayerLegacyJump *legacy, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	CCSPlayer_MovementServices *ms = legacy->m_pMovementServices;
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 #ifdef WATER_FIX
 	if (player->enableWaterFix && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f && ms->pawn->m_fFlags & FL_ONGROUND)
@@ -256,25 +259,54 @@ void FASTCALL movement::Detour_CheckJumpButton(CCSPlayer_MovementServices *ms, C
 		}
 	}
 #endif
-	player->OnCheckJumpButton();
-	CheckJumpButton(ms, mv);
-	player->OnCheckJumpButtonPost();
+	player->OnCheckJumpButtonLegacy();
+	CheckJumpButtonLegacy(legacy, mv);
+	player->OnCheckJumpButtonLegacyPost();
 }
 
-void FASTCALL movement::Detour_OnJump(CCSPlayer_MovementServices *ms, CMoveData *mv)
+void FASTCALL movement::Detour_CheckJumpButtonModern(CCSPlayerModernJump *modern, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	CCSPlayer_MovementServices *ms = modern->m_pMovementServices;
 	MovementPlayer *player = playerManager->ToPlayer(ms);
-	player->OnJump();
+	player->OnCheckJumpButtonModern();
+	CheckJumpButtonModern(modern, mv);
+	player->OnCheckJumpButtonModernPost();
+}
+
+void FASTCALL movement::Detour_OnJumpLegacy(CCSPlayerLegacyJump *legacy, CMoveData *mv)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	CCSPlayer_MovementServices *ms = legacy->m_pMovementServices;
+	MovementPlayer *player = playerManager->ToPlayer(ms);
+	player->OnJumpLegacy();
 	Vector oldOutWishVel = mv->m_outWishVel;
-	OnJump(ms, mv);
+	OnJumpLegacy(legacy, mv);
 	if (mv->m_outWishVel != oldOutWishVel)
 	{
 		player->inPerf = (!player->takeoffFromLadder && !player->oldWalkMoved);
 		player->RegisterTakeoff(true, player->possibleLadderHop);
 		player->OnStopTouchGround();
 	}
-	player->OnJumpPost();
+	player->OnJumpLegacyPost();
+}
+
+void FASTCALL movement::Detour_OnJumpModern(CCSPlayerModernJump *modern, CMoveData *mv)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	CCSPlayer_MovementServices *ms = modern->m_pMovementServices;
+	MovementPlayer *player = playerManager->ToPlayer(ms);
+	player->OnJumpModern();
+	Vector oldOutWishVel = mv->m_outWishVel;
+	OnJumpModern(modern, mv);
+	if (mv->m_outWishVel != oldOutWishVel)
+	{
+		// TODO: this is different now!
+		player->inPerf = (!player->takeoffFromLadder && !player->oldWalkMoved);
+		player->RegisterTakeoff(true, player->possibleLadderHop);
+		player->OnStopTouchGround();
+	}
+	player->OnJumpModernPost();
 }
 
 void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData *mv)

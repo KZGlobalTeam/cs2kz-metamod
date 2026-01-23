@@ -11,6 +11,7 @@ class CBasePlayerWeapon;
 #include "datatypes.h"
 #include "econ/ccsplayerinventory.h"
 #include "entity/cbaseplayerweapon.h"
+class CCSPlayer_MovementServices;
 
 class CPlayerPawnComponent
 {
@@ -104,29 +105,61 @@ class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 
 public:
 	DECLARE_SCHEMA_CLASS_ENTITY(CPlayer_MovementServices_Humanoid);
-	SCHEMA_FIELD(bool, m_bDucking)
-	SCHEMA_FIELD(bool, m_bDucked)
 	SCHEMA_FIELD(float, m_flSurfaceFriction)
 };
 
+// Not a real class, just something that the two classes below can inherit from
+class CCSPlayerBaseJump
+{
+	void **vtable;
+
+public:
+	CCSPlayer_MovementServices *m_pMovementServices;
+};
+
+class CCSPlayerLegacyJump : public CCSPlayerBaseJump
+{
+public:
+	DECLARE_SCHEMA_CLASS_BASE(CCSPlayerLegacyJump, 0)
+	SCHEMA_FIELD(bool, m_bOldJumpPressed)
+	SCHEMA_FIELD(float, m_flJumpPressedTime)
+};
+
+class CCSPlayerModernJump : public CCSPlayerBaseJump
+{
+public:
+	DECLARE_SCHEMA_CLASS_BASE(CCSPlayerModernJump, 0)
+	SCHEMA_FIELD(int, m_nLastActualJumpPressTick)
+	SCHEMA_FIELD(float, m_flLastActualJumpPressFrac)
+	SCHEMA_FIELD(int, m_nLastUsableJumpPressTick)
+	SCHEMA_FIELD(float, m_flLastUsableJumpPressFrac)
+	SCHEMA_FIELD(int, m_nLastLandedTick)
+	SCHEMA_FIELD(float, m_flLastLandedFrac)
+	SCHEMA_FIELD(float, m_flLastLandedVelocityX)
+	SCHEMA_FIELD(float, m_flLastLandedVelocityY)
+};
+
 class CCSPlayer_MovementServices : public CPlayer_MovementServices_Humanoid
+
 {
 	virtual ~CCSPlayer_MovementServices() = 0;
 
 public:
 	DECLARE_SCHEMA_CLASS_ENTITY(CCSPlayer_MovementServices);
 	SCHEMA_FIELD(Vector, m_vecLadderNormal)
-	SCHEMA_FIELD(bool, m_bOldJumpPressed)
-	SCHEMA_FIELD(float, m_flJumpPressedTime)
 	SCHEMA_FIELD(float, m_flAccumulatedJumpError)
+	SCHEMA_FIELD(bool, m_bDucked)
 	SCHEMA_FIELD(float, m_flDuckSpeed)
 	SCHEMA_FIELD(float, m_flDuckAmount)
 	SCHEMA_FIELD(float, m_flStamina)
 	SCHEMA_FIELD(bool, m_bDuckOverride)
 	SCHEMA_FIELD(float, m_flLastDuckTime)
 	SCHEMA_FIELD(float, m_bDesiresDuck)
+	SCHEMA_FIELD(bool, m_bDucking)
 	SCHEMA_FIELD(float, m_flDuckOffset)
 	SCHEMA_FIELD(bool, m_duckUntilOnGround)
+	SCHEMA_FIELD(CCSPlayerLegacyJump, m_LegacyJump)
+	SCHEMA_FIELD(CCSPlayerModernJump, m_ModernJump)
 };
 
 class CCSPlayer_WaterServices : public CPlayerPawnComponent

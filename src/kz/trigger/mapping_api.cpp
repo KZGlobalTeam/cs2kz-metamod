@@ -284,7 +284,8 @@ void KZTriggerService::ApplyAntiBhop(bool replicate)
 {
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", "999999.9", replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", "false", replicate);
-	player->GetMoveServices()->m_bOldJumpPressed() = true;
+	player->GetMoveServices()->m_LegacyJump().m_bOldJumpPressed() = true;
+	player->GetMoveServices()->m_ModernJump().m_nLastActualJumpPressTick() = 5529600; // Magic number to prevent jumps
 }
 
 void KZTriggerService::CancelAntiBhop(bool replicate)
@@ -293,6 +294,7 @@ void KZTriggerService::CancelAntiBhop(bool replicate)
 	const CVValue_t *autoBhopValue = player->GetCvarValueFromModeStyles("sv_autobunnyhopping");
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue, replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue, replicate);
+	player->GetMoveServices()->m_ModernJump().m_nLastActualJumpPressTick() = -1;
 }
 
 void KZTriggerService::ApplyForcedDuck()

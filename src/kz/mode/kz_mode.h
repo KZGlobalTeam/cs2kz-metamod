@@ -42,6 +42,7 @@ enum KzModeCvars
 	MODECVAR_MP_SOLID_TEAMMATES,
 	MODECVAR_MP_SOLID_ENEMIES,
 	MODECVAR_SV_SUBTICK_MOVEMENT_VIEW_ANGLES,
+	MODECVAR_SV_LEGACY_JUMP,
 	MODECVAR_COUNT,
 };
 class KZPlayer;
@@ -128,13 +129,21 @@ public:
 
 	virtual void OnLadderMovePost() {}
 
-	virtual void OnCheckJumpButton() {}
+	virtual void OnCheckJumpButtonLegacy() {}
 
-	virtual void OnCheckJumpButtonPost() {}
+	virtual void OnCheckJumpButtonLegacyPost() {}
 
-	virtual void OnJump() {}
+	virtual void OnCheckJumpButtonModern() {}
 
-	virtual void OnJumpPost() {}
+	virtual void OnCheckJumpButtonModernPost() {}
+
+	virtual void OnJumpLegacy() {}
+
+	virtual void OnJumpLegacyPost() {}
+
+	virtual void OnJumpModern() {}
+
+	virtual void OnJumpModernPost() {}
 
 	virtual void OnAirMove() {}
 
@@ -273,7 +282,8 @@ namespace KZ::mode
 		"sv_water_slow_amount",
 		"mp_solid_teammates",
 		"mp_solid_enemies",
-		"sv_subtick_movement_view_angles"
+		"sv_subtick_movement_view_angles",
+		"sv_legacy_jump"
 	};
 
 
@@ -312,7 +322,8 @@ namespace KZ::mode
 		new CConVarRef<float>("sv_water_slow_amount"),
 		new CConVarRef<int>("mp_solid_teammates"),
 		new CConVarRef<int>("mp_solid_enemies"),
-		new CConVarRef<bool>("sv_subtick_movement_view_angles")
+		new CConVarRef<bool>("sv_subtick_movement_view_angles"),
+		new CConVarRef<bool>("sv_legacy_jump")
 	};
 
 	// clang-format on

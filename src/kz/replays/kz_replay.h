@@ -13,7 +13,7 @@ class KZPlayer;
 
 enum : u32
 {
-	KZ_REPLAY_VERSION = 1,
+	KZ_REPLAY_VERSION = 2,
 };
 
 enum ReplayType : u32
@@ -59,11 +59,11 @@ struct RpJumpStats
 	struct GeneralData
 	{
 		u32 serverTick;
-		float takeoffOrigin[3];
-		float adjustedTakeoffOrigin[3];
-		float takeoffVelocity[3];
-		float landingOrigin[3];
-		float adjustedLandingOrigin[3];
+		f32 takeoffOrigin[3];
+		f32 adjustedTakeoffOrigin[3];
+		f32 takeoffVelocity[3];
+		f32 landingOrigin[3];
+		f32 adjustedLandingOrigin[3];
 
 		u8 jumpType;
 		u8 distanceTier;
@@ -149,8 +149,8 @@ struct RpEvent
 				TIMER_STAGE,
 			} type;
 
-			i32 index; // Course ID for start/end, split number for split, checkpoint number for cpz, stage number for stage.
-			f32 time;  // Final time for end, time reached split/checkpoint/stage for split/cpz/stage. Current time for pause/stop/resume.
+			i32 index; // Course ID for start/end, split number for split, checkpoi32 number for cpz, stage number for stage.
+			f32 time;  // Final time for end, time reached split/checkpoi32/stage for split/cpz/stage. Current time for pause/stop/resume.
 		} timer;
 
 		RpModeStyleInfo modeChange;
@@ -248,6 +248,18 @@ struct TickData
 		u32 entityFlags {};
 		MoveType_t moveType = MOVETYPE_WALK;
 	} pre, post;
+
+	struct ModernJumpPre
+	{
+		i32 lastActualJumpPressTick {};
+		f32 lastActualJumpPressFrac {};
+		i32 lastUsableJumpPressTick {};
+		f32 lastUsableJumpPressFrac {};
+		i32 lastLandedTick {};
+		f32 lastLandedFrac {};
+		f32 lastLandedVelocityX {};
+		f32 lastLandedVelocityY {};
+	} modernJump {};
 };
 
 // While tick data is only recorded during certain conditions, metadata is recorded every time the server receives a move message from the client.

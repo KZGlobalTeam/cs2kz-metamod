@@ -115,7 +115,7 @@ void KZRecordingService::RecordTickData_PhysicsSimulate()
 	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
 	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
 	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
-	this->currentTickData.pre.jumpPressedTime = movementServices->m_flJumpPressedTime;
+	this->currentTickData.pre.jumpPressedTime = movementServices->m_LegacyJump().m_flJumpPressedTime;
 	this->currentTickData.pre.duckSpeed = movementServices->m_flDuckSpeed;
 	this->currentTickData.pre.duckAmount = movementServices->m_flDuckAmount;
 	this->currentTickData.pre.duckOffset = movementServices->m_flDuckOffset;
@@ -126,6 +126,16 @@ void KZRecordingService::RecordTickData_PhysicsSimulate()
 
 	this->currentTickData.pre.entityFlags = this->player->GetPlayerPawn()->m_fFlags();
 	this->currentTickData.pre.moveType = this->player->GetPlayerPawn()->m_nActualMoveType;
+
+	// Record modern jump data
+	this->currentTickData.modernJump.lastActualJumpPressTick = movementServices->m_ModernJump().m_nLastActualJumpPressTick();
+	this->currentTickData.modernJump.lastActualJumpPressFrac = movementServices->m_ModernJump().m_flLastActualJumpPressFrac();
+	this->currentTickData.modernJump.lastUsableJumpPressTick = movementServices->m_ModernJump().m_nLastUsableJumpPressTick();
+	this->currentTickData.modernJump.lastUsableJumpPressFrac = movementServices->m_ModernJump().m_flLastUsableJumpPressFrac();
+	this->currentTickData.modernJump.lastLandedTick = movementServices->m_ModernJump().m_nLastLandedTick();
+	this->currentTickData.modernJump.lastLandedFrac = movementServices->m_ModernJump().m_flLastLandedFrac();
+	this->currentTickData.modernJump.lastLandedVelocityX = movementServices->m_ModernJump().m_flLastLandedVelocityX();
+	this->currentTickData.modernJump.lastLandedVelocityY = movementServices->m_ModernJump().m_flLastLandedVelocityY();
 }
 
 void KZRecordingService::RecordTickData_SetupMove(PlayerCommand *pc)
@@ -156,7 +166,7 @@ void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
 	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
 	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
-	this->currentTickData.post.jumpPressedTime = movementServices->m_flJumpPressedTime;
+	this->currentTickData.post.jumpPressedTime = movementServices->m_LegacyJump().m_flJumpPressedTime;
 	this->currentTickData.post.duckSpeed = movementServices->m_flDuckSpeed;
 	this->currentTickData.post.duckAmount = movementServices->m_flDuckAmount;
 	this->currentTickData.post.duckOffset = movementServices->m_flDuckOffset;

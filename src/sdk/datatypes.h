@@ -273,14 +273,17 @@ public:
 	float m_flMaxSpeed;
 	float m_flClientMaxSpeed;
 	float m_flFrictionDecel;
+	// 2026-01-21 update adds these fields to calculate exactly when during the tick the player hit the ground using physics equations
+	// rather than just assuming they landed at the end of the tick, somewhat similar to how CS2KZ landingTimeActual formula works.
+	float m_flPreAirMovePosZ;
+	float m_flPreAirMoveVelZ;
+	float m_flPreAirMoveAccelZ;
 	bool m_bInAir;
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
-#ifdef _WIN32
-static_assert(sizeof(CMoveData) == 312, "Class didn't match expected size");
-#else
-static_assert(sizeof(CMoveData) == 304, "Class didn't match expected size");
-#endif
+
+static_assert(sizeof(CMoveData) == 320, "Class didn't match expected size");
+
 // Custom data types goes here.
 
 enum TurnState

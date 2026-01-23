@@ -108,6 +108,11 @@ enum TickDataChangeFlags : u64
 	CHANGED_POST_MOVE_TYPE = (1ULL << 37),
 
 	CHANGED_CHECKPOINT = (1ULL << 38),
+
+	// 2026 ModernJump fields
+	CHANGED_MODERN_JUMP_ACTUAL_PRESS = (1ULL << 39), // lastActualJumpPressTick + lastActualJumpPressFrac
+	CHANGED_MODERN_JUMP_USABLE_PRESS = (1ULL << 40), // lastUsableJumpPressTick + lastUsableJumpPressFrac
+	CHANGED_MODERN_JUMP_LANDED = (1ULL << 41),       // lastLandedTick + lastLandedFrac + lastLandedVelocityX + lastLandedVelocityY
 };
 
 // Compare pre or post data and build change flags
@@ -229,6 +234,28 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 		{
 			flags |= CHANGED_CHECKPOINT;
 		}
+
+		// 2026 ModernJump fields
+		if (i == 0 || 
+			current.modernJump.lastActualJumpPressTick != tickData[i - 1].modernJump.lastActualJumpPressTick ||
+			current.modernJump.lastActualJumpPressFrac != tickData[i - 1].modernJump.lastActualJumpPressFrac)
+		{
+			flags |= CHANGED_MODERN_JUMP_ACTUAL_PRESS;
+		}
+		if (i == 0 || 
+			current.modernJump.lastUsableJumpPressTick != tickData[i - 1].modernJump.lastUsableJumpPressTick ||
+			current.modernJump.lastUsableJumpPressFrac != tickData[i - 1].modernJump.lastUsableJumpPressFrac)
+		{
+			flags |= CHANGED_MODERN_JUMP_USABLE_PRESS;
+		}
+		if (i == 0 || 
+			current.modernJump.lastLandedTick != tickData[i - 1].modernJump.lastLandedTick ||
+			current.modernJump.lastLandedFrac != tickData[i - 1].modernJump.lastLandedFrac ||
+			current.modernJump.lastLandedVelocityX != tickData[i - 1].modernJump.lastLandedVelocityX ||
+			current.modernJump.lastLandedVelocityY != tickData[i - 1].modernJump.lastLandedVelocityY)
+		{
+			flags |= CHANGED_MODERN_JUMP_LANDED;
+		}
 		
 		// Write change flags (single u64)
 		AppendToBuffer(buffer, &flags, sizeof(flags));
@@ -284,6 +311,25 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 			AppendToBuffer(buffer, &current.checkpoint.index, sizeof(current.checkpoint.index));
 			AppendToBuffer(buffer, &current.checkpoint.checkpointCount, sizeof(current.checkpoint.checkpointCount));
 			AppendToBuffer(buffer, &current.checkpoint.teleportCount, sizeof(current.checkpoint.teleportCount));
+		}
+
+		// 2026 ModernJump fields
+		if (flags & CHANGED_MODERN_JUMP_ACTUAL_PRESS)
+		{
+			AppendToBuffer(buffer, &current.modernJump.lastActualJumpPressTick, sizeof(current.modernJump.lastActualJumpPressTick));
+			AppendToBuffer(buffer, &current.modernJump.lastActualJumpPressFrac, sizeof(current.modernJump.lastActualJumpPressFrac));
+		}
+		if (flags & CHANGED_MODERN_JUMP_USABLE_PRESS)
+		{
+			AppendToBuffer(buffer, &current.modernJump.lastUsableJumpPressTick, sizeof(current.modernJump.lastUsableJumpPressTick));
+			AppendToBuffer(buffer, &current.modernJump.lastUsableJumpPressFrac, sizeof(current.modernJump.lastUsableJumpPressFrac));
+		}
+		if (flags & CHANGED_MODERN_JUMP_LANDED)
+		{
+			AppendToBuffer(buffer, &current.modernJump.lastLandedTick, sizeof(current.modernJump.lastLandedTick));
+			AppendToBuffer(buffer, &current.modernJump.lastLandedFrac, sizeof(current.modernJump.lastLandedFrac));
+			AppendToBuffer(buffer, &current.modernJump.lastLandedVelocityX, sizeof(current.modernJump.lastLandedVelocityX));
+			AppendToBuffer(buffer, &current.modernJump.lastLandedVelocityY, sizeof(current.modernJump.lastLandedVelocityY));
 		}
 		// clang-format on
 	}
@@ -470,6 +516,42 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 			memcpy(&current.checkpoint.index, readPtr, sizeof(current.checkpoint.index)); readPtr += sizeof(current.checkpoint.index);
 			memcpy(&current.checkpoint.checkpointCount, readPtr, sizeof(current.checkpoint.checkpointCount)); readPtr += sizeof(current.checkpoint.checkpointCount);
 			memcpy(&current.checkpoint.teleportCount, readPtr, sizeof(current.checkpoint.teleportCount)); readPtr += sizeof(current.checkpoint.teleportCount);
+		}
+
+		// 2026 ModernJump fields
+		if (i > 0)
+		{
+			current.modernJump = outTickData[i - 1].modernJump;
+		}
+		else
+		{
+			current.modernJump = {};
+		}
+		// Only read these fields if present in the data (v2+)
+		if (flags & CHANGED_MODERN_JUMP_ACTUAL_PRESS)
+		{
+			memcpy(&current.modernJump.lastActualJumpPressTick, readPtr, sizeof(current.modernJump.lastActualJumpPressTick));
+			readPtr += sizeof(current.modernJump.lastActualJumpPressTick);
+			memcpy(&current.modernJump.lastActualJumpPressFrac, readPtr, sizeof(current.modernJump.lastActualJumpPressFrac));
+			readPtr += sizeof(current.modernJump.lastActualJumpPressFrac);
+		}
+		if (flags & CHANGED_MODERN_JUMP_USABLE_PRESS)
+		{
+			memcpy(&current.modernJump.lastUsableJumpPressTick, readPtr, sizeof(current.modernJump.lastUsableJumpPressTick));
+			readPtr += sizeof(current.modernJump.lastUsableJumpPressTick);
+			memcpy(&current.modernJump.lastUsableJumpPressFrac, readPtr, sizeof(current.modernJump.lastUsableJumpPressFrac));
+			readPtr += sizeof(current.modernJump.lastUsableJumpPressFrac);
+		}
+		if (flags & CHANGED_MODERN_JUMP_LANDED)
+		{
+			memcpy(&current.modernJump.lastLandedTick, readPtr, sizeof(current.modernJump.lastLandedTick));
+			readPtr += sizeof(current.modernJump.lastLandedTick);
+			memcpy(&current.modernJump.lastLandedFrac, readPtr, sizeof(current.modernJump.lastLandedFrac));
+			readPtr += sizeof(current.modernJump.lastLandedFrac);
+			memcpy(&current.modernJump.lastLandedVelocityX, readPtr, sizeof(current.modernJump.lastLandedVelocityX));
+			readPtr += sizeof(current.modernJump.lastLandedVelocityX);
+			memcpy(&current.modernJump.lastLandedVelocityY, readPtr, sizeof(current.modernJump.lastLandedVelocityY));
+			readPtr += sizeof(current.modernJump.lastLandedVelocityY);
 		}
 		// clang-format on
 	}

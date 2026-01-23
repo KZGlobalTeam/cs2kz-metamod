@@ -492,45 +492,87 @@ void KZPlayer::OnLadderMovePost()
 	}
 }
 
-void KZPlayer::OnCheckJumpButton()
+void KZPlayer::OnCheckJumpButtonLegacy()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->modeService->OnCheckJumpButton();
+	this->modeService->OnCheckJumpButtonLegacy();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnCheckJumpButton();
+		this->styleServices[i]->OnCheckJumpButtonLegacy();
 	}
 	this->triggerService->OnCheckJumpButton();
 }
 
-void KZPlayer::OnCheckJumpButtonPost()
+void KZPlayer::OnCheckJumpButtonLegacyPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->modeService->OnCheckJumpButtonPost();
+	this->modeService->OnCheckJumpButtonLegacyPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnCheckJumpButtonPost();
+		this->styleServices[i]->OnCheckJumpButtonLegacyPost();
 	}
 }
 
-void KZPlayer::OnJump()
+void KZPlayer::OnCheckJumpButtonModern()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->modeService->OnJump();
+	this->modeService->OnCheckJumpButtonModern();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnJump();
+		this->styleServices[i]->OnCheckJumpButtonModern();
+	}
+	this->triggerService->OnCheckJumpButton();
+}
+
+void KZPlayer::OnCheckJumpButtonModernPost()
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	this->modeService->OnCheckJumpButtonModernPost();
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnCheckJumpButtonModernPost();
+	}
+}
+
+void KZPlayer::OnJumpLegacy()
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	this->modeService->OnJumpLegacy();
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnJumpLegacy();
 	}
 	this->hudService->OnJump();
 }
 
-void KZPlayer::OnJumpPost()
+void KZPlayer::OnJumpLegacyPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	this->modeService->OnJumpPost();
+	this->modeService->OnJumpLegacyPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
-		this->styleServices[i]->OnJumpPost();
+		this->styleServices[i]->OnJumpLegacyPost();
+	}
+}
+
+void KZPlayer::OnJumpModern()
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	this->modeService->OnJumpModern();
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnJumpModern();
+	}
+	this->hudService->OnJump();
+}
+
+void KZPlayer::OnJumpModernPost()
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	this->modeService->OnJumpModernPost();
+	FOR_EACH_VEC(this->styleServices, i)
+	{
+		this->styleServices[i]->OnJumpModernPost();
 	}
 }
 

@@ -48,6 +48,7 @@ class KZVanillaModeService : public KZModeService
 		(int)0,                // mp_solid_teammates
 		(int)0,                // mp_solid_enemies
 		(bool)true,            // sv_subtick_movement_view_angles
+		(bool)false,           // sv_legacy_jump
 	};
 
 	static_assert(KZ_ARRAYSIZE(modeCvarValues) == MODECVAR_COUNT, "Array modeCvarValues length is not the same as MODECVAR_COUNT!");
