@@ -794,6 +794,15 @@ void KZPlayer::OnStartTouchGround()
 void KZPlayer::OnStopTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	if (!inPerf && !this->GetCvarValueFromModeStyles("sv_legacy_jump")->m_bValue)
+	{
+		f32 landingTick = this->GetMoveServices()->m_ModernJump().m_nLastLandedTick() + this->GetMoveServices()->m_ModernJump().m_flLastLandedFrac();
+		f32 windowMin = landingTick - this->GetCvarValueFromModeStyles("sv_bhop_time_window")->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
+		f32 windowMax = landingTick + this->GetCvarValueFromModeStyles("sv_bhop_time_window")->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
+		f32 startTime = this->currentMoveData->m_flSubtickStartFraction + this->currentMoveData->m_nTickCount;
+
+		this->inPerf = (startTime >= windowMin && startTime <= windowMax);
+	}
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
 	FOR_EACH_VEC(this->styleServices, i)

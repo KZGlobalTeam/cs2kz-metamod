@@ -301,7 +301,6 @@ void FASTCALL movement::Detour_OnJumpModern(CCSPlayerModernJump *modern, CMoveDa
 	OnJumpModern(modern, mv);
 	if (mv->m_outWishVel != oldOutWishVel)
 	{
-		// TODO: this is different now!
 		player->inPerf = (!player->takeoffFromLadder && !player->oldWalkMoved);
 		player->RegisterTakeoff(true, player->possibleLadderHop);
 		player->OnStopTouchGround();
