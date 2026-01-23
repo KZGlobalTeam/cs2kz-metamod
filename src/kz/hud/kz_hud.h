@@ -43,9 +43,9 @@ public:
 		}
 	}
 
-	void OnJump()
+	void OnJump(bool modern = false)
 	{
-		jumpedThisTick = true;
+		jumpedThisTick = modern ? this->player->IsButtonPressed(IN_JUMP) : true;
 	}
 
 	void OnStopTouchGround()

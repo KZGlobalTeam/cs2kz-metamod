@@ -43,6 +43,7 @@ enum KzModeCvars
 	MODECVAR_MP_SOLID_ENEMIES,
 	MODECVAR_SV_SUBTICK_MOVEMENT_VIEW_ANGLES,
 	MODECVAR_SV_LEGACY_JUMP,
+	MODECVAR_SV_BHOP_TIME_WINDOW,
 	MODECVAR_COUNT,
 };
 class KZPlayer;
@@ -283,7 +284,8 @@ namespace KZ::mode
 		"mp_solid_teammates",
 		"mp_solid_enemies",
 		"sv_subtick_movement_view_angles",
-		"sv_legacy_jump"
+		"sv_legacy_jump",
+		"sv_bhop_time_window"
 	};
 
 
@@ -323,7 +325,8 @@ namespace KZ::mode
 		new CConVarRef<int>("mp_solid_teammates"),
 		new CConVarRef<int>("mp_solid_enemies"),
 		new CConVarRef<bool>("sv_subtick_movement_view_angles"),
-		new CConVarRef<bool>("sv_legacy_jump")
+		new CConVarRef<bool>("sv_legacy_jump"),
+		new CConVarRef<float>("sv_bhop_time_window"),
 	};
 
 	// clang-format on

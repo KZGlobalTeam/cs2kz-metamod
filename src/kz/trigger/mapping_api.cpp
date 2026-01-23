@@ -294,7 +294,11 @@ void KZTriggerService::CancelAntiBhop(bool replicate)
 	const CVValue_t *autoBhopValue = player->GetCvarValueFromModeStyles("sv_autobunnyhopping");
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_jump_spam_penalty_time", spamModeValue, replicate);
 	utils::SetConVarValue(player->GetPlayerSlot(), "sv_autobunnyhopping", autoBhopValue, replicate);
-	player->GetMoveServices()->m_ModernJump().m_nLastActualJumpPressTick() = -1;
+
+	if (player->GetMoveServices()->m_ModernJump().m_nLastActualJumpPressTick() > g_pKZUtils->GetServerGlobals()->tickcount)
+	{
+		player->GetMoveServices()->m_ModernJump().m_nLastActualJumpPressTick() = 0;
+	}
 }
 
 void KZTriggerService::ApplyForcedDuck()

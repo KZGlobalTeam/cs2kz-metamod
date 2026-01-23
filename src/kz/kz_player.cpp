@@ -522,6 +522,7 @@ void KZPlayer::OnCheckJumpButtonModern()
 		this->styleServices[i]->OnCheckJumpButtonModern();
 	}
 	this->triggerService->OnCheckJumpButton();
+	this->hudService->OnJump(true);
 }
 
 void KZPlayer::OnCheckJumpButtonModernPost()
@@ -563,7 +564,6 @@ void KZPlayer::OnJumpModern()
 	{
 		this->styleServices[i]->OnJumpModern();
 	}
-	this->hudService->OnJump();
 }
 
 void KZPlayer::OnJumpModernPost()
