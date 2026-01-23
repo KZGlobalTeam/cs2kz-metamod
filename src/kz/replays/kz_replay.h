@@ -149,8 +149,8 @@ struct RpEvent
 				TIMER_STAGE,
 			} type;
 
-			i32 index; // Course ID for start/end, split number for split, checkpoi32 number for cpz, stage number for stage.
-			f32 time;  // Final time for end, time reached split/checkpoi32/stage for split/cpz/stage. Current time for pause/stop/resume.
+			i32 index; // Course ID for start/end, split number for split, checkpoint number for cpz, stage number for stage.
+			f32 time;  // Final time for end, time reached split/checkpoint/stage for split/cpz/stage. Current time for pause/stop/resume.
 		} timer;
 
 		RpModeStyleInfo modeChange;
