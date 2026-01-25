@@ -2,13 +2,13 @@ WIP, not ready for release
 
 # Requirements
 
-- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1325 or later
+- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1383 or later
 
-- Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases/) v1.4 for radio menus and KZ sound effects (eg. jumpstats)
+- Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases/) v1.4.10 for radio menus and KZ sound effects (eg. jumpstats)
 
 - Optional[^1]: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
 
-- Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) 1.3.3 or later for local database support
+- Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) v1.3.4.2 or later for local database support
 
 [^1]: if your server is global, this plugin is required
 
