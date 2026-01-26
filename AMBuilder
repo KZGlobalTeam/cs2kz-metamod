@@ -323,7 +323,7 @@ def configure_abh(sdk, cxx):
   return abh_binary
 
 def configure_lgj(sdk, cxx):
-  lgj_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-legacy-jump", sdk)
+  lgj_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-legacyjump", sdk)
 
   if lgj_binary.compiler.family == 'gcc' or lgj_binary.compiler.family == 'clang':
     lgj_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
