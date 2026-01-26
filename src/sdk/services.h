@@ -117,7 +117,7 @@ public:
 	CCSPlayer_MovementServices *m_pMovementServices;
 };
 
-class CCSPlayerLegacyJump : public CCSPlayerBaseJump
+class alignas(8) CCSPlayerLegacyJump : public CCSPlayerBaseJump
 {
 public:
 	DECLARE_SCHEMA_CLASS_BASE(CCSPlayerLegacyJump, 0)
@@ -125,7 +125,7 @@ public:
 	SCHEMA_FIELD(float, m_flJumpPressedTime)
 };
 
-class CCSPlayerModernJump : public CCSPlayerBaseJump
+class alignas(8) CCSPlayerModernJump : public CCSPlayerBaseJump
 {
 public:
 	DECLARE_SCHEMA_CLASS_BASE(CCSPlayerModernJump, 0)
