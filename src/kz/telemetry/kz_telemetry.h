@@ -18,10 +18,62 @@ private:
 		f64 timeSpentInServer {};
 	} activeStats;
 
+	struct ModernBhopStats
+	{
+		u32 numTruePerfs {};
+		u32 numModernPerfs {};
+		u32 numNonPerfs {};
+
+		u32 GetTotalJumps() const
+		{
+			return numTruePerfs + numModernPerfs + numNonPerfs;
+		}
+
+		f32 GetPerfRatio(bool modern) const
+		{
+			u32 totalJumps = GetTotalJumps();
+			if (totalJumps == 0)
+			{
+				return 0.0f;
+			}
+			if (modern)
+			{
+				return (f32)(numModernPerfs) / (f32)totalJumps;
+			}
+			else
+			{
+				return (f32)(numTruePerfs) / (f32)totalJumps;
+			}
+		}
+	} modernBhopStats;
+
+	struct LegacyBhopStats
+	{
+		u32 numPerfs {};
+		u32 numNonPerfs {};
+
+		u32 GetTotalJumps() const
+		{
+			return numPerfs + numNonPerfs;
+		}
+
+		f32 GetPerfRatio() const
+		{
+			u32 totalJumps = GetTotalJumps();
+			if (totalJumps == 0)
+			{
+				return 0.0f;
+			}
+			return (f32)(numPerfs) / (f32)totalJumps;
+		}
+	} legacyBhopStats;
+
 public:
 	virtual void Reset() override
 	{
 		this->activeStats = {};
+		this->modernBhopStats = {};
+		this->legacyBhopStats = {};
 	}
 
 	static void ActiveCheck();
@@ -47,4 +99,23 @@ public:
 	}
 
 	void OnPhysicsSimulatePost();
+
+	Vector preOutWishVel;
+	void OnJumpModern();
+	void OnJumpModernPost();
+	void PrintModernBhopStats();
+
+	void ResetModernBhopStats()
+	{
+		this->modernBhopStats = {};
+	}
+
+	void OnJumpLegacy();
+	void OnJumpLegacyPost();
+	void PrintLegacyBhopStats();
+
+	void ResetLegacyBhopStats()
+	{
+		this->legacyBhopStats = {};
+	}
 };

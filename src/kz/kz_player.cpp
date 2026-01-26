@@ -538,6 +538,7 @@ void KZPlayer::OnCheckJumpButtonModernPost()
 void KZPlayer::OnJumpLegacy()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->telemetryService->OnJumpLegacy();
 	this->modeService->OnJumpLegacy();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -549,6 +550,7 @@ void KZPlayer::OnJumpLegacy()
 void KZPlayer::OnJumpLegacyPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->telemetryService->OnJumpLegacyPost();
 	this->modeService->OnJumpLegacyPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -559,6 +561,7 @@ void KZPlayer::OnJumpLegacyPost()
 void KZPlayer::OnJumpModern()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->telemetryService->OnJumpModern();
 	this->modeService->OnJumpModern();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -569,6 +572,7 @@ void KZPlayer::OnJumpModern()
 void KZPlayer::OnJumpModernPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->telemetryService->OnJumpModernPost();
 	this->modeService->OnJumpModernPost();
 	FOR_EACH_VEC(this->styleServices, i)
 	{

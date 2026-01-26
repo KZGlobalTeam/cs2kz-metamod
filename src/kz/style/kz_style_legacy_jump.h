@@ -1,10 +1,10 @@
 #include "kz_style.h"
 #include "version_gen.h"
 
-#define STYLE_NAME       "AutoBhop"
-#define STYLE_NAME_SHORT "ABH"
+#define STYLE_NAME       "LegacyJump"
+#define STYLE_NAME_SHORT "LGJ"
 
-class KZAutoBhopStylePlugin : public ISmmPlugin, public IMetamodListener
+class KZLegacyJumpStylePlugin : public ISmmPlugin, public IMetamodListener
 {
 public:
 	bool Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late);
@@ -20,12 +20,12 @@ public:
 
 	const char *GetName()
 	{
-		return "CS2KZ-Style-AutoBhop";
+		return "CS2KZ-Style-LegacyJump";
 	}
 
 	const char *GetDescription()
 	{
-		return "AutoBhop style plugin for CS2KZ";
+		return "LegacyJump style plugin for CS2KZ";
 	}
 
 	const char *GetURL()
@@ -54,7 +54,7 @@ public:
 	}
 };
 
-class KZAutoBhopStyleService : public KZStyleService
+class KZLegacyJumpStyleService : public KZStyleService
 {
 	using KZStyleService::KZStyleService;
 

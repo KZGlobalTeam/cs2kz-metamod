@@ -322,6 +322,46 @@ def configure_abh(sdk, cxx):
   
   return abh_binary
 
+def configure_lgj(sdk, cxx):
+  lgj_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-legacy-jump", sdk)
+
+  if lgj_binary.compiler.family == 'gcc' or lgj_binary.compiler.family == 'clang':
+    lgj_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
+  if lgj_binary.compiler.family == 'clang':
+    lgj_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
+
+  lgj_binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'src'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+  ]
+
+  if lgj_binary.compiler.target.platform == 'linux':
+    lgj_binary.compiler.postlink += [
+      os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
+    ] 
+    lgj_binary.sources += [
+      'src/utils/plat_linux.cpp'
+      ]
+  elif lgj_binary.compiler.target.platform == 'windows':
+    lgj_binary.compiler.postlink += [
+      os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
+    ]
+    lgj_binary.sources += [
+      'src/utils/plat_win.cpp'
+      ]
+
+  lgj_binary.sources += [
+    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
+    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_legacy_jump.cpp'),
+  ]
+  return lgj_binary
+
 sdk_target = MMSPlugin.sdk_target
 sdk = MMSPlugin.sdk_target.sdk
 cxx = MMSPlugin.sdk_target.cxx
@@ -332,17 +372,20 @@ binary = configure_main(sdk_target, sdk, cxx)
 ckz_binary = configure_ckz(sdk, cxx)
 # Style binaries
 abh_binary = configure_abh(sdk, cxx)
+lgj_binary = configure_lgj(sdk, cxx)
 
 protoc_builder = get_proto_builder(builder, sdk_target, sdk)
 
 binary.custom = [protoc_builder]
 ckz_binary.custom = [protoc_builder]
 abh_binary.custom = [protoc_builder]
+lgj_binary.custom = [protoc_builder]
 
 # We have to split nodes here because they will be put into different folders.
 nodes = builder.Add(binary)
 mode_nodes = builder.Add(ckz_binary)
-style_nodes = builder.Add(abh_binary)
+abh_nodes = builder.Add(abh_binary)
+lgj_nodes = builder.Add(lgj_binary)
 
 # If we are generating a VS project, make sure to add the modes in, and the build folder for linter.
 if builder.options.generator == 'vs':
@@ -353,6 +396,6 @@ if builder.options.generator == 'vs':
 
 MMSPlugin.binaries += [nodes]
 MMSPlugin.mode_binaries += [mode_nodes]
-MMSPlugin.style_binaries += [style_nodes]
+MMSPlugin.style_binaries += [abh_nodes, lgj_nodes]
 
 # vim: filetype=python expandtab shiftwidth=2 tabstop=8 textwidth=99

@@ -1469,4 +1469,16 @@
 		"en"		"Display the tier of the current course or a specified course."
 		"ua"		"Показати складнісь поточного курсу або вказаного курсу."
 	}
+	"Command Description - kz_modernperfstats"
+	{
+		"en"		"Retrieve bhop statistics for modern jumping."
+	}
+	"Command Description - kz_legacyperfstats"
+	{
+		"en"		"Retrieve bhop statistics for legacy jumping."
+	}
+	"Command Description - kz_resetperfstats"
+	{
+		"en"		"Reset bhop statistics for modern and legacy jumping."
+	}
 }
