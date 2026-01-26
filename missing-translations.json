@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 554,
-    "phrases_with_missing": 474,
-    "total_missing_entries": 2400,
+    "total_phrases": 560,
+    "phrases_with_missing": 480,
+    "total_missing_entries": 2472,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 93.68,
+      "coverage_percent": 92.68,
       "translated": 519,
-      "missing": 35,
+      "missing": 41,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -92,6 +92,24 @@
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
+        },
+        {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection (Short)",
           "line": 47,
@@ -260,6 +278,24 @@
           "english_text": "{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
           "line": 849,
@@ -283,9 +319,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 93.68,
+      "coverage_percent": 92.68,
       "translated": 519,
-      "missing": 35,
+      "missing": 41,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -318,6 +354,24 @@
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
+        },
+        {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection (Short)",
           "line": 47,
@@ -486,6 +540,24 @@
           "english_text": "{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
           "line": 849,
@@ -507,7 +579,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 554,
+      "translated": 560,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -518,9 +590,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 51.99,
+      "coverage_percent": 51.43,
       "translated": 288,
-      "missing": 266,
+      "missing": 272,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -989,6 +1061,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -1903,6 +1993,24 @@
           "english_text": "{darkred}The player you specified cannot be found."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top - Table Name (Server Overall)",
           "line": 3,
@@ -2130,9 +2238,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 42.96,
+      "coverage_percent": 42.5,
       "translated": 238,
-      "missing": 316,
+      "missing": 322,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -2679,6 +2787,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -3605,6 +3731,24 @@
           "english_text": "{darkred}The player you specified cannot be found."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer-personalbest.phrases.txt",
           "phrase": "PB Time - Overall (Global)",
           "line": 137,
@@ -4042,9 +4186,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 41.52,
+      "coverage_percent": 41.07,
       "translated": 230,
-      "missing": 324,
+      "missing": 330,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -4567,6 +4711,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -5535,6 +5697,24 @@
           "english_text": "{darkred}The player you specified cannot be found."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top - Table Name (Server Overall)",
           "line": 3,
@@ -6002,9 +6182,9 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 52.53,
+      "coverage_percent": 51.96,
       "translated": 291,
-      "missing": 263,
+      "missing": 269,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -6449,6 +6629,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -7303,6 +7501,24 @@
           "english_text": "Saved By"
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top - Table Name (Server Overall)",
           "line": 3,
@@ -7593,9 +7809,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 60.11,
+      "coverage_percent": 59.46,
       "translated": 333,
-      "missing": 221,
+      "missing": 227,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -7890,6 +8106,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -8792,6 +9026,24 @@
           "english_text": "{darkred}The player you specified cannot be found."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - New World Record",
           "line": 170,
@@ -8932,9 +9184,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 94.04,
+      "coverage_percent": 93.04,
       "translated": 521,
-      "missing": 33,
+      "missing": 39,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -8953,6 +9205,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-course.phrases.txt",
@@ -9123,6 +9393,24 @@
           "english_text": "{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
           "line": 849,
@@ -9143,9 +9431,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 16.61,
+      "coverage_percent": 16.43,
       "translated": 92,
-      "missing": 462,
+      "missing": 468,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9974,6 +10262,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -11176,6 +11482,24 @@
           "english_text": "{grey}The {purple}{style} {grey}style is currently not available."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top - Table Name (Server Overall)",
           "line": 3,
@@ -11931,9 +12255,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 71.66,
+      "coverage_percent": 70.89,
       "translated": 397,
-      "missing": 157,
+      "missing": 163,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -12066,6 +12390,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-course.phrases.txt",
@@ -12776,6 +13118,24 @@
           "english_text": "Saved By"
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
           "line": 840,
@@ -12886,9 +13246,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 48.19,
+      "coverage_percent": 47.68,
       "translated": 267,
-      "missing": 287,
+      "missing": 293,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -13387,6 +13747,24 @@
           "phrase": "Command Description - kz_tier",
           "line": 1467,
           "english_text": "Display the tier of the current course or a specified course."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -14319,6 +14697,24 @@
           "english_text": "{darkred}The player you specified cannot be found."
         },
         {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
           "file": "cs2kz-timer-coursetop.phrases.txt",
           "phrase": "Course Top - Table Name (Server Overall)",
           "line": 3,
@@ -14624,15 +15020,51 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 99.82,
+      "coverage_percent": 98.75,
       "translated": 553,
-      "missing": 1,
+      "missing": 7,
       "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping."
+        },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Multiple Matches",
           "line": 250,
           "english_text": "{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset."
         }
       ],
       "menu": {
@@ -15192,7 +15624,7 @@
       ]
     },
     "cs2kz-commands.phrases.txt": {
-      "phrases_with_missing": 114,
+      "phrases_with_missing": 117,
       "phrases": [
         {
           "name": "Command Help Response (Chat)",
@@ -17700,6 +18132,72 @@
             "ru",
             "sv",
             "tr"
+          ]
+        },
+        {
+          "name": "Command Description - kz_modernperfstats",
+          "line": 1472,
+          "english_text": "Retrieve bhop statistics for modern jumping.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_legacyperfstats",
+          "line": 1476,
+          "english_text": "Retrieve bhop statistics for legacy jumping.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_resetperfstats",
+          "line": 1480,
+          "english_text": "Reset bhop statistics for modern and legacy jumping.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
@@ -22412,6 +22910,77 @@
           ],
           "missing_languages": [
             "ru"
+          ]
+        }
+      ]
+    },
+    "cs2kz-telemetry.phrases.txt": {
+      "phrases_with_missing": 3,
+      "phrases": [
+        {
+          "name": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Telemetry - Legacy Bhop Stats",
+          "line": 9,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Telemetry - Reset Bhop Stats",
+          "line": 15,
+          "english_text": "{grey}Bunny hop statistics have been reset.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
