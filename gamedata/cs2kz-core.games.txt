@@ -423,8 +423,8 @@
 			// In DebugDrawMesh, offset used when solid=true
 			"DebugTriangle"
 			{
-				"windows"		"54"
-				"linux"			"55"
+				"windows"		"55"
+				"linux"			"56"
 			}
 			// CDebugOverlayGameSystem second vtable, offset 1 (windows):
 			//   result = debugoverlay;
