@@ -1,3 +1,4 @@
+SPANISH TODO
 "Tips"
 {
 	"Tip - kz_js"

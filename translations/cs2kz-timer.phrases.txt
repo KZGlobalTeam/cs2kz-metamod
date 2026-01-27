@@ -1,3 +1,4 @@
+SPANISH TODO
 "Phrases"
 {
 	"1 Teleport Text"
