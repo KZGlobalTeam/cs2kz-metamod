@@ -26,6 +26,11 @@ bool KZ::API::DecodeStyleString(std::string_view styleString, Style &style)
 		style = Style::AutoBhop;
 		return true;
 	}
+	else if (KZ_STREQI(styleString.data(), "legacy-jump") || KZ_STREQI(styleString.data(), "lgj"))
+	{
+		style = Style::LegacyJump;
+		return true;
+	}
 	else
 	{
 		return false;

@@ -22,6 +22,7 @@ namespace KZ::API
 	enum class Style : u8
 	{
 		AutoBhop = 1,
+		LegacyJump = 2,
 	};
 
 	bool DecodeStyleString(std::string_view styleString, Style &style);
