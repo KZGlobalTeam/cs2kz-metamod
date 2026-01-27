@@ -25,7 +25,7 @@
 		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}, щоб увімк./вимк. постійне відображення статистики стрибків."
 		"tr"	"{grey}{default}/jsalways {grey}kullanarak tüm zıplama istatistiklerinin sohbette gözükmesini açabilirsin."
 		"it"	"{grey}Scrivi {default}/jsalways {grey}per mostrare sempre le statistiche dei salti."
-		"es"	"{grey}Usa {default}/jsalways {grey}para alternar el modo de estadísticas de salto siempre activas."
+		"es"	"{grey}Usa {default}/jsalways {grey}para alternar la visibilidad de las estadísticas de salto siempre activas."
 		"de"	"{grey}Verwende {default}/jsalways {grey}, um den Modus für immer aktive Jumpstats umzuschalten."
 		"ko"	"{grey}항상 활성화된 점프 통계 모드를 전환하려면 {default}/jsalways{grey}를 사용하세요."
 		"lv"	"{grey}Izmanto {default}/jsalways {grey}, lai jumpstatu reporti vienmēr būtu ieslēgti."

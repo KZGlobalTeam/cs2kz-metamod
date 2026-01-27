@@ -25,7 +25,7 @@
 		"ua"		"{grey}Ви приховали свої ноги."
 		"tr"		"{grey}Oyuncu ayakları şuan görünmez durumda."
 		"it"		"{grey}Le gambe ora sono nascoste."
-		"es"		"{grey}Las piernas de tu personaje ahora están ocultas."
+		"es"		"{grey}Las piernas de tu personaje ahora son invisibles."
 		"de"		"{grey}Die Beine deines Spielers sind jetzt versteckt."
 		"ko"		"{grey}플레이어의 다리가 이제 숨겨졌습니다."
 		"lv"		"{grey}Tava spēlētāja kājas tagad ir paslēptas."
@@ -41,7 +41,7 @@
 		"ua"		"{grey}Ви тепер можете бачити інших гравців."
 		"tr"		"{grey}Diğer oyuncuları görmeyi açtınız."
 		"it"		"{grey}Stai mostrando gli altri giocatori."
-		"es"		"{grey}Ahora estás viendo a otros jugadores."
+		"es"		"{grey}Ahora estás viendo a los otros jugadores."
 		"de"		"{grey}Du zeigst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 표시됩니다."
 		"lv"		"{grey}Tagad tu redzi citus spēlētājus."
@@ -57,7 +57,7 @@
 		"ua"		"{grey}Ви приховали інших гравців."
 		"tr"		"{grey}Diğer oyuncuları görmeyi kapattınız."
 		"it"		"{grey}Stai nascondendo gli altri giocatori."
-		"es"		"{grey}Ahora estás ocultando a otros jugadores."
+		"es"		"{grey}Ahora estás ocultando a los otros jugadores."
 		"de"		"{grey}Du versteckst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 숨겨졌습니다."
 		"lv"		"{grey}Tagad tu neredzi citus spēlētājus."
@@ -89,7 +89,7 @@
 		"ua"		"{grey}Ви приховали свою зброю."
 		"tr"		"{grey}Silahı görmeyi kapattınız."
 		"it"		"{grey}Stai nascondendo l'arma."
-		"es"		"{grey}Ahora estás escondiendo tu arma."
+		"es"		"{grey}Ahora tu arma no es visible."
 		"de"		"{grey}Du versteckst jetzt deine Waffe."
 		"ko"		"{grey}이제 무기가 숨겨졌습니다."
 		"lv"		"{grey}Tagad tu neredzi savu ieroci."
@@ -102,6 +102,7 @@
 		"ua"		"{grey}Тепер зброю буде автоматично приховано після відродження."
 		"sv"		"{grey}Du kommer att automatiskt dölja ditt vapen när du spawnar."
 		"de"		"{grey}Deine Waffe wird nun beim Spawnen automatisch versteckt."
+		"es"		"{grey}Al reaparecer, tu arma se esconderá de forma automática."
 	}
 	"Quiet Option - Auto Hide Weapon - Disable"
 	{
@@ -111,5 +112,6 @@
 		"ua"		"{grey}Зброю більше не буде автоматично приховано після відродження."
 		"sv"		"{grey}Du kommer inte att automatiskt dölja ditt vapen när du spawnar."
 		"de"		"{grey}Deine Waffe wird beim Spawnen nicht mehr automatisch versteckt."
+		"es"		"{grey}Al reaparecer, tu arma ya no se esconderá de forma automática."
 	}
 }

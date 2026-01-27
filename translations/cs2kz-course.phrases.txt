@@ -48,122 +48,145 @@
 	{
 		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API."
+		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ."
 	}
 	"Map Info - No API Connection"
 	{
 		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API. Деяка інформація про мапу може бути недоступною."
+		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ. Alguna información del mapa puede no estar disponible."
 	}
 	"Map Info - No API Map Data (Short)"
 	{
 		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API."
+		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa."
 	}
 	"Map Info - No API Map Data"
 	{
 		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API. Деяка інформація про мапу може бути недоступною."
+		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa. Alguna información del mapa puede no estar disponible."
 	}
 	"Map Info - Check Console"
 	{
 		"en"		"{grey}Check console for details!"
 		"ua"		"{grey}Перевірте консоль для детальної інформації!"
+		"es"		"{grey}¡Abre la consola para obtener más detalles!"
 	}
 	"Map Info - Map In Testing"
 	{
 		"#format"	"map:s"
 		"en"		"{default}{map} {grey}is currently {yellow}in testing{grey}."
 		"ua"		"{default}{map} {grey}наразі {yellow}перебуває на стадії тестування{grey}."
+		"es"		"{default}{map} {grey}está {yellow}en pruebas{grey}."
 	}
 	"Map Info - Map Info Header"
 	{
 		"#format"	"map:s"
 		"en"		"{map} Map Information"
 		"ua"		"{map} Інформація про мапу"
+		"es"		"{map} Información del mapa"
 	}
 	"Map Info - Mappers"
 	{
 		"#format"	"mappers:s"
 		"en"		"Mappers: {mappers}"
 		"ua"		"Мапери: {mappers}"
+		"es"		"Mapeadores: {mappers}"
 	}
 	"Map Info - State"
 	{
 		"#format"	"state:s"
 		"en"		"State: {state}"
 		"ua"		"Статус: {state}"
+		"es"		"Estado: {state}"
 	}
 	"Map Info - Description"
 	{
 		"#format"	"description:s"
 		"en"		"Description: {description}"
 		"ua"		"Опис: {description}"
+		"es"		"Descripción: {description}"
 	}
 	"Map Info - Invalid"
 	{
 		"en"		"N/A"
 		"ua"		"Н/Д"
+		"es			"N/A"
 	}
 	"Map Info - In Testing"
 	{
 		"en"		"In Testing"
 		"ua"		"На стадії тестування"
+		"es"		"En pruebas"
 	}
 	"Map Info - Approved"
 	{
 		"#format"	"date:s"
 		"en"		"Approved ({date})"
 		"ua"		"Схвалено ({date})"
+		"es"		"Aprobado ({date})"
 	}
 	"Course Info - Unranked"
 	{
 		"en"		"Unranked"
 		"ua"		"Без рейтингу"
+		"es"		"Sin nivel"
 	}
 	"Course Info - Pending"
 	{
 		"en"		"Pending"
 		"ua"		"На розгляді"
+		"es"		"Pendiente"
 	}
 	"Course Info - Ranked"
 	{
 		"en"		"Ranked"
 		"ua"		"Рейтинговий"
+		"es"		"Nivelado"
 	}
 	"Courses - Table Name"
 	{
 		"en"		"Courses"
 		"ua"		"Курси"
+		"es"		"Caminos"
 	}
 	"Course Info Header - Name"
 	{
 		"en"		"Name"
 		"ua"		"Назва"
+		"es"		"Nombre"
 	}
 	"Course Info Header - Mappers"
 	{
 		"en"		"Mappers"
 		"ua"		"Мапери"
+		"es"		"Mapeadores"
 	}
 	"Course Info Header - Tier (Vanilla)"
 	{
 		"en"		"Tier (Vanilla)"
 		"ua"		"Складність (Vanilla)"
+		"es"		"Nivel (Vanilla)
 	}
 	"Course Info Header - Tier (Classic)"
 	{
 		"en"		"Tier (Classic)"
 		"ua"		"Складність (Classic)"
+		"es"		"Nivel (Classic)"
 	}
 	"Course Info Header - State (Vanilla)"
 	{
 		"en"		"State (Vanilla)"
 		"ua"		"Статус (Vanilla)"
+		"es"		"Estado (Vanilla)"
 	}
 	"Course Info Header - State (Classic)"
 	{
 		"en"		"State (Classic)"
 		"ua"		"Статус (Classic)"
+		"es"		"Estado (Classic)"
 	}
 
 	"Course Data Unavailable"
@@ -171,6 +194,7 @@
 		"#format"	"course:s"
 		"en"		"{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
 		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
+		"es"		"{darkred}Datos del curso {default}{course}{darked} inaccesibles."
 	}
 
 	"Tier Info"
@@ -179,5 +203,6 @@
 		"#format"	"course:s,tier_nub:d,tier_pro:d,state:s,description:s"
 		"en"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Складність {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"es"		"{default}{course}{grey} ({purple}{stat}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 	}
 }

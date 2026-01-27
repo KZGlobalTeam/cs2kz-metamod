@@ -82,6 +82,7 @@
 		"ru"		"{grey}Пожалуйста, подождите, прежде чем использовать эту команду снова."
 		"sv"		"{grey}Vänligen vänta innan du använder kommandot igen."
 		"ua"		"{grey}Будь ласка, зачекайте, перш ніж використовувати цю команду знову."
+		"es"		
 		"de"		"{grey}Bitte warte, bevor du diesen Befehl erneut verwendest."
 	}
 }
