@@ -434,6 +434,7 @@
 		"pl"		"Włącz/wyłącz dźwięk checkpointa."
 		"ua"		"Перемикання звуку чекпоінту."
 		"sv"		"Aktivera/inaktivera checkpoint ljudeffekt."
+		"es"		
 		"de"		"Aktiviere/Deactiviere Checkpoint-Sound"
 	}
 	"Command Description - kz_tpsound"
@@ -443,6 +444,7 @@
 		"pl"		"Włącz/wyłącz dźwięk teleportu."
 		"ua"		"Перемикання звуку телепорту."
 		"sv"		"Aktivera/inaktivera teleport ljudeffekt."
+		"es"		
 		"de"		"Aktiviere/Deactiviere Teleport-Sound"
 	}
 	"Command Description - kz_panel"
@@ -542,6 +544,7 @@
         "pl"		"Ustaw minimalny poziom wyświetlania jumpstatów."
         "ua"		"Встановити мінімальний рівень для відображення статистики стрибків."
 		"sv"		"Ange din miniminivå för jumpstatsrapportering."
+		"es"		
 		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel."
     }
     "Command Description - kz_jstierconsole"
@@ -551,6 +554,7 @@
         "pl"		"Ustaw minimalny poziom wyświetlania jumpstatów w konsoli."
         "ua"		"Встановити мінімальний рівень для відображення статистики стрибків в консолі."
 		"sv"		"Ange din lägsta rapporteringsnivå för jumpstats i konsolen."
+		"es"		
 		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel für die Konsole."
     }
     "Command Description - kz_jsbroadcastsound"
@@ -560,6 +564,7 @@
         "pl"		"Ustaw minimalny poziom dla odtwarzania dźwięków jumpstat."
         "ua"		"Встановити мінімальний рівень для звукових ефектів під час стрибків."
 		"sv"		"Ange miniminivån för jumpstats-ljudsändning."
+		"es"		
 		"de"		"Setze minimales Jumpstats-Soundlevel für fremde Jumpstats im Chat."
     }
 	"Command Description - kz_jsbroadcastconsole"
@@ -568,6 +573,7 @@
 		"chi"		"设置在控制台广播跳跃数据的最低等级."
 		"pl"		"Ustaw minimalny tier transmitowania jumpstatów w konsoli."
 		"ua"		"Встановити мінімальний тір статистики стрибків для трансляції в консолі."
+		"es"		
 		"de"		"Setze dein minimales Jumpstats-Level für fremde Jumpstats in der Konsole."
 	}
 	"Command Description - kz_jsextend"
@@ -577,6 +583,7 @@
 		"pl"		"Włącz/wyłącz rozszerzone raportowanie jumpstatów na czacie."
 		"ua"		"Перемикання розширеної статистики стрибків у чаті."
 		"sv"		"Aktivera/Inaktivera utökad jumpstatsrapportering i chatten."
+		"es"		
 		"de"		"Aktiviere/Deaktiviere erweiterte Jumpstats-Benachrichtigungen im Chat."
 	}
 	"Command Description - kz_jsvolume"
@@ -586,6 +593,7 @@
 		"pl"		"Ustaw głośność efektów dźwiękowych jumpstatów."
 		"ua"		"Встановити гучність ефектів стрибків."
 		"sv"		"Ange volymen för jumpstats-ljudeffekter."
+		"es"		
 		"de"		"Setze Jumpstat-Sound Lautstärke."
 	}
 	"Command Description - kz_mode"
@@ -670,6 +678,7 @@
 		"pl"		"Wyświetl na czacie listę obserwujących graczy."
 		"ua"		"Показати в чаті список спостерігачів."
 		"sv"		"Lista närvarande åskådare i chatten."
+		"es"		
 		"de"		"Liste derzeitige Zuschauer im Chat auf."
 	}
 	"Command Description - kz_goto"
@@ -1237,6 +1246,7 @@
 		"ua"		"Показати персональний найкращий час на сервері."
 		"sv"		"Hämta personlig bästa statistik på servern."
 		"lv"		"Saņemt servera personīgos labākos rezultātus."
+		"es"		
 		"de"		"Abrufen von Server-Bestenliste."
 	}
 	"Command Description - kz_gpb"
@@ -1247,6 +1257,7 @@
 		"ua"		"Показати глобальний персональний найкращий час."
 		"sv"		"Hämta personlig bästa statistik globalt."
 		"lv"		"Saņemt globālos personīgos labākos rezultātus."
+		"es"		
 		"de"		"Abrufen von eigenem globalen Rekord"
 	}
 	"Command Description - kz_globalcheck"
@@ -1257,6 +1268,7 @@
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 		"lv"		"Parādīt GlobalAPI statusu."
+		"es"		
 		"de"		"Status der GlobalAPI anzeigen."
 	}
 	"Command Description - kz_gc"
@@ -1267,6 +1279,7 @@
 		"ua"		"Показати статус GlobalAPI."
 		"sv"		"Visa statusen av GlobalAPI."
 		"lv"		"Parādīt GlobalAPI statusu."
+		"es"		
 		"de"		"Status der GlobalAPI anzeigen."
 	}
 	"Command Description - kz_beam"
@@ -1276,6 +1289,7 @@
 		"pl"		"Ustaw lub Włącz/Wyłącz rodzaj smugi (off/ground/feet)."
 		"sv"		"Ställ in eller växla spelarens stråltyp (av/mark/fötter)."
 		"ua"		"Встановити або перемикнути тип променя руху (вимкнути/по землі/від ніг)."
+		"es"		
 		"de"		"Setze oder schalte durch die Spielerstrahl-Typen (off/ground/feet)."
 	}
 	"Command Description - kz_beamoffset"
@@ -1285,6 +1299,7 @@
 		"pl"		"Ustaw lub wyświetl przesunięcie smugi."
 		"sv"		"Ställ in eller hämta spelarens stråloffset."
 		"ua"		"Встановити або отримати значення зміщення променя руху."
+		"es"		
 		"de"		"Spielerstrahl-Offset einstellen oder abrufen."
 	}
 	"Command Description - kz_measure"
@@ -1294,6 +1309,7 @@
 		"pl"		"Zmierz odległość między dwoma punktami lub długość bloku, jeśli punkty znajdują się w tym samym miejscu."
 		"sv"		"Mät avståndet mellan två punkter, eller mät blockavståndet om två punkter är på samma plats."
 		"ua"		"Виміряти відстань між двома точками або відстань між блоками, якщо дві точки знаходяться на одному рівні."
+		"es"		
 		"de"		"Miss den Abstand zwischen zwei Punkten, oder miss die Distanz eines Jumpstat-Blocks, wenn die zwei Punkte am selben Ort sind."
 	}
 	"Command Description - kz_measurestart"
@@ -1303,6 +1319,7 @@
 		"pl"		"Ustaw pozycję startową pomiaru."
 		"sv"		"Ställ in startpositionen för mätningen."
 		"ua"		"Встановити початкову позицію для вимірювання."
+		"es"		
 		"de"		"Setze den Startpunkt der Messung."
 	}
 	"Command Description - kz_measureend"
@@ -1312,6 +1329,7 @@
 		"pl"		"Ustaw pozycję końcową pomiaru i policz odległość."
 		"sv"		"Ställ in mätningens slutposition och beräkna avståndet."
 		"ua"		"Встановити кінцеве положення для вимірювання та обчислити відстань."
+		"es"		
 		"de"		"Setze den Endpunkt der Messung. Gibt darauf die Distanz zurück."
 	}
 	"Command Description - kz_measureblock"
@@ -1321,6 +1339,7 @@
 		"pl"		"Zmierz długość bloku."
 		"sv"		"Mät blockavståndet."
 		"ua"		"Виміряти відстань між блоками."
+		"es"		
 		"de"		"Miss die Distanz des Jumpstat-Blocks."
 	}
 	"Command Description - kz_timerstopsound"
@@ -1330,6 +1349,7 @@
 		"pl"		"Włącz/Wyłącz dźwięk zatrzymania timera."
 		"ua"		"Увімк./вимк. звук зупинки таймера."
 		"sv"		"Aktivera/Inaktivera timerstoppljud."
+		"es"		
 		"de"		"Aktiviere/Deaktiviere den Timer-Stop-Sound."
 	}
 	"Command Description - kz_autohideweapon"
@@ -1339,6 +1359,7 @@
 		"pl"		"Włącz/wyłącz automatyczne ukrywanie modelu broni."
 		"ua"		"Увімк./вимк. автоматичне приховування зброї."
 		"sv"		"Aktivera/inaktivera automatisk vapendöljning."
+		"es"		
 		"de"		"Aktiviere/Deaktiviere das automatische Verstecken des Waffen-Viewmodels."
 	}
 	"Command Description - kz_pistol"
@@ -1348,6 +1369,7 @@
 		"pl"		"Zmień lub usuń obecny pistolet."
 		"ua"		"Змінити або видалити поточний пістолет."
 		"sv"		"Byt eller ta bort den nuvarande pistolen."
+		"es"		
 		"de"		"Änder oder entferne die derzeitige Pistole."
 	}
 	"Command Description - kz_rpsave"
@@ -1356,6 +1378,7 @@
 		"chi"		"手动将过往游戏数据保存为回放."
 		"pl"		"Ręcznie zapisz ostatni przebieg jako powtórkę."
 		"ua"		"Вручну зберегти попередній геймплей як повтор."
+		"es"		
 		"de"		"Speicher vergangenes Gameplay manuell als Wiederholung."
 	}
 	"Command Description - kz_replay"
@@ -1364,6 +1387,7 @@
 		"chi"		"播放之前保存的回放."
 		"pl"		"Odtwórz wcześniej zapisaną powtórkę."
 		"ua"		"Відтворити раніше збережений повтор."
+		"es"		
 		"de"		"Spiele die zuvor gespeicherte Wiederholung ab."
 	}
 	"Command Description - kz_replays"
@@ -1371,6 +1395,7 @@
 		"en"		"List saved replays."
 		"pl"		"Wyświetl listę zapisanych powtórek."
 		"ua"		"Показати список збережених повторів."
+		"es"		
 		"de"		"Liste die gespeicherten Wiederholungen auf."
 	}
   	"Command Description - kz_rpgoto"
@@ -1379,6 +1404,7 @@
 		"chi"		"跳转到回放中的特定时间点. (hh:mm:ss)"
 		"pl"		"Przejdź do konkretnego czasu w powtórce (gg:mm:ss)."
 		"ua"		"Перейти до конкретного моменту в повторі. (hh:mm:ss)"
+		"es"		
 		"de"		"Springe zu einem bestimmten Zeitpunkt in der Wiederholung. (hh:mm:ss)"
 	}
   	"Command Description - kz_rpgototick"
@@ -1387,6 +1413,7 @@
 		"chi"		"跳转到回放中的特定的Tick."
 		"pl"		"Przejdź do konkretnego ticku w powtórce."
 		"ua"		"Перейти до конкретного тіку в повторі."
+		"es"		
 		"de"		"Springe zu einem bestimmten Tick in der Widerholung."
 	}
   	"Command Description - kz_rpinfo"
@@ -1395,6 +1422,7 @@
 		"chi"		"显示当前回放的信息."
 		"pl"		"Wyświetl informacje o obecnej powtórce."
 		"ua"		"Відобразити інформацію про поточний повтор."
+		"es"		
 		"de"		"Zeige Informationen über die aktuelle Wiederholung an."
 	}
   	"Command Description - kz_rppause"
@@ -1403,6 +1431,7 @@
 		"chi"		"暂停或继续当前回放."
 		"pl"		"Wstrzymaj lub wznów obecną powtórkę."
 		"ua"		"Поставити на паузу або продовжити відтворення поточного повтору."
+		"es"		
 		"de"		"Pausieren/Fortsetzen der aktuellen Wiederholung."
 	}
   	"Command Description - kz_rploadprogress"
@@ -1411,6 +1440,7 @@
 		"chi"		"显示回放的加载进度."
 		"pl"		"Wyświetl postęp ładowania powtórki."
 		"ua"		"Показати прогрес завантаження повтору."
+		"es"		
 		"de"		"Zeige den Ladefortschritt der Wiederholung an."
 	}
   	"Command Description - kz_rpcancelload"
@@ -1419,6 +1449,7 @@
 		"chi"		"取消加载回放."
 		"pl"		"Anuluj ładowanie powtórki."
 		"ua"		"Скасувати завантаження повтору."
+		"es"		
 		"de"		"Brich das Laden der Wiederholung ab."
 	}
 	"Command Description - kz_recordvolume"
@@ -1427,6 +1458,7 @@
 		"chi"		"设置世界纪录音效的音量."
 		"pl"		"Ustaw głośność efektu dźwiękowego rekordu świata."
 		"ua"		"Встановити гучність звукового ефекту світового рекорду."
+		"es"		
 		"de"		"Setze die Lautstärke des Weltrekord-Sounds fest."
 	}
 	"Command Description - kz_cpmessage"
@@ -1435,6 +1467,7 @@
 		"chi"		"切换检查点消息是否显示."
 		"pl"		"Włącz/wyłącz wiadomości o checkpointach."
 		"ua"		"Увімк./вимк. повідомлення про чекпоінт."
+		"es"		
 		"de"		"Aktiviere/Deaktiviere Checkpoint-Nachrichten."
 	}
 	"Command Description - kz_rphidelegs"
@@ -1443,6 +1476,7 @@
 		"chi"		"切换回放bot的第一人称腿部是否显示."
 		"pl"		"Włącz/wyłącz widoczność nóg bota w powtórce (w pierwszej osobie)."
 		"ua"		"Увімк./вимк. відображення ніг бота повтору від першої особи."
+		"es"		
 		"de"		"Schalte die Sichtbarkeit der Beine des Replay-Bots in der Ego-Perspektive um."
 	}
 	"Command Description - kz_accept"
@@ -1450,6 +1484,7 @@
 		"en"		"Accept an incoming race."
 		"chi"		"接受比赛邀请."
 		"ua"		"Прийняти запрошення на участь у гонці."
+		"es"		
 		"pl"		"Zaakceptuj nadchodzący wyścig."
 	}
 	"Command Description - kz_surrender"
@@ -1457,28 +1492,34 @@
 		"en"		"Surrender an ongoing race."
 		"chi"		"放弃当前比赛."
 		"ua"		"Здатися в поточній гонці."
+		"es"		
 		"pl"		"Poddaj bieżący wyścig."
 	}
 	"Command Description - kz_mapinfo"
 	{
 		"en"		"Display information about the current map."
 		"ua"		"Показати інформацію про поточну мапу."
+		"es"		
 	}
 	"Command Description - kz_tier"
 	{
 		"en"		"Display the tier of the current course or a specified course."
 		"ua"		"Показати складнісь поточного курсу або вказаного курсу."
+		"es"		
 	}
 	"Command Description - kz_modernperfstats"
 	{
 		"en"		"Retrieve bhop statistics for modern jumping."
+		"es"		
 	}
 	"Command Description - kz_legacyperfstats"
 	{
 		"en"		"Retrieve bhop statistics for legacy jumping."
+		"es"		
 	}
 	"Command Description - kz_resetperfstats"
 	{
 		"en"		"Reset bhop statistics for modern and legacy jumping."
+		"es"		
 	}
 }

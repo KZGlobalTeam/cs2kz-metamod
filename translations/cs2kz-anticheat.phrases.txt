@@ -10,6 +10,7 @@
 		"fi"		"{yellow}Varoitus{grey}: Sinun {default}m_yaw{grey} arvo täytyy olla vähemmän tai yhtäsuuri kuin 0.3 pelataksesi tällä palvelimella. Yhteys katkaistaan."
 		"ko"		"{yellow}경고{grey}: 이 서버에서 플레이하려면 {default}m_yaw{grey} 값이 0.3 이하여야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"{yellow}Brīdinājums{grey}: Tavam {default}m_yaw{grey} vērtībai jābūt mazākai vai vienādai ar 0.3, lai spēlētu šajā serverī. Tu tiksi atvienots."
+		"es"		"{yellow}Atención,: El valor de {default}m_yaw{grey} debe ser menor o igual a 0.3 para jugar en este servidor. Vas a ser desconectado."
 		"de"		"{yellow}Warnung{grey}: Dein {default}m_yaw{grey}-Wert muss kleiner oder gleich 0.3 sein, um auf diesem Server spielen zu können. Du wirst getrennt."
 	}
 	"Kick Player m_yaw (Console)"
@@ -22,6 +23,7 @@
 		"fi"		"Varoitus: Sinun m_yaw arvo täytyy olla vähemmän tai yhtäsuuri kuin 0.3 pelataksesi tällä palvelimella. Yhteys katkaistaan."
 		"ko"		"경고: 이 서버에서 플레이하려면 m_yaw 값이 0.3 이하여야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"Brīdinājums: Tavam m_yaw vērtībai jābūt mazākai vai vienādai ar 0.3, lai spēlētu šajā serverī. Tu tiksi atvienots."
+		"es"		"{yellow}Atención,: El valor de {default}m_yaw{grey} debe ser menor o igual a 0.3 para jugar en este servidor. Vas a ser desconectado."
 		"de"		"Warnung: Dein m_yaw-Wert muss kleiner oder gleich 0.3 sein, um auf diesem Server spielen zu können. Du wirst getrennt."
 	}
 	"Kick Player fps_max"
@@ -34,6 +36,7 @@
 		"fi"		"{yellow}Varoitus{grey}: Sinun {default}fps_max{grey} arvo täytyy olla enemmän tai yhtäsuuri kuin 64, jotta voit pelata tällä palvelimella. Yhteys katkaistaan."
 		"ko"		"{yellow}경고{grey}: 이 서버에서 플레이하려면 {default}fps_max{grey} 값이 64 이상이어야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"{yellow}Brīdinājums{grey}: Tavai {default}fps_max{grey} vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
+		"es"		"{yellow}Atención,: El valor de {default}fps_max{grey} debe ser mayor o igual a 64 para jugar en este servidor. Vas a ser desconectado."
 		"de"		"{yellow}Warnung{grey}: Dein {default}fps_max{grey}-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
 	}
 	"Kick Player fps_max (Console)"
@@ -46,6 +49,7 @@
 		"fi"		"Varoitus: Sinun fps_max arvo täytyy olla enemmän tai yhtäsuuri kuin 64 pelataksesi tällä palvelimella. Yhteys katkaistaan."
 		"ko"		"경고: 이 서버에서 플레이하려면 fps_max 값이 64 이상이어야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"Brīdinājums: Tavai fps_max vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
+		"es"		"{yellow}Atención,: El valor de {default}fps_max{grey} debe ser mayor o igual a 64 para jugar en este servidor. Vas a ser desconectado."
 		"de"		"Warnung: Dein fps_max-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
 	}
 }

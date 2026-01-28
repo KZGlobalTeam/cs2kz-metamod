@@ -1,3 +1,4 @@
+SPANISH TODO
 "Phrases"
 {
 	"Tip - kz_replay"
