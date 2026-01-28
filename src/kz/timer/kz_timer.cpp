@@ -673,7 +673,7 @@ SCMD(kz_timerstopsound, SCFL_TIMER | SCFL_PREFERENCE)
 	return MRES_SUPERCEDE;
 }
 
-SCMD_LINK(kz_tss, kz_toggletimerstopsound);
+SCMD_LINK(kz_tss, kz_timerstopsound);
 
 void KZTimerService::ToggleTimerStopSound()
 {
