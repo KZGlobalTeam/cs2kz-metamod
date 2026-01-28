@@ -66,7 +66,6 @@ public:
 	virtual const CVValue_t *GetModeConVarValues() override;
 
 	// Triggerfix
-	virtual void OnSetupMove(PlayerCommand *pc) override;
 	virtual void OnPlayerMove() override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnDuckPost() override;
