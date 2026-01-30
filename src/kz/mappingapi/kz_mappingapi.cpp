@@ -984,8 +984,19 @@ void KZ::course::PrintCourses(KZPlayer *player)
 {
 	// If we have API map data, that means we have information about individual mappers for each course, along with tiers for both modes.
 	// Otherwise, the only course information we have is the course ID and the course name.
-	const KZ::API::Map *map = KZGlobalService::WithCurrentMap([](const KZ::API::Map *currentMap) { return currentMap; });
-	if (map)
+	bool hasMap = false;
+	std::vector<KZ::API::Map::Course> courses;
+	hasMap = KZGlobalService::WithCurrentMap(
+		[&](const KZ::API::Map *currentMap)
+		{
+			if (currentMap)
+			{
+				courses = currentMap->courses;
+				return true;
+			}
+			return false;
+		});
+	if (hasMap)
 	{
 		CUtlString headers[KZ_ARRAYSIZE(columnKeysWithAPI)];
 		for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithAPI); col++)
@@ -997,7 +1008,7 @@ void KZ::course::PrintCourses(KZPlayer *player)
 		{
 			KZCourseDescriptor *course = g_sortedCourses[i];
 			const KZ::API::Map::Course *apiCourse = nullptr;
-			for (auto &c : map->courses)
+			for (auto &c : courses)
 			{
 				if (c.id == course->globalDatabaseID)
 				{
@@ -1087,9 +1098,28 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 		player->languageService->PrintChat(true, false, "Map Info - No API Connection");
 	}
 
-	const KZ::API::Map *map = KZGlobalService::WithCurrentMap([](const KZ::API::Map *currentMap) { return currentMap; });
+	bool hasMap = false;
+	std::vector<KZ::API::Map::Course> courses;
+	std::vector<KZ::API::PlayerInfo> mappers;
+	std::string mapApprovedAt;
+	KZ::API::Map::State mapState;
+	std::string mapDescription;
+	hasMap = KZGlobalService::WithCurrentMap(
+		[&](const KZ::API::Map *currentMap)
+		{
+			if (currentMap)
+			{
+				courses = currentMap->courses;
+				mappers = currentMap->mappers;
+				mapState = currentMap->state;
+				mapDescription = currentMap->description.value_or("");
+				mapApprovedAt = currentMap->approvedAt;
+				return true;
+			}
+			return false;
+		});
 
-	if (!map)
+	if (!hasMap)
 	{
 		player->languageService->PrintChat(true, false, "Map Info - No API Map Data");
 	}
@@ -1105,28 +1135,28 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 	}
 	player->languageService->PrintConsole(false, false, "Map Info - Map Info Header", mapName.Get());
 
-	if (map)
+	if (hasMap)
 	{
 		// Mappers
-		if (map->mappers.size() > 0)
+		if (mappers.size() > 0)
 		{
-			std::string mappers;
-			for (u32 i = 0; i < map->mappers.size(); i++)
+			std::string mappersStr;
+			for (u32 i = 0; i < mappers.size(); i++)
 			{
-				mappers += map->mappers[i].name;
-				if (i < map->mappers.size() - 1)
+				mappersStr += mappers[i].name;
+				if (i < mappers.size() - 1)
 				{
-					mappers += ", ";
+					mappersStr += ", ";
 				}
 			}
-			player->languageService->PrintConsole(false, false, "Map Info - Mappers", mappers.c_str());
+			player->languageService->PrintConsole(false, false, "Map Info - Mappers", mappersStr.c_str());
 		}
 		// Map state
 		std::string stateStr;
-		switch (map->state)
+		switch (mapState)
 		{
 			case KZ::API::Map::State::Approved:
-				stateStr = player->languageService->PrepareMessage("Map Info - Approved", map->approvedAt.c_str());
+				stateStr = player->languageService->PrepareMessage("Map Info - Approved", mapApprovedAt.c_str());
 				break;
 			case KZ::API::Map::State::InTesting:
 				stateStr = player->languageService->PrepareMessage("Map Info - In Testing");
@@ -1137,9 +1167,9 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 		}
 		player->languageService->PrintConsole(false, false, "Map Info - State", stateStr.c_str());
 		// Map description
-		if (map->description && map->description.value().length() > 0)
+		if (mapDescription.length() > 0)
 		{
-			player->languageService->PrintConsole(false, false, "Map Info - Description", map->description.value().c_str());
+			player->languageService->PrintConsole(false, false, "Map Info - Description", mapDescription.c_str());
 		}
 	}
 	// Courses
@@ -1187,14 +1217,25 @@ static_function void PrintCourseTier(KZPlayer *player, const CCommand *args)
 		player->languageService->PrintChat(true, false, "Map Info - No API Connection (Short)");
 		return;
 	}
-	const KZ::API::Map *map = KZGlobalService::WithCurrentMap([](const KZ::API::Map *currentMap) { return currentMap; });
-	if (!map)
+	bool hasMap = false;
+	std::vector<KZ::API::Map::Course> courses;
+	hasMap = KZGlobalService::WithCurrentMap(
+		[&](const KZ::API::Map *currentMap)
+		{
+			if (currentMap)
+			{
+				courses = currentMap->courses;
+				return true;
+			}
+			return false;
+		});
+	if (!hasMap)
 	{
 		player->languageService->PrintChat(true, false, "Map Info - No API Map Data (Short)");
 		return;
 	}
 	const KZ::API::Map::Course *apiCourse = nullptr;
-	for (auto &c : map->courses)
+	for (auto &c : courses)
 	{
 		if (c.id == course->globalDatabaseID)
 		{
