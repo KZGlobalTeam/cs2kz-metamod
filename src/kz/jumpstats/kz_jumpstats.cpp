@@ -191,8 +191,10 @@ void Strafe::End()
 		// Calculate BA/DA/OL
 		if (this->aaCalls[i].wishspeed == 0)
 		{
-			u64 buttonBits = IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT;
-			if (CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, buttonBits))
+			if ((CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_FORWARD, true)
+				 && CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_BACK, true))
+				|| (CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_MOVELEFT, true)
+					&& CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_MOVERIGHT, true)))
 			{
 				this->overlap += this->aaCalls[i].duration;
 			}
@@ -407,7 +409,6 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	this->player->GetAngles(&currentAngle);
 	call->maxspeed = this->player->currentMoveData->m_flMaxSpeed;
 	call->currentYaw = currentAngle.y;
-	this->player->GetMoveServices()->m_nButtons()->GetButtons(call->buttons);
 	call->wishdir = wishdir;
 	call->wishspeed = wishspeed;
 	call->accel = accel;
@@ -791,6 +792,7 @@ void KZJumpstatsService::OnAirAccelerate()
 		return;
 	}
 	AACall call;
+	this->player->GetMoveServices()->m_nButtons()->GetButtons(call.buttons);
 	this->player->GetVelocity(&call.velocityPre);
 
 	// moveDataPost is still the movedata from last tick.
