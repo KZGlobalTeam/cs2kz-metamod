@@ -1,3 +1,4 @@
+SPANISH TODO
 "Phrases"
 {
 	"1 Teleport Text"
@@ -714,7 +715,7 @@
 		"ua"		"{grey}Використання: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"tr"		"{grey}Kullanım: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"ko"		"{grey}사용법: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
-		"es"		"{grey}Usa: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"es"		"{grey}Uso: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"lv"		"{grey}Pielietojums: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"de"		"{grey}Verwendung: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 	}

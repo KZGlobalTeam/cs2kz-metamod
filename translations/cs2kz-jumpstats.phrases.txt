@@ -391,7 +391,7 @@
 		"it"		"Invalid movetype change"
 		"de"		"Ungültige Änderung des Bewegungstyps"
 		"ko"		"잘못된 이동 유형 변경"
-		"es"		"Cambio de tipo de movimiento no válido"
+		"es"		"Cambio del tipo de movimiento inválido"
 		"lv"		"Nederīga kustības veida maiņa"
 	}
 	"Invalid movetype"
@@ -406,7 +406,7 @@
 		"it"		"Invalid movetype"
 		"de"		"Ungültigr Bewegungstyp"
 		"ko"		"잘못된 이동 유형"
-		"es"		"Tipo de movimiento no válido"
+		"es"		"Tipo de movimiento inválido"
 		"lv"		"Nederīgs kustības veids"
 	}
 	"Just noclipped"
@@ -421,7 +421,7 @@
 		"it"		"Just noclipped"
 		"de"		"Gerade genoclipped"
 		"ko"		"방금 노클립 모드로 전환되었습니다."
-		"es"		"Acabas de noclippear"
+		"es"		"Acabas de hacer noclip"
 		"lv"		"Tikko izmantots noclip"
 	}
 	"Invalid collisions"
@@ -436,7 +436,7 @@
 		"it"		"Invalid collisions"
 		"de"		"Ungültige collisions"
 		"ko"		"잘못된 충돌"
-		"es"		"Colisiones no válidas"
+		"es"		"Colisiones inválidas"
 		"lv"		"Nederīgas sadursmes"
 	}
 	"Base velocity detected"
@@ -479,7 +479,7 @@
 		"it"		"Invalid gains"
 		"de"		"Ungültige gains"
 		"ko"		"잘못된 게인"
-		"es"		"Ganancias no válidas"
+		"es"		"Ganancias inválidas"
 		"lv"		"Nederīgi ieguvumi"
 	}
 	"Externally modified"
@@ -494,7 +494,7 @@
 		"pl"		"Zmodyfikowane zewnętrznie"
 		"de"		"Extern modifiziert"
 		"ko"		"외부에서 수정됨"
-		"es"		"Externamente modificado"
+		"es"		"Modificado externamente"
 		"lv"		"Modificēts ārēji"
 	}
 	"Edgebugged"
@@ -602,7 +602,7 @@
 		"it"		"{grey}Hai disabilitato le statistiche dei salti forzate."
 		"de"		"{grey}Du hast die immer aktiven Jumpstats deaktiviert."
 		"ko"		"{grey}항상 활성화된 점프 통계 기능을 비활성화했습니다."
-		"es"		"{grey}Has desactivado las estadísticas de salto siempre activas."
+		"es"		"{grey}Has desactivado las estadísticas de salto siempre visibles."
 		"lv"		"{grey}Tu esi atspējojis vienmēr ieslēgto lēcienu statistiku."
 	}
 	"Jumpstats Option - Tier Hint"
@@ -612,6 +612,7 @@
 		"pl"		"{grey}Dostępne stopnie jumpstatów: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"ua"		"{grey}Існуючі тіри стрибків: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"sv"		"{grey}Giltiga jumpstats nivåer: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+		"es"		{grey} Niveles para las estadísticas de salto: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"de"		"{grey}Gütlige Jumpstats-Level: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
@@ -626,7 +627,7 @@
 		"it"		"{grey}Utilizzo: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"de"		"{grey}Verwendung: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"ko"		"{grey}사용법: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
-		"es"		"{grey}Usa: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"es"		"{grey}Uso: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"lv"		"{grey}Pielietojums: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
@@ -657,7 +658,7 @@
 		"it"		"{grey}La soglia minima per mostrare le statistiche dei salti ora è {default}{tier}."
 		"de"		"{grey}Der Broadcast-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
 		"ko"		"{grey}점프 통계 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
-		"es"		"{grey}El límite de difusión de estadísticas de saltos es ahora {default}{tier}."
+		"es"		"{grey}El límite de difusión de estadísticas de salto ahora es {default}{tier}."
 		"lv"		"{grey}Lēcienu statistikas pārraides slieksnis tagad ir {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
@@ -667,6 +668,7 @@
 		"pl"		"{grey}Wyświetlanie jumpstatów w konsoli wyłączone."
 		"ua"		"{grey}Трансляція статистики стрибків у консолі вимкнута."
 		"de"		"{grey}Jumpstats-Konsolen-Ausgabe von anderen Spielern deaktiviert."
+		"es"		"{grey}Difusión de estadísticas de salto en consola desactivada."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
 	{
@@ -676,6 +678,7 @@
 		"pl"		"{grey}Próg wyświetlania jumpstatów w konsoli jest ustawiony na {default}{tier}."
 		"ua"		"{grey}Мінмальний поріг трансляції статистики стрибків у консолі — {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats-Konsolen-Ausgabe von anderen Spielern ist nun {default}{tier}."
+		"es"		"{grey}El umbral para mostrar las estadísticas de salto ahora es {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -689,7 +692,7 @@
 		"it"		"{grey}Utilizzo: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"de"		"{grey}Verwendung: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"ko"		"{grey}사용법: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
-		"es"		"{grey}Usa: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"es"		"{grey}Uso: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"lv"		"{grey}Pielietojums: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
@@ -704,7 +707,7 @@
 		"it"		"{grey}Effetti sonori dei salti disabilitati."
 		"de"		"{grey}Jumpstats-Soundeffekt deaktiviert."
 		"ko"		"{grey}점프 통계 사운드 효과가 비활성화되었습니다."
-		"es"		"{grey}Sonido de efectos de saltos activados."
+		"es"		"{grey}Activado el efecto de sonido al mostrar estadísticas de salto."
 		"lv"		"{grey}Lēcienu statistikas skaņas efekts ir atspējots."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
@@ -720,7 +723,7 @@
 		"it"		"{grey}La soglia minima per gli effetti sonori dei salti ora è {default}{tier}."
 		"de"		"{grey}Der Soundeffekt-Schwellenwert für Jumpstats ist jetzt {default}{tier}."
 		"ko"		"{grey}점프 통계 사운드 효과 임계값이 이제 {default}{tier}로 설정되었습니다."
-		"es"		"{grey}El límite de efectos de sonidos de estadísticas de salto es ahora {default}{tier}."
+		"es"		"{grey}El límite de efectos de sonidos para estadísticas de salto ahora es {default}{tier}."
 		"lv"		"{grey}Lēcienu statistikas skaņas efekta slieksnis tagad ir {default}{tier}."
 	}
 
@@ -854,6 +857,7 @@
 		"ua"		"{grey}Відображення статистики стрибків у чаті вимкнено."
 		"sv"		"{grey}Jumpstats chatt rapportering inaktiverad."
 		"de"		"{grey}Jumpstats Chat-Benachrichtigungen deaktivert."
+		"es"		"{grey}Reporte de estadísticas de salto en chat desactivado"
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Response"
 	{
@@ -864,6 +868,7 @@
 		"ua"		"{grey}Поріг відображення статистики стрибків встановлено на {default}{tier}."
 		"sv"		"{grey}Jumpstats chat rapporteringsgränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats Chat-Benachrichtigungen ist nun {default}{tier}."
+		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en chat ahora es {default}{tier}." 
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
@@ -873,6 +878,7 @@
 		"ua"		"{grey}Відображення статистики стрибків у консолі вимкнено."
 		"sv"		"{grey}Jumpstats konsol rapportering inaktiverad."
 		"de"		"{grey}Jumpstats Konsolen-Benachrichtigungen deaktivert."
+		"es"		"{grey}Reporte de estadísticas de salto en consola desactivado."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Response"
 	{
@@ -883,6 +889,7 @@
 		"ua"		"{grey}Поріг відображення статистики стрибків у консолі встановлено на {default}{tier}."
 		"sv"		"{grey}Jumpstats konsol rapporteringsgränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats Konsolen-Benachrichtigungen ist nun {default}{tier}."
+		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en consola ahora es {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
 	{
@@ -892,6 +899,7 @@
 		"ua"		"{grey}Звукові ефекти для стрибків вимкнено."
 		"sv"		"{grey}Jumpstats ljudsändning inaktiverad."
 		"de"		"{grey}Jumpstats-Sounds von anderen Spielern sind nun deaktivert."
+		"es"		"{grey}Efecto de sonido al reportar estadísticas de salto desactivado."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
 	{
@@ -902,6 +910,7 @@
 		"ua"		"{grey}Поріг звукових ефектів для стрибків встановлено на {default}{tier}."
 		"sv"		"{grey}Jumpstats ljudsändnings gränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats-Sounds von anderen Spielern ist nun {default}{tier}."
+		"es"		"{grey}El umbral para el efecto de sonido en el reporte de estadísticas de salto ahora es {default}tier."
 	}
 	"Jumpstats Option - Jumpstats Volume - Current"
 	{
@@ -911,6 +920,7 @@
 		"pl"		"{grey}Aktualna głośność dźwięków jumpstatów jest ustawiona na {default}{volume}."
 		"ua"		"{grey}Гучність звукових ефектів для стрибків {default}{volume}."
 		"de"		"{grey}Derzeitige Lautstärke von Jumpstats-Sounds ist {default}{volume}."
+		"es"		"{grey}El volumen de sonido en el reporte de estadísticas de salto es {default}{volume}."
 	}
 	"Jumpstats Option - Jumpstats Volume - Response"
 	{
@@ -921,6 +931,7 @@
 		"ua"		"{grey}Гучність звукових ефектів стрибків встановлено на {default}{volume}."
 		"sv"		"{grey}Jumpstats volymen är nu {default}{volume}."
 		"de"		"{grey}Jumpstats Lautstärke wurde auf {default}{volume} gesetzt."
+		"es"		"{grey}Establecido el volumen de sonido en el reporte de estadísticas de salto a {default}{volume}."
 	}
 	"Jumpstats Option - Extended Chat Stats - Enable"
 	{
@@ -930,6 +941,7 @@
 		"ua"		"{grey}Увімкнено розширену статистику стрибків."
 		"sv"		"{grey}Utökad jumpstats chattrapportering aktiverat."
 		"de"		"{grey}Erweiterte Jumpstats-Benachrichtigungen im Chat aktiviert."
+		"es"		"{grey}Reporte extendido de estadísticas de salto en el chat activado."
 	}
 	"Jumpstats Option - Extended Chat Stats - Disable"
 	{
@@ -939,15 +951,18 @@
 		"ua"		"{grey}Розширену статистику стрибків вимкнуто."
 		"sv"		"{grey}Utökad jumpstats chattrapportering inaktiverat."
 		"de"		"{grey}Erweiterte Jumpstats-Benachrichtigungen im Chat deaktiviert."
+		"es"		"{grey}Reporte extendido de estadísticas de salto en el chat desactivado"
 	}
 	"Jumpstats Option - Jumpstats Reporting - Enable"
 	{
 		"en"		"{grey}Jumpstats reporting enabled."
 		"ua"		"{grey}Відображення статистики стрибків увімкнено."
+		"es"		"{grey}Reporte de estadísticas de salto activado"
 	}
 	"Jumpstats Option - Jumpstats Reporting - Disable"
 	{
 		"en"		"{grey}Jumpstats reporting disabled."
 		"ua"		"{grey}Відображення статистики стрибків вимкнено."
+		"es"		"{grey}Reporte de estadísticas de salto desactivado"
 	}
 }
