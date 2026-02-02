@@ -29,7 +29,7 @@ public:
 
 	u32 GetFOV()
 	{
-		return this->player->optionService->GetPreferenceInt("fov", this->GetMinFOV());
+		return this->player->optionService->GetPreferenceInt("fov", this->GetDefaultFOV());
 	}
 
 	void OnPhysicsSimulate();
