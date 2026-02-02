@@ -78,7 +78,6 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'kz_misc.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'block_radio.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'time_limit.cpp'),
-    
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player.cpp'),
@@ -127,6 +126,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'pistol', 'kz_pistol.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'kz_profile.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'fov', 'kz_fov.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'kz_racing.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'racing', 'coordinator.cpp'),

@@ -50,7 +50,16 @@
 	
 	// Number of minutes to keep archived replays before deletion (minimum 24 hours, default 48 hours).
 	"archiveRetentionMinutes"			"2880"
+
+	// Default FOV for players.
+	"defaultFOV"						"90"
 	
+	// Minimum FOV for players.
+	"minFOV"							"60"
+	
+	// Maximum FOV for players.
+	"maxFOV"							"130"
+
 	// Local database configurations.
 	"db"
 	{

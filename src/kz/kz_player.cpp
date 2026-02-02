@@ -26,6 +26,7 @@
 #include "racing/kz_racing.h"
 #include "profile/kz_profile.h"
 #include "pistol/kz_pistol.h"
+#include "fov/kz_fov.h"
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -61,6 +62,7 @@ void KZPlayer::Init()
 	delete this->measureService;
 	delete this->profileService;
 	delete this->pistolService;
+	delete this->fovService;
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->beamService = new KZBeamService(this);
@@ -84,6 +86,7 @@ void KZPlayer::Init()
 	this->measureService = new KZMeasureService(this);
 	this->profileService = new KZProfileService(this);
 	this->pistolService = new KZPistolService(this);
+	this->fovService = new KZFOVService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -164,6 +167,7 @@ void KZPlayer::OnPhysicsSimulate()
 	this->noclipService->HandleMoveCollision();
 	this->EnableGodMode();
 	this->UpdatePlayerModelAlpha();
+	this->fovService->OnPhysicsSimulate();
 	KZ::replaysystem::OnPhysicsSimulate(this);
 }
 

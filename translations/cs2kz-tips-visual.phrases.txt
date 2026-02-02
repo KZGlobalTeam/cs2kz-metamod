@@ -60,4 +60,8 @@
 		"ko"	"{grey}무기 표시 여부를 전환하려면 {default}/hideweapon{grey}을 입력하세요."
 		"lv"	"{grey}Rakstot {default}/hideweapon {grey}, tu vari izslēgt ieroča redzamību."
 	}
+	"Tip - kz_fov"
+	{
+		"en"	"{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+	}
 }

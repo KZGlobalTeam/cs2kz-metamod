@@ -53,6 +53,7 @@ class KZTipService;
 class KZTriggerService;
 class KZPistolService;
 class KZRecordingService;
+class KZFOVService;
 
 class KZPlayer : public MovementPlayer
 {
@@ -172,6 +173,7 @@ public:
 	KZTriggerService *triggerService {};
 	KZPistolService *pistolService {};
 	KZRecordingService *recordingService {};
+	KZFOVService *fovService {};
 
 	void DisableTurnbinds();
 	void EnableGodMode();
