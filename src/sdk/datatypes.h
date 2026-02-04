@@ -151,9 +151,10 @@ struct SubtickMove
 		{
 			float analog_forward_delta;
 			float analog_left_delta;
-			float pitch_delta;
-			float yaw_delta;
 		} analogMove;
+
+		float pitch;
+		float yaw;
 	};
 
 	bool IsAnalogInput()

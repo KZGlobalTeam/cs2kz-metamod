@@ -1,5 +1,6 @@
 /*
 	Detector for invalid cvar values on clients.
+	Some of them will only result in kicks, while the ones that can only be changed via cheats will result in bans.
 */
 #include "common.h"
 #include "convar.h"
@@ -139,7 +140,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 			// Player shouldn't be able to normally change fps_max during gameplay, so they must be using a cheat.
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "Changed fps_max from " + std::to_string(player->anticheatService->currentMaxFps) + " to " + std::to_string(fps);
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "sv_cheats"))
@@ -154,7 +155,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "sv_cheats is enabled on client despite being disabled on server";
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "sensitivity"))
@@ -165,7 +166,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "Invalid sensitivity value: " + std::string(pszCvarValue);
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "cl_showpos") || KZ_STREQI(pszCvarName, "cam_showangles"))
@@ -178,7 +179,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = std::string(pszCvarName) + " is enabled on client despite sv_cheats being disabled on server";
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "cl_drawhud"))
@@ -191,7 +192,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "cl_drawhud is disabled on client despite sv_cheats being disabled on server";
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "fov_cs_debug"))
@@ -205,7 +206,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "fov_cs_debug is enabled on client despite sv_cheats being disabled on server";
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "cl_pitchdown"))
@@ -214,7 +215,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "cl_pitchdown has invalid value: " + std::string(pszCvarValue);
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "cl_pitchup"))
@@ -223,7 +224,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "cl_pitchup has invalid value: " + std::string(pszCvarValue);
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "cl_yawspeed"))
@@ -232,7 +233,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		{
 			player->anticheatService->MarkHasInvalidCvars();
 			std::string reason = "cl_yawspeed has invalid value: " + std::string(pszCvarValue);
-			player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 		}
 	}
 }
@@ -266,7 +267,7 @@ static_function f64 CheckUserInfoCvars(KZPlayer *player)
 			{
 				player->anticheatService->MarkHasInvalidCvars();
 				std::string reason = "Invalid sensitivity value: " + std::string(value);
-				player->anticheatService->MarkDetection(reason, false, BAN_DURATION_INVALID_CVARS, true);
+				player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
 				return 0.0f;
 			}
 		}

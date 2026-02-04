@@ -146,7 +146,11 @@ public:
 	static void QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, u32 count, u32 offset, TransactionSuccessCallbackFunc onSuccess,
 							 TransactionFailureCallbackFunc onFailure);
 
-	void Ban(const char *reason = nullptr, f32 durationDays = 0.0f, const UUID_t banId = UUID_t(false), const UUID_t replayUuid = UUID_t(false));
-	void Ban(const char *reason, const char *endTime, const UUID_t banId = UUID_t(false), const UUID_t replayUuid = UUID_t(false));
+	static void Ban(u64 steamID64, const char *reason = nullptr, f32 duration = 0.0f, const UUID_t banId = UUID_t(false),
+					const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,
+					TransactionFailureCallbackFunc onFailure = OnGenericTxnFailure);
+	static void AddOrUpdateBan(u64 steamID64, const char *reason, const char *endTime, const UUID_t banId = UUID_t(false),
+							   const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,
+							   TransactionFailureCallbackFunc onFailure = OnGenericTxnFailure);
 	static void Unban(u64 steamID64);
 };

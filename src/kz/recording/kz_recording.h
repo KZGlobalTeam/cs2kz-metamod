@@ -344,10 +344,10 @@ public:
 		Both
 	};
 
-private:
 	// Helper function to copy weapons from recording service to recorder before queuing
 	void CopyWeaponsToRecorder(Recorder *recorder);
 
+private:
 	template<typename Func>
 	void ApplyToTarget(Func &&func, RecorderType target)
 	{

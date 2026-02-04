@@ -3,10 +3,11 @@
 #include "utils/simplecmds.h"
 
 #include "kz_jumpstats.h"
-#include "../mode/kz_mode.h"
-#include "../style/kz_style.h"
-#include "../option/kz_option.h"
-#include "../language/kz_language.h"
+#include "kz/anticheat/kz_anticheat.h"
+#include "kz/mode/kz_mode.h"
+#include "kz/style/kz_style.h"
+#include "kz/option/kz_option.h"
+#include "kz/language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
@@ -868,6 +869,7 @@ void KZJumpstatsService::EndJump()
 	}
 	KZJumpstatsService::AnnounceJump(jump);
 	this->player->recordingService->OnJumpFinish(jump);
+	this->player->anticheatService->OnJumpFinish(jump);
 }
 
 void KZJumpstatsService::InvalidateJumpstats(const char *reason)

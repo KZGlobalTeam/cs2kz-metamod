@@ -97,6 +97,8 @@ public:
 		}
 		m_arrForceSubtickMoveWhen[index] = when;
 	}
+
+	SCHEMA_FIELD(Vector, m_vecLastMovementImpulses)
 };
 
 class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices

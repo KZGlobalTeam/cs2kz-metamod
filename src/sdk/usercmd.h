@@ -33,11 +33,7 @@ class CUserCmd : public CUserCmdBaseHost<CSGOUserCmdPB>
 class CUserCmdExtended : public CUserCmd
 {
 public:
-	struct
-	{
-		void **vtable;
-		uint64 buttons[3];
-	} buttonstates;
+	CInButtonState buttonstates;
 
 	// Not part of the player message
 	uint32_t unknown;

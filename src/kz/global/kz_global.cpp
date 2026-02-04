@@ -400,7 +400,7 @@ void KZGlobalService::OnClientDisconnect()
 	}
 }
 
-void KZGlobalService::SubmitBan(std::string reason, UUID_t replayUUID)
+void KZGlobalService::SubmitBan(u64 steamID, std::string reason, std::string details)
 {
 	// TODO Anticheat: Implement this!
 }

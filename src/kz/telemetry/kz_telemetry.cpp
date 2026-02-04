@@ -1,4 +1,5 @@
 #include "kz_telemetry.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "utils/simplecmds.h"
 #include "kz/language/kz_language.h"
 #include "sdk/usercmd.h"
@@ -19,6 +20,7 @@ void KZTelemetryService::OnJumpModernPost()
 		return;
 	}
 
+	this->player->anticheatService->OnJump();
 	// Not a bhop attempt if more than 100ms have passed since landing.
 	if (g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTimeServer > 0.1f)
 	{
@@ -61,6 +63,7 @@ void KZTelemetryService::OnJumpLegacyPost()
 		return;
 	}
 
+	this->player->anticheatService->OnJump();
 	// Not a bhop attempt if more than 100ms have passed since landing.
 	if (g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTimeServer > 0.1f)
 	{

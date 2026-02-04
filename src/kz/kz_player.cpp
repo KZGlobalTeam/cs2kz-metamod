@@ -33,7 +33,6 @@
 #include "vprof.h"
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
-
 extern CSteamGameServerAPIContext g_steamAPI;
 
 void KZPlayer::Init()
@@ -96,6 +95,7 @@ void KZPlayer::Reset()
 	MovementPlayer::Reset();
 
 	// Reset services that should not persist across player sessions.
+	this->anticheatService->Reset();
 	this->languageService->Reset();
 	this->tipService->Reset();
 	this->modeService->Reset();
@@ -175,6 +175,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulatePost();
+	this->anticheatService->OnPhysicsSimulatePost();
 	this->recordingService->OnPhysicsSimulatePost();
 	this->triggerService->OnPhysicsSimulatePost();
 	this->telemetryService->OnPhysicsSimulatePost();
@@ -202,6 +203,7 @@ void KZPlayer::OnProcessUsercmds(PlayerCommand *cmds, int numcmds)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->recordingService->OnProcessUsercmds(cmds, numcmds);
+	// this->anticheatService->OnProcessUsercmds(cmds, numcmds);
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -222,6 +224,7 @@ void KZPlayer::OnProcessUsercmdsPost(PlayerCommand *cmds, int numcmds)
 void KZPlayer::OnSetupMove(PlayerCommand *pc)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->OnSetupMove(pc);
 	this->recordingService->OnSetupMove(pc);
 	this->modeService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
