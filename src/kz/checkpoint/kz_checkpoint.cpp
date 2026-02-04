@@ -42,7 +42,7 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 	}
 	if (KeyValues3 *startPos = ssps.FindMember(currentMap.Get()))
 	{
-		if (!startPos->FindMember("origin") || !startPos->FindMember("angles") || !startPos->FindMember("ladderNormal")
+		if (!startPos || !startPos->FindMember("origin") || !startPos->FindMember("angles") || !startPos->FindMember("ladderNormal")
 			|| !startPos->FindMember("onLadder") || !startPos->FindMember("groundEnt") || !startPos->FindMember("slopeDropOffset")
 			|| !startPos->FindMember("slopeDropHeight"))
 		{

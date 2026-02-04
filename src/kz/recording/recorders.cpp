@@ -290,16 +290,40 @@ bool Recorder::WriteToFile()
 	i32 bytesWritten = 0;
 	bytesWritten += this->WriteHeader(file);
 
+	if (kz_replay_recording_debug.Get())
+	{
+		META_CONPRINTF("kz_replay_recording_debug: Wrote replay header (%d bytes)\n", bytesWritten);
+	}
 	bytesWritten += KZ::replaysystem::compression::WriteTickDataCompressed(file, this->tickData, this->subtickData);
 
+	if (kz_replay_recording_debug.Get())
+	{
+		META_CONPRINTF("kz_replay_recording_debug: Wrote tick data (%d bytes)\n", bytesWritten);
+	}
 	bytesWritten += KZ::replaysystem::compression::WriteWeaponsCompressed(file, this->weaponTable);
 
+	if (kz_replay_recording_debug.Get())
+	{
+		META_CONPRINTF("kz_replay_recording_debug: Wrote weapons (%d bytes)\n", bytesWritten);
+	}
 	bytesWritten += KZ::replaysystem::compression::WriteJumpsCompressed(file, this->jumps);
 
+	if (kz_replay_recording_debug.Get())
+	{
+		META_CONPRINTF("kz_replay_recording_debug: Wrote jumps (%d bytes)\n", bytesWritten);
+	}
 	bytesWritten += KZ::replaysystem::compression::WriteEventsCompressed(file, this->rpEvents);
 
+	if (kz_replay_recording_debug.Get())
+	{
+		META_CONPRINTF("kz_replay_recording_debug: Wrote events (%d bytes)\n", bytesWritten);
+	}
 	bytesWritten += KZ::replaysystem::compression::WriteCmdDataCompressed(file, this->cmdData, this->cmdSubtickData);
 
+	if (kz_replay_recording_debug.Get())
+	{
+		META_CONPRINTF("kz_replay_recording_debug: Wrote cmd data (%d bytes)\n", bytesWritten);
+	}
 	// Close the file before renaming
 	g_pFullFileSystem->Close(file);
 
