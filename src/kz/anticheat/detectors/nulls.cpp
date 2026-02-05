@@ -274,7 +274,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		return;
 	}
 	std::sort(framerates.begin(), framerates.end());
-	f32 medianFramerate = Max(framerates[framerates.size() / 2], 1 / this->player->anticheatService->currentMaxFps);
+	f32 medianFramerate = framerates[framerates.size() / 2];
 	if (medianFramerate == 0.0f)
 	{
 		// Fallback to engine tick interval if framerate is unavailable
