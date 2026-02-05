@@ -55,7 +55,7 @@
 	"defaultFOV"						"90"
 	
 	// Minimum FOV for players.
-	"minFOV"							"60"
+	"minFOV"							"80"
 	
 	// Maximum FOV for players.
 	"maxFOV"							"130"
