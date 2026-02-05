@@ -84,9 +84,4 @@
 		"ua"		"{grey}Будь ласка, зачекайте, перш ніж використовувати цю команду знову."
 		"de"		"{grey}Bitte warte, bevor du diesen Befehl erneut verwendest."
 	}
-	"Error Message (Invalid FOV)"
-	{
-		"#format"	"fov:s,min:d,max:d"
-		"en"		"{darkred}Invalid FOV \"{fov}\" (allowed {min} - {max})."
-	}
 }

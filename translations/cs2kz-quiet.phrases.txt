@@ -112,9 +112,4 @@
 		"sv"		"{grey}Du kommer inte att automatiskt dölja ditt vapen när du spawnar."
 		"de"		"{grey}Deine Waffe wird beim Spawnen nicht mehr automatisch versteckt."
 	}
-	"Quiet Option - FOV - Show"
-	{
-		"#format"	"fov:d"
-		"en"		"{grey}Your FOV is {purple}{fov}{grey}."
-	}
 }
