@@ -34,6 +34,6 @@ SCMD(kz_fov, SCFL_PLAYER | SCFL_PREFERENCE)
 		player->fovService->SetFOV(newFOV);
 	}
 
-	player->languageService->PrintChat(true, false, "Quiet Option - FOV - Show", player->fovService->GetFOV());
+	player->languageService->PrintChat(true, false, "FOV - Show", player->fovService->GetFOV());
 	return MRES_SUPERCEDE;
 }
