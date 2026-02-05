@@ -28,6 +28,7 @@ public:
 	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, m_hPawn)
 	SCHEMA_FIELD_POINTER(char, m_iszPlayerName)
 	SCHEMA_FIELD(PlayerConnectedState, m_iConnected)
+	SCHEMA_FIELD(uint32, m_iDesiredFOV)
 
 	void SetOrRefreshPlayerName(const char *name = nullptr)
 	{

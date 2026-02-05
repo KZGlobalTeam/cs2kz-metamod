@@ -1481,4 +1481,8 @@
 	{
 		"en"		"Reset bhop statistics for modern and legacy jumping."
 	}
+	"Command Description - kz_fov"
+	{
+		"en"		"Change your FOV."
+	}
 }
