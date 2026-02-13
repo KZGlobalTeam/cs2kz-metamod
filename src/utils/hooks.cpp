@@ -582,8 +582,8 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->timerService->OnClientDisconnect();
 	player->recordingService->OnClientDisconnect();
 	player->optionService->OnClientDisconnect();
-	player->globalService->OnClientDisconnect();
 	player->racingService->OnClientDisconnect();
+	player->globalService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -712,9 +712,9 @@ static_function bool Hook_ActivateServer()
 	RecordAnnounce::Clear();
 	KZ::misc::OnActivateServer();
 	KZDatabaseService::SetupMap();
-	KZGlobalService::OnActivateServer();
 	KZRecordingService::OnActivateServer();
 	KZRacingService::OnActivateServer();
+	KZGlobalService::OnActivateServer();
 
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
@@ -746,8 +746,8 @@ static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimula
 {
 	ProcessTimers();
 	KZRecordingService::ProcessFileWriteCompletion();
-	KZGlobalService::OnServerGamePostSimulate();
 	KZRacingService::OnServerGamePostSimulate();
+	KZGlobalService::OnServerGamePostSimulate();
 }
 
 static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg)

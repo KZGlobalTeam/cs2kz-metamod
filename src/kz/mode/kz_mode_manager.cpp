@@ -387,15 +387,15 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 	return emptyInfo;
 }
 
-KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZ::API::Mode mode)
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZ::api::Mode mode)
 {
 	switch (mode)
 	{
-		case KZ::API::Mode::Vanilla:
+		case KZ::api::Mode::Vanilla:
 		{
 			return KZ::mode::GetModeInfo("vanilla");
 		}
-		case KZ::API::Mode::Classic:
+		case KZ::api::Mode::Classic:
 		{
 			return KZ::mode::GetModeInfo("classic");
 		}

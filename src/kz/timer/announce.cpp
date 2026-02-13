@@ -1,7 +1,6 @@
 #include "announce.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
-#include "kz/global/events.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/recording/kz_recording.h"
@@ -37,8 +36,8 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	// Setup mode
 	auto mode = KZ::mode::GetModeInfo(player->modeService);
 	this->mode.name = mode.shortModeName;
-	KZ::API::Mode apiMode;
-	this->global = KZ::API::DecodeModeString(this->mode.name, apiMode);
+	KZ::api::Mode apiMode;
+	this->global = KZ::api::DecodeModeString(this->mode.name, apiMode);
 	if (!this->global)
 	{
 		if (kz_debug_announce_global.Get())
@@ -70,18 +69,18 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 
 	// clang-format off
 
-	KZGlobalService::WithCurrentMap([&](const KZ::API::Map *currentMap)
+	KZGlobalService::WithCurrentMap([&](const std::optional<KZ::api::Map> &currentMap)
 	{
-		this->global = currentMap != nullptr;
+		this->global = currentMap.has_value();
 
-		if (currentMap == nullptr)
+		if (!currentMap)
 		{
 			return;
 		}
 
-		const KZ::API::Map::Course *course = nullptr;
+		const KZ::api::Map::Course *course = nullptr;
 
-		for (const KZ::API::Map::Course &c : currentMap->courses)
+		for (const KZ::api::Map::Course &c : currentMap->courses)
 		{
 			if (KZ_STREQ(c.name.c_str(), this->course.name.c_str()))
 			{
@@ -97,7 +96,7 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 				META_CONPRINTF("[KZ::Global - %u] Course '%s' not found on global map '%s', will not submit globally.\n", uid, this->course.name.c_str(),
 							   currentMap->name.c_str());
 				META_CONPRINTF("[KZ::Global - %u] Available courses:\n", uid);
-				for (const KZ::API::Map::Course &c : currentMap->courses)
+				for (const KZ::api::Map::Course &c : currentMap->courses)
 				{
 					META_CONPRINTF(" - %s\n", c.name.c_str());
 				}
@@ -106,7 +105,7 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 		}
 		else
 		{
-			this->globalFilterID = (apiMode == KZ::API::Mode::Classic)
+			this->globalFilterID = (apiMode == KZ::api::Mode::Classic)
 				? course->filters.classic.id
 				: course->filters.vanilla.id;
 		}
@@ -154,38 +153,18 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 
 void RecordAnnounce::SubmitGlobal()
 {
-	auto callback = [uid = this->uid](KZ::API::events::NewRecordAck &ack)
-	{
-		META_CONPRINTF("[KZ::Global - %u] Record submitted under ID %d\n", uid, ack.recordId);
-
-		RecordAnnounce *rec = RecordAnnounce::Get(uid);
-		if (!rec)
-		{
-			return;
-		}
-		rec->globalResponse.received = true;
-		rec->globalResponse.recordId = ack.recordId;
-		// TODO: Remove this 0.1 when API sends the correct rating
-		rec->globalResponse.playerRating = ack.playerRating * 0.1f;
-		rec->globalResponse.overall.rank = ack.overallData.rank;
-		rec->globalResponse.overall.points = ack.overallData.points;
-		rec->globalResponse.overall.maxRank = ack.overallData.leaderboardSize;
-		rec->globalResponse.pro.rank = ack.proData.rank;
-		rec->globalResponse.pro.points = ack.proData.points;
-		rec->globalResponse.pro.maxRank = ack.proData.leaderboardSize;
-
-		// cache should not be overwritten by styled runs
-		if (rec->styles.empty())
-		{
-			rec->UpdateGlobalCache();
-		}
-	};
-
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
 
-	// Dirty hack since nested forward declaration isn't possible.
-	KZGlobalService::SubmitRecordResult submissionResult = player->globalService->SubmitRecord(
-		this->globalFilterID, this->time, this->teleports, this->mode.md5, (void *)(&this->styles), this->metadata.c_str(), callback);
+	KZGlobalService::RecordData data;
+	data.filterID = this->globalFilterID;
+	data.time = this->time;
+	data.teleports = this->teleports;
+	data.modeMD5 = this->mode.md5;
+	data.styles = this->styles;
+	data.metadata = this->metadata;
+
+	KZGlobalService::MessageCallback<KZ::api::messages::NewRecordAck> callback(RecordAnnounce::OnGlobalRecordSubmitted, this->uid);
+	KZGlobalService::SubmitRecordResult submissionResult = player->globalService->SubmitRecord(std::move(data), std::move(callback));
 
 	if (kz_debug_announce_global.Get())
 	{
@@ -444,10 +423,9 @@ void RecordAnnounce::AnnounceGlobal()
 											   this->globalResponse.overall.maxRank, diffText.c_str());
 
 			player->languageService->PrintChat(true, false, "Beat Course Info - Global Points (TP)", this->globalResponse.overall.points,
-											   nubPointsDiff, this->globalResponse.playerRating);
+											   nubPointsDiff);
 		}
-
-		if (this->globalResponse.pro.rank != 0)
+		else if (this->globalResponse.pro.rank != 0)
 		{
 			f64 proPbDiff = this->time - this->oldGPB.pro.time;
 			f64 proPointsDiff = MAX(this->globalResponse.pro.points - this->oldGPB.pro.points, 0.0f);
@@ -456,16 +434,17 @@ void RecordAnnounce::AnnounceGlobal()
 			KZTimerService::FormatDiffTime(proPbDiff, formattedDiffTimePro, sizeof(formattedDiffTimePro));
 
 			// clang-format off
-            std::string diffTextPro = hasOldPBPro
-                ? player->languageService->PrepareMessage("Personal Best Difference", proPbDiff < 0 ? "{green}" : "{red}", formattedDiffTimePro)
-                : "";
+			std::string diffTextPro = hasOldPBPro
+				? player->languageService->PrepareMessage("Personal Best Difference", proPbDiff < 0 ? "{green}" : "{red}", formattedDiffTimePro)
+				: "";
 			// clang-format on
+
 			player->languageService->PrintChat(true, false, "Beat Course Info - Global (PRO)", this->globalResponse.overall.rank,
 											   this->globalResponse.overall.maxRank, diffText.c_str(), this->globalResponse.pro.rank,
 											   this->globalResponse.pro.maxRank, diffTextPro.c_str());
 
 			player->languageService->PrintChat(true, false, "Beat Course Info - Global Points (PRO)", this->globalResponse.overall.points,
-											   nubPointsDiff, this->globalResponse.pro.points, proPointsDiff, this->globalResponse.playerRating);
+											   nubPointsDiff, this->globalResponse.pro.points, proPointsDiff);
 		}
 
 		if (beatWR)
@@ -486,5 +465,30 @@ void RecordAnnounce::AnnounceGlobal()
 				utils::PlaySoundToClient(player->GetPlayerSlot(), "kz.holyshit", player->optionService->GetPreferenceFloat("recordVolume", 1.0f));
 			}
 		}
+	}
+}
+
+void RecordAnnounce::OnGlobalRecordSubmitted(const KZ::api::messages::NewRecordAck &ack, u32 uid)
+{
+	META_CONPRINTF("[KZ::Global - %u] Record submitted under ID %s\n", uid, ack.recordId.c_str());
+
+	RecordAnnounce *rec = RecordAnnounce::Get(uid);
+	if (!rec)
+	{
+		return;
+	}
+	rec->globalResponse.received = true;
+	rec->globalResponse.recordId = ack.recordId;
+	rec->globalResponse.overall.rank = ack.overallData.rank;
+	rec->globalResponse.overall.points = ack.overallData.points;
+	rec->globalResponse.overall.maxRank = ack.overallData.leaderboardSize;
+	rec->globalResponse.pro.rank = ack.proData.rank;
+	rec->globalResponse.pro.points = ack.proData.points;
+	rec->globalResponse.pro.maxRank = ack.proData.leaderboardSize;
+
+	// cache should not be overwritten by styled runs
+	if (rec->styles.empty())
+	{
+		rec->UpdateGlobalCache();
 	}
 }

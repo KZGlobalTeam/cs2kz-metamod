@@ -92,8 +92,8 @@ void KZProfileService::RequestRating()
 		}
 		return;
 	}
-	KZ::API::Mode mode;
-	if (!KZ::API::DecodeModeString(this->player->modeService->GetModeShortName(), mode))
+	KZ::api::Mode mode;
+	if (!KZ::api::DecodeModeString(this->player->modeService->GetModeShortName(), mode))
 	{
 		if (kz_profile_debug.GetBool())
 		{
@@ -173,7 +173,7 @@ void KZProfileService::RequestRating()
 		}
 		if (kz_profile_debug.GetBool())
 		{
-			META_CONPRINTF("[KZ::Profile] Updating rating for player %s: %.2f.\n", player->GetName(), player->profileService->currentRating * 0.1f);
+			META_CONPRINTF("[KZ::Profile] Updating rating for player %s: %.2f.\n", player->GetName(), player->profileService->currentRating);
 		}
 		player->profileService->UpdateCompetitiveRank();
 		player->profileService->UpdateClantag();
@@ -193,8 +193,8 @@ bool KZProfileService::CanDisplayRank()
 	{
 		return false;
 	}
-	KZ::API::Mode mode;
-	return KZ::API::DecodeModeString(this->player->modeService->GetModeShortName(), mode);
+	KZ::api::Mode mode;
+	return KZ::api::DecodeModeString(this->player->modeService->GetModeShortName(), mode);
 }
 
 void KZProfileService::UpdateClantag()
@@ -248,7 +248,7 @@ void KZProfileService::UpdateCompetitiveRank()
 	{
 		return;
 	}
-	i32 rating = this->CanDisplayRank() ? static_cast<i32>(floor(this->currentRating * 0.1f)) : 0;
+	i32 rating = this->CanDisplayRank() ? static_cast<i32>(floor(this->currentRating)) : 0;
 	this->player->GetController()->m_iCompetitiveRankType(11);
 	this->player->GetController()->m_iCompetitiveRanking(rating);
 }

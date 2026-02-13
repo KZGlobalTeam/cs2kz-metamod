@@ -128,7 +128,7 @@ protected:
 
 	u64 localModeID;
 	CUtlString modeName;
-	KZ::API::Mode apiMode;
+	KZ::api::Mode apiMode;
 
 	u64 localStyleIDs;
 	CUtlVector<CUtlString> styleList;

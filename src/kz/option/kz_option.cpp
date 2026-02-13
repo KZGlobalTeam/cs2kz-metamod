@@ -208,10 +208,10 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 
 	// Merge loaded preferences, excluding user-set preferences
 	// Global preferences override local preferences, but not user-set ones
-	DebugPrintKV3(&this->prefKV);
-	DebugPrintKV3(&loadedPrefs);
+	// DebugPrintKV3(&this->prefKV);
+	// DebugPrintKV3(&loadedPrefs);
 	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
-	DebugPrintKV3(&this->prefKV);
+	// DebugPrintKV3(&this->prefKV);
 
 	this->dataState = GLOBAL;
 

@@ -1,7 +1,8 @@
 #include "common.h"
+#include "utils/utils.h"
 #include "api.h"
 
-bool KZ::API::DecodeModeString(std::string_view modeString, Mode &mode)
+bool KZ::api::DecodeModeString(std::string_view modeString, Mode &mode)
 {
 	if (KZ_STREQI(modeString.data(), "vanilla") || KZ_STREQI(modeString.data(), "vnl"))
 	{
@@ -19,25 +20,7 @@ bool KZ::API::DecodeModeString(std::string_view modeString, Mode &mode)
 	}
 }
 
-bool KZ::API::DecodeStyleString(std::string_view styleString, Style &style)
-{
-	if (KZ_STREQI(styleString.data(), "auto-bhop") || KZ_STREQI(styleString.data(), "abh"))
-	{
-		style = Style::AutoBhop;
-		return true;
-	}
-	else if (KZ_STREQI(styleString.data(), "legacy-jump") || KZ_STREQI(styleString.data(), "lgj"))
-	{
-		style = Style::LegacyJump;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool KZ::API::PlayerInfo::FromJson(const Json &json)
+bool KZ::api::PlayerInfo::FromJson(const Json &json)
 {
 	if (!json.Get("id", this->id))
 	{
@@ -58,7 +41,7 @@ bool KZ::API::PlayerInfo::FromJson(const Json &json)
 	return json.Get("name", this->name);
 }
 
-bool KZ::API::Player::FromJson(const Json &json)
+bool KZ::api::Player::FromJson(const Json &json)
 {
 	bool success = true;
 
@@ -84,7 +67,7 @@ bool KZ::API::Player::FromJson(const Json &json)
 	return success;
 }
 
-bool KZ::API::Map::FromJson(const Json &json)
+bool KZ::api::Map::FromJson(const Json &json)
 {
 	if (!json.Get("id", this->id))
 	{
@@ -141,19 +124,19 @@ bool KZ::API::Map::FromJson(const Json &json)
 	return true;
 }
 
-bool KZ::API::Map::DecodeStateString(std::string_view stateString, State &state)
+bool KZ::api::Map::DecodeStateString(std::string_view stateString, State &state)
 {
 	if (stateString == "invalid")
 	{
-		state = KZ::API::Map::State::Invalid;
+		state = KZ::api::Map::State::Invalid;
 	}
 	else if (stateString == "in-testing")
 	{
-		state = KZ::API::Map::State::InTesting;
+		state = KZ::api::Map::State::InTesting;
 	}
 	else if (stateString == "approved")
 	{
-		state = KZ::API::Map::State::Approved;
+		state = KZ::api::Map::State::Approved;
 	}
 	else
 	{
@@ -164,7 +147,7 @@ bool KZ::API::Map::DecodeStateString(std::string_view stateString, State &state)
 	return true;
 }
 
-bool KZ::API::Map::Course::FromJson(const Json &json)
+bool KZ::api::Map::Course::FromJson(const Json &json)
 {
 	// clang-format off
 	return json.Get("id", this->id)
@@ -175,12 +158,12 @@ bool KZ::API::Map::Course::FromJson(const Json &json)
 	// clang-format on
 }
 
-bool KZ::API::Map::Course::Filters::FromJson(const Json &json)
+bool KZ::api::Map::Course::Filters::FromJson(const Json &json)
 {
 	return json.Get("vanilla", this->vanilla) && json.Get("classic", this->classic);
 }
 
-bool KZ::API::Map::Course::Filter::FromJson(const Json &json)
+bool KZ::api::Map::Course::Filter::FromJson(const Json &json)
 {
 	if (!json.Get("id", this->id))
 	{
@@ -231,47 +214,47 @@ bool KZ::API::Map::Course::Filter::FromJson(const Json &json)
 	return true;
 }
 
-bool KZ::API::Map::Course::Filter::DecodeTierString(std::string_view tierString, Tier &tier)
+bool KZ::api::Map::Course::Filter::DecodeTierString(std::string_view tierString, Tier &tier)
 {
 	if (tierString == "very-easy")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::VeryEasy;
+		tier = KZ::api::Map::Course::Filter::Tier::VeryEasy;
 	}
 	else if (tierString == "easy")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Easy;
+		tier = KZ::api::Map::Course::Filter::Tier::Easy;
 	}
 	else if (tierString == "medium")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Medium;
+		tier = KZ::api::Map::Course::Filter::Tier::Medium;
 	}
 	else if (tierString == "advanced")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Advanced;
+		tier = KZ::api::Map::Course::Filter::Tier::Advanced;
 	}
 	else if (tierString == "hard")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Hard;
+		tier = KZ::api::Map::Course::Filter::Tier::Hard;
 	}
 	else if (tierString == "very-hard")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::VeryHard;
+		tier = KZ::api::Map::Course::Filter::Tier::VeryHard;
 	}
 	else if (tierString == "extreme")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Extreme;
+		tier = KZ::api::Map::Course::Filter::Tier::Extreme;
 	}
 	else if (tierString == "death")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Death;
+		tier = KZ::api::Map::Course::Filter::Tier::Death;
 	}
 	else if (tierString == "unfeasible")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Unfeasible;
+		tier = KZ::api::Map::Course::Filter::Tier::Unfeasible;
 	}
 	else if (tierString == "impossible")
 	{
-		tier = KZ::API::Map::Course::Filter::Tier::Impossible;
+		tier = KZ::api::Map::Course::Filter::Tier::Impossible;
 	}
 	else
 	{
@@ -282,19 +265,19 @@ bool KZ::API::Map::Course::Filter::DecodeTierString(std::string_view tierString,
 	return true;
 }
 
-bool KZ::API::Map::Course::Filter::DecodeStateString(std::string_view stateString, State &state)
+bool KZ::api::Map::Course::Filter::DecodeStateString(std::string_view stateString, State &state)
 {
 	if (stateString == "unranked")
 	{
-		state = KZ::API::Map::Course::Filter::State::Unranked;
+		state = KZ::api::Map::Course::Filter::State::Unranked;
 	}
 	else if (stateString == "pending")
 	{
-		state = KZ::API::Map::Course::Filter::State::Pending;
+		state = KZ::api::Map::Course::Filter::State::Pending;
 	}
 	else if (stateString == "ranked")
 	{
-		state = KZ::API::Map::Course::Filter::State::Ranked;
+		state = KZ::api::Map::Course::Filter::State::Ranked;
 	}
 	else
 	{
@@ -305,7 +288,7 @@ bool KZ::API::Map::Course::Filter::DecodeStateString(std::string_view stateStrin
 	return true;
 }
 
-bool KZ::API::Record::FromJson(const Json &json)
+bool KZ::api::Record::FromJson(const Json &json)
 {
 	if (!json.Get("id", this->id))
 	{
@@ -376,12 +359,12 @@ bool KZ::API::Record::FromJson(const Json &json)
 	return true;
 }
 
-bool KZ::API::Record::MapInfo::FromJson(const Json &json)
+bool KZ::api::Record::MapInfo::FromJson(const Json &json)
 {
 	return json.Get("id", this->id) && json.Get("name", this->name);
 }
 
-bool KZ::API::Record::CourseInfo::FromJson(const Json &json)
+bool KZ::api::Record::CourseInfo::FromJson(const Json &json)
 {
 	return json.Get("id", this->id) && json.Get("name", this->name);
 }
