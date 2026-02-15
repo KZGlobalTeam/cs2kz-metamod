@@ -118,6 +118,7 @@
 		"chi"		"{darkred}你已达到传送限制,无法继续传送."
 		"pl"		"{darkred}Nie możesz już się teleportować, ponieważ wykorzystałeś już cały limit."
 		"ua"		"{darkred}Ви не можете телепортуватися, оскільки ви досягли свого ліміту телепортів."
+		"es"		
 		"de"		"{darkred}Du kannst nicht teleportieren, weil du dein Teleportationslimit erreicht hast."
 	}
 	"Can't Prev CP (No Checkpoints)"
@@ -271,7 +272,7 @@
 		"ua"		"{darkred}Ваші чекпоінти були стерті мапою."
 		"tr"		"{darkred}Kontrol noktaları harita tarafından temizlendi."
 		"ko"		"{darkred}맵에서 체크포인트를 초기화했습니다."
-		"es"		"{darkred}El mapa ha limpiado tus checkpoints."
+		"es"		"{darkred}El mapa ha eliminado tus checkpoints."
 		"lv"		"{darkred}Karte ir notīrījusi tavus kontrolpunktus."
 		"de"		"{darkred}Die Map hat deine Checkpoints zurückgesetzt."
 	}
@@ -282,6 +283,7 @@
 		"pl"		"{grey}Aktywowałeś dźwięk checkpointu."
 		"sv"		"{grey}Du har aktiverat checkpointljuden."
 		"ua"		"{grey}Ви увімкнули звук чекпоінту."
+		"es"		"{grey}Has activado el sonido de checkpoint."
 		"de"		"{grey}Du hast Checkpoint-Sounds aktiviert."
 	}
 	"Checkpoint Options - Checkpoint Sound - Disable"
@@ -291,6 +293,7 @@
 		"pl"		"{grey}Wyłączyłeś dźwięk checkpointu."
 		"sv"		"{grey}Du har inaktiverat checkpointljuden."
 		"ua"		"{grey}Ви вимкнули звук чекпоінту."
+		"es"		"{grey}Has desactivado el sonido de checkpoint."
 		"de"		"{grey}Du hast Checkpoint-Sounds deaktiviert."
 	}
 	"Checkpoint Options - Teleport Sound - Enable"
@@ -300,6 +303,7 @@
 		"pl"		"{grey}Aktywowałeś dźwięk teleportu."
 		"sv"		"{grey}Du har aktiverat teleportljuden."
 		"ua"		"{grey}Ви увімкнули звук телепорту."
+		"es"		"{grey}Has activado el sonido de teletransporte."
 		"de"		"{grey}Du hast Teleport-Sounds aktiviert."
 	}
 	"Checkpoint Options - Teleport Sound - Disable"
@@ -309,6 +313,7 @@
 		"pl"		"{grey}Wyłączyłeś dźwięk teleportu."
 		"sv"		"{grey}Du har inaktiverat teleportljuden."
 		"ua"		"{grey}Ви вимкнули звук телепорту."
+		"es"		"{grey}Has desactivado el sonido de teletransporte."
 		"de"		"{grey}Du hast Teleport-Sounds deaktiviert."
 	}
 	"Checkpoint Options - Checkpoint Message - Enable"
@@ -317,6 +322,7 @@
 		"chi"		"{grey}你开启了传送消息."
 		"pl"		"{grey}Aktywowałeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви увімкнули повідомлення про зроблений чекпоінт."
+		"es"		"{grey}Has activado los mensajes de checkpoint."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten aktiviert."
 	}
 	"Checkpoint Options - Checkpoint Message - Disable"
@@ -325,6 +331,7 @@
 		"chi"		"{grey}你禁用了传送消息."
 		"pl"		"{grey}Wyłączyłeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви вимкнули повідомлення про зроблений чекпоінт."
+		"es"		"{grey}Has desactivado los mensajes de checkpoint."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten deaktiviert."
 	}
 }

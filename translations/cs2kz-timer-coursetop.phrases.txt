@@ -1,3 +1,4 @@
+SPANISH TODO
 "Phrases"
 {
 	"Course Top - Table Name (Server Overall)"
@@ -187,7 +188,7 @@
 		"tr"		"{grey}Kullanım: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Detaylar için konsola bak!!"
 		"ua"		"{grey}Використання: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Перевірте консоль щодо деталей!"
 		"it"		"{grey}Utilizzo: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Controlla la console per ulteriori dettagli!"
-		"es"		"{grey}Usa: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. ¡Mira la consola para ver más detalles!"
+		"es"		"{grey}Uso: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. ¡Mira la consola para ver más detalles!"
 		"de"		"{grey}Verwendung: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Überprüfen Sie die Konsole auf Details!"
 		"pl"		"{grey}Użycie: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Sprawdź konsolę, aby uzyskać więcej informacji!"
 		"ko"		"{grey}사용법: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
@@ -202,7 +203,7 @@
 		"tr"		"Kullanım: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nÖrnek: \"kz_ctop map=kz_map c=Main o=10 l=20\". Ctop'un başına 'g' veya 's' ekleyerek sunucu ve global olarak belirtebilirsin.(örn. kz_gctop)."
 		"ua"		"Використання: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nНаприклад: \"kz_ctop map=kz_map c=Main o=10 l=20\". Додайте 'g' або 's' напочатку перед суфіксом 'top' щоб отримати лише світову(g)/сервера(s) таблицю лідерів курсу (напр. kz_gctop)."
 		"it"		"Utilizzo: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nEsempio: \"kz_ctop map=kz_map c=Main o=10 l=20\". Aggiungi 'g' o 's' all'inizio prima di 'top' per specificare globale/server (es. kz_gctop)."
-		"es"		"Usa: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nEjemplo: \"kz_ctop map=kz_map c=Main o=10 l=20\". Añada 'g' o 's' al principio antes del sufijo 'top' para especificar solo global/servidor (Por ej. kz_gctop)."
+		"es"		"Uso: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nEjemplo: \"kz_ctop map=kz_map c=Main o=10 l=20\". Añada 'g' o 's' al principio antes del sufijo 'top' para especificar solo global/servidor (Por ej. kz_gctop)."
 		"de"		"Verwendung: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nBeispiel: \"kz_ctop map=kz_map c=Main o=10 l=20\". Fügen Sie 'g' oder 's' am Anfang vor dem 'top'-Suffix hinzu, um nur global/server anzugeben (z.B. kz_gctop)."
 		"pl"		"Użycie: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nPrzykład: \"kz_ctop map=kz_map c=Main o=10 l=20\". Dodaj 'g' lub 's' na początku przed sufiksem 'top', aby określić tylko globalny/serwerowy (np. kz_gctop)."
 		"ko"		"사용법: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\n예시: \"kz_ctop map=kz_map c=Main o=10 l=20\". 'g' 또는 's'를 'top' 접미사 앞에 추가하여 글로벌/서버만 지정할 수 있습니다 (예: kz_gctop)."

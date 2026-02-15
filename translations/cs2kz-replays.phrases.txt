@@ -1,3 +1,4 @@
+SPANISH TODO
 "Phrases"
 {
 	"Replay - No Replay Playing"
