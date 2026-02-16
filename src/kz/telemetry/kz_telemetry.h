@@ -21,30 +21,15 @@ private:
 	struct ModernBhopStats
 	{
 		u32 numTruePerfs {};
-		u32 numModernPerfs {};
+		u32 numModernPerfsEarly {};
+		u32 numModernPerfsLate {};
 		u32 numNonPerfs {};
 
 		u32 GetTotalJumps() const
 		{
-			return numTruePerfs + numModernPerfs + numNonPerfs;
+			return numTruePerfs + numModernPerfsEarly + numModernPerfsLate + numNonPerfs;
 		}
 
-		f32 GetPerfRatio(bool modern) const
-		{
-			u32 totalJumps = GetTotalJumps();
-			if (totalJumps == 0)
-			{
-				return 0.0f;
-			}
-			if (modern)
-			{
-				return (f32)(numModernPerfs) / (f32)totalJumps;
-			}
-			else
-			{
-				return (f32)(numTruePerfs) / (f32)totalJumps;
-			}
-		}
 	} modernBhopStats;
 
 	struct LegacyBhopStats
@@ -118,4 +103,6 @@ public:
 	{
 		this->legacyBhopStats = {};
 	}
+
+	bool mightBeModernPerf {};
 };

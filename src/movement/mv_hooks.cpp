@@ -253,9 +253,9 @@ void FASTCALL movement::Detour_CheckJumpButtonLegacy(CCSPlayerLegacyJump *legacy
 #ifdef WATER_FIX
 	if (player->enableWaterFix && ms->pawn->m_MoveType() == MOVETYPE_WALK && ms->pawn->m_flWaterLevel() > 0.5f && ms->pawn->m_fFlags & FL_ONGROUND)
 	{
-		if (ms->m_nButtons()->m_pButtonStates[0] & IN_JUMP)
+		if (ms->m_nButtons().m_pButtonStates[0] & IN_JUMP)
 		{
-			ms->m_nButtons()->m_pButtonStates[1] |= IN_JUMP;
+			ms->m_nButtons().m_pButtonStates[1] |= IN_JUMP;
 		}
 	}
 #endif

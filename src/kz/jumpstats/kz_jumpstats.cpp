@@ -793,7 +793,7 @@ void KZJumpstatsService::OnAirAccelerate()
 		return;
 	}
 	AACall call;
-	this->player->GetMoveServices()->m_nButtons()->GetButtons(call.buttons);
+	this->player->GetMoveServices()->m_nButtons().GetButtons(call.buttons);
 	this->player->GetVelocity(&call.velocityPre);
 
 	// moveDataPost is still the movedata from last tick.

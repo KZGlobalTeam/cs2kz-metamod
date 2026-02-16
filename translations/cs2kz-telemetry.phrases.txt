@@ -2,10 +2,9 @@
 {
 	"Telemetry - Modern Bhop Stats"
 	{
-		// Jumps: 200 | 25% True (50) | 10% Modern (20)
-		"#format"	"numJumps:d,truePerfPercent:.0f,truePerfs:d,modernPerfPercent:.0f,modernPerfs:d"
-		"en"		"{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
-		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}Дійсні ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Сучасні ({lime}{modernPerfs}{grey})"
+		// Jumps: 200 | 25% True (50) | 10% Early (20) | 5% Late (10)
+		"#format"	"numJumps:d,truePerfPercent:.0f,truePerfs:d,modernPerfEarlyPercent:.0f,modernPerfsEarly:d,modernPerfLatePercent:.0f,modernPerfsLate:d"
+		"en"		"{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
 	}
 	"Telemetry - Legacy Bhop Stats"
 	{

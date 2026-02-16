@@ -812,7 +812,7 @@ void KZPlayer::OnStopTouchGround()
 		f32 windowMax = landingTick + this->GetCvarValueFromModeStyles("sv_bhop_time_window")->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
 		f32 startTime = this->currentMoveData->m_flSubtickStartFraction + this->currentMoveData->m_nTickCount;
 
-		this->inPerf = (startTime >= windowMin && startTime <= windowMax);
+		this->inPerf = (startTime >= windowMin && startTime <= windowMax) && this->jumped;
 	}
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();

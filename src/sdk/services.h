@@ -75,7 +75,7 @@ class CPlayer_MovementServices : public CPlayerPawnComponent
 
 public:
 	DECLARE_SCHEMA_CLASS_ENTITY(CPlayer_MovementServices);
-	SCHEMA_FIELD_POINTER(CInButtonState, m_nButtons)
+	SCHEMA_FIELD(CInButtonState, m_nButtons)
 	SCHEMA_FIELD_POINTER(float, m_arrForceSubtickMoveWhen)
 
 	void SetForcedSubtickMove(i32 index, f32 when, bool network = true)

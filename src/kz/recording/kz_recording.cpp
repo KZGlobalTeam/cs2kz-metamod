@@ -112,9 +112,9 @@ void KZRecordingService::RecordTickData_PhysicsSimulate()
 	this->player->GetVelocity(&this->currentTickData.pre.velocity);
 	this->player->GetAngles(&this->currentTickData.pre.angles);
 	auto movementServices = this->player->GetMoveServices();
-	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
-	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
-	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[0]);
+	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[1]);
+	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[2]);
 	this->currentTickData.pre.jumpPressedTime = movementServices->m_LegacyJump().m_flJumpPressedTime;
 	this->currentTickData.pre.duckSpeed = movementServices->m_flDuckSpeed;
 	this->currentTickData.pre.duckAmount = movementServices->m_flDuckAmount;
@@ -164,9 +164,9 @@ void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 	this->player->GetVelocity(&this->currentTickData.post.velocity);
 	this->player->GetAngles(&this->currentTickData.post.angles);
 	auto movementServices = this->player->GetMoveServices();
-	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
-	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
-	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[0]);
+	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[1]);
+	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[2]);
 	this->currentTickData.post.jumpPressedTime = movementServices->m_LegacyJump().m_flJumpPressedTime;
 	this->currentTickData.post.duckSpeed = movementServices->m_flDuckSpeed;
 	this->currentTickData.post.duckAmount = movementServices->m_flDuckAmount;
