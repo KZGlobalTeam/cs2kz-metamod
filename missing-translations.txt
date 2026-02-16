@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 560
-Phrases with missing translations: 480
-Total missing translation entries: 2472
+Total phrases: 564
+Phrases with missing translations: 484
+Total missing translation entries: 2520
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  92.7% (519/560)
-  de (german)          [██████████████████░░]  92.7% (519/560)
-  en (english)         [████████████████████] 100.0% (560/560)
-  es (spanish)         [██████████░░░░░░░░░░]  51.4% (288/560)
-  fi (finnish)         [████████░░░░░░░░░░░░]  42.5% (238/560)
-  it (italian)         [████████░░░░░░░░░░░░]  41.1% (230/560)
-  ko (koreana)         [██████████░░░░░░░░░░]  52.0% (291/560)
-  lv (latvian)         [███████████░░░░░░░░░]  59.5% (333/560)
-  pl (polish)          [██████████████████░░]  93.0% (521/560)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.4% (92/560)
-  sv (swedish)         [██████████████░░░░░░]  70.9% (397/560)
-  tr (turkish)         [█████████░░░░░░░░░░░]  47.7% (267/560)
-  ua (ukrainian)       [███████████████████░]  98.8% (553/560)
+  chi (schinese)       [██████████████████░░]  92.0% (519/564)
+  de (german)          [██████████████████░░]  92.0% (519/564)
+  en (english)         [████████████████████] 100.0% (564/564)
+  es (spanish)         [██████████░░░░░░░░░░]  51.1% (288/564)
+  fi (finnish)         [████████░░░░░░░░░░░░]  42.2% (238/564)
+  it (italian)         [████████░░░░░░░░░░░░]  40.8% (230/564)
+  ko (koreana)         [██████████░░░░░░░░░░]  51.6% (291/564)
+  lv (latvian)         [███████████░░░░░░░░░]  59.0% (333/564)
+  pl (polish)          [██████████████████░░]  92.4% (521/564)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.3% (92/564)
+  sv (swedish)         [██████████████░░░░░░]  70.4% (397/564)
+  tr (turkish)         [█████████░░░░░░░░░░░]  47.3% (267/564)
+  ua (ukrainian)       [███████████████████░]  98.0% (553/564)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -366,6 +366,8 @@ cs2kz-commands.phrases.txt
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
   Line 1480: "Command Description - kz_resetperfstats"
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1484: "Command Description - kz_fov"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -438,6 +440,13 @@ cs2kz-course.phrases.txt
     Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
   Line 176: "Tier Info"
     Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+
+cs2kz-fov.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "FOV - Show"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 8: "Error Message (Invalid FOV)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-hud.phrases.txt
 ----------------------------------------------------------------------
@@ -1116,6 +1125,8 @@ cs2kz-tips-visual.phrases.txt
     Missing (1): ru
   Line 48: "Tip - kz_hideweapon"
     Missing (1): ru
+  Line 63: "Tip - kz_fov"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 ======================================================================
 DETAILED MISSING MENU TRANSLATIONS

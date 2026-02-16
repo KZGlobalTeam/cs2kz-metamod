@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 560,
-    "phrases_with_missing": 480,
-    "total_missing_entries": 2472,
+    "total_phrases": 564,
+    "phrases_with_missing": 484,
+    "total_missing_entries": 2520,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 92.68,
+      "coverage_percent": 92.02,
       "translated": 519,
-      "missing": 41,
+      "missing": 45,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -110,6 +110,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection (Short)",
           "line": 47,
@@ -260,6 +266,18 @@
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
+        },
+        {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
           "line": 943,
@@ -306,6 +324,12 @@
           "phrase": "Started Run on Non Ranked Course",
           "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -319,9 +343,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 92.68,
+      "coverage_percent": 92.02,
       "translated": 519,
-      "missing": 41,
+      "missing": 45,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -372,6 +396,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection (Short)",
           "line": 47,
@@ -522,6 +552,18 @@
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
+        },
+        {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
           "line": 943,
@@ -568,6 +610,12 @@
           "phrase": "Started Run on Non Ranked Course",
           "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -579,7 +627,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 560,
+      "translated": 564,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -590,9 +638,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 51.43,
+      "coverage_percent": 51.06,
       "translated": 288,
-      "missing": 272,
+      "missing": 276,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -1081,6 +1129,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
           "line": 77,
@@ -1235,6 +1289,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -2225,6 +2291,12 @@
           "phrase": "Tip - kz_rphidelegs",
           "line": 92,
           "english_text": "{grey}Type {default}!rphidelegs {grey}to toggle the visibility of the replay bot's first person legs."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -2238,9 +2310,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 42.5,
+      "coverage_percent": 42.2,
       "translated": 238,
-      "missing": 322,
+      "missing": 326,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -2807,6 +2879,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
           "line": 77,
@@ -2961,6 +3039,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -4173,6 +4263,12 @@
           "phrase": "Tip - kz_comparelevel",
           "line": 3,
           "english_text": "{grey}You can select different benchmarks to compare your run against by using {default}/comparelevel{grey}."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -4186,9 +4282,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 41.07,
+      "coverage_percent": 40.78,
       "translated": 230,
-      "missing": 330,
+      "missing": 334,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -4731,6 +4827,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Steam Authentication Warning",
           "line": 3,
@@ -4927,6 +5029,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -6169,6 +6283,12 @@
           "phrase": "Tip - kz_comparelevel",
           "line": 3,
           "english_text": "{grey}You can select different benchmarks to compare your run against by using {default}/comparelevel{grey}."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -6182,9 +6302,9 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 51.96,
+      "coverage_percent": 51.6,
       "translated": 291,
-      "missing": 269,
+      "missing": 273,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -6649,6 +6769,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
           "line": 77,
@@ -6803,6 +6929,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -7799,6 +7937,12 @@
           "phrase": "Tip - kz_rphidelegs",
           "line": 92,
           "english_text": "{grey}Type {default}!rphidelegs {grey}to toggle the visibility of the replay bot's first person legs."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -7809,9 +7953,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 59.46,
+      "coverage_percent": 59.04,
       "translated": 333,
-      "missing": 227,
+      "missing": 231,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -8126,6 +8270,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "Command Cooldown",
           "line": 77,
@@ -8280,6 +8430,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -9174,6 +9336,12 @@
           "phrase": "Tip - kz_rphidelegs",
           "line": 92,
           "english_text": "{grey}Type {default}!rphidelegs {grey}to toggle the visibility of the replay bot's first person legs."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -9184,9 +9352,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 93.04,
+      "coverage_percent": 92.38,
       "translated": 521,
-      "missing": 39,
+      "missing": 43,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -9223,6 +9391,12 @@
           "phrase": "Command Description - kz_resetperfstats",
           "line": 1480,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-course.phrases.txt",
@@ -9375,6 +9549,18 @@
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
         },
         {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
+        },
+        {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
           "line": 943,
@@ -9421,6 +9607,12 @@
           "phrase": "Started Run on Non Ranked Course",
           "line": 856,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -9431,9 +9623,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 16.43,
+      "coverage_percent": 16.31,
       "translated": 92,
-      "missing": 468,
+      "missing": 472,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -10282,6 +10474,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Steam Authentication Warning",
           "line": 3,
@@ -10472,6 +10670,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
@@ -12242,6 +12452,12 @@
           "phrase": "Tip - kz_hideweapon",
           "line": 48,
           "english_text": "{grey}Type {default}/hideweapon {grey}to toggle your weapon visibility."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -12255,9 +12471,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 70.89,
+      "coverage_percent": 70.39,
       "translated": 397,
-      "missing": 163,
+      "missing": 167,
       "missing_phrases": [
         {
           "file": "cs2kz-api.phrases.txt",
@@ -12410,6 +12626,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-course.phrases.txt",
           "phrase": "Map Info - No API Connection (Short)",
           "line": 47,
@@ -12558,6 +12780,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -13236,6 +13470,12 @@
           "phrase": "Tip - kz_rphidelegs",
           "line": 92,
           "english_text": "{grey}Type {default}!rphidelegs {grey}to toggle the visibility of the replay bot's first person legs."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -13246,9 +13486,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 47.68,
+      "coverage_percent": 47.34,
       "translated": 267,
-      "missing": 293,
+      "missing": 297,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -13767,6 +14007,12 @@
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
           "file": "cs2kz-common.phrases.txt",
           "phrase": "No Prime Warning",
           "line": 17,
@@ -13927,6 +14173,18 @@
           "phrase": "Tier Info",
           "line": 176,
           "english_text": "{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -15007,6 +15265,12 @@
           "phrase": "Tip - kz_rphidelegs",
           "line": 92,
           "english_text": "{grey}Type {default}!rphidelegs {grey}to toggle the visibility of the replay bot's first person legs."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -15020,9 +15284,9 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 98.75,
+      "coverage_percent": 98.05,
       "translated": 553,
-      "missing": 7,
+      "missing": 11,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -15041,6 +15305,24 @@
           "phrase": "Command Description - kz_resetperfstats",
           "line": 1480,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}."
+        },
+        {
+          "file": "cs2kz-fov.phrases.txt",
+          "phrase": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
@@ -15065,6 +15347,12 @@
           "phrase": "Telemetry - Reset Bhop Stats",
           "line": 15,
           "english_text": "{grey}Bunny hop statistics have been reset."
+        },
+        {
+          "file": "cs2kz-tips-visual.phrases.txt",
+          "phrase": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
         }
       ],
       "menu": {
@@ -15624,7 +15912,7 @@
       ]
     },
     "cs2kz-commands.phrases.txt": {
-      "phrases_with_missing": 117,
+      "phrases_with_missing": 118,
       "phrases": [
         {
           "name": "Command Help Response (Chat)",
@@ -18199,6 +18487,28 @@
             "tr",
             "ua"
           ]
+        },
+        {
+          "name": "Command Description - kz_fov",
+          "line": 1484,
+          "english_text": "Change your FOV.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
         }
       ]
     },
@@ -18934,6 +19244,55 @@
             "ru",
             "sv",
             "tr"
+          ]
+        }
+      ]
+    },
+    "cs2kz-fov.phrases.txt": {
+      "phrases_with_missing": 2,
+      "phrases": [
+        {
+          "name": "FOV - Show",
+          "line": 3,
+          "english_text": "{grey}Your FOV is {purple}{fov}{grey}.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Error Message (Invalid FOV)",
+          "line": 8,
+          "english_text": "{darkred}Invalid FOV \\\"{fov}\\\" (allowed {min} - {max}).",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
@@ -25688,7 +26047,7 @@
       ]
     },
     "cs2kz-tips-visual.phrases.txt": {
-      "phrases_with_missing": 4,
+      "phrases_with_missing": 5,
       "phrases": [
         {
           "name": "Tip - kz_panel",
@@ -25776,6 +26135,28 @@
           ],
           "missing_languages": [
             "ru"
+          ]
+        },
+        {
+          "name": "Tip - kz_fov",
+          "line": 63,
+          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]

@@ -3,7 +3,7 @@ Base directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 Translations directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/translations
 Menu directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/menu
 
-Checking 31 translation files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/translations'...
+Checking 32 translation files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/translations'...
 
 Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'lv', 'pl', 'ru', 'sv', 'tr', 'ua']
 
