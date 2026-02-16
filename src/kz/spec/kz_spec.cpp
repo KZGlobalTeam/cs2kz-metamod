@@ -2,6 +2,7 @@
 #include "../timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "utils/simplecmds.h"
+#include "utils/ctimer.h"
 
 static_global class KZTimerServiceEventListener_Spec : public KZTimerServiceEventListener
 {
@@ -130,6 +131,16 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	return true;
 }
 
+static_function f64 TeleportObserver(CPlayerUserId userID, Vector origin, QAngle angles)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+	if (player && player->GetObserverPawn())
+	{
+		player->GetObserverPawn()->Teleport(&origin, &angles, nullptr);
+	}
+	return 0.0f;
+};
+
 bool KZSpecService::SpectatePlayer(KZPlayer *target)
 {
 	if (!target || !this->CanSpectate())
@@ -149,13 +160,24 @@ bool KZSpecService::SpectatePlayer(KZPlayer *target)
 		player->languageService->PrintChat(true, false, "Spectate Failure (Generic)");
 		return false;
 	}
-	// This needs to be set if the player spectates themself, so that the camera position is correct.
-	controller->m_DesiredObserverMode(OBS_MODE_IN_EYE);
-	controller->m_hDesiredObserverTarget(target->GetPlayerPawn());
 
 	obsService->m_iObserverMode(OBS_MODE_IN_EYE);
 	obsService->m_iObserverLastMode(OBS_MODE_NONE);
 	obsService->m_hObserverTarget(target->GetPlayerPawn());
+
+	if (target == this->player)
+	{
+		controller->m_DesiredObserverMode(OBS_MODE_ROAMING);
+		obsService->m_iObserverMode(OBS_MODE_ROAMING);
+		controller->m_hDesiredObserverTarget(target->GetPlayerPawn());
+		obsService->m_hObserverTarget(target->GetPlayerPawn());
+		Vector origin;
+		QAngle angles;
+		this->player->GetEyeOrigin(&origin);
+		this->player->GetAngles(&angles);
+		StartTimer<CPlayerUserId, Vector, QAngle>(TeleportObserver, player->GetClient()->GetUserID(), std::move(origin), std::move(angles), 0.0f,
+												  false, false);
+	}
 	return true;
 }
 
