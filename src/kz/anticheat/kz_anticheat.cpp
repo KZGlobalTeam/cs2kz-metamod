@@ -90,16 +90,19 @@ void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
 	{
 		META_CONPRINTF("%s\n", cmd->DebugString().c_str());
 	}
+	this->currentCmdNum = cmd->cmdNum;
 	this->CheckSubtickAbuse(cmd);
 	// this->RecordNumJumpForCommand(cmd);
 	this->CreateInputEvents(cmd);
-	this->currentCmdNum = cmd->cmdNum;
+	this->ParseCommandForJump(cmd);
 }
 
 void KZAnticheatService::OnPhysicsSimulatePost()
 {
 	this->CheckNulls();
 	this->CheckSuspiciousSubtickCommands();
+	this->CleanupOldInputEvents();
+	this->CheckLandingEvents();
 }
 
 void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)

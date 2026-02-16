@@ -70,7 +70,7 @@ static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot,
 
 void KZAnticheatService::InitSvCheatsWatcher()
 {
-	// g_pCVar->InstallGlobalChangeCallback(OnCvarChanged);
+	g_pCVar->InstallGlobalChangeCallback(OnCvarChanged);
 	assert(sv_cheats.IsValidRef() && sv_cheats.IsConVarDataAvailable());
 	if (!sv_cheats.Get())
 	{
@@ -82,7 +82,7 @@ void KZAnticheatService::InitSvCheatsWatcher()
 
 void KZAnticheatService::CleanupSvCheatsWatcher()
 {
-	// g_pCVar->RemoveGlobalChangeCallback(OnCvarChanged);
+	g_pCVar->RemoveGlobalChangeCallback(OnCvarChanged);
 }
 
 f64 KZAnticheatService::KickPlayerInvalidSettings(CPlayerUserId userID)
@@ -102,7 +102,6 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 		META_CONPRINTF("Warning: Could not retrieve cvar value for player slot %d cvar %s, status %d\n", nSlot.Get(), pszCvarName, (int)eStatus);
 		return;
 	}
-	META_CONPRINTF("Retrieved cvar value for player slot %d cvar %s: %s\n", nSlot.Get(), pszCvarName, pszCvarValue);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(nSlot);
 	if (!player || !player->IsInGame() || !player->anticheatService->ShouldCheckClientCvars())
 	{

@@ -1,5 +1,6 @@
 #include "kz_profile.h"
 #include "utils/http.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/option/kz_option.h"
@@ -190,6 +191,11 @@ bool KZProfileService::CanDisplayRank()
 	}
 	// No rating if styles are enabled.
 	if (this->player->styleServices.Count() > 0)
+	{
+		return false;
+	}
+	// No rating if player is banned.
+	if (this->player->anticheatService->isBanned)
 	{
 		return false;
 	}

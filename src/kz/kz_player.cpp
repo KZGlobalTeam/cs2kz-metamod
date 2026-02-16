@@ -252,6 +252,7 @@ void KZPlayer::OnProcessMovement()
 	KZ::replaysystem::OnProcessMovement(this);
 
 	this->DisableTurnbinds();
+	this->anticheatService->OnProcessMovement();
 	this->triggerService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -267,6 +268,7 @@ void KZPlayer::OnProcessMovementPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 
+	this->anticheatService->OnProcessMovementPost();
 	this->jumpstatsService->UpdateJump();
 	this->modeService->OnProcessMovementPost();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -590,6 +592,7 @@ void KZPlayer::OnJumpModernPost()
 void KZPlayer::OnAirMove()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->OnAirMove();
 	this->modeService->OnAirMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -793,6 +796,7 @@ void KZPlayer::OnPostThinkPost()
 void KZPlayer::OnStartTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->CreateLandEvent();
 	this->jumpstatsService->EndJump();
 	this->timerService->OnStartTouchGround();
 	this->modeService->OnStartTouchGround();
@@ -828,6 +832,7 @@ void KZPlayer::OnStopTouchGround()
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->OnChangeMoveType(oldMoveType);
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 	this->timerService->OnChangeMoveType(oldMoveType);
 	this->modeService->OnChangeMoveType(oldMoveType);

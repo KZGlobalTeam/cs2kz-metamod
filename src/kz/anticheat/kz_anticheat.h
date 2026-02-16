@@ -16,7 +16,7 @@ public:
 		{
 			Other = 0,
 			StrafeHack = 1,   // Strafe hacking
-			BhopHack = 2,     // Unusual perf rates
+			BhopHack = 2,     // Bhop hack/macro
 			Hyperscroll = 3,  // Scrolling too much
 			InvalidCvar = 4,  // Invalid client cvar values
 			InvalidInput = 5, // Impossible input values
@@ -175,15 +175,41 @@ public:
 
 	// ===========[ Hyperscroll ]===========
 
+	std::deque<f32> recentJumps;
+
+	struct LandingEvent
+	{
+		i32 cmdNum;
+		f32 landingTime;
+		bool pendingPerf = true;
+		bool hasPerfectBhop;
+		u32 numJumpBefore;
+		u32 numJumpAfter;
+
+		std::string ToString() const
+		{
+			return tfm::format("(%d%s%d)", numJumpBefore, hasPerfectBhop ? "*" : " ", numJumpAfter);
+		}
+	};
+
+	void PrintBhopCheck();
+	f32 lastValidMoveTypeTime = -1.0f;
+	std::deque<LandingEvent> recentLandingEvents;
 	// Record the number of jump attempts in a command.
 	void RecordNumJumpForCommand(PlayerCommand *cmd);
-
-	// Create a jump event for hyperscroll detection.
-	void CreateJumpEvent(PlayerCommand *cmd);
+	void ParseCommandForJump(PlayerCommand *cmd);
 
 	void CreateLandEvent();
 	// Update existing events.
-	void UpdateExistingEvents();
+	void CheckLandingEvents();
+
+	void OnChangeMoveType(MoveType_t oldMoveType);
+
+	f32 currentAirTime = 0.0f;
+	bool airMovedThisFrame = false;
+	void OnProcessMovement();
+	void OnAirMove();
+	void OnProcessMovementPost();
 
 	// ===========[ Subtick abuses ]===========
 
@@ -196,7 +222,7 @@ public:
 	void CheckSuspiciousSubtickCommands();
 
 	// Generic Events
-	void OnJump() {}
+	void OnJump();
 
 	void OnSetupMove(PlayerCommand *cmd);
 	void OnPhysicsSimulatePost();

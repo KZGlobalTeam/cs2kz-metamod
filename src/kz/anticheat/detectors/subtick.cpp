@@ -5,6 +5,16 @@
 #include "sdk/usercmd.h"
 #include "kz/telemetry/kz_telemetry.h"
 
+// Tunable thresholds for subtick command checks
+#define SUBTICK_INITIAL_IGNORE_TIME        10.0f
+#define SUBTICK_INVALID_COMMAND_WINDOW     5.0f
+#define SUBTICK_INVALID_COMMAND_THRESHOLD  5
+#define SUBTICK_SUSPICIOUS_MOVES_WINDOW    0.5f
+#define SUBTICK_SUSPICIOUS_MOVES_THRESHOLD 16
+#define SUBTICK_SUBTICK_INPUTS_WINDOW      20.0f
+#define SUBTICK_SUBTICK_INPUTS_THRESHOLD   30
+#define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
+
 // Every command should have all button presses/releases accounted for in subtick moves.
 // Only cheats that modify buttons without updating subtick moves would fail this.
 static_global bool VerifyCommand(const PlayerCommand &cmd)
@@ -137,50 +147,50 @@ void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)
 
 void KZAnticheatService::CheckSuspiciousSubtickCommands()
 {
-	if (this->player->telemetryService->GetTimeInServer() < 10.0f)
+	if (this->player->telemetryService->GetTimeInServer() < SUBTICK_INITIAL_IGNORE_TIME)
 	{
 		// Don't check for the first 10 seconds to avoid false positives on connect... just in case.
 		return;
 	}
 	f32 currentTime = g_pKZUtils->GetServerGlobals()->curtime;
 
-	// Clear out invalid commands within 5 seconds
-	while (!this->invalidCommandTimes.empty() && currentTime - this->invalidCommandTimes.front() > 5.0f)
+	// Clear out invalid commands within configured window
+	while (!this->invalidCommandTimes.empty() && currentTime - this->invalidCommandTimes.front() > SUBTICK_INVALID_COMMAND_WINDOW)
 	{
 		this->invalidCommandTimes.pop_front();
 	}
-	if (this->invalidCommandTimes.size() >= 5)
+	if (this->invalidCommandTimes.size() >= SUBTICK_INVALID_COMMAND_THRESHOLD)
 	{
 		this->MarkInfraction(Infraction::Type::InvalidInput, "Excessive invalid commands detected");
 		this->invalidCommandTimes.clear();
 	}
 
-	// Clear out old entries beyond 500ms
-	while (!this->suspiciousSubtickMoveTimes.empty() && currentTime - this->suspiciousSubtickMoveTimes.front() > 0.5f)
+	// Clear out old entries beyond configured window
+	while (!this->suspiciousSubtickMoveTimes.empty() && currentTime - this->suspiciousSubtickMoveTimes.front() > SUBTICK_SUSPICIOUS_MOVES_WINDOW)
 	{
 		this->suspiciousSubtickMoveTimes.pop_front();
 	}
 	// If there are too many within the timeframe, ban
-	if (this->suspiciousSubtickMoveTimes.size() >= 16)
+	if (this->suspiciousSubtickMoveTimes.size() >= SUBTICK_SUSPICIOUS_MOVES_THRESHOLD)
 	{
 		this->MarkInfraction(Infraction::Type::SubtickSpam, "Excessive subtick moves detected");
 		this->suspiciousSubtickMoveTimes.clear();
 	}
 
-	// Clear out old entries beyond 20s
-	while (!this->numCommandsWithSubtickInputs.empty() && currentTime - this->numCommandsWithSubtickInputs.front() > 20.0f)
+	// Clear out old entries beyond configured window
+	while (!this->numCommandsWithSubtickInputs.empty() && currentTime - this->numCommandsWithSubtickInputs.front() > SUBTICK_SUBTICK_INPUTS_WINDOW)
 	{
 		this->numCommandsWithSubtickInputs.pop_front();
 	}
-	while (!this->zeroWhenCommandTimes.empty() && currentTime - this->zeroWhenCommandTimes.front() > 20.0f)
+	while (!this->zeroWhenCommandTimes.empty() && currentTime - this->zeroWhenCommandTimes.front() > SUBTICK_SUBTICK_INPUTS_WINDOW)
 	{
 		this->zeroWhenCommandTimes.pop_front();
 	}
 	// If the vast majority of commands in the timeframe have subtick inputs with zero 'when', kick.
-	if (this->numCommandsWithSubtickInputs.size() >= 30)
+	if (this->numCommandsWithSubtickInputs.size() >= SUBTICK_SUBTICK_INPUTS_THRESHOLD)
 	{
 		f32 ratio = (f32)this->zeroWhenCommandTimes.size() / (f32)this->numCommandsWithSubtickInputs.size();
-		if (ratio >= 0.9f)
+		if (ratio >= SUBTICK_ZERO_WHEN_RATIO_THRESHOLD)
 		{
 			this->MarkInfraction(Infraction::Type::Desubtick, "Desubticking detected");
 			this->zeroWhenCommandTimes.clear();

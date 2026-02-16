@@ -6,20 +6,23 @@
 #include "utils/simplecmds.h"
 
 #define NUM_MIN_INPUT_EVENTS_FOR_DETECTION                    128
-#define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MINIMUM 96
-#define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM 768
+#define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MINIMUM 128
+#define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM 640
 
 // The higher the FPS, the less likely player can get perfect counter-strafes by chance.
 #define FPS_FOR_MINIMUM_SUSPICION   64.0f // We shouldn't count any attempt below this FPS.
-#define FPS_FOR_MAXIMUM_SUSPICION   512.0f
+#define FPS_FOR_MAXIMUM_SUSPICION   256.0f
 #define ANALOG_CSTRAFE_WEIGHT       2.0f // Perfect analog strafes are extremely suspicious. Most (if not all) ingame null aliases abuse analog inputs.
 #define MIN_AIR_SPEED_FOR_DETECTION 100.0f // Only consider airstrafes with at least this airspeed to avoid false positives.
 // Only count counterstrafe attempts as underlap if the keypresses are at most this far apart. Consider higher values as brand new inputs.
-#define UNDERLAP_COUNT_THRESHOLD 0.2f
+#define UNDERLAP_COUNT_THRESHOLD      0.2f
+#define UNDERLAP_PERCENTAGE_THRESHOLD 0.1f // At least 10% of the strafes should have underlap to consider the median underlap duration.
 // Higher underlap average means the player are unlikely to be nulling.
 // If the player's underlap average is above this value, we won't consider them for nulls detection.
 // If 10% or more of their strafes have underlap, we should start taking the threshold below into consideration.
 #define UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD 0.02f // ~10% of a flat ground jump, considering 7.5 strafes on average
+
+CConVar<bool> kz_ac_nulls_debug("kz_ac_nulls_debug", FCVAR_CHEAT, "Enable nulls detector debug messages", false);
 
 void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 {
@@ -256,9 +259,11 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	// Not enough data to check.
 	if (events.size() < NUM_MIN_INPUT_EVENTS_FOR_DETECTION)
 	{
-		// TODO Anticheat: Remove this
-		this->player->PrintAlert(false, true, "Not enough input events for nulls detection (%zu/%d)", events.size(),
-								 NUM_MIN_INPUT_EVENTS_FOR_DETECTION);
+		if (kz_ac_nulls_debug.Get())
+		{
+			this->player->PrintAlert(false, true, "Not enough input events for nulls detection (%zu/%d)", events.size(),
+									 NUM_MIN_INPUT_EVENTS_FOR_DETECTION);
+		}
 		return;
 	}
 	std::vector<f32> framerates;
@@ -274,7 +279,13 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		return;
 	}
 	std::sort(framerates.begin(), framerates.end());
+
 	f32 medianFramerate = framerates[framerates.size() / 2];
+	// The median FPS should not exceed fps_max set by players.
+	if (this->currentMaxFps != 0)
+	{
+		medianFramerate = Max(medianFramerate, 1.0f / this->currentMaxFps); // Min(measured fps, fps_max)
+	}
 	if (medianFramerate == 0.0f)
 	{
 		// Fallback to engine tick interval if framerate is unavailable
@@ -285,8 +296,10 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		Lerp(1 - ratio, NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MINIMUM, NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM);
 	if (events.size() < requiredPerfectCstrafes)
 	{
-		// TODO Anticheat: Remove this
-		this->player->PrintAlert(false, true, "Not enough input events (%zu/%d)", events.size(), requiredPerfectCstrafes);
+		if (kz_ac_nulls_debug.Get())
+		{
+			this->player->PrintAlert(false, true, "Not enough input events (%zu/%d)", events.size(), requiredPerfectCstrafes);
+		}
 		return;
 	}
 	// Analyze the input events for perfect counter-strafes.
@@ -364,8 +377,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 				// This is actually a perfect counter-strafe, not an overlap
 				if (shouldAnalyze)
 				{
-					// TODO Anticheat: Remove this
-					if (event.cmdNum == this->currentCmdNum)
+					if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
 					{
 						this->player->PrintConsole(false, true, "Perfect @ %f", event.cmdNum + event.fraction);
 					}
@@ -379,8 +391,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			}
 			else if (event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
 			{
-				// TODO Anticheat: Remove this
-				if (event.cmdNum == this->currentCmdNum)
+				if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
 				{
 					this->player->PrintConsole(false, true, "Overlap @ %f", event.cmdNum + event.fraction);
 				}
@@ -433,8 +444,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		// Note: timeDiff < 0 (overlap) is already handled earlier in the loop
 		if (timeDiff == 0.0f)
 		{
-			// TODO Anticheat: Remove this
-			if (event.cmdNum == this->currentCmdNum)
+			if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
 			{
 				this->player->PrintConsole(false, true, "Perfect @ %f", event.cmdNum + event.fraction);
 			}
@@ -449,7 +459,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		else
 		{
 			// TODO Anticheat: Remove this
-			if (event.cmdNum == this->currentCmdNum)
+			if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
 			{
 				this->player->PrintConsole(false, true, "Underlap %.3f ms @ %f", timeDiff * 1000, event.cmdNum + event.fraction);
 			}
@@ -464,11 +474,14 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		underlapMedian = underlapDurations[underlapDurations.size() / 2];
 	}
 
+	u32 total = numOverlaps + numPerfect + underlapDurations.size();
 	// Ban if criteria met
-	if (underlapMedian >= UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD)
+	if (underlapMedian >= UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD && ((f32)underlapDurations.size() / (f32)(total) >= UNDERLAP_PERCENTAGE_THRESHOLD))
 	{
-		// TODO Anticheat: Remove this
-		this->player->PrintAlert(false, true, "Underlap median too high: %.1f ms", underlapMedian * 1000);
+		if (kz_ac_nulls_debug.Get())
+		{
+			this->player->PrintAlert(false, true, "Underlap median too high: %.2f ms", underlapMedian * 1000);
+		}
 		return;
 	}
 
@@ -481,25 +494,25 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 
 	if (numConsecutivePerfect >= adjustedRequiredPerfectCstrafes)
 	{
-		std::string details = tinyformat::format(
-			"Kicked for nulls detection on axis %s. Consecutive perfect cstrafes: %d (required: %d), total perfect cstrafes: %d/%d total, "
-			"overlaps: %d, underlap median: %.1f ms, median FPS: %.2f",
-			(button1 == IN_FORWARD || button2 == IN_BACK) ? "forward/backward" : "left/right", numConsecutivePerfect, adjustedRequiredPerfectCstrafes,
-			numPerfect, (numOverlaps + numPerfect + underlapDurations.size()), numOverlaps, underlapMedian * 1000, 1 / medianFramerate);
+		std::string details =
+			tinyformat::format("Nulls detection on axis %s. Streak: %d/%d, total %d/%d, OL: %d, DA median: %.2f ms, FPS: %.2f",
+							   (button1 == IN_FORWARD || button2 == IN_BACK) ? "forward/backward" : "left/right", numConsecutivePerfect,
+							   adjustedRequiredPerfectCstrafes, numPerfect, total, numOverlaps, underlapMedian * 1000, 1 / medianFramerate);
 		META_CONPRINTF("%s\n", details.c_str());
-
 		this->MarkInfraction(KZAnticheatService::Infraction::Type::Nulls, details);
 	}
 
-	// TODO Anticheat: Remove this
-	this->player->PrintAlert(false, true, "Perfect: %d (consecutive %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d",
-							 numPerfect, numConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, underlapMedian * 1000,
-							 1 / medianFramerate, (int)(numOverlaps + numPerfect + underlapDurations.size()));
+	if (kz_ac_nulls_debug.Get())
+	{
+		this->player->PrintAlert(
+			false, true, "Perfect: %d (consecutive %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d", numPerfect,
+			numConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, underlapMedian * 1000, 1 / medianFramerate, (i32)(total));
+	}
 }
 
 void KZAnticheatService::CheckNulls()
 {
-	// this->AnalyzeNullsForAxis(this->recentForwardBackwardEvents, IN_FORWARD, IN_BACK);
+	this->AnalyzeNullsForAxis(this->recentForwardBackwardEvents, IN_FORWARD, IN_BACK);
 	this->AnalyzeNullsForAxis(this->recentLeftRightEvents, IN_MOVELEFT, IN_MOVERIGHT);
 }
 

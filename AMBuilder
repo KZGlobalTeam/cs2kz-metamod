@@ -85,10 +85,10 @@ def configure_main(sdk_target, sdk, cxx):
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'infractions.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'bhop.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'subtick.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'nulls.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'cvars.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'hyperscroll.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'jumps.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'beam', 'kz_beam.cpp'),
