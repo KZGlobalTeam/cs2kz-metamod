@@ -1472,17 +1472,21 @@
 	"Command Description - kz_modernperfstats"
 	{
 		"en"		"Retrieve bhop statistics for modern jumping."
+		"ua"		"Показати статистику bhop для сучасних стрибків."
 	}
 	"Command Description - kz_legacyperfstats"
 	{
 		"en"		"Retrieve bhop statistics for legacy jumping."
+		"ua"		"Показати статистику bhop для класичних стрибків."
 	}
 	"Command Description - kz_resetperfstats"
 	{
 		"en"		"Reset bhop statistics for modern and legacy jumping."
+		"ua"		"Скинути статистику bhop для сучасних і класичних стрибків."
 	}
 	"Command Description - kz_fov"
 	{
 		"en"		"Change your FOV."
+		"ua"		"Змінити FOV."
 	}
 }
