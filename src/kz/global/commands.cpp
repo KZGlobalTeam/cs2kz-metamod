@@ -1,10 +1,11 @@
 #include <string_view>
 
 #include "common.h"
-#include "kz_global.h"
-#include "kz/mode/kz_mode.h"
 #include "kz/language/kz_language.h"
+#include "kz/mode/kz_mode.h"
 #include "kz/option/kz_option.h"
+#include "kz/style/kz_style.h"
+#include "kz_global.h"
 #include "utils/http.h"
 #include "utils/simplecmds.h"
 
@@ -23,6 +24,7 @@ namespace
 		bool mapGlobal = false;
 		bool playerGlobal = false;
 		bool modeGlobal = false;
+		bool stylesGlobal = false;
 
 		void report(KZPlayer *player) const
 		{
@@ -33,7 +35,7 @@ namespace
 					MakeStatusString(this->mapGlobal),
 					MakeStatusString(this->playerGlobal),
 					MakeStatusString(this->modeGlobal),
-					MakeStatusString(false));
+					MakeStatusString(this->stylesGlobal));
 			// clang-format on
 		}
 	};
@@ -50,6 +52,7 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 		status.serverConnected = true;
 		status.mapGlobal = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &mapInfo) { return mapInfo.has_value(); });
 		status.playerGlobal = !player->globalService->IsBanned();
+
 		KZGlobalService::WithGlobalModes(
 			[&](const KZGlobalService::GlobalModeChecksums &checksums)
 			{
@@ -65,6 +68,36 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 					status.modeGlobal = KZ_STREQ(modeInfo.md5, checksums.classic.c_str());
 				}
 			});
+
+		KZGlobalService::WithGlobalStyles(
+			[&](const std::vector<KZGlobalService::GlobalStyleChecksum> &checksums)
+			{
+				bool allValid = true;
+
+				FOR_EACH_VEC(player->styleServices, i)
+				{
+					bool isValid = false;
+
+					for (const KZGlobalService::GlobalStyleChecksum &checksum : checksums)
+					{
+						if (KZ_STREQ(player->styleServices[i]->GetStyleShortName(), checksum.style.c_str()))
+						{
+							auto styleInfo = KZ::style::GetStyleInfo(player->styleServices[i]);
+							isValid = KZ_STREQ(styleInfo.md5, checksum.checksum.c_str());
+							break;
+						}
+					}
+
+					if (!isValid)
+					{
+						allValid = false;
+						break;
+					}
+				}
+
+				status.stylesGlobal = allValid;
+			});
+
 		status.report(player);
 	}
 	else
