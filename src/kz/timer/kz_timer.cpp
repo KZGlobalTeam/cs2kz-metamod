@@ -1170,7 +1170,6 @@ const PBData *KZTimerService::GetGlobalCachedPB(const KZCourseDescriptor *course
 void KZTimerService::InsertPBToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata,
 									 f64 points)
 {
-	META_CONPRINTF("[KZ::DEBUG] inserting pb into cache\n");
 	PBData &pb = global ? this->globalPBCache[ToPBDataKey(modeID, course->guid)] : this->localPBCache[ToPBDataKey(modeID, course->guid)];
 
 	overall ? pb.overall.points = points : pb.pro.points = points;
