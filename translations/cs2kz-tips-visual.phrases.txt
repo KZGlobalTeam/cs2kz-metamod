@@ -63,5 +63,6 @@
 	"Tip - kz_fov"
 	{
 		"en"	"{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+		"ua"	"{grey}Напишіть в чаті {default}/fov {purple}<значення> {default}, щоб змінити ваш FOV."
 	}
 }
