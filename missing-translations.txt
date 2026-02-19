@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 564
 Phrases with missing translations: 484
-Total missing translation entries: 2520
+Total missing translation entries: 2509
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.3% (92/564)
   sv (swedish)         [██████████████░░░░░░]  70.4% (397/564)
   tr (turkish)         [█████████░░░░░░░░░░░]  47.3% (267/564)
-  ua (ukrainian)       [███████████████████░]  98.0% (553/564)
+  ua (ukrainian)       [████████████████████] 100.0% (564/564)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -361,13 +361,13 @@ cs2kz-commands.phrases.txt
   Line 1467: "Command Description - kz_tier"
     Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
   Line 1472: "Command Description - kz_modernperfstats"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1476: "Command Description - kz_legacyperfstats"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1480: "Command Description - kz_resetperfstats"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1484: "Command Description - kz_fov"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1477: "Command Description - kz_legacyperfstats"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1482: "Command Description - kz_resetperfstats"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1487: "Command Description - kz_fov"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -444,9 +444,9 @@ cs2kz-course.phrases.txt
 cs2kz-fov.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "FOV - Show"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 8: "Error Message (Invalid FOV)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 9: "Error Message (Invalid FOV)"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-hud.phrases.txt
 ----------------------------------------------------------------------
@@ -730,86 +730,86 @@ cs2kz-replays.phrases.txt
   Line 242: "Replay - Invalid UUID"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
   Line 250: "Replay - Multiple Matches"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 255: "Replay - Loaded Successfully"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 256: "Replay - Loaded Successfully"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 263: "Replay - No Loading Progress"
+  Line 264: "Replay - No Loading Progress"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 271: "Replay - Loading Progress"
+  Line 272: "Replay - Loading Progress"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 280: "Replay - Loading Completed"
+  Line 281: "Replay - Loading Completed"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 288: "Replay - Loading Cancelled"
+  Line 289: "Replay - Loading Cancelled"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 296: "Replay - Usage Command"
+  Line 297: "Replay - Usage Command"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 304: "Replay - Load Cancelled"
+  Line 305: "Replay - Load Cancelled"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 312: "Replay - Invalid File Format"
+  Line 313: "Replay - Invalid File Format"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 320: "Replay - Manual Replay Failed"
+  Line 321: "Replay - Manual Replay Failed"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 328: "Replay - Manual Replay Saved"
+  Line 329: "Replay - Manual Replay Saved"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 337: "Replay - Manual Replay Saved (Console)"
+  Line 338: "Replay - Manual Replay Saved (Console)"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 346: "Replay - Run Replay Failed"
+  Line 347: "Replay - Run Replay Failed"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 354: "Replay - Run Replay Saved"
+  Line 355: "Replay - Run Replay Saved"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 363: "Replay - Run Replay Saved (Console)"
+  Line 364: "Replay - Run Replay Saved (Console)"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 372: "Replay - Wrong Map"
+  Line 373: "Replay - Wrong Map"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 381: "Replay - Unknown Mode"
+  Line 382: "Replay - Unknown Mode"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 390: "Replay - Unknown Style"
+  Line 391: "Replay - Unknown Style"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 399: "Replay List - Check Console"
+  Line 400: "Replay List - Check Console"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 407: "Replay List - Usage Title"
+  Line 408: "Replay List - Usage Title"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 416: "Replay List - Usage General Options"
+  Line 417: "Replay List - Usage General Options"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 430: "Replay List - Usage Type Options"
+  Line 431: "Replay List - Usage Type Options"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 442: "Replay List - No Matching Replays"
+  Line 443: "Replay List - No Matching Replays"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 450: "Cheater Replays - Table Name"
+  Line 451: "Cheater Replays - Table Name"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 458: "Run Replays - Table Name"
+  Line 459: "Run Replays - Table Name"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 466: "Jump Replays - Table Name"
+  Line 467: "Jump Replays - Table Name"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 474: "Manual Replays - Table Name"
+  Line 475: "Manual Replays - Table Name"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 482: "Replay Table Header - Player"
+  Line 483: "Replay Table Header - Player"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 490: "Replay Table Header - Map"
+  Line 491: "Replay Table Header - Map"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 498: "Replay Table Header - Reason"
+  Line 499: "Replay Table Header - Reason"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 506: "Replay Table Header - SteamID"
+  Line 507: "Replay Table Header - SteamID"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 514: "Replay Table Header - UUID"
+  Line 515: "Replay Table Header - UUID"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 522: "Replay Table Header - Course"
+  Line 523: "Replay Table Header - Course"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 530: "Replay Table Header - Mode"
+  Line 531: "Replay Table Header - Mode"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 538: "Replay Table Header - Time"
+  Line 539: "Replay Table Header - Time"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 546: "Replay Table Header - Teleports"
+  Line 547: "Replay Table Header - Teleports"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 554: "Replay Table Header - Jump Type"
+  Line 555: "Replay Table Header - Jump Type"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 562: "Replay Table Header - Distance"
+  Line 563: "Replay Table Header - Distance"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 570: "Replay Table Header - Block"
+  Line 571: "Replay Table Header - Block"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 578: "Replay Table Header - Strafes"
+  Line 579: "Replay Table Header - Strafes"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 586: "Replay Table Header - Saved By"
+  Line 587: "Replay Table Header - Saved By"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
 
 cs2kz-spec.phrases.txt
@@ -843,11 +843,11 @@ cs2kz-styles.phrases.txt
 cs2kz-telemetry.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Telemetry - Modern Bhop Stats"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 9: "Telemetry - Legacy Bhop Stats"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 15: "Telemetry - Reset Bhop Stats"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 10: "Telemetry - Legacy Bhop Stats"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 17: "Telemetry - Reset Bhop Stats"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-timer-coursetop.phrases.txt
 ----------------------------------------------------------------------
@@ -1126,7 +1126,7 @@ cs2kz-tips-visual.phrases.txt
   Line 48: "Tip - kz_hideweapon"
     Missing (1): ru
   Line 63: "Tip - kz_fov"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 ======================================================================
 DETAILED MISSING MENU TRANSLATIONS
