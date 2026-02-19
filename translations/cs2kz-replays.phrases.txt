@@ -251,6 +251,7 @@
 	{
 		"#format"	"uuid:s"
 		"en"		"{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
+		"ua"		"{darkred}Кілька повторів відповідають підрядку UUID {grey}'{default}{uuid}{grey}'."
 	}
 	"Replay - Loaded Successfully"
 	{

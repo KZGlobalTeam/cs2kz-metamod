@@ -5,15 +5,18 @@
 		// Jumps: 200 | 25% True (50) | 10% Modern (20)
 		"#format"	"numJumps:d,truePerfPercent:.0f,truePerfs:d,modernPerfPercent:.0f,modernPerfs:d"
 		"en"		"{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}Дійсні ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Сучасні ({lime}{modernPerfs}{grey})"
 	}
 	"Telemetry - Legacy Bhop Stats"
 	{
 		// Jumps: 200 | 25% Perf (50)
 		"#format"	"numJumps:d,perfPercent:.0f,perfs:d"
 		"en"		"{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
 	}
 	"Telemetry - Reset Bhop Stats"
 	{
 		"en"		"{grey}Bunny hop statistics have been reset."
+		"ua"		"{grey}Bhop статистику було скинуто."
 	}
 }

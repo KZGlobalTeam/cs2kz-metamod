@@ -4,10 +4,12 @@
 	{
 		"#format"	"fov:d"
 		"en"		"{grey}Your FOV is {purple}{fov}{grey}."
+		"ua"		"{grey}Ваш FOV — {purple}{fov}{grey}."
 	}
 	"Error Message (Invalid FOV)"
 	{
 		"#format"	"fov:s,min:d,max:d"
 		"en"		"{darkred}Invalid FOV \"{fov}\" (allowed {min} - {max})."
+		"ua"		"{darkred}Невірний FOV \"{fov}\" (дозволено {min} - {max})."
 	}
 }
