@@ -88,6 +88,9 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		KZ::replaysystem::Init();
 	}
 
+	// We don't need command filtering for KZ maps.
+	CommandLine()->AppendParm("-disable_workshop_command_filtering", "");
+
 	KZ::replaysystem::InitWatcher();
 	return true;
 }
