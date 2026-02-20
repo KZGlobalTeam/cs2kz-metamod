@@ -26,7 +26,7 @@ namespace
 		bool modeGlobal = false;
 		bool stylesGlobal = false;
 
-		void report(KZPlayer *player) const
+		void Report(KZPlayer *player) const
 		{
 			// clang-format off
 			player->languageService->PrintChat(true, false, "Global Check",

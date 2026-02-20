@@ -17,7 +17,7 @@
 #include "kz_global.h"
 #include "messages.h"
 
-static_function bool getApiUrl(std::string &url)
+static_function bool GetApiUrl(std::string &url)
 {
 	url = KZOptionService::GetOptionStr("apiUrl", KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org"));
 
@@ -45,7 +45,7 @@ static_function bool getApiUrl(std::string &url)
 	return true;
 }
 
-static_function bool getApiKey(std::string &key)
+static_function bool GetApiKey(std::string &url)
 {
 	key = KZOptionService::GetOptionStr("apiKey");
 
