@@ -45,7 +45,7 @@ static_function bool GetApiUrl(std::string &url)
 	return true;
 }
 
-static_function bool GetApiKey(std::string &url)
+static_function bool GetApiKey(std::string &key)
 {
 	key = KZOptionService::GetOptionStr("apiKey");
 
