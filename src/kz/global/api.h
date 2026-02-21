@@ -1,15 +1,8 @@
 #pragma once
 
-#include <optional>
-#include <string>
-#include <string_view>
-#include <vector>
-
-#include "common.h"
 #include "utils/json.h"
-#include "utils/utils.h"
 
-namespace KZ::API
+namespace KZ::api
 {
 	enum class Mode : u8
 	{
@@ -18,14 +11,6 @@ namespace KZ::API
 	};
 
 	bool DecodeModeString(std::string_view modeString, Mode &mode);
-
-	enum class Style : u8
-	{
-		AutoBhop = 1,
-		LegacyJump = 2,
-	};
-
-	bool DecodeStyleString(std::string_view styleString, Style &style);
 
 	struct PlayerInfo
 	{
@@ -138,7 +123,7 @@ namespace KZ::API
 			bool FromJson(const Json &json);
 		};
 
-		u32 id;
+		std::string id;
 		PlayerInfo player;
 		MapInfo map;
 		CourseInfo course;
@@ -154,4 +139,4 @@ namespace KZ::API
 
 		bool FromJson(const Json &json);
 	};
-} // namespace KZ::API
+}; // namespace KZ::api

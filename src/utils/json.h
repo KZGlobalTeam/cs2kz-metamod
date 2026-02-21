@@ -25,7 +25,7 @@ public:
 		return this->inner.dump();
 	}
 
-	bool ContainsKey(const std::string &key) const
+	bool ContainsKey(const std::string &key, bool allowNull = false) const
 	{
 		if (!this->inner.is_object())
 		{
@@ -39,13 +39,44 @@ public:
 			return false;
 		}
 
-		if (this->inner[key].is_null())
+		if (!allowNull && this->inner[key].is_null())
 		{
 			META_CONPRINTF("[JSON] Key `%s` is null.\n", key.c_str());
 			return false;
 		}
 
 		return true;
+	}
+
+	template<typename T>
+	bool Decode(std::optional<T> &out) const
+	{
+		if (this->inner.is_null())
+		{
+			out = std::nullopt;
+			return true;
+		}
+
+		T value;
+
+		if (!value.FromJson(*this))
+		{
+			return false;
+		}
+
+		out = std::make_optional(std::move(value));
+		return true;
+	}
+
+	template<typename T>
+	bool Decode(T &out) const
+	{
+		if (this->inner.is_null())
+		{
+			return false;
+		}
+
+		return out.FromJson(*this);
 	}
 
 	template<typename T>
@@ -239,6 +270,25 @@ public:
 		return true;
 	}
 
+	template<typename T>
+	bool Set(const std::string &key, const std::optional<T> &value)
+	{
+		if (!this->inner.is_object())
+		{
+			return false;
+		}
+
+		if (value)
+		{
+			return this->Set(key, value.value());
+		}
+		else
+		{
+			this->inner[key] = nlohmann::json(nullptr);
+			return true;
+		}
+	}
+
 	bool IsValid() const
 	{
 		return !this->inner.is_discarded();
@@ -246,7 +296,7 @@ public:
 
 	bool Get(const std::string &key, Json &out) const
 	{
-		if (!this->ContainsKey(key))
+		if (!this->ContainsKey(key, /* allowNull */ true))
 		{
 			return false;
 		}

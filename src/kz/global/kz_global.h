@@ -2,112 +2,481 @@
 
 #include <atomic>
 #include <chrono>
+#include <memory>
 #include <mutex>
-#include <string>
-#include <string_view>
-#include <type_traits>
+#include <optional>
+#include <unordered_map>
+#include <vector>
 
 #include <vendor/ixwebsocket/ixwebsocket/IXWebSocket.h>
 
-#include "utils/json.h"
-
+#include "common.h"
+#include "cs2kz.h"
 #include "kz/kz.h"
-#include "kz/global/api.h"
-#include "kz/global/handshake.h"
-#include "kz/global/events.h"
 #include "kz/timer/announce.h"
+#include "utils/json.h"
+#include "messages.h"
 
 class KZGlobalService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
 
 public:
-	/**
-	 * Returns whether the global service is "available".
-	 *
-	 * That is, whether it makes sense to call any of the other functions that
-	 * need an established connection to the API.
-	 */
-	static bool IsAvailable();
-
-	/**
-	 * Returns whether the global service might become "available" in the future.
-	 */
-	static bool MayBecomeAvailable();
-
-	/**
-	 * Executes a function with information about the current map.
-	 *
-	 * `F` should be a function that accepts a single argument of type `const KZ::API::Map*`.
-	 */
-	template<typename F>
-	static auto WithCurrentMap(F &&f)
+	enum class MessageCallbackCancelReason
 	{
-		std::unique_lock lock(KZGlobalService::currentMap.mutex);
-		const KZ::API::Map *currentMap = nullptr;
+		Timeout,
+		Disconnect,
+	};
 
-		if (KZGlobalService::currentMap.data.has_value())
+	struct PlayerIdentifier
+	{
+		inline static PlayerIdentifier SteamID(u64 steamID)
 		{
-			currentMap = &*KZGlobalService::currentMap.data;
+			PlayerIdentifier identifier;
+			identifier.value = std::to_string(steamID);
+			return identifier;
 		}
 
-		return f(currentMap);
-	}
+		inline static PlayerIdentifier Name(std::string_view name)
+		{
+			PlayerIdentifier identifier;
+			identifier.value = name;
+			return identifier;
+		}
 
-	/**
-	 * Executes a function with a list of `ModeInfo` structs we got from the API.
-	 *
-	 * `F` should be a function that accepts a single argument of type
-	 * `const std::vector<KZ::API::handshake::HelloAck::ModeInfo>&`.
-	 */
-	template<typename F>
-	static auto WithGlobalModes(F &&f)
+		inline std::string_view Value() const
+		{
+			return this->value;
+		}
+
+	private:
+		std::string value;
+	};
+
+private:
+	class MessageCallbackInternal
 	{
-		std::unique_lock lock(KZGlobalService::globalModes.mutex);
-		const std::vector<KZ::API::handshake::HelloAck::ModeInfo> &modes = KZGlobalService::globalModes.data;
-		return f(modes);
-	}
+	public:
+		using CancelReason = MessageCallbackCancelReason;
 
-	/**
-	 * Executes a function with a list of `StyleInfo` structs we got from the API.
-	 *
-	 * `F` should be a function that accepts a single argument of type
-	 * `const std::vector<KZ::API::handshake::HelloAck::StyleInfo>&`.
-	 */
-	template<typename F>
-	static auto WithGlobalStyles(F &&f)
-	{
-		std::unique_lock lock(KZGlobalService::globalStyles.mutex);
-		const std::vector<KZ::API::handshake::HelloAck::StyleInfo> &styles = KZGlobalService::globalStyles.data;
-		return f(styles);
-	}
+		std::chrono::time_point<std::chrono::system_clock> sentAt;
+		std::chrono::seconds expiresAfter = std::chrono::seconds(5);
 
-	/**
-	 * Updates the cached world records for the current map.
-	 */
-	static void UpdateRecordCache();
+		virtual void OnResponse(u32 messageID, const Json &payload) = 0;
+
+		virtual void OnError(u32 messageID, const KZ::api::messages::Error &error)
+		{
+			META_CONPRINTF("[KZ::Global] Received error response to WebSocket message (id=%i): %s\n", messageID, error.message.c_str());
+		}
+
+		virtual void OnCancelled(u32 messageID, CancelReason reason)
+		{
+			const char *reasonStr = "";
+
+			switch (reason)
+			{
+				case CancelReason::Timeout:
+				{
+					reasonStr = "timed out";
+				}
+				break;
+
+				case CancelReason::Disconnect:
+				{
+					reasonStr = "disconnected";
+				}
+				break;
+			}
+
+			META_CONPRINTF("[KZ::Global] Cancelled WebSocket message (id=%i, %s)\n", messageID, reasonStr);
+		}
+	};
 
 public:
-	static void Init();
-	static void Cleanup();
+	template<typename Response>
+	class MessageCallback : public MessageCallbackInternal
+	{
+		std::function<void(const Response &)> onResponse;
+		std::function<void(const KZ::api::messages::Error &)> onError;
+		std::function<void(CancelReason)> onCancelled;
 
-	static void OnServerGamePostSimulate();
-	static void OnActivateServer();
+		void OnResponse(u32 messageID, const Json &payload) override
+		{
+			Response response;
 
-public:
-	void OnPlayerAuthorized();
-	void OnClientDisconnect();
+			if (payload.Decode(response))
+			{
+				this->onResponse(response);
+			}
+			else
+			{
+				META_CONPRINTF("[KZ::Global] Received unknown payload as WebSocket response. (id=%i)\n", messageID);
+			}
+		}
+
+		void OnError(u32 messageID, const KZ::api::messages::Error &error) override
+		{
+			MessageCallbackInternal::OnError(messageID, error);
+			this->onError(error);
+		}
+
+		void OnCancelled(u32 messageID, CancelReason reason) override
+		{
+			MessageCallbackInternal::OnCancelled(messageID, reason);
+			this->onCancelled(reason);
+		}
+
+	public:
+		// clang-format off
+		template<typename OnResponse, typename... Args>
+		explicit MessageCallback(OnResponse &&onResponse, Args &&...args)
+			: onResponse([cb = std::bind(std::move(onResponse), std::placeholders::_1, std::forward<Args>(args)...)] (const Response &response) { cb(response); })
+			, onError([](const KZ::api::messages::Error &) {})
+			, onCancelled([](CancelReason) {})
+		// clang-format on
+		{
+		}
+
+		inline void Timeout(std::chrono::seconds duration)
+		{
+			this->expiresAfter = duration;
+		}
+
+		template<typename CB>
+		void OnError(CB &&onError)
+		{
+			this->onError = std::move(onError);
+		}
+
+		template<typename CB>
+		void OnCancelled(CB &&onCancelled)
+		{
+			this->onCancelled = std::move(onCancelled);
+		}
+	};
+
+private:
+	enum class State
+	{
+		/**
+		 * The state before `Init()` is called and after `Cleanup()` has been called.
+		 */
+		Uninitialized,
+
+		/**
+		 * The state after `Init()` has been called, when the WebSocket has been configured, but not yet started.
+		 */
+		Configured,
+
+		/**
+		 * The state after `WS::socket->start()` has been called.
+		 */
+		Connecting,
+
+		/**
+		 * The state after the WebSocket connection has been fully established.
+		 */
+		Connected,
+
+		/**
+		 * The state after we sent our `hello` message to the API.
+		 */
+		HandshakeInitiated,
+
+		/**
+		 * The state after we received a `hello_ack` response to our `hello` message from the API.
+		 *
+		 * This is the final "in operation" state when the connection can actually be "used" for normal message exchange.
+		 */
+		HandshakeCompleted,
+
+		/**
+		 * The state after we've been disconnected but haven't yet reconnected.
+		 */
+		Reconnecting,
+
+		/**
+		 * The state when we're not connected and don't plan on connecting anymore either.
+		 */
+		Disconnected,
+	};
+
+	static inline std::atomic<State> state = State::Uninitialized;
+
+	/**
+	 * API information about the current map.
+	 */
+	static inline struct
+	{
+		std::mutex mutex;
+		std::optional<KZ::api::Map> info;
+	} currentMap;
+
+	/**
+	 * Functions that must be executed on the main thread.
+	 *
+	 * These are used for lifecycle management and state transitions that need to happen on the main thread
+	 * (e.g. because we need to get the curren map name).
+	 */
+	static inline struct
+	{
+		std::mutex mutex;
+		std::optional<KZ::api::messages::handshake::HelloAck> helloAck;
+		std::vector<std::function<void()>> queue;
+	} callbacks;
+
+	template<typename CB>
+	inline static void QueueCallback(CB &&callback)
+	{
+		{
+			std::lock_guard _guard(KZGlobalService::callbacks.mutex);
+			KZGlobalService::callbacks.queue.emplace_back(std::move(callback));
+		}
+	}
+
+	/**
+	 * All the WebSocket-related state.
+	 */
+	static inline struct WS
+	{
+		/**
+		 * A partially parsed WebSocket message.
+		 */
+		struct ReceivedMessage
+		{
+			/**
+			 * The message ID.
+			 *
+			 * This is either the same ID as a message we sent earlier, indicating a response, or 0.
+			 */
+			u32 id;
+
+			/**
+			 * The message we sent earlier, to which this is the reply, triggered an error.
+			 */
+			bool isError;
+
+			/**
+			 * The rest of the payload, which will be parsed according to `MessageType` later.
+			 */
+			Json payload;
+		};
+
+		// INVARIANT: should be `nullptr` when `state == Uninitialized`, and a valid pointer otherwise
+		static inline std::unique_ptr<ix::WebSocket> socket = nullptr;
+
+		/**
+		 * WebSocket messages we have received, but not yet processed.
+		 *
+		 * These are processed on the main thread, and potentially passed into callbacks stored in
+		 * `messageCallbacks.queue`.
+		 */
+		static inline struct
+		{
+			std::mutex mutex;
+			std::vector<ReceivedMessage> queue;
+		} receivedMessages;
+
+		/**
+		 * Callbacks for sent messages we expect to get a reply to.
+		 *
+		 * The key is the message ID we used to send the original message, and the API will respond with a message that
+		 * has the same ID. The callback itself is given the message data extracted when we received the message.
+		 */
+		static inline struct
+		{
+			std::mutex mutex;
+			std::unordered_map<u32, std::unique_ptr<MessageCallbackInternal>> callbacks;
+		} messageCallbacks;
+
+		/**
+		 * Callback for `IXWebSocket`; called on every received message.
+		 */
+		static void OnMessage(const ix::WebSocketMessagePtr &message);
+
+		/**
+		 * Helper function called by `OnMessage()` if we get an `Open` message.
+		 */
+		static void OnOpenMessage();
+
+		/**
+		 * Helper function called by `WS_OnMessage()` if we get a `Close` message.
+		 */
+		static void OnCloseMessage(const ix::WebSocketCloseInfo &closeInfo);
+
+		/**
+		 * Helper function called by `WS_OnMessage()` if we get an `Error` message.
+		 */
+		static void OnErrorMessage(const ix::WebSocketErrorInfo &errorInfo);
+
+		/**
+		 * Initiates the WebSocket handshake with the API.
+		 *
+		 * This sends the `hello` message.
+		 */
+		static void InitiateHandshake();
+
+		/**
+		 * Completes the WebSocket handshake with the API.
+		 *
+		 * This is called once we have received the `hello_ack` response to our `hello` message we sent earlier in
+		 * `WS_InitiateHandshake()`.
+		 */
+		static void CompleteHandshake(KZ::api::messages::handshake::HelloAck &&ack);
+
+		/**
+		 * Sends the given payload as a WebSocket message.
+		 */
+		template<typename Payload>
+		static bool SendMessage(const Payload &payload)
+		{
+			u32 messageID;
+			const char *messageType;
+			Json messagePayload;
+			return SendMessageImpl(messageID, messageType, messagePayload, payload);
+		}
+
+		/**
+		 * Sends the given payload as a WebSocket message and queues the given `callback` to be executed when a response is received.
+		 */
+		template<typename Payload, typename Callback>
+		static bool SendMessage(const Payload &payload, Callback &&callback)
+		{
+			u32 messageID;
+			const char *messageType;
+			Json messagePayload;
+
+			std::unique_ptr<MessageCallbackInternal> erasedCallback = std::make_unique<Callback>(std::move(callback));
+
+			if (!SendMessageImpl(messageID, messageType, messagePayload, payload))
+			{
+				return false;
+			}
+
+			erasedCallback->sentAt = std::chrono::system_clock::now();
+
+			{
+				std::lock_guard _guard(messageCallbacks.mutex);
+				messageCallbacks.callbacks.emplace(messageID, std::move(erasedCallback));
+			}
+
+			return true;
+		}
+
+	private:
+		static inline std::atomic<u32> nextMessageID = 1;
+
+		static inline u32 NextMessageID()
+		{
+			return nextMessageID.fetch_add(1, std::memory_order_relaxed);
+		}
+
+		/**
+		 * Implementation detail of `SendMessage()`.
+		 *
+		 * It initializes the first 3 parameters and encodes `Payload`.
+		 */
+		template<typename Payload>
+		static bool SendMessageImpl(u32 &messageID, const char *&messageType, Json &messagePayload, const Payload &payload)
+		{
+			messageID = NextMessageID();
+			META_CONPRINTF("[KZ::Global] assigned message ID %i\n", messageID);
+			messageType = Payload::Name();
+
+			if (!messagePayload.Set("id", messageID))
+			{
+				return false;
+			}
+
+			if (!messagePayload.Set("event", messageType))
+			{
+				return false;
+			}
+
+			if (!messagePayload.Set("data", payload))
+			{
+				return false;
+			}
+
+			std::string encodedPayload = messagePayload.ToString();
+			socket->send(encodedPayload);
+
+			// clang-format off
+			META_CONPRINTF("[KZ::Global] Sent WebSocket message. (id=%i, type=%s)\n"
+					"------------------------------------\n"
+					"%s\n"
+					"------------------------------------\n",
+					messageID, messageType, encodedPayload.c_str());
+			// clang-format on
+
+			return true;
+		}
+	} ws;
 
 	/**
 	 * Information about the current player we received from the API when the player connected.
 	 */
 	struct
 	{
-		/**
-		 * Whether the player is globally banned.
-		 */
-		bool isBanned {};
-	} playerInfo {};
+		bool isBanned;
+	} playerInfo;
+
+public:
+	static void Init();
+	static void Cleanup();
+
+	inline static bool IsAvailable()
+	{
+		return state.load() == State::HandshakeCompleted;
+	}
+
+	template<typename F>
+	inline static auto WithCurrentMap(F &&f)
+	{
+		std::lock_guard _guard(currentMap.mutex);
+		const std::optional<KZ::api::Map> &mapInfo = currentMap.info;
+		return f(mapInfo);
+	}
+
+	struct GlobalModeChecksums
+	{
+		std::string vanilla;
+		std::string classic;
+	};
+
+	struct GlobalStyleChecksum
+	{
+		std::string style;
+		std::string checksum;
+	};
+
+	template<typename F>
+	inline static auto WithGlobalModes(F &&f)
+	{
+		std::lock_guard _guard(globalModes.mutex);
+		const GlobalModeChecksums &checksums = globalModes.checksums;
+		return f(checksums);
+	}
+
+	template<typename F>
+	inline static auto WithGlobalStyles(F &&f)
+	{
+		std::lock_guard _guard(globalStyles.mutex);
+		const std::vector<GlobalStyleChecksum> &checksums = globalStyles.checksums;
+		return f(checksums);
+	}
+
+	static void UpdateRecordCache();
+
+	struct RecordData
+	{
+		u16 filterID;
+		f64 time;
+		u32 teleports;
+		std::string_view modeMD5;
+		std::vector<RecordAnnounce::StyleInfo> styles;
+		std::string_view metadata;
+	};
 
 	enum class SubmitRecordResult
 	{
@@ -137,380 +506,178 @@ public:
 		Submitted,
 	};
 
-	/**
-	 * Submits a new record to the API.
-	 */
 	template<typename CB>
-	SubmitRecordResult SubmitRecord(u16 filterID, f64 time, u32 teleports, std::string_view modeMD5, void *styles, std::string_view metadata, CB &&cb)
+	SubmitRecordResult SubmitRecord(const RecordData &data, CB &&callback)
 	{
 		if (!this->player->IsAuthenticated() && !this->player->hasPrime)
 		{
 			return SubmitRecordResult::PlayerNotAuthenticated;
 		}
 
+		// clang-format off
+		bool currentMapIsGlobal = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &mapInfo) {
+			return mapInfo.has_value();
+		});
+		// clang-format on
+
+		if (!currentMapIsGlobal)
 		{
-			std::unique_lock currentMapLock(KZGlobalService::currentMap.mutex);
-			if (!KZGlobalService::currentMap.data.has_value())
-			{
-				META_CONPRINTF("[KZ::Global] Cannot submit record on non-global map.\n");
-				return SubmitRecordResult::MapNotGlobal;
-			}
+			META_CONPRINTF("[KZ::Global] Cannot submit record on non-global map.\n");
+			return SubmitRecordResult::MapNotGlobal;
 		}
 
-		KZ::API::events::NewRecord data;
-		data.playerID = this->player->GetSteamId64();
-		data.filterID = filterID;
-		data.modeChecksum = modeMD5;
-		for (const auto &style : *(std::vector<RecordAnnounce::StyleInfo> *)styles)
+		KZ::api::messages::NewRecord message;
+		message.playerID = this->player->GetSteamId64();
+		message.filterID = data.filterID;
+		message.modeChecksum = data.modeMD5;
+		for (const RecordAnnounce::StyleInfo &style : data.styles)
 		{
-			data.styles.push_back({style.name, style.md5});
+			message.styles.push_back({style.name, style.md5});
 		}
-		data.teleports = teleports;
-		data.time = time;
-		data.metadata = metadata;
+		message.teleports = data.teleports;
+		message.time = data.time;
+		message.metadata = data.metadata;
+
+		// clang-format off
+		auto sendMessage = [message = std::move(message), callback = std::move(callback)]() mutable {
+			KZGlobalService::WS::SendMessage(message, std::move(callback));
+		};
+		// clang-format on
 
 		switch (KZGlobalService::state.load())
 		{
 			case KZGlobalService::State::HandshakeCompleted:
-				KZGlobalService::SendMessage("new-record", data, cb);
+				sendMessage();
 				return SubmitRecordResult::Submitted;
 
 			case KZGlobalService::State::Disconnected:
 				return SubmitRecordResult::NotConnected;
 
 			default:
-				KZGlobalService::AddMainThreadCallback([=]() { KZGlobalService::SendMessage("new-record", data, cb); });
+				KZGlobalService::QueueCallback(std::move(sendMessage));
 				return SubmitRecordResult::Queued;
 		}
 	}
 
-	/**
-	 * Query the personal best of a player on a certain map, course, mode, style.
-	 */
-	template<typename CB>
-	static bool QueryPB(u64 steamid64, std::string_view targetPlayerName, std::string_view mapName, std::string_view courseNameOrNumber,
-						KZ::API::Mode mode, const CUtlVector<CUtlString> &styleNames, CB &&cb)
+	struct QueryPBParams
 	{
-		if (!KZGlobalService::IsAvailable())
-		{
-			return false;
-		}
-
-		std::string_view event("want-personal-best");
-		KZ::API::events::WantPersonalBest data = {steamid64, targetPlayerName, mapName, courseNameOrNumber, mode};
-		FOR_EACH_VEC(styleNames, i)
-		{
-			data.styles.emplace_back(styleNames[i].Get());
-		}
-		return KZGlobalService::SendMessage(event, data, std::move(cb));
-	}
-
-	/**
-	 * Query the course top on a certain map, mode with a certain limit and offset.
-	 */
-	template<typename CB>
-	static bool QueryCourseTop(std::string_view mapName, std::string_view courseNameOrNumber, KZ::API::Mode mode, u32 limit, u32 offset, CB &&cb)
-	{
-		if (!KZGlobalService::IsAvailable())
-		{
-			return false;
-		}
-
-		std::string_view event("want-course-top");
-		KZ::API::events::WantCourseTop data = {mapName, courseNameOrNumber, mode, limit, offset};
-		return KZGlobalService::SendMessage(event, data, std::move(cb));
-	}
-
-	/**
-	 * Query the world record of a course on a certain mode.
-	 */
-	template<typename CB>
-	static bool QueryWorldRecords(std::string_view mapName, std::string_view courseNameOrNumber, KZ::API::Mode mode, CB &&cb)
-	{
-		if (!KZGlobalService::IsAvailable())
-		{
-			return false;
-		}
-
-		std::string_view event("want-world-records");
-		KZ::API::events::WantWorldRecords data = {mapName, courseNameOrNumber, mode};
-		return KZGlobalService::SendMessage(event, data, std::move(cb));
-	}
-
-private:
-	enum class State
-	{
-		/**
-		 * The default state
-		 */
-		Uninitialized,
-
-		/**
-		 * After `Init()` has returned
-		 */
-		Initialized,
-
-		/**
-		 * After we receive an "open" message on the WS thread
-		 */
-		Connected,
-
-		/**
-		 * After we sent the 'Hello' message
-		 */
-		HandshakeInitiated,
-
-		/**
-		 * After we received the 'HelloAck' message
-		 */
-		HandshakeCompleted,
-
-		/**
-		 * After the server closed the connection for a reason that won't change
-		 */
-		Disconnected,
-
-		/**
-		 * After the server closed the connection, but it's still worth to retry the connection
-		 */
-		DisconnectedButWorthRetrying,
+		PlayerIdentifier player;
+		std::string_view map;
+		std::string_view course;
+		KZ::api::Mode mode;
+		std::vector<std::string_view> styles;
 	};
 
-	/**
-	 * The current connection state
-	 */
-	static inline std::atomic<State> state = State::Uninitialized;
-
-	static inline struct
+	template<typename CB>
+	static bool QueryPB(const QueryPBParams &params, CB &&callback)
 	{
-		std::mutex mutex;
+		if (!KZGlobalService::IsAvailable())
+		{
+			return false;
+		}
 
-		/**
-		 * Callbacks to execute on the main thread as soon as possible
-		 */
-		std::vector<std::function<void()>> queue;
+		KZ::api::messages::WantPersonalBest message;
+		message.player = params.player.Value();
+		message.map = params.map;
+		message.course = params.course;
+		message.mode = params.mode;
+		message.styles = params.styles;
 
-		/**
-		 * Callbacks to execute on the main thread as soon as we are fully connected to the API
-		 */
-		std::vector<std::function<void()>> whenConnectedQueue;
-	} mainThreadCallbacks {};
+		return KZGlobalService::WS::SendMessage(message, std::move(callback));
+	}
 
-	// invariant: should be `nullptr` if `state == Uninitialized` and otherwise a valid pointer
-	static inline ix::WebSocket *socket = nullptr;
-
-	/**
-	 * The ID we'll use for the next message we send to the API.
-	 */
-	static inline std::atomic<u32> nextMessageID = 1;
-
-	/**
-	 * Callbacks to execute when we receive responses to messages we sent earlier.
-	 *
-	 * The key is the message ID we're looking for, and the callback will be
-	 * invoked with that message ID and the payload.
-	 */
-	static inline struct
+	struct QueryCourseTopParams
 	{
-		std::mutex mutex;
-		std::unordered_map<u32, std::function<void(u32, const Json &)>> queue;
-	} messageCallbacks {};
+		std::string_view map;
+		std::string_view course;
+		KZ::api::Mode mode;
+		u32 limit;
+		u32 offset;
+	};
 
-	/**
-	 * Information about the current map we got from the API
-	 */
-	static inline struct
+	template<typename CB>
+	static bool QueryCourseTop(const QueryCourseTopParams &params, CB &&callback)
 	{
-		std::mutex mutex;
-		std::optional<KZ::API::Map> data;
-	} currentMap {};
+		if (!KZGlobalService::IsAvailable())
+		{
+			return false;
+		}
 
-	/**
-	 * Information about all modes the API knows about
-	 */
-	static inline struct
+		KZ::api::messages::WantCourseTop message;
+		message.map = params.map;
+		message.course = params.course;
+		message.mode = params.mode;
+		message.limit = params.limit;
+		message.offset = params.offset;
+
+		return KZGlobalService::WS::SendMessage(std::move(message), std::move(callback));
+	}
+
+	template<typename CB>
+	static bool QueryWorldRecords(std::string_view map, std::string_view course, KZ::api::Mode mode, CB &&callback)
 	{
-		std::mutex mutex;
-		std::vector<KZ::API::handshake::HelloAck::ModeInfo> data;
-	} globalModes;
+		if (!KZGlobalService::IsAvailable())
+		{
+			return false;
+		}
 
-	/**
-	 * Information about all styles the API knows about
-	 */
-	static inline struct
-	{
-		std::mutex mutex;
-		std::vector<KZ::API::handshake::HelloAck::StyleInfo> data;
-	} globalStyles;
+		KZ::api::messages::WantWorldRecords message;
+		message.map = map;
+		message.course = course;
+		message.mode = mode;
 
-	static inline struct
-	{
-		std::mutex mutex;
-		std::vector<KZ::API::handshake::HelloAck::Announcement> data;
-	} announcements;
+		return KZGlobalService::WS::SendMessage(std::move(message), std::move(callback));
+	}
 
-public:
 	void PrintAnnouncements();
 
-private:
+	static void OnActivateServer();
+	static void OnServerGamePostSimulate();
+
 	static void EnforceConVars();
 	static void RestoreConVars();
 
-	/**
-	 * Callback we pass to `IXWebSocket`.
-	 *
-	 * This will be called on the WebSocket thread.
-	 */
-	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
+	void OnPlayerAuthorized();
+	void OnClientDisconnect();
 
 	/**
-	 * Initiates the handshake with the API once a connection has been established.
-	 *
-	 * Has to be called from the main thread.
+	 * Whether the player is globally banned.
 	 */
-	static void InitiateHandshake();
-
-	/**
-	 * Completes the handshake with the API.
-	 *
-	 * Has to be called from the main thread.
-	 */
-	static void CompleteHandshake(KZ::API::handshake::HelloAck &ack);
-
-	/**
-	 * Queues a callback to be executed on the main thread as soon as possible.
-	 */
-	template<typename CB>
-	static void AddMainThreadCallback(CB &&callback)
+	bool IsBanned() const
 	{
-		std::unique_lock lock(KZGlobalService::mainThreadCallbacks.mutex);
-		KZGlobalService::mainThreadCallbacks.queue.emplace_back(std::move(callback));
+		return this->playerInfo.isBanned;
 	}
 
+private:
 	/**
-	 * Queues a callback to be executed on the main thread as soon as we have an established connection to the API.
+	 * API information about modes.
 	 */
-	template<typename CB>
-	static void AddWhenConnectedCallback(CB &&callback)
+	static inline struct
 	{
-		std::unique_lock lock(KZGlobalService::mainThreadCallbacks.mutex);
-		KZGlobalService::mainThreadCallbacks.whenConnectedQueue.emplace_back(std::move(callback));
-	}
+		std::mutex mutex;
+		GlobalModeChecksums checksums;
+	} globalModes;
 
 	/**
-	 * Queues a callback to be executed when we receive a message with the given ID.
-	 *
-	 * The callback will be executed on the main thread.
+	 * API information about styles.
 	 */
-	template<typename CB>
-	static void AddMessageCallback(u32 messageID, CB &&callback)
+	static inline struct
 	{
-		std::unique_lock lock(KZGlobalService::messageCallbacks.mutex);
-		KZGlobalService::messageCallbacks.queue[messageID] = std::move(callback);
-	}
+		std::mutex mutex;
+		std::vector<GlobalStyleChecksum> checksums;
+	} globalStyles;
 
 	/**
-	 * Executes the callback with the given ID, if any.
-	 *
-	 * The callback will be executed on the main thread.
+	 * API announcements.
 	 */
-	static void ExecuteMessageCallback(u32 messageID, const Json &payload);
-
-	/**
-	 * Prepares a message to be sent to the API.
-	 *
-	 * Note: we specialize `handshake::Hello` here because the format is slightly different from all other messages
-	 */
-	static bool PrepareMessage(std::string_view event, u32 messageID, const KZ::API::handshake::Hello &data, Json &payload)
+	static inline struct
 	{
-		if (KZGlobalService::state.load() != State::Connected)
-		{
-			META_CONPRINTF("[KZ::Global] WARN: called `SendMessage()` before connection was established (state=%i)\n", KZGlobalService::state.load());
-			return false;
-		}
+		std::mutex mutex;
+		std::vector<KZ::api::messages::handshake::HelloAck::Announcement> announcements;
+	} globalAnnouncements;
 
-		return payload.Set("id", messageID) && data.ToJson(payload);
-	}
-
-	/**
-	 * Prepares a message to be sent to the API.
-	 */
-	template<typename T>
-	static bool PrepareMessage(std::string_view event, u32 messageID, const T &data, Json &payload)
-	{
-		if (KZGlobalService::state.load() != State::HandshakeCompleted)
-		{
-			META_CONPRINTF("[KZ::Global] WARN: called `SendMessage()` before handshake has completed (state=%i)\n", KZGlobalService::state.load());
-			return false;
-		}
-
-		// clang-format off
-		bool success = payload.Set("id", messageID)
-			&& payload.Set("event", event)
-			&& payload.Set("data", data);
-		// clang-format on
-
-		if (!success)
-		{
-			META_CONPRINTF("[KZ::Global] Failed to serialize message for event `%s`.\n", event);
-		}
-
-		return success;
-	}
-
-	/**
-	 * Sends a message to the API.
-	 */
-	template<typename T>
-	static bool SendMessage(std::string_view event, const T &data)
-	{
-		Json payload;
-
-		if (!KZGlobalService::PrepareMessage(event, KZGlobalService::nextMessageID++, data, payload))
-		{
-			return false;
-		}
-
-		KZGlobalService::socket->send(payload.ToString());
-		return true;
-	}
-
-	/**
-	 * Sends a message to the API with a callback to be executed when we get a response.
-	 */
-	template<typename T, typename CB>
-	static bool SendMessage(std::string_view event, const T &data, CB &&callback)
-	{
-		u32 messageID = KZGlobalService::nextMessageID++;
-		Json payload;
-
-		if (!KZGlobalService::PrepareMessage(event, messageID, data, payload))
-		{
-			return false;
-		}
-
-		// clang-format off
-		KZGlobalService::AddMessageCallback(messageID, [callback = std::move(callback)](u32 messageID, const Json& payload)
-		{
-			if (!payload.IsValid())
-			{
-				META_CONPRINTF("[KZ::Global] WebSocket message is not valid JSON.\n");
-				return;
-			}
-
-			std::remove_reference_t<typename decltype(std::function(callback))::argument_type> decoded;
-
-			if (!payload.Get("data", decoded))
-			{
-				META_CONPRINTF("[KZ::Global] WebSocket message does not contain a valid `data` field.\n");
-				return;
-			}
-
-			callback(decoded);
-		});
-		// clang-format on
-
-		KZGlobalService::socket->send(payload.ToString());
-		return true;
-	}
+private:
+	static void OnMapInfo(const std::optional<KZ::api::Map> &mapInfo);
+	static void OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ack, u64 steamID);
+	static void OnWorldRecordsForCache(const KZ::api::messages::WorldRecordsForCache &records);
 };

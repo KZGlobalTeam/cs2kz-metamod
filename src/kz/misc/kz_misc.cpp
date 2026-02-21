@@ -19,7 +19,6 @@
 #include "kz/telemetry/kz_telemetry.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/tip/kz_tip.h"
-#include "kz/global/kz_global.h"
 #include "kz/profile/kz_profile.h"
 #include "kz/pistol/kz_pistol.h"
 #include "kz/racing/kz_racing.h"

@@ -2,7 +2,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
-#include "kz/global/events.h"
+#include "kz/global/messages.h"
 
 #include "utils/simplecmds.h"
 
@@ -44,43 +44,47 @@ struct TopRecordRequest : public BaseRequest
 		}
 		if (this->globalStatus == ResponseStatus::ENABLED)
 		{
-			auto callback = [uid = this->uid](KZ::API::events::WorldRecords &wrs)
-			{
-				TopRecordRequest *req = (TopRecordRequest *)TopRecordRequest::Find(uid);
-				if (!req)
-				{
-					return;
-				}
-
-				if (wrs.map.has_value() && wrs.course.has_value())
-				{
-					req->mapName = wrs.map->name.c_str();
-					req->courseName = wrs.course->name.c_str();
-					req->globalStatus = ResponseStatus::RECEIVED;
-				}
-				else
-				{
-					req->globalStatus = ResponseStatus::DISABLED;
-					return;
-				}
-
-				req->wrData.hasRecord = wrs.overall.has_value();
-				if (req->wrData.hasRecord)
-				{
-					req->wrData.holder = wrs.overall->player.name.c_str();
-					req->wrData.runTime = wrs.overall->time;
-					req->wrData.teleportsUsed = wrs.overall->teleports;
-				}
-				req->wrData.hasRecordPro = wrs.pro.has_value();
-				if (req->wrData.hasRecordPro)
-				{
-					req->wrData.holderPro = wrs.pro->player.name.c_str();
-					req->wrData.runTimePro = wrs.pro->time;
-				}
-			};
 			this->globalStatus = ResponseStatus::PENDING;
-			KZGlobalService::QueryWorldRecords(std::string_view(this->mapName.Get(), this->mapName.Length()),
-											   std::string_view(this->courseName.Get(), this->courseName.Length()), this->apiMode, callback);
+
+			std::string_view map(this->mapName.Get(), this->mapName.Length());
+			std::string_view course(this->courseName.Get(), this->courseName.Length());
+			KZGlobalService::MessageCallback<KZ::api::messages::WorldRecords> callback(TopRecordRequest::OnWorldRecordsQueried, this->uid);
+			KZGlobalService::QueryWorldRecords(map, course, this->apiMode, std::move(callback));
+		}
+	}
+
+	static void OnWorldRecordsQueried(const KZ::api::messages::WorldRecords &records, u64 uid)
+	{
+		TopRecordRequest *req = (TopRecordRequest *)TopRecordRequest::Find(uid);
+		if (!req)
+		{
+			return;
+		}
+
+		if (records.map.has_value() && records.course.has_value())
+		{
+			req->mapName = records.map->name.c_str();
+			req->courseName = records.course->name.c_str();
+			req->globalStatus = ResponseStatus::RECEIVED;
+		}
+		else
+		{
+			req->globalStatus = ResponseStatus::DISABLED;
+			return;
+		}
+
+		req->wrData.hasRecord = records.overall.has_value();
+		if (req->wrData.hasRecord)
+		{
+			req->wrData.holder = records.overall->player.name.c_str();
+			req->wrData.runTime = records.overall->time;
+			req->wrData.teleportsUsed = records.overall->teleports;
+		}
+		req->wrData.hasRecordPro = records.pro.has_value();
+		if (req->wrData.hasRecordPro)
+		{
+			req->wrData.holderPro = records.pro->player.name.c_str();
+			req->wrData.runTimePro = records.pro->time;
 		}
 	}
 

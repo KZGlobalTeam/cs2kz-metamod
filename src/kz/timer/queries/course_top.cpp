@@ -191,43 +191,52 @@ struct CourseTopRequest : public BaseRequest
 
 		if (this->globalStatus == ResponseStatus::ENABLED)
 		{
-			auto callback = [uid = this->uid](KZ::API::events::CourseTop &ctops)
-			{
-				CourseTopRequest *req = (CourseTopRequest *)CourseTopRequest::Find(uid);
-				if (!req)
-				{
-					return;
-				}
-
-				if (ctops.map.has_value() && ctops.course.has_value())
-				{
-					req->mapName = ctops.map->name.c_str();
-					req->courseName = ctops.course->name.c_str();
-					req->globalStatus = ResponseStatus::RECEIVED;
-				}
-				else
-				{
-					req->globalStatus = ResponseStatus::DISABLED;
-					return;
-				}
-				for (const auto &record : ctops.overall)
-				{
-					CUtlString id;
-					id.Format("%u", record.id);
-					req->wrData.overallData.AddToTail(
-						{id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
-				}
-				for (const auto &record : ctops.pro)
-				{
-					CUtlString id;
-					id.Format("%u", record.id);
-					req->wrData.proData.AddToTail({id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
-				}
-			};
 			this->globalStatus = ResponseStatus::PENDING;
-			KZGlobalService::QueryCourseTop(std::string_view(this->mapName.Get(), this->mapName.Length()),
-											std::string_view(this->courseName.Get(), this->courseName.Length()), this->apiMode, this->limit,
-											this->offset, callback);
+
+			KZGlobalService::QueryCourseTopParams params;
+			params.map = std::string_view(this->mapName.Get(), this->mapName.Length());
+			params.course = std::string_view(this->courseName.Get(), this->courseName.Length());
+			params.mode = this->apiMode;
+			params.limit = this->limit;
+			params.offset = this->offset;
+
+			KZGlobalService::MessageCallback<KZ::api::messages::CourseTop> callback(CourseTopRequest::OnGlobalCourseTopQueried, this->uid);
+
+			KZGlobalService::QueryCourseTop(std::move(params), std::move(callback));
+		}
+	}
+
+	static void OnGlobalCourseTopQueried(const KZ::api::messages::CourseTop &ctop, u64 uid)
+	{
+		CourseTopRequest *req = (CourseTopRequest *)CourseTopRequest::Find(uid);
+		if (!req)
+		{
+			return;
+		}
+
+		if (ctop.map.has_value() && ctop.course.has_value())
+		{
+			req->mapName = ctop.map->name.c_str();
+			req->courseName = ctop.course->name.c_str();
+			req->globalStatus = ResponseStatus::RECEIVED;
+		}
+		else
+		{
+			req->globalStatus = ResponseStatus::DISABLED;
+			return;
+		}
+		for (const auto &record : ctop.overall)
+		{
+			CUtlString id;
+			id.Format("%s", record.id.c_str());
+			req->wrData.overallData.AddToTail(
+				{id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
+		}
+		for (const auto &record : ctop.pro)
+		{
+			CUtlString id;
+			id.Format("%s", record.id.c_str());
+			req->wrData.proData.AddToTail({id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
 		}
 	}
 

@@ -1,144 +1,119 @@
 #include <string_view>
 
 #include "common.h"
-#include "kz_global.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
-#include "kz/style/kz_style.h"
 #include "kz/option/kz_option.h"
+#include "kz/style/kz_style.h"
+#include "kz_global.h"
 #include "utils/http.h"
 #include "utils/simplecmds.h"
 
-static_function std::string_view MakeStatusString(bool checkmark)
+namespace
 {
-	using namespace std::literals::string_view_literals;
-	return checkmark ? "{green}✓{default}"sv : "{darkred}✗{default}"sv;
-}
+	std::string_view MakeStatusString(bool checkmark)
+	{
+		using namespace std::literals::string_view_literals;
+		return checkmark ? "{green}✓{default}"sv : "{darkred}✗{default}"sv;
+	}
+
+	struct GlobalStatus
+	{
+		bool apiOnline = false;
+		bool serverConnected = false;
+		bool mapGlobal = false;
+		bool playerGlobal = false;
+		bool modeGlobal = false;
+		bool stylesGlobal = false;
+
+		void Report(KZPlayer *player) const
+		{
+			// clang-format off
+			player->languageService->PrintChat(true, false, "Global Check",
+					MakeStatusString(this->apiOnline),
+					MakeStatusString(this->serverConnected),
+					MakeStatusString(this->mapGlobal),
+					MakeStatusString(this->playerGlobal),
+					MakeStatusString(this->modeGlobal),
+					MakeStatusString(this->stylesGlobal));
+			// clang-format on
+		}
+	};
+}; // namespace
 
 SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 {
+	GlobalStatus status;
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
 	if (KZGlobalService::IsAvailable())
 	{
-		bool apiStatus = true;
-		bool serverStatus = true;
-		bool mapStatus = KZGlobalService::WithCurrentMap([](const KZ::API::Map *currentMap) { return currentMap != nullptr; });
-		bool playerStatus = !player->globalService->playerInfo.isBanned;
+		status.apiOnline = true;
+		status.serverConnected = true;
+		status.mapGlobal = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &mapInfo) { return mapInfo.has_value(); });
+		status.playerGlobal = !player->globalService->IsBanned();
 
-		// clang-format off
-		bool modeStatus = KZGlobalService::WithGlobalModes([&](const auto& globalModes)
-		{
-			KZ::API::Mode mode;
-			if (KZ::API::DecodeModeString(player->modeService->GetModeShortName(), mode))
+		KZGlobalService::WithGlobalModes(
+			[&](const KZGlobalService::GlobalModeChecksums &checksums)
 			{
-				KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(player->modeService->GetModeShortName());
+				const char *modeName = player->modeService->GetModeShortName();
+				KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(modeName);
 
-				for (const auto &globalMode : globalModes)
+				if (KZ_STREQ(modeName, "VNL"))
 				{
-#ifdef _WIN32
-					const std::string& checksum = globalMode.windowsChecksum;
-#else
-					const std::string& checksum = globalMode.linuxChecksum;
-#endif
+					status.modeGlobal = KZ_STREQ(modeInfo.md5, checksums.vanilla.c_str());
+				}
+				else if (KZ_STREQ(modeName, "CKZ"))
+				{
+					status.modeGlobal = KZ_STREQ(modeInfo.md5, checksums.classic.c_str());
+				}
+			});
 
-					if (mode == globalMode.mode && KZ_STREQ(modeInfo.md5, checksum.c_str()))
+		KZGlobalService::WithGlobalStyles(
+			[&](const std::vector<KZGlobalService::GlobalStyleChecksum> &checksums)
+			{
+				bool allValid = true;
+
+				FOR_EACH_VEC(player->styleServices, i)
+				{
+					bool isValid = false;
+
+					for (const KZGlobalService::GlobalStyleChecksum &checksum : checksums)
 					{
-						return true;
+						if (KZ_STREQ(player->styleServices[i]->GetStyleShortName(), checksum.style.c_str()))
+						{
+							auto styleInfo = KZ::style::GetStyleInfo(player->styleServices[i]);
+							isValid = KZ_STREQ(styleInfo.md5, checksum.checksum.c_str());
+							break;
+						}
 					}
-				}
-			}
 
-			return false;
-		});
-		// clang-format on
-
-		// clang-format off
-		bool styleStatus = KZGlobalService::WithGlobalStyles([&](const auto& globalStyles)
-		{
-			FOR_EACH_VEC(player->styleServices, i)
-			{
-				if (!styleStatus)
-				{
-					return false;
-				}
-
-				KZ::API::Style style;
-
-				if (!KZ::API::DecodeStyleString(player->styleServices[i]->GetStyleShortName(), style))
-				{
-					return false;
-				}
-
-				auto styleInfo = KZ::style::GetStyleInfo(player->styleServices[i]);
-				bool found = false;
-
-				for (const auto &globalStyle : globalStyles)
-				{
-#ifdef _WIN32
-					const std::string& checksum = globalStyle.windowsChecksum;
-#else
-					const std::string& checksum = globalStyle.linuxChecksum;
-#endif
-
-					if (style == globalStyle.style && KZ_STREQ(styleInfo.md5, checksum.c_str()))
+					if (!isValid)
 					{
-						found = true;
+						allValid = false;
 						break;
 					}
 				}
 
-				if (!found)
-				{
-					return false;
-				}
-			}
+				status.stylesGlobal = allValid;
+			});
 
-			return true;
-		});
-		// clang-format on
-
-		// clang-format off
-		player->languageService->PrintChat(true, false, "Global Check",
-				MakeStatusString(apiStatus),
-				MakeStatusString(serverStatus),
-				MakeStatusString(mapStatus),
-				MakeStatusString(playerStatus),
-				MakeStatusString(modeStatus),
-				MakeStatusString(styleStatus));
-		// clang-format on
+		status.Report(player);
 	}
 	else
 	{
 		HTTP::Request request(HTTP::Method::GET, KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org"));
-		auto callback = [player](HTTP::Response response)
+		auto onResponse = [=](HTTP::Response response) mutable
 		{
-			std::string_view apiStatus = MakeStatusString(response.status == 200);
-			std::string_view serverStatus = MakeStatusString(false);
-			std::string_view mapStatus = MakeStatusString(false);
-			std::string_view playerStatus = MakeStatusString(false);
-			std::string_view modeStatus = MakeStatusString(false);
-			std::string_view styleStatus = MakeStatusString(false);
+			status.apiOnline = (response.status == 200);
 
-			if (KZGlobalService::MayBecomeAvailable())
+			if (player)
 			{
-				mapStatus = "{yellow}?";
-				playerStatus = "{yellow}?";
-				modeStatus = "{yellow}?";
-				styleStatus = "{yellow}?";
+				status.Report(player);
 			}
-
-			// clang-format off
-			player->languageService->PrintChat(true, false, "Global Check",
-					apiStatus,
-					serverStatus,
-					mapStatus,
-					playerStatus,
-					modeStatus,
-					styleStatus);
-			// clang-format on
 		};
-		request.Send(callback);
+
+		request.Send(std::move(onResponse));
 	}
 
 	return MRES_SUPERCEDE;

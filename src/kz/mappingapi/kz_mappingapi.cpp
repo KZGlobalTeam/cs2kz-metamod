@@ -980,14 +980,109 @@ static_global const char *courseStateKeys[] = {
 };
 // clang-format on
 
+static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ::api::Map::Course> &courses)
+{
+	CUtlString headers[KZ_ARRAYSIZE(columnKeysWithAPI)];
+	for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithAPI); col++)
+	{
+		headers[col] = player->languageService->PrepareMessage(columnKeysWithAPI[col]).c_str();
+	}
+	utils::Table<KZ_ARRAYSIZE(columnKeysWithAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		KZCourseDescriptor *course = g_sortedCourses[i];
+		const KZ::api::Map::Course *apiCourse = nullptr;
+		for (auto &c : courses)
+		{
+			if (c.id == course->globalDatabaseID)
+			{
+				apiCourse = &c;
+				break;
+			}
+		}
+		std::string tierClassic {}, tierVanilla {}, stateClassic {}, stateVanilla {}, mappers {};
+		if (apiCourse)
+		{
+			// Mappers
+			for (u32 m = 0; m < apiCourse->mappers.size(); m++)
+			{
+				mappers += apiCourse->mappers[m].name;
+				if (m < apiCourse->mappers.size() - 1)
+				{
+					mappers += ", ";
+				}
+			}
+			// Tiers
+			tierClassic = std::to_string((u8)apiCourse->filters.classic.nubTier) + "/" + std::to_string((u8)apiCourse->filters.classic.proTier);
+			tierVanilla = std::to_string((u8)apiCourse->filters.vanilla.nubTier) + "/" + std::to_string((u8)apiCourse->filters.vanilla.proTier);
+			// States
+			stateClassic = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.classic.state + 1]);
+			stateVanilla = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.vanilla.state + 1]);
+		}
+		else
+		{
+			META_CONPRINTF("Warning: Course ID %i not found in API map data!\n", course->globalDatabaseID);
+		}
+		// clang-format off
+		table.SetRow(
+			i,
+			std::to_string(course->id).c_str(),
+			course->name,
+			mappers.c_str(),
+			stateClassic.c_str(),
+			tierClassic.c_str(),
+			stateVanilla.c_str(),
+			tierVanilla.c_str()
+		);
+		// clang-format on
+	}
+	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetTitle());
+	player->PrintConsole(false, false, table.GetHeader());
+	for (u32 i = 0; i < table.GetNumEntries(); i++)
+	{
+		player->PrintConsole(false, false, table.GetLine(i));
+	}
+	player->PrintConsole(false, false, table.GetSeparator("="));
+}
+
+static_function void PrintCoursesWithoutMap(KZPlayer *player)
+{
+	CUtlString headers[KZ_ARRAYSIZE(columnKeysWithoutAPI)];
+	for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithoutAPI); col++)
+	{
+		headers[col] = player->languageService->PrepareMessage(columnKeysWithoutAPI[col]).c_str();
+	}
+	utils::Table<KZ_ARRAYSIZE(columnKeysWithoutAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
+	FOR_EACH_VEC(g_sortedCourses, i)
+	{
+		KZCourseDescriptor *course = g_sortedCourses[i];
+		// clang-format off
+		table.SetRow(
+			i,
+			std::to_string(course->id).c_str(),
+			course->name
+		);
+		// clang-format on
+	}
+	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetTitle());
+	player->PrintConsole(false, false, table.GetHeader());
+	for (u32 i = 0; i < table.GetNumEntries(); i++)
+	{
+		player->PrintConsole(false, false, table.GetLine(i));
+	}
+	player->PrintConsole(false, false, table.GetSeparator("="));
+}
+
 void KZ::course::PrintCourses(KZPlayer *player)
 {
 	// If we have API map data, that means we have information about individual mappers for each course, along with tiers for both modes.
 	// Otherwise, the only course information we have is the course ID and the course name.
 	bool hasMap = false;
-	std::vector<KZ::API::Map::Course> courses;
+	std::vector<KZ::api::Map::Course> courses;
 	hasMap = KZGlobalService::WithCurrentMap(
-		[&](const KZ::API::Map *currentMap)
+		[&](const std::optional<KZ::api::Map> &currentMap)
 		{
 			if (currentMap)
 			{
@@ -998,96 +1093,11 @@ void KZ::course::PrintCourses(KZPlayer *player)
 		});
 	if (hasMap)
 	{
-		CUtlString headers[KZ_ARRAYSIZE(columnKeysWithAPI)];
-		for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithAPI); col++)
-		{
-			headers[col] = player->languageService->PrepareMessage(columnKeysWithAPI[col]).c_str();
-		}
-		utils::Table<KZ_ARRAYSIZE(columnKeysWithAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
-		FOR_EACH_VEC(g_sortedCourses, i)
-		{
-			KZCourseDescriptor *course = g_sortedCourses[i];
-			const KZ::API::Map::Course *apiCourse = nullptr;
-			for (auto &c : courses)
-			{
-				if (c.id == course->globalDatabaseID)
-				{
-					apiCourse = &c;
-					break;
-				}
-			}
-			std::string tierClassic {}, tierVanilla {}, stateClassic {}, stateVanilla {}, mappers {};
-			if (apiCourse)
-			{
-				// Mappers
-				for (u32 m = 0; m < apiCourse->mappers.size(); m++)
-				{
-					mappers += apiCourse->mappers[m].name;
-					if (m < apiCourse->mappers.size() - 1)
-					{
-						mappers += ", ";
-					}
-				}
-				// Tiers
-				tierClassic = std::to_string((u8)apiCourse->filters.classic.nubTier) + "/" + std::to_string((u8)apiCourse->filters.classic.proTier);
-				tierVanilla = std::to_string((u8)apiCourse->filters.vanilla.nubTier) + "/" + std::to_string((u8)apiCourse->filters.vanilla.proTier);
-				// States
-				stateClassic = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.classic.state + 1]);
-				stateVanilla = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.vanilla.state + 1]);
-			}
-			else
-			{
-				META_CONPRINTF("Warning: Course ID %i not found in API map data!\n", course->globalDatabaseID);
-			}
-			// clang-format off
-			table.SetRow(
-				i,
-				std::to_string(course->id).c_str(),
-				course->name,
-				mappers.c_str(),
-				stateClassic.c_str(),
-				tierClassic.c_str(),
-				stateVanilla.c_str(),
-				tierVanilla.c_str()
-			);
-			// clang-format on
-		}
-		player->PrintConsole(false, false, table.GetSeparator("="));
-		player->PrintConsole(false, false, table.GetTitle());
-		player->PrintConsole(false, false, table.GetHeader());
-		for (u32 i = 0; i < table.GetNumEntries(); i++)
-		{
-			player->PrintConsole(false, false, table.GetLine(i));
-		}
-		player->PrintConsole(false, false, table.GetSeparator("="));
+		PrintCoursesWithMap(player, courses);
 	}
 	else
 	{
-		CUtlString headers[KZ_ARRAYSIZE(columnKeysWithoutAPI)];
-		for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithoutAPI); col++)
-		{
-			headers[col] = player->languageService->PrepareMessage(columnKeysWithoutAPI[col]).c_str();
-		}
-		utils::Table<KZ_ARRAYSIZE(columnKeysWithoutAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
-		FOR_EACH_VEC(g_sortedCourses, i)
-		{
-			KZCourseDescriptor *course = g_sortedCourses[i];
-			// clang-format off
-			table.SetRow(
-				i,
-				std::to_string(course->id).c_str(),
-				course->name
-			);
-			// clang-format on
-		}
-		player->PrintConsole(false, false, table.GetSeparator("="));
-		player->PrintConsole(false, false, table.GetTitle());
-		player->PrintConsole(false, false, table.GetHeader());
-		for (u32 i = 0; i < table.GetNumEntries(); i++)
-		{
-			player->PrintConsole(false, false, table.GetLine(i));
-		}
-		player->PrintConsole(false, false, table.GetSeparator("="));
+		PrintCoursesWithoutMap(player);
 	}
 }
 
@@ -1099,13 +1109,13 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 	}
 
 	bool hasMap = false;
-	std::vector<KZ::API::Map::Course> courses;
-	std::vector<KZ::API::PlayerInfo> mappers;
+	std::vector<KZ::api::Map::Course> courses;
+	std::vector<KZ::api::PlayerInfo> mappers;
 	std::string mapApprovedAt;
-	KZ::API::Map::State mapState;
+	KZ::api::Map::State mapState;
 	std::string mapDescription;
 	hasMap = KZGlobalService::WithCurrentMap(
-		[&](const KZ::API::Map *currentMap)
+		[&](const std::optional<KZ::api::Map> &currentMap)
 		{
 			if (currentMap)
 			{
@@ -1155,10 +1165,10 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 		std::string stateStr;
 		switch (mapState)
 		{
-			case KZ::API::Map::State::Approved:
+			case KZ::api::Map::State::Approved:
 				stateStr = player->languageService->PrepareMessage("Map Info - Approved", mapApprovedAt.c_str());
 				break;
-			case KZ::API::Map::State::InTesting:
+			case KZ::api::Map::State::InTesting:
 				stateStr = player->languageService->PrepareMessage("Map Info - In Testing");
 				break;
 			default:
@@ -1218,9 +1228,9 @@ static_function void PrintCourseTier(KZPlayer *player, const CCommand *args)
 		return;
 	}
 	bool hasMap = false;
-	std::vector<KZ::API::Map::Course> courses;
+	std::vector<KZ::api::Map::Course> courses;
 	hasMap = KZGlobalService::WithCurrentMap(
-		[&](const KZ::API::Map *currentMap)
+		[&](const std::optional<KZ::api::Map> &currentMap)
 		{
 			if (currentMap)
 			{
@@ -1234,7 +1244,7 @@ static_function void PrintCourseTier(KZPlayer *player, const CCommand *args)
 		player->languageService->PrintChat(true, false, "Map Info - No API Map Data (Short)");
 		return;
 	}
-	const KZ::API::Map::Course *apiCourse = nullptr;
+	const KZ::api::Map::Course *apiCourse = nullptr;
 	for (auto &c : courses)
 	{
 		if (c.id == course->globalDatabaseID)

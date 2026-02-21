@@ -145,27 +145,27 @@
 
 	"Beat Course Info - Global Points (TP)"
 	{
-		// Course Points: 2345 Overall (+512) | Player Rating: 34475
-		"#format"	"points:.0f,points_gained:.0f,player_rating:.0f"
-		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
-		"chi"		"{grey}关卡得分: {purple}{points}{grey} {yellow}总体{grey} (+{purple}{points_gained}{grey}) | 玩家 Rating: {purple}{player_rating}{grey}"
-		"pl"		"{grey}Punkty na trasie: {purple}{points}{grey} {yellow}Ogólnie{grey} (+{purple}{points_gained}{grey}) | Ocena gracza: {purple}{player_rating}{grey}"
-		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
-		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
-		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey}) | Spēlētāja reitings: {purple}{player_rating}{grey}"
-		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey}) | Spieler-Rating: {purple}{player_rating}{grey}"
+		// Course Points: 2345 Overall (+512)
+		"#format"	"points:.0f,points_gained:.0f"
+		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})"
+		"chi"		"{grey}关卡得分: {purple}{points}{grey} {yellow}总体{grey} (+{purple}{points_gained}{grey})"
+		"pl"		"{grey}Punkty na trasie: {purple}{points}{grey} {yellow}Ogólnie{grey} (+{purple}{points_gained}{grey})"
+		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey})"
+		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey})"
+		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey})"
+		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey})"
 	}
 	"Beat Course Info - Global Points (PRO)"
 	{
-		// Course Points: 2345 Overall (+512) / 3345 PRO (+123) | Player Rating: 34475
-		"#format"	"points:.0f,points_gained:.0f,points_pro:.0f,points_gained_pro:.0f,player_rating:.0f"
-		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
-		"chi"		"{grey}关卡得分: {purple}{points}{grey} {yellow}总体{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}裸跳{grey} (+{purple}{points_gained}{grey}) | 玩家 Rating: {purple}{player_rating}{grey}"
-		"pl"		"{grey}Punkty na trasie: {purple}{points}{grey} {yellow}Ogólnie{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Ocena gracza: {purple}{player_rating}{grey}"
-		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Рейтинг гравця: {purple}{player_rating}{grey}"
-		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Spelar Gradering: {purple}{player_rating}{grey}"
-		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey}) | Spēlētāja reitings: {purple}{player_rating}{grey}"
-		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey}) | Spieler-Rating: {purple}{player_rating}{grey}"
+		// Course Points: 2345 Overall (+512) / 3345 PRO (+123)
+		"#format"	"points:.0f,points_gained:.0f,points_pro:.0f,points_gained_pro:.0f"
+		"en"		"{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
+		"chi"		"{grey}关卡得分: {purple}{points}{grey} {yellow}总体{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}裸跳{grey} (+{purple}{points_gained_pro}{grey})"
+		"pl"		"{grey}Punkty na trasie: {purple}{points}{grey} {yellow}Ogólnie{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
+		"ua"		"{grey}Очки за курс: {purple}{points}{grey} {yellow}Загалом{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
+		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
+		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
+		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
 	}
 	"Beat Course Info - New World Record"
 	{

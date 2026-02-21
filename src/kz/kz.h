@@ -32,6 +32,7 @@ class KZBeamService;
 class KZCheckpointService;
 class KZDatabaseService;
 class KZGlobalService;
+class KZGlobalService;
 class KZHUDService;
 class KZJumpstatsService;
 class KZLanguageService;

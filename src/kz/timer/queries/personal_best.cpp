@@ -1,7 +1,7 @@
 #include "base_request.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
-#include "kz/global/events.h"
+#include "kz/global/messages.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -106,53 +106,70 @@ struct PBRequest : public BaseRequest
 			return;
 		}
 		this->globalStatus = ResponseStatus::PENDING;
-		auto callback = [uid = this->uid](KZ::API::events::PersonalBest &pb)
+
+		KZGlobalService::QueryPBParams params;
+
+		params.player =
+			this->targetSteamID64
+				? KZGlobalService::PlayerIdentifier::SteamID(this->targetSteamID64)
+				: KZGlobalService::PlayerIdentifier::Name(std::string_view(this->targetPlayerName.Get(), this->targetPlayerName.Length()));
+
+		params.map = std::string_view(this->mapName.Get(), this->mapName.Length());
+		params.course = std::string_view(this->courseName.Get(), this->courseName.Length());
+		params.mode = this->apiMode;
+
+		FOR_EACH_VEC(styleList, i)
 		{
-			PBRequest *req = (PBRequest *)PBRequest::Find(uid);
-			if (!req)
-			{
-				return;
-			}
+			params.styles.emplace_back(styleList[i].Get(), styleList[i].Length());
+		}
 
-			if (req->requestingGlobalPlayer && req->localStatus == ResponseStatus::ENABLED && pb.player.has_value())
-			{
-				req->requestingGlobalPlayer = false;
-				req->queryLocalRanking = !pb.player->isBanned;
-			}
+		KZGlobalService::MessageCallback<KZ::api::messages::PersonalBest> callback(PBRequest::OnPBQueried, this->uid);
+		KZGlobalService::QueryPB(std::move(params), std::move(callback));
+	}
 
-			if (pb.map.has_value() && pb.course.has_value())
-			{
-				req->mapName = pb.map->name.c_str();
-				req->courseName = pb.course->name.c_str();
-				req->globalStatus = ResponseStatus::RECEIVED;
-			}
-			else
-			{
-				req->globalStatus = ResponseStatus::DISABLED;
-				return;
-			}
+	static void OnPBQueried(const KZ::api::messages::PersonalBest &pb, u64 uid)
+	{
+		PBRequest *req = (PBRequest *)PBRequest::Find(uid);
+		if (!req)
+		{
+			return;
+		}
 
-			req->gpbData.hasPB = pb.overall.has_value();
-			if (req->gpbData.hasPB)
-			{
-				req->gpbData.runTime = pb.overall->time;
-				req->gpbData.rank = pb.overall->nubRank;
-				req->gpbData.maxRank = pb.overall->nubMaxRank;
-				req->gpbData.teleportsUsed = pb.overall->teleports;
-				req->gpbData.points = pb.overall->nubPoints;
-			}
-			req->gpbData.hasPBPro = pb.pro.has_value();
-			if (req->gpbData.hasPBPro)
-			{
-				req->gpbData.runTimePro = pb.pro->time;
-				req->gpbData.rankPro = pb.pro->proRank;
-				req->gpbData.maxRankPro = pb.pro->proMaxRank;
-				req->gpbData.pointsPro = pb.pro->proPoints;
-			}
-		};
-		KZGlobalService::QueryPB(this->targetSteamID64, std::string_view(this->targetPlayerName.Get(), this->targetPlayerName.Length()),
-								 std::string_view(this->mapName.Get(), this->mapName.Length()),
-								 std::string_view(this->courseName.Get(), this->courseName.Length()), this->apiMode, this->styleList, callback);
+		if (req->requestingGlobalPlayer && req->localStatus == ResponseStatus::ENABLED && pb.player.has_value())
+		{
+			req->requestingGlobalPlayer = false;
+			req->queryLocalRanking = !pb.player->isBanned;
+		}
+
+		if (pb.map.has_value() && pb.course.has_value())
+		{
+			req->mapName = pb.map->name.c_str();
+			req->courseName = pb.course->name.c_str();
+			req->globalStatus = ResponseStatus::RECEIVED;
+		}
+		else
+		{
+			req->globalStatus = ResponseStatus::DISABLED;
+			return;
+		}
+
+		req->gpbData.hasPB = pb.overall.has_value();
+		if (req->gpbData.hasPB)
+		{
+			req->gpbData.runTime = pb.overall->time;
+			req->gpbData.rank = pb.overall->nubRank;
+			req->gpbData.maxRank = pb.overall->nubMaxRank;
+			req->gpbData.teleportsUsed = pb.overall->teleports;
+			req->gpbData.points = pb.overall->nubPoints;
+		}
+		req->gpbData.hasPBPro = pb.pro.has_value();
+		if (req->gpbData.hasPBPro)
+		{
+			req->gpbData.runTimePro = pb.pro->time;
+			req->gpbData.rankPro = pb.pro->proRank;
+			req->gpbData.maxRankPro = pb.pro->proMaxRank;
+			req->gpbData.pointsPro = pb.pro->proPoints;
+		}
 	}
 
 	virtual void Reply()

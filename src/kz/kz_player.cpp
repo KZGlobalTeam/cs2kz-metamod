@@ -22,8 +22,8 @@
 #include "trigger/kz_trigger.h"
 #include "recording/kz_recording.h"
 #include "replays/kz_replaysystem.h"
-#include "global/kz_global.h"
 #include "racing/kz_racing.h"
+#include "global/kz_global.h"
 #include "profile/kz_profile.h"
 #include "pistol/kz_pistol.h"
 #include "fov/kz_fov.h"
@@ -57,8 +57,8 @@ void KZPlayer::Init()
 	delete this->telemetryService;
 	delete this->triggerService;
 	delete this->recordingService;
-	delete this->globalService;
 	delete this->racingService;
+	delete this->globalService;
 	delete this->measureService;
 	delete this->profileService;
 	delete this->pistolService;
@@ -81,8 +81,8 @@ void KZPlayer::Init()
 	this->telemetryService = new KZTelemetryService(this);
 	this->triggerService = new KZTriggerService(this);
 	this->recordingService = new KZRecordingService(this);
-	this->globalService = new KZGlobalService(this);
 	this->racingService = new KZRacingService(this);
+	this->globalService = new KZGlobalService(this);
 	this->measureService = new KZMeasureService(this);
 	this->profileService = new KZProfileService(this);
 	this->pistolService = new KZPistolService(this);

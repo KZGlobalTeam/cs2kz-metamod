@@ -5,7 +5,7 @@
 #pragma once
 
 #include "kz/timer/kz_timer.h"
-#include "kz/global/api.h"
+#include "kz/global/messages.h"
 
 struct RecordAnnounce
 {
@@ -145,8 +145,7 @@ public:
 			u64 maxRank {};
 		};
 
-		u32 recordId {};
-		f64 playerRating {};
+		std::string recordId {};
 		RunData overall {};
 		RunData pro {};
 	} globalResponse;
@@ -197,4 +196,7 @@ public:
 	void AnnounceLocal();
 	// Print the run's global rankings, and PB difference, course points and total rating (if available).
 	void AnnounceGlobal();
+
+private:
+	static void OnGlobalRecordSubmitted(const KZ::api::messages::NewRecordAck &ack, u32 uid);
 };

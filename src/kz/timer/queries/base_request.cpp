@@ -369,7 +369,7 @@ void BaseRequest::SetupMode(CUtlString modeName)
 		}
 	}
 
-	if (!KZ::API::DecodeModeString(this->modeName.Get(), this->apiMode))
+	if (!KZ::api::DecodeModeString(this->modeName.Get(), this->apiMode))
 	{
 		this->globalStatus = ResponseStatus::DISABLED;
 	}

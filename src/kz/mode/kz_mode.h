@@ -337,7 +337,7 @@ namespace KZ::mode
 	void EnableReplicatedModeCvars();
 
 	KZModeManager::ModePluginInfo GetModeInfo(KZModeService *mode);
-	KZModeManager::ModePluginInfo GetModeInfo(KZ::API::Mode mode);
+	KZModeManager::ModePluginInfo GetModeInfo(KZ::api::Mode mode);
 	KZModeManager::ModePluginInfo GetModeInfo(CUtlString modeName);
 	KZModeManager::ModePluginInfo GetModeInfoFromDatabaseID(i32 id);
 }; // namespace KZ::mode
