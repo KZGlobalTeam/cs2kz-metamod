@@ -18,7 +18,10 @@ enum EInButtonState : uint64_t
 
 class CInButtonState
 {
-	virtual SchemaMetaInfoHandle_t<CSchemaClassInfo> Schema_DynamicBinding() {}; // Do not use
+	virtual SchemaMetaInfoHandle_t<CSchemaClassInfo> Schema_DynamicBinding() // Do not use
+	{
+		return {};
+	}
 
 public:
 	uint64 m_pButtonStates[3];
