@@ -137,7 +137,12 @@ void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
 	}
 	else if (this->GetPendingInfraction())
 	{
+		KZDatabaseService::Unban(this->player->GetSteamId64());
 		this->GetPendingInfraction()->SubmitGlobalInfraction();
+	}
+	else
+	{
+		KZDatabaseService::Unban(this->player->GetSteamId64());
 	}
 }
 

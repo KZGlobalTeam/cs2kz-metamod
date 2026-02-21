@@ -32,6 +32,8 @@ After a player is marked as cheating via `KZAnticheatService::MarkInfraction(...
 
 ## Auth and backend availability scenarios
 
+The anticheat services behaves differently depending on different availability scenarios of the local DB and the global API.
+
 ### If marked before Steam auth
 
 - `MarkInfraction(...)` immediately kicks with `Invalid Steam Logon` and returns.
