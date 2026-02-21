@@ -98,7 +98,7 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 				status.stylesGlobal = allValid;
 			});
 
-		status.report(player);
+		status.Report(player);
 	}
 	else
 	{
@@ -109,7 +109,7 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 
 			if (player)
 			{
-				status.report(player);
+				status.Report(player);
 			}
 		};
 

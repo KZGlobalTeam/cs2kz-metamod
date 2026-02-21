@@ -68,7 +68,7 @@ void KZGlobalService::Init()
 	META_CONPRINTF("[KZ::Global] Initializing GlobalService...\n");
 
 	std::string apiUrl;
-	if (!getApiUrl(apiUrl))
+	if (!GetApiUrl(apiUrl))
 	{
 		KZGlobalService::state.store(KZGlobalService::State::Disconnected);
 		return;
@@ -76,7 +76,7 @@ void KZGlobalService::Init()
 	META_CONPRINTF("[KZ::Global] API URL is `%s`.\n", apiUrl.c_str());
 
 	std::string apiKey;
-	if (!getApiKey(apiKey))
+	if (!GetApiKey(apiKey))
 	{
 		KZGlobalService::state.store(KZGlobalService::State::Disconnected);
 		return;
