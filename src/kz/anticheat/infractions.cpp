@@ -47,6 +47,10 @@ void KZAnticheatService::CleanupInfractions()
 
 void KZAnticheatService::MarkInfraction(Infraction::Type type, const std::string &details)
 {
+	if (!this->ShouldRunDetections())
+	{
+		return;
+	}
 	if (!this->player->IsAuthenticated())
 	{
 		// Cannot mark infraction for unauthenticated players, so we just kick them.
@@ -96,6 +100,7 @@ void KZAnticheatService::Infraction::OnGlobalSubmitSuccess(const UUID_t &infract
 
 void KZAnticheatService::Infraction::OnGlobalSubmitFailure()
 {
+	this->banDuration = KZAnticheatService::Infraction::banDurations[(u8)this->type];
 	this->SubmitLocalInfraction();
 	this->SaveReplay();
 }

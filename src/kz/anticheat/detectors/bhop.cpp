@@ -24,6 +24,7 @@
 
 #define REPETITIVE_PATTERN_THRESHOLD 0.9f // If 90% of the perfs are the same pattern, it might be a cheat...
 #define LOW_PATTERN_THRESHOLD        4    // ...if the most common pattern is smaller than 4.
+#define HIGH_PATTERN_THRESHOLD       16.0f
 
 void KZAnticheatService::ParseCommandForJump(PlayerCommand *cmd)
 {
@@ -143,84 +144,100 @@ void KZAnticheatService::OnProcessMovementPost()
 
 void KZAnticheatService::OnJump()
 {
+	if (!this->ShouldRunDetections())
+	{
+		return;
+	}
 	if (this->player->IsPerfing(true) && !this->recentLandingEvents.empty() && this->recentLandingEvents.back().pendingPerf)
 	{
 		recentLandingEvents.back().hasPerfectBhop = true;
+		recentLandingEvents.back().shouldCountTowardsPerfChains =
+			this->player->GetCvarValueFromModeStyles("sv_jump_spam_penalty_time")->m_fl32Value >= ENGINE_FIXED_TICK_INTERVAL;
 	}
 }
 
 void KZAnticheatService::CheckLandingEvents()
 {
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
 	while (this->recentLandingEvents.size() > WINDOW_SIZE)
 	{
 		this->recentLandingEvents.pop_front();
 	}
 	if (this->recentLandingEvents.size() >= MIN_SAMPLE_COUNT)
 	{
-		u32 numPerfect = 0;
-		u32 maxConsecutivePerfect = 0;
-		u32 currentConsecutivePerfect = 0;
+		u32 numPerfs = 0;
+		u32 totalChainEligibleEvents = 0;
+		u32 maxPerfChain = 0;
+		u32 currentPerfChain = 0;
 		std::unordered_map<u32, u32> patterns;
-		u32 averagePattern;
+		u32 mostCommonPattern = 0;
+		u32 mostCommonPatternCount = 0;
+		u32 totalPatternOccurrences = 0;
+		u32 weightedPatternSum = 0;
 		for (const auto &event : this->recentLandingEvents)
 		{
+			if (event.numJumpAfter > 0 || event.numJumpBefore > 0)
+			{
+				u32 pattern = event.numJumpBefore + event.numJumpAfter;
+				u32 count = ++patterns[pattern];
+				totalPatternOccurrences++;
+				weightedPatternSum += pattern;
+				if (count > mostCommonPatternCount)
+				{
+					mostCommonPatternCount = count;
+					mostCommonPattern = pattern;
+				}
+			}
+			if (!event.shouldCountTowardsPerfChains)
+			{
+				continue;
+			}
+			totalChainEligibleEvents++;
 			if (event.hasPerfectBhop)
 			{
-				numPerfect++;
-				currentConsecutivePerfect++;
-				maxConsecutivePerfect = Max(maxConsecutivePerfect, currentConsecutivePerfect);
-				patterns[event.numJumpBefore + event.numJumpAfter]++;
-				averagePattern += event.numJumpBefore + event.numJumpAfter;
+				numPerfs++;
+				currentPerfChain++;
+				maxPerfChain = Max(maxPerfChain, currentPerfChain);
 			}
 			else
 			{
-				currentConsecutivePerfect = 0;
+				currentPerfChain = 0;
 			}
 		}
-		if (numPerfect > 0)
-		{
-			averagePattern /= numPerfect;
-		}
-		if (maxConsecutivePerfect >= NUM_CONSECUTIVE_PERFS_FOR_INFRACTION)
+		f32 averagePattern = totalPatternOccurrences > 0 ? (f32)weightedPatternSum / (f32)totalPatternOccurrences : 0.0f;
+
+		// Hard consecutive perf chain check.
+		if (maxPerfChain >= NUM_CONSECUTIVE_PERFS_FOR_INFRACTION)
 		{
 			this->MarkInfraction(KZAnticheatService::Infraction::Type::BhopHack,
-								 tfm::format("%d/%d consecutive perfect bhops", maxConsecutivePerfect, (u32)this->recentLandingEvents.size()));
+								 tfm::format("%d/%d consecutive perfect bhops", maxPerfChain, totalChainEligibleEvents));
+			return;
 		}
-		else if (maxConsecutivePerfect >= NUM_CONSECUTIVE_PERFS_FOR_PATTERN_CHECK)
+
+		// Pattern-based bhop infraction after medium chain threshold.
+		if (maxPerfChain >= NUM_CONSECUTIVE_PERFS_FOR_PATTERN_CHECK)
 		{
-			// Check if it's the same pattern over and over again
-			u32 maxPatternCount = 0;
-			u32 patternWithMaxCount = 0;
-			for (const auto &pattern : patterns)
-			{
-				if (pattern.second > maxPatternCount)
-				{
-					maxPatternCount = pattern.second;
-					patternWithMaxCount = pattern.first;
-				}
-			}
-			if (maxPatternCount >= numPerfect * REPETITIVE_PATTERN_THRESHOLD && patternWithMaxCount < LOW_PATTERN_THRESHOLD)
+			if (totalPatternOccurrences > 0 && mostCommonPatternCount >= totalPatternOccurrences * REPETITIVE_PATTERN_THRESHOLD
+				&& mostCommonPattern < LOW_PATTERN_THRESHOLD)
 			{
 				this->MarkInfraction(KZAnticheatService::Infraction::Type::BhopHack,
-									 tfm::format("%d/%d occurrences of pattern %d", maxPatternCount, numPerfect, patternWithMaxCount));
+									 tfm::format("%d/%d occurrences of pattern %d (avg pattern %.2f)", mostCommonPatternCount,
+												 totalPatternOccurrences, mostCommonPattern, averagePattern));
+				return;
 			}
 		}
-		else
+
+		// Hyperscroll check
+		f32 perfectRatio = totalChainEligibleEvents > 0 ? (f32)numPerfs / (f32)totalChainEligibleEvents : 0.0f;
+		if (averagePattern >= HIGH_PATTERN_THRESHOLD && perfectRatio > PERF_RATIO_FOR_HYPERSCROLL_INFRACTION)
 		{
-			f32 ratio = (f32)numPerfect / (f32)this->recentLandingEvents.size();
-			if (this->recentLandingEvents.size() >= MIN_SAMPLE_COUNT)
-			{
-				if (ratio >= PERF_RATIO_FOR_BHOP_HACK_INFRACTION)
-				{
-					this->MarkInfraction(
-						KZAnticheatService::Infraction::Type::BhopHack,
-						tfm::format("%.2f%% perfect bhops (%d/%d)", ratio * 100.0f, numPerfect, (u32)this->recentLandingEvents.size()));
-				}
-				else if (ratio >= PERF_RATIO_FOR_HYPERSCROLL_INFRACTION && averagePattern > 16)
-				{
-					this->MarkInfraction(KZAnticheatService::Infraction::Type::Hyperscroll, "");
-				}
-			}
+			this->MarkInfraction(KZAnticheatService::Infraction::Type::Hyperscroll,
+								 tfm::format("Average pattern %.2f >= %.2f with %.2f%% perfect ratio (%d/%d)", averagePattern, HIGH_PATTERN_THRESHOLD,
+											 perfectRatio * 100.0f, numPerfs, totalChainEligibleEvents));
+			return;
 		}
 	}
 }

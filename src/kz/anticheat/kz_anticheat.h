@@ -116,6 +116,8 @@ public:
 	void Reset() override
 	{
 		isBanned = false;
+		printedCheaterMessage = false;
+		canPrintCheaterMessage = false;
 		hasValidCvars = true;
 		recentForwardBackwardEvents.clear();
 		recentLeftRightEvents.clear();
@@ -126,18 +128,28 @@ public:
 		numCommandsWithSubtickInputs.clear();
 		recentJumpStatuses.clear();
 		currentCmdNum = {};
+		recentJumps.clear();
+		recentLandingEvents.clear();
+		lastValidMoveTypeTime = -1.0f;
 	}
 
 	static void Init();
 	static void CleanupSvCheatsWatcher();
 	bool isBanned = false;
+	void ClearDetectionBuffers();
+	bool ShouldRunDetections() const;
+	static f64 PrintWarning(CPlayerUserId userID);
+
+	bool canPrintCheaterMessage = false;
+	bool printedCheaterMessage = false;
+	void PrintCheaterMessage();
 
 	// ==========[ Cvars ]===========
 	bool hasValidCvars = true;
 
 	bool ShouldCheckClientCvars()
 	{
-		return hasValidCvars;
+		return hasValidCvars && this->ShouldRunDetections();
 	}
 
 	static void InitSvCheatsWatcher();
@@ -183,6 +195,9 @@ public:
 		f32 landingTime;
 		bool pendingPerf = true;
 		bool hasPerfectBhop;
+		// This is true if the jump penalty is smaller than the tick interval, in which case we should not be counting this towards perf chains
+		// since the player can legitimately hit 100% perfs with desubticks.
+		bool shouldCountTowardsPerfChains = false;
 		u32 numJumpBefore;
 		u32 numJumpAfter;
 
@@ -192,11 +207,8 @@ public:
 		}
 	};
 
-	void PrintBhopCheck();
 	f32 lastValidMoveTypeTime = -1.0f;
 	std::deque<LandingEvent> recentLandingEvents;
-	// Record the number of jump attempts in a command.
-	void RecordNumJumpForCommand(PlayerCommand *cmd);
 	void ParseCommandForJump(PlayerCommand *cmd);
 
 	void CreateLandEvent();
@@ -235,7 +247,7 @@ public:
 	};
 
 	void OnPlayerFullyConnect();
-	// TODO: Connect this somewhere
+	// TODO Anticheat: Connect this somewhere
 	void OnGlobalAuthFinished(BanInfo *banInfo);
 	void OnClientSetup(bool isBanned);
 

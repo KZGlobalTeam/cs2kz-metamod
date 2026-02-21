@@ -12,7 +12,17 @@
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
 CConVarRef<bool> sv_cheats("sv_cheats");
+
 // Checks for sv_cheats protected commands will only kick in after this delay
+
+bool KZAnticheatService::ShouldRunDetections() const
+{
+	if (!sv_cheats.IsValidRef() || !sv_cheats.IsConVarDataAvailable())
+	{
+		return true;
+	}
+	return !sv_cheats.Get();
+}
 
 extern IClientCvarValue *g_pClientCvarValue;
 
@@ -239,6 +249,10 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 
 static_function f64 CheckUserInfoCvars(KZPlayer *player)
 {
+	if (!player->anticheatService->ShouldRunDetections())
+	{
+		return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
+	}
 	for (auto &name : userInfoCvarNames)
 	{
 		const char *value = interfaces::pEngine->GetClientConVarValue(player->GetPlayerSlot(), name);
@@ -281,6 +295,10 @@ static_function f64 CheckClientCvars(CPlayerUserId userID)
 	{
 		return 0.0f;
 	}
+	if (!player->anticheatService->ShouldRunDetections())
+	{
+		return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
+	}
 	if (CheckUserInfoCvars(player) == 0.0f)
 	{
 		return 0.0f;
@@ -298,6 +316,10 @@ static_function f64 CheckClientCvars(CPlayerUserId userID)
 
 void KZAnticheatService::InitCvarMonitor()
 {
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
 	StartTimer<CPlayerUserId>(CheckClientCvars, this->player->GetClient()->GetUserID(),
 							  RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL), true, true);
 }

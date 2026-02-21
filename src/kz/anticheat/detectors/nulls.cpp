@@ -458,7 +458,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		}
 		else
 		{
-			// TODO Anticheat: Remove this
 			if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
 			{
 				this->player->PrintConsole(false, true, "Underlap %.3f ms @ %f", timeDiff * 1000, event.cmdNum + event.fraction);

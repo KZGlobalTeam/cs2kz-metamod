@@ -1,13 +1,13 @@
-#include "../kz.h"
+#include "kz_jumpstats.h"
+#include "kz/anticheat/kz_anticheat.h"
+#include "kz/mode/kz_mode.h"
+#include "kz/style/kz_style.h"
+#include "kz/option/kz_option.h"
+#include "kz/language/kz_language.h"
+
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 #include "utils/tables.h"
-
-#include "kz_jumpstats.h"
-#include "../mode/kz_mode.h"
-#include "../style/kz_style.h"
-#include "../option/kz_option.h"
-#include "../language/kz_language.h"
 
 static_global const char *columnKeys[] = {"#.",
 										  "Sync",
@@ -120,6 +120,10 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	bool shouldPrint = minTier != DistanceTier_None && color >= minTier;
 	shouldPrint |= !broadcast && target->optionService->GetPreferenceBool("jsAlways", false);
 	shouldPrint |= target->IsCSTV();
+	if (broadcast && !jump->GetJumpPlayer()->anticheatService->isBanned)
+	{
+		shouldPrint = false;
+	}
 	if (!shouldPrint)
 	{
 		return;
@@ -245,6 +249,10 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 		return;
 	}
 
+	if (jump->GetJumpPlayer()->anticheatService->isBanned)
+	{
+		return;
+	}
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	const char *jumpColor = distanceTierColors[tier];
 
@@ -282,6 +290,11 @@ void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool br
 	// - The target is a CSTV (HLTV) client
 	bool shouldPlay = soundMinTier != DistanceTier_None && tier >= soundMinTier && tier > DistanceTier_Meh;
 	shouldPlay |= target->IsCSTV();
+
+	if (broadcast && !jump->GetJumpPlayer()->anticheatService->isBanned)
+	{
+		shouldPlay = false;
+	}
 	if (!shouldPlay || target->optionService->GetPreferenceBool("jsAlways", false))
 	{
 		return;

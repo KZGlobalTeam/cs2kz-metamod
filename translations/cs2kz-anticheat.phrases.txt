@@ -48,4 +48,12 @@
 		"lv"		"Brīdinājums: Tavai fps_max vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
 		"de"		"Warnung: Dein fps_max-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
 	}
+	"Anti-Cheat Warning"
+	{
+		"en"		"{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+	}
+	"Cheater Warning"
+	{
+		"en"		"{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+	}
 }

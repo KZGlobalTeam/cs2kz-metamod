@@ -12,14 +12,6 @@
 
 CConVar<bool> kz_debug_announce_global("kz_debug_announce_global", FCVAR_NONE, "Print debug info for record announcements.", false);
 
-// struct
-// {
-// 	bool Get() const
-// 	{
-// 		return true;
-// 	}
-// } kz_debug_announce_global;
-
 RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	: uid(RecordAnnounce::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), userID(player->GetClient()->GetUserID()),
 	  time(player->timerService->GetTime()), runUUID(player->recordingService->GetCurrentRunUUID().ToString()),

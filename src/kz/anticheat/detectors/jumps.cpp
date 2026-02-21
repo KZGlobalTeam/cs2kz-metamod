@@ -36,6 +36,10 @@ void KZAnticheatService::OnJumpFinish(Jump *jump)
 	{
 		return;
 	}
+	if (!this->ShouldRunDetections())
+	{
+		return;
+	}
 	if (this->player->styleServices.Count() > 0)
 	{
 		// Styles can modify player's strafes in unpredictable ways, so skip detection for styled players.

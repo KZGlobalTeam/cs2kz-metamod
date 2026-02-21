@@ -124,6 +124,10 @@ static_global bool PossibleDesubtickedCommand(const PlayerCommand &cmd)
 
 void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)
 {
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
 	// Verify all button presses/releases are accounted for in subtick moves
 	if (!VerifyCommand(*cmd))
 	{
@@ -147,6 +151,10 @@ void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)
 
 void KZAnticheatService::CheckSuspiciousSubtickCommands()
 {
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
 	if (this->player->telemetryService->GetTimeInServer() < SUBTICK_INITIAL_IGNORE_TIME)
 	{
 		// Don't check for the first 10 seconds to avoid false positives on connect... just in case.
