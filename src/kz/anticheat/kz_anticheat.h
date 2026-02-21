@@ -3,7 +3,7 @@
 #include "kz/recording/kz_recording.h"
 
 class KZBaseService;
-struct Jump;
+class Jump;
 
 class KZAnticheatService : public KZBaseService
 {
