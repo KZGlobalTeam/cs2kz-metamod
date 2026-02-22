@@ -227,7 +227,6 @@ void KZPlayer::OnSetupMove(PlayerCommand *pc)
 	this->anticheatService->OnSetupMove(pc);
 	this->recordingService->OnSetupMove(pc);
 	this->modeService->OnSetupMove(pc);
-	this->anticheatService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnSetupMove(pc);
