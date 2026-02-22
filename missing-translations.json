@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 564,
-    "phrases_with_missing": 484,
-    "total_missing_entries": 2509,
+    "total_phrases": 566,
+    "phrases_with_missing": 486,
+    "total_missing_entries": 2534,
     "all_languages": [
       "chi",
       "de",
@@ -57,10 +57,22 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 92.02,
+      "coverage_percent": 91.7,
       "translated": 519,
-      "missing": 45,
+      "missing": 47,
       "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
         {
           "file": "cs2kz-api.phrases.txt",
           "phrase": "Non Global Map Warning",
@@ -299,18 +311,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -343,10 +355,22 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 92.02,
+      "coverage_percent": 91.7,
       "translated": 519,
-      "missing": 45,
+      "missing": 47,
       "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
         {
           "file": "cs2kz-api.phrases.txt",
           "phrase": "Non Global Map Warning",
@@ -585,18 +609,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -627,7 +651,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 564,
+      "translated": 566,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -638,15 +662,15 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 51.06,
+      "coverage_percent": 50.88,
       "translated": 288,
-      "missing": 276,
+      "missing": 278,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player m_yaw",
           "line": 3,
-          "english_text": "{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -658,13 +682,25 @@
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max",
           "line": 27,
-          "english_text": "{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max (Console)",
           "line": 39,
           "english_text": "Warning: Your fps_max value must be more or equal to 64 to play on this server. You will be disconnected."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
         },
         {
           "file": "cs2kz-api.phrases.txt",
@@ -2062,18 +2098,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -2310,10 +2346,22 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 42.2,
+      "coverage_percent": 42.05,
       "translated": 238,
-      "missing": 326,
+      "missing": 328,
       "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
         {
           "file": "cs2kz-api.phrases.txt",
           "phrase": "Non Global Map Warning",
@@ -3824,18 +3872,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -4282,15 +4330,15 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 40.78,
+      "coverage_percent": 40.64,
       "translated": 230,
-      "missing": 334,
+      "missing": 336,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player m_yaw",
           "line": 3,
-          "english_text": "{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -4302,13 +4350,25 @@
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max",
           "line": 27,
-          "english_text": "{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max (Console)",
           "line": 39,
           "english_text": "Warning: Your fps_max value must be more or equal to 64 to play on this server. You will be disconnected."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
         },
         {
           "file": "cs2kz-api.phrases.txt",
@@ -5814,18 +5874,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -6302,10 +6362,22 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 51.6,
+      "coverage_percent": 51.41,
       "translated": 291,
-      "missing": 273,
+      "missing": 275,
       "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
         {
           "file": "cs2kz-api.phrases.txt",
           "phrase": "Non Global Map Warning",
@@ -7642,18 +7714,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -7953,10 +8025,22 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 59.04,
+      "coverage_percent": 58.83,
       "translated": 333,
-      "missing": 231,
+      "missing": 233,
       "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
         {
           "file": "cs2kz-api.phrases.txt",
           "phrase": "Non Global Map Warning",
@@ -9191,18 +9275,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -9352,10 +9436,22 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 92.38,
+      "coverage_percent": 92.05,
       "translated": 521,
-      "missing": 43,
+      "missing": 45,
       "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
         {
           "file": "cs2kz-api.phrases.txt",
           "phrase": "Non Global Map Warning",
@@ -9582,18 +9678,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -9623,15 +9719,15 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 16.31,
+      "coverage_percent": 16.25,
       "translated": 92,
-      "missing": 472,
+      "missing": 474,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player m_yaw",
           "line": 3,
-          "english_text": "{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9643,13 +9739,25 @@
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max",
           "line": 27,
-          "english_text": "{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max (Console)",
           "line": 39,
           "english_text": "Warning: Your fps_max value must be more or equal to 64 to play on this server. You will be disconnected."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
         },
         {
           "file": "cs2kz-api.phrases.txt",
@@ -11695,18 +11803,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -12471,10 +12579,22 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 70.39,
+      "coverage_percent": 70.14,
       "translated": 397,
-      "missing": 167,
+      "missing": 169,
       "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
         {
           "file": "cs2kz-api.phrases.txt",
           "phrase": "Non Global Map Warning",
@@ -13355,18 +13475,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -13486,15 +13606,15 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 47.34,
+      "coverage_percent": 47.17,
       "translated": 267,
-      "missing": 297,
+      "missing": 299,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player m_yaw",
           "line": 3,
-          "english_text": "{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -13506,13 +13626,25 @@
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max",
           "line": 27,
-          "english_text": "{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
+          "english_text": "{darkred}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
         },
         {
           "file": "cs2kz-anticheat.phrases.txt",
           "phrase": "Kick Player fps_max (Console)",
           "line": 39,
           "english_text": "Warning: Your fps_max value must be more or equal to 64 to play on this server. You will be disconnected."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
         },
         {
           "file": "cs2kz-api.phrases.txt",
@@ -14958,18 +15090,18 @@
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset."
         },
         {
@@ -15284,10 +15416,29 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 100.0,
-      "translated": 564,
-      "missing": 0,
-      "missing_phrases": [],
+      "coverage_percent": 99.47,
+      "translated": 563,
+      "missing": 3,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+        },
+        {
+          "file": "cs2kz-anticheat.phrases.txt",
+          "phrase": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+        },
+        {
+          "file": "cs2kz-telemetry.phrases.txt",
+          "phrase": "Telemetry - Modern Bhop Stats",
+          "line": 3,
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -15297,12 +15448,12 @@
   },
   "files": {
     "cs2kz-anticheat.phrases.txt": {
-      "phrases_with_missing": 4,
+      "phrases_with_missing": 6,
       "phrases": [
         {
           "name": "Kick Player m_yaw",
           "line": 3,
-          "english_text": "{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected.",
+          "english_text": "{darkred}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected.",
           "existing_languages": [
             "chi",
             "de",
@@ -15346,7 +15497,7 @@
         {
           "name": "Kick Player fps_max",
           "line": 27,
-          "english_text": "{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected.",
+          "english_text": "{darkred}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected.",
           "existing_languages": [
             "chi",
             "de",
@@ -15385,6 +15536,50 @@
             "it",
             "ru",
             "tr"
+          ]
+        },
+        {
+          "name": "Anti-Cheat Warning",
+          "line": 51,
+          "english_text": "{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Cheater Warning",
+          "line": 55,
+          "english_text": "{darkred}WARNING: You are currently banned. Your jumps and records will not be saved.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
@@ -23212,10 +23407,9 @@
         {
           "name": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfPercent}%%%% {grey}Modern ({lime}{modernPerfs}{grey})",
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})",
           "existing_languages": [
-            "en",
-            "ua"
+            "en"
           ],
           "missing_languages": [
             "chi",
@@ -23228,12 +23422,13 @@
             "pl",
             "ru",
             "sv",
-            "tr"
+            "tr",
+            "ua"
           ]
         },
         {
           "name": "Telemetry - Legacy Bhop Stats",
-          "line": 10,
+          "line": 9,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})",
           "existing_languages": [
             "en",
@@ -23255,7 +23450,7 @@
         },
         {
           "name": "Telemetry - Reset Bhop Stats",
-          "line": 17,
+          "line": 16,
           "english_text": "{grey}Bunny hop statistics have been reset.",
           "existing_languages": [
             "en",

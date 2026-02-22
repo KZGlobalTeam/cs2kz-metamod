@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 564
-Phrases with missing translations: 484
-Total missing translation entries: 2509
+Total phrases: 566
+Phrases with missing translations: 486
+Total missing translation entries: 2534
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  92.0% (519/564)
-  de (german)          [██████████████████░░]  92.0% (519/564)
-  en (english)         [████████████████████] 100.0% (564/564)
-  es (spanish)         [██████████░░░░░░░░░░]  51.1% (288/564)
-  fi (finnish)         [████████░░░░░░░░░░░░]  42.2% (238/564)
-  it (italian)         [████████░░░░░░░░░░░░]  40.8% (230/564)
-  ko (koreana)         [██████████░░░░░░░░░░]  51.6% (291/564)
-  lv (latvian)         [███████████░░░░░░░░░]  59.0% (333/564)
-  pl (polish)          [██████████████████░░]  92.4% (521/564)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.3% (92/564)
-  sv (swedish)         [██████████████░░░░░░]  70.4% (397/564)
-  tr (turkish)         [█████████░░░░░░░░░░░]  47.3% (267/564)
-  ua (ukrainian)       [████████████████████] 100.0% (564/564)
+  chi (schinese)       [██████████████████░░]  91.7% (519/566)
+  de (german)          [██████████████████░░]  91.7% (519/566)
+  en (english)         [████████████████████] 100.0% (566/566)
+  es (spanish)         [██████████░░░░░░░░░░]  50.9% (288/566)
+  fi (finnish)         [████████░░░░░░░░░░░░]  42.0% (238/566)
+  it (italian)         [████████░░░░░░░░░░░░]  40.6% (230/566)
+  ko (koreana)         [██████████░░░░░░░░░░]  51.4% (291/566)
+  lv (latvian)         [███████████░░░░░░░░░]  58.8% (333/566)
+  pl (polish)          [██████████████████░░]  92.0% (521/566)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.3% (92/566)
+  sv (swedish)         [██████████████░░░░░░]  70.1% (397/566)
+  tr (turkish)         [█████████░░░░░░░░░░░]  47.2% (267/566)
+  ua (ukrainian)       [███████████████████░]  99.5% (563/566)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -80,6 +80,10 @@ cs2kz-anticheat.phrases.txt
     Missing (4): es, it, ru, tr
   Line 39: "Kick Player fps_max (Console)"
     Missing (4): es, it, ru, tr
+  Line 51: "Anti-Cheat Warning"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 55: "Cheater Warning"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-api.phrases.txt
 ----------------------------------------------------------------------
@@ -843,10 +847,10 @@ cs2kz-styles.phrases.txt
 cs2kz-telemetry.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Telemetry - Modern Bhop Stats"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 9: "Telemetry - Legacy Bhop Stats"
     Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 10: "Telemetry - Legacy Bhop Stats"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 17: "Telemetry - Reset Bhop Stats"
+  Line 16: "Telemetry - Reset Bhop Stats"
     Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-timer-coursetop.phrases.txt
