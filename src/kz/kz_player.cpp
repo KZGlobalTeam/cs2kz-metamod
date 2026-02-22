@@ -224,6 +224,7 @@ void KZPlayer::OnSetupMove(PlayerCommand *pc)
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->recordingService->OnSetupMove(pc);
 	this->modeService->OnSetupMove(pc);
+	this->anticheatService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
 		this->styleServices[i]->OnSetupMove(pc);
