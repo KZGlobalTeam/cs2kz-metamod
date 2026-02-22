@@ -1,12 +1,8 @@
-#include "kz/kz.h"
-#include "kz/language/kz_language.h"
-#include "kz/timer/kz_timer.h"
-#include "strafe_optimizer.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "sdk/usercmd.h"
-#include "utils/ctimer.h"
 #include <cmath>
 
-float StrafeOptimizerDetector::CalculateYawSpeed(size_t index)
+float KZAnticheatService::CalculateYawSpeed(size_t index)
 {
 	if (index == 0)
 	{
@@ -30,7 +26,7 @@ float StrafeOptimizerDetector::CalculateYawSpeed(size_t index)
 	return yawDiff / frameTime;
 }
 
-float StrafeOptimizerDetector::CalculateYawAccel(size_t index)
+float KZAnticheatService::CalculateYawAccel(size_t index)
 {
 	if (index < 2)
 	{
@@ -44,13 +40,8 @@ float StrafeOptimizerDetector::CalculateYawAccel(size_t index)
 	return (currentSpeed - lastSpeed) / frameTime;
 }
 
-void StrafeOptimizerDetector::DetectOptimization(KZPlayer *player, PlayerCommand *pc)
+void KZAnticheatService::DetectOptimization(PlayerCommand *pc)
 {
-	if (yawSpikeFlag)
-	{
-		return;
-	}
-
 	// get yaw delta from subtick moves
 	float totalYawDelta = 0.0f;
 	const CBaseUserCmdPB &baseCmd = pc->base();
@@ -113,9 +104,9 @@ void StrafeOptimizerDetector::DetectOptimization(KZPlayer *player, PlayerCommand
 	// finally check for suspicious yaw accel patterns
 	if (yawAccelPercent > 0.9f)
 	{
-		yawSpikeFlag = true;
-		META_CONPRINTF("[KZ::Anticheat] %s has been flagged for using a strafe optimizer", player->GetName());
-		// place evil punishments here
+		std::string details = tinyformat::format("Strafe optimizer detected");
+		META_CONPRINTF("%s\n", details.c_str());
+		this->MarkInfraction(KZAnticheatService::Infraction::Type::StrafeHack, details);
 	}
 
 	// clear angle frames after reaching 200

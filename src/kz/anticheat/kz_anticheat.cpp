@@ -78,6 +78,7 @@ void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
 	this->CheckSubtickAbuse(cmd);
 	this->CreateInputEvents(cmd);
 	this->ParseCommandForJump(cmd);
+	this->DetectOptimization(cmd);
 }
 
 void KZAnticheatService::OnPhysicsSimulatePost()
@@ -107,6 +108,8 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->currentAirTime = 0.0f;
 	this->airMovedThisFrame = false;
 	this->lastValidMoveTypeTime = -1.0f;
+	this->angleFrameHistory.clear();
+	this->yawAccelPercent = 0.0f;
 }
 
 void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
@@ -208,9 +211,4 @@ void KZAnticheatService::PrintCheaterMessage()
 		this->player->languageService->PrintChat(true, false, "Cheater Warning");
 		this->printedCheaterMessage = true;
 	}
-}
-
-void KZAnticheatService::OnSetupMove(PlayerCommand *pc)
-{
-	strafeOptDetector.DetectOptimization(this->player, pc);
 }

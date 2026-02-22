@@ -233,6 +233,22 @@ public:
 	void CheckSubtickAbuse(PlayerCommand *cmd);
 	void CheckSuspiciousSubtickCommands();
 
+	// ===========[ Strafe optimization ]===========
+
+	struct AngleFrame
+	{
+		QAngle angle;
+		float frametime;
+		float yawDelta;
+	};
+
+	f32 yawAccelPercent = 0.0f;
+	std::vector<AngleFrame> angleFrameHistory;
+
+	float CalculateYawSpeed(size_t index);
+	float CalculateYawAccel(size_t index);
+	void DetectOptimization(PlayerCommand *pc);
+
 	// Generic Events
 	void OnJump();
 
