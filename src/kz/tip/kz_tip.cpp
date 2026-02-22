@@ -1,4 +1,5 @@
 #include "kz_tip.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/global/kz_global.h"
@@ -13,11 +14,6 @@ static_global f64 tipInterval;
 static_global i32 nextTipIndex;
 static_global CTimer<> *tipTimer;
 
-static_global class KZTimerServiceEventListener_Tip : public KZTimerServiceEventListener
-{
-	virtual void OnTimerStartPost(KZPlayer *player, u32 courseGUID) override;
-} timerEventListener;
-
 extern IMultiAddonManager *g_pMultiAddonManager;
 
 void KZTipService::Init()
@@ -25,14 +21,12 @@ void KZTipService::Init()
 	LoadTips();
 	ShuffleTips();
 	tipTimer = StartTimer(PrintTips, true);
-	KZTimerService::RegisterEventListener(&timerEventListener);
 }
 
 void KZTipService::Reset()
 {
 	this->showTips = true;
 	this->teamJoinedAtLeastOnce = false;
-	this->timerStartedAtLeastOnce = false;
 }
 
 void KZTipService::ToggleTips()
@@ -131,40 +125,6 @@ void KZTipService::OnPlayerJoinTeam(i32 team)
 	}
 
 	this->player->globalService->PrintAnnouncements();
-	this->QueryBeamCvar();
-}
 
-void KZTipService::QueryBeamCvar()
-{
-	CPlayerUserId userID = this->player->GetClient()->GetUserID();
-	if (g_pClientCvarValue)
-	{
-		// clang-format off
-		g_pClientCvarValue->QueryCvarValue(this->player->GetPlayerSlot(), "spec_show_xray",
-			[userID](CPlayerSlot nSlot, ECvarValueStatus eStatus, const char *pszCvarName, const char *pszCvarValue)
-			{
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
-				if (!player)
-				{
-					return;
-				}
-		});
-		// clang-format on
-	}
-}
-
-void KZTipService::OnTimerStartPost()
-{
-	if (this->timerStartedAtLeastOnce)
-	{
-		return;
-	}
-
-	this->teamJoinedAtLeastOnce = true;
-	// TODO: Print no cheating stuff
-}
-
-void KZTimerServiceEventListener_Tip::OnTimerStartPost(KZPlayer *player, u32 courseGUID)
-{
-	player->tipService->OnTimerStartPost();
+	StartTimer<CPlayerUserId>(KZAnticheatService::PrintWarning, this->player->GetClient()->GetUserID(), 1.0f, false, false);
 }

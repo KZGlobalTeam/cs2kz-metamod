@@ -400,6 +400,11 @@ void KZGlobalService::OnClientDisconnect()
 	}
 }
 
+void KZGlobalService::SubmitBan(u64 steamID, std::string reason, std::string details)
+{
+	// TODO Anticheat: Implement this!
+}
+
 void KZGlobalService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 {
 	switch (message->type)

@@ -26,7 +26,7 @@ class KZDatabaseServiceEventListener
 public:
 	virtual void OnDatabaseSetup() {}
 
-	virtual void OnClientSetup(Player *player, u64 steamID64, bool isCheater) {}
+	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned) {}
 
 	virtual void OnMapSetup() {}
 
@@ -118,17 +118,11 @@ public:
 	// Client/Player
 	void SetupClient();
 	void SavePrefs(CUtlString prefs);
-	bool isCheater {};
 
 private:
 	bool isSetUp {};
 
 public:
-	bool IsSetup()
-	{
-		return isSetUp;
-	}
-
 	static void FindPlayerByAlias(CUtlString playerName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Mode
@@ -151,4 +145,12 @@ public:
 	static void QueryAllRecords(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	static void QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, u32 count, u32 offset, TransactionSuccessCallbackFunc onSuccess,
 							 TransactionFailureCallbackFunc onFailure);
+
+	static void Ban(u64 steamID64, const char *reason = nullptr, f32 duration = 0.0f, const UUID_t banId = UUID_t(false),
+					const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,
+					TransactionFailureCallbackFunc onFailure = OnGenericTxnFailure);
+	static void AddOrUpdateBan(u64 steamID64, const char *reason, const char *endTime, const UUID_t banId = UUID_t(false),
+							   const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,
+							   TransactionFailureCallbackFunc onFailure = OnGenericTxnFailure);
+	static void Unban(u64 steamID64);
 };

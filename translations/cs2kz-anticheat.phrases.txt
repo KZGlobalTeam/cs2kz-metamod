@@ -2,15 +2,15 @@
 {
 	"Kick Player m_yaw"
 	{
-		"en"		"{yellow}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
-		"chi"		"{yellow}警告{grey}: 你的 {default}m_yaw{grey} 数值必须小于或等于 0.3 才能在此服务器上游玩. 你将会断开连接."
-		"pl"		"{yellow}UWAGA!{grey}: Wartość {default}m_yaw{grey} musi być mniejsza lub równa 0.3, by grać na tym serwerze. Zostaniesz rozłączony."
-		"ua"		"{yellow}Увага{grey}: Щоб грати на цьому сервері, ваше значення {default}m_yaw{grey} має бути меншим або дорівнювати 0.3. Вас буде від'єднано."
-		"sv"		"{yellow}Varning{grey}: Ditt {default}m_yaw{grey} värde måste mindre eller lika med 0.3 för att spela på den här servern. Du blir disconnectad."
-		"fi"		"{yellow}Varoitus{grey}: Sinun {default}m_yaw{grey} arvo täytyy olla vähemmän tai yhtäsuuri kuin 0.3 pelataksesi tällä palvelimella. Yhteys katkaistaan."
-		"ko"		"{yellow}경고{grey}: 이 서버에서 플레이하려면 {default}m_yaw{grey} 값이 0.3 이하여야 합니다. 곧 서버와 연결이 끊어집니다."
-		"lv"		"{yellow}Brīdinājums{grey}: Tavam {default}m_yaw{grey} vērtībai jābūt mazākai vai vienādai ar 0.3, lai spēlētu šajā serverī. Tu tiksi atvienots."
-		"de"		"{yellow}Warnung{grey}: Dein {default}m_yaw{grey}-Wert muss kleiner oder gleich 0.3 sein, um auf diesem Server spielen zu können. Du wirst getrennt."
+		"en"		"{darkred}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
+		"chi"		"{darkred}警告{grey}: 你的 {default}m_yaw{grey} 数值必须小于或等于 0.3 才能在此服务器上游玩. 你将会断开连接."
+		"pl"		"{darkred}UWAGA!{grey}: Wartość {default}m_yaw{grey} musi być mniejsza lub równa 0.3, by grać na tym serwerze. Zostaniesz rozłączony."
+		"ua"		"{darkred}Увага{grey}: Щоб грати на цьому сервері, ваше значення {default}m_yaw{grey} має бути меншим або дорівнювати 0.3. Вас буде від'єднано."
+		"sv"		"{darkred}Varning{grey}: Ditt {default}m_yaw{grey} värde måste mindre eller lika med 0.3 för att spela på den här servern. Du blir disconnectad."
+		"fi"		"{darkred}Varoitus{grey}: Sinun {default}m_yaw{grey} arvo täytyy olla vähemmän tai yhtäsuuri kuin 0.3 pelataksesi tällä palvelimella. Yhteys katkaistaan."
+		"ko"		"{darkred}경고{grey}: 이 서버에서 플레이하려면 {default}m_yaw{grey} 값이 0.3 이하여야 합니다. 곧 서버와 연결이 끊어집니다."
+		"lv"		"{darkred}Brīdinājums{grey}: Tavam {default}m_yaw{grey} vērtībai jābūt mazākai vai vienādai ar 0.3, lai spēlētu šajā serverī. Tu tiksi atvienots."
+		"de"		"{darkred}Warnung{grey}: Dein {default}m_yaw{grey}-Wert muss kleiner oder gleich 0.3 sein, um auf diesem Server spielen zu können. Du wirst getrennt."
 	}
 	"Kick Player m_yaw (Console)"
 	{
@@ -26,15 +26,15 @@
 	}
 	"Kick Player fps_max"
 	{
-		"en"		"{yellow}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
-		"chi"		"{yellow}警告{grey}: 你的 {default}fps_max{grey} 数值必须大于或等于 64 才能在此服务器上游玩. 你将会断开连接."
-		"pl"		"{yellow}UWAGA!{grey}: Wartość {default}fps_max{grey} musi być większa lub równa 64, by grać na tym serwerze. Zostaniesz rozłączony."
-		"ua"		"{yellow}Увага{grey}: Для гри на цьому сервері ваше значення {default}fps_max{grey} має бути більшим або рівним 64. Вас буде від'єднано."
-		"sv"		"{yellow}Varning{grey}: Ditt {default}fps_max{grey} värde måste vara mer eller lika med 64 för att spela på den här servern. Du blir disconnectad."
-		"fi"		"{yellow}Varoitus{grey}: Sinun {default}fps_max{grey} arvo täytyy olla enemmän tai yhtäsuuri kuin 64, jotta voit pelata tällä palvelimella. Yhteys katkaistaan."
-		"ko"		"{yellow}경고{grey}: 이 서버에서 플레이하려면 {default}fps_max{grey} 값이 64 이상이어야 합니다. 곧 서버와 연결이 끊어집니다."
-		"lv"		"{yellow}Brīdinājums{grey}: Tavai {default}fps_max{grey} vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
-		"de"		"{yellow}Warnung{grey}: Dein {default}fps_max{grey}-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
+		"en"		"{darkred}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
+		"chi"		"{darkred}警告{grey}: 你的 {default}fps_max{grey} 数值必须大于或等于 64 才能在此服务器上游玩. 你将会断开连接."
+		"pl"		"{darkred}UWAGA!{grey}: Wartość {default}fps_max{grey} musi być większa lub równa 64, by grać na tym serwerze. Zostaniesz rozłączony."
+		"ua"		"{darkred}Увага{grey}: Для гри на цьому сервері ваше значення {default}fps_max{grey} має бути більшим або рівним 64. Вас буде від'єднано."
+		"sv"		"{darkred}Varning{grey}: Ditt {default}fps_max{grey} värde måste vara mer eller lika med 64 för att spela på den här servern. Du blir disconnectad."
+		"fi"		"{darkred}Varoitus{grey}: Sinun {default}fps_max{grey} arvo täytyy olla enemmän tai yhtäsuuri kuin 64, jotta voit pelata tällä palvelimella. Yhteys katkaistaan."
+		"ko"		"{darkred}경고{grey}: 이 서버에서 플레이하려면 {default}fps_max{grey} 값이 64 이상이어야 합니다. 곧 서버와 연결이 끊어집니다."
+		"lv"		"{darkred}Brīdinājums{grey}: Tavai {default}fps_max{grey} vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
+		"de"		"{darkred}Warnung{grey}: Dein {default}fps_max{grey}-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
 	}
 	"Kick Player fps_max (Console)"
 	{
@@ -47,5 +47,13 @@
 		"ko"		"경고: 이 서버에서 플레이하려면 fps_max 값이 64 이상이어야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"Brīdinājums: Tavai fps_max vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
 		"de"		"Warnung: Dein fps_max-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
+	}
+	"Anti-Cheat Warning"
+	{
+		"en"		"{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+	}
+	"Cheater Warning"
+	{
+		"en"		"{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
 	}
 }

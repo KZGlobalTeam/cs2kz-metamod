@@ -21,7 +21,7 @@ CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tie
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 extern CSteamGameServerAPIContext g_steamAPI;
 
-ReplayFileWriter *KZRecordingService::s_fileWriter = nullptr;
+ReplayFileWriter *KZRecordingService::fileWriter = nullptr;
 
 // Not sure what's the best place to put this, so putting it here for now.
 void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
@@ -112,9 +112,9 @@ void KZRecordingService::RecordTickData_PhysicsSimulate()
 	this->player->GetVelocity(&this->currentTickData.pre.velocity);
 	this->player->GetAngles(&this->currentTickData.pre.angles);
 	auto movementServices = this->player->GetMoveServices();
-	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
-	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
-	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.pre.buttons[0] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[0]);
+	this->currentTickData.pre.buttons[1] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[1]);
+	this->currentTickData.pre.buttons[2] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[2]);
 	this->currentTickData.pre.jumpPressedTime = movementServices->m_LegacyJump().m_flJumpPressedTime;
 	this->currentTickData.pre.duckSpeed = movementServices->m_flDuckSpeed;
 	this->currentTickData.pre.duckAmount = movementServices->m_flDuckAmount;
@@ -164,9 +164,9 @@ void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 	this->player->GetVelocity(&this->currentTickData.post.velocity);
 	this->player->GetAngles(&this->currentTickData.post.angles);
 	auto movementServices = this->player->GetMoveServices();
-	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[0]);
-	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[1]);
-	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons()->m_pButtonStates[2]);
+	this->currentTickData.post.buttons[0] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[0]);
+	this->currentTickData.post.buttons[1] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[1]);
+	this->currentTickData.post.buttons[2] = static_cast<u32>(movementServices->m_nButtons().m_pButtonStates[2]);
 	this->currentTickData.post.jumpPressedTime = movementServices->m_LegacyJump().m_flJumpPressedTime;
 	this->currentTickData.post.duckSpeed = movementServices->m_flDuckSpeed;
 	this->currentTickData.post.duckAmount = movementServices->m_flDuckAmount;
@@ -254,12 +254,12 @@ void KZRecordingService::CheckRecorders()
 			{
 				META_CONPRINTF("kz_replay_recording_debug: Run recorder stopped\n");
 			}
-			if (s_fileWriter)
+			if (fileWriter)
 			{
 				CPlayerUserId userID = this->player->GetClient()->GetUserID();
 				auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
 				this->CopyWeaponsToRecorder(recorderPtr.get());
-				s_fileWriter->QueueWrite(
+				fileWriter->QueueWrite(
 					std::move(recorderPtr),
 					// Success callback
 					[userID](const UUID_t &uuid, f32 replayDuration)
@@ -299,11 +299,11 @@ void KZRecordingService::CheckRecorders()
 			{
 				META_CONPRINTF("kz_replay_recording_debug: Jump recorder stopped\n");
 			}
-			if (s_fileWriter)
+			if (fileWriter)
 			{
 				auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
 				this->CopyWeaponsToRecorder(recorderPtr.get());
-				s_fileWriter->QueueWrite(std::move(recorderPtr));
+				fileWriter->QueueWrite(std::move(recorderPtr));
 			}
 			it = this->jumpRecorders.erase(it);
 		}

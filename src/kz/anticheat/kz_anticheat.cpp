@@ -2,74 +2,210 @@
 #include "kz_anticheat.h"
 #include "kz/language/kz_language.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/db/kz_db.h"
+#include "kz/global/kz_global.h"
 #include "utils/ctimer.h"
+#include "sdk/usercmd.h"
 
-#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
+CConVar<bool> kz_ac_autokick("kz_ac_autokick", FCVAR_NONE, "Whether to kick players that are already banned", false);
 
-extern IClientCvarValue *g_pClientCvarValue;
-
-#define INTEGRITY_CHECK_MIN_INTERVAL 1.0f
-#define INTEGRITY_CHECK_MAX_INTERVAL 5.0f
-#define KICK_DELAY                   5.0f
-#define MINIMUM_FPS_MAX              64.0f
-#define MAXIMUM_M_YAW                0.3f
-
-static_function f64 KickPlayerInvalidSettings(CPlayerUserId userID)
+CON_COMMAND_F(kz_unban, "Unban a player by their SteamID. Does not globally unban players. Only works if the server isn't globally connected.",
+			  FCVAR_NONE)
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
-	if (player)
-	{
-		player->Kick("Invalid player settings");
-	}
-	return 0.0f;
-}
+	// TODO Anticheat: API doesn't fully support bans yet.
+	// if (KZGlobalService::MayBecomeAvailable())
+	// {
+	// 	META_CONPRINTF("[KZ::Anticheat] Cannot unban players while connected to the global service.\n");
+	// 	return;
+	// }
 
-static_function void ValidateCvar(CPlayerSlot nSlot, ECvarValueStatus eStatus, const char *pszCvarName, const char *pszCvarValue)
-{
-	if (eStatus != ECvarValueStatus::ValueIntact)
+	if (args.ArgC() != 2)
 	{
+		META_CONPRINTF("[KZ::Anticheat] Usage: kz_unban <SteamID64>\n");
 		return;
 	}
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(nSlot);
-	if (KZ_STREQI(pszCvarName, "m_yaw"))
+	u64 steamID = atoll(args.Arg(1));
+	KZPlayer *player = g_pKZPlayerManager->SteamIdToPlayer(steamID);
+	if (player)
 	{
-		if (atof(pszCvarValue) > MAXIMUM_M_YAW)
-		{
-			player->languageService->PrintChat(true, false, "Kick Player m_yaw");
-			player->languageService->PrintConsole(false, false, "Kick Player m_yaw (Console)");
-			player->anticheatService->MarkHasInvalidCvars();
-			player->timerService->TimerStop();
-			StartTimer<CPlayerUserId>(KickPlayerInvalidSettings, player->GetClient()->GetUserID(), KICK_DELAY, true, true);
-		}
+		player->anticheatService->isBanned = false;
 	}
-	else if (KZ_STREQI(pszCvarName, "fps_max"))
-	{
-		if (atof(pszCvarValue) != 0.0f && atof(pszCvarValue) < MINIMUM_FPS_MAX)
-		{
-			player->languageService->PrintChat(true, false, "Kick Player fps_max");
-			player->languageService->PrintConsole(false, false, "Kick Player fps_max (Console)");
-			player->anticheatService->MarkHasInvalidCvars();
-			player->timerService->TimerStop();
-			StartTimer<CPlayerUserId>(KickPlayerInvalidSettings, player->GetClient()->GetUserID(), KICK_DELAY, true, true);
-		}
-	}
+	KZDatabaseService::Unban(steamID);
 }
 
-static_function f64 CheckClientCvars(CPlayerUserId userID)
+static_global class : public KZDatabaseServiceEventListener
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
-	if (!player || !g_pClientCvarValue || !player->anticheatService->ShouldCheckClientCvars())
+public:
+	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned)
 	{
-		return 0.0f;
-	}
-	g_pClientCvarValue->QueryCvarValue(player->GetPlayerSlot(), "m_yaw", ValidateCvar);
-	g_pClientCvarValue->QueryCvarValue(player->GetPlayerSlot(), "fps_max", ValidateCvar);
-	return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
+		KZPlayer *kzPlayer = g_pKZPlayerManager->ToKZPlayer(player);
+		if (kzPlayer->IsFakeClient() || kzPlayer->IsCSTV())
+		{
+			return;
+		}
+		kzPlayer->anticheatService->OnClientSetup(isBanned);
+	};
+} databaseEventListener;
+
+void KZAnticheatService::Init()
+{
+	KZDatabaseService::RegisterEventListener(&databaseEventListener);
+	KZAnticheatService::InitSvCheatsWatcher();
 }
 
 void KZAnticheatService::OnPlayerFullyConnect()
 {
-	this->hasValidCvars = true;
-	StartTimer<CPlayerUserId>(CheckClientCvars, this->player->GetClient()->GetUserID(),
-							  RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL), true, true);
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
+	this->InitCvarMonitor();
+}
+
+void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
+{
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
+	if (!this->ShouldRunDetections())
+	{
+		this->ClearDetectionBuffers();
+		return;
+	}
+
+	this->currentCmdNum = cmd->cmdNum;
+	this->CheckSubtickAbuse(cmd);
+	this->CreateInputEvents(cmd);
+	this->ParseCommandForJump(cmd);
+}
+
+void KZAnticheatService::OnPhysicsSimulatePost()
+{
+	if (!this->ShouldRunDetections())
+	{
+		this->ClearDetectionBuffers();
+		return;
+	}
+	this->CheckNulls();
+	this->CheckSuspiciousSubtickCommands();
+	this->CleanupOldInputEvents();
+	this->CheckLandingEvents();
+}
+
+void KZAnticheatService::ClearDetectionBuffers()
+{
+	this->recentForwardBackwardEvents.clear();
+	this->recentLeftRightEvents.clear();
+	this->suspiciousSubtickMoveTimes.clear();
+	this->invalidCommandTimes.clear();
+	this->zeroWhenCommandTimes.clear();
+	this->numCommandsWithSubtickInputs.clear();
+	this->recentJumpStatuses.clear();
+	this->recentJumps.clear();
+	this->recentLandingEvents.clear();
+	this->currentAirTime = 0.0f;
+	this->airMovedThisFrame = false;
+	this->lastValidMoveTypeTime = -1.0f;
+}
+
+void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
+{
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
+	this->isBanned = banInfo != nullptr;
+	// Already banned? Just add the player to the local ban database and ignore any current infraction.
+	if (banInfo)
+	{
+		KZDatabaseService::AddOrUpdateBan(this->player->GetSteamId64(), banInfo->reason.c_str(), banInfo->expirationDate.c_str(), banInfo->banId);
+		if (this->GetPendingInfraction())
+		{
+			this->GetPendingInfraction()->replay = nullptr; // Wipe replay to avoid saving it
+			this->GetPendingInfraction()->submitted = true;
+		}
+		if (kz_ac_autokick.Get())
+		{
+			this->player->Kick("Marked as cheater in global database", NETWORK_DISCONNECT_KICKED_UNTRUSTEDACCOUNT);
+		}
+		else
+		{
+			this->isBanned = true; // Don't kick, but still mark as banned
+			this->PrintCheaterMessage();
+		}
+	}
+	else if (this->GetPendingInfraction())
+	{
+		KZDatabaseService::Unban(this->player->GetSteamId64());
+		this->GetPendingInfraction()->SubmitGlobalInfraction();
+	}
+	else
+	{
+		KZDatabaseService::Unban(this->player->GetSteamId64());
+	}
+}
+
+void KZAnticheatService::OnClientSetup(bool isBanned)
+{
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
+	if (KZGlobalService::MayBecomeAvailable())
+	{
+		// Wait for global auth instead.
+		return;
+	}
+	this->isBanned = isBanned;
+	// Already banned? Kick the player and ignore any current infraction.
+	if (isBanned)
+	{
+		if (this->GetPendingInfraction())
+		{
+			this->GetPendingInfraction()->replay = nullptr; // Wipe replay to avoid saving it
+			this->GetPendingInfraction()->submitted = true;
+		}
+		if (kz_ac_autokick.Get())
+		{
+			this->player->Kick("Marked as cheater in local database", NETWORK_DISCONNECT_KICKED_UNTRUSTEDACCOUNT);
+		}
+		else
+		{
+			this->isBanned = true; // Don't kick, but still mark as banned
+			this->PrintCheaterMessage();
+		}
+	}
+	else if (this->GetPendingInfraction())
+	{
+		// Note: This will skip straight to local submission anyway.
+		this->GetPendingInfraction()->SubmitGlobalInfraction();
+	}
+}
+
+f64 KZAnticheatService::PrintWarning(CPlayerUserId userID)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+	if (player && !player->anticheatService->printedCheaterMessage)
+	{
+		player->anticheatService->canPrintCheaterMessage = true;
+		if (!player->anticheatService->isBanned)
+		{
+			player->languageService->PrintChat(false, false, "Anti-Cheat Warning");
+		}
+		else
+		{
+			player->anticheatService->PrintCheaterMessage();
+		}
+	}
+	return 0.0f;
+}
+
+void KZAnticheatService::PrintCheaterMessage()
+{
+	if (this->isBanned && this->canPrintCheaterMessage && !this->printedCheaterMessage)
+	{
+		this->player->languageService->PrintChat(true, false, "Cheater Warning");
+		this->printedCheaterMessage = true;
+	}
 }

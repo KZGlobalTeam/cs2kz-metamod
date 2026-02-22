@@ -26,12 +26,14 @@ constexpr char sql_getmaprank[] = R"(
     SELECT COUNT(DISTINCT Times.SteamID64) + 1
         FROM Times 
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Times.MapCourseID=%d
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Times.MapCourseID=%d
         AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.RunTime < 
         (SELECT MIN(Times.RunTime) 
         FROM Times 
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Times.SteamID64=%llu AND Times.MapCourseID=%d
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Times.SteamID64=%llu AND Times.MapCourseID=%d
         AND Times.ModeID=%d AND Times.StyleIDFlags=0)
 )";
 
@@ -39,13 +41,15 @@ constexpr char sql_getmaprankpro[] = R"(
     SELECT COUNT(DISTINCT Times.SteamID64) + 1
         FROM Times 
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Times.MapCourseID=%d
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Times.MapCourseID=%d
         AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.Teleports=0 
         AND Times.RunTime < 
         (SELECT MIN(Times.RunTime) 
         FROM Times 
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Times.SteamID64=%llu 
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Times.SteamID64=%llu 
         AND Times.MapCourseID=%d AND Times.ModeID=%d 
         AND Times.StyleIDFlags=0 AND Times.Teleports=0)
 )";
@@ -54,7 +58,8 @@ constexpr char sql_getlowestmaprank[] = R"(
     SELECT COUNT(DISTINCT Times.SteamID64) 
         FROM Times 
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Times.MapCourseID=%d
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Times.MapCourseID=%d
         AND Times.ModeID=%d AND Times.StyleIDFlags=0
 )";
 
@@ -62,6 +67,7 @@ constexpr char sql_getlowestmaprankpro[] = R"(
     SELECT COUNT(DISTINCT Times.SteamID64) 
         FROM Times 
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Times.MapCourseID=%d
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Times.MapCourseID=%d
         AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.Teleports=0
 )";

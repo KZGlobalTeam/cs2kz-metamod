@@ -97,6 +97,7 @@ public:
 public:
 	void OnPlayerAuthorized();
 	void OnClientDisconnect();
+	static void SubmitBan(u64 steamID, std::string reason, std::string details);
 
 	/**
 	 * Information about the current player we received from the API when the player connected.

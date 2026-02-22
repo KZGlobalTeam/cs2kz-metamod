@@ -84,6 +84,13 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'kz_player_print.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'kz_anticheat.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'infractions.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'bhop.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'subtick.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'nulls.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'cvars.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'anticheat', 'detectors', 'jumps.cpp'),
+    
     os.path.join(builder.sourcePath, 'src', 'kz', 'beam', 'kz_beam.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'kz_checkpoint.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'commands.cpp'),
@@ -96,6 +103,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'migrations.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_prefs.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_time.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'set_cheater.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_client.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_database.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_map_courses.cpp'),

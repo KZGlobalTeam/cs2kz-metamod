@@ -4,6 +4,7 @@
 #include "kz/kz.h"
 #include "utils/simplecmds.h"
 
+#include "kz/anticheat/kz_anticheat.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/quiet/kz_quiet.h"
@@ -488,16 +489,17 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 
 		std::string coloredPrefix = player->profileService->GetPrefix(true);
 		std::string prefix = player->profileService->GetPrefix(false);
+		std::string playerColor = player->anticheatService->isBanned ? "{grey}" : "{lime}";
 		if (player->IsAlive())
 		{
-			utils::SayChat(player->GetController(), "%s {lime}%s{default}: %s", coloredPrefix.c_str(), name, text.c_str());
+			utils::SayChat(player->GetController(), "%s %s%s{default}: %s", coloredPrefix.c_str(), playerColor.c_str(), name, text.c_str());
 			utils::PrintConsoleAll("%s %s: %s", prefix.c_str(), name, text.c_str());
 			META_CONPRINTF("%s %s: %s\n", prefix.c_str(), name, text.c_str());
 			player->racingService->SendChatMessage(text.c_str());
 		}
 		else
 		{
-			utils::SayChat(player->GetController(), "{grey}* %s {lime}%s{default}: %s", coloredPrefix.c_str(), name, text.c_str());
+			utils::SayChat(player->GetController(), "{grey}* %s %s%s{default}: %s", coloredPrefix.c_str(), playerColor.c_str(), name, text.c_str());
 			utils::PrintConsoleAll("* %s %s: %s", prefix.c_str(), name, text.c_str());
 			META_CONPRINTF("* %s %s: %s\n", prefix.c_str(), name, text.c_str());
 			player->racingService->SendChatMessage(text.c_str());

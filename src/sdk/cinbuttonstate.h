@@ -18,10 +18,13 @@ enum EInButtonState : uint64_t
 
 class CInButtonState
 {
-	DECLARE_SCHEMA_CLASS_ENTITY(CInButtonState);
+	virtual SchemaMetaInfoHandle_t<CSchemaClassInfo> Schema_DynamicBinding() // Do not use
+	{
+		return {};
+	}
 
 public:
-	SCHEMA_FIELD_POINTER(uint64, m_pButtonStates);
+	uint64 m_pButtonStates[3];
 
 	void GetButtons(uint64 buttons[3])
 	{

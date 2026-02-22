@@ -10,6 +10,7 @@
 #include "queries/maps.h"
 #include "queries/modes.h"
 #include "queries/players.h"
+#include "queries/bans.h"
 #include "queries/styles.h"
 #include "queries/startpos.h"
 #include "queries/times.h"
@@ -42,6 +43,7 @@ static_global const std::string mysqlMigrations[] =
 	trimString(mysql_jumpstats_create),
 	trimString(mysql_startpos_create),
 	trimString(mysql_times_alter_id_column),
+	trimString(mysql_bans_create),
 };
 
 static_global const std::string sqliteMigrations[] = 
@@ -58,6 +60,7 @@ static_global const std::string sqliteMigrations[] =
 	trimString(sqlite_times_alter_id_column_2),
 	trimString(sqlite_times_alter_id_column_3),
 	trimString(sqlite_times_alter_id_column_4),
+	trimString(sqlite_bans_create),
 };
 
 // clang-format on

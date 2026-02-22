@@ -153,8 +153,11 @@ constexpr char sql_jumpstats_ranking_gettop[] = R"(
             Jumpstats j 
         INNER JOIN 
             Players p ON 
-                p.SteamID64=j.SteamID64 AND 
-                p.Cheater = 0 
+                p.SteamID64=j.SteamID64 
+        LEFT JOIN
+            Bans b ON
+                b.SteamID64 = p.SteamID64 AND
+                (b.ExpiresAt IS NULL OR b.ExpiresAt > CURRENT_TIMESTAMP)
         INNER JOIN 
             ( 
                 SELECT j.SteamID64, j.JumpType, j.Mode, j.IsBlockJump, MAX(j.Distance) BestDistance 
@@ -184,6 +187,8 @@ constexpr char sql_jumpstats_ranking_gettop[] = R"(
                 j.Mode = MaxDist.Mode AND 
                 j.IsBlockJump = MaxDist.IsBlockJump AND 
                 j.Distance = MaxDist.BestDistance 
+            WHERE
+                b.ID IS NULL
         ORDER BY j.Block DESC, j.Distance DESC 
         LIMIT %d
 )";

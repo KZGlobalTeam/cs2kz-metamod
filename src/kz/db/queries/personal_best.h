@@ -32,14 +32,16 @@ constexpr char sql_getmaprank[] = R"(
         INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
         INNER JOIN Maps ON Maps.ID = MapCourses.MapID
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Maps.Name='%s' AND MapCourses.Name='%s' 
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Maps.Name='%s' AND MapCourses.Name='%s' 
         AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.RunTime < 
             (SELECT MIN(Times.RunTime) 
             FROM Times 
             INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
             INNER JOIN Maps ON Maps.ID = MapCourses.MapID
             INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-            WHERE Players.Cheater=0 AND Times.SteamID64=%llu AND Maps.Name='%s'
+            LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+            WHERE Bans.ID IS NULL AND Times.SteamID64=%llu AND Maps.Name='%s'
             AND MapCourses.Name='%s' AND Times.ModeID=%d AND Times.StyleIDFlags=0)
 )";
 
@@ -49,7 +51,8 @@ constexpr char sql_getmaprankpro[] = R"(
         INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
         INNER JOIN Maps ON Maps.ID = MapCourses.MapID
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Maps.Name='%s' AND MapCourses.Name='%s' 
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Maps.Name='%s' AND MapCourses.Name='%s' 
         AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.Teleports=0 
         AND Times.RunTime < 
             (SELECT MIN(Times.RunTime) 
@@ -57,7 +60,8 @@ constexpr char sql_getmaprankpro[] = R"(
             INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
             INNER JOIN Maps ON Maps.ID = MapCourses.MapID
             INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-            WHERE Players.Cheater=0 AND Times.SteamID64=%llu AND Maps.Name='%s' 
+            LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+            WHERE Bans.ID IS NULL AND Times.SteamID64=%llu AND Maps.Name='%s' 
             AND MapCourses.Name='%s' AND Times.ModeID=%d 
             AND Times.StyleIDFlags=0 AND Times.Teleports=0)
 )";
@@ -68,7 +72,8 @@ constexpr char sql_getlowestmaprank[] = R"(
         INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
         INNER JOIN Maps ON Maps.ID = MapCourses.MapID
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Maps.Name='%s' 
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Maps.Name='%s' 
         AND MapCourses.Name='%s' AND Times.ModeID=%d 
         AND Times.StyleIDFlags=0 AND Times.StyleIDFlags=0
 )";
@@ -79,7 +84,8 @@ constexpr char sql_getlowestmaprankpro[] = R"(
         INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
         INNER JOIN Maps ON Maps.ID = MapCourses.MapID
         INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        WHERE Players.Cheater=0 AND Maps.Name='%s'
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE Bans.ID IS NULL AND Maps.Name='%s'
         AND MapCourses.Name='%s' AND Times.ModeID=%d 
         AND Times.StyleIDFlags=0 AND Times.Teleports=0
 )";

@@ -1,5 +1,6 @@
 #include "announce.h"
 #include "kz/db/kz_db.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "kz/global/kz_global.h"
 #include "kz/global/events.h"
 #include "kz/language/kz_language.h"
@@ -129,6 +130,13 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	// Metadata
 	this->metadata = player->timerService->GetCurrentRunMetadata().Get();
 
+	// Cheaters should not submit locally.
+	if (player->anticheatService->isBanned)
+	{
+		this->local = false;
+		this->global = false;
+	}
+
 	// Previous GPBs
 	if (global)
 	{
@@ -154,6 +162,13 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 
 void RecordAnnounce::SubmitGlobal()
 {
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
+	if (!player || player->anticheatService->isBanned)
+	{
+		this->global = false;
+		return;
+	}
+
 	auto callback = [uid = this->uid](KZ::API::events::NewRecordAck &ack)
 	{
 		META_CONPRINTF("[KZ::Global - %u] Record submitted under ID %d\n", uid, ack.recordId);
@@ -180,8 +195,6 @@ void RecordAnnounce::SubmitGlobal()
 			rec->UpdateGlobalCache();
 		}
 	};
-
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
 
 	// Dirty hack since nested forward declaration isn't possible.
 	KZGlobalService::SubmitRecordResult submissionResult = player->globalService->SubmitRecord(

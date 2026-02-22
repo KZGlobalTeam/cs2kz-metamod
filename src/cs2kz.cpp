@@ -10,6 +10,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
 #include "kz/mode/kz_mode.h"
@@ -79,6 +80,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZOptionService::InitOptions();
 	KZTipService::Init();
+	KZAnticheatService::Init();
 	if (late)
 	{
 		g_steamAPI.Init();
@@ -113,6 +115,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZLanguageService::Cleanup();
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
+	KZAnticheatService::CleanupSvCheatsWatcher();
 	ConVar_Unregister();
 	return true;
 }

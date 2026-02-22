@@ -109,9 +109,9 @@ void KZRecordingService::WriteCircularBufferToFileAsync(f32 duration, const char
 	this->CopyWeaponsToRecorder(recorder.get());
 
 	// Queue for async write with callbacks
-	if (s_fileWriter)
+	if (fileWriter)
 	{
-		s_fileWriter->QueueWrite(std::move(recorder), onSuccess, onFailure);
+		fileWriter->QueueWrite(std::move(recorder), onSuccess, onFailure);
 	}
 	else if (onFailure)
 	{

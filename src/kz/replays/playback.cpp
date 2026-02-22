@@ -143,9 +143,9 @@ namespace KZ::replaysystem::playback
 		TickData *tickData = &replay->tickData[replay->currentTick];
 
 		auto moveServices = player->GetMoveServices();
-		moveServices->m_nButtons()->m_pButtonStates[0] = tickData->post.buttons[0];
-		moveServices->m_nButtons()->m_pButtonStates[1] = tickData->post.buttons[1];
-		moveServices->m_nButtons()->m_pButtonStates[2] = tickData->post.buttons[2];
+		moveServices->m_nButtons().m_pButtonStates[0] = tickData->post.buttons[0];
+		moveServices->m_nButtons().m_pButtonStates[1] = tickData->post.buttons[1];
+		moveServices->m_nButtons().m_pButtonStates[2] = tickData->post.buttons[2];
 		moveServices->m_LegacyJump().m_flJumpPressedTime =
 			g_pKZUtils->GetServerGlobals()->curtime + tickData->post.jumpPressedTime - tickData->gameTime;
 
@@ -249,17 +249,17 @@ namespace KZ::replaysystem::playback
 		if (tickData->pre.buttons[0])
 		{
 			command->mutable_base()->mutable_buttons_pb()->set_buttonstate1(tickData->pre.buttons[0]);
-			command->buttonstates.buttons[0] = tickData->pre.buttons[0];
+			command->buttonstates.m_pButtonStates[0] = tickData->pre.buttons[0];
 		}
 		if (tickData->pre.buttons[1])
 		{
 			command->mutable_base()->mutable_buttons_pb()->set_buttonstate2(tickData->pre.buttons[1]);
-			command->buttonstates.buttons[1] = tickData->pre.buttons[1];
+			command->buttonstates.m_pButtonStates[1] = tickData->pre.buttons[1];
 		}
 		if (tickData->pre.buttons[2])
 		{
 			command->mutable_base()->mutable_buttons_pb()->set_buttonstate3(tickData->pre.buttons[2]);
-			command->buttonstates.buttons[2] = tickData->pre.buttons[2];
+			command->buttonstates.m_pButtonStates[2] = tickData->pre.buttons[2];
 		}
 
 		if (tickData->leftHanded)

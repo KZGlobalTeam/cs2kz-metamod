@@ -1,4 +1,5 @@
 #include "kz_telemetry.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "utils/simplecmds.h"
 #include "kz/language/kz_language.h"
 #include "sdk/usercmd.h"
@@ -9,6 +10,11 @@ f64 KZTelemetryService::lastActiveCheckTime = 0.0f;
 void KZTelemetryService::OnJumpModern()
 {
 	this->preOutWishVel = this->player->currentMoveData->m_outWishVel;
+	CCSPlayerModernJump &modernJump = this->player->GetMoveServices()->m_ModernJump();
+	f32 lastUsableJumpPress = modernJump.m_nLastUsableJumpPressTick() + modernJump.m_flLastUsableJumpPressFrac();
+	f32 modernLandTime = modernJump.m_nLastLandedTick() + modernJump.m_flLastLandedFrac();
+
+	this->mightBeModernPerf = lastUsableJumpPress < modernLandTime;
 }
 
 void KZTelemetryService::OnJumpModernPost()
@@ -19,6 +25,7 @@ void KZTelemetryService::OnJumpModernPost()
 		return;
 	}
 
+	this->player->anticheatService->OnJump();
 	// Not a bhop attempt if more than 100ms have passed since landing.
 	if (g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTimeServer > 0.1f)
 	{
@@ -37,13 +44,13 @@ void KZTelemetryService::OnJumpModernPost()
 	}
 	else
 	{
-		if (this->player->IsPerfing(true))
+		if (this->player->IsPerfing(true) && !this->mightBeModernPerf)
 		{
 			this->modernBhopStats.numTruePerfs++;
 		}
 		else
 		{
-			this->modernBhopStats.numModernPerfs++;
+			this->mightBeModernPerf ? this->modernBhopStats.numModernPerfsEarly++ : this->modernBhopStats.numModernPerfsLate++;
 		}
 	}
 }
@@ -61,6 +68,7 @@ void KZTelemetryService::OnJumpLegacyPost()
 		return;
 	}
 
+	this->player->anticheatService->OnJump();
 	// Not a bhop attempt if more than 100ms have passed since landing.
 	if (g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTimeServer > 0.1f)
 	{
@@ -93,9 +101,19 @@ void KZTelemetryService::PrintLegacyBhopStats()
 void KZTelemetryService::PrintModernBhopStats()
 {
 	// Bhops: 200 | 25% True (50) | 10% Modern (20)
-	this->player->languageService->PrintChat(true, false, "Telemetry - Modern Bhop Stats", this->modernBhopStats.GetTotalJumps(),
-											 this->modernBhopStats.GetPerfRatio(false) * 100.0f, this->modernBhopStats.numTruePerfs,
-											 this->modernBhopStats.GetPerfRatio(true) * 100.0f, this->modernBhopStats.numModernPerfs);
+	auto &modernStats = this->modernBhopStats;
+	f32 truePerfPercent = 0;
+	f32 modernPerfEarlyPercent = 0;
+	f32 modernPerfLatePercent = 0;
+	if (modernStats.GetTotalJumps() > 0)
+	{
+		truePerfPercent = (f32)modernStats.numTruePerfs / (f32)modernStats.GetTotalJumps() * 100.0f;
+		modernPerfEarlyPercent = (f32)modernStats.numModernPerfsEarly / (f32)modernStats.GetTotalJumps() * 100.0f;
+		modernPerfLatePercent = (f32)modernStats.numModernPerfsLate / (f32)modernStats.GetTotalJumps() * 100.0f;
+	}
+	this->player->languageService->PrintChat(true, false, "Telemetry - Modern Bhop Stats", modernStats.GetTotalJumps(), truePerfPercent,
+											 modernStats.numTruePerfs, modernPerfEarlyPercent, modernStats.numModernPerfsEarly, modernPerfLatePercent,
+											 modernStats.numModernPerfsLate);
 }
 
 void KZTelemetryService::OnPhysicsSimulatePost()
@@ -105,8 +123,8 @@ void KZTelemetryService::OnPhysicsSimulatePost()
 	{
 		return;
 	}
-	if (this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[1] != 0
-		|| this->player->GetMoveServices()->m_nButtons()->m_pButtonStates[2] != 0)
+	if (this->player->GetMoveServices()->m_nButtons().m_pButtonStates[1] != 0
+		|| this->player->GetMoveServices()->m_nButtons().m_pButtonStates[2] != 0)
 	{
 		this->activeStats.lastActionTime = g_pKZUtils->GetServerGlobals()->realtime;
 		return;

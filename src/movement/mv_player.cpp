@@ -213,7 +213,7 @@ bool MovementPlayer::IsButtonPressed(InputBitMask_t button, bool onlyDown)
 	{
 		return false;
 	}
-	return ms->m_nButtons()->IsButtonPressed(button, onlyDown);
+	return ms->m_nButtons().IsButtonPressed(button, onlyDown);
 }
 
 bool MovementPlayer::IsButtonNewlyPressed(InputBitMask_t button)
@@ -223,7 +223,7 @@ bool MovementPlayer::IsButtonNewlyPressed(InputBitMask_t button)
 	{
 		return false;
 	}
-	return ms->m_nButtons()->IsButtonNewlyPressed(button);
+	return ms->m_nButtons().IsButtonNewlyPressed(button);
 }
 
 f32 MovementPlayer::GetGroundPosition()

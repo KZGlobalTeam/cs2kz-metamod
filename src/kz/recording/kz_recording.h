@@ -344,10 +344,10 @@ public:
 		Both
 	};
 
-private:
 	// Helper function to copy weapons from recording service to recorder before queuing
 	void CopyWeaponsToRecorder(Recorder *recorder);
 
+private:
 	template<typename Func>
 	void ApplyToTarget(Func &&func, RecorderType target)
 	{
@@ -380,6 +380,6 @@ public:
 		ApplyToTarget([&](auto &r) { r.PushData(value); }, target);
 	}
 
-private:
-	static ReplayFileWriter *s_fileWriter;
+	static ReplayFileWriter *fileWriter;
+	static inline std::vector<UUID_t> globalUploadQueue;
 };

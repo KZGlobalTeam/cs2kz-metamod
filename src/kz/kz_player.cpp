@@ -33,7 +33,6 @@
 #include "vprof.h"
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
-
 extern CSteamGameServerAPIContext g_steamAPI;
 
 void KZPlayer::Init()
@@ -96,6 +95,7 @@ void KZPlayer::Reset()
 	MovementPlayer::Reset();
 
 	// Reset services that should not persist across player sessions.
+	this->anticheatService->Reset();
 	this->languageService->Reset();
 	this->tipService->Reset();
 	this->modeService->Reset();
@@ -175,6 +175,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulatePost();
+	this->anticheatService->OnPhysicsSimulatePost();
 	this->recordingService->OnPhysicsSimulatePost();
 	this->triggerService->OnPhysicsSimulatePost();
 	this->telemetryService->OnPhysicsSimulatePost();
@@ -202,6 +203,7 @@ void KZPlayer::OnProcessUsercmds(PlayerCommand *cmds, int numcmds)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->recordingService->OnProcessUsercmds(cmds, numcmds);
+	// this->anticheatService->OnProcessUsercmds(cmds, numcmds);
 	this->modeService->OnProcessUsercmds(cmds, numcmds);
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -222,6 +224,7 @@ void KZPlayer::OnProcessUsercmdsPost(PlayerCommand *cmds, int numcmds)
 void KZPlayer::OnSetupMove(PlayerCommand *pc)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->OnSetupMove(pc);
 	this->recordingService->OnSetupMove(pc);
 	this->modeService->OnSetupMove(pc);
 	FOR_EACH_VEC(this->styleServices, i)
@@ -249,6 +252,7 @@ void KZPlayer::OnProcessMovement()
 	KZ::replaysystem::OnProcessMovement(this);
 
 	this->DisableTurnbinds();
+	this->anticheatService->OnProcessMovement();
 	this->triggerService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -264,6 +268,7 @@ void KZPlayer::OnProcessMovementPost()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 
+	this->anticheatService->OnProcessMovementPost();
 	this->jumpstatsService->UpdateJump();
 	this->modeService->OnProcessMovementPost();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -587,6 +592,7 @@ void KZPlayer::OnJumpModernPost()
 void KZPlayer::OnAirMove()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->OnAirMove();
 	this->modeService->OnAirMove();
 	FOR_EACH_VEC(this->styleServices, i)
 	{
@@ -790,6 +796,7 @@ void KZPlayer::OnPostThinkPost()
 void KZPlayer::OnStartTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->CreateLandEvent();
 	this->jumpstatsService->EndJump();
 	this->timerService->OnStartTouchGround();
 	this->modeService->OnStartTouchGround();
@@ -809,7 +816,7 @@ void KZPlayer::OnStopTouchGround()
 		f32 windowMax = landingTick + this->GetCvarValueFromModeStyles("sv_bhop_time_window")->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
 		f32 startTime = this->currentMoveData->m_flSubtickStartFraction + this->currentMoveData->m_nTickCount;
 
-		this->inPerf = (startTime >= windowMin && startTime <= windowMax);
+		this->inPerf = (startTime >= windowMin && startTime <= windowMax) && this->jumped;
 	}
 	this->timerService->OnStopTouchGround();
 	this->modeService->OnStopTouchGround();
@@ -825,6 +832,7 @@ void KZPlayer::OnStopTouchGround()
 void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	this->anticheatService->OnChangeMoveType(oldMoveType);
 	this->jumpstatsService->OnChangeMoveType(oldMoveType);
 	this->timerService->OnChangeMoveType(oldMoveType);
 	this->modeService->OnChangeMoveType(oldMoveType);
