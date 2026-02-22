@@ -44,11 +44,11 @@ public:
 		// Big ban for players using hacked clients, medium ban for minor infractions
 		static inline f32 banDurations[] = {
 			-1.0f,                // Other - no ban, just kick
-			0.0f,                 // StrafeHack - permanent ban
-			0.0f,                 // BhopHack - permanent ban
+			31556926.0f * 5,      // StrafeHack - 5 years
+			31556926.0f * 5,      // BhopHack - 5 years
 			60.0f * 24 * 60 * 60, // Hyperscroll - 60 days
-			0.0f,                 // InvalidCvar - permanent ban
-			0.0f,                 // InvalidInput - permanent ban
+			31556926.0f * 5,      // InvalidCvar - 5 years
+			31556926.0f * 5,      // InvalidInput - 5 years
 			-1.0f,                // Nulls - no ban, just kick (for now)
 			-1.0f,                // SubtickSpam - no ban, just kick (for now)
 			-1.0f                 // Desubtick - kick only
