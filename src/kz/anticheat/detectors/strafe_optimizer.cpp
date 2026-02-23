@@ -104,9 +104,9 @@ void KZAnticheatService::DetectOptimization(PlayerCommand *pc)
 	// finally check for suspicious yaw accel patterns
 	if (yawAccelPercent > 0.9f)
 	{
-		std::string details = tinyformat::format("Strafe optimizer detected");
-		META_CONPRINTF("%s\n", details.c_str());
-		this->MarkInfraction(KZAnticheatService::Infraction::Type::StrafeHack, details);
+		META_CONPRINTF("Strafe optimizer detected for player %s (%llu)\n", player->GetName(), player->GetSteamId64(false));
+		this->MarkInfraction(KZAnticheatService::Infraction::Type::StrafeHack, "Strafe optimizer detected");
+		return;
 	}
 
 	// clear angle frames after reaching 200
