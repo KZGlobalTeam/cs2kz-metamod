@@ -839,9 +839,9 @@ cs2kz-styles.phrases.txt
 ----------------------------------------------------------------------
   Line 51: "Toggle Style Command Usage"
     Missing (1): ru
-  Line 82: "Possible Styles"
+  Line 83: "Possible Styles"
     Missing (1): ru
-  Line 97: "Style Not Available"
+  Line 98: "Style Not Available"
     Missing (1): ru
 
 cs2kz-telemetry.phrases.txt

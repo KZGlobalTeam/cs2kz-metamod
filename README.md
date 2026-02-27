@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`6a42cf3`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/6a42cf3308580a00e7b118f1e04b3d9120c20ec6)
-- **Time:** 2026-02-27 14:12:32 UTC
-- **Message:** Add messages for missing course end, print a message for !end if there is no act
+- **Commit:** [`3fc4e4c`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/3fc4e4c97154f3da251864a1e549a70b57685787)
+- **Time:** 2026-02-27 14:39:54 UTC
+- **Message:** Fix kz_fov tip
 
 ---
 

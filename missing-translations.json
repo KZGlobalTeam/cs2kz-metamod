@@ -353,7 +353,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -663,7 +663,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -2368,7 +2368,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -4364,7 +4364,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -6408,7 +6408,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -8086,7 +8086,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -9509,7 +9509,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -9804,7 +9804,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -11886,13 +11886,13 @@
         {
           "file": "cs2kz-styles.phrases.txt",
           "phrase": "Possible Styles",
-          "line": 82,
+          "line": 83,
           "english_text": "Possible styles:"
         },
         {
           "file": "cs2kz-styles.phrases.txt",
           "phrase": "Style Not Available",
-          "line": 97,
+          "line": 98,
           "english_text": "{grey}The {purple}{style} {grey}style is currently not available."
         },
         {
@@ -12673,7 +12673,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -13715,7 +13715,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -15534,7 +15534,7 @@
           "file": "cs2kz-tips-visual.phrases.txt",
           "phrase": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV."
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
         }
       ],
       "menu": {
@@ -23501,7 +23501,7 @@
         },
         {
           "name": "Possible Styles",
-          "line": 82,
+          "line": 83,
           "english_text": "Possible styles:",
           "existing_languages": [
             "chi",
@@ -23523,7 +23523,7 @@
         },
         {
           "name": "Style Not Available",
-          "line": 97,
+          "line": 98,
           "english_text": "{grey}The {purple}{style} {grey}style is currently not available.",
           "existing_languages": [
             "chi",
@@ -26456,7 +26456,7 @@
         {
           "name": "Tip - kz_fov",
           "line": 63,
-          "english_text": "{grey}Use {default}/fov {purple}<value> {default}to change your FOV.",
+          "english_text": "{grey}Use {default}/fov {purple}<value> {grey}to change your FOV.",
           "existing_languages": [
             "en",
             "ua"
