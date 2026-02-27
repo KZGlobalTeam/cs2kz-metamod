@@ -143,7 +143,7 @@ void KZAnticheatService::Infraction::SaveReplay()
 		KZRecordingService::fileWriter->QueueWrite(
 			std::move(this->replay),
 			// Success callback
-			[name, steamID, uuid = this->replay->uuid](const UUID_t &uuid, f32 replayDuration)
+			[name, steamID](const UUID_t &uuid, f32 replayDuration)
 			{
 				META_CONPRINTF("[KZ::Anticheat] Cheater replay %s saved for player %s (%llu)\n", uuid.ToString().c_str(), name.c_str(), steamID);
 				// TODO Anticheat: Add UUID to the global upload queue
