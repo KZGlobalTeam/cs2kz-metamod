@@ -7,8 +7,8 @@
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/language/kz_language.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/telemetry/kz_telemetry.h"
 #include "utils/ctimer.h"
-
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
 CConVarRef<bool> sv_cheats("sv_cheats");
@@ -144,12 +144,20 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 			player->timerService->TimerStop();
 			StartTimer<CPlayerUserId>(KZAnticheatService::KickPlayerInvalidSettings, player->GetClient()->GetUserID(), KICK_DELAY, true, true);
 		}
-		else if (fps != player->anticheatService->currentMaxFps)
+		else if (fabs(fps - player->anticheatService->currentMaxFps) > 0.01f)
 		{
 			// Player shouldn't be able to normally change fps_max during gameplay, so they must be using a cheat.
-			player->anticheatService->MarkHasInvalidCvars();
-			std::string reason = "Changed fps_max from " + std::to_string(player->anticheatService->currentMaxFps) + " to " + std::to_string(fps);
-			player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
+			// It seems to be somehow possible upon joining a server?
+			if (player->telemetryService->GetTimeInServer() < 60.0f)
+			{
+				player->anticheatService->currentMaxFps = fps;
+			}
+			else
+			{
+				player->anticheatService->MarkHasInvalidCvars();
+				std::string reason = "Changed fps_max from " + std::to_string(player->anticheatService->currentMaxFps) + " to " + std::to_string(fps);
+				player->anticheatService->MarkInfraction(KZAnticheatService::Infraction::Type::InvalidCvar, reason);
+			}
 		}
 	}
 	else if (KZ_STREQI(pszCvarName, "sv_cheats"))

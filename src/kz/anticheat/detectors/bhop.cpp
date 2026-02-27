@@ -232,7 +232,8 @@ void KZAnticheatService::CheckLandingEvents()
 
 		// Hyperscroll check
 		f32 perfectRatio = totalChainEligibleEvents > 0 ? (f32)numPerfs / (f32)totalChainEligibleEvents : 0.0f;
-		if (averagePattern >= HIGH_PATTERN_THRESHOLD && perfectRatio > PERF_RATIO_FOR_HYPERSCROLL_INFRACTION)
+		if (averagePattern >= HIGH_PATTERN_THRESHOLD && perfectRatio > PERF_RATIO_FOR_HYPERSCROLL_INFRACTION
+			&& totalChainEligibleEvents >= MIN_SAMPLE_COUNT)
 		{
 			this->MarkInfraction(KZAnticheatService::Infraction::Type::Hyperscroll,
 								 tfm::format("Average pattern %.2f >= %.2f with %.2f%% perfect ratio (%d/%d)", averagePattern, HIGH_PATTERN_THRESHOLD,
