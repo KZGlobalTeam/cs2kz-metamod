@@ -310,6 +310,11 @@ private:
 		static void OnErrorMessage(const ix::WebSocketErrorInfo &errorInfo);
 
 		/**
+		 * The map name sent in the `hello` message, used to validate the `hello_ack` response.
+		 */
+		static inline std::string handshakeMapName;
+
+		/**
 		 * Initiates the WebSocket handshake with the API.
 		 *
 		 * This sends the `hello` message.
@@ -684,7 +689,8 @@ private:
 	} globalAnnouncements;
 
 private:
-	static void OnMapInfo(const std::optional<KZ::api::Map> &mapInfo);
+	static void SendMapChange();
+	static void OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std::string sentMapName);
 	static void OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ack, u64 steamID);
 	static void OnWorldRecordsForCache(const KZ::api::messages::WorldRecordsForCache &records);
 };

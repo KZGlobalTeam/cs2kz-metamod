@@ -152,23 +152,28 @@ void KZGlobalService::SubmitBan(u64 steamID, std::string reason, std::string det
 	// TODO Anticheat: Implement this!
 }
 
-void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo)
+void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std::string sentMapName)
 {
 	bool mapNameOk = false;
 	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
+
+	if (mapNameOk && currentMapName.Get() != sentMapName)
+	{
+		META_CONPRINTF("[KZ::Global] Map changed since MapChange was sent (sent '%s', current '%s'); re-sending.\n", sentMapName.c_str(),
+					   currentMapName.Get());
+		KZGlobalService::SendMapChange();
+		return;
+	}
 
 	if (mapInfo.has_value())
 	{
 		if (mapNameOk)
 		{
 			META_CONPRINTF("[KZ::Global] %s is approved.\n", mapInfo->name.c_str());
-			if (mapInfo->name == currentMapName.Get())
+			for (const auto &course : mapInfo->courses)
 			{
-				for (const auto &course : mapInfo->courses)
-				{
-					KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
-					META_CONPRINTF("[KZ::Global] Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
-				}
+				KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
+				META_CONPRINTF("[KZ::Global] Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
 			}
 		}
 		else
@@ -178,7 +183,7 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo)
 	}
 	else
 	{
-		META_CONPRINTF("[KZ::Global] %s is not approved.\n", currentMapName.Get());
+		META_CONPRINTF("[KZ::Global] %s is not approved.\n", sentMapName.c_str());
 	}
 
 	{
@@ -210,6 +215,24 @@ void KZGlobalService::PrintAnnouncements()
 	}
 }
 
+void KZGlobalService::SendMapChange()
+{
+	bool mapNameOk = false;
+	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
+
+	if (!mapNameOk)
+	{
+		META_CONPRINTF("[KZ::Global] Failed to get current map name. Cannot send `map_change` event.\n");
+		return;
+	}
+
+	KZ::api::messages::MapChange message;
+	message.name = currentMapName.Get();
+
+	KZGlobalService::MessageCallback<std::optional<KZ::api::Map>> callback(KZGlobalService::OnMapInfo, std::string(currentMapName.Get()));
+	KZGlobalService::WS::SendMessage(message, std::move(callback));
+}
+
 void KZGlobalService::OnActivateServer()
 {
 	if (KZGlobalService::state.load() == KZGlobalService::State::Uninitialized)
@@ -229,21 +252,7 @@ void KZGlobalService::OnActivateServer()
 
 		case KZGlobalService::State::HandshakeCompleted:
 		{
-			KZ::api::messages::MapChange message;
-
-			bool mapNameOk = false;
-			CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
-
-			if (!mapNameOk)
-			{
-				META_CONPRINTF("[KZ::Global] Failed to get current map name. Cannot send `map_change` event.\n");
-				break;
-			}
-
-			message.name = currentMapName.Get();
-
-			KZGlobalService::MessageCallback<std::optional<KZ::api::Map>> callback(KZGlobalService::OnMapInfo);
-			KZGlobalService::WS::SendMessage(message, std::move(callback));
+			KZGlobalService::SendMapChange();
 		}
 		break;
 	}
@@ -679,6 +688,7 @@ void KZGlobalService::WS::InitiateHandshake()
 		return;
 	}
 
+	KZGlobalService::WS::handshakeMapName = currentMapName.Get();
 	KZ::api::messages::handshake::Hello hello(g_KZPlugin.GetMD5(), currentMapName.Get());
 
 	for (Player *player : g_pPlayerManager->players)
@@ -704,9 +714,25 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 	META_CONPRINTF("[KZ::Global] Completing WebSocket handshake...\n");
 	// META_CONPRINTF("[KZ::Global] WebSocket session ID: `%s`\n", ack.sessionID.c_str());
 
+	bool mapMismatch = false;
+
 	{
-		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
-		KZGlobalService::currentMap.info = std::move(ack.mapInfo);
+		bool mapNameOk = false;
+		CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
+
+		if (mapNameOk && currentMapName.Get() == KZGlobalService::WS::handshakeMapName)
+		{
+			std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+			KZGlobalService::currentMap.info = std::move(ack.mapInfo);
+		}
+		else
+		{
+			META_CONPRINTF("[KZ::Global] Map changed during handshake (sent '%s', current '%s'); re-sending map_change.\n",
+						   KZGlobalService::WS::handshakeMapName.c_str(), mapNameOk ? currentMapName.Get() : "<unknown>");
+			std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+			KZGlobalService::currentMap.info = std::nullopt;
+			mapMismatch = true;
+		}
 	}
 
 	{
@@ -762,6 +788,11 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 	if (!KZGlobalService::state.compare_exchange_strong(currentState, KZGlobalService::State::HandshakeCompleted))
 	{
 		META_CONPRINTF("[KZ::Global] State changed unexpectedly during `CompleteHandshake()`.\n");
+	}
+
+	if (mapMismatch)
+	{
+		KZGlobalService::SendMapChange();
 	}
 
 	for (Player *player : g_pKZPlayerManager->players)
