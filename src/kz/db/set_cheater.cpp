@@ -52,7 +52,7 @@ void KZDatabaseService::AddOrUpdateBan(u64 steamID64, const char *reason, const 
 	const UUID_t &useId = banId == UUID_t(false) ? banId : UUID_t();
 	std::string banIdStr = useId.ToString();
 	std::string escapedReason = GetDatabaseConnection()->Escape(reason ? reason : "No reason provided");
-	std::string replayUuidStr = replayUuid == UUID_t(false) ? replayUuid.ToString() : "NULL";
+	std::string replayUuidStr = replayUuid == UUID_t(false) ? "NULL" : replayUuid.ToString();
 
 	const char *insertQuery = GetDatabaseType() == KZ::Database::DatabaseType::MySQL ? mysql_bans_insert : sqlite_bans_insert;
 	V_snprintf(query, sizeof(query), insertQuery, banIdStr.c_str(), steamID64, escapedReason.c_str(), replayUuidStr.c_str(), endTime);
