@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 566
-Phrases with missing translations: 486
-Total missing translation entries: 2534
+Total phrases: 568
+Phrases with missing translations: 488
+Total missing translation entries: 2558
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  91.7% (519/566)
-  de (german)          [██████████████████░░]  91.7% (519/566)
-  en (english)         [████████████████████] 100.0% (566/566)
-  es (spanish)         [██████████░░░░░░░░░░]  50.9% (288/566)
-  fi (finnish)         [████████░░░░░░░░░░░░]  42.0% (238/566)
-  it (italian)         [████████░░░░░░░░░░░░]  40.6% (230/566)
-  ko (koreana)         [██████████░░░░░░░░░░]  51.4% (291/566)
-  lv (latvian)         [███████████░░░░░░░░░]  58.8% (333/566)
-  pl (polish)          [██████████████████░░]  92.0% (521/566)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.3% (92/566)
-  sv (swedish)         [██████████████░░░░░░]  70.1% (397/566)
-  tr (turkish)         [█████████░░░░░░░░░░░]  47.2% (267/566)
-  ua (ukrainian)       [███████████████████░]  99.5% (563/566)
+  chi (schinese)       [██████████████████░░]  91.4% (519/568)
+  de (german)          [██████████████████░░]  91.4% (519/568)
+  en (english)         [████████████████████] 100.0% (568/568)
+  es (spanish)         [██████████░░░░░░░░░░]  50.7% (288/568)
+  fi (finnish)         [████████░░░░░░░░░░░░]  41.9% (238/568)
+  it (italian)         [████████░░░░░░░░░░░░]  40.5% (230/568)
+  ko (koreana)         [██████████░░░░░░░░░░]  51.2% (291/568)
+  lv (latvian)         [███████████░░░░░░░░░]  58.6% (333/568)
+  pl (polish)          [██████████████████░░]  91.7% (521/568)
+  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.2% (92/568)
+  sv (swedish)         [█████████████░░░░░░░]  69.9% (397/568)
+  tr (turkish)         [█████████░░░░░░░░░░░]  47.0% (267/568)
+  ua (ukrainian)       [███████████████████░]  99.1% (563/568)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -968,83 +968,87 @@ cs2kz-timer.phrases.txt
     Missing (3): fi, it, ru
   Line 357: "No Start Position For Course"
     Missing (3): fi, it, ru
-  Line 371: "No Jumpstat Area Found"
+  Line 371: "No End Position For Course"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 376: "No Active Course"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 380: "No Jumpstat Area Found"
     Missing (3): fi, it, ru
-  Line 384: "Turnbinds Disabled"
+  Line 393: "Turnbinds Disabled"
     Missing (4): fi, it, ru, tr
-  Line 398: "Course Split Reached"
+  Line 407: "Course Split Reached"
     Missing (3): fi, it, ru
-  Line 412: "Course Checkpoint Reached"
+  Line 421: "Course Checkpoint Reached"
     Missing (4): fi, it, ru, tr
-  Line 425: "Course Stage Reached"
+  Line 434: "Course Stage Reached"
     Missing (3): fi, it, ru
-  Line 441: "Server PB Diff (Overall)"
+  Line 450: "Server PB Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 453: "Global PB Diff (Overall)"
+  Line 462: "Global PB Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 465: "SR Diff (Overall)"
+  Line 474: "SR Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 477: "WR Diff (Overall)"
+  Line 486: "WR Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 489: "Server PB Diff (Pro)"
+  Line 498: "Server PB Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 501: "Global PB Diff (Pro)"
+  Line 510: "Global PB Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 513: "SR Diff (Pro)"
+  Line 522: "SR Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 525: "WR Diff (Pro)"
+  Line 534: "WR Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 539: "Missed Server PB (Overall)"
+  Line 548: "Missed Server PB (Overall)"
     Missing (3): fi, it, ru
-  Line 553: "Missed Global PB (Overall)"
+  Line 562: "Missed Global PB (Overall)"
     Missing (3): fi, it, ru
-  Line 567: "Missed SR (Overall)"
+  Line 576: "Missed SR (Overall)"
     Missing (3): fi, it, ru
-  Line 581: "Missed WR (Overall)"
+  Line 590: "Missed WR (Overall)"
     Missing (3): fi, it, ru
-  Line 595: "Missed Server PB (Pro)"
+  Line 604: "Missed Server PB (Pro)"
     Missing (3): fi, it, ru
-  Line 609: "Missed Global PB (Pro)"
+  Line 618: "Missed Global PB (Pro)"
     Missing (3): fi, it, ru
-  Line 623: "Missed SR (Pro)"
+  Line 632: "Missed SR (Pro)"
     Missing (3): fi, it, ru
-  Line 637: "Missed WR (Pro)"
+  Line 646: "Missed WR (Pro)"
     Missing (3): fi, it, ru
-  Line 651: "Missed Server PB (Overall+Pro)"
+  Line 660: "Missed Server PB (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 665: "Missed Global PB (Overall+Pro)"
+  Line 674: "Missed Global PB (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 679: "Missed SR (Overall+Pro)"
+  Line 688: "Missed SR (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 693: "Missed WR (Overall+Pro)"
+  Line 702: "Missed WR (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 708: "Compare Command Usage"
+  Line 717: "Compare Command Usage"
     Missing (3): fi, it, ru
-  Line 721: "Compare Disabled"
+  Line 730: "Compare Disabled"
     Missing (3): fi, it, ru
-  Line 734: "Compare Server PB"
+  Line 743: "Compare Server PB"
     Missing (3): fi, it, ru
-  Line 747: "Compare Global PB"
+  Line 756: "Compare Global PB"
     Missing (3): fi, it, ru
-  Line 760: "Compare Server Record"
+  Line 769: "Compare Server Record"
     Missing (3): fi, it, ru
-  Line 773: "Compare World Record"
+  Line 782: "Compare World Record"
     Missing (3): fi, it, ru
-  Line 787: "Request - Failed (Invalid Map)"
+  Line 796: "Request - Failed (Invalid Map)"
     Missing (5): fi, it, ko, ru, tr
-  Line 798: "Request - Failed (Generic)"
+  Line 807: "Request - Failed (Generic)"
     Missing (5): fi, it, ko, ru, tr
-  Line 809: "Request - Failed (No Course in Current Map)"
+  Line 818: "Request - Failed (No Course in Current Map)"
     Missing (5): fi, it, ko, ru, tr
-  Line 822: "Timer Stop Sound Enabled"
+  Line 831: "Timer Stop Sound Enabled"
     Missing (7): es, fi, it, ko, lv, ru, tr
-  Line 831: "Timer Stop Sound Disabled"
+  Line 840: "Timer Stop Sound Disabled"
     Missing (7): es, fi, it, ko, lv, ru, tr
-  Line 840: "Record Volume Set"
+  Line 849: "Record Volume Set"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 849: "Started Run on Course"
+  Line 858: "Started Run on Course"
     Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 856: "Started Run on Non Ranked Course"
+  Line 865: "Started Run on Non Ranked Course"
     Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-tips-general.phrases.txt

@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 566,
-    "phrases_with_missing": 486,
-    "total_missing_entries": 2534,
+    "total_phrases": 568,
+    "phrases_with_missing": 488,
+    "total_missing_entries": 2558,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 91.7,
+      "coverage_percent": 91.37,
       "translated": 519,
-      "missing": 47,
+      "missing": 49,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -327,14 +327,26 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -355,9 +367,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 91.7,
+      "coverage_percent": 91.37,
       "translated": 519,
-      "missing": 47,
+      "missing": 49,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -625,14 +637,26 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -651,7 +675,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 566,
+      "translated": 568,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -662,9 +686,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 50.88,
+      "coverage_percent": 50.7,
       "translated": 288,
-      "missing": 278,
+      "missing": 280,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -2210,32 +2234,44 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -2346,9 +2382,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 42.05,
+      "coverage_percent": 41.9,
       "translated": 238,
-      "missing": 328,
+      "missing": 330,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -3984,236 +4020,248 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "No Jumpstat Area Found",
+          "phrase": "No End Position For Course",
           "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Jumpstat Area Found",
+          "line": 380,
           "english_text": "{darkred}Jumpstat area not found on this map!"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Turnbinds Disabled",
-          "line": 384,
+          "line": 393,
           "english_text": "{darkred}Turnbinds are disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Split Reached",
-          "line": 398,
+          "line": 407,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 412,
+          "line": 421,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Stage Reached",
-          "line": 425,
+          "line": 434,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 441,
+          "line": 450,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 453,
+          "line": 462,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 465,
+          "line": 474,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 477,
+          "line": 486,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 489,
+          "line": 498,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 501,
+          "line": 510,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 513,
+          "line": 522,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 525,
+          "line": 534,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall)",
-          "line": 539,
+          "line": 548,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall)",
-          "line": 553,
+          "line": 562,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall)",
-          "line": 567,
+          "line": 576,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall)",
-          "line": 581,
+          "line": 590,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Pro)",
-          "line": 595,
+          "line": 604,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Pro)",
-          "line": 609,
+          "line": 618,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Pro)",
-          "line": 623,
+          "line": 632,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Pro)",
-          "line": 637,
+          "line": 646,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall+Pro)",
-          "line": 651,
+          "line": 660,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall+Pro)",
-          "line": 665,
+          "line": 674,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall+Pro)",
-          "line": 679,
+          "line": 688,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall+Pro)",
-          "line": 693,
+          "line": 702,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Command Usage",
-          "line": 708,
+          "line": 717,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Disabled",
-          "line": 721,
+          "line": 730,
           "english_text": "{grey}Run comparison disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Server PB",
-          "line": 734,
+          "line": 743,
           "english_text": "{grey}You will now compare your run to your server personal best."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Global PB",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}You will now compare your run to up to your global personal best."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Server Record",
-          "line": 760,
+          "line": 769,
           "english_text": "{grey}You will now compare your run to up to the server record."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare World Record",
-          "line": 773,
+          "line": 782,
           "english_text": "{grey}You will now compare your run to up to the world record."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 787,
+          "line": 796,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 798,
+          "line": 807,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 809,
+          "line": 818,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -4330,9 +4378,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 40.64,
+      "coverage_percent": 40.49,
       "translated": 230,
-      "missing": 336,
+      "missing": 338,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -6016,236 +6064,248 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "No Jumpstat Area Found",
+          "phrase": "No End Position For Course",
           "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Jumpstat Area Found",
+          "line": 380,
           "english_text": "{darkred}Jumpstat area not found on this map!"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Turnbinds Disabled",
-          "line": 384,
+          "line": 393,
           "english_text": "{darkred}Turnbinds are disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Split Reached",
-          "line": 398,
+          "line": 407,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 412,
+          "line": 421,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Stage Reached",
-          "line": 425,
+          "line": 434,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 441,
+          "line": 450,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 453,
+          "line": 462,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 465,
+          "line": 474,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 477,
+          "line": 486,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 489,
+          "line": 498,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 501,
+          "line": 510,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 513,
+          "line": 522,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 525,
+          "line": 534,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall)",
-          "line": 539,
+          "line": 548,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall)",
-          "line": 553,
+          "line": 562,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall)",
-          "line": 567,
+          "line": 576,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall)",
-          "line": 581,
+          "line": 590,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Pro)",
-          "line": 595,
+          "line": 604,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Pro)",
-          "line": 609,
+          "line": 618,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Pro)",
-          "line": 623,
+          "line": 632,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Pro)",
-          "line": 637,
+          "line": 646,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall+Pro)",
-          "line": 651,
+          "line": 660,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall+Pro)",
-          "line": 665,
+          "line": 674,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall+Pro)",
-          "line": 679,
+          "line": 688,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall+Pro)",
-          "line": 693,
+          "line": 702,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Command Usage",
-          "line": 708,
+          "line": 717,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Disabled",
-          "line": 721,
+          "line": 730,
           "english_text": "{grey}Run comparison disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Server PB",
-          "line": 734,
+          "line": 743,
           "english_text": "{grey}You will now compare your run to your server personal best."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Global PB",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}You will now compare your run to up to your global personal best."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Server Record",
-          "line": 760,
+          "line": 769,
           "english_text": "{grey}You will now compare your run to up to the server record."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare World Record",
-          "line": 773,
+          "line": 782,
           "english_text": "{grey}You will now compare your run to up to the world record."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 787,
+          "line": 796,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 798,
+          "line": 807,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 809,
+          "line": 818,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -6362,9 +6422,9 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 51.41,
+      "coverage_percent": 51.23,
       "translated": 291,
-      "missing": 275,
+      "missing": 277,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -7826,98 +7886,110 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 441,
+          "line": 450,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 453,
+          "line": 462,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 465,
+          "line": 474,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 477,
+          "line": 486,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 489,
+          "line": 498,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 501,
+          "line": 510,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 513,
+          "line": 522,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 525,
+          "line": 534,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 787,
+          "line": 796,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 798,
+          "line": 807,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 809,
+          "line": 818,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -8025,9 +8097,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 58.83,
+      "coverage_percent": 58.63,
       "translated": 333,
-      "missing": 233,
+      "missing": 235,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9303,32 +9375,44 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -9436,9 +9520,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 92.05,
+      "coverage_percent": 91.73,
       "translated": 521,
-      "missing": 45,
+      "missing": 47,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9694,14 +9778,26 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -9719,9 +9815,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 16.25,
+      "coverage_percent": 16.2,
       "translated": 92,
-      "missing": 474,
+      "missing": 476,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -12131,236 +12227,248 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "No Jumpstat Area Found",
+          "phrase": "No End Position For Course",
           "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Jumpstat Area Found",
+          "line": 380,
           "english_text": "{darkred}Jumpstat area not found on this map!"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Turnbinds Disabled",
-          "line": 384,
+          "line": 393,
           "english_text": "{darkred}Turnbinds are disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Split Reached",
-          "line": 398,
+          "line": 407,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 412,
+          "line": 421,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Stage Reached",
-          "line": 425,
+          "line": 434,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 441,
+          "line": 450,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 453,
+          "line": 462,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 465,
+          "line": 474,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 477,
+          "line": 486,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 489,
+          "line": 498,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 501,
+          "line": 510,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 513,
+          "line": 522,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 525,
+          "line": 534,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall)",
-          "line": 539,
+          "line": 548,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall)",
-          "line": 553,
+          "line": 562,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall)",
-          "line": 567,
+          "line": 576,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall)",
-          "line": 581,
+          "line": 590,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Pro)",
-          "line": 595,
+          "line": 604,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Pro)",
-          "line": 609,
+          "line": 618,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Pro)",
-          "line": 623,
+          "line": 632,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Pro)",
-          "line": 637,
+          "line": 646,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall+Pro)",
-          "line": 651,
+          "line": 660,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall+Pro)",
-          "line": 665,
+          "line": 674,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall+Pro)",
-          "line": 679,
+          "line": 688,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall+Pro)",
-          "line": 693,
+          "line": 702,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Command Usage",
-          "line": 708,
+          "line": 717,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Disabled",
-          "line": 721,
+          "line": 730,
           "english_text": "{grey}Run comparison disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Server PB",
-          "line": 734,
+          "line": 743,
           "english_text": "{grey}You will now compare your run to your server personal best."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Global PB",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}You will now compare your run to up to your global personal best."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare Server Record",
-          "line": 760,
+          "line": 769,
           "english_text": "{grey}You will now compare your run to up to the server record."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Compare World Record",
-          "line": 773,
+          "line": 782,
           "english_text": "{grey}You will now compare your run to up to the world record."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 787,
+          "line": 796,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 798,
+          "line": 807,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 809,
+          "line": 818,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -12579,9 +12687,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 70.14,
+      "coverage_percent": 69.89,
       "translated": 397,
-      "missing": 169,
+      "missing": 171,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -13491,20 +13599,32 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -13606,9 +13726,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 47.17,
+      "coverage_percent": 47.01,
       "translated": 267,
-      "missing": 299,
+      "missing": 301,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -15202,110 +15322,122 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
           "phrase": "Turnbinds Disabled",
-          "line": 384,
+          "line": 393,
           "english_text": "{darkred}Turnbinds are disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 412,
+          "line": 421,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 441,
+          "line": 450,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 453,
+          "line": 462,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 465,
+          "line": 474,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 477,
+          "line": 486,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 489,
+          "line": 498,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 501,
+          "line": 510,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 513,
+          "line": 522,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 525,
+          "line": 534,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 787,
+          "line": 796,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 798,
+          "line": 807,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 809,
+          "line": 818,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
@@ -15416,9 +15548,9 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 99.47,
+      "coverage_percent": 99.12,
       "translated": 563,
-      "missing": 3,
+      "missing": 5,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -15437,6 +15569,18 @@
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
           "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No End Position For Course",
+          "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course."
         }
       ],
       "menu": {
@@ -24280,7 +24424,7 @@
       ]
     },
     "cs2kz-timer.phrases.txt": {
-      "phrases_with_missing": 55,
+      "phrases_with_missing": 57,
       "phrases": [
         {
           "name": "1 Teleport Text",
@@ -24635,8 +24779,52 @@
           ]
         },
         {
-          "name": "No Jumpstat Area Found",
+          "name": "No End Position For Course",
           "line": 371,
+          "english_text": "{darkred}End position not found for course {default}{course_name}{darkred}!",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "No Active Course",
+          "line": 376,
+          "english_text": "{grey}You currently have no active course.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "No Jumpstat Area Found",
+          "line": 380,
           "english_text": "{darkred}Jumpstat area not found on this map!",
           "existing_languages": [
             "chi",
@@ -24658,7 +24846,7 @@
         },
         {
           "name": "Turnbinds Disabled",
-          "line": 384,
+          "line": 393,
           "english_text": "{darkred}Turnbinds are disabled.",
           "existing_languages": [
             "chi",
@@ -24680,7 +24868,7 @@
         },
         {
           "name": "Course Split Reached",
-          "line": 398,
+          "line": 407,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}",
           "existing_languages": [
             "chi",
@@ -24702,7 +24890,7 @@
         },
         {
           "name": "Course Checkpoint Reached",
-          "line": 412,
+          "line": 421,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}",
           "existing_languages": [
             "chi",
@@ -24724,7 +24912,7 @@
         },
         {
           "name": "Course Stage Reached",
-          "line": 425,
+          "line": 434,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}",
           "existing_languages": [
             "chi",
@@ -24746,7 +24934,7 @@
         },
         {
           "name": "Server PB Diff (Overall)",
-          "line": 441,
+          "line": 450,
           "english_text": " | SPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -24768,7 +24956,7 @@
         },
         {
           "name": "Global PB Diff (Overall)",
-          "line": 453,
+          "line": 462,
           "english_text": " | GPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -24790,7 +24978,7 @@
         },
         {
           "name": "SR Diff (Overall)",
-          "line": 465,
+          "line": 474,
           "english_text": " | SR {diff_time}",
           "existing_languages": [
             "chi",
@@ -24812,7 +25000,7 @@
         },
         {
           "name": "WR Diff (Overall)",
-          "line": 477,
+          "line": 486,
           "english_text": " | WR {diff_time}",
           "existing_languages": [
             "chi",
@@ -24834,7 +25022,7 @@
         },
         {
           "name": "Server PB Diff (Pro)",
-          "line": 489,
+          "line": 498,
           "english_text": " | PRO SPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -24856,7 +25044,7 @@
         },
         {
           "name": "Global PB Diff (Pro)",
-          "line": 501,
+          "line": 510,
           "english_text": " | PRO GPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -24878,7 +25066,7 @@
         },
         {
           "name": "SR Diff (Pro)",
-          "line": 513,
+          "line": 522,
           "english_text": " | PRO SR {diff_time}",
           "existing_languages": [
             "chi",
@@ -24900,7 +25088,7 @@
         },
         {
           "name": "WR Diff (Pro)",
-          "line": 525,
+          "line": 534,
           "english_text": " | PRO WR {diff_time}",
           "existing_languages": [
             "chi",
@@ -24922,7 +25110,7 @@
         },
         {
           "name": "Missed Server PB (Overall)",
-          "line": 539,
+          "line": 548,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -24944,7 +25132,7 @@
         },
         {
           "name": "Missed Global PB (Overall)",
-          "line": 553,
+          "line": 562,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -24966,7 +25154,7 @@
         },
         {
           "name": "Missed SR (Overall)",
-          "line": 567,
+          "line": 576,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -24988,7 +25176,7 @@
         },
         {
           "name": "Missed WR (Overall)",
-          "line": 581,
+          "line": 590,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25010,7 +25198,7 @@
         },
         {
           "name": "Missed Server PB (Pro)",
-          "line": 595,
+          "line": 604,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25032,7 +25220,7 @@
         },
         {
           "name": "Missed Global PB (Pro)",
-          "line": 609,
+          "line": 618,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25054,7 +25242,7 @@
         },
         {
           "name": "Missed SR (Pro)",
-          "line": 623,
+          "line": 632,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25076,7 +25264,7 @@
         },
         {
           "name": "Missed WR (Pro)",
-          "line": 637,
+          "line": 646,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25098,7 +25286,7 @@
         },
         {
           "name": "Missed Server PB (Overall+Pro)",
-          "line": 651,
+          "line": 660,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25120,7 +25308,7 @@
         },
         {
           "name": "Missed Global PB (Overall+Pro)",
-          "line": 665,
+          "line": 674,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25142,7 +25330,7 @@
         },
         {
           "name": "Missed SR (Overall+Pro)",
-          "line": 679,
+          "line": 688,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25164,7 +25352,7 @@
         },
         {
           "name": "Missed WR (Overall+Pro)",
-          "line": 693,
+          "line": 702,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -25186,7 +25374,7 @@
         },
         {
           "name": "Compare Command Usage",
-          "line": 708,
+          "line": 717,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}.",
           "existing_languages": [
             "chi",
@@ -25208,7 +25396,7 @@
         },
         {
           "name": "Compare Disabled",
-          "line": 721,
+          "line": 730,
           "english_text": "{grey}Run comparison disabled.",
           "existing_languages": [
             "chi",
@@ -25230,7 +25418,7 @@
         },
         {
           "name": "Compare Server PB",
-          "line": 734,
+          "line": 743,
           "english_text": "{grey}You will now compare your run to your server personal best.",
           "existing_languages": [
             "chi",
@@ -25252,7 +25440,7 @@
         },
         {
           "name": "Compare Global PB",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}You will now compare your run to up to your global personal best.",
           "existing_languages": [
             "chi",
@@ -25274,7 +25462,7 @@
         },
         {
           "name": "Compare Server Record",
-          "line": 760,
+          "line": 769,
           "english_text": "{grey}You will now compare your run to up to the server record.",
           "existing_languages": [
             "chi",
@@ -25296,7 +25484,7 @@
         },
         {
           "name": "Compare World Record",
-          "line": 773,
+          "line": 782,
           "english_text": "{grey}You will now compare your run to up to the world record.",
           "existing_languages": [
             "chi",
@@ -25318,7 +25506,7 @@
         },
         {
           "name": "Request - Failed (Invalid Map)",
-          "line": 787,
+          "line": 796,
           "english_text": "{darkred}Failed to process current request. (Invalid map)",
           "existing_languages": [
             "chi",
@@ -25340,7 +25528,7 @@
         },
         {
           "name": "Request - Failed (Generic)",
-          "line": 798,
+          "line": 807,
           "english_text": "{darkred}Failed to process current request.",
           "existing_languages": [
             "chi",
@@ -25362,7 +25550,7 @@
         },
         {
           "name": "Request - Failed (No Course in Current Map)",
-          "line": 809,
+          "line": 818,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})",
           "existing_languages": [
             "chi",
@@ -25384,7 +25572,7 @@
         },
         {
           "name": "Timer Stop Sound Enabled",
-          "line": 822,
+          "line": 831,
           "english_text": "{grey}You have enabled the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -25406,7 +25594,7 @@
         },
         {
           "name": "Timer Stop Sound Disabled",
-          "line": 831,
+          "line": 840,
           "english_text": "{grey}You have disabled the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -25428,7 +25616,7 @@
         },
         {
           "name": "Record Volume Set",
-          "line": 840,
+          "line": 849,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}.",
           "existing_languages": [
             "chi",
@@ -25450,7 +25638,7 @@
         },
         {
           "name": "Started Run on Course",
-          "line": 849,
+          "line": 858,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}",
           "existing_languages": [
             "en",
@@ -25472,7 +25660,7 @@
         },
         {
           "name": "Started Run on Non Ranked Course",
-          "line": 856,
+          "line": 865,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating.",
           "existing_languages": [
             "en",
