@@ -129,8 +129,8 @@ RecordAnnounce::RecordAnnounce(KZPlayer *player)
 	// Metadata
 	this->metadata = player->timerService->GetCurrentRunMetadata().Get();
 
-	// Cheaters should not submit locally.
-	if (player->anticheatService->isBanned)
+	// Cheaters should not submit locally. Non authenticated players should not submit either.
+	if (player->anticheatService->isBanned || !player->IsAuthenticated())
 	{
 		this->local = false;
 		this->global = false;
