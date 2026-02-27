@@ -128,7 +128,7 @@ void KZProfileService::RequestRating()
 	{
 		apiURL.pop_back();
 	}
-	std::string url = apiURL + "/players/" + std::to_string(steamID64) + "/profile?mode=" + std::to_string(static_cast<u8>(mode));
+	std::string url = apiURL + "/players/" + std::to_string(steamID64);
 	HTTP::Request request(HTTP::Method::GET, url);
 	if (kz_profile_debug.GetBool())
 	{
@@ -169,7 +169,8 @@ void KZProfileService::RequestRating()
 		}
 		Json json(response.Body().value_or(""));
 
-		if (!json.Get("rating", player->profileService->currentRating))
+		const char *ratingField = (mode == KZ::api::Mode::Classic) ? "ckz_rating" : "vnl_rating";
+		if (!json.Get(ratingField, player->profileService->currentRating))
 		{
 			if (kz_profile_debug.GetBool())
 			{
