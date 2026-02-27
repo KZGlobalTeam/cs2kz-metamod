@@ -2188,13 +2188,13 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (TP)",
           "line": 146,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (PRO)",
           "line": 158,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -3932,13 +3932,13 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (TP)",
           "line": 146,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (PRO)",
           "line": 158,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -5964,13 +5964,13 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (TP)",
           "line": 146,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (PRO)",
           "line": 158,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -7804,13 +7804,13 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (TP)",
           "line": 146,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (PRO)",
           "line": 158,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -12061,13 +12061,13 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (TP)",
           "line": 146,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (PRO)",
           "line": 158,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -15180,13 +15180,13 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (TP)",
           "line": 146,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Global Points (PRO)",
           "line": 158,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}"
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -24373,7 +24373,7 @@
         {
           "name": "Beat Course Info - Global Points (TP)",
           "line": 146,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}",
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey})",
           "existing_languages": [
             "chi",
             "de",
@@ -24395,7 +24395,7 @@
         {
           "name": "Beat Course Info - Global Points (PRO)",
           "line": 158,
-          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points}{grey} {blue}PRO{grey} (+{purple}{points_gained}{grey}) | Player Rating: {purple}{player_rating}{grey}",
+          "english_text": "{grey}Course Points: {purple}{points}{grey} {yellow}Overall{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})",
           "existing_languages": [
             "chi",
             "de",
