@@ -15,7 +15,7 @@ bool KZDatabaseService::AreCoursesSetUp()
 
 void KZDatabaseService::SetupCourses(CUtlVector<KZCourseDescriptor *> &courses)
 {
-	char query[1024];
+	char query[2048];
 	Transaction txn;
 	FOR_EACH_VEC(courses, i)
 	{

@@ -31,7 +31,7 @@ void KZDatabaseService::InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString
 		return;
 	}
 	Transaction txn;
-	char query[1024];
+	char query[2048];
 	switch (KZDatabaseService::GetDatabaseType())
 	{
 		case DatabaseType::SQLite:

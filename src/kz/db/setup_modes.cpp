@@ -31,7 +31,7 @@ void KZDatabaseService::InsertAndUpdateModeIDs(CUtlString modeName, CUtlString s
 		return;
 	}
 	Transaction txn;
-	char query[1024];
+	char query[2048];
 	switch (KZDatabaseService::GetDatabaseType())
 	{
 		case DatabaseType::SQLite:

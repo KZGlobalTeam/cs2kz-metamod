@@ -47,7 +47,7 @@ void KZDatabaseService::AddOrUpdateBan(u64 steamID64, const char *reason, const 
 	{
 		return;
 	}
-	char query[1024];
+	char query[2048];
 
 	Transaction txn;
 
@@ -76,7 +76,7 @@ void KZDatabaseService::Unban(u64 steamID64)
 		return;
 	}
 
-	char query[1024];
+	char query[2048];
 	Transaction txn;
 
 	// Set active bans to expire now

@@ -11,7 +11,7 @@ void KZDatabaseService::FindPlayerByAlias(CUtlString playerName, TransactionSucc
 	}
 
 	Transaction txn;
-	char query[1024];
+	char query[2048];
 
 	// Get player's steamID through their alias.
 	std::string cleanedPlayerName = KZDatabaseService::GetDatabaseConnection()->Escape(playerName.Get());

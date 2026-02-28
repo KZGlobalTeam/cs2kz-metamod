@@ -27,7 +27,7 @@ void KZDatabaseService::SetupMap()
 	}
 
 	Transaction txn;
-	char query[1024];
+	char query[2048];
 	CUtlString mapName = g_pKZUtils->GetServerGlobals()->mapname.ToCStr();
 	auto escapedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
 	auto databaseType = KZDatabaseService::GetDatabaseType();

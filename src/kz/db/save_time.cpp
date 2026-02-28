@@ -17,7 +17,7 @@ void KZDatabaseService::SaveTime(const char *runUUID, u64 steamID, u32 courseID,
 		return;
 	}
 
-	char query[1024];
+	char query[2048];
 	Transaction txn;
 
 	// Always use UUID insert since all migrations must be applied for the plugin to run

@@ -18,7 +18,7 @@ void KZDatabaseService::SetupClient()
 		return;
 	}
 	// Setup Client Step 1 - Upsert them into Players Table
-	char query[1024];
+	char query[2048];
 
 	// Note: The player must have been authenticated and have a valid steamID at this point.
 	const char *clientName = this->player->GetName();

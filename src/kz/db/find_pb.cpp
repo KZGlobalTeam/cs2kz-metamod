@@ -10,7 +10,7 @@ void KZDatabaseService::QueryPB(u64 steamID64, CUtlString mapName, CUtlString co
 
 	Transaction txn;
 
-	char query[1024];
+	char query[2048];
 	// Get PB
 	V_snprintf(query, sizeof(query), sql_getpb, steamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), modeID, 0ull, 1);
 	txn.queries.push_back(query);
@@ -47,7 +47,7 @@ void KZDatabaseService::QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlS
 
 	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
 
-	char query[1024];
+	char query[2048];
 	Transaction txn;
 	// Get PB
 	V_snprintf(query, sizeof(query), sql_getpb, steamID64, cleanedMapName.c_str(), cleanedCourseName.c_str(), modeID, styleIDFlags, 1);
@@ -66,7 +66,7 @@ void KZDatabaseService::QueryAllPBs(u64 steamID64, CUtlString mapName, Transacti
 
 	Transaction txn;
 
-	char query[1024];
+	char query[2048];
 	// Get PB
 	V_snprintf(query, sizeof(query), sql_getpbs, steamID64, cleanedMapName.c_str());
 	txn.queries.push_back(query);

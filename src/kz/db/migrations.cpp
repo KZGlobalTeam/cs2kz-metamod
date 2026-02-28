@@ -167,7 +167,7 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 	}
 
 	Transaction txn;
-	char query[1024];
+	char query[2048];
 	for (u32 i = current; i < max; i++)
 	{
 		switch (KZDatabaseService::GetDatabaseType())
