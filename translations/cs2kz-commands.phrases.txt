@@ -33,7 +33,7 @@
 	"Command Help Response Category Hint (Console)"
 	{
 		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
-		"chi"		"您可以使用 \"kz_help <类别>\" 获取特定类别的命令列表 (例如：kz_help checkpoint misc).\n可用类别列表: checkpoint(存点), record(记录), jumpstats(跳跃统计), measure(测量), modestyle(模式风格), preference(偏好设置), racing(竞速), replay(重播), saveloc(保存位置), spec(观察), status(状态), timer(计时器), player(玩家), global(全球), misc(杂项), map(地图)"
+		"chi"		"你可以使用 \"kz_help <类别>\" 获取特定类别的命令列表 (例如：kz_help checkpoint misc).\n可用类别列表: checkpoint(存点), record(记录), jumpstats(跳跃统计), measure(测量), modestyle(模式风格), preference(偏好设置), racing(竞速), replay(重播), saveloc(保存位置), spec(观察), status(状态), timer(计时器), player(玩家), global(全球), misc(杂项), map(地图)"
 		"pl"		"Możesz użyć \"kz_help <kategoria>\", aby uzyskać listę komend dla danej kategorii (np. kz_help checkpoint misc).\nLista dostępnych kategorii: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"ua"		"Ви можете використати \"kz_help <категорія>\", щоб отримати список команд, пов'язаних з певною категорією (наприклад, kz_help checkpoint misc).\nСписок доступних категорій: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
@@ -1462,31 +1462,37 @@
 	"Command Description - kz_mapinfo"
 	{
 		"en"		"Display information about the current map."
+		"chi"		"显示当前地图的信息."
 		"ua"		"Показати інформацію про поточну мапу."
 	}
 	"Command Description - kz_tier"
 	{
 		"en"		"Display the tier of the current course or a specified course."
+		"chi"		"显示当前关卡或指定关卡的等级."
 		"ua"		"Показати складнісь поточного курсу або вказаного курсу."
 	}
 	"Command Description - kz_modernperfstats"
 	{
 		"en"		"Retrieve bhop statistics for modern jumping."
+		"chi"		"获取现代跳跃的bhop统计信息."
 		"ua"		"Показати статистику bhop для сучасних стрибків."
 	}
 	"Command Description - kz_legacyperfstats"
 	{
 		"en"		"Retrieve bhop statistics for legacy jumping."
+		"chi"		"获取传统跳跃的bhop统计信息."
 		"ua"		"Показати статистику bhop для класичних стрибків."
 	}
 	"Command Description - kz_resetperfstats"
 	{
 		"en"		"Reset bhop statistics for modern and legacy jumping."
+		"chi"		"重置现代跳跃和传统跳跃的bhop统计信息."
 		"ua"		"Скинути статистику bhop для сучасних і класичних стрибків."
 	}
 	"Command Description - kz_fov"
 	{
 		"en"		"Change your FOV."
+		"chi"		"改变你的FOV."
 		"ua"		"Змінити FOV."
 	}
 }

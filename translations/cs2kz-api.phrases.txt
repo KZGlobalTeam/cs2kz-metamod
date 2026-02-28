@@ -16,6 +16,7 @@
 	"Non Global Map Warning"
 	{
 		"en"		"{yellow}Warning{grey}: The current map is not globally approved. Runs on this map will not be globally submitted."
+		"chi"		"{yellow}警告{grey}: 当前地图未获全球认可. 在此地图上完成的成绩记录将不会被提交至全球排行榜."
 		"ua"		"{yellow}Увага{grey}: Поточна мапа не затверджена на глобальному рівні. Проходження на цій мапі не будуть зараховані до глобальної статистики."
 	}
 }
