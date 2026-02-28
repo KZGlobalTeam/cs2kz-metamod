@@ -276,7 +276,7 @@ std::string KZProfileService::GetPrefix(bool colors)
 		i32 rank = Ranks::Unknown;
 		for (i32 i = Ranks::NUM_RANKS - 1; i >= 0; i--)
 		{
-			if (this->currentRating * 0.1f >= rankThresholds[i])
+			if (this->currentRating >= rankThresholds[i])
 			{
 				rank = i;
 				break;
