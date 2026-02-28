@@ -51,9 +51,11 @@
 	"Anti-Cheat Warning"
 	{
 		"en"		"{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
+		"chi"		"{darkred}警告：严禁使用任何硬件/软件/配置获取不公平优势! 包括但不限于: 作弊工具、自动宏、超速滚动、SOCD/Null、desubtick以及鼠标滥用配置等."
 	}
 	"Cheater Warning"
 	{
 		"en"		"{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
+		"chi"		"{darkred}警告：你已被封禁. 你的跳跃和记录将不会保存."
 	}
 }

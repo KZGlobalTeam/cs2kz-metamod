@@ -372,10 +372,12 @@
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}End position not found for course {default}{course_name}{darkred}!"
+		"chi"		"{darkred}{course_name} {darkred}的终点无法找到!"
 	}
 	"No Active Course"
 	{
 		"en"		"{grey}You currently have no active course."
+		"chi"		"{grey}你当前没有激活中的关卡."
 	}
 	"No Jumpstat Area Found"
 	{
@@ -860,6 +862,7 @@
 		// You have started a run on new course: Main
 		"#format"	"course_name:s"
 		"en"		"{grey}You have started a run on a new course: {default}{course_name}{grey}"
+		"chi"		"{grey}你已开始在新关卡 {default}{course_name}{grey} 上进行跳图."
 		"ua"		"{grey}Ви почали проходження нового курсу: {default}{course_name}{grey}"
 	}
 	"Started Run on Non Ranked Course"
@@ -867,6 +870,7 @@
 		// Warning:  Course Main is not ranked. Runs on this course will not affect your global player rating.
 		"#format"	"course_name:s"
 		"en"		"{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+		"chi"		"{yellow}警告: {grey} 关卡 {default}{course_name}{grey} 没有排行. 在这个关卡上跳图不会影响你的全球玩家评分."
 		"ua"		"{yellow}Увага: {grey} Курс {default}{course_name}{grey} не є рейтинговим. Проходження на цьому курсі не будуть зараховані до вашого глобального рейтингу."
 	}
 }
