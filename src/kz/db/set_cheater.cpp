@@ -22,7 +22,14 @@ void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, con
 	if (duration > 0.0f)
 	{
 		// Temporary ban with specific duration in seconds
-		V_snprintf(expiryValue, sizeof(expiryValue), "DATE_ADD(CURRENT_TIMESTAMP, INTERVAL %.0f SECOND)", duration);
+		if (GetDatabaseType() == KZ::Database::DatabaseType::MySQL)
+		{
+			V_snprintf(expiryValue, sizeof(expiryValue), "DATE_ADD(CURRENT_TIMESTAMP, INTERVAL %.0f SECOND)", duration);
+		}
+		else
+		{
+			V_snprintf(expiryValue, sizeof(expiryValue), "datetime('now', '+%.0f seconds')", duration);
+		}
 	}
 	else if (duration == 0.0f)
 	{
