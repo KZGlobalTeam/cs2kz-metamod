@@ -8,12 +8,12 @@ SUMMARY
 Total languages: 13
 Total phrases: 568
 Phrases with missing translations: 488
-Total missing translation entries: 2558
+Total missing translation entries: 2512
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  91.4% (519/568)
+  chi (schinese)       [███████████████████░]  99.5% (565/568)
   de (german)          [██████████████████░░]  91.4% (519/568)
   en (english)         [████████████████████] 100.0% (568/568)
   es (spanish)         [██████████░░░░░░░░░░]  50.7% (288/568)
@@ -81,16 +81,16 @@ cs2kz-anticheat.phrases.txt
   Line 39: "Kick Player fps_max (Console)"
     Missing (4): es, it, ru, tr
   Line 51: "Anti-Cheat Warning"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 55: "Cheater Warning"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 56: "Cheater Warning"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-api.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Global Check"
     Missing (4): es, it, ru, tr
   Line 16: "Non Global Map Warning"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-beam.phrases.txt
 ----------------------------------------------------------------------
@@ -361,17 +361,17 @@ cs2kz-commands.phrases.txt
   Line 1455: "Command Description - kz_surrender"
     Missing (9): de, es, fi, it, ko, lv, ru, sv, tr
   Line 1462: "Command Description - kz_mapinfo"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1467: "Command Description - kz_tier"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1472: "Command Description - kz_modernperfstats"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1477: "Command Description - kz_legacyperfstats"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1482: "Command Description - kz_resetperfstats"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1487: "Command Description - kz_fov"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1468: "Command Description - kz_tier"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1474: "Command Description - kz_modernperfstats"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1480: "Command Description - kz_legacyperfstats"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1486: "Command Description - kz_resetperfstats"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1492: "Command Description - kz_fov"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -395,62 +395,62 @@ cs2kz-course.phrases.txt
   Line 32: "Course List Header"
     Missing (2): it, ru
   Line 47: "Map Info - No API Connection (Short)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 52: "Map Info - No API Connection"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 57: "Map Info - No API Map Data (Short)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 62: "Map Info - No API Map Data"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 67: "Map Info - Check Console"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 72: "Map Info - Map In Testing"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 78: "Map Info - Map Info Header"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 84: "Map Info - Mappers"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 90: "Map Info - State"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 96: "Map Info - Description"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 102: "Map Info - Invalid"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 107: "Map Info - In Testing"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 112: "Map Info - Approved"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 118: "Course Info - Unranked"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 123: "Course Info - Pending"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 128: "Course Info - Ranked"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 133: "Courses - Table Name"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 138: "Course Info Header - Name"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 143: "Course Info Header - Mappers"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 148: "Course Info Header - Tier (Vanilla)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 153: "Course Info Header - Tier (Classic)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 158: "Course Info Header - State (Vanilla)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 163: "Course Info Header - State (Classic)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 169: "Course Data Unavailable"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 176: "Tier Info"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 53: "Map Info - No API Connection"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 59: "Map Info - No API Map Data (Short)"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 65: "Map Info - No API Map Data"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 71: "Map Info - Check Console"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 77: "Map Info - Map In Testing"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 84: "Map Info - Map Info Header"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 91: "Map Info - Mappers"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 98: "Map Info - State"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 105: "Map Info - Description"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 112: "Map Info - Invalid"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 118: "Map Info - In Testing"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 124: "Map Info - Approved"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 131: "Course Info - Unranked"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 137: "Course Info - Pending"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 143: "Course Info - Ranked"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 149: "Courses - Table Name"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 155: "Course Info Header - Name"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 161: "Course Info Header - Mappers"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 167: "Course Info Header - Tier (Vanilla)"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 173: "Course Info Header - Tier (Classic)"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 179: "Course Info Header - State (Vanilla)"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 185: "Course Info Header - State (Classic)"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 192: "Course Data Unavailable"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 200: "Tier Info"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-fov.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "FOV - Show"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 9: "Error Message (Invalid FOV)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 10: "Error Message (Invalid FOV)"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-hud.phrases.txt
 ----------------------------------------------------------------------
@@ -568,9 +568,9 @@ cs2kz-jumpstats.phrases.txt
   Line 934: "Jumpstats Option - Extended Chat Stats - Disable"
     Missing (7): es, fi, it, ko, lv, ru, tr
   Line 943: "Jumpstats Option - Jumpstats Reporting - Enable"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 948: "Jumpstats Option - Jumpstats Reporting - Disable"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 949: "Jumpstats Option - Jumpstats Reporting - Disable"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-language.phrases.txt
 ----------------------------------------------------------------------
@@ -847,11 +847,11 @@ cs2kz-styles.phrases.txt
 cs2kz-telemetry.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Telemetry - Modern Bhop Stats"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 9: "Telemetry - Legacy Bhop Stats"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 16: "Telemetry - Reset Bhop Stats"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 10: "Telemetry - Legacy Bhop Stats"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 18: "Telemetry - Reset Bhop Stats"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-timer-coursetop.phrases.txt
 ----------------------------------------------------------------------
@@ -969,87 +969,87 @@ cs2kz-timer.phrases.txt
   Line 357: "No Start Position For Course"
     Missing (3): fi, it, ru
   Line 371: "No End Position For Course"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 376: "No Active Course"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 380: "No Jumpstat Area Found"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 377: "No Active Course"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 382: "No Jumpstat Area Found"
     Missing (3): fi, it, ru
-  Line 393: "Turnbinds Disabled"
+  Line 395: "Turnbinds Disabled"
     Missing (4): fi, it, ru, tr
-  Line 407: "Course Split Reached"
+  Line 409: "Course Split Reached"
     Missing (3): fi, it, ru
-  Line 421: "Course Checkpoint Reached"
+  Line 423: "Course Checkpoint Reached"
     Missing (4): fi, it, ru, tr
-  Line 434: "Course Stage Reached"
+  Line 436: "Course Stage Reached"
     Missing (3): fi, it, ru
-  Line 450: "Server PB Diff (Overall)"
+  Line 452: "Server PB Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 462: "Global PB Diff (Overall)"
+  Line 464: "Global PB Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 474: "SR Diff (Overall)"
+  Line 476: "SR Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 486: "WR Diff (Overall)"
+  Line 488: "WR Diff (Overall)"
     Missing (5): fi, it, ko, ru, tr
-  Line 498: "Server PB Diff (Pro)"
+  Line 500: "Server PB Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 510: "Global PB Diff (Pro)"
+  Line 512: "Global PB Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 522: "SR Diff (Pro)"
+  Line 524: "SR Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 534: "WR Diff (Pro)"
+  Line 536: "WR Diff (Pro)"
     Missing (5): fi, it, ko, ru, tr
-  Line 548: "Missed Server PB (Overall)"
+  Line 550: "Missed Server PB (Overall)"
     Missing (3): fi, it, ru
-  Line 562: "Missed Global PB (Overall)"
+  Line 564: "Missed Global PB (Overall)"
     Missing (3): fi, it, ru
-  Line 576: "Missed SR (Overall)"
+  Line 578: "Missed SR (Overall)"
     Missing (3): fi, it, ru
-  Line 590: "Missed WR (Overall)"
+  Line 592: "Missed WR (Overall)"
     Missing (3): fi, it, ru
-  Line 604: "Missed Server PB (Pro)"
+  Line 606: "Missed Server PB (Pro)"
     Missing (3): fi, it, ru
-  Line 618: "Missed Global PB (Pro)"
+  Line 620: "Missed Global PB (Pro)"
     Missing (3): fi, it, ru
-  Line 632: "Missed SR (Pro)"
+  Line 634: "Missed SR (Pro)"
     Missing (3): fi, it, ru
-  Line 646: "Missed WR (Pro)"
+  Line 648: "Missed WR (Pro)"
     Missing (3): fi, it, ru
-  Line 660: "Missed Server PB (Overall+Pro)"
+  Line 662: "Missed Server PB (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 674: "Missed Global PB (Overall+Pro)"
+  Line 676: "Missed Global PB (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 688: "Missed SR (Overall+Pro)"
+  Line 690: "Missed SR (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 702: "Missed WR (Overall+Pro)"
+  Line 704: "Missed WR (Overall+Pro)"
     Missing (3): fi, it, ru
-  Line 717: "Compare Command Usage"
+  Line 719: "Compare Command Usage"
     Missing (3): fi, it, ru
-  Line 730: "Compare Disabled"
+  Line 732: "Compare Disabled"
     Missing (3): fi, it, ru
-  Line 743: "Compare Server PB"
+  Line 745: "Compare Server PB"
     Missing (3): fi, it, ru
-  Line 756: "Compare Global PB"
+  Line 758: "Compare Global PB"
     Missing (3): fi, it, ru
-  Line 769: "Compare Server Record"
+  Line 771: "Compare Server Record"
     Missing (3): fi, it, ru
-  Line 782: "Compare World Record"
+  Line 784: "Compare World Record"
     Missing (3): fi, it, ru
-  Line 796: "Request - Failed (Invalid Map)"
+  Line 798: "Request - Failed (Invalid Map)"
     Missing (5): fi, it, ko, ru, tr
-  Line 807: "Request - Failed (Generic)"
+  Line 809: "Request - Failed (Generic)"
     Missing (5): fi, it, ko, ru, tr
-  Line 818: "Request - Failed (No Course in Current Map)"
+  Line 820: "Request - Failed (No Course in Current Map)"
     Missing (5): fi, it, ko, ru, tr
-  Line 831: "Timer Stop Sound Enabled"
+  Line 833: "Timer Stop Sound Enabled"
     Missing (7): es, fi, it, ko, lv, ru, tr
-  Line 840: "Timer Stop Sound Disabled"
+  Line 842: "Timer Stop Sound Disabled"
     Missing (7): es, fi, it, ko, lv, ru, tr
-  Line 849: "Record Volume Set"
+  Line 851: "Record Volume Set"
     Missing (8): es, fi, it, ko, lv, ru, sv, tr
-  Line 858: "Started Run on Course"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 865: "Started Run on Non Ranked Course"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 860: "Started Run on Course"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 868: "Started Run on Non Ranked Course"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-tips-general.phrases.txt
 ----------------------------------------------------------------------
@@ -1134,7 +1134,7 @@ cs2kz-tips-visual.phrases.txt
   Line 48: "Tip - kz_hideweapon"
     Missing (1): ru
   Line 63: "Tip - kz_fov"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 ======================================================================
 DETAILED MISSING MENU TRANSLATIONS

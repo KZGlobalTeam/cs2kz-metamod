@@ -11,13 +11,13 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 568 |
 | **Phrases Missing Translations** | 488 |
-| **Total Missing Entries** | 2558 |
+| **Total Missing Entries** | 2512 |
 | **Menu Files** | 9 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [██████████████████░░]  91.4% (519/568)
+  chi (schinese)       [███████████████████░]  99.5% (565/568)
   de (german)          [██████████████████░░]  91.4% (519/568)
   en (english)         [████████████████████] 100.0% (568/568)
   es (spanish)         [██████████░░░░░░░░░░]  50.7% (288/568)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`3fc4e4c`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/3fc4e4c97154f3da251864a1e549a70b57685787)
-- **Time:** 2026-02-27 14:39:54 UTC
-- **Message:** Fix kz_fov tip
+- **Commit:** [`6c3d9dd`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/6c3d9ddfb13b21d18f796aeca404a18ee483b2f0)
+- **Time:** 2026-02-28 06:04:16 UTC
+- **Message:** update chinese translation (#512)
 
 ---
 
