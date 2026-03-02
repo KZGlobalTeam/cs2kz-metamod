@@ -553,7 +553,15 @@ bool KZTimerService::CanPause(bool showError)
 	{
 		return false;
 	}
-
+	if (this->JustLanded())
+	{
+		if (showError)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Pause (Just Landed)");
+			this->player->PlayErrorSound();
+		}
+		return false;
+	}
 	if (this->player->triggerService->InAntiPauseArea())
 	{
 		if (showError)
