@@ -5,6 +5,7 @@
 #include "sdk/entity/cparticlesystem.h"
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
+#define KZ_HUD_ON_GROUND_THRESHOLD      0.07f
 
 class KZHUDService : public KZBaseService
 {
