@@ -27,6 +27,30 @@ public:
 	SCHEMA_FIELD(Vector, m_vecDataCPValue)
 	SCHEMA_FIELD(int32, m_nTintCP)
 	SCHEMA_FIELD(Color, m_clrTint)
+
+	bool SetControlPointValue(int iControlPoint, const Vector &vValue)
+	{
+		for (int i = 0; i != 4; ++i)
+		{
+			if (m_iServerControlPointAssignments[i] == iControlPoint)
+			{
+				m_vServerControlPoints[i] = vValue;
+				m_vServerControlPoints.NetworkStateChanged();
+				return true;
+			}
+			if (m_iServerControlPointAssignments[i] == 255)
+			{
+				m_iServerControlPointAssignments[i] = iControlPoint;
+				m_iServerControlPointAssignments.NetworkStateChanged();
+				m_vServerControlPoints[i] = vValue;
+				m_vServerControlPoints.NetworkStateChanged();
+				return true;
+			}
+		}
+
+		Warning("No free server controlled control points.\n");
+		return false; // already using up all of our server control points
+	}
 };
 
 #define CUSTOM_PARTICLE_SYSTEM_TEAM 5

@@ -761,6 +761,7 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 	}
 	pResourceManifest->AddResource("particles/ui/hud/ui_map_def_utility_trail.vpcf");
 	pResourceManifest->AddResource("particles/ui/annotation/ui_annotation_line_segment.vpcf");
+	pResourceManifest->AddResource("particles/velo/velo_overlay_large.vpcf");
 }
 
 static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,

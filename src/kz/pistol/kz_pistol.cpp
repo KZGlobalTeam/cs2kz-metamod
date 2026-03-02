@@ -61,6 +61,10 @@ void KZPistolService::UpdatePistol()
 			this->player->GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
 			auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(
 				this->player->GetController()->m_iTeamNum() == CS_TEAM_CT ? "weapon_knife" : "weapon_knife_t");
+			CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(weapon->m_CBodyComponent()->m_pSceneNode());
+			CAttributeContainer &attrManager = weapon->m_AttributeManager();
+			CEconItemView &item = attrManager.m_Item();
+			item.m_iItemDefinitionIndex(0);
 		}
 		return;
 	}
@@ -115,6 +119,9 @@ void KZPistolService::UpdatePistol()
 		player->GetPlayerPawn()->m_iTeamNum(otherTeam);
 	}
 	auto weapon = this->player->GetPlayerPawn()->m_pItemServices()->GiveNamedItem(pistol.className);
+	CAttributeContainer &attrManager = weapon->m_AttributeManager();
+	CEconItemView &item = attrManager.m_Item();
+	item.m_iItemDefinitionIndex(0);
 
 	if (switchTeam)
 	{

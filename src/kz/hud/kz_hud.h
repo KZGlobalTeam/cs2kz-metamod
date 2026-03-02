@@ -1,6 +1,8 @@
 #pragma once
 #include "../kz.h"
 #include "../timer/kz_timer.h"
+#include "entityhandle.h"
+#include "sdk/entity/cparticlesystem.h"
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 
@@ -81,4 +83,51 @@ private:
 	std::string GetKeyText(const char *language = KZ_DEFAULT_LANGUAGE);
 	std::string GetCheckpointText(const char *language = KZ_DEFAULT_LANGUAGE);
 	std::string GetTimerText(const char *language = KZ_DEFAULT_LANGUAGE);
+
+	// Control point mapping:
+	// 16 = Color | 17X = Reserved | 17Y = Size | 18X = X offset | 18Y = Y offset
+
+	// 0.03 scale
+	// (0, -4.5) for speed 0-99,
+	// (?/ -4.5) for 100-999 speed
+	// (-0.625/0.625, -4.5) offset for 1000+ speed
+	CHandle<CParticleSystem> speedParticles[2];
+	// 0.0225 scale, (-0.625/0.625, -7.2) offset
+	CHandle<CParticleSystem> prespeedParticles[2];
+
+	// 17X = Input flags
+	enum KeyParticleFlags : u8
+	{
+		Forward = 1 << 0,
+		Left = 1 << 1,
+		Back = 1 << 2,
+		Right = 1 << 3,
+		Jump = 1 << 4,
+		Duck = 1 << 5
+	};
+
+	// 0.05 scale, (0, -7 offset)
+	CHandle<CParticleSystem> keysParticle;
+
+	// 0.03 scale, TBD offset
+	CHandle<CParticleSystem> timerTextParticles[4];
+	CHandle<CParticleSystem> timerDelimiterParticle;
+
+	void UpdateParticles();
+
+	void SetMHUDParticleScale(CHandle<CParticleSystem> &particle, f32 scale);
+	void SetMHUDParticlePosition(CHandle<CParticleSystem> &particle, f32 *x = nullptr, f32 *y = nullptr);
+	void SetMHUDParticleColor(CHandle<CParticleSystem> &particle, const Color &color);
+
+	void CheckMHUDSpeedParticles();
+	void SetMHUDSpeedParticleVelocity(const Vector &speed, const Vector *prespeed = nullptr);
+
+	void CheckMHUDTimerParticles();
+	void SetMHUDTimerValue(f64 time);
+
+	void CheckMHUDCrouchJumpParticle();
+	void SetMHUDCrouchJumpIndicator(bool enable);
+
+	void CheckMHUDKeyParticle();
+	void SetMHUDKeys(u64 *keyMask = nullptr);
 };
