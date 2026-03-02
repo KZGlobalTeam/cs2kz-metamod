@@ -483,9 +483,9 @@ public:
 		u16 filterID;
 		f64 time;
 		u32 teleports;
-		std::string_view modeMD5;
+		std::string modeMD5;
 		std::vector<RecordAnnounce::StyleInfo> styles;
-		std::string_view metadata;
+		std::string metadata;
 	};
 
 	enum class SubmitRecordResult
