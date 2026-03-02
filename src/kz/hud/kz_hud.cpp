@@ -13,8 +13,6 @@
 
 #include "tier0/memdbgon.h"
 
-#define HUD_ON_GROUND_THRESHOLD 0.07f
-
 static_global class KZTimerServiceEventListener_HUD : public KZTimerServiceEventListener
 {
 	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID) override;
@@ -50,7 +48,7 @@ std::string KZHUDService::GetSpeedText(const char *language)
 	velocity += baseVelocity;
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
 	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
-		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > HUD_ON_GROUND_THRESHOLD)
+		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD)
 		|| (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", velocity.Length2D());

@@ -47,15 +47,46 @@ void KZHUDService::CheckMHUDSpeedParticles()
 	{
 		this->speedParticles[1] = CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 1.0f, 0.03f, 0.625f, -4.5f);
 	}
+	if (!this->prespeedParticles[0])
+	{
+		this->prespeedParticles[0] = CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 1.0f, 0.0225f, -0.625f, -7.2f);
+	}
+	if (!this->prespeedParticles[1])
+	{
+		this->prespeedParticles[1] = CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 1.0f, 0.0225f, 0.625f, -7.2f);
+	}
 	Vector velocity, baseVelocity;
 	this->player->GetVelocity(&velocity);
 	this->player->GetBaseVelocity(&baseVelocity);
 	velocity += baseVelocity;
-	this->SetMHUDSpeedParticleVelocity(velocity);
+
+	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
+		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD)
+		|| (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
+	{
+		this->SetMHUDSpeedParticleVelocity(velocity);
+	}
+	else
+	{
+		this->SetMHUDSpeedParticleVelocity(velocity, &this->player->takeoffVelocity);
+	}
+	Color color = Color(255, 255, 255, 255);
+	if (this->player->IsPerfing() && !this->player->possibleLadderHop && !this->player->takeoffFromLadder)
+	{
+		color = this->fromDuckbug ? Color(0xFF, 0xFF, 0x20, 0xFF) : Color(0x40, 0xFF, 0x40, 0xFF);
+	}
+	this->SetMHUDParticleColor(this->prespeedParticles[0], color);
+	this->SetMHUDParticleColor(this->prespeedParticles[1], color);
 }
 
-CConVar<float> offset_left("offset_left", FCVAR_NONE, "", -0.35f);
-CConVar<float> offset_right("offset_right", FCVAR_NONE, "", 0.35f);
+void KZHUDService::SetMHUDParticleColor(CHandle<CParticleSystem> &particle, const Color &color)
+{
+	if (!particle)
+	{
+		return;
+	}
+	particle.Get()->SetControlPointValue(16, {(f32)color.r(), (f32)color.g(), (f32)color.b()});
+}
 
 void KZHUDService::SetMHUDSpeedParticleVelocity(const Vector &speed, const Vector *prespeed)
 {
@@ -65,7 +96,10 @@ void KZHUDService::SetMHUDSpeedParticleVelocity(const Vector &speed, const Vecto
 		i32 firstTwoDigits = speedRounded / 100;
 		i32 lastTwoDigits = speedRounded % 100;
 		// Leading 0 corresponds to sequences 100-109
-		lastTwoDigits += 100;
+		if (lastTwoDigits < 10)
+		{
+			lastTwoDigits += 100;
+		}
 		this->speedParticles[0].Get()->SetControlPointValue(17, Vector(static_cast<f32>(firstTwoDigits), 0.03f, 0.0f));
 		this->speedParticles[0].Get()->SetControlPointValue(18, Vector(-0.625f, -4.5f, 1.0f));
 		this->speedParticles[1].Get()->SetControlPointValue(17, Vector(static_cast<f32>(lastTwoDigits), 0.03f, 0.0f));
@@ -76,10 +110,15 @@ void KZHUDService::SetMHUDSpeedParticleVelocity(const Vector &speed, const Vecto
 		// First particle display the first 2 digits, second particle display the last two.
 		i32 firstTwoDigits = speedRounded / 100;
 		i32 lastTwoDigits = speedRounded % 100;
+		// Leading 0 corresponds to sequences 100-109
+		if (lastTwoDigits < 10)
+		{
+			lastTwoDigits += 100;
+		}
 		this->speedParticles[0].Get()->SetControlPointValue(17, Vector(static_cast<f32>(firstTwoDigits), 0.03f, 0.0f));
-		this->speedParticles[0].Get()->SetControlPointValue(18, Vector(offset_left.GetFloat(), -4.5f, 1.0f));
+		this->speedParticles[0].Get()->SetControlPointValue(18, Vector(-0.625f, -4.5f, 1.0f));
 		this->speedParticles[1].Get()->SetControlPointValue(17, Vector(static_cast<f32>(lastTwoDigits), 0.03f, 0.0f));
-		this->speedParticles[1].Get()->SetControlPointValue(18, Vector(offset_right.GetFloat(), -4.5f, 1.0f));
+		this->speedParticles[1].Get()->SetControlPointValue(18, Vector(0.3125f, -4.5f, 1.0f));
 	}
 	else
 	{
@@ -88,5 +127,53 @@ void KZHUDService::SetMHUDSpeedParticleVelocity(const Vector &speed, const Vecto
 		// hide second particle by setting reserved to 100 which is out of range
 		// todo: actually checktransmit this out
 		this->speedParticles[1].Get()->SetControlPointValue(18, Vector(100.0f, 0.03f, 0.0f));
+	}
+
+	if (!prespeed)
+	{
+		// todo: actually checktransmit this out
+		this->prespeedParticles[0].Get()->SetControlPointValue(18, Vector(100.0f, 0.0225f, 0.0f));
+		this->prespeedParticles[1].Get()->SetControlPointValue(18, Vector(100.0f, 0.0225f, 0.0f));
+	}
+	else
+	{
+		i32 prespeedRounded = RoundFloatToInt(prespeed->Length2D());
+		if (prespeedRounded > 1000)
+		{
+			i32 firstTwoDigits = prespeedRounded / 100;
+			i32 lastTwoDigits = prespeedRounded % 100;
+			// Leading 0 corresponds to sequences 100-109
+			if (lastTwoDigits < 10)
+			{
+				lastTwoDigits += 100;
+			}
+			this->prespeedParticles[0].Get()->SetControlPointValue(17, Vector(static_cast<f32>(firstTwoDigits), 0.0225f, 0.0f));
+			this->prespeedParticles[0].Get()->SetControlPointValue(18, Vector(-0.625f, -7.2f, 1.0f));
+			this->prespeedParticles[1].Get()->SetControlPointValue(17, Vector(static_cast<f32>(lastTwoDigits), 0.0225f, 0.0f));
+			this->prespeedParticles[1].Get()->SetControlPointValue(18, Vector(0.625f, -7.2f, 1.0f));
+		}
+		else if (prespeedRounded > 100)
+		{
+			// First particle display the first 2 digits, second particle display the last two.
+			i32 firstTwoDigits = prespeedRounded / 100;
+			i32 lastTwoDigits = prespeedRounded % 100;
+			// Leading 0 corresponds to sequences 100-109
+			if (lastTwoDigits < 10)
+			{
+				lastTwoDigits += 100;
+			}
+			this->prespeedParticles[0].Get()->SetControlPointValue(17, Vector(static_cast<f32>(firstTwoDigits), 0.0225f, 0.0f));
+			this->prespeedParticles[0].Get()->SetControlPointValue(18, Vector(-0.625f, -7.2f, 1.0f));
+			this->prespeedParticles[1].Get()->SetControlPointValue(17, Vector(static_cast<f32>(lastTwoDigits), 0.0225f, 0.0f));
+			this->prespeedParticles[1].Get()->SetControlPointValue(18, Vector(0.3125f, -7.2f, 1.0f));
+		}
+		else
+		{
+			this->prespeedParticles[0].Get()->SetControlPointValue(17, Vector(static_cast<f32>(prespeedRounded), 0.0225f, 0.0f));
+			this->prespeedParticles[0].Get()->SetControlPointValue(18, Vector(0, -7.2f, 1.0f));
+			// hide second particle by setting reserved to 100 which is out of range
+			// todo: actually checktransmit this out
+			this->prespeedParticles[1].Get()->SetControlPointValue(18, Vector(100.0f, 0.0225f, 0.0f));
+		}
 	}
 }
