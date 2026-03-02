@@ -53,6 +53,13 @@ void KZNoclipService::HandleNoclip()
 			pawn->CollisionRulesChanged();
 		}
 	}
+	if (pawn->m_nActualMoveType() == MOVETYPE_NOCLIP || pawn->m_MoveType() == MOVETYPE_NOCLIP)
+	{
+		if (this->player->IsAlive() && this->player->timerService->GetTimerRunning())
+		{
+			this->player->timerService->TimerStop();
+		}
+	}
 }
 
 // Commands
