@@ -153,19 +153,19 @@ namespace KZ::api::messages
 	{
 		struct StyleInfo
 		{
-			std::string_view name;
-			std::string_view checksum;
+			std::string name;
+			std::string checksum;
 
 			bool ToJson(Json &json) const;
 		};
 
 		u64 playerID;
 		u16 filterID;
-		std::string_view modeChecksum;
+		std::string modeChecksum;
 		u32 teleports;
 		f64 time;
 		std::vector<StyleInfo> styles;
-		std::string_view metadata;
+		std::string metadata;
 
 		inline static const char *Name()
 		{
