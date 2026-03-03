@@ -114,21 +114,23 @@ private:
 	CHandle<CParticleSystem> timerTextParticles[4];
 	CHandle<CParticleSystem> timerDelimiterParticle;
 
+	// Usage: !mhud prespeed/speed/keys/indicator/timer [reset/set <preference> <value>]
+	void ParsePreferences(const char *prefs);
 	void UpdateParticles();
 
-	void SetMHUDParticleScale(CHandle<CParticleSystem> &particle, f32 scale);
-	void SetMHUDParticlePosition(CHandle<CParticleSystem> &particle, f32 *x = nullptr, f32 *y = nullptr);
-	void SetMHUDParticleColor(CHandle<CParticleSystem> &particle, const Color &color);
-
+	// (Pre)Speed args: offsetX1/offsetY1/offsetX2/offsetY2/scale/perfColor/jbColor
 	void CheckMHUDSpeedParticles();
 	void SetMHUDSpeedParticleVelocity(const Vector &speed, const Vector *prespeed = nullptr);
 
+	// Timer preference args: offsetX/offsetY/tpColor/proColor/pausedColor/stoppedColor
 	void CheckMHUDTimerParticles();
 	void SetMHUDTimerValue(f64 time);
 
+	// Crouch jump indicator args: offsetX/offsetY/scale/color/verbose
 	void CheckMHUDCrouchJumpParticle();
 	void SetMHUDCrouchJumpIndicator(bool enable);
 
+	// Key args: offsetX/offsetY/scale/color/overlapColor
 	void CheckMHUDKeyParticle();
 	void SetMHUDKeys(u64 *keyMask = nullptr);
 };

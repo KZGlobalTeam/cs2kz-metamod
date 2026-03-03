@@ -140,8 +140,6 @@ std::string KZHUDService::GetTimerText(const char *language)
 	return std::string("");
 }
 
-void KZHUDService::UpdateParticles() {}
-
 void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 {
 	player->hudService->CheckMHUDSpeedParticles();

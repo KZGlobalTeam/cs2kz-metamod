@@ -75,18 +75,11 @@ void KZHUDService::CheckMHUDSpeedParticles()
 	{
 		color = this->fromDuckbug ? Color(0xFF, 0xFF, 0x20, 0xFF) : Color(0x40, 0xFF, 0x40, 0xFF);
 	}
-	this->SetMHUDParticleColor(this->prespeedParticles[0], color);
-	this->SetMHUDParticleColor(this->prespeedParticles[1], color);
+	this->prespeedParticles[0]->SetControlPointValue(16, Vector((f32)color.r(), (f32)color.g(), (f32)color.b()));
+	this->prespeedParticles[1]->SetControlPointValue(16, Vector((f32)color.r(), (f32)color.g(), (f32)color.b()));
 }
 
-void KZHUDService::SetMHUDParticleColor(CHandle<CParticleSystem> &particle, const Color &color)
-{
-	if (!particle)
-	{
-		return;
-	}
-	particle.Get()->SetControlPointValue(16, {(f32)color.r(), (f32)color.g(), (f32)color.b()});
-}
+void KZHUDService::UpdateParticles() {}
 
 void KZHUDService::SetMHUDSpeedParticleVelocity(const Vector &speed, const Vector *prespeed)
 {
