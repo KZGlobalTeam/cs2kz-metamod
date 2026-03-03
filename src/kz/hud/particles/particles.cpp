@@ -3,8 +3,7 @@
 #include "entitykeyvalues.h"
 #include "utils/simplecmds.h"
 
-#define PARTICLE_SPEED           "particles/velo/velo_overlay.vpcf"
-#define PARTICLE_SPEED_LARGE     "particles/velo/velo_overlay_large.vpcf"
+#define PARTICLE_SPEED           "particles/velo/velo_overlay_large.vpcf"
 #define PARTICLE_CROUCH_JUMP     "particles/cj/cj.vpcf"
 #define PARTICLE_TIMER           "particles/velo/velo_overlay_large.vpcf"
 #define PARTICLE_TIMER_DELIMITER "particles/timer/timer_delimiter.vpcf"
@@ -33,7 +32,7 @@ CParticleSystem *CreateMHUDParticle(const char *particleName, const Color &color
 
 SCMD(kz_test_particle, SCFL_MISC)
 {
-	CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 255.0f, 0.03f, 0, 0);
+	CreateMHUDParticle(PARTICLE_SPEED, Color(255, 255, 255, 255), 255.0f, 0.03f, 0, 0);
 	return MRES_SUPERCEDE;
 }
 
@@ -41,19 +40,19 @@ void KZHUDService::CheckMHUDSpeedParticles()
 {
 	if (!this->speedParticles[0])
 	{
-		this->speedParticles[0] = CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 1.0f, 0.03f, -0.625f, -4.5f);
+		this->speedParticles[0] = CreateMHUDParticle(PARTICLE_SPEED, Color(255, 255, 255, 255), 1.0f, 0.03f, -0.625f, -4.5f);
 	}
 	if (!this->speedParticles[1])
 	{
-		this->speedParticles[1] = CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 1.0f, 0.03f, 0.625f, -4.5f);
+		this->speedParticles[1] = CreateMHUDParticle(PARTICLE_SPEED, Color(255, 255, 255, 255), 1.0f, 0.03f, 0.625f, -4.5f);
 	}
 	if (!this->prespeedParticles[0])
 	{
-		this->prespeedParticles[0] = CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 1.0f, 0.0225f, -0.625f, -7.2f);
+		this->prespeedParticles[0] = CreateMHUDParticle(PARTICLE_SPEED, Color(255, 255, 255, 255), 1.0f, 0.0225f, -0.625f, -7.2f);
 	}
 	if (!this->prespeedParticles[1])
 	{
-		this->prespeedParticles[1] = CreateMHUDParticle(PARTICLE_SPEED_LARGE, Color(255, 255, 255, 255), 1.0f, 0.0225f, 0.625f, -7.2f);
+		this->prespeedParticles[1] = CreateMHUDParticle(PARTICLE_SPEED, Color(255, 255, 255, 255), 1.0f, 0.0225f, 0.625f, -7.2f);
 	}
 	Vector velocity, baseVelocity;
 	this->player->GetVelocity(&velocity);
@@ -75,18 +74,11 @@ void KZHUDService::CheckMHUDSpeedParticles()
 	{
 		color = this->fromDuckbug ? Color(0xFF, 0xFF, 0x20, 0xFF) : Color(0x40, 0xFF, 0x40, 0xFF);
 	}
-	this->SetMHUDParticleColor(this->prespeedParticles[0], color);
-	this->SetMHUDParticleColor(this->prespeedParticles[1], color);
+	this->prespeedParticles[0]->SetControlPointValue(16, Vector((f32)color.r(), (f32)color.g(), (f32)color.b()));
+	this->prespeedParticles[1]->SetControlPointValue(16, Vector((f32)color.r(), (f32)color.g(), (f32)color.b()));
 }
 
-void KZHUDService::SetMHUDParticleColor(CHandle<CParticleSystem> &particle, const Color &color)
-{
-	if (!particle)
-	{
-		return;
-	}
-	particle.Get()->SetControlPointValue(16, {(f32)color.r(), (f32)color.g(), (f32)color.b()});
-}
+void KZHUDService::UpdateParticles() {}
 
 void KZHUDService::SetMHUDSpeedParticleVelocity(const Vector &speed, const Vector *prespeed)
 {
