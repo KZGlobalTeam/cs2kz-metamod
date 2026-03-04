@@ -5,7 +5,7 @@
 		"en"		"{grey}Usage: {default}kz_spec <@me/name>{grey}."
 		"chi"		"{grey}用法: {default}kz_spec <@me/name>{grey}."
 		"pl"		"{grey}Użycie: {default}kz_spec <@me/nazwa>{grey}."
-		"ru"		"{grey}Использование: {default}kz_spec <@me/никнейм>{grey}."
+		"ru"		"{grey}Применение: {default}kz_spec <@me/никнейм>{grey}."
 		"ua"		"{grey}Використання: {default}kz_spec <@me/нікнейм>{grey}."
 		"sv"		"{grey}Användning: {default}kz_spec <@me/name>{grey}."
 		"ko"		"{grey}사용법: {default}kz_spec <@me/name>{grey}."
