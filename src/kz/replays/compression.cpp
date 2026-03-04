@@ -1,4 +1,4 @@
-#include "kz_replay.h"
+﻿#include "kz_replay.h"
 #include "compression.h"
 #include "filesystem.h"
 #include "vendor/zstd/lib/zstd.h"
@@ -170,7 +170,7 @@ static_function u64 BuildPostChangeFlags(const TickData::MovementData &current, 
 	return flags;
 }
 
-i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, const std::vector<TickData> &tickData,
+i32 KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
 														   const std::vector<SubtickData> &subtickData)
 {
 	i32 bytesWritten = 0;
@@ -348,8 +348,10 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 	header.uncompressedSize = (u32)buffer.size();
 	header.elementCount = (u32)tickData.size();
 
-	bytesWritten += g_pFullFileSystem->Write(&header, sizeof(header), file);
-	bytesWritten += g_pFullFileSystem->Write(compressedData, compressedSize, file);
+	AppendToBuffer(outBuffer, &header, sizeof(header));
+	bytesWritten += (i32)sizeof(header);
+	AppendToBuffer(outBuffer, compressedData, compressedSize);
+	bytesWritten += (i32)compressedSize;
 
 	delete[] static_cast<char *>(compressedData);
 
@@ -367,8 +369,10 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 		subtickHeader.uncompressedSize = (u32)uncompressedSubtickSize;
 		subtickHeader.elementCount = (u32)subtickData.size();
 
-		bytesWritten += g_pFullFileSystem->Write(&subtickHeader, sizeof(subtickHeader), file);
-		bytesWritten += g_pFullFileSystem->Write(compressedSubtick, compressedSubtickSize, file);
+		AppendToBuffer(outBuffer, &subtickHeader, sizeof(subtickHeader));
+		bytesWritten += (i32)sizeof(subtickHeader);
+		AppendToBuffer(outBuffer, compressedSubtick, compressedSubtickSize);
+		bytesWritten += (i32)compressedSubtickSize;
 
 		delete[] static_cast<char *>(compressedSubtick);
 	}
@@ -376,35 +380,30 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 	return bytesWritten;
 }
 
-bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, std::vector<TickData> &outTickData,
+bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &outTickData,
 														   std::vector<SubtickData> &outSubtickData)
 {
-	// Read section header
-	CompressedSectionHeader header;
-	g_pFullFileSystem->Read(&header, sizeof(header), file);
-
-	// Allocate buffer for compressed data
-	char *compressedData = new char[header.compressedSize];
-	if (!compressedData)
+	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
 	}
+	CompressedSectionHeader header;
+	memcpy(&header, cursor, sizeof(header));
+	cursor += sizeof(header);
 
-	// Read compressed data
-	g_pFullFileSystem->Read(compressedData, header.compressedSize, file);
-
-	// Allocate buffer for decompressed data
+	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	{
+		return false;
+	}
 	char *decompressedData = new char[header.uncompressedSize];
 	if (!decompressedData)
 	{
-		delete[] compressedData;
 		return false;
 	}
 
 	// Decompress
-	bool success = Decompress(compressedData, header.compressedSize, decompressedData, header.uncompressedSize);
-	delete[] compressedData;
-
+	bool success = Decompress(cursor, header.compressedSize, decompressedData, header.uncompressedSize);
+	cursor += header.compressedSize;
 	if (!success)
 	{
 		delete[] decompressedData;
@@ -555,55 +554,47 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 	delete[] decompressedData;
 
 	// Read subtick data
-	CompressedSectionHeader subtickHeader;
-	g_pFullFileSystem->Read(&subtickHeader, sizeof(subtickHeader), file);
-
-	char *compressedSubtick = new char[subtickHeader.compressedSize];
-	if (!compressedSubtick)
+	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
 	}
+	CompressedSectionHeader subtickHeader;
+	memcpy(&subtickHeader, cursor, sizeof(subtickHeader));
+	cursor += sizeof(subtickHeader);
 
-	g_pFullFileSystem->Read(compressedSubtick, subtickHeader.compressedSize, file);
-
+	if (cursor + (ptrdiff_t)subtickHeader.compressedSize > end)
+	{
+		return false;
+	}
 	outSubtickData.resize(subtickHeader.elementCount);
-
-	success = Decompress(compressedSubtick, subtickHeader.compressedSize, outSubtickData.data(), subtickHeader.uncompressedSize);
-
-	delete[] compressedSubtick;
-
+	success = Decompress(cursor, subtickHeader.compressedSize, outSubtickData.data(), subtickHeader.uncompressedSize);
+	cursor += subtickHeader.compressedSize;
 	return success;
 }
 
-bool KZ::replaysystem::compression::ReadWeaponsCompressed(FileHandle_t file, std::vector<std::pair<i32, EconInfo>> &outWeaponTable)
+bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable)
 {
-	// Read section header
-	CompressedSectionHeader header;
-	g_pFullFileSystem->Read(&header, sizeof(header), file);
-
-	// Allocate buffer for compressed data
-	char *compressedData = new char[header.compressedSize];
-	if (!compressedData)
+	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
 	}
+	CompressedSectionHeader header;
+	memcpy(&header, cursor, sizeof(header));
+	cursor += sizeof(header);
 
-	// Read compressed data
-	g_pFullFileSystem->Read(compressedData, header.compressedSize, file);
-
-	// Allocate buffer for decompressed data
+	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	{
+		return false;
+	}
 	char *decompressedData = new char[header.uncompressedSize];
 	if (!decompressedData)
 	{
-		delete[] compressedData;
 		return false;
 	}
 
 	// Decompress
-	bool success = Decompress(compressedData, header.compressedSize, decompressedData, header.uncompressedSize);
-
-	delete[] compressedData;
-
+	bool success = Decompress(cursor, header.compressedSize, decompressedData, header.uncompressedSize);
+	cursor += header.compressedSize;
 	if (!success)
 	{
 		delete[] decompressedData;
@@ -627,9 +618,9 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(FileHandle_t file, std
 		memcpy(&econInfo.mainInfo, readPtr, sizeof(econInfo.mainInfo));
 		readPtr += sizeof(econInfo.mainInfo);
 
-		for (i32 i = 0; i < econInfo.mainInfo.numAttributes; i++)
+		for (i32 j = 0; j < econInfo.mainInfo.numAttributes; j++)
 		{
-			memcpy(&econInfo.attributes[i], readPtr, sizeof(EconInfo::attributes[0]));
+			memcpy(&econInfo.attributes[j], readPtr, sizeof(EconInfo::attributes[0]));
 			readPtr += sizeof(EconInfo::attributes[0]);
 		}
 		META_CONPRINTF("Read weapon ID %d with %d attributes\n", weaponID, econInfo.mainInfo.numAttributes);
@@ -644,34 +635,29 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(FileHandle_t file, std
 // Events compression
 // ========================================
 
-bool KZ::replaysystem::compression::ReadEventsCompressed(FileHandle_t file, std::vector<RpEvent> &outEvents)
+bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents)
 {
-	// Read section header
-	CompressedSectionHeader header;
-	g_pFullFileSystem->Read(&header, sizeof(header), file);
-
-	// Allocate buffer for compressed data
-	char *compressedData = new char[header.compressedSize];
-	if (!compressedData)
+	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
 	}
+	// Read section header
+	CompressedSectionHeader header;
+	memcpy(&header, cursor, sizeof(header));
+	cursor += sizeof(header);
 
-	// Read compressed data
-	g_pFullFileSystem->Read(compressedData, header.compressedSize, file);
-
+	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	{
+		return false;
+	}
 	// Resize output vector
 	outEvents.resize(header.elementCount);
-
-	// Decompress directly into output vector
-	bool success = Decompress(compressedData, header.compressedSize, outEvents.data(), header.uncompressedSize);
-
-	delete[] compressedData;
-
+	bool success = Decompress(cursor, header.compressedSize, outEvents.data(), header.uncompressedSize);
+	cursor += header.compressedSize;
 	return success;
 }
 
-i32 KZ::replaysystem::compression::WriteEventsCompressed(FileHandle_t file, const std::vector<RpEvent> &events)
+i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events)
 {
 	i32 bytesWritten = 0;
 
@@ -690,8 +676,10 @@ i32 KZ::replaysystem::compression::WriteEventsCompressed(FileHandle_t file, cons
 	header.uncompressedSize = (u32)uncompressedSize;
 	header.elementCount = (u32)events.size();
 
-	bytesWritten += g_pFullFileSystem->Write(&header, sizeof(header), file);
-	bytesWritten += g_pFullFileSystem->Write(compressedData, compressedSize, file);
+	AppendToBuffer(outBuffer, &header, sizeof(header));
+	bytesWritten += (i32)sizeof(header);
+	AppendToBuffer(outBuffer, compressedData, compressedSize);
+	bytesWritten += (i32)compressedSize;
 
 	delete[] static_cast<char *>(compressedData);
 
@@ -702,35 +690,29 @@ i32 KZ::replaysystem::compression::WriteEventsCompressed(FileHandle_t file, cons
 // Jumps compression
 // ========================================
 
-bool KZ::replaysystem::compression::ReadJumpsCompressed(FileHandle_t file, std::vector<RpJumpStats> &outJumps)
+bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps)
 {
-	// Read section header
-	CompressedSectionHeader header;
-	g_pFullFileSystem->Read(&header, sizeof(header), file);
-
-	// Allocate buffer for compressed data
-	char *compressedData = new char[header.compressedSize];
-	if (!compressedData)
+	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
 	}
+	CompressedSectionHeader header;
+	memcpy(&header, cursor, sizeof(header));
+	cursor += sizeof(header);
 
-	// Read compressed data
-	g_pFullFileSystem->Read(compressedData, header.compressedSize, file);
-
-	// Allocate buffer for decompressed data
+	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	{
+		return false;
+	}
 	char *decompressedData = new char[header.uncompressedSize];
 	if (!decompressedData)
 	{
-		delete[] compressedData;
 		return false;
 	}
 
 	// Decompress
-	bool success = Decompress(compressedData, header.compressedSize, decompressedData, header.uncompressedSize);
-
-	delete[] compressedData;
-
+	bool success = Decompress(cursor, header.compressedSize, decompressedData, header.uncompressedSize);
+	cursor += header.compressedSize;
 	if (!success)
 	{
 		delete[] decompressedData;
@@ -779,7 +761,7 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(FileHandle_t file, std::
 	return true;
 }
 
-i32 KZ::replaysystem::compression::WriteJumpsCompressed(FileHandle_t file, const std::vector<RpJumpStats> &jumps)
+i32 KZ::replaysystem::compression::WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps)
 {
 	i32 bytesWritten = 0;
 
@@ -832,8 +814,10 @@ i32 KZ::replaysystem::compression::WriteJumpsCompressed(FileHandle_t file, const
 	header.uncompressedSize = (u32)buffer.size();
 	header.elementCount = (u32)jumps.size();
 
-	bytesWritten += g_pFullFileSystem->Write(&header, sizeof(header), file);
-	bytesWritten += g_pFullFileSystem->Write(compressedData, compressedSize, file);
+	AppendToBuffer(outBuffer, &header, sizeof(header));
+	bytesWritten += (i32)sizeof(header);
+	AppendToBuffer(outBuffer, compressedData, compressedSize);
+	bytesWritten += (i32)compressedSize;
 
 	delete[] static_cast<char *>(compressedData);
 
@@ -870,34 +854,32 @@ enum CmdDataChangeFlags : u64
 	CHANGED_CMD_M_PITCH = (1ULL << 20),
 };
 
-bool KZ::replaysystem::compression::ReadCmdDataCompressed(FileHandle_t file, std::vector<CmdData> &outCmdData,
+bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData,
 														  std::vector<SubtickData> &outCmdSubtickData)
 {
-	// Read cmd data section header
-	CompressedSectionHeader header;
-	g_pFullFileSystem->Read(&header, sizeof(header), file);
-
-	// Allocate buffer for compressed data
-	char *compressedData = new char[header.compressedSize];
-	if (!compressedData)
+	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
 	}
+	CompressedSectionHeader header;
+	memcpy(&header, cursor, sizeof(header));
+	cursor += sizeof(header);
 
-	// Read compressed data
-	g_pFullFileSystem->Read(compressedData, header.compressedSize, file);
+	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	{
+		return false;
+	}
 
 	// Allocate buffer for decompressed data
 	char *decompressedData = new char[header.uncompressedSize];
 	if (!decompressedData)
 	{
-		delete[] compressedData;
 		return false;
 	}
 
 	// Decompress
-	bool success = Decompress(compressedData, header.compressedSize, decompressedData, header.uncompressedSize);
-	delete[] compressedData;
+	bool success = Decompress(cursor, header.compressedSize, decompressedData, header.uncompressedSize);
+	cursor += header.compressedSize;
 
 	if (!success)
 	{
@@ -976,28 +958,26 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(FileHandle_t file, std
 
 	delete[] decompressedData;
 
-	// Read cmd subtick data
-	CompressedSectionHeader subtickHeader;
-	g_pFullFileSystem->Read(&subtickHeader, sizeof(subtickHeader), file);
-
-	char *compressedSubtick = new char[subtickHeader.compressedSize];
-	if (!compressedSubtick)
+	// Cmd subtick section
+	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
 	}
+	CompressedSectionHeader subtickHeader;
+	memcpy(&subtickHeader, cursor, sizeof(subtickHeader));
+	cursor += sizeof(subtickHeader);
 
-	g_pFullFileSystem->Read(compressedSubtick, subtickHeader.compressedSize, file);
-
+	if (cursor + (ptrdiff_t)subtickHeader.compressedSize > end)
+	{
+		return false;
+	}
 	outCmdSubtickData.resize(subtickHeader.elementCount);
-
-	success = Decompress(compressedSubtick, subtickHeader.compressedSize, outCmdSubtickData.data(), subtickHeader.uncompressedSize);
-
-	delete[] compressedSubtick;
-
+	success = Decompress(cursor, subtickHeader.compressedSize, outCmdSubtickData.data(), subtickHeader.uncompressedSize);
+	cursor += subtickHeader.compressedSize;
 	return success;
 }
 
-i32 KZ::replaysystem::compression::WriteWeaponsCompressed(FileHandle_t file, const std::vector<std::pair<i32, EconInfo>> &weaponTable)
+i32 KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable)
 {
 	i32 bytesWritten = 0;
 
@@ -1041,15 +1021,17 @@ i32 KZ::replaysystem::compression::WriteWeaponsCompressed(FileHandle_t file, con
 	header.uncompressedSize = (u32)buffer.size();
 	header.elementCount = (u32)weaponTable.size();
 
-	bytesWritten += g_pFullFileSystem->Write(&header, sizeof(header), file);
-	bytesWritten += g_pFullFileSystem->Write(compressedData, compressedSize, file);
+	AppendToBuffer(outBuffer, &header, sizeof(header));
+	bytesWritten += (i32)sizeof(header);
+	AppendToBuffer(outBuffer, compressedData, compressedSize);
+	bytesWritten += (i32)compressedSize;
 
 	delete[] static_cast<char *>(compressedData);
 
 	return bytesWritten;
 }
 
-i32 KZ::replaysystem::compression::WriteCmdDataCompressed(FileHandle_t file, const std::vector<CmdData> &cmdData,
+i32 KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
 														  const std::vector<SubtickData> &cmdSubtickData)
 {
 	i32 bytesWritten = 0;
@@ -1135,8 +1117,10 @@ i32 KZ::replaysystem::compression::WriteCmdDataCompressed(FileHandle_t file, con
 	header.uncompressedSize = (u32)buffer.size();
 	header.elementCount = (u32)cmdData.size();
 
-	bytesWritten += g_pFullFileSystem->Write(&header, sizeof(header), file);
-	bytesWritten += g_pFullFileSystem->Write(compressedData, compressedSize, file);
+	AppendToBuffer(outBuffer, &header, sizeof(header));
+	bytesWritten += (i32)sizeof(header);
+	AppendToBuffer(outBuffer, compressedData, compressedSize);
+	bytesWritten += (i32)compressedSize;
 
 	delete[] static_cast<char *>(compressedData);
 
@@ -1154,8 +1138,10 @@ i32 KZ::replaysystem::compression::WriteCmdDataCompressed(FileHandle_t file, con
 		subtickHeader.uncompressedSize = (u32)uncompressedSubtickSize;
 		subtickHeader.elementCount = (u32)cmdSubtickData.size();
 
-		bytesWritten += g_pFullFileSystem->Write(&subtickHeader, sizeof(subtickHeader), file);
-		bytesWritten += g_pFullFileSystem->Write(compressedSubtick, compressedSubtickSize, file);
+		AppendToBuffer(outBuffer, &subtickHeader, sizeof(subtickHeader));
+		bytesWritten += (i32)sizeof(subtickHeader);
+		AppendToBuffer(outBuffer, compressedSubtick, compressedSubtickSize);
+		bytesWritten += (i32)compressedSubtickSize;
 
 		delete[] static_cast<char *>(compressedSubtick);
 	}

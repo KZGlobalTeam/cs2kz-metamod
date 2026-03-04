@@ -23,11 +23,6 @@ ManualRecorder::ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy
 	}
 }
 
-i32 ManualRecorder::WriteHeader(FileHandle_t file)
-{
-	return Recorder::WriteHeader(file);
-}
-
 CheaterRecorder::CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer *savedBy)
 	: Recorder(player, 120.0f, RP_CHEATER, true, DistanceTier_None)
 {
@@ -39,11 +34,6 @@ CheaterRecorder::CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer 
 		reporter->set_name(savedBy->GetName());
 		reporter->set_steamid64(savedBy->GetSteamId64());
 	}
-}
-
-i32 CheaterRecorder::WriteHeader(FileHandle_t file)
-{
-	return Recorder::WriteHeader(file);
 }
 
 // JumpRecorder Implementation
@@ -63,11 +53,6 @@ JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, RP_JUMPSTA
 	jumpProto->set_pre(jump->GetTakeoffSpeed());
 	jumpProto->set_max(jump->GetMaxSpeed());
 	jumpProto->set_sync(jump->GetSync());
-}
-
-i32 JumpRecorder::WriteHeader(FileHandle_t file)
-{
-	return Recorder::WriteHeader(file);
 }
 
 // RunRecorder Implementation
@@ -95,11 +80,6 @@ void RunRecorder::End(f32 time, i32 numTeleports)
 	runProto->set_time(time);
 	runProto->set_num_teleports(numTeleports);
 	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 4.0f;
-}
-
-i32 RunRecorder::WriteHeader(FileHandle_t file)
-{
-	return Recorder::WriteHeader(file);
 }
 
 // Recorder Implementation
@@ -265,10 +245,11 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyT
 
 bool Recorder::WriteToFile()
 {
-	// Update the replay timestamp before writing.
-	time_t unixTime = 0;
-	time(&unixTime);
-	replayHeader.set_timestamp((u64)unixTime);
+	std::vector<char> buffer;
+	if (!this->WriteToMemory(buffer))
+	{
+		return false;
+	}
 
 	std::string uuidStr = this->uuid.ToString();
 	char tempFilename[512];
@@ -278,7 +259,6 @@ bool Recorder::WriteToFile()
 
 	g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_PATH, "GAME");
 
-	// Write to temporary file first
 	FileHandle_t file = g_pFullFileSystem->Open(tempFilename, "wb", "GAME");
 	if (!file)
 	{
@@ -286,48 +266,9 @@ bool Recorder::WriteToFile()
 		return false;
 	}
 
-	// Order of writing must match order of reading in kz_replaydata.cpp
-	i32 bytesWritten = 0;
-	bytesWritten += this->WriteHeader(file);
-
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote replay header (%d bytes)\n", bytesWritten);
-	}
-	bytesWritten += KZ::replaysystem::compression::WriteTickDataCompressed(file, this->tickData, this->subtickData);
-
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote tick data (%d bytes)\n", bytesWritten);
-	}
-	bytesWritten += KZ::replaysystem::compression::WriteWeaponsCompressed(file, this->weaponTable);
-
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote weapons (%d bytes)\n", bytesWritten);
-	}
-	bytesWritten += KZ::replaysystem::compression::WriteJumpsCompressed(file, this->jumps);
-
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote jumps (%d bytes)\n", bytesWritten);
-	}
-	bytesWritten += KZ::replaysystem::compression::WriteEventsCompressed(file, this->rpEvents);
-
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote events (%d bytes)\n", bytesWritten);
-	}
-	bytesWritten += KZ::replaysystem::compression::WriteCmdDataCompressed(file, this->cmdData, this->cmdSubtickData);
-
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Wrote cmd data (%d bytes)\n", bytesWritten);
-	}
-	// Close the file before renaming
+	g_pFullFileSystem->Write(buffer.data(), (int)buffer.size(), file);
 	g_pFullFileSystem->Close(file);
 
-	// Rename temp file to final name
 	if (!g_pFullFileSystem->RenameFile(tempFilename, finalFilename, "GAME"))
 	{
 		META_CONPRINTF("Failed to rename replay file from %s to %s\n", tempFilename, finalFilename);
@@ -337,13 +278,13 @@ bool Recorder::WriteToFile()
 
 	if (kz_replay_recording_debug.Get())
 	{
-		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%d bytes)\n", finalFilename, bytesWritten);
+		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%zu bytes)\n", finalFilename, buffer.size());
 	}
 
 	return true;
 }
 
-i32 Recorder::WriteHeader(FileHandle_t file)
+i32 Recorder::WriteHeader(std::vector<char> &outBuffer)
 {
 	// Serialize unified protobuf header with length prefix
 	std::string serialized;
@@ -353,33 +294,27 @@ i32 Recorder::WriteHeader(FileHandle_t file)
 		return 0;
 	}
 	u32 size = static_cast<u32>(serialized.size());
-	i32 written = 0;
-	written += g_pFullFileSystem->Write(&size, sizeof(size), file);
-	written += g_pFullFileSystem->Write(serialized.data(), size, file);
+	i32 written = (i32)(sizeof(size) + serialized.size());
+	const char *sizeBytes = reinterpret_cast<const char *>(&size);
+	outBuffer.insert(outBuffer.end(), sizeBytes, sizeBytes + sizeof(size));
+	outBuffer.insert(outBuffer.end(), serialized.begin(), serialized.end());
 	return written;
 }
 
-i32 Recorder::WriteTickData(FileHandle_t file)
+bool Recorder::WriteToMemory(std::vector<char> &outBuffer)
 {
-	return KZ::replaysystem::compression::WriteTickDataCompressed(file, this->tickData, this->subtickData);
-}
+	// Update the replay timestamp before serializing.
+	time_t unixTime = 0;
+	time(&unixTime);
+	replayHeader.set_timestamp((u64)unixTime);
 
-i32 Recorder::WriteWeapons(FileHandle_t file)
-{
-	return KZ::replaysystem::compression::WriteWeaponsCompressed(file, this->weaponTable);
-}
+	// Order of writing must match order of reading in kz_replaydata.cpp
+	this->WriteHeader(outBuffer);
+	KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, this->tickData, this->subtickData);
+	KZ::replaysystem::compression::WriteWeaponsCompressed(outBuffer, this->weaponTable);
+	KZ::replaysystem::compression::WriteJumpsCompressed(outBuffer, this->jumps);
+	KZ::replaysystem::compression::WriteEventsCompressed(outBuffer, this->rpEvents);
+	KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, this->cmdData, this->cmdSubtickData);
 
-i32 Recorder::WriteJumps(FileHandle_t file)
-{
-	return KZ::replaysystem::compression::WriteJumpsCompressed(file, this->jumps);
-}
-
-i32 Recorder::WriteEvents(FileHandle_t file)
-{
-	return KZ::replaysystem::compression::WriteEventsCompressed(file, this->rpEvents);
-}
-
-i32 Recorder::WriteCmdData(FileHandle_t file)
-{
-	return KZ::replaysystem::compression::WriteCmdDataCompressed(file, this->cmdData, this->cmdSubtickData);
+	return true;
 }
