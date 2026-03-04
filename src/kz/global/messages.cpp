@@ -58,11 +58,18 @@ bool KZ::api::messages::MapChange::ToJson(Json &json) const
 
 bool KZ::api::messages::PlayerJoin::ToJson(Json &json) const
 {
-	return json.Set("id", this->id) && json.Set("name", this->name) && json.Set("ip_address", this->ipAddress);
+	// clang-format off
+	return json.Set("id", this->id) 
+		&& json.Set("name", this->name) 
+		&& json.Set("ip_address", this->ipAddress) 
+		&& json.Set("has_prime", this->hasPrime);
+	// clang-format on
 }
 
 bool KZ::api::messages::PlayerJoinAck::FromJson(const Json &json)
 {
+	// Backwards compat with older plugin versions that didn't include hasPrime in the ack
+	json.Get("has_prime", this->hasPrime);
 	return json.Get("preferences", this->preferences) && json.Get("is_banned", this->isBanned);
 }
 
