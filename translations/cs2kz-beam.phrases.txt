@@ -60,7 +60,7 @@
 		"sv"		"{grey}Nuvarande stråloffset: {default}{x} {y} {z}"
 		"ua"		"{grey}Поточне зміщення променя: {default}{x} {y} {z}"
 		"de"		"{grey}Aktueller Spielerstrahl-Offset: {default}{x} {y} {z}"
-		"ru"		"{grey}Текущее смещение луча: {default}{x} {y} {z}"
+		"ru"		"{grey}Текущий сдвиг луча: {default}{x} {y} {z}"
 	}
 
 }
