@@ -94,12 +94,8 @@ struct Recorder
 	}
 
 	bool WriteToFile();
-	virtual i32 WriteHeader(FileHandle_t file);
-	virtual i32 WriteTickData(FileHandle_t file);
-	virtual i32 WriteWeapons(FileHandle_t file);
-	virtual i32 WriteJumps(FileHandle_t file);
-	virtual i32 WriteEvents(FileHandle_t file);
-	virtual i32 WriteCmdData(FileHandle_t file);
+	bool WriteToMemory(std::vector<char> &outBuffer);
+	i32 WriteHeader(std::vector<char> &outBuffer);
 
 	template<typename T>
 	void PushData(const T &data)
@@ -211,25 +207,21 @@ struct RunRecorder : public Recorder
 {
 	RunRecorder(KZPlayer *player);
 	void End(f32 time, i32 numTeleports);
-	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct JumpRecorder : public Recorder
 {
 	JumpRecorder(Jump *jump);
-	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct CheaterRecorder : public Recorder
 {
 	CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer *savedBy);
-	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 struct ManualRecorder : public Recorder
 {
 	ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy);
-	virtual i32 WriteHeader(FileHandle_t file) override;
 };
 
 class KZRecordingService : public KZBaseService

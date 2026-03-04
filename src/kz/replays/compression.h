@@ -19,32 +19,32 @@ namespace KZ::replaysystem::compression
 	bool Decompress(const void *src, size_t srcSize, void *dst, size_t dstSize);
 
 	// Write compressed tick data with delta encoding
-	i32 WriteTickDataCompressed(FileHandle_t file, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
+	i32 WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
 
 	// Read compressed tick data with delta decoding
-	bool ReadTickDataCompressed(FileHandle_t file, std::vector<TickData> &outTickData, std::vector<SubtickData> &outSubtickData);
+	bool ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &outTickData, std::vector<SubtickData> &outSubtickData);
 
 	// Read compressed weapon changes
-	bool ReadWeaponsCompressed(FileHandle_t file, std::vector<std::pair<i32, EconInfo>> &outWeaponTable);
+	bool ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable);
 
 	// Read compressed events
-	bool ReadEventsCompressed(FileHandle_t file, std::vector<RpEvent> &outEvents);
+	bool ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents);
 
 	// Read compressed jumps
-	bool ReadJumpsCompressed(FileHandle_t file, std::vector<RpJumpStats> &outJumps);
+	bool ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps);
 
 	// Read compressed CmdData
-	bool ReadCmdDataCompressed(FileHandle_t file, std::vector<CmdData> &outCmdData, std::vector<SubtickData> &outCmdSubtickData);
+	bool ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData, std::vector<SubtickData> &outCmdSubtickData);
 
 	// Write compressed weapon changes
-	i32 WriteWeaponsCompressed(FileHandle_t file, const std::vector<std::pair<i32, EconInfo>> &weaponTable);
+	i32 WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable);
 
 	// Write compressed events
-	i32 WriteEventsCompressed(FileHandle_t file, const std::vector<RpEvent> &events);
+	i32 WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events);
 
 	// Write compressed jumps
-	i32 WriteJumpsCompressed(FileHandle_t file, const std::vector<RpJumpStats> &jumps);
+	i32 WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps);
 
 	// Write compressed CmdData
-	i32 WriteCmdDataCompressed(FileHandle_t file, const std::vector<CmdData> &cmdData, const std::vector<SubtickData> &cmdSubtickData);
+	i32 WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData, const std::vector<SubtickData> &cmdSubtickData);
 } // namespace KZ::replaysystem::compression
