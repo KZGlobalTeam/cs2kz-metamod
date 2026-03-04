@@ -14,7 +14,7 @@
 		"en"		"{grey}Usage: kz_rpgoto <tick>"
 		"chi"		"{grey}用法: kz_rpgoto <tick>"
 		"pl"		"{grey}Użycie: kz_rpgoto <tick>"
-		"ru"		"{grey}Использование: kz_rpgoto <тик>"
+		"ru"		"{grey}Применение: kz_rpgoto <тик>"
 		"ua"		"{grey}Використання: kz_rpgoto <тік>"
 		"de"		"{grey}Verwendung: kz_rpgoto <tick>"
 	}
@@ -23,7 +23,7 @@
 		"en"		"{grey}Usage: kz_rpseek <+/-seconds>"
 		"chi"		"{grey}用法: kz_rpseek <+/-seconds>"
 		"pl"		"{grey}Użycie: kz_rpseek <+/-sekundy>"
-		"ru"		"{grey}Использование: kz_rpseek <+/-секунды>"
+		"ru"		"{grey}Применение: kz_rpseek <+/-секунды>"
 		"ua"		"{grey}Використання: kz_rpseek <+/-секунди>"
 		"de"		"{grey}Verwendung: kz_rpseek <+/-Sekunden>"
 	}
@@ -32,7 +32,7 @@
 		"en"		"{grey}Usage: <time/tick> (Examples: 1:23.45, +10, -5.2, 1234)"
 		"chi"		"{grey}用法: <time/tick> (示例: 1:23.45, +10, -5.2, 1234)"
 		"pl"		"{grey}Użycie: <czas/tick> (Przykłady: 1:23.45, +10, -5.2, 1234)"
-		"ru"		"{grey}Использование: <время/тик> (Примеры: 1:23.45, +10, -5.2, 1234)"
+		"ru"		"{grey}Применение: <время/тик> (Примеры: 1:23.45, +10, -5.2, 1234)"
 		"ua"		"{grey}Використання: <час/тік> (Приклади: 1:23.45, +10, -5.2, 1234)"
 		"de"		"{grey}Verwendung: <time/tick> (Beispiele: 1:23.45, +10, -5.2, 1234)"
 	}
@@ -41,7 +41,7 @@
 		"en"		"{grey}Usage: kz_rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
 		"chi"		"{grey}用法: kz_rpgoto <time> (示例: 1:23.45, +10, -5.2)"
 		"pl"		"{grey}Użycie: kz_rpgoto <time> (Przykłady: 1:23.45, +10, -5.2)"
-		"ru"		"{grey}Использование: kz_rpgoto <время> (Примеры: 1:23.45, +10, -5.2)"
+		"ru"		"{grey}Применение: kz_rpgoto <время> (Примеры: 1:23.45, +10, -5.2)"
 		"ua"		"{grey}Використання: kz_rpgoto <час> (Приклади: 1:23.45, +10, -5.2)"
 		"de"		"{grey}Verwendung: kz_rpgoto <time> (Beispiele: 1:23.45, +10, -5.2)"
 	}
@@ -50,7 +50,7 @@
 		"en"		"{grey}Usage: kz_rpgototick <tick> (Examples: 1234, +100, -50)"
 		"chi"		"{grey}用法: kz_rpgototick <tick> (示例: 1234, +100, -50)"
 		"pl"		"{grey}Użycie: kz_rpgoto <czas> (Przykłady: 1:23.45, +10, -5.2)"
-		"ru"		"{grey}Использование: kz_rpgototick <тик> (Примеры: 1234, +100, -50)"
+		"ru"		"{grey}Применение: kz_rpgototick <тик> (Примеры: 1234, +100, -50)"
 		"ua"		"{grey}Використання: kz_rpgototick <тік> (Приклади: 1234, +100, -50)"
 		"de"		"{grey}Verwendung: kz_rpgototick <tick> (Beispiele: 1234, +100, -50)"
 	}
@@ -332,7 +332,7 @@
 		"en"		"{grey}Usage: kz_replay <ID>"
 		"chi"		"{grey}用法: kz_replay <ID>"
 		"pl"		"{grey}Użycie: kz_replay <ID>"
-		"ru"		"{grey}Использование: kz_replay <ID>"
+		"ru"		"{grey}Применение: kz_replay <ID>"
 		"ua"		"{grey}Використання: kz_replay <ID>"
 		"de"		"{grey}Verwendung: kz_replay <ID>"
 	}
@@ -457,7 +457,7 @@
 		"en"		"Usage: !replays [type=run/r/jump/j/manual/m] [options...]"
 		"chi"		"用法: !replays [type=run/r/jump/j/manual/m] [options...]"
 		"pl"		"Użycie: !replays [type=run/r/jump/j/manual/m] [opcje...]"
-		"ru"		"Использование: !replays [type=run/r/jump/j/manual/m] [параметры...]"
+		"ru"		"Применение: !replays [type=run/r/jump/j/manual/m] [параметры...]"
 		"ua"		"Використання: !replays [type=run/r/jump/j/manual/m] [параметри...]"
 		"de"		"Verwendung: !replays [type=run/r/jump/j/manual/m] [Optionen...]"
 	}
