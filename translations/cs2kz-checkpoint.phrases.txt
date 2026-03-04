@@ -6,7 +6,7 @@
 		"#format"	"checkpoint_count:d"
 		"en"		"{grey}You have made a checkpoint (#{default}{checkpoint_count}{grey})."
 		"chi"		"{grey}你设置了一个存点 (#{default}{checkpoint_count}{grey})."
-		"ru"		"{grey}Вы поставили чекпойнт (#{default}{checkpoint_count}{grey})."
+		"ru"		"{grey}Вы поставили чекпоинт (#{default}{checkpoint_count}{grey})."
 		"pl"		"{grey}Ustawiłeś checkpoint (#{default}{checkpoint_count}{grey})."
 		"fi"		"{grey}Olet asettanut tallennuspisteen (#{default}{checkpoint_count}{grey})."
 		"sv"		"{grey}Du har skapat en checkpoint (#{default}{checkpoint_count}{grey})."
@@ -22,6 +22,7 @@
 	{
 		"en"		"{yellow}Warning{grey}: Checkpoint created in checkpoint disabled area."
 		"chi"		"{yellow}警告{grey}: 存点禁止创建在禁用存点区域."
+		"ru"		"{yellow}Внимание{grey}: Чекпоинт поставлен в анти-чекпоинт зоне."
 		"pl"		"{yellow}UWAGA!{grey}: Ustawiłeś checkpoint w niedozwolonym miejscu."
 		"fi"		"{yellow}Varoitus{grey}: tallennuspiste asetettu kieltoalueelle."
 		"sv"		"{yellow}Varning{grey}: Checkpoint skapad på otillåtet område."
@@ -37,7 +38,7 @@
 	{
 		"en"		"{darkred}You can't make a checkpoint mid-air."
 		"chi"		"{darkred}空中无法存点."
-		"ru"		"{darkred}Вы не можете поставить чекпойнт в воздухе."
+		"ru"		"{darkred}Вы не можете поставить чекпоинт в воздухе."
 		"pl"		"{darkred}Nie możesz ustawić checkpointu będąc w powietrzu."
 		"fi"		"{darkred}Et voi asettaa tallennuspistettä ilmassa."
 		"sv"		"{darkred}Kan inte skapa checkpoint i luften."
@@ -53,7 +54,7 @@
 	{
 		"en"		"{darkred}You can't make a checkpoint because you just landed."
 		"chi"		"{darkred}落地瞬间无法存点."
-		"ru"		"{darkred}Вы не можете поставить чекпойнт после приземления."
+		"ru"		"{darkred}Вы не можете поставить чекпоинт сразу после приземления."
 		"pl"		"{darkred}Nie możesz ustawić checkpointu, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi asettaa tallennuspistettä sillä laskeuduit juuri."
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom du landade nyligen."
@@ -69,6 +70,7 @@
 	{
 		"en"		"{darkred}You can't checkpoint because checkpoints are disabled in this area."
 		"chi"		"{darkred}此区域禁止存点."
+		"ru"		"{darkred}В этой зоне нельзя ставить чекпоинты."
 		"pl"		"{darkred}Nie możesz ustawić checkpointu w tym miejscu."
 		"fi"		"{darkred}Et voi asettaa tallennuspistettä, sillä ne ovat poissa käytöstä tällä alueella."
 		"sv"		"{darkred}Kan inte skapa checkpoint eftersom checkpoints är otillåtna på detta området."
@@ -84,7 +86,7 @@
 	{
 		"en"		"{darkred}You can't teleport because you have not set a checkpoint."
 		"chi"		"{darkred}你尚未设置任何存点, 无法传送."
-		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпойнты."
+		"ru"		"{darkred}Вы не можете телепортироваться, потому что у вас отсутствуют чекпоинты."
 		"pl"		"{darkred}Nie możesz się teleportować, ponieważ nie ustawiłeś żadnego checkpointu."
 		"fi"		"{darkred}Et voi teleportata, sillä et ole asettanut tallennuspistettä."
 		"sv"		"{darkred}Du kan inte teleportera eftersom du har inga checkpoints."
@@ -100,7 +102,7 @@
 	{
 		"en"		"{darkred}You can't teleport to your checkpoints in this area."
 		"chi"		"{darkred}在这个位置你不能读点."
-		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпойнты здесь."
+		"ru"		"{darkred}Вы не можете телепортироваться на свои чекпоинты здесь."
 		"pl"		"{darkred}Nie możesz się teleportować w tym miejscu."
 		"fi"		"{darkred}Et voi teleportata, sillä se on poissa käytöstä tällä alueella."
 		"sv"		"{darkred}Du kan inte teleportera till checkpoints på detta området."
@@ -116,6 +118,7 @@
 	{
 		"en"		"{darkred}You can't teleport because you have reached your teleport limit."
 		"chi"		"{darkred}你已达到传送限制,无法继续传送."
+		"ru"		"{darkred}Вы не можете телепортироваться, поскольку вы достигли лимита по телепортам."
 		"pl"		"{darkred}Nie możesz już się teleportować, ponieważ wykorzystałeś już cały limit."
 		"ua"		"{darkred}Ви не можете телепортуватися, оскільки ви досягли свого ліміту телепортів."
 		"de"		"{darkred}Du kannst nicht teleportieren, weil du dein Teleportationslimit erreicht hast."
@@ -124,7 +127,7 @@
 	{
 		"en"		"{darkred}You have no checkpoints to go back to."
 		"chi"		"{darkred}你没有任何能退回的存点."
-		"ru"		"{darkred}У вас нет чекпойнтов, чтобы вернутся к ним."
+		"ru"		"{darkred}У вас нет чекпоинтов, к которым можно вернуться."
 		"pl"		"{darkred}Nie masz żadnych checkpointów do których możesz wrócić."
 		"fi"		"{darkred}Et ole asettanut tallennuspistettä johon palata."
 		"sv"		"{darkred}Du har inga checkpoints att teleportera till."
@@ -140,7 +143,7 @@
 	{
 		"en"		"{darkred}You have no checkpoints to go forward to."
 		"chi"		"{darkred}你没有任何能前进的存点."
-		"ru"		"{darkred}У вас нет чекпойнтов, к которым можно телепортироваться."
+		"ru"		"{darkred}У вас следующего чекпоинта, к которому можно перейти."
 		"pl"		"{darkred}Nie masz żadnych checkpointów do których możesz przejść."
 		"fi"		"{darkred}Et ole asettanut tallennuspistettä johon edetä."
 		"sv"		"{darkred}Du har inga checkpoints att teleportera framåt till."
@@ -172,7 +175,7 @@
 	{
 		"en"		"{darkred}You can't undo because you teleported mid-air."
 		"chi"		"{darkred}在空中不能撤销存点."
-		"ru"		"{darkred}Вы не можете отменить, потому что телепортировались в воздухе."
+		"ru"		"{darkred}Вы не можете отменить телепорт, потому что телепортировались в воздухе."
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ użyłeś teleportu w powietrzu."
 		"fi"		"{darkred}Et voi palata takaisin, sillä teleporttasit ilmassa."
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade i luften."
@@ -188,7 +191,7 @@
 	{
 		"en"		"{darkred}You can't undo because you had just landed."
 		"chi"		"{darkred}落地瞬间无法撤销存点."
-		"ru"		"{darkred}Вы не можете отменить после приземления."
+		"ru"		"{darkred}Вы не можете отменить телепорт сразу после приземления."
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ dopiero wylądowałeś."
 		"fi"		"{darkred}Et voi palata takaisin, sillä laskeuduit juuri."
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du hade precis landat."
@@ -204,6 +207,7 @@
 	{
 		"en"		"{darkred}You can't undo because you teleported while in an anti-checkpoint zone."
 		"chi"		"{darkred}你无法撤销，因为你在禁止存点区域."
+		"ru"		"{darkred}Вы не можете отменить телепорт, поскольку вы телепортировались в анти-чекпоинт зоне."
 		"pl"		"{darkred}Nie możesz wrócić, ponieważ użyłeś teleportu będąc w miejscu niedozwolonym."
 		"fi"		"{darkred}Et voi palata takaisin, sillä teleporttasit tallennuspiste-kieltoalueella."
 		"sv"		"{darkred}Du kan inte ångra din teleport eftersom du teleporterade på ett otillåtet område."
@@ -219,6 +223,7 @@
 	{
 		"en"		"{grey}Failed to set your custom start position!"
 		"chi"		"{grey}设置你的自定义起点失败!"
+		"ru"		"{grey}Не удалось установить стартовую позицию!"
 		"pl"		"{grey}Nie udało się ustawić własnej pozycji startowej!"
 		"fi"		"{grey}Custom aloituspisteen asettaminen epäonnistui!"
 		"sv"		"{grey}Misslyckades med att skapa din startposition!"
@@ -266,6 +271,7 @@
 	{
 		"en"		"{darkred}The map has cleared your checkpoints."
 		"chi"		"{darkred}该地图清除了你的存点."
+		"ru"		"{darkred}Ваши чекпоинты были стёрты картой."
 		"pl"		"{darkred}Twoje checkpointy zostały usunięte przez mapę."
 		"sv"		"{darkred}Kartan har rensat dina checkpoints."
 		"ua"		"{darkred}Ваші чекпоінти були стерті мапою."
@@ -279,6 +285,7 @@
 	{
 		"en"		"{grey}You have enabled checkpoint sound."
 		"chi"		"{grey}你开启了存点音效."
+		"ru"		"{grey}Вы включили звук чекпоинта."
 		"pl"		"{grey}Aktywowałeś dźwięk checkpointu."
 		"sv"		"{grey}Du har aktiverat checkpointljuden."
 		"ua"		"{grey}Ви увімкнули звук чекпоінту."
@@ -288,6 +295,7 @@
 	{
 		"en"		"{grey}You have disabled checkpoint sound."
 		"chi"		"{grey}你禁用了存点音效."
+		"ru"		"{grey}Вы отключили звук чекпоинта."
 		"pl"		"{grey}Wyłączyłeś dźwięk checkpointu."
 		"sv"		"{grey}Du har inaktiverat checkpointljuden."
 		"ua"		"{grey}Ви вимкнули звук чекпоінту."
@@ -297,6 +305,7 @@
 	{
 		"en"		"{grey}You have enabled teleport sound."
 		"chi"		"{grey}你开启了传送音效."
+		"ru"		"{grey}Вы включили звук телепорта."
 		"pl"		"{grey}Aktywowałeś dźwięk teleportu."
 		"sv"		"{grey}Du har aktiverat teleportljuden."
 		"ua"		"{grey}Ви увімкнули звук телепорту."
@@ -306,6 +315,7 @@
 	{
 		"en"		"{grey}You have disabled teleport sound."
 		"chi"		"{grey}你禁用了传送音效."
+		"ru"		"{grey}Вы отключили звук телепорта."
 		"pl"		"{grey}Wyłączyłeś dźwięk teleportu."
 		"sv"		"{grey}Du har inaktiverat teleportljuden."
 		"ua"		"{grey}Ви вимкнули звук телепорту."
@@ -315,6 +325,7 @@
 	{
 		"en"		"{grey}You have enabled checkpoint messages."
 		"chi"		"{grey}你开启了传送消息."
+		"ru"		"{grey}Вы включили сообщения о чекпоинтах."
 		"pl"		"{grey}Aktywowałeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви увімкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten aktiviert."
@@ -323,6 +334,7 @@
 	{
 		"en"		"{grey}You have disabled checkpoint messages."
 		"chi"		"{grey}你禁用了传送消息."
+		"ru"		"{grey}Вы отключили сообщения о чекпоинтах."
 		"pl"		"{grey}Wyłączyłeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви вимкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten deaktiviert."
