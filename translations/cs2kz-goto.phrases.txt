@@ -55,7 +55,7 @@
 		"en"		"{grey}Usage: {default}kz_goto <player name>"
 		"chi"		"{grey}用法: {default}kz_goto <玩家名字>"
 		"pl"		"{grey}Użycie: {default}kz_goto <nazwa gracza>"
-		"ru"		"{grey}Использование: {default}kz_goto <никнейм игрока>"
+		"ru"		"{grey}Применение: {default}kz_goto <никнейм игрока>"
 		"fi"		"{grey}Käyttö: {default}kz_goto <pelaajan nimi>"
 		"sv"		"{grey}Användning: {default}kz_goto <spelares namn>"
 		"ua"		"{grey}Використання: {default}kz_goto <нікнейм гравця>"
