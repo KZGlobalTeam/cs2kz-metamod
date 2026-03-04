@@ -353,12 +353,7 @@ void KZRecordingService::CheckModeStyles()
 	if (this->lastKnownMode.shortModeName != currentModeInfo.shortModeName || !KZ_STREQI(this->lastKnownMode.md5, currentModeInfo.md5))
 	{
 		this->lastKnownMode = currentModeInfo;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_MODE_CHANGE;
-		V_strncpy(event.data.modeChange.name, currentModeInfo.longModeName.Get(), sizeof(event.data.modeChange.name));
-		V_strncpy(event.data.modeChange.md5, currentModeInfo.md5, sizeof(event.data.modeChange.md5));
-		this->InsertEvent(event);
+		this->InsertModeChangeEvent(currentModeInfo.longModeName.Get(), currentModeInfo.md5);
 		if (kz_replay_recording_debug.Get())
 		{
 			META_CONPRINTF("kz_replay_recording_debug: Mode change event: %s\n", currentModeInfo.longModeName.Get());
@@ -391,11 +386,7 @@ void KZRecordingService::CheckModeStyles()
 		for (auto &style : this->lastKnownStyles)
 		{
 			RpEvent event;
-			event.serverTick = this->currentTickData.serverTick;
-			event.type = RpEventType::RPEVENT_STYLE_CHANGE;
-			V_strncpy(event.data.styleChange.name, style.shortName, sizeof(event.data.styleChange.name));
-			V_strncpy(event.data.styleChange.md5, style.md5, sizeof(event.data.styleChange.md5));
-			event.data.styleChange.clearStyles = refreshStyles;
+			this->InsertStyleChangeEvent(style.longName, style.md5, refreshStyles);
 			refreshStyles = false; // only the first styleChange needs to have clearStyles = true
 			this->InsertEvent(event);
 		}
