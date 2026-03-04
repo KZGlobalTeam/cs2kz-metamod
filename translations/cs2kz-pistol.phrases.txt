@@ -5,7 +5,7 @@
 		"en"		"{grey}Usage: {default}kz_pistol <name|off>{grey}."
 		"chi"		"{grey}用法: {default}kz_pistol <name|off>{grey}."
 		"pl"		"{grey}Użycie: {default}kz_pistol <name|off>{grey}."
-		"ru"		"{grey}Использование: {default}kz_pistol <название|off>{grey}."
+		"ru"		"{grey}Применение: {default}kz_pistol <название|off>{grey}."
 		"ua"		"{grey}Використання: {default}kz_pistol <name|off>{grey}."
 		"sv"		"{grey}Användning: {default}kz_pistol <name|off>{grey}."
 		"de"		"{grey}Anwendung: {default}kz_pistol <name|off>{grey}."
