@@ -13,7 +13,7 @@
 	{
 		"en"		"{grey}Type {default}!replays {grey}to list available replays in the server."
 		"chi"		"{grey}在聊天框中输入 {default}!replays {grey}以列出服务器中可用的回放."
-		"en"		"{grey}Напишите {default}!replays {grey} для просмотра доступных реплеев на этом сервере."
+		"ru"		"{grey}Напишите {default}!replays {grey} для просмотра доступных реплеев на этом сервере."
 		"ua"		"{grey}Напишіть {default}!replays {grey}, щоб переглянути список доступних повторів на сервері."
 		"de"		"{grey}Gib {default}!replays {grey}ein, um alle verfügbaren Replays auf dem Server anzuzeigen."
 		"pl"		"{grey}Wpisz {default}!replays {grey}, aby wyświetlić dostępne powtórki na serwerze."
