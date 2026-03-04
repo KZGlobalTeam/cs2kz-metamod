@@ -38,7 +38,7 @@
 		"sv"		"{grey}Användning: {default}kz_beamoffset <x> <y> <z>"
 		"ua"		"{grey}Використання: {default}kz_beamoffset <x> <y> <z>"
 		"de"		"{grey}Verwendung: {default}kz_beamoffset <x> <y> <z>"
-		"ru"		"{grey}Использование: {default}kz_beamoffset <x> <y> <z>"
+		"ru"		"{grey}Применение: {default}kz_beamoffset <x> <y> <z>"
 	}
 	"Beam Command Usage"
 	{
@@ -48,7 +48,7 @@
 		"sv"		"{grey}Användning: {default}kz_beam <off/feet/ground>"
 		"ua"		"{grey}Використання：{default}kz_beam <off/feet/ground>"
 		"de"		"{grey}Verwendung: {default}kz_beam <off/feet/ground>"
-		"ru"		"{grey}Использование: {default}kz_beam <off/feet/ground>"
+		"ru"		"{grey}Применение: {default}kz_beam <off/feet/ground>"
 	}
 	"Current Beam Offset"
 	{
