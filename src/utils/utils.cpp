@@ -748,6 +748,22 @@ bool utils::WriteBufferToFile(const char *path, const std::vector<char> &buffer)
 	return true;
 }
 
+bool utils::ReadBufferFromFile(const char *path, std::vector<char> &outBuffer)
+{
+	FileHandle_t file = g_pFullFileSystem->Open(path, "rb", "GAME");
+	if (!file)
+	{
+		META_CONPRINTF("[KZ] Failed to open file for reading: %s\n", path);
+		return false;
+	}
+
+	u32 size = g_pFullFileSystem->Size(file);
+	outBuffer.resize(size);
+	g_pFullFileSystem->Read(outBuffer.data(), (int)size, file);
+	g_pFullFileSystem->Close(file);
+	return true;
+}
+
 bool utils::ParseSteamID2(std::string_view steamID, u64 &out)
 {
 	if (steamID.size() <= 10)
