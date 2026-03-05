@@ -716,6 +716,38 @@ u32 utils::GetServerVersion()
 	return serverVersion;
 }
 
+bool utils::WriteBufferToFile(const char *path, const std::vector<char> &buffer)
+{
+	char dir[512];
+	V_ExtractFilePath(path, dir, sizeof(dir));
+	if (dir[0])
+	{
+		g_pFullFileSystem->CreateDirHierarchy(dir, "GAME");
+	}
+
+	char tempPath[512];
+	V_snprintf(tempPath, sizeof(tempPath), "%s.tmp", path);
+
+	FileHandle_t file = g_pFullFileSystem->Open(tempPath, "wb", "GAME");
+	if (!file)
+	{
+		META_CONPRINTF("[KZ] Failed to open file for writing: %s\n", tempPath);
+		return false;
+	}
+
+	g_pFullFileSystem->Write(buffer.data(), (int)buffer.size(), file);
+	g_pFullFileSystem->Close(file);
+
+	if (!g_pFullFileSystem->RenameFile(tempPath, path, "GAME"))
+	{
+		META_CONPRINTF("[KZ] Failed to rename file from %s to %s\n", tempPath, path);
+		g_pFullFileSystem->RemoveFile(tempPath, "GAME");
+		return false;
+	}
+
+	return true;
+}
+
 bool utils::ParseSteamID2(std::string_view steamID, u64 &out)
 {
 	if (steamID.size() <= 10)

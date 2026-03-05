@@ -252,27 +252,11 @@ bool Recorder::WriteToFile()
 	}
 
 	std::string uuidStr = this->uuid.ToString();
-	char tempFilename[512];
 	char finalFilename[512];
-	V_snprintf(tempFilename, sizeof(tempFilename), "%s/%s.replay.tmp", KZ_REPLAY_PATH, uuidStr.c_str());
 	V_snprintf(finalFilename, sizeof(finalFilename), "%s/%s.replay", KZ_REPLAY_PATH, uuidStr.c_str());
 
-	g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_PATH, "GAME");
-
-	FileHandle_t file = g_pFullFileSystem->Open(tempFilename, "wb", "GAME");
-	if (!file)
+	if (!utils::WriteBufferToFile(finalFilename, buffer))
 	{
-		META_CONPRINTF("Failed to open replay file for writing: %s\n", tempFilename);
-		return false;
-	}
-
-	g_pFullFileSystem->Write(buffer.data(), (int)buffer.size(), file);
-	g_pFullFileSystem->Close(file);
-
-	if (!g_pFullFileSystem->RenameFile(tempFilename, finalFilename, "GAME"))
-	{
-		META_CONPRINTF("Failed to rename replay file from %s to %s\n", tempFilename, finalFilename);
-		g_pFullFileSystem->RemoveFile(tempFilename, "GAME");
 		return false;
 	}
 
