@@ -51,6 +51,10 @@ constexpr char sql_times_delete[] = R"(
         WHERE ID='%s'
 )";
 
+constexpr char sql_times_update_id[] = R"(
+    UPDATE Times SET ID='%s' WHERE ID='%s'
+)";
+
 // Migration queries to convert Times.ID to use UUID v7 strings
 constexpr char mysql_times_alter_id_column[] = R"(
     ALTER TABLE Times MODIFY COLUMN ID VARCHAR(36) NOT NULL

@@ -343,7 +343,7 @@ void KZGlobalService::OnServerGamePostSimulate()
 					}
 					else
 					{
-						callbackHandle.mapped()->OnResponse(it->id, it->payload);
+						callbackHandle.mapped()->OnResponse(it->id, it->payload, it->binaryData);
 					}
 
 					it = KZGlobalService::ws.receivedMessages.queue.erase(it);
@@ -357,7 +357,9 @@ void KZGlobalService::OnServerGamePostSimulate()
 				}
 			}
 		}
-		break;
+
+			replayManager.ProcessUploads();
+			break;
 
 		default:
 			break;
@@ -507,7 +509,26 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 				   "\n----------------------------------------\n",
 				   message->str.c_str());
 
-	Json payload(message->str);
+	// The message needs to be length-prefixed if it's binary.
+	// Example: `26{"id":1,"event":"example"}` means the JSON payload is 26 characters long, and any bytes after that are binary data.
+	u64 jsonLength = 0;
+	u64 headerLength = 0;
+	if (message->binary)
+	{
+		while (headerLength < message->str.size() && std::isdigit(message->str[headerLength]))
+		{
+			headerLength++;
+		}
+		jsonLength = std::stoull(message->str.substr(0, headerLength));
+	}
+
+	if (message->binary && message->str.size() < headerLength + jsonLength)
+	{
+		META_CONPRINTF("[KZ::Global] Incoming WebSocket message does not contain enough data for the declared JSON payload length.\n");
+		return;
+	}
+
+	Json payload(message->binary ? message->str.substr(headerLength, jsonLength) : message->str);
 
 	if (!payload.IsValid())
 	{
@@ -553,11 +574,15 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 				break;
 			}
 
-			ReceivedMessage message;
-			message.id = messageID;
-			message.isError = (event == "error");
+			ReceivedMessage receivedMessage;
+			receivedMessage.id = messageID;
+			receivedMessage.isError = (event == "error");
+			if (message->binary && message->wireSize > headerLength + jsonLength)
+			{
+				receivedMessage.binaryData = std::vector<char>(message->str.begin() + headerLength + jsonLength, message->str.end());
+			}
 
-			if (!payload.Get("data", message.payload))
+			if (!payload.Get("data", receivedMessage.payload))
 			{
 				META_CONPRINTF("[KZ::Global] Incoming WebSocket message contained an invalid `data` field.\n");
 				break;
@@ -565,7 +590,7 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 
 			{
 				std::lock_guard _guard(KZGlobalService::ws.receivedMessages.mutex);
-				KZGlobalService::ws.receivedMessages.queue.emplace_back(std::move(message));
+				KZGlobalService::ws.receivedMessages.queue.emplace_back(std::move(receivedMessage));
 			}
 		}
 		break;

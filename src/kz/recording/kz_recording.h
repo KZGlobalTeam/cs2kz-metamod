@@ -2,11 +2,13 @@
 
 #include <optional>
 #include <unordered_map>
+#include <atomic>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
 #include <queue>
 #include <deque>
+#include <functional>
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
@@ -149,58 +151,44 @@ struct Recorder
 class KZRecordingService;
 class KZPlayer;
 
-// Callback types for write completion
-using WriteSuccessCallback = std::function<void(const UUID_t &uuid, f32 duration)>;
+// Callback types for file writer operations.
+// All callbacks are invoked on the main thread via ReplayFileWriter::RunFrame().
+// Buffer path: recorder is serialized to memory and the buffer is delivered to the callback.
+using BufferSuccessCallback = std::function<void(const UUID_t &uuid, f32 duration, std::vector<char> &&buffer)>;
+// Disk path: recorder is written to disk; callback receives only uuid and duration.
+using DiskWriteSuccessCallback = std::function<void(const UUID_t &uuid, f32 duration)>;
 using WriteFailureCallback = std::function<void(const char *error)>;
 
-// Write task with optional callbacks
-struct WriteTask
-{
-	std::unique_ptr<Recorder> recorder;
-	WriteSuccessCallback onSuccess;
-	WriteFailureCallback onFailure;
-};
-
-// Completed write result
-struct WriteResult
-{
-	bool success;
-	UUID_t uuid;
-	f32 duration;
-	std::string errorMessage;
-	WriteSuccessCallback onSuccess;
-	WriteFailureCallback onFailure;
-};
-
-// Thread-safe file writer for async replay file writing
+// Serializes/writes replays on per-task threads.
+// Callbacks are marshalled back to the main thread via RunFrame().
 class ReplayFileWriter
 {
 public:
 	ReplayFileWriter();
 	~ReplayFileWriter();
 
-	void Start();
+	// Drain active threads — blocks until all in-flight serializations finish.
 	void Stop();
 
-	// Queue a recorder for async file writing (fire-and-forget)
-	void QueueWrite(std::unique_ptr<Recorder> recorder);
+	// Spawn a thread to serialize recorder to memory; delivers buffer to onSuccess on the main thread.
+	void QueueWrite(std::unique_ptr<Recorder> recorder, BufferSuccessCallback onSuccess, WriteFailureCallback onFailure);
 
-	// Queue a recorder with callbacks
-	void QueueWrite(std::unique_ptr<Recorder> recorder, WriteSuccessCallback onSuccess, WriteFailureCallback onFailure);
+	// Spawn a thread to write recorder to disk; calls onSuccess/onFailure on the main thread (both optional).
+	void QueueWriteToFile(std::unique_ptr<Recorder> recorder, DiskWriteSuccessCallback onSuccess = nullptr, WriteFailureCallback onFailure = nullptr);
 
-	// Run frame - process any completed writes and invoke callbacks on main thread
+	// Invoke pending callbacks — call once per game frame from the main thread.
 	void RunFrame();
 
 private:
-	void ThreadRun();
+	template<typename F>
+	void SpawnThread(F &&work);
 
-	std::unique_ptr<std::thread> m_thread;
-	std::queue<WriteTask> m_writeQueue;
-	std::queue<WriteResult> m_completedWrites;
-	std::mutex m_queueLock;
+	std::atomic<int> m_activeThreads {0};
+	std::mutex m_shutdownMutex;
+	std::condition_variable m_shutdownCV;
+
+	std::queue<std::function<void()>> m_completedCallbacks;
 	std::mutex m_completedLock;
-	std::condition_variable m_queueCV;
-	bool m_terminate = false;
 };
 
 struct RunRecorder : public Recorder
@@ -297,7 +285,7 @@ private:
 
 public:
 	// Write a replay file with completion callbacks
-	void WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, WriteSuccessCallback onSuccess,
+	void WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, DiskWriteSuccessCallback onSuccess,
 										WriteFailureCallback onFailure);
 
 public:

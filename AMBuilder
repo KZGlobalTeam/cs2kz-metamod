@@ -67,6 +67,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'http.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'async_file_io.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'player', 'player_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'player', 'player.cpp'),
@@ -103,6 +104,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'migrations.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_prefs.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_time.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'rename_run.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'set_cheater.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_client.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'setup_database.cpp'),
@@ -116,6 +118,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'commands.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'api.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'messages.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'replays.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
 
@@ -165,7 +168,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'telemetry', 'kz_telemetry.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'kz_timer.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'announce.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'submission.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'base_request.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'course_top.cpp'),

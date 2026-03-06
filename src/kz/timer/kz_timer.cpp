@@ -10,7 +10,7 @@
 #include "kz/trigger/kz_trigger.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/recording/kz_recording.h"
-#include "announce.h"
+#include "submission.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -373,7 +373,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	// This must be called after OnTimerEndPost so that the run UUID is set correctly.
 	if (!this->player->GetPlayerPawn()->IsBot())
 	{
-		RecordAnnounce::Create(this->player);
+		RunSubmission::Create(this->player);
 	}
 
 	return true;
