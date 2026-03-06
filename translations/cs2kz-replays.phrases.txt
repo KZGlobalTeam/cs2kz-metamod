@@ -592,4 +592,27 @@
 		"ua"		"Збережено"
 		"de"		"Gespeichert von"
 	}
+	"Replay - Not Found"
+	{
+		"en"		"{darkred}Replay not found."
+	}
+	"Replay Request - Sending"
+	{
+		"#format"	"uuid:s"
+		"en"		"{grey}Requesting replay {default}{uuid}{grey} from the API..."
+	}
+	"Replay Request - Already Requested"
+	{
+		"#format"	"uuid:s"
+		"en"		"{grey}A replay download is already in progress ({default}{uuid}{grey})."
+	}
+	"Replay Request - Error"
+	{
+		"#format"	"message:s"
+		"en"		"{darkred}Failed to download replay: {default}{message}"
+	}
+	"Replay Request - Cancelled"
+	{
+		"en"		"{grey}Replay download was cancelled."
+	}
 }

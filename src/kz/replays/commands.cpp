@@ -15,6 +15,7 @@
 #include "watcher.h"
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"
+#include "kz/global/kz_global.h"
 #include <functional>
 extern ReplayWatcher g_ReplayWatcher;
 
@@ -81,6 +82,19 @@ namespace KZ::replaysystem::commands
 		// Validate uuid format
 		char replayPath[512];
 		V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_PATH "/%s.replay", parsedUuid.ToString().c_str());
+
+		if (!g_pFullFileSystem->FileExists(replayPath))
+		{
+			if (KZGlobalService::IsAvailable())
+			{
+				KZGlobalService::RequestReplay(player, parsedUuid);
+			}
+			else
+			{
+				player->languageService->PrintChat(true, false, "Replay - Not Found");
+			}
+			return;
+		}
 
 		// Show loading message
 		player->languageService->PrintChat(true, false, "Replay - Loading");

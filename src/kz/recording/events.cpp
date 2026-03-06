@@ -60,21 +60,15 @@ public:
 void KZRecordingService::Init()
 {
 	KZTimerService::RegisterEventListener(&timerEventListener);
-	if (!fileWriter)
-	{
-		fileWriter = new ReplayFileWriter();
-		fileWriter->Start();
-	}
+	fileWriter = new ReplayFileWriter();
 }
 
 void KZRecordingService::Shutdown()
 {
-	if (fileWriter)
-	{
-		fileWriter->Stop();
-		delete fileWriter;
-		fileWriter = nullptr;
-	}
+	KZTimerService::UnregisterEventListener(&timerEventListener);
+	fileWriter->Stop();
+	delete fileWriter;
+	fileWriter = nullptr;
 }
 
 void KZRecordingService::OnActivateServer()
@@ -91,9 +85,9 @@ void KZRecordingService::OnActivateServer()
 
 void KZRecordingService::ProcessFileWriteCompletion()
 {
-	if (fileWriter)
+	if (KZRecordingService::fileWriter)
 	{
-		fileWriter->RunFrame();
+		KZRecordingService::fileWriter->RunFrame();
 	}
 }
 
@@ -317,7 +311,7 @@ void KZRecordingService::OnClientDisconnect()
 		{
 			auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
 			this->CopyWeaponsToRecorder(recorderPtr.get());
-			fileWriter->QueueWrite(std::move(recorderPtr));
+			fileWriter->QueueWriteToFile(std::move(recorderPtr));
 		}
 	}
 	this->runRecorders.clear();
@@ -327,7 +321,7 @@ void KZRecordingService::OnClientDisconnect()
 		{
 			auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
 			this->CopyWeaponsToRecorder(recorderPtr.get());
-			fileWriter->QueueWrite(std::move(recorderPtr));
+			fileWriter->QueueWriteToFile(std::move(recorderPtr));
 		}
 	}
 	this->jumpRecorders.clear();

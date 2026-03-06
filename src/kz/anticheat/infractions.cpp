@@ -140,7 +140,7 @@ void KZAnticheatService::Infraction::SaveReplay()
 		std::string name = this->replay.get()->replayHeader.player().name();
 		u64 steamID = this->steamID;
 		// clang-format off
-		KZRecordingService::fileWriter->QueueWrite(
+		KZRecordingService::fileWriter->QueueWriteToFile(
 			std::move(this->replay),
 			// Success callback
 			[name, steamID](const UUID_t &uuid, f32 replayDuration)
