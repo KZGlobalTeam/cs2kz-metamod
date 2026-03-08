@@ -728,7 +728,14 @@ class TranslationLinter:
         current_group: Optional[MenuGroup] = None
         current_command: Optional[MenuCommand] = None
         brace_depth = 0
-        section_stack = []
+
+        # Nesting structure (depth after opening brace):
+        #   1: RadioPanel.txt
+        #   2: Groups
+        #   3: group (e.g. menu_simple) — kv pairs are group properties
+        #   4: Commands
+        #   5: command (e.g. Checkpoint) — kv pairs are command properties
+        KNOWN_SECTIONS = {"RadioPanel.txt", "Groups", "Commands"}
 
         for line_num, line in enumerate(lines, 1):
             stripped = line.strip()
@@ -742,25 +749,42 @@ class TranslationLinter:
 
             if stripped == "}":
                 brace_depth -= 1
-                if current_command and brace_depth == 3:
+                if brace_depth < 0:
+                    brace_depth = 0
+                    continue
+                if current_command and brace_depth == 4:
                     current_command.end_line = line_num
                     if current_group:
                         current_group.commands.append(current_command)
                     current_command = None
                 elif current_group and brace_depth == 2:
+                    # Flush any dangling command before closing the group
+                    if current_command:
+                        current_command.end_line = line_num
+                        current_group.commands.append(current_command)
+                        current_command = None
                     current_group.end_line = line_num
                     groups.append(current_group)
                     current_group = None
-                elif section_stack and brace_depth == len(section_stack) - 1:
-                    section_stack.pop()
                 continue
 
-            kv_match = re.match(r'^"([^"]+)"\s+"([^"]*)"', stripped)
-            section_match = re.match(r'^"([^"]+)"$', stripped)
+            kv_match = re.match(r'^"([^"]*)"\s+"([^"]*)"', stripped)
+            section_match = re.match(r'^"([^"]*)"$', stripped)
 
             if kv_match:
                 key = kv_match.group(1)
                 value = kv_match.group(2)
+
+                if not key:
+                    self._add_issue(
+                        f"menu/{filepath.name}",
+                        line_num,
+                        "error",
+                        "Syntax",
+                        "Empty key in key-value pair",
+                        stripped[:80]
+                    )
+                    continue
 
                 if current_command:
                     if key == "hotkey":
@@ -769,35 +793,103 @@ class TranslationLinter:
                         current_command.label = value
                     elif key == "cmd":
                         current_command.cmd = value
+                    else:
+                        self._add_issue(
+                            f"menu/{filepath.name}",
+                            line_num,
+                            "warning",
+                            "Unknown Key",
+                            f"Unknown key '{key}' in command '{current_command.name}' (expected: hotkey, label, cmd)"
+                        )
                 elif current_group:
+                    COMMAND_KEYS = {"hotkey", "label", "cmd"}
                     if key == "hotkey":
                         current_group.hotkey = value
                     elif key == "title":
                         current_group.title = value
                     elif key == "timeout":
                         current_group.timeout = value
+                    elif key in COMMAND_KEYS:
+                        self._add_issue(
+                            f"menu/{filepath.name}",
+                            line_num,
+                            "error",
+                            "Structural",
+                            f"Command key '{key}' found at group level in '{current_group.name}' - likely a missing or extra brace"
+                        )
+                    else:
+                        self._add_issue(
+                            f"menu/{filepath.name}",
+                            line_num,
+                            "warning",
+                            "Unknown Key",
+                            f"Unknown key '{key}' in group '{current_group.name}' (expected: hotkey, title, timeout)"
+                        )
 
             elif section_match:
                 key = section_match.group(1)
 
-                if key == "Groups":
-                    section_stack.append("Groups")
-                elif key == "Commands":
-                    section_stack.append("Commands")
-                elif key in ["RadioPanel.txt"]:
+                if key in KNOWN_SECTIONS:
                     pass
-                elif "Groups" in section_stack and "Commands" not in section_stack and brace_depth == 2:
+                elif brace_depth == 2:
+                    # Flush any dangling group (missing closing brace)
+                    if current_group:
+                        if current_command:
+                            current_command.end_line = line_num
+                            current_group.commands.append(current_command)
+                            current_command = None
+                        current_group.end_line = line_num
+                        groups.append(current_group)
+                    if not key:
+                        self._add_issue(
+                            f"menu/{filepath.name}",
+                            line_num,
+                            "error",
+                            "Syntax",
+                            "Empty group name"
+                        )
                     current_group = MenuGroup(
                         name=key,
                         start_line=line_num,
                         end_line=line_num
                     )
-                elif "Commands" in section_stack and brace_depth == 4:
+                elif brace_depth == 4:
+                    # Flush any dangling command (missing closing brace)
+                    if current_command:
+                        current_command.end_line = line_num
+                        if current_group:
+                            current_group.commands.append(current_command)
+                    if not key:
+                        self._add_issue(
+                            f"menu/{filepath.name}",
+                            line_num,
+                            "error",
+                            "Syntax",
+                            "Empty command name"
+                        )
                     current_command = MenuCommand(
                         name=key,
                         start_line=line_num,
                         end_line=line_num
                     )
+
+            elif stripped.startswith('"'):
+                self._add_issue(
+                    f"menu/{filepath.name}",
+                    line_num,
+                    "error",
+                    "Syntax",
+                    "Malformed line - doesn't match expected key-value or section format",
+                    stripped[:80]
+                )
+
+        # Flush any dangling state at end of file
+        if current_command and current_group:
+            current_command.end_line = len(lines)
+            current_group.commands.append(current_command)
+        if current_group:
+            current_group.end_line = len(lines)
+            groups.append(current_group)
 
         return groups
 
@@ -842,6 +934,14 @@ class TranslationLinter:
                     else:
                         brace_stack.pop()
 
+            quote_count = stripped.count('"') - stripped.count('\\"')
+            if quote_count % 2 != 0:
+                self._add_issue(
+                    filename, line_num, "error", "Syntax",
+                    "Odd number of quotes - possible unclosed string",
+                    stripped[:80]
+                )
+
         for line_num, brace in brace_stack:
             self._add_issue(
                 filename, line_num, "error", "Syntax",
@@ -867,6 +967,15 @@ class TranslationLinter:
                 continue
 
             lang_group = lang_group_map[en_group_name]
+
+            if en_group.timeout and lang_group.timeout and en_group.timeout != lang_group.timeout:
+                self._add_issue(
+                    f"menu/{filename}",
+                    lang_group.start_line,
+                    "warning",
+                    "Mismatch",
+                    f"Timeout mismatch for group '{en_group_name}': english='{en_group.timeout}', {filename}='{lang_group.timeout}'"
+                )
 
             en_commands = {c.name: c for c in en_group.commands}
             lang_commands = {c.name: c for c in lang_group.commands}
@@ -895,7 +1004,24 @@ class TranslationLinter:
                         f"Missing label for command '{en_cmd_name}' in group '{en_group_name}'"
                     )
 
-                if en_cmd.hotkey != lang_cmd.hotkey:
+                if en_cmd.cmd is not None and lang_cmd.cmd is None:
+                    self._add_issue(
+                        f"menu/{filename}",
+                        lang_cmd.start_line,
+                        "warning",
+                        "Missing",
+                        f"Missing 'cmd' property for command '{en_cmd_name}' in group '{en_group_name}'"
+                    )
+
+                if en_cmd.hotkey is not None and lang_cmd.hotkey is None:
+                    self._add_issue(
+                        f"menu/{filename}",
+                        lang_cmd.start_line,
+                        "warning",
+                        "Missing",
+                        f"Missing 'hotkey' property for command '{en_cmd_name}' in group '{en_group_name}'"
+                    )
+                elif en_cmd.hotkey != lang_cmd.hotkey:
                     self._add_issue(
                         f"menu/{filename}",
                         lang_cmd.start_line,
@@ -904,13 +1030,24 @@ class TranslationLinter:
                         f"Hotkey mismatch for '{en_cmd_name}': english='{en_cmd.hotkey}', {filename}='{lang_cmd.hotkey}'"
                     )
 
-                if en_cmd.cmd != lang_cmd.cmd:
+                if en_cmd.cmd is not None and lang_cmd.cmd is not None and en_cmd.cmd != lang_cmd.cmd:
                     self._add_issue(
                         f"menu/{filename}",
                         lang_cmd.start_line,
                         "warning",
                         "Mismatch",
                         f"Command mismatch for '{en_cmd_name}': english='{en_cmd.cmd}', {filename}='{lang_cmd.cmd}'"
+                    )
+
+            for lang_cmd_name in sorted(lang_commands.keys()):
+                if lang_cmd_name not in en_commands:
+                    lang_cmd = lang_commands[lang_cmd_name]
+                    self._add_issue(
+                        f"menu/{filename}",
+                        lang_cmd.start_line,
+                        "warning",
+                        "Extra",
+                        f"Extra command '{lang_cmd_name}' in group '{en_group_name}' not in english.txt"
                     )
 
         for lang_group_name in sorted(lang_group_map.keys()):
