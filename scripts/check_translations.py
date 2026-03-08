@@ -164,7 +164,8 @@ class TranslationLinter:
         "developer", "haunted", "gold"
     }
 
-    SPECIAL_DIRECTIVES = {"#format"}
+    MENU_COMMAND_KEYS = {"hotkey", "label", "cmd"}
+    MENU_KNOWN_SECTIONS = {"RadioPanel.txt", "Groups", "Commands"}
 
     MENU_LANGUAGE_MAP = {
         "arabic": "ar",
@@ -212,8 +213,8 @@ class TranslationLinter:
         self.ignore_trackers: dict[str, IgnoreTracker] = {}
         self.global_languages: set[str] = set()
 
-        self.known_languages = self._parse_config_languages()
-        self.language_names = self._parse_config_language_names()
+        self.known_languages, self.language_names = self._parse_config()
+        self._code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
 
         self.menu_files: dict[str, list[MenuGroup]] = {}
         self.menu_languages: set[str] = set()
@@ -222,52 +223,21 @@ class TranslationLinter:
         print(f"Translations directory: {self.translations_dir}")
         print(f"Menu directory: {self.menu_dir}\n")
 
-    def _parse_config_languages(self) -> set[str]:
+    def _parse_config(self) -> tuple[set[str], dict[str, str]]:
         config_path = self.translations_dir / "config.txt"
 
         if not config_path.exists():
             print(f"config.txt not found in {self.translations_dir}, using default language list")
-            return self.DEFAULT_KNOWN_LANGUAGES.copy()
+            return self.DEFAULT_KNOWN_LANGUAGES.copy(), {}
 
         try:
             with open(config_path, "r", encoding="utf-8") as f:
                 content = f.read()
         except Exception as e:
             print(f"Failed to read config.txt: {e}, using default language list")
-            return self.DEFAULT_KNOWN_LANGUAGES.copy()
+            return self.DEFAULT_KNOWN_LANGUAGES.copy(), {}
 
         languages = set()
-
-        for line in content.splitlines():
-            stripped = line.strip()
-
-            if not stripped or stripped.startswith("//") or stripped in ["{", "}", '"Languages"']:
-                continue
-
-            match = re.match(r'^"([^"]+)"\s+"([^"]+)"', stripped)
-            if match:
-                lang_code = match.group(2)
-                languages.add(lang_code)
-
-        if languages:
-            print(f"Loaded {len(languages)} language codes from config.txt")
-            return languages
-        else:
-            print(f"No languages found in config.txt, using default language list")
-            return self.DEFAULT_KNOWN_LANGUAGES.copy()
-
-    def _parse_config_language_names(self) -> dict[str, str]:
-        config_path = self.translations_dir / "config.txt"
-
-        if not config_path.exists():
-            return {}
-
-        try:
-            with open(config_path, "r", encoding="utf-8") as f:
-                content = f.read()
-        except Exception:
-            return {}
-
         names = {}
 
         for line in content.splitlines():
@@ -280,10 +250,16 @@ class TranslationLinter:
             if match:
                 lang_name = match.group(1)
                 lang_code = match.group(2)
+                languages.add(lang_code)
                 if lang_code not in names:
                     names[lang_code] = lang_name
 
-        return names
+        if languages:
+            print(f"Loaded {len(languages)} language codes from config.txt")
+            return languages, names
+        else:
+            print(f"No languages found in config.txt, using default language list")
+            return self.DEFAULT_KNOWN_LANGUAGES.copy(), {}
 
     def _get_language_display_name(self, code: str) -> str:
         if code in self.language_names:
@@ -444,12 +420,6 @@ class TranslationLinter:
                     "Line has trailing whitespace"
                 )
 
-            if original_line.endswith("\r"):
-                self._add_issue(
-                    filename, line_num, "warning", "Formatting",
-                    "Line has Windows-style (CRLF) line ending"
-                )
-
             if stripped == "":
                 if prev_line_empty:
                     self._add_issue(
@@ -513,7 +483,6 @@ class TranslationLinter:
         phrase_blocks = []
         current_block: Optional[PhraseBlock] = None
         brace_depth = 0
-        in_phrases_section = False
         ignore_tracker = self.ignore_trackers.get(filename)
 
         for line_num, line in enumerate(lines, 1):
@@ -523,7 +492,6 @@ class TranslationLinter:
                 continue
 
             if stripped == '"Phrases"':
-                in_phrases_section = True
                 continue
 
             if stripped == "{":
@@ -560,8 +528,6 @@ class TranslationLinter:
                         current_block.format_spec = value
                         current_block.format_line = line_num
                         current_block.placeholders = self._parse_format_spec(value)
-                    elif key in self.SPECIAL_DIRECTIVES:
-                        pass
                     else:
                         if key in current_block.languages:
                             prev_line = current_block.languages[key][0]
@@ -735,8 +701,6 @@ class TranslationLinter:
         #   3: group (e.g. menu_simple) — kv pairs are group properties
         #   4: Commands
         #   5: command (e.g. Checkpoint) — kv pairs are command properties
-        KNOWN_SECTIONS = {"RadioPanel.txt", "Groups", "Commands"}
-
         for line_num, line in enumerate(lines, 1):
             stripped = line.strip()
 
@@ -802,14 +766,13 @@ class TranslationLinter:
                             f"Unknown key '{key}' in command '{current_command.name}' (expected: hotkey, label, cmd)"
                         )
                 elif current_group:
-                    COMMAND_KEYS = {"hotkey", "label", "cmd"}
                     if key == "hotkey":
                         current_group.hotkey = value
                     elif key == "title":
                         current_group.title = value
                     elif key == "timeout":
                         current_group.timeout = value
-                    elif key in COMMAND_KEYS:
+                    elif key in self.MENU_COMMAND_KEYS:
                         self._add_issue(
                             f"menu/{filepath.name}",
                             line_num,
@@ -829,7 +792,7 @@ class TranslationLinter:
             elif section_match:
                 key = section_match.group(1)
 
-                if key in KNOWN_SECTIONS:
+                if key in self.MENU_KNOWN_SECTIONS:
                     pass
                 elif brace_depth == 2:
                     # Flush any dangling group (missing closing brace)
@@ -1061,12 +1024,10 @@ class TranslationLinter:
                 )
 
     def _check_missing_menu_languages(self) -> None:
-        code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
-
         missing_menus = []
 
         for lang_code in self.known_languages:
-            lang_name = code_to_name.get(lang_code)
+            lang_name = self._code_to_name.get(lang_code)
             if lang_name and lang_name not in self.menu_languages:
                 menu_file = self.menu_dir / f"{lang_name}.txt"
                 if not menu_file.exists():
@@ -1162,10 +1123,8 @@ class TranslationLinter:
         english_groups = self.menu_files["english.txt"]
         missing_data = {}
 
-        code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
-
         for lang_code in sorted(self.known_languages):
-            lang_name = code_to_name.get(lang_code)
+            lang_name = self._code_to_name.get(lang_code)
             if not lang_name:
                 continue
 
@@ -1248,10 +1207,8 @@ class TranslationLinter:
             output.write("MENU TRANSLATION STATUS\n")
             output.write("-" * 70 + "\n\n")
 
-            code_to_name = {v: k for k, v in self.MENU_LANGUAGE_MAP.items()}
-
             for lang_code in sorted(self.known_languages):
-                lang_name = code_to_name.get(lang_code, lang_code)
+                lang_name = self._code_to_name.get(lang_code, lang_code)
 
                 if lang_code in missing_menu_data:
                     data = missing_menu_data[lang_code]
