@@ -1,6 +1,8 @@
-WIP, not ready for release 
+# CS2KZ
 
-# Requirements
+WIP, not ready for release
+
+## Requirements
 
 - [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1383 or later
 
@@ -12,42 +14,49 @@ WIP, not ready for release
 
 [^1]: if your server is global, this plugin is required
 
-# Installation:
+## Installation
 
 - Download the latest version in the release section and extract them to your server's `csgo/` directory.
 
-# Compilation
+## Compilation
+
 - Remember to *recursively* clone the plugin, and symlink needs to be enabled as well! ([this isn't the default on windows](https://stackoverflow.com/a/59761201))
-   ```
+
+   ```bash
    git clone -c core.symlinks=true --recursive https://github.com/KZGlobalTeam/cs2kz-metamod.git
    ```
+
 - Latest [AMBuild](https://github.com/alliedmodders/ambuild/) needs to be installed for compilation.
 
 - For each platform:
   
-Windows (ambuild/msvc): 
-```
+Windows (ambuild/msvc):
+
+```bash
 mkdir build
 cd build
 python3 ../configure.py 
 ambuild
-``` 
+```
 
 For windows debugging with VS, build the project then add the following command at the end:
-```
+
+```bash
 python3 ../configure.py --gen=vs --vs-version 17
-``` 
+```
 
 Linux (ambuild/clang):
-```
+
+```bash
 mkdir build
 cd build
 python3 ../configure.py 
 ambuild
-``` 
+```
 
 Linux (Docker w/ Valve SDK Image):
-```
+
+```bash
 mkdir build
 docker build -t cs2kz-linux-builder .
 docker run --rm -v ./build:/app/build cs2kz-linux-builder
@@ -57,7 +66,8 @@ Note: does not work with gcc!
 
 Copy the contents of `build/package/` to your server's `csgo/` directory.
 
-# Project Architecture
+## Project Architecture
+
 This is a CS2 KZ Metamod C++ plugin with:
 
 - Source code files in `src` directory
@@ -73,6 +83,7 @@ This is a CS2 KZ Metamod C++ plugin with:
 - Third party dependencies are found in `vendor`
 - `AMBuilder` is used to declare the list of translation units to add into the build. See [AMBuild](https://github.com/alliedmodders/ambuild) for more information.
 
-## Coding standards
+### Coding standards
+
 - Follow the existing naming conventions.
 - Prefer short types defined in `common.h` (eg. `u32`, `u64`, `f32`,... ) unless it is code related to reverse engineering/SDK.
