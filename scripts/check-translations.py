@@ -4,7 +4,7 @@ Translation file linter for cs2kz-metamod phrase files and menu files.
 Checks for format issues and missing/duplicate language entries.
 
 Usage:
-    python check_translations.py [base_directory]
+    python check-translations.py [base_directory]
 
 If no directory is specified, defaults to current directory.
 The script will look for:
