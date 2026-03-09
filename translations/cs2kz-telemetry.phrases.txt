@@ -6,6 +6,7 @@
 		"#format"	"numJumps:d,truePerfPercent:.0f,truePerfs:d,modernPerfEarlyPercent:.0f,modernPerfsEarly:d,modernPerfLatePercent:.0f,modernPerfsLate:d"
 		"en"		"{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
 		"chi"		"{grey}跳跃: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}Вчасно ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Зарано ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Запізно ({lime}{modernPerfsLate}{grey})"
 	}
 	"Telemetry - Legacy Bhop Stats"
 	{
