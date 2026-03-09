@@ -373,11 +373,13 @@
 		"#format"	"course_name:s"
 		"en"		"{darkred}End position not found for course {default}{course_name}{darkred}!"
 		"chi"		"{darkred}{course_name} {darkred}的终点无法找到!"
+		"ua"		"{darkred}Не знайдено кінцеву позицію для курсу {default}{course_name}{darkred}!"
 	}
 	"No Active Course"
 	{
 		"en"		"{grey}You currently have no active course."
 		"chi"		"{grey}你当前没有激活中的关卡."
+		"ua"		"{grey}Наразі у вас немає активного курсу."
 	}
 	"No Jumpstat Area Found"
 	{
