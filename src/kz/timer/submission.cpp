@@ -349,8 +349,9 @@ void RunSubmission::TryFinalize()
 	}
 	// else: finalUUID stays equal to localUUID (set in constructor)
 
-	// 1. Local DB insert with the final UUID
-	if (local)
+	// 1. Local DB insert with the final UUID (skip if already inserted in the constructor
+	// for non-global runs, where SubmitLocal was called immediately with localUUID).
+	if (local && !localSubmitted)
 	{
 		SubmitLocal(finalUUID.ToString().c_str());
 	}
@@ -422,6 +423,15 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 
 void RunSubmission::SubmitLocal(const char *uuid)
 {
+	this->localSubmitted = true;
+
+	// Styled runs use a fire-and-forget insert (save_time.cpp skips rank queries);
+	// mark local false now so CheckAll() doesn't wait for a response that will never arrive.
+	if (this->styleIDs != 0)
+	{
+		this->local = false;
+	}
+
 	auto onFailure = [uid = this->uid](std::string, int)
 	{
 		RunSubmission *sub = RunSubmission::Get(uid);
