@@ -51,6 +51,7 @@ struct RunSubmission
 	bool apiResponseReceived {}; // set when NewRecordAck arrives
 	bool finalized {};           // set once TryFinalize() actually commits
 	bool runAnnounced {};        // AnnounceRun()/AnnounceLocal()/AnnounceGlobal() have been called
+	bool localSubmitted {};      // set once SubmitLocal() has been called, prevents double-insert
 
 	// Replay buffer held in RAM from OnReplayReady() until QueueUpload() moves it away.
 	// After the move it is empty; DoLateAPIResponse() will fall back to a disk read.
