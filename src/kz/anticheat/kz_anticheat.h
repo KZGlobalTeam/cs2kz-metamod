@@ -2,7 +2,10 @@
 #include "../kz.h"
 #include "kz/recording/kz_recording.h"
 
-namespace KZ::api { struct BanInfo; }
+namespace KZ::api
+{
+	struct BanInfo;
+}
 
 class KZBaseService;
 class Jump;

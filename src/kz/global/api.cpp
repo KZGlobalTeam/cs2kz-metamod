@@ -69,9 +69,7 @@ bool KZ::api::Player::FromJson(const Json &json)
 
 bool KZ::api::BanInfo::FromJson(const Json &json)
 {
-	return json.Get("id", this->id)
-		&& json.Get("reason", this->reason)
-		&& json.Get("expires_at", this->expiresAt);
+	return json.Get("id", this->id) && json.Get("reason", this->reason) && json.Get("expires_at", this->expiresAt);
 }
 
 bool KZ::api::Map::FromJson(const Json &json)
