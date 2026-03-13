@@ -2,6 +2,8 @@
 #include "../kz.h"
 #include "kz/recording/kz_recording.h"
 
+namespace KZ::api { struct BanInfo; }
+
 class KZBaseService;
 class Jump;
 
@@ -102,7 +104,8 @@ public:
 
 		void SubmitLocalInfraction();
 
-		void SaveReplay();
+		// uploadToAPI=true when the global API successfully accepted the infraction and wants the replay.
+		void SaveReplay(bool uploadToAPI);
 
 		// Finalize the infraction (ban/kick the player if needed)
 		void Finalize();
@@ -255,16 +258,8 @@ public:
 	void OnSetupMove(PlayerCommand *cmd);
 	void OnPhysicsSimulatePost();
 
-	struct BanInfo
-	{
-		UUID_t banId;
-		std::string reason;
-		std::string expirationDate;
-	};
-
 	void OnPlayerFullyConnect();
-	// TODO Anticheat: Connect this somewhere
-	void OnGlobalAuthFinished(BanInfo *banInfo);
+	void OnGlobalAuthFinished(KZ::api::BanInfo *banInfo);
 	void OnClientSetup(bool isBanned);
 
 	// ==========[ Strafes ]===========
@@ -285,6 +280,7 @@ public:
 
 	// Infraction stuff
 	static Infraction *GetPendingInfraction(const UUID_t &infractionId);
+	static Infraction *GetPendingInfraction(u64 steamID);
 
 	Infraction *GetPendingInfraction();
 	static void CleanupInfractions();

@@ -29,6 +29,15 @@ namespace KZ::api
 		bool FromJson(const Json &json);
 	};
 
+	struct BanInfo
+	{
+		std::string id;
+		std::string reason;
+		std::string expiresAt;
+
+		bool FromJson(const Json &json);
+	};
+
 	struct Map
 	{
 		enum class State : i8

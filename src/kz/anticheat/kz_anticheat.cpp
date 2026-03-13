@@ -112,7 +112,7 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->yawAccelPercent = 0.0f;
 }
 
-void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
+void KZAnticheatService::OnGlobalAuthFinished(KZ::api::BanInfo *banInfo)
 {
 	if (this->player->IsFakeClient() || this->player->IsCSTV())
 	{
@@ -122,7 +122,9 @@ void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
 	// Already banned? Just add the player to the local ban database and ignore any current infraction.
 	if (banInfo)
 	{
-		KZDatabaseService::AddOrUpdateBan(this->player->GetSteamId64(), banInfo->reason.c_str(), banInfo->expirationDate.c_str(), banInfo->banId);
+		UUID_t banId;
+		UUID_t::FromString(banInfo->id.c_str(), &banId);
+		KZDatabaseService::AddOrUpdateBan(this->player->GetSteamId64(), banInfo->reason.c_str(), banInfo->expiresAt.c_str(), banId);
 		if (this->GetPendingInfraction())
 		{
 			this->GetPendingInfraction()->replay = nullptr; // Wipe replay to avoid saving it
