@@ -51,6 +51,9 @@
 	// Number of minutes to keep archived replays before deletion (minimum 24 hours, default 48 hours).
 	"archiveRetentionMinutes"			"2880"
 
+	// Number of days to keep replays downloaded from the API before deletion (0 = keep forever, default 7 days).
+	"downloadedReplayRetentionDays"		"7"
+
 	// Default FOV for players.
 	"defaultFOV"						"90"
 	

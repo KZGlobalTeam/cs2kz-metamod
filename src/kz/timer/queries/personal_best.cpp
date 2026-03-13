@@ -356,8 +356,8 @@ struct PBRequest : public BaseRequest
 					req->pbData.hasPB = true;
 					if (result->FetchRow())
 					{
-						req->pbData.runTime = result->GetFloat(0);
-						req->pbData.teleportsUsed = result->GetInt(1);
+						req->pbData.runTime = result->GetFloat(1);
+						req->pbData.teleportsUsed = result->GetInt(2);
 					}
 					if ((result = queries[1]->GetResultSet()) && result->FetchRow())
 					{
@@ -373,7 +373,7 @@ struct PBRequest : public BaseRequest
 					req->pbData.hasPBPro = true;
 					if (result->FetchRow())
 					{
-						req->pbData.runTimePro = result->GetFloat(0);
+						req->pbData.runTimePro = result->GetFloat(1);
 					}
 					if ((result = queries[4]->GetResultSet()) && result->FetchRow())
 					{
@@ -414,8 +414,8 @@ struct PBRequest : public BaseRequest
 					req->pbData.hasPB = true;
 					if (result->FetchRow())
 					{
-						req->pbData.runTime = result->GetFloat(0);
-						req->pbData.teleportsUsed = result->GetInt(1);
+						req->pbData.runTime = result->GetFloat(1);
+						req->pbData.teleportsUsed = result->GetInt(2);
 					}
 				}
 				if ((result = queries[1]->GetResultSet()) && result->GetRowCount() > 0)
@@ -423,7 +423,7 @@ struct PBRequest : public BaseRequest
 					req->pbData.hasPBPro = true;
 					if (result->FetchRow())
 					{
-						req->pbData.runTimePro = result->GetFloat(0);
+						req->pbData.runTimePro = result->GetFloat(1);
 					}
 				}
 			}

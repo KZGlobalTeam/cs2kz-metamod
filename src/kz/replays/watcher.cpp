@@ -1006,6 +1006,82 @@ void ReplayWatcher::ScanReplays()
 		this->jumpReplays = std::move(newJump);
 		this->manualReplays = std::move(newManual);
 	}
+
+	ScanDownloadedReplays(currentUnixTime);
+}
+
+void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
+{
+	char searchPath[MAX_PATH];
+	V_snprintf(searchPath, sizeof(searchPath), "%s/*.replay", KZ_REPLAY_DOWNLOADS_PATH);
+
+	FileFindHandle_t findHandle = {};
+	const char *pFileName = g_pFullFileSystem->FindFirstEx(searchPath, "GAME", &findHandle);
+	// retentionDays == 0 means keep forever (no eviction).
+	u32 retentionDays = (u32)MAX(KZOptionService::GetOptionInt("downloadedReplayRetentionDays", 7), 0);
+	u64 retentionSeconds = (u64)retentionDays * 24 * 3600;
+
+	std::unordered_map<UUID_t, ReplayHeader> newDownloaded;
+
+	while (pFileName)
+	{
+		if (!g_pFullFileSystem->FindIsDirectory(findHandle) && !V_strstr(pFileName, ".replay.tmp"))
+		{
+			char uuidStr[64];
+			V_strncpy(uuidStr, pFileName, sizeof(uuidStr));
+			char *ext = V_strstr(uuidStr, ".replay");
+			if (ext)
+			{
+				*ext = '\0';
+			}
+			UUID_t uuid;
+			if (UUID_t::FromString(uuidStr, &uuid))
+			{
+				char fullPath[MAX_PATH];
+				V_snprintf(fullPath, sizeof(fullPath), "%s/%s", KZ_REPLAY_DOWNLOADS_PATH, pFileName);
+
+				// Evict files whose download time (file mtime) is older than the retention period.
+				if (retentionDays > 0)
+				{
+					long fileTime = g_pFullFileSystem->GetFileTime(fullPath, "GAME");
+					if (fileTime > 0 && (u64)currentTime >= (u64)fileTime + retentionSeconds)
+					{
+						g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+						pFileName = g_pFullFileSystem->FindNext(findHandle);
+						continue;
+					}
+				}
+
+				FileHandle_t file = g_pFullFileSystem->Open(fullPath, "rb", "GAME");
+				if (file)
+				{
+					u32 size = 0;
+					if (g_pFullFileSystem->Read(&size, sizeof(size), file) == sizeof(size) && size > 0 && size < 5 * 1024 * 1024)
+					{
+						std::string buf;
+						buf.resize(size);
+						if (g_pFullFileSystem->Read(buf.data(), size, file) == size)
+						{
+							ReplayHeader hdr;
+							if (hdr.ParseFromString(buf))
+							{
+								newDownloaded[uuid] = hdr;
+							}
+						}
+					}
+					g_pFullFileSystem->Close(file);
+				}
+			}
+		}
+		pFileName = g_pFullFileSystem->FindNext(findHandle);
+	}
+
+	g_pFullFileSystem->FindClose(findHandle);
+
+	{
+		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
+		this->downloadedReplays = std::move(newDownloaded);
+	}
 }
 
 ReplayWatcher g_ReplayWatcher;
@@ -1035,6 +1111,7 @@ std::vector<UUID_t> ReplayWatcher::FindReplaysByUUIDSubstring(const char *uuidSu
 	checkMap(this->runReplays);
 	checkMap(this->jumpReplays);
 	checkMap(this->manualReplays);
+	checkMap(this->downloadedReplays);
 
 	return matches;
 }
