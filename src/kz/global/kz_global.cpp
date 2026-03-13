@@ -16,6 +16,7 @@
 
 #include "kz_global.h"
 #include "messages.h"
+#include "kz/anticheat/kz_anticheat.h"
 
 static_function bool GetApiUrl(std::string &url)
 {
@@ -145,11 +146,6 @@ void KZGlobalService::OnWorldRecordsForCache(const KZ::api::messages::WorldRecor
 
 		KZTimerService::InsertRecordToCache(record.time, course, modeID, record.nubPoints != 0, true);
 	}
-}
-
-void KZGlobalService::SubmitBan(u64 steamID, std::string reason, std::string details)
-{
-	// TODO Anticheat: Implement this!
 }
 
 void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std::string sentMapName)
@@ -401,7 +397,7 @@ static_function void OnPlayerRecordsReceived(const KZ::api::messages::PlayerReco
 void KZGlobalService::OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ack, u64 steamID)
 {
 	META_CONPRINTF("[KZ::Global] Received `player_join_ack` response. (player.id=%llu, player.is_banned=%s, player.has_prime=%s)\n", steamID,
-				   ack.isBanned ? "true" : "false", ack.hasPrime ? "true" : "false");
+				   ack.ban.has_value() ? "true" : "false", ack.hasPrime ? "true" : "false");
 
 	KZPlayer *player = g_pKZPlayerManager->SteamIdToPlayer(steamID);
 	if (player == nullptr)
@@ -409,9 +405,12 @@ void KZGlobalService::OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ac
 		return;
 	}
 
-	player->globalService->playerInfo.isBanned = ack.isBanned;
+	player->globalService->playerInfo.isBanned = ack.ban.has_value();
 	player->hasPrime |= ack.hasPrime; // Players cannot lose Prime status.
 	player->optionService->InitializeGlobalPrefs(ack.preferences.ToString());
+
+	KZ::api::BanInfo *banInfo = ack.ban.has_value() ? const_cast<KZ::api::BanInfo *>(&ack.ban.value()) : nullptr;
+	player->anticheatService->OnGlobalAuthFinished(banInfo);
 
 	u16 currentMapID = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &map) { return map ? map->id : 0; });
 

@@ -1,5 +1,6 @@
 #include "messages.h"
 #include "version_gen.h"
+#include "kz/anticheat/kz_anticheat.h"
 
 bool KZ::api::messages::handshake::Hello::PlayerInfo::ToJson(Json &json) const
 {
@@ -68,9 +69,18 @@ bool KZ::api::messages::PlayerJoin::ToJson(Json &json) const
 
 bool KZ::api::messages::PlayerJoinAck::FromJson(const Json &json)
 {
-	// Backwards compat with older plugin versions that didn't include hasPrime in the ack
 	json.Get("has_prime", this->hasPrime);
-	return json.Get("preferences", this->preferences) && json.Get("is_banned", this->isBanned);
+	Json banJson;
+	if (json.Get("ban", banJson))
+	{
+		KZ::api::BanInfo banInfo;
+		if (!banInfo.FromJson(banJson))
+		{
+			return false;
+		}
+		this->ban = std::move(banInfo);
+	}
+	return json.Get("preferences", this->preferences);
 }
 
 bool KZ::api::messages::PlayerLeave::ToJson(Json &json) const
@@ -147,6 +157,48 @@ bool KZ::api::messages::NewRecordAck::FromJson(const Json &json)
 	}
 
 	return true;
+}
+
+const char *KZ::api::messages::InfractionTypeToApiReason(u8 type)
+{
+	using Type = KZAnticheatService::Infraction::Type;
+	switch (static_cast<Type>(type))
+	{
+		case Type::StrafeHack:
+			return "strafe_hack";
+		case Type::BhopHack:
+			return "bhop_hack";
+		case Type::Hyperscroll:
+			return "hyperscroll";
+		case Type::InvalidCvar:
+			return "invalid_cvar";
+		case Type::InvalidInput:
+			return "invalid_input";
+		case Type::Nulls:
+			return "nulls";
+		case Type::SubtickSpam:
+			return "subtick_spam";
+		case Type::Desubtick:
+			return "desubtick";
+		default:
+			return "other";
+	}
+}
+
+bool KZ::api::messages::SubmitInfraction::ToJson(Json &json) const
+{
+	// clang-format off
+	return json.Set("player_id", this->playerID)
+		&& json.Set("reason", this->reason)
+		&& json.Set("details", this->details);
+	// clang-format on
+}
+
+bool KZ::api::messages::SubmitInfractionAck::FromJson(const Json &json)
+{
+	// replayId is optional, some infractions do not need replays (eg. invalid cvars)
+	json.Get("replay_id", this->replayId);
+	return json.Get("ban_id", this->banId) && json.Get("ban_duration", this->banDuration);
 }
 
 bool KZ::api::messages::MapDetails::FromJson(const Json &json)

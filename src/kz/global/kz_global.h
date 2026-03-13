@@ -629,7 +629,21 @@ public:
 		}
 	}
 
-	static void SubmitBan(u64 steamID, std::string reason, std::string details);
+	template<typename CB>
+	static bool SubmitInfraction(u64 steamID, const char *reason, const char *details, CB &&callback)
+	{
+		if (!KZGlobalService::IsAvailable())
+		{
+			return false;
+		}
+
+		KZ::api::messages::SubmitInfraction message;
+		message.playerID = steamID;
+		message.reason = reason;
+		message.details = details;
+
+		return KZGlobalService::WS::SendMessage(message, std::move(callback));
+	}
 
 	struct QueryPBParams
 	{
@@ -773,7 +787,7 @@ private:
 		std::vector<std::pair<UUID_t, std::vector<char>>> pendingUploads;
 		std::optional<UUID_t> pendingDownload;
 		// Since the response doesn't have json data, it should just be `2{}<BINARY DATA>`
-		static void OnReplayRequestSuccess(const KZ::api::messages::WantReplayAck &ack, const std::vector<char> &binaryData, CPlayerUserId userID);
+		static void OnReplayRequestSuccess(const KZ::api::messages::ReplayData &ack, const std::vector<char> &binaryData, CPlayerUserId userID);
 		bool QueueUpload(const UUID_t &uploadID, std::vector<char> &&replayData);
 
 		void ProcessUploads();

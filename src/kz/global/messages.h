@@ -112,7 +112,7 @@ namespace KZ::api::messages
 	struct PlayerJoinAck
 	{
 		Json preferences;
-		bool isBanned;
+		std::optional<KZ::api::BanInfo> ban;
 		bool hasPrime;
 
 		bool FromJson(const Json &json);
@@ -189,6 +189,31 @@ namespace KZ::api::messages
 		std::string recordId {};
 		RecordData overallData {};
 		RecordData proData {};
+
+		bool FromJson(const Json &json);
+	};
+
+	const char *InfractionTypeToApiReason(/*KZAnticheatService::Infraction::Type*/ u8 type);
+
+	struct SubmitInfraction
+	{
+		u64 playerID {};
+		std::string reason;
+		std::string details; // detection details
+
+		inline static const char *Name()
+		{
+			return "submit-infraction";
+		}
+
+		bool ToJson(Json &json) const;
+	};
+
+	struct SubmitInfractionAck
+	{
+		std::string banId;
+		std::string replayId;    // empty if no replay was stored
+		f32 banDuration = -1.0f; // in seconds; -1 means kick-only
 
 		bool FromJson(const Json &json);
 	};
@@ -332,7 +357,7 @@ namespace KZ::api::messages
 		bool ToJson(Json &json) const;
 	};
 
-	struct WantReplayAck
+	struct ReplayData
 	{
 		bool FromJson(const Json &)
 		{

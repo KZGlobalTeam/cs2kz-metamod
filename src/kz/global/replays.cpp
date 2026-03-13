@@ -32,7 +32,7 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 	}
 }
 
-void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const KZ::api::messages::WantReplayAck &ack, const std::vector<char> &binaryData,
+void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const KZ::api::messages::ReplayData &ack, const std::vector<char> &binaryData,
 															CPlayerUserId userID)
 {
 	UUID_t replayID;
@@ -115,8 +115,7 @@ void KZGlobalService::ReplayManager::RequestReplay(KZPlayer *requester, UUID_t r
 	auto userID = requester->GetClient()->GetUserID();
 
 	requester->languageService->PrintChat(true, false, "Replay Request - Sending", replayID.ToString().c_str());
-	KZGlobalService::MessageCallback<KZ::api::messages::WantReplayAck, true> callback(&KZGlobalService::ReplayManager::OnReplayRequestSuccess,
-																					  userID);
+	KZGlobalService::MessageCallback<KZ::api::messages::ReplayData, true> callback(&KZGlobalService::ReplayManager::OnReplayRequestSuccess, userID);
 	callback.OnError(
 		[userID](const KZ::api::messages::Error &error)
 		{

@@ -529,7 +529,6 @@ namespace KZ::replaysystem::commands
 	}
 } // namespace KZ::replaysystem::commands
 
-// Command implementations using the new modules
 SCMD(kz_replay, SCFL_REPLAY)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
