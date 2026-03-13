@@ -1459,12 +1459,7 @@
 	}
 	"Command Description - kz_replay"
 	{
-		"en"		"Play a previously saved replay."
-		"chi"		"播放之前保存的回放."
-		"pl"		"Odtwórz wcześniej zapisaną powtórkę."
-		"ru"		"Проиграть сохранённый повтор."
-		"ua"		"Відтворити раніше збережений повтор."
-		"de"		"Spiele die zuvor gespeicherte Wiederholung ab."
+		"en"		"Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
 	}
 	"Command Description - kz_replays"
 	{

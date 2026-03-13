@@ -6,6 +6,7 @@
 #include "kz/replays/playback.h"
 #include "utils/async_file_io.h"
 #include "utils/utils.h"
+#include "filesystem.h"
 
 using namespace KZ::replaysystem;
 
@@ -48,8 +49,9 @@ void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const KZ::api::messa
 	// Save the downloaded replay to disk asynchronously.
 	if (replayID.IsV7())
 	{
+		g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_DOWNLOADS_PATH, "GAME");
 		char replayPath[512];
-		V_snprintf(replayPath, sizeof(replayPath), "%s/%s.replay", KZ_REPLAY_PATH, replayID.ToString().c_str());
+		V_snprintf(replayPath, sizeof(replayPath), "%s/%s.replay", KZ_REPLAY_DOWNLOADS_PATH, replayID.ToString().c_str());
 		if (g_asyncFileIO)
 		{
 			g_asyncFileIO->QueueWriteBuffer(replayPath, binaryData);

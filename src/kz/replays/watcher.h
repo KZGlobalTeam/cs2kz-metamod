@@ -59,6 +59,7 @@ class ReplayWatcher
 	std::unordered_map<UUID_t, ReplayHeader> manualReplays;
 	std::map<UUID_t, ReplayHeader> runReplays;
 	std::map<UUID_t, ReplayHeader> jumpReplays;
+	std::unordered_map<UUID_t, ReplayHeader> downloadedReplays;
 	// External archival index: uuid -> archived unix timestamp
 	std::unordered_map<UUID_t, u64> archivedIndex;
 	bool archiveDirty = false;
@@ -66,6 +67,7 @@ class ReplayWatcher
 	void WatchLoop();
 
 	void ScanReplays();
+	void ScanDownloadedReplays(u64 currentTime);
 
 	void MarkArchived(const UUID_t &uuid, u64 archiveTimestamp);
 	void LoadArchiveIndex();

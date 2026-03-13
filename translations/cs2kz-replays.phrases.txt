@@ -329,12 +329,7 @@
 	}
 	"Replay - Usage Command"
 	{
-		"en"		"{grey}Usage: kz_replay <ID>"
-		"chi"		"{grey}用法: kz_replay <ID>"
-		"pl"		"{grey}Użycie: kz_replay <ID>"
-		"ru"		"{grey}Применение: kz_replay <ID>"
-		"ua"		"{grey}Використання: kz_replay <ID>"
-		"de"		"{grey}Verwendung: kz_replay <ID>"
+		"en"		"{grey}Usage: kz_replay <ID> or kz_replay <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
 	}
 	"Replay - Load Cancelled"
 	{
@@ -682,5 +677,45 @@
 	"Replay Request - Cancelled"
 	{
 		"en"		"{grey}Replay download was cancelled."
+	}
+	"Replay - No Course"
+	{
+		"en"		"{darkred}No course found on this map."
+	}
+	"Replay - Invalid Mode Arg"
+	{
+		"en"		"{darkred}Unknown mode."
+	}
+	"Replay - Global Mode Only"
+	{
+		"en"		"{darkred}Global records are only available for global modes."
+	}
+	"Replay - API Not Available"
+	{
+		"en"		"{darkred}The global API is not available."
+	}
+	"Replay - Querying WR"
+	{
+		"en"		"{grey}Querying world record replay..."
+	}
+	"Replay - Querying GPB"
+	{
+		"en"		"{grey}Querying personal best replay..."
+	}
+	"Replay - WR Not Found"
+	{
+		"en"		"{grey}No world record replay found for this filter."
+	}
+	"Replay - SR Not Found"
+	{
+		"en"		"{grey}No server record replay found for this filter."
+	}
+	"Replay - GPB Not Found"
+	{
+		"en"		"{grey}No global personal best replay found."
+	}
+	"Replay - SPB Not Found"
+	{
+		"en"		"{grey}No server personal best replay found."
 	}
 }
