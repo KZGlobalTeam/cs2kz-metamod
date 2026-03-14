@@ -5,6 +5,7 @@
 		"en"	"{grey}Use {default}/panel {grey}to toggle the panel in the middle of your screen."
 		"chi"	"{grey}使用 {default}/panel {grey}可以切换屏幕中心面板的显示."
 		"pl"	"{grey}Użyj {default}/panel {grey}aby włączyć lub wyłączyć panel na środku ekranu."
+		"ru"	"{grey}Напишите {default}/panel{grey}, чтобы включить/выключить панель по центру экрана."
 		"fi"	"{grey}Käytä {default}/panel {grey}komentoa vaihtaaksesi keskipaneelin näyttämisen asetusta."
 		"sv"	"{grey}Använd {default}/panel {grey}för att ändra synligheten av rutan i mitten av skärmen."
 		"ua"	"{grey}Напишіть в чат{default}/panel{grey} щоб увімк./вимк. центральну панель на екрані."
@@ -20,6 +21,7 @@
 		"en"	"{grey}You can toggle your leg visibility by typing{default} /hidelegs{grey}."
 		"chi"	"{grey}你需要隐藏腿部吗？ 输入 {default}/hidelegs{grey} 切换显示或隐藏."
 		"pl"	"{grey}Jeśli nie chcesz widzieć swoich nóg, użyj{default} /hidelegs{grey}."
+		"ru"	"{grey}Вы можете спрятать/показать ваши ноги, написав{default} /hidelegs{grey}."
 		"fi"	"{grey}Voit vaihtaa jalkojesi näkyvyyttä kirjoittamalla{default} /hidelegs{grey} komennon."
 		"sv"	"{grey}Du kan ändra dina bens synlighet genom att skriva{default} /hidelegs{grey}."
 		"ua"	"{grey}Ви можете приховати/показати ваші ноги написавши в чат{default} /hidelegs{grey}."
@@ -35,6 +37,7 @@
 		"en"	"{grey}Don't want to see other players? Use {default}/hide{grey}."
 		"chi"	"{grey}不想看到其他玩家？ 输入 {default}/hide{grey} 切换显示或隐藏."
 		"pl"	"{grey}Nie chcesz widzieć innych graczy? Użyj {default}/hide{grey}."
+		"ru"	"{grey}Мешаются другие игроки? Напишите {default}/hide{grey}."
 		"fi"	"{grey}Etkö halua nähdä muita pelaajia? Käytä {default}/hide{grey} komentoa."
 		"sv"	"{grey}Vill du inte se andra spelare? Använd {default}/hide{grey}."
 		"ua"	"{grey}Не хочете бачити інших гравців? Напишіть в чат {default}/hide{grey}."
@@ -50,6 +53,7 @@
 		"en"	"{grey}Type {default}/hideweapon {grey}to toggle your weapon visibility."
 		"chi"	"{grey}输入 {default}/hideweapon {grey}可以关掉枪械模型显示."
 		"pl"	"{grey}Użyj {default}/hideweapon {grey}aby włączyć lub wyłączyć widoczność broni."
+		"ru"	"{grey}Напишите {default}/hideweapon{grey}, чтобы спрятать/показать ваше оружие."
 		"fi"	"{grey}Kirjoita {default}/hideweapon {grey}vaihtaaksesi aseesi näkyvyyden asetusta."
 		"sv"	"{grey}Vill du ändra ditt vapens synlighet? Använd {default}/hide{grey}."
 		"ua"	"{grey}Напишіть в чат {default}/hideweapon {grey}щоб сховати/показати вашу зброю."
@@ -64,6 +68,7 @@
 	{
 		"en"	"{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
 		"chi"	"{grey}输入 {default}/fov {purple}<值> {grey}可以改变你的视野."
+		"ru"	"{grey}Напишите {default}/fov {purple}<значение>{grey}, чтобы изменить свой FOV."
 		"ua"	"{grey}Напишіть в чаті {default}/fov {purple}<значення> {grey}, щоб змінити ваш FOV."
 	}
 }
