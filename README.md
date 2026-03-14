@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`e8811ba`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/e8811bad580042899b138a62fc13ecf57e3c4290)
-- **Time:** 2026-03-14 10:08:17 UTC
-- **Message:** Add Russian radio menu (#520)
+- **Commit:** [`2b88cb7`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/2b88cb7b7245db11c0dcda02a210efbf4df62976)
+- **Time:** 2026-03-14 13:37:32 UTC
+- **Message:** Russian translation updates (#524)
 
 ---
 
