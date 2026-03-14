@@ -15,7 +15,7 @@ SUMMARY: 0 error(s), 25 warning(s)
 
 cs2kz-jumpstats.phrases.txt (0 errors, 1 warnings)
 --------------------------------------------------
-  cs2kz-jumpstats.phrases.txt:557: [WARNING] Format: Unknown format tag: {gray}
+  cs2kz-jumpstats.phrases.txt:576: [WARNING] Format: Unknown format tag: {gray}
     Context: "es"		"{gray}Has activado los informes de estadísticas de salto."
 
 menu/ (0 errors, 24 warnings)

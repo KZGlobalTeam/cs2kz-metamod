@@ -10,8 +10,8 @@ Automated translation linter reports for cs2kz-metamod.
 | **Linter Warnings** | 25 |
 | **Total Languages** | 13 |
 | **Total Phrases** | 568 |
-| **Phrases Missing Translations** | 488 |
-| **Total Missing Entries** | 2512 |
+| **Phrases Missing Translations** | 348 |
+| **Total Missing Entries** | 2036 |
 | **Menu Files** | 9 |
 
 ## Language Coverage (Phrases)
@@ -26,7 +26,7 @@ Automated translation linter reports for cs2kz-metamod.
   ko (korean)          [██████████░░░░░░░░░░]  51.2% (291/568)
   lv (latvian)         [███████████░░░░░░░░░]  58.6% (333/568)
   pl (polish)          [██████████████████░░]  91.7% (521/568)
-  ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.2% (92/568)
+  ru (russian)         [████████████████████] 100.0% (568/568)
   sv (swedish)         [█████████████░░░░░░░]  69.9% (397/568)
   tr (turkish)         [█████████░░░░░░░░░░░]  47.0% (267/568)
   ua (ukrainian)       [███████████████████░]  99.1% (563/568)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`edfc38e`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/edfc38e15443368f348340e596124a8348be044f)
-- **Time:** 2026-03-14 10:02:22 UTC
-- **Message:** Update menu linting + extras (#521)
+- **Commit:** [`900fedf`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/900fedf0561ca0366ec672616a0db71965ac057d)
+- **Time:** 2026-03-14 10:03:14 UTC
+- **Message:** Russian translations (#519)
 
 ---
 
