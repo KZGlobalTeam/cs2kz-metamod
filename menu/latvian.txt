@@ -40,7 +40,7 @@
 			}
 		}
 
-		"menu_extended"
+		"menu_advanced"
 		{
 			"hotkey"	"1"
 			"title"		"TP izvēlne (Paplašinātā)"
@@ -149,7 +149,7 @@
 					"cmd"		"kz_hidelegs"
 				}
 
-				"Toggle Jumpstats Display"
+				"Toggle Jumpstats"
 				{
 					"hotkey"	"6"
 					"label"		"Ieslēgt/Izslēgt Jumpstats Display"
