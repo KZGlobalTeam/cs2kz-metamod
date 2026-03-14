@@ -57,7 +57,7 @@ MENU TRANSLATION STATUS
   pt    (brazilian   ): File missing
   pt_p  (portuguese  ): File missing
   ro    (romanian    ): File missing
-  ru    (russian     ): File missing
+  ru    (russian     ): Complete
   sk    (slovak      ): File missing
   sv    (swedish     ): Complete
   th    (thai        ): File missing
@@ -917,10 +917,6 @@ portuguese.txt (pt_p)
  Entire file is missing
 
 romanian.txt (ro)
-----------------------------------------------------------------------
- Entire file is missing
-
-russian.txt (ru)
 ----------------------------------------------------------------------
  Entire file is missing
 

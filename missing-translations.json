@@ -9552,13 +9552,8 @@
       "missing": 0,
       "missing_phrases": [],
       "menu": {
-        "name": "russian",
-        "file_exists": false,
-        "missing_groups": [
-          "menu_advanced",
-          "menu_option",
-          "menu_simple"
-        ],
+        "file_exists": true,
+        "missing_groups": [],
         "missing_commands": []
       }
     },
@@ -20266,6 +20261,7 @@
       "korean",
       "latvian",
       "polish",
+      "russian",
       "swedish",
       "ukrainian"
     ],
@@ -20442,16 +20438,6 @@
       },
       "ro": {
         "name": "romanian",
-        "file_exists": false,
-        "missing_groups": [
-          "menu_advanced",
-          "menu_option",
-          "menu_simple"
-        ],
-        "missing_commands": []
-      },
-      "ru": {
-        "name": "russian",
         "file_exists": false,
         "missing_groups": [
           "menu_advanced",
