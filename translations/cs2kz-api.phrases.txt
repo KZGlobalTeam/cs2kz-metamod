@@ -12,11 +12,13 @@
 		"ko"		"API {api} {grey}| {default} 서버 {server} {grey}| {default} 맵 {map} {grey}| {default} 당신 {player} {grey}| {default} 모드 {mode} {grey}| {default} 스타일 {styles}"
 		"lv"		"API {api} {grey}| {default} Serveris {server} {grey}| {default} Karte {map} {grey}| {default} Tu {player} {grey}| {default} Režīms {mode} {grey}| {default} Stili {styles}"
 		"de"		"API {api} {grey}| {default} Server {server} {grey}| {default} Map {map} {grey}| {default} Du {player} {grey}| {default} Modus {mode} {grey}| {default} Styles {styles}"
+		"ru"		"API {api} {grey}| {default} Сервер {server} {grey}| {default} Карта {map} {grey}| {default} Вы {player} {grey}| {default} Режим {mode} {grey}| {default} Стили {styles}"
 	}
 	"Non Global Map Warning"
 	{
 		"en"		"{yellow}Warning{grey}: The current map is not globally approved. Runs on this map will not be globally submitted."
 		"chi"		"{yellow}警告{grey}: 当前地图未获全球认可. 在此地图上完成的成绩记录将不会被提交至全球排行榜."
 		"ua"		"{yellow}Увага{grey}: Поточна мапа не затверджена на глобальному рівні. Проходження на цій мапі не будуть зараховані до глобальної статистики."
+		"ru"		"{yellow}Внимание{grey}: Текущая карта не одобрена глобально. Прохождения на этой карте не будут внесены в глобальную статистику."
 	}
 }

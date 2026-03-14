@@ -2,22 +2,22 @@
 {
 	// Default mode for players.
 	"defaultMode"						"Classic"
-	
+
 	// Default style(s) for players.
 	"defaultStyles"						""
-	
-	// How long should a map run for before it must be reloaded in minutes (maximum 24 hours)
+
+	// How long should a map run for before it must be reloaded in minutes (maximum 24 hours).
 	"defaultTimeLimit"					"60.0"
-	
-	// Default language to be used if client does not set a language/language is not supported
+
+	// Default language to be used if client does not set a language/language is not supported.
 	"defaultLanguage"					"en"
-	
+
 	// Interval between tips.
 	"tipInterval"						"75"
-	
+
 	// Minimum jumpstat tier for sound effect.
 	"defaultJSSoundMinTier"				"4"
-	
+
 	// Minimum jumpstat tier for showing jumpstats.
 	"defaultJSMinTier"					"2"
 
@@ -26,37 +26,37 @@
 
 	// Minimum jumpstat tier for broadcasting.
 	"defaultJSBroadcastMinTier"			"5"
-	
+
 	// Minimum jumpstat tier for broadcasting in console.
 	"defaultJSBroadcastMinTierConsole"	"5"
-	
+
 	// Minimum jumpstat tier for broadcasting sound effect.
 	"defaultJSBroadcastSoundMinTier"	"5"
 
 	// Default chat prefix.
 	"chatPrefix"						"{lime}KZ {grey}|{default}"
-	
+
 	// Whether we override chat processing or not.
 	"overridePlayerChat"				"true"
-	
+
 	// Maximum amount of manually saved replays allowed per player (minimum 2).
 	"maxManualReplays"					"2"
-	
+
 	// Maximum amount of run replays to keep per category (top N by time + top N by time with 0 teleports, minimum 2).
 	"maxRunReplaysPerGroup"				"3"
-	
+
 	// Maximum amount of jump replays to keep per category (top N by block distance + top N by distance, minimum 2).
 	"maxJumpReplaysPerCategory"			"3"
-	
+
 	// Number of minutes to keep archived replays before deletion (minimum 24 hours, default 48 hours).
 	"archiveRetentionMinutes"			"2880"
 
 	// Default FOV for players.
 	"defaultFOV"						"90"
-	
+
 	// Minimum FOV for players.
 	"minFOV"							"80"
-	
+
 	// Maximum FOV for players.
 	"maxFOV"							"130"
 
@@ -65,13 +65,13 @@
 	{
 		"driver"	"sqlite"
 		"database"	"cs2kz"
-		
-		// MySQL connections only, required
+
+		// MySQL connections only, required.
 		"host"		"192.168.1.8"
 		"user"		"root"
 		"pass"		"root"
-		
-		// MySQL connections only, optional
+
+		// MySQL connections only, optional.
 		//"timeout"			"60"
 		//"port"			"3306"
 	}

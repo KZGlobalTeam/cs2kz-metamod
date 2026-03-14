@@ -7,6 +7,7 @@
 		"en"		"{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
 		"chi"		"{grey}跳跃: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
 		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}Вчасно ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Зарано ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Запізно ({lime}{modernPerfsLate}{grey})"
+		"ru"		"{grey}Прыжки: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Рано ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Поздно ({lime}{modernPerfsLate}{grey})"
 	}
 	"Telemetry - Legacy Bhop Stats"
 	{
@@ -14,12 +15,14 @@
 		"#format"	"numJumps:d,perfPercent:.0f,perfs:d"
 		"en"		"{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
 		"chi"		"{grey}跳跃: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+		"ru"		"{grey}Прыжки: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
 		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
 	}
 	"Telemetry - Reset Bhop Stats"
 	{
 		"en"		"{grey}Bunny hop statistics have been reset."
 		"chi"		"{grey}Bunny hop 统计数据已重置."
+		"ru"		"{grey}Bhop статистика была очищена."
 		"ua"		"{grey}Bhop статистику було скинуто."
 	}
 }

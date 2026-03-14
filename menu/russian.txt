@@ -1,3 +1,5 @@
+// CS2KZ Menu (Russian)
+// Russian radio menu support addon for CS2KZ plugin.
 "RadioPanel.txt"
 {
 	"Groups"
@@ -5,7 +7,7 @@
 		"menu_simple"
 		{
 			"hotkey"	"0"
-			"title"		"TP izvēlne (SIMPLE)"
+			"title"		"TP Меню (Простое)"
 			"timeout"	"100000"
 
 			"Commands"
@@ -13,28 +15,28 @@
 				"Checkpoint"
 				{
 					"hotkey"	"1"
-					"label"		"Checkpoint"
+					"label"		"Чекпоинт"
 					"cmd"		"kz_cp; radio"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
-					"label"		"Teleportēties"
+					"label"		"Телепорт"
 					"cmd"		"kz_tp; radio"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"3"
-					"label"		"Pauzēt/Atjaunot"
+					"label"		"Пауза/Возобновить"
 					"cmd"		"kz_pause; radio"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"4"
-					"label"		"Restartēt/Atdzimt"
+					"label"		"Рестарт/Респавн"
 					"cmd"		"kz_r; radio"
 				}
 			}
@@ -43,7 +45,7 @@
 		"menu_advanced"
 		{
 			"hotkey"	"1"
-			"title"		"TP izvēlne (Paplašinātā)"
+			"title"		"TP Меню (Расширенное)"
 			"timeout"	"100000"
 
 			"Commands"
@@ -51,56 +53,56 @@
 				"Checkpoint"
 				{
 					"hotkey"	"1"
-					"label"		"Checkpoint"
+					"label"		"Чекпоинт (CP)"
 					"cmd"		"kz_cp; radio1"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
-					"label"		"Teleportēties"
+					"label"		"Телепорт (TP)"
 					"cmd"		"kz_tp; radio1"
 				}
 
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
-					"label"		"Iepriekšējais CP"
+					"label"		"Предыдущий CP"
 					"cmd"		"kz_prevcp; radio1"
 				}
 
 				"Next Checkpoint"
 				{
 					"hotkey"	"4"
-					"label"		"Nākamais CP"
+					"label"		"Следующий CP"
 					"cmd"		"kz_nextcp; radio1"
 				}
 
 				"Undo Teleport"
 				{
 					"hotkey"	"5"
-					"label"		"Atcelt TP"
+					"label"		"Отменить TP"
 					"cmd"		"kz_undo; radio1"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"6"
-					"label"		"Pauzēt/Atjaunot"
+					"label"		"Пауза/Возобновить"
 					"cmd"		"kz_pause; radio1"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"7"
-					"label"		"Restartēt/Atdzimt"
+					"label"		"Рестарт/Респавн"
 					"cmd"		"kz_r; radio1"
 				}
 
 				"Noclip"
 				{
 					"hotkey"	"8"
-					"label"		"Mainīt Noclip"
+					"label"		"Noclip"
 					"cmd"		"kz_noclip; radio1"
 				}
 			}
@@ -109,7 +111,7 @@
 		"menu_option"
 		{
 			"hotkey"	"2"
-			"title"		"Opciju izvēlne"
+			"title"		"Меню настроек"
 			"timeout"	"100000"
 
 			"Commands"
@@ -117,49 +119,49 @@
 				"Set Custom Start Position"
 				{
 					"hotkey"	"1"
-					"label"		"Iestatīt pielāgoto starta pozīciju"
+					"label"		"Установить стартовую позицию"
 					"cmd"		"kz_ssp"
 				}
 
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
-					"label"		"Notīrīt pielāgoto starta pozīciju"
+					"label"		"Сбросить стартовую позицию"
 					"cmd"		"kz_csp"
 				}
 
 				"Hide"
 				{
 					"hotkey"	"3"
-					"label"		"Parādīt/Slēpt citus spēlētājus"
+					"label"		"Показать/Спрятать игроков"
 					"cmd"		"kz_hide"
 				}
 
 				"Hide Weapon"
 				{
 					"hotkey"	"4"
-					"label"		"Parādīt/Slēpt ieročus"
+					"label"		"Показать/Спрятать оружие"
 					"cmd"		"kz_hideweapon"
 				}
 
 				"Hide Legs"
 				{
 					"hotkey"	"5"
-					"label"		"Parādīt/Slēpt kājas"
+					"label"		"Показать/Спрятать ноги"
 					"cmd"		"kz_hidelegs"
 				}
 
 				"Toggle Jumpstats"
 				{
 					"hotkey"	"6"
-					"label"		"Ieslēgt/Izslēgt Jumpstats Display"
+					"label"		"Вкл./Выкл. статистику прыжков"
 					"cmd"		"kz_togglejs"
 				}
 
 				"Toggle Jumpstats Always"
 				{
 					"hotkey"	"7"
-					"label"		"Ieslēgt/Izslēgt Jumpstats vienmēr"
+					"label"		"Всегда показывать статистику"
 					"cmd"		"kz_jsalways"
 				}
 			}
