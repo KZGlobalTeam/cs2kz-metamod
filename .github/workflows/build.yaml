@@ -32,7 +32,7 @@ jobs:
           docker run -v ./build:/app/build -v ./.git:/app/.git cs2kz-linux-builder
 
       - name: Archive build
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: cs2kz-linux
           path: ./build/package
@@ -83,7 +83,7 @@ jobs:
         run: ambuild
 
       - name: Archive build
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: cs2kz-windows
           path: ./build/package

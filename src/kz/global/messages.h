@@ -99,6 +99,7 @@ namespace KZ::api::messages
 		std::string_view id;
 		std::string_view name;
 		std::string_view ipAddress;
+		bool hasPrime;
 
 		inline static const char *Name()
 		{
@@ -112,6 +113,7 @@ namespace KZ::api::messages
 	{
 		Json preferences;
 		bool isBanned;
+		bool hasPrime;
 
 		bool FromJson(const Json &json);
 	};

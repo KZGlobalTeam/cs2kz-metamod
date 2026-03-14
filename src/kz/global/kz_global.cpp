@@ -398,8 +398,8 @@ static_function void OnPlayerRecordsReceived(const KZ::api::messages::PlayerReco
 
 void KZGlobalService::OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ack, u64 steamID)
 {
-	META_CONPRINTF("[KZ::Global] Received `player_join_ack` response. (player.id=%llu, player.is_banned=%s)\n", steamID,
-				   ack.isBanned ? "true" : "false");
+	META_CONPRINTF("[KZ::Global] Received `player_join_ack` response. (player.id=%llu, player.is_banned=%s, player.has_prime=%s)\n", steamID,
+				   ack.isBanned ? "true" : "false", ack.hasPrime ? "true" : "false");
 
 	KZPlayer *player = g_pKZPlayerManager->SteamIdToPlayer(steamID);
 	if (player == nullptr)
@@ -408,6 +408,7 @@ void KZGlobalService::OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ac
 	}
 
 	player->globalService->playerInfo.isBanned = ack.isBanned;
+	player->hasPrime |= ack.hasPrime; // Players cannot lose Prime status.
 	player->optionService->InitializeGlobalPrefs(ack.preferences.ToString());
 
 	u16 currentMapID = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &map) { return map ? map->id : 0; });
@@ -444,6 +445,7 @@ void KZGlobalService::OnPlayerAuthorized()
 	message.id = stringifiedSteamID;
 	message.name = this->player->GetName();
 	message.ipAddress = this->player->GetIpAddress();
+	message.hasPrime = this->player->hasPrime;
 
 	KZGlobalService::MessageCallback<KZ::api::messages::PlayerJoinAck> callback(KZGlobalService::OnPlayerJoinAck, steamID);
 	KZGlobalService::WS::SendMessage(message, std::move(callback));
