@@ -7,7 +7,7 @@ Automated translation linter reports for cs2kz-metamod.
 | Metric | Value |
 |--------|-------|
 | **Linter Errors** | 0 |
-| **Linter Warnings** | 24 |
+| **Linter Warnings** | 25 |
 | **Total Languages** | 13 |
 | **Total Phrases** | 568 |
 | **Phrases Missing Translations** | 488 |
@@ -23,7 +23,7 @@ Automated translation linter reports for cs2kz-metamod.
   es (spanish)         [██████████░░░░░░░░░░]  50.7% (288/568)
   fi (finnish)         [████████░░░░░░░░░░░░]  41.9% (238/568)
   it (italian)         [████████░░░░░░░░░░░░]  40.5% (230/568)
-  ko (koreana)         [██████████░░░░░░░░░░]  51.2% (291/568)
+  ko (korean)          [██████████░░░░░░░░░░]  51.2% (291/568)
   lv (latvian)         [███████████░░░░░░░░░]  58.6% (333/568)
   pl (polish)          [██████████████████░░]  91.7% (521/568)
   ru (russian)         [███░░░░░░░░░░░░░░░░░]  16.2% (92/568)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`6c3d9dd`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/6c3d9ddfb13b21d18f796aeca404a18ee483b2f0)
-- **Time:** 2026-02-28 06:04:16 UTC
-- **Message:** update chinese translation (#512)
+- **Commit:** [`edfc38e`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/edfc38e15443368f348340e596124a8348be044f)
+- **Time:** 2026-03-14 10:02:22 UTC
+- **Message:** Update menu linting + extras (#521)
 
 ---
 

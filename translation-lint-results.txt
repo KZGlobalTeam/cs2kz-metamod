@@ -1,4 +1,4 @@
-Loaded 32 language codes from config.txt
+Loaded 33 language entries from config.txt
 Base directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 Translations directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/translations
 Menu directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/menu
@@ -10,8 +10,13 @@ Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'l
 Checking 9 menu files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/menu'...
 
 ======================================================================
-SUMMARY: 0 error(s), 24 warning(s)
+SUMMARY: 0 error(s), 25 warning(s)
 ======================================================================
+
+cs2kz-jumpstats.phrases.txt (0 errors, 1 warnings)
+--------------------------------------------------
+  cs2kz-jumpstats.phrases.txt:557: [WARNING] Format: Unknown format tag: {gray}
+    Context: "es"		"{gray}Has activado los informes de estadísticas de salto."
 
 menu/ (0 errors, 24 warnings)
 --------------------------------------------------
@@ -41,7 +46,7 @@ menu/ (0 errors, 24 warnings)
   menu/:0: [WARNING] Missing: Missing menu translation file: vietnamese.txt (for language code 'vi')
 
 ======================================================================
-TOTAL: 0 error(s), 24 warning(s) in 1 file(s)
+TOTAL: 0 error(s), 25 warning(s) in 2 file(s)
 ======================================================================
 Missing translations report written to: missing-translations.txt
 Missing translations JSON written to: missing-translations.json
