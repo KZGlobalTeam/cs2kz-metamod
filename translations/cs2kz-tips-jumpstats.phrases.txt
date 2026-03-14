@@ -5,6 +5,7 @@
 		"en"	"{grey}You can toggle jumpstats reporting by typing {default}/js{grey}."
 		"chi"	"{grey}你可以使用 {default}/js{grey} 开启或关闭起跳提示."
 		"pl"	"{grey}Użyj {default}/js{grey} aby włączyć lub wyłączyć wykaz jumpstatów."
+		"ru"	"{grey}Напишите {default}/js{grey}, чтобы включить статистику прыжков."
 		"fi"	"{grey}Voit vaihtaa jumpstattien reportoinnin asetusta käyttämällä {default}/js{grey} komentoa."
 		"sv"	"{grey}Du kan ändra jumpstats chattutskriften genom att skriva {default}/js{grey}."
 		"ua"	"{grey}Ви можете увімк./вимк. статистику стрибків написавши в чат {default}/js{grey}."
@@ -20,6 +21,7 @@
 		"en"	"{grey}Use {default}/jsalways {grey}to toggle always-on jumpstats mode."
 		"chi"	"{grey}使用 {default}/jsalways {grey}可以显示全部的跳跃提示，包括无效跳跃."
 		"pl"	"{grey}Użyj {default}/jsalways {grey} aby włączyć lub wyłączyć wyświetlanie dystansu dla każdego skoku."
+		"ru"	"{grey}Напишите {default}/jsalways{grey}, чтобы включить постоянную статистику прыжков."
 		"fi"	"{grey}Käytä {default}/jsalways {grey}komentoa vaihtaaksesi \"aina-päällä\" jumpstattien asetuksen tilaa."
 		"sv"	"{grey}Använd {default}/jsalways {grey}för att toggla alla egna jumpstats."
 		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}, щоб увімк./вимк. постійне відображення статистики стрибків."
@@ -35,6 +37,7 @@
 		"en"	"{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
 		"chi"	"{grey}使用 {default}/jstier {grey}设置显示你的跳跃数据的最低等级."
 		"pl"	"{grey}Użyj {default}/jstier {grey}, aby ustawić minimalny poziom raportowania jumpstatów."
+		"ru"	"{grey}Напишите {default}/jstier{grey}, чтобы изменить минимальный тир статистики прыжков."
 		"ua"	"{grey}Використання {default}/jstier {grey}, щоб встановити мінімальний тір статистики стрибків."
 		"de"	"{grey}Benutze {default}/jstier {grey} um dein minimales Level für Jumpstat-Benachrichtigungen zu setzen."
 	}
@@ -43,6 +46,7 @@
 		"en"	"{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
 		"chi"	"{grey}使用 {default}/jsextend {grey}可以切换是否在聊天框展示详细跳跃数据."
 		"pl"	"{grey}Użyj {default}/jsextend {grey}, aby włączyć lub wyłączyć rozszerzone raportowanie jumpstatów w czacie."
+		"ru"	"{grey}Напишите {default}/jsextend{grey}, чтобы показывать подробную статистику прыжков в чате."
 		"ua"	"{grey}Використання {default}/jsextend {grey}, щоб увімк./вимк. розширену статистику стрибків у чаті."
 		"de"	"{grey}Benutze {default}/jsextend {grey}um erweitertes Jumpstats-Feedback im Chat zu erhalten.."
 	}

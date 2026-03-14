@@ -11,6 +11,7 @@
 		"ko"		"{darkred}경고{grey}: 이 서버에서 플레이하려면 {default}m_yaw{grey} 값이 0.3 이하여야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"{darkred}Brīdinājums{grey}: Tavam {default}m_yaw{grey} vērtībai jābūt mazākai vai vienādai ar 0.3, lai spēlētu šajā serverī. Tu tiksi atvienots."
 		"de"		"{darkred}Warnung{grey}: Dein {default}m_yaw{grey}-Wert muss kleiner oder gleich 0.3 sein, um auf diesem Server spielen zu können. Du wirst getrennt."
+		"ru"		"{darkred}Внимание{grey}: Ваше значение {default}m_yaw{grey} должно быть меньше или равно 0.3, чтобы играть на этом сервере. Вы будете отключены."
 	}
 	"Kick Player m_yaw (Console)"
 	{
@@ -23,6 +24,7 @@
 		"ko"		"경고: 이 서버에서 플레이하려면 m_yaw 값이 0.3 이하여야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"Brīdinājums: Tavam m_yaw vērtībai jābūt mazākai vai vienādai ar 0.3, lai spēlētu šajā serverī. Tu tiksi atvienots."
 		"de"		"Warnung: Dein m_yaw-Wert muss kleiner oder gleich 0.3 sein, um auf diesem Server spielen zu können. Du wirst getrennt."
+		"ru"		"Внимание: Ваше значение m_yaw должно быть меньше или равно 0.3, чтобы играть на этом сервере. Вы будете отключены."
 	}
 	"Kick Player fps_max"
 	{
@@ -35,6 +37,7 @@
 		"ko"		"{darkred}경고{grey}: 이 서버에서 플레이하려면 {default}fps_max{grey} 값이 64 이상이어야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"{darkred}Brīdinājums{grey}: Tavai {default}fps_max{grey} vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
 		"de"		"{darkred}Warnung{grey}: Dein {default}fps_max{grey}-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
+		"ru"		"{darkred}Внимание{grey}: Ваше значение {default}fps_max{grey} должно быть больше или равно 64, чтобы играть на этом сервере. Вы будете отключены."
 	}
 	"Kick Player fps_max (Console)"
 	{
@@ -47,15 +50,18 @@
 		"ko"		"경고: 이 서버에서 플레이하려면 fps_max 값이 64 이상이어야 합니다. 곧 서버와 연결이 끊어집니다."
 		"lv"		"Brīdinājums: Tavai fps_max vērtībai jābūt vismaz 64, lai spēlētu šajā serverī. Tu tiksi atvienots."
 		"de"		"Warnung: Dein fps_max-Wert muss höher oder gleich 64 sein, um auf diesem Server spielen zu können."
+		"ru"		"Внимание: Ваше значение fps_max должно быть больше или равно 64, чтобы играть на этом сервере. Вы будете отключены."
 	}
 	"Anti-Cheat Warning"
 	{
 		"en"		"{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
 		"chi"		"{darkred}警告：严禁使用任何硬件/软件/配置获取不公平优势! 包括但不限于: 作弊工具、自动宏、超速滚动、SOCD/Null、desubtick以及鼠标滥用配置等."
+		"ru"		"{darkred}ВНИМАНИЕ: Любое использование аппаратного/программного обеспечения или конфигов для получения нечестного преимущества строго запрещено! Это включает в себя, но не ограничивается: читами, макросами, hyperscroll'ом, SOCD/snap tap/нуллами, desubtick-биндами и злоупотреблением конфигами мыши."
 	}
 	"Cheater Warning"
 	{
 		"en"		"{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
 		"chi"		"{darkred}警告：你已被封禁. 你的跳跃和记录将不会保存."
+		"ru"		"{darkred}ВНИМАНИЕ: Вы забанены. Ваши прыжки и рекорды не будут сохранены."
 	}
 }

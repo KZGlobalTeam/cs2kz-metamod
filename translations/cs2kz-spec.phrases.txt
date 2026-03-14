@@ -5,6 +5,7 @@
 		"en"		"{grey}Usage: {default}kz_spec <@me/name>{grey}."
 		"chi"		"{grey}用法: {default}kz_spec <@me/name>{grey}."
 		"pl"		"{grey}Użycie: {default}kz_spec <@me/nazwa>{grey}."
+		"ru"		"{grey}Применение: {default}kz_spec <@me/никнейм>{grey}."
 		"ua"		"{grey}Використання: {default}kz_spec <@me/нікнейм>{grey}."
 		"sv"		"{grey}Användning: {default}kz_spec <@me/name>{grey}."
 		"ko"		"{grey}사용법: {default}kz_spec <@me/name>{grey}."
@@ -65,6 +66,7 @@
 		"en"		"{darkred}You cannot go into spectator mode right now."
 		"chi"		"{darkred}你现在无法进入观察者模式."
 		"pl"		"{darkred}Nie możesz teraz wejść w tryb obserwatora."
+		"ru"		"{darkred}Сейчас вы не можете перейти в наблюдатели."
 		"ua"		"{darkred}Ви не можете зараз перейти в режим спостерігача."
 		"sv"		"{darkred}Du kan inte gå i åskådarläge just nu."
 		"ko"		"{darkred}지금은 관전 모드로 전환할 수 없습니다."
@@ -88,6 +90,7 @@
 		"pl"		"{darkred}Nie można znaleźć wskazanego gracza."
 		"ua"		"{darkred}Вказаного вами гравця не знайдено."
 		"sv"		"{darkred}Spelaren du har angett kan inte hittas."
+		"ru"		"{darkred}Указанный вами игрок не найден."
 		"ko"		"{darkred}해당하는 플레이어를 찾지 못하였습니다."
 		"de"		"{darkred}Der von dir angegebene Spieler konnte nicht gefunden werden."
 	}
