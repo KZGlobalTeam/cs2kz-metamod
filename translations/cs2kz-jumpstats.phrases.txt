@@ -69,7 +69,7 @@
 	{
 		"en"		"Strafes"
 		"chi"		"加速"
-		"ru"		"Стрейфы"
+		"ru"		"Strafes"
 		"pl"		"Strafy"
 		"fi"		"Strafet"
 		"sv"		"Strafes"
@@ -85,7 +85,7 @@
 	{
 		"en"		"Strafe"
 		"chi"		"加速"
-		"ru"		"Стрейф"
+		"ru"		"Strafe"
 		"pl"		"Strafa"
 		"fi"		"Strafe"
 		"sv"		"Strafe"
@@ -101,7 +101,7 @@
 	{
 		"en"		"Sync"
 		"chi"		"同步率"
-		"ru"		"Sync"
+		"ru"		"Синхр."
 		"pl"		"Synchronizacja"
 		"fi"		"Synkronisointi"
 		"sv"		"Synk"
