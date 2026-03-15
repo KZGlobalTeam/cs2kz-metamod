@@ -454,9 +454,11 @@ private:
 			{
 				// Combine JSON text + binary data into a single binary frame
 				// See replayManager::ProcessUploads
-				// TODO: should this be prefixed as well?
 				std::string combined;
-				combined.reserve(encodedPayload.size() + binaryData->size());
+				// Length-prefix this message for consistency with the receiving code
+				std::string lengthPrefix = std::to_string(encodedPayload.size());
+				combined.reserve(lengthPrefix.size() + encodedPayload.size() + binaryData->size());
+				combined.append(lengthPrefix);
 				combined.append(encodedPayload);
 				combined.append(binaryData->data(), binaryData->size());
 				socket->sendBinary(combined);
