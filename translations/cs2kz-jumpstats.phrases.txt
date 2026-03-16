@@ -573,7 +573,7 @@
 		"it"		"{grey}Hai abilitato le statistiche dei salti."
 		"de"		"{grey}Du hast das Jumpstats-Berichte aktiviert."
 		"ko"		"{grey}점프 통계 보고 기능을 활성화했습니다."
-		"es"		"{gray}Has activado los informes de estadísticas de salto."
+		"es"		"{grey}Has activado los informes de estadísticas de salto."
 		"lv"		"{grey}Tu esi ieslēdzis lēcienu statistikas ziņošanu."
 	}
 	"Jumpstats Option - Master Switch - Disable"
