@@ -108,11 +108,12 @@ void KZTriggerService::OnStopTouchGround()
 	FOR_EACH_VEC(this->triggerTrackers, i)
 	{
 		TriggerTouchTracker tracker = this->triggerTrackers[i];
-		if (!tracker.kzTrigger)
+		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(tracker.triggerHandle));
+		if (!tracker.kzTrigger || !trigger)
 		{
 			continue;
 		}
-		if (KZ::mapapi::IsBhopTrigger(tracker.kzTrigger->type))
+		if (KZ::mapapi::IsBhopTrigger(tracker.kzTrigger->type) && trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
 		{
 			// set last touched triggers for single and sequential bhop.
 			if (tracker.kzTrigger->type == KZTRIGGER_SEQUENTIAL_BHOP)
