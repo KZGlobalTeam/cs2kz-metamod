@@ -508,26 +508,23 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 				   "\n----------------------------------------\n",
 				   message->str.c_str());
 
-	// The message needs to be length-prefixed if it's binary.
-	// Example: `26{"id":1,"event":"example"}` means the JSON payload is 26 characters long, and any bytes after that are binary data.
+	// Binary messages use a newline as the delimiter between the JSON payload and the binary data.
+	// Example: `{"id":1,"event":"example"}\n[binary data]`
 	u64 jsonLength = 0;
 	u64 headerLength = 0;
 	if (message->binary)
 	{
-		while (headerLength < message->str.size() && std::isdigit(message->str[headerLength]))
+		size_t newlinePos = message->str.find('\n');
+		if (newlinePos == std::string::npos)
 		{
-			headerLength++;
+			META_CONPRINTF("[KZ::Global] Incoming binary WebSocket message is missing the newline delimiter.\n");
+			return;
 		}
-		jsonLength = std::stoull(message->str.substr(0, headerLength));
+		jsonLength = newlinePos;
+		headerLength = newlinePos + 1;
 	}
 
-	if (message->binary && message->str.size() < headerLength + jsonLength)
-	{
-		META_CONPRINTF("[KZ::Global] Incoming WebSocket message does not contain enough data for the declared JSON payload length.\n");
-		return;
-	}
-
-	Json payload(message->binary ? message->str.substr(headerLength, jsonLength) : message->str);
+	Json payload(message->binary ? message->str.substr(0, jsonLength) : message->str);
 
 	if (!payload.IsValid())
 	{
@@ -576,9 +573,9 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 			ReceivedMessage receivedMessage;
 			receivedMessage.id = messageID;
 			receivedMessage.isError = (event == "error");
-			if (message->binary && message->wireSize > headerLength + jsonLength)
+			if (message->binary && message->str.size() > headerLength)
 			{
-				receivedMessage.binaryData = std::vector<char>(message->str.begin() + headerLength + jsonLength, message->str.end());
+				receivedMessage.binaryData = std::vector<char>(message->str.begin() + headerLength, message->str.end());
 			}
 
 			if (!payload.Get("data", receivedMessage.payload))

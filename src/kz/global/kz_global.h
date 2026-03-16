@@ -452,14 +452,13 @@ private:
 
 			if (binaryData && !binaryData->empty())
 			{
-				// Combine JSON text + binary data into a single binary frame
-				// See replayManager::ProcessUploads
+				// Combine JSON text + binary data into a single binary frame, delimited by newline.
+				// Strip any newlines from the JSON so the delimiter is unambiguous.
+				encodedPayload.erase(std::remove(encodedPayload.begin(), encodedPayload.end(), '\n'), encodedPayload.end());
 				std::string combined;
-				// Length-prefix this message for consistency with the receiving code
-				std::string lengthPrefix = std::to_string(encodedPayload.size());
-				combined.reserve(lengthPrefix.size() + encodedPayload.size() + binaryData->size());
-				combined.append(lengthPrefix);
+				combined.reserve(encodedPayload.size() + 1 + binaryData->size());
 				combined.append(encodedPayload);
+				combined.push_back('\n');
 				combined.append(binaryData->data(), binaryData->size());
 				socket->sendBinary(combined);
 			}
