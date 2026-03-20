@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 579
 Phrases with missing translations: 359
-Total missing translation entries: 2168
+Total missing translation entries: 2152
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [███████████████████░]  98.1% (568/579)
   sv (swedish)         [█████████████░░░░░░░]  68.6% (397/579)
   tr (turkish)         [█████████░░░░░░░░░░░]  46.1% (267/579)
-  ua (ukrainian)       [███████████████████░]  97.2% (563/579)
+  ua (ukrainian)       [████████████████████] 100.0% (579/579)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -81,9 +81,9 @@ cs2kz-anticheat.phrases.txt
   Line 42: "Kick Player fps_max (Console)"
     Missing (3): es, it, tr
   Line 55: "Anti-Cheat Warning"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 61: "Cheater Warning"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 62: "Cheater Warning"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-api.phrases.txt
 ----------------------------------------------------------------------
@@ -245,58 +245,58 @@ cs2kz-commands.phrases.txt
   Line 1411: "Command Description - kz_measureblock"
     Missing (6): es, fi, it, ko, lv, tr
   Line 1421: "Command Description - kz_paint"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1425: "Command Description - kz_paintcolor"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1429: "Command Description - kz_paintsize"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1433: "Command Description - kz_cleardecals"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1437: "Command Description - kz_timerstopsound"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1426: "Command Description - kz_paintcolor"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1431: "Command Description - kz_paintsize"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1436: "Command Description - kz_cleardecals"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 1441: "Command Description - kz_timerstopsound"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1447: "Command Description - kz_autohideweapon"
+  Line 1451: "Command Description - kz_autohideweapon"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1457: "Command Description - kz_pistol"
+  Line 1461: "Command Description - kz_pistol"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1467: "Command Description - kz_rpsave"
+  Line 1471: "Command Description - kz_rpsave"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1476: "Command Description - kz_replay"
+  Line 1480: "Command Description - kz_replay"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1485: "Command Description - kz_replays"
+  Line 1489: "Command Description - kz_replays"
     Missing (8): chi, es, fi, it, ko, lv, sv, tr
-  Line 1493: "Command Description - kz_rpgoto"
+  Line 1497: "Command Description - kz_rpgoto"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1502: "Command Description - kz_rpgototick"
+  Line 1506: "Command Description - kz_rpgototick"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1511: "Command Description - kz_rpinfo"
+  Line 1515: "Command Description - kz_rpinfo"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1520: "Command Description - kz_rppause"
+  Line 1524: "Command Description - kz_rppause"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1529: "Command Description - kz_rploadprogress"
+  Line 1533: "Command Description - kz_rploadprogress"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1538: "Command Description - kz_rpcancelload"
+  Line 1542: "Command Description - kz_rpcancelload"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1547: "Command Description - kz_recordvolume"
+  Line 1551: "Command Description - kz_recordvolume"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1556: "Command Description - kz_cpmessage"
+  Line 1560: "Command Description - kz_cpmessage"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1565: "Command Description - kz_rphidelegs"
+  Line 1569: "Command Description - kz_rphidelegs"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1574: "Command Description - kz_accept"
+  Line 1578: "Command Description - kz_accept"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1582: "Command Description - kz_surrender"
+  Line 1586: "Command Description - kz_surrender"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1590: "Command Description - kz_mapinfo"
+  Line 1594: "Command Description - kz_mapinfo"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1597: "Command Description - kz_tier"
+  Line 1601: "Command Description - kz_tier"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1604: "Command Description - kz_modernperfstats"
+  Line 1608: "Command Description - kz_modernperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1611: "Command Description - kz_legacyperfstats"
+  Line 1615: "Command Description - kz_legacyperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1618: "Command Description - kz_resetperfstats"
+  Line 1622: "Command Description - kz_resetperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1625: "Command Description - kz_fov"
+  Line 1629: "Command Description - kz_fov"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-common.phrases.txt
@@ -442,19 +442,19 @@ cs2kz-measure.phrases.txt
 cs2kz-paint.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Paint Color Command Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 7: "Current Paint Color"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 12: "Paint Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 17: "Paint Color RGB Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 22: "Paint Size Command Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 26: "Current Paint Size"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 31: "Paint Size Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 8: "Current Paint Color"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 14: "Paint Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 20: "Paint Color RGB Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 26: "Paint Size Command Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 31: "Current Paint Size"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 37: "Paint Size Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-pistol.phrases.txt
 ----------------------------------------------------------------------
@@ -678,10 +678,10 @@ cs2kz-spec.phrases.txt
 cs2kz-telemetry.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Telemetry - Modern Bhop Stats"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 11: "Telemetry - Legacy Bhop Stats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 20: "Telemetry - Reset Bhop Stats"
+  Line 12: "Telemetry - Legacy Bhop Stats"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 21: "Telemetry - Reset Bhop Stats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-timer-coursetop.phrases.txt
@@ -738,86 +738,86 @@ cs2kz-timer.phrases.txt
   Line 372: "No Start Position For Course"
     Missing (2): fi, it
   Line 387: "No End Position For Course"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 394: "No Active Course"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 400: "No Jumpstat Area Found"
-    Missing (2): fi, it
-  Line 414: "Turnbinds Disabled"
-    Missing (3): fi, it, tr
-  Line 429: "Course Split Reached"
-    Missing (2): fi, it
-  Line 444: "Course Checkpoint Reached"
-    Missing (3): fi, it, tr
-  Line 458: "Course Stage Reached"
-    Missing (2): fi, it
-  Line 475: "Server PB Diff (Overall)"
-    Missing (4): fi, it, ko, tr
-  Line 488: "Global PB Diff (Overall)"
-    Missing (4): fi, it, ko, tr
-  Line 501: "SR Diff (Overall)"
-    Missing (4): fi, it, ko, tr
-  Line 514: "WR Diff (Overall)"
-    Missing (4): fi, it, ko, tr
-  Line 527: "Server PB Diff (Pro)"
-    Missing (4): fi, it, ko, tr
-  Line 540: "Global PB Diff (Pro)"
-    Missing (4): fi, it, ko, tr
-  Line 553: "SR Diff (Pro)"
-    Missing (4): fi, it, ko, tr
-  Line 566: "WR Diff (Pro)"
-    Missing (4): fi, it, ko, tr
-  Line 581: "Missed Server PB (Overall)"
-    Missing (2): fi, it
-  Line 596: "Missed Global PB (Overall)"
-    Missing (2): fi, it
-  Line 611: "Missed SR (Overall)"
-    Missing (2): fi, it
-  Line 626: "Missed WR (Overall)"
-    Missing (2): fi, it
-  Line 641: "Missed Server PB (Pro)"
-    Missing (2): fi, it
-  Line 656: "Missed Global PB (Pro)"
-    Missing (2): fi, it
-  Line 671: "Missed SR (Pro)"
-    Missing (2): fi, it
-  Line 686: "Missed WR (Pro)"
-    Missing (2): fi, it
-  Line 701: "Missed Server PB (Overall+Pro)"
-    Missing (2): fi, it
-  Line 716: "Missed Global PB (Overall+Pro)"
-    Missing (2): fi, it
-  Line 731: "Missed SR (Overall+Pro)"
-    Missing (2): fi, it
-  Line 746: "Missed WR (Overall+Pro)"
-    Missing (2): fi, it
-  Line 762: "Compare Command Usage"
-    Missing (2): fi, it
-  Line 776: "Compare Disabled"
-    Missing (2): fi, it
-  Line 790: "Compare Server PB"
-    Missing (2): fi, it
-  Line 804: "Compare Global PB"
-    Missing (2): fi, it
-  Line 818: "Compare Server Record"
-    Missing (2): fi, it
-  Line 832: "Compare World Record"
-    Missing (2): fi, it
-  Line 847: "Request - Failed (Invalid Map)"
-    Missing (4): fi, it, ko, tr
-  Line 859: "Request - Failed (Generic)"
-    Missing (4): fi, it, ko, tr
-  Line 871: "Request - Failed (No Course in Current Map)"
-    Missing (4): fi, it, ko, tr
-  Line 885: "Timer Stop Sound Enabled"
-    Missing (6): es, fi, it, ko, lv, tr
-  Line 895: "Timer Stop Sound Disabled"
-    Missing (6): es, fi, it, ko, lv, tr
-  Line 905: "Record Volume Set"
-    Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 915: "Started Run on Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 924: "Started Run on Non Ranked Course"
+  Line 395: "No Active Course"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 402: "No Jumpstat Area Found"
+    Missing (2): fi, it
+  Line 416: "Turnbinds Disabled"
+    Missing (3): fi, it, tr
+  Line 431: "Course Split Reached"
+    Missing (2): fi, it
+  Line 446: "Course Checkpoint Reached"
+    Missing (3): fi, it, tr
+  Line 460: "Course Stage Reached"
+    Missing (2): fi, it
+  Line 477: "Server PB Diff (Overall)"
+    Missing (4): fi, it, ko, tr
+  Line 490: "Global PB Diff (Overall)"
+    Missing (4): fi, it, ko, tr
+  Line 503: "SR Diff (Overall)"
+    Missing (4): fi, it, ko, tr
+  Line 516: "WR Diff (Overall)"
+    Missing (4): fi, it, ko, tr
+  Line 529: "Server PB Diff (Pro)"
+    Missing (4): fi, it, ko, tr
+  Line 542: "Global PB Diff (Pro)"
+    Missing (4): fi, it, ko, tr
+  Line 555: "SR Diff (Pro)"
+    Missing (4): fi, it, ko, tr
+  Line 568: "WR Diff (Pro)"
+    Missing (4): fi, it, ko, tr
+  Line 583: "Missed Server PB (Overall)"
+    Missing (2): fi, it
+  Line 598: "Missed Global PB (Overall)"
+    Missing (2): fi, it
+  Line 613: "Missed SR (Overall)"
+    Missing (2): fi, it
+  Line 628: "Missed WR (Overall)"
+    Missing (2): fi, it
+  Line 643: "Missed Server PB (Pro)"
+    Missing (2): fi, it
+  Line 658: "Missed Global PB (Pro)"
+    Missing (2): fi, it
+  Line 673: "Missed SR (Pro)"
+    Missing (2): fi, it
+  Line 688: "Missed WR (Pro)"
+    Missing (2): fi, it
+  Line 703: "Missed Server PB (Overall+Pro)"
+    Missing (2): fi, it
+  Line 718: "Missed Global PB (Overall+Pro)"
+    Missing (2): fi, it
+  Line 733: "Missed SR (Overall+Pro)"
+    Missing (2): fi, it
+  Line 748: "Missed WR (Overall+Pro)"
+    Missing (2): fi, it
+  Line 764: "Compare Command Usage"
+    Missing (2): fi, it
+  Line 778: "Compare Disabled"
+    Missing (2): fi, it
+  Line 792: "Compare Server PB"
+    Missing (2): fi, it
+  Line 806: "Compare Global PB"
+    Missing (2): fi, it
+  Line 820: "Compare Server Record"
+    Missing (2): fi, it
+  Line 834: "Compare World Record"
+    Missing (2): fi, it
+  Line 849: "Request - Failed (Invalid Map)"
+    Missing (4): fi, it, ko, tr
+  Line 861: "Request - Failed (Generic)"
+    Missing (4): fi, it, ko, tr
+  Line 873: "Request - Failed (No Course in Current Map)"
+    Missing (4): fi, it, ko, tr
+  Line 887: "Timer Stop Sound Enabled"
+    Missing (6): es, fi, it, ko, lv, tr
+  Line 897: "Timer Stop Sound Disabled"
+    Missing (6): es, fi, it, ko, lv, tr
+  Line 907: "Record Volume Set"
+    Missing (7): es, fi, it, ko, lv, sv, tr
+  Line 917: "Started Run on Course"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 926: "Started Run on Non Ranked Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-tips-general.phrases.txt
