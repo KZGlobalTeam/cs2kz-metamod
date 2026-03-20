@@ -71,6 +71,7 @@ struct SndOpEventGuid_t;
 struct EmitSound_t;
 class CAttributeList;
 class CBaseModelEntity;
+class CGlobalSymbol;
 
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
@@ -86,6 +87,7 @@ typedef void DebugDrawMesh_t(CTransform &transform, Ray_t &ray, i32 r, i32 g, i3
 typedef CCSPlayerController *CreateBot_t(BotProfile *botProfile, i32 teamNumber);
 typedef void SetOrAddAttributeValueByName_t(CAttributeList *attrList, const char *attrName, f32 value);
 typedef void SetModel_t(CBaseModelEntity *entity, const char *modelName);
+typedef void DecalTrace_t(trace_t *trace, CGlobalSymbol *symbol, f32 size_override);
 
 namespace interfaces
 {
@@ -123,11 +125,11 @@ public:
 	KZUtils(TracePlayerBBox_t *TracePlayerBBox, GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles,
 			EmitSoundFunc_t *EmitSound, SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName,
 			DispatchSpawn_t *DispatchSpawn, RemoveEntity_t *RemoveEntity, DebugDrawMesh_t *DebugDrawMesh, CreateBot_t *CreateBot,
-			SetOrAddAttributeValueByName_t *SetOrAddAttributeValueByName, SetModel_t *SetModel)
+			SetOrAddAttributeValueByName_t *SetOrAddAttributeValueByName, SetModel_t *SetModel, DecalTrace_t *DecalTrace)
 		: TracePlayerBBox(TracePlayerBBox), GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles),
 		  EmitSound(EmitSound), SwitchTeam(SwitchTeam), SetPawn(SetPawn), CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn),
 		  RemoveEntity(RemoveEntity), DebugDrawMesh(DebugDrawMesh), CreateBot(CreateBot), SetOrAddAttributeValueByName(SetOrAddAttributeValueByName),
-		  SetModel(SetModel)
+		  SetModel(SetModel), DecalTrace(DecalTrace)
 	{
 	}
 
@@ -144,6 +146,7 @@ public:
 	CreateBot_t *const CreateBot;
 	SetOrAddAttributeValueByName_t *const SetOrAddAttributeValueByName;
 	SetModel_t *const SetModel;
+	DecalTrace_t *const DecalTrace;
 
 	virtual CGameConfig *GetGameConfig();
 	virtual const CGlobalVars *GetServerGlobals();
