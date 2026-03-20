@@ -7,7 +7,7 @@ Automated translation linter reports for cs2kz-metamod.
 | Metric | Value |
 |--------|-------|
 | **Linter Errors** | 0 |
-| **Linter Warnings** | 24 |
+| **Linter Warnings** | 23 |
 | **Total Languages** | 13 |
 | **Total Phrases** | 579 |
 | **Phrases Missing Translations** | 359 |
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`2920dd1`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/2920dd13e72bb5bb8456957a295e8f0d1742ca92)
-- **Time:** 2026-03-20 16:17:05 UTC
-- **Message:** Ukrainian translation upd. (#522)
+- **Commit:** [`a58f8e8`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/a58f8e8e8e04700dfa92faf8d92e252da9c2d18b)
+- **Time:** 2026-03-20 16:17:28 UTC
+- **Message:** Fix color code in Spanish jumpstats phrase (#525)
 
 ---
 
