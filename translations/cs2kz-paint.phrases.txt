@@ -11,7 +11,7 @@
 		"#format"	"name:s,r:d,g:d,b:d"
 		"en"		"{grey}Current paint color: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 		"ua"		"{grey}Колір мітки: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
-		"ru"		"{grey}Цвет краски: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
+		"ru"		"{grey}Ваш цвет краски: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 	}
 	"Paint Color Set"
 	{
@@ -38,7 +38,7 @@
 		"#format"	"size:.1f"
 		"en"		"{grey}Current paint size: {default}{size}{grey}."
 		"ua"		"{grey}Розмір кольорової мітки: {default}{size}{grey}."
-		"ru"		"{grey}Размер метки краски: {default}{size}{grey}."
+		"ru"		"{grey}Ваш размер метки краски: {default}{size}{grey}."
 	}
 	"Paint Size Set"
 	{
