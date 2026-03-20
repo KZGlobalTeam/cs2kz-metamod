@@ -9,27 +9,27 @@ Automated translation linter reports for cs2kz-metamod.
 | **Linter Errors** | 0 |
 | **Linter Warnings** | 24 |
 | **Total Languages** | 13 |
-| **Total Phrases** | 568 |
-| **Phrases Missing Translations** | 348 |
-| **Total Missing Entries** | 2036 |
+| **Total Phrases** | 579 |
+| **Phrases Missing Translations** | 359 |
+| **Total Missing Entries** | 2168 |
 | **Menu Files** | 10 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [███████████████████░]  99.5% (565/568)
-  de (german)          [██████████████████░░]  91.4% (519/568)
-  en (english)         [████████████████████] 100.0% (568/568)
-  es (spanish)         [██████████░░░░░░░░░░]  50.7% (288/568)
-  fi (finnish)         [████████░░░░░░░░░░░░]  41.9% (238/568)
-  it (italian)         [████████░░░░░░░░░░░░]  40.5% (230/568)
-  ko (korean)          [██████████░░░░░░░░░░]  51.2% (291/568)
-  lv (latvian)         [███████████░░░░░░░░░]  58.6% (333/568)
-  pl (polish)          [██████████████████░░]  91.7% (521/568)
-  ru (russian)         [████████████████████] 100.0% (568/568)
-  sv (swedish)         [█████████████░░░░░░░]  69.9% (397/568)
-  tr (turkish)         [█████████░░░░░░░░░░░]  47.0% (267/568)
-  ua (ukrainian)       [███████████████████░]  99.1% (563/568)
+  chi (schinese)       [███████████████████░]  97.6% (565/579)
+  de (german)          [█████████████████░░░]  89.6% (519/579)
+  en (english)         [████████████████████] 100.0% (579/579)
+  es (spanish)         [█████████░░░░░░░░░░░]  49.7% (288/579)
+  fi (finnish)         [████████░░░░░░░░░░░░]  41.1% (238/579)
+  it (italian)         [███████░░░░░░░░░░░░░]  39.7% (230/579)
+  ko (korean)          [██████████░░░░░░░░░░]  50.3% (291/579)
+  lv (latvian)         [███████████░░░░░░░░░]  57.5% (333/579)
+  pl (polish)          [█████████████████░░░]  90.0% (521/579)
+  ru (russian)         [███████████████████░]  98.1% (568/579)
+  sv (swedish)         [█████████████░░░░░░░]  68.6% (397/579)
+  tr (turkish)         [█████████░░░░░░░░░░░]  46.1% (267/579)
+  ua (ukrainian)       [███████████████████░]  97.2% (563/579)
 ```
 
 ## Menu Translation Status
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`2b88cb7`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/2b88cb7b7245db11c0dcda02a210efbf4df62976)
-- **Time:** 2026-03-14 13:37:32 UTC
-- **Message:** Russian translation updates (#524)
+- **Commit:** [`d01e353`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/d01e35324f59a323d5e47d4d11e7a702e2073788)
+- **Time:** 2026-03-20 09:36:45 UTC
+- **Message:** Add kz_paint[size/color] and kz_cleardecals
 
 ---
 
