@@ -82,6 +82,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	RESOLVE_SIG(g_pGameConfig, "CreateBot", CreateBot_t, CreateBot, sigResolved);
 	RESOLVE_SIG(g_pGameConfig, "SetOrAddAttributeValueByName", SetOrAddAttributeValueByName_t, SetOrAddAttributeValueByName, sigResolved);
 	RESOLVE_SIG(g_pGameConfig, "SetModel", SetModel_t, SetModel, sigResolved);
+	RESOLVE_SIG(g_pGameConfig, "DecalTrace", DecalTrace_t, DecalTrace, sigResolved);
 
 	if (!sigResolved)
 	{
@@ -90,7 +91,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		return false;
 	}
 	g_pKZUtils = new KZUtils(TracePlayerBBox, GetLegacyGameEventListener, SnapViewAngles, EmitSound, SwitchTeam, SetPawn, CreateEntityByName,
-							 DispatchSpawn, RemoveEntity, DebugDrawMesh, CreateBot, SetOrAddAttributeValueByName, SetModel);
+							 DispatchSpawn, RemoveEntity, DebugDrawMesh, CreateBot, SetOrAddAttributeValueByName, SetModel, DecalTrace);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
