@@ -1421,18 +1421,22 @@
 	"Command Description - kz_paint"
 	{
 		"en"		"Place a paint decal on the surface you are aiming at."
+		"ua"		"Нанести кольорову мітку на поверхню, на яку ви наводите приціл."
 	}
 	"Command Description - kz_paintcolor"
 	{
 		"en"		"Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
+		"ua"		"Встановити або показати колір мітки. Можна вказати назву кольору (red, white, black, blue, brown, green, yellow, purple) або значення R G B [A]."
 	}
 	"Command Description - kz_paintsize"
 	{
 		"en"		"Set or display your paint size. Accepts a positive number (default: 8)."
+		"ua"		"Встановити або показати розмір кольорової мітки. Приймає додатне число (за замовчуванням: 8)."
 	}
 	"Command Description - kz_cleardecals"
 	{
 		"en"		"Remove all decals from the map."
+		"ua"		"Прибрати всі кольорові мітки на мапі."
 	}
 	"Command Description - kz_timerstopsound"
 	{
