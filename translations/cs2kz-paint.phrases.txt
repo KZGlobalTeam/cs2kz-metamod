@@ -1,0 +1,36 @@
+"Phrases"
+{
+	"Paint Color Command Usage"
+	{
+		"en"		"{grey}Usage: kz_paintcolor <color name> or <R> <G> <B> [A]\nAvailable colors: red, white, black, blue, brown, green, yellow, purple"
+	}
+	"Current Paint Color"
+	{
+		"#format"	"name:s,r:d,g:d,b:d"
+		"en"		"{grey}Current paint color: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
+	}
+	"Paint Color Set"
+	{
+		"#format"	"name:s"
+		"en"		"{grey}Paint color set to {default}{name}{grey}."
+	}
+	"Paint Color RGB Set"
+	{
+		"#format"	"r:d,g:d,b:d,a:d"
+		"en"		"{grey}Paint color set to RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
+	}
+	"Paint Size Command Usage"
+	{
+		"en"		"{grey}Usage: kz_paintsize <size>\nSize must be a positive number. Default: 16"
+	}
+	"Current Paint Size"
+	{
+		"#format"	"size:.1f"
+		"en"		"{grey}Current paint size: {default}{size}{grey}."
+	}
+	"Paint Size Set"
+	{
+		"#format"	"size:.1f"
+		"en"		"{grey}Paint size set to {default}{size}{grey}."
+	}
+}

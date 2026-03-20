@@ -12,6 +12,7 @@
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
 #include "option/kz_option.h"
+#include "paint/kz_paint.h"
 #include "quiet/kz_quiet.h"
 #include "spec/kz_spec.h"
 #include "goto/kz_goto.h"
@@ -51,6 +52,7 @@ void KZPlayer::Init()
 	delete this->specService;
 	delete this->timerService;
 	delete this->optionService;
+	delete this->paintService;
 	delete this->noclipService;
 	delete this->tipService;
 	delete this->telemetryService;
@@ -76,6 +78,7 @@ void KZPlayer::Init()
 	this->gotoService = new KZGotoService(this);
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
+	this->paintService = new KZPaintService(this);
 	this->tipService = new KZTipService(this);
 	this->telemetryService = new KZTelemetryService(this);
 	this->triggerService = new KZTriggerService(this);

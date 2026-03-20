@@ -1418,6 +1418,22 @@
 		"ua"		"Виміряти відстань між блоками."
 		"de"		"Miss die Distanz des Jumpstat-Blocks."
 	}
+	"Command Description - kz_paint"
+	{
+		"en"		"Place a paint decal on the surface you are aiming at."
+	}
+	"Command Description - kz_paintcolor"
+	{
+		"en"		"Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
+	}
+	"Command Description - kz_paintsize"
+	{
+		"en"		"Set or display your paint size. Accepts a positive number (default: 8)."
+	}
+	"Command Description - kz_cleardecals"
+	{
+		"en"		"Remove all decals from the map."
+	}
 	"Command Description - kz_timerstopsound"
 	{
 		"en"		"Toggle the timer stop sound."

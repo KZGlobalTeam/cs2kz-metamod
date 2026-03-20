@@ -10,6 +10,7 @@
 #include "kz/beam/kz_beam.h"
 #include "kz/measure/kz_measure.h"
 #include "kz/option/kz_option.h"
+#include "kz/paint/kz_paint.h"
 #include "kz/language/kz_language.h"
 
 #include "utils/utils.h"
@@ -140,6 +141,37 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 	u32 emitterEntIndex = 0;
 	switch (info->m_MessageId)
 	{
+		case GE_PlaceDecalEvent:
+		{
+			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgPlaceDecalEvent>();
+			if (msg->decal_group_name() != KZPaintService::DECAL_GROUP_NAME)
+			{
+				return;
+			}
+
+			// Find the player who initiated this paint and restrict delivery to only them.
+			for (i32 i = 1; i <= MAXPLAYERS; i++)
+			{
+				KZPlayer *painter = g_pKZPlayerManager->ToPlayer(i);
+				if (!painter || !painter->paintService || !painter->paintService->pendingPaint)
+				{
+					continue;
+				}
+
+				*(uint64 *)clients = 1ull << (i - 1);
+
+				Color color = painter->paintService->GetColor();
+				// Game expects ARGB; internal storage and user input are RGBA.
+				u32 colorPacked = ((u32)color.a() << 24) | ((u32)color.r() << 16) | ((u32)color.g() << 8) | (u32)color.b();
+				msg->set_color(colorPacked);
+				msg->set_size_override(painter->paintService->GetSize());
+				return;
+			}
+
+			// No painter found — suppress the decal entirely.
+			*(uint64 *)clients = 0;
+			return;
+		}
 		// Hide bullet decals, and sound.
 		case GE_FireBulletsId:
 		{
