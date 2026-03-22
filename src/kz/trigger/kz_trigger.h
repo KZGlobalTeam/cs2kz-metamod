@@ -42,6 +42,9 @@ public:
 		bool startedTouch {};
 		// Player to trigger.
 		bool touchedThisTick {};
+		// Whether OnMappingApiTriggerStartTouchPost was fired for this tracker.
+		// This is false when the player entered the trigger without the correct filter active.
+		bool mappingApiStartedTouch {};
 
 		// Server time
 		f32 startTouchTime {};
@@ -85,11 +88,11 @@ private:
 
 	// OnTriggerStartTouchPre is an exception as the touch tracker might not exist yet.
 	bool OnTriggerStartTouchPre(CBaseTrigger *trigger);
-	void OnTriggerStartTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker);
+	void OnTriggerStartTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker);
 	bool OnTriggerTouchPre(CBaseTrigger *trigger, TriggerTouchTracker tracker);
-	void OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker);
+	void OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker);
 	bool OnTriggerEndTouchPre(CBaseTrigger *trigger, TriggerTouchTracker tracker);
-	void OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker);
+	void OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker);
 
 	// Mapping API stuff.
 	struct Modifiers

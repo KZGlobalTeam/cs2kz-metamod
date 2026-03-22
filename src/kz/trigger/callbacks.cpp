@@ -47,27 +47,48 @@ bool KZTriggerService::OnTriggerEndTouchPre(CBaseTrigger *trigger, TriggerTouchT
 }
 
 // Mapping API stuff.
-void KZTriggerService::OnTriggerStartTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker)
+void KZTriggerService::OnTriggerStartTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker)
 {
 	if (!tracker.kzTrigger || !trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
 	{
 		return;
 	}
+	tracker.mappingApiStartedTouch = true;
 	this->OnMappingApiTriggerStartTouchPost(tracker);
 }
 
-void KZTriggerService::OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker)
+void KZTriggerService::OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker)
 {
-	if (!tracker.kzTrigger || !trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
+	if (!tracker.kzTrigger)
 	{
 		return;
+	}
+	bool filterPasses = trigger->PassesTriggerFilters(this->player->GetPlayerPawn());
+	if (!filterPasses)
+	{
+		// Filter lost while inside the trigger - treat as a virtual end touch.
+		if (tracker.mappingApiStartedTouch)
+		{
+			tracker.mappingApiStartedTouch = false;
+			this->OnMappingApiTriggerEndTouchPost(tracker);
+		}
+		return;
+	}
+	// The filter wasn't active when the player entered this trigger, but it is now.
+	// We need to retroactively fire StartTouch for this trigger so that modifiers get applied correctly.
+	if (!tracker.mappingApiStartedTouch)
+	{
+		tracker.mappingApiStartedTouch = true;
+		this->OnMappingApiTriggerStartTouchPost(tracker);
 	}
 	this->OnMappingApiTriggerTouchPost(tracker);
 }
 
-void KZTriggerService::OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker tracker)
+void KZTriggerService::OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker)
 {
-	if (!tracker.kzTrigger || !trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
+	// Only fire the mapping API end touch if the mapping API start touch was actually fired,
+	// so that counter increments/decrements stay symmetric regardless of when the filter became active.
+	if (!tracker.kzTrigger || !tracker.mappingApiStartedTouch)
 	{
 		return;
 	}
