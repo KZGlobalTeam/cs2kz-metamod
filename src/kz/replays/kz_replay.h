@@ -13,7 +13,7 @@ class KZPlayer;
 
 enum : u32
 {
-	KZ_REPLAY_VERSION = 2,
+	KZ_REPLAY_VERSION = 3,
 };
 
 enum ReplayType : u32
