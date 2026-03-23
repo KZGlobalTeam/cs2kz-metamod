@@ -1439,10 +1439,12 @@
 	"Command Description - kz_togglepaint"
 	{
 		"en"		"Toggle auto painting every 50ms while aiming at surfaces."
+		"ru"		"Вкл./Выкл. автопокраску каждые 50мс, пока вы целитесь на поверхность."
 	}
 	"Command Description - kz_showpaint"
 	{
 		"en"		"Toggle between showing only your own paint and showing paint from all players."
+		"ru"		"Показывать только вашу краску / краску всех игроков."
 	}
 	"Command Description - kz_cleardecals"
 	{
