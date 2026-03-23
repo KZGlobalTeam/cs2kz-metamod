@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 579,
-    "phrases_with_missing": 359,
-    "total_missing_entries": 2152,
+    "total_phrases": 585,
+    "phrases_with_missing": 365,
+    "total_missing_entries": 2224,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 97.58,
+      "coverage_percent": 96.58,
       "translated": 565,
-      "missing": 14,
+      "missing": 20,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -87,14 +87,26 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
@@ -140,6 +152,30 @@
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
         },
         {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
+        },
+        {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Multiple Matches",
           "line": 277,
@@ -159,9 +195,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 89.64,
+      "coverage_percent": 88.72,
       "translated": 519,
-      "missing": 60,
+      "missing": 66,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -201,56 +237,68 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -470,6 +518,30 @@
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
         },
         {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
+        },
+        {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Multiple Matches",
           "line": 277,
@@ -533,7 +605,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 579,
+      "translated": 585,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -544,9 +616,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 49.74,
+      "coverage_percent": 49.23,
       "translated": 288,
-      "missing": 291,
+      "missing": 297,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -934,146 +1006,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -1429,6 +1513,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
           "file": "cs2kz-pistol.phrases.txt",
@@ -2308,9 +2416,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 41.11,
+      "coverage_percent": 40.68,
       "translated": 238,
-      "missing": 341,
+      "missing": 347,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -2776,146 +2884,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -3283,6 +3403,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
           "file": "cs2kz-pistol.phrases.txt",
@@ -4372,9 +4516,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 39.72,
+      "coverage_percent": 39.32,
       "translated": 230,
-      "missing": 349,
+      "missing": 355,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -4816,146 +4960,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -5365,6 +5521,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
           "file": "cs2kz-pistol.phrases.txt",
@@ -6484,9 +6664,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 50.26,
+      "coverage_percent": 49.74,
       "translated": 291,
-      "missing": 288,
+      "missing": 294,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -6850,146 +7030,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -7333,6 +7525,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
           "file": "cs2kz-pistol.phrases.txt",
@@ -8225,9 +8441,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 57.51,
+      "coverage_percent": 56.92,
       "translated": 333,
-      "missing": 246,
+      "missing": 252,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -8441,146 +8657,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -8924,6 +9152,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
           "file": "cs2kz-pistol.phrases.txt",
@@ -9714,9 +9966,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 89.98,
+      "coverage_percent": 89.06,
       "translated": 521,
-      "missing": 58,
+      "missing": 64,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9756,44 +10008,56 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -10013,6 +10277,30 @@
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
         },
         {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
+        },
+        {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Multiple Matches",
           "line": 277,
@@ -10075,9 +10363,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 98.1,
+      "coverage_percent": 97.09,
       "translated": 568,
-      "missing": 11,
+      "missing": 17,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -10099,8 +10387,20 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
@@ -10144,6 +10444,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         }
       ],
       "menu": {
@@ -10154,9 +10478,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 68.57,
+      "coverage_percent": 67.86,
       "translated": 397,
-      "missing": 182,
+      "missing": 188,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -10226,128 +10550,140 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -10583,6 +10919,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
           "file": "cs2kz-racing.phrases.txt",
@@ -11259,9 +11619,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 46.11,
+      "coverage_percent": 45.64,
       "translated": 267,
-      "missing": 312,
+      "missing": 318,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -11679,146 +12039,158 @@
         },
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_cleardecals",
+          "phrase": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV."
         },
         {
@@ -12192,6 +12564,30 @@
           "phrase": "Paint Size Set",
           "line": 37,
           "english_text": "{grey}Paint size set to {default}{size}{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
           "file": "cs2kz-pistol.phrases.txt",
@@ -13149,10 +13545,47 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 100.0,
+      "coverage_percent": 98.97,
       "translated": 579,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 6,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_togglepaint",
+          "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}."
+        },
+        {
+          "file": "cs2kz-paint.phrases.txt",
+          "phrase": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}."
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -13666,7 +14099,7 @@
       ]
     },
     "cs2kz-commands.phrases.txt": {
-      "phrases_with_missing": 85,
+      "phrases_with_missing": 87,
       "phrases": [
         {
           "name": "Command Help Response Category Hint (Console)",
@@ -15011,8 +15444,52 @@
           ]
         },
         {
-          "name": "Command Description - kz_cleardecals",
+          "name": "Command Description - kz_togglepaint",
           "line": 1436,
+          "english_text": "Toggle auto painting every 50ms while aiming at surfaces.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_showpaint",
+          "line": 1440,
+          "english_text": "Toggle between showing only your own paint and showing paint from all players.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_cleardecals",
+          "line": 1444,
           "english_text": "Remove all decals from the map.",
           "existing_languages": [
             "en",
@@ -15034,7 +15511,7 @@
         },
         {
           "name": "Command Description - kz_timerstopsound",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Toggle the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -15056,7 +15533,7 @@
         },
         {
           "name": "Command Description - kz_autohideweapon",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Toggle the automatic hiding of weapon viewmodel.",
           "existing_languages": [
             "chi",
@@ -15078,7 +15555,7 @@
         },
         {
           "name": "Command Description - kz_pistol",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Change or remove the current pistol.",
           "existing_languages": [
             "chi",
@@ -15100,7 +15577,7 @@
         },
         {
           "name": "Command Description - kz_rpsave",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Manually save past gameplay into a replay.",
           "existing_languages": [
             "chi",
@@ -15122,7 +15599,7 @@
         },
         {
           "name": "Command Description - kz_replay",
-          "line": 1480,
+          "line": 1488,
           "english_text": "Play a previously saved replay.",
           "existing_languages": [
             "chi",
@@ -15144,7 +15621,7 @@
         },
         {
           "name": "Command Description - kz_replays",
-          "line": 1489,
+          "line": 1497,
           "english_text": "List saved replays.",
           "existing_languages": [
             "de",
@@ -15166,7 +15643,7 @@
         },
         {
           "name": "Command Description - kz_rpgoto",
-          "line": 1497,
+          "line": 1505,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)",
           "existing_languages": [
             "chi",
@@ -15188,7 +15665,7 @@
         },
         {
           "name": "Command Description - kz_rpgototick",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Go to a specific tick in the replay.",
           "existing_languages": [
             "chi",
@@ -15210,7 +15687,7 @@
         },
         {
           "name": "Command Description - kz_rpinfo",
-          "line": 1515,
+          "line": 1523,
           "english_text": "Display information about the current replay.",
           "existing_languages": [
             "chi",
@@ -15232,7 +15709,7 @@
         },
         {
           "name": "Command Description - kz_rppause",
-          "line": 1524,
+          "line": 1532,
           "english_text": "Pause or resume the current replay.",
           "existing_languages": [
             "chi",
@@ -15254,7 +15731,7 @@
         },
         {
           "name": "Command Description - kz_rploadprogress",
-          "line": 1533,
+          "line": 1541,
           "english_text": "Display the loading progress of the replay.",
           "existing_languages": [
             "chi",
@@ -15276,7 +15753,7 @@
         },
         {
           "name": "Command Description - kz_rpcancelload",
-          "line": 1542,
+          "line": 1550,
           "english_text": "Cancel the loading of the replay.",
           "existing_languages": [
             "chi",
@@ -15298,7 +15775,7 @@
         },
         {
           "name": "Command Description - kz_recordvolume",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Set the volume of the world record sound effect.",
           "existing_languages": [
             "chi",
@@ -15320,7 +15797,7 @@
         },
         {
           "name": "Command Description - kz_cpmessage",
-          "line": 1560,
+          "line": 1568,
           "english_text": "Toggle checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -15342,7 +15819,7 @@
         },
         {
           "name": "Command Description - kz_rphidelegs",
-          "line": 1569,
+          "line": 1577,
           "english_text": "Toggle replay bot's first person legs visibility.",
           "existing_languages": [
             "chi",
@@ -15364,7 +15841,7 @@
         },
         {
           "name": "Command Description - kz_accept",
-          "line": 1578,
+          "line": 1586,
           "english_text": "Accept an incoming race.",
           "existing_languages": [
             "chi",
@@ -15386,7 +15863,7 @@
         },
         {
           "name": "Command Description - kz_surrender",
-          "line": 1586,
+          "line": 1594,
           "english_text": "Surrender an ongoing race.",
           "existing_languages": [
             "chi",
@@ -15408,7 +15885,7 @@
         },
         {
           "name": "Command Description - kz_mapinfo",
-          "line": 1594,
+          "line": 1602,
           "english_text": "Display information about the current map.",
           "existing_languages": [
             "chi",
@@ -15430,7 +15907,7 @@
         },
         {
           "name": "Command Description - kz_tier",
-          "line": 1601,
+          "line": 1609,
           "english_text": "Display the tier of the current course or a specified course.",
           "existing_languages": [
             "chi",
@@ -15452,7 +15929,7 @@
         },
         {
           "name": "Command Description - kz_modernperfstats",
-          "line": 1608,
+          "line": 1616,
           "english_text": "Retrieve bhop statistics for modern jumping.",
           "existing_languages": [
             "chi",
@@ -15474,7 +15951,7 @@
         },
         {
           "name": "Command Description - kz_legacyperfstats",
-          "line": 1615,
+          "line": 1623,
           "english_text": "Retrieve bhop statistics for legacy jumping.",
           "existing_languages": [
             "chi",
@@ -15496,7 +15973,7 @@
         },
         {
           "name": "Command Description - kz_resetperfstats",
-          "line": 1622,
+          "line": 1630,
           "english_text": "Reset bhop statistics for modern and legacy jumping.",
           "existing_languages": [
             "chi",
@@ -15518,7 +15995,7 @@
         },
         {
           "name": "Command Description - kz_fov",
-          "line": 1629,
+          "line": 1637,
           "english_text": "Change your FOV.",
           "existing_languages": [
             "chi",
@@ -16913,7 +17390,7 @@
       ]
     },
     "cs2kz-paint.phrases.txt": {
-      "phrases_with_missing": 7,
+      "phrases_with_missing": 11,
       "phrases": [
         {
           "name": "Paint Color Command Usage",
@@ -17067,6 +17544,94 @@
             "ru",
             "sv",
             "tr"
+          ]
+        },
+        {
+          "name": "Paint Toggle Enabled",
+          "line": 43,
+          "english_text": "{grey}Auto paint is now {lime}enabled{grey}.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Paint Toggle Disabled",
+          "line": 47,
+          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Show Paint Enabled",
+          "line": 51,
+          "english_text": "{grey}You now see paint from {default}all players{grey}.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Show Paint Disabled",
+          "line": 55,
+          "english_text": "{grey}You now only see {default}your own paint{grey}.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
