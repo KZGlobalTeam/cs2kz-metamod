@@ -1436,6 +1436,14 @@
 		"ua"		"Встановити або показати розмір кольорової мітки. Приймає додатне число (за замовчуванням: 8)."
 		"ru"		"Установить или отобразить размер метки краски. Размер - положительное число (по умолчанию: 8)."
 	}
+	"Command Description - kz_togglepaint"
+	{
+		"en"		"Toggle auto painting every 50ms while aiming at surfaces."
+	}
+	"Command Description - kz_showpaint"
+	{
+		"en"		"Toggle between showing only your own paint and showing paint from all players."
+	}
 	"Command Description - kz_cleardecals"
 	{
 		"en"		"Remove all decals from the map."

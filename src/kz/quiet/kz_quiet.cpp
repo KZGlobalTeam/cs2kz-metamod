@@ -149,7 +149,9 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 				return;
 			}
 
-			// Find the player who initiated this paint and restrict delivery to only them.
+			u64 currentRecipients = *(const u64 *)clients;
+
+			// Find the player who initiated this paint.
 			for (i32 i = 1; i <= MAXPLAYERS; i++)
 			{
 				KZPlayer *painter = g_pKZPlayerManager->ToPlayer(i);
@@ -158,11 +160,33 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 					continue;
 				}
 
-				*(uint64 *)clients = 1ull << (i - 1);
+				u64 paintRecipients = 0;
+				for (i32 recipientPlayerIndex = 1; recipientPlayerIndex <= MAXPLAYERS; recipientPlayerIndex++)
+				{
+					u64 recipientBit = 1ull << (recipientPlayerIndex - 1);
+					if ((currentRecipients & recipientBit) == 0)
+					{
+						continue;
+					}
+
+					if (recipientPlayerIndex == i)
+					{
+						paintRecipients |= recipientBit;
+						continue;
+					}
+
+					KZPlayer *recipient = g_pKZPlayerManager->ToPlayer(recipientPlayerIndex);
+					if (recipient && recipient->paintService && recipient->paintService->ShouldShowAllPaint())
+					{
+						paintRecipients |= recipientBit;
+					}
+				}
+
+				*(uint64 *)clients = paintRecipients;
 
 				Color color = painter->paintService->GetColor();
-				// Game expects ARGB; internal storage and user input are RGBA.
-				u32 colorPacked = ((u32)color.a() << 24) | ((u32)color.r() << 16) | ((u32)color.g() << 8) | (u32)color.b();
+				// Game expects ABGR; internal storage and user input are RGBA.
+				u32 colorPacked = ((u32)color.a() << 24) | ((u32)color.b() << 16) | ((u32)color.g() << 8) | (u32)color.r();
 				msg->set_color(colorPacked);
 				msg->set_size_override(painter->paintService->GetSize());
 				return;

@@ -12,6 +12,11 @@ void KZPaintService::Reset()
 	// Reset to default: red color and default size
 	player->optionService->SetPreferenceInt("paintColor", 0xFF0000FF); // Red (RGBA format)
 	player->optionService->SetPreferenceFloat("paintSize", DEFAULT_PAINT_SIZE);
+	player->optionService->SetPreferenceBool("showAllPaint", false);
+
+	this->autoPaintEnabled = false;
+	this->hasLastAutoPaintPosition = false;
+	this->nextAutoPaintTime = 0.0;
 }
 
 Color KZPaintService::GetColor() const
@@ -137,16 +142,56 @@ const char *KZPaintService::GetColorName() const
 	return "Custom";
 }
 
+bool KZPaintService::ShouldShowAllPaint() const
+{
+	return this->player->optionService->GetPreferenceBool("showAllPaint", false);
+}
+
+bool KZPaintService::IsAutoPaintEnabled() const
+{
+	return this->autoPaintEnabled;
+}
+
+void KZPaintService::OnGameFrame()
+{
+	for (i32 i = 1; i <= MAXPLAYERS; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+		if (!player || !player->paintService)
+		{
+			continue;
+		}
+
+		player->paintService->TryAutoPaint();
+	}
+}
+
+void KZPaintService::ToggleAutoPaint()
+{
+	this->autoPaintEnabled = !this->autoPaintEnabled;
+	if (this->autoPaintEnabled)
+	{
+		this->hasLastAutoPaintPosition = false;
+		this->nextAutoPaintTime = 0.0;
+	}
+}
+
+void KZPaintService::ToggleShowAllPaint()
+{
+	bool newValue = !this->player->optionService->GetPreferenceBool("showAllPaint", false);
+	this->player->optionService->SetPreferenceBool("showAllPaint", newValue);
+}
+
 // Commands
 
 #define KZ_PAINT_TRACE_DISTANCE 32768.0f
 
-void KZPaintService::PlacePaint()
+bool KZPaintService::TracePaint(trace_t &tr) const
 {
 	CCSPlayerPawnBase *pawn = static_cast<CCSPlayerPawnBase *>(this->player->GetCurrentPawn());
 	if (!pawn)
 	{
-		return;
+		return false;
 	}
 
 	Vector origin;
@@ -157,21 +202,61 @@ void KZPaintService::PlacePaint()
 	AngleVectors(angles, &forward);
 	Vector endPos = origin + forward * KZ_PAINT_TRACE_DISTANCE;
 
-	trace_t tr;
 	bbox_t bounds({vec3_origin, vec3_origin});
 	CTraceFilterPlayerMovementCS filter(pawn);
 	filter.EnableInteractsExcludeLayer(LAYER_INDEX_CONTENTS_PLAYER_CLIP);
 	filter.EnableInteractsExcludeLayer(LAYER_INDEX_CONTENTS_PLAYER);
 	g_pKZUtils->TracePlayerBBox(origin, endPos, bounds, &filter, tr);
 
-	if (!tr.DidHit())
+	return tr.DidHit();
+}
+
+void KZPaintService::PlacePaint()
+{
+	trace_t tr;
+	if (!this->TracePaint(tr))
 	{
 		return;
 	}
+
 	CGlobalSymbol paintDecal = MakeGlobalSymbol("paint");
 	this->pendingPaint = true;
 	g_pKZUtils->DecalTrace(&tr, &paintDecal, 0.0f);
 	this->pendingPaint = false;
+}
+
+void KZPaintService::TryAutoPaint()
+{
+	if (!this->autoPaintEnabled)
+	{
+		return;
+	}
+
+	f64 curTime = g_pKZUtils->GetGlobals()->curtime;
+	if (curTime < this->nextAutoPaintTime)
+	{
+		return;
+	}
+	this->nextAutoPaintTime = curTime + 0.05;
+
+	trace_t tr;
+	if (!this->TracePaint(tr))
+	{
+		return;
+	}
+
+	if (this->hasLastAutoPaintPosition && (tr.m_vEndPos - this->lastAutoPaintPosition).LengthSqr() < 1.0f)
+	{
+		return;
+	}
+
+	CGlobalSymbol paintDecal = MakeGlobalSymbol("paint");
+	this->pendingPaint = true;
+	g_pKZUtils->DecalTrace(&tr, &paintDecal, 0.0f);
+	this->pendingPaint = false;
+
+	this->lastAutoPaintPosition = tr.m_vEndPos;
+	this->hasLastAutoPaintPosition = true;
 }
 
 SCMD(kz_paint, SCFL_MISC)
@@ -191,14 +276,14 @@ SCMD(kz_paintcolor, SCFL_PREFERENCE | SCFL_MISC)
 		player->languageService->PrintChat(true, false, "Current Paint Color", player->paintService->GetColorName(),
 										   player->paintService->GetColor().r(), player->paintService->GetColor().g(),
 										   player->paintService->GetColor().b());
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 
 	// Check for predefined colors
 	if (player->paintService->SetColor(args->Arg(1)))
 	{
 		player->languageService->PrintChat(true, false, "Paint Color Set", player->paintService->GetColorName());
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 
 	// Try to parse as RGB values
@@ -216,11 +301,11 @@ SCMD(kz_paintcolor, SCFL_PREFERENCE | SCFL_MISC)
 
 		player->paintService->SetColorRGB(r, g, b, a);
 		player->languageService->PrintChat(true, false, "Paint Color RGB Set", r, g, b, a);
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 
 	player->languageService->PrintChat(true, false, "Paint Color Command Usage");
-	return MRES_HANDLED;
+	return MRES_SUPERCEDE;
 }
 
 SCMD(kz_paintsize, SCFL_PREFERENCE | SCFL_MISC)
@@ -231,18 +316,36 @@ SCMD(kz_paintsize, SCFL_PREFERENCE | SCFL_MISC)
 	{
 		player->languageService->PrintChat(true, false, "Paint Size Command Usage");
 		player->languageService->PrintChat(true, false, "Current Paint Size", player->paintService->GetSize());
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 
 	f32 value = (f32)atof(args->Arg(1));
 	if (player->paintService->SetSize(value))
 	{
 		player->languageService->PrintChat(true, false, "Paint Size Set", player->paintService->GetSize());
-		return MRES_HANDLED;
+		return MRES_SUPERCEDE;
 	}
 
 	player->languageService->PrintChat(true, false, "Paint Size Command Usage");
-	return MRES_HANDLED;
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_togglepaint, SCFL_MISC | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->paintService->ToggleAutoPaint();
+
+	player->languageService->PrintChat(true, false, player->paintService->IsAutoPaintEnabled() ? "Paint Toggle Enabled" : "Paint Toggle Disabled");
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_showpaint, SCFL_MISC | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->paintService->ToggleShowAllPaint();
+
+	player->languageService->PrintChat(true, false, player->paintService->ShouldShowAllPaint() ? "Show Paint Enabled" : "Show Paint Disabled");
+	return MRES_SUPERCEDE;
 }
 
 SCMD(kz_cleardecals, SCFL_MISC)

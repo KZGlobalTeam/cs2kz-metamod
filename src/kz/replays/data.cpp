@@ -210,7 +210,7 @@ namespace KZ::replaysystem::data
 		}
 		UpdateProgress(file, fileSize, progress);
 
-		if (result.header.version() != KZ_REPLAY_VERSION)
+		if (result.header.version() < 1 || result.header.version() > KZ_REPLAY_VERSION)
 		{
 			g_pFullFileSystem->Close(file);
 			return result;
@@ -230,7 +230,7 @@ namespace KZ::replaysystem::data
 		std::vector<TickData> tickDataVec;
 		std::vector<SubtickData> subtickDataVec;
 
-		if (!KZ::replaysystem::compression::ReadTickDataCompressed(file, tickDataVec, subtickDataVec))
+		if (!KZ::replaysystem::compression::ReadTickDataCompressed(file, tickDataVec, subtickDataVec, result.header.version()))
 		{
 			g_pFullFileSystem->Close(file);
 			return result;

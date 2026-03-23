@@ -11,10 +11,30 @@ extern CConVar<bool> kz_replay_playback_debug;
 // Helper functions
 // ========================================
 
+static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount, u32 replayVersion,
+										  std::vector<TickData> &outTickData);
+
 static_function void AppendToBuffer(std::vector<char> &buffer, const void *data, size_t size)
 {
 	const char *bytes = static_cast<const char *>(data);
 	buffer.insert(buffer.end(), bytes, bytes + size);
+}
+
+static_function bool ReadFromBuffer(const char *&ptr, const char *end, void *dst, size_t size)
+{
+	if (size > static_cast<size_t>(end - ptr))
+	{
+		return false;
+	}
+
+	memcpy(dst, ptr, size);
+	ptr += size;
+	return true;
+}
+
+static_function bool ReadIfFlag(u64 flags, u64 flag, const char *&ptr, const char *end, void *dst, size_t size)
+{
+	return !(flags & flag) || ReadFromBuffer(ptr, end, dst, size);
 }
 
 // ========================================
@@ -109,10 +129,10 @@ enum TickDataChangeFlags : u64
 
 	CHANGED_CHECKPOINT = (1ULL << 38),
 
-	// 2026 ModernJump fields
-	CHANGED_MODERN_JUMP_ACTUAL_PRESS = (1ULL << 39), // lastActualJumpPressTick + lastActualJumpPressFrac
-	CHANGED_MODERN_JUMP_USABLE_PRESS = (1ULL << 40), // lastUsableJumpPressTick + lastUsableJumpPressFrac
-	CHANGED_MODERN_JUMP_LANDED = (1ULL << 41),       // lastLandedTick + lastLandedFrac + lastLandedVelocity (Vector)
+	// 2026 v3 ModernJump fields (v2 used different bits and is handled in read path)
+	CHANGED_MODERN_JUMP_ACTUAL_PRESS = (1ULL << 40), // lastActualJumpPressTick + lastActualJumpPressFrac
+	CHANGED_MODERN_JUMP_USABLE_PRESS = (1ULL << 41), // lastUsableJumpPressTick + lastUsableJumpPressFrac
+	CHANGED_MODERN_JUMP_LANDED = (1ULL << 42),       // lastLandedTick + lastLandedFrac + lastLandedVelocity (Vector)
 };
 
 // Compare pre or post data and build change flags
@@ -377,7 +397,7 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(FileHandle_t file, co
 }
 
 bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, std::vector<TickData> &outTickData,
-														   std::vector<SubtickData> &outSubtickData)
+														   std::vector<SubtickData> &outSubtickData, u32 replayVersion)
 {
 	// Read section header
 	CompressedSectionHeader header;
@@ -412,149 +432,14 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 	}
 
 	// Reconstruct tick data from delta-encoded buffer
-	outTickData.resize(header.elementCount);
-	const char *readPtr = decompressedData;
-
-	for (u32 i = 0; i < header.elementCount; i++)
-	{
-		TickData &current = outTickData[i];
-
-		// Read change flags
-		u64 flags;
-		memcpy(&flags, readPtr, sizeof(flags));
-		readPtr += sizeof(flags);
-
-		// Copy from previous tick if not changed (or apply expected increment)
-		if (i > 0)
-		{
-			// clang-format off
-			// Server tick is expected to increment by 1
-			if (!(flags & CHANGED_SERVER_TICK)) current.serverTick = outTickData[i - 1].serverTick + 1;
-			if (!(flags & CHANGED_GAME_TIME)) current.gameTime = outTickData[i - 1].gameTime;
-			if (!(flags & CHANGED_REAL_TIME)) current.realTime = outTickData[i - 1].realTime;
-			if (!(flags & CHANGED_UNIX_TIME)) current.unixTime = outTickData[i - 1].unixTime;
-			if (!(flags & CHANGED_CMD_NUMBER)) current.cmdNumber = outTickData[i - 1].cmdNumber;
-			if (!(flags & CHANGED_CLIENT_TICK)) current.clientTick = outTickData[i - 1].clientTick;
-			if (!(flags & CHANGED_FORWARD)) current.forward = outTickData[i - 1].forward;
-			if (!(flags & CHANGED_LEFT)) current.left = outTickData[i - 1].left;
-			if (!(flags & CHANGED_UP)) current.up = outTickData[i - 1].up;
-			if (!(flags & CHANGED_LEFT_HANDED)) current.leftHanded = outTickData[i - 1].leftHanded;
-			if (!(flags & CHANGED_WEAPON)) current.weapon = outTickData[i - 1].weapon;
-			// clang-format on
-		}
-
-		// Read changed fields
-		// clang-format off
-		if (flags & CHANGED_SERVER_TICK) { memcpy(&current.serverTick, readPtr, sizeof(current.serverTick)); readPtr += sizeof(current.serverTick); }
-		if (flags & CHANGED_GAME_TIME) { memcpy(&current.gameTime, readPtr, sizeof(current.gameTime)); readPtr += sizeof(current.gameTime); }
-		if (flags & CHANGED_REAL_TIME) { memcpy(&current.realTime, readPtr, sizeof(current.realTime)); readPtr += sizeof(current.realTime); }
-		if (flags & CHANGED_UNIX_TIME) { memcpy(&current.unixTime, readPtr, sizeof(current.unixTime)); readPtr += sizeof(current.unixTime); }
-		if (flags & CHANGED_CMD_NUMBER) { memcpy(&current.cmdNumber, readPtr, sizeof(current.cmdNumber)); readPtr += sizeof(current.cmdNumber); }
-		if (flags & CHANGED_CLIENT_TICK) { memcpy(&current.clientTick, readPtr, sizeof(current.clientTick)); readPtr += sizeof(current.clientTick); }
-		if (flags & CHANGED_FORWARD) { memcpy(&current.forward, readPtr, sizeof(current.forward)); readPtr += sizeof(current.forward); }
-		if (flags & CHANGED_LEFT) { memcpy(&current.left, readPtr, sizeof(current.left)); readPtr += sizeof(current.left); }
-		if (flags & CHANGED_UP) { memcpy(&current.up, readPtr, sizeof(current.up)); readPtr += sizeof(current.up); }
-		if (flags & CHANGED_LEFT_HANDED) { memcpy(&current.leftHanded, readPtr, sizeof(current.leftHanded)); readPtr += sizeof(current.leftHanded); }
-		if (flags & CHANGED_WEAPON) { memcpy(&current.weapon, readPtr, sizeof(current.weapon)); readPtr += sizeof(current.weapon); }
-
-		// Reconstruct pre data
-		// For tick 0: compare with zero
-		// For tick N: compare with previous.post
-		TickData::MovementData prevPre = {};
-		if (i > 0)
-		{
-			prevPre = outTickData[i - 1].post;
-		}
-		
-		// Copy from previous or read changed
-		current.pre = prevPre;
-		if (flags & CHANGED_PRE_ORIGIN) { memcpy(&current.pre.origin, readPtr, sizeof(current.pre.origin)); readPtr += sizeof(current.pre.origin); }
-		if (flags & CHANGED_PRE_VELOCITY) { memcpy(&current.pre.velocity, readPtr, sizeof(current.pre.velocity)); readPtr += sizeof(current.pre.velocity); }
-		if (flags & CHANGED_PRE_ANGLES) { memcpy(&current.pre.angles, readPtr, sizeof(current.pre.angles)); readPtr += sizeof(current.pre.angles); }
-		if (flags & CHANGED_PRE_BUTTONS_0) { memcpy(&current.pre.buttons[0], readPtr, sizeof(current.pre.buttons[0])); readPtr += sizeof(current.pre.buttons[0]); }
-		if (flags & CHANGED_PRE_BUTTONS_1) { memcpy(&current.pre.buttons[1], readPtr, sizeof(current.pre.buttons[1])); readPtr += sizeof(current.pre.buttons[1]); }
-		if (flags & CHANGED_PRE_BUTTONS_2) { memcpy(&current.pre.buttons[2], readPtr, sizeof(current.pre.buttons[2])); readPtr += sizeof(current.pre.buttons[2]); }
-		if (flags & CHANGED_PRE_JUMP_PRESSED_TIME) { memcpy(&current.pre.jumpPressedTime, readPtr, sizeof(current.pre.jumpPressedTime)); readPtr += sizeof(current.pre.jumpPressedTime); }
-		if (flags & CHANGED_PRE_DUCK_SPEED) { memcpy(&current.pre.duckSpeed, readPtr, sizeof(current.pre.duckSpeed)); readPtr += sizeof(current.pre.duckSpeed); }
-		if (flags & CHANGED_PRE_DUCK_AMOUNT) { memcpy(&current.pre.duckAmount, readPtr, sizeof(current.pre.duckAmount)); readPtr += sizeof(current.pre.duckAmount); }
-		if (flags & CHANGED_PRE_DUCK_OFFSET) { memcpy(&current.pre.duckOffset, readPtr, sizeof(current.pre.duckOffset)); readPtr += sizeof(current.pre.duckOffset); }
-		if (flags & CHANGED_PRE_LAST_DUCK_TIME) { memcpy(&current.pre.lastDuckTime, readPtr, sizeof(current.pre.lastDuckTime)); readPtr += sizeof(current.pre.lastDuckTime); }
-		if (flags & CHANGED_PRE_REPLAY_FLAGS) { memcpy(&current.pre.replayFlags, readPtr, sizeof(current.pre.replayFlags)); readPtr += sizeof(current.pre.replayFlags); }
-		if (flags & CHANGED_PRE_ENTITY_FLAGS) { memcpy(&current.pre.entityFlags, readPtr, sizeof(current.pre.entityFlags)); readPtr += sizeof(current.pre.entityFlags); }
-		if (flags & CHANGED_PRE_MOVE_TYPE) { memcpy(&current.pre.moveType, readPtr, sizeof(current.pre.moveType)); readPtr += sizeof(current.pre.moveType); }
-		
-		// Reconstruct post data (compare with current.pre)
-		current.post = current.pre;
-		if (flags & CHANGED_POST_ORIGIN) { memcpy(&current.post.origin, readPtr, sizeof(current.post.origin)); readPtr += sizeof(current.post.origin); }
-		if (flags & CHANGED_POST_VELOCITY) { memcpy(&current.post.velocity, readPtr, sizeof(current.post.velocity)); readPtr += sizeof(current.post.velocity); }
-		if (flags & CHANGED_POST_ANGLES) { memcpy(&current.post.angles, readPtr, sizeof(current.post.angles)); readPtr += sizeof(current.post.angles); }
-		if (flags & CHANGED_POST_BUTTONS_0) { memcpy(&current.post.buttons[0], readPtr, sizeof(current.post.buttons[0])); readPtr += sizeof(current.post.buttons[0]); }
-		if (flags & CHANGED_POST_BUTTONS_1) { memcpy(&current.post.buttons[1], readPtr, sizeof(current.post.buttons[1])); readPtr += sizeof(current.post.buttons[1]); }
-		if (flags & CHANGED_POST_BUTTONS_2) { memcpy(&current.post.buttons[2], readPtr, sizeof(current.post.buttons[2])); readPtr += sizeof(current.post.buttons[2]); }
-		if (flags & CHANGED_POST_JUMP_PRESSED_TIME) { memcpy(&current.post.jumpPressedTime, readPtr, sizeof(current.post.jumpPressedTime)); readPtr += sizeof(current.post.jumpPressedTime); }
-		if (flags & CHANGED_POST_DUCK_SPEED) { memcpy(&current.post.duckSpeed, readPtr, sizeof(current.post.duckSpeed)); readPtr += sizeof(current.post.duckSpeed); }
-		if (flags & CHANGED_POST_DUCK_AMOUNT) { memcpy(&current.post.duckAmount, readPtr, sizeof(current.post.duckAmount)); readPtr += sizeof(current.post.duckAmount); }
-		if (flags & CHANGED_POST_DUCK_OFFSET) { memcpy(&current.post.duckOffset, readPtr, sizeof(current.post.duckOffset)); readPtr += sizeof(current.post.duckOffset); }
-		if (flags & CHANGED_POST_LAST_DUCK_TIME) { memcpy(&current.post.lastDuckTime, readPtr, sizeof(current.post.lastDuckTime)); readPtr += sizeof(current.post.lastDuckTime); }
-		if (flags & CHANGED_POST_REPLAY_FLAGS) { memcpy(&current.post.replayFlags, readPtr, sizeof(current.post.replayFlags)); readPtr += sizeof(current.post.replayFlags); }
-		if (flags & CHANGED_POST_ENTITY_FLAGS) { memcpy(&current.post.entityFlags, readPtr, sizeof(current.post.entityFlags)); readPtr += sizeof(current.post.entityFlags); }
-		if (flags & CHANGED_POST_MOVE_TYPE) { memcpy(&current.post.moveType, readPtr, sizeof(current.post.moveType)); readPtr += sizeof(current.post.moveType); }
-
-		// Reconstruct checkpoint data (compare with previous)
-		if (i > 0)
-		{
-			current.checkpoint = outTickData[i - 1].checkpoint;
-		}
-		else
-		{
-			current.checkpoint = {};
-		}
-		if (flags & CHANGED_CHECKPOINT)
-		{
-			memcpy(&current.checkpoint.index, readPtr, sizeof(current.checkpoint.index)); readPtr += sizeof(current.checkpoint.index);
-			memcpy(&current.checkpoint.checkpointCount, readPtr, sizeof(current.checkpoint.checkpointCount)); readPtr += sizeof(current.checkpoint.checkpointCount);
-			memcpy(&current.checkpoint.teleportCount, readPtr, sizeof(current.checkpoint.teleportCount)); readPtr += sizeof(current.checkpoint.teleportCount);
-		}
-
-		// 2026 ModernJump fields
-		if (i > 0)
-		{
-			current.modernJump = outTickData[i - 1].modernJump;
-		}
-		else
-		{
-			current.modernJump = {};
-		}
-		// Only read these fields if present in the data (v2+)
-		if (flags & CHANGED_MODERN_JUMP_ACTUAL_PRESS)
-		{
-			memcpy(&current.modernJump.lastActualJumpPressTick, readPtr, sizeof(current.modernJump.lastActualJumpPressTick));
-			readPtr += sizeof(current.modernJump.lastActualJumpPressTick);
-			memcpy(&current.modernJump.lastActualJumpPressFrac, readPtr, sizeof(current.modernJump.lastActualJumpPressFrac));
-			readPtr += sizeof(current.modernJump.lastActualJumpPressFrac);
-		}
-		if (flags & CHANGED_MODERN_JUMP_USABLE_PRESS)
-		{
-			memcpy(&current.modernJump.lastUsableJumpPressTick, readPtr, sizeof(current.modernJump.lastUsableJumpPressTick));
-			readPtr += sizeof(current.modernJump.lastUsableJumpPressTick);
-			memcpy(&current.modernJump.lastUsableJumpPressFrac, readPtr, sizeof(current.modernJump.lastUsableJumpPressFrac));
-			readPtr += sizeof(current.modernJump.lastUsableJumpPressFrac);
-		}
-		if (flags & CHANGED_MODERN_JUMP_LANDED)
-		{
-			memcpy(&current.modernJump.lastLandedTick, readPtr, sizeof(current.modernJump.lastLandedTick));
-			readPtr += sizeof(current.modernJump.lastLandedTick);
-			memcpy(&current.modernJump.lastLandedFrac, readPtr, sizeof(current.modernJump.lastLandedFrac));
-			readPtr += sizeof(current.modernJump.lastLandedFrac);
-			memcpy(&current.modernJump.lastLandedVelocity, readPtr, sizeof(current.modernJump.lastLandedVelocity));
-			readPtr += sizeof(current.modernJump.lastLandedVelocity);
-		}
-		// clang-format on
-	}
+	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, header.elementCount, replayVersion, outTickData);
 
 	delete[] decompressedData;
+	if (!decoded)
+	{
+		return false;
+	}
 
-	// Read subtick data
 	CompressedSectionHeader subtickHeader;
 	g_pFullFileSystem->Read(&subtickHeader, sizeof(subtickHeader), file);
 
@@ -573,6 +458,159 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(FileHandle_t file, st
 	delete[] compressedSubtick;
 
 	return success;
+}
+
+static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount, u32 replayVersion,
+										  std::vector<TickData> &outTickData)
+{
+	outTickData.clear();
+	outTickData.resize(elementCount);
+
+	const u64 weaponFlag = (1ULL << 39);
+	const u64 modernActualFlag = replayVersion >= 3 ? (1ULL << 40) : (replayVersion == 2 ? (1ULL << 39) : 0);
+	const u64 modernUsableFlag = replayVersion >= 3 ? (1ULL << 41) : (replayVersion == 2 ? (1ULL << 40) : 0);
+	const u64 modernLandedFlag = replayVersion >= 3 ? (1ULL << 42) : (replayVersion == 2 ? (1ULL << 41) : 0);
+
+	const bool hasModernJump = replayVersion >= 2;
+
+	const char *readPtr = decompressedData;
+	const char *endPtr = decompressedData + uncompressedSize;
+
+	for (u32 i = 0; i < elementCount; i++)
+	{
+		TickData &current = outTickData[i];
+
+		// Read change flags
+		u64 flags = 0;
+		if (!ReadFromBuffer(readPtr, endPtr, &flags, sizeof(flags)))
+		{
+			return false;
+		}
+
+		// Copy from previous tick if not changed (or apply expected increment)
+		// clang-format off
+		if (i > 0)
+		{
+			// Server tick is expected to increment by 1
+			if (!(flags & CHANGED_SERVER_TICK)) current.serverTick = outTickData[i - 1].serverTick + 1;
+			if (!(flags & CHANGED_GAME_TIME)) current.gameTime = outTickData[i - 1].gameTime;
+			if (!(flags & CHANGED_REAL_TIME)) current.realTime = outTickData[i - 1].realTime;
+			if (!(flags & CHANGED_UNIX_TIME)) current.unixTime = outTickData[i - 1].unixTime;
+			if (!(flags & CHANGED_CMD_NUMBER)) current.cmdNumber = outTickData[i - 1].cmdNumber;
+			if (!(flags & CHANGED_CLIENT_TICK)) current.clientTick = outTickData[i - 1].clientTick;
+			if (!(flags & CHANGED_FORWARD)) current.forward = outTickData[i - 1].forward;
+			if (!(flags & CHANGED_LEFT)) current.left = outTickData[i - 1].left;
+			if (!(flags & CHANGED_UP)) current.up = outTickData[i - 1].up;
+			if (!(flags & CHANGED_LEFT_HANDED)) current.leftHanded = outTickData[i - 1].leftHanded;
+			if (!(flags & weaponFlag)) current.weapon = outTickData[i - 1].weapon;
+		}
+
+		// Read changed fields
+		if (!ReadIfFlag(flags, CHANGED_SERVER_TICK, readPtr, endPtr, &current.serverTick, sizeof(current.serverTick))) return false;
+		if (!ReadIfFlag(flags, CHANGED_GAME_TIME, readPtr, endPtr, &current.gameTime, sizeof(current.gameTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_REAL_TIME, readPtr, endPtr, &current.realTime, sizeof(current.realTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_UNIX_TIME, readPtr, endPtr, &current.unixTime, sizeof(current.unixTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_CMD_NUMBER, readPtr, endPtr, &current.cmdNumber, sizeof(current.cmdNumber))) return false;
+		if (!ReadIfFlag(flags, CHANGED_CLIENT_TICK, readPtr, endPtr, &current.clientTick, sizeof(current.clientTick))) return false;
+		if (!ReadIfFlag(flags, CHANGED_FORWARD, readPtr, endPtr, &current.forward, sizeof(current.forward))) return false;
+		if (!ReadIfFlag(flags, CHANGED_LEFT, readPtr, endPtr, &current.left, sizeof(current.left))) return false;
+		if (!ReadIfFlag(flags, CHANGED_UP, readPtr, endPtr, &current.up, sizeof(current.up))) return false;
+		if (!ReadIfFlag(flags, CHANGED_LEFT_HANDED, readPtr, endPtr, &current.leftHanded, sizeof(current.leftHanded))) return false;
+		if (!ReadIfFlag(flags, weaponFlag, readPtr, endPtr, &current.weapon, sizeof(current.weapon))) return false;
+
+		// Reconstruct pre data
+		// For tick 0: compare with zero
+		// For tick N: compare with previous.post
+		TickData::MovementData prevPre = {};
+		if (i > 0)
+		{
+			prevPre = outTickData[i - 1].post;
+		}
+		
+		// Copy from previous or read changed
+		current.pre = prevPre;
+
+		if (!ReadIfFlag(flags, CHANGED_PRE_ORIGIN, readPtr, endPtr, &current.pre.origin, sizeof(current.pre.origin))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_VELOCITY, readPtr, endPtr, &current.pre.velocity, sizeof(current.pre.velocity))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_ANGLES, readPtr, endPtr, &current.pre.angles, sizeof(current.pre.angles))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_0, readPtr, endPtr, &current.pre.buttons[0], sizeof(current.pre.buttons[0]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_1, readPtr, endPtr, &current.pre.buttons[1], sizeof(current.pre.buttons[1]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_2, readPtr, endPtr, &current.pre.buttons[2], sizeof(current.pre.buttons[2]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_JUMP_PRESSED_TIME, readPtr, endPtr, &current.pre.jumpPressedTime, sizeof(current.pre.jumpPressedTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_SPEED, readPtr, endPtr, &current.pre.duckSpeed, sizeof(current.pre.duckSpeed))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_AMOUNT, readPtr, endPtr, &current.pre.duckAmount, sizeof(current.pre.duckAmount))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_OFFSET, readPtr, endPtr, &current.pre.duckOffset, sizeof(current.pre.duckOffset))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_LAST_DUCK_TIME, readPtr, endPtr, &current.pre.lastDuckTime, sizeof(current.pre.lastDuckTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_REPLAY_FLAGS, readPtr, endPtr, &current.pre.replayFlags, sizeof(current.pre.replayFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_ENTITY_FLAGS, readPtr, endPtr, &current.pre.entityFlags, sizeof(current.pre.entityFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_MOVE_TYPE, readPtr, endPtr, &current.pre.moveType, sizeof(current.pre.moveType))) return false;
+
+		// Reconstruct post data (compare with current.pre)
+		current.post = current.pre;
+		if (!ReadIfFlag(flags, CHANGED_POST_ORIGIN, readPtr, endPtr, &current.post.origin, sizeof(current.post.origin))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_VELOCITY, readPtr, endPtr, &current.post.velocity, sizeof(current.post.velocity))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_ANGLES, readPtr, endPtr, &current.post.angles, sizeof(current.post.angles))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_0, readPtr, endPtr, &current.post.buttons[0], sizeof(current.post.buttons[0]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_1, readPtr, endPtr, &current.post.buttons[1], sizeof(current.post.buttons[1]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_2, readPtr, endPtr, &current.post.buttons[2], sizeof(current.post.buttons[2]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_JUMP_PRESSED_TIME, readPtr, endPtr, &current.post.jumpPressedTime, sizeof(current.post.jumpPressedTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_SPEED, readPtr, endPtr, &current.post.duckSpeed, sizeof(current.post.duckSpeed))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_AMOUNT, readPtr, endPtr, &current.post.duckAmount, sizeof(current.post.duckAmount))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_OFFSET, readPtr, endPtr, &current.post.duckOffset, sizeof(current.post.duckOffset))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_LAST_DUCK_TIME, readPtr, endPtr, &current.post.lastDuckTime, sizeof(current.post.lastDuckTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_REPLAY_FLAGS, readPtr, endPtr, &current.post.replayFlags, sizeof(current.post.replayFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_ENTITY_FLAGS, readPtr, endPtr, &current.post.entityFlags, sizeof(current.post.entityFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_MOVE_TYPE, readPtr, endPtr, &current.post.moveType, sizeof(current.post.moveType))) return false;
+
+		// Reconstruct checkpoint data (compare with previous)
+		if (i > 0)
+		{
+			current.checkpoint = outTickData[i - 1].checkpoint;
+		}
+		else
+		{
+			current.checkpoint = {};
+		}
+		if (flags & CHANGED_CHECKPOINT)
+		{
+			if (!ReadFromBuffer(readPtr, endPtr, &current.checkpoint.index, sizeof(current.checkpoint.index))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &current.checkpoint.checkpointCount, sizeof(current.checkpoint.checkpointCount))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &current.checkpoint.teleportCount, sizeof(current.checkpoint.teleportCount))) return false;
+		}
+
+		// 2026 ModernJump fields
+		if (i > 0)
+		{
+			current.modernJump = outTickData[i - 1].modernJump;
+		}
+		else
+		{
+			current.modernJump = {};
+		}
+
+		// Only read these fields if present in the data (v2+)
+		if (hasModernJump)
+		{
+			if (flags & modernActualFlag)
+			{
+				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastActualJumpPressTick, sizeof(current.modernJump.lastActualJumpPressTick))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastActualJumpPressFrac, sizeof(current.modernJump.lastActualJumpPressFrac))) return false;
+			}
+			if (flags & modernUsableFlag)
+			{
+				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastUsableJumpPressTick, sizeof(current.modernJump.lastUsableJumpPressTick))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastUsableJumpPressFrac, sizeof(current.modernJump.lastUsableJumpPressFrac))) return false;
+			}
+			if (flags & modernLandedFlag)
+			{
+				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastLandedTick, sizeof(current.modernJump.lastLandedTick))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastLandedFrac, sizeof(current.modernJump.lastLandedFrac))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastLandedVelocity, sizeof(current.modernJump.lastLandedVelocity))) return false;
+			}
+		}
+	}
+	// clang-format on
+	return readPtr == endPtr;
 }
 
 bool KZ::replaysystem::compression::ReadWeaponsCompressed(FileHandle_t file, std::vector<std::pair<i32, EconInfo>> &outWeaponTable)

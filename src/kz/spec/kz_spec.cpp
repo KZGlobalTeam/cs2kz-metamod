@@ -277,13 +277,14 @@ SCMD(kz_spec, SCFL_SPEC)
 		return MRES_SUPERCEDE;
 	}
 
-	// Handle explicit target
+	// If no target is provided, default to the first alive player.
 	if (args->ArgC() < 2)
 	{
-		player->languageService->PrintChat(true, false, "Spec Command Usage", args->ArgS());
+		player->specService->SpectatePlayer(firstAlivePlayer);
 		return MRES_SUPERCEDE;
 	}
 
+	// Handle explicit target
 	player->specService->SpectatePlayer(args->Arg(1));
 	return MRES_SUPERCEDE;
 }
