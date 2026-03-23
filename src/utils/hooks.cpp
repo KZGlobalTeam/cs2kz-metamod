@@ -15,6 +15,7 @@
 #include "kz/beam/kz_beam.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
+#include "kz/paint/kz_paint.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/timer/announce.h"
@@ -505,6 +506,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	BaseRequest::CheckRequests();
 	KZTelemetryService::ActiveCheck();
 	KZBeamService::UpdateBeams();
+	KZPaintService::OnGameFrame();
 	KZProfileService::OnGameFrame();
 	KZ::replaysystem::OnGameFrame();
 	KZRacingService::BroadcastRaceInfo();

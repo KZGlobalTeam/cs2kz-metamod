@@ -39,8 +39,21 @@ public:
 	Color GetColor() const;
 	f32 GetSize() const;
 	const char *GetColorName() const;
+	bool ShouldShowAllPaint() const;
+	bool IsAutoPaintEnabled() const;
+	static void OnGameFrame();
 
 	void PlacePaint();
+	void ToggleAutoPaint();
+	void ToggleShowAllPaint();
 
 	bool pendingPaint = false;
+	bool autoPaintEnabled = false;
+	bool hasLastAutoPaintPosition = false;
+	f64 nextAutoPaintTime = 0.0;
+	Vector lastAutoPaintPosition = vec3_origin;
+
+private:
+	bool TracePaint(trace_t &tr) const;
+	void TryAutoPaint();
 };

@@ -40,4 +40,20 @@
 		"en"		"{grey}Paint size set to {default}{size}{grey}."
 		"ua"		"{grey}Розмір кольорової мітки встановлено на {default}{size}{grey}."
 	}
+	"Paint Toggle Enabled"
+	{
+		"en"		"{grey}Auto paint is now {lime}enabled{grey}."
+	}
+	"Paint Toggle Disabled"
+	{
+		"en"		"{grey}Auto paint is now {darkred}disabled{grey}."
+	}
+	"Show Paint Enabled"
+	{
+		"en"		"{grey}You now see paint from {default}all players{grey}."
+	}
+	"Show Paint Disabled"
+	{
+		"en"		"{grey}You now only see {default}your own paint{grey}."
+	}
 }
