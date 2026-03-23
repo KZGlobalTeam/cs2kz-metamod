@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 585
 Phrases with missing translations: 365
-Total missing translation entries: 2224
+Total missing translation entries: 2213
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -22,7 +22,7 @@ LANGUAGE COVERAGE (Phrases)
   ko (korean)          [█████████░░░░░░░░░░░]  49.7% (291/585)
   lv (latvian)         [███████████░░░░░░░░░]  56.9% (333/585)
   pl (polish)          [█████████████████░░░]  89.1% (521/585)
-  ru (russian)         [███████████████████░]  97.1% (568/585)
+  ru (russian)         [███████████████████░]  99.0% (579/585)
   sv (swedish)         [█████████████░░░░░░░]  67.9% (397/585)
   tr (turkish)         [█████████░░░░░░░░░░░]  45.6% (267/585)
   ua (ukrainian)       [███████████████████░]  99.0% (579/585)
@@ -245,62 +245,62 @@ cs2kz-commands.phrases.txt
   Line 1411: "Command Description - kz_measureblock"
     Missing (6): es, fi, it, ko, lv, tr
   Line 1421: "Command Description - kz_paint"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1426: "Command Description - kz_paintcolor"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1431: "Command Description - kz_paintsize"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1436: "Command Description - kz_togglepaint"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1427: "Command Description - kz_paintcolor"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1433: "Command Description - kz_paintsize"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1439: "Command Description - kz_togglepaint"
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1440: "Command Description - kz_showpaint"
+  Line 1443: "Command Description - kz_showpaint"
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1444: "Command Description - kz_cleardecals"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1449: "Command Description - kz_timerstopsound"
+  Line 1447: "Command Description - kz_cleardecals"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1453: "Command Description - kz_timerstopsound"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1459: "Command Description - kz_autohideweapon"
+  Line 1463: "Command Description - kz_autohideweapon"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1469: "Command Description - kz_pistol"
+  Line 1473: "Command Description - kz_pistol"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1479: "Command Description - kz_rpsave"
+  Line 1483: "Command Description - kz_rpsave"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1488: "Command Description - kz_replay"
+  Line 1492: "Command Description - kz_replay"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1497: "Command Description - kz_replays"
+  Line 1501: "Command Description - kz_replays"
     Missing (8): chi, es, fi, it, ko, lv, sv, tr
-  Line 1505: "Command Description - kz_rpgoto"
+  Line 1509: "Command Description - kz_rpgoto"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1514: "Command Description - kz_rpgototick"
+  Line 1518: "Command Description - kz_rpgototick"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1523: "Command Description - kz_rpinfo"
+  Line 1527: "Command Description - kz_rpinfo"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1532: "Command Description - kz_rppause"
+  Line 1536: "Command Description - kz_rppause"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1541: "Command Description - kz_rploadprogress"
+  Line 1545: "Command Description - kz_rploadprogress"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1550: "Command Description - kz_rpcancelload"
+  Line 1554: "Command Description - kz_rpcancelload"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1559: "Command Description - kz_recordvolume"
+  Line 1563: "Command Description - kz_recordvolume"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1568: "Command Description - kz_cpmessage"
+  Line 1572: "Command Description - kz_cpmessage"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1577: "Command Description - kz_rphidelegs"
+  Line 1581: "Command Description - kz_rphidelegs"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1586: "Command Description - kz_accept"
+  Line 1590: "Command Description - kz_accept"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1594: "Command Description - kz_surrender"
+  Line 1598: "Command Description - kz_surrender"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1602: "Command Description - kz_mapinfo"
+  Line 1606: "Command Description - kz_mapinfo"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1609: "Command Description - kz_tier"
+  Line 1613: "Command Description - kz_tier"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1616: "Command Description - kz_modernperfstats"
+  Line 1620: "Command Description - kz_modernperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1623: "Command Description - kz_legacyperfstats"
+  Line 1627: "Command Description - kz_legacyperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1630: "Command Description - kz_resetperfstats"
+  Line 1634: "Command Description - kz_resetperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1637: "Command Description - kz_fov"
+  Line 1641: "Command Description - kz_fov"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-common.phrases.txt
@@ -446,26 +446,26 @@ cs2kz-measure.phrases.txt
 cs2kz-paint.phrases.txt
 ----------------------------------------------------------------------
   Line 3: "Paint Color Command Usage"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 8: "Current Paint Color"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 14: "Paint Color Set"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 20: "Paint Color RGB Set"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 26: "Paint Size Command Usage"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 31: "Current Paint Size"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 37: "Paint Size Set"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 43: "Paint Toggle Enabled"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 9: "Current Paint Color"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 16: "Paint Color Set"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 23: "Paint Color RGB Set"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 30: "Paint Size Command Usage"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 36: "Current Paint Size"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 43: "Paint Size Set"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 50: "Paint Toggle Enabled"
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 47: "Paint Toggle Disabled"
+  Line 54: "Paint Toggle Disabled"
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 51: "Show Paint Enabled"
+  Line 58: "Show Paint Enabled"
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 55: "Show Paint Disabled"
+  Line 62: "Show Paint Disabled"
     Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-pistol.phrases.txt
