@@ -50,17 +50,21 @@
 	"Paint Toggle Enabled"
 	{
 		"en"		"{grey}Auto paint is now {lime}enabled{grey}."
+		"ru"		"{grey}Автопокраска {lime}включена{grey}."
 	}
 	"Paint Toggle Disabled"
 	{
 		"en"		"{grey}Auto paint is now {darkred}disabled{grey}."
+		"ru"		"{grey}Автопокраска {darkred}выключена{grey}."
 	}
 	"Show Paint Enabled"
 	{
 		"en"		"{grey}You now see paint from {default}all players{grey}."
+		"ru"		"{grey}Теперь вы видите краску {default}всех игроков{grey}."
 	}
 	"Show Paint Disabled"
 	{
 		"en"		"{grey}You now only see {default}your own paint{grey}."
+		"ru"		"{grey}Теперь вы видите {default}только вашу краску{grey}."
 	}
 }
