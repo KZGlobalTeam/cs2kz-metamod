@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 594
 Phrases with missing translations: 378
-Total missing translation entries: 2363
+Total missing translation entries: 2350
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -22,7 +22,7 @@ LANGUAGE COVERAGE (Phrases)
   ko (korean)          [█████████░░░░░░░░░░░]  48.3% (287/594)
   lv (latvian)         [███████████░░░░░░░░░]  55.4% (329/594)
   pl (polish)          [█████████████████░░░]  87.0% (517/594)
-  ru (russian)         [███████████████████░]  97.8% (581/594)
+  ru (russian)         [████████████████████] 100.0% (594/594)
   sv (swedish)         [█████████████░░░░░░░]  66.2% (393/594)
   tr (turkish)         [████████░░░░░░░░░░░░]  44.3% (263/594)
   ua (ukrainian)       [███████████████████░]  96.8% (575/594)
@@ -385,64 +385,64 @@ cs2kz-fov.phrases.txt
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------
   Line 212: "Width (Short)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 475: "Player gravity scale changed"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 476: "Player gravity scale changed"
     Missing (3): fi, it, tr
-  Line 552: "Disabled By Map"
+  Line 553: "Disabled By Map"
     Missing (3): fi, it, tr
-  Line 631: "Jumpstats Option - Tier Hint"
+  Line 632: "Jumpstats Option - Tier Hint"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 690: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
+  Line 691: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 699: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
+  Line 700: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 797: "Jumpstats Report - Chat Summary (Simple)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 803: "Jumpstats Report - Chat Summary"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 828: "Jumpstats Report - Console Failstat Summary"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 834: "Jumpstat Report - Console Details 1"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 840: "Jumpstat Report - Console Segment - Edge"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 845: "Jumpstat Report - Console Segment - Block"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 850: "Jumpstat Report - Console Segment - Miss"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 855: "Jumpstats Report - Chat Segment - Edge"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 860: "Jumpstats Report - Chat Segment - Deviation"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 865: "Jumpstats Report - Chat Segment - Offset"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 870: "Jumpstats Report - Chat Segment - Miss"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 875: "Jumpstat Report - Console Details 2"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 881: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
+  Line 798: "Jumpstats Report - Chat Summary (Simple)"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 805: "Jumpstats Report - Chat Summary"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 831: "Jumpstats Report - Console Failstat Summary"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 838: "Jumpstat Report - Console Details 1"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 845: "Jumpstat Report - Console Segment - Edge"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 851: "Jumpstat Report - Console Segment - Block"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 857: "Jumpstat Report - Console Segment - Miss"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 863: "Jumpstats Report - Chat Segment - Edge"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 869: "Jumpstats Report - Chat Segment - Deviation"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 875: "Jumpstats Report - Chat Segment - Offset"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 881: "Jumpstats Report - Chat Segment - Miss"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 887: "Jumpstat Report - Console Details 2"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 894: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 891: "Jumpstats Option - Jumpstats Minimum Tier - Response"
+  Line 904: "Jumpstats Option - Jumpstats Minimum Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 902: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
+  Line 915: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 912: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
+  Line 925: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 923: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
+  Line 936: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 933: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
+  Line 946: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 944: "Jumpstats Option - Jumpstats Volume - Current"
+  Line 957: "Jumpstats Option - Jumpstats Volume - Current"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 954: "Jumpstats Option - Jumpstats Volume - Response"
+  Line 967: "Jumpstats Option - Jumpstats Volume - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 965: "Jumpstats Option - Extended Chat Stats - Enable"
+  Line 978: "Jumpstats Option - Extended Chat Stats - Enable"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 975: "Jumpstats Option - Extended Chat Stats - Disable"
+  Line 988: "Jumpstats Option - Extended Chat Stats - Disable"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 985: "Jumpstats Option - Jumpstats Reporting - Enable"
+  Line 998: "Jumpstats Option - Jumpstats Reporting - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 992: "Jumpstats Option - Jumpstats Reporting - Disable"
+  Line 1005: "Jumpstats Option - Jumpstats Reporting - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-language.phrases.txt

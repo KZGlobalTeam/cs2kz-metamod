@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 594 |
 | **Phrases Missing Translations** | 378 |
-| **Total Missing Entries** | 2363 |
+| **Total Missing Entries** | 2350 |
 | **Menu Files** | 10 |
 
 ## Language Coverage (Phrases)
@@ -26,7 +26,7 @@ Automated translation linter reports for cs2kz-metamod.
   ko (korean)          [█████████░░░░░░░░░░░]  48.3% (287/594)
   lv (latvian)         [███████████░░░░░░░░░]  55.4% (329/594)
   pl (polish)          [█████████████████░░░]  87.0% (517/594)
-  ru (russian)         [███████████████████░]  97.8% (581/594)
+  ru (russian)         [████████████████████] 100.0% (594/594)
   sv (swedish)         [█████████████░░░░░░░]  66.2% (393/594)
   tr (turkish)         [████████░░░░░░░░░░░░]  44.3% (263/594)
   ua (ukrainian)       [███████████████████░]  96.8% (575/594)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`301017e`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/301017e94f22908a81adfa360d7329e150d38c70)
-- **Time:** 2026-03-25 03:24:04 UTC
-- **Message:** Add block, edge, failstats to jumpstats; fix jumpstats replay playback issue, ad
+- **Commit:** [`c6d0fa8`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/c6d0fa87a0cc1ab782774a590daa3c12b674cfa9)
+- **Time:** 2026-03-25 19:14:05 UTC
+- **Message:** Russian translations (#533)
 
 ---
 
