@@ -9,7 +9,7 @@
 		"pl"		"Przesunięcie"
 		"fi"		"Kompensaatio"
 		"sv"		"Offset"
-		"ua"		"Зсув"
+		"ua"		"Зміщення"
 		"tr"		"Offset"
 		"it"		"Offset"
 		"es"		"Desplazamiento"
@@ -212,6 +212,7 @@
 	"Width (Short)"
 	{
 		"en"		"Width"
+		"ua"		"Шир."
 		"ru"		"Ширина"
 	}
 	"Edge"
@@ -800,6 +801,7 @@
 		// LJ: 258.1 | 6 Strafes | 79% Sync | 276 Pre | 347 Max | 4.09 Edge | +1 W
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,edge_stats:s,release:s"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
+		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
 		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр. | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс.{edge_stats}{release}"
 	}
 	"Jumpstats Report - Chat Summary"
@@ -808,6 +810,7 @@
 		// BA 6% | OL 2% | DA 15% | 9.7 Dev | 25.5 Width | 55.83 Height | 34.35 Miss
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,bad_angles:.0f,overlap:.0f,dead_air:.0f,width:.1f,height:.2f,edge_stats:s,release:s,deviation_stats:s,miss_stats:s"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
+		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Висота{miss_stats}"
 		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр. | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс.{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Высота{miss_stats}"
 	}
 	"Jumpstats Report - Console Summary"
@@ -833,6 +836,7 @@
 		// zer0.k failed 280.3341 units with a Long Jump
 		"#format"	"player_name:s,distance:.4f,jump_type:s,invalidation_reason:s"
 		"en"		"{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
+		"ua"		"{player_name} не зміг стрибнути {distance} units з {jump_type} {invalidation_reason}"
 		"ru"		"{player_name} не долетел {distance} юнитов с {jump_type} {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
@@ -840,48 +844,56 @@
 		// CKZ | 272 Block | 4.09 Edge | 23.50 Miss | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height | +1.0 W
 		"#format"	"mode_style:s,block:s,edge:s,miss:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f,release:s"
 		"en"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+		"ua"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота{release}"
 		"ru"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
 	}
 	"Jumpstat Report - Console Segment - Edge"
 	{
 		"#format"	"value:.2f"
 		"en"		" | {value} Edge"
+		"ua"		" | {value} Край"
 		"ru"		" | {value} Край"
 	}
 	"Jumpstat Report - Console Segment - Block"
 	{
 		"#format"	"value:.0f"
 		"en"		" | {value} Block"
+		"ua"		" | {value} Блок"
 		"ru"		" | {value} Блок"
 	}
 	"Jumpstat Report - Console Segment - Miss"
 	{
 		"#format"	"value:.2f"
 		"en"		" | {value} Miss"
+		"ua"		" | {value} Брак"
 		"ru"		" | {value} Нехватка"
 	}
 	"Jumpstats Report - Chat Segment - Edge"
 	{
 		"#format"	"value:.2f"
 		"en"		" | {olive}{value} {grey}Edge"
+		"ua"		" | {olive}{value} {grey}Край"
 		"ru"		" | {olive}{value} {grey}Край"
 	}
 	"Jumpstats Report - Chat Segment - Deviation"
 	{
 		"#format"	"value:.1f"
 		"en"		" | {olive}{value} {grey}Dev"
+		"ua"		" | {olive}{value} {grey}Відх"
 		"ru"		" | {olive}{value} {grey}Откл."
 	}
 	"Jumpstats Report - Chat Segment - Offset"
 	{
 		"#format"	"value:.1f"
 		"en"		" | {olive}{value} {grey}Offset"
+		"ua"		" | {olive}{value} {grey}Зміщення"
 		"ru"		" | {olive}{value} {grey}Смещение"
 	}
 	"Jumpstats Report - Chat Segment - Miss"
 	{
 		"#format"	"value:.2f"
 		"en"		" | {olive}{value} {grey}Miss"
+		"ua"		" | {olive}{value} {grey}Брак"
 		"ru"		" | {olive}{value} {grey}Нехватка"
 	}
 	"Jumpstat Report - Console Details 2"
@@ -889,6 +901,7 @@
 		// 57% GainEff | 1.048 Airpath | 17.7 Deviation | 43.1 Width | 0.8003 Airtime | -8.0 Offset | 0.12/0.12 Crouched
 		"#format"	"gain_eff:.0f,air_path:.3f,deviation:.1f,width:.1f,air_time:.4f,offset:.1f,duck_end_time:.2f,duck_total_time:.2f"
 		"en"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зміщення | {duck_end_time}/{duck_total_time} Присівши"
 		"ru"		"{gain_eff}%%%% ЭффПрир | {air_path} Airpath | {deviation} Отклонение | {width} Ширина | {air_time} Airtime | {offset} Смещение | {duck_end_time}/{duck_total_time} В приседе"
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"

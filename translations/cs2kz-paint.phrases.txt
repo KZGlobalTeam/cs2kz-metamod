@@ -50,21 +50,25 @@
 	"Paint Toggle Enabled"
 	{
 		"en"		"{grey}Auto paint is now {lime}enabled{grey}."
+		"ua"		"{grey}Автоматична кольорова мітка {lime}увімкнена{grey}."
 		"ru"		"{grey}Автопокраска {lime}включена{grey}."
 	}
 	"Paint Toggle Disabled"
 	{
 		"en"		"{grey}Auto paint is now {darkred}disabled{grey}."
+		"ua"		"{grey}Автоматична кольорова мітка {darkred}вимкнена{grey}."
 		"ru"		"{grey}Автопокраска {darkred}выключена{grey}."
 	}
 	"Show Paint Enabled"
 	{
 		"en"		"{grey}You now see paint from {default}all players{grey}."
+		"ua"		"{grey}Тепер ви бачите кольорові мітки {default}всіх гравців{grey}."
 		"ru"		"{grey}Теперь вы видите краску {default}всех игроков{grey}."
 	}
 	"Show Paint Disabled"
 	{
 		"en"		"{grey}You now only see {default}your own paint{grey}."
+		"ua"		"{grey}Тепер ви бачите {default}лише свої{grey} кольрові мітки."
 		"ru"		"{grey}Теперь вы видите {default}только вашу краску{grey}."
 	}
 }
