@@ -36,7 +36,7 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 	stats.overall.duckDuration = jump->duckDuration;
 	stats.overall.duckEndDuration = jump->duckEndDuration;
 	stats.overall.release = jump->release;
-	stats.overall.block = -1.0f; // TODO
+	stats.overall.block = jump->GetBlock();
 	stats.overall.edge = jump->GetEdge(false);
 	stats.overall.landingEdge = jump->GetEdge(true);
 	V_strncpy(stats.overall.invalidateReason, jump->invalidateReason, sizeof(stats.overall.invalidateReason));
@@ -125,6 +125,8 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 	out.duckDuration = js->overall.duckDuration;
 	out.duckEndDuration = js->overall.duckEndDuration;
 	out.release = js->overall.release;
+	out.block = js->overall.block;
+	out.edge = js->overall.edge;
 	V_strncpy(out.invalidateReason, js->overall.invalidateReason, sizeof(out.invalidateReason));
 
 	// Clear existing strafes just in case
@@ -156,10 +158,10 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 		// Add AACall data for this strafe
 		for (size_t j = 0; j < js->aaCalls.size(); j++)
 		{
-			AACall *aa = strafe->aaCalls.AddToTailGetPtr();
 			const RpJumpStats::AAData &aaData = js->aaCalls[j];
 			if (aaData.strafeIndex == i)
 			{
+				AACall *aa = strafe->aaCalls.AddToTailGetPtr();
 				aa->externalSpeedDiff = aaData.externalSpeedDiff;
 				aa->prevYaw = aaData.prevYaw;
 				aa->currentYaw = aaData.currentYaw;

@@ -849,7 +849,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
-	this->jumpstatsService->InvalidateJumpstats("Teleported");
+	this->jumpstatsService->HandleTeleport();
 	this->modeService->OnTeleport(origin, angles, velocity);
 	this->timerService->OnTeleport(origin, angles, velocity);
 	this->recordingService->OnTeleport(origin, angles, velocity);

@@ -376,8 +376,29 @@ void Jump::Init()
 	this->adjustedTakeoffOrigin = this->player->takeoffGroundOrigin;
 	this->takeoffVelocity = this->player->takeoffVelocity;
 	this->jumpType = this->player->jumpstatsService->DetermineJumpType();
+	this->originalJumpType = this->jumpType;
 
 	this->valid = this->GetJumpPlayer()->styleServices.Count() == 0;
+
+	// Block / failstat / edge fields
+	this->block = 0.0f;
+	this->edge = -1.0f;
+	this->miss = 0.0f;
+	this->failstatDistance = 0.0f;
+	this->failstatOffset = 0.0f;
+	this->failstatSync = 0.0f;
+	this->failstatBadAngles = 0.0f;
+	this->poseIndex = 0;
+	this->poseCount = 0;
+	this->failstatBlockDetected = (this->jumpType != JumpType_LadderJump);
+	this->failstatFailed = false;
+	this->failstatValid = false;
+	this->failstatBlockHeight = this->adjustedTakeoffOrigin.z;
+	this->poseEndedDuration = 0.0f;
+	this->poseEndedSyncDuration = 0.0f;
+	this->poseEndedBadAnglesDuration = 0.0f;
+	this->poseEndedOverlapDuration = 0.0f;
+	this->poseEndedDeadAirDuration = 0.0f;
 
 	// W release tracking.
 	f32 lastPressedTime = this->player->jumpstatsService->GetLastWPressedTime();
@@ -447,9 +468,15 @@ void Jump::Update()
 	}
 	this->totalDistance += (this->player->currentMoveData->m_vecAbsOrigin - this->player->moveDataPre.m_vecAbsOrigin).Length2D();
 	this->currentMaxSpeed = MAX(this->player->currentMoveData->m_vecVelocity.Length2D(), this->currentMaxSpeed);
-	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z, this->currentMaxHeight);
+	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z - this->adjustedTakeoffOrigin.z, this->currentMaxHeight);
 
 	this->valid = this->valid && this->GetJumpPlayer()->styleServices.Count() == 0;
+
+	this->RecordPose();
+	if (this->IsValid())
+	{
+		this->UpdateFailstat();
+	}
 }
 
 void Jump::End()
@@ -458,12 +485,21 @@ void Jump::End()
 	if (this->strafes.Count() > 0)
 	{
 		this->strafes.Tail().End();
+		this->CacheEndedStrafePoseTotals(this->strafes.Tail());
 	}
 	this->landingOrigin = this->player->landingOrigin;
 	this->adjustedLandingOrigin = this->player->landingOriginActual;
-	this->currentMaxHeight -= this->adjustedTakeoffOrigin.z;
 	// This is not the real jump duration, it's just here to calculate sync.
 	f32 jumpDuration = 0.0f;
+
+	// Reset aggregate stats in case they were temporarily populated during failstat probing.
+	this->width = 0.0f;
+	this->overlap = 0.0f;
+	this->deadAir = 0.0f;
+	this->badAngles = 0.0f;
+	this->sync = 0.0f;
+	this->duckDuration = 0.0f;
+	this->duckEndDuration = 0.0f;
 
 	f32 gain = 0.0f;
 	f32 maxGain = 0.0f;
@@ -497,15 +533,73 @@ void Jump::End()
 	this->sync /= jumpDuration;
 	this->ended = true;
 	this->gainEff = gain / maxGain;
+
+	if (this->failstatValid)
+	{
+		// Keep failstat estimate; failstatValid is already managed live in UpdateFailstat().
+		f32 failBlock = this->block;
+		f32 failEdge = this->edge;
+		f32 failMiss = this->miss;
+
+		this->EndBlockDistance();
+
+		// Keep failstat estimation for reporting.
+		this->block = failBlock;
+		this->edge = failEdge;
+		this->miss = failMiss;
+	}
+	else
+	{
+		this->EndBlockDistance();
+	}
+
+	bool jsAlways = this->player->optionService->GetPreferenceBool("jsAlways", false);
+	if (!this->failstatValid && jsAlways && this->block == 0.0f)
+	{
+		this->AlwaysFailstat();
+	}
+	else if (this->failstatValid && this->miss <= 0.0f)
+	{
+		// Recover miss from always-failstat traces without clobbering failstat metrics.
+		f32 failBlock = this->block;
+		f32 failEdge = this->edge;
+		f32 failDistance = this->failstatDistance;
+		f32 failOffset = this->failstatOffset;
+		f32 failAirtime = this->airtime;
+		f32 failBadAngles = this->badAngles;
+		f32 failOverlap = this->overlap;
+		f32 failDeadAir = this->deadAir;
+		f32 failSync = this->sync;
+		f32 failstatBadAngles = this->failstatBadAngles;
+		bool hadValidFailstat = this->failstatValid;
+
+		this->failstatValid = false;
+		this->AlwaysFailstat();
+		f32 failMiss = this->miss;
+
+		this->block = failBlock;
+		this->edge = failEdge;
+		this->failstatDistance = failDistance;
+		this->failstatOffset = failOffset;
+		this->airtime = failAirtime;
+		this->badAngles = failBadAngles;
+		this->overlap = failOverlap;
+		this->deadAir = failDeadAir;
+		this->sync = failSync;
+		this->failstatBadAngles = failstatBadAngles;
+		this->failstatValid = hadValidFailstat;
+		this->miss = failMiss;
+	}
+
 	// If there's no air time at all then that was definitely not a jump.
-	// Happens when player touch the ground from a ladder.
+	// Happens when player touches the ground from a ladder.
 	if (jumpDuration == 0.0f)
 	{
 		this->jumpType = JumpType_FullInvalid;
 	}
-	else
+	else if (!this->failstatValid)
 	{
-		// Make sure the airtime is valid.
+		// Airtime caps apply to landed jumps; failstats are evaluated at fail-plane crossing.
 		switch (this->jumpType)
 		{
 			case JumpType_LadderJump:
@@ -552,6 +646,7 @@ Strafe *Jump::GetCurrentStrafe()
 	else if (this->strafes.Tail().turnstate == -this->player->GetTurning())
 	{
 		this->strafes.Tail().End();
+		this->CacheEndedStrafePoseTotals(this->strafes.Tail());
 		// Finish the previous strafe before adding a new strafe.
 		Strafe strafe = Strafe(this);
 		strafe.turnstate = this->player->GetTurning();
@@ -562,8 +657,22 @@ Strafe *Jump::GetCurrentStrafe()
 	return &this->strafes.Tail();
 }
 
+void Jump::CacheEndedStrafePoseTotals(Strafe &strafe)
+{
+	this->poseEndedDuration += strafe.GetStrafeDuration();
+	this->poseEndedSyncDuration += strafe.GetSyncDuration();
+	this->poseEndedBadAnglesDuration += strafe.GetBadAngleDuration();
+	this->poseEndedOverlapDuration += strafe.GetOverlapDuration();
+	this->poseEndedDeadAirDuration += strafe.GetDeadAirDuration();
+}
+
 f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist, i32 floorLevel)
 {
+	if (this->IsFailstat() && this->failstatDistance > 0.0f && useDistbugFix && !disableAddDist)
+	{
+		return floorLevel < 0 ? this->failstatDistance : floor(this->failstatDistance * pow(10, floorLevel)) / pow(10, floorLevel);
+	}
+
 	f32 dist = 32.0f;
 	if (this->jumpType == JumpType_LadderJump || disableAddDist)
 	{
@@ -578,12 +687,6 @@ f32 Jump::GetDistance(bool useDistbugFix, bool disableAddDist, i32 floorLevel)
 		dist += (this->landingOrigin - this->takeoffOrigin).Length2D();
 	}
 	return floorLevel < 0 ? dist : floor(dist * pow(10, floorLevel)) / pow(10, floorLevel);
-}
-
-// TODO
-f32 Jump::GetEdge(bool landing)
-{
-	return 0.0f;
 }
 
 f32 Jump::GetAirPath()
@@ -870,6 +973,34 @@ void KZJumpstatsService::EndJump()
 	KZJumpstatsService::AnnounceJump(jump);
 	this->player->recordingService->OnJumpFinish(jump);
 	this->player->anticheatService->OnJumpFinish(jump);
+}
+
+void KZJumpstatsService::HandleTeleport()
+{
+	if (KZ::replaysystem::IsReplayBot(this->player))
+	{
+		return;
+	}
+	if (this->jumps.Count() <= 0)
+	{
+		return;
+	}
+
+	Jump *jump = &this->jumps.Tail();
+	if (jump->AlreadyEnded())
+	{
+		return;
+	}
+
+	// If failstat already exists, finalize and report it before invalidating due to teleport.
+	if (jump->IsFailstat())
+	{
+		jump->Invalidate("Teleported");
+		this->EndJump();
+		return;
+	}
+
+	this->InvalidateJumpstats("Teleported");
 }
 
 void KZJumpstatsService::InvalidateJumpstats(const char *reason)

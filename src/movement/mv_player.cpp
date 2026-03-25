@@ -338,7 +338,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	}
 	// reverse bugged
 	f32 diffZ = mv->m_vecAbsOrigin.z - this->GetGroundPosition();
-	if (diffZ <= 0) // Ledgegrabbed, just use the current origin.
+	if (diffZ <= 0.03125f) // Ledgegrabbed, just use the current origin.
 	{
 		this->landingOriginActual = mv->m_vecAbsOrigin;
 		this->landingTimeActual = this->landingTime;
