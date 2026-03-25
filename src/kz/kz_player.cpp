@@ -115,6 +115,7 @@ void KZPlayer::Reset()
 	this->beamService->Reset();
 	this->telemetryService->Reset();
 	this->recordingService->Reset();
+	this->paintService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true, false);
 	g_pKZStyleManager->ClearStyles(this, true, false);
