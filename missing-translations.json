@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 594,
     "phrases_with_missing": 378,
-    "total_missing_entries": 2350,
+    "total_missing_entries": 2331,
     "all_languages": [
       "chi",
       "de",
@@ -94,19 +94,19 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
@@ -118,73 +118,73 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
@@ -238,19 +238,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -322,61 +322,61 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -550,85 +550,85 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -682,19 +682,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -1169,151 +1169,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1465,
+          "line": 1467,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1475,
+          "line": 1477,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -1493,163 +1493,163 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Tier Hint",
-          "line": 632,
+          "line": 633,
           "english_text": "{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 894,
+          "line": 907,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 904,
+          "line": 917,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 915,
+          "line": 928,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 925,
+          "line": 938,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 936,
+          "line": 949,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 946,
+          "line": 959,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 967,
+          "line": 980,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 978,
+          "line": 991,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 988,
+          "line": 1001,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -1757,19 +1757,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -3125,151 +3125,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1465,
+          "line": 1467,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1475,
+          "line": 1477,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -3449,175 +3449,175 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Player gravity scale changed",
-          "line": 476,
+          "line": 477,
           "english_text": "Player gravity scale changed"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Disabled By Map",
-          "line": 553,
+          "line": 554,
           "english_text": "Disabled by map"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Tier Hint",
-          "line": 632,
+          "line": 633,
           "english_text": "{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 894,
+          "line": 907,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 904,
+          "line": 917,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 915,
+          "line": 928,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 925,
+          "line": 938,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 936,
+          "line": 949,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 946,
+          "line": 959,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 967,
+          "line": 980,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 978,
+          "line": 991,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 988,
+          "line": 1001,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -3725,19 +3725,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -5279,151 +5279,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1465,
+          "line": 1467,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1475,
+          "line": 1477,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -5645,175 +5645,175 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Player gravity scale changed",
-          "line": 476,
+          "line": 477,
           "english_text": "Player gravity scale changed"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Disabled By Map",
-          "line": 553,
+          "line": 554,
           "english_text": "Disabled by map"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Tier Hint",
-          "line": 632,
+          "line": 633,
           "english_text": "{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 894,
+          "line": 907,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 904,
+          "line": 917,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 915,
+          "line": 928,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 925,
+          "line": 938,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 936,
+          "line": 949,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 946,
+          "line": 959,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 967,
+          "line": 980,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 978,
+          "line": 991,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 988,
+          "line": 1001,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -5921,19 +5921,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -7427,151 +7427,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1465,
+          "line": 1467,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1475,
+          "line": 1477,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -7751,163 +7751,163 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Tier Hint",
-          "line": 632,
+          "line": 633,
           "english_text": "{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 894,
+          "line": 907,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 904,
+          "line": 917,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 915,
+          "line": 928,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 925,
+          "line": 938,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 936,
+          "line": 949,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 946,
+          "line": 959,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 967,
+          "line": 980,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 978,
+          "line": 991,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 988,
+          "line": 1001,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -8003,19 +8003,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -9132,151 +9132,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1465,
+          "line": 1467,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1475,
+          "line": 1477,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -9456,163 +9456,163 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Tier Hint",
-          "line": 632,
+          "line": 633,
           "english_text": "{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 894,
+          "line": 907,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 904,
+          "line": 917,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 915,
+          "line": 928,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 925,
+          "line": 938,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 936,
+          "line": 949,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 946,
+          "line": 959,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 967,
+          "line": 980,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 978,
+          "line": 991,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 988,
+          "line": 1001,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -9708,19 +9708,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -10561,49 +10561,49 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -10777,85 +10777,85 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -10909,19 +10909,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -11078,133 +11078,133 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -11378,103 +11378,103 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -11528,19 +11528,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -12645,151 +12645,151 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1465,
+          "line": 1467,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1475,
+          "line": 1477,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV."
         },
         {
@@ -12975,175 +12975,175 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Player gravity scale changed",
-          "line": 476,
+          "line": 477,
           "english_text": "Player gravity scale changed"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Disabled By Map",
-          "line": 553,
+          "line": 554,
           "english_text": "Disabled by map"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Tier Hint",
-          "line": 632,
+          "line": 633,
           "english_text": "{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 894,
+          "line": 907,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 904,
+          "line": 917,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 915,
+          "line": 928,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 925,
+          "line": 938,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 936,
+          "line": 949,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 946,
+          "line": 959,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 967,
+          "line": 980,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 978,
+          "line": 991,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 988,
+          "line": 1001,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
@@ -13251,19 +13251,19 @@
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}."
         },
         {
           "file": "cs2kz-paint.phrases.txt",
           "phrase": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}."
         },
         {
@@ -14222,125 +14222,10 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 96.8,
-      "translated": 575,
-      "missing": 19,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_togglepaint",
-          "line": 1439,
-          "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_showpaint",
-          "line": 1444,
-          "english_text": "Toggle between showing only your own paint and showing paint from all players."
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Width (Short)",
-          "line": 212,
-          "english_text": "Width"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
-          "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Summary",
-          "line": 805,
-          "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
-          "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Details 1",
-          "line": 838,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
-          "english_text": " | {value} Edge"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
-          "english_text": " | {value} Block"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
-          "english_text": " | {value} Miss"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
-          "english_text": " | {olive}{value} {grey}Edge"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
-          "english_text": " | {olive}{value} {grey}Dev"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
-          "english_text": " | {olive}{value} {grey}Offset"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
-          "english_text": " | {olive}{value} {grey}Miss"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Details 2",
-          "line": 887,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
-        },
-        {
-          "file": "cs2kz-paint.phrases.txt",
-          "phrase": "Paint Toggle Enabled",
-          "line": 50,
-          "english_text": "{grey}Auto paint is now {lime}enabled{grey}."
-        },
-        {
-          "file": "cs2kz-paint.phrases.txt",
-          "phrase": "Paint Toggle Disabled",
-          "line": 55,
-          "english_text": "{grey}Auto paint is now {darkred}disabled{grey}."
-        },
-        {
-          "file": "cs2kz-paint.phrases.txt",
-          "phrase": "Show Paint Enabled",
-          "line": 60,
-          "english_text": "{grey}You now see paint from {default}all players{grey}."
-        },
-        {
-          "file": "cs2kz-paint.phrases.txt",
-          "phrase": "Show Paint Disabled",
-          "line": 65,
-          "english_text": "{grey}You now only see {default}your own paint{grey}."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 594,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -16204,7 +16089,8 @@
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -16216,17 +16102,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Command Description - kz_showpaint",
-          "line": 1444,
+          "line": 1445,
           "english_text": "Toggle between showing only your own paint and showing paint from all players.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -16238,13 +16124,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Command Description - kz_cleardecals",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Remove all decals from the map.",
           "existing_languages": [
             "en",
@@ -16266,7 +16151,7 @@
         },
         {
           "name": "Command Description - kz_timerstopsound",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -16288,7 +16173,7 @@
         },
         {
           "name": "Command Description - kz_autohideweapon",
-          "line": 1465,
+          "line": 1467,
           "english_text": "Toggle the automatic hiding of weapon viewmodel.",
           "existing_languages": [
             "chi",
@@ -16310,7 +16195,7 @@
         },
         {
           "name": "Command Description - kz_pistol",
-          "line": 1475,
+          "line": 1477,
           "english_text": "Change or remove the current pistol.",
           "existing_languages": [
             "chi",
@@ -16332,7 +16217,7 @@
         },
         {
           "name": "Command Description - kz_rpsave",
-          "line": 1485,
+          "line": 1487,
           "english_text": "Manually save past gameplay into a replay.",
           "existing_languages": [
             "chi",
@@ -16354,7 +16239,7 @@
         },
         {
           "name": "Command Description - kz_replay",
-          "line": 1494,
+          "line": 1496,
           "english_text": "Play a previously saved replay.",
           "existing_languages": [
             "chi",
@@ -16376,7 +16261,7 @@
         },
         {
           "name": "Command Description - kz_replays",
-          "line": 1503,
+          "line": 1505,
           "english_text": "List saved replays.",
           "existing_languages": [
             "de",
@@ -16398,7 +16283,7 @@
         },
         {
           "name": "Command Description - kz_rpgoto",
-          "line": 1511,
+          "line": 1513,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)",
           "existing_languages": [
             "chi",
@@ -16420,7 +16305,7 @@
         },
         {
           "name": "Command Description - kz_rpgototick",
-          "line": 1520,
+          "line": 1522,
           "english_text": "Go to a specific tick in the replay.",
           "existing_languages": [
             "chi",
@@ -16442,7 +16327,7 @@
         },
         {
           "name": "Command Description - kz_rpinfo",
-          "line": 1529,
+          "line": 1531,
           "english_text": "Display information about the current replay.",
           "existing_languages": [
             "chi",
@@ -16464,7 +16349,7 @@
         },
         {
           "name": "Command Description - kz_rppause",
-          "line": 1538,
+          "line": 1540,
           "english_text": "Pause or resume the current replay.",
           "existing_languages": [
             "chi",
@@ -16486,7 +16371,7 @@
         },
         {
           "name": "Command Description - kz_rploadprogress",
-          "line": 1547,
+          "line": 1549,
           "english_text": "Display the loading progress of the replay.",
           "existing_languages": [
             "chi",
@@ -16508,7 +16393,7 @@
         },
         {
           "name": "Command Description - kz_rpcancelload",
-          "line": 1556,
+          "line": 1558,
           "english_text": "Cancel the loading of the replay.",
           "existing_languages": [
             "chi",
@@ -16530,7 +16415,7 @@
         },
         {
           "name": "Command Description - kz_recordvolume",
-          "line": 1565,
+          "line": 1567,
           "english_text": "Set the volume of the world record sound effect.",
           "existing_languages": [
             "chi",
@@ -16552,7 +16437,7 @@
         },
         {
           "name": "Command Description - kz_cpmessage",
-          "line": 1574,
+          "line": 1576,
           "english_text": "Toggle checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -16574,7 +16459,7 @@
         },
         {
           "name": "Command Description - kz_rphidelegs",
-          "line": 1583,
+          "line": 1585,
           "english_text": "Toggle replay bot's first person legs visibility.",
           "existing_languages": [
             "chi",
@@ -16596,7 +16481,7 @@
         },
         {
           "name": "Command Description - kz_accept",
-          "line": 1592,
+          "line": 1594,
           "english_text": "Accept an incoming race.",
           "existing_languages": [
             "chi",
@@ -16618,7 +16503,7 @@
         },
         {
           "name": "Command Description - kz_surrender",
-          "line": 1600,
+          "line": 1602,
           "english_text": "Surrender an ongoing race.",
           "existing_languages": [
             "chi",
@@ -16640,7 +16525,7 @@
         },
         {
           "name": "Command Description - kz_mapinfo",
-          "line": 1608,
+          "line": 1610,
           "english_text": "Display information about the current map.",
           "existing_languages": [
             "chi",
@@ -16662,7 +16547,7 @@
         },
         {
           "name": "Command Description - kz_tier",
-          "line": 1615,
+          "line": 1617,
           "english_text": "Display the tier of the current course or a specified course.",
           "existing_languages": [
             "chi",
@@ -16684,7 +16569,7 @@
         },
         {
           "name": "Command Description - kz_modernperfstats",
-          "line": 1622,
+          "line": 1624,
           "english_text": "Retrieve bhop statistics for modern jumping.",
           "existing_languages": [
             "chi",
@@ -16706,7 +16591,7 @@
         },
         {
           "name": "Command Description - kz_legacyperfstats",
-          "line": 1629,
+          "line": 1631,
           "english_text": "Retrieve bhop statistics for legacy jumping.",
           "existing_languages": [
             "chi",
@@ -16728,7 +16613,7 @@
         },
         {
           "name": "Command Description - kz_resetperfstats",
-          "line": 1636,
+          "line": 1638,
           "english_text": "Reset bhop statistics for modern and legacy jumping.",
           "existing_languages": [
             "chi",
@@ -16750,7 +16635,7 @@
         },
         {
           "name": "Command Description - kz_fov",
-          "line": 1643,
+          "line": 1645,
           "english_text": "Change your FOV.",
           "existing_languages": [
             "chi",
@@ -17566,7 +17451,8 @@
           "english_text": "Width",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17578,13 +17464,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Player gravity scale changed",
-          "line": 476,
+          "line": 477,
           "english_text": "Player gravity scale changed",
           "existing_languages": [
             "chi",
@@ -17606,7 +17491,7 @@
         },
         {
           "name": "Disabled By Map",
-          "line": 553,
+          "line": 554,
           "english_text": "Disabled by map",
           "existing_languages": [
             "chi",
@@ -17628,7 +17513,7 @@
         },
         {
           "name": "Jumpstats Option - Tier Hint",
-          "line": 632,
+          "line": 633,
           "english_text": "{grey}Valid jumpstats tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}.",
           "existing_languages": [
             "chi",
@@ -17650,7 +17535,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled",
-          "line": 691,
+          "line": 692,
           "english_text": "{grey}Jumpstats console broadcasting disabled.",
           "existing_languages": [
             "chi",
@@ -17672,7 +17557,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response",
-          "line": 700,
+          "line": 701,
           "english_text": "{grey}Jumpstats console broadcast threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -17694,11 +17579,12 @@
         },
         {
           "name": "Jumpstats Report - Chat Summary (Simple)",
-          "line": 798,
+          "line": 799,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17710,17 +17596,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Report - Chat Summary",
-          "line": 805,
+          "line": 807,
           "english_text": "{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17732,17 +17618,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Report - Console Failstat Summary",
-          "line": 831,
+          "line": 834,
           "english_text": "{player_name} failed {distance} units with a {jump_type} {invalidation_reason}",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17754,17 +17640,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Details 1",
-          "line": 838,
+          "line": 842,
           "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17776,17 +17662,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Segment - Edge",
-          "line": 845,
+          "line": 850,
           "english_text": " | {value} Edge",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17798,17 +17684,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Segment - Block",
-          "line": 851,
+          "line": 857,
           "english_text": " | {value} Block",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17820,17 +17706,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Segment - Miss",
-          "line": 857,
+          "line": 864,
           "english_text": " | {value} Miss",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17842,17 +17728,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Report - Chat Segment - Edge",
-          "line": 863,
+          "line": 871,
           "english_text": " | {olive}{value} {grey}Edge",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17864,17 +17750,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 869,
+          "line": 878,
           "english_text": " | {olive}{value} {grey}Dev",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17886,17 +17772,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Report - Chat Segment - Offset",
-          "line": 875,
+          "line": 885,
           "english_text": " | {olive}{value} {grey}Offset",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17908,17 +17794,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Report - Chat Segment - Miss",
-          "line": 881,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Miss",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17930,17 +17816,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Details 2",
-          "line": 887,
+          "line": 899,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17952,13 +17838,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 894,
+          "line": 907,
           "english_text": "{grey}Jumpstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -17980,7 +17865,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 904,
+          "line": 917,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -18002,7 +17887,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 915,
+          "line": 928,
           "english_text": "{grey}Jumpstats console reporting disabled.",
           "existing_languages": [
             "chi",
@@ -18024,7 +17909,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 925,
+          "line": 938,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -18046,7 +17931,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 936,
+          "line": 949,
           "english_text": "{grey}Jumpstats sound broadcast disabled.",
           "existing_languages": [
             "chi",
@@ -18068,7 +17953,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 946,
+          "line": 959,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -18090,7 +17975,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 957,
+          "line": 970,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}.",
           "existing_languages": [
             "chi",
@@ -18112,7 +17997,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 967,
+          "line": 980,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}.",
           "existing_languages": [
             "chi",
@@ -18134,7 +18019,7 @@
         },
         {
           "name": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 978,
+          "line": 991,
           "english_text": "{grey}Extended jumpstats chat reporting enabled.",
           "existing_languages": [
             "chi",
@@ -18156,7 +18041,7 @@
         },
         {
           "name": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 988,
+          "line": 1001,
           "english_text": "{grey}Extended jumpstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -18178,7 +18063,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 998,
+          "line": 1011,
           "english_text": "{grey}Jumpstats reporting enabled.",
           "existing_languages": [
             "chi",
@@ -18200,7 +18085,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1005,
+          "line": 1018,
           "english_text": "{grey}Jumpstats reporting disabled.",
           "existing_languages": [
             "chi",
@@ -18593,7 +18478,8 @@
           "english_text": "{grey}Auto paint is now {lime}enabled{grey}.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18605,17 +18491,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Paint Toggle Disabled",
-          "line": 55,
+          "line": 56,
           "english_text": "{grey}Auto paint is now {darkred}disabled{grey}.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18627,17 +18513,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Show Paint Enabled",
-          "line": 60,
+          "line": 62,
           "english_text": "{grey}You now see paint from {default}all players{grey}.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18649,17 +18535,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Show Paint Disabled",
-          "line": 65,
+          "line": 68,
           "english_text": "{grey}You now only see {default}your own paint{grey}.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18671,8 +18557,7 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]

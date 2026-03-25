@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 594
 Phrases with missing translations: 378
-Total missing translation entries: 2350
+Total missing translation entries: 2331
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [████████████████████] 100.0% (594/594)
   sv (swedish)         [█████████████░░░░░░░]  66.2% (393/594)
   tr (turkish)         [████████░░░░░░░░░░░░]  44.3% (263/594)
-  ua (ukrainian)       [███████████████████░]  96.8% (575/594)
+  ua (ukrainian)       [████████████████████] 100.0% (594/594)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -251,56 +251,56 @@ cs2kz-commands.phrases.txt
   Line 1433: "Command Description - kz_paintsize"
     Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
   Line 1439: "Command Description - kz_togglepaint"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 1444: "Command Description - kz_showpaint"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 1449: "Command Description - kz_cleardecals"
     Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1455: "Command Description - kz_timerstopsound"
+  Line 1445: "Command Description - kz_showpaint"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1451: "Command Description - kz_cleardecals"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1457: "Command Description - kz_timerstopsound"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1465: "Command Description - kz_autohideweapon"
+  Line 1467: "Command Description - kz_autohideweapon"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1475: "Command Description - kz_pistol"
+  Line 1477: "Command Description - kz_pistol"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1485: "Command Description - kz_rpsave"
+  Line 1487: "Command Description - kz_rpsave"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1494: "Command Description - kz_replay"
+  Line 1496: "Command Description - kz_replay"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1503: "Command Description - kz_replays"
+  Line 1505: "Command Description - kz_replays"
     Missing (8): chi, es, fi, it, ko, lv, sv, tr
-  Line 1511: "Command Description - kz_rpgoto"
+  Line 1513: "Command Description - kz_rpgoto"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1520: "Command Description - kz_rpgototick"
+  Line 1522: "Command Description - kz_rpgototick"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1529: "Command Description - kz_rpinfo"
+  Line 1531: "Command Description - kz_rpinfo"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1538: "Command Description - kz_rppause"
+  Line 1540: "Command Description - kz_rppause"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1547: "Command Description - kz_rploadprogress"
+  Line 1549: "Command Description - kz_rploadprogress"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1556: "Command Description - kz_rpcancelload"
+  Line 1558: "Command Description - kz_rpcancelload"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1565: "Command Description - kz_recordvolume"
+  Line 1567: "Command Description - kz_recordvolume"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1574: "Command Description - kz_cpmessage"
+  Line 1576: "Command Description - kz_cpmessage"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1583: "Command Description - kz_rphidelegs"
+  Line 1585: "Command Description - kz_rphidelegs"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1592: "Command Description - kz_accept"
+  Line 1594: "Command Description - kz_accept"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1600: "Command Description - kz_surrender"
+  Line 1602: "Command Description - kz_surrender"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1608: "Command Description - kz_mapinfo"
+  Line 1610: "Command Description - kz_mapinfo"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1615: "Command Description - kz_tier"
+  Line 1617: "Command Description - kz_tier"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1622: "Command Description - kz_modernperfstats"
+  Line 1624: "Command Description - kz_modernperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1629: "Command Description - kz_legacyperfstats"
+  Line 1631: "Command Description - kz_legacyperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1636: "Command Description - kz_resetperfstats"
+  Line 1638: "Command Description - kz_resetperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1643: "Command Description - kz_fov"
+  Line 1645: "Command Description - kz_fov"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-common.phrases.txt
@@ -385,64 +385,64 @@ cs2kz-fov.phrases.txt
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------
   Line 212: "Width (Short)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 476: "Player gravity scale changed"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 477: "Player gravity scale changed"
     Missing (3): fi, it, tr
-  Line 553: "Disabled By Map"
+  Line 554: "Disabled By Map"
     Missing (3): fi, it, tr
-  Line 632: "Jumpstats Option - Tier Hint"
+  Line 633: "Jumpstats Option - Tier Hint"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 691: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
+  Line 692: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 700: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
+  Line 701: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 798: "Jumpstats Report - Chat Summary (Simple)"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 805: "Jumpstats Report - Chat Summary"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 831: "Jumpstats Report - Console Failstat Summary"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 838: "Jumpstat Report - Console Details 1"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 845: "Jumpstat Report - Console Segment - Edge"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 851: "Jumpstat Report - Console Segment - Block"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 857: "Jumpstat Report - Console Segment - Miss"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 863: "Jumpstats Report - Chat Segment - Edge"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 869: "Jumpstats Report - Chat Segment - Deviation"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 875: "Jumpstats Report - Chat Segment - Offset"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 881: "Jumpstats Report - Chat Segment - Miss"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 887: "Jumpstat Report - Console Details 2"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 894: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
+  Line 799: "Jumpstats Report - Chat Summary (Simple)"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 807: "Jumpstats Report - Chat Summary"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 834: "Jumpstats Report - Console Failstat Summary"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 842: "Jumpstat Report - Console Details 1"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 850: "Jumpstat Report - Console Segment - Edge"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 857: "Jumpstat Report - Console Segment - Block"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 864: "Jumpstat Report - Console Segment - Miss"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 871: "Jumpstats Report - Chat Segment - Edge"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 878: "Jumpstats Report - Chat Segment - Deviation"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 885: "Jumpstats Report - Chat Segment - Offset"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 892: "Jumpstats Report - Chat Segment - Miss"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 899: "Jumpstat Report - Console Details 2"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 907: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 904: "Jumpstats Option - Jumpstats Minimum Tier - Response"
+  Line 917: "Jumpstats Option - Jumpstats Minimum Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 915: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
+  Line 928: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 925: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
+  Line 938: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 936: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
+  Line 949: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 946: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
+  Line 959: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 957: "Jumpstats Option - Jumpstats Volume - Current"
+  Line 970: "Jumpstats Option - Jumpstats Volume - Current"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 967: "Jumpstats Option - Jumpstats Volume - Response"
+  Line 980: "Jumpstats Option - Jumpstats Volume - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 978: "Jumpstats Option - Extended Chat Stats - Enable"
+  Line 991: "Jumpstats Option - Extended Chat Stats - Enable"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 988: "Jumpstats Option - Extended Chat Stats - Disable"
+  Line 1001: "Jumpstats Option - Extended Chat Stats - Disable"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 998: "Jumpstats Option - Jumpstats Reporting - Enable"
+  Line 1011: "Jumpstats Option - Jumpstats Reporting - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1005: "Jumpstats Option - Jumpstats Reporting - Disable"
+  Line 1018: "Jumpstats Option - Jumpstats Reporting - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-language.phrases.txt
@@ -486,13 +486,13 @@ cs2kz-paint.phrases.txt
   Line 43: "Paint Size Set"
     Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
   Line 50: "Paint Toggle Enabled"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 55: "Paint Toggle Disabled"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 60: "Show Paint Enabled"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 65: "Show Paint Disabled"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 56: "Paint Toggle Disabled"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 62: "Show Paint Enabled"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 68: "Show Paint Disabled"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-pistol.phrases.txt
 ----------------------------------------------------------------------
