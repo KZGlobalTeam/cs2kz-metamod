@@ -273,6 +273,10 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	{
 		return;
 	}
+	if (jump->IsFailstat() || !jump->IsValid() || jump->GetOffset() < -JS_EPSILON)
+	{
+		return;
+	}
 	this->lastJumpUUID = UUID_t(true);
 	// If the player has a style, ignore it.
 	if (this->player->styleServices.Count() > 0)

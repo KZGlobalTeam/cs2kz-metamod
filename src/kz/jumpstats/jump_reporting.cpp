@@ -20,6 +20,7 @@ static_global const char *columnKeys[] = {"#.",
 										  "Bad Angles (Short)",
 										  "Overlap (Short)",
 										  "Dead Air (Short)",
+										  "Width (Short)",
 										  "Average Gain (Short)",
 										  "Gain Efficiency (Short)",
 										  "Angle Ratio"};
@@ -42,49 +43,79 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		return;
 	}
 	const char *language = target->languageService->GetLanguage();
-	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	JumpType reportType = jump->GetReportJumpType();
+	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(reportType, jump->GetDistance());
 	DistanceTier minTier = static_cast<DistanceTier>(
 		target->optionService->GetPreferenceInt("jsMinTier", KZOptionService::GetOptionInt("defaultJSMinTier", DistanceTier_Impressive)));
-	if (!target->optionService->GetPreferenceBool("jsAlways", false) && (minTier == DistanceTier_None || color < minTier))
+	bool jsAlways = target->optionService->GetPreferenceBool("jsAlways", false);
+	bool isFailstat = jump->IsFailstat();
+	if (!jsAlways && (minTier == DistanceTier_None || color < minTier))
 	{
 		return;
 	}
 	const char *jumpColor = distanceTierColors[color];
-	if (jump->GetOffset() <= -JS_EPSILON || !jump->IsValid() || target->optionService->GetPreferenceBool("jsAlways", false))
+	if (isFailstat || jump->GetOffset() <= -JS_EPSILON || !jump->IsValid() || jsAlways)
 	{
 		jumpColor = distanceTierColors[DistanceTier_Meh];
+	}
+
+	std::string jumpTypeShort = jumpTypeShortStr[reportType];
+	if (isFailstat)
+	{
+		jumpTypeShort += "-F";
 	}
 
 	f32 flooredDist = floor(jump->GetDistance() * 10) / 10;
 
 	std::string releaseString = "";
-	if (jump->GetJumpType() == JumpType_LongJump || jump->GetJumpType() == JumpType_LadderJump || jump->GetJumpType() == JumpType_WeirdJump)
+	if (reportType == JumpType_LongJump || reportType == JumpType_LadderJump || reportType == JumpType_WeirdJump)
 	{
 		releaseString = jump->GetReleaseString(true);
 	}
+
+	// TODO: Standardize the way we prepare these stats.
+	std::string edgeStats = "";
+	if (jump->GetEdge(false) >= 0.0f)
+	{
+		edgeStats = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment - Edge", jump->GetEdge(false));
+	}
+
+	std::string deviationStats = "";
+	if (jump->GetBlock() > 0.0f)
+	{
+		deviationStats = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment - Deviation", jump->GetDeviation());
+	}
+
+	std::string missStats = "";
+	if (jump->GetMiss() > 0.0f)
+	{
+		missStats = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment - Miss", jump->GetMiss());
+	}
+
 	if (!extended)
 	{
 		// clang-format off
-		target->languageService->PrintChat(true, false, "Jumpstats Report - Chat Summary (Simple)", 
+		target->languageService->PrintChat(true, false, "Jumpstats Report - Chat Summary (Simple)",
 			jumpColor,
-			jumpTypeShortStr[jump->GetJumpType()],
+			jumpTypeShort.c_str(),
 			jump->GetDistance(true, false, 1),
-			jump->strafes.Count(), 
+			jump->strafes.Count(),
 			KZLanguageService::PrepareMessageWithLang(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
 			jump->GetSync() * 100.0f,
 			jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
 			jump->GetMaxSpeed(),
+			edgeStats.c_str(),
 			releaseString.c_str()
 		);
 		// clang-format on
 		return;
 	}
 	// clang-format off
-	target->languageService->PrintChat(true, false, "Jumpstats Report - Chat Summary", 
+	target->languageService->PrintChat(true, false, "Jumpstats Report - Chat Summary",
 		jumpColor,
-		jumpTypeShortStr[jump->GetJumpType()],
+		jumpTypeShort.c_str(),
 		jump->GetDistance(true, false, 1),
-		jump->strafes.Count(), 
+		jump->strafes.Count(),
 		KZLanguageService::PrepareMessageWithLang(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
 		jump->GetSync() * 100.0f,
 		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
@@ -92,10 +123,12 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		jump->GetBadAngles() * 100,
 		jump->GetOverlap() * 100,
 		jump->GetDeadAir() * 100,
-		jump->GetDeviation(),
 		jump->GetWidth(),
 		jump->GetMaxHeight(),
-		releaseString.c_str()
+		edgeStats.c_str(),
+		releaseString.c_str(),
+		deviationStats.c_str(),
+		missStats.c_str()
 	);
 	// clang-format on
 }
@@ -107,7 +140,8 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		return;
 	}
 
-	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	JumpType reportType = jump->GetReportJumpType();
+	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(reportType, jump->GetDistance());
 	DistanceTier minTier = static_cast<DistanceTier>(
 		broadcast ? target->optionService->GetPreferenceInt("jsBroadcastMinTierConsole",
 															KZOptionService::GetOptionInt("defaultJSBroadcastMinTierConsole", DistanceTier_Ownage))
@@ -129,13 +163,16 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		return;
 	}
 	const char *language = target->languageService->GetLanguage();
+	std::string jumpType = jumpTypeStr[reportType];
+	const char *summaryPhrase = jump->IsFailstat() ? "Jumpstats Report - Console Failstat Summary" : "Jumpstats Report - Console Summary";
 	// clang-format off
-	target->languageService->PrintConsole(false, false, "Jumpstats Report - Console Summary",
+	target->languageService->PrintConsole(false, false, summaryPhrase,
 		jump->GetJumpPlayer()->GetName(),
 		jump->GetDistance(),
-		jumpTypeStr[jump->GetJumpType()],
+		jumpType.c_str(),
 		jump->GetInvalidationReasonString(jump->invalidateReason)
 	);
+	// clang-format on
 	std::string modeStyleNames = jump->GetJumpPlayer()->modeService->GetModeShortName();
 	FOR_EACH_VEC(jump->GetJumpPlayer()->styleServices, i)
 	{
@@ -143,12 +180,33 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		modeStyleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();
 	}
 	std::string releaseString = "";
-	if (jump->GetJumpType() == JumpType_LongJump || jump->GetJumpType() == JumpType_LadderJump || jump->GetJumpType() == JumpType_WeirdJump)
+	if (reportType == JumpType_LongJump || reportType == JumpType_LadderJump || reportType == JumpType_WeirdJump)
 	{
 		releaseString = jump->GetReleaseString(false);
 	}
+	// Build inline stats for console
+	std::string edgeString = "";
+	std::string blockString = "";
+	std::string missString = "";
+	if (jump->GetEdge(false) >= 0.0f)
+	{
+		edgeString = KZLanguageService::PrepareMessageWithLang(language, "Jumpstat Report - Console Segment - Edge", jump->GetEdge(false));
+	}
+	if (jump->GetBlock() > 0.0f)
+	{
+		blockString = KZLanguageService::PrepareMessageWithLang(language, "Jumpstat Report - Console Segment - Block", jump->GetBlock());
+	}
+	if (jump->GetMiss() > 0.0f)
+	{
+		missString = KZLanguageService::PrepareMessageWithLang(language, "Jumpstat Report - Console Segment - Miss", jump->GetMiss());
+	}
+
+	// clang-format off
 	target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Details 1",
 		modeStyleNames.c_str(),
+		blockString.c_str(),
+		edgeString.c_str(),
+		missString.c_str(),
 		jump->strafes.Count(),
 		KZLanguageService::PrepareMessageWithLang(language, jump->strafes.Count() > 1 ? "Strafes" : "Strafe").c_str(),
 		jump->GetSync() * 100.0f,
@@ -183,7 +241,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	{
 		char strafeNumberString[5];
 		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
-		char badAngleString[16], overlapString[16], deadAirString[16], avgGainString[16], gainEffString[16];
+		char badAngleString[16], overlapString[16], deadAirString[16], widthString[16], avgGainString[16], gainEffString[16];
 		char angRatioString[32];
 		V_snprintf(strafeNumberString, sizeof(strafeNumberString), "%i.", i+1);
 		V_snprintf(syncString, sizeof(syncString), "%.0f%%%%", jump->strafes[i].GetSync() * 100.0f);
@@ -196,6 +254,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		V_snprintf(badAngleString, sizeof(badAngleString), "%.1f", jump->strafes[i].GetBadAngleDuration() * ENGINE_FIXED_TICK_RATE);
 		V_snprintf(overlapString, sizeof(overlapString), "%.1f", jump->strafes[i].GetOverlapDuration() * ENGINE_FIXED_TICK_RATE);
 		V_snprintf(deadAirString, sizeof(deadAirString), "%.1f", jump->strafes[i].GetDeadAirDuration() * ENGINE_FIXED_TICK_RATE);
+		V_snprintf(widthString, sizeof(widthString), "%.1f", fabsf(jump->strafes[i].GetWidth()));
 		V_snprintf(avgGainString, sizeof(avgGainString), "%.2f", jump->strafes[i].GetGain() / jump->strafes[i].GetStrafeDuration() * ENGINE_FIXED_TICK_INTERVAL);
 		V_snprintf(gainEffString, sizeof(gainEffString), "%.0f%%%%", jump->strafes[i].GetGain() / jump->strafes[i].GetMaxGain() * 100.0f);
 
@@ -225,6 +284,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 			badAngleString,
 			overlapString,
 			deadAirString,
+			widthString,
 			avgGainString,
 			gainEffString,
 			angRatioString
@@ -253,7 +313,15 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 	{
 		return;
 	}
-	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	if (!jump->IsValid())
+	{
+		return;
+	}
+	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetReportJumpType(), jump->GetDistance());
+	if (tier == DistanceTier_None)
+	{
+		return;
+	}
 	const char *jumpColor = distanceTierColors[tier];
 
 	DistanceTier broadcastTier = static_cast<DistanceTier>(target->optionService->GetPreferenceInt(
@@ -267,7 +335,7 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 			jump->GetJumpPlayer()->GetName(), 
 			jumpColor,
 			jump->GetDistance(),
-			jumpTypeStr[jump->GetJumpType()],
+			jumpTypeStr[jump->GetReportJumpType()],
 			jump->GetJumpPlayer()->modeService->GetModeName()
 		);
 		KZJumpstatsService::PrintJumpToConsole(target, jump);
@@ -278,7 +346,7 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast)
 {
-	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
+	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetReportJumpType(), jump->GetDistance());
 	DistanceTier soundMinTier =
 		broadcast ? static_cast<DistanceTier>(target->optionService->GetPreferenceInt(
 						"jsBroadcastSoundMinTier", KZOptionService::GetOptionInt("defaultJSBroadcastSoundMinTier", DistanceTier_Ownage)))
@@ -308,6 +376,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 	{
 		return;
 	}
+	bool isFailstat = jump->IsFailstat();
 	for (i32 i = 1; i <= MAXPLAYERS; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
@@ -318,7 +387,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
 		if (player == jump->GetJumpPlayer() || player->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
 		{
-			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !player->optionService->GetPreferenceBool("jsAlways", false))
+			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !isFailstat && !player->optionService->GetPreferenceBool("jsAlways", false))
 			{
 				continue;
 			}
@@ -339,7 +408,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player has broadcasting enabled, we show a brief summary in chat and play a sound.
 		else
 		{
-			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()))
+			if (!jump->IsValid())
 			{
 				continue;
 			}

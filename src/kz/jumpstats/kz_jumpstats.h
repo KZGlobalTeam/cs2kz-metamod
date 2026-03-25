@@ -47,10 +47,28 @@ enum DistanceTier : u8
 #define JS_SPEED_MODIFICATION_TOLERANCE 0.1f
 #define JS_TELEPORT_DISTANCE_SQUARED    4096.0f * 4096.0f * ENGINE_FIXED_TICK_INTERVAL
 
+#define JS_MIN_BLOCK_DISTANCE          186
+#define JS_MIN_LAJ_BLOCK_DISTANCE      50
+#define JS_MAX_LAJ_FAILSTAT_DISTANCE   250
+#define JS_FAILSTATS_MAX_TRACKED_TICKS 512
+#define JS_OFFSET_EPSILON              0.04f
+
 extern const char *jumpTypeStr[JUMPTYPE_COUNT];
 extern const char *jumpTypeShortStr[JUMPTYPE_COUNT];
 extern const char *distanceTierColors[DISTANCETIER_COUNT];
 extern const char *distanceTierSounds[DISTANCETIER_COUNT];
+
+struct JumpPose
+{
+	Vector position;
+	// These fields are used for jsalways's backtracking.
+	f32 airtime;
+	f32 badAngles;
+	f32 overlap;
+	f32 deadAir;
+	f32 sync;
+};
+
 class Jump;
 
 class AACall
@@ -214,6 +232,7 @@ public:
 	Vector adjustedLandingOrigin;
 
 	JumpType jumpType;
+	JumpType originalJumpType;
 
 	// Required for airpath stat.
 	f32 totalDistance {};
@@ -240,6 +259,30 @@ public:
 	f32 touchDuration {};
 	char invalidateReason[256] {};
 	bool trackingRelease = true;
+
+	// Block / failstat / edge tracking
+	f32 block {};
+	f32 edge = -1.0f;
+	f32 miss {};
+	f32 failstatDistance {};
+	f32 failstatOffset {};
+	f32 failstatSync {};
+	f32 failstatBadAngles {};
+	// One pose per subtick movement.
+	JumpPose poseHistory[JS_FAILSTATS_MAX_TRACKED_TICKS];
+	i32 poseIndex {};
+	i32 poseCount {};
+	bool failstatBlockDetected {};
+	bool failstatFailed {};
+	bool failstatValid {};
+	f32 failstatBlockHeight {};
+
+	// Running totals for ended strafes, used by RecordPose snapshots.
+	f32 poseEndedDuration {};
+	f32 poseEndedSyncDuration {};
+	f32 poseEndedBadAnglesDuration {};
+	f32 poseEndedOverlapDuration {};
+	f32 poseEndedDeadAirDuration {};
 
 public:
 	Jump() = default;
@@ -269,6 +312,11 @@ public:
 		return this->jumpType;
 	}
 
+	JumpType GetReportJumpType()
+	{
+		return this->IsFailstat() ? this->originalJumpType : this->jumpType;
+	}
+
 	KZPlayer *GetJumpPlayer()
 	{
 		return this->player;
@@ -296,6 +344,10 @@ public:
 
 	f32 GetOffset()
 	{
+		if (this->IsFailstat())
+		{
+			return this->failstatOffset;
+		}
 		return adjustedLandingOrigin.z - adjustedTakeoffOrigin.z;
 	}
 
@@ -308,11 +360,19 @@ public:
 
 	f32 GetSync()
 	{
+		if (this->IsFailstat())
+		{
+			return this->failstatSync;
+		}
 		return this->sync;
 	}
 
 	f32 GetBadAngles()
 	{
+		if (this->IsFailstat())
+		{
+			return this->failstatBadAngles;
+		}
 		return this->badAngles;
 	}
 
@@ -337,6 +397,21 @@ public:
 	}
 
 	f32 GetEdge(bool landing);
+
+	f32 GetBlock()
+	{
+		return this->block;
+	}
+
+	f32 GetMiss()
+	{
+		return this->miss;
+	}
+
+	bool IsFailstat()
+	{
+		return this->failstatValid;
+	}
 
 	f32 GetGainEfficiency()
 	{
@@ -367,26 +442,37 @@ public:
 		}
 		if (this->GetReleaseInTick() > 10)
 		{
-			return colored ? "| {red}✗{grey} W" : "| ✗ W";
+			return colored ? " | {red}✗{grey} W" : " | ✗ W";
 		}
 		else if (this->GetReleaseInTick() > 0)
 		{
-			V_snprintf(releaseString, sizeof(releaseString), "%s| %s+%.1f%s W", colored ? "{grey}" : "", colored ? "{red}" : "",
+			V_snprintf(releaseString, sizeof(releaseString), " %s| %s+%.1f%s W", colored ? "{grey}" : "", colored ? "{red}" : "",
 					   this->GetReleaseInTick(), colored ? "{grey}" : "");
 		}
 		else if (this->GetReleaseInTick() == 0)
 		{
-			return colored ? "| {green}✓{grey} W" : "| ✓ W";
+			return colored ? " | {green}✓{grey} W" : " | ✓ W";
 		}
 		else
 		{
-			V_snprintf(releaseString, sizeof(releaseString), "%s| %s%.1f%s W", colored ? "{grey}" : "", colored ? "{blue}" : "",
+			V_snprintf(releaseString, sizeof(releaseString), " %s| %s%.1f%s W", colored ? "{grey}" : "", colored ? "{blue}" : "",
 					   this->GetReleaseInTick(), colored ? "{grey}" : "");
 		}
 		return releaseString;
 	}
 
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
+
+	// Block / failstat / edge tracking
+	void RecordPose();
+	void CacheEndedStrafePoseTotals(Strafe &strafe);
+	void UpdateFailstat();
+	void EndBlockDistance();
+	void AlwaysFailstat();
+	void CalcBlockStats(Vector landingOrigin, bool checkOffset = false);
+	void CalcLadderBlockStats(Vector landingOrigin, bool checkOffset = false);
+	void CalcAlwaysEdge();
+	bool GetFailOrigin(f32 planeHeight, Vector &result, i32 poseOffset);
 };
 
 class KZJumpstatsService : public KZBaseService
@@ -438,6 +524,7 @@ public:
 	void AddJump();
 	void UpdateJump();
 	void EndJump();
+	void HandleTeleport();
 	void InvalidateJumpstats(const char *reason = NULL);
 	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
