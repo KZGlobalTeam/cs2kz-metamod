@@ -139,6 +139,10 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	{
 		return;
 	}
+	if (broadcast && jump->GetOffset() <= -JS_EPSILON)
+	{
+		return;
+	}
 
 	JumpType reportType = jump->GetReportJumpType();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(reportType, jump->GetDistance());
@@ -317,6 +321,10 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 	{
 		return;
 	}
+	if (jump->GetOffset() <= -JS_EPSILON)
+	{
+		return;
+	}
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetReportJumpType(), jump->GetDistance());
 	if (tier == DistanceTier_None)
 	{
@@ -346,6 +354,10 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast)
 {
+	if (broadcast && jump->GetOffset() <= -JS_EPSILON)
+	{
+		return;
+	}
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetReportJumpType(), jump->GetDistance());
 	DistanceTier soundMinTier =
 		broadcast ? static_cast<DistanceTier>(target->optionService->GetPreferenceInt(
@@ -409,6 +421,10 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		else
 		{
 			if (!jump->IsValid())
+			{
+				continue;
+			}
+			if (jump->GetOffset() <= -JS_EPSILON)
 			{
 				continue;
 			}
