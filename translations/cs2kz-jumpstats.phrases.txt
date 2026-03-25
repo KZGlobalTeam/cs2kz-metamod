@@ -101,7 +101,7 @@
 	{
 		"en"		"Sync"
 		"chi"		"同步率"
-		"ru"		"Синхр."
+		"ru"		"Синх"
 		"pl"		"Synchronizacja"
 		"fi"		"Synkronisointi"
 		"sv"		"Synk"
@@ -213,7 +213,7 @@
 	{
 		"en"		"Width"
 		"ua"		"Шир."
-		"ru"		"Ширина"
+		"ru"		"Шир."
 	}
 	"Edge"
 	{
@@ -363,7 +363,7 @@
 	{
 		"en"		"AvgGain"
 		"chi"		"平均增益"
-		"ru"		"СрПрирост"
+		"ru"		"СрПрир"
 		"pl"		"ŚrZysk"
 		"fi"		"KeskGain"
 		"sv"		"AvgGain"
@@ -802,7 +802,7 @@
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,edge_stats:s,release:s"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
-		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр. | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс.{edge_stats}{release}"
+		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
 	}
 	"Jumpstats Report - Chat Summary"
 	{
@@ -811,7 +811,7 @@
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,bad_angles:.0f,overlap:.0f,dead_air:.0f,width:.1f,height:.2f,edge_stats:s,release:s,deviation_stats:s,miss_stats:s"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Висота{miss_stats}"
-		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр. | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс.{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Высота{miss_stats}"
+		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Высота{miss_stats}"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -845,7 +845,7 @@
 		"#format"	"mode_style:s,block:s,edge:s,miss:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f,release:s"
 		"en"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
 		"ua"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота{release}"
-		"ru"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр. | {pre} Pre | {max} Макс. | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
+		"ru"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синх | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
 	}
 	"Jumpstat Report - Console Segment - Edge"
 	{
@@ -880,21 +880,21 @@
 		"#format"	"value:.1f"
 		"en"		" | {olive}{value} {grey}Dev"
 		"ua"		" | {olive}{value} {grey}Відх"
-		"ru"		" | {olive}{value} {grey}Откл."
+		"ru"		" | {olive}{value} {grey}Откл"
 	}
 	"Jumpstats Report - Chat Segment - Offset"
 	{
 		"#format"	"value:.1f"
 		"en"		" | {olive}{value} {grey}Offset"
 		"ua"		" | {olive}{value} {grey}Зміщення"
-		"ru"		" | {olive}{value} {grey}Смещение"
+		"ru"		" | {olive}{value} {grey}Смещ"
 	}
 	"Jumpstats Report - Chat Segment - Miss"
 	{
 		"#format"	"value:.2f"
 		"en"		" | {olive}{value} {grey}Miss"
 		"ua"		" | {olive}{value} {grey}Брак"
-		"ru"		" | {olive}{value} {grey}Нехватка"
+		"ru"		" | {olive}{value} {grey}Нехв"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
