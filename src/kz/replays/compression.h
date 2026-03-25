@@ -22,8 +22,7 @@ namespace KZ::replaysystem::compression
 	i32 WriteTickDataCompressed(FileHandle_t file, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
 
 	// Read compressed tick data with delta decoding
-	bool ReadTickDataCompressed(FileHandle_t file, std::vector<TickData> &outTickData, std::vector<SubtickData> &outSubtickData,
-								  u32 replayVersion);
+	bool ReadTickDataCompressed(FileHandle_t file, std::vector<TickData> &outTickData, std::vector<SubtickData> &outSubtickData, u32 replayVersion);
 
 	// Read compressed weapon changes
 	bool ReadWeaponsCompressed(FileHandle_t file, std::vector<std::pair<i32, EconInfo>> &outWeaponTable);
