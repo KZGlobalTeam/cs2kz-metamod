@@ -858,7 +858,7 @@
 	{
 		"#format"	"value:.2f"
 		"en"		" | {value} Miss"
-		"ru"		" | {value} Miss"
+		"ru"		" | {value} Нехватка"
 	}
 	"Jumpstats Report - Chat Segment - Edge"
 	{
