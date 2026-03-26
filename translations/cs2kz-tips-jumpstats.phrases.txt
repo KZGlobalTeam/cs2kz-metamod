@@ -32,6 +32,14 @@
 		"ko"	"{grey}항상 활성화된 점프 통계 모드를 전환하려면 {default}/jsalways{grey}를 사용하세요."
 		"lv"	"{grey}Izmanto {default}/jsalways {grey}, lai jumpstatu reporti vienmēr būtu ieslēgti."
 	}
+	"Tip - kz_jsfailstats"
+	{
+		"en"	"{grey}Use {default}/jsfailstats {grey}to toggle failstats chat reporting."
+	}
+	"Tip - kz_jsfailstatsconsole"
+	{
+		"en"	"{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
+	}
 	"Tip - kz_jstier"
 	{
 		"en"	"{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."

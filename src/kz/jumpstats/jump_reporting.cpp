@@ -49,6 +49,10 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		target->optionService->GetPreferenceInt("jsMinTier", KZOptionService::GetOptionInt("defaultJSMinTier", DistanceTier_Impressive)));
 	bool jsAlways = target->optionService->GetPreferenceBool("jsAlways", false);
 	bool isFailstat = jump->IsFailstat();
+	if (isFailstat && !target->optionService->GetPreferenceBool("jsFailstats", true))
+	{
+		return;
+	}
 	if (!jsAlways && (minTier == DistanceTier_None || color < minTier))
 	{
 		return;
@@ -139,7 +143,11 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	{
 		return;
 	}
-	if (broadcast && jump->GetOffset() <= -JS_EPSILON)
+	if (jump->IsFailstat() && !target->optionService->GetPreferenceBool("jsFailstatsConsole", true))
+	{
+		return;
+	}
+	if (broadcast && (jump->IsFailstat() || jump->GetOffset() <= -JS_EPSILON))
 	{
 		return;
 	}
@@ -321,10 +329,6 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 	{
 		return;
 	}
-	if (jump->GetOffset() <= -JS_EPSILON)
-	{
-		return;
-	}
 	DistanceTier tier = jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->GetReportJumpType(), jump->GetDistance());
 	if (tier == DistanceTier_None)
 	{
@@ -354,7 +358,7 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 
 void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast)
 {
-	if (broadcast && jump->GetOffset() <= -JS_EPSILON)
+	if (broadcast && (jump->IsFailstat() || jump->GetOffset() <= -JS_EPSILON))
 	{
 		return;
 	}
@@ -399,6 +403,10 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
 		if (player == jump->GetJumpPlayer() || player->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
 		{
+			if (isFailstat && !player->optionService->GetPreferenceBool("jsFailstats", true))
+			{
+				continue;
+			}
 			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !isFailstat && !player->optionService->GetPreferenceBool("jsAlways", false))
 			{
 				continue;
@@ -420,11 +428,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player has broadcasting enabled, we show a brief summary in chat and play a sound.
 		else
 		{
-			if (!jump->IsValid())
-			{
-				continue;
-			}
-			if (jump->GetOffset() <= -JS_EPSILON)
+			if (!jump->IsValid() || jump->IsFailstat() || jump->GetOffset() <= -JS_EPSILON)
 			{
 				continue;
 			}

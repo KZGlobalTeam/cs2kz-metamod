@@ -554,6 +554,8 @@ public:
 	void SetSoundMinTier(const char *tierString);
 	void ToggleExtendedChatStats();
 	void ToggleJSAlways();
+	void ToggleFailstatsReporting();
+	void ToggleFailstatsConsoleReporting();
 	void SetJumpstatsVolume(f32 volume);
 	void ToggleJumpstatsReporting();
 };

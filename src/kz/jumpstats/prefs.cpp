@@ -257,6 +257,32 @@ void KZJumpstatsService::ToggleJSAlways()
 	}
 }
 
+void KZJumpstatsService::ToggleFailstatsReporting()
+{
+	this->player->optionService->SetPreferenceBool("jsFailstats", !this->player->optionService->GetPreferenceBool("jsFailstats", true));
+	if (this->player->optionService->GetPreferenceBool("jsFailstats", true))
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Failstats Chat Reporting - Enable");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Failstats Chat Reporting - Disable");
+	}
+}
+
+void KZJumpstatsService::ToggleFailstatsConsoleReporting()
+{
+	this->player->optionService->SetPreferenceBool("jsFailstatsConsole", !this->player->optionService->GetPreferenceBool("jsFailstatsConsole", true));
+	if (this->player->optionService->GetPreferenceBool("jsFailstatsConsole", true))
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Failstats Console Reporting - Enable");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Failstats Console Reporting - Disable");
+	}
+}
+
 SCMD(kz_jstier, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
@@ -303,6 +329,20 @@ SCMD(kz_jsalways, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleJSAlways();
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_jsfailstats, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleFailstatsReporting();
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_jsfailstatsconsole, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->ToggleFailstatsConsoleReporting();
 	return MRES_SUPERCEDE;
 }
 
