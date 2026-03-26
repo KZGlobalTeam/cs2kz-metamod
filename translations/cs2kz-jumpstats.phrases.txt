@@ -1022,4 +1022,12 @@
 		"ru"		"{grey}Отображение статистики прыжков выключено."
 		"ua"		"{grey}Відображення статистики стрибків вимкнено."
 	}
+	"Jumpstats Option - Failstats Reporting - Enable"
+	{
+		"en"		"{grey}Failstats reporting enabled."
+	}
+	"Jumpstats Option - Failstats Reporting - Disable"
+	{
+		"en"		"{grey}Failstats reporting disabled."
+	}
 }
