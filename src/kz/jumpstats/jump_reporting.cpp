@@ -143,7 +143,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	{
 		return;
 	}
-	if (jump->IsFailstat() && !target->optionService->GetPreferenceBool("jsFailstats", true))
+	if (jump->IsFailstat() && !target->optionService->GetPreferenceBool("jsFailstatsConsole", true))
 	{
 		return;
 	}

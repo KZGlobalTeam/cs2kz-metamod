@@ -34,7 +34,11 @@
 	}
 	"Tip - kz_jsfailstats"
 	{
-		"en"	"{grey}Use {default}/jsfailstats {grey}to toggle failstats reporting."
+		"en"	"{grey}Use {default}/jsfailstats {grey}to toggle failstats chat reporting."
+	}
+	"Tip - kz_jsfailstatsconsole"
+	{
+		"en"	"{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
 	}
 	"Tip - kz_jstier"
 	{

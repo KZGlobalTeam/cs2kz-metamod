@@ -580,7 +580,11 @@
 	}
 	"Command Description - kz_jsfailstats"
 	{
-		"en"		"Toggle failstats reporting."
+		"en"		"Toggle failstats chat reporting."
+	}
+	"Command Description - kz_jsfailstatsconsole"
+	{
+		"en"		"Toggle failstats console reporting."
 	}
     "Command Description - kz_jstier"
     {
