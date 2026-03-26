@@ -1025,17 +1025,21 @@
 	"Jumpstats Option - Failstats Chat Reporting - Enable"
 	{
 		"en"		"{grey}Failstats chat reporting enabled."
+		"ru"		"{grey}Отображение проваленных прыжков в чате включено."
 	}
 	"Jumpstats Option - Failstats Chat Reporting - Disable"
 	{
 		"en"		"{grey}Failstats chat reporting disabled."
+		"ru"		"{grey}Отображение проваленных прыжков в чате выключено."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Enable"
 	{
 		"en"		"{grey}Failstats console reporting enabled."
+		"ru"		"{grey}Отображение проваленных прыжков в консоли включено."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Disable"
 	{
 		"en"		"{grey}Failstats console reporting disabled."
+		"ru"		"{grey}Отображение проваленных прыжков в консоли выключено."
 	}
 }
