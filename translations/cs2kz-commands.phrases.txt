@@ -582,11 +582,13 @@
 	{
 		"en"		"Toggle failstats chat reporting."
 		"ru"		"Вкл/Выкл вывод проваленных прыжков в чат."
+		"ua"		"Увімк./Вимк. показ статистики невдалих стрибків в чаті."
 	}
 	"Command Description - kz_jsfailstatsconsole"
 	{
 		"en"		"Toggle failstats console reporting."
 		"ru"		"Вкл/Выкл вывод проваленных прыжков в консоль."
+		"ua"		"Увімк./Вимк. показ статистики невдалих стрибків в консолі."
 	}
     "Command Description - kz_jstier"
     {

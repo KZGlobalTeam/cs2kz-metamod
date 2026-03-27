@@ -36,11 +36,13 @@
 	{
 		"en"	"{grey}Use {default}/jsfailstats {grey}to toggle failstats chat reporting."
 		"ru"	"{grey}Напишите {default}/jsfailstats{grey}, чтобы включить статистику проваленных прыжков в чате."
+		"ua"	"{grey}Напишіть {default}/jsfailstats {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у чаті."
 	}
 	"Tip - kz_jsfailstatsconsole"
 	{
 		"en"	"{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
 		"ru"	"{grey}Напишите {default}/jsfailstatsconsole{grey}, чтобы включить статистику проваленных прыжков в консоли."
+		"ua"	"{grey}Напишіть {default}/jsfailstatsconsole {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у консолі."
 	}
 	"Tip - kz_jstier"
 	{
@@ -48,7 +50,7 @@
 		"chi"	"{grey}使用 {default}/jstier {grey}设置显示你的跳跃数据的最低等级."
 		"pl"	"{grey}Użyj {default}/jstier {grey}, aby ustawić minimalny poziom raportowania jumpstatów."
 		"ru"	"{grey}Напишите {default}/jstier{grey}, чтобы изменить минимальный тир статистики прыжков."
-		"ua"	"{grey}Використання {default}/jstier {grey}, щоб встановити мінімальний тір статистики стрибків."
+		"ua"	"{grey}Напишіть {default}/jstier {grey}, щоб встановити мінімальний тір статистики стрибків."
 		"de"	"{grey}Benutze {default}/jstier {grey} um dein minimales Level für Jumpstat-Benachrichtigungen zu setzen."
 	}
 	"Tip - kz_jsextend"
@@ -57,7 +59,7 @@
 		"chi"	"{grey}使用 {default}/jsextend {grey}可以切换是否在聊天框展示详细跳跃数据."
 		"pl"	"{grey}Użyj {default}/jsextend {grey}, aby włączyć lub wyłączyć rozszerzone raportowanie jumpstatów w czacie."
 		"ru"	"{grey}Напишите {default}/jsextend{grey}, чтобы показывать подробную статистику прыжков в чате."
-		"ua"	"{grey}Використання {default}/jsextend {grey}, щоб увімк./вимк. розширену статистику стрибків у чаті."
+		"ua"	"{grey}Напишіть {default}/jsextend {grey}, щоб увімк./вимк. розширену статистику стрибків у чаті."
 		"de"	"{grey}Benutze {default}/jsextend {grey}um erweitertes Jumpstats-Feedback im Chat zu erhalten.."
 	}
 }
