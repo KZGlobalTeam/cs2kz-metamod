@@ -5,7 +5,7 @@
 		"en"	"{grey}You can toggle jumpstats reporting by typing {default}/js{grey}."
 		"chi"	"{grey}你可以使用 {default}/js{grey} 开启或关闭起跳提示."
 		"pl"	"{grey}Użyj {default}/js{grey} aby włączyć lub wyłączyć wykaz jumpstatów."
-		"ru"	"{grey}Напишите {default}/js{grey}, чтобы включить статистику прыжков."
+		"ru"	"{grey}Напишите {default}/js{grey}, чтобы включить/выключить статистику прыжков."
 		"fi"	"{grey}Voit vaihtaa jumpstattien reportoinnin asetusta käyttämällä {default}/js{grey} komentoa."
 		"sv"	"{grey}Du kan ändra jumpstats chattutskriften genom att skriva {default}/js{grey}."
 		"ua"	"{grey}Ви можете увімк./вимк. статистику стрибків написавши в чат {default}/js{grey}."
@@ -35,10 +35,12 @@
 	"Tip - kz_jsfailstats"
 	{
 		"en"	"{grey}Use {default}/jsfailstats {grey}to toggle failstats chat reporting."
+		"ru"	"{grey}Напишите {default}/jsfailstats{grey}, чтобы включить статистику проваленных прыжков в чате."
 	}
 	"Tip - kz_jsfailstatsconsole"
 	{
 		"en"	"{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
+		"ru"	"{grey}Напишите {default}/jsfailstatsconsole{grey}, чтобы включить статистику проваленных прыжков в консоли."
 	}
 	"Tip - kz_jstier"
 	{
