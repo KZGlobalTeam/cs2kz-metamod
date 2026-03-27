@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 602,
     "phrases_with_missing": 386,
-    "total_missing_entries": 2419,
+    "total_missing_entries": 2411,
     "all_languages": [
       "chi",
       "de",
@@ -70,55 +70,55 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
@@ -208,19 +208,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -304,7 +304,7 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         }
       ],
@@ -352,91 +352,91 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -700,19 +700,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -838,7 +838,7 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
@@ -1139,289 +1139,289 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstier",
-          "line": 591,
+          "line": 593,
           "english_text": "Set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstierconsole",
-          "line": 601,
+          "line": 603,
           "english_text": "Set your minimum jumpstats console reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastsound",
-          "line": 611,
+          "line": 613,
           "english_text": "Set the minimum tier for jumpstats sound broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsextend",
-          "line": 630,
+          "line": 632,
           "english_text": "Toggle extended jumpstats reporting in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsvolume",
-          "line": 640,
+          "line": 642,
           "english_text": "Set jumpstats sound effect volume."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_specs",
-          "line": 730,
+          "line": 732,
           "english_text": "List currently spectating players in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1327,
+          "line": 1329,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1338,
+          "line": 1340,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1349,
+          "line": 1351,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1360,
+          "line": 1362,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1371,
+          "line": 1373,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1381,
+          "line": 1383,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1391,
+          "line": 1393,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1401,
+          "line": 1403,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1411,
+          "line": 1413,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1421,
+          "line": 1423,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1467,
+          "line": 1469,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1477,
+          "line": 1479,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1487,
+          "line": 1489,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -1769,19 +1769,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -2687,19 +2687,19 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
         },
         {
@@ -3041,391 +3041,391 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstier",
-          "line": 591,
+          "line": 593,
           "english_text": "Set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstierconsole",
-          "line": 601,
+          "line": 603,
           "english_text": "Set your minimum jumpstats console reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastsound",
-          "line": 611,
+          "line": 613,
           "english_text": "Set the minimum tier for jumpstats sound broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsextend",
-          "line": 630,
+          "line": 632,
           "english_text": "Toggle extended jumpstats reporting in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsvolume",
-          "line": 640,
+          "line": 642,
           "english_text": "Set jumpstats sound effect volume."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_specs",
-          "line": 730,
+          "line": 732,
           "english_text": "List currently spectating players in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_lj",
-          "line": 948,
+          "line": 950,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_ljarea",
-          "line": 961,
+          "line": 963,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsarea",
-          "line": 974,
+          "line": 976,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_end",
-          "line": 987,
+          "line": 989,
           "english_text": "Teleport to the end."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_ctop",
-          "line": 1128,
+          "line": 1130,
           "english_text": "Retrieve top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_coursetop",
-          "line": 1143,
+          "line": 1145,
           "english_text": "Retrieve top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_maptop",
-          "line": 1158,
+          "line": 1160,
           "english_text": "Retrieve top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gctop",
-          "line": 1173,
+          "line": 1175,
           "english_text": "Retrieve global top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gcoursetop",
-          "line": 1188,
+          "line": 1190,
           "english_text": "Retrieve global top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gmaptop",
-          "line": 1204,
+          "line": 1206,
           "english_text": "Retrieve global top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_sctop",
-          "line": 1219,
+          "line": 1221,
           "english_text": "Retrieve server top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_scoursetop",
-          "line": 1234,
+          "line": 1236,
           "english_text": "Retrieve server top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_smaptop",
-          "line": 1249,
+          "line": 1251,
           "english_text": "Retrieve server top course times of a map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_comparelevel",
-          "line": 1264,
+          "line": 1266,
           "english_text": "Set the maximum preferred level of run comparison."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_playercheck",
-          "line": 1277,
+          "line": 1279,
           "english_text": "Check the status of the specified player (default to self)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pc",
-          "line": 1291,
+          "line": 1293,
           "english_text": "Check the status of the specified player (default to self)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_courses",
-          "line": 1313,
+          "line": 1315,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1327,
+          "line": 1329,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1338,
+          "line": 1340,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1349,
+          "line": 1351,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1360,
+          "line": 1362,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1371,
+          "line": 1373,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1381,
+          "line": 1383,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1391,
+          "line": 1393,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1401,
+          "line": 1403,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1411,
+          "line": 1413,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1421,
+          "line": 1423,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1467,
+          "line": 1469,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1477,
+          "line": 1479,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1487,
+          "line": 1489,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -3785,19 +3785,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -4907,19 +4907,19 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
         },
         {
@@ -5297,337 +5297,337 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstier",
-          "line": 591,
+          "line": 593,
           "english_text": "Set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstierconsole",
-          "line": 601,
+          "line": 603,
           "english_text": "Set your minimum jumpstats console reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastsound",
-          "line": 611,
+          "line": 613,
           "english_text": "Set the minimum tier for jumpstats sound broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsextend",
-          "line": 630,
+          "line": 632,
           "english_text": "Toggle extended jumpstats reporting in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsvolume",
-          "line": 640,
+          "line": 642,
           "english_text": "Set jumpstats sound effect volume."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_specs",
-          "line": 730,
+          "line": 732,
           "english_text": "List currently spectating players in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_lj",
-          "line": 948,
+          "line": 950,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_ljarea",
-          "line": 961,
+          "line": 963,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsarea",
-          "line": 974,
+          "line": 976,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_end",
-          "line": 987,
+          "line": 989,
           "english_text": "Teleport to the end."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_comparelevel",
-          "line": 1264,
+          "line": 1266,
           "english_text": "Set the maximum preferred level of run comparison."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_playercheck",
-          "line": 1277,
+          "line": 1279,
           "english_text": "Check the status of the specified player (default to self)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pc",
-          "line": 1291,
+          "line": 1293,
           "english_text": "Check the status of the specified player (default to self)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_courses",
-          "line": 1313,
+          "line": 1315,
           "english_text": "Display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1327,
+          "line": 1329,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1338,
+          "line": 1340,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1349,
+          "line": 1351,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1360,
+          "line": 1362,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1371,
+          "line": 1373,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1381,
+          "line": 1383,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1391,
+          "line": 1393,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1401,
+          "line": 1403,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1411,
+          "line": 1413,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1421,
+          "line": 1423,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1467,
+          "line": 1469,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1477,
+          "line": 1479,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1487,
+          "line": 1489,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -6029,19 +6029,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -7181,19 +7181,19 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
         },
         {
@@ -7541,289 +7541,289 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstier",
-          "line": 591,
+          "line": 593,
           "english_text": "Set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstierconsole",
-          "line": 601,
+          "line": 603,
           "english_text": "Set your minimum jumpstats console reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastsound",
-          "line": 611,
+          "line": 613,
           "english_text": "Set the minimum tier for jumpstats sound broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsextend",
-          "line": 630,
+          "line": 632,
           "english_text": "Toggle extended jumpstats reporting in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsvolume",
-          "line": 640,
+          "line": 642,
           "english_text": "Set jumpstats sound effect volume."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_specs",
-          "line": 730,
+          "line": 732,
           "english_text": "List currently spectating players in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1327,
+          "line": 1329,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1338,
+          "line": 1340,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1349,
+          "line": 1351,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1360,
+          "line": 1362,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1371,
+          "line": 1373,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1381,
+          "line": 1383,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1391,
+          "line": 1393,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1401,
+          "line": 1403,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1411,
+          "line": 1413,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1421,
+          "line": 1423,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1467,
+          "line": 1469,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1477,
+          "line": 1479,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1487,
+          "line": 1489,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -8171,19 +8171,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -9095,19 +9095,19 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
         },
         {
@@ -9318,265 +9318,265 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstier",
-          "line": 591,
+          "line": 593,
           "english_text": "Set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstierconsole",
-          "line": 601,
+          "line": 603,
           "english_text": "Set your minimum jumpstats console reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastsound",
-          "line": 611,
+          "line": 613,
           "english_text": "Set the minimum tier for jumpstats sound broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsextend",
-          "line": 630,
+          "line": 632,
           "english_text": "Toggle extended jumpstats reporting in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsvolume",
-          "line": 640,
+          "line": 642,
           "english_text": "Set jumpstats sound effect volume."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_specs",
-          "line": 730,
+          "line": 732,
           "english_text": "List currently spectating players in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1371,
+          "line": 1373,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1381,
+          "line": 1383,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1391,
+          "line": 1393,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1401,
+          "line": 1403,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1411,
+          "line": 1413,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1421,
+          "line": 1423,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1467,
+          "line": 1469,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1477,
+          "line": 1479,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1487,
+          "line": 1489,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -9924,19 +9924,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -10746,19 +10746,19 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
         },
         {
@@ -10879,79 +10879,79 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -11215,19 +11215,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -11353,7 +11353,7 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
@@ -11432,175 +11432,175 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -11882,19 +11882,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -12548,19 +12548,19 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
         },
         {
@@ -12921,319 +12921,319 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstier",
-          "line": 591,
+          "line": 593,
           "english_text": "Set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jstierconsole",
-          "line": 601,
+          "line": 603,
           "english_text": "Set your minimum jumpstats console reporting tier."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastsound",
-          "line": 611,
+          "line": 613,
           "english_text": "Set the minimum tier for jumpstats sound broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsextend",
-          "line": 630,
+          "line": 632,
           "english_text": "Toggle extended jumpstats reporting in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsvolume",
-          "line": 640,
+          "line": 642,
           "english_text": "Set jumpstats sound effect volume."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_specs",
-          "line": 730,
+          "line": 732,
           "english_text": "List currently spectating players in chat."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_lj",
-          "line": 948,
+          "line": 950,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_ljarea",
-          "line": 961,
+          "line": 963,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_jsarea",
-          "line": 974,
+          "line": 976,
           "english_text": "Teleport to the jumpstat area."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_end",
-          "line": 987,
+          "line": 989,
           "english_text": "Teleport to the end."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_comparelevel",
-          "line": 1264,
+          "line": 1266,
           "english_text": "Set the maximum preferred level of run comparison."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_spb",
-          "line": 1327,
+          "line": 1329,
           "english_text": "Retrieve server personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gpb",
-          "line": 1338,
+          "line": 1340,
           "english_text": "Retrieve global personal best statistics."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_globalcheck",
-          "line": 1349,
+          "line": 1351,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_gc",
-          "line": 1360,
+          "line": 1362,
           "english_text": "Display the status of the GlobalAPI."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beam",
-          "line": 1371,
+          "line": 1373,
           "english_text": "Set or toggle player beam type (off/ground/feet)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_beamoffset",
-          "line": 1381,
+          "line": 1383,
           "english_text": "Set or get player beam offset."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measure",
-          "line": 1391,
+          "line": 1393,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measurestart",
-          "line": 1401,
+          "line": 1403,
           "english_text": "Set the start position of the measurement."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureend",
-          "line": 1411,
+          "line": 1413,
           "english_text": "Set the end position of the measurement and calculate the distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1421,
+          "line": 1423,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1467,
+          "line": 1469,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1477,
+          "line": 1479,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1487,
+          "line": 1489,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV."
         },
         {
@@ -13599,19 +13599,19 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -14595,19 +14595,19 @@
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier."
         },
         {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat."
         },
         {
@@ -14702,59 +14702,10 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 98.67,
-      "translated": 594,
-      "missing": 8,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_jsfailstats",
-          "line": 581,
-          "english_text": "Toggle failstats chat reporting."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
-          "english_text": "Toggle failstats console reporting."
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1025,
-          "english_text": "{grey}Failstats chat reporting enabled."
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
-          "english_text": "{grey}Failstats chat reporting disabled."
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
-          "english_text": "{grey}Failstats console reporting enabled."
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
-          "english_text": "{grey}Failstats console reporting disabled."
-        },
-        {
-          "file": "cs2kz-tips-jumpstats.phrases.txt",
-          "phrase": "Tip - kz_jsfailstats",
-          "line": 35,
-          "english_text": "{grey}Use {default}/jsfailstats {grey}to toggle failstats chat reporting."
-        },
-        {
-          "file": "cs2kz-tips-jumpstats.phrases.txt",
-          "phrase": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
-          "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 602,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -15782,7 +15733,8 @@
           "english_text": "Toggle failstats chat reporting.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -15794,17 +15746,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Command Description - kz_jsfailstatsconsole",
-          "line": 586,
+          "line": 587,
           "english_text": "Toggle failstats console reporting.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -15816,13 +15768,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Command Description - kz_jstier",
-          "line": 591,
+          "line": 593,
           "english_text": "Set your minimum jumpstats reporting tier.",
           "existing_languages": [
             "chi",
@@ -15844,7 +15795,7 @@
         },
         {
           "name": "Command Description - kz_jstierconsole",
-          "line": 601,
+          "line": 603,
           "english_text": "Set your minimum jumpstats console reporting tier.",
           "existing_languages": [
             "chi",
@@ -15866,7 +15817,7 @@
         },
         {
           "name": "Command Description - kz_jsbroadcastsound",
-          "line": 611,
+          "line": 613,
           "english_text": "Set the minimum tier for jumpstats sound broadcast.",
           "existing_languages": [
             "chi",
@@ -15888,7 +15839,7 @@
         },
         {
           "name": "Command Description - kz_jsbroadcastconsole",
-          "line": 621,
+          "line": 623,
           "english_text": "Set the minimum tier for jumpstats console broadcast.",
           "existing_languages": [
             "chi",
@@ -15910,7 +15861,7 @@
         },
         {
           "name": "Command Description - kz_jsextend",
-          "line": 630,
+          "line": 632,
           "english_text": "Toggle extended jumpstats reporting in chat.",
           "existing_languages": [
             "chi",
@@ -15932,7 +15883,7 @@
         },
         {
           "name": "Command Description - kz_jsvolume",
-          "line": 640,
+          "line": 642,
           "english_text": "Set jumpstats sound effect volume.",
           "existing_languages": [
             "chi",
@@ -15954,7 +15905,7 @@
         },
         {
           "name": "Command Description - kz_specs",
-          "line": 730,
+          "line": 732,
           "english_text": "List currently spectating players in chat.",
           "existing_languages": [
             "chi",
@@ -15976,7 +15927,7 @@
         },
         {
           "name": "Command Description - kz_lj",
-          "line": 948,
+          "line": 950,
           "english_text": "Teleport to the jumpstat area.",
           "existing_languages": [
             "chi",
@@ -15998,7 +15949,7 @@
         },
         {
           "name": "Command Description - kz_ljarea",
-          "line": 961,
+          "line": 963,
           "english_text": "Teleport to the jumpstat area.",
           "existing_languages": [
             "chi",
@@ -16020,7 +15971,7 @@
         },
         {
           "name": "Command Description - kz_jsarea",
-          "line": 974,
+          "line": 976,
           "english_text": "Teleport to the jumpstat area.",
           "existing_languages": [
             "chi",
@@ -16042,7 +15993,7 @@
         },
         {
           "name": "Command Description - kz_end",
-          "line": 987,
+          "line": 989,
           "english_text": "Teleport to the end.",
           "existing_languages": [
             "chi",
@@ -16064,7 +16015,7 @@
         },
         {
           "name": "Command Description - kz_ctop",
-          "line": 1128,
+          "line": 1130,
           "english_text": "Retrieve top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16086,7 +16037,7 @@
         },
         {
           "name": "Command Description - kz_coursetop",
-          "line": 1143,
+          "line": 1145,
           "english_text": "Retrieve top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16108,7 +16059,7 @@
         },
         {
           "name": "Command Description - kz_maptop",
-          "line": 1158,
+          "line": 1160,
           "english_text": "Retrieve top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16130,7 +16081,7 @@
         },
         {
           "name": "Command Description - kz_gctop",
-          "line": 1173,
+          "line": 1175,
           "english_text": "Retrieve global top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16152,7 +16103,7 @@
         },
         {
           "name": "Command Description - kz_gcoursetop",
-          "line": 1188,
+          "line": 1190,
           "english_text": "Retrieve global top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16174,7 +16125,7 @@
         },
         {
           "name": "Command Description - kz_gmaptop",
-          "line": 1204,
+          "line": 1206,
           "english_text": "Retrieve global top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16196,7 +16147,7 @@
         },
         {
           "name": "Command Description - kz_sctop",
-          "line": 1219,
+          "line": 1221,
           "english_text": "Retrieve server top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16218,7 +16169,7 @@
         },
         {
           "name": "Command Description - kz_scoursetop",
-          "line": 1234,
+          "line": 1236,
           "english_text": "Retrieve server top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16240,7 +16191,7 @@
         },
         {
           "name": "Command Description - kz_smaptop",
-          "line": 1249,
+          "line": 1251,
           "english_text": "Retrieve server top course times of a map.",
           "existing_languages": [
             "chi",
@@ -16262,7 +16213,7 @@
         },
         {
           "name": "Command Description - kz_comparelevel",
-          "line": 1264,
+          "line": 1266,
           "english_text": "Set the maximum preferred level of run comparison.",
           "existing_languages": [
             "chi",
@@ -16284,7 +16235,7 @@
         },
         {
           "name": "Command Description - kz_playercheck",
-          "line": 1277,
+          "line": 1279,
           "english_text": "Check the status of the specified player (default to self).",
           "existing_languages": [
             "chi",
@@ -16306,7 +16257,7 @@
         },
         {
           "name": "Command Description - kz_pc",
-          "line": 1291,
+          "line": 1293,
           "english_text": "Check the status of the specified player (default to self).",
           "existing_languages": [
             "chi",
@@ -16328,7 +16279,7 @@
         },
         {
           "name": "Command Description - kz_course",
-          "line": 1305,
+          "line": 1307,
           "english_text": "Teleport to a course, or display the current course and the list of all courses in the map.",
           "existing_languages": [
             "de",
@@ -16350,7 +16301,7 @@
         },
         {
           "name": "Command Description - kz_courses",
-          "line": 1313,
+          "line": 1315,
           "english_text": "Display the current course and the list of all courses in the map.",
           "existing_languages": [
             "chi",
@@ -16372,7 +16323,7 @@
         },
         {
           "name": "Command Description - kz_spb",
-          "line": 1327,
+          "line": 1329,
           "english_text": "Retrieve server personal best statistics.",
           "existing_languages": [
             "chi",
@@ -16394,7 +16345,7 @@
         },
         {
           "name": "Command Description - kz_gpb",
-          "line": 1338,
+          "line": 1340,
           "english_text": "Retrieve global personal best statistics.",
           "existing_languages": [
             "chi",
@@ -16416,7 +16367,7 @@
         },
         {
           "name": "Command Description - kz_globalcheck",
-          "line": 1349,
+          "line": 1351,
           "english_text": "Display the status of the GlobalAPI.",
           "existing_languages": [
             "chi",
@@ -16438,7 +16389,7 @@
         },
         {
           "name": "Command Description - kz_gc",
-          "line": 1360,
+          "line": 1362,
           "english_text": "Display the status of the GlobalAPI.",
           "existing_languages": [
             "chi",
@@ -16460,7 +16411,7 @@
         },
         {
           "name": "Command Description - kz_beam",
-          "line": 1371,
+          "line": 1373,
           "english_text": "Set or toggle player beam type (off/ground/feet).",
           "existing_languages": [
             "chi",
@@ -16482,7 +16433,7 @@
         },
         {
           "name": "Command Description - kz_beamoffset",
-          "line": 1381,
+          "line": 1383,
           "english_text": "Set or get player beam offset.",
           "existing_languages": [
             "chi",
@@ -16504,7 +16455,7 @@
         },
         {
           "name": "Command Description - kz_measure",
-          "line": 1391,
+          "line": 1393,
           "english_text": "Measure the distance between two points, or measure the block distance if two points are at the same place.",
           "existing_languages": [
             "chi",
@@ -16526,7 +16477,7 @@
         },
         {
           "name": "Command Description - kz_measurestart",
-          "line": 1401,
+          "line": 1403,
           "english_text": "Set the start position of the measurement.",
           "existing_languages": [
             "chi",
@@ -16548,7 +16499,7 @@
         },
         {
           "name": "Command Description - kz_measureend",
-          "line": 1411,
+          "line": 1413,
           "english_text": "Set the end position of the measurement and calculate the distance.",
           "existing_languages": [
             "chi",
@@ -16570,7 +16521,7 @@
         },
         {
           "name": "Command Description - kz_measureblock",
-          "line": 1421,
+          "line": 1423,
           "english_text": "Measure the block distance.",
           "existing_languages": [
             "chi",
@@ -16592,7 +16543,7 @@
         },
         {
           "name": "Command Description - kz_paint",
-          "line": 1431,
+          "line": 1433,
           "english_text": "Place a paint decal on the surface you are aiming at.",
           "existing_languages": [
             "en",
@@ -16614,7 +16565,7 @@
         },
         {
           "name": "Command Description - kz_paintcolor",
-          "line": 1437,
+          "line": 1439,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values.",
           "existing_languages": [
             "en",
@@ -16636,7 +16587,7 @@
         },
         {
           "name": "Command Description - kz_paintsize",
-          "line": 1443,
+          "line": 1445,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8).",
           "existing_languages": [
             "en",
@@ -16658,7 +16609,7 @@
         },
         {
           "name": "Command Description - kz_togglepaint",
-          "line": 1449,
+          "line": 1451,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces.",
           "existing_languages": [
             "en",
@@ -16680,7 +16631,7 @@
         },
         {
           "name": "Command Description - kz_showpaint",
-          "line": 1455,
+          "line": 1457,
           "english_text": "Toggle between showing only your own paint and showing paint from all players.",
           "existing_languages": [
             "en",
@@ -16702,7 +16653,7 @@
         },
         {
           "name": "Command Description - kz_cleardecals",
-          "line": 1461,
+          "line": 1463,
           "english_text": "Remove all decals from the map.",
           "existing_languages": [
             "en",
@@ -16724,7 +16675,7 @@
         },
         {
           "name": "Command Description - kz_timerstopsound",
-          "line": 1467,
+          "line": 1469,
           "english_text": "Toggle the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -16746,7 +16697,7 @@
         },
         {
           "name": "Command Description - kz_autohideweapon",
-          "line": 1477,
+          "line": 1479,
           "english_text": "Toggle the automatic hiding of weapon viewmodel.",
           "existing_languages": [
             "chi",
@@ -16768,7 +16719,7 @@
         },
         {
           "name": "Command Description - kz_pistol",
-          "line": 1487,
+          "line": 1489,
           "english_text": "Change or remove the current pistol.",
           "existing_languages": [
             "chi",
@@ -16790,7 +16741,7 @@
         },
         {
           "name": "Command Description - kz_rpsave",
-          "line": 1497,
+          "line": 1499,
           "english_text": "Manually save past gameplay into a replay.",
           "existing_languages": [
             "chi",
@@ -16812,7 +16763,7 @@
         },
         {
           "name": "Command Description - kz_replay",
-          "line": 1506,
+          "line": 1508,
           "english_text": "Play a previously saved replay.",
           "existing_languages": [
             "chi",
@@ -16834,7 +16785,7 @@
         },
         {
           "name": "Command Description - kz_replays",
-          "line": 1515,
+          "line": 1517,
           "english_text": "List saved replays.",
           "existing_languages": [
             "de",
@@ -16856,7 +16807,7 @@
         },
         {
           "name": "Command Description - kz_rpgoto",
-          "line": 1523,
+          "line": 1525,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)",
           "existing_languages": [
             "chi",
@@ -16878,7 +16829,7 @@
         },
         {
           "name": "Command Description - kz_rpgototick",
-          "line": 1532,
+          "line": 1534,
           "english_text": "Go to a specific tick in the replay.",
           "existing_languages": [
             "chi",
@@ -16900,7 +16851,7 @@
         },
         {
           "name": "Command Description - kz_rpinfo",
-          "line": 1541,
+          "line": 1543,
           "english_text": "Display information about the current replay.",
           "existing_languages": [
             "chi",
@@ -16922,7 +16873,7 @@
         },
         {
           "name": "Command Description - kz_rppause",
-          "line": 1550,
+          "line": 1552,
           "english_text": "Pause or resume the current replay.",
           "existing_languages": [
             "chi",
@@ -16944,7 +16895,7 @@
         },
         {
           "name": "Command Description - kz_rploadprogress",
-          "line": 1559,
+          "line": 1561,
           "english_text": "Display the loading progress of the replay.",
           "existing_languages": [
             "chi",
@@ -16966,7 +16917,7 @@
         },
         {
           "name": "Command Description - kz_rpcancelload",
-          "line": 1568,
+          "line": 1570,
           "english_text": "Cancel the loading of the replay.",
           "existing_languages": [
             "chi",
@@ -16988,7 +16939,7 @@
         },
         {
           "name": "Command Description - kz_recordvolume",
-          "line": 1577,
+          "line": 1579,
           "english_text": "Set the volume of the world record sound effect.",
           "existing_languages": [
             "chi",
@@ -17010,7 +16961,7 @@
         },
         {
           "name": "Command Description - kz_cpmessage",
-          "line": 1586,
+          "line": 1588,
           "english_text": "Toggle checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -17032,7 +16983,7 @@
         },
         {
           "name": "Command Description - kz_rphidelegs",
-          "line": 1595,
+          "line": 1597,
           "english_text": "Toggle replay bot's first person legs visibility.",
           "existing_languages": [
             "chi",
@@ -17054,7 +17005,7 @@
         },
         {
           "name": "Command Description - kz_accept",
-          "line": 1604,
+          "line": 1606,
           "english_text": "Accept an incoming race.",
           "existing_languages": [
             "chi",
@@ -17076,7 +17027,7 @@
         },
         {
           "name": "Command Description - kz_surrender",
-          "line": 1612,
+          "line": 1614,
           "english_text": "Surrender an ongoing race.",
           "existing_languages": [
             "chi",
@@ -17098,7 +17049,7 @@
         },
         {
           "name": "Command Description - kz_mapinfo",
-          "line": 1620,
+          "line": 1622,
           "english_text": "Display information about the current map.",
           "existing_languages": [
             "chi",
@@ -17120,7 +17071,7 @@
         },
         {
           "name": "Command Description - kz_tier",
-          "line": 1627,
+          "line": 1629,
           "english_text": "Display the tier of the current course or a specified course.",
           "existing_languages": [
             "chi",
@@ -17142,7 +17093,7 @@
         },
         {
           "name": "Command Description - kz_modernperfstats",
-          "line": 1634,
+          "line": 1636,
           "english_text": "Retrieve bhop statistics for modern jumping.",
           "existing_languages": [
             "chi",
@@ -17164,7 +17115,7 @@
         },
         {
           "name": "Command Description - kz_legacyperfstats",
-          "line": 1641,
+          "line": 1643,
           "english_text": "Retrieve bhop statistics for legacy jumping.",
           "existing_languages": [
             "chi",
@@ -17186,7 +17137,7 @@
         },
         {
           "name": "Command Description - kz_resetperfstats",
-          "line": 1648,
+          "line": 1650,
           "english_text": "Reset bhop statistics for modern and legacy jumping.",
           "existing_languages": [
             "chi",
@@ -17208,7 +17159,7 @@
         },
         {
           "name": "Command Description - kz_fov",
-          "line": 1655,
+          "line": 1657,
           "english_text": "Change your FOV.",
           "existing_languages": [
             "chi",
@@ -18684,7 +18635,8 @@
           "english_text": "{grey}Failstats chat reporting enabled.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18696,17 +18648,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1030,
+          "line": 1031,
           "english_text": "{grey}Failstats chat reporting disabled.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18718,17 +18670,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1035,
+          "line": 1037,
           "english_text": "{grey}Failstats console reporting enabled.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18740,17 +18692,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1040,
+          "line": 1043,
           "english_text": "{grey}Failstats console reporting disabled.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18762,8 +18714,7 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -22983,7 +22934,8 @@
           "english_text": "{grey}Use {default}/jsfailstats {grey}to toggle failstats chat reporting.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -22995,17 +22947,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Tip - kz_jsfailstatsconsole",
-          "line": 40,
+          "line": 41,
           "english_text": "{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -23017,13 +22969,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Tip - kz_jstier",
-          "line": 45,
+          "line": 47,
           "english_text": "{grey}Use {default}/jstier {grey}to set your minimum jumpstats reporting tier.",
           "existing_languages": [
             "chi",
@@ -23045,7 +22996,7 @@
         },
         {
           "name": "Tip - kz_jsextend",
-          "line": 54,
+          "line": 56,
           "english_text": "{grey}Use {default}/jsextend {grey}to toggle extended jumpstats reporting in chat.",
           "existing_languages": [
             "chi",
