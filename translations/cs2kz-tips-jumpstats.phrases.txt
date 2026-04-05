@@ -35,12 +35,14 @@
 	"Tip - kz_jsfailstats"
 	{
 		"en"	"{grey}Use {default}/jsfailstats {grey}to toggle failstats chat reporting."
+		"chi"	"{grey}使用 {default}/jsfailstats {grey}切换是否在聊天框展示失败统计."
 		"ru"	"{grey}Напишите {default}/jsfailstats{grey}, чтобы включить статистику проваленных прыжков в чате."
 		"ua"	"{grey}Напишіть {default}/jsfailstats {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у чаті."
 	}
 	"Tip - kz_jsfailstatsconsole"
 	{
 		"en"	"{grey}Use {default}/jsfailstatsconsole {grey}to toggle failstats console reporting."
+		"chi"	"{grey}使用 {default}/jsfailstatsconsole {grey}切换是否在控制台展示失败统计."
 		"ru"	"{grey}Напишите {default}/jsfailstatsconsole{grey}, чтобы включить статистику проваленных прыжков в консоли."
 		"ua"	"{grey}Напишіть {default}/jsfailstatsconsole {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у консолі."
 	}
