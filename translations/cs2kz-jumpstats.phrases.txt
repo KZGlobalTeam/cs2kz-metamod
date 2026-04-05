@@ -212,6 +212,7 @@
 	"Width (Short)"
 	{
 		"en"		"Width"
+		"chi"		"幅度"
 		"ua"		"Шир."
 		"ru"		"Шир."
 	}
@@ -801,6 +802,7 @@
 		// LJ: 258.1 | 6 Strafes | 79% Sync | 276 Pre | 347 Max | 4.09 Edge | +1 W
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,edge_stats:s,release:s"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
+		"chi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}同步 | {olive}{pre} {grey}地速 | {olive}{max} {grey}空速{edge_stats}{release}"
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
 		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
 	}
@@ -810,6 +812,7 @@
 		// BA 6% | OL 2% | DA 15% | 9.7 Dev | 25.5 Width | 55.83 Height | 34.35 Miss
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,bad_angles:.0f,overlap:.0f,dead_air:.0f,width:.1f,height:.2f,edge_stats:s,release:s,deviation_stats:s,miss_stats:s"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
+		"chi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}同步 | {olive}{pre} {grey}地速 | {olive}{max} {grey}空速{edge_stats}{release}\n{grey}无效 {olive}{bad_angles}%%%% {grey}| 冲突 {olive}{overlap}%%%% {grey}| 无操作 {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}幅度 | {olive}{height} {grey}高度{miss_stats}"
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Висота{miss_stats}"
 		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Высота{miss_stats}"
 	}
@@ -836,6 +839,7 @@
 		// zer0.k failed 280.3341 units with a Long Jump
 		"#format"	"player_name:s,distance:.4f,jump_type:s,invalidation_reason:s"
 		"en"		"{player_name} failed {distance} units with a {jump_type} {invalidation_reason}"
+		"chi"		"{player_name} {jump_type} 失败了 {distance} units {invalidation_reason}"
 		"ua"		"{player_name} не зміг стрибнути {distance} units з {jump_type} {invalidation_reason}"
 		"ru"		"{player_name} не долетел {distance} юнитов с {jump_type} {invalidation_reason}"
 	}
@@ -844,6 +848,7 @@
 		// CKZ | 272 Block | 4.09 Edge | 23.50 Miss | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height | +1.0 W
 		"#format"	"mode_style:s,block:s,edge:s,miss:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f,release:s"
 		"en"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+		"chi"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度{release}"
 		"ua"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота{release}"
 		"ru"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синх | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
 	}
@@ -851,6 +856,7 @@
 	{
 		"#format"	"value:.2f"
 		"en"		" | {value} Edge"
+		"chi"		" | {value} 边缘"
 		"ua"		" | {value} Край"
 		"ru"		" | {value} Край"
 	}
@@ -858,6 +864,7 @@
 	{
 		"#format"	"value:.0f"
 		"en"		" | {value} Block"
+		"chi"		" | {value} 块"
 		"ua"		" | {value} Блок"
 		"ru"		" | {value} Блок"
 	}
@@ -865,6 +872,7 @@
 	{
 		"#format"	"value:.2f"
 		"en"		" | {value} Miss"
+		"chi"		" | {value} 错漏"
 		"ua"		" | {value} Брак"
 		"ru"		" | {value} Нехватка"
 	}
@@ -872,6 +880,7 @@
 	{
 		"#format"	"value:.2f"
 		"en"		" | {olive}{value} {grey}Edge"
+		"chi"		" | {olive}{value} {grey}边缘"
 		"ua"		" | {olive}{value} {grey}Край"
 		"ru"		" | {olive}{value} {grey}Край"
 	}
@@ -879,6 +888,7 @@
 	{
 		"#format"	"value:.1f"
 		"en"		" | {olive}{value} {grey}Dev"
+		"chi"		" | {olive}{value} {grey}偏移"
 		"ua"		" | {olive}{value} {grey}Відх"
 		"ru"		" | {olive}{value} {grey}Откл"
 	}
@@ -886,6 +896,7 @@
 	{
 		"#format"	"value:.1f"
 		"en"		" | {olive}{value} {grey}Offset"
+		"chi"		" | {olive}{value} {grey}位移"
 		"ua"		" | {olive}{value} {grey}Зміщення"
 		"ru"		" | {olive}{value} {grey}Смещ"
 	}
@@ -893,6 +904,7 @@
 	{
 		"#format"	"value:.2f"
 		"en"		" | {olive}{value} {grey}Miss"
+		"chi"		" | {olive}{value} {grey}错漏"
 		"ua"		" | {olive}{value} {grey}Брак"
 		"ru"		" | {olive}{value} {grey}Нехв"
 	}
@@ -901,6 +913,7 @@
 		// 57% GainEff | 1.048 Airpath | 17.7 Deviation | 43.1 Width | 0.8003 Airtime | -8.0 Offset | 0.12/0.12 Crouched
 		"#format"	"gain_eff:.0f,air_path:.3f,deviation:.1f,width:.1f,air_time:.4f,offset:.1f,duck_end_time:.2f,duck_total_time:.2f"
 		"en"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+		"chi"		"{gain_eff}%%%% 增益效率 | {air_path} 空中路径 | {deviation} Deviation | {width} 幅度 | {air_time} 滞空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 下蹲"
 		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зміщення | {duck_end_time}/{duck_total_time} Присівши"
 		"ru"		"{gain_eff}%%%% ЭффПрир | {air_path} Airpath | {deviation} Отклонение | {width} Ширина | {air_time} Airtime | {offset} Смещение | {duck_end_time}/{duck_total_time} В приседе"
 	}
@@ -1025,24 +1038,28 @@
 	"Jumpstats Option - Failstats Chat Reporting - Enable"
 	{
 		"en"		"{grey}Failstats chat reporting enabled."
+		"chi"		"{grey}已启用在聊天框展示失败数据."
 		"ru"		"{grey}Отображение проваленных прыжков в чате включено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в чаті увімкнено."
 	}
 	"Jumpstats Option - Failstats Chat Reporting - Disable"
 	{
 		"en"		"{grey}Failstats chat reporting disabled."
+		"chi"		"{grey}已禁用在聊天框展示失败数据."
 		"ru"		"{grey}Отображение проваленных прыжков в чате выключено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в чаті вимкнено."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Enable"
 	{
 		"en"		"{grey}Failstats console reporting enabled."
+		"chi"		"{grey}已启用在控制台展示失败数据."
 		"ru"		"{grey}Отображение проваленных прыжков в консоли включено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в консолі увімкнено."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Disable"
 	{
 		"en"		"{grey}Failstats console reporting disabled."
+		"chi"		"{grey}已禁用在控制台展示失败数据."
 		"ru"		"{grey}Отображение проваленных прыжков в консоли выключено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в консолі вимкнено."
 	}
