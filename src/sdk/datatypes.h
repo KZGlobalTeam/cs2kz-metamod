@@ -282,7 +282,9 @@ public:
 	bool m_bGameCodeMovedPlayer; // true if usercmd cmd number == (m_nGameCodeHasMovedPlayerAfterCommand + 1)
 };
 
+#ifdef _WIN32
 static_assert(sizeof(CMoveData) == 320, "Class didn't match expected size");
+#endif
 
 // Custom data types goes here.
 
