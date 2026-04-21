@@ -214,7 +214,7 @@ void KZProfileService::UpdateClantag()
 	if (!this->player->IsConnected()
 		|| (this->player->GetController() && this->player->GetController()->m_iConnected() != PlayerConnectedState::PlayerConnected))
 	{
-		if (this->player->GetController() && this->player->GetController()->m_szClan() != "")
+		if (this->player->GetController() && V_strlen(this->player->GetController()->m_szClan().String()) > 0)
 		{
 			this->SetClantag("");
 		}

@@ -21,6 +21,7 @@ public:
 private:
 	virtual void unk_00() = 0;
 	virtual void unk_01() = 0;
+	virtual void unk_02() = 0;
 	virtual ~CPlayerPawnComponent() = 0;
 	virtual void unk_03() = 0;
 	virtual void unk_04() = 0;

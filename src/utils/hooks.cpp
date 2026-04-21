@@ -158,11 +158,11 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *, ns_a
 
 // IGameSystem
 static_global int serverGamePostSimulateHook {};
-SH_DECL_HOOK1_void(IGameSystem, ServerGamePostSimulate, SH_NOATTRIB, false, const EventServerGamePostSimulate_t *);
+SH_DECL_HOOK1_void(IGameSystem, OnServerGamePostSimulate, SH_NOATTRIB, false, const EventServerGamePostSimulate_t *);
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *);
 
 static_global int buildGameSessionManifestHookID {};
-SH_DECL_HOOK1_void(IGameSystem, BuildGameSessionManifest, SH_NOATTRIB, false, const EventBuildGameSessionManifest_t *);
+SH_DECL_HOOK1_void(IGameSystem, OnBuildGameSessionManifest, SH_NOATTRIB, false, const EventBuildGameSessionManifest_t *);
 static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg);
 
 static_global bool ignoreTouchEvent {};
@@ -235,14 +235,14 @@ void hooks::Initialize()
 	);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
 		IGameSystem, 
-		ServerGamePostSimulate, 
+		OnServerGamePostSimulate, 
 		(IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem"),
 		SH_STATIC(Hook_ServerGamePostSimulate), 
 		true
 	);
 	buildGameSessionManifestHookID = SH_ADD_DVPHOOK(
 		IGameSystem, 
-		BuildGameSessionManifest, 
+		OnBuildGameSessionManifest, 
 		(IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem"), 
 		SH_STATIC(Hook_BuildGameSessionManifest), 
 		true
