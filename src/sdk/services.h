@@ -23,7 +23,6 @@ private:
 	virtual void unk_01() = 0;
 	virtual void unk_02() = 0;
 	virtual ~CPlayerPawnComponent() = 0;
-	virtual void unk_03() = 0;
 	virtual void unk_04() = 0;
 	virtual void unk_05() = 0;
 	virtual void unk_06() = 0;
@@ -39,6 +38,7 @@ private:
 	virtual void unk_16() = 0;
 	virtual void unk_17() = 0;
 	virtual void unk_18() = 0;
+	virtual void unk_19() = 0;
 
 public:
 	CNetworkVarChainer chainEntity;
