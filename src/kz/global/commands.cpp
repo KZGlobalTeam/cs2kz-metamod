@@ -116,7 +116,7 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 		request.Send(std::move(onResponse));
 	}
 
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_gc, kz_globalcheck);

@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/timer/kz_timer.h"
 

@@ -1,4 +1,5 @@
 #include "kz_trigger.h"
+#include "utils/hooks.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/language/kz_language.h"
@@ -411,8 +412,8 @@ void KZTriggerService::StartTouch(CBaseTrigger *trigger)
 
 	// Handle changes in origin and velocity due to this event.
 	this->UpdatePreTouchData();
-	trigger->StartTouch(pawn);
-	pawn->StartTouch(pawn);
+	hooks::CallOriginalStartTouch(trigger, pawn);
+	hooks::CallOriginalStartTouch(pawn, pawn);
 	tracker->startedTouch = true;
 	this->OnTriggerStartTouchPost(trigger, *tracker);
 	// Call UpdatePlayerPostTouch here because UpdatePlayerStartTouch will be run inside Touch later anyway.
@@ -448,8 +449,8 @@ void KZTriggerService::Touch(CBaseTrigger *trigger, bool silent)
 	if (shouldTouch)
 	{
 		this->UpdatePreTouchData();
-		trigger->Touch(pawn);
-		pawn->Touch(trigger);
+		hooks::CallOriginalTouch(trigger, pawn);
+		hooks::CallOriginalTouch(pawn, trigger);
 		if (!silent)
 		{
 			tracker->touchedThisTick = true;
@@ -488,8 +489,8 @@ void KZTriggerService::EndTouch(CBaseTrigger *trigger)
 			this->Touch(trigger);
 		}
 		this->UpdatePreTouchData();
-		trigger->EndTouch(pawn);
-		pawn->EndTouch(trigger);
+		hooks::CallOriginalEndTouch(trigger, pawn);
+		hooks::CallOriginalEndTouch(pawn, trigger);
 		this->UpdatePlayerPostTouch();
 		this->OnTriggerEndTouchPost(trigger, *tracker);
 		this->triggerTrackers.FindAndRemove(*tracker);

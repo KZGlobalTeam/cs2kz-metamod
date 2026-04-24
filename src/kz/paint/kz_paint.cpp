@@ -263,7 +263,7 @@ SCMD(kz_paint, SCFL_MISC)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->paintService->PlacePaint();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_paintcolor, SCFL_PREFERENCE | SCFL_MISC)
@@ -276,14 +276,14 @@ SCMD(kz_paintcolor, SCFL_PREFERENCE | SCFL_MISC)
 		player->languageService->PrintChat(true, false, "Current Paint Color", player->paintService->GetColorName(),
 										   player->paintService->GetColor().r(), player->paintService->GetColor().g(),
 										   player->paintService->GetColor().b());
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	// Check for predefined colors
 	if (player->paintService->SetColor(args->Arg(1)))
 	{
 		player->languageService->PrintChat(true, false, "Paint Color Set", player->paintService->GetColorName());
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	// Try to parse as RGB values
@@ -301,11 +301,11 @@ SCMD(kz_paintcolor, SCFL_PREFERENCE | SCFL_MISC)
 
 		player->paintService->SetColorRGB(r, g, b, a);
 		player->languageService->PrintChat(true, false, "Paint Color RGB Set", r, g, b, a);
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	player->languageService->PrintChat(true, false, "Paint Color Command Usage");
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_paintsize, SCFL_PREFERENCE | SCFL_MISC)
@@ -316,18 +316,18 @@ SCMD(kz_paintsize, SCFL_PREFERENCE | SCFL_MISC)
 	{
 		player->languageService->PrintChat(true, false, "Paint Size Command Usage");
 		player->languageService->PrintChat(true, false, "Current Paint Size", player->paintService->GetSize());
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	f32 value = (f32)atof(args->Arg(1));
 	if (player->paintService->SetSize(value))
 	{
 		player->languageService->PrintChat(true, false, "Paint Size Set", player->paintService->GetSize());
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	player->languageService->PrintChat(true, false, "Paint Size Command Usage");
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_togglepaint, SCFL_MISC | SCFL_PREFERENCE)
@@ -336,7 +336,7 @@ SCMD(kz_togglepaint, SCFL_MISC | SCFL_PREFERENCE)
 	player->paintService->ToggleAutoPaint();
 
 	player->languageService->PrintChat(true, false, player->paintService->IsAutoPaintEnabled() ? "Paint Toggle Enabled" : "Paint Toggle Disabled");
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_showpaint, SCFL_MISC | SCFL_PREFERENCE)
@@ -345,7 +345,7 @@ SCMD(kz_showpaint, SCFL_MISC | SCFL_PREFERENCE)
 	player->paintService->ToggleShowAllPaint();
 
 	player->languageService->PrintChat(true, false, player->paintService->ShouldShowAllPaint() ? "Show Paint Enabled" : "Show Paint Disabled");
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_cleardecals, SCFL_MISC)
@@ -355,7 +355,7 @@ SCMD(kz_cleardecals, SCFL_MISC)
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("round_start");
 	if (!event)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	event->SetInt("timelimit", 0);
 	event->SetInt("fraglimit", 0);
@@ -363,5 +363,5 @@ SCMD(kz_cleardecals, SCFL_MISC)
 	IGameEventListener2 *listener = g_pKZUtils->GetLegacyGameEventListener(player->GetPlayerSlot());
 	listener->FireGameEvent(event);
 	interfaces::pGameEventManager->FreeEvent(event);
-	return MRES_SUPERCEDE;
+	return true;
 }

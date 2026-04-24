@@ -4,7 +4,7 @@
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
 
-#include "../kz.h"
+#include "kz/kz.h"
 
 class KZPlayer;
 

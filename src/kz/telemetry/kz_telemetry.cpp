@@ -201,11 +201,11 @@ SCMD(kz_modernperfstats, SCFL_PLAYER)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Error Message (Player Not Found)", args->ArgS());
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	targetPlayer->telemetryService->PrintModernBhopStats(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_mps, kz_modernperfstats);
@@ -217,11 +217,11 @@ SCMD(kz_legacyperfstats, SCFL_PLAYER)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Error Message (Player Not Found)", args->ArgS());
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	targetPlayer->telemetryService->PrintLegacyBhopStats(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_lps, kz_legacyperfstats);
@@ -232,7 +232,7 @@ SCMD(kz_resetperfstats, SCFL_PLAYER)
 	player->telemetryService->ResetModernBhopStats();
 	player->telemetryService->ResetLegacyBhopStats();
 	player->languageService->PrintChat(true, false, "Telemetry - Reset Bhop Stats");
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_rps, kz_resetperfstats);

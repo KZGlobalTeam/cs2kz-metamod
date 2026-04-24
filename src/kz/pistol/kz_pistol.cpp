@@ -27,14 +27,14 @@ SCMD(kz_pistol, SCFL_PREFERENCE | SCFL_MISC | SCFL_PLAYER)
 	if (args->ArgC() < 2)
 	{
 		player->languageService->PrintChat(true, false, "Pistol Command Usage");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	const char *weapon = args->ArgS();
 	i16 pistolIndex = KZPistolService::GetPistolIndexByName(weapon);
 	if (pistolIndex == -1)
 	{
 		player->languageService->PrintChat(true, false, "Pistol Unknown", weapon);
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	player->pistolService->preferredPistol = pistolIndex;
 	player->pistolService->UpdatePistol();
@@ -42,10 +42,10 @@ SCMD(kz_pistol, SCFL_PREFERENCE | SCFL_MISC | SCFL_PLAYER)
 	if (pistolIndex == 0)
 	{
 		player->languageService->PrintChat(true, false, "Pistol Disabled");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	player->languageService->PrintChat(true, false, "Pistol Changed", KZPistolService::pistols[pistolIndex].name);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 void KZPistolService::UpdatePistol()

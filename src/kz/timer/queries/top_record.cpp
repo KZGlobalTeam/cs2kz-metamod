@@ -261,12 +261,12 @@ SCMD(kz_wr, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	TopRecordRequest::Create<TopRecordRequest>(player, TopRecordRequest::trFeatures, true, true, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_sr, SCFL_RECORD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	TopRecordRequest::Create<TopRecordRequest>(player, TopRecordRequest::trFeatures, true, false, args);
-	return MRES_SUPERCEDE;
+	return true;
 }

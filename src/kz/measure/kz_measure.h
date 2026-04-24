@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 
 class KZMeasureService : public KZBaseService
 {

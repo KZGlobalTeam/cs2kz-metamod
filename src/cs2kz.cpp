@@ -65,7 +65,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	ConVar_Register();
 	hooks::Initialize();
 	ix::initNetSystem();
-	movement::InitDetours();
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();

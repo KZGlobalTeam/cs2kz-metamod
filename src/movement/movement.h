@@ -41,36 +41,6 @@ extern CUtlVector<TraceHistory> traceHistory;
 
 namespace movement
 {
-	void InitDetours();
-
-	void FASTCALL Detour_PhysicsSimulate(CCSPlayerController *);
-	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, PlayerCommand *, CMoveData *);
-	i32 FASTCALL Detour_ProcessUsercmds(CCSPlayerController *, PlayerCommand *, int, bool, float);
-	void FASTCALL Detour_ProcessMovement(CCSPlayer_MovementServices *, CMoveData *);
-	bool FASTCALL Detour_PlayerMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_CheckParameters(CCSPlayer_MovementServices *, CMoveData *);
-	bool FASTCALL Detour_CanMove(CCSPlayerPawnBase *);
-	void FASTCALL Detour_FullWalkMove(CCSPlayer_MovementServices *, CMoveData *, bool);
-	bool FASTCALL Detour_MoveInit(CCSPlayer_MovementServices *, CMoveData *);
-	bool FASTCALL Detour_CheckWater(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_WaterMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_CheckVelocity(CCSPlayer_MovementServices *, CMoveData *, const char *);
-	void FASTCALL Detour_Duck(CCSPlayer_MovementServices *, CMoveData *);
-	bool FASTCALL Detour_CanUnduck(CCSPlayer_MovementServices *, CMoveData *);
-	bool FASTCALL Detour_LadderMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_CheckJumpButtonLegacy(CCSPlayerLegacyJump *, CMoveData *);
-	void FASTCALL Detour_CheckJumpButtonModern(CCSPlayerModernJump *, CMoveData *);
-	void FASTCALL Detour_OnJumpLegacy(CCSPlayerLegacyJump *, CMoveData *);
-	void FASTCALL Detour_OnJumpModern(CCSPlayerModernJump *, CMoveData *);
-	void FASTCALL Detour_AirMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_AirAccelerate(CCSPlayer_MovementServices *, CMoveData *, Vector &, f32, f32);
-	void FASTCALL Detour_Friction(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_WalkMove(CCSPlayer_MovementServices *, CMoveData *);
-	void FASTCALL Detour_TryPlayerMove(CCSPlayer_MovementServices *, CMoveData *, Vector *, trace_t *, bool *);
-	void FASTCALL Detour_CategorizePosition(CCSPlayer_MovementServices *, CMoveData *, bool);
-	void FASTCALL Detour_CheckFalling(CCSPlayer_MovementServices *, CMoveData *);
-
-	void FASTCALL Detour_PostThink(CCSPlayerPawnBase *);
 } // namespace movement
 
 class MovementPlayer : public Player

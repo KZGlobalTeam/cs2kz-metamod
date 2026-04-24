@@ -141,7 +141,7 @@ SCMD(kz_help, SCFL_MISC)
 			PrintCategoryCommands(player, i, false);
 		}
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *descKey, u64 flags)
@@ -250,9 +250,9 @@ bool scmd::UnregisterCmd(const char *name)
 	return false;
 }
 
-META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
+bool scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 {
-	META_RES result = MRES_IGNORED;
+	bool result = false;
 	if (!GameEntitySystem())
 	{
 		return result;
@@ -262,7 +262,7 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 
 	if (!controller || !g_pKZPlayerManager->ToPlayer(controller))
 	{
-		return MRES_IGNORED;
+		return false;
 	}
 
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
@@ -277,7 +277,7 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 		if (!V_stricmp(g_cmdManager.cmds[i].name, args[0]))
 		{
 			result = g_cmdManager.cmds[i].callback(controller, &args);
-			if (result == MRES_SUPERCEDE)
+			if (result)
 			{
 				return result;
 			}
@@ -286,9 +286,9 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	return result;
 }
 
-META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
+bool scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
-	META_RES result = MRES_IGNORED;
+	bool result = false;
 	if (!GameEntitySystem())
 	{
 		return result;
@@ -299,7 +299,7 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 
 	if (!cmd.IsValidRef() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
 	{
-		return MRES_IGNORED;
+		return false;
 	}
 	const char *commandName = cmd.GetName();
 
@@ -308,20 +308,20 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 		if (args.ArgC() < 2)
 		{
 			// no argument somehow
-			return MRES_IGNORED;
+			return false;
 		}
 
 		if (args[1][0] != SCMD_CHAT_TRIGGER && args[1][0] != SCMD_CHAT_SILENT_TRIGGER)
 		{
 			// no chat command trigger
-			return MRES_IGNORED;
+			return false;
 		}
 
 		i32 argLen = strlen(args[1]);
 		if (argLen < 1)
 		{
 			// arg is too short!
-			return MRES_IGNORED;
+			return false;
 		}
 		Scmd *cmds = g_cmdManager.cmds;
 
@@ -341,11 +341,11 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
 			if (!V_stricmp(arg, cmdName))
 			{
-				META_RES result = cmds[i].callback(controller, &cmdArgs);
-				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER || result == MRES_SUPERCEDE)
+				bool result = cmds[i].callback(controller, &cmdArgs);
+				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER || result)
 				{
 					// don't send chat message
-					return MRES_SUPERCEDE;
+					return true;
 				}
 			}
 		}
@@ -365,8 +365,8 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
 			if (!V_stricmp(commandName, cmdName))
 			{
-				META_RES result = g_cmdManager.cmds[i].callback(controller, &args);
-				if (result == MRES_SUPERCEDE)
+				bool result = g_cmdManager.cmds[i].callback(controller, &args);
+				if (result)
 				{
 					return result;
 				}
@@ -374,5 +374,5 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 		}
 	}
 
-	return MRES_IGNORED;
+	return false;
 }

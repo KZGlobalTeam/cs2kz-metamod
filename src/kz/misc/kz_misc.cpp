@@ -44,7 +44,7 @@ SCMD(kz_hidelegs, SCFL_PLAYER | SCFL_PREFERENCE)
 	{
 		player->languageService->PrintChat(true, false, "Quiet Option - Hide Player Legs - Disable");
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_hide, SCFL_PLAYER | SCFL_PREFERENCE)
@@ -59,7 +59,7 @@ SCMD(kz_hide, SCFL_PLAYER | SCFL_PREFERENCE)
 	{
 		player->languageService->PrintChat(true, false, "Quiet Option - Show Players - Enable");
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_end, SCFL_MAP)
@@ -74,7 +74,7 @@ SCMD(kz_end, SCFL_MAP)
 		if (!course || !course || !course->hasEndPosition)
 		{
 			player->languageService->PrintChat(true, false, "No End Position For Course", args->ArgS());
-			return MRES_SUPERCEDE;
+			return true;
 		}
 	}
 
@@ -93,7 +93,7 @@ SCMD(kz_end, SCFL_MAP)
 		{
 			CUtlString courseName = player->timerService->GetCourse()->GetName();
 			player->languageService->PrintChat(true, false, "No End Position For Course", courseName.Get());
-			return MRES_SUPERCEDE;
+			return true;
 		}
 	}
 
@@ -116,14 +116,14 @@ SCMD(kz_end, SCFL_MAP)
 	else
 	{
 		player->languageService->PrintChat(true, false, "No Active Course");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	if (shouldTeleport)
 	{
 		if (!player->timerService->CheckSafeguard())
 		{
-			return MRES_SUPERCEDE;
+			return true;
 		}
 		player->timerService->TimerStop();
 		if (player->GetPlayerPawn()->IsAlive())
@@ -140,7 +140,7 @@ SCMD(kz_end, SCFL_MAP)
 		}
 		player->Teleport(&tpOrigin, &tpAngles, &vec3_origin);
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
@@ -248,7 +248,7 @@ SCMD(kz_restart, SCFL_TIMER | SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	KZ::misc::HandleTeleportToCourse(player, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_r, kz_restart);
@@ -263,7 +263,7 @@ SCMD(kz_lj, SCFL_JUMPSTATS | SCFL_MAP)
 	{
 		if (!player->timerService->CheckSafeguard())
 		{
-			return MRES_SUPERCEDE;
+			return true;
 		}
 		player->timerService->TimerStop();
 		player->Teleport(&destPos, &destAngles, &vec3_origin);
@@ -273,7 +273,7 @@ SCMD(kz_lj, SCFL_JUMPSTATS | SCFL_MAP)
 		player->languageService->PrintChat(true, false, "No Jumpstat Area Found", args->ArgS());
 	}
 
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_ljarea, kz_lj);
@@ -308,11 +308,11 @@ SCMD(kz_playercheck, SCFL_PLAYER)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Error Message (Player Not Found)", args->ArgS());
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	player->languageService->PrintChat(
 		true, false, targetPlayer->IsAuthenticated() ? "Player Authenticated (Steam)" : "Player Not Authenticated (Steam)", targetPlayer->GetName());
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_pc, kz_playercheck);
@@ -341,22 +341,22 @@ SCMD(jointeam, SCFL_HIDDEN)
 		if (!player->timerService->GetPaused() && !player->timerService->CanPause())
 		{
 			CloseTeamMenu(player);
-			return MRES_SUPERCEDE;
+			return true;
 		}
 	}
 	else if (player->IsAlive() && !player->timerService->CheckSafeguard())
 	{
 		CloseTeamMenu(player);
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	KZ::misc::JoinTeam(player, newTeam, true);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(switchhands, SCFL_HIDDEN)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	return MRES_IGNORED;
+	return false;
 }
 
 SCMD_LINK(switchhandsleft, switchhands);

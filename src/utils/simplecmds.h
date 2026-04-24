@@ -28,7 +28,7 @@ enum
 	SCFL_HUD = 1 << 16
 };
 
-#define SCMD_CALLBACK(name) META_RES name(CCSPlayerController *controller, const CCommand *args)
+#define SCMD_CALLBACK(name) bool name(CCSPlayerController *controller, const CCommand *args)
 
 #define SCMD_CONSOLE_PREFIX      "kz_"
 #define SCMD_CHAT_SILENT_TRIGGER '/'
@@ -42,8 +42,8 @@ namespace scmd
 	bool LinkCmd(const char *name, const char *linkedName);
 	bool UnregisterCmd(const char *name);
 
-	META_RES OnClientCommand(CPlayerSlot &slot, const CCommand &args);
-	META_RES OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
+	bool OnClientCommand(CPlayerSlot &slot, const CCommand &args);
+	bool OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
 } // namespace scmd
 
 class SCmdRegister

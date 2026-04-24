@@ -94,7 +94,7 @@ SCMD(kz_tips, SCFL_MISC)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->tipService->ToggleTips();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 f64 KZTipService::PrintTips()

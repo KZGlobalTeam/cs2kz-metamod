@@ -287,70 +287,70 @@ SCMD(kz_jstier, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetMinTier(args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jstierconsole, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetMinTierConsole(args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jssound, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetSoundMinTier(args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsbroadcast, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetBroadcastMinTier(args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsbroadcastconsole, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetBroadcastMinTierConsole(args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsbroadcastsound, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetBroadcastSoundMinTier(args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsalways, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleJSAlways();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsfailstats, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleFailstatsReporting();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsfailstatsconsole, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleFailstatsConsoleReporting();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsextend, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleExtendedChatStats();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jsvolume, SCFL_JUMPSTATS | SCFL_PREFERENCE)
@@ -360,19 +360,19 @@ SCMD(kz_jsvolume, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 	{
 		player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Volume - Current",
 										   player->optionService->GetPreferenceFloat("jsVolume", 0.75f));
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	f32 volume = Clamp(static_cast<f32>(V_atof(args->Arg(1))), 0.0f, 2.0f);
 
 	player->jumpstatsService->SetJumpstatsVolume(volume);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_jumpstats, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->ToggleJumpstatsReporting();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_js, kz_jumpstats);

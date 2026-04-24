@@ -530,14 +530,14 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!g_pFullFileSystem || !player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	f32 duration = args->ArgC() > 1 ? utils::StringToFloat(args->Arg(1)) : 120.0f;
 	KZPlayer *target = player->IsAlive() ? player : player->specService->GetSpectatedPlayer();
 	if (!target)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	// Capture player userid for the callback (don't capture player pointer as it may be invalid)
@@ -566,5 +566,5 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 			}
 		});
 
-	return MRES_SUPERCEDE;
+	return true;
 }

@@ -74,7 +74,7 @@ def resolveMMSRoot():
   else:
     prenormalized_path = resolveEnvPath('MMSOURCE20', 'mmsource-2.0')
     if not prenormalized_path:
-      prenormalized_path = resolveEnvPath('MMSOURCE_DEV', 'meta0mod-source')
+      prenormalized_path = resolveEnvPath('MMSOURCE_DEV', 'metamod-source')
     if not prenormalized_path:
       prenormalized_path = resolveEnvPath('MMSOURCE_DEV', 'mmsource-central')
   if not prenormalized_path or not os.path.isdir(prenormalized_path):
@@ -425,7 +425,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     cxx.cxxincludes += [
       os.path.join(context.currentSourcePath),
       os.path.join(mms_core_path),
-      os.path.join(mms_core_path, 'sourcehook'),
+      os.path.join(self.mms_root, 'third_party', 'khook', 'include'),
     ]
 
     for other_sdk in self.sdk_manifests:

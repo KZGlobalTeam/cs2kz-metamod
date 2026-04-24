@@ -263,7 +263,7 @@ namespace KZ
 		void OnActivateServer();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 		void ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
-		META_RES CheckBlockedRadioCommands(const char *cmd);
+		bool CheckBlockedRadioCommands(const char *cmd);
 		void OnRoundStart();
 		void InitTimeLimit();
 		void EnforceTimeLimit();

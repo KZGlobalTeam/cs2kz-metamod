@@ -49,7 +49,7 @@ SCMD(kz_beam, SCFL_MISC | SCFL_PREFERENCE)
 		else
 		{
 			player->languageService->PrintChat(true, false, "Beam Command Usage");
-			return MRES_HANDLED;
+			return true;
 		}
 	}
 	player->beamService->SetBeamType(newDesiredBeamType);
@@ -72,7 +72,7 @@ SCMD(kz_beam, SCFL_MISC | SCFL_PREFERENCE)
 		}
 	}
 	player->optionService->SetPreferenceInt("desiredBeamType", player->beamService->desiredBeamType);
-	return MRES_HANDLED;
+	return true;
 }
 
 SCMD(kz_beamoffset, SCFL_MISC | SCFL_PREFERENCE)
@@ -83,14 +83,14 @@ SCMD(kz_beamoffset, SCFL_MISC | SCFL_PREFERENCE)
 		player->languageService->PrintChat(true, false, "Beam Offset Command Usage");
 		player->languageService->PrintChat(true, false, "Current Beam Offset", player->beamService->playerBeamOffset.x,
 										   player->beamService->playerBeamOffset.y, player->beamService->playerBeamOffset.z);
-		return MRES_HANDLED;
+		return true;
 	}
 	player->beamService->playerBeamOffset = Vector(atof(args->Arg(1)), atof(args->Arg(2)), atof(args->Arg(3)));
 
 	player->optionService->SetPreferenceVector("beamOffset", player->beamService->playerBeamOffset);
 	player->languageService->PrintChat(true, false, "Current Beam Offset", player->beamService->playerBeamOffset.x,
 									   player->beamService->playerBeamOffset.y, player->beamService->playerBeamOffset.z);
-	return MRES_HANDLED;
+	return true;
 }
 
 void KZBeamService::Update()

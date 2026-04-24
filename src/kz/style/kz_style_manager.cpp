@@ -487,7 +487,7 @@ SCMD(kz_style, SCFL_MODESTYLE)
 	if (args->ArgC() == 1)
 	{
 		styleManager.PrintActiveStyles(player);
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	if (args->Arg(1)[0] == '+')
 	{
@@ -503,35 +503,35 @@ SCMD(kz_style, SCFL_MODESTYLE)
 	{
 		styleManager.ToggleStyle(player, args->Arg(1));
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_togglestyle, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.ToggleStyle(player, args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_addstyle, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.AddStyle(player, args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_removestyle, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.RemoveStyle(player, args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_clearstyles, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	styleManager.ClearStyles(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *player)

@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 
 #define KZ_STYLE_MANAGER_INTERFACE "KZStyleManagerInterface"
 

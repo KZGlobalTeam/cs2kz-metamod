@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 #include "utils/utils.h"
 #include "KeyValues.h"
 #include "interfaces/interfaces.h"

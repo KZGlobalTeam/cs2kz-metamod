@@ -341,7 +341,7 @@ SCMD(kz_mode, SCFL_MODESTYLE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	modeManager.SwitchToMode(player, args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 static_function SCMD_CALLBACK(Command_KzModeShort)
@@ -366,7 +366,7 @@ static_function SCMD_CALLBACK(Command_KzModeShort)
 		const char *mode = args->Arg(0) + len;
 		modeManager.SwitchToMode(player, mode);
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)

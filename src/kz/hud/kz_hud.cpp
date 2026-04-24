@@ -1,4 +1,4 @@
-#include "../kz.h"
+#include "kz/kz.h"
 #include "cs2kz.h"
 #include "kz_hud.h"
 #include "sdk/datatypes.h"
@@ -249,12 +249,12 @@ SCMD(kz_panel, SCFL_HUD)
 			{
 				player->languageService->PrintChat(true, false, "HUD Option - Compact Panel - Disable");
 			}
-			return MRES_SUPERCEDE;
+			return true;
 		}
 		else
 		{
 			player->languageService->PrintChat(true, false, "Panel Command Usage");
-			return MRES_SUPERCEDE;
+			return true;
 		}
 	}
 	player->hudService->TogglePanel();
@@ -266,5 +266,5 @@ SCMD(kz_panel, SCFL_HUD)
 	{
 		player->languageService->PrintChat(true, false, "HUD Option - Info Panel - Disable");
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }

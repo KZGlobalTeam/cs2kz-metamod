@@ -355,7 +355,7 @@ SCMD(kz_hideweapon, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->quietService->ToggleHideWeapon();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 void KZQuietService::ToggleHideWeapon()

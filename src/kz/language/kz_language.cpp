@@ -230,7 +230,7 @@ SCMD(kz_language, SCFL_PREFERENCE)
 		player->languageService->PrintChat(true, false, "Switch Language", language);
 		player->languageService->PrintChat(false, false, "Language Change - Manual Menu Change Required");
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 CON_COMMAND_F(kz_reload_translations, "Reload translation configuration files", FCVAR_NONE)

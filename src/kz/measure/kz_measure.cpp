@@ -226,26 +226,26 @@ SCMD(kz_measure, SCFL_MEASURE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->measureService->TryMeasure();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_measurestart, SCFL_MEASURE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->measureService->StartMeasure();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_measureend, SCFL_MEASURE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->measureService->EndMeasure();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_measureblock, SCFL_MEASURE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->measureService->MeasureBlock();
-	return MRES_SUPERCEDE;
+	return true;
 }

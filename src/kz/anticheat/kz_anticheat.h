@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 #include "kz/recording/kz_recording.h"
 
 class KZBaseService;
