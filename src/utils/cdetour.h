@@ -109,5 +109,3 @@ void CDetour<T>::FreeDetour()
 #define INIT_DETOUR(config, name) \
 	name.CreateDetour(config); \
 	name.EnableDetour();
-
-void FlushAllDetours();

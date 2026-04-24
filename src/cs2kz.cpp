@@ -117,7 +117,6 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	ix::uninitNetSystem();
 	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
-	utils::Cleanup();
 	g_pKZModeManager->Cleanup();
 	g_pKZStyleManager->Cleanup();
 	g_pPlayerManager->Cleanup();

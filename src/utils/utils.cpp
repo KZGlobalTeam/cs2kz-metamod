@@ -95,8 +95,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	return true;
 }
 
-void utils::Cleanup() {}
-
 CBaseEntity *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
 {
 	if (!GameEntitySystem())
