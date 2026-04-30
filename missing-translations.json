@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 606,
     "phrases_with_missing": 390,
-    "total_missing_entries": 2438,
+    "total_missing_entries": 2434,
     "all_languages": [
       "chi",
       "de",
@@ -124,13 +124,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -514,13 +514,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -1529,13 +1529,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -3557,13 +3557,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -5825,13 +5825,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -8003,13 +8003,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -9780,13 +9780,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -11173,13 +11173,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -11437,35 +11437,10 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 99.34,
-      "translated": 602,
-      "missing": 4,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
-          "line": 91,
-          "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD Option - Compact Panel - Enable",
-          "line": 252,
-          "english_text": "{grey}Compact panel enabled."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
-          "english_text": "{grey}Compact panel disabled."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "Panel Command Usage",
-          "line": 260,
-          "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 606,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -11871,13 +11846,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -13540,13 +13515,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -14860,13 +14835,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         }
       ],
@@ -17463,7 +17438,8 @@
           "line": 91,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta.",
           "existing_languages": [
-            "en"
+            "en",
+            "ru"
           ],
           "missing_languages": [
             "chi",
@@ -17474,7 +17450,6 @@
             "ko",
             "lv",
             "pl",
-            "ru",
             "sv",
             "tr",
             "ua"
@@ -18160,7 +18135,8 @@
           "line": 252,
           "english_text": "{grey}Compact panel enabled.",
           "existing_languages": [
-            "en"
+            "en",
+            "ru"
           ],
           "missing_languages": [
             "chi",
@@ -18171,7 +18147,6 @@
             "ko",
             "lv",
             "pl",
-            "ru",
             "sv",
             "tr",
             "ua"
@@ -18179,10 +18154,11 @@
         },
         {
           "name": "HUD Option - Compact Panel - Disable",
-          "line": 256,
+          "line": 257,
           "english_text": "{grey}Compact panel disabled.",
           "existing_languages": [
-            "en"
+            "en",
+            "ru"
           ],
           "missing_languages": [
             "chi",
@@ -18193,7 +18169,6 @@
             "ko",
             "lv",
             "pl",
-            "ru",
             "sv",
             "tr",
             "ua"
@@ -18201,10 +18176,11 @@
         },
         {
           "name": "Panel Command Usage",
-          "line": 260,
+          "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}.",
           "existing_languages": [
-            "en"
+            "en",
+            "ru"
           ],
           "missing_languages": [
             "chi",
@@ -18215,7 +18191,6 @@
             "ko",
             "lv",
             "pl",
-            "ru",
             "sv",
             "tr",
             "ua"
