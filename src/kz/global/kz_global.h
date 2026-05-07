@@ -62,7 +62,7 @@ private:
 		std::chrono::time_point<std::chrono::system_clock> sentAt;
 		std::chrono::seconds expiresAfter = std::chrono::seconds(5);
 
-		virtual void OnResponse(u32 messageID, const Json &payload) = 0;
+		virtual void OnResponse(u32 messageID, const Json &payload, const std::vector<char> &binaryData) = 0;
 
 		virtual void OnError(u32 messageID, const KZ::api::messages::Error &error)
 		{
@@ -93,14 +93,89 @@ private:
 	};
 
 public:
-	template<typename Response>
+	template<typename Response, bool WithBinaryData = false>
 	class MessageCallback : public MessageCallbackInternal
+	{
+		// clang-format off
+		using OnResponseFn = std::conditional_t<WithBinaryData,
+			std::function<void(const Response &, const std::vector<char> &)>,
+			std::function<void(const Response &)>>;
+		// clang-format on
+
+		OnResponseFn onResponse;
+		std::function<void(const KZ::api::messages::Error &)> onError;
+		std::function<void(CancelReason)> onCancelled;
+
+		void OnResponse(u32 messageID, const Json &payload, const std::vector<char> &binaryData) override
+		{
+			Response response;
+
+			if (payload.Decode(response))
+			{
+				if constexpr (WithBinaryData)
+				{
+					this->onResponse(response, binaryData);
+				}
+				else
+				{
+					this->onResponse(response);
+				}
+			}
+			else
+			{
+				META_CONPRINTF("[KZ::Global] Received unknown payload as WebSocket response. (id=%i)\n", messageID);
+			}
+		}
+
+		void OnError(u32 messageID, const KZ::api::messages::Error &error) override
+		{
+			MessageCallbackInternal::OnError(messageID, error);
+			this->onError(error);
+		}
+
+		void OnCancelled(u32 messageID, CancelReason reason) override
+		{
+			MessageCallbackInternal::OnCancelled(messageID, reason);
+			this->onCancelled(reason);
+		}
+
+	public:
+		// clang-format off
+		template<typename OnResponse, typename... Args>
+		explicit MessageCallback(OnResponse &&onResponse, Args &&...args)
+			: onResponse([cb = std::bind(std::move(onResponse), std::placeholders::_1, std::placeholders::_2, std::forward<Args>(args)...)] (const Response &response, const std::vector<char> &binaryData) { cb(response, binaryData); })
+			, onError([](const KZ::api::messages::Error &) {})
+			, onCancelled([](CancelReason) {})
+		// clang-format on
+		{
+		}
+
+		inline void Timeout(std::chrono::seconds duration)
+		{
+			this->expiresAfter = duration;
+		}
+
+		template<typename CB>
+		void OnError(CB &&onError)
+		{
+			this->onError = std::move(onError);
+		}
+
+		template<typename CB>
+		void OnCancelled(CB &&onCancelled)
+		{
+			this->onCancelled = std::move(onCancelled);
+		}
+	};
+
+	template<typename Response>
+	class MessageCallback<Response, false> : public MessageCallbackInternal
 	{
 		std::function<void(const Response &)> onResponse;
 		std::function<void(const KZ::api::messages::Error &)> onError;
 		std::function<void(CancelReason)> onCancelled;
 
-		void OnResponse(u32 messageID, const Json &payload) override
+		void OnResponse(u32 messageID, const Json &payload, const std::vector<char> &) override
 		{
 			Response response;
 
@@ -260,6 +335,11 @@ private:
 			 * The rest of the payload, which will be parsed according to `MessageType` later.
 			 */
 			Json payload;
+
+			/**
+			 * Optional binary payload appended after the JSON in the same WebSocket frame.
+			 */
+			std::vector<char> binaryData;
 		};
 
 		// INVARIANT: should be `nullptr` when `state == Uninitialized`, and a valid pointer otherwise
@@ -734,11 +814,21 @@ private:
 
 		bool QueueUpload(const UUID_t &uploadID, std::vector<char> &&replayData);
 		void ProcessUploads();
+
+		std::optional<UUID_t> pendingDownload;
+
+		static void OnReplayRequestSuccess(const KZ::api::messages::ReplayData &ack, const std::vector<char> &binaryData, CPlayerUserId userID);
+		void RequestReplay(KZPlayer *requester, UUID_t replayID);
 	} replayManager;
 
 public:
 	static bool QueueReplayUpload(const UUID_t &uploadID, std::vector<char> &&replayData)
 	{
 		return replayManager.QueueUpload(uploadID, std::move(replayData));
+	}
+
+	static void RequestReplay(KZPlayer *requester, UUID_t replayID)
+	{
+		replayManager.RequestReplay(requester, replayID);
 	}
 };

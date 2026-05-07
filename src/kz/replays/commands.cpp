@@ -88,8 +88,13 @@ namespace KZ::replaysystem::commands
 
 		if (!g_pFullFileSystem->FileExists(replayPath))
 		{
-			player->languageService->PrintChat(true, false, "Replay - Not Found");
-			return;
+			// Also check the downloads directory.
+			V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_DOWNLOADS_PATH "/%s.replay", parsedUuid.ToString().c_str());
+			if (!g_pFullFileSystem->FileExists(replayPath))
+			{
+				player->languageService->PrintChat(true, false, "Replay - Not Found");
+				return;
+			}
 		}
 
 		// Show loading message
@@ -537,11 +542,24 @@ namespace KZ::replaysystem::commands
 		if (g_pFullFileSystem->FileExists(replayPath))
 		{
 			LoadReplay(player, uuid.ToString().c_str());
+			return;
 		}
-		else
+
+		char downloadPath[512];
+		V_snprintf(downloadPath, sizeof(downloadPath), KZ_REPLAY_DOWNLOADS_PATH "/%s.replay", uuid.ToString().c_str());
+		if (g_pFullFileSystem->FileExists(downloadPath))
 		{
-			player->languageService->PrintChat(true, false, "Replay - Not Found");
+			LoadReplay(player, uuid.ToString().c_str());
+			return;
 		}
+
+		if (KZGlobalService::IsAvailable())
+		{
+			KZGlobalService::RequestReplay(player, uuid);
+			return;
+		}
+
+		player->languageService->PrintChat(true, false, "Replay - Not Found");
 	}
 
 	struct RecordContext

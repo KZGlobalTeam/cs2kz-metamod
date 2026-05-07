@@ -118,6 +118,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'commands.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'api.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'messages.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'replays.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
 

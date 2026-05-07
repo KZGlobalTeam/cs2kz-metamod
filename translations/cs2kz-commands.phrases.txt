@@ -1509,7 +1509,7 @@
 	}
 	"Command Description - kz_replay"
 	{
-		"en"		"Play a previously saved replay, or look up a record replay by type (wr, sr, pb, spb, etc.)."
+		"en"		"Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
 	}
 	"Command Description - kz_replays"
 	{

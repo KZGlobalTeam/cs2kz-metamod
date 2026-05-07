@@ -331,4 +331,17 @@ namespace KZ::api::messages
 
 		bool ToJson(Json &json) const;
 	};
+
+	struct ReplayData
+	{
+		inline static const char *Name()
+		{
+			return "replay-data";
+		}
+
+		bool FromJson(const Json &json)
+		{
+			return true;
+		}
+	};
 }; // namespace KZ::api::messages
