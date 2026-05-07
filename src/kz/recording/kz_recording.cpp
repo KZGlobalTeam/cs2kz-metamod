@@ -1,6 +1,7 @@
 #include "cs2kz.h"
 #include "kz_recording.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/timer/submission.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/language/kz_language.h"
@@ -255,36 +256,38 @@ void KZRecordingService::CheckRecorders()
 		auto &recorder = *it;
 		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
-			// Stop this recorder and queue for async write
 			if (kz_replay_recording_debug.Get())
 			{
 				META_CONPRINTF("kz_replay_recording_debug: Run recorder stopped\n");
 			}
-			if (fileWriter)
+			if (KZRecordingService::fileWriter)
 			{
-				CPlayerUserId userID = this->player->GetClient()->GetUserID();
 				auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
 				this->CopyWeaponsToRecorder(recorderPtr.get());
-				fileWriter->QueueWrite(
+				UUID_t localUUID = recorderPtr->uuid; // capture before move
+				KZRecordingService::fileWriter->QueueWrite(
 					std::move(recorderPtr),
-					// Success callback
-					[userID](const UUID_t &uuid, f32 replayDuration)
+					// Success: deliver buffer to RunSubmission state machine
+					[localUUID](const UUID_t &, f32, std::vector<char> &&buffer)
 					{
-						KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
-						if (callbackPlayer)
+						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
+						if (sub)
 						{
-							callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", uuid.ToString().c_str());
-							callbackPlayer->languageService->PrintConsole(false, false, "Replay - Run Replay Saved (Console)",
-																		  uuid.ToString().c_str());
+							sub->OnReplayReady(std::move(buffer));
 						}
 					},
-					// Failure callback
-					[userID](const char *error)
+					// Failure: notify the player and log
+					[localUUID](const char *error)
 					{
-						KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
-						if (callbackPlayer)
+						META_CONPRINTF("[KZ] Run replay serialization failed for UUID %s: %s\n", localUUID.ToString().c_str(), error);
+						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
+						if (sub)
 						{
-							callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
+							KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(sub->userID);
+							if (callbackPlayer)
+							{
+								callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
+							}
 						}
 					});
 			}
@@ -309,7 +312,7 @@ void KZRecordingService::CheckRecorders()
 			{
 				auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
 				this->CopyWeaponsToRecorder(recorderPtr.get());
-				fileWriter->QueueWrite(std::move(recorderPtr));
+				fileWriter->QueueWriteToFile(std::move(recorderPtr));
 			}
 			it = this->jumpRecorders.erase(it);
 		}
@@ -351,12 +354,7 @@ void KZRecordingService::CheckModeStyles()
 	if (this->lastKnownMode.shortModeName != currentModeInfo.shortModeName || !KZ_STREQI(this->lastKnownMode.md5, currentModeInfo.md5))
 	{
 		this->lastKnownMode = currentModeInfo;
-		RpEvent event;
-		event.serverTick = this->currentTickData.serverTick;
-		event.type = RpEventType::RPEVENT_MODE_CHANGE;
-		V_strncpy(event.data.modeChange.name, currentModeInfo.longModeName.Get(), sizeof(event.data.modeChange.name));
-		V_strncpy(event.data.modeChange.md5, currentModeInfo.md5, sizeof(event.data.modeChange.md5));
-		this->InsertEvent(event);
+		this->InsertModeChangeEvent(currentModeInfo.longModeName.Get(), currentModeInfo.md5);
 		if (kz_replay_recording_debug.Get())
 		{
 			META_CONPRINTF("kz_replay_recording_debug: Mode change event: %s\n", currentModeInfo.longModeName.Get());
@@ -389,11 +387,7 @@ void KZRecordingService::CheckModeStyles()
 		for (auto &style : this->lastKnownStyles)
 		{
 			RpEvent event;
-			event.serverTick = this->currentTickData.serverTick;
-			event.type = RpEventType::RPEVENT_STYLE_CHANGE;
-			V_strncpy(event.data.styleChange.name, style.shortName, sizeof(event.data.styleChange.name));
-			V_strncpy(event.data.styleChange.md5, style.md5, sizeof(event.data.styleChange.md5));
-			event.data.styleChange.clearStyles = refreshStyles;
+			this->InsertStyleChangeEvent(style.longName, style.md5, refreshStyles);
 			refreshStyles = false; // only the first styleChange needs to have clearStyles = true
 			this->InsertEvent(event);
 		}

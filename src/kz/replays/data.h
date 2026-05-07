@@ -81,6 +81,7 @@ namespace KZ::replaysystem::data
 
 	// Data management functions
 	void LoadReplayAsync(std::string path, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
+	void LoadReplayMemoryAsync(std::vector<char> data, UUID_t uuid, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
 	void FreeReplayData(ReplayPlayback *replay);
 	void ResetReplayState(ReplayPlayback *replay);
 

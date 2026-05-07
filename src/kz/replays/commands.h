@@ -7,6 +7,20 @@ class KZPlayer;
 
 namespace KZ::replaysystem::commands
 {
+	enum class RecordType
+	{
+		WR,
+		WRPro,
+		SR,
+		SRPro,
+		PB,
+		PBPro,
+		GPB,
+		GPBPro,
+		SPB,
+		SPBPro
+	};
+
 	// Navigation functions
 	void NavigateReplay(KZPlayer *player, u32 targetTick);
 
@@ -20,6 +34,7 @@ namespace KZ::replaysystem::commands
 	void ToggleReplayPause(KZPlayer *player);
 	void ListReplays(KZPlayer *player, const char *input);
 	void ToggleLegsVisibility(KZPlayer *player);
+	void LoadReplayForRecord(KZPlayer *player, RecordType type, const char *courseArg, const char *modeArg);
 } // namespace KZ::replaysystem::commands
 
 #endif // KZ_REPLAYCOMMANDS_H

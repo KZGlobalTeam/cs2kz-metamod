@@ -7,6 +7,7 @@
 #include "utils/utils.h"
 #include "utils/hooks.h"
 #include "utils/gameconfig.h"
+#include "utils/async_file_io.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
@@ -65,6 +66,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZPistolService::Init();
 	KZ::misc::Init();
 	KZQuietService::Init();
+	AsyncFileIO::Init();
 	KZRecordingService::Init();
 	if (!KZ::mode::CheckModeCvars())
 	{
@@ -102,6 +104,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	this->unloading = true;
 	KZ::misc::UnrestrictTimeLimit();
 	KZRecordingService::Shutdown();
+	AsyncFileIO::Cleanup();
 	KZRacingService::Cleanup();
 	ix::uninitNetSystem();
 	hooks::Cleanup();

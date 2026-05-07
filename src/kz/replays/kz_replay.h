@@ -5,8 +5,7 @@
 #include "sdk/entity/cbaseplayerweapon.h"
 #include "kz_replay.pb.h" // Protobuf definitions for replay header
 // relative to csgo/
-#define KZ_REPLAY_PATH      "kzreplays"
-#define KZ_REPLAY_RUNS_PATH KZ_REPLAY_PATH "/runs"
+#define KZ_REPLAY_PATH "kzreplays"
 
 class CSubtickMoveStep;
 class KZPlayer;

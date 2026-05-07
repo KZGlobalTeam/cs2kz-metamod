@@ -13,7 +13,7 @@
 #include "common.h"
 #include "cs2kz.h"
 #include "kz/kz.h"
-#include "kz/timer/announce.h"
+#include "kz/timer/submission.h"
 #include "utils/json.h"
 #include "messages.h"
 
@@ -484,7 +484,7 @@ public:
 		f64 time;
 		u32 teleports;
 		std::string modeMD5;
-		std::vector<RecordAnnounce::StyleInfo> styles;
+		std::vector<RunSubmission::StyleInfo> styles;
 		std::string metadata;
 	};
 
@@ -540,7 +540,7 @@ public:
 		message.playerID = this->player->GetSteamId64();
 		message.filterID = data.filterID;
 		message.modeChecksum = data.modeMD5;
-		for (const RecordAnnounce::StyleInfo &style : data.styles)
+		for (const RunSubmission::StyleInfo &style : data.styles)
 		{
 			message.styles.push_back({style.name, style.md5});
 		}

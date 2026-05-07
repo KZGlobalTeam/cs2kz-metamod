@@ -92,7 +92,7 @@ void CircularRecorder::TrimOldJumps(u32 currentTick)
 	}
 }
 
-void KZRecordingService::WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, WriteSuccessCallback onSuccess,
+void KZRecordingService::WriteCircularBufferToFileAsync(f32 duration, const char *cheaterReason, KZPlayer *saver, DiskWriteSuccessCallback onSuccess,
 														WriteFailureCallback onFailure)
 {
 	std::unique_ptr<Recorder> recorder;
@@ -108,10 +108,10 @@ void KZRecordingService::WriteCircularBufferToFileAsync(f32 duration, const char
 	// Copy weapons before queuing to another thread
 	this->CopyWeaponsToRecorder(recorder.get());
 
-	// Queue for async write with callbacks
+	// Queue for async write to disk with callbacks
 	if (fileWriter)
 	{
-		fileWriter->QueueWrite(std::move(recorder), onSuccess, onFailure);
+		fileWriter->QueueWriteToFile(std::move(recorder), onSuccess, onFailure);
 	}
 	else if (onFailure)
 	{

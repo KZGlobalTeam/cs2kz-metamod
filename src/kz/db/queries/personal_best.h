@@ -1,6 +1,6 @@
 
 constexpr char sql_getpb[] = R"(
-    SELECT Times.RunTime, Times.Teleports 
+    SELECT Times.ID, Times.RunTime, Times.Teleports 
         FROM Times
         INNER JOIN MapCourses ON Times.MapCourseID = MapCourses.ID
         INNER JOIN Maps ON MapCourses.MapID = Maps.ID
@@ -12,7 +12,7 @@ constexpr char sql_getpb[] = R"(
 )";
 
 constexpr char sql_getpbpro[] = R"(
-    SELECT Times.RunTime 
+    SELECT Times.ID, Times.RunTime 
         FROM Times
         INNER JOIN MapCourses ON MapCourses.ID = Times.MapCourseID
         INNER JOIN Maps ON Maps.ID = MapCourses.MapID
