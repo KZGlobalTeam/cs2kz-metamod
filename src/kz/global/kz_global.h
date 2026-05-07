@@ -342,6 +342,18 @@ private:
 		}
 
 		/**
+		 * Sends the given payload as a WebSocket message with binary data appended after the JSON.
+		 */
+		template<typename Payload>
+		static bool SendMessageWithBinary(const Payload &payload, const std::vector<char> &binaryData)
+		{
+			u32 messageID;
+			const char *messageType;
+			Json messagePayload;
+			return SendMessageImpl(messageID, messageType, messagePayload, payload, &binaryData);
+		}
+
+		/**
 		 * Sends the given payload as a WebSocket message and queues the given `callback` to be executed when a response is received.
 		 */
 		template<typename Payload, typename Callback>
@@ -380,9 +392,12 @@ private:
 		 * Implementation detail of `SendMessage()`.
 		 *
 		 * It initializes the first 3 parameters and encodes `Payload`.
+		 * If `binaryData` is non-null, the JSON text is concatenated with the binary buffer
+		 * and sent as a single binary WebSocket frame.
 		 */
 		template<typename Payload>
-		static bool SendMessageImpl(u32 &messageID, const char *&messageType, Json &messagePayload, const Payload &payload)
+		static bool SendMessageImpl(u32 &messageID, const char *&messageType, Json &messagePayload, const Payload &payload,
+									const std::vector<char> *binaryData = nullptr)
 		{
 			messageID = NextMessageID();
 			META_CONPRINTF("[KZ::Global] assigned message ID %i\n", messageID);
@@ -404,7 +419,23 @@ private:
 			}
 
 			std::string encodedPayload = messagePayload.ToString();
-			socket->send(encodedPayload);
+
+			if (binaryData && !binaryData->empty())
+			{
+				// Combine JSON text + binary data into a single binary frame, delimited by newline.
+				// Strip any newlines from the JSON so the delimiter is unambiguous.
+				encodedPayload.erase(std::remove(encodedPayload.begin(), encodedPayload.end(), '\n'), encodedPayload.end());
+				std::string combined;
+				combined.reserve(encodedPayload.size() + 1 + binaryData->size());
+				combined.append(encodedPayload);
+				combined.push_back('\n');
+				combined.append(binaryData->data(), binaryData->size());
+				socket->sendBinary(combined);
+			}
+			else
+			{
+				socket->send(encodedPayload);
+			}
 
 			// clang-format off
 			META_CONPRINTF("[KZ::Global] Sent WebSocket message. (id=%i, type=%s)\n"
@@ -693,4 +724,21 @@ private:
 	static void OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std::string sentMapName);
 	static void OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ack, u64 steamID);
 	static void OnWorldRecordsForCache(const KZ::api::messages::WorldRecordsForCache &records);
+
+	static inline struct ReplayManager
+	{
+		std::mutex mutex;
+		// Message example:
+		// {"event":"new-replay","data":{"id":"a14ca802-0449-4441-8d19-08aeee7c2f9a"}}<BINARY DATA>
+		std::vector<std::pair<UUID_t, std::vector<char>>> pendingUploads;
+
+		bool QueueUpload(const UUID_t &uploadID, std::vector<char> &&replayData);
+		void ProcessUploads();
+	} replayManager;
+
+public:
+	static bool QueueReplayUpload(const UUID_t &uploadID, std::vector<char> &&replayData)
+	{
+		return replayManager.QueueUpload(uploadID, std::move(replayData));
+	}
 };

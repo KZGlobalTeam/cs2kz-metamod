@@ -675,4 +675,20 @@
 	{
 		"en"		"{grey}No server personal best replay found."
 	}
+	"Replay - Global Mode Only"
+	{
+		"en"		"{darkred}Global records are only available for global modes."
+	}
+	"Replay - API Not Available"
+	{
+		"en"		"{darkred}The global API is not available."
+	}
+	"Replay - Querying WR"
+	{
+		"en"		"{grey}Querying world record replay..."
+	}
+	"Replay - WR Not Found"
+	{
+		"en"		"{grey}No world record replay found for this filter."
+	}
 }

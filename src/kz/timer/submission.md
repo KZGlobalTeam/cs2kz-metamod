@@ -25,6 +25,7 @@ Record submission flow:
      queued (API was offline) or the timeout expires.
    - Once committed (`finalized = true`):
      a. Inserts into the local DB using `finalUUID` (if `local`).
+     b. Queues the replay buffer for API upload (if `global && apiResponseReceived`).
 
 4. `CheckAll()` runs every game frame:
    - Calls `TryFinalize()` to advance the state machine.
@@ -46,8 +47,8 @@ Scenarios:
 2. API temporarily down at submit time (`Queued` result from `SubmitRecord`):
    - `pendingQueuedSubmission = true`; local DB insert deferred until API UUID arrives.
    - Once the API reconnects and delivers `NewRecordAck`:
-     - If already `finalized` (timeout fired): `DoLateAPIResponse` renames the replay file
-       and updates the DB UUID.
+     - If already `finalized` (timeout fired): `DoLateAPIResponse` renames the replay file,
+       updates the DB UUID, and queues the replay for upload.
      - If not yet `finalized`: `TryFinalize()` runs normally with the API UUID.
 
 3. API response arrived late (after `TryFinalize` already committed with `localUUID`):
@@ -55,6 +56,7 @@ Scenarios:
    - When `NewRecordAck` eventually arrives, `DoLateAPIResponse`:
      - Renames replay on disk (`localUUID → apiUUID`).
      - Updates the DB row (`UPDATE records SET uuid = ?`).
+     - Queues replay upload from RAM buffer (if still available) or re-reads from disk.
 
 4. Local database not available:
    - `local = false` at construction; DB insert steps are skipped throughout.

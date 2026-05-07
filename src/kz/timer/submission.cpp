@@ -355,6 +355,12 @@ void RunSubmission::TryFinalize()
 	{
 		SubmitLocal(finalUUID.ToString().c_str());
 	}
+
+	// 2. Upload replay to the global API if the run was accepted.
+	if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
+	{
+		KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -382,6 +388,12 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 
 	// Keep finalUUID consistent with the authoritative API-assigned UUID
 	finalUUID = apiFinalUUID;
+
+	// Upload replay now that we have the correct API-assigned UUID.
+	if (!replayBuffer.empty())
+	{
+		KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+	}
 }
 
 // ---------------------------------------------------------------------------
