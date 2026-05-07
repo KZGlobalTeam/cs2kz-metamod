@@ -11,7 +11,7 @@
 		"ua"	"{grey}Ви можете увімк./вимк. статистику стрибків написавши в чат {default}/js{grey}."
 		"tr"	"{grey}Zıplama istatistiklerinin sohbette gözükmesi için {default}/js{grey}."
 		"it"	"{grey}Puoi cambiare la visibilità delle statistiche dei salti con {default}/js{grey}."
-		"es"	"{grey}Puedes alternar las estadísticas de salto escribiendo {default}/js{grey}."
+		"es"	"{grey}Puedes activar/desactivar las estadísticas de salto, escribiendo {default}/js{grey}."
 		"de"	"{grey}Sie können die Berichterstattung über Jumpstats aktivieren oder deaktivieren, indem Sie {default}/js{grey} eingeben."
 		"ko"	"{grey}점프 통계 보고 기능을 전환하려면 {default}/js{grey}를 입력하세요."
 		"lv"	"{grey}Tu vari ieslēgt vai izslēgt jumpstats atskaiti, rakstot {default}/js{grey}."
@@ -27,7 +27,7 @@
 		"ua"	"{grey}Напишіть в чат {default}/jsalways {grey}, щоб увімк./вимк. постійне відображення статистики стрибків."
 		"tr"	"{grey}{default}/jsalways {grey}kullanarak tüm zıplama istatistiklerinin sohbette gözükmesini açabilirsin."
 		"it"	"{grey}Scrivi {default}/jsalways {grey}per mostrare sempre le statistiche dei salti."
-		"es"	"{grey}Usa {default}/jsalways {grey}para alternar el modo de estadísticas de salto siempre activas."
+		"es"	"{grey}Usa {default}/jsalways {grey}para activar/desactivar que siempre se muestren las estadísticas de salto."
 		"de"	"{grey}Verwende {default}/jsalways {grey}, um den Modus für immer aktive Jumpstats umzuschalten."
 		"ko"	"{grey}항상 활성화된 점프 통계 모드를 전환하려면 {default}/jsalways{grey}를 사용하세요."
 		"lv"	"{grey}Izmanto {default}/jsalways {grey}, lai jumpstatu reporti vienmēr būtu ieslēgti."
@@ -38,6 +38,7 @@
 		"chi"	"{grey}使用 {default}/jsfailstats {grey}切换是否在聊天框展示失败统计."
 		"ru"	"{grey}Напишите {default}/jsfailstats{grey}, чтобы включить статистику проваленных прыжков в чате."
 		"ua"	"{grey}Напишіть {default}/jsfailstats {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у чаті."
+		"es"	"{grey}Usa {default}/jsfailstats {grey}para activar/desactivar el reporte de stadísticas de fallos en el chat."
 	}
 	"Tip - kz_jsfailstatsconsole"
 	{
@@ -45,6 +46,7 @@
 		"chi"	"{grey}使用 {default}/jsfailstatsconsole {grey}切换是否在控制台展示失败统计."
 		"ru"	"{grey}Напишите {default}/jsfailstatsconsole{grey}, чтобы включить статистику проваленных прыжков в консоли."
 		"ua"	"{grey}Напишіть {default}/jsfailstatsconsole {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у консолі."
+		"es"	"{grey}Usa {default}/jsfailstatsconsole {grey}para activar/desactivar el reporte de stadísticas de fallos en la consola."
 	}
 	"Tip - kz_jstier"
 	{
@@ -54,6 +56,7 @@
 		"ru"	"{grey}Напишите {default}/jstier{grey}, чтобы изменить минимальный тир статистики прыжков."
 		"ua"	"{grey}Напишіть {default}/jstier {grey}, щоб встановити мінімальний тір статистики стрибків."
 		"de"	"{grey}Benutze {default}/jstier {grey} um dein minimales Level für Jumpstat-Benachrichtigungen zu setzen."
+		"es"	"{grey}Usa {default}/jstier {grey}para configurar el nivel mínimo para el mostrar las estadísticas de salto."
 	}
 	"Tip - kz_jsextend"
 	{
@@ -63,5 +66,6 @@
 		"ru"	"{grey}Напишите {default}/jsextend{grey}, чтобы показывать подробную статистику прыжков в чате."
 		"ua"	"{grey}Напишіть {default}/jsextend {grey}, щоб увімк./вимк. розширену статистику стрибків у чаті."
 		"de"	"{grey}Benutze {default}/jsextend {grey}um erweitertes Jumpstats-Feedback im Chat zu erhalten.."
+		"es"	"{grey}Usa {default}/jsextend {grey}para activar/desactivar imprimir estadísticas extendidas de los saltos en el chat."
 	}
 }
