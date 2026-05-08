@@ -550,7 +550,7 @@ void RunSubmission::CheckAll()
 			bool localReady = !sub->local || sub->localResponse.received;
 			bool globalReady = !sub->global || sub->globalResponse.received;
 
-			if (sub->finalized && localReady && globalReady && !sub->runAnnounced)
+			if (localReady && globalReady && !sub->runAnnounced)
 			{
 				sub->runAnnounced = true;
 				sub->AnnounceRun();
