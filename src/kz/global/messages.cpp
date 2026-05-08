@@ -262,8 +262,3 @@ bool KZ::api::messages::NewReplay::ToJson(Json &json) const
 {
 	return json.Set("id", this->replayID);
 }
-
-bool KZ::api::messages::WantReplay::ToJson(Json &json) const
-{
-	return json.Set("id", this->replayID);
-}

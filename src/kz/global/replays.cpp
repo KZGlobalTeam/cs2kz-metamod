@@ -5,6 +5,7 @@
 #include "kz/replays/bot.h"
 #include "kz/replays/playback.h"
 #include "utils/async_file_io.h"
+#include "utils/http.h"
 #include "utils/utils.h"
 #include "filesystem.h"
 
@@ -33,8 +34,7 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 	}
 }
 
-void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const KZ::api::messages::ReplayData &ack, const std::vector<char> &binaryData,
-															CPlayerUserId userID)
+void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const std::vector<char> &binaryData, CPlayerUserId userID)
 {
 	UUID_t replayID;
 	{
@@ -117,43 +117,59 @@ void KZGlobalService::ReplayManager::RequestReplay(KZPlayer *requester, UUID_t r
 	auto userID = requester->GetClient()->GetUserID();
 
 	requester->languageService->PrintChat(true, false, "Replay Request - Sending", replayID.ToString().c_str());
-	KZGlobalService::MessageCallback<KZ::api::messages::ReplayData, true> callback(&KZGlobalService::ReplayManager::OnReplayRequestSuccess, userID);
-	callback.OnError(
-		[userID](const KZ::api::messages::Error &error)
-		{
-			{
-				std::lock_guard _guard(KZGlobalService::replayManager.mutex);
-				KZGlobalService::replayManager.pendingDownload.reset();
-			}
-			KZPlayer *requester = g_pKZPlayerManager->ToPlayer(userID);
-			if (!requester || !requester->IsConnected())
-			{
-				return;
-			}
 
-			requester->languageService->PrintChat(true, false, "Replay Request - Error", error.message.c_str());
-		});
-	callback.OnCancelled(
-		[userID](KZGlobalService::MessageCallbackCancelReason)
-		{
-			{
-				std::lock_guard _guard(KZGlobalService::replayManager.mutex);
-				KZGlobalService::replayManager.pendingDownload.reset();
-			}
-			KZPlayer *requester = g_pKZPlayerManager->ToPlayer(userID);
-			if (!requester || !requester->IsConnected())
-			{
-				return;
-			}
+	// TODO: download with http
 
-			requester->languageService->PrintChat(true, false, "Replay Request - Cancelled");
-		});
-	// A replay should not take over two minutes to download... hopefully.
-	callback.Timeout(std::chrono::seconds(120));
+	std::string url("https://replays.cs2kz.org/");
+	url += replayID.ToString();
+
+	HTTP::Request request(HTTP::Method::GET, url);
+
+	// TODO: make this optional
+	META_CONPRINTF("[KZ::Global] Requesting replay from %s.\n", url.c_str());
+
+	auto doOnErrorCleanup = [userID]()
+	{
+		{
+			std::lock_guard _guard(KZGlobalService::replayManager.mutex);
+			KZGlobalService::replayManager.pendingDownload.reset();
+		}
+		KZPlayer *requester = g_pKZPlayerManager->ToPlayer(userID);
+		if (!requester || !requester->IsConnected())
+		{
+			return;
+		}
+
+		requester->languageService->PrintChat(true, false, "Replay Request - Error");
+	};
+
+	auto onResponse = [userID, url, doOnErrorCleanup](HTTP::Response response)
+	{
+		// TODO: make this optional
+		META_CONPRINTF("[KZ::Global] Received response for replay %s: status %d.\n", url.c_str(), response.status);
+
+		if (response.status != 200)
+		{
+			// TODO: make this optional
+			META_CONPRINTF("[KZ::Global] Non-200 response for replay %s: status %d.\n", url.c_str(), response.status);
+
+			doOnErrorCleanup();
+
+			return;
+		}
+
+		std::optional<std::vector<char>> body = response.RawBody();
+
+		if (body.has_value())
+		{
+			KZGlobalService::ReplayManager::OnReplayRequestSuccess(*body, userID);
+		}
+	};
+
+	request.Send(onResponse, doOnErrorCleanup);
 
 	{
 		std::lock_guard _guard(this->mutex);
 		this->pendingDownload = replayID;
 	}
-	KZGlobalService::WS::SendMessage(KZ::api::messages::WantReplay {replayID.ToString()});
 }

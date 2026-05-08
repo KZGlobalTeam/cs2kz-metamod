@@ -711,11 +711,6 @@
 	}
 	"Replay Request - Error"
 	{
-		"#format"	"message:s"
-		"en"		"{darkred}Failed to download replay: {default}{message}"
-	}
-	"Replay Request - Cancelled"
-	{
-		"en"		"{grey}Replay download was cancelled."
+		"en"		"{darkred}Failed to download replay."
 	}
 }

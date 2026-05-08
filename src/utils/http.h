@@ -19,6 +19,7 @@ namespace HTTP
 	typedef std::unordered_map<std::string, std::string> HeaderMap;
 	typedef std::unordered_map<std::string, std::string> QueryParameters;
 	typedef std::function<void(Response)> ResponseCallback;
+	typedef std::function<void()> ErrorCallback;
 
 	extern std::vector<InFlightRequest *> g_InFlightRequests;
 
@@ -47,7 +48,7 @@ namespace HTTP
 		void SetBody(std::string body);
 
 		// Send the request.
-		void Send(ResponseCallback onResponse) const;
+		void Send(ResponseCallback onResponse, ErrorCallback onError = nullptr) const;
 
 	private:
 		const Method method;
@@ -71,6 +72,9 @@ namespace HTTP
 		// Extracts the body if it exists.
 		std::optional<std::string> Body() const;
 
+		// Extracts the body if it exists.
+		std::optional<std::vector<char>> RawBody() const;
+
 	private:
 		HTTPRequestHandle requestHandle;
 	};
@@ -80,8 +84,9 @@ namespace HTTP
 	public:
 		InFlightRequest(const InFlightRequest &req) = delete;
 
-		InFlightRequest(HTTPRequestHandle handle, SteamAPICall_t steamCallHandle, std::string url, std::string body, ResponseCallback onResponse)
-			: url(url), body(body), handle(handle), onResponse(onResponse)
+		InFlightRequest(HTTPRequestHandle handle, SteamAPICall_t steamCallHandle, std::string url, std::string body, ResponseCallback onResponse,
+						ErrorCallback onError)
+			: url(url), body(body), handle(handle), onResponse(onResponse), onError(onError)
 		{
 			callResult.SetGameserverFlag();
 			callResult.Set(steamCallHandle, this, &InFlightRequest::OnRequestCompleted);
@@ -106,6 +111,7 @@ namespace HTTP
 		HTTPRequestHandle handle;
 		CCallResult<InFlightRequest, HTTPRequestCompleted_t> callResult;
 		ResponseCallback onResponse;
+		ErrorCallback onError;
 
 		void OnRequestCompleted(HTTPRequestCompleted_t *completedRequest, bool failed);
 	};

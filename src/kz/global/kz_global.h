@@ -817,7 +817,7 @@ private:
 
 		std::optional<UUID_t> pendingDownload;
 
-		static void OnReplayRequestSuccess(const KZ::api::messages::ReplayData &ack, const std::vector<char> &binaryData, CPlayerUserId userID);
+		static void OnReplayRequestSuccess(const std::vector<char> &binaryData, CPlayerUserId userID);
 		void RequestReplay(KZPlayer *requester, UUID_t replayID);
 	} replayManager;
 

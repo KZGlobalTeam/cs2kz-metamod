@@ -25,7 +25,7 @@ namespace HTTP
 		this->body = body;
 	}
 
-	void Request::Send(ResponseCallback onResponse) const
+	void Request::Send(ResponseCallback onResponse, ErrorCallback onError) const
 	{
 		if (!g_pHTTP)
 		{
@@ -82,7 +82,7 @@ namespace HTTP
 			META_CONPRINTF("[HTTP] Failed to send HTTP request.\n");
 		}
 
-		new InFlightRequest(handle, steamCallHandle, url, body, onResponse);
+		new InFlightRequest(handle, steamCallHandle, url, body, onResponse, onError);
 	}
 
 	std::optional<std::string> Response::Header(const char *name) const
@@ -112,6 +112,18 @@ namespace HTTP
 
 	std::optional<std::string> Response::Body() const
 	{
+		std::optional<std::vector<char>> rawBody = RawBody();
+
+		if (rawBody.has_value())
+		{
+			return std::make_optional(rawBody->data());
+		}
+
+		return std::nullopt;
+	}
+
+	std::optional<std::vector<char>> Response::RawBody() const
+	{
 		u32 responseBodySize;
 
 		if (!g_pHTTP->GetHTTPResponseBodySize(requestHandle, &responseBodySize))
@@ -119,20 +131,17 @@ namespace HTTP
 			return std::nullopt;
 		}
 
-		u8 *rawResponseBody = new u8[responseBodySize + 1];
+		std::vector<char> rawResponseBody;
+		rawResponseBody.reserve(responseBodySize + 1);
 
-		if (!g_pHTTP->GetHTTPResponseBodyData(requestHandle, rawResponseBody, responseBodySize))
+		if (!g_pHTTP->GetHTTPResponseBodyData(requestHandle, (u8 *)rawResponseBody.data(), responseBodySize))
 		{
-			delete[] rawResponseBody;
 			return std::nullopt;
 		}
 
-		rawResponseBody[responseBodySize] = '\0';
+		rawResponseBody.push_back('\0');
 
-		std::string responseBody = std::string((char *)rawResponseBody);
-		delete[] rawResponseBody;
-
-		return responseBody;
+		return std::make_optional(std::move(rawResponseBody));
 	}
 
 	void InFlightRequest::OnRequestCompleted(HTTPRequestCompleted_t *completedRequest, bool failed)
@@ -140,6 +149,10 @@ namespace HTTP
 		if (failed)
 		{
 			META_CONPRINTF("[HTTP] request to `%s` failed with code %d\n", url.c_str(), completedRequest->m_eStatusCode);
+			if (onError)
+			{
+				onError();
+			}
 			delete this;
 			return;
 		}
