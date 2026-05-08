@@ -18,6 +18,11 @@ struct UUID_t
 		}
 	}
 
+	UUID_t(const char *str)
+	{
+		FromString(str, this);
+	}
+
 	void Init()
 	{
 		// Generate all random bytes first
