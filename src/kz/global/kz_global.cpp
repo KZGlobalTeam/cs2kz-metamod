@@ -453,7 +453,15 @@ void KZGlobalService::OnPlayerAuthorized()
 	KZ::api::messages::PlayerJoin message;
 	message.id = stringifiedSteamID;
 	message.name = this->player->GetName();
-	message.ipAddress = this->player->GetIpAddress();
+	const char *ipAddress = this->player->GetIpAddress();
+	if (ipAddress && !KZ_STREQI(ipAddress, "unknown"))
+	{
+		message.ipAddress = ipAddress;
+	}
+	else
+	{
+		message.ipAddress = "";
+	}
 	message.hasPrime = this->player->hasPrime;
 
 	KZGlobalService::MessageCallback<KZ::api::messages::PlayerJoinAck> callback(KZGlobalService::OnPlayerJoinAck, steamID);
