@@ -92,7 +92,7 @@ namespace KZ::replaysystem::commands
 			V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_DOWNLOADS_PATH "/%s.replay", parsedUuid.ToString().c_str());
 			if (!g_pFullFileSystem->FileExists(replayPath))
 			{
-				player->languageService->PrintChat(true, false, "Replay - Not Found");
+				KZGlobalService::RequestReplay(player, parsedUuid);
 				return;
 			}
 		}
