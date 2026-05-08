@@ -67,9 +67,8 @@ SCMD_LINK(kz_csp, kz_clearstartpos);
 SCMD(kz_cpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->checkpointService->checkpointSound = !player->checkpointService->checkpointSound;
-	player->optionService->SetPreferenceBool("checkpointSound", player->checkpointService->checkpointSound);
-	if (player->checkpointService->checkpointSound)
+	player->optionService->SetPreferenceBool("checkpointSound", !player->optionService->GetPreferenceBool("checkpointSound", true));
+	if (player->optionService->GetPreferenceBool("checkpointSound", true))
 	{
 		player->languageService->PrintChat(true, false, "Checkpoint Options - Checkpoint Sound - Enable");
 	}
@@ -85,9 +84,8 @@ SCMD_LINK(kz_checkpointsound, kz_cpsound);
 SCMD(kz_tpsound, SCFL_CHECKPOINT | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->checkpointService->teleportSound = !player->checkpointService->teleportSound;
-	player->optionService->SetPreferenceBool("teleportSound", player->checkpointService->teleportSound);
-	if (player->checkpointService->teleportSound)
+	player->optionService->SetPreferenceBool("teleportSound", !player->optionService->GetPreferenceBool("teleportSound", true));
+	if (player->optionService->GetPreferenceBool("teleportSound", true))
 	{
 		player->languageService->PrintChat(true, false, "Checkpoint Options - Teleport Sound - Enable");
 	}

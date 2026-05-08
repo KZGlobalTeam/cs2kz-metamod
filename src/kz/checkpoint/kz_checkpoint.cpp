@@ -54,9 +54,6 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 		this->customStartPosition.groundEnt = CEntityHandle(startPos->FindMember("groundEnt")->GetUInt());
 		this->hasCustomStartPosition = true;
 	}
-
-	player->checkpointService->checkpointSound = player->optionService->GetPreferenceBool("checkpointSound", true);
-	player->checkpointService->teleportSound = player->optionService->GetPreferenceBool("teleportSound", true);
 }
 
 void KZCheckpointService::ResetCheckpoints(bool playSound, bool resetTeleports)
@@ -407,7 +404,7 @@ void KZCheckpointService::TpToStartPosition()
 
 void KZCheckpointService::PlayCheckpointErrorSound()
 {
-	if (this->checkpointSound)
+	if (this->player->optionService->GetPreferenceBool("checkpointSound", true))
 	{
 		this->player->PlayErrorSound();
 	}
@@ -415,7 +412,7 @@ void KZCheckpointService::PlayCheckpointErrorSound()
 
 void KZCheckpointService::PlayTeleportErrorSound()
 {
-	if (this->teleportSound)
+	if (this->player->optionService->GetPreferenceBool("teleportSound", true))
 	{
 		this->player->PlayErrorSound();
 	}
@@ -423,7 +420,7 @@ void KZCheckpointService::PlayTeleportErrorSound()
 
 void KZCheckpointService::PlayCheckpointSound()
 {
-	if (this->checkpointSound)
+	if (this->player->optionService->GetPreferenceBool("checkpointSound", true))
 	{
 		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_SET_CP);
 	}
@@ -431,7 +428,7 @@ void KZCheckpointService::PlayCheckpointSound()
 
 void KZCheckpointService::PlayTeleportSound()
 {
-	if (this->teleportSound)
+	if (this->player->optionService->GetPreferenceBool("teleportSound", true))
 	{
 		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_SND_DO_TP);
 	}
