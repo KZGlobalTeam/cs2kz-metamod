@@ -131,15 +131,12 @@ namespace HTTP
 			return std::nullopt;
 		}
 
-		std::vector<char> rawResponseBody;
-		rawResponseBody.reserve(responseBodySize + 1);
+		std::vector<char> rawResponseBody(responseBodySize);
 
 		if (!g_pHTTP->GetHTTPResponseBodyData(requestHandle, (u8 *)rawResponseBody.data(), responseBodySize))
 		{
 			return std::nullopt;
 		}
-
-		rawResponseBody.push_back('\0');
 
 		return std::make_optional(std::move(rawResponseBody));
 	}
