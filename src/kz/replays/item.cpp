@@ -200,8 +200,8 @@ void KZ::replaysystem::item::ApplyItemAttributesToWeapon(CBasePlayerWeapon &weap
 	item.m_iItemIDHigh(info.mainInfo.itemID >> 32);
 	item.m_iItemIDLow((u32)info.mainInfo.itemID & 0xFFFFFFFF);
 	item.m_iInventoryPosition(info.mainInfo.inventoryPosition);
-	strncpy(item.m_szCustomName(), info.mainInfo.customName, sizeof(info.mainInfo.customName));
-	strncpy(item.m_szCustomNameOverride(), info.mainInfo.customNameOverride, sizeof(info.mainInfo.customNameOverride));
+	V_strncpy(item.m_szCustomName(), info.mainInfo.customName, sizeof(info.mainInfo.customName));
+	V_strncpy(item.m_szCustomNameOverride(), info.mainInfo.customNameOverride, sizeof(info.mainInfo.customNameOverride));
 
 	for (int i = 0; i < info.mainInfo.numAttributes; i++)
 	{
@@ -248,8 +248,8 @@ void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, con
 		item.m_iItemIDLow((u32)info.mainInfo.itemID & 0xFFFFFFFF);
 		item.m_iInventoryPosition(info.mainInfo.inventoryPosition);
 		item.m_bInitialized = true;
-		strncpy(item.m_szCustomName(), info.mainInfo.customName, sizeof(info.mainInfo.customName));
-		strncpy(item.m_szCustomNameOverride(), info.mainInfo.customNameOverride, sizeof(info.mainInfo.customNameOverride));
+		V_strncpy(item.m_szCustomName(), info.mainInfo.customName, sizeof(info.mainInfo.customName));
+		V_strncpy(item.m_szCustomNameOverride(), info.mainInfo.customNameOverride, sizeof(info.mainInfo.customNameOverride));
 		CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
 		for (int i = 0; i < info.mainInfo.numAttributes; i++)
 		{

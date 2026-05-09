@@ -52,8 +52,8 @@ struct EconInfo
 		mainInfo.accountID = item.m_iAccountID();
 		mainInfo.itemID = item.m_iItemID();
 		mainInfo.inventoryPosition = item.m_iInventoryPosition();
-		strncpy(mainInfo.customName, item.m_szCustomName(), sizeof(mainInfo.customName));
-		strncpy(mainInfo.customNameOverride, item.m_szCustomNameOverride(), sizeof(mainInfo.customNameOverride));
+		V_strncpy(mainInfo.customName, item.m_szCustomName(), sizeof(mainInfo.customName));
+		V_strncpy(mainInfo.customNameOverride, item.m_szCustomNameOverride(), sizeof(mainInfo.customNameOverride));
 		CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
 		mainInfo.numAttributes = MIN(attributeList.m_Attributes->Count(), 32);
 		for (int i = 0; i < mainInfo.numAttributes; ++i)
@@ -71,8 +71,8 @@ struct EconInfo
 		mainInfo.accountID = item.m_iAccountID();
 		mainInfo.itemID = item.m_iItemID();
 		mainInfo.inventoryPosition = item.m_iInventoryPosition();
-		strncpy(mainInfo.customName, item.m_szCustomName(), sizeof(mainInfo.customName));
-		strncpy(mainInfo.customNameOverride, item.m_szCustomNameOverride(), sizeof(mainInfo.customNameOverride));
+		V_strncpy(mainInfo.customName, item.m_szCustomName(), sizeof(mainInfo.customName));
+		V_strncpy(mainInfo.customNameOverride, item.m_szCustomNameOverride(), sizeof(mainInfo.customNameOverride));
 		CAttributeList &attributeList = item.m_NetworkedDynamicAttributes();
 		mainInfo.numAttributes = MIN(attributeList.m_Attributes->Count(), 32);
 		for (int i = 0; i < mainInfo.numAttributes; ++i)
