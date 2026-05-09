@@ -263,9 +263,28 @@ void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, con
 	CUtlString modelStr = modelName;
 	modelStr = modelStr.StripExtension();
 	modelStr.Append(".vmdl_c");
+
 	if (g_pFullFileSystem->FileExists(modelStr.Get()))
 	{
-		g_pKZUtils->SetModel(pawn, modelName);
+		// If the model starts with "characters/models" and there's a "agents/models" variant, use that instead.
+		// Newer CS2 versions no longer work with the "characters/models" variants.
+		if (V_strstr(modelStr.Get(), "characters/models/"))
+		{
+			CUtlString agentModelStr = modelStr.Replace("characters/models/", "agents/models/");
+			if (g_pFullFileSystem->FileExists(agentModelStr.Get()))
+			{
+				agentModelStr = agentModelStr.Replace(".vmdl_c", ".vmdl");
+				g_pKZUtils->SetModel(pawn, agentModelStr.Get());
+			}
+			else
+			{
+				g_pKZUtils->SetModel(pawn, modelName);
+			}
+		}
+		else
+		{
+			g_pKZUtils->SetModel(pawn, modelName);
+		}
 	}
 	else
 	{
