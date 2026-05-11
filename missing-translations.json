@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 606,
-    "phrases_with_missing": 390,
-    "total_missing_entries": 2434,
+    "total_phrases": 611,
+    "phrases_with_missing": 395,
+    "total_missing_entries": 2494,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 96.04,
+      "coverage_percent": 95.25,
       "translated": 582,
-      "missing": 24,
+      "missing": 29,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -204,6 +204,36 @@
           "phrase": "Replay - Multiple Matches",
           "line": 277,
           "english_text": "{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         }
       ],
       "menu": {
@@ -219,9 +249,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 84.98,
+      "coverage_percent": 84.29,
       "translated": 515,
-      "missing": 91,
+      "missing": 96,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -752,6 +782,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstats",
           "line": 35,
@@ -779,7 +839,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 606,
+      "translated": 611,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -790,9 +850,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 46.86,
+      "coverage_percent": 46.48,
       "translated": 284,
-      "missing": 322,
+      "missing": 327,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -2619,6 +2679,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-general.phrases.txt",
           "phrase": "Tip - website",
           "line": 147,
@@ -2740,9 +2830,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 38.61,
+      "coverage_percent": 38.3,
       "translated": 234,
-      "missing": 372,
+      "missing": 377,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -4863,6 +4953,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-general.phrases.txt",
           "phrase": "Tip - website",
           "line": 147,
@@ -4990,9 +5110,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 37.29,
+      "coverage_percent": 36.99,
       "translated": 226,
-      "missing": 380,
+      "missing": 385,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -7161,6 +7281,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-general.phrases.txt",
           "phrase": "Tip - website",
           "line": 147,
@@ -7288,9 +7438,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 47.36,
+      "coverage_percent": 46.97,
       "translated": 287,
-      "missing": 319,
+      "missing": 324,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9099,6 +9249,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-general.phrases.txt",
           "phrase": "Tip - website",
           "line": 147,
@@ -9215,9 +9395,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 54.29,
+      "coverage_percent": 53.85,
       "translated": 329,
-      "missing": 277,
+      "missing": 282,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -10774,6 +10954,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-general.phrases.txt",
           "phrase": "Tip - website",
           "line": 147,
@@ -10890,9 +11100,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 85.31,
+      "coverage_percent": 84.62,
       "translated": 517,
-      "missing": 89,
+      "missing": 94,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -11411,6 +11621,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstats",
           "line": 35,
@@ -11437,10 +11677,41 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.18,
       "translated": 606,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 5,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -11449,9 +11720,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 64.85,
+      "coverage_percent": 64.32,
       "translated": 393,
-      "missing": 213,
+      "missing": 218,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -12630,6 +12901,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-jumpstats.phrases.txt",
           "phrase": "Tip - kz_jsfailstats",
           "line": 35,
@@ -12740,9 +13041,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 43.4,
+      "coverage_percent": 43.04,
       "translated": 263,
-      "missing": 343,
+      "missing": 348,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -14695,6 +14996,36 @@
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+        },
+        {
           "file": "cs2kz-tips-general.phrases.txt",
           "phrase": "Tip - website",
           "line": 147,
@@ -14816,9 +15147,9 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 99.34,
+      "coverage_percent": 98.53,
       "translated": 602,
-      "missing": 4,
+      "missing": 9,
       "missing_phrases": [
         {
           "file": "cs2kz-common.phrases.txt",
@@ -14843,6 +15174,36 @@
           "phrase": "Panel Command Usage",
           "line": 262,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         }
       ],
       "menu": {
@@ -22026,7 +22387,7 @@
       ]
     },
     "cs2kz-timer.phrases.txt": {
-      "phrases_with_missing": 50,
+      "phrases_with_missing": 55,
       "phrases": [
         {
           "name": "Beat Course Info - Global Points (TP)",
@@ -23126,6 +23487,116 @@
             "pl",
             "sv",
             "tr"
+          ]
+        },
+        {
+          "name": "Safeguard - Disable",
+          "line": 935,
+          "english_text": "{grey}Safeguard disabled.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Safeguard - Enable",
+          "line": 939,
+          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Safeguard - Enable (PRO)",
+          "line": 943,
+          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Safeguard - Blocked",
+          "line": 947,
+          "english_text": "{darkred}You can't perform this action because safeguard is enabled.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Safeguard - Blocked (Restart)",
+          "line": 951,
+          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
