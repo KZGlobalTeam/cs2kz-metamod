@@ -1510,6 +1510,7 @@
 	"Command Description - kz_replay"
 	{
 		"en"		"Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
+		"ua"		"Відтворити раніше збережений повтор або знайти повтор рекорду за типом (wr, sr, pb тощо)."
 	}
 	"Command Description - kz_replays"
 	{
