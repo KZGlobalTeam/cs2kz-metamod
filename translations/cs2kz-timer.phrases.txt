@@ -935,22 +935,27 @@
 	"Safeguard - Disable"
 	{
 		"en"		"{grey}Safeguard disabled."
+		"ua"		"{grey}Запобіжник вимкнено."
 	}
 	"Safeguard - Enable"
 	{
 		"en"		"{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+		"ua"		"{grey}Запобіжник увімкнено. Ви більше не зможете виконувати команди, які можуть зупинити ваш таймер під час проходження."
 	}
 	"Safeguard - Enable (PRO)"
 	{
 		"en"		"{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+		"ua"		"{grey}Запобіжник для {blue}PRO {grey}проходжень увімкнено. Ви більше не зможете використовувати телепорти або виконувати команди, які можуть зупинити ваш таймер під час проходження."
 	}
 	"Safeguard - Blocked"
 	{
 		"en"		"{darkred}You can't perform this action because safeguard is enabled."
+		"ua"		"{darkred}Ви не можете виконати цю дію, поки увімкнено запобіжник."
 	}
 	"Safeguard - Blocked (Restart)"
 	{
 		"#format"	"cooldown:.1f"
 		"en"		"{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+		"ua"		"{grey}Дію заблоковано запобіжником. Будь ласка, зачекайте {default}{cooldown} {grey}сек. і повторіть команду."
 	}
 }
