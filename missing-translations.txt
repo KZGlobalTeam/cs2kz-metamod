@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 611
 Phrases with missing translations: 395
-Total missing translation entries: 2494
+Total missing translation entries: 2485
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [███████████████████░]  99.2% (606/611)
   sv (swedish)         [████████████░░░░░░░░]  64.3% (393/611)
   tr (turkish)         [████████░░░░░░░░░░░░]  43.0% (263/611)
-  ua (ukrainian)       [███████████████████░]  98.5% (602/611)
+  ua (ukrainian)       [████████████████████] 100.0% (611/611)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -320,7 +320,7 @@ cs2kz-common.phrases.txt
   Line 81: "Command Cooldown"
     Missing (6): es, fi, it, ko, lv, tr
   Line 91: "Beta Join Warning"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-course.phrases.txt
 ----------------------------------------------------------------------
@@ -391,11 +391,11 @@ cs2kz-fov.phrases.txt
 cs2kz-hud.phrases.txt
 ----------------------------------------------------------------------
   Line 252: "HUD Option - Compact Panel - Enable"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 257: "HUD Option - Compact Panel - Disable"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 262: "Panel Command Usage"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 258: "HUD Option - Compact Panel - Disable"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 264: "Panel Command Usage"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------
@@ -881,15 +881,15 @@ cs2kz-timer.phrases.txt
   Line 926: "Started Run on Non Ranked Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 935: "Safeguard - Disable"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 939: "Safeguard - Enable"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 943: "Safeguard - Enable (PRO)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 947: "Safeguard - Blocked"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 951: "Safeguard - Blocked (Restart)"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 940: "Safeguard - Enable"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 945: "Safeguard - Enable (PRO)"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 950: "Safeguard - Blocked"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 955: "Safeguard - Blocked (Restart)"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-tips-general.phrases.txt
 ----------------------------------------------------------------------

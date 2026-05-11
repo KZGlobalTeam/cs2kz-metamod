@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 611,
     "phrases_with_missing": 395,
-    "total_missing_entries": 2494,
+    "total_missing_entries": 2485,
     "all_languages": [
       "chi",
       "de",
@@ -124,13 +124,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -214,25 +214,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         }
       ],
@@ -544,13 +544,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -790,25 +790,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -1589,13 +1589,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -2687,25 +2687,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -3647,13 +3647,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -4961,25 +4961,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -5945,13 +5945,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -7289,25 +7289,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -8153,13 +8153,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -9257,25 +9257,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -9960,13 +9960,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -10962,25 +10962,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -11383,13 +11383,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -11629,25 +11629,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -11690,25 +11690,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         }
       ],
@@ -12117,13 +12117,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -12909,25 +12909,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -13816,13 +13816,13 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
         },
         {
@@ -15004,25 +15004,25 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -15147,65 +15147,10 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 98.53,
-      "translated": 602,
-      "missing": 9,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
-          "line": 91,
-          "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD Option - Compact Panel - Enable",
-          "line": 252,
-          "english_text": "{grey}Compact panel enabled."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD Option - Compact Panel - Disable",
-          "line": 257,
-          "english_text": "{grey}Compact panel disabled."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "Panel Command Usage",
-          "line": 262,
-          "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Safeguard - Disable",
-          "line": 935,
-          "english_text": "{grey}Safeguard disabled."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Safeguard - Enable",
-          "line": 939,
-          "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Safeguard - Enable (PRO)",
-          "line": 943,
-          "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Safeguard - Blocked",
-          "line": 947,
-          "english_text": "{darkred}You can't perform this action because safeguard is enabled."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Safeguard - Blocked (Restart)",
-          "line": 951,
-          "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 611,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -17800,7 +17745,8 @@
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -17812,8 +17758,7 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -18497,7 +18442,8 @@
           "english_text": "{grey}Compact panel enabled.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18509,17 +18455,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "HUD Option - Compact Panel - Disable",
-          "line": 257,
+          "line": 258,
           "english_text": "{grey}Compact panel disabled.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18531,17 +18477,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Panel Command Usage",
-          "line": 262,
+          "line": 264,
           "english_text": "{grey}Usage: {default}kz_panel <compact>{grey}.",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -18553,8 +18499,7 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -23494,7 +23439,8 @@
           "line": 935,
           "english_text": "{grey}Safeguard disabled.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -23507,16 +23453,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Safeguard - Enable",
-          "line": 939,
+          "line": 940,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -23529,16 +23475,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Safeguard - Enable (PRO)",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -23551,16 +23497,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Safeguard - Blocked",
-          "line": 947,
+          "line": 950,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -23573,16 +23519,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Safeguard - Blocked (Restart)",
-          "line": 951,
+          "line": 955,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -23595,8 +23541,7 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
