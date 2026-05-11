@@ -226,6 +226,13 @@ void KZGlobalService::SendMapChange()
 		return;
 	}
 
+	// Clear immediately so stale global map data isn't used for run submissions
+	// while waiting for the API response.
+	{
+		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+		KZGlobalService::currentMap.info = std::nullopt;
+	}
+
 	KZ::api::messages::MapChange message;
 	message.name = currentMapName.Get();
 
