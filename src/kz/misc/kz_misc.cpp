@@ -121,6 +121,10 @@ SCMD(kz_end, SCFL_MAP)
 
 	if (shouldTeleport)
 	{
+		if (!player->timerService->CheckSafeguard())
+		{
+			return MRES_SUPERCEDE;
+		}
 		player->timerService->TimerStop();
 		if (player->GetPlayerPawn()->IsAlive())
 		{
@@ -163,6 +167,11 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 			player->languageService->PrintChat(true, false, "No Start Position For Course", courseArg.Get());
 			return;
 		}
+	}
+
+	if (!player->timerService->CheckSafeguardRestart())
+	{
+		return;
 	}
 
 	player->timerService->OnTeleportToStart();
@@ -252,6 +261,10 @@ SCMD(kz_lj, SCFL_JUMPSTATS | SCFL_MAP)
 	QAngle destAngles;
 	if (g_pMappingApi->GetJumpstatArea(destPos, destAngles))
 	{
+		if (!player->timerService->CheckSafeguard())
+		{
+			return MRES_SUPERCEDE;
+		}
 		player->timerService->TimerStop();
 		player->Teleport(&destPos, &destAngles, &vec3_origin);
 	}
@@ -304,9 +317,39 @@ SCMD(kz_playercheck, SCFL_PLAYER)
 
 SCMD_LINK(kz_pc, kz_playercheck);
 
+static_function void CloseTeamMenu(KZPlayer *player)
+{
+	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("entity_killed");
+	if (event)
+	{
+		event->SetInt("entindex_killed", player->GetPlayerPawn()->entindex());
+		IGameEventListener2 *listener = g_pKZUtils->GetLegacyGameEventListener(player->GetPlayerSlot());
+		if (listener)
+		{
+			listener->FireGameEvent(event);
+		}
+		interfaces::pGameEventManager->FreeEvent(event);
+	}
+}
+
 SCMD(jointeam, SCFL_HIDDEN)
 {
-	KZ::misc::JoinTeam(g_pKZPlayerManager->ToPlayer(controller), atoi(args->Arg(1)), true);
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	int newTeam = atoi(args->Arg(1));
+	if (newTeam == CS_TEAM_SPECTATOR || newTeam == CS_TEAM_NONE)
+	{
+		if (!player->timerService->GetPaused() && !player->timerService->CanPause())
+		{
+			CloseTeamMenu(player);
+			return MRES_SUPERCEDE;
+		}
+	}
+	else if (player->IsAlive() && !player->timerService->CheckSafeguard())
+	{
+		CloseTeamMenu(player);
+		return MRES_SUPERCEDE;
+	}
+	KZ::misc::JoinTeam(player, newTeam, true);
 	return MRES_SUPERCEDE;
 }
 

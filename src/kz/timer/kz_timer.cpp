@@ -692,6 +692,113 @@ void KZTimerService::ToggleTimerStopSound()
 	this->player->languageService->PrintChat(true, false, this->shouldPlayTimerStopSound ? "Timer Stop Sound Enabled" : "Timer Stop Sound Disabled");
 }
 
+// Safeguard
+
+void KZTimerService::ToggleSafeguard()
+{
+	if (this->player->optionService->GetPreferenceInt("safeguard") == SAFEGUARD_NUB)
+	{
+		this->player->optionService->SetPreferenceInt("safeguard", SAFEGUARD_DISABLED);
+		this->player->languageService->PrintChat(true, false, "Safeguard - Disable");
+	}
+	else
+	{
+		this->player->optionService->SetPreferenceInt("safeguard", SAFEGUARD_NUB);
+		this->player->languageService->PrintChat(true, false, "Safeguard - Enable");
+	}
+}
+
+void KZTimerService::ToggleProSafeguard()
+{
+	if (this->player->optionService->GetPreferenceInt("safeguard") == SAFEGUARD_PRO)
+	{
+		this->player->optionService->SetPreferenceInt("safeguard", SAFEGUARD_DISABLED);
+		this->player->languageService->PrintChat(true, false, "Safeguard - Disable");
+	}
+	else
+	{
+		this->player->optionService->SetPreferenceInt("safeguard", SAFEGUARD_PRO);
+		this->player->languageService->PrintChat(true, false, "Safeguard - Enable (PRO)");
+	}
+}
+
+bool KZTimerService::CheckSafeguard(bool showError)
+{
+	if (this->player->optionService->GetPreferenceInt("safeguard") <= SAFEGUARD_DISABLED || !this->GetTimerRunning() || !this->GetValidTimer())
+	{
+		return true;
+	}
+	if (showError)
+	{
+		this->player->languageService->PrintChat(true, false, "Safeguard - Blocked");
+		this->player->PlayErrorSound();
+	}
+	return false;
+}
+
+bool KZTimerService::CheckSafeguardPro(bool showError)
+{
+	if (this->player->optionService->GetPreferenceInt("safeguard") != SAFEGUARD_PRO || !this->GetTimerRunning() || !this->GetValidTimer()
+		|| this->player->checkpointService->GetTeleportCount() > 0)
+	{
+		return true;
+	}
+	if (showError)
+	{
+		this->player->languageService->PrintChat(true, false, "Safeguard - Blocked");
+		this->player->PlayErrorSound();
+	}
+	return false;
+}
+
+bool KZTimerService::CheckSafeguardRestart(bool showError)
+{
+	if (this->player->optionService->GetPreferenceInt("safeguard") <= SAFEGUARD_DISABLED || !this->GetTimerRunning() || !this->GetValidTimer())
+	{
+		return true;
+	}
+	f64 currentTime = g_pKZUtils->GetServerGlobals()->curtime;
+	f64 timeSinceLastAttempt = currentTime - this->lastRestartAttemptTime;
+	f64 cooldown;
+	if (this->lastRestartAttemptTime == 0.0 || timeSinceLastAttempt > KZ_SAFEGUARD_RESTART_MAX_DELAY)
+	{
+		this->lastRestartAttemptTime = currentTime;
+		cooldown = KZ_SAFEGUARD_RESTART_MIN_DELAY;
+	}
+	else
+	{
+		cooldown = KZ_SAFEGUARD_RESTART_MIN_DELAY - timeSinceLastAttempt;
+	}
+	if (cooldown <= 0.0)
+	{
+		this->lastRestartAttemptTime = 0.0;
+		return true;
+	}
+	if (showError)
+	{
+		this->player->languageService->PrintChat(true, false, "Safeguard - Blocked (Restart)", cooldown);
+		this->player->PlayErrorSound();
+	}
+	return false;
+}
+
+SCMD(kz_safeguard, SCFL_TIMER | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->timerService->ToggleSafeguard();
+	return MRES_SUPERCEDE;
+}
+
+SCMD_LINK(kz_safe, kz_safeguard);
+SCMD_LINK(kz_sg, kz_safeguard);
+
+SCMD(kz_pro, SCFL_TIMER | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->timerService->ToggleProSafeguard();
+	return MRES_SUPERCEDE;
+}
+
 void KZTimerService::Reset()
 {
 	this->timerRunning = {};
@@ -714,6 +821,7 @@ void KZTimerService::Reset()
 	this->lastInvalidateTime = {};
 	this->touchedGroundSinceTouchingStartZone = {};
 	this->shouldPlayTimerStopSound = true;
+	this->lastRestartAttemptTime = {};
 }
 
 void KZTimerService::OnPhysicsSimulatePost()
@@ -846,6 +954,10 @@ SCMD(kz_stop, SCFL_TIMER)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (player->timerService->GetTimerRunning())
 	{
+		if (!player->timerService->CheckSafeguard())
+		{
+			return MRES_SUPERCEDE;
+		}
 		player->timerService->TimerStop();
 	}
 	return MRES_SUPERCEDE;

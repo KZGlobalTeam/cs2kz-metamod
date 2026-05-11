@@ -932,4 +932,25 @@
 		"ru"		"{yellow}Внимание: {grey} Маршрут {default}{course_name}{grey} не является рейтинговым. Прохождение этого маршрута не повлияет на ваш глобальный рейтинг."
 		"ua"		"{yellow}Увага: {grey} Курс {default}{course_name}{grey} не є рейтинговим. Проходження на цьому курсі не будуть зараховані до вашого глобального рейтингу."
 	}
+	"Safeguard - Disable"
+	{
+		"en"		"{grey}Safeguard disabled."
+	}
+	"Safeguard - Enable"
+	{
+		"en"		"{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+	}
+	"Safeguard - Enable (PRO)"
+	{
+		"en"		"{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+	}
+	"Safeguard - Blocked"
+	{
+		"en"		"{darkred}You can't perform this action because safeguard is enabled."
+	}
+	"Safeguard - Blocked (Restart)"
+	{
+		"#format"	"cooldown:.1f"
+		"en"		"{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+	}
 }

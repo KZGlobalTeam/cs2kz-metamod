@@ -172,6 +172,10 @@ void KZCheckpointService::DoTeleport(i32 index)
 		this->PlayTeleportErrorSound();
 		return;
 	}
+	if (!this->player->timerService->CheckSafeguardPro())
+	{
+		return;
+	}
 	this->DoTeleport(this->checkpoints[this->currentCpIndex]);
 }
 

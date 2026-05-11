@@ -22,6 +22,16 @@
 
 #define KZ_PAUSE_COOLDOWN 1.0f
 
+#define KZ_SAFEGUARD_RESTART_MIN_DELAY 0.6f
+#define KZ_SAFEGUARD_RESTART_MAX_DELAY 5.0f
+
+enum SafeguardOption : u8
+{
+	SAFEGUARD_DISABLED = 0,
+	SAFEGUARD_NUB,
+	SAFEGUARD_PRO
+};
+
 struct PBData
 {
 	PBData()
@@ -335,6 +345,8 @@ private:
 	bool touchedGroundSinceTouchingStartZone {};
 	bool shouldPlayTimerStopSound = true;
 
+	f64 lastRestartAttemptTime {};
+
 public:
 	bool GetPaused()
 	{
@@ -354,6 +366,13 @@ public:
 	void TogglePause();
 
 	void ToggleTimerStopSound();
+
+	// Safeguard
+	void ToggleSafeguard();
+	void ToggleProSafeguard();
+	bool CheckSafeguard(bool showError = true);
+	bool CheckSafeguardPro(bool showError = true);
+	bool CheckSafeguardRestart(bool showError = true);
 
 public:
 	virtual void Reset() override;
