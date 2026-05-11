@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 625 |
 | **Phrases Missing Translations** | 409 |
-| **Total Missing Entries** | 2663 |
+| **Total Missing Entries** | 2647 |
 | **Menu Files** | 10 |
 
 ## Language Coverage (Phrases)
@@ -29,7 +29,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [███████████████████░]  96.6% (604/625)
   sv (swedish)         [████████████░░░░░░░░]  62.9% (393/625)
   tr (turkish)         [████████░░░░░░░░░░░░]  42.1% (263/625)
-  ua (ukrainian)       [███████████████████░]  97.4% (609/625)
+  ua (ukrainian)       [████████████████████] 100.0% (625/625)
 ```
 
 ## Menu Translation Status
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`e1f1a07`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/e1f1a0798391d39a3f511513d2b9fe2a78358e71)
-- **Time:** 2026-05-11 20:33:01 UTC
-- **Message:** Add global replays support, refactor run submissions (#556)
+- **Commit:** [`cffd607`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/cffd607c0fc679983711e1d69854426729e78a4f)
+- **Time:** 2026-05-11 21:20:42 UTC
+- **Message:** Ukrainian translation upd. — global replays (#558)
 
 ---
 
