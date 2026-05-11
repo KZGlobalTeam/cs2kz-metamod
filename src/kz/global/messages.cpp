@@ -58,12 +58,17 @@ bool KZ::api::messages::MapChange::ToJson(Json &json) const
 
 bool KZ::api::messages::PlayerJoin::ToJson(Json &json) const
 {
-	// clang-format off
-	return json.Set("id", this->id) 
-		&& json.Set("name", this->name) 
-		&& json.Set("ip_address", this->ipAddress) 
-		&& json.Set("has_prime", this->hasPrime);
-	// clang-format on
+	if (!(json.Set("id", this->id) && json.Set("name", this->name) && json.Set("has_prime", this->hasPrime)))
+	{
+		return false;
+	};
+
+	if (this->ipAddress != "" && !json.Set("ip_address", this->ipAddress))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 bool KZ::api::messages::PlayerJoinAck::FromJson(const Json &json)
@@ -251,4 +256,9 @@ bool KZ::api::messages::WantPlayerRecords::ToJson(Json &json) const
 bool KZ::api::messages::PlayerRecords::FromJson(const Json &json)
 {
 	return json.Get("records", this->records);
+}
+
+bool KZ::api::messages::NewReplay::ToJson(Json &json) const
+{
+	return json.Set("id", this->replayID);
 }

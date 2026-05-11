@@ -13,7 +13,7 @@
 #include "common.h"
 #include "cs2kz.h"
 #include "kz/kz.h"
-#include "kz/timer/announce.h"
+#include "kz/timer/submission.h"
 #include "utils/json.h"
 #include "messages.h"
 
@@ -62,7 +62,7 @@ private:
 		std::chrono::time_point<std::chrono::system_clock> sentAt;
 		std::chrono::seconds expiresAfter = std::chrono::seconds(5);
 
-		virtual void OnResponse(u32 messageID, const Json &payload) = 0;
+		virtual void OnResponse(u32 messageID, const Json &payload, const std::vector<char> &binaryData) = 0;
 
 		virtual void OnError(u32 messageID, const KZ::api::messages::Error &error)
 		{
@@ -93,14 +93,89 @@ private:
 	};
 
 public:
-	template<typename Response>
+	template<typename Response, bool WithBinaryData = false>
 	class MessageCallback : public MessageCallbackInternal
+	{
+		// clang-format off
+		using OnResponseFn = std::conditional_t<WithBinaryData,
+			std::function<void(const Response &, const std::vector<char> &)>,
+			std::function<void(const Response &)>>;
+		// clang-format on
+
+		OnResponseFn onResponse;
+		std::function<void(const KZ::api::messages::Error &)> onError;
+		std::function<void(CancelReason)> onCancelled;
+
+		void OnResponse(u32 messageID, const Json &payload, const std::vector<char> &binaryData) override
+		{
+			Response response;
+
+			if (payload.Decode(response))
+			{
+				if constexpr (WithBinaryData)
+				{
+					this->onResponse(response, binaryData);
+				}
+				else
+				{
+					this->onResponse(response);
+				}
+			}
+			else
+			{
+				META_CONPRINTF("[KZ::Global] Received unknown payload as WebSocket response. (id=%i)\n", messageID);
+			}
+		}
+
+		void OnError(u32 messageID, const KZ::api::messages::Error &error) override
+		{
+			MessageCallbackInternal::OnError(messageID, error);
+			this->onError(error);
+		}
+
+		void OnCancelled(u32 messageID, CancelReason reason) override
+		{
+			MessageCallbackInternal::OnCancelled(messageID, reason);
+			this->onCancelled(reason);
+		}
+
+	public:
+		// clang-format off
+		template<typename OnResponse, typename... Args>
+		explicit MessageCallback(OnResponse &&onResponse, Args &&...args)
+			: onResponse([cb = std::bind(std::move(onResponse), std::placeholders::_1, std::placeholders::_2, std::forward<Args>(args)...)] (const Response &response, const std::vector<char> &binaryData) { cb(response, binaryData); })
+			, onError([](const KZ::api::messages::Error &) {})
+			, onCancelled([](CancelReason) {})
+		// clang-format on
+		{
+		}
+
+		inline void Timeout(std::chrono::seconds duration)
+		{
+			this->expiresAfter = duration;
+		}
+
+		template<typename CB>
+		void OnError(CB &&onError)
+		{
+			this->onError = std::move(onError);
+		}
+
+		template<typename CB>
+		void OnCancelled(CB &&onCancelled)
+		{
+			this->onCancelled = std::move(onCancelled);
+		}
+	};
+
+	template<typename Response>
+	class MessageCallback<Response, false> : public MessageCallbackInternal
 	{
 		std::function<void(const Response &)> onResponse;
 		std::function<void(const KZ::api::messages::Error &)> onError;
 		std::function<void(CancelReason)> onCancelled;
 
-		void OnResponse(u32 messageID, const Json &payload) override
+		void OnResponse(u32 messageID, const Json &payload, const std::vector<char> &) override
 		{
 			Response response;
 
@@ -260,6 +335,11 @@ private:
 			 * The rest of the payload, which will be parsed according to `MessageType` later.
 			 */
 			Json payload;
+
+			/**
+			 * Optional binary payload appended after the JSON in the same WebSocket frame.
+			 */
+			std::vector<char> binaryData;
 		};
 
 		// INVARIANT: should be `nullptr` when `state == Uninitialized`, and a valid pointer otherwise
@@ -342,6 +422,18 @@ private:
 		}
 
 		/**
+		 * Sends the given payload as a WebSocket message with binary data appended after the JSON.
+		 */
+		template<typename Payload>
+		static bool SendMessageWithBinary(const Payload &payload, const std::vector<char> &binaryData)
+		{
+			u32 messageID;
+			const char *messageType;
+			Json messagePayload;
+			return SendMessageImpl(messageID, messageType, messagePayload, payload, &binaryData);
+		}
+
+		/**
 		 * Sends the given payload as a WebSocket message and queues the given `callback` to be executed when a response is received.
 		 */
 		template<typename Payload, typename Callback>
@@ -380,9 +472,12 @@ private:
 		 * Implementation detail of `SendMessage()`.
 		 *
 		 * It initializes the first 3 parameters and encodes `Payload`.
+		 * If `binaryData` is non-null, the JSON text is concatenated with the binary buffer
+		 * and sent as a single binary WebSocket frame.
 		 */
 		template<typename Payload>
-		static bool SendMessageImpl(u32 &messageID, const char *&messageType, Json &messagePayload, const Payload &payload)
+		static bool SendMessageImpl(u32 &messageID, const char *&messageType, Json &messagePayload, const Payload &payload,
+									const std::vector<char> *binaryData = nullptr)
 		{
 			messageID = NextMessageID();
 			META_CONPRINTF("[KZ::Global] assigned message ID %i\n", messageID);
@@ -404,7 +499,23 @@ private:
 			}
 
 			std::string encodedPayload = messagePayload.ToString();
-			socket->send(encodedPayload);
+
+			if (binaryData && !binaryData->empty())
+			{
+				// Combine JSON text + binary data into a single binary frame, delimited by newline.
+				// Strip any newlines from the JSON so the delimiter is unambiguous.
+				encodedPayload.erase(std::remove(encodedPayload.begin(), encodedPayload.end(), '\n'), encodedPayload.end());
+				std::string combined;
+				combined.reserve(encodedPayload.size() + 1 + binaryData->size());
+				combined.append(encodedPayload);
+				combined.push_back('\n');
+				combined.append(binaryData->data(), binaryData->size());
+				socket->sendBinary(combined);
+			}
+			else
+			{
+				socket->send(encodedPayload);
+			}
 
 			// clang-format off
 			META_CONPRINTF("[KZ::Global] Sent WebSocket message. (id=%i, type=%s)\n"
@@ -484,7 +595,7 @@ public:
 		f64 time;
 		u32 teleports;
 		std::string modeMD5;
-		std::vector<RecordAnnounce::StyleInfo> styles;
+		std::vector<RunSubmission::StyleInfo> styles;
 		std::string metadata;
 	};
 
@@ -540,7 +651,7 @@ public:
 		message.playerID = this->player->GetSteamId64();
 		message.filterID = data.filterID;
 		message.modeChecksum = data.modeMD5;
-		for (const RecordAnnounce::StyleInfo &style : data.styles)
+		for (const RunSubmission::StyleInfo &style : data.styles)
 		{
 			message.styles.push_back({style.name, style.md5});
 		}
@@ -693,4 +804,31 @@ private:
 	static void OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std::string sentMapName);
 	static void OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ack, u64 steamID);
 	static void OnWorldRecordsForCache(const KZ::api::messages::WorldRecordsForCache &records);
+
+	static inline struct ReplayManager
+	{
+		std::mutex mutex;
+		// Message example:
+		// {"event":"new-replay","data":{"id":"a14ca802-0449-4441-8d19-08aeee7c2f9a"}}<BINARY DATA>
+		std::vector<std::pair<UUID_t, std::vector<char>>> pendingUploads;
+
+		bool QueueUpload(const UUID_t &uploadID, std::vector<char> &&replayData);
+		void ProcessUploads();
+
+		std::optional<UUID_t> pendingDownload;
+
+		static void OnReplayRequestSuccess(const std::vector<char> &binaryData, CPlayerUserId userID);
+		void RequestReplay(KZPlayer *requester, UUID_t replayID);
+	} replayManager;
+
+public:
+	static bool QueueReplayUpload(const UUID_t &uploadID, std::vector<char> &&replayData)
+	{
+		return replayManager.QueueUpload(uploadID, std::move(replayData));
+	}
+
+	static void RequestReplay(KZPlayer *requester, UUID_t replayID)
+	{
+		replayManager.RequestReplay(requester, replayID);
+	}
 };

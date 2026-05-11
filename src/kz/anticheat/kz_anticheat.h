@@ -102,7 +102,7 @@ public:
 
 		void SubmitLocalInfraction();
 
-		void SaveReplay();
+		void SaveReplay(bool uploadToAPI);
 
 		// Finalize the infraction (ban/kick the player if needed)
 		void Finalize();

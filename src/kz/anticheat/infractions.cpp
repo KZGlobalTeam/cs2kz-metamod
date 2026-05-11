@@ -1,6 +1,8 @@
 #include "kz_anticheat.h"
 #include "kz/global/kz_global.h"
 #include "kz/db/kz_db.h"
+#include "kz/replays/kz_replay.h"
+#include "utils/async_file_io.h"
 
 KZAnticheatService::Infraction *KZAnticheatService::GetPendingInfraction(const UUID_t &infractionId)
 {
@@ -95,14 +97,14 @@ void KZAnticheatService::Infraction::OnGlobalSubmitSuccess(const UUID_t &infract
 		this->replay.get()->uuid = replayUUID;
 	}
 	this->SubmitLocalInfraction();
-	this->SaveReplay();
+	this->SaveReplay(true);
 }
 
 void KZAnticheatService::Infraction::OnGlobalSubmitFailure()
 {
 	this->banDuration = KZAnticheatService::Infraction::banDurations[(u8)this->type];
 	this->SubmitLocalInfraction();
-	this->SaveReplay();
+	this->SaveReplay(false);
 }
 
 void KZAnticheatService::Infraction::SubmitLocalInfraction()
@@ -132,29 +134,40 @@ void KZAnticheatService::Infraction::SubmitLocalInfraction()
 	KZDatabaseService::Ban(this->steamID, this->details.c_str(), this->banDuration, this->id, this->replayUUID, onSuccess, onFailure);
 }
 
-void KZAnticheatService::Infraction::SaveReplay()
+void KZAnticheatService::Infraction::SaveReplay(bool uploadToAPI)
 {
-	if (this->replay)
+	if (!this->replay)
 	{
-		// Queue replay for saving
-		std::string name = this->replay.get()->replayHeader.player().name();
-		u64 steamID = this->steamID;
-		// clang-format off
-		KZRecordingService::fileWriter->QueueWrite(
-			std::move(this->replay),
-			// Success callback
-			[name, steamID](const UUID_t &uuid, f32 replayDuration)
-			{
-				META_CONPRINTF("[KZ::Anticheat] Cheater replay %s saved for player %s (%llu)\n", uuid.ToString().c_str(), name.c_str(), steamID);
-				// TODO Anticheat: Add UUID to the global upload queue
-			},
-			// Failure callback
-			[name, steamID](const char *error)
-			{
-				META_CONPRINTF("[KZ::Anticheat] Failed to save cheater replay for player %s (%llu) - Error: %s\n", name.c_str(), steamID, error);
-			});
-		// clang-format on
+		return;
 	}
+
+	std::string name = this->replay->replayHeader.player().name();
+	u64 steamID = this->steamID;
+
+	// clang-format off
+	KZRecordingService::fileWriter->QueueWrite(
+		std::move(this->replay),
+		// Success: write to disk (and optionally upload).
+		[name, steamID, uploadToAPI](const UUID_t &uuid, f32 replayDuration, std::vector<char> &&buf)
+		{
+			char replayPath[512];
+			V_snprintf(replayPath, sizeof(replayPath), "%s/%s.replay", KZ_REPLAY_PATH, uuid.ToString().c_str());
+			if (g_asyncFileIO)
+			{
+				g_asyncFileIO->QueueWriteBuffer(replayPath, buf);
+			}
+			if (uploadToAPI)
+			{
+				KZGlobalService::QueueReplayUpload(uuid, std::move(buf));
+			}
+			META_CONPRINTF("[KZ::Anticheat] Cheater replay %s saved for player %s (%llu)\n", uuid.ToString().c_str(), name.c_str(), steamID);
+		},
+		// Failure
+		[name, steamID](const char *error)
+		{
+			META_CONPRINTF("[KZ::Anticheat] Failed to save cheater replay for player %s (%llu) - Error: %s\n", name.c_str(), steamID, error);
+		});
+	// clang-format on
 }
 
 void KZAnticheatService::Infraction::Finalize()

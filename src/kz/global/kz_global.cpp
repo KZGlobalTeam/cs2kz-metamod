@@ -350,7 +350,7 @@ void KZGlobalService::OnServerGamePostSimulate()
 					}
 					else
 					{
-						callbackHandle.mapped()->OnResponse(it->id, it->payload);
+						callbackHandle.mapped()->OnResponse(it->id, it->payload, it->binaryData);
 					}
 
 					it = KZGlobalService::ws.receivedMessages.queue.erase(it);
@@ -363,6 +363,8 @@ void KZGlobalService::OnServerGamePostSimulate()
 					KZGlobalService::ws.messageCallbacks.callbacks.merge(messageCallbacks);
 				}
 			}
+
+			KZGlobalService::replayManager.ProcessUploads();
 		}
 		break;
 
@@ -451,7 +453,15 @@ void KZGlobalService::OnPlayerAuthorized()
 	KZ::api::messages::PlayerJoin message;
 	message.id = stringifiedSteamID;
 	message.name = this->player->GetName();
-	message.ipAddress = this->player->GetIpAddress();
+	const char *ipAddress = this->player->GetIpAddress();
+	if (ipAddress && !KZ_STREQI(ipAddress, "unknown"))
+	{
+		message.ipAddress = ipAddress;
+	}
+	else
+	{
+		message.ipAddress = "";
+	}
 	message.hasPrime = this->player->hasPrime;
 
 	KZGlobalService::MessageCallback<KZ::api::messages::PlayerJoinAck> callback(KZGlobalService::OnPlayerJoinAck, steamID);
@@ -514,7 +524,25 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 				   "\n----------------------------------------\n",
 				   message->str.c_str());
 
-	Json payload(message->str);
+	// Binary frames carry: <json>\n<binary-data>
+	// Text frames are pure JSON.
+	std::string_view jsonPart = message->str;
+	std::vector<char> binaryPart;
+
+	if (message->binary)
+	{
+		auto newlinePos = message->str.find('\n');
+		if (newlinePos != std::string::npos)
+		{
+			jsonPart = std::string_view(message->str.data(), newlinePos);
+			const char *binStart = message->str.data() + newlinePos + 1;
+			size_t binLen = message->str.size() - newlinePos - 1;
+			binaryPart.assign(binStart, binStart + binLen);
+		}
+	}
+
+	std::string jsonStr(jsonPart);
+	Json payload(jsonStr);
 
 	if (!payload.IsValid())
 	{
@@ -560,11 +588,12 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 				break;
 			}
 
-			ReceivedMessage message;
-			message.id = messageID;
-			message.isError = (event == "error");
+			ReceivedMessage receivedMessage;
+			receivedMessage.id = messageID;
+			receivedMessage.isError = (event == "error");
+			receivedMessage.binaryData = std::move(binaryPart);
 
-			if (!payload.Get("data", message.payload))
+			if (!payload.Get("data", receivedMessage.payload))
 			{
 				META_CONPRINTF("[KZ::Global] Incoming WebSocket message contained an invalid `data` field.\n");
 				break;
@@ -572,7 +601,7 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 
 			{
 				std::lock_guard _guard(KZGlobalService::ws.receivedMessages.mutex);
-				KZGlobalService::ws.receivedMessages.queue.emplace_back(std::move(message));
+				KZGlobalService::ws.receivedMessages.queue.emplace_back(std::move(receivedMessage));
 			}
 		}
 		break;

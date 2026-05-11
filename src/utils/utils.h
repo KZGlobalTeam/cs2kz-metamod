@@ -98,6 +98,13 @@ namespace utils
 
 	bool ParseSteamID2(std::string_view steamID, u64 &out);
 
+	// Atomically writes buffer to path (via a .tmp file) using the GAME search path.
+	// Creates any missing parent directories beforehand.
+	bool WriteBufferToFile(const char *path, const std::vector<char> &buffer);
+
+	// Reads a file into buffer using the GAME search path. Returns false on failure.
+	bool ReadBufferFromFile(const char *path, std::vector<char> &outBuffer);
+
 	inline u32 GetPaddingForWideString(const char *string)
 	{
 		return MAX(0, strlen(string) - mbstowcs(NULL, string, 0));

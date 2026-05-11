@@ -7,6 +7,7 @@
 #include "gamesystems/spawngroup_manager.h"
 #include "utils/simplecmds.h"
 #include "utils/gamesystem.h"
+#include "utils/async_file_io.h"
 #include "steam/steam_gameserver.h"
 
 #include "cs2kz.h"
@@ -18,7 +19,7 @@
 #include "kz/paint/kz_paint.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
-#include "kz/timer/announce.h"
+#include "kz/timer/submission.h"
 #include "kz/timer/queries/base_request.h"
 #include "kz/telemetry/kz_telemetry.h"
 #include "kz/trigger/kz_trigger.h"
@@ -517,7 +518,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	g_pKZPlayerManager->PerformAuthChecks();
-	RecordAnnounce::Check();
+	RunSubmission::CheckAll();
 	BaseRequest::CheckRequests();
 	KZTelemetryService::ActiveCheck();
 	KZBeamService::UpdateBeams();
@@ -726,7 +727,7 @@ static_function bool Hook_ActivateServer()
 
 	META_CONPRINTF("[KZ] Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size);
 
-	RecordAnnounce::Clear();
+	RunSubmission::Clear();
 	KZ::misc::OnActivateServer();
 	KZDatabaseService::SetupMap();
 	KZRecordingService::OnActivateServer();
@@ -763,6 +764,10 @@ static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimula
 {
 	ProcessTimers();
 	KZRecordingService::ProcessFileWriteCompletion();
+	if (g_asyncFileIO)
+	{
+		g_asyncFileIO->RunFrame();
+	}
 	KZRacingService::OnServerGamePostSimulate();
 	KZGlobalService::OnServerGamePostSimulate();
 }
