@@ -253,15 +253,18 @@
 	{
 		"en"		"{grey}Compact panel enabled."
 		"ru"		"{grey}Компактная панель включена."
+		"ua"		"{grey}Компактна панель увімкнена."
 	}
 	"HUD Option - Compact Panel - Disable"
 	{
 		"en"		"{grey}Compact panel disabled."
 		"ru"		"{grey}Компактная панель выключена."
+		"ua"		"{grey}Компактна панель вимкнена."
 	}
 	"Panel Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_panel <compact>{grey}."
 		"ru"		"{grey}Применение: {default}kz_panel <compact>{grey}."
+		"ua"		"{grey}Використання: {default}kz_panel <compact>{grey}."
 	}
 }
