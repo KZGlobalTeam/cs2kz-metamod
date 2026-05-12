@@ -275,7 +275,7 @@ void KZRecordingService::CheckRecorders()
 					// Failure: notify the player and log
 					[localUUID](const char *error)
 					{
-						KZ_LOG_WARN(LogChannel::Recording, 
+						KZ_LOG_WARN(LogChannel::Recording,
 									"Run replay serialization failed for UUID %s: %s\n",
 									localUUID.ToString().c_str(), error);
 						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
