@@ -140,7 +140,7 @@ void AsyncFileIO::ThreadRun()
 					if (!ok)
 					{
 						KZ_LOG_WARN(LogChannel::General, "Failed to rename file from %s to %s\n",
-									task.oldPath.c_str(), task.newPath.c_str());
+								task.oldPath.c_str(), task.newPath.c_str());
 					}
 					if (task.onDone)
 					{
