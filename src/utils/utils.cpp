@@ -732,7 +732,7 @@ bool utils::WriteBufferToFile(const char *path, const std::vector<char> &buffer)
 	FileHandle_t file = g_pFullFileSystem->Open(tempPath, "wb", "GAME");
 	if (!file)
 	{
-		META_CONPRINTF("[KZ] Failed to open file for writing: %s\n", tempPath);
+		KZ_LOG_WARN(LogChannel::General, "Failed to open file for writing: %s\n", tempPath);
 		return false;
 	}
 
@@ -741,7 +741,7 @@ bool utils::WriteBufferToFile(const char *path, const std::vector<char> &buffer)
 
 	if (!g_pFullFileSystem->RenameFile(tempPath, path, "GAME"))
 	{
-		META_CONPRINTF("[KZ] Failed to rename file from %s to %s\n", tempPath, path);
+		KZ_LOG_WARN(LogChannel::General, "Failed to rename file from %s to %s\n", tempPath, path);
 		g_pFullFileSystem->RemoveFile(tempPath, "GAME");
 		return false;
 	}
@@ -754,7 +754,7 @@ bool utils::ReadBufferFromFile(const char *path, std::vector<char> &outBuffer)
 	FileHandle_t file = g_pFullFileSystem->Open(path, "rb", "GAME");
 	if (!file)
 	{
-		META_CONPRINTF("[KZ] Failed to open file for reading: %s\n", path);
+		KZ_LOG_WARN(LogChannel::General, "Failed to open file for reading: %s\n", path);
 		return false;
 	}
 

@@ -255,10 +255,7 @@ void KZRecordingService::CheckRecorders()
 		auto &recorder = *it;
 		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
-			if (kz_replay_recording_debug.Get())
-			{
-				KZ_LOG_INFO(LogChannel::Recording, "kz_replay_recording_debug: Run recorder stopped\n");
-			}
+			KZ_LOG_DEBUG(LogChannel::Recording, "Run recorder stopped\n");
 			if (KZRecordingService::fileWriter)
 			{
 				auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
@@ -278,7 +275,8 @@ void KZRecordingService::CheckRecorders()
 					// Failure: notify the player and log
 					[localUUID](const char *error)
 					{
-						META_CONPRINTF("[KZ] Run replay serialization failed for UUID %s: %s\n", localUUID.ToString().c_str(), error);
+						KZ_LOG_WARN(LogChannel::Recording, "Run replay serialization failed for UUID %s: %s\n",
+									localUUID.ToString().c_str(), error);
 						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
 						if (sub)
 						{
@@ -351,10 +349,7 @@ void KZRecordingService::CheckModeStyles()
 	{
 		this->lastKnownMode = currentModeInfo;
 		this->InsertModeChangeEvent(currentModeInfo.longModeName.Get(), currentModeInfo.md5);
-		if (kz_replay_recording_debug.Get())
-		{
-			KZ_LOG_INFO(LogChannel::Recording, "kz_replay_recording_debug: Mode change event: %s\n", currentModeInfo.longModeName.Get());
-		}
+		KZ_LOG_DEBUG(LogChannel::Recording, "Mode change event: %s\n", currentModeInfo.longModeName.Get());
 	}
 	bool refreshStyles = this->player->styleServices.Count() != this->lastKnownStyles.size();
 	if (!refreshStyles)

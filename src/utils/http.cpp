@@ -145,7 +145,7 @@ namespace HTTP
 	{
 		if (failed)
 		{
-			META_CONPRINTF("[HTTP] request to `%s` failed with code %d\n", url.c_str(), completedRequest->m_eStatusCode);
+			KZ_LOG_WARN(LogChannel::General, "[HTTP] request to `%s` failed with code %d\n", url.c_str(), completedRequest->m_eStatusCode);
 			if (onError)
 			{
 				onError();

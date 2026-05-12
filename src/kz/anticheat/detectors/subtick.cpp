@@ -46,7 +46,8 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 	}
 	if (expectedButtons != 0)
 	{
-		META_CONPRINTF("Unaccounted buttons in subtick moves detected in command %d: %s\n", cmd.cmdNum, cmd.DebugString().c_str());
+		KZ_LOG_DEBUG(LogChannel::AC, "Unaccounted buttons in subtick moves detected in command %d: %s\n", cmd.cmdNum,
+					 cmd.DebugString().c_str());
 	}
 	return expectedButtons == 0;
 }
@@ -137,8 +138,8 @@ void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)
 	if (!VerifyCommand(*cmd))
 	{
 		this->invalidCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
-		META_CONPRINTF("Invalid command detected from player %s(%llu) @%f, current: %i\n", this->player->GetName(), this->player->GetSteamId64(),
-					   g_pKZUtils->GetServerGlobals()->curtime, this->invalidCommandTimes.size());
+		KZ_LOG_WARN(LogChannel::AC, "Invalid command detected from player %s(%llu) @%f, current: %i\n", this->player->GetName(),
+					this->player->GetSteamId64(), g_pKZUtils->GetServerGlobals()->curtime, this->invalidCommandTimes.size());
 	}
 	// Check for excessive subtick moves with angles
 	if (HasExcessiveSubtickMovesWithAngles(*cmd))

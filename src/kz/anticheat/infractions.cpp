@@ -160,12 +160,13 @@ void KZAnticheatService::Infraction::SaveReplay(bool uploadToAPI)
 			{
 				KZGlobalService::QueueReplayUpload(uuid, std::move(buf));
 			}
-			META_CONPRINTF("[KZ::Anticheat] Cheater replay %s saved for player %s (%llu)\n", uuid.ToString().c_str(), name.c_str(), steamID);
+			KZ_LOG_INFO(LogChannel::AC, "Cheater replay %s saved for player %s (%llu)\n", uuid.ToString().c_str(), name.c_str(), steamID);
 		},
 		// Failure
 		[name, steamID](const char *error)
 		{
-			META_CONPRINTF("[KZ::Anticheat] Failed to save cheater replay for player %s (%llu) - Error: %s\n", name.c_str(), steamID, error);
+			KZ_LOG_WARN(LogChannel::AC, "Failed to save cheater replay for player %s (%llu) - Error: %s\n", name.c_str(), steamID,
+						error);
 		});
 	// clang-format on
 }

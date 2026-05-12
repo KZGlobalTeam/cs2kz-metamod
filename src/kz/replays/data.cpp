@@ -152,10 +152,7 @@ namespace KZ::replaysystem::data
 		{
 			size_t bytesRead = static_cast<size_t>(cursor - dataStart);
 			progress = static_cast<f32>(bytesRead) / static_cast<f32>(totalSize);
-			if (kz_replay_playback_debug.Get())
-			{
-				KZ_LOG_INFO(LogChannel::Replays, "Replay load progress: %zu bytes, %.2f%%\n", bytesRead, progress.load() * 100.0f);
-			}
+			KZ_LOG_DEBUG(LogChannel::Replays, "Replay load progress: %zu bytes, %.2f%%\n", bytesRead, progress.load() * 100.0f);
 		}
 	}
 
@@ -174,10 +171,7 @@ namespace KZ::replaysystem::data
 		{
 			return result;
 		}
-		if (kz_replay_playback_debug.Get())
-		{
-			KZ_LOG_INFO(LogChannel::Replays, "Loading replay protobuf header...\n");
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Loading replay protobuf header...\n");
 
 		// Try to read header size (u32). If this fails, the data is invalid or corrupted.
 		if (cursor + (ptrdiff_t)sizeof(u32) > end)

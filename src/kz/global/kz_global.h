@@ -123,7 +123,7 @@ public:
 			}
 			else
 			{
-				META_CONPRINTF("[KZ::Global] Received unknown payload as WebSocket response. (id=%i)\n", messageID);
+				KZ_LOG_WARN(LogChannel::Global, "Received unknown payload as WebSocket response. (id=%i)\n", messageID);
 			}
 		}
 

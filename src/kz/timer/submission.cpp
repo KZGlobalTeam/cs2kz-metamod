@@ -40,11 +40,11 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	{
 		if (!player->hasPrime)
 		{
-			META_CONPRINTF("[KZ::Global - %u] Player %s does not have Prime, will not submit globally.\n", uid, player->GetName());
+			KZ_LOG_INFO(LogChannel::Global, "[%u] Player %s does not have Prime, will not submit globally.\n", uid, player->GetName());
 		}
 		if (!KZGlobalService::IsAvailable())
 		{
-			META_CONPRINTF("[KZ::Global - %u] Global service is not available, will not submit globally.\n", uid);
+			KZ_LOG_INFO(LogChannel::Global, "[%u] Global service is not available, will not submit globally.\n", uid);
 		}
 	}
 
@@ -61,7 +61,8 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	{
 		if (kz_debug_announce_global.Get())
 		{
-			META_CONPRINTF("[KZ::Global - %u] Mode '%s' is not a valid global mode, will not submit globally.\n", uid, this->mode.name.c_str());
+			KZ_LOG_INFO(LogChannel::Global, "[%u] Mode '%s' is not a valid global mode, will not submit globally.\n", uid,
+						this->mode.name.c_str());
 		}
 	}
 	this->mode.md5 = mode.md5;
@@ -109,12 +110,12 @@ RunSubmission::RunSubmission(KZPlayer *player)
 		{
 			if (kz_debug_announce_global.Get())
 			{
-				META_CONPRINTF("[KZ::Global - %u] Course '%s' not found on global map '%s', will not submit globally.\n", uid,
-							   this->course.name.c_str(), currentMap->name.c_str());
-				META_CONPRINTF("[KZ::Global - %u] Available courses:\n", uid);
+				KZ_LOG_INFO(LogChannel::Global, "[%u] Course '%s' not found on global map '%s', will not submit globally.\n", uid,
+							 this->course.name.c_str(), currentMap->name.c_str());
+				KZ_LOG_INFO(LogChannel::Global, "[%u] Available courses:\n", uid);
 				for (const KZ::api::Map::Course &c : currentMap->courses)
 				{
-					META_CONPRINTF(" - %s\n", c.name.c_str());
+					KZ_LOG_INFO(LogChannel::Global, " - %s\n", c.name.c_str());
 				}
 			}
 			global = false;
@@ -205,7 +206,7 @@ void RunSubmission::SubmitGlobal()
 
 	if (kz_debug_announce_global.Get())
 	{
-		META_CONPRINTF("[KZ::Global - %u] Global record submission result: %d\n", uid, static_cast<int>(submissionResult));
+		KZ_LOG_INFO(LogChannel::Global, "[%u] Global record submission result: %d\n", uid, static_cast<int>(submissionResult));
 	}
 
 	switch (submissionResult)
@@ -617,7 +618,7 @@ void RunSubmission::CheckAll()
 
 void RunSubmission::OnGlobalRecordSubmitted(const KZ::api::messages::NewRecordAck &ack, u32 uid)
 {
-	META_CONPRINTF("[KZ::Global - %u] Record submitted under ID %s\n", uid, ack.recordId.c_str());
+	KZ_LOG_INFO(LogChannel::Global, "[%u] Record submitted under ID %s\n", uid, ack.recordId.c_str());
 
 	RunSubmission *sub = RunSubmission::Get(uid);
 	if (!sub)

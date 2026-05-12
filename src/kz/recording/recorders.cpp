@@ -258,11 +258,7 @@ bool Recorder::WriteToFile()
 		return false;
 	}
 
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%zu bytes)\n", finalFilename, buffer.size());
-	}
-
+	KZ_LOG_DEBUG(LogChannel::Recording, "Saved replay to %s (%zu bytes)\n", finalFilename, buffer.size());
 	return true;
 }
 
