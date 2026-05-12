@@ -117,7 +117,7 @@ void KZAnticheatService::Infraction::SubmitLocalInfraction()
 	auto &id = this->id;
 	auto onSuccess = [id](std::vector<ISQLQuery *> queries)
 	{
-		META_CONPRINTF("[KZ::Anticheat] Saved local infraction %s\n", id.ToString().c_str());
+		KZ_LOG_INFO(LogChannel::AC, "Saved local infraction %s\n", id.ToString().c_str());
 		if (KZAnticheatService::Infraction *infraction = KZAnticheatService::GetPendingInfraction(id))
 		{
 			infraction->Finalize();
@@ -125,7 +125,7 @@ void KZAnticheatService::Infraction::SubmitLocalInfraction()
 	};
 	auto onFailure = [id](std::string error, int failIndex)
 	{
-		META_CONPRINTF("[KZ::Anticheat] Failed to record local infraction %s: %s\n", id.ToString().c_str(), error.c_str());
+		KZ_LOG_WARN(LogChannel::AC, "Failed to record local infraction %s: %s\n", id.ToString().c_str(), error.c_str());
 		if (KZAnticheatService::Infraction *infraction = KZAnticheatService::GetPendingInfraction(id))
 		{
 			infraction->Finalize();

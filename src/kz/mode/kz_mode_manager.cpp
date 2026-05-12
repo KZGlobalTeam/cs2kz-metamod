@@ -40,12 +40,12 @@ bool KZ::mode::CheckModeCvars()
 	{
 		if (!modeCvarRefs[i]->IsValidRef())
 		{
-			META_CONPRINTF("Failed to find %s reference!\n", KZ::mode::modeCvarNames[i]);
+			KZ_LOG_WARN(LogChannel::Mode, "Failed to find %s reference!\n", KZ::mode::modeCvarNames[i]);
 			return false;
 		}
 		if (!modeCvarRefs[i]->IsConVarDataAvailable())
 		{
-			META_CONPRINTF("Failed to find %s cvarData!\n", KZ::mode::modeCvarNames[i]);
+			KZ_LOG_WARN(LogChannel::Mode, "Failed to find %s cvarData!\n", KZ::mode::modeCvarNames[i]);
 		}
 	}
 	return true;
@@ -374,7 +374,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 	KZModeManager::ModePluginInfo emptyInfo;
 	if (!mode)
 	{
-		META_CONPRINTF("[KZ] Warning: Getting mode info from a nullptr!\n");
+		KZ_LOG_WARN(LogChannel::Mode, "Warning: Getting mode info from a nullptr!\n");
 		return emptyInfo;
 	}
 	FOR_EACH_VEC(modeInfos, i)
@@ -408,7 +408,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 	KZModeManager::ModePluginInfo emptyInfo;
 	if (modeName.IsEmpty())
 	{
-		META_CONPRINTF("[KZ] Warning: Getting mode info from an empty string!\n");
+		KZ_LOG_WARN(LogChannel::Mode, "Warning: Getting mode info from an empty string!\n");
 		return emptyInfo;
 	}
 	FOR_EACH_VEC(modeInfos, i)

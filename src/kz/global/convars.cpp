@@ -63,7 +63,7 @@ void KZGlobalService::EnforceConVars()
 
 	g_pCVar->ResetConVarsToDefaultValuesByFlag(FCVAR_CHEAT);
 
-	META_CONPRINTF("[KZ::Global] Enforced relevant ConVars.\n");
+	KZ_LOG_INFO(LogChannel::Global, "Enforced relevant ConVars.\n");
 }
 
 void KZGlobalService::RestoreConVars()
@@ -78,5 +78,5 @@ void KZGlobalService::RestoreConVars()
 		enforcedServerCVars[i]->GetConVarData()->RemoveFlags(FCVAR_CHEAT);
 	}
 
-	META_CONPRINTF("[KZ::Global] Restored relevant ConVars.\n");
+	KZ_LOG_INFO(LogChannel::Global, "Restored relevant ConVars.\n");
 }

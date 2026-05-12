@@ -15,13 +15,13 @@ CON_COMMAND_F(kz_unban, "Unban a player by their SteamID. Does not globally unba
 	// TODO Anticheat: API doesn't fully support bans yet.
 	// if (KZGlobalService::MayBecomeAvailable())
 	// {
-	// 	META_CONPRINTF("[KZ::Anticheat] Cannot unban players while connected to the global service.\n");
+	// 	KZ_LOG_INFO(LogChannel::AC, "Cannot unban players while connected to the global service.\n");
 	// 	return;
 	// }
 
 	if (args.ArgC() != 2)
 	{
-		META_CONPRINTF("[KZ::Anticheat] Usage: kz_unban <SteamID64>\n");
+		KZ_LOG_INFO(LogChannel::AC, "Usage: kz_unban <SteamID64>\n");
 		return;
 	}
 	u64 steamID = atoll(args.Arg(1));

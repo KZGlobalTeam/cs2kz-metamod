@@ -1,0 +1,187 @@
+#include <ctime>
+
+#include "common.h"
+#include "convar.h"
+#include "tier0/logging.h"
+#include "filesystem.h"
+#include "utils/logging.h"
+#include "kz/option/kz_option.h"
+
+CConVar<bool> kz_log_to_file("kz_log_to_file", FCVAR_NONE, "Whether to mirror CS2KZ log output to a file in addons/cs2kz/logs.", true,
+							 [](CConVar<bool> *, CSplitScreenSlot, const bool *, const bool *) { g_KZLoggingListener.CheckFile(); });
+
+struct KZChannel_t
+{
+	LogChannel channel;
+	const char *name;
+	LoggingChannelID_t handle;
+};
+
+static void RegisterKZChannelTags(LoggingChannelID_t channelID)
+{
+	LoggingSystem_AddTagToChannel(channelID, KZ_LOG_TAG);
+}
+
+static KZChannel_t g_KZChannels[] = {
+	// Handles are set in function below
+	{LogChannel::General, "CS2KZ.General", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::AC, "CS2KZ.AC", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::DB, "CS2KZ.DB", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Global, "CS2KZ.Global", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Language, "CS2KZ.Language", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::MappingAPI, "CS2KZ.MappingAPI", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Misc, "CS2KZ.Misc", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Mode, "CS2KZ.Mode", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Movement, "CS2KZ.Movement", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Option, "CS2KZ.Option", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Player, "CS2KZ.Player", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Profile, "CS2KZ.Profile", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Racing, "CS2KZ.Racing", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Recording, "CS2KZ.Recording", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Replays, "CS2KZ.Replays", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Style, "CS2KZ.Style", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Timer, "CS2KZ.Timer", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Tip, "CS2KZ.Tip", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Trigger, "CS2KZ.Trigger", INVALID_LOGGING_CHANNEL_ID},
+};
+
+void RegisterKZLogging()
+{
+	LoggingSystem_RegisterLoggingListener(&g_KZLoggingListener);
+	for (auto &entry : g_KZChannels)
+	{
+		if (LoggingSystem_FindChannel(entry.name) == -1)
+		{
+			entry.handle = LoggingSystem_RegisterLoggingChannel(entry.name, RegisterKZChannelTags, LCF_DO_NOT_ECHO, LV_DEFAULT);
+		}
+	}
+}
+
+LoggingChannelID_t GetServiceChannel(LogChannel channel)
+{
+	for (const auto &entry : g_KZChannels)
+	{
+		if (entry.channel == channel)
+		{
+			return entry.handle;
+		}
+	}
+
+	return g_KZChannels[0].handle;
+}
+
+const char *GetServiceChannelName(LoggingChannelID_t channelID)
+{
+	for (const auto &entry : g_KZChannels)
+	{
+		if (entry.handle == channelID)
+		{
+			return entry.name;
+		}
+	}
+
+	return g_KZChannels[0].name;
+}
+
+void KZLoggingListener::Log(const LoggingContext_t *pContext, const tchar *pMessage)
+{
+	if (!LoggingSystem_HasTag(pContext->m_ChannelID, KZ_LOG_TAG))
+	{
+		return;
+	}
+
+	const char *level = "INFO";
+	Color color(255, 255, 255, 255);
+
+	if (pContext->m_Severity >= LS_WARNING)
+	{
+		level = "WARN";
+		color = Color(255, 220, 80, 255);
+	}
+	else if (pContext->m_Severity == LS_DETAILED)
+	{
+		level = "DEBUG";
+		color = Color(160, 160, 160, 255);
+	}
+
+	const char *channelName = GetServiceChannelName(pContext->m_ChannelID);
+
+	size_t msgLen = V_strlen(pMessage);
+	bool needsNewline = (msgLen == 0 || pMessage[msgLen - 1] != '\n');
+
+	ConColorMsg(color, "[%s] [%s] %s%s", channelName, level, pMessage, needsNewline ? "\n" : "");
+
+	if (kz_log_to_file.Get())
+	{
+		CheckFile();
+		if (!m_pFile)
+		{
+			return;
+		}
+		std::time_t t = std::time(nullptr);
+		std::tm tm {};
+#ifdef _WIN32
+		localtime_s(&tm, &t);
+#else
+		localtime_r(&t, &tm);
+#endif
+		char ts[32];
+		std::strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S", &tm);
+		g_pFullFileSystem->FPrintf(m_pFile, "[%s] [%s] [%s] %s%s", ts, channelName, level, pMessage, needsNewline ? "\n" : "");
+		g_pFullFileSystem->Flush(m_pFile);
+	}
+}
+
+void KZLoggingListener::CheckFile()
+{
+	if (kz_log_to_file.Get())
+	{
+		OpenFile();
+	}
+	else
+	{
+		CloseFile();
+	}
+}
+
+void KZLoggingListener::OpenFile()
+{
+	if (m_pFile)
+	{
+		return;
+	}
+	char dir[1024];
+	V_snprintf(dir, sizeof(dir), "%s/addons/cs2kz/logs", g_SMAPI->GetBaseDir());
+	V_FixSlashes(dir);
+	g_pFullFileSystem->CreateDirHierarchy(dir, nullptr);
+
+	char path[1024];
+	if (KZOptionService::GetOptionInt("logNewFileOnStartup", true))
+	{
+		std::time_t t = std::time(nullptr);
+		std::tm tm {};
+#ifdef _WIN32
+		localtime_s(&tm, &t);
+#else
+		localtime_r(&t, &tm);
+#endif
+		char ts[32];
+		std::strftime(ts, sizeof(ts), "%Y-%m-%d", &tm);
+		V_snprintf(path, sizeof(path), "%s/cs2kz_%s.log", dir, ts);
+	}
+	else
+	{
+		V_snprintf(path, sizeof(path), "%s/cs2kz.log", dir);
+	}
+	V_FixSlashes(path);
+	m_pFile = g_pFullFileSystem->Open(path, "a");
+}
+
+void KZLoggingListener::CloseFile()
+{
+	if (m_pFile)
+	{
+		g_pFullFileSystem->Close(m_pFile);
+		m_pFile = nullptr;
+	}
+}

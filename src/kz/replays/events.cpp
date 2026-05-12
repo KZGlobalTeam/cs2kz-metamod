@@ -8,8 +8,6 @@
 #include "data.h"
 #include "bot.h"
 
-extern CConVar<bool> kz_replay_playback_debug;
-
 namespace KZ::replaysystem::events
 {
 
@@ -65,10 +63,7 @@ namespace KZ::replaysystem::events
 		while (replay->currentJump < replay->numJumps && replay->jumps[replay->currentJump].overall.serverTick <= serverTick)
 		{
 			RpJumpStats *jump = &replay->jumps[replay->currentJump];
-			if (kz_replay_playback_debug.Get())
-			{
-				utils::PrintChatAll("Jump event: tick %d", jump->overall.serverTick);
-			}
+			KZ_LOG_DEBUG(LogChannel::Replays, "Jump event: tick %d\n", jump->overall.serverTick);
 			jump->PrintJump(&player);
 			replay->currentJump++;
 		}
@@ -76,11 +71,8 @@ namespace KZ::replaysystem::events
 
 	void HandleTimerEvent(KZPlayer &player, const RpEvent *event, data::ReplayPlayback *replay)
 	{
-		if (kz_replay_playback_debug.Get())
-		{
-			utils::PrintChatAll("Timer event: tick %d, type %d, index %d, time %.3f", event->serverTick, event->data.timer.type,
-								event->data.timer.index, event->data.timer.time);
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Timer event: tick %d, type %d, index %d, time %.3f\n", event->serverTick, event->data.timer.type,
+					 event->data.timer.index, event->data.timer.time);
 
 		switch (event->data.timer.type)
 		{
@@ -265,10 +257,7 @@ namespace KZ::replaysystem::events
 	void HandleModeChangeEvent(KZPlayer &player, const RpEvent *event)
 	{
 		const char *modeNamePtr = reinterpret_cast<const char *>(&event->data.modeChange); // first field is name[64]
-		if (kz_replay_playback_debug.Get())
-		{
-			utils::PrintChatAll("Mode change event: tick %d, mode %s", event->serverTick, modeNamePtr);
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Mode change event: tick %d, mode %s\n", event->serverTick, modeNamePtr);
 
 		g_pKZModeManager->SwitchToMode(&player, modeNamePtr, true, true, false);
 	}
@@ -276,13 +265,8 @@ namespace KZ::replaysystem::events
 	void HandleStyleChangeEvent(KZPlayer &player, const RpEvent *event)
 	{
 		const char *styleNamePtr = reinterpret_cast<const char *>(&event->data.styleChange); // first field is name[64]
-		if (kz_replay_playback_debug.Get())
-		{
-			utils::PrintChatAll("Style change event: tick %d, style %s, clear style %d", event->serverTick, styleNamePtr,
-								event->data.styleChange.clearStyles);
-			META_CONPRINTF("Style change event: tick %d, style %s, clear style %d\n", event->serverTick, styleNamePtr,
-						   event->data.styleChange.clearStyles);
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Style change event: tick %d, style %s, clear style %d\n", event->serverTick, styleNamePtr,
+					 event->data.styleChange.clearStyles);
 
 		if (event->data.styleChange.clearStyles)
 		{
@@ -293,10 +277,7 @@ namespace KZ::replaysystem::events
 
 	void HandleTeleportEvent(KZPlayer &player, const RpEvent *event)
 	{
-		if (kz_replay_playback_debug.Get())
-		{
-			utils::PrintChatAll("Teleport event: tick %d", event->serverTick);
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Teleport event: tick %d\n", event->serverTick);
 
 		player.GetPlayerPawn()->Teleport(event->data.teleport.hasOrigin ? (Vector *)&event->data.teleport.origin : nullptr,
 										 event->data.teleport.hasAngles ? (QAngle *)&event->data.teleport.angles : nullptr,

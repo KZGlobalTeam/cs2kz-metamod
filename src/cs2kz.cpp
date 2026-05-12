@@ -52,6 +52,11 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	{
 		return false;
 	}
+
+	RegisterKZLogging();
+	KZOptionService::InitOptions();
+	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
+
 	ConVar_Register();
 	hooks::Initialize();
 	ix::initNetSystem();
@@ -80,7 +85,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::DisableReplicatedModeCvars();
 
-	KZOptionService::InitOptions();
 	KZTipService::Init();
 	KZAnticheatService::Init();
 	if (late)
@@ -120,6 +124,9 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
 	ConVar_Unregister();
+	LoggingSystem_UnregisterLoggingListener(&g_KZLoggingListener);
+	kz_log_to_file.Set(false);
+	g_KZLoggingListener.CheckFile();
 	return true;
 }
 

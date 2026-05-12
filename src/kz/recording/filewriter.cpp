@@ -3,8 +3,6 @@
 #include "cs2kz.h"
 #include "utils/utils.h"
 
-extern CConVar<bool> kz_replay_recording_debug;
-
 ReplayFileWriter::ReplayFileWriter() {}
 
 ReplayFileWriter::~ReplayFileWriter()

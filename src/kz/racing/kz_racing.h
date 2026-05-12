@@ -340,7 +340,7 @@ private:
 
 		if (!success)
 		{
-			META_CONPRINTF("[KZ::Global] Failed to serialize message for event `%s`.\n", event);
+			KZ_LOG_WARN(LogChannel::Racing, "Failed to serialize message for event `%.*s`.\n", (int)event.size(), event.data());
 		}
 
 		return success;

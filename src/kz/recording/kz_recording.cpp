@@ -17,7 +17,6 @@
 
 #include <set>
 
-CConVar<bool> kz_replay_recording_debug("kz_replay_recording_debug", FCVAR_NONE, "Debug replay recording", false);
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 extern CSteamGameServerAPIContext g_steamAPI;
@@ -258,7 +257,7 @@ void KZRecordingService::CheckRecorders()
 		{
 			if (kz_replay_recording_debug.Get())
 			{
-				META_CONPRINTF("kz_replay_recording_debug: Run recorder stopped\n");
+				KZ_LOG_INFO(LogChannel::Recording, "kz_replay_recording_debug: Run recorder stopped\n");
 			}
 			if (KZRecordingService::fileWriter)
 			{
@@ -304,10 +303,7 @@ void KZRecordingService::CheckRecorders()
 		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
 			// Stop this recorder and queue for async write
-			if (kz_replay_recording_debug.Get())
-			{
-				META_CONPRINTF("kz_replay_recording_debug: Jump recorder stopped\n");
-			}
+			KZ_LOG_DEBUG(LogChannel::Recording, "Jump recorder stopped\n");
 			if (fileWriter)
 			{
 				auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
@@ -357,7 +353,7 @@ void KZRecordingService::CheckModeStyles()
 		this->InsertModeChangeEvent(currentModeInfo.longModeName.Get(), currentModeInfo.md5);
 		if (kz_replay_recording_debug.Get())
 		{
-			META_CONPRINTF("kz_replay_recording_debug: Mode change event: %s\n", currentModeInfo.longModeName.Get());
+			KZ_LOG_INFO(LogChannel::Recording, "kz_replay_recording_debug: Mode change event: %s\n", currentModeInfo.longModeName.Get());
 		}
 	}
 	bool refreshStyles = this->player->styleServices.Count() != this->lastKnownStyles.size();
@@ -391,10 +387,7 @@ void KZRecordingService::CheckModeStyles()
 			refreshStyles = false; // only the first styleChange needs to have clearStyles = true
 			this->InsertEvent(event);
 		}
-		if (kz_replay_recording_debug.Get())
-		{
-			META_CONPRINTF("kz_replay_recording_debug: Style change event: %u styles\n", (unsigned int)this->lastKnownStyles.size());
-		}
+		KZ_LOG_DEBUG(LogChannel::Recording, "Style change event: %u styles\n", (unsigned int)this->lastKnownStyles.size());
 	}
 
 	if (!this->circularRecording->earliestMode.has_value())
@@ -432,7 +425,7 @@ void KZRecordingService::EnsureCircularRecorderInitialized()
 	if (!this->circularRecording)
 	{
 		this->circularRecording = new CircularRecorder();
-		META_CONPRINTF("[KZ] Initialized circular recorder for player %s\n", this->player->GetName());
+		KZ_LOG_INFO(LogChannel::Recording, "[KZ] Initialized circular recorder for player %s\n", this->player->GetName());
 	}
 }
 
@@ -528,14 +521,11 @@ void KZRecordingService::CopyWeaponsToRecorder(Recorder *recorder)
 		}
 	}
 
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Copying %u referenced weapons to recorder\n", referencedWeaponIndices.size());
-	}
+	KZ_LOG_DEBUG(LogChannel::Recording, "Copying %zu referenced weapons to recorder\n", referencedWeaponIndices.size());
 
 	for (i32 weaponIndex : referencedWeaponIndices)
 	{
-		META_CONPRINTF("Pushing weapon index %d to recorder\n", weaponIndex);
+		KZ_LOG_INFO(LogChannel::Recording, "Pushing weapon index %d to recorder\n", weaponIndex);
 		auto weapon = this->weapons[weaponIndex];
 		recorder->weaponTable.push_back({weaponIndex, weapon});
 	}

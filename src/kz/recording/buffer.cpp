@@ -1,7 +1,6 @@
 #include "kz_recording.h"
 #include "kz/language/kz_language.h"
 #include <unordered_set>
-extern CConVar<bool> kz_replay_recording_debug;
 
 // CircularRecorder method implementations
 void CircularRecorder::TrimOldCommands(u32 currentTick)

@@ -31,20 +31,20 @@ void KZRacingService::Init()
 		return;
 	}
 
-	META_CONPRINTF("[KZ::Racing] Initializing RacingService...\n");
+	KZ_LOG_INFO(LogChannel::Racing, "Initializing RacingService...\n");
 
 	std::string url = KZOptionService::GetOptionStr("racingCoordinatorUrl", "");
 
 	if (url.empty())
 	{
-		META_CONPRINTF("[KZ::Racing] `racingCoordinatorUrl` is empty. RacingService will be disabled.\n");
+		KZ_LOG_INFO(LogChannel::Racing, "`racingCoordinatorUrl` is empty. RacingService will be disabled.\n");
 		KZRacingService::state.store(KZRacingService::State::Disconnected);
 		return;
 	}
 
 	if (url.size() < 4 || url.substr(0, 4) != "http")
 	{
-		META_CONPRINTF("[KZ::Racing] `racingCoordinatorUrl` is invalid. RacingService will be disabled.\n");
+		KZ_LOG_INFO(LogChannel::Racing, "`racingCoordinatorUrl` is invalid. RacingService will be disabled.\n");
 		KZRacingService::state.store(KZRacingService::State::Disconnected);
 		return;
 	}
@@ -55,7 +55,7 @@ void KZRacingService::Init()
 
 	if (key.empty())
 	{
-		META_CONPRINTF("[KZ::Racing] `racingSecret` is empty. RacingService will be disabled.\n");
+		KZ_LOG_INFO(LogChannel::Racing, "`racingSecret` is empty. RacingService will be disabled.\n");
 		KZRacingService::state.store(KZRacingService::State::Disconnected);
 		return;
 	}
@@ -67,7 +67,7 @@ void KZRacingService::Init()
 	KZRacingService::socket->setOnMessageCallback(KZRacingService::OnWebSocketMessage);
 
 	KZRacingService::state.store(KZRacingService::State::Configured);
-	META_CONPRINTF("[KZ::Racing] RacingService configured.\n");
+	KZ_LOG_INFO(LogChannel::Racing, "RacingService configured.\n");
 	KZRacingService::itemDownloadHandler.m_CallbackDownloadItemResult.Register(&KZRacingService::itemDownloadHandler,
 																			   &KZRacingService::ItemDownloadHandler::OnAddonDownloaded);
 
@@ -86,7 +86,7 @@ void KZRacingService::Cleanup()
 	KZTimerService::UnregisterEventListener(&timerEventListener);
 	KZRacingService::itemDownloadHandler.m_CallbackDownloadItemResult.Unregister();
 	KZRacingService::state.store(KZRacingService::State::Uninitialized);
-	META_CONPRINTF("[KZ::Racing] RacingService cleaned up.\n");
+	KZ_LOG_INFO(LogChannel::Racing, "RacingService cleaned up.\n");
 }
 
 void KZRacingService::OnActivateServer()
@@ -98,7 +98,7 @@ void KZRacingService::OnActivateServer()
 
 	if (KZRacingService::state.load() == KZRacingService::State::Configured)
 	{
-		META_CONPRINTF("[KZ::Racing] Starting WebSocket...\n");
+		KZ_LOG_INFO(LogChannel::Racing, "Starting WebSocket...\n");
 		KZRacingService::socket->setPingInterval(10);
 		KZRacingService::socket->start();
 		KZRacingService::state.store(KZRacingService::State::Connecting);
@@ -125,7 +125,7 @@ void KZRacingService::OnServerGamePostSimulate()
 				<= g_pKZUtils->GetServerGlobals()->tickcount
 			&& KZRacingService::currentRace.state == RaceInfo::State::Ongoing))
 	{
-		META_CONPRINTF("[KZ::Racing] Race duration expired.\n");
+		KZ_LOG_INFO(LogChannel::Racing, "Race duration expired.\n");
 		KZRacingService::SendRaceFinished();
 		KZRacingService::currentRace.state = RaceInfo::State::None;
 	}
@@ -137,7 +137,7 @@ void KZRacingService::ProcessMainThreadCallbacks()
 		std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
 		if (!KZRacingService::mainThreadCallbacks.queue.empty())
 		{
-			META_CONPRINTF("[KZ::Racing] Running callbacks...\n");
+			KZ_LOG_INFO(LogChannel::Racing, "Running callbacks...\n");
 			for (const std::function<void()> &callback : KZRacingService::mainThreadCallbacks.queue)
 			{
 				callback();
@@ -161,23 +161,26 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 			return KZRacingService::WS_OnErrorMessage(message->errorInfo);
 
 		case ix::WebSocketMessageType::Ping:
-			return META_CONPRINTF("[KZ::Racing] Received ping WebSocket message.\n");
+			KZ_LOG_DEBUG(LogChannel::Racing, "Received ping WebSocket message.\n");
+			return;
 
 		case ix::WebSocketMessageType::Pong:
-			return META_CONPRINTF("[KZ::Racing] Received pong WebSocket message.\n");
+			KZ_LOG_DEBUG(LogChannel::Racing, "Received pong WebSocket message.\n");
+			return;
 	}
 
-	META_CONPRINTF("[KZ::Racing] Received WebSocket message.\n"
-				   "----------------------------------------\n"
-				   "%s"
-				   "\n----------------------------------------\n",
-				   message->str.c_str());
+	KZ_LOG_DEBUG(LogChannel::Racing,
+				 "Received WebSocket message.\n"
+				 "----------------------------------------\n"
+				 "%s"
+				 "\n----------------------------------------\n",
+				 message->str.c_str());
 
 	Json payload(message->str);
 
 	if (!payload.IsValid())
 	{
-		META_CONPRINTF("[KZ::Racing] Incoming WebSocket message is not valid JSON.\n");
+		KZ_LOG_WARN(LogChannel::Racing, "Incoming WebSocket message is not valid JSON.\n");
 		return;
 	}
 
@@ -188,14 +191,14 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 			std::string event;
 			if (!payload.Get("event", event))
 			{
-				META_CONPRINTF("[KZ::Racing] Incoming WebSocket message did not contain a valid `event` field.\n");
+				KZ_LOG_WARN(LogChannel::Racing, "Incoming WebSocket message did not contain a valid `event` field.\n");
 				break;
 			}
 
 			Json data;
 			if (!payload.Get("data", data))
 			{
-				META_CONPRINTF("[KZ::Racing] Incoming WebSocket message did not contain a valid `data` field.\n");
+				KZ_LOG_WARN(LogChannel::Racing, "Incoming WebSocket message did not contain a valid `data` field.\n");
 				break;
 			}
 
@@ -310,7 +313,7 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 			}
 			else
 			{
-				META_CONPRINTF("[KZ::Racing] Incoming WebSocket message contained an unknown `event` field: `%s`\n", event.c_str());
+				KZ_LOG_INFO(LogChannel::Racing, "Incoming WebSocket message contained an unknown `event` field: `%s`\n", event.c_str());
 			}
 		}
 		break;
@@ -323,12 +326,12 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 void KZRacingService::WS_OnOpenMessage()
 {
 	KZRacingService::state.store(KZRacingService::State::Connected);
-	META_CONPRINTF("[KZ::Racing] WebSocket connection established.\n");
+	KZ_LOG_INFO(LogChannel::Racing, "WebSocket connection established.\n");
 }
 
 void KZRacingService::WS_OnCloseMessage(const ix::WebSocketCloseInfo &closeInfo)
 {
-	META_CONPRINTF("[KZ::Racing] WebSocket connection closed (%i): %s\n", closeInfo.code, closeInfo.reason.c_str());
+	KZ_LOG_INFO(LogChannel::Racing, "WebSocket connection closed (%i): %s\n", closeInfo.code, closeInfo.reason.c_str());
 
 	KZRacingService::currentRace = {};
 	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
@@ -363,8 +366,8 @@ void KZRacingService::WS_OnCloseMessage(const ix::WebSocketCloseInfo &closeInfo)
 
 void KZRacingService::WS_OnErrorMessage(const ix::WebSocketErrorInfo &errorInfo)
 {
-	META_CONPRINTF("[KZ::Racing] WebSocket error (status %i, retries=%i, wait_time=%f): %s\n", errorInfo.http_status, errorInfo.retries,
-				   errorInfo.wait_time, errorInfo.reason.c_str());
+	KZ_LOG_WARN(LogChannel::Racing, "WebSocket error (status %i, retries=%i, wait_time=%f): %s\n", errorInfo.http_status, errorInfo.retries,
+				errorInfo.wait_time, errorInfo.reason.c_str());
 
 	switch (errorInfo.http_status)
 	{

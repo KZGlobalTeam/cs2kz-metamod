@@ -39,6 +39,12 @@
 	// Whether we override chat processing or not.
 	"overridePlayerChat"				"true"
 
+	// Whether to mirror CS2KZ log output to a file in addons/cs2kz/logs.
+	"logToFile"							"true"
+
+	// Whether to create a new log file on plugin startup, named with the startup datetime.
+	"logNewFileOnStartup"				"true"
+
 	// Maximum amount of manually saved replays allowed per player (minimum 2).
 	"maxManualReplays"					"2"
 

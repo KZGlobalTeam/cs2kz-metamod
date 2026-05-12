@@ -52,10 +52,10 @@ void KZRacingService::ItemDownloadHandler::OnAddonDownloaded(DownloadItemResult_
 {
 	if (pParam->m_eResult != k_EResultOK)
 	{
-		META_CONPRINTF("[KZ::Racing] Failed to download workshop item %llu, error code: %d\n", pParam->m_nPublishedFileId, pParam->m_eResult);
+		KZ_LOG_WARN(LogChannel::Racing, "Failed to download workshop item %llu, error code: %d\n", pParam->m_nPublishedFileId, pParam->m_eResult);
 		return;
 	}
 
-	META_CONPRINTF("[KZ::Racing] Successfully downloaded workshop item %llu\n", pParam->m_nPublishedFileId);
+	KZ_LOG_INFO(LogChannel::Racing, "Successfully downloaded workshop item %llu\n", pParam->m_nPublishedFileId);
 	KZRacingService::CheckMap();
 }

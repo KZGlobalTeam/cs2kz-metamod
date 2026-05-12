@@ -174,7 +174,7 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 	LoadKV3FromJSON(&loadedPrefs, &error, text.Get(), "");
 	if (!error.IsEmpty())
 	{
-		META_CONPRINTF("[KZ::DB] Error fetching local preference: %s\n", error.Get());
+		KZ_LOG_WARN(LogChannel::DB, "Error fetching local preference: %s\n", error.Get());
 		return;
 	}
 
@@ -202,7 +202,7 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 
 	if (!error.IsEmpty())
 	{
-		META_CONPRINTF("[KZ::Options] Error loading global preferences: %s\n", error.Get());
+		KZ_LOG_WARN(LogChannel::Option, "Error loading global preferences: %s\n", error.Get());
 		return;
 	}
 
@@ -215,7 +215,7 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 
 	this->dataState = GLOBAL;
 
-	META_CONPRINTF("[KZ::Options] Loaded global preferences.\n");
+	KZ_LOG_INFO(LogChannel::Option, "Loaded global preferences for %s (%llu).\n", this->player->GetName(), this->player->GetSteamId64());
 
 	// Calling this before the player is ingame will create unwanted race conditions.
 	// We need to make sure the player is both authenticated and ingame.
@@ -236,7 +236,7 @@ void KZOptionService::SaveLocalPrefs()
 	SaveKV3AsJSON(&this->prefKV, &error, &output);
 	if (!error.IsEmpty())
 	{
-		META_CONPRINTF("[KZ::DB] Error saving local preference: %s\n", error.Get());
+		KZ_LOG_WARN(LogChannel::DB, "Error saving local preference: %s\n", error.Get());
 		return;
 	}
 	this->player->databaseService->SavePrefs(output);

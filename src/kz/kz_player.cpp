@@ -970,7 +970,7 @@ const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(const char *name)
 	if (!cvarRef.IsValidRef() || !cvarRef.IsConVarDataAvailable())
 	{
 		assert(0);
-		META_CONPRINTF("Failed to find %s!\n", name);
+		KZ_LOG_WARN(LogChannel::General, "Failed to find %s!\n", name);
 		return CVValue_t::InvalidValue();
 	}
 
