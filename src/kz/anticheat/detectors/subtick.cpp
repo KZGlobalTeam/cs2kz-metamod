@@ -46,8 +46,7 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 	}
 	if (expectedButtons != 0)
 	{
-		KZ_LOG_DEBUG(LogChannel::AC, "Unaccounted buttons in subtick moves detected in command %d: %s\n",
-					cmd.cmdNum, cmd.DebugString().c_str());
+		KZ_LOG_DEBUG(LogChannel::AC, "Unaccounted buttons in subtick moves detected in command %d: %s\n", cmd.cmdNum, cmd.DebugString().c_str());
 	}
 	return expectedButtons == 0;
 }
@@ -96,8 +95,8 @@ static_global bool HasExcessiveSubtickMovesWithAngles(const PlayerCommand &cmd)
 			{
 				if (kz_ac_subtick_debug.GetBool())
 				{
-					KZ_LOG_INFO(LogChannel::AC, "Suspicious subtick moves with angles detected in command %d: %s\n",
-							cmd.cmdNum, cmd.DebugString().c_str());
+					KZ_LOG_INFO(LogChannel::AC, "Suspicious subtick moves with angles detected in command %d: %s\n", cmd.cmdNum,
+								cmd.DebugString().c_str());
 				}
 				return true;
 			}

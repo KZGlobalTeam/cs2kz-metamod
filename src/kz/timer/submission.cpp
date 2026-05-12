@@ -61,8 +61,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	{
 		if (kz_debug_announce_global.Get())
 		{
-			KZ_LOG_INFO(LogChannel::Global, "[%u] Mode '%s' is not a valid global mode, will not submit globally.\n",
-					uid, this->mode.name.c_str());
+			KZ_LOG_INFO(LogChannel::Global, "[%u] Mode '%s' is not a valid global mode, will not submit globally.\n", uid, this->mode.name.c_str());
 		}
 	}
 	this->mode.md5 = mode.md5;
