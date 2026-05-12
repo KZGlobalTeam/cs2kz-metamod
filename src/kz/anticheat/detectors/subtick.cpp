@@ -138,7 +138,7 @@ void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)
 	if (!VerifyCommand(*cmd))
 	{
 		this->invalidCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
-		KZ_LOG_WARN(LogChannel::AC, "Invalid command detected from player %s(%llu) @%f, current: %i\n", this->player->GetName(),
+		KZ_LOG_WARN(LogChannel::AC, "Invalid command detected from player %s(%llu) @%f, current: %zu\n", this->player->GetName(),
 					this->player->GetSteamId64(), g_pKZUtils->GetServerGlobals()->curtime, this->invalidCommandTimes.size());
 	}
 	// Check for excessive subtick moves with angles
