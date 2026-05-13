@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 625 |
 | **Phrases Missing Translations** | 409 |
-| **Total Missing Entries** | 2647 |
+| **Total Missing Entries** | 2626 |
 | **Menu Files** | 10 |
 
 ## Language Coverage (Phrases)
@@ -26,7 +26,7 @@ Automated translation linter reports for cs2kz-metamod.
   ko (korean)          [█████████░░░░░░░░░░░]  45.9% (287/625)
   lv (latvian)         [██████████░░░░░░░░░░]  52.6% (329/625)
   pl (polish)          [████████████████░░░░]  82.4% (515/625)
-  ru (russian)         [███████████████████░]  96.6% (604/625)
+  ru (russian)         [████████████████████] 100.0% (625/625)
   sv (swedish)         [████████████░░░░░░░░]  62.9% (393/625)
   tr (turkish)         [████████░░░░░░░░░░░░]  42.1% (263/625)
   ua (ukrainian)       [████████████████████] 100.0% (625/625)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`cffd607`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/cffd607c0fc679983711e1d69854426729e78a4f)
-- **Time:** 2026-05-11 21:20:42 UTC
-- **Message:** Ukrainian translation upd. — global replays (#558)
+- **Commit:** [`a8ff4c5`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/a8ff4c544ad46685912148d2df9113dd7c6f7c4f)
+- **Time:** 2026-05-13 17:33:28 UTC
+- **Message:** Russian translation upd. (#559)
 
 ---
 
