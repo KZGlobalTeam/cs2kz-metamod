@@ -96,12 +96,12 @@
 	}
   "Website tip"
 	{
-		"en"	"{grey}Visit official CS2KZ website for up-to-date maps, records and servers: {default}https://cs2kz.org{grey}"
-		"chi"	"{grey}访问CS2KZ官方网站以获取最新的地图、记录和服务器: {default}https://cs2kz.org{grey}"
-		"pl"	"{grey}Odwiedź oficjalną stronę CS2KZ, aby zobaczyć aktualne mapy, rekordy i serwery: {default}https://cs2kz.org{grey}"
-		"ru"	"{grey}Посетите официальный веб-сайт CS2KZ, чтобы ознакомиться с актуальными картами, рекордами и серверами: {default}https://cs2kz.org{grey}"
-		"ua"	"{grey}Відвідайте офіційний веб-сайт CS2KZ, щоб ознайомитися з актуальними мапами, рекордами та серверами: {default}https://cs2kz.org{grey}"
-		"sv"	"{grey}Besök den officiella CS2KZ-webbplatsen för uppdaterade kartor, rekord och servrar: {default}https://cs2kz.org{grey}"
-		"de"	"{grey}Besuche die offizielle CS2KZ-Webseite für aktuelle Maps, Rekorde und KZServer: {default}https://cs2kz.org{grey}"
+		"en"		"{grey}Visit official CS2KZ website for up-to-date maps, records and servers: {default}https://cs2kz.org{grey}"
+		"chi"		"{grey}访问CS2KZ官方网站以获取最新的地图、记录和服务器: {default}https://cs2kz.org{grey}"
+		"pl"		"{grey}Odwiedź oficjalną stronę CS2KZ, aby zobaczyć aktualne mapy, rekordy i serwery: {default}https://cs2kz.org{grey}"
+		"ru"		"{grey}Посетите официальный веб-сайт CS2KZ, чтобы ознакомиться с актуальными картами, рекордами и серверами: {default}https://cs2kz.org{grey}"
+		"ua"		"{grey}Відвідайте офіційний веб-сайт CS2KZ, щоб ознайомитися з актуальними мапами, рекордами та серверами: {default}https://cs2kz.org{grey}"
+		"sv"		"{grey}Besök den officiella CS2KZ-webbplatsen för uppdaterade kartor, rekord och servrar: {default}https://cs2kz.org{grey}"
+		"de"		"{grey}Besuche die offizielle CS2KZ-Webseite für aktuelle Maps, Rekorde und KZServer: {default}https://cs2kz.org{grey}"
 	}
 }
