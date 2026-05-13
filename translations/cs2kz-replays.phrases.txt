@@ -330,6 +330,7 @@
 	"Replay - Usage Command"
 	{
 		"en"		"{grey}Usage: kz_replay <ID> or kz_replay <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
+		"ru"		"{grey}Применение: kz_replay <ID> или kz_replay <wr/sr/pb/gpb/spb[pro]> [<маршрут> [<режим>]]"
 		"ua"		"{grey}Використання: kz_replay <ID> або kz_replay <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
 	}
 	"Replay - Load Cancelled"
@@ -659,73 +660,87 @@
 	"Replay - Not Found"
 	{
 		"en"		"{darkred}Replay not found."
+		"ru"		"{darkred}Повтор не найден."
 		"ua"		"{darkred}Повтор не знайдено."
 	}
 	"Replay - No Course"
 	{
 		"en"		"{darkred}No course found on this map."
+		"ru"		"{darkred}На этой карте не найдены маршруты."
 		"ua"		"{darkred}На цій мапі не знайдено курсу."
 	}
 	"Replay - Invalid Mode Arg"
 	{
 		"en"		"{darkred}Unknown mode."
+		"ru"		"{darkred}Неизвестный режим."
 		"ua"		"{darkred}Невідомий режим."
 	}
 	"Replay - SR Not Found"
 	{
 		"en"		"{grey}No server record replay found for this filter."
+		"ru"		"{grey}Не найдено повтора рекорда сервера для этого фильтра."
 		"ua"		"{grey}Не знайдено повтору рекорду сервера для цього фільтру."
 	}
 	"Replay - SPB Not Found"
 	{
 		"en"		"{grey}No server personal best replay found."
+		"ru"		"{grey}Не найдено повтора личного рекорда на сервере."
 		"ua"		"{grey}Не знайдено повтору особистого найкращого часу на сервері."
 	}
 	"Replay - Global Mode Only"
 	{
 		"en"		"{darkred}Global records are only available for global modes."
+		"ru"		"{darkred}Глобальные рекорды доступны только для глобальных режимов."
 		"ua"		"{darkred}Світові рекорди доступні лише для глобальних режимів."
 	}
 	"Replay - API Not Available"
 	{
 		"en"		"{darkred}The global API is not available."
+		"ru"		"{darkred}Глобальный API недоступен."
 		"ua"		"{darkred}Глобальний API недоступний."
 	}
 	"Replay - Querying WR"
 	{
 		"en"		"{grey}Querying world record replay..."
+		"ru"		"{grey}Запрашиваем повтор мирового рекорда..."
 		"ua"		"{grey}Здійснюється запит повтору світового рекорду..."
 	}
 	"Replay - WR Not Found"
 	{
 		"en"		"{grey}No world record replay found for this filter."
+		"ru"		"{grey}Не найдено повтора мирового рекорда для этого фильтра."
 		"ua"		"{grey}Не знайдено повтору світового рекорду для цього фільтру."
 	}
 	"Replay - Querying GPB"
 	{
 		"en"		"{grey}Querying personal best replay..."
+		"ru"		"{grey}Запрашиваем повтор личного рекорда..."
 		"ua"		"{grey}Здійснюється запит повтору особистого найкращого часу..."
 	}
 	"Replay - GPB Not Found"
 	{
 		"en"		"{grey}No global personal best replay found."
+		"ru"		"{grey}Не найдено повтора глобального личного рекорда."
 		"ua"		"{grey}Не знайдено повтору глобального особистого найкращого часу."
 	}
 	"Replay Request - Sending"
 	{
 		"#format"	"uuid:s"
 		"en"		"{grey}Requesting replay {default}{uuid}{grey} from the API..."
+		"ru"		"{grey}Запрашиваем повтор {default}{uuid}{grey} из API..."
 		"ua"		"{grey}Запит повтору {default}{uuid}{grey} з API..."
 	}
 	"Replay Request - Already Requested"
 	{
 		"#format"	"uuid:s"
 		"en"		"{grey}A replay download is already in progress ({default}{uuid}{grey})."
+		"ru"		"{grey}Загрузка повтора уже идёт ({default}{uuid}{grey})."
 		"ua"		"{grey}Завантаження повтору вже триває ({default}{uuid}{grey})."
 	}
 	"Replay Request - Error"
 	{
 		"en"		"{darkred}Failed to download replay."
+		"ru"		"{darkred}Не удалось загрузить повтор."
 		"ua"		"{darkred}Не вдалося завантажити повтор."
 	}
 }
