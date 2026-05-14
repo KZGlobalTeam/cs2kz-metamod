@@ -82,7 +82,7 @@ public:
 private:
 	void OpenFile();
 	void CloseFile();
-	FILE* m_pFile = nullptr;
+	FILE *m_pFile = nullptr;
 };
 
 inline KZLoggingListener g_KZLoggingListener {};

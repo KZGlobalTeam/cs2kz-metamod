@@ -129,40 +129,42 @@ void KZLoggingListener::CheckFile()
 
 void KZLoggingListener::OpenFile()
 {
-    if (m_pFile)
-    {
-        return;
-    }
+	if (m_pFile)
+	{
+		return;
+	}
 
-    std::filesystem::path logDir = std::filesystem::path(g_SMAPI->GetBaseDir()) / "addons" / "cs2kz" / "logs";
+	std::filesystem::path logDir = std::filesystem::path(g_SMAPI->GetBaseDir()) / "addons" / "cs2kz" / "logs";
 
-    std::error_code ec;
-    if (!std::filesystem::exists(logDir))
-    {
-        std::filesystem::create_directories(logDir, ec);
-        if (ec) return; 
-    }
+	std::error_code ec;
+	if (!std::filesystem::exists(logDir))
+	{
+		std::filesystem::create_directories(logDir, ec);
+		if (ec)
+		{
+			return;
+		}
+	}
 
-    char szFileName[256];
-    if (KZOptionService::GetOptionInt("logNewFileOnStartup", true))
-    {
-        std::time_t now = std::time(nullptr);
-        std::tm tm {};
+	char szFileName[256];
+	if (KZOptionService::GetOptionInt("logNewFileOnStartup", true))
+	{
+		std::time_t now = std::time(nullptr);
+		std::tm tm {};
 #ifdef _WIN32
-        localtime_s(&tm, &now);
+		localtime_s(&tm, &now);
 #else
-        localtime_r(&now, &tm);
+		localtime_r(&now, &tm);
 #endif
-        V_snprintf(szFileName, sizeof(szFileName), "cs2kz_%04d-%02d-%02d.log", 
-            tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
-    }
-    else
-    {
-        V_strncpy(szFileName, "cs2kz.log", sizeof(szFileName));
-    }
+		V_snprintf(szFileName, sizeof(szFileName), "cs2kz_%04d-%02d-%02d.log", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+	}
+	else
+	{
+		V_strncpy(szFileName, "cs2kz.log", sizeof(szFileName));
+	}
 
-    std::filesystem::path fullPath = logDir / szFileName;
-    m_pFile = fopen(fullPath.string().c_str(), "a");
+	std::filesystem::path fullPath = logDir / szFileName;
+	m_pFile = fopen(fullPath.string().c_str(), "a");
 }
 
 void KZLoggingListener::CloseFile()
