@@ -90,7 +90,6 @@ void KZLoggingListener::Log(const LoggingContext_t *pContext, const tchar *pMess
 		return;
 	}
 
-
 	if (kz_log_to_file.Get())
 	{
 		CheckFile();
