@@ -72,8 +72,7 @@ const char *GetServiceChannelName(LoggingChannelID_t channelID);
 
 #include "filesystem.h"
 
-// Logging listener that claims every channel tagged with KZ_LOG_TAG, prints
-// it to the console with a [CS2KZ.<Service>] [<LEVEL>] prefix and optionally
+// Logging listener that claims every channel tagged with KZ_LOG_TAG and optionally
 // mirrors output to a log file.
 class KZLoggingListener : public ILoggingListener
 {

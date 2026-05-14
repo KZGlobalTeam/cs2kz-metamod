@@ -90,8 +90,6 @@ void KZLoggingListener::Log(const LoggingContext_t *pContext, const tchar *pMess
 		return;
 	}
 
-	size_t msgLen = V_strlen(pMessage);
-	bool needsNewline = (msgLen == 0 || pMessage[msgLen - 1] != '\n');
 
 	if (kz_log_to_file.Get())
 	{
@@ -107,6 +105,8 @@ void KZLoggingListener::Log(const LoggingContext_t *pContext, const tchar *pMess
 #else
 		localtime_r(&t, &tm);
 #endif
+		size_t msgLen = V_strlen(pMessage);
+		bool needsNewline = (msgLen == 0 || pMessage[msgLen - 1] != '\n');
 		char ts[32];
 		std::strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S", &tm);
 		g_pFullFileSystem->FPrintf(m_pFile, "[%s] %s%s", ts, pMessage, needsNewline ? "\n" : "");

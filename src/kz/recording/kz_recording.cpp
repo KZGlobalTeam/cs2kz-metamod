@@ -419,7 +419,7 @@ void KZRecordingService::EnsureCircularRecorderInitialized()
 	if (!this->circularRecording)
 	{
 		this->circularRecording = new CircularRecorder();
-		KZ_LOG_INFO(LogChannel::Recording, "[KZ] Initialized circular recorder for player %s\n", this->player->GetName());
+		KZ_LOG_INFO(LogChannel::Recording, "Initialized circular recorder for player %s\n", this->player->GetName());
 	}
 }
 
