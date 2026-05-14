@@ -42,10 +42,33 @@ LoggingChannelID_t GetServiceChannel(LogChannel service);
 // Get the name of a logging channel
 const char *GetServiceChannelName(LoggingChannelID_t channelID);
 
-#define KZ_LOG_INFO(service, fmt, ...)  Log_Msg(GetServiceChannel(service), fmt, ##__VA_ARGS__)
-#define KZ_LOG_DEBUG(service, fmt, ...) InternalMsg(GetServiceChannel(service), LS_DETAILED, fmt, ##__VA_ARGS__)
-#define KZ_LOG_WARN(service, fmt, ...)  Log_Warning(GetServiceChannel(service), fmt, ##__VA_ARGS__)
-#define KZ_LOG_ERROR(service, fmt, ...) Log_Error(GetServiceChannel(service), fmt, ##__VA_ARGS__)
+#define KZ_LOG_INFO(service, fmt, ...)                                                                                   \
+	do                                                                                                                    \
+	{                                                                                                                     \
+		const LoggingChannelID_t channel = GetServiceChannel(service);                                                      \
+		Log_Msg(channel, "[%s] [INFO] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__);                              \
+	} while (0)
+
+#define KZ_LOG_DEBUG(service, fmt, ...)                                                                                  \
+	do                                                                                                                    \
+	{                                                                                                                     \
+		const LoggingChannelID_t channel = GetServiceChannel(service);                                                      \
+		InternalMsg(channel, LS_DETAILED, "[%s] [DEBUG] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__);            \
+	} while (0)
+
+#define KZ_LOG_WARN(service, fmt, ...)                                                                                   \
+	do                                                                                                                    \
+	{                                                                                                                     \
+		const LoggingChannelID_t channel = GetServiceChannel(service);                                                      \
+		Log_Warning(channel, "[%s] [WARN] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__);                          \
+	} while (0)
+
+#define KZ_LOG_ERROR(service, fmt, ...)                                                                                  \
+	do                                                                                                                    \
+	{                                                                                                                     \
+		const LoggingChannelID_t channel = GetServiceChannel(service);                                                      \
+		Log_Error(channel, "[%s] [ERROR] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__);                           \
+	} while (0)
 
 #include "filesystem.h"
 

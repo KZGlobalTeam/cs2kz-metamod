@@ -52,7 +52,7 @@ void RegisterKZLogging()
 	{
 		if (LoggingSystem_FindChannel(entry.name) == -1)
 		{
-			entry.handle = LoggingSystem_RegisterLoggingChannel(entry.name, RegisterKZChannelTags, LCF_DO_NOT_ECHO, LV_DEFAULT);
+			entry.handle = LoggingSystem_RegisterLoggingChannel(entry.name, RegisterKZChannelTags, LCF_CONSOLE_ONLY, LV_DEFAULT);
 		}
 	}
 }
@@ -90,26 +90,8 @@ void KZLoggingListener::Log(const LoggingContext_t *pContext, const tchar *pMess
 		return;
 	}
 
-	const char *level = "INFO";
-	Color color(255, 255, 255, 255);
-
-	if (pContext->m_Severity >= LS_WARNING)
-	{
-		level = "WARN";
-		color = Color(255, 220, 80, 255);
-	}
-	else if (pContext->m_Severity == LS_DETAILED)
-	{
-		level = "DEBUG";
-		color = Color(160, 160, 160, 255);
-	}
-
-	const char *channelName = GetServiceChannelName(pContext->m_ChannelID);
-
 	size_t msgLen = V_strlen(pMessage);
 	bool needsNewline = (msgLen == 0 || pMessage[msgLen - 1] != '\n');
-
-	ConColorMsg(color, "[%s] [%s] %s%s", channelName, level, pMessage, needsNewline ? "\n" : "");
 
 	if (kz_log_to_file.Get())
 	{
@@ -127,7 +109,7 @@ void KZLoggingListener::Log(const LoggingContext_t *pContext, const tchar *pMess
 #endif
 		char ts[32];
 		std::strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S", &tm);
-		g_pFullFileSystem->FPrintf(m_pFile, "[%s] [%s] [%s] %s%s", ts, channelName, level, pMessage, needsNewline ? "\n" : "");
+		g_pFullFileSystem->FPrintf(m_pFile, "[%s] %s%s", ts, pMessage, needsNewline ? "\n" : "");
 		g_pFullFileSystem->Flush(m_pFile);
 	}
 }
