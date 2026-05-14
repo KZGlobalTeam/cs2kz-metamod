@@ -3,7 +3,6 @@
 #include "common.h"
 #include "convar.h"
 #include "tier0/logging.h"
-#include "filesystem.h"
 #include "utils/logging.h"
 #include "kz/option/kz_option.h"
 
@@ -108,8 +107,11 @@ void KZLoggingListener::Log(const LoggingContext_t *pContext, const tchar *pMess
 		bool needsNewline = (msgLen == 0 || pMessage[msgLen - 1] != '\n');
 		char ts[32];
 		std::strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S", &tm);
-		g_pFullFileSystem->FPrintf(m_pFile, "[%s] %s%s", ts, pMessage, needsNewline ? "\n" : "");
-		g_pFullFileSystem->Flush(m_pFile);
+
+		char logMessage[1024];
+		V_snprintf(logMessage, sizeof(logMessage), "[%s] %s%s", ts, pMessage, needsNewline ? "\n" : "");
+		fputs(logMessage, m_pFile);
+		fflush(m_pFile);
 	}
 }
 
@@ -127,42 +129,47 @@ void KZLoggingListener::CheckFile()
 
 void KZLoggingListener::OpenFile()
 {
-	if (m_pFile)
-	{
-		return;
-	}
-	char dir[1024];
-	V_snprintf(dir, sizeof(dir), "%s/addons/cs2kz/logs", g_SMAPI->GetBaseDir());
-	V_FixSlashes(dir);
-	g_pFullFileSystem->CreateDirHierarchy(dir, nullptr);
+    if (m_pFile)
+    {
+        return;
+    }
 
-	char path[1024];
-	if (KZOptionService::GetOptionInt("logNewFileOnStartup", true))
-	{
-		std::time_t t = std::time(nullptr);
-		std::tm tm {};
+    std::filesystem::path logDir = std::filesystem::path(g_SMAPI->GetBaseDir()) / "addons" / "cs2kz" / "logs";
+
+    std::error_code ec;
+    if (!std::filesystem::exists(logDir))
+    {
+        std::filesystem::create_directories(logDir, ec);
+        if (ec) return; 
+    }
+
+    char szFileName[256];
+    if (KZOptionService::GetOptionInt("logNewFileOnStartup", true))
+    {
+        std::time_t now = std::time(nullptr);
+        std::tm tm {};
 #ifdef _WIN32
-		localtime_s(&tm, &t);
+        localtime_s(&tm, &now);
 #else
-		localtime_r(&t, &tm);
+        localtime_r(&now, &tm);
 #endif
-		char ts[32];
-		std::strftime(ts, sizeof(ts), "%Y-%m-%d", &tm);
-		V_snprintf(path, sizeof(path), "%s/cs2kz_%s.log", dir, ts);
-	}
-	else
-	{
-		V_snprintf(path, sizeof(path), "%s/cs2kz.log", dir);
-	}
-	V_FixSlashes(path);
-	m_pFile = g_pFullFileSystem->Open(path, "a");
+        V_snprintf(szFileName, sizeof(szFileName), "cs2kz_%04d-%02d-%02d.log", 
+            tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+    }
+    else
+    {
+        V_strncpy(szFileName, "cs2kz.log", sizeof(szFileName));
+    }
+
+    std::filesystem::path fullPath = logDir / szFileName;
+    m_pFile = fopen(fullPath.string().c_str(), "a");
 }
 
 void KZLoggingListener::CloseFile()
 {
 	if (m_pFile)
 	{
-		g_pFullFileSystem->Close(m_pFile);
+		fclose(m_pFile);
 		m_pFile = nullptr;
 	}
 }

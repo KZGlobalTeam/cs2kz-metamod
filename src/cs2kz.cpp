@@ -53,10 +53,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 
-	RegisterKZLogging();
 	KZOptionService::InitOptions();
-	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
-
 	ConVar_Register();
 	hooks::Initialize();
 	ix::initNetSystem();
@@ -98,6 +95,9 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	// We don't need command filtering for KZ maps.
 	CommandLine()->AppendParm("-disable_workshop_command_filtering", "");
+
+	RegisterKZLogging();
+	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
 
 	KZ::replaysystem::InitWatcher();
 	return true;

@@ -1,4 +1,5 @@
 #pragma once
+#include <filesystem>
 
 #include "convar.h"
 #include "tier0/logging.h"
@@ -70,8 +71,6 @@ const char *GetServiceChannelName(LoggingChannelID_t channelID);
 		Log_Error(channel, "[%s] [ERROR] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
 	} while (0)
 
-#include "filesystem.h"
-
 // Logging listener that claims every channel tagged with KZ_LOG_TAG and optionally
 // mirrors output to a log file.
 class KZLoggingListener : public ILoggingListener
@@ -83,7 +82,7 @@ public:
 private:
 	void OpenFile();
 	void CloseFile();
-	FileHandle_t m_pFile = nullptr;
+	FILE* m_pFile = nullptr;
 };
 
 inline KZLoggingListener g_KZLoggingListener {};
