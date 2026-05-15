@@ -47,28 +47,28 @@ const char *GetServiceChannelName(LoggingChannelID_t channelID);
 	do \
 	{ \
 		const LoggingChannelID_t channel = GetServiceChannel(service); \
-		Log_Msg(channel, "[%s] [INFO] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
+		LoggingSystem_Log(channel, LS_MESSAGE, "[%s] [INFO] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
 	} while (0)
 
 #define KZ_LOG_DEBUG(service, fmt, ...) \
 	do \
 	{ \
 		const LoggingChannelID_t channel = GetServiceChannel(service); \
-		InternalMsg(channel, LS_DETAILED, "[%s] [DEBUG] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
+		LoggingSystem_Log(channel, LS_DETAILED, "[%s] [DEBUG] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
 	} while (0)
 
 #define KZ_LOG_WARN(service, fmt, ...) \
 	do \
 	{ \
 		const LoggingChannelID_t channel = GetServiceChannel(service); \
-		Log_Warning(channel, "[%s] [WARN] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
+		LoggingSystem_Log(channel, LS_WARNING, "[%s] [WARN] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
 	} while (0)
 
 #define KZ_LOG_ERROR(service, fmt, ...) \
 	do \
 	{ \
 		const LoggingChannelID_t channel = GetServiceChannel(service); \
-		Log_Error(channel, "[%s] [ERROR] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
+		LoggingSystem_Log(channel, LS_ERROR, "[%s] [ERROR] " fmt, GetServiceChannelName(channel), ##__VA_ARGS__); \
 	} while (0)
 
 // Logging listener that claims every channel tagged with KZ_LOG_TAG and optionally

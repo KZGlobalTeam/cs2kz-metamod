@@ -77,7 +77,6 @@ void KZProfileService::RequestRating()
 {
 	if (!KZGlobalService::IsAvailable())
 	{
-		KZ_LOG_DEBUG(LogChannel::Profile, "Global service not available, cannot request rating for player %s.\n", this->player->GetName());
 		return;
 	}
 	if (!this->player->IsAuthenticated() || !this->player->IsConnected())

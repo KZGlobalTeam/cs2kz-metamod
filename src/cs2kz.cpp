@@ -47,13 +47,21 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 {
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
+	modules::Initialize();
+	if (!interfaces::Initialize(ismm, error, maxlen))
+	{
+		return false;
+	}
+
+	KZOptionService::InitOptions();
+	RegisterKZLogging();
+	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
 
 	if (!utils::Initialize(ismm, error, maxlen))
 	{
 		return false;
 	}
 
-	KZOptionService::InitOptions();
 	ConVar_Register();
 	hooks::Initialize();
 	ix::initNetSystem();
@@ -95,10 +103,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	// We don't need command filtering for KZ maps.
 	CommandLine()->AppendParm("-disable_workshop_command_filtering", "");
-
-	RegisterKZLogging();
-	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
-
+	KZ_LOG_DEBUG(LogChannel::General, "Plugin loaded successfully. (late load: %s)", late ? "true" : "false");
 	KZ::replaysystem::InitWatcher();
 	return true;
 }

@@ -23,35 +23,36 @@ static void RegisterKZChannelTags(LoggingChannelID_t channelID)
 
 static KZChannel_t g_KZChannels[] = {
 	// Handles are set in function below
-	{LogChannel::General, "CS2KZ.General", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::AC, "CS2KZ.AC", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::DB, "CS2KZ.DB", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Global, "CS2KZ.Global", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Language, "CS2KZ.Language", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::MappingAPI, "CS2KZ.MappingAPI", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Misc, "CS2KZ.Misc", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Mode, "CS2KZ.Mode", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Movement, "CS2KZ.Movement", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Option, "CS2KZ.Option", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Player, "CS2KZ.Player", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Profile, "CS2KZ.Profile", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Racing, "CS2KZ.Racing", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Recording, "CS2KZ.Recording", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Replays, "CS2KZ.Replays", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Style, "CS2KZ.Style", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Timer, "CS2KZ.Timer", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Tip, "CS2KZ.Tip", INVALID_LOGGING_CHANNEL_ID},
-	{LogChannel::Trigger, "CS2KZ.Trigger", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::General, "CS2KZ::General", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::AC, "CS2KZ::AC", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::DB, "CS2KZ::DB", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Global, "CS2KZ::Global", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Language, "CS2KZ::Language", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::MappingAPI, "CS2KZ::MappingAPI", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Misc, "CS2KZ::Misc", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Mode, "CS2KZ::Mode", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Movement, "CS2KZ::Movement", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Option, "CS2KZ::Option", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Player, "CS2KZ::Player", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Profile, "CS2KZ::Profile", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Racing, "CS2KZ::Racing", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Recording, "CS2KZ::Recording", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Replays, "CS2KZ::Replays", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Style, "CS2KZ::Style", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Timer, "CS2KZ::Timer", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Tip, "CS2KZ::Tip", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::Trigger, "CS2KZ::Trigger", INVALID_LOGGING_CHANNEL_ID},
 };
 
 void RegisterKZLogging()
 {
 	LoggingSystem_RegisterLoggingListener(&g_KZLoggingListener);
+	LoggingVerbosity_t verbosity = CommandLine()->FindParm("-debug") ? LV_MAX : LV_DEFAULT;
 	for (auto &entry : g_KZChannels)
 	{
 		if (LoggingSystem_FindChannel(entry.name) == -1)
 		{
-			entry.handle = LoggingSystem_RegisterLoggingChannel(entry.name, RegisterKZChannelTags, LCF_CONSOLE_ONLY, LV_DEFAULT);
+			entry.handle = LoggingSystem_RegisterLoggingChannel(entry.name, RegisterKZChannelTags, 0, verbosity, Color(37, 162, 255, 255));
 		}
 	}
 }

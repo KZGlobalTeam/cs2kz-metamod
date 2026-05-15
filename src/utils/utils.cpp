@@ -30,7 +30,7 @@
 	type *variable = (decltype(variable))gameConfig->ResolveSignature(name); \
 	if (!variable) \
 	{ \
-		Warning("Failed to find address for %s!\n", #name); \
+		KZ_LOG_WARN(LogChannel::General, "Failed to find address for %s!\n", #name); \
 		result = false; \
 	}
 
@@ -43,12 +43,6 @@ static_global u32 serverVersion;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
-	modules::Initialize();
-	if (!interfaces::Initialize(ismm, error, maxlen))
-	{
-		return false;
-	}
-
 	CBufferStringGrowable<256> gamedirpath;
 	interfaces::pEngine->GetGameDir(gamedirpath);
 
@@ -60,7 +54,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	if (!g_pGameConfig->Init(g_pFullFileSystem, conf_error, sizeof(conf_error)))
 	{
 		snprintf(error, maxlen, "Could not read %s: %s", g_pGameConfig->GetPath().c_str(), conf_error);
-		Warning("%s\n", error);
+		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
 		return false;
 	}
 
@@ -88,7 +82,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	if (!sigResolved)
 	{
 		snprintf(error, maxlen, "Failed to resolve one or more signatures.");
-		Warning("%s\n", error);
+		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
 		return false;
 	}
 	g_pKZUtils = new KZUtils(GetLegacyGameEventListener, SnapViewAngles, EmitSound, SwitchTeam, SetPawn, CreateEntityByName, DispatchSpawn,
