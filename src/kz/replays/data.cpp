@@ -8,7 +8,6 @@
 #include <mutex>
 #include <atomic>
 
-CConVar<bool> kz_replay_playback_debug("kz_replay_playback_debug", FCVAR_NONE, "Prints debug info about replay playback.", false);
 CConVar<bool> kz_replay_playback_skins_enable("kz_replay_playback_skins_enable", FCVAR_NONE, "Enables applying player skins during replay playback.",
 											  true);
 
@@ -153,10 +152,7 @@ namespace KZ::replaysystem::data
 		{
 			size_t bytesRead = static_cast<size_t>(cursor - dataStart);
 			progress = static_cast<f32>(bytesRead) / static_cast<f32>(totalSize);
-			if (kz_replay_playback_debug.Get())
-			{
-				META_CONPRINTF("Replay load progress: %zu bytes, %.2f%%\n", bytesRead, progress.load() * 100.0f);
-			}
+			KZ_LOG_DEBUG(LogChannel::Replays, "Replay load progress: %zu bytes, %.2f%%\n", bytesRead, progress.load() * 100.0f);
 		}
 	}
 
@@ -175,10 +171,7 @@ namespace KZ::replaysystem::data
 		{
 			return result;
 		}
-		if (kz_replay_playback_debug.Get())
-		{
-			META_CONPRINTF("Loading replay protobuf header...\n");
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Loading replay protobuf header...\n");
 
 		// Try to read header size (u32). If this fails, the data is invalid or corrupted.
 		if (cursor + (ptrdiff_t)sizeof(u32) > end)
@@ -218,10 +211,7 @@ namespace KZ::replaysystem::data
 		{
 			return result;
 		}
-		if (kz_replay_playback_debug.Get())
-		{
-			META_CONPRINTF("Loading compressed tick data...\n");
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Loading compressed tick data...\n");
 
 		std::vector<TickData> tickDataVec;
 		std::vector<SubtickData> subtickDataVec;
@@ -248,10 +238,7 @@ namespace KZ::replaysystem::data
 			delete[] result.subtickData;
 			return {};
 		}
-		if (kz_replay_playback_debug.Get())
-		{
-			META_CONPRINTF("Loading weapons...\n");
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Loading weapons...\n");
 
 		std::vector<std::pair<i32, EconInfo>> weaponTableVec;
 
@@ -283,10 +270,7 @@ namespace KZ::replaysystem::data
 			delete[] result.weapons;
 			return {};
 		}
-		if (kz_replay_playback_debug.Get())
-		{
-			META_CONPRINTF("Loading compressed jump stats...\n");
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Loading compressed jump stats...\n");
 
 		std::vector<RpJumpStats> jumpsVec;
 
@@ -325,10 +309,7 @@ namespace KZ::replaysystem::data
 			delete[] result.jumps;
 			return {};
 		}
-		if (kz_replay_playback_debug.Get())
-		{
-			META_CONPRINTF("Loading compressed events...\n");
-		}
+		KZ_LOG_DEBUG(LogChannel::Replays, "Loading compressed events...\n");
 
 		std::vector<RpEvent> eventsVec;
 

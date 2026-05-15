@@ -66,7 +66,7 @@ private:
 
 		virtual void OnError(u32 messageID, const KZ::api::messages::Error &error)
 		{
-			META_CONPRINTF("[KZ::Global] Received error response to WebSocket message (id=%i): %s\n", messageID, error.message.c_str());
+			KZ_LOG_WARN(LogChannel::Global, "Received error response to WebSocket message (id=%i): %s\n", messageID, error.message.c_str());
 		}
 
 		virtual void OnCancelled(u32 messageID, CancelReason reason)
@@ -88,7 +88,7 @@ private:
 				break;
 			}
 
-			META_CONPRINTF("[KZ::Global] Cancelled WebSocket message (id=%i, %s)\n", messageID, reasonStr);
+			KZ_LOG_INFO(LogChannel::Global, "Cancelled WebSocket message (id=%i, %s)\n", messageID, reasonStr);
 		}
 	};
 
@@ -123,7 +123,7 @@ public:
 			}
 			else
 			{
-				META_CONPRINTF("[KZ::Global] Received unknown payload as WebSocket response. (id=%i)\n", messageID);
+				KZ_LOG_WARN(LogChannel::Global, "Received unknown payload as WebSocket response. (id=%i)\n", messageID);
 			}
 		}
 
@@ -185,7 +185,7 @@ public:
 			}
 			else
 			{
-				META_CONPRINTF("[KZ::Global] Received unknown payload as WebSocket response. (id=%i)\n", messageID);
+				KZ_LOG_WARN(LogChannel::Global, "Received unknown payload as WebSocket response. (id=%i)\n", messageID);
 			}
 		}
 
@@ -480,7 +480,7 @@ private:
 									const std::vector<char> *binaryData = nullptr)
 		{
 			messageID = NextMessageID();
-			META_CONPRINTF("[KZ::Global] assigned message ID %i\n", messageID);
+			KZ_LOG_DEBUG(LogChannel::Global, "assigned message ID %i\n", messageID);
 			messageType = Payload::Name();
 
 			if (!messagePayload.Set("id", messageID))
@@ -518,7 +518,7 @@ private:
 			}
 
 			// clang-format off
-			META_CONPRINTF("[KZ::Global] Sent WebSocket message. (id=%i, type=%s)\n"
+			KZ_LOG_DEBUG(LogChannel::Global, "Sent WebSocket message. (id=%i, type=%s)\n"
 					"------------------------------------\n"
 					"%s\n"
 					"------------------------------------\n",
@@ -643,7 +643,7 @@ public:
 
 		if (!currentMapIsGlobal)
 		{
-			META_CONPRINTF("[KZ::Global] Cannot submit record on non-global map.\n");
+			KZ_LOG_INFO(LogChannel::Global, "Cannot submit record on non-global map.\n");
 			return SubmitRecordResult::MapNotGlobal;
 		}
 

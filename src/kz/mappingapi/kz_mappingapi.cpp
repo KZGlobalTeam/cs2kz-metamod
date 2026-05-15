@@ -530,7 +530,7 @@ void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKey
 			//  for backwards compatibility.
 			if (g_mappingApi.mapApiVersion == KZ_NO_MAPAPI_VERSION)
 			{
-				META_CONPRINTF("Warning: Map is not compiled with Mapping API. Reverting to default behavior.\n");
+				KZ_LOG_INFO(LogChannel::MappingAPI, "Warning: Map is not compiled with Mapping API. Reverting to default behavior.\n");
 
 				// Manually create a KZ_NO_MAPAPI_COURSE_NAME course here because there shouldn't be any info_target_server_only around.
 				Mapi_CreateCourse();
@@ -1021,7 +1021,7 @@ static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ:
 		}
 		else
 		{
-			META_CONPRINTF("Warning: Course ID %i not found in API map data!\n", course->globalDatabaseID);
+			KZ_LOG_WARN(LogChannel::MappingAPI, "Warning: Course ID %i not found in API map data!\n", course->globalDatabaseID);
 		}
 		// clang-format off
 		table.SetRow(

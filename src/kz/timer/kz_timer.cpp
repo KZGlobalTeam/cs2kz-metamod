@@ -1219,7 +1219,7 @@ void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *cou
 	LoadKV3FromJSON(&kv, &error, metadata.Get(), "");
 	if (!error.IsEmpty())
 	{
-		META_CONPRINTF("[KZ::Timer] Failed to insert PB to cache due to metadata error: %s\n", error.Get());
+		KZ_LOG_WARN(LogChannel::Timer, "Failed to insert PB to cache due to metadata error: %s\n", error.Get());
 		return;
 	}
 
@@ -1303,7 +1303,7 @@ void KZTimerService::InsertPBToCache(f64 time, const KZCourseDescriptor *course,
 	LoadKV3FromJSON(&kv, &error, metadata.Get(), "");
 	if (!error.IsEmpty())
 	{
-		META_CONPRINTF("[KZ::Timer] Failed to insert server record to cache due to metadata error: %s\n", error.Get());
+		KZ_LOG_WARN(LogChannel::Timer, "Failed to insert server record to cache due to metadata error: %s\n", error.Get());
 		return;
 	}
 
@@ -1442,7 +1442,7 @@ void KZTimerService::ShowSplitText(u32 currentSplit)
 	{
 		if (pb->overall.pbSplitZoneTimes[currentSplit - 1] > 0)
 		{
-			META_CONPRINTF("pb->overall.pbSplitZoneTimes[currentSplit - 1] = %lf\n", pb->overall.pbSplitZoneTimes[currentSplit - 1]);
+			KZ_LOG_DEBUG(LogChannel::Timer, "pb->overall.pbSplitZoneTimes[currentSplit - 1] = %lf\n", pb->overall.pbSplitZoneTimes[currentSplit - 1]);
 			f64 diff = this->splitZoneTimes[currentSplit - 1] - pb->overall.pbSplitZoneTimes[currentSplit - 1];
 			CUtlString diffText = KZTimerService::FormatDiffTime(diff);
 			diffText.Format("{grey}%s%s{grey}", diff < 0 ? "{green}" : "{lightred}", diffText.Get());
@@ -1601,7 +1601,7 @@ CUtlString KZTimerService::GetCurrentRunMetadata()
 	{
 		return result;
 	}
-	META_CONPRINTF("[KZ::Timer] Failed to obtain current run's metadata! (%s)\n", error.Get());
+	KZ_LOG_WARN(LogChannel::Timer, "Failed to obtain current run's metadata! (%s)\n", error.Get());
 	return "";
 }
 

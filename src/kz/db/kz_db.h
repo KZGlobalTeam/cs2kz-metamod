@@ -83,12 +83,12 @@ public:
 
 	static void OnGenericTxnSuccess(std::vector<ISQLQuery *> queries)
 	{
-		ConMsg("[KZ::DB] Transaction successful.\n");
+		KZ_LOG_INFO(LogChannel::DB, "Transaction successful.\n");
 	}
 
 	static void OnGenericTxnFailure(std::string error, int failIndex)
 	{
-		ConMsg("[KZ::DB] Transaction failed at %i (%s).\n", failIndex, error.c_str());
+		KZ_LOG_WARN(LogChannel::DB, "Transaction failed at %i (%s).\n", failIndex, error.c_str());
 	}
 
 	static void OnGenericQuerySuccess(ISQLQuery *query) {}

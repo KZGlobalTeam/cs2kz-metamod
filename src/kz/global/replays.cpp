@@ -125,8 +125,7 @@ void KZGlobalService::ReplayManager::RequestReplay(KZPlayer *requester, UUID_t r
 
 	HTTP::Request request(HTTP::Method::GET, url);
 
-	// TODO: make this optional
-	META_CONPRINTF("[KZ::Global] Requesting replay from %s.\n", url.c_str());
+	KZ_LOG_DEBUG(LogChannel::Global, "Requesting replay from %s.\n", url.c_str());
 
 	auto doOnErrorCleanup = [userID]()
 	{
@@ -145,13 +144,11 @@ void KZGlobalService::ReplayManager::RequestReplay(KZPlayer *requester, UUID_t r
 
 	auto onResponse = [userID, url, doOnErrorCleanup](HTTP::Response response)
 	{
-		// TODO: make this optional
-		META_CONPRINTF("[KZ::Global] Received response for replay %s: status %d.\n", url.c_str(), response.status);
+		KZ_LOG_DEBUG(LogChannel::Global, "Received response for replay %s: status %d.\n", url.c_str(), response.status);
 
 		if (response.status != 200)
 		{
-			// TODO: make this optional
-			META_CONPRINTF("[KZ::Global] Non-200 response for replay %s: status %d.\n", url.c_str(), response.status);
+			KZ_LOG_DEBUG(LogChannel::Global, "Non-200 response for replay %s: status %d.\n", url.c_str(), response.status);
 
 			doOnErrorCleanup();
 

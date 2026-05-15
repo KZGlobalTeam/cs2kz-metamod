@@ -12,6 +12,7 @@
 
 #include "entity2/entitysystem.h"
 #include "tier0/dbg.h"
+#include "utils/logging.h"
 
 #define MAXPLAYERS 64
 

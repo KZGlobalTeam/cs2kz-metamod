@@ -33,7 +33,7 @@ bool KZ::api::PlayerInfo::FromJson(const Json &json)
 
 		if (!utils::ParseSteamID2(id, this->id))
 		{
-			META_CONPRINTF("[KZ::Global] Failed to parse SteamID2.\n");
+			KZ_LOG_WARN(LogChannel::Global, "Failed to parse SteamID2.\n");
 			return false;
 		}
 	}
@@ -56,7 +56,7 @@ bool KZ::api::Player::FromJson(const Json &json)
 
 		if (!utils::ParseSteamID2(id, this->id))
 		{
-			META_CONPRINTF("[KZ::Global] Failed to parse SteamID2.\n");
+			KZ_LOG_WARN(LogChannel::Global, "Failed to parse SteamID2.\n");
 			return false;
 		}
 	}
@@ -140,7 +140,7 @@ bool KZ::api::Map::DecodeStateString(std::string_view stateString, State &state)
 	}
 	else
 	{
-		META_CONPRINTF("[KZ::Global] `state` field has an unknown value.\n");
+		KZ_LOG_WARN(LogChannel::Global, "`state` field has an unknown value.\n");
 		return false;
 	}
 
@@ -258,7 +258,7 @@ bool KZ::api::Map::Course::Filter::DecodeTierString(std::string_view tierString,
 	}
 	else
 	{
-		META_CONPRINTF("[KZ::Global] `tier` field has an unknown tierString.\n");
+		KZ_LOG_WARN(LogChannel::Global, "`tier` field has an unknown tierString.\n");
 		return false;
 	}
 
@@ -281,7 +281,7 @@ bool KZ::api::Map::Course::Filter::DecodeStateString(std::string_view stateStrin
 	}
 	else
 	{
-		META_CONPRINTF("[KZ::Global] `state` field has an unknown value.\n");
+		KZ_LOG_WARN(LogChannel::Global, "`state` field has an unknown value.\n");
 		return false;
 	}
 

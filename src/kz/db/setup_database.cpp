@@ -11,13 +11,13 @@ void KZDatabaseService::SetupDatabase()
 	KeyValues *config = KZOptionService::GetOptionKV("db");
 	if (!config)
 	{
-		META_CONPRINT("[KZ::DB] No database config detected.\n");
+		KZ_LOG_INFO(LogChannel::DB, "No database config detected.\n");
 		return;
 	}
 	ISQLInterface *sqlInterface = (ISQLInterface *)g_SMAPI->MetaFactory(SQLMM_INTERFACE, nullptr, nullptr);
 	if (!sqlInterface)
 	{
-		META_CONPRINT("[KZ::DB] Database plugin not found. Local database is disabled.\n");
+		KZ_LOG_INFO(LogChannel::DB, "Database plugin not found. Local database is disabled.\n");
 		return;
 	}
 	const char *driver = config->GetString("driver");
@@ -39,7 +39,7 @@ void KZDatabaseService::SetupDatabase()
 	}
 	else
 	{
-		META_CONPRINT("[KZ::DB] No database config detected.\n");
+		KZ_LOG_INFO(LogChannel::DB, "No database config detected.\n");
 	}
 	databaseConnection->Connect(OnDatabaseConnected);
 }
@@ -48,12 +48,12 @@ void KZDatabaseService::OnDatabaseConnected(bool connect)
 {
 	if (connect)
 	{
-		META_CONPRINT("[KZ::DB] LocalDB connected.\n");
+		KZ_LOG_INFO(LogChannel::DB, "LocalDB connected.\n");
 		KZDatabaseService::RunMigrations();
 	}
 	else
 	{
-		META_CONPRINT("[KZ::DB] Failed to connect\n");
+		KZ_LOG_WARN(LogChannel::DB, "Failed to connect\n");
 		// make sure to properly destroy the connection
 		databaseConnection->Destroy();
 		databaseConnection = nullptr;

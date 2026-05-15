@@ -69,7 +69,7 @@ void FlushAllDetours()
 int FASTCALL Detour_RecvServerBrowserPacket(RecvPktInfo_t &info, void *pSock)
 {
 	int retValue = RecvServerBrowserPacket(info, pSock);
-	// META_CONPRINTF("Detour_RecvServerBrowserPacket: Message received from %i.%i.%i.%i:%i, returning %i\nPayload: %s\n",
+	// KZ_LOG_DEBUG(LogChannel::Movement, "Detour_RecvServerBrowserPacket: Message received from %i.%i.%i.%i:%i, returning %i\nPayload: %s\n",
 	// 	info.m_adrFrom.m_IPv4Bytes.b1, info.m_adrFrom.m_IPv4Bytes.b2, info.m_adrFrom.m_IPv4Bytes.b3, info.m_adrFrom.m_IPv4Bytes.b4,
 	// 	info.m_adrFrom.m_usPort, retValue, (char*)info.m_pPkt);
 	return retValue;
@@ -94,45 +94,47 @@ bool Detour_TraceShape(const void *physicsQuery, const Ray_t &ray, const Vector 
 	traceHistory.AddToTail({start, end, ray, pm->DidHit(), pm->m_vStartPos, pm->m_vEndPos, pm->m_vHitNormal, pm->m_vHitPoint, pm->m_flHitOffset,
 							pm->m_flFraction, error, velocity});
 	return ret;
-	META_CONPRINTF("Trace %s -> %s, ", VecToString(start), VecToString(end));
+	KZ_LOG_DEBUG(LogChannel::Movement, "Trace %s -> %s, ", VecToString(start), VecToString(end));
 	switch (ray.m_eType)
 	{
 		case RAY_TYPE_LINE:
 		{
-			META_CONPRINTF("RAY_TYPE_LINE offset %s radius %f, ", VecToString(ray.m_Line.m_vStartOffset), ray.m_Line.m_flRadius);
+			KZ_LOG_DEBUG(LogChannel::Movement, "RAY_TYPE_LINE offset %s radius %f, ", VecToString(ray.m_Line.m_vStartOffset), ray.m_Line.m_flRadius);
 			break;
 		}
 		case RAY_TYPE_SPHERE:
 		{
-			META_CONPRINTF("RAY_TYPE_SPHERE radius %f, center %s, ", ray.m_Sphere.m_flRadius, VecToString(ray.m_Sphere.m_vCenter));
+			KZ_LOG_DEBUG(LogChannel::Movement, "RAY_TYPE_SPHERE radius %f, center %s, ", ray.m_Sphere.m_flRadius,
+						 VecToString(ray.m_Sphere.m_vCenter));
 			break;
 		}
 		case RAY_TYPE_HULL:
 		{
-			META_CONPRINTF("RAY_TYPE_HULL mins = %s, maxs = %s, ", VecToString(ray.m_Hull.m_vMins), VecToString(ray.m_Hull.m_vMaxs));
+			KZ_LOG_DEBUG(LogChannel::Movement, "RAY_TYPE_HULL mins = %s, maxs = %s, ", VecToString(ray.m_Hull.m_vMins),
+						 VecToString(ray.m_Hull.m_vMaxs));
 			break;
 		}
 		case RAY_TYPE_CAPSULE:
 		{
-			META_CONPRINTF("RAY_TYPE_CAPSULE radius %f, center %s %s, ", ray.m_Capsule.m_flRadius, VecToString(ray.m_Capsule.m_vCenter[0]),
-						   VecToString(ray.m_Capsule.m_vCenter[1]));
+			KZ_LOG_DEBUG(LogChannel::Movement, "RAY_TYPE_CAPSULE radius %f, center %s %s, ", ray.m_Capsule.m_flRadius,
+						 VecToString(ray.m_Capsule.m_vCenter[0]), VecToString(ray.m_Capsule.m_vCenter[1]));
 			break;
 		}
 		case RAY_TYPE_MESH:
 		{
-			META_CONPRINTF("RAY_TYPE_MESH mins = %s, maxs = %s, numVertice = %i, pVertices = %p, ", VecToString(ray.m_Mesh.m_vMins),
-						   VecToString(ray.m_Mesh.m_vMaxs), ray.m_Mesh.m_nNumVertices, ray.m_Mesh.m_pVertices);
+			KZ_LOG_DEBUG(LogChannel::Movement, "RAY_TYPE_MESH mins = %s, maxs = %s, numVertice = %i, pVertices = %p, ",
+						 VecToString(ray.m_Mesh.m_vMins), VecToString(ray.m_Mesh.m_vMaxs), ray.m_Mesh.m_nNumVertices, ray.m_Mesh.m_pVertices);
 			break;
 		}
 	}
 	if (pm->DidHit())
 	{
-		META_CONPRINTF("hit %s (normal %s, triangle %i, body %p, shape %p)\n", VecToString(pm->m_vEndPos), VecToString(pm->m_vHitNormal),
-					   pm->m_nTriangle, pm->m_hBody, pm->m_hShape);
+		KZ_LOG_DEBUG(LogChannel::Movement, "hit %s (normal %s, triangle %i, body %p, shape %p)\n", VecToString(pm->m_vEndPos),
+					 VecToString(pm->m_vHitNormal), pm->m_nTriangle, pm->m_hBody, pm->m_hShape);
 	}
 	else
 	{
-		META_CONPRINT("missed\n");
+		KZ_LOG_DEBUG(LogChannel::Movement, "missed\n");
 	}
 #endif
 	return ret;

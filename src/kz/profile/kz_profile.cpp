@@ -73,52 +73,34 @@ void KZProfileService::OnCheckTransmit()
 	}
 }
 
-CConVar<bool> kz_profile_debug("kz_profile_debug", FCVAR_NONE, "Enable profile debug messages.", false);
-
 void KZProfileService::RequestRating()
 {
 	if (!KZGlobalService::IsAvailable())
 	{
-		if (kz_profile_debug.GetBool())
-		{
-			META_CONPRINTF("[KZ::Profile] Global service not available, cannot request rating for player %s.\n", this->player->GetName());
-		}
 		return;
 	}
 	if (!this->player->IsAuthenticated() || !this->player->IsConnected())
 	{
-		if (kz_profile_debug.GetBool())
-		{
-			META_CONPRINTF("[KZ::Profile] Player %s not authenticated or not connected, cannot request rating.\n", this->player->GetName());
-		}
+		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s not authenticated or not connected, cannot request rating.\n", this->player->GetName());
 		return;
 	}
 	KZ::api::Mode mode;
 	if (!KZ::api::DecodeModeString(this->player->modeService->GetModeShortName(), mode))
 	{
-		if (kz_profile_debug.GetBool())
-		{
-			META_CONPRINTF("[KZ::Profile] Player %s has invalid mode '%s', cannot request rating.\n", this->player->GetName(),
-						   this->player->modeService->GetModeShortName());
-		}
+		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s has invalid mode '%s', cannot request rating.\n", this->player->GetName(),
+					 this->player->modeService->GetModeShortName());
 		return;
 	}
 	this->desiredMode = static_cast<u8>(mode);
 	u64 steamID64 = this->player->GetSteamId64();
 	if (steamID64 == 0)
 	{
-		if (kz_profile_debug.GetBool())
-		{
-			META_CONPRINTF("[KZ::Profile] Player %s has invalid SteamID, cannot request rating.\n", this->player->GetName());
-		}
+		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s has invalid SteamID, cannot request rating.\n", this->player->GetName());
 		return;
 	}
 	if (this->player->styleServices.Count() > 0)
 	{
-		if (kz_profile_debug.GetBool())
-		{
-			META_CONPRINTF("[KZ::Profile] Player %s has styles enabled, skipping rating request.\n", this->player->GetName());
-		}
+		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s has styles enabled, skipping rating request.\n", this->player->GetName());
 		return;
 	}
 	this->timeToNextRatingRefresh = g_pKZUtils->GetServerGlobals()->realtime + RATING_REFRESH_PERIOD + RandomFloat(-30.0f, 30.0f);
@@ -130,41 +112,26 @@ void KZProfileService::RequestRating()
 	}
 	std::string url = apiURL + "/players/" + std::to_string(steamID64);
 	HTTP::Request request(HTTP::Method::GET, url);
-	if (kz_profile_debug.GetBool())
-	{
-		META_CONPRINTF("[KZ::Profile] Requesting rating for player %s (%llu) in mode %d.\n", this->player->GetName(), steamID64,
-					   static_cast<u8>(mode));
-	}
+	KZ_LOG_DEBUG(LogChannel::Profile, "Requesting rating for player %s (%llu) in mode %d.\n", this->player->GetName(), steamID64,
+				 static_cast<u8>(mode));
 	auto callback = [steamID64, mode](HTTP::Response response)
 	{
-		if (kz_profile_debug.GetBool())
-		{
-			META_CONPRINTF("[KZ::Profile] Received response for player %llu: status %d.\n", steamID64, response.status);
-		}
+		KZ_LOG_DEBUG(LogChannel::Profile, "Received response for player %llu: status %d.\n", steamID64, response.status);
 		if (response.status != 200)
 		{
-			if (kz_profile_debug.GetBool())
-			{
-				META_CONPRINTF("[KZ::Profile] Non-200 response for player %llu: status %d.\n", steamID64, response.status);
-			}
+			KZ_LOG_DEBUG(LogChannel::Profile, "Non-200 response for player %llu: status %d.\n", steamID64, response.status);
 			return;
 		}
 		KZPlayer *player = g_pKZPlayerManager->SteamIdToPlayer(steamID64);
 		if (player == nullptr)
 		{
-			if (kz_profile_debug.GetBool())
-			{
-				META_CONPRINTF("[KZ::Profile] Player not found for SteamID %llu.\n", steamID64);
-			}
+			KZ_LOG_DEBUG(LogChannel::Profile, "Player not found for SteamID %llu.\n", steamID64);
 			return;
 		}
 		// The player mode has changed since the request was made.
 		if (player->profileService->desiredMode != static_cast<u8>(mode))
 		{
-			if (kz_profile_debug.GetBool())
-			{
-				META_CONPRINTF("[KZ::Profile] Player %s mode changed since request, ignoring response.\n", player->GetName());
-			}
+			KZ_LOG_DEBUG(LogChannel::Profile, "Player %s mode changed since request, ignoring response.\n", player->GetName());
 			return;
 		}
 		Json json(response.Body().value_or(""));
@@ -172,16 +139,10 @@ void KZProfileService::RequestRating()
 		const char *ratingField = (mode == KZ::api::Mode::Classic) ? "ckz_rating" : "vnl_rating";
 		if (!json.Get(ratingField, player->profileService->currentRating))
 		{
-			if (kz_profile_debug.GetBool())
-			{
-				META_CONPRINTF("[KZ::Profile] Failed to parse rating from response for player %s.\n", player->GetName());
-			}
+			KZ_LOG_DEBUG(LogChannel::Profile, "Failed to parse rating from response for player %s.\n", player->GetName());
 			return;
 		}
-		if (kz_profile_debug.GetBool())
-		{
-			META_CONPRINTF("[KZ::Profile] Updating rating for player %s: %.2f.\n", player->GetName(), player->profileService->currentRating);
-		}
+		KZ_LOG_DEBUG(LogChannel::Profile, "Updating rating for player %s: %.2f.\n", player->GetName(), player->profileService->currentRating);
 		player->profileService->UpdateCompetitiveRank();
 		player->profileService->UpdateClantag();
 	};

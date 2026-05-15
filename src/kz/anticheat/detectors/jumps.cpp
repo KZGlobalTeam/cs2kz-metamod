@@ -115,7 +115,7 @@ void KZAnticheatService::OnJumpFinish(Jump *jump)
 	{
 		std::string details = tfm::format("Strafe hack detected: %d suspicious jumps out of last %d (%.2f%%).", suspiciousJumpCount,
 										  NUM_JUMPS_WINDOW_SIZE, (f32)suspiciousJumpCount / (f32)NUM_JUMPS_WINDOW_SIZE * 100.0f);
-		META_CONPRINTF("%s\n", details.c_str());
+		KZ_LOG_INFO(LogChannel::AC, "%s\n", details.c_str());
 		this->MarkInfraction(Infraction::Type::StrafeHack, details);
 	}
 }

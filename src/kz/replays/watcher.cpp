@@ -677,7 +677,7 @@ void ReplayWatcher::SaveArchiveIndex()
 	if (!SaveKV3ToFile(g_KV3Encoding_Text, g_KV3Format_Generic, &kv, &error, ARCHIVE_INDEX_PATH, "GAME", KV3_SAVE_TEXT_NONE))
 	{
 		// Log error if needed, but continue
-		META_CONPRINTF("Failed to save archive index: %s\n", error.Get());
+		KZ_LOG_WARN(LogChannel::Replays, "Failed to save archive index: %s\n", error.Get());
 	}
 
 	this->archiveDirty = false;

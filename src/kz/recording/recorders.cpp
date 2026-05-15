@@ -10,8 +10,6 @@
 #include "sdk/usercmd.h"
 #include "kz/replays/compression.h"
 
-extern CConVar<bool> kz_replay_recording_debug;
-
 ManualRecorder::ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy) : Recorder(player, duration, RP_MANUAL, true, DistanceTier_None)
 {
 	if (savedBy)
@@ -260,11 +258,7 @@ bool Recorder::WriteToFile()
 		return false;
 	}
 
-	if (kz_replay_recording_debug.Get())
-	{
-		META_CONPRINTF("kz_replay_recording_debug: Saved replay to %s (%zu bytes)\n", finalFilename, buffer.size());
-	}
-
+	KZ_LOG_DEBUG(LogChannel::Recording, "Saved replay to %s (%zu bytes)\n", finalFilename, buffer.size());
 	return true;
 }
 
@@ -274,7 +268,7 @@ i32 Recorder::WriteHeader(std::vector<char> &outBuffer)
 	std::string serialized;
 	if (!this->replayHeader.SerializeToString(&serialized))
 	{
-		META_CONPRINTF("[KZ] Failed to serialize replay header protobuf\n");
+		KZ_LOG_WARN(LogChannel::Recording, "Failed to serialize replay header protobuf\n");
 		return 0;
 	}
 	u32 size = static_cast<u32>(serialized.size());

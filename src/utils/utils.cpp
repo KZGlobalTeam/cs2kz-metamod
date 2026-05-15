@@ -3,6 +3,7 @@
 #include "common.h"
 #include "cs2kz.h"
 #include "addresses.h"
+#include "logging.h"
 #include "gameconfig.h"
 #include "utils.h"
 #include "convar.h"
@@ -29,7 +30,7 @@
 	type *variable = (decltype(variable))gameConfig->ResolveSignature(name); \
 	if (!variable) \
 	{ \
-		Warning("Failed to find address for %s!\n", #name); \
+		KZ_LOG_WARN(LogChannel::General, "Failed to find address for %s!\n", #name); \
 		result = false; \
 	}
 
@@ -42,12 +43,6 @@ static_global u32 serverVersion;
 
 bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 {
-	modules::Initialize();
-	if (!interfaces::Initialize(ismm, error, maxlen))
-	{
-		return false;
-	}
-
 	CBufferStringGrowable<256> gamedirpath;
 	interfaces::pEngine->GetGameDir(gamedirpath);
 
@@ -59,7 +54,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	if (!g_pGameConfig->Init(g_pFullFileSystem, conf_error, sizeof(conf_error)))
 	{
 		snprintf(error, maxlen, "Could not read %s: %s", g_pGameConfig->GetPath().c_str(), conf_error);
-		Warning("%s\n", error);
+		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
 		return false;
 	}
 
@@ -87,7 +82,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	if (!sigResolved)
 	{
 		snprintf(error, maxlen, "Failed to resolve one or more signatures.");
-		Warning("%s\n", error);
+		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
 		return false;
 	}
 	g_pKZUtils = new KZUtils(GetLegacyGameEventListener, SnapViewAngles, EmitSound, SwitchTeam, SetPawn, CreateEntityByName, DispatchSpawn,
@@ -286,7 +281,7 @@ bool utils::SetConVarValue(CPlayerSlot slot, const char *name, const char *value
 	if (!cvarRef.IsValidRef() || !cvarRef.IsConVarDataAvailable())
 	{
 		assert(0);
-		META_CONPRINTF("Failed to find %s!\n", name);
+		KZ_LOG_WARN(LogChannel::General, "Failed to find %s!\n", name);
 		return false;
 	}
 
@@ -656,7 +651,7 @@ void utils::ResetMapIfEmpty()
 		return;
 	}
 
-	META_CONPRINTF("[KZ] Server is empty, triggering map reload...\n");
+	KZ_LOG_INFO(LogChannel::General, "Server is empty, triggering map reload...\n");
 	utils::ResetMap();
 }
 
@@ -667,7 +662,7 @@ void utils::ResetMap()
 	{
 		if (!g_pKZUtils->GetGlobals() || !g_pKZUtils->GetGlobals()->mapname.ToCStr() || g_pKZUtils->GetGlobals()->mapname.ToCStr()[0] == 0)
 		{
-			META_CONPRINTF("[KZ] Warning: Map name is empty, cannot reload the current map! Defaulting to de_dust2...\n");
+			KZ_LOG_WARN(LogChannel::General, "Warning: Map name is empty, cannot reload the current map! Defaulting to de_dust2...\n");
 			V_snprintf(cmd, sizeof(cmd), "changelevel de_dust2");
 		}
 		else
@@ -731,7 +726,7 @@ bool utils::WriteBufferToFile(const char *path, const std::vector<char> &buffer)
 	FileHandle_t file = g_pFullFileSystem->Open(tempPath, "wb", "GAME");
 	if (!file)
 	{
-		META_CONPRINTF("[KZ] Failed to open file for writing: %s\n", tempPath);
+		KZ_LOG_WARN(LogChannel::General, "Failed to open file for writing: %s\n", tempPath);
 		return false;
 	}
 
@@ -740,7 +735,7 @@ bool utils::WriteBufferToFile(const char *path, const std::vector<char> &buffer)
 
 	if (!g_pFullFileSystem->RenameFile(tempPath, path, "GAME"))
 	{
-		META_CONPRINTF("[KZ] Failed to rename file from %s to %s\n", tempPath, path);
+		KZ_LOG_WARN(LogChannel::General, "Failed to rename file from %s to %s\n", tempPath, path);
 		g_pFullFileSystem->RemoveFile(tempPath, "GAME");
 		return false;
 	}
@@ -753,7 +748,7 @@ bool utils::ReadBufferFromFile(const char *path, std::vector<char> &outBuffer)
 	FileHandle_t file = g_pFullFileSystem->Open(path, "rb", "GAME");
 	if (!file)
 	{
-		META_CONPRINTF("[KZ] Failed to open file for reading: %s\n", path);
+		KZ_LOG_WARN(LogChannel::General, "Failed to open file for reading: %s\n", path);
 		return false;
 	}
 

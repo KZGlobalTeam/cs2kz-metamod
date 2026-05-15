@@ -139,7 +139,7 @@ void AsyncFileIO::ThreadRun()
 					bool ok = g_pFullFileSystem->RenameFile(task.oldPath.c_str(), task.newPath.c_str(), "GAME");
 					if (!ok)
 					{
-						META_CONPRINTF("[KZ] Failed to rename file from %s to %s\n", task.oldPath.c_str(), task.newPath.c_str());
+						KZ_LOG_WARN(LogChannel::General, "Failed to rename file from %s to %s\n", task.oldPath.c_str(), task.newPath.c_str());
 					}
 					if (task.onDone)
 					{

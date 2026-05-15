@@ -47,11 +47,21 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 {
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
+	modules::Initialize();
+	if (!interfaces::Initialize(ismm, error, maxlen))
+	{
+		return false;
+	}
+
+	KZOptionService::InitOptions();
+	InitKZLogging();
+	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
 
 	if (!utils::Initialize(ismm, error, maxlen))
 	{
 		return false;
 	}
+
 	ConVar_Register();
 	hooks::Initialize();
 	ix::initNetSystem();
@@ -80,7 +90,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	KZ::mode::DisableReplicatedModeCvars();
 
-	KZOptionService::InitOptions();
 	KZTipService::Init();
 	KZAnticheatService::Init();
 	if (late)
@@ -94,7 +103,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	// We don't need command filtering for KZ maps.
 	CommandLine()->AppendParm("-disable_workshop_command_filtering", "");
-
+	KZ_LOG_DEBUG(LogChannel::General, "Plugin loaded successfully. (late load: %s)", late ? "true" : "false");
 	KZ::replaysystem::InitWatcher();
 	return true;
 }
@@ -120,6 +129,9 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
 	ConVar_Unregister();
+	LoggingSystem_UnregisterLoggingListener(&g_KZLoggingListener);
+	kz_log_to_file.Set(false);
+	g_KZLoggingListener.CheckFile();
 	return true;
 }
 
