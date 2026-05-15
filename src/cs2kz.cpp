@@ -54,7 +54,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	}
 
 	KZOptionService::InitOptions();
-	RegisterKZLogging();
+	InitKZLogging();
 	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
 
 	if (!utils::Initialize(ismm, error, maxlen))

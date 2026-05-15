@@ -1,8 +1,4 @@
-#include <ctime>
-
 #include "common.h"
-#include "convar.h"
-#include "tier0/logging.h"
 #include "utils/logging.h"
 #include "kz/option/kz_option.h"
 
@@ -44,7 +40,54 @@ static KZChannel_t g_KZChannels[] = {
 	{LogChannel::Trigger, "CS2KZ::Trigger", INVALID_LOGGING_CHANNEL_ID},
 };
 
-void RegisterKZLogging()
+static void PurgeLogs()
+{
+	int retentionDays = (int)KZOptionService::GetOptionInt("logRetentionDays", 30);
+	if (retentionDays <= 0)
+	{
+		return;
+	}
+
+	std::filesystem::path logDir = std::filesystem::path(g_SMAPI->GetBaseDir()) / "addons" / "cs2kz" / "logs";
+
+	std::error_code ec;
+	if (!std::filesystem::exists(logDir, ec) || ec)
+	{
+		return;
+	}
+
+	auto cutoff = std::filesystem::file_time_type::clock::now() - std::chrono::hours(24 * retentionDays);
+
+	for (const auto &entry : std::filesystem::directory_iterator(logDir, ec))
+	{
+		if (ec)
+		{
+			break;
+		}
+		if (!entry.is_regular_file())
+		{
+			continue;
+		}
+		const auto &path = entry.path();
+		if (path.extension() != ".log" || path.stem().string().rfind("cs2kz", 0) != 0)
+		{
+			continue;
+		}
+		auto writeTime = entry.last_write_time(ec);
+		if (ec)
+		{
+			ec.clear();
+			continue;
+		}
+		if (writeTime < cutoff)
+		{
+			std::filesystem::remove(path, ec);
+			ec.clear();
+		}
+	}
+}
+
+void InitKZLogging()
 {
 	LoggingSystem_RegisterLoggingListener(&g_KZLoggingListener);
 	LoggingVerbosity_t verbosity = CommandLine()->FindParm("-debug") ? LV_MAX : LV_DEFAULT;
@@ -55,6 +98,7 @@ void RegisterKZLogging()
 			entry.handle = LoggingSystem_RegisterLoggingChannel(entry.name, RegisterKZChannelTags, 0, verbosity, Color(37, 162, 255, 255));
 		}
 	}
+	PurgeLogs();
 }
 
 LoggingChannelID_t GetServiceChannel(LogChannel channel)
