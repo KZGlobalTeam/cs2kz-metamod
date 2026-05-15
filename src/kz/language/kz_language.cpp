@@ -139,7 +139,7 @@ const char *KZLanguageService::GetTranslatedFormat(const char *language, const c
 {
 	if (!translationKV->FindKey(phrase))
 	{
-		KZ_LOG_DEBUG(LogChannel::Language, "Warning: Phrase '%s' not found, returning orignal message!\n", phrase);
+		// KZ_LOG_DEBUG(LogChannel::Language, "Warning: Phrase '%s' not found, returning orignal message!\n", phrase);
 		return phrase;
 	}
 	const char *outFormat = translationKV->FindKey(phrase)->GetString(language);
@@ -150,7 +150,7 @@ const char *KZLanguageService::GetTranslatedFormat(const char *language, const c
 			// It is fine to have no format.
 			return NULL;
 		}
-		KZ_LOG_DEBUG(LogChannel::Language, "Warning: Phrase '%s' not found for language %s!\n", phrase, language);
+		// KZ_LOG_DEBUG(LogChannel::Language, "Warning: Phrase '%s' not found for language %s!\n", phrase, language);
 		return translationKV->FindKey(phrase)->GetString(KZ_DEFAULT_LANGUAGE);
 	}
 	return outFormat;
