@@ -763,8 +763,19 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 
 		if (mapNameOk && currentMapName.Get() == KZGlobalService::WS::handshakeMapName)
 		{
-			std::lock_guard _guard(KZGlobalService::currentMap.mutex);
-			KZGlobalService::currentMap.info = std::move(ack.mapInfo);
+			char md5[33];
+			g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
+			if (ack.mapInfo.has_value() && ack.mapInfo.value().vpkChecksum != md5)
+			{
+				KZ_LOG_WARN(LogChannel::Global, "Checksum mismatch for current map (expected %s, got %s); treating as unapproved.\n", md5,
+							ack.mapInfo.value().vpkChecksum.c_str());
+				KZGlobalService::currentMap.info = std::nullopt;
+			}
+			else
+			{
+				std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+				KZGlobalService::currentMap.info = std::move(ack.mapInfo);
+			}
 		}
 		else
 		{
