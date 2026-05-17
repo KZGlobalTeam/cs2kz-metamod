@@ -42,12 +42,18 @@ struct PBData
 	void Reset()
 	{
 		overall.pbTime = {};
+		overall.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
 		overall.pbSplitZoneTimes.FillWithValue(-1.0);
+		overall.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
 		overall.pbCpZoneTimes.FillWithValue(-1.0);
+		overall.pbStageZoneTimes.SetCount(KZ_MAX_STAGE_ZONES);
 		overall.pbStageZoneTimes.FillWithValue(-1.0);
 		pro.pbTime = {};
+		pro.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
 		pro.pbSplitZoneTimes.FillWithValue(-1.0);
+		pro.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
 		pro.pbCpZoneTimes.FillWithValue(-1.0);
+		pro.pbStageZoneTimes.SetCount(KZ_MAX_STAGE_ZONES);
 		pro.pbStageZoneTimes.FillWithValue(-1.0);
 	}
 
