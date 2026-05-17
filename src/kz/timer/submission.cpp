@@ -511,7 +511,7 @@ void RunSubmission::UpdateGlobalCache()
 				player->timerService->InsertPBToCache(this->time, course, mode.id, true, true, this->metadata.c_str(),
 													  this->globalResponse.overall.points);
 			}
-			if (this->time < this->oldGPB.pro.time || this->oldGPB.pro.time == 0)
+			if (this->teleports == 0 && (this->time < this->oldGPB.pro.time || this->oldGPB.pro.time == 0))
 			{
 				player->timerService->InsertPBToCache(this->time, course, mode.id, false, true, this->metadata.c_str(),
 													  this->globalResponse.pro.points);
