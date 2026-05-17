@@ -114,7 +114,11 @@ void KZTriggerService::OnStopTouchGround()
 		{
 			continue;
 		}
-		if (KZ::mapapi::IsBhopTrigger(tracker.kzTrigger->type) && trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
+		if (!trigger->PassesTriggerFilters(this->player->GetPlayerPawn()))
+		{
+			continue;
+		}
+		if (KZ::mapapi::IsBhopTrigger(tracker.kzTrigger->type))
 		{
 			// set last touched triggers for single and sequential bhop.
 			if (tracker.kzTrigger->type == KZTRIGGER_SEQUENTIAL_BHOP)
