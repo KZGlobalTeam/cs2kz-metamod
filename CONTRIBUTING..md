@@ -29,6 +29,8 @@ python ../configure.py
 ambuild
 ```
 
+Make sure AMBuild detects MSVC/cl.exe.
+
 ### Dev workflow
 
 - Re-run `ambuild` after code changes.
