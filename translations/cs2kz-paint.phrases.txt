@@ -3,6 +3,7 @@
 	"Paint Color Command Usage"
 	{
 		"en"		"{grey}Usage: kz_paintcolor <color name> or <R> <G> <B> [A]\nAvailable colors: red, white, black, blue, brown, green, yellow, purple"
+		"chi"		"{grey}用法: kz_paintcolor <颜色名称> 或 <R> <G> <B> [A]\n可用颜色: red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ua"		"{grey}Використання: kz_paintcolor <назва кольору> or <R> <G> <B> [A]\nДоступні кольори: red, white, black, blue, brown, green, yellow, purple"
 		"ru"		"{grey}Применение: kz_paintcolor <название цвета> или <R> <G> <B> [A]\nДоступные цвета: red, white, black, blue, brown, green, yellow, purple"
 	}
@@ -10,6 +11,7 @@
 	{
 		"#format"	"name:s,r:d,g:d,b:d"
 		"en"		"{grey}Current paint color: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
+		"chi"		"{grey}当前涂色颜色: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 		"ua"		"{grey}Колір мітки: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 		"ru"		"{grey}Ваш цвет краски: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 	}
@@ -17,6 +19,7 @@
 	{
 		"#format"	"name:s"
 		"en"		"{grey}Paint color set to {default}{name}{grey}."
+		"chi"		"{grey}涂色颜色已设置为 {default}{name}{grey}."
 		"ua"		"{grey}Колір мітки встановлено на {default}{name}{grey}."
 		"ru"		"{grey}Выбранный цвет краски: {default}{name}{grey}."
 	}
@@ -24,12 +27,14 @@
 	{
 		"#format"	"r:d,g:d,b:d,a:d"
 		"en"		"{grey}Paint color set to RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
+		"chi"		"{grey}涂色颜色已设置为 RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 		"ua"		"{grey}Колір мітки встановлено на RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 		"ru"		"{grey}Выбранный цвет краски: RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 	}
 	"Paint Size Command Usage"
 	{
 		"en"		"{grey}Usage: kz_paintsize <size>\nSize must be a positive number. Default: 16"
+		"chi"		"{grey}用法: kz_paintsize <大小>\n大小必须为正数. 默认: 16"
 		"ua"		"{grey}Використання: kz_paintsize <розмір>\nРозмір має бути додатнім числом. За замовчуванням: 16"
 		"ru"		"{grey}Применение: kz_paintsize <размер>\nРазмер — положительное число. По умолчанию: 16"
 	}
@@ -37,6 +42,7 @@
 	{
 		"#format"	"size:.1f"
 		"en"		"{grey}Current paint size: {default}{size}{grey}."
+		"chi"		"{grey}当前涂色大小: {default}{size}{grey}."
 		"ua"		"{grey}Розмір кольорової мітки: {default}{size}{grey}."
 		"ru"		"{grey}Ваш размер метки краски: {default}{size}{grey}."
 	}
@@ -44,30 +50,35 @@
 	{
 		"#format"	"size:.1f"
 		"en"		"{grey}Paint size set to {default}{size}{grey}."
+		"chi"		"{grey}涂色大小已设置为 {default}{size}{grey}."
 		"ua"		"{grey}Розмір кольорової мітки встановлено на {default}{size}{grey}."
 		"ru"		"{grey}Размер метки краски установлен: {default}{size}{grey}."
 	}
 	"Paint Toggle Enabled"
 	{
 		"en"		"{grey}Auto paint is now {lime}enabled{grey}."
+		"chi"		"{grey}自动涂色已{lime}启用{grey}."
 		"ua"		"{grey}Автоматична кольорова мітка {lime}увімкнена{grey}."
 		"ru"		"{grey}Автопокраска {lime}включена{grey}."
 	}
 	"Paint Toggle Disabled"
 	{
 		"en"		"{grey}Auto paint is now {darkred}disabled{grey}."
+		"chi"		"{grey}自动涂色已{darkred}禁用{grey}."
 		"ua"		"{grey}Автоматична кольорова мітка {darkred}вимкнена{grey}."
 		"ru"		"{grey}Автопокраска {darkred}выключена{grey}."
 	}
 	"Show Paint Enabled"
 	{
 		"en"		"{grey}You now see paint from {default}all players{grey}."
+		"chi"		"{grey}你现在能看到{default}所有玩家{grey}的涂色."
 		"ua"		"{grey}Тепер ви бачите кольорові мітки {default}всіх гравців{grey}."
 		"ru"		"{grey}Теперь вы видите краску {default}всех игроков{grey}."
 	}
 	"Show Paint Disabled"
 	{
 		"en"		"{grey}You now only see {default}your own paint{grey}."
+		"chi"		"{grey}你现在只能看到{default}自己的涂色{grey}."
 		"ua"		"{grey}Тепер ви бачите {default}лише свої{grey} кольрові мітки."
 		"ru"		"{grey}Теперь вы видите {default}только вашу краску{grey}."
 	}

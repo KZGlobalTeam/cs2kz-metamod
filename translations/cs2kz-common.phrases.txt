@@ -91,6 +91,7 @@
 	"Beta Join Warning"
 	{
 		"en"		"CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
+		"chi"		"CS2KZ 当前处于测试阶段. 请注意所有记录和数据将在 CS2KZ 结束测试后被清除."
 		"ru"		"CS2KZ находится на стадии тестирования. Напоминаем, что все рекорды и данные будут стёрты, когда CS2KZ выйдет из беты."
 		"ua"		"CS2KZ наразі перебуває на етапі тестування. Зверніть увагу, що всі рекорди та дані будуть видалені після виходу CS2KZ з бета-версії."
 	}
