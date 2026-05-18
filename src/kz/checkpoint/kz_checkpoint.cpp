@@ -81,11 +81,18 @@ void KZCheckpointService::SetCheckpoint()
 		return;
 	}
 
+	bool timerRunning = this->player->timerService->GetTimerRunning();
+	bool showAreaWarning = false;
+
 	if (this->player->triggerService->InAntiCpArea())
 	{
-		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Anti Checkpoint Area)");
-		this->PlayCheckpointErrorSound();
-		return;
+		if (timerRunning)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Anti Checkpoint Area)");
+			this->PlayCheckpointErrorSound();
+			return;
+		}
+		showAreaWarning = true;
 	}
 
 	if (this->player->triggerService->InBhopTriggers())
@@ -95,12 +102,25 @@ void KZCheckpointService::SetCheckpoint()
 		return;
 	}
 
-	u32 flags = pawn->m_fFlags();
-	if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
+	if (this->player->noclipService->IsNoclipping())
 	{
-		this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Midair)");
-		this->PlayCheckpointErrorSound();
-		return;
+		if (timerRunning)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Midair)");
+			this->PlayCheckpointErrorSound();
+			return;
+		}
+		showAreaWarning = true;
+	}
+	else
+	{
+		u32 flags = pawn->m_fFlags();
+		if (!(flags & FL_ONGROUND) && !(pawn->m_MoveType() == MOVETYPE_LADDER))
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Checkpoint (Midair)");
+			this->PlayCheckpointErrorSound();
+			return;
+		}
 	}
 
 	Checkpoint cp = {};
@@ -115,7 +135,11 @@ void KZCheckpointService::SetCheckpoint()
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
-	if (player->optionService->GetPreferenceBool("checkpointMessage", true))
+	if (showAreaWarning)
+	{
+		this->player->languageService->PrintChat(true, false, "Anti Checkpoint Area Warning");
+	}
+	else if (player->optionService->GetPreferenceBool("checkpointMessage", true))
 	{
 		this->player->languageService->PrintChat(true, false, "Make Checkpoint", this->GetCheckpointCount());
 	}
