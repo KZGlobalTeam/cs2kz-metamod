@@ -1309,6 +1309,7 @@
 	"Command Description - kz_course"
 	{
 		"en"		"Teleport to a course, or display the current course and the list of all courses in the map."
+		"chi"		"传送到一个关卡, 或显示当前关卡和地图中的所有关卡列表."
 		"pl"		"Teleportuj się do trasy lub wyświetl aktualną trasę i listę wszystkich tras na mapie."
 		"ru"		"Телепортироваться на маршрут или показать текущий маршрут и список всех маршрутов карты."
 		"ua"		"Телепортуватися до курсу або показати поточний курс та список всіх курсів на мапі."
@@ -1435,36 +1436,42 @@
 	"Command Description - kz_paint"
 	{
 		"en"		"Place a paint decal on the surface you are aiming at."
+		"chi"		"在你瞄准的表面上放置涂色标记."
 		"ua"		"Нанести кольорову мітку на поверхню, на яку ви наводите приціл."
 		"ru"		"Покрасить поверхность, на которую наведен прицел."
 	}
 	"Command Description - kz_paintcolor"
 	{
 		"en"		"Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
+		"chi"		"设置或显示你的涂色颜色. 支持颜色名称 (red, white, black, blue, brown, green, yellow, purple) 或 R G B [A] 数值."
 		"ua"		"Встановити або показати колір мітки. Можна вказати назву кольору (red, white, black, blue, brown, green, yellow, purple) або значення R G B [A]."
 		"ru"		"Установить или отобразить цвет краски. Команда принимает название (red, white, black, blue, brown, green, yellow, purple) или значения R G B [A]."
 	}
 	"Command Description - kz_paintsize"
 	{
 		"en"		"Set or display your paint size. Accepts a positive number (default: 8)."
+		"chi"		"设置或显示你的涂色大小. 接受正数 (默认: 8)."
 		"ua"		"Встановити або показати розмір кольорової мітки. Приймає додатне число (за замовчуванням: 8)."
 		"ru"		"Установить или отобразить размер метки краски. Размер - положительное число (по умолчанию: 8)."
 	}
 	"Command Description - kz_togglepaint"
 	{
 		"en"		"Toggle auto painting every 50ms while aiming at surfaces."
+		"chi"		"切换每50毫秒自动在你瞄准的表面涂色."
 		"ua"		"Увімк./вимк. автоматичну кольорову мітку кожні 50мс, поки ви цілетеся на поверхню."
 		"ru"		"Вкл./Выкл. автопокраску каждые 50мс, пока вы целитесь на поверхность."
 	}
 	"Command Description - kz_showpaint"
 	{
 		"en"		"Toggle between showing only your own paint and showing paint from all players."
+		"chi"		"切换仅显示自己的涂色或显示所有玩家的涂色."
 		"ua"		"Показувати лише ваші кольорові мітки або мітки всіх гравців."
 		"ru"		"Показывать только вашу краску / краску всех игроков."
 	}
 	"Command Description - kz_cleardecals"
 	{
 		"en"		"Remove all decals from the map."
+		"chi"		"移除地图上所有的涂色标记."
 		"ua"		"Прибрати всі кольорові мітки на мапі."
 		"ru"		"Удалить всю краску с карты."
 	}
@@ -1510,12 +1517,14 @@
 	"Command Description - kz_replay"
 	{
 		"en"		"Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
+		"chi"		"播放之前保存的回放, 或根据类型查找记录回放 (wr, sr, pb 等)."
 		"ua"		"Відтворити раніше збережений повтор або знайти повтор рекорду за типом (wr, sr, pb тощо)."
 		"ru"		"Проиграть сохранённый повтор или найти повтор рекорда по типу (wr, sr, pb, т.д.)."
 	}
 	"Command Description - kz_replays"
 	{
 		"en"		"List saved replays."
+		"chi"		"列出已保存的回放."
 		"pl"		"Wyświetl listę zapisanych powtórek."
 		"ru"		"Показать сохранённые повторы."
 		"ua"		"Показати список збережених повторів."

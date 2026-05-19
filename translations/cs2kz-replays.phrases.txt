@@ -278,6 +278,7 @@
 	{
 		"#format"	"uuid:s"
 		"en"		"{darkred}Multiple replays match UUID substring {grey}'{default}{uuid}{grey}'."
+		"chi"		"{darkred}多个回放匹配UUID子串 {grey}'{default}{uuid}{grey}'."
 		"ru"		"{darkred}Несколько повторов соответствуют подстроке UUID {grey}'{default}{uuid}{grey}'."
 		"ua"		"{darkred}Кілька повторів відповідають підрядку UUID {grey}'{default}{uuid}{grey}'."
 	}
@@ -330,6 +331,7 @@
 	"Replay - Usage Command"
 	{
 		"en"		"{grey}Usage: kz_replay <ID> or kz_replay <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
+		"chi"		"{grey}用法: kz_replay <ID> 或 kz_replay <wr/sr/pb/gpb/spb[pro]> [<关卡> [<模式>]]"
 		"ru"		"{grey}Применение: kz_replay <ID> или kz_replay <wr/sr/pb/gpb/spb[pro]> [<маршрут> [<режим>]]"
 		"ua"		"{grey}Використання: kz_replay <ID> або kz_replay <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
 	}
@@ -660,66 +662,77 @@
 	"Replay - Not Found"
 	{
 		"en"		"{darkred}Replay not found."
+		"chi"		"{darkred}未找到回放."
 		"ru"		"{darkred}Повтор не найден."
 		"ua"		"{darkred}Повтор не знайдено."
 	}
 	"Replay - No Course"
 	{
 		"en"		"{darkred}No course found on this map."
+		"chi"		"{darkred}该地图未找到关卡."
 		"ru"		"{darkred}На этой карте не найдены маршруты."
 		"ua"		"{darkred}На цій мапі не знайдено курсу."
 	}
 	"Replay - Invalid Mode Arg"
 	{
 		"en"		"{darkred}Unknown mode."
+		"chi"		"{darkred}未知模式."
 		"ru"		"{darkred}Неизвестный режим."
 		"ua"		"{darkred}Невідомий режим."
 	}
 	"Replay - SR Not Found"
 	{
 		"en"		"{grey}No server record replay found for this filter."
+		"chi"		"{grey}未找到符合此筛选条件的服务器记录回放."
 		"ru"		"{grey}Не найдено повтора рекорда сервера для этого фильтра."
 		"ua"		"{grey}Не знайдено повтору рекорду сервера для цього фільтру."
 	}
 	"Replay - SPB Not Found"
 	{
 		"en"		"{grey}No server personal best replay found."
+		"chi"		"{grey}未找到服务器个人最佳回放."
 		"ru"		"{grey}Не найдено повтора личного рекорда на сервере."
 		"ua"		"{grey}Не знайдено повтору особистого найкращого часу на сервері."
 	}
 	"Replay - Global Mode Only"
 	{
 		"en"		"{darkred}Global records are only available for global modes."
+		"chi"		"{darkred}全球记录仅适用于全球模式."
 		"ru"		"{darkred}Глобальные рекорды доступны только для глобальных режимов."
 		"ua"		"{darkred}Світові рекорди доступні лише для глобальних режимів."
 	}
 	"Replay - API Not Available"
 	{
 		"en"		"{darkred}The global API is not available."
+		"chi"		"{darkred}全球 API 不可用."
 		"ru"		"{darkred}Глобальный API недоступен."
 		"ua"		"{darkred}Глобальний API недоступний."
 	}
 	"Replay - Querying WR"
 	{
 		"en"		"{grey}Querying world record replay..."
+		"chi"		"{grey}正在查询世界记录回放..."
 		"ru"		"{grey}Запрашиваем повтор мирового рекорда..."
 		"ua"		"{grey}Здійснюється запит повтору світового рекорду..."
 	}
 	"Replay - WR Not Found"
 	{
 		"en"		"{grey}No world record replay found for this filter."
+		"chi"		"{grey}未找到符合此筛选条件的世界记录回放."
 		"ru"		"{grey}Не найдено повтора мирового рекорда для этого фильтра."
 		"ua"		"{grey}Не знайдено повтору світового рекорду для цього фільтру."
 	}
 	"Replay - Querying GPB"
 	{
 		"en"		"{grey}Querying personal best replay..."
+		"chi"		"{grey}正在查询个人最佳回放..."
 		"ru"		"{grey}Запрашиваем повтор личного рекорда..."
 		"ua"		"{grey}Здійснюється запит повтору особистого найкращого часу..."
 	}
 	"Replay - GPB Not Found"
 	{
 		"en"		"{grey}No global personal best replay found."
+		"chi"		"{grey}未找到全球个人最佳回放."
 		"ru"		"{grey}Не найдено повтора глобального личного рекорда."
 		"ua"		"{grey}Не знайдено повтору глобального особистого найкращого часу."
 	}
@@ -727,6 +740,7 @@
 	{
 		"#format"	"uuid:s"
 		"en"		"{grey}Requesting replay {default}{uuid}{grey} from the API..."
+		"chi"		"{grey}正在从 API 请求回放 {default}{uuid}{grey}..."
 		"ru"		"{grey}Запрашиваем повтор {default}{uuid}{grey} из API..."
 		"ua"		"{grey}Запит повтору {default}{uuid}{grey} з API..."
 	}
@@ -734,12 +748,14 @@
 	{
 		"#format"	"uuid:s"
 		"en"		"{grey}A replay download is already in progress ({default}{uuid}{grey})."
+		"chi"		"{grey}回放下载已在进行中 ({default}{uuid}{grey})."
 		"ru"		"{grey}Загрузка повтора уже идёт ({default}{uuid}{grey})."
 		"ua"		"{grey}Завантаження повтору вже триває ({default}{uuid}{grey})."
 	}
 	"Replay Request - Error"
 	{
 		"en"		"{darkred}Failed to download replay."
+		"chi"		"{darkred}回放下载失败."
 		"ru"		"{darkred}Не удалось загрузить повтор."
 		"ua"		"{darkred}Не вдалося завантажити повтор."
 	}

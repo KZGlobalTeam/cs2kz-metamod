@@ -935,24 +935,28 @@
 	"Safeguard - Disable"
 	{
 		"en"		"{grey}Safeguard disabled."
+		"chi"		"{grey}安全防护已禁用."
 		"ru"		"{grey}Защита таймера выключена."
 		"ua"		"{grey}Запобіжник вимкнено."
 	}
 	"Safeguard - Enable"
 	{
 		"en"		"{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
+		"chi"		"{grey}安全防护已启用. 在有效跑图中, 你将无法使用任何会停止计时器的命令."
 		"ru"		"{grey}Защита таймера включена. Теперь команды, сбрасывающие таймер, деактивированы."
 		"ua"		"{grey}Запобіжник увімкнено. Ви більше не зможете виконувати команди, які можуть зупинити ваш таймер під час проходження."
 	}
 	"Safeguard - Enable (PRO)"
 	{
 		"en"		"{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
+		"chi"		"{grey}{blue}PRO {grey}跑图安全防护已启用. 在有效跑图中, 你将无法使用传送或任何会停止计时器的命令."
 		"ru"		"{grey}Защита {blue}PRO {grey}таймера включена. Теперь телепорты и команды, сбрасывающие таймер, деактивированы."
 		"ua"		"{grey}Запобіжник для {blue}PRO {grey}проходжень увімкнено. Ви більше не зможете використовувати телепорти або виконувати команди, які можуть зупинити ваш таймер під час проходження."
 	}
 	"Safeguard - Blocked"
 	{
 		"en"		"{darkred}You can't perform this action because safeguard is enabled."
+		"chi"		"{darkred}安全防护已启用, 你无法执行此操作."
 		"ru"		"{darkred}Вы не можете это сделать, пока включена защита таймера."
 		"ua"		"{darkred}Ви не можете виконати цю дію, поки увімкнено запобіжник."
 	}
@@ -960,6 +964,7 @@
 	{
 		"#format"	"cooldown:.1f"
 		"en"		"{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
+		"chi"		"{grey}操作被安全防护阻止. 请等待 {default}{cooldown} {grey}秒后重新输入指令."
 		"ru"		"{grey}Действие заблокировано защитой таймера. Пожалуйста, подождите {default}{cooldown} {grey}секунд и повторите команду."
 		"ua"		"{grey}Дію заблоковано запобіжником. Будь ласка, зачекайте {default}{cooldown} {grey}сек. і повторіть команду."
 	}
