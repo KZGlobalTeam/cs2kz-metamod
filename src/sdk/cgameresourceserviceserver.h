@@ -10,6 +10,7 @@ class CGameResourceService
 public:
 	CGameEntitySystem *GetGameEntitySystem()
 	{
-		return *reinterpret_cast<CGameEntitySystem **>((uintptr_t)(this) + g_pGameConfig->GetOffset("GameEntitySystem"));
+		static_persist const uintptr_t offset = g_pGameConfig->GetOffset("GameEntitySystem");
+		return *reinterpret_cast<CGameEntitySystem **>((uintptr_t)(this) + offset);
 	}
 };
