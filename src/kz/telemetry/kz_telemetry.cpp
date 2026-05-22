@@ -1,5 +1,6 @@
 #include "kz_telemetry.h"
 #include "kz/anticheat/kz_anticheat.h"
+#include "kz/mode/kz_mode.h"
 #include "utils/simplecmds.h"
 #include "kz/language/kz_language.h"
 #include "sdk/usercmd.h"
@@ -59,7 +60,7 @@ void KZTelemetryService::OnJumpModernPost()
 	}
 
 	// Don't count jumps when autobhop is active.
-	if (this->player->GetCvarValueFromModeStyles("sv_autobunnyhopping")->m_bValue)
+	if (this->player->GetCvarValueFromModeStyles(MODECVAR_SV_AUTOBUNNYHOPPING)->m_bValue)
 	{
 		return;
 	}
@@ -102,7 +103,7 @@ void KZTelemetryService::OnJumpLegacyPost()
 	}
 
 	// Don't count jumps when autobhop is active.
-	if (this->player->GetCvarValueFromModeStyles("sv_autobunnyhopping")->m_bValue)
+	if (this->player->GetCvarValueFromModeStyles(MODECVAR_SV_AUTOBUNNYHOPPING)->m_bValue)
 	{
 		return;
 	}

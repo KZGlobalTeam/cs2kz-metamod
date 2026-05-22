@@ -7,7 +7,7 @@
 
 #define KZ_MODE_MANAGER_INTERFACE "KZModeManagerInterface"
 
-enum KzModeCvars
+enum KzModeCvars : int
 {
 	MODECVAR_FIRST = 0,
 	MODECVAR_SV_ACCELERATE = 0,
