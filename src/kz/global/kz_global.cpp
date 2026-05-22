@@ -237,6 +237,7 @@ void KZGlobalService::SendMapChange()
 
 	// Clear immediately so stale global map data isn't used for run submissions
 	// while waiting for the API response.
+	KZ_LOG_INFO(LogChannel::Global, "Sending map change for '%s'...\n", currentMapName.Get());
 	{
 		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
 		KZGlobalService::currentMap.info = std::nullopt;
@@ -767,37 +768,35 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 	bool mapMismatch = false;
 
 	{
-		bool mapNameOk = false;
-		CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
+		bool mapOk = false;
+		CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
 
-		if (mapNameOk && currentMapName.Get() == KZGlobalService::WS::handshakeMapName)
+		if (mapOk && currentMapName.Get() == KZGlobalService::WS::handshakeMapName)
 		{
 			char md5[33];
 			g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
-			if (ack.mapInfo.has_value() && ack.mapInfo.value().vpkChecksum != md5)
+			if (!ack.mapInfo.has_value())
+			{
+				KZ_LOG_WARN(LogChannel::Global, "Current map %s is not approved.\n", currentMapName.Get());
+				mapOk = false;
+			}
+			else if (ack.mapInfo.value().vpkChecksum != md5)
 			{
 				KZ_LOG_WARN(LogChannel::Global, "Checksum mismatch for current map (expected %s, got %s); treating as unapproved.\n", md5,
 							ack.mapInfo.value().vpkChecksum.c_str());
-				{
-					std::lock_guard _guard(KZGlobalService::currentMap.mutex);
-					KZGlobalService::currentMap.info = std::nullopt;
-				}
-			}
-			else
-			{
-				std::lock_guard _guard(KZGlobalService::currentMap.mutex);
-				KZGlobalService::currentMap.info = std::move(ack.mapInfo);
+				mapOk = false;
 			}
 		}
 		else
 		{
 			KZ_LOG_INFO(LogChannel::Global, "Map changed during handshake (sent '%s', current '%s'); re-sending map_change.\n",
-						KZGlobalService::WS::handshakeMapName.c_str(), mapNameOk ? currentMapName.Get() : "<unknown>");
-			{
-				std::lock_guard _guard(KZGlobalService::currentMap.mutex);
-				KZGlobalService::currentMap.info = std::nullopt;
-			}
+						KZGlobalService::WS::handshakeMapName.c_str(), mapOk ? currentMapName.Get() : "<unknown>");
+			mapOk = false;
 			mapMismatch = true;
+		}
+		{
+			std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+			KZGlobalService::currentMap.info = mapOk ? std::move(ack.mapInfo) : std::nullopt;
 		}
 	}
 
