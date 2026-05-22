@@ -154,10 +154,10 @@ void KZGlobalService::SubmitBan(u64 steamID, std::string reason, std::string det
 
 void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std::string sentMapName)
 {
-	bool mapNameOk = false;
-	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
+	bool mapOk = false;
+	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
 
-	if (mapNameOk && currentMapName.Get() != sentMapName)
+	if (mapOk && currentMapName.Get() != sentMapName)
 	{
 		KZ_LOG_INFO(LogChannel::Global, "Map changed since MapChange was sent (sent '%s', current '%s'); re-sending.\n", sentMapName.c_str(),
 					currentMapName.Get());
@@ -167,7 +167,15 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 
 	if (mapInfo.has_value())
 	{
-		if (mapNameOk)
+		char md5[33];
+		g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
+		if (mapInfo.has_value() && mapInfo.value().vpkChecksum != md5)
+		{
+			KZ_LOG_WARN(LogChannel::Global, "Checksum mismatch for current map (expected %s, got %s); treating as unapproved.\n", md5,
+						mapInfo.value().vpkChecksum.c_str());
+			mapOk = false;
+		}
+		else if (mapOk)
 		{
 			KZ_LOG_INFO(LogChannel::Global, "%s is approved.\n", mapInfo->name.c_str());
 			for (const auto &course : mapInfo->courses)
@@ -184,11 +192,12 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 	else
 	{
 		KZ_LOG_INFO(LogChannel::Global, "%s is not approved.\n", sentMapName.c_str());
+		mapOk = false;
 	}
 
 	{
 		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
-		KZGlobalService::currentMap.info = std::move(mapInfo);
+		KZGlobalService::currentMap.info = mapOk ? std::move(mapInfo) : std::nullopt;
 	}
 }
 
@@ -769,7 +778,10 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 			{
 				KZ_LOG_WARN(LogChannel::Global, "Checksum mismatch for current map (expected %s, got %s); treating as unapproved.\n", md5,
 							ack.mapInfo.value().vpkChecksum.c_str());
-				KZGlobalService::currentMap.info = std::nullopt;
+				{
+					std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+					KZGlobalService::currentMap.info = std::nullopt;
+				}
 			}
 			else
 			{
@@ -781,8 +793,10 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 		{
 			KZ_LOG_INFO(LogChannel::Global, "Map changed during handshake (sent '%s', current '%s'); re-sending map_change.\n",
 						KZGlobalService::WS::handshakeMapName.c_str(), mapNameOk ? currentMapName.Get() : "<unknown>");
-			std::lock_guard _guard(KZGlobalService::currentMap.mutex);
-			KZGlobalService::currentMap.info = std::nullopt;
+			{
+				std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+				KZGlobalService::currentMap.info = std::nullopt;
+			}
 			mapMismatch = true;
 		}
 	}
