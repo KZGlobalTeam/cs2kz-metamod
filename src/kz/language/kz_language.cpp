@@ -56,6 +56,7 @@ void KZLanguageService::LoadConfigFiles()
 	addonsKV->UsesEscapeSequences(true);
 	KZLanguageService::LoadTranslations();
 	KZLanguageService::LoadLanguages();
+	KZLanguageService::ClearTemplateCache();
 }
 
 void KZLanguageService::Cleanup()
