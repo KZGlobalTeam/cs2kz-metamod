@@ -87,7 +87,10 @@ void KZTriggerService::OnCheckJumpButton()
 	this->ApplyJumpFactor(false);
 }
 
-void KZTriggerService::OnProcessMovement() {}
+void KZTriggerService::OnProcessMovement()
+{
+	this->UpdateModifiersInternal();
+}
 
 void KZTriggerService::OnProcessMovementPost()
 {
