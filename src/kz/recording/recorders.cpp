@@ -112,7 +112,14 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyT
 			break;
 		}
 		this->tickData.push_back(*tickData);
-		this->subtickData.push_back(*circular->subtickData->PeekSingle(i));
+		// Pack subtick data into flat storage
+		SubtickData *sd = circular->subtickData->PeekSingle(i);
+		u8 count = (u8)MIN(sd->numSubtickMoves, MAX_SUBTICK_MOVES);
+		this->subtickCounts.push_back(count);
+		for (u8 j = 0; j < count; j++)
+		{
+			this->subtickMoves.push_back(sd->subtickMoves[j]);
+		}
 	}
 	i32 first = 0;
 	bool shouldCopy = false;
@@ -236,7 +243,14 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyT
 		for (i32 i = first; i < circular->cmdData->GetReadAvailable(); i++)
 		{
 			this->cmdData.push_back(*circular->cmdData->PeekSingle(i));
-			this->cmdSubtickData.push_back(*circular->cmdSubtickData->PeekSingle(i));
+			// Pack cmd subtick data into flat storage
+			SubtickData *sd = circular->cmdSubtickData->PeekSingle(i);
+			u8 count = (u8)MIN(sd->numSubtickMoves, MAX_SUBTICK_MOVES);
+			this->cmdSubtickCounts.push_back(count);
+			for (u8 j = 0; j < count; j++)
+			{
+				this->cmdSubtickMoves.push_back(sd->subtickMoves[j]);
+			}
 		}
 	}
 }
@@ -286,13 +300,20 @@ bool Recorder::WriteToMemory(std::vector<char> &outBuffer)
 	time(&unixTime);
 	replayHeader.set_timestamp((u64)unixTime);
 
+	// Unpack subtick data from flat storage into SubtickData format for compression.
+	std::vector<SubtickData> unpackedSubtick;
+	UnpackSubtickData(unpackedSubtick, this->subtickCounts, this->subtickMoves);
+
+	std::vector<SubtickData> unpackedCmdSubtick;
+	UnpackSubtickData(unpackedCmdSubtick, this->cmdSubtickCounts, this->cmdSubtickMoves);
+
 	// Order of writing must match order of reading in kz_replaydata.cpp
 	this->WriteHeader(outBuffer);
-	KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, this->tickData, this->subtickData);
+	KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, this->tickData, unpackedSubtick);
 	KZ::replaysystem::compression::WriteWeaponsCompressed(outBuffer, this->weaponTable);
 	KZ::replaysystem::compression::WriteJumpsCompressed(outBuffer, this->jumps);
 	KZ::replaysystem::compression::WriteEventsCompressed(outBuffer, this->rpEvents);
-	KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, this->cmdData, this->cmdSubtickData);
+	KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, this->cmdData, unpackedCmdSubtick);
 
 	return true;
 }

@@ -78,7 +78,10 @@ struct Recorder
 	f32 desiredStopTime = -1;
 	ReplayHeader replayHeader; // Unified protobuf header
 	std::vector<TickData> tickData;
-	std::vector<SubtickData> subtickData;
+
+	std::vector<u8> subtickCounts;
+	std::vector<SubtickData::RpSubtickMove> subtickMoves;
+
 	std::vector<RpEvent> rpEvents;
 
 	// Empty until the replay is queued for writing.
@@ -86,7 +89,9 @@ struct Recorder
 
 	std::vector<RpJumpStats> jumps;
 	std::vector<CmdData> cmdData;
-	std::vector<SubtickData> cmdSubtickData;
+
+	std::vector<u8> cmdSubtickCounts;
+	std::vector<SubtickData::RpSubtickMove> cmdSubtickMoves;
 	// Copy the last numSeconds seconds of data from the circular recorder.
 	Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyTimerEvents, DistanceTier copyJumps);
 
@@ -134,13 +139,37 @@ struct Recorder
 	template<Vec V>
 	void PushData(const SubtickData &data)
 	{
+		u8 count = (u8)MIN(data.numSubtickMoves, MAX_SUBTICK_MOVES);
 		if constexpr (V == Vec::Tick)
 		{
-			subtickData.push_back(data);
+			subtickCounts.push_back(count);
+			for (u8 i = 0; i < count; i++)
+			{
+				subtickMoves.push_back(data.subtickMoves[i]);
+			}
 		}
 		else
 		{
-			cmdSubtickData.push_back(data);
+			cmdSubtickCounts.push_back(count);
+			for (u8 i = 0; i < count; i++)
+			{
+				cmdSubtickMoves.push_back(data.subtickMoves[i]);
+			}
+		}
+	}
+
+	// Reconstruct SubtickData vectors from packed storage (for serialization).
+	void UnpackSubtickData(std::vector<SubtickData> &out, const std::vector<u8> &counts, const std::vector<SubtickData::RpSubtickMove> &moves) const
+	{
+		out.resize(counts.size());
+		u32 offset = 0;
+		for (size_t i = 0; i < counts.size(); i++)
+		{
+			out[i].numSubtickMoves = counts[i];
+			for (u8 j = 0; j < counts[i]; j++)
+			{
+				out[i].subtickMoves[j] = moves[offset++];
+			}
 		}
 	}
 
