@@ -198,6 +198,7 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 	{
 		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
 		KZGlobalService::currentMap.info = mapOk ? std::move(mapInfo) : std::nullopt;
+		KZGlobalService::currentMap.confirmed = true;
 	}
 }
 
@@ -241,6 +242,7 @@ void KZGlobalService::SendMapChange()
 	{
 		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
 		KZGlobalService::currentMap.info = std::nullopt;
+		KZGlobalService::currentMap.confirmed = false;
 	}
 
 	KZ::api::messages::MapChange message;
@@ -797,6 +799,7 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 		{
 			std::lock_guard _guard(KZGlobalService::currentMap.mutex);
 			KZGlobalService::currentMap.info = mapOk ? std::move(ack.mapInfo) : std::nullopt;
+			KZGlobalService::currentMap.confirmed = true;
 		}
 	}
 

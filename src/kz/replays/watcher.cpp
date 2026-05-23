@@ -756,7 +756,7 @@ void ReplayWatcher::ProcessRunReplays(std::vector<std::tuple<UUID_t, ReplayHeade
 		}
 		runMap[uuid] = hdr;
 	}
-	int maxPer = MAX(KZOptionService::GetOptionInt("maxRunReplaysPerGroup", 3), 2);
+	int maxPer = (int)MAX(KZOptionService::GetOptionInt("maxRunReplaysPerGroup", 3), 0);
 	for (auto &[uuid, header] : groups)
 	{
 		std::set<UUID_t> keep;
@@ -826,7 +826,7 @@ void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHead
 		groups[key].push_back(t);
 		jumpMap[uuid] = hdr;
 	}
-	int maxPer = MAX(KZOptionService::GetOptionInt("maxJumpReplaysPerCategory", 3), 2);
+	int maxPer = (int)MAX(KZOptionService::GetOptionInt("maxJumpReplaysPerCategory", 3), 0);
 	for (auto &[key, vec] : groups)
 	{
 		std::set<UUID_t> keep;
@@ -854,7 +854,7 @@ void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHead
 void ReplayWatcher::CleanupManualReplays(std::unordered_map<UUID_t, ReplayHeader> &map,
 										 std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &bySteam)
 {
-	int maxManual = MAX(KZOptionService::GetOptionInt("maxManualReplays", 2), 2);
+	int maxManual = (int)MAX(KZOptionService::GetOptionInt("maxManualReplays", 2), 0);
 	for (auto &[steamID, vec] : bySteam)
 	{
 		if (vec.size() > maxManual)
@@ -908,7 +908,7 @@ void ReplayWatcher::ScanReplays()
 
 	time_t currentUnixTime = 0;
 	time(&currentUnixTime);
-	u32 retentionMinutes = MAX(KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880), 1440);
+	u32 retentionMinutes = (u32)MAX(KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880), 0);
 	u64 retentionSeconds = retentionMinutes * 60ULL;
 
 	while (pFileName)

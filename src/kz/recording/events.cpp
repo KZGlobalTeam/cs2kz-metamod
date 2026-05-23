@@ -3,6 +3,8 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/global/kz_global.h"
+#include "kz/option/kz_option.h"
 
 extern CConVar<i32> kz_replay_recording_min_jump_tier;
 
@@ -116,6 +118,18 @@ void KZRecordingService::OnTimerStart()
 	{
 		return;
 	}
+
+	// Skip recording run replays only when the API has confirmed the map is not global.
+	// If the API response is still pending, we record anyway to avoid missing replays on global maps.
+	if (!KZOptionService::GetOptionInt("recordNonGlobalRuns", true) && KZGlobalService::IsCurrentMapConfirmedNotGlobal())
+	{
+		KZ_LOG_DEBUG(LogChannel::Recording, "Skipping run recorder: map is not global and kz_replay_record_nonglobal_runs is false\n");
+		this->InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TIMER_START, this->player->timerService->GetTime(),
+							   this->player->timerService->GetCourse()->id);
+		this->currentRunUUID = UUID_t(false);
+		return;
+	}
+
 	this->runRecorders.push_back(RunRecorder(this->player));
 	KZ_LOG_DEBUG(LogChannel::Recording, "Timer start\n");
 	this->InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TIMER_START, this->player->timerService->GetTime(),

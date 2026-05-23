@@ -285,6 +285,9 @@ private:
 	{
 		std::mutex mutex;
 		std::optional<KZ::api::Map> info;
+		// Set to false when a map_change request is in-flight (info is pending).
+		// Set to true once the API response has been processed (global or not).
+		bool confirmed = false;
 	} currentMap;
 
 	/**
@@ -557,6 +560,22 @@ public:
 		std::lock_guard _guard(currentMap.mutex);
 		const std::optional<KZ::api::Map> &mapInfo = currentMap.info;
 		return f(mapInfo);
+	}
+
+	/**
+	 * Returns true only when the API has confirmed the current map is NOT global.
+	 * Returns false if the map IS global, or if the API response is still pending.
+	 * Also returns true when the service is permanently disconnected, since a global
+	 * confirmation will never arrive in that case.
+	 */
+	inline static bool IsCurrentMapConfirmedNotGlobal()
+	{
+		if (state.load() == State::Disconnected)
+		{
+			return true;
+		}
+		std::lock_guard _guard(currentMap.mutex);
+		return currentMap.confirmed && !currentMap.info.has_value();
 	}
 
 	struct GlobalModeChecksums
