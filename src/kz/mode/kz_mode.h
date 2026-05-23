@@ -207,6 +207,13 @@ public:
 		return true;
 	}
 
+	// Returns whether timer zones can be touched at the current point in time.
+	// Used by both the trigger system and the ztopwatch AABB check.
+	virtual bool CanTouchTimerZone()
+	{
+		return true;
+	}
+
 	// Other events
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) {}
 };

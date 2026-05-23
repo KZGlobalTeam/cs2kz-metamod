@@ -375,19 +375,19 @@ void KZVanillaModeService::OnAirMovePost()
 }
 
 // Only touch timer triggers on full ticks.
+bool KZVanillaModeService::CanTouchTimerZone()
+{
+	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	return fabs(roundf(time) - time) < 0.001f;
+}
+
 bool KZVanillaModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 {
 	if (!g_pMappingApi->IsTriggerATimerZone(trigger))
 	{
 		return true;
 	}
-	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
-	if (fabs(roundf(time) - time) < 0.001f)
-	{
-		return true;
-	}
-
-	return false;
+	return CanTouchTimerZone();
 }
 
 bool KZVanillaModeService::OnTriggerTouch(CBaseTrigger *trigger)
@@ -396,12 +396,7 @@ bool KZVanillaModeService::OnTriggerTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
-	if (fabs(roundf(time) - time) < 0.001f)
-	{
-		return true;
-	}
-	return false;
+	return CanTouchTimerZone();
 }
 
 bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
@@ -410,12 +405,7 @@ bool KZVanillaModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	f32 time = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
-	if (fabs(roundf(time) - time) < 0.001f)
-	{
-		return true;
-	}
-	return false;
+	return CanTouchTimerZone();
 }
 
 void KZVanillaModeService::OnPlayerMove()

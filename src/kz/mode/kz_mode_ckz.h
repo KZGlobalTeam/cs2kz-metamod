@@ -201,6 +201,7 @@ public:
 	virtual void OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing) override;
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
 
+	virtual bool CanTouchTimerZone() override;
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;

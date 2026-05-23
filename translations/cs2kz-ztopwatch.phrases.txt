@@ -1,0 +1,114 @@
+"Phrases"
+{
+	"Zone Stopwatch - Point Set"
+	{
+		"#format"	"point:s"
+		"en"		"{grey}Zone Stopwatch: {default}{point}{grey} set."
+	}
+	"Zone Stopwatch - Point Name - Start 1"
+	{
+		"en"		"Start Corner 1"
+	}
+	"Zone Stopwatch - Point Name - Start 2"
+	{
+		"en"		"Start Corner 2"
+	}
+	"Zone Stopwatch - Point Name - End 1"
+	{
+		"en"		"End Corner 1"
+	}
+	"Zone Stopwatch - Point Name - End 2"
+	{
+		"en"		"End Corner 2"
+	}
+	"Zone Stopwatch - Timer Running"
+	{
+		"en"		"{darkred}Zone Stopwatch is unavailable while the timer is running."
+	}
+	"Zone Stopwatch - Enabled"
+	{
+		"en"		"{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
+	}
+	"Zone Stopwatch - Disabled"
+	{
+		"en"		"{grey}Zone Stopwatch {darkred}disabled{grey}."
+	}
+	"Zone Stopwatch - Reset"
+	{
+		"en"		"{grey}Zone Stopwatch: All zones cleared."
+	}
+	"Zone Stopwatch - Start On Jump Enabled"
+	{
+		"en"		"{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
+	}
+	"Zone Stopwatch - Start On Jump Disabled"
+	{
+		"en"		"{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
+	}
+	"Zone Stopwatch - Stop On Land Enabled"
+	{
+		"en"		"{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
+	}
+	"Zone Stopwatch - Stop On Land Disabled"
+	{
+		"en"		"{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
+	}
+	"Zone Stopwatch - Time"
+	{
+		// Elapsed time: 12:34.567
+		"#format"	"time:s"
+		"en"		"{grey}Elapsed time: {default}{time}"
+	}
+	"Zone Stopwatch - Status Header"
+	{
+		"#format"	"state:s"
+		"en"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
+	}
+	"Zone Stopwatch - Status Point"
+	{
+		// Start Corner 1: set <-- next
+		"#format"	"point:s,status:s,next:s"
+		"en"		"{grey}{default}{point}{grey}: {status}{next}"
+	}	
+	"Zone Stopwatch - Status Next"
+	{
+		"en"		" <-- Next"
+	}
+	"Zone Stopwatch - Status On"
+	{
+		"en"		"ON"
+	}
+	"Zone Stopwatch - Status Off"
+	{
+		"en"		"OFF"
+	}
+	"Zone Stopwatch - Status Set"
+	{
+		"en"		"Set"
+	}
+	"Zone Stopwatch - Status Unset"
+	{
+		"en"		"Unset"
+	}
+	"Zone Stopwatch - Status Options"
+	{
+		// Start on jump: ON | Stop on land: OFF
+		"#format"	"startjump:s,stoponland:s"
+		"en"		"{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
+	}
+	"Zone Stopwatch - Usage"
+	{
+		"en"		"{grey}Check console for Zone Stopwatch usage."
+	}
+	"Zone Stopwatch - Usage - Console"
+	{
+		// Zone Stopwatch usage:
+		//   !ztopwatch / !zw: Toggle on/off
+		//   !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)
+		//   !ztopwatch clear: Clear all zones
+		//   !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)
+		//   !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)
+		//   !ztopwatch status: Show current status
+		"en"		"Zone Stopwatch usage:\n  !ztopwatch / !zw: Toggle on/off\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\n  !ztopwatch clear: Clear all zones\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\n  !ztopwatch status: Show current status"
+	}
+}

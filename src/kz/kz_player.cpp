@@ -28,6 +28,7 @@
 #include "profile/kz_profile.h"
 #include "pistol/kz_pistol.h"
 #include "fov/kz_fov.h"
+#include "ztopwatch/kz_ztopwatch.h"
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -64,6 +65,7 @@ void KZPlayer::Init()
 	delete this->profileService;
 	delete this->pistolService;
 	delete this->fovService;
+	delete this->ztopwatchService;
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->beamService = new KZBeamService(this);
@@ -89,6 +91,7 @@ void KZPlayer::Init()
 	this->profileService = new KZProfileService(this);
 	this->pistolService = new KZPistolService(this);
 	this->fovService = new KZFOVService(this);
+	this->ztopwatchService = new KZZtopwatchService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -116,6 +119,7 @@ void KZPlayer::Reset()
 	this->telemetryService->Reset();
 	this->recordingService->Reset();
 	this->paintService->Reset();
+	this->ztopwatchService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true, false);
 	g_pKZStyleManager->ClearStyles(this, true, false);
@@ -288,6 +292,7 @@ void KZPlayer::OnProcessMovementPost()
 	this->jumpstatsService->OnProcessMovementPost();
 	this->triggerService->OnProcessMovementPost();
 	KZ::replaysystem::OnProcessMovementPost(this);
+	this->ztopwatchService->OnProcessMovementPost();
 	MovementPlayer::OnProcessMovementPost();
 }
 
@@ -564,6 +569,7 @@ void KZPlayer::OnJumpLegacy()
 		this->styleServices[i]->OnJumpLegacy();
 	}
 	this->hudService->OnJump();
+	this->ztopwatchService->OnJump();
 }
 
 void KZPlayer::OnJumpLegacyPost()
@@ -586,6 +592,7 @@ void KZPlayer::OnJumpModern()
 	{
 		this->styleServices[i]->OnJumpModern();
 	}
+	this->ztopwatchService->OnJump();
 }
 
 void KZPlayer::OnJumpModernPost()

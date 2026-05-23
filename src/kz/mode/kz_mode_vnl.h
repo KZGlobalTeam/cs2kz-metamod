@@ -76,6 +76,7 @@ public:
 	virtual bool OnTriggerStartTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
+	virtual bool CanTouchTimerZone() override;
 	virtual void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity) override;
 
 	virtual void OnStartTouchGround() override;
