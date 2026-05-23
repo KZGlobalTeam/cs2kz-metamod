@@ -49,7 +49,6 @@ void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const std::vector<ch
 	// Save the downloaded replay to disk asynchronously.
 	if (replayID.IsV7())
 	{
-		g_pFullFileSystem->CreateDirHierarchy(KZ_REPLAY_DOWNLOADS_PATH, "GAME");
 		char replayPath[512];
 		V_snprintf(replayPath, sizeof(replayPath), "%s/%s.replay", KZ_REPLAY_DOWNLOADS_PATH, replayID.ToString().c_str());
 		if (g_asyncFileIO)

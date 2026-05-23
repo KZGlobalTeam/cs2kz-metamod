@@ -42,7 +42,7 @@ void ReplayFileWriter::QueueWrite(std::unique_ptr<Recorder> recorder, BufferSucc
 				return;
 			}
 			UUID_t uuid = rec->uuid;
-			f32 duration = rec->tickData.size() * ENGINE_FIXED_TICK_INTERVAL;
+			f32 duration = rec->totalTicksRecorded * ENGINE_FIXED_TICK_INTERVAL;
 			std::vector<char> buffer;
 			bool ok = rec->WriteToMemory(buffer);
 			std::lock_guard<std::mutex> lock(m_completedLock);
@@ -81,7 +81,7 @@ void ReplayFileWriter::QueueWriteToFile(std::unique_ptr<Recorder> recorder, Disk
 				return;
 			}
 			UUID_t uuid = rec->uuid;
-			f32 duration = rec->tickData.size() * ENGINE_FIXED_TICK_INTERVAL;
+			f32 duration = rec->totalTicksRecorded * ENGINE_FIXED_TICK_INTERVAL;
 			bool ok = rec->WriteToFile();
 			if (!onSuccess && !onFailure)
 			{

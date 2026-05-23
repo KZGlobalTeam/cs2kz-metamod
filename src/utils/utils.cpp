@@ -711,51 +711,88 @@ u32 utils::GetServerVersion()
 	return serverVersion;
 }
 
-bool utils::WriteBufferToFile(const char *path, const std::vector<char> &buffer)
+bool utils::WriteBufferToFile(const char *relativePath, const std::vector<char> &buffer)
 {
-	char dir[512];
-	V_ExtractFilePath(path, dir, sizeof(dir));
+	char absPath[1024];
+	V_snprintf(absPath, sizeof(absPath), "%s/csgo/%s", Plat_GetGameDirectory(), relativePath);
+
+	// Ensure directory exists
+	char dir[1024];
+	V_ExtractFilePath(absPath, dir, sizeof(dir));
 	if (dir[0])
 	{
-		g_pFullFileSystem->CreateDirHierarchy(dir, "GAME");
+		std::filesystem::create_directories(dir);
 	}
 
-	char tempPath[512];
-	V_snprintf(tempPath, sizeof(tempPath), "%s.tmp", path);
+	char tmpPath[1024];
+	V_snprintf(tmpPath, sizeof(tmpPath), "%s.tmp", absPath);
 
-	FileHandle_t file = g_pFullFileSystem->Open(tempPath, "wb", "GAME");
-	if (!file)
+	FILE *fp = fopen(tmpPath, "wb");
+	if (!fp)
 	{
-		KZ_LOG_WARN(LogChannel::General, "Failed to open file for writing: %s\n", tempPath);
+		KZ_LOG_WARN(LogChannel::General, "Failed to open file for writing: %s\n", tmpPath);
 		return false;
 	}
+	fwrite(buffer.data(), 1, buffer.size(), fp);
+	fclose(fp);
 
-	g_pFullFileSystem->Write(buffer.data(), (int)buffer.size(), file);
-	g_pFullFileSystem->Close(file);
-
-	if (!g_pFullFileSystem->RenameFile(tempPath, path, "GAME"))
+#ifdef _WIN32
+	if (!MoveFileExA(tmpPath, absPath, MOVEFILE_REPLACE_EXISTING))
+#else
+	if (rename(tmpPath, absPath) != 0)
+#endif
 	{
-		KZ_LOG_WARN(LogChannel::General, "Failed to rename file from %s to %s\n", tempPath, path);
-		g_pFullFileSystem->RemoveFile(tempPath, "GAME");
+		remove(tmpPath);
 		return false;
 	}
-
 	return true;
 }
 
-bool utils::ReadBufferFromFile(const char *path, std::vector<char> &outBuffer)
+bool utils::ReadBufferFromFile(const char *relativePath, std::vector<char> &outBuffer)
 {
-	FileHandle_t file = g_pFullFileSystem->Open(path, "rb", "GAME");
-	if (!file)
+	char absPath[1024];
+	V_snprintf(absPath, sizeof(absPath), "%s/csgo/%s", Plat_GetGameDirectory(), relativePath);
+
+	FILE *fp = fopen(absPath, "rb");
+	if (!fp)
 	{
-		KZ_LOG_WARN(LogChannel::General, "Failed to open file for reading: %s\n", path);
+		KZ_LOG_WARN(LogChannel::General, "Failed to open file for reading: %s\n", absPath);
 		return false;
 	}
-
-	u32 size = g_pFullFileSystem->Size(file);
+	fseek(fp, 0, SEEK_END);
+	long size = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
 	outBuffer.resize(size);
-	g_pFullFileSystem->Read(outBuffer.data(), (int)size, file);
-	g_pFullFileSystem->Close(file);
+	fread(outBuffer.data(), 1, size, fp);
+	fclose(fp);
+	return true;
+}
+
+void utils::RemoveFile(const char *relativePath)
+{
+	char absPath[1024];
+	V_snprintf(absPath, sizeof(absPath), "%s/csgo/%s", Plat_GetGameDirectory(), relativePath);
+	KZ_LOG_DEBUG(LogChannel::General, "Removing %s\n", absPath);
+	if (remove(absPath) != 0)
+	{
+		KZ_LOG_WARN(LogChannel::General, "Failed to remove %s\n", absPath);
+	}
+}
+
+bool utils::RenameFile(const char *oldRelativePath, const char *newRelativePath)
+{
+	char absOld[1024], absNew[1024];
+	V_snprintf(absOld, sizeof(absOld), "%s/csgo/%s", Plat_GetGameDirectory(), oldRelativePath);
+	V_snprintf(absNew, sizeof(absNew), "%s/csgo/%s", Plat_GetGameDirectory(), newRelativePath);
+#ifdef _WIN32
+	if (!MoveFileExA(absOld, absNew, MOVEFILE_REPLACE_EXISTING))
+#else
+	if (rename(absOld, absNew) != 0)
+#endif
+	{
+		KZ_LOG_WARN(LogChannel::General, "Failed to rename %s to %s\n", absOld, absNew);
+		return false;
+	}
 	return true;
 }
 

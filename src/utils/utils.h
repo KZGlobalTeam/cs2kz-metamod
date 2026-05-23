@@ -98,12 +98,12 @@ namespace utils
 
 	bool ParseSteamID2(std::string_view steamID, u64 &out);
 
-	// Atomically writes buffer to path (via a .tmp file) using the GAME search path.
-	// Creates any missing parent directories beforehand.
-	bool WriteBufferToFile(const char *path, const std::vector<char> &buffer);
-
-	// Reads a file into buffer using the GAME search path. Returns false on failure.
-	bool ReadBufferFromFile(const char *path, std::vector<char> &outBuffer);
+	// File I/O operations. All paths are relative to the game directory (game/csgo)
+	bool WriteBufferToFile(const char *relativePath, const std::vector<char> &buffer);
+	// Note: This function does NOT work with internal VPK content. Use IFileSystem directly instead for that.
+	bool ReadBufferFromFile(const char *relativePath, std::vector<char> &outBuffer);
+	void RemoveFile(const char *relativePath);
+	bool RenameFile(const char *oldRelativePath, const char *newRelativePath);
 
 	inline u32 GetPaddingForWideString(const char *string)
 	{
