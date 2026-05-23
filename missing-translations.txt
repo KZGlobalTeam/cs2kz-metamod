@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 625
-Phrases with missing translations: 409
-Total missing translation entries: 2581
+Total phrases: 650
+Phrases with missing translations: 434
+Total missing translation entries: 2881
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [████████████████████] 100.0% (625/625)
-  de (german)          [████████████████░░░░]  82.1% (513/625)
-  en (english)         [████████████████████] 100.0% (625/625)
-  es (spanish)         [█████████░░░░░░░░░░░]  45.4% (284/625)
-  fi (finnish)         [███████░░░░░░░░░░░░░]  37.4% (234/625)
-  it (italian)         [███████░░░░░░░░░░░░░]  36.2% (226/625)
-  ko (korean)          [█████████░░░░░░░░░░░]  45.9% (287/625)
-  lv (latvian)         [██████████░░░░░░░░░░]  52.6% (329/625)
-  pl (polish)          [████████████████░░░░]  82.4% (515/625)
-  ru (russian)         [████████████████████] 100.0% (625/625)
-  sv (swedish)         [████████████░░░░░░░░]  62.9% (393/625)
-  tr (turkish)         [████████░░░░░░░░░░░░]  42.1% (263/625)
-  ua (ukrainian)       [████████████████████] 100.0% (625/625)
+  chi (schinese)       [███████████████████░]  96.2% (625/650)
+  de (german)          [███████████████░░░░░]  78.9% (513/650)
+  en (english)         [████████████████████] 100.0% (650/650)
+  es (spanish)         [████████░░░░░░░░░░░░]  43.7% (284/650)
+  fi (finnish)         [███████░░░░░░░░░░░░░]  36.0% (234/650)
+  it (italian)         [██████░░░░░░░░░░░░░░]  34.8% (226/650)
+  ko (korean)          [████████░░░░░░░░░░░░]  44.2% (287/650)
+  lv (latvian)         [██████████░░░░░░░░░░]  50.6% (329/650)
+  pl (polish)          [███████████████░░░░░]  79.2% (515/650)
+  ru (russian)         [███████████████████░]  96.2% (625/650)
+  sv (swedish)         [████████████░░░░░░░░]  60.5% (393/650)
+  tr (turkish)         [████████░░░░░░░░░░░░]  40.5% (263/650)
+  ua (ukrainian)       [███████████████████░]  96.2% (625/650)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -246,65 +246,67 @@ cs2kz-commands.phrases.txt
     Missing (6): es, fi, it, ko, lv, tr
   Line 1416: "Command Description - kz_measureend"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1426: "Command Description - kz_measureblock"
+  Line 1426: "Command Description - kz_ztopwatch"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1430: "Command Description - kz_measureblock"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1436: "Command Description - kz_paint"
+  Line 1440: "Command Description - kz_paint"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1443: "Command Description - kz_paintcolor"
+  Line 1447: "Command Description - kz_paintcolor"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1450: "Command Description - kz_paintsize"
+  Line 1454: "Command Description - kz_paintsize"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1457: "Command Description - kz_togglepaint"
+  Line 1461: "Command Description - kz_togglepaint"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1464: "Command Description - kz_showpaint"
+  Line 1468: "Command Description - kz_showpaint"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1471: "Command Description - kz_cleardecals"
+  Line 1475: "Command Description - kz_cleardecals"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1478: "Command Description - kz_timerstopsound"
+  Line 1482: "Command Description - kz_timerstopsound"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1488: "Command Description - kz_autohideweapon"
+  Line 1492: "Command Description - kz_autohideweapon"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1498: "Command Description - kz_pistol"
+  Line 1502: "Command Description - kz_pistol"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1508: "Command Description - kz_rpsave"
+  Line 1512: "Command Description - kz_rpsave"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1517: "Command Description - kz_replay"
+  Line 1521: "Command Description - kz_replay"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1524: "Command Description - kz_replays"
+  Line 1528: "Command Description - kz_replays"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1533: "Command Description - kz_rpgoto"
+  Line 1537: "Command Description - kz_rpgoto"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1542: "Command Description - kz_rpgototick"
+  Line 1546: "Command Description - kz_rpgototick"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1551: "Command Description - kz_rpinfo"
+  Line 1555: "Command Description - kz_rpinfo"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1560: "Command Description - kz_rppause"
+  Line 1564: "Command Description - kz_rppause"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1569: "Command Description - kz_rploadprogress"
+  Line 1573: "Command Description - kz_rploadprogress"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1578: "Command Description - kz_rpcancelload"
+  Line 1582: "Command Description - kz_rpcancelload"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1587: "Command Description - kz_recordvolume"
+  Line 1591: "Command Description - kz_recordvolume"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1596: "Command Description - kz_cpmessage"
+  Line 1600: "Command Description - kz_cpmessage"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1605: "Command Description - kz_rphidelegs"
+  Line 1609: "Command Description - kz_rphidelegs"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1614: "Command Description - kz_accept"
+  Line 1618: "Command Description - kz_accept"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1622: "Command Description - kz_surrender"
+  Line 1626: "Command Description - kz_surrender"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1630: "Command Description - kz_mapinfo"
+  Line 1634: "Command Description - kz_mapinfo"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1637: "Command Description - kz_tier"
+  Line 1641: "Command Description - kz_tier"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1644: "Command Description - kz_modernperfstats"
+  Line 1648: "Command Description - kz_modernperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1651: "Command Description - kz_legacyperfstats"
+  Line 1655: "Command Description - kz_legacyperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1658: "Command Description - kz_resetperfstats"
+  Line 1662: "Command Description - kz_resetperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1665: "Command Description - kz_fov"
+  Line 1669: "Command Description - kz_fov"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-common.phrases.txt
@@ -971,6 +973,57 @@ cs2kz-tips-visual.phrases.txt
 ----------------------------------------------------------------------
   Line 67: "Tip - kz_fov"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+
+cs2kz-ztopwatch.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Zone Stopwatch - Point Set"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 8: "Zone Stopwatch - Point Name - Start 1"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 12: "Zone Stopwatch - Point Name - Start 2"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 16: "Zone Stopwatch - Point Name - End 1"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 20: "Zone Stopwatch - Point Name - End 2"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 24: "Zone Stopwatch - Timer Running"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 28: "Zone Stopwatch - Enabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 32: "Zone Stopwatch - Disabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 36: "Zone Stopwatch - Reset"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 40: "Zone Stopwatch - Start On Jump Enabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 44: "Zone Stopwatch - Start On Jump Disabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 48: "Zone Stopwatch - Stop On Land Enabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 52: "Zone Stopwatch - Stop On Land Disabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 56: "Zone Stopwatch - Time"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 62: "Zone Stopwatch - Status Header"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 67: "Zone Stopwatch - Status Point"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 73: "Zone Stopwatch - Status Next"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 77: "Zone Stopwatch - Status On"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 81: "Zone Stopwatch - Status Off"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 85: "Zone Stopwatch - Status Set"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 89: "Zone Stopwatch - Status Unset"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 93: "Zone Stopwatch - Status Options"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 99: "Zone Stopwatch - Usage"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 103: "Zone Stopwatch - Usage - Console"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 ======================================================================
 DETAILED MISSING MENU TRANSLATIONS
