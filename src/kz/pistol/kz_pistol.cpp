@@ -1,7 +1,6 @@
 #include "kz/pistol/kz_pistol.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
-#include "kz/quiet/kz_quiet.h"
 
 #include "utils/simplecmds.h"
 #include "icvar.h"
@@ -51,7 +50,7 @@ SCMD(kz_pistol, SCFL_PREFERENCE | SCFL_MISC | SCFL_PLAYER)
 
 void KZPistolService::UpdatePistol()
 {
-	if (!player->IsAlive() || !player->IsInGame() || player->quietService->ShouldHideWeapon())
+	if (!player->IsAlive() || !player->IsInGame())
 	{
 		return;
 	}
