@@ -1,4 +1,5 @@
 #include "kz/pistol/kz_pistol.h"
+#include "kz/quiet/kz_quiet.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
 
@@ -51,6 +52,12 @@ SCMD(kz_pistol, SCFL_PREFERENCE | SCFL_MISC | SCFL_PLAYER)
 void KZPistolService::UpdatePistol()
 {
 	if (!player->IsAlive() || !player->IsInGame())
+	{
+		return;
+	}
+	// Don't swap the weapon while the player is hiding it
+	// UpdatePistol() will be called when they toggle hide weapon off.
+	if (player->quietService->ShouldHideWeapon())
 	{
 		return;
 	}

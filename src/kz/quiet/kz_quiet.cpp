@@ -7,6 +7,7 @@
 #include "sdk/services.h"
 
 #include "kz_quiet.h"
+#include "kz/pistol/kz_pistol.h"
 #include "kz/beam/kz_beam.h"
 #include "kz/measure/kz_measure.h"
 #include "kz/option/kz_option.h"
@@ -365,6 +366,10 @@ void KZQuietService::ToggleHideWeapon()
 	this->player->optionService->SetPreferenceBool("hideWeapon", this->hideWeapon);
 	this->player->languageService->PrintChat(true, false,
 											 this->hideWeapon ? "Quiet Option - Show Weapon - Disable" : "Quiet Option - Show Weapon - Enable");
+	if (!this->hideWeapon)
+	{
+		this->player->pistolService->UpdatePistol();
+	}
 }
 
 void KZQuietService::OnPhysicsSimulatePost() {}
