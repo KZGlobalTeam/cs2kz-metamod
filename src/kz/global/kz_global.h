@@ -287,7 +287,7 @@ private:
 		std::optional<KZ::api::Map> info;
 		// Set to false when a map_change request is in-flight (info is pending).
 		// Set to true once the API response has been processed (global or not).
-		bool confirmed = false;
+		bool confirmed;
 	} currentMap;
 
 	/**
