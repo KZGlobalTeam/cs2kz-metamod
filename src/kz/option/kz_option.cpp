@@ -159,7 +159,7 @@ void KZOptionService::Cleanup()
 
 void KZOptionService::InitializeLocalPrefs(CUtlString text)
 {
-	if (this->dataState > LOCAL)
+	if (this->dataState >= LOCAL)
 	{
 		return;
 	}
@@ -195,6 +195,10 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 {
 	assert(!json.empty() && "API always sends at least an empty object");
 
+	if (this->dataState >= GLOBAL)
+	{
+		return;
+	}
 	// Load the preferences from the API into a temporary KV
 	KeyValues3 loadedPrefs(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error;
