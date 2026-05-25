@@ -4,101 +4,124 @@
 	{
 		"#format"	"point:s"
 		"en"		"{grey}Zone Stopwatch: {default}{point}{grey} set."
+		"ua"		"{grey}Zone Stopwatch: {default}{point}{grey} встановлено."
 	}
 	"Zone Stopwatch - Point Name - Start 1"
 	{
 		"en"		"Start Corner 1"
+		"ua"		"Початковий кут 1"
 	}
 	"Zone Stopwatch - Point Name - Start 2"
 	{
 		"en"		"Start Corner 2"
+		"ua"		"Початковий кут 2"
 	}
 	"Zone Stopwatch - Point Name - End 1"
 	{
 		"en"		"End Corner 1"
+		"ua"		"Кінцевий кут 1"
 	}
 	"Zone Stopwatch - Point Name - End 2"
 	{
 		"en"		"End Corner 2"
+		"ua"		"Кінцевий кут 2"
 	}
 	"Zone Stopwatch - Timer Running"
 	{
 		"en"		"{darkred}Zone Stopwatch is unavailable while the timer is running."
+		"ua"		"{darkred}Zone Stopwatch недоступний, поки таймер увімкнено."
 	}
 	"Zone Stopwatch - Enabled"
 	{
 		"en"		"{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
+		"ua"		"{grey}Zone Stopwatch {green}увімкнено{grey}. Відлік почнеться при вході в початкову зону."
 	}
 	"Zone Stopwatch - Disabled"
 	{
 		"en"		"{grey}Zone Stopwatch {darkred}disabled{grey}."
+		"ua"		"{grey}Zone Stopwatch {darkred}вимкнено{grey}."
 	}
 	"Zone Stopwatch - Reset"
 	{
 		"en"		"{grey}Zone Stopwatch: All zones cleared."
+		"ua"		"{grey}Zone Stopwatch: Усі зони очищено."
 	}
 	"Zone Stopwatch - Start On Jump Enabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
+		"ua"		"{grey}Zone Stopwatch: Старт при стрибку {green}увімкнено{grey}."
 	}
 	"Zone Stopwatch - Start On Jump Disabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
+		"ua"		"{grey}Zone Stopwatch: Старт при стрибку {darkred}вимкнено{grey}."
 	}
 	"Zone Stopwatch - Stop On Land Enabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
+		"ua"		"{grey}Zone Stopwatch: Зупинка при приземленні {green}увімкнена{grey}."
 	}
 	"Zone Stopwatch - Stop On Land Disabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
+		"ua"		"{grey}Zone Stopwatch: Зупинка при приземленні {darkred}вимкнена{grey}"
 	}
 	"Zone Stopwatch - Time"
 	{
 		// Elapsed time: 12:34.567
 		"#format"	"time:s"
 		"en"		"{grey}Elapsed time: {default}{time}"
+		"ua"		"{grey}Витрачений час: {default}{time}"
 	}
 	"Zone Stopwatch - Status Header"
 	{
 		"#format"	"state:s"
 		"en"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
+		"ua"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
 	}
 	"Zone Stopwatch - Status Point"
 	{
 		// Start Corner 1: set <-- next
 		"#format"	"point:s,status:s,next:s"
 		"en"		"{grey}{default}{point}{grey}: {status}{next}"
+		"ua"		"{grey}{default}{point}{grey}: {status}{next}"
 	}	
 	"Zone Stopwatch - Status Next"
 	{
 		"en"		" <-- Next"
+		"ua"		" <-- Наступний"
 	}
 	"Zone Stopwatch - Status On"
 	{
 		"en"		"ON"
+		"ua"		"УВІМК"
 	}
 	"Zone Stopwatch - Status Off"
 	{
 		"en"		"OFF"
+		"ua"		"ВИМК"
 	}
 	"Zone Stopwatch - Status Set"
 	{
 		"en"		"Set"
+		"ua"		"Встановлено"
 	}
 	"Zone Stopwatch - Status Unset"
 	{
 		"en"		"Unset"
+		"ua"		"Не встановлено"
 	}
 	"Zone Stopwatch - Status Options"
 	{
 		// Start on jump: ON | Stop on land: OFF
 		"#format"	"startjump:s,stoponland:s"
 		"en"		"{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
+		"ua"		"{grey}Старт при стрибку: {default}{startjump}{grey} | Зупинка при приземленні: {default}{stoponland}"
 	}
 	"Zone Stopwatch - Usage"
 	{
 		"en"		"{grey}Check console for Zone Stopwatch usage."
+		"ua"		"{grey}Інструкція Zone Stopwatch виведена в консоль."
 	}
 	"Zone Stopwatch - Usage - Console"
 	{
@@ -110,5 +133,6 @@
 		//   !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)
 		//   !ztopwatch status: Show current status
 		"en"		"Zone Stopwatch usage:\n  !ztopwatch / !zw: Toggle on/off\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\n  !ztopwatch clear: Clear all zones\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\n  !ztopwatch status: Show current status"
+		"ua"		"Використання Zone Stopwatch:\n  !ztopwatch / !zw: Увімкнути/вимкнути\n  !ztopwatch place: Встановити наступний кут (послідовність: початковий 1 -> початковий 2 -> кінцевий 1 -> кінцевий 2)\n  !ztopwatch clear: Очистити всі зони\n  !ztopwatch startjump / sj: Старт таймера при стрибку (замість входу в зону)\n  !ztopwatch stopland / sl: Зупинка таймера при приземленні (замість входу в зону)\n  !ztopwatch status: Показати поточний статус"
 	}
 }
