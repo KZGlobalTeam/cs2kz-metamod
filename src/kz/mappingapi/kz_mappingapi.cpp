@@ -1016,8 +1016,8 @@ static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ:
 			tierClassic = std::to_string((u8)apiCourse->filters.classic.nubTier) + "/" + std::to_string((u8)apiCourse->filters.classic.proTier);
 			tierVanilla = std::to_string((u8)apiCourse->filters.vanilla.nubTier) + "/" + std::to_string((u8)apiCourse->filters.vanilla.proTier);
 			// States
-			stateClassic = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.classic.state + 1]);
-			stateVanilla = player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.vanilla.state + 1]);
+			stateClassic = player->languageService->PrepareMessage(courseStateKeys[(i8)apiCourse->filters.classic.state + 1]);
+			stateVanilla = player->languageService->PrepareMessage(courseStateKeys[(i8)apiCourse->filters.vanilla.state + 1]);
 		}
 		else
 		{
@@ -1264,8 +1264,8 @@ static_function void PrintCourseTier(KZPlayer *player, const CCommand *args)
 	u8 proTier =
 		u8(KZ_STREQI(player->modeService->GetModeName(), "Classic") ? apiCourse->filters.classic.proTier : apiCourse->filters.vanilla.proTier);
 	std::string state = KZ_STREQI(player->modeService->GetModeName(), "Classic")
-							? player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.classic.state + 1])
-							: player->languageService->PrepareMessage(courseStateKeys[(u8)apiCourse->filters.vanilla.state + 1]);
+							? player->languageService->PrepareMessage(courseStateKeys[(i8)apiCourse->filters.classic.state + 1])
+							: player->languageService->PrepareMessage(courseStateKeys[(i8)apiCourse->filters.vanilla.state + 1]);
 	std::string description = apiCourse->description ? ": " + apiCourse->description.value() : "";
 	player->languageService->PrintChat(true, false, "Tier Info", course->name, nubTier, proTier, state.c_str(), description.c_str());
 }
