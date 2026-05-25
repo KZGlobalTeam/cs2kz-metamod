@@ -15,7 +15,7 @@ SUMMARY: 0 error(s), 24 warning(s)
 
 cs2kz-ztopwatch.phrases.txt (0 errors, 1 warnings)
 --------------------------------------------------
-  cs2kz-ztopwatch.phrases.txt:72: [WARNING] Formatting: Line has trailing whitespace
+  cs2kz-ztopwatch.phrases.txt:88: [WARNING] Formatting: Line has trailing whitespace
 
 menu/ (0 errors, 23 warnings)
 --------------------------------------------------

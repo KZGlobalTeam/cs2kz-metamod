@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 650,
     "phrases_with_missing": 434,
-    "total_missing_entries": 2881,
+    "total_missing_entries": 2856,
     "all_languages": [
       "chi",
       "de",
@@ -76,139 +76,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -268,91 +268,91 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -916,139 +916,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -1457,181 +1457,181 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1430,
+          "line": 1431,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1482,
+          "line": 1483,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1492,
+          "line": 1493,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1502,
+          "line": 1503,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -3137,139 +3137,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -3749,181 +3749,181 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1430,
+          "line": 1431,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1482,
+          "line": 1483,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1492,
+          "line": 1493,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1502,
+          "line": 1503,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -5651,139 +5651,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -6239,181 +6239,181 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1430,
+          "line": 1431,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1482,
+          "line": 1483,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1492,
+          "line": 1493,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1502,
+          "line": 1503,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -8213,139 +8213,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -8723,181 +8723,181 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1430,
+          "line": 1431,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1482,
+          "line": 1483,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1492,
+          "line": 1493,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1502,
+          "line": 1503,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -10409,139 +10409,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -10764,181 +10764,181 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1430,
+          "line": 1431,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1482,
+          "line": 1483,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1492,
+          "line": 1493,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1502,
+          "line": 1503,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -12348,139 +12348,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -12535,79 +12535,79 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -13171,139 +13171,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -13334,139 +13334,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -13551,157 +13551,157 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -14889,139 +14889,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -15448,181 +15448,181 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1430,
+          "line": 1431,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1482,
+          "line": 1483,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1492,
+          "line": 1493,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1502,
+          "line": 1503,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV."
         },
         {
@@ -17224,139 +17224,139 @@
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage."
         },
         {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
         }
       ],
@@ -17373,161 +17373,10 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 96.15,
-      "translated": 625,
-      "missing": 25,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_ztopwatch",
-          "line": 1426,
-          "english_text": "Toggle the zone stopwatch on/off, or use subcommands: place (set next corner), clear (reset zones), startjump/sj (toggle start on jump), stopland/sl (toggle stop on land), status."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Point Set",
-          "line": 3,
-          "english_text": "{grey}Zone Stopwatch: {default}{point}{grey} set."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
-          "english_text": "Start Corner 1"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
-          "english_text": "Start Corner 2"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
-          "english_text": "End Corner 1"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
-          "english_text": "End Corner 2"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Timer Running",
-          "line": 24,
-          "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Enabled",
-          "line": 28,
-          "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Disabled",
-          "line": 32,
-          "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Reset",
-          "line": 36,
-          "english_text": "{grey}Zone Stopwatch: All zones cleared."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
-          "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
-          "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
-          "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
-          "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Time",
-          "line": 56,
-          "english_text": "{grey}Elapsed time: {default}{time}"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status Header",
-          "line": 62,
-          "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status Point",
-          "line": 67,
-          "english_text": "{grey}{default}{point}{grey}: {status}{next}"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status Next",
-          "line": 73,
-          "english_text": " <-- Next"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status On",
-          "line": 77,
-          "english_text": "ON"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status Off",
-          "line": 81,
-          "english_text": "OFF"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status Set",
-          "line": 85,
-          "english_text": "Set"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status Unset",
-          "line": 89,
-          "english_text": "Unset"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Status Options",
-          "line": 93,
-          "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Usage",
-          "line": 99,
-          "english_text": "{grey}Check console for Zone Stopwatch usage."
-        },
-        {
-          "file": "cs2kz-ztopwatch.phrases.txt",
-          "phrase": "Zone Stopwatch - Usage - Console",
-          "line": 103,
-          "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status"
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 650,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -19346,7 +19195,8 @@
           "line": 1426,
           "english_text": "Toggle the zone stopwatch on/off, or use subcommands: place (set next corner), clear (reset zones), startjump/sj (toggle start on jump), stopland/sl (toggle stop on land), status.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -19359,13 +19209,12 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Command Description - kz_measureblock",
-          "line": 1430,
+          "line": 1431,
           "english_text": "Measure the block distance.",
           "existing_languages": [
             "chi",
@@ -19387,7 +19236,7 @@
         },
         {
           "name": "Command Description - kz_paint",
-          "line": 1440,
+          "line": 1441,
           "english_text": "Place a paint decal on the surface you are aiming at.",
           "existing_languages": [
             "chi",
@@ -19409,7 +19258,7 @@
         },
         {
           "name": "Command Description - kz_paintcolor",
-          "line": 1447,
+          "line": 1448,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values.",
           "existing_languages": [
             "chi",
@@ -19431,7 +19280,7 @@
         },
         {
           "name": "Command Description - kz_paintsize",
-          "line": 1454,
+          "line": 1455,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8).",
           "existing_languages": [
             "chi",
@@ -19453,7 +19302,7 @@
         },
         {
           "name": "Command Description - kz_togglepaint",
-          "line": 1461,
+          "line": 1462,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces.",
           "existing_languages": [
             "chi",
@@ -19475,7 +19324,7 @@
         },
         {
           "name": "Command Description - kz_showpaint",
-          "line": 1468,
+          "line": 1469,
           "english_text": "Toggle between showing only your own paint and showing paint from all players.",
           "existing_languages": [
             "chi",
@@ -19497,7 +19346,7 @@
         },
         {
           "name": "Command Description - kz_cleardecals",
-          "line": 1475,
+          "line": 1476,
           "english_text": "Remove all decals from the map.",
           "existing_languages": [
             "chi",
@@ -19519,7 +19368,7 @@
         },
         {
           "name": "Command Description - kz_timerstopsound",
-          "line": 1482,
+          "line": 1483,
           "english_text": "Toggle the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -19541,7 +19390,7 @@
         },
         {
           "name": "Command Description - kz_autohideweapon",
-          "line": 1492,
+          "line": 1493,
           "english_text": "Toggle the automatic hiding of weapon viewmodel.",
           "existing_languages": [
             "chi",
@@ -19563,7 +19412,7 @@
         },
         {
           "name": "Command Description - kz_pistol",
-          "line": 1502,
+          "line": 1503,
           "english_text": "Change or remove the current pistol.",
           "existing_languages": [
             "chi",
@@ -19585,7 +19434,7 @@
         },
         {
           "name": "Command Description - kz_rpsave",
-          "line": 1512,
+          "line": 1513,
           "english_text": "Manually save past gameplay into a replay.",
           "existing_languages": [
             "chi",
@@ -19607,7 +19456,7 @@
         },
         {
           "name": "Command Description - kz_replay",
-          "line": 1521,
+          "line": 1522,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.).",
           "existing_languages": [
             "chi",
@@ -19629,7 +19478,7 @@
         },
         {
           "name": "Command Description - kz_replays",
-          "line": 1528,
+          "line": 1529,
           "english_text": "List saved replays.",
           "existing_languages": [
             "chi",
@@ -19651,7 +19500,7 @@
         },
         {
           "name": "Command Description - kz_rpgoto",
-          "line": 1537,
+          "line": 1538,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)",
           "existing_languages": [
             "chi",
@@ -19673,7 +19522,7 @@
         },
         {
           "name": "Command Description - kz_rpgototick",
-          "line": 1546,
+          "line": 1547,
           "english_text": "Go to a specific tick in the replay.",
           "existing_languages": [
             "chi",
@@ -19695,7 +19544,7 @@
         },
         {
           "name": "Command Description - kz_rpinfo",
-          "line": 1555,
+          "line": 1556,
           "english_text": "Display information about the current replay.",
           "existing_languages": [
             "chi",
@@ -19717,7 +19566,7 @@
         },
         {
           "name": "Command Description - kz_rppause",
-          "line": 1564,
+          "line": 1565,
           "english_text": "Pause or resume the current replay.",
           "existing_languages": [
             "chi",
@@ -19739,7 +19588,7 @@
         },
         {
           "name": "Command Description - kz_rploadprogress",
-          "line": 1573,
+          "line": 1574,
           "english_text": "Display the loading progress of the replay.",
           "existing_languages": [
             "chi",
@@ -19761,7 +19610,7 @@
         },
         {
           "name": "Command Description - kz_rpcancelload",
-          "line": 1582,
+          "line": 1583,
           "english_text": "Cancel the loading of the replay.",
           "existing_languages": [
             "chi",
@@ -19783,7 +19632,7 @@
         },
         {
           "name": "Command Description - kz_recordvolume",
-          "line": 1591,
+          "line": 1592,
           "english_text": "Set the volume of the world record sound effect.",
           "existing_languages": [
             "chi",
@@ -19805,7 +19654,7 @@
         },
         {
           "name": "Command Description - kz_cpmessage",
-          "line": 1600,
+          "line": 1601,
           "english_text": "Toggle checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -19827,7 +19676,7 @@
         },
         {
           "name": "Command Description - kz_rphidelegs",
-          "line": 1609,
+          "line": 1610,
           "english_text": "Toggle replay bot's first person legs visibility.",
           "existing_languages": [
             "chi",
@@ -19849,7 +19698,7 @@
         },
         {
           "name": "Command Description - kz_accept",
-          "line": 1618,
+          "line": 1619,
           "english_text": "Accept an incoming race.",
           "existing_languages": [
             "chi",
@@ -19871,7 +19720,7 @@
         },
         {
           "name": "Command Description - kz_surrender",
-          "line": 1626,
+          "line": 1627,
           "english_text": "Surrender an ongoing race.",
           "existing_languages": [
             "chi",
@@ -19893,7 +19742,7 @@
         },
         {
           "name": "Command Description - kz_mapinfo",
-          "line": 1634,
+          "line": 1635,
           "english_text": "Display information about the current map.",
           "existing_languages": [
             "chi",
@@ -19915,7 +19764,7 @@
         },
         {
           "name": "Command Description - kz_tier",
-          "line": 1641,
+          "line": 1642,
           "english_text": "Display the tier of the current course or a specified course.",
           "existing_languages": [
             "chi",
@@ -19937,7 +19786,7 @@
         },
         {
           "name": "Command Description - kz_modernperfstats",
-          "line": 1648,
+          "line": 1649,
           "english_text": "Retrieve bhop statistics for modern jumping.",
           "existing_languages": [
             "chi",
@@ -19959,7 +19808,7 @@
         },
         {
           "name": "Command Description - kz_legacyperfstats",
-          "line": 1655,
+          "line": 1656,
           "english_text": "Retrieve bhop statistics for legacy jumping.",
           "existing_languages": [
             "chi",
@@ -19981,7 +19830,7 @@
         },
         {
           "name": "Command Description - kz_resetperfstats",
-          "line": 1662,
+          "line": 1663,
           "english_text": "Reset bhop statistics for modern and legacy jumping.",
           "existing_languages": [
             "chi",
@@ -20003,7 +19852,7 @@
         },
         {
           "name": "Command Description - kz_fov",
-          "line": 1669,
+          "line": 1670,
           "english_text": "Change your FOV.",
           "existing_languages": [
             "chi",
@@ -26704,7 +26553,8 @@
           "line": 3,
           "english_text": "{grey}Zone Stopwatch: {default}{point}{grey} set.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26717,16 +26567,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Point Name - Start 1",
-          "line": 8,
+          "line": 9,
           "english_text": "Start Corner 1",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26739,16 +26589,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Point Name - Start 2",
-          "line": 12,
+          "line": 14,
           "english_text": "Start Corner 2",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26761,16 +26611,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Point Name - End 1",
-          "line": 16,
+          "line": 19,
           "english_text": "End Corner 1",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26783,16 +26633,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Point Name - End 2",
-          "line": 20,
+          "line": 24,
           "english_text": "End Corner 2",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26805,16 +26655,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Timer Running",
-          "line": 24,
+          "line": 29,
           "english_text": "{darkred}Zone Stopwatch is unavailable while the timer is running.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26827,16 +26677,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Enabled",
-          "line": 28,
+          "line": 34,
           "english_text": "{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26849,16 +26699,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Disabled",
-          "line": 32,
+          "line": 39,
           "english_text": "{grey}Zone Stopwatch {darkred}disabled{grey}.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26871,16 +26721,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Reset",
-          "line": 36,
+          "line": 44,
           "english_text": "{grey}Zone Stopwatch: All zones cleared.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26893,16 +26743,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Start On Jump Enabled",
-          "line": 40,
+          "line": 49,
           "english_text": "{grey}Zone Stopwatch: Start on jump {green}enabled{grey}.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26915,16 +26765,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Start On Jump Disabled",
-          "line": 44,
+          "line": 54,
           "english_text": "{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26937,16 +26787,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Stop On Land Enabled",
-          "line": 48,
+          "line": 59,
           "english_text": "{grey}Zone Stopwatch: Stop on land {green}enabled{grey}.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26959,16 +26809,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Stop On Land Disabled",
-          "line": 52,
+          "line": 64,
           "english_text": "{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -26981,16 +26831,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Time",
-          "line": 56,
+          "line": 69,
           "english_text": "{grey}Elapsed time: {default}{time}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27003,16 +26853,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status Header",
-          "line": 62,
+          "line": 76,
           "english_text": "{grey}--- Zone Stopwatch [{default}{state}{grey}] ---",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27025,16 +26875,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status Point",
-          "line": 67,
+          "line": 82,
           "english_text": "{grey}{default}{point}{grey}: {status}{next}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27047,16 +26897,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status Next",
-          "line": 73,
+          "line": 89,
           "english_text": " <-- Next",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27069,16 +26919,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status On",
-          "line": 77,
+          "line": 94,
           "english_text": "ON",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27091,16 +26941,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status Off",
-          "line": 81,
+          "line": 99,
           "english_text": "OFF",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27113,16 +26963,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status Set",
-          "line": 85,
+          "line": 104,
           "english_text": "Set",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27135,16 +26985,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status Unset",
-          "line": 89,
+          "line": 109,
           "english_text": "Unset",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27157,16 +27007,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Status Options",
-          "line": 93,
+          "line": 114,
           "english_text": "{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27179,16 +27029,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Usage",
-          "line": 99,
+          "line": 121,
           "english_text": "{grey}Check console for Zone Stopwatch usage.",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27201,16 +27051,16 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Zone Stopwatch - Usage - Console",
-          "line": 103,
+          "line": 126,
           "english_text": "Zone Stopwatch usage:\\n  !ztopwatch / !zw: Toggle on/off\\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\\n  !ztopwatch clear: Clear all zones\\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\\n  !ztopwatch status: Show current status",
           "existing_languages": [
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -27223,8 +27073,7 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
