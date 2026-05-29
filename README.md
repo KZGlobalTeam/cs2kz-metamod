@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 711 |
 | **Phrases Missing Translations** | 495 |
-| **Total Missing Entries** | 3588 |
+| **Total Missing Entries** | 3527 |
 | **Menu Files** | 10 |
 
 ## Language Coverage (Phrases)
@@ -29,7 +29,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [█████████████████░░░]  87.9% (625/711)
   sv (swedish)         [███████████░░░░░░░░░]  55.3% (393/711)
   tr (turkish)         [███████░░░░░░░░░░░░░]  37.0% (263/711)
-  ua (ukrainian)       [██████████████████░░]  91.4% (650/711)
+  ua (ukrainian)       [████████████████████] 100.0% (711/711)
 ```
 
 ## Menu Translation Status
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`3c2bc6f`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/3c2bc6f0ef43dae0774f04e1d51929a3c1ad7805)
-- **Time:** 2026-05-29 16:44:48 UTC
-- **Message:** Add particle-based HUD support, cleanup compact code logic
+- **Commit:** [`7401210`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/7401210ffc790aed7fc2da85e2ab61c19226b3b8)
+- **Time:** 2026-05-29 19:30:14 UTC
+- **Message:** Ukrainian translations (#567)
 
 ---
 

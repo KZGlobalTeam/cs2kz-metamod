@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 711
 Phrases with missing translations: 495
-Total missing translation entries: 3588
+Total missing translation entries: 3527
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [█████████████████░░░]  87.9% (625/711)
   sv (swedish)         [███████████░░░░░░░░░]  55.3% (393/711)
   tr (turkish)         [███████░░░░░░░░░░░░░]  37.0% (263/711)
-  ua (ukrainian)       [██████████████████░░]  91.4% (650/711)
+  ua (ukrainian)       [████████████████████] 100.0% (711/711)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -309,7 +309,7 @@ cs2kz-commands.phrases.txt
   Line 1670: "Command Description - kz_fov"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 1677: "Command Description - kz_mhud"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -401,125 +401,125 @@ cs2kz-hud.phrases.txt
   Line 266: "Panel Command Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 274: "MHUD - Speed Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 278: "MHUD - Speed Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 282: "MHUD - Prespeed Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 286: "MHUD - Prespeed Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 290: "MHUD - Timer Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 294: "MHUD - Timer Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 298: "MHUD - Timer Detail Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 302: "MHUD - Timer Detail Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 306: "MHUD - Keys Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 310: "MHUD - Keys Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 314: "MHUD - Keys Overlap Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 318: "MHUD - Keys Overlap Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 322: "MHUD - Speed Offset Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 327: "MHUD - Speed Offset Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 332: "MHUD - Speed Scale Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 337: "MHUD - Speed Scale Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 342: "MHUD - Speed Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 347: "MHUD - Speed Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 351: "MHUD - Speed CJ Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 356: "MHUD - Speed CJ Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 360: "MHUD - Speed Reset"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 364: "MHUD - Prespeed Offset Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 369: "MHUD - Prespeed Offset Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 374: "MHUD - Prespeed Scale Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 379: "MHUD - Prespeed Scale Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 384: "MHUD - Prespeed Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 389: "MHUD - Prespeed Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 393: "MHUD - Prespeed Perf Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 398: "MHUD - Prespeed Perf Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 402: "MHUD - Prespeed Jumpbug Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 407: "MHUD - Prespeed Jumpbug Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 411: "MHUD - Prespeed Reset"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 415: "MHUD - Timer Offset Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 420: "MHUD - Timer Offset Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 425: "MHUD - Timer Scale Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 430: "MHUD - Timer Scale Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 435: "MHUD - Timer TP Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 440: "MHUD - Timer TP Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 444: "MHUD - Timer Pro Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 449: "MHUD - Timer Pro Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 453: "MHUD - Timer Paused Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 458: "MHUD - Timer Paused Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 462: "MHUD - Timer Stopped Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 467: "MHUD - Timer Stopped Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 471: "MHUD - Timer Reset"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 475: "MHUD - Keys Offset Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 480: "MHUD - Keys Offset Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 485: "MHUD - Keys Scale Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 490: "MHUD - Keys Scale Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 495: "MHUD - Keys Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 500: "MHUD - Keys Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 504: "MHUD - Keys Overlap Color Set"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 509: "MHUD - Keys Overlap Color Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 513: "MHUD - Keys Reset"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 517: "MHUD - Unavailable"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 521: "MHUD - Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 525: "MHUD - Speed Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 529: "MHUD - Prespeed Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 533: "MHUD - Timer Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 537: "MHUD - Keys Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 279: "MHUD - Speed Disabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 284: "MHUD - Prespeed Enabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 289: "MHUD - Prespeed Disabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 294: "MHUD - Timer Enabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 299: "MHUD - Timer Disabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 304: "MHUD - Timer Detail Enabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 309: "MHUD - Timer Detail Disabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 314: "MHUD - Keys Enabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 319: "MHUD - Keys Disabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 324: "MHUD - Keys Overlap Enabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 329: "MHUD - Keys Overlap Disabled"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 334: "MHUD - Speed Offset Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 340: "MHUD - Speed Offset Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 346: "MHUD - Speed Scale Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 352: "MHUD - Speed Scale Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 358: "MHUD - Speed Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 364: "MHUD - Speed Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 369: "MHUD - Speed CJ Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 375: "MHUD - Speed CJ Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 380: "MHUD - Speed Reset"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 385: "MHUD - Prespeed Offset Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 391: "MHUD - Prespeed Offset Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 397: "MHUD - Prespeed Scale Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 403: "MHUD - Prespeed Scale Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 409: "MHUD - Prespeed Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 415: "MHUD - Prespeed Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 420: "MHUD - Prespeed Perf Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 426: "MHUD - Prespeed Perf Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 431: "MHUD - Prespeed Jumpbug Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 437: "MHUD - Prespeed Jumpbug Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 442: "MHUD - Prespeed Reset"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 447: "MHUD - Timer Offset Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 453: "MHUD - Timer Offset Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 459: "MHUD - Timer Scale Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 465: "MHUD - Timer Scale Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 471: "MHUD - Timer TP Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 477: "MHUD - Timer TP Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 482: "MHUD - Timer Pro Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 488: "MHUD - Timer Pro Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 493: "MHUD - Timer Paused Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 499: "MHUD - Timer Paused Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 504: "MHUD - Timer Stopped Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 510: "MHUD - Timer Stopped Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 515: "MHUD - Timer Reset"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 520: "MHUD - Keys Offset Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 526: "MHUD - Keys Offset Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 532: "MHUD - Keys Scale Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 538: "MHUD - Keys Scale Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 544: "MHUD - Keys Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 550: "MHUD - Keys Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 555: "MHUD - Keys Overlap Color Set"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 561: "MHUD - Keys Overlap Color Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 566: "MHUD - Keys Reset"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 571: "MHUD - Unavailable"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 576: "MHUD - Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 581: "MHUD - Speed Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 586: "MHUD - Prespeed Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 591: "MHUD - Timer Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 596: "MHUD - Keys Usage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------
