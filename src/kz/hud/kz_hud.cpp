@@ -67,6 +67,7 @@ void KZHUDService::OnProcessMovement()
 		{
 			this->particlesActive = useParticles;
 			utils::SendConVarValue(this->player->GetPlayerSlot(), sv_suppress_viewpunch, useParticles ? "1" : "0");
+			utils::SendConVarValue(this->player->GetPlayerSlot(), "view_punch_decay", useParticles ? "99999" : "18");
 		}
 		auto dst = sv_suppress_viewpunch.GetConVarData()->Value(-1);
 		auto traits = sv_suppress_viewpunch.TypeTraits();
@@ -205,14 +206,14 @@ std::string KZHUDService::GetTimerText(const char *language)
 void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 {
 	// Only update/show particles for alive players when MHUD is available.
-	bool useParticles = player->IsAlive() && KZHUDService::IsMHUDAvailable();
+	bool useParticles = target->IsAlive() && KZHUDService::IsMHUDAvailable();
 	if (useParticles)
 	{
-		player->hudService->UpdateParticles();
+		target->hudService->UpdateParticles();
 	}
 	else
 	{
-		player->hudService->DestroyAllParticles();
+		target->hudService->DestroyAllParticles();
 	}
 	if (!target->hudService->IsShowingPanel())
 	{
@@ -221,9 +222,9 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 	const char *language = target->languageService->GetLanguage();
 
 	// Per-element panel suppression: only active when the particle HUD is live.
-	bool suppressSpeed = useParticles && player->hudService->IsMHUDSpeedEnabled();
-	bool suppressTimer = useParticles && player->hudService->IsMHUDTimerEnabled();
-	bool suppressKeys = useParticles && player->hudService->IsMHUDKeysEnabled();
+	bool suppressSpeed = useParticles && target->hudService->IsMHUDSpeedEnabled();
+	bool suppressTimer = useParticles && target->hudService->IsMHUDTimerEnabled();
+	bool suppressKeys = useParticles && target->hudService->IsMHUDKeysEnabled();
 
 	std::string keyText = suppressKeys ? std::string("") : player->hudService->GetKeyText(language);
 	std::string checkpointText = player->hudService->GetCheckpointText(language);
