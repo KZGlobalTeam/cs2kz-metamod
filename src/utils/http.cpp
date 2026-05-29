@@ -100,7 +100,7 @@ namespace HTTP
 					methodStr = "PATCH";
 					break;
 			}
-			KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Sending HTTP %s request to `%s`\n", url.c_str());
+			KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Sending HTTP %s request to `%s`\n", methodStr.c_str(), url.c_str());
 			if (!body.empty())
 			{
 				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Body: %s\n", body.c_str());
