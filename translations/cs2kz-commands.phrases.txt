@@ -1677,5 +1677,6 @@
 	"Command Description - kz_mhud"
 	{
 		"en"		"Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+		"ua"		"Налаштувати HUD. Використання: kz_mhud <speed|prespeed|timer|keys> [властивість] [значення...]"
 	}
 }
