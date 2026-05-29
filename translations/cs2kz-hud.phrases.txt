@@ -274,268 +274,328 @@
 	"MHUD - Speed Enabled"
 	{
 		"en"		"{grey}Speed is currently {green}enabled."
+		"ua"		"{grey}Відображення швидкості {green}увімкнено."
 	}
 	"MHUD - Speed Disabled"
 	{
 		"en"		"{grey}Speed is currently {darkred}disabled."
+		"ua"		"{grey}Відображення швидкості {darkred}вимкнено."
 	}
 	"MHUD - Prespeed Enabled"
 	{
 		"en"		"{grey}Prespeed is currently {green}enabled."
+		"ua"		"{grey}Відображення пре-швидкості (prespeed) {green}увімкнено."
 	}
 	"MHUD - Prespeed Disabled"
 	{
 		"en"		"{grey}Prespeed is currently {darkred}disabled."
+		"ua"		"{grey}Відображення пре-швидкості (prespeed) {darkred}вимкнено."
 	}
 	"MHUD - Timer Enabled"
 	{
 		"en"		"{grey}Timer is currently {green}enabled."
+		"ua"		"{grey}Відображення таймера {green}увімкнено."
 	}
 	"MHUD - Timer Disabled"
 	{
 		"en"		"{grey}Timer is currently {darkred}disabled."
+		"ua"		"{grey}Відображення таймера {darkred}вимкнено."
 	}
 	"MHUD - Timer Detail Enabled"
 	{
 		"en"		"{grey}Timer detail is currently {green}enabled."
+		"ua"		"{grey}Розширений таймер {green}увімкнено."
 	}
 	"MHUD - Timer Detail Disabled"
 	{
 		"en"		"{grey}Timer detail is currently {darkred}disabled."
+		"ua"		"{grey}Розширений таймер {darkred}вимкнено."
 	}
 	"MHUD - Keys Enabled"
 	{
 		"en"		"{grey}Keys are currently {green}enabled."
+		"ua"		"{grey}Відображення клавіш {green}увімкнено."
 	}
 	"MHUD - Keys Disabled"
 	{
 		"en"		"{grey}Keys are currently {darkred}disabled."
+		"ua"		"{grey}Відображення клавіш {darkred}вимкнено."
 	}
 	"MHUD - Keys Overlap Enabled"
 	{
 		"en"		"{grey}Keys overlap is currently {green}enabled."
+		"ua"		"{grey}Накладання (overlap) клавіш {green}увімкнено."
 	}
 	"MHUD - Keys Overlap Disabled"
 	{
 		"en"		"{grey}Keys overlap is currently {darkred}disabled."
+		"ua"		"{grey}Накладання (overlap) клавіш {darkred}вимкнено."
 	}
 	"MHUD - Speed Offset Set"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}speed{grey} offset has been updated to {default}({x}, {y})."
+		"ua"		"{grey}Зміщення {default}швидкості{grey} в HUD змінено на {default}({x}, {y})."
 	}
 	"MHUD - Speed Offset Usage"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}speed{grey} offset is currently {default}({x}, {y}){grey}.  Usage: {default}!mhud speed offset {grey}<x> <y>"
+		"ua"		"{grey}Зміщення {default}швидкості{grey} в HUD зараз {default}({x}, {y}){grey}.  Використання: {default}!mhud speed offset {grey}<x> <y>"
 	}
 	"MHUD - Speed Scale Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}speed{grey} scale has been updated to {default}{value}."
+		"ua"		"{grey}Розмір {default}швидкості{grey} в HUD змінено на {default}{value}."
 	}
 	"MHUD - Speed Scale Usage"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}speed{grey} scale is currently {default}{value}{grey}.  Usage: {default}!mhud speed scale {grey}<value>"
+		"ua"		"{grey}Розмір {default}швидкості{grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud speed scale {grey}<значення>"
 	}
 	"MHUD - Speed Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}speed{grey} color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}швидкості{grey} в HUD змінено на {default}{value}."
 	}
 	"MHUD - Speed Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud speed color {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud speed color {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Speed CJ Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}speed{grey} crouch jump color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}швидкості{grey} для стрибків у присяді (CJ) в HUD змінено на {default}{value}."
 	}
 	"MHUD - Speed CJ Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud speed cjcolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud speed cjcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Speed Reset"
 	{
 		"en"		"{grey}HUD {default}speed{grey} settings have been reset to defaults."
+		"ua"		"{grey}Налаштування {default}швидкості{grey} в HUD скинуті до стандартних."
 	}
 	"MHUD - Prespeed Offset Set"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}prespeed{grey} offset has been updated to {default}({x}, {y})."
+		"ua"		"{grey}Зміщення {default}пре-швидкості (prespeed){grey} в HUD зараз {default}({x}, {y})."
 	}
 	"MHUD - Prespeed Offset Usage"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}prespeed{grey} offset is currently {default}({x}, {y}){grey}.  Usage: {default}!mhud prespeed offset {grey}<x> <y>"
+		"ua"		"{grey}Зміщення {default}пре-швидкості (prespeed){grey} в HUD зараз {default}({x}, {y}){grey}. Використання: {default}!mhud prespeed offset {grey}<x> <y>"
 	}
 	"MHUD - Prespeed Scale Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}prespeed{grey} scale has been updated to {default}{value}."
+		"ua"		"{grey}Розмір {default}пре-швидкості (prespeed){grey} в HUD змінено на {default}{value}."
 	}
 	"MHUD - Prespeed Scale Usage"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}prespeed{grey} scale is currently {default}{value}{grey}.  Usage: {default}!mhud prespeed scale {grey}<value>"
+		"ua"		"{grey}Розмір {default}пре-швидкості (prespeed){grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud prespeed scale {grey}<значення>"
 	}
 	"MHUD - Prespeed Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}prespeed{grey} color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}пре-швидкості (prespeed){grey} в HUD змінено на {default}{value}."
 	}
 	"MHUD - Prespeed Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud prespeed color {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud prespeed color {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Prespeed Perf Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}prespeed{grey} perf color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}пре-швидкості (prespeed){grey} для perf в HUD змінено на {default}{value}."
 	}
 	"MHUD - Prespeed Perf Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud prespeed perfcolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud prespeed perfcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Prespeed Jumpbug Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}prespeed{grey} jumpbug color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}пре-швидкості{grey} для jumpbug в HUD змінено на {default}{value}."
 	}
 	"MHUD - Prespeed Jumpbug Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud prespeed jumpbugcolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud prespeed jumpbugcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Prespeed Reset"
 	{
 		"en"		"{grey}HUD {default}prespeed{grey} settings have been reset to defaults."
+		"ua"		"{grey}Налаштування {default}пре-швидкості (prespeed){grey} в HUD скинуті до стандартних."
 	}
 	"MHUD - Timer Offset Set"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}timer{grey} offset has been updated to {default}({x}, {y})."
+		"ua"		"{grey}Зміщення {default}таймера{grey} в HUD змінено на {default}({x}, {y})."
 	}
 	"MHUD - Timer Offset Usage"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}timer{grey} offset is currently {default}({x}, {y}){grey}.  Usage: {default}!mhud timer offset {grey}<x> <y>"
+		"ua"		"{grey}Зміщення {default}таймера{grey} в HUD зараз {default}({x}, {y}){grey}. Використання: {default}!mhud timer offset {grey}<x> <y>"
 	}
 	"MHUD - Timer Scale Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}timer{grey} scale has been updated to {default}{value}."
+		"ua"		"{grey}Розмір {default}таймера{grey} змінено на {default}{value}."
 	}
 	"MHUD - Timer Scale Usage"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}timer{grey} scale is currently {default}{value}{grey}.  Usage: {default}!mhud timer scale {grey}<value>"
+		"ua"		"{grey}Розмір {default}таймера{grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud timer scale {grey}<значення>"
 	}
 	"MHUD - Timer TP Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}timer{grey} TP color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}таймера{grey} для проходження з телепортами (TP run) змінено на {default}{value}."
 	}
 	"MHUD - Timer TP Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud timer tpcolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud timer tpcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Pro Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}timer{grey} pro color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}таймера{grey} для проходження без телепортів (Pro run) змінено на {default}{value}."
 	}
 	"MHUD - Timer Pro Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud timer procolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud timer procolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Paused Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}timer{grey} paused color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}таймера{grey} в HUD під час паузи змінено на {default}{value}."
 	}
 	"MHUD - Timer Paused Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud timer pausedcolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud timer pausedcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Stopped Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}timer{grey} stopped color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}таймера{grey} в HUD під час повної зупинки змінено на {default}{value}."
 	}
 	"MHUD - Timer Stopped Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud timer stoppedcolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud timer stoppedcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Reset"
 	{
 		"en"		"{grey}HUD {default}timer{grey} settings have been reset to defaults."
+		"ua"		"{grey}Налаштування {default}таймера{grey} в HUD скинуті до стандартних."
 	}
 	"MHUD - Keys Offset Set"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}keys{grey} offset has been updated to {default}({x}, {y})."
+		"ua"		"{grey}Зміщення відображення {default}клавіш{grey} в HUD змінено на {default}({x}, {y})."
 	}
 	"MHUD - Keys Offset Usage"
 	{
 		"#format"	"x:s,y:s"
 		"en"		"{grey}HUD {default}keys{grey} offset is currently {default}({x}, {y}){grey}.  Usage: {default}!mhud keys offset {grey}<x> <y>"
+		"ua"		"{grey}Зміщення відображення {default}клавіш{grey} в HUD зараз {default}({x}, {y}){grey}. Використання: {default}!mhud keys offset {grey}<x> <y>"
 	}
 	"MHUD - Keys Scale Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}keys{grey} scale has been updated to {default}{value}."
+		"ua"		"{grey}Розмір {default}клавіш{grey} в HUD змінено на {default}{value}."
 	}
 	"MHUD - Keys Scale Usage"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}keys{grey} scale is currently {default}{value}{grey}.  Usage: {default}!mhud keys scale {grey}<value>"
+		"ua"		"{grey}Розмір {default}клавіш{grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud keys scale {grey}<значення>"
 	}
 	"MHUD - Keys Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}keys{grey} color has been updated to {default}{value}."
+		"ua"		"{grey}Колір відображення {default}клавіш{grey} в HUD змінено на {default}{value}."
 	}
 	"MHUD - Keys Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud keys color {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud keys color {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Keys Overlap Color Set"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}keys{grey} overlap color has been updated to {default}{value}."
+		"ua"		"{grey}Колір {default}накладання клавіш{grey} в HUD змінено на {default}{value}."
 	}
 	"MHUD - Keys Overlap Color Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud keys overlapcolor {grey}<r> <g> <b> [a] {grey}or {default}<colorname>{grey}.  Names: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ua"		"{grey}Використання: {default}!mhud keys overlapcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Keys Reset"
 	{
 		"en"		"{grey}HUD {default}keys{grey} settings have been reset to defaults."
+		"ua"		"{grey}Налаштування {default}клавіш{grey} в HUD скинуті до стандартних."
 	}
 	"MHUD - Unavailable"
 	{
 		"en"		"{grey}The particle HUD is currently unavailable."
+		"ua"		"{grey}Панель HUD наразі недоступна."
 	}
 	"MHUD - Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+		"ua"		"{grey}Використання: {default}!mhud {grey}<елемент>  •  Список елементів: {default}speed prespeed timer keys"
 	}
 	"MHUD - Speed Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
+		"ua"		"{grey}Використання: {default}!mhud speed {grey}<властивість>  •  Список властивостей: {default}offset scale color crouchjumpcolor/cjcolor reset"
 	}
 	"MHUD - Prespeed Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
+		"ua"		"{grey}Використання: {default}!mhud prespeed {grey}<властивість>  •  Список властивостей: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
 	}
 	"MHUD - Timer Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
+		"ua"		"{grey}Використання: {default}!mhud timer {grey}<властивість>  •  Список властивостей: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
 	}
 	"MHUD - Keys Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+		"ua"		"{grey}Використання: {default}!mhud keys {grey}<властивість>  •  Список властивостей: {default}overlap offset scale color overlapcolor reset"
 	}
 }
