@@ -11,6 +11,7 @@
 #include "kz/beam/kz_beam.h"
 #include "kz/measure/kz_measure.h"
 #include "kz/ztopwatch/kz_ztopwatch.h"
+#include "kz/hud/kz_hud.h"
 #include "kz/option/kz_option.h"
 #include "kz/paint/kz_paint.h"
 #include "kz/language/kz_language.h"
@@ -79,6 +80,11 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			if (isZtopwatchEdge)
 			{
 				// Don't hide zone stopwatch edges for the owner.
+				continue;
+			}
+
+			if (targetPlayer->hudService->OwnsParticle(particleSystem->GetRefEHandle()))
+			{
 				continue;
 			}
 			pTransmitInfo->m_pTransmitEdict->Clear(particleSystem->GetEntityIndex().Get());

@@ -43,39 +43,7 @@ bool KZPaintService::SetColor(const char *colorName)
 	}
 
 	Color color;
-	if (KZ_STREQI(colorName, "red"))
-	{
-		color = Color(255, 0, 0, 255);
-	}
-	else if (KZ_STREQI(colorName, "white"))
-	{
-		color = Color(255, 255, 255, 255);
-	}
-	else if (KZ_STREQI(colorName, "black"))
-	{
-		color = Color(0, 0, 0, 255);
-	}
-	else if (KZ_STREQI(colorName, "blue"))
-	{
-		color = Color(0, 0, 255, 255);
-	}
-	else if (KZ_STREQI(colorName, "brown"))
-	{
-		color = Color(165, 42, 42, 255);
-	}
-	else if (KZ_STREQI(colorName, "green"))
-	{
-		color = Color(0, 128, 0, 255);
-	}
-	else if (KZ_STREQI(colorName, "yellow"))
-	{
-		color = Color(255, 255, 0, 255);
-	}
-	else if (KZ_STREQI(colorName, "purple"))
-	{
-		color = Color(128, 0, 128, 255);
-	}
-	else
+	if (!utils::ParseColorName(colorName, color))
 	{
 		return false;
 	}
@@ -287,20 +255,11 @@ SCMD(kz_paintcolor, SCFL_PREFERENCE | SCFL_MISC)
 	}
 
 	// Try to parse as RGB values
-	if (args->ArgC() >= 4 && utils::IsNumeric(args->Arg(1)) && utils::IsNumeric(args->Arg(2)) && utils::IsNumeric(args->Arg(3)))
+	Color c;
+	if (utils::ParseColorArgs(args, 1, c))
 	{
-		u8 r = (u8)Clamp(atoi(args->Arg(1)), 0, 255);
-		u8 g = (u8)Clamp(atoi(args->Arg(2)), 0, 255);
-		u8 b = (u8)Clamp(atoi(args->Arg(3)), 0, 255);
-		u8 a = 255;
-
-		if (args->ArgC() >= 5 && utils::IsNumeric(args->Arg(4)))
-		{
-			a = (u8)Clamp(atoi(args->Arg(4)), 0, 255);
-		}
-
-		player->paintService->SetColorRGB(r, g, b, a);
-		player->languageService->PrintChat(true, false, "Paint Color RGB Set", r, g, b, a);
+		player->paintService->SetColorRGB(c.r(), c.g(), c.b(), c.a());
+		player->languageService->PrintChat(true, false, "Paint Color RGB Set", c.r(), c.g(), c.b(), c.a());
 		return MRES_SUPERCEDE;
 	}
 

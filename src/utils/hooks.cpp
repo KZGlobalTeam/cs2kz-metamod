@@ -26,6 +26,7 @@
 #include "kz/db/kz_db.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
+#include "kz/hud/kz_hud.h"
 #include "kz/profile/kz_profile.h"
 #include "kz/pistol/kz_pistol.h"
 #include "kz/recording/kz_recording.h"
@@ -602,6 +603,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->optionService->OnClientDisconnect();
 	player->racingService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
+	player->hudService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -783,6 +785,9 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 	}
 	pResourceManifest->AddResource("particles/ui/hud/ui_map_def_utility_trail.vpcf");
 	pResourceManifest->AddResource("particles/ui/annotation/ui_annotation_line_segment.vpcf");
+	pResourceManifest->AddResource("particles/velo/velo_overlay_large.vpcf");
+	pResourceManifest->AddResource("particles/timer_delimiter/timer_delimiter.vpcf");
+	pResourceManifest->AddResource("particles/inputs/inputs.vpcf");
 }
 
 static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,

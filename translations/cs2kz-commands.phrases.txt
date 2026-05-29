@@ -1674,4 +1674,8 @@
 		"ua"		"Змінити FOV."
 		"ru"		"Изменить FOV."
 	}
+	"Command Description - kz_mhud"
+	{
+		"en"		"Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+	}
 }

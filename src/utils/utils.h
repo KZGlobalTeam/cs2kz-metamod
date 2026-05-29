@@ -98,6 +98,15 @@ namespace utils
 
 	bool ParseSteamID2(std::string_view steamID, u64 &out);
 
+	// Parse "R G B [A]" from a command's arguments starting at startIdx.
+	// Values are clamped to 0-255. Returns false if fewer than 3 integer args are present.
+	bool ParseColorArgs(const CCommand *args, i32 startIdx, Color &out);
+
+	// Parse a predefined color name (case-insensitive).
+	// Recognized names: red, white, black, blue, brown, green, yellow, purple.
+	// Returns false if name is not recognized.
+	bool ParseColorName(const char *name, Color &out);
+
 	// File I/O operations. All paths are relative to the game directory (game/csgo)
 	bool WriteBufferToFile(const char *relativePath, const std::vector<char> &buffer);
 	// Note: This function does NOT work with internal VPK content. Use IFileSystem directly instead for that.

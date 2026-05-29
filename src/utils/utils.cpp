@@ -796,6 +796,62 @@ bool utils::RenameFile(const char *oldRelativePath, const char *newRelativePath)
 	return true;
 }
 
+bool utils::ParseColorName(const char *name, Color &out)
+{
+	struct Entry
+	{
+		const char *name;
+		u8 r, g, b;
+	};
+
+	// clang-format off
+	static constexpr Entry table[] =
+	{
+		{"red", 255, 0, 0},
+		{"white", 255, 255, 255},
+		{"black", 0, 0, 0},
+		{"blue", 0, 0, 255},
+		{"brown", 165, 42, 42},
+		{"green", 0, 128, 0},
+		{"yellow", 255, 255, 0},
+		{"purple", 128, 0, 128}
+	};
+	// clang-format on
+
+	for (auto &e : table)
+	{
+		if (KZ_STREQI(name, e.name))
+		{
+			out = Color(e.r, e.g, e.b, 255);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool utils::ParseColorArgs(const CCommand *args, i32 startIdx, Color &out)
+{
+	// clang-format off
+	if (args->ArgC() < startIdx + 3 
+		|| !utils::IsNumeric(args->Arg(startIdx + 0)) 
+		|| !utils::IsNumeric(args->Arg(startIdx + 1))
+		|| !utils::IsNumeric(args->Arg(startIdx + 2)))
+	{
+		return false;
+	}
+	// clang-format on
+	u8 r = (u8)Clamp(atoi(args->Arg(startIdx + 0)), 0, 255);
+	u8 g = (u8)Clamp(atoi(args->Arg(startIdx + 1)), 0, 255);
+	u8 b = (u8)Clamp(atoi(args->Arg(startIdx + 2)), 0, 255);
+	u8 a = 255;
+	if (args->ArgC() >= startIdx + 4 && utils::IsNumeric(args->Arg(startIdx + 3)))
+	{
+		a = (u8)Clamp(atoi(args->Arg(startIdx + 3)), 0, 255);
+	}
+	out = Color(r, g, b, a);
+	return true;
+}
+
 bool utils::ParseSteamID2(std::string_view steamID, u64 &out)
 {
 	if (steamID.size() <= 10)

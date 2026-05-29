@@ -267,6 +267,7 @@ void KZPlayer::OnProcessMovement()
 
 	this->DisableTurnbinds();
 	this->anticheatService->OnProcessMovement();
+	this->hudService->OnProcessMovement();
 	this->triggerService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -293,6 +294,7 @@ void KZPlayer::OnProcessMovementPost()
 	this->triggerService->OnProcessMovementPost();
 	KZ::replaysystem::OnProcessMovementPost(this);
 	this->ztopwatchService->OnProcessMovementPost();
+	this->hudService->OnProcessMovementPost();
 	MovementPlayer::OnProcessMovementPost();
 }
 
