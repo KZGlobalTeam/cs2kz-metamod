@@ -7,7 +7,8 @@ constexpr char sql_getcoursetop[] = R"(
     LEFT JOIN Bans b ON b.SteamID64=t.SteamID64 AND (b.ExpiresAt IS NULL OR b.ExpiresAt > CURRENT_TIMESTAMP)
         LEFT OUTER JOIN Times t2 ON t2.SteamID64=t.SteamID64 
         AND t2.MapCourseID=t.MapCourseID AND t2.ModeID=t.ModeID
-        AND t2.StyleIDFlags=t.StyleIDFlags AND t2.RunTime<t.RunTime 
+        AND t2.StyleIDFlags=t.StyleIDFlags
+		AND (t2.RunTime < t.RunTime OR (t2.RunTime = t.RunTime AND t2.ID < t.ID))
     WHERE t2.ID IS NULL AND b.ID IS NULL AND Maps.Name='%s' AND mc.Name='%s' AND t.ModeID=%d AND t.StyleIDFlags=0
         ORDER BY PBTime ASC
         LIMIT %d
@@ -23,7 +24,8 @@ constexpr char sql_getcoursetoppro[] = R"(
     LEFT JOIN Bans b ON b.SteamID64=t.SteamID64 AND (b.ExpiresAt IS NULL OR b.ExpiresAt > CURRENT_TIMESTAMP)
         LEFT OUTER JOIN Times t2 ON t2.SteamID64=t.SteamID64 AND t2.MapCourseID=t.MapCourseID 
         AND t2.ModeID=t.ModeID AND t2.StyleIDFlags=t.StyleIDFlags 
-        AND t2.RunTime<t.RunTime AND t.Teleports=0 AND t2.Teleports=0 
+        AND (t2.RunTime < t.RunTime OR (t2.RunTime = t.RunTime AND t2.ID < t.ID))
+		AND t.Teleports=0 AND t2.Teleports=0
     WHERE t2.ID IS NULL AND b.ID IS NULL AND Maps.Name='%s'
         AND mc.Name='%s' AND t.ModeID=%d AND t.Teleports=0 AND t.StyleIDFlags=0 
         ORDER BY PBTime ASC
