@@ -148,7 +148,7 @@ namespace HTTP
 
 		if (rawBody.has_value())
 		{
-			return std::make_optional(rawBody->data());
+			return std::make_optional(std::string(rawBody->data(), rawBody->size()));
 		}
 
 		return std::nullopt;
