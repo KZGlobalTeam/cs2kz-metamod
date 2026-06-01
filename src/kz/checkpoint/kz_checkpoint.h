@@ -30,6 +30,15 @@ public:
 		bool teleportInAntiCpTrigger {};
 	};
 
+	struct CustomStartPosition
+	{
+		Vector origin;
+		QAngle angles;
+		Vector ladderNormal;
+		bool onLadder {};
+		bool onGround {};
+	};
+
 private:
 	i32 currentCpIndex {};
 	u32 tpCount {};
@@ -39,8 +48,9 @@ private:
 	UndoTeleportData undoTeleportData;
 
 	bool hasCustomStartPosition {};
-	Checkpoint customStartPosition;
+	CustomStartPosition customStartPosition;
 	Checkpoint lastTeleportedCheckpoint {};
+	bool lastTeleportForcedOnGround {};
 
 public:
 	void OnPlayerPreferencesLoaded();
@@ -49,6 +59,7 @@ public:
 
 	void UndoTeleport();
 	void DoTeleport(const Checkpoint cp);
+	void DoTeleport(const Checkpoint cp, bool stayOnGround);
 	void DoTeleport(i32 index);
 	void TpHoldPlayerStill();
 	void TpToCheckpoint();
