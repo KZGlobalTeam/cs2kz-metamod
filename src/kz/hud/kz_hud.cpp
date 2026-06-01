@@ -93,6 +93,11 @@ void KZHUDService::Reset()
 	this->showPanel = this->player->optionService->GetPreferenceBool("showPanel", true);
 	this->timerStoppedTime = {};
 	this->currentTimeWhenTimerStopped = {};
+	this->jumpedThisTick = false;
+	this->fromDuckbug = false;
+	this->crouchJumping = false;
+	this->particlesActive = false;
+	this->DestroyAllParticles();
 }
 
 std::string KZHUDService::GetSpeedText(const char *language)
