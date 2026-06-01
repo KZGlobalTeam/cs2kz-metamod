@@ -49,7 +49,7 @@ SCMD(kz_pistol, SCFL_PREFERENCE | SCFL_MISC | SCFL_PLAYER)
 	return MRES_SUPERCEDE;
 }
 
-void KZPistolService::UpdatePistol()
+void KZPistolService::UpdatePistol(bool force)
 {
 	if (!player->IsAlive() || !player->IsInGame())
 	{
@@ -57,7 +57,7 @@ void KZPistolService::UpdatePistol()
 	}
 	// Don't swap the weapon while the player is hiding it
 	// UpdatePistol() will be called when they toggle hide weapon off.
-	if (player->quietService->ShouldHideWeapon())
+	if (player->quietService->ShouldHideWeapon() && !force)
 	{
 		return;
 	}
