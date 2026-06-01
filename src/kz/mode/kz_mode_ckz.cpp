@@ -170,6 +170,10 @@ const CVValue_t *KZClassicModeService::GetModeConVarValues()
 
 void KZClassicModeService::OnStopTouchGround()
 {
+	if (this->player->GetMoveType() != MOVETYPE_WALK)
+	{
+		return;
+	}
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	f32 speed = velocity.Length2D();
