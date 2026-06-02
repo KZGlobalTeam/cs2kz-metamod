@@ -4,66 +4,79 @@
 	{
 		"#format"	"point:s"
 		"en"		"{grey}Zone Stopwatch: {default}{point}{grey} set."
+		"chi"		"{grey}区域计时器: {default}{point}{grey} 已设置."
 		"ua"		"{grey}Zone Stopwatch: {default}{point}{grey} встановлено."
 	}
 	"Zone Stopwatch - Point Name - Start 1"
 	{
 		"en"		"Start Corner 1"
+		"chi"		"起点角落 1"
 		"ua"		"Початковий кут 1"
 	}
 	"Zone Stopwatch - Point Name - Start 2"
 	{
 		"en"		"Start Corner 2"
+		"chi"		"起点角落 2"
 		"ua"		"Початковий кут 2"
 	}
 	"Zone Stopwatch - Point Name - End 1"
 	{
 		"en"		"End Corner 1"
+		"chi"		"终点角落 1"
 		"ua"		"Кінцевий кут 1"
 	}
 	"Zone Stopwatch - Point Name - End 2"
 	{
 		"en"		"End Corner 2"
+		"chi"		"终点角落 2"
 		"ua"		"Кінцевий кут 2"
 	}
 	"Zone Stopwatch - Timer Running"
 	{
 		"en"		"{darkred}Zone Stopwatch is unavailable while the timer is running."
+		"chi"		"{darkred}区域计时器 在计时器运行时不可用."
 		"ua"		"{darkred}Zone Stopwatch недоступний, поки таймер увімкнено."
 	}
 	"Zone Stopwatch - Enabled"
 	{
 		"en"		"{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
+		"chi"		"{grey}区域计时器 已{green}启用{grey}. 进入起始区域时开始计时."
 		"ua"		"{grey}Zone Stopwatch {green}увімкнено{grey}. Відлік почнеться при вході в початкову зону."
 	}
 	"Zone Stopwatch - Disabled"
 	{
 		"en"		"{grey}Zone Stopwatch {darkred}disabled{grey}."
+		"chi"		"{grey}区域计时器 已{darkred}禁用{grey}."
 		"ua"		"{grey}Zone Stopwatch {darkred}вимкнено{grey}."
 	}
 	"Zone Stopwatch - Reset"
 	{
 		"en"		"{grey}Zone Stopwatch: All zones cleared."
+		"chi"		"{grey}区域计时器: 所有区域已清除."
 		"ua"		"{grey}Zone Stopwatch: Усі зони очищено."
 	}
 	"Zone Stopwatch - Start On Jump Enabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
+		"chi"		"{grey}区域计时器: 起跳时开始已{green}启用{grey}."
 		"ua"		"{grey}Zone Stopwatch: Старт при стрибку {green}увімкнено{grey}."
 	}
 	"Zone Stopwatch - Start On Jump Disabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
+		"chi"		"{grey}区域计时器: 起跳时开始已{darkred}禁用{grey}."
 		"ua"		"{grey}Zone Stopwatch: Старт при стрибку {darkred}вимкнено{grey}."
 	}
 	"Zone Stopwatch - Stop On Land Enabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
+		"chi"		"{grey}区域计时器: 落地时停止已{green}启用{grey}."
 		"ua"		"{grey}Zone Stopwatch: Зупинка при приземленні {green}увімкнена{grey}."
 	}
 	"Zone Stopwatch - Stop On Land Disabled"
 	{
 		"en"		"{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
+		"chi"		"{grey}区域计时器: 落地时停止已{darkred}禁用{grey}."
 		"ua"		"{grey}Zone Stopwatch: Зупинка при приземленні {darkred}вимкнена{grey}"
 	}
 	"Zone Stopwatch - Time"
@@ -71,12 +84,14 @@
 		// Elapsed time: 12:34.567
 		"#format"	"time:s"
 		"en"		"{grey}Elapsed time: {default}{time}"
+		"chi"		"{grey}已用时间: {default}{time}"
 		"ua"		"{grey}Витрачений час: {default}{time}"
 	}
 	"Zone Stopwatch - Status Header"
 	{
 		"#format"	"state:s"
 		"en"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
+		"chi"		"{grey}--- 区域计时器 [{default}{state}{grey}] ---"
 		"ua"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
 	}
 	"Zone Stopwatch - Status Point"
@@ -84,31 +99,37 @@
 		// Start Corner 1: set <-- next
 		"#format"	"point:s,status:s,next:s"
 		"en"		"{grey}{default}{point}{grey}: {status}{next}"
+		"chi"		"{grey}{default}{point}{grey}: {status}{next}"
 		"ua"		"{grey}{default}{point}{grey}: {status}{next}"
 	}	
 	"Zone Stopwatch - Status Next"
 	{
 		"en"		" <-- Next"
+		"chi"		" <-- 下一个"
 		"ua"		" <-- Наступний"
 	}
 	"Zone Stopwatch - Status On"
 	{
 		"en"		"ON"
+		"chi"		"开"
 		"ua"		"УВІМК"
 	}
 	"Zone Stopwatch - Status Off"
 	{
 		"en"		"OFF"
+		"chi"		"关"
 		"ua"		"ВИМК"
 	}
 	"Zone Stopwatch - Status Set"
 	{
 		"en"		"Set"
+		"chi"		"已设置"
 		"ua"		"Встановлено"
 	}
 	"Zone Stopwatch - Status Unset"
 	{
 		"en"		"Unset"
+		"chi"		"未设置"
 		"ua"		"Не встановлено"
 	}
 	"Zone Stopwatch - Status Options"
@@ -116,11 +137,13 @@
 		// Start on jump: ON | Stop on land: OFF
 		"#format"	"startjump:s,stoponland:s"
 		"en"		"{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
+		"chi"		"{grey}起跳时开始: {default}{startjump}{grey} | 落地时停止: {default}{stoponland}"
 		"ua"		"{grey}Старт при стрибку: {default}{startjump}{grey} | Зупинка при приземленні: {default}{stoponland}"
 	}
 	"Zone Stopwatch - Usage"
 	{
 		"en"		"{grey}Check console for Zone Stopwatch usage."
+		"chi"		"{grey}请在控制台中查看区域计时器用法."
 		"ua"		"{grey}Інструкція Zone Stopwatch виведена в консоль."
 	}
 	"Zone Stopwatch - Usage - Console"
@@ -133,6 +156,7 @@
 		//   !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)
 		//   !ztopwatch status: Show current status
 		"en"		"Zone Stopwatch usage:\n  !ztopwatch / !zw: Toggle on/off\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\n  !ztopwatch clear: Clear all zones\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\n  !ztopwatch status: Show current status"
+		"chi"		"区域计时器用法:\n  !ztopwatch / !zw: 开关\n  !ztopwatch place: 设置下一个角落 (顺序: 起点角落 1 -> 起点角落 2 -> 终点角落 1 -> 终点角落 2)\n  !ztopwatch clear: 清除所有区域\n  !ztopwatch startjump / sj: 起跳时开始计时(不进入区域直接开始)\n  !ztopwatch stopland / sl: 落地时停止计时(不进入区域直接停止)\n  !ztopwatch status: 显示当前状态"
 		"ua"		"Використання Zone Stopwatch:\n  !ztopwatch / !zw: Увімкнути/вимкнути\n  !ztopwatch place: Встановити наступний кут (послідовність: початковий 1 -> початковий 2 -> кінцевий 1 -> кінцевий 2)\n  !ztopwatch clear: Очистити всі зони\n  !ztopwatch startjump / sj: Старт таймера при стрибку (замість входу в зону)\n  !ztopwatch stopland / sl: Зупинка таймера при приземленні (замість входу в зону)\n  !ztopwatch status: Показати поточний статус"
 	}
 }
