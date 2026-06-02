@@ -6,6 +6,7 @@
 */
 
 #include "kz/anticheat/kz_anticheat.h"
+#include "kz/mode/kz_mode.h"
 #include "sdk/usercmd.h"
 #include "utils/simplecmds.h"
 
@@ -101,7 +102,7 @@ void KZAnticheatService::CreateLandEvent()
 		return;
 	}
 	// Check sv_autobunnyhopping
-	if (this->player->GetCvarValueFromModeStyles("sv_autobunnyhopping")->m_bValue != false)
+	if (this->player->GetCvarValueFromModeStyles(MODECVAR_SV_AUTOBUNNYHOPPING)->m_bValue != false)
 	{
 		return;
 	}
@@ -152,7 +153,7 @@ void KZAnticheatService::OnJump()
 	{
 		recentLandingEvents.back().hasPerfectBhop = true;
 		recentLandingEvents.back().shouldCountTowardsPerfChains =
-			this->player->GetCvarValueFromModeStyles("sv_jump_spam_penalty_time")->m_fl32Value >= ENGINE_FIXED_TICK_INTERVAL;
+			this->player->GetCvarValueFromModeStyles(MODECVAR_SV_JUMP_SPAM_PENALTY_TIME)->m_fl32Value >= ENGINE_FIXED_TICK_INTERVAL;
 	}
 }
 

@@ -259,7 +259,7 @@ namespace KZ::replaysystem::playback
 
 		// Bots should never have any subtick move, but who knows?
 		command->mutable_base()->clear_subtick_moves();
-		for (u32 i = 0; i < subtickData->numSubtickMoves && i < 64; i++)
+		for (u32 i = 0; i < subtickData->numSubtickMoves && i < MAX_SUBTICK_MOVES; i++)
 		{
 			auto move = command->mutable_base()->add_subtick_moves();
 			move->set_when(subtickData->subtickMoves[i].when);

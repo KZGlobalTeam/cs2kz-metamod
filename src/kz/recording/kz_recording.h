@@ -78,7 +78,10 @@ struct Recorder
 	f32 desiredStopTime = -1;
 	ReplayHeader replayHeader; // Unified protobuf header
 	std::vector<TickData> tickData;
-	std::vector<SubtickData> subtickData;
+
+	std::vector<u8> subtickCounts;
+	std::vector<SubtickData::RpSubtickMove> subtickMoves;
+
 	std::vector<RpEvent> rpEvents;
 
 	// Empty until the replay is queued for writing.
@@ -86,9 +89,34 @@ struct Recorder
 
 	std::vector<RpJumpStats> jumps;
 	std::vector<CmdData> cmdData;
-	std::vector<SubtickData> cmdSubtickData;
+
+	std::vector<u8> cmdSubtickCounts;
+	std::vector<SubtickData::RpSubtickMove> cmdSubtickMoves;
+
+	// --- Incremental disk flushing for long runs ---
+	// Every 15 minutes, in-memory data is written to a temp file on disk to keep memory bounded during long runs.
+	static constexpr u32 FLUSH_INTERVAL_TICKS = 57600; // 15 minutes at 64 ticks/sec
+	u32 numFlushedChunks = 0;
+	u32 totalTicksRecorded = 0; // Total across all flushed chunks + in-memory
+	std::string tempFileBase;   // Set on first flush; empty means no flushing has occurred
+
+	// Flush in-memory recording data to a temp chunk file on disk, then clear in-memory vectors.
+	void FlushChunkToDisk();
+	// Read all flushed chunks from disk back into vectors, appending the current in-memory remainder.
+	void LoadFlushedChunks(std::vector<TickData> &outTick, std::vector<u8> &outSubtickCounts,
+						   std::vector<SubtickData::RpSubtickMove> &outSubtickMoves, std::vector<RpEvent> &outEvents,
+						   std::vector<RpJumpStats> &outJumps, std::vector<CmdData> &outCmd, std::vector<u8> &outCmdSubtickCounts,
+						   std::vector<SubtickData::RpSubtickMove> &outCmdSubtickMoves);
+	void CleanupTempFiles();
+
 	// Copy the last numSeconds seconds of data from the circular recorder.
 	Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyTimerEvents, DistanceTier copyJumps);
+	~Recorder();
+
+	// Explicitly re-enable move operations.
+	// This ensures std::move() transfers ownership rather than copying.
+	Recorder(Recorder &&) = default;
+	Recorder &operator=(Recorder &&) = default;
 
 	bool ShouldStopAndSave(f32 currentTime)
 	{
@@ -105,6 +133,11 @@ struct Recorder
 		if constexpr (std::is_same<T, TickData>::value)
 		{
 			tickData.push_back(data);
+			totalTicksRecorded++;
+			if (tickData.size() >= FLUSH_INTERVAL_TICKS)
+			{
+				FlushChunkToDisk();
+			}
 		}
 		else if constexpr (std::is_same<T, RpEvent>::value)
 		{
@@ -134,13 +167,37 @@ struct Recorder
 	template<Vec V>
 	void PushData(const SubtickData &data)
 	{
+		u8 count = (u8)MIN(data.numSubtickMoves, MAX_SUBTICK_MOVES);
 		if constexpr (V == Vec::Tick)
 		{
-			subtickData.push_back(data);
+			subtickCounts.push_back(count);
+			for (u8 i = 0; i < count; i++)
+			{
+				subtickMoves.push_back(data.subtickMoves[i]);
+			}
 		}
 		else
 		{
-			cmdSubtickData.push_back(data);
+			cmdSubtickCounts.push_back(count);
+			for (u8 i = 0; i < count; i++)
+			{
+				cmdSubtickMoves.push_back(data.subtickMoves[i]);
+			}
+		}
+	}
+
+	// Reconstruct SubtickData vectors from packed storage (for serialization).
+	void UnpackSubtickData(std::vector<SubtickData> &out, const std::vector<u8> &counts, const std::vector<SubtickData::RpSubtickMove> &moves) const
+	{
+		out.resize(counts.size());
+		u32 offset = 0;
+		for (size_t i = 0; i < counts.size(); i++)
+		{
+			out[i].numSubtickMoves = counts[i];
+			for (u8 j = 0; j < counts[i]; j++)
+			{
+				out[i].subtickMoves[j] = moves[offset++];
+			}
 		}
 	}
 

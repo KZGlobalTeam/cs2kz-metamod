@@ -7,8 +7,11 @@
 #include "sdk/services.h"
 
 #include "kz_quiet.h"
+#include "kz/pistol/kz_pistol.h"
 #include "kz/beam/kz_beam.h"
 #include "kz/measure/kz_measure.h"
+#include "kz/ztopwatch/kz_ztopwatch.h"
+#include "kz/hud/kz_hud.h"
 #include "kz/option/kz_option.h"
 #include "kz/paint/kz_paint.h"
 #include "kz/language/kz_language.h"
@@ -62,6 +65,26 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			if (targetPlayer->measureService->measurerHandle == particleSystem->GetRefEHandle())
 			{
 				// Don't hide the measure beam for the owner.
+				continue;
+			}
+			bool isZtopwatchEdge = false;
+			for (int e = 0; e < KZZtopwatchService::Zone::NUM_EDGES; e++)
+			{
+				if (targetPlayer->ztopwatchService->startZone.edges[e] == particleSystem->GetRefEHandle()
+					|| targetPlayer->ztopwatchService->endZone.edges[e] == particleSystem->GetRefEHandle())
+				{
+					isZtopwatchEdge = true;
+					break;
+				}
+			}
+			if (isZtopwatchEdge)
+			{
+				// Don't hide zone stopwatch edges for the owner.
+				continue;
+			}
+
+			if (targetPlayer->hudService->OwnsParticle(particleSystem->GetRefEHandle()))
+			{
 				continue;
 			}
 			pTransmitInfo->m_pTransmitEdict->Clear(particleSystem->GetEntityIndex().Get());
@@ -365,6 +388,10 @@ void KZQuietService::ToggleHideWeapon()
 	this->player->optionService->SetPreferenceBool("hideWeapon", this->hideWeapon);
 	this->player->languageService->PrintChat(true, false,
 											 this->hideWeapon ? "Quiet Option - Show Weapon - Disable" : "Quiet Option - Show Weapon - Enable");
+	if (!this->hideWeapon)
+	{
+		this->player->pistolService->UpdatePistol();
+	}
 }
 
 void KZQuietService::OnPhysicsSimulatePost() {}

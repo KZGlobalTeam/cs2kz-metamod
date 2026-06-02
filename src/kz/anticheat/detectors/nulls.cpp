@@ -266,7 +266,8 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		}
 		return;
 	}
-	std::vector<f32> framerates;
+	this->nullsFramerateBuffer.clear();
+	auto &framerates = this->nullsFramerateBuffer;
 	for (const InputEvent &event : events)
 	{
 		if (event.framerate > 0.0f)
@@ -307,7 +308,8 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	u32 numPerfect = 0;
 	u32 numConsecutivePerfect = 0;
 	u32 maxConsecutivePerfect = 0;
-	std::vector<f32> underlapDurations;
+	this->nullsUnderlapBuffer.clear();
+	auto &underlapDurations = this->nullsUnderlapBuffer;
 
 	// Track the last release event and current press state for each direction
 	const InputEvent *lastButton1Release = nullptr;

@@ -7,7 +7,7 @@
 
 #define KZ_MODE_MANAGER_INTERFACE "KZModeManagerInterface"
 
-enum KzModeCvars
+enum KzModeCvars : int
 {
 	MODECVAR_FIRST = 0,
 	MODECVAR_SV_ACCELERATE = 0,
@@ -203,6 +203,13 @@ public:
 	}
 
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger)
+	{
+		return true;
+	}
+
+	// Returns whether timer zones can be touched at the current point in time.
+	// Used by both the trigger system and the ztopwatch AABB check.
+	virtual bool CanTouchTimerZone()
 	{
 		return true;
 	}

@@ -1423,6 +1423,11 @@
 		"ua"		"Встановити кінцеве положення для вимірювання та обчислити відстань."
 		"de"		"Setze den Endpunkt der Messung. Gibt darauf die Distanz zurück."
 	}
+	"Command Description - kz_ztopwatch"
+	{
+		"en"		"Toggle the zone stopwatch on/off, or use subcommands: place (set next corner), clear (reset zones), startjump/sj (toggle start on jump), stopland/sl (toggle stop on land), status."
+		"ua"		"Увімк./вимк. Zone Stopwatch або використати підкоманди: place (встановити наступний кут), clear (скинути зони), startjump/sj (увімк./вимк. старт при стрибку), stopland/sl (увімк./вимк. зупинку при приземленні), status."
+	}
 	"Command Description - kz_measureblock"
 	{
 		"en"		"Measure the block distance."
@@ -1668,5 +1673,10 @@
 		"chi"		"改变你的FOV."
 		"ua"		"Змінити FOV."
 		"ru"		"Изменить FOV."
+	}
+	"Command Description - kz_mhud"
+	{
+		"en"		"Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+		"ua"		"Налаштувати HUD. Використання: kz_mhud <speed|prespeed|timer|keys> [властивість] [значення...]"
 	}
 }

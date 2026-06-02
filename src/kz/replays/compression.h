@@ -35,7 +35,8 @@ namespace KZ::replaysystem::compression
 	bool ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps);
 
 	// Read compressed CmdData
-	bool ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData, std::vector<SubtickData> &outCmdSubtickData);
+	bool ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData, std::vector<SubtickData> &outCmdSubtickData,
+							   u32 replayVersion);
 
 	// Write compressed weapon changes
 	i32 WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable);

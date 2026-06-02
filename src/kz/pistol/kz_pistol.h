@@ -74,10 +74,10 @@ public:
 
 	void OnPlayerJoinTeam()
 	{
-		this->UpdatePistol();
+		this->UpdatePistol(true);
 	}
 
-	void UpdatePistol();
+	void UpdatePistol(bool force = false);
 	// Return true if the player has a weapon that isn't a knife.
 	bool NeedWeaponStripping();
 	i16 preferredPistol = 8; // Default to USP-S

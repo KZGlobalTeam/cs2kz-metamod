@@ -304,7 +304,24 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 		}
 	}
 
-	TryFinalize();
+	if (finalized)
+	{
+		if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
+		{
+			KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+
+			if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+			{
+				char deletePath[512];
+				BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
+				utils::RemoveFile(deletePath);
+			}
+		}
+	}
+	else
+	{
+		TryFinalize();
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -322,11 +339,6 @@ void RunSubmission::TryFinalize()
 	if (!local && !global)
 	{
 		finalized = true;
-		return;
-	}
-
-	if (!replayReady && global)
-	{
 		return;
 	}
 
@@ -360,6 +372,14 @@ void RunSubmission::TryFinalize()
 	if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+
+		// Delete local replay file after uploading if archiveRetentionMinutes is 0.
+		if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+		{
+			char deletePath[512];
+			BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
+			utils::RemoveFile(deletePath);
+		}
 	}
 }
 
@@ -393,6 +413,14 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	if (!replayBuffer.empty())
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+
+		// Delete local replay file after uploading if archiveRetentionMinutes is 0.
+		if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+		{
+			char deletePath[512];
+			BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
+			utils::RemoveFile(deletePath);
+		}
 	}
 }
 

@@ -122,6 +122,8 @@ public:
 		recentForwardBackwardEvents.clear();
 		recentLeftRightEvents.clear();
 		lastButtons = 0;
+		nullsFramerateBuffer.clear();
+		nullsUnderlapBuffer.clear();
 		suspiciousSubtickMoveTimes.clear();
 		invalidCommandTimes.clear();
 		zeroWhenCommandTimes.clear();
@@ -179,6 +181,8 @@ public:
 	std::deque<InputEvent> recentForwardBackwardEvents;
 	std::deque<InputEvent> recentLeftRightEvents;
 	u64 lastButtons;
+	std::vector<f32> nullsFramerateBuffer;
+	std::vector<f32> nullsUnderlapBuffer;
 
 	void CreateInputEvents(PlayerCommand *cmd);
 	void CheckNulls();

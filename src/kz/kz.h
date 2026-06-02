@@ -6,6 +6,7 @@
 #include "mappingapi/kz_mappingapi.h"
 #include "circularbuffer.h"
 
+enum KzModeCvars : int; // defined in mode/kz_mode.h
 // TODO: If we want to enable player collision, we need to unhardcode this.
 #define KZ_COLLISION_GROUP_STANDARD  COLLISION_GROUP_DEBRIS
 #define KZ_COLLISION_GROUP_NOTRIGGER LAST_SHARED_COLLISION_GROUP
@@ -56,6 +57,7 @@ class KZTriggerService;
 class KZPistolService;
 class KZRecordingService;
 class KZFOVService;
+class KZZtopwatchService;
 
 class KZPlayer : public MovementPlayer
 {
@@ -177,6 +179,7 @@ public:
 	KZPistolService *pistolService {};
 	KZRecordingService *recordingService {};
 	KZFOVService *fovService {};
+	KZZtopwatchService *ztopwatchService {};
 
 	void DisableTurnbinds();
 	void EnableGodMode();
@@ -203,7 +206,7 @@ public:
 	virtual void PrintAlert(bool addPrefix, bool includeSpectators, const char *format, ...);
 	virtual void PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...);
 
-	const CVValue_t *GetCvarValueFromModeStyles(const char *name);
+	const CVValue_t *GetCvarValueFromModeStyles(KzModeCvars cvar);
 };
 
 class KZBaseService

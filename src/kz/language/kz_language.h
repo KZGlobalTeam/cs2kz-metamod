@@ -53,11 +53,10 @@ private:
 		}
 	}
 
-	template<typename... Args>
-	static std::string GetFormattedMessage(const char *input, const char *format, Args &&...args)
+	static std::string BuildTemplate(const char *msgFormat, const char *paramFormat)
 	{
-		std::string inputStr = std::string(input);
-		const char *tokenStart = format;
+		std::string inputStr = std::string(msgFormat);
+		const char *tokenStart = paramFormat;
 		int argNumber = 0;
 		while (true)
 		{
@@ -70,7 +69,7 @@ private:
 			const char *replaceEnd = strstr(replaceStart, ",");
 			if (!replaceEnd)
 			{
-				replaceEnd = format + strlen(format);
+				replaceEnd = paramFormat + strlen(paramFormat);
 				ReplaceStringInPlace(inputStr, '{' + std::string(tokenStart, tokenEnd - tokenStart) + '}',
 									 '%' + std::to_string(++argNumber) + '$' + std::string(replaceStart, replaceEnd - replaceStart));
 				break;
@@ -82,21 +81,62 @@ private:
 				tokenStart = replaceEnd + 1;
 			}
 		}
-		return tfm::format(inputStr.c_str(), std::forward<Args>(args)...);
+		return inputStr;
 	}
 
+	template<typename... Args>
+	static std::string GetFormattedMessage(const char *input, const char *format, Args &&...args)
+	{
+		return tfm::format(BuildTemplate(input, format).c_str(), std::forward<Args>(args)...);
+	}
+
+	struct TemplateEntry
+	{
+		std::string str;
+		bool hasFormat;
+	};
+
+	static inline std::unordered_map<std::string, TemplateEntry> formattedTemplateCache;
+
 public:
+	static void ClearTemplateCache()
+	{
+		formattedTemplateCache.clear();
+	}
+
 	template<typename... Args>
 	static std::string PrepareMessageWithLang(const char *language, const char *message, Args &&...args)
 	{
-		const char *paramFormat = GetTranslatedFormat("#format", message);
-		const char *msgFormat = GetTranslatedFormat(language, message);
-		if (!paramFormat)
+		std::string cacheKey;
+		cacheKey.reserve(strlen(language) + 1 + strlen(message));
+		cacheKey.append(language);
+		cacheKey += '\0';
+		cacheKey.append(message);
+
+		auto it = formattedTemplateCache.find(cacheKey);
+		if (it == formattedTemplateCache.end())
 		{
-			// Just return the raw unformatted message if format can't be found.
-			return std::string(msgFormat);
+			const char *paramFormat = GetTranslatedFormat("#format", message);
+			const char *msgFormat = GetTranslatedFormat(language, message);
+			TemplateEntry entry;
+			if (!paramFormat)
+			{
+				entry.str = msgFormat ? msgFormat : message;
+				entry.hasFormat = false;
+			}
+			else
+			{
+				entry.str = BuildTemplate(msgFormat, paramFormat);
+				entry.hasFormat = true;
+			}
+			it = formattedTemplateCache.emplace(std::move(cacheKey), std::move(entry)).first;
 		}
-		return GetFormattedMessage(msgFormat, paramFormat, args...);
+		const TemplateEntry &entry = it->second;
+		if (!entry.hasFormat)
+		{
+			return entry.str;
+		}
+		return tfm::format(entry.str.c_str(), std::forward<Args>(args)...);
 	}
 
 	template<typename... Args>

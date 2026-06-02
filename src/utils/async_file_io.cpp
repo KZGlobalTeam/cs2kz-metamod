@@ -1,6 +1,5 @@
 #include "async_file_io.h"
 #include "utils.h"
-#include "filesystem.h"
 #include "common.h"
 
 AsyncFileIO *g_asyncFileIO = nullptr;
@@ -87,6 +86,12 @@ void AsyncFileIO::QueueWriteBuffer(std::string path, std::vector<char> buffer)
 	EnqueueTask(std::move(task));
 }
 
+void AsyncFileIO::Drain()
+{
+	std::unique_lock<std::mutex> lock(m_queueLock);
+	m_drainCV.wait(lock, [this] { return m_taskQueue.empty() && !m_processing; });
+}
+
 void AsyncFileIO::EnqueueTask(AsyncAnyTask &&task)
 {
 	{
@@ -136,7 +141,7 @@ void AsyncFileIO::ThreadRun()
 			overloaded_async {
 				[&](RenameTask &task)
 				{
-					bool ok = g_pFullFileSystem->RenameFile(task.oldPath.c_str(), task.newPath.c_str(), "GAME");
+					bool ok = utils::RenameFile(task.oldPath.c_str(), task.newPath.c_str());
 					if (!ok)
 					{
 						KZ_LOG_WARN(LogChannel::General, "Failed to rename file from %s to %s\n", task.oldPath.c_str(), task.newPath.c_str());
@@ -158,11 +163,7 @@ void AsyncFileIO::ThreadRun()
 					std::lock_guard<std::mutex> lock(m_completedLock);
 					m_completedTasks.push(std::move(result));
 				},
-				[&](RawWriteTask &task)
-				{
-					// Fire-and-forget: write buffer directly to disk, no result marshalled back.
-					utils::WriteBufferToFile(task.path.c_str(), task.buffer);
-				},
+				[&](RawWriteTask &task) { bool ok = utils::WriteBufferToFile(task.path.c_str(), task.buffer); },
 			},
 			anyTask);
 	};
@@ -183,19 +184,26 @@ void AsyncFileIO::ThreadRun()
 			{
 				task = std::move(m_taskQueue.front());
 				m_taskQueue.pop();
+				m_processing = true;
 			}
 		}
 
 		processTask(task);
+
+		{
+			std::lock_guard<std::mutex> lock(m_queueLock);
+			m_processing = false;
+		}
+		m_drainCV.notify_all();
 	}
 
-	// Flush remaining tasks on shutdown — disk writes only, skip reads
+	// Flush remaining tasks on shutdown
 	while (!m_taskQueue.empty())
 	{
 		auto &front = m_taskQueue.front();
 		if (auto *rt = std::get_if<RenameTask>(&front))
 		{
-			g_pFullFileSystem->RenameFile(rt->oldPath.c_str(), rt->newPath.c_str(), "GAME");
+			utils::RenameFile(rt->oldPath.c_str(), rt->newPath.c_str());
 		}
 		else if (auto *rwt = std::get_if<RawWriteTask>(&front))
 		{

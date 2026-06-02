@@ -450,8 +450,33 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	{
 		return false;
 	}
-	outSubtickData.resize(subtickHeader.elementCount);
-	success = Decompress(cursor, subtickHeader.compressedSize, outSubtickData.data(), subtickHeader.uncompressedSize);
+
+	// v4+ uses subtickMoves[MAX_SUBTICK_MOVES]; older replays used subtickMoves[64].
+	if (replayVersion >= 4)
+	{
+		outSubtickData.resize(subtickHeader.elementCount);
+		success = Decompress(cursor, subtickHeader.compressedSize, outSubtickData.data(), subtickHeader.uncompressedSize);
+	}
+	else
+	{
+		char *tempBuf = new char[subtickHeader.uncompressedSize];
+		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
+		if (success)
+		{
+			size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
+			outSubtickData.resize(subtickHeader.elementCount);
+			for (u32 i = 0; i < subtickHeader.elementCount; i++)
+			{
+				const char *entry = tempBuf + i * oldEntrySize;
+				memcpy(&outSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
+				if (outSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+				{
+					outSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+				}
+			}
+		}
+		delete[] tempBuf;
+	}
 	cursor += subtickHeader.compressedSize;
 	return success;
 }
@@ -892,7 +917,7 @@ enum CmdDataChangeFlags : u64
 };
 
 bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData,
-														  std::vector<SubtickData> &outCmdSubtickData)
+														  std::vector<SubtickData> &outCmdSubtickData, u32 replayVersion)
 {
 	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
@@ -1008,8 +1033,33 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	{
 		return false;
 	}
-	outCmdSubtickData.resize(subtickHeader.elementCount);
-	success = Decompress(cursor, subtickHeader.compressedSize, outCmdSubtickData.data(), subtickHeader.uncompressedSize);
+
+	// v4+ uses subtickMoves[MAX_SUBTICK_MOVES]; older replays used subtickMoves[64].
+	if (replayVersion >= 4)
+	{
+		outCmdSubtickData.resize(subtickHeader.elementCount);
+		success = Decompress(cursor, subtickHeader.compressedSize, outCmdSubtickData.data(), subtickHeader.uncompressedSize);
+	}
+	else
+	{
+		char *tempBuf = new char[subtickHeader.uncompressedSize];
+		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
+		if (success)
+		{
+			size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
+			outCmdSubtickData.resize(subtickHeader.elementCount);
+			for (u32 i = 0; i < subtickHeader.elementCount; i++)
+			{
+				const char *entry = tempBuf + i * oldEntrySize;
+				memcpy(&outCmdSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
+				if (outCmdSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+				{
+					outCmdSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+				}
+			}
+		}
+		delete[] tempBuf;
+	}
 	cursor += subtickHeader.compressedSize;
 	return success;
 }

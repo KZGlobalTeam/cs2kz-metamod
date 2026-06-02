@@ -27,6 +27,7 @@ void KZCheckpointService::Reset()
 {
 	this->ResetCheckpoints();
 	this->hasCustomStartPosition = false;
+	this->lastTeleportForcedOnGround = false;
 }
 
 void KZCheckpointService::OnPlayerPreferencesLoaded()
@@ -43,7 +44,7 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 	if (KeyValues3 *startPos = ssps.FindMember(currentMap.Get()))
 	{
 		if (!startPos || !startPos->FindMember("origin") || !startPos->FindMember("angles") || !startPos->FindMember("ladderNormal")
-			|| !startPos->FindMember("onLadder") || !startPos->FindMember("groundEnt"))
+			|| !startPos->FindMember("onLadder"))
 		{
 			return;
 		}
@@ -51,7 +52,18 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 		this->customStartPosition.angles = startPos->FindMember("angles")->GetQAngle();
 		this->customStartPosition.ladderNormal = startPos->FindMember("ladderNormal")->GetVector();
 		this->customStartPosition.onLadder = startPos->FindMember("onLadder")->GetBool();
-		this->customStartPosition.groundEnt = CEntityHandle(startPos->FindMember("groundEnt")->GetUInt());
+		if (KeyValues3 *onGroundMember = startPos->FindMember("onGround"))
+		{
+			this->customStartPosition.onGround = onGroundMember->GetBool();
+		}
+		else if (KeyValues3 *groundEntMember = startPos->FindMember("groundEnt"))
+		{
+			this->customStartPosition.onGround = groundEntMember->GetUInt() != 0;
+		}
+		else
+		{
+			this->customStartPosition.onGround = false;
+		}
 		this->hasCustomStartPosition = true;
 	}
 }
@@ -205,6 +217,11 @@ void KZCheckpointService::DoTeleport(i32 index)
 
 void KZCheckpointService::DoTeleport(const Checkpoint cp)
 {
+	this->DoTeleport(cp, false);
+}
+
+void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround)
+{
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn || !pawn->IsAlive())
 	{
@@ -264,6 +281,10 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp)
 	{
 		pawn->m_hGroundEntity(cp.groundEnt);
 	}
+	if (stayOnGround)
+	{
+		pawn->m_fFlags(pawn->m_fFlags() | FL_ONGROUND);
+	}
 
 	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
 	if (cp.onLadder)
@@ -291,6 +312,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp)
 	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->PlayTeleportSound();
 	this->lastTeleportedCheckpoint = cp;
+	this->lastTeleportForcedOnGround = stayOnGround;
 }
 
 void KZCheckpointService::TpToCheckpoint()
@@ -360,6 +382,10 @@ void KZCheckpointService::TpHoldPlayerStill()
 	{
 		this->player->GetPlayerPawn()->m_fFlags(this->player->GetPlayerPawn()->m_fFlags | FL_ONGROUND);
 	}
+	if (this->lastTeleportForcedOnGround)
+	{
+		this->player->GetPlayerPawn()->m_fFlags(this->player->GetPlayerPawn()->m_fFlags | FL_ONGROUND);
+	}
 	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(this->lastTeleportedCheckpoint.groundEnt));
 
 	if (!groundEntity)
@@ -388,7 +414,12 @@ void KZCheckpointService::SetStartPosition()
 	this->hasCustomStartPosition = true;
 	this->player->GetOrigin(&this->customStartPosition.origin);
 	this->player->GetAngles(&this->customStartPosition.angles);
-	this->customStartPosition.groundEnt = pawn->m_hGroundEntity();
+	if (this->player->GetMoveServices())
+	{
+		this->customStartPosition.ladderNormal = this->player->GetMoveServices()->m_vecLadderNormal();
+		this->customStartPosition.onLadder = pawn->m_MoveType() == MOVETYPE_LADDER;
+	}
+	this->customStartPosition.onGround = (pawn->m_fFlags() & FL_ONGROUND) != 0;
 	bool hasMapName = false;
 	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
 	if (hasMapName)
@@ -401,7 +432,7 @@ void KZCheckpointService::SetStartPosition()
 		startPos->FindOrCreateMember("angles")->SetQAngle(this->customStartPosition.angles);
 		startPos->FindOrCreateMember("ladderNormal")->SetVector(this->customStartPosition.ladderNormal);
 		startPos->FindOrCreateMember("onLadder")->SetBool(this->customStartPosition.onLadder);
-		startPos->FindOrCreateMember("groundEnt")->SetUInt(this->customStartPosition.groundEnt.ToInt());
+		startPos->FindOrCreateMember("onGround")->SetBool(this->customStartPosition.onGround);
 
 		player->optionService->SetPreferenceTable("startPositions", ssps);
 	}
@@ -427,7 +458,13 @@ void KZCheckpointService::ClearStartPosition()
 
 void KZCheckpointService::TpToStartPosition()
 {
-	this->DoTeleport(this->customStartPosition);
+	Checkpoint cp = {};
+	cp.origin = this->customStartPosition.origin;
+	cp.angles = this->customStartPosition.angles;
+	cp.ladderNormal = this->customStartPosition.ladderNormal;
+	cp.onLadder = this->customStartPosition.onLadder;
+	cp.groundEnt = CEntityHandle();
+	this->DoTeleport(cp, this->customStartPosition.onGround);
 }
 
 void KZCheckpointService::PlayCheckpointErrorSound()

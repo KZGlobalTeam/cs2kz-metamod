@@ -89,6 +89,9 @@ public:
 	// Queue a raw buffer write on the bg thread (fire-and-forget, no callback)
 	void QueueWriteBuffer(std::string path, std::vector<char> buffer);
 
+	// Block until all queued tasks have been processed by the background thread.
+	void Drain();
+
 	// Process completed tasks and invoke their callbacks — call once per game frame from the main thread
 	void RunFrame();
 
@@ -102,7 +105,9 @@ private:
 	std::mutex m_queueLock;
 	std::mutex m_completedLock;
 	std::condition_variable m_queueCV;
+	std::condition_variable m_drainCV;
 	bool m_terminate = false;
+	bool m_processing = false;
 };
 
 extern AsyncFileIO *g_asyncFileIO;

@@ -28,6 +28,7 @@
 #include "profile/kz_profile.h"
 #include "pistol/kz_pistol.h"
 #include "fov/kz_fov.h"
+#include "ztopwatch/kz_ztopwatch.h"
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -64,6 +65,7 @@ void KZPlayer::Init()
 	delete this->profileService;
 	delete this->pistolService;
 	delete this->fovService;
+	delete this->ztopwatchService;
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->beamService = new KZBeamService(this);
@@ -89,6 +91,7 @@ void KZPlayer::Init()
 	this->profileService = new KZProfileService(this);
 	this->pistolService = new KZPistolService(this);
 	this->fovService = new KZFOVService(this);
+	this->ztopwatchService = new KZZtopwatchService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -116,6 +119,7 @@ void KZPlayer::Reset()
 	this->telemetryService->Reset();
 	this->recordingService->Reset();
 	this->paintService->Reset();
+	this->ztopwatchService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true, false);
 	g_pKZStyleManager->ClearStyles(this, true, false);
@@ -263,6 +267,7 @@ void KZPlayer::OnProcessMovement()
 
 	this->DisableTurnbinds();
 	this->anticheatService->OnProcessMovement();
+	this->hudService->OnProcessMovement();
 	this->triggerService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)
@@ -288,6 +293,8 @@ void KZPlayer::OnProcessMovementPost()
 	this->jumpstatsService->OnProcessMovementPost();
 	this->triggerService->OnProcessMovementPost();
 	KZ::replaysystem::OnProcessMovementPost(this);
+	this->ztopwatchService->OnProcessMovementPost();
+	this->hudService->OnProcessMovementPost();
 	MovementPlayer::OnProcessMovementPost();
 }
 
@@ -564,6 +571,7 @@ void KZPlayer::OnJumpLegacy()
 		this->styleServices[i]->OnJumpLegacy();
 	}
 	this->hudService->OnJump();
+	this->ztopwatchService->OnJump();
 }
 
 void KZPlayer::OnJumpLegacyPost()
@@ -586,6 +594,7 @@ void KZPlayer::OnJumpModern()
 	{
 		this->styleServices[i]->OnJumpModern();
 	}
+	this->ztopwatchService->OnJump();
 }
 
 void KZPlayer::OnJumpModernPost()
@@ -819,11 +828,11 @@ void KZPlayer::OnStartTouchGround()
 void KZPlayer::OnStopTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	if (!inPerf && !this->GetCvarValueFromModeStyles("sv_legacy_jump")->m_bValue)
+	if (!inPerf && !this->GetCvarValueFromModeStyles(MODECVAR_SV_LEGACY_JUMP)->m_bValue)
 	{
 		f32 landingTick = this->GetMoveServices()->m_ModernJump().m_nLastLandedTick() + this->GetMoveServices()->m_ModernJump().m_flLastLandedFrac();
-		f32 windowMin = landingTick - this->GetCvarValueFromModeStyles("sv_bhop_time_window")->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
-		f32 windowMax = landingTick + this->GetCvarValueFromModeStyles("sv_bhop_time_window")->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
+		f32 windowMin = landingTick - this->GetCvarValueFromModeStyles(MODECVAR_SV_BHOP_TIME_WINDOW)->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
+		f32 windowMax = landingTick + this->GetCvarValueFromModeStyles(MODECVAR_SV_BHOP_TIME_WINDOW)->m_fl32Value * 0.5f * ENGINE_FIXED_TICK_RATE;
 		f32 startTime = this->currentMoveData->m_flSubtickStartFraction + this->currentMoveData->m_nTickCount;
 
 		this->inPerf = (startTime >= windowMin && startTime <= windowMax) && this->jumped;
@@ -958,22 +967,9 @@ void KZPlayer::OnChangeTeamPost(i32 team)
 	this->timerService->OnPlayerJoinTeam(team);
 }
 
-const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(const char *name)
+const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(KzModeCvars cvar)
 {
-	if (!name)
-	{
-		assert(0);
-		return CVValue_t::InvalidValue();
-	}
-
-	ConVarRefAbstract cvarRef(name);
-	if (!cvarRef.IsValidRef() || !cvarRef.IsConVarDataAvailable())
-	{
-		assert(0);
-		KZ_LOG_WARN(LogChannel::General, "Failed to find %s!\n", name);
-		return CVValue_t::InvalidValue();
-	}
-
+	const char *name = KZ::mode::modeCvarNames[cvar];
 	FOR_EACH_VEC_BACK(this->styleServices, i)
 	{
 		if (this->styleServices[i]->GetTweakedConvarValue(name))
@@ -981,18 +977,5 @@ const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(const char *name)
 			return this->styleServices[i]->GetTweakedConvarValue(name);
 		}
 	}
-
-	for (int i = 0; i < MODECVAR_COUNT; i++)
-	{
-		if (!KZ::mode::modeCvarRefs[i]->IsValidRef() || !KZ::mode::modeCvarRefs[i]->IsConVarDataAvailable())
-		{
-			continue;
-		}
-		if (!V_stricmp(KZ::mode::modeCvarRefs[i]->GetName(), name))
-		{
-			return &this->modeService->GetModeConVarValues()[i];
-		}
-	}
-
-	return cvarRef.GetConVarData()->Value(-1);
+	return &this->modeService->GetModeConVarValues()[cvar];
 }

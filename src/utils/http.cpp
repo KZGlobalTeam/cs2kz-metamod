@@ -81,7 +81,39 @@ namespace HTTP
 		{
 			KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to send HTTP request.\n");
 		}
-
+		// Log detailed HTTP requests for debugging.
+		if (LoggingSystem_IsChannelEnabled(GetServiceChannel(LogChannel::General), LS_DETAILED))
+		{
+			std::string methodStr;
+			switch (method)
+			{
+				case Method::GET:
+					methodStr = "GET";
+					break;
+				case Method::POST:
+					methodStr = "POST";
+					break;
+				case Method::PUT:
+					methodStr = "PUT";
+					break;
+				case Method::PATCH:
+					methodStr = "PATCH";
+					break;
+			}
+			KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Sending HTTP %s request to `%s`\n", methodStr.c_str(), url.c_str());
+			if (!body.empty())
+			{
+				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Body: %s\n", body.c_str());
+			}
+			if (!headers.empty())
+			{
+				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Headers:\n");
+				for (const auto &[name, value] : headers)
+				{
+					KZ_LOG_DEBUG(LogChannel::General, "[HTTP]   %s: %s\n", name.c_str(), value.c_str());
+				}
+			}
+		}
 		new InFlightRequest(handle, steamCallHandle, url, body, onResponse, onError);
 	}
 
@@ -116,7 +148,7 @@ namespace HTTP
 
 		if (rawBody.has_value())
 		{
-			return std::make_optional(rawBody->data());
+			return std::make_optional(std::string(rawBody->data(), rawBody->size()));
 		}
 
 		return std::nullopt;
@@ -155,6 +187,18 @@ namespace HTTP
 		}
 
 		Response response(completedRequest->m_eStatusCode, completedRequest->m_hRequest);
+		if (LoggingSystem_IsChannelEnabled(GetServiceChannel(LogChannel::General), LS_DETAILED))
+		{
+			KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Received response for request to `%s` with status code %d\n", url.c_str(), response.status);
+			if (!response.Body().has_value())
+			{
+				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Response has no body.\n");
+			}
+			else
+			{
+				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Response body: %s\n", response.Body()->c_str());
+			}
+		}
 		onResponse(response);
 
 		if (g_pHTTP)

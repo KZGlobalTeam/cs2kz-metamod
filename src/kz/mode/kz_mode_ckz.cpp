@@ -170,6 +170,10 @@ const CVValue_t *KZClassicModeService::GetModeConVarValues()
 
 void KZClassicModeService::OnStopTouchGround()
 {
+	if (this->player->GetMoveType() != MOVETYPE_WALK)
+	{
+		return;
+	}
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	f32 speed = velocity.Length2D();
@@ -1032,6 +1036,12 @@ void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 	}
 }
 
+bool KZClassicModeService::CanTouchTimerZone()
+{
+	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
+	return fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f;
+}
+
 // Only touch timer triggers on half ticks.
 bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 {
@@ -1039,13 +1049,7 @@ bool KZClassicModeService::OnTriggerStartTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
-	if (fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f)
-	{
-		return true;
-	}
-
-	return false;
+	return this->CanTouchTimerZone();
 }
 
 bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
@@ -1054,12 +1058,7 @@ bool KZClassicModeService::OnTriggerTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
-	if (fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f)
-	{
-		return true;
-	}
-	return false;
+	return this->CanTouchTimerZone();
 }
 
 bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
@@ -1068,10 +1067,5 @@ bool KZClassicModeService::OnTriggerEndTouch(CBaseTrigger *trigger)
 	{
 		return true;
 	}
-	f64 tick = g_pKZUtils->GetGlobals()->curtime * ENGINE_FIXED_TICK_RATE;
-	if (fabs(roundf(tick) - tick) < 0.001f || fabs(roundf(tick) - tick - 0.5f) < 0.001f)
-	{
-		return true;
-	}
-	return false;
+	return this->CanTouchTimerZone();
 }

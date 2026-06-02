@@ -63,10 +63,14 @@ void KZProfileService::OnGameFrame()
 
 void KZProfileService::OnCheckTransmit()
 {
+	if (!kz_profile_rating_badge_enabled.Get())
+	{
+		return;
+	}
 	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (player && player->profileService)
+		if (player && player->IsInGame())
 		{
 			player->profileService->UpdateCompetitiveRank();
 		}
@@ -217,7 +221,7 @@ void KZProfileService::OnPhysicsSimulatePost()
 
 void KZProfileService::UpdateCompetitiveRank()
 {
-	if (!this->player->GetController() || !kz_profile_rating_badge_enabled.GetBool())
+	if (!this->player->IsInGame() || !kz_profile_rating_badge_enabled.GetBool() || !this->player->GetController())
 	{
 		return;
 	}
