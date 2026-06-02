@@ -1426,6 +1426,7 @@
 	"Command Description - kz_ztopwatch"
 	{
 		"en"		"Toggle the zone stopwatch on/off, or use subcommands: place (set next corner), clear (reset zones), startjump/sj (toggle start on jump), stopland/sl (toggle stop on land), status."
+		"ru"		"Вкл./Выкл. Zone Stopwatch или использовать подкоманды: place (поставить след. угол), clear (сбросить зоны), startjump/sj (вкл./выкл. старт при прыжке), stopland/sl (вкл./выкл. остановку при приземлении), status."
 		"ua"		"Увімк./вимк. Zone Stopwatch або використати підкоманди: place (встановити наступний кут), clear (скинути зони), startjump/sj (увімк./вимк. старт при стрибку), stopland/sl (увімк./вимк. зупинку при приземленні), status."
 	}
 	"Command Description - kz_measureblock"
@@ -1678,5 +1679,6 @@
 	{
 		"en"		"Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
 		"ua"		"Налаштувати HUD. Використання: kz_mhud <speed|prespeed|timer|keys> [властивість] [значення...]"
+		"ru"		"Настроить HUD. Применение: kz_mhud <speed|prespeed|timer|keys> [свойство] [значение...]"
 	}
 }
