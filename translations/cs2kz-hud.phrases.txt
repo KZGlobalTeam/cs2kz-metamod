@@ -334,13 +334,13 @@
 	"MHUD - Keys Overlap Enabled"
 	{
 		"en"		"{grey}Keys overlap is currently {green}enabled."
-		"chi"		"{grey}按键重叠显示已 {green}启用."
+		"chi"		"{grey}按键冲突显示已 {green}启用."
 		"ua"		"{grey}Накладання (overlap) клавіш {green}увімкнено."
 	}
 	"MHUD - Keys Overlap Disabled"
 	{
 		"en"		"{grey}Keys overlap is currently {darkred}disabled."
-		"chi"		"{grey}按键重叠显示已 {darkred}禁用."
+		"chi"		"{grey}按键冲突显示已 {darkred}禁用."
 		"ua"		"{grey}Накладання (overlap) клавіш {darkred}вимкнено."
 	}
 	"MHUD - Speed Offset Set"
@@ -448,7 +448,7 @@
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}prespeed{grey} perf color has been updated to {default}{value}."
-		"chi"		"{grey}HUD {default}起跳速度{grey}完美跳跃颜色已更新为 {default}{value}."
+		"chi"		"{grey}HUD {default}起跳速度{grey}完美连跳颜色已更新为 {default}{value}."
 		"ua"		"{grey}Колір {default}пре-швидкості (prespeed){grey} для perf в HUD змінено на {default}{value}."
 	}
 	"MHUD - Prespeed Perf Color Usage"
@@ -461,7 +461,7 @@
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD {default}prespeed{grey} jumpbug color has been updated to {default}{value}."
-		"chi"		"{grey}HUD {default}起跳速度{grey}跳虫颜色已更新为 {default}{value}."
+		"chi"		"{grey}HUD {default}起跳速度{grey} jumpbug 颜色已更新为 {default}{value}."
 		"ua"		"{grey}Колір {default}пре-швидкості{grey} для jumpbug в HUD змінено на {default}{value}."
 	}
 	"MHUD - Prespeed Jumpbug Color Usage"
@@ -631,19 +631,19 @@
 	"MHUD - Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
-		"chi"		"{grey}用法: {default}!mhud {grey}<元素>  •  元素: {default}speed(速度) prespeed(起跳速度) timer(计时器) keys(按键)"
+		"chi"		"{grey}用法: {default}!mhud {grey}<显示项>  •  可选显示项: {default}speed(速度) prespeed(起跳速度) timer(计时器) keys(按键)"
 		"ua"		"{grey}Використання: {default}!mhud {grey}<елемент>  •  Список елементів: {default}speed prespeed timer keys"
 	}
 	"MHUD - Speed Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
-		"chi"		"{grey}用法: {default}!mhud speed {grey}<属性>  •  属性: {default}offset(偏移) scale(缩放) color(颜色) crouchjumpcolor/cjcolor(蹲跳颜色) reset(重置)"
+		"chi"		"{grey}用法: {default}!mhud speed {grey}<属性>  •  属性: {default}offset(偏移) scale(缩放) color(颜色) crouchjumpcolor/cjcolor(CJ颜色) reset(重置)"
 		"ua"		"{grey}Використання: {default}!mhud speed {grey}<властивість>  •  Список властивостей: {default}offset scale color crouchjumpcolor/cjcolor reset"
 	}
 	"MHUD - Prespeed Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
-		"chi"		"{grey}用法: {default}!mhud prespeed {grey}<属性>  •  属性: {default}offset(偏移) scale(缩放) color(颜色) perfcolor(完美颜色) jumpbugcolor/jbcolor(跳虫颜色) reset(重置)"
+		"chi"		"{grey}用法: {default}!mhud prespeed {grey}<属性>  •  属性: {default}offset(偏移) scale(缩放) color(颜色) perfcolor(完美连跳颜色) jumpbugcolor/jbcolor(jumpbug颜色) reset(重置)"
 		"ua"		"{grey}Використання: {default}!mhud prespeed {grey}<властивість>  •  Список властивостей: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
 	}
 	"MHUD - Timer Usage"

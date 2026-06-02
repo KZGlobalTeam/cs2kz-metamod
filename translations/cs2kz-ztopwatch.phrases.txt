@@ -10,25 +10,25 @@
 	"Zone Stopwatch - Point Name - Start 1"
 	{
 		"en"		"Start Corner 1"
-		"chi"		"起点角落 1"
+		"chi"		"开始计时区域 1"
 		"ua"		"Початковий кут 1"
 	}
 	"Zone Stopwatch - Point Name - Start 2"
 	{
 		"en"		"Start Corner 2"
-		"chi"		"起点角落 2"
+		"chi"		"开始计时区域 2"
 		"ua"		"Початковий кут 2"
 	}
 	"Zone Stopwatch - Point Name - End 1"
 	{
 		"en"		"End Corner 1"
-		"chi"		"终点角落 1"
+		"chi"		"计时停止区域 1"
 		"ua"		"Кінцевий кут 1"
 	}
 	"Zone Stopwatch - Point Name - End 2"
 	{
 		"en"		"End Corner 2"
-		"chi"		"终点角落 2"
+		"chi"		"计时停止区域 2"
 		"ua"		"Кінцевий кут 2"
 	}
 	"Zone Stopwatch - Timer Running"
@@ -156,7 +156,7 @@
 		//   !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)
 		//   !ztopwatch status: Show current status
 		"en"		"Zone Stopwatch usage:\n  !ztopwatch / !zw: Toggle on/off\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\n  !ztopwatch clear: Clear all zones\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\n  !ztopwatch status: Show current status"
-		"chi"		"区域计时器用法:\n  !ztopwatch / !zw: 开关\n  !ztopwatch place: 设置下一个角落 (顺序: 起点角落 1 -> 起点角落 2 -> 终点角落 1 -> 终点角落 2)\n  !ztopwatch clear: 清除所有区域\n  !ztopwatch startjump / sj: 起跳时开始计时(不进入区域直接开始)\n  !ztopwatch stopland / sl: 落地时停止计时(不进入区域直接停止)\n  !ztopwatch status: 显示当前状态"
+		"chi"		"区域计时器用法:\n  !ztopwatch / !zw: 开关\n  !ztopwatch place: 设置下一个角落 (顺序: 起点角落 1 -> 起点角落 2 -> 终点角落 1 -> 终点角落 2)\n  !ztopwatch clear: 清除所有区域\n  !ztopwatch startjump / sj: 起跳时开始计时\n  !ztopwatch stopland / sl: 落地时停止计时\n  !ztopwatch status: 显示当前状态"
 		"ua"		"Використання Zone Stopwatch:\n  !ztopwatch / !zw: Увімкнути/вимкнути\n  !ztopwatch place: Встановити наступний кут (послідовність: початковий 1 -> початковий 2 -> кінцевий 1 -> кінцевий 2)\n  !ztopwatch clear: Очистити всі зони\n  !ztopwatch startjump / sj: Старт таймера при стрибку (замість входу в зону)\n  !ztopwatch stopland / sl: Зупинка таймера при приземленні (замість входу в зону)\n  !ztopwatch status: Показати поточний статус"
 	}
 }
