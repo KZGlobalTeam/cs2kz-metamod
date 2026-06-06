@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 711,
-    "phrases_with_missing": 495,
-    "total_missing_entries": 3441,
+    "total_phrases": 712,
+    "phrases_with_missing": 496,
+    "total_missing_entries": 3448,
     "all_languages": [
       "chi",
       "de",
@@ -57,8 +57,8 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 87.9,
-      "translated": 625,
+      "coverage_percent": 87.92,
+      "translated": 626,
       "missing": 86,
       "missing_phrases": [
         {
@@ -591,8 +591,8 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 72.15,
-      "translated": 513,
+      "coverage_percent": 72.19,
+      "translated": 514,
       "missing": 198,
       "missing_phrases": [
         {
@@ -1468,85 +1468,85 @@
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -1793,7 +1793,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 711,
+      "translated": 712,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -1804,9 +1804,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 39.94,
+      "coverage_percent": 39.89,
       "translated": 284,
-      "missing": 427,
+      "missing": 428,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -3760,128 +3760,134 @@
         },
         {
           "file": "cs2kz-replays.phrases.txt",
-          "phrase": "Replay Table Header - Time",
+          "phrase": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles"
+        },
+        {
+          "file": "cs2kz-replays.phrases.txt",
+          "phrase": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -4384,9 +4390,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 32.91,
+      "coverage_percent": 32.87,
       "translated": 234,
-      "missing": 477,
+      "missing": 478,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -6430,128 +6436,134 @@
         },
         {
           "file": "cs2kz-replays.phrases.txt",
-          "phrase": "Replay Table Header - Time",
+          "phrase": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles"
+        },
+        {
+          "file": "cs2kz-replays.phrases.txt",
+          "phrase": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -7264,9 +7276,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 31.79,
+      "coverage_percent": 31.74,
       "translated": 226,
-      "missing": 485,
+      "missing": 486,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9328,128 +9340,134 @@
         },
         {
           "file": "cs2kz-replays.phrases.txt",
-          "phrase": "Replay Table Header - Time",
+          "phrase": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles"
+        },
+        {
+          "file": "cs2kz-replays.phrases.txt",
+          "phrase": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -10192,9 +10210,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 40.37,
+      "coverage_percent": 40.31,
       "translated": 287,
-      "missing": 424,
+      "missing": 425,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -12112,128 +12130,134 @@
         },
         {
           "file": "cs2kz-replays.phrases.txt",
-          "phrase": "Replay Table Header - Time",
+          "phrase": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles"
+        },
+        {
+          "file": "cs2kz-replays.phrases.txt",
+          "phrase": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -12749,9 +12773,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 46.27,
+      "coverage_percent": 46.21,
       "translated": 329,
-      "missing": 382,
+      "missing": 383,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -14519,128 +14543,134 @@
         },
         {
           "file": "cs2kz-replays.phrases.txt",
-          "phrase": "Replay Table Header - Time",
+          "phrase": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles"
+        },
+        {
+          "file": "cs2kz-replays.phrases.txt",
+          "phrase": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -15054,8 +15084,8 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 72.43,
-      "translated": 515,
+      "coverage_percent": 72.47,
+      "translated": 516,
       "missing": 196,
       "missing_phrases": [
         {
@@ -15919,85 +15949,85 @@
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -16244,7 +16274,7 @@
     "ru": {
       "name": "russian",
       "coverage_percent": 100.0,
-      "translated": 711,
+      "translated": 712,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -16255,9 +16285,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 55.27,
+      "coverage_percent": 55.2,
       "translated": 393,
-      "missing": 318,
+      "missing": 319,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -17719,128 +17749,134 @@
         },
         {
           "file": "cs2kz-replays.phrases.txt",
-          "phrase": "Replay Table Header - Time",
+          "phrase": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles"
+        },
+        {
+          "file": "cs2kz-replays.phrases.txt",
+          "phrase": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -18176,9 +18212,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 36.99,
+      "coverage_percent": 36.94,
       "translated": 263,
-      "missing": 448,
+      "missing": 449,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -20180,128 +20216,134 @@
         },
         {
           "file": "cs2kz-replays.phrases.txt",
-          "phrase": "Replay Table Header - Time",
+          "phrase": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles"
+        },
+        {
+          "file": "cs2kz-replays.phrases.txt",
+          "phrase": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API..."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey})."
         },
         {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay."
         },
         {
@@ -20883,7 +20925,7 @@
     "ua": {
       "name": "ukrainian",
       "coverage_percent": 100.0,
-      "translated": 711,
+      "translated": 712,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -27399,7 +27441,7 @@
       ]
     },
     "cs2kz-replays.phrases.txt": {
-      "phrases_with_missing": 82,
+      "phrases_with_missing": 83,
       "phrases": [
         {
           "name": "Replay - No Replay Playing",
@@ -28744,8 +28786,30 @@
           ]
         },
         {
-          "name": "Replay Table Header - Time",
+          "name": "Replay Table Header - Styles",
           "line": 599,
+          "english_text": "Styles",
+          "existing_languages": [
+            "chi",
+            "de",
+            "en",
+            "pl",
+            "ru",
+            "ua"
+          ],
+          "missing_languages": [
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "sv",
+            "tr"
+          ]
+        },
+        {
+          "name": "Replay Table Header - Time",
+          "line": 608,
           "english_text": "Time",
           "existing_languages": [
             "chi",
@@ -28767,7 +28831,7 @@
         },
         {
           "name": "Replay Table Header - Teleports",
-          "line": 608,
+          "line": 617,
           "english_text": "Teleports",
           "existing_languages": [
             "chi",
@@ -28789,7 +28853,7 @@
         },
         {
           "name": "Replay Table Header - Jump Type",
-          "line": 617,
+          "line": 626,
           "english_text": "Jump Type",
           "existing_languages": [
             "chi",
@@ -28811,7 +28875,7 @@
         },
         {
           "name": "Replay Table Header - Distance",
-          "line": 626,
+          "line": 635,
           "english_text": "Distance",
           "existing_languages": [
             "chi",
@@ -28833,7 +28897,7 @@
         },
         {
           "name": "Replay Table Header - Block",
-          "line": 635,
+          "line": 644,
           "english_text": "Block",
           "existing_languages": [
             "chi",
@@ -28855,7 +28919,7 @@
         },
         {
           "name": "Replay Table Header - Strafes",
-          "line": 644,
+          "line": 653,
           "english_text": "Strafes",
           "existing_languages": [
             "chi",
@@ -28877,7 +28941,7 @@
         },
         {
           "name": "Replay Table Header - Saved By",
-          "line": 653,
+          "line": 662,
           "english_text": "Saved By",
           "existing_languages": [
             "chi",
@@ -28899,7 +28963,7 @@
         },
         {
           "name": "Replay - Not Found",
-          "line": 662,
+          "line": 671,
           "english_text": "{darkred}Replay not found.",
           "existing_languages": [
             "chi",
@@ -28921,7 +28985,7 @@
         },
         {
           "name": "Replay - No Course",
-          "line": 669,
+          "line": 678,
           "english_text": "{darkred}No course found on this map.",
           "existing_languages": [
             "chi",
@@ -28943,7 +29007,7 @@
         },
         {
           "name": "Replay - Invalid Mode Arg",
-          "line": 676,
+          "line": 685,
           "english_text": "{darkred}Unknown mode.",
           "existing_languages": [
             "chi",
@@ -28965,7 +29029,7 @@
         },
         {
           "name": "Replay - SR Not Found",
-          "line": 683,
+          "line": 692,
           "english_text": "{grey}No server record replay found for this filter.",
           "existing_languages": [
             "chi",
@@ -28987,7 +29051,7 @@
         },
         {
           "name": "Replay - SPB Not Found",
-          "line": 690,
+          "line": 699,
           "english_text": "{grey}No server personal best replay found.",
           "existing_languages": [
             "chi",
@@ -29009,7 +29073,7 @@
         },
         {
           "name": "Replay - Global Mode Only",
-          "line": 697,
+          "line": 706,
           "english_text": "{darkred}Global records are only available for global modes.",
           "existing_languages": [
             "chi",
@@ -29031,7 +29095,7 @@
         },
         {
           "name": "Replay - API Not Available",
-          "line": 704,
+          "line": 713,
           "english_text": "{darkred}The global API is not available.",
           "existing_languages": [
             "chi",
@@ -29053,7 +29117,7 @@
         },
         {
           "name": "Replay - Querying WR",
-          "line": 711,
+          "line": 720,
           "english_text": "{grey}Querying world record replay...",
           "existing_languages": [
             "chi",
@@ -29075,7 +29139,7 @@
         },
         {
           "name": "Replay - WR Not Found",
-          "line": 718,
+          "line": 727,
           "english_text": "{grey}No world record replay found for this filter.",
           "existing_languages": [
             "chi",
@@ -29097,7 +29161,7 @@
         },
         {
           "name": "Replay - Querying GPB",
-          "line": 725,
+          "line": 734,
           "english_text": "{grey}Querying personal best replay...",
           "existing_languages": [
             "chi",
@@ -29119,7 +29183,7 @@
         },
         {
           "name": "Replay - GPB Not Found",
-          "line": 732,
+          "line": 741,
           "english_text": "{grey}No global personal best replay found.",
           "existing_languages": [
             "chi",
@@ -29141,7 +29205,7 @@
         },
         {
           "name": "Replay Request - Sending",
-          "line": 739,
+          "line": 748,
           "english_text": "{grey}Requesting replay {default}{uuid}{grey} from the API...",
           "existing_languages": [
             "chi",
@@ -29163,7 +29227,7 @@
         },
         {
           "name": "Replay Request - Already Requested",
-          "line": 747,
+          "line": 756,
           "english_text": "{grey}A replay download is already in progress ({default}{uuid}{grey}).",
           "existing_languages": [
             "chi",
@@ -29185,7 +29249,7 @@
         },
         {
           "name": "Replay Request - Error",
-          "line": 755,
+          "line": 764,
           "english_text": "{darkred}Failed to download replay.",
           "existing_languages": [
             "chi",

@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 711
-Phrases with missing translations: 495
-Total missing translation entries: 3441
+Total phrases: 712
+Phrases with missing translations: 496
+Total missing translation entries: 3448
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [█████████████████░░░]  87.9% (625/711)
-  de (german)          [██████████████░░░░░░]  72.2% (513/711)
-  en (english)         [████████████████████] 100.0% (711/711)
-  es (spanish)         [███████░░░░░░░░░░░░░]  39.9% (284/711)
-  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.9% (234/711)
-  it (italian)         [██████░░░░░░░░░░░░░░]  31.8% (226/711)
-  ko (korean)          [████████░░░░░░░░░░░░]  40.4% (287/711)
-  lv (latvian)         [█████████░░░░░░░░░░░]  46.3% (329/711)
-  pl (polish)          [██████████████░░░░░░]  72.4% (515/711)
-  ru (russian)         [████████████████████] 100.0% (711/711)
-  sv (swedish)         [███████████░░░░░░░░░]  55.3% (393/711)
-  tr (turkish)         [███████░░░░░░░░░░░░░]  37.0% (263/711)
-  ua (ukrainian)       [████████████████████] 100.0% (711/711)
+  chi (schinese)       [█████████████████░░░]  87.9% (626/712)
+  de (german)          [██████████████░░░░░░]  72.2% (514/712)
+  en (english)         [████████████████████] 100.0% (712/712)
+  es (spanish)         [███████░░░░░░░░░░░░░]  39.9% (284/712)
+  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.9% (234/712)
+  it (italian)         [██████░░░░░░░░░░░░░░]  31.7% (226/712)
+  ko (korean)          [████████░░░░░░░░░░░░]  40.3% (287/712)
+  lv (latvian)         [█████████░░░░░░░░░░░]  46.2% (329/712)
+  pl (polish)          [██████████████░░░░░░]  72.5% (516/712)
+  ru (russian)         [████████████████████] 100.0% (712/712)
+  sv (swedish)         [███████████░░░░░░░░░]  55.2% (393/712)
+  tr (turkish)         [███████░░░░░░░░░░░░░]  36.9% (263/712)
+  ua (ukrainian)       [████████████████████] 100.0% (712/712)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -826,47 +826,49 @@ cs2kz-replays.phrases.txt
     Missing (7): es, fi, it, ko, lv, sv, tr
   Line 590: "Replay Table Header - Mode"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 599: "Replay Table Header - Time"
+  Line 599: "Replay Table Header - Styles"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 608: "Replay Table Header - Teleports"
+  Line 608: "Replay Table Header - Time"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 617: "Replay Table Header - Jump Type"
+  Line 617: "Replay Table Header - Teleports"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 626: "Replay Table Header - Distance"
+  Line 626: "Replay Table Header - Jump Type"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 635: "Replay Table Header - Block"
+  Line 635: "Replay Table Header - Distance"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 644: "Replay Table Header - Strafes"
+  Line 644: "Replay Table Header - Block"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 653: "Replay Table Header - Saved By"
+  Line 653: "Replay Table Header - Strafes"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 662: "Replay - Not Found"
+  Line 662: "Replay Table Header - Saved By"
+    Missing (7): es, fi, it, ko, lv, sv, tr
+  Line 671: "Replay - Not Found"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 669: "Replay - No Course"
+  Line 678: "Replay - No Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 676: "Replay - Invalid Mode Arg"
+  Line 685: "Replay - Invalid Mode Arg"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 683: "Replay - SR Not Found"
+  Line 692: "Replay - SR Not Found"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 690: "Replay - SPB Not Found"
+  Line 699: "Replay - SPB Not Found"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 697: "Replay - Global Mode Only"
+  Line 706: "Replay - Global Mode Only"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 704: "Replay - API Not Available"
+  Line 713: "Replay - API Not Available"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 711: "Replay - Querying WR"
+  Line 720: "Replay - Querying WR"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 718: "Replay - WR Not Found"
+  Line 727: "Replay - WR Not Found"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 725: "Replay - Querying GPB"
+  Line 734: "Replay - Querying GPB"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 732: "Replay - GPB Not Found"
+  Line 741: "Replay - GPB Not Found"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 739: "Replay Request - Sending"
+  Line 748: "Replay Request - Sending"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 747: "Replay Request - Already Requested"
+  Line 756: "Replay Request - Already Requested"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 755: "Replay Request - Error"
+  Line 764: "Replay Request - Error"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-spec.phrases.txt
