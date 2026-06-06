@@ -25,6 +25,7 @@ static_global const char *runReplayTableHeaders[] = {"#.",
 													 "Replay Table Header - Map",
 													 "Replay Table Header - Course",
 													 "Replay Table Header - Mode",
+													 "Replay Table Header - Styles",
 													 "Replay Table Header - Time",
 													 "Replay Table Header - Teleports",
 													 "Replay Table Header - SteamID",
@@ -46,30 +47,60 @@ static_global const char *manualReplayTableHeaders[] = {"#.",
 														"Replay Table Header - SteamID",
 														"Replay Table Header - UUID"};
 
-void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
+struct PageRange
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays;
-	u64 numMatched = 0;
+	size_t start;
+	size_t end;
+};
+
+static_function PageRange GetPageRange(const ReplayFilterCriteria &criteria, size_t total)
+{
+	size_t startIndex = 0;
+	if (criteria.offset > 0)
 	{
-		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
-		for (auto &replay : this->cheaterReplays)
+		startIndex = static_cast<size_t>(criteria.offset);
+	}
+	if (startIndex > total)
+	{
+		startIndex = total;
+	}
+	const size_t limit = criteria.limit > 0 ? static_cast<size_t>(criteria.limit) : 0;
+	const size_t endIndex = limit > 0 ? MIN(startIndex + limit, total) : startIndex;
+	return {startIndex, endIndex};
+}
+
+template<typename MapT>
+static_function std::vector<std::pair<UUID_t, ReplayHeader>> CollectMatchesWithMapFallback(const MapT &replayMap,
+																						   const ReplayFilterCriteria &criteria, std::mutex &mutex)
+{
+	auto collectMatches = [&](bool exactMapMatch)
+	{
+		std::vector<std::pair<UUID_t, ReplayHeader>> matches;
+		std::lock_guard<std::mutex> lock(mutex);
+		for (auto &replay : replayMap)
 		{
-			if (criteria.PassFilters(replay.second))
+			if (criteria.PassFilters(replay.second, exactMapMatch))
 			{
-				if (numMatched < criteria.offset)
-				{
-					numMatched++;
-					continue;
-				}
-				// Found a matching replay
-				matchingReplays.push_back(replay);
-				if (numMatched++ >= criteria.offset + criteria.limit)
-				{
-					break;
-				}
+				matches.push_back(replay);
 			}
 		}
+		return matches;
+	};
+
+	const bool preferExactMap = !criteria.mapName.empty() && criteria.mapName != "*";
+	auto matches = collectMatches(preferExactMap);
+	if (preferExactMap && matches.empty())
+	{
+		matches = collectMatches(false);
 	}
+	return matches;
+}
+
+void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
+{
+	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays =
+		CollectMatchesWithMapFallback(this->cheaterReplays, criteria, this->replayMapsMutex);
+	PageRange page = GetPageRange(criteria, matchingReplays.size());
 	CUtlString headers[KZ_ARRAYSIZE(cheaterReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(cheaterReplayTableHeaders); i++)
 	{
@@ -77,20 +108,20 @@ void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &c
 	}
 
 	utils::Table<KZ_ARRAYSIZE(cheaterReplayTableHeaders)> table(player->languageService->PrepareMessage(CHEATER_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = 0; i < matchingReplays.size(); i++)
+	for (size_t i = page.start; i < page.end; i++)
 	{
 		auto &pair = matchingReplays[i];
 		const ReplayHeader &hdr = pair.second;
 
-		std::string rowNumber = std::to_string(i + 1);
+		std::string rowNumber = std::to_string((i - page.start) + 1);
 		std::string steamID = hdr.has_player() ? std::to_string(hdr.player().steamid64()) : "0";
 		const char *reason = hdr.has_cheater() ? hdr.cheater().reason().c_str() : "";
 		// clang-format off
-		table.SetRow(i, rowNumber.c_str(),
-                    hdr.player().name().c_str(), 
-                    hdr.map().name().c_str(), 
-                    reason,
-						steamID.c_str(),
+		table.SetRow(i - page.start, rowNumber.c_str(),
+					hdr.player().name().c_str(), 
+					hdr.map().name().c_str(), 
+					reason,
+					steamID.c_str(),
 					pair.first.ToString().c_str());
 		// clang-format on
 	}
@@ -111,35 +142,20 @@ void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &c
 
 void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays;
-	u64 numMatched = 0;
-	{
-		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
-		for (auto &replay : this->runReplays)
-		{
-			if (criteria.PassFilters(replay.second))
-			{
-				if (numMatched < criteria.offset)
-				{
-					numMatched++;
-					continue;
-				}
+	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays = CollectMatchesWithMapFallback(this->runReplays, criteria, this->replayMapsMutex);
 
-				matchingReplays.push_back(replay);
-				if (numMatched++ >= criteria.offset + criteria.limit)
-				{
-					break;
-				}
-			}
-		}
-	}
+	std::sort(matchingReplays.begin(), matchingReplays.end(),
+			  [](const auto &a, const auto &b) { return a.second.run().time() < b.second.run().time(); });
+
+	PageRange page = GetPageRange(criteria, matchingReplays.size());
+
 	CUtlString headers[KZ_ARRAYSIZE(runReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(runReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(runReplayTableHeaders[i]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(runReplayTableHeaders)> table(player->languageService->PrepareMessage(RUN_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = 0; i < matchingReplays.size(); i++)
+	for (size_t i = page.start; i < page.end; i++)
 	{
 		auto &pair = matchingReplays[i];
 		const ReplayHeader &hdr = pair.second;
@@ -149,19 +165,35 @@ void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &crite
 		}
 		auto &run = hdr.run();
 		std::string modeName = run.mode().name();
-		if (run.styles_size() > 0)
+		std::string stylesList;
+		for (int styleIndex = 0; styleIndex < run.styles_size(); styleIndex++)
 		{
-			modeName += " +" + std::to_string(run.styles_size());
+			const auto &style = run.styles(styleIndex);
+			const std::string &styleName = !style.short_name().empty() ? style.short_name() : style.name();
+			if (styleName.empty())
+			{
+				continue;
+			}
+			if (!stylesList.empty())
+			{
+				stylesList += ", ";
+			}
+			stylesList += styleName;
 		}
-		std::string rowNumber = std::to_string(i + 1);
+		if (stylesList.empty())
+		{
+			stylesList = "-";
+		}
+		std::string rowNumber = std::to_string((i - page.start) + 1);
 		std::string teleports = std::to_string(run.num_teleports());
 		std::string steamID = std::to_string(hdr.player().steamid64());
 		// clang-format off
-		table.SetRow(i, rowNumber.c_str(),
+		table.SetRow(i - page.start, rowNumber.c_str(),
                         hdr.player().name().c_str(), 
                         hdr.map().name().c_str(),
                         run.course_name().c_str(), 
                         modeName.c_str(),
+						stylesList.c_str(),
                         utils::FormatTime(run.time()).Get(), teleports.c_str(), steamID.c_str(), pair.first.ToString().c_str());
 		// clang-format on
 	}
@@ -183,35 +215,15 @@ void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &crite
 
 void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays;
-	u64 numMatched = 0;
-	{
-		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
-		for (auto &replay : this->jumpReplays)
-		{
-			if (criteria.PassFilters(replay.second))
-			{
-				if (numMatched < criteria.offset)
-				{
-					numMatched++;
-					continue;
-				}
-				// Found a matching replay
-				matchingReplays.push_back(replay);
-				if (numMatched++ >= criteria.offset + criteria.limit)
-				{
-					break;
-				}
-			}
-		}
-	}
+	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays = CollectMatchesWithMapFallback(this->jumpReplays, criteria, this->replayMapsMutex);
+	PageRange page = GetPageRange(criteria, matchingReplays.size());
 	CUtlString headers[KZ_ARRAYSIZE(jumpReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(jumpReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(jumpReplayTableHeaders[i]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(jumpReplayTableHeaders)> table(player->languageService->PrepareMessage(JUMP_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = 0; i < matchingReplays.size(); i++)
+	for (size_t i = page.start; i < page.end; i++)
 	{
 		auto &pair = matchingReplays[i];
 		const ReplayHeader &hdr = pair.second;
@@ -225,10 +237,10 @@ void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &crit
 		{
 			continue;
 		}
-		std::string rowNumber = std::to_string(i + 1);
+		std::string rowNumber = std::to_string((i - page.start) + 1);
 		std::string steamID = std::to_string(hdr.player().steamid64());
 		// clang-format off
-		table.SetRow(i, rowNumber.c_str(), 
+		table.SetRow(i - page.start, rowNumber.c_str(), 
                         hdr.player().name().c_str(), 
                         hdr.map().name().c_str(), 
                         jump.mode().name().c_str(), 
@@ -261,35 +273,16 @@ void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &crit
 
 void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays;
-	u64 numMatched = 0;
-	{
-		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
-		for (auto &replay : this->manualReplays)
-		{
-			if (criteria.PassFilters(replay.second))
-			{
-				if (numMatched < criteria.offset)
-				{
-					numMatched++;
-					continue;
-				}
-				// Found a matching replay
-				matchingReplays.push_back(replay);
-				if (numMatched++ >= criteria.offset + criteria.limit)
-				{
-					break;
-				}
-			}
-		}
-	}
+	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays =
+		CollectMatchesWithMapFallback(this->manualReplays, criteria, this->replayMapsMutex);
+	PageRange page = GetPageRange(criteria, matchingReplays.size());
 	CUtlString headers[KZ_ARRAYSIZE(manualReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(manualReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(manualReplayTableHeaders[i]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(manualReplayTableHeaders)> table(player->languageService->PrepareMessage(MANUAL_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = 0; i < matchingReplays.size(); i++)
+	for (size_t i = page.start; i < page.end; i++)
 	{
 		auto &pair = matchingReplays[i];
 		const ReplayHeader &hdr = pair.second;
@@ -297,11 +290,11 @@ void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &cr
 		{
 			continue;
 		}
-		std::string rowNumber = std::to_string(i + 1);
+		std::string rowNumber = std::to_string((i - page.start) + 1);
 		std::string steamID = std::to_string(hdr.player().steamid64());
 		const char *savedBy = (hdr.manual().has_saved_by() ? hdr.manual().saved_by().name().c_str() : "");
 		// clang-format off
-		table.SetRow(i, rowNumber.c_str(), 
+		table.SetRow(i - page.start, rowNumber.c_str(), 
                         hdr.player().name().c_str(), 
                         hdr.map().name().c_str(), 
                         savedBy, 
@@ -507,7 +500,7 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 	}
 }
 
-bool ReplayFilterCriteria::PassGeneralFilters(const ReplayHeader &header) const
+bool ReplayFilterCriteria::PassGeneralFilters(const ReplayHeader &header, bool exactMapMatch) const
 {
 	if (player.nameSubString.has_value()
 		&& (!header.has_player() || !V_stristr(header.player().name().c_str(), player.nameSubString.value().c_str())))
@@ -518,9 +511,23 @@ bool ReplayFilterCriteria::PassGeneralFilters(const ReplayHeader &header) const
 	{
 		return false;
 	}
-	if (mapName != "*" && (!header.has_map() || !V_stristr(header.map().name().c_str(), mapName.c_str())))
+	if (mapName != "*")
 	{
-		return false;
+		if (!header.has_map())
+		{
+			return false;
+		}
+		if (exactMapMatch)
+		{
+			if (V_stricmp(header.map().name().c_str(), mapName.c_str()) != 0)
+			{
+				return false;
+			}
+		}
+		else if (!V_stristr(header.map().name().c_str(), mapName.c_str()))
+		{
+			return false;
+		}
 	}
 	return true;
 }
@@ -612,9 +619,9 @@ bool ReplayFilterCriteria::PassManualFilters(const ReplayHeader &header) const
 	return true;
 }
 
-bool ReplayFilterCriteria::PassFilters(const ReplayHeader &header) const
+bool ReplayFilterCriteria::PassFilters(const ReplayHeader &header, bool exactMapMatch) const
 {
-	if (!PassGeneralFilters(header))
+	if (!PassGeneralFilters(header, exactMapMatch))
 	{
 		return false;
 	}

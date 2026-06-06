@@ -596,6 +596,15 @@
 		"ua"		"Режим"
 		"de"		"Modus"
 	}
+	"Replay Table Header - Styles"
+	{
+		"en"		"Styles"
+		"chi"		"风格"
+		"pl"		"Style"
+		"ru"		"Стили"
+		"ua"		"Стилі"
+		"de"		"Stile"
+	}
 	"Replay Table Header - Time"
 	{
 		"en"		"Time"

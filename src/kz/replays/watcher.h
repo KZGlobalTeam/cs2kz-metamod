@@ -40,13 +40,13 @@ struct ReplayFilterCriteria
 	u8 jumpType = 0; // LJ by default
 	f32 minDistance = 0.0f;
 
-	bool PassGeneralFilters(const ReplayHeader &header) const;
+	bool PassGeneralFilters(const ReplayHeader &header, bool exactMapMatch) const;
 	bool PassCheaterFilters(const ReplayHeader &header) const;
 	bool PassRunFilters(const ReplayHeader &header) const;
 	bool PassJumpFilters(const ReplayHeader &header) const;
 	bool PassManualFilters(const ReplayHeader &header) const;
 
-	bool PassFilters(const ReplayHeader &header) const;
+	bool PassFilters(const ReplayHeader &header, bool exactMapMatch) const;
 };
 
 // Keep track of replays on disk and their headers.
