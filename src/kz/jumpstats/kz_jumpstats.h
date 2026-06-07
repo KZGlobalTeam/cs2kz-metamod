@@ -77,6 +77,8 @@ public:
 	f32 externalSpeedDiff {};
 	f32 prevYaw {};
 	f32 currentYaw {};
+	f32 startFraction {};
+	f32 endFraction {1.0f};
 	Vector wishdir;
 	f32 maxspeed {};
 	f32 wishspeed {};
@@ -263,6 +265,7 @@ public:
 	// Block / failstat / edge tracking
 	f32 block {};
 	f32 edge = -1.0f;
+	f32 landingEdge = -1.0f;
 	f32 miss {};
 	f32 failstatDistance {};
 	f32 failstatOffset {};
@@ -270,6 +273,7 @@ public:
 	f32 failstatBadAngles {};
 	i32 failstatStrafeCount {};
 	f32 failstatTotalDistance {};
+	i32 failstatGraphCallCount {};
 	// One pose per subtick movement.
 	JumpPose poseHistory[JS_FAILSTATS_MAX_TRACKED_TICKS];
 	i32 poseIndex {};
@@ -416,7 +420,7 @@ public:
 		return this->miss;
 	}
 
-	bool IsFailstat()
+	bool IsFailstat() const
 	{
 		return this->failstatValid;
 	}
@@ -470,6 +474,7 @@ public:
 	}
 
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
+	bool BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &strafeRight, std::string &mouseLeft, std::string &mouseRight) const;
 
 	// Block / failstat / edge tracking
 	void RecordPose();

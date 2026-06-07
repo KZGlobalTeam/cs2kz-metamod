@@ -752,7 +752,7 @@ i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outB
 // Jumps compression
 // ========================================
 
-bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps)
+bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps, u32 replayVersion)
 {
 	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
@@ -781,7 +781,7 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 		return false;
 	}
 
-	// Deserialize jumps from buffer
+	// Deserialize jumps from buffer.
 	outJumps.clear();
 	outJumps.reserve(header.elementCount);
 
@@ -789,6 +789,23 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 	i32 numJumps;
 	memcpy(&numJumps, readPtr, sizeof(numJumps));
 	readPtr += sizeof(numJumps);
+
+	struct OldAAData
+	{
+		u32 strafeIndex;
+		f32 externalSpeedDiff;
+		f32 prevYaw;
+		f32 currentYaw;
+		f32 wishDir[3];
+		f32 wishSpeed;
+		f32 accel;
+		f32 surfaceFriction;
+		f32 duration;
+		u32 buttons[3];
+		f32 velocityPre[3];
+		f32 velocityPost[3];
+		bool ducking;
+	};
 
 	for (i32 i = 0; i < numJumps; i++)
 	{
@@ -813,8 +830,45 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 		readPtr += sizeof(numAACalls);
 
 		jump.aaCalls.resize(numAACalls);
-		memcpy(jump.aaCalls.data(), readPtr, sizeof(RpJumpStats::AAData) * numAACalls);
-		readPtr += sizeof(RpJumpStats::AAData) * numAACalls;
+		if (replayVersion >= 5)
+		{
+			memcpy(jump.aaCalls.data(), readPtr, sizeof(RpJumpStats::AAData) * numAACalls);
+			readPtr += sizeof(RpJumpStats::AAData) * numAACalls;
+		}
+		else
+		{
+			for (i32 j = 0; j < numAACalls; j++)
+			{
+				OldAAData oldAA = {};
+				memcpy(&oldAA, readPtr, sizeof(oldAA));
+				readPtr += sizeof(oldAA);
+
+				RpJumpStats::AAData &aa = jump.aaCalls[j];
+				aa.strafeIndex = oldAA.strafeIndex;
+				aa.externalSpeedDiff = oldAA.externalSpeedDiff;
+				aa.prevYaw = oldAA.prevYaw;
+				aa.currentYaw = oldAA.currentYaw;
+				aa.startFraction = 0.0f;
+				aa.endFraction = 1.0f;
+				aa.wishDir[0] = oldAA.wishDir[0];
+				aa.wishDir[1] = oldAA.wishDir[1];
+				aa.wishDir[2] = oldAA.wishDir[2];
+				aa.wishSpeed = oldAA.wishSpeed;
+				aa.accel = oldAA.accel;
+				aa.surfaceFriction = oldAA.surfaceFriction;
+				aa.duration = oldAA.duration;
+				aa.buttons[0] = oldAA.buttons[0];
+				aa.buttons[1] = oldAA.buttons[1];
+				aa.buttons[2] = oldAA.buttons[2];
+				aa.velocityPre[0] = oldAA.velocityPre[0];
+				aa.velocityPre[1] = oldAA.velocityPre[1];
+				aa.velocityPre[2] = oldAA.velocityPre[2];
+				aa.velocityPost[0] = oldAA.velocityPost[0];
+				aa.velocityPost[1] = oldAA.velocityPost[1];
+				aa.velocityPost[2] = oldAA.velocityPost[2];
+				aa.ducking = oldAA.ducking;
+			}
+		}
 
 		outJumps.push_back(jump);
 	}

@@ -8,12 +8,25 @@
 #include "sdk/navphysicsinterface.h"
 #include "utils/utils.h"
 
+static_global constexpr i32 JS_CONSOLE_GRAPH_MAX_FRAMES = 150;
+
+static_function i32 GetTotalAACallCount(const Jump &jump)
+{
+	i32 totalCalls = 0;
+	FOR_EACH_VEC(jump.strafes, i)
+	{
+		totalCalls += jump.strafes[i].aaCalls.Count();
+	}
+	return totalCalls;
+}
+
 // ============================================================
 // Trace helpers
 // ============================================================
 
 // Hull sweep from start to end with the given bounding box. Returns true if hit.
-static bool TraceHullPosition(KZPlayer *player, const Vector &start, const Vector &end, const Vector &mins, const Vector &maxs, Vector &position)
+static_function bool TraceHullPosition(KZPlayer *player, const Vector &start, const Vector &end, const Vector &mins, const Vector &maxs,
+									   Vector &position)
 {
 	CCSPlayerPawnBase *pawn = player->GetPlayerPawn();
 	if (!pawn)
@@ -33,7 +46,7 @@ static bool TraceHullPosition(KZPlayer *player, const Vector &start, const Vecto
 }
 
 // Point (ray) trace from start to end. Returns true if hit.
-static bool TraceRayPosition(KZPlayer *player, const Vector &start, const Vector &end, Vector &position)
+static_function bool TraceRayPosition(KZPlayer *player, const Vector &start, const Vector &end, Vector &position)
 {
 	CCSPlayerPawnBase *pawn = player->GetPlayerPawn();
 	if (!pawn)
@@ -52,7 +65,7 @@ static bool TraceRayPosition(KZPlayer *player, const Vector &start, const Vector
 }
 
 // Point trace returning both hit position and surface normal.
-static bool TraceRayPositionNormal(KZPlayer *player, const Vector &start, const Vector &end, Vector &position, Vector &normal)
+static_function bool TraceRayPositionNormal(KZPlayer *player, const Vector &start, const Vector &end, Vector &position, Vector &normal)
 {
 	CCSPlayerPawnBase *pawn = player->GetPlayerPawn();
 	if (!pawn)
@@ -73,7 +86,7 @@ static bool TraceRayPositionNormal(KZPlayer *player, const Vector &start, const 
 
 // coordDist: 0 = X-axis dominant, 1 = Y-axis dominant
 // distSign: +1 (landing > takeoff along that axis) or -1
-static void GetCoordOrientation(const Vector &landingPos, const Vector &takeoffPos, i32 &coordDist, i32 &distSign)
+static_function void GetCoordOrientation(const Vector &landingPos, const Vector &takeoffPos, i32 &coordDist, i32 &distSign)
 {
 	coordDist = fabsf(landingPos.x - takeoffPos.x) < fabsf(landingPos.y - takeoffPos.y) ? 1 : 0;
 	distSign = landingPos[coordDist] > takeoffPos[coordDist] ? 1 : -1;
@@ -82,7 +95,7 @@ static void GetCoordOrientation(const Vector &landingPos, const Vector &takeoffP
 // Downward scan to find the top surface Z of a block.
 // Searches 'searchArea' units above and below origin[coord + offset].
 // Returns a very large negative number on failure.
-static f32 FindBlockHeight(KZPlayer *player, const Vector &origin, f32 offset, i32 coord, f32 searchArea)
+static_function f32 FindBlockHeight(KZPlayer *player, const Vector &origin, f32 offset, i32 coord, f32 searchArea)
 {
 	Vector traceStart = origin;
 	traceStart[coord] += offset;
@@ -99,7 +112,7 @@ static f32 FindBlockHeight(KZPlayer *player, const Vector &origin, f32 offset, i
 
 // 3-step 54-unit vertical scan. Used by AlwaysFailstat to find the block surface
 // when the block has a roof (headbanger geometry).
-static bool TryFindBlockHeight(KZPlayer *player, const Vector &position, Vector &result, i32 coordDist, i32 distSign)
+static_function bool TryFindBlockHeight(KZPlayer *player, const Vector &position, Vector &result, i32 coordDist, i32 distSign)
 {
 	Vector traceStart = position;
 	traceStart[coordDist] += (f32)distSign;
@@ -126,7 +139,7 @@ static bool TryFindBlockHeight(KZPlayer *player, const Vector &position, Vector 
 }
 
 // Short point trace; returns true if it hits and the hit normal is aligned with coordDist.
-static bool BlockTraceAligned(KZPlayer *player, const Vector &start, const Vector &end, i32 coordDist)
+static_function bool BlockTraceAligned(KZPlayer *player, const Vector &start, const Vector &end, i32 coordDist)
 {
 	Vector pos, normal;
 	if (!TraceRayPositionNormal(player, start, end, pos, normal))
@@ -137,7 +150,8 @@ static bool BlockTraceAligned(KZPlayer *player, const Vector &start, const Vecto
 }
 
 // Verifies that the faces of the takeoff and landing blocks are parallel.
-static bool BlockAreEdgesParallel(KZPlayer *player, const Vector &startBlock, const Vector &endBlock, f32 deviation, i32 coordDist, i32 coordDev)
+static_function bool BlockAreEdgesParallel(KZPlayer *player, const Vector &startBlock, const Vector &endBlock, f32 deviation, i32 coordDist,
+										   i32 coordDev)
 {
 	f32 offset = startBlock[coordDist] > endBlock[coordDist] ? 0.1f : -0.1f;
 
@@ -177,10 +191,9 @@ static bool BlockAreEdgesParallel(KZPlayer *player, const Vector &startBlock, co
 	return false;
 }
 
-// TODO: Add landing edge tracking
 f32 Jump::GetEdge(bool landing)
 {
-	return this->edge;
+	return landing ? this->landingEdge : this->edge;
 }
 
 // ============================================================
@@ -342,12 +355,14 @@ void Jump::UpdateFailstat()
 	bool hadValidFailstat = this->failstatValid;
 	f32 prevBlock = this->block;
 	f32 prevEdge = this->edge;
+	f32 prevLandingEdge = this->landingEdge;
 	f32 prevDistance = this->failstatDistance;
 	f32 prevOffset = this->failstatOffset;
 	f32 prevSync = this->failstatSync;
 	f32 prevBadAngles = this->failstatBadAngles;
 	i32 prevStrafeCount = this->failstatStrafeCount;
 	f32 prevTotalDistance = this->failstatTotalDistance;
+	i32 prevGraphCallCount = this->failstatGraphCallCount;
 
 	if (!isLadderJump && rawDist >= (f32)JS_MIN_BLOCK_DISTANCE)
 	{
@@ -381,6 +396,7 @@ void Jump::UpdateFailstat()
 		this->failstatBadAngles = totalDuration > 0.0f ? baDuration / totalDuration : 0.0f;
 		this->failstatStrafeCount = this->strafes.Count();
 		this->failstatTotalDistance = this->totalDistance;
+		this->failstatGraphCallCount = Min(GetTotalAACallCount(*this), JS_CONSOLE_GRAPH_MAX_FRAMES);
 		this->failstatValid = true;
 	}
 	else if (hadValidFailstat)
@@ -388,12 +404,14 @@ void Jump::UpdateFailstat()
 		// Keep the last valid estimate if a later subtick sample is invalid.
 		this->block = prevBlock;
 		this->edge = prevEdge;
+		this->landingEdge = prevLandingEdge;
 		this->failstatDistance = prevDistance;
 		this->failstatOffset = prevOffset;
 		this->failstatSync = prevSync;
 		this->failstatBadAngles = prevBadAngles;
 		this->failstatStrafeCount = prevStrafeCount;
 		this->failstatTotalDistance = prevTotalDistance;
+		this->failstatGraphCallCount = prevGraphCallCount;
 		this->failstatValid = true;
 	}
 }
@@ -458,6 +476,7 @@ void Jump::CalcBlockStats(Vector landingOrigin, bool checkOffset)
 	{
 		this->block = 0.0f;
 		this->edge = -1.0f;
+		this->landingEdge = -1.0f;
 		return;
 	}
 
@@ -477,11 +496,13 @@ void Jump::CalcBlockStats(Vector landingOrigin, bool checkOffset)
 	this->block = (f32)RoundFloatToInt(rawBlock);
 	// Trace stops JS_OFFSET_EPSILON units in front of the actual block face; compensate
 	this->edge = fabsf(startBlock[coordDist] - this->adjustedTakeoffOrigin[coordDist] + (16.0f - JS_OFFSET_EPSILON) * distSign);
+	this->landingEdge = (this->adjustedLandingOrigin[coordDist] - endBlock[coordDist]) * distSign + 16.0f;
 
 	if (this->block < (f32)JS_MIN_BLOCK_DISTANCE)
 	{
 		this->block = 0.0f;
 		this->edge = -1.0f;
+		this->landingEdge = -1.0f;
 	}
 }
 
@@ -552,11 +573,13 @@ void Jump::CalcLadderBlockStats(Vector landingOrigin, bool checkOffset)
 
 	this->block = (f32)RoundFloatToInt(fabsf(blockPosition[coordDist] - ladderPosition[coordDist]));
 	this->edge = fabsf(this->adjustedTakeoffOrigin[coordDist] - ladderPosition[coordDist]) - 16.0f;
+	this->landingEdge = (this->adjustedLandingOrigin[coordDist] - blockPosition[coordDist]) * distSign + 16.0f;
 
 	if (this->block < (f32)JS_MIN_LAJ_BLOCK_DISTANCE)
 	{
 		this->block = 0.0f;
 		this->edge = -1.0f;
+		this->landingEdge = -1.0f;
 	}
 }
 

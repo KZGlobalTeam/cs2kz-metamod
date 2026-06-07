@@ -13,7 +13,7 @@ class KZPlayer;
 
 enum : u32
 {
-	KZ_REPLAY_VERSION = 4,
+	KZ_REPLAY_VERSION = 5,
 };
 
 // Maximum subtick moves per tick. The theoretical engine maximum is 64, but 36 is a much more reasonable amount.
@@ -113,6 +113,8 @@ struct RpJumpStats
 		f32 externalSpeedDiff;
 		f32 prevYaw;
 		f32 currentYaw;
+		f32 startFraction;
+		f32 endFraction;
 		f32 wishDir[3];
 		f32 wishSpeed;
 		f32 accel;

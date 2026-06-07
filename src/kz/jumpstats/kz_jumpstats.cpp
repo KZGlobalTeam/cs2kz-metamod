@@ -156,10 +156,10 @@ f32 AACall::CalcIdealGain()
 	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	
 	f32 idealSpeed = sqrt(this->velocityPre.Length2DSqr()
-		+ MIN(this->CalcAccelSpeed(true), wishspeedcapped)
-		* MIN(this->CalcAccelSpeed(true), wishspeedcapped)
+		+ Min(this->CalcAccelSpeed(true), wishspeedcapped)
+		* Min(this->CalcAccelSpeed(true), wishspeedcapped)
 		+ 2
-		* MIN(this->CalcAccelSpeed(true), wishspeedcapped)
+		* Min(this->CalcAccelSpeed(true), wishspeedcapped)
 		* this->velocityPre.Length2D()
 		* cos(this->CalcIdealYaw(true))
 	);
@@ -383,11 +383,13 @@ void Jump::Init()
 	// Block / failstat / edge fields
 	this->block = 0.0f;
 	this->edge = -1.0f;
+	this->landingEdge = -1.0f;
 	this->miss = 0.0f;
 	this->failstatDistance = 0.0f;
 	this->failstatOffset = 0.0f;
 	this->failstatSync = 0.0f;
 	this->failstatBadAngles = 0.0f;
+	this->failstatGraphCallCount = 0;
 	this->poseIndex = 0;
 	this->poseCount = 0;
 	this->failstatBlockDetected = (this->jumpType != JumpType_LadderJump);
@@ -429,13 +431,15 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	AACall *call = &strafe->aaCalls.Tail();
 	QAngle currentAngle;
 	this->player->GetAngles(&currentAngle);
+	call->startFraction = this->player->currentMoveData->m_flSubtickStartFraction;
+	call->endFraction = this->player->currentMoveData->m_flSubtickEndFraction;
 	call->maxspeed = this->player->currentMoveData->m_flMaxSpeed;
 	call->currentYaw = currentAngle.y;
 	call->wishdir = wishdir;
 	call->wishspeed = wishspeed;
 	call->accel = accel;
 	call->surfaceFriction = this->player->GetMoveServices()->m_flSurfaceFriction();
-	call->duration = g_pKZUtils->GetGlobals()->frametime;
+	call->duration = MAX(call->endFraction - call->startFraction, 0.0f) * ENGINE_FIXED_TICK_INTERVAL;
 	call->ducking = this->player->GetMoveServices()->m_bDucked;
 	this->player->GetVelocity(&call->velocityPost);
 

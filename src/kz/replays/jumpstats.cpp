@@ -76,6 +76,8 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 			aa.externalSpeedDiff = a.externalSpeedDiff;
 			aa.prevYaw = a.prevYaw;
 			aa.currentYaw = a.currentYaw;
+			aa.startFraction = a.startFraction;
+			aa.endFraction = a.endFraction;
 			aa.wishDir[0] = a.wishdir.x;
 			aa.wishDir[1] = a.wishdir.y;
 			aa.wishDir[2] = a.wishdir.z;
@@ -165,6 +167,8 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 				aa->externalSpeedDiff = aaData.externalSpeedDiff;
 				aa->prevYaw = aaData.prevYaw;
 				aa->currentYaw = aaData.currentYaw;
+				aa->startFraction = aaData.startFraction;
+				aa->endFraction = aaData.endFraction;
 				aa->wishdir.x = aaData.wishDir[0];
 				aa->wishdir.y = aaData.wishDir[1];
 				aa->wishdir.z = aaData.wishDir[2];

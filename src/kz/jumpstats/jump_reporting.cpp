@@ -198,11 +198,17 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	}
 	// Build inline stats for console
 	std::string edgeString = "";
+	std::string landingEdgeString = "";
 	std::string blockString = "";
 	std::string missString = "";
 	if (jump->GetEdge(false) >= 0.0f)
 	{
 		edgeString = KZLanguageService::PrepareMessageWithLang(language, "Jumpstat Report - Console Segment - Edge", jump->GetEdge(false));
+	}
+	if (jump->GetEdge(true) > 0.0f)
+	{
+		landingEdgeString =
+			KZLanguageService::PrepareMessageWithLang(language, "Jumpstat Report - Console Segment - Landing Edge", jump->GetEdge(true));
 	}
 	if (jump->GetBlock() > 0.0f)
 	{
@@ -218,6 +224,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		modeStyleNames.c_str(),
 		blockString.c_str(),
 		edgeString.c_str(),
+		landingEdgeString.c_str(),
 		missString.c_str(),
 		jump->GetStrafeCount(),
 		KZLanguageService::PrepareMessageWithLang(language, jump->GetStrafeCount() > 1 ? "Strafes" : "Strafe").c_str(),
@@ -310,6 +317,20 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		for (u32 i = 0; i < table.GetNumEntries(); i++)
 		{
 			target->PrintConsole(false, false, table.GetLine(i));
+		}
+	}
+
+	if (!broadcast)
+	{
+		std::string strafeLeft, strafeRight, mouseLeft, mouseRight;
+		if (jump->BuildConsoleStrafeMouseGraph(strafeLeft, strafeRight, mouseLeft, mouseRight))
+		{
+			target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Graph - Strafe Keys");
+			target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Graph - Left", strafeLeft.c_str());
+			target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Graph - Right", strafeRight.c_str());
+			target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Graph - Mouse Movement");
+			target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Graph - Left", mouseLeft.c_str());
+			target->languageService->PrintConsole(false, false, "Jumpstat Report - Console Graph - Right", mouseRight.c_str());
 		}
 	}
 }

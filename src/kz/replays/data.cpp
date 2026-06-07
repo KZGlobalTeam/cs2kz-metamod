@@ -274,7 +274,7 @@ namespace KZ::replaysystem::data
 
 		std::vector<RpJumpStats> jumpsVec;
 
-		if (!KZ::replaysystem::compression::ReadJumpsCompressed(cursor, end, jumpsVec))
+		if (!KZ::replaysystem::compression::ReadJumpsCompressed(cursor, end, jumpsVec, result.header.version()))
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;

@@ -845,12 +845,12 @@
 	}
 	"Jumpstat Report - Console Details 1"
 	{
-		// CKZ | 272 Block | 4.09 Edge | 23.50 Miss | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height | +1.0 W
-		"#format"	"mode_style:s,block:s,edge:s,miss:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f,release:s"
-		"en"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
-		"chi"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度{release}"
-		"ua"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота{release}"
-		"ru"		"{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синх | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
+		// CKZ | 272 Block | 4.09 Edge | 1.23 LandEdge | 23.50 Miss | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height | +1.0 W
+		"#format"	"mode_style:s,block:s,edge:s,landing_edge:s,miss:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f,release:s"
+		"en"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+		"chi"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度{release}"
+		"ua"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота{release}"
+		"ru"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синх | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
 	}
 	"Jumpstat Report - Console Segment - Edge"
 	{
@@ -875,6 +875,11 @@
 		"chi"		" | {value} 错漏"
 		"ua"		" | {value} Брак"
 		"ru"		" | {value} Нехватка"
+	}
+	"Jumpstat Report - Console Segment - Landing Edge"
+	{
+		"#format"	"value:.2f"
+		"en"		" | {value} LandEdge"
 	}
 	"Jumpstats Report - Chat Segment - Edge"
 	{
@@ -916,6 +921,24 @@
 		"chi"		"{gain_eff}%%%% 增益效率 | {air_path} 空中路径 | {deviation} Deviation | {width} 幅度 | {air_time} 滞空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 下蹲"
 		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зміщення | {duck_end_time}/{duck_total_time} Присівши"
 		"ru"		"{gain_eff}%%%% ЭффПрир | {air_path} Airpath | {deviation} Отклонение | {width} Ширина | {air_time} Airtime | {offset} Смещение | {duck_end_time}/{duck_total_time} В приседе"
+	}
+	"Jumpstat Report - Console Graph - Strafe Keys"
+	{
+		"en"		"Strafe keys:"
+	}
+	"Jumpstat Report - Console Graph - Mouse Movement"
+	{
+		"en"		"Mouse movement:"
+	}
+	"Jumpstat Report - Console Graph - Left"
+	{
+		"#format"	"value:s"
+		"en"		"L: {value}"
+	}
+	"Jumpstat Report - Console Graph - Right"
+	{
+		"#format"	"value:s"
+		"en"		"R: {value}"
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
 	{

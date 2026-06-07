@@ -32,7 +32,7 @@ namespace KZ::replaysystem::compression
 	bool ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents);
 
 	// Read compressed jumps
-	bool ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps);
+	bool ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps, u32 replayVersion);
 
 	// Read compressed CmdData
 	bool ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData, std::vector<SubtickData> &outCmdSubtickData,
