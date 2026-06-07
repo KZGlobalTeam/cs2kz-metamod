@@ -352,8 +352,8 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         'IXWEBSOCKET_USE_MBED_TLS_MIN_VERSION_3'
       ]
       cxx.cflags += [
+        '/wd4267', # conversion from 'size_t' to 'type', possible loss of data
         '/W3',
-        '/Zi',
         '/std:c++17',
       ]
       cxx.cxxflags += ['/TP']
@@ -372,6 +372,8 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         'uuid.lib',
         'odbc32.lib',
         'odbccp32.lib',
+        '/ignore:4098',
+        '/ignore:4099',
       ]
 
     # Optimization
