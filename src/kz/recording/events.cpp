@@ -126,7 +126,8 @@ void KZRecordingService::OnTimerStart()
 		KZ_LOG_DEBUG(LogChannel::Recording, "Skipping run recorder: map is not global and kz_replay_record_nonglobal_runs is false\n");
 		this->InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TIMER_START, this->player->timerService->GetTime(),
 							   this->player->timerService->GetCourse()->id);
-		this->currentRunUUID = UUID_t(false);
+		// Assign a random UUID for local database saving.
+		this->currentRunUUID = UUID_t();
 		return;
 	}
 
