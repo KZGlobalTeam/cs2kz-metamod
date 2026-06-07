@@ -114,11 +114,6 @@ namespace utils
 	void RemoveFile(const char *relativePath);
 	bool RenameFile(const char *oldRelativePath, const char *newRelativePath);
 
-	inline u32 GetPaddingForWideString(const char *string)
-	{
-		return MAX(0, strlen(string) - mbstowcs(NULL, string, 0));
-	}
-
 	inline Vector TransformPoint(const CTransform &tm, const Vector &p)
 	{
 		return Vector(tm.m_vPosition.x

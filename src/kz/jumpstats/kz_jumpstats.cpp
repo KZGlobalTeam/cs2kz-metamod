@@ -153,7 +153,7 @@ f32 AACall::CalcIdealGain()
 	// sqrt(v^2+a^2+2*v*a*cos(yaw)
 	// clang-format off
 	
-	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
+	const f32 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	
 	f32 idealSpeed = sqrt(this->velocityPre.Length2DSqr()
 		+ Min(this->CalcAccelSpeed(true), wishspeedcapped)

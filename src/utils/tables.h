@@ -20,7 +20,7 @@ namespace utils
 			{
 				this->headers[i] = headers[i];
 				this->headers[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
-				columnLengths[i] = this->headers[i].Length();
+				columnLengths[i] = GetDisplayByteLength(this->headers[i].Get());
 			}
 		}
 
@@ -30,11 +30,54 @@ namespace utils
 			{
 				this->headers[i] = headers[i];
 				this->headers[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
-				columnLengths[i] = this->headers[i].Length();
+				columnLengths[i] = GetDisplayByteLength(this->headers[i].Get());
 			}
 		}
 
 	private:
+		static constexpr const char *fontResetSuffix = "ᅟ";
+
+		static u32 GetUtf8CodepointCount(const char *value, u32 byteCount)
+		{
+			u32 codepoints = 0;
+			for (u32 i = 0; i < byteCount; i++)
+			{
+				unsigned char c = static_cast<unsigned char>(value[i]);
+				if ((c & 0xC0) != 0x80)
+				{
+					codepoints++;
+				}
+			}
+			return codepoints;
+		}
+
+		static bool EndsWithFontResetSuffix(const char *value, u32 length)
+		{
+			const u32 suffixLength = static_cast<u32>(V_strlen(fontResetSuffix));
+			if (length < suffixLength)
+			{
+				return false;
+			}
+			return V_strncmp(value + (length - suffixLength), fontResetSuffix, suffixLength) == 0;
+		}
+
+		static u32 GetDisplayByteLength(const char *value)
+		{
+			u32 length = static_cast<u32>(V_strlen(value));
+			if (EndsWithFontResetSuffix(value, length))
+			{
+				length -= static_cast<u32>(V_strlen(fontResetSuffix));
+			}
+			return length;
+		}
+
+		static u32 GetDisplayPadding(const char *value)
+		{
+			u32 displayBytes = GetDisplayByteLength(value);
+			u32 displayCodepoints = GetUtf8CodepointCount(value, displayBytes);
+			return displayBytes > displayCodepoints ? displayBytes - displayCodepoints : 0;
+		}
+
 		struct TableEntry
 		{
 			CUtlString data[columnCount];
@@ -58,7 +101,7 @@ namespace utils
 			}
 			entries[row].data[column] = value;
 			entries[row].data[column].Append("ᅟ"); // Add a space to reset the "font" to monospace
-			columnLengths[column] = MAX(columnLengths[column], (u32)V_strlen(entries[row].data[column].Get()));
+			columnLengths[column] = MAX(columnLengths[column], GetDisplayByteLength(entries[row].data[column].Get()));
 			return true;
 		}
 
@@ -79,7 +122,7 @@ namespace utils
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				entries[row].data[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
-				columnLengths[i] = MAX(columnLengths[i], (u32)V_strlen(entries[row].data[i].Get()));
+				columnLengths[i] = MAX(columnLengths[i], GetDisplayByteLength(entries[row].data[i].Get()));
 			}
 		}
 
@@ -107,10 +150,11 @@ namespace utils
 		CUtlString GetHeader()
 		{
 			CUtlString result;
+			const u32 fontResetSuffixLength = static_cast<u32>(V_strlen(fontResetSuffix));
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				CUtlString value;
-				value.Format("%-*s%s", columnLengths[i] + GetPaddingForWideString(headers[i].Get()), headers[i].Get(),
+				value.Format("%-*s%s", columnLengths[i] + GetDisplayPadding(headers[i].Get()) + fontResetSuffixLength, headers[i].Get(),
 							 i == columnCount - 1 ? "" : "  ");
 				for (i32 i = 0; i < value.Length() - 1; i++)
 				{
@@ -132,11 +176,12 @@ namespace utils
 				return "";
 			}
 			CUtlString result;
+			const u32 fontResetSuffixLength = static_cast<u32>(V_strlen(fontResetSuffix));
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				CUtlString value;
-				value.Format("%-*s%s", columnLengths[i] + GetPaddingForWideString(entries[row].data[i].Get()), entries[row].data[i].Get(),
-							 i == columnCount - 1 ? "" : "  ");
+				value.Format("%-*s%s", columnLengths[i] + GetDisplayPadding(entries[row].data[i].Get()) + fontResetSuffixLength,
+							 entries[row].data[i].Get(), i == columnCount - 1 ? "" : "  ");
 				for (i32 i = 0; i < value.Length() - 1; i++)
 				{
 					if (value[i] == '%' && value[i + 1] == '%')
