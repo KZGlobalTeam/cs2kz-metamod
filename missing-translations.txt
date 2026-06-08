@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 712
-Phrases with missing translations: 496
-Total missing translation entries: 3448
+Total phrases: 717
+Phrases with missing translations: 501
+Total missing translation entries: 3508
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [█████████████████░░░]  87.9% (626/712)
-  de (german)          [██████████████░░░░░░]  72.2% (514/712)
-  en (english)         [████████████████████] 100.0% (712/712)
-  es (spanish)         [███████░░░░░░░░░░░░░]  39.9% (284/712)
-  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.9% (234/712)
-  it (italian)         [██████░░░░░░░░░░░░░░]  31.7% (226/712)
-  ko (korean)          [████████░░░░░░░░░░░░]  40.3% (287/712)
-  lv (latvian)         [█████████░░░░░░░░░░░]  46.2% (329/712)
-  pl (polish)          [██████████████░░░░░░]  72.5% (516/712)
-  ru (russian)         [████████████████████] 100.0% (712/712)
-  sv (swedish)         [███████████░░░░░░░░░]  55.2% (393/712)
-  tr (turkish)         [███████░░░░░░░░░░░░░]  36.9% (263/712)
-  ua (ukrainian)       [████████████████████] 100.0% (712/712)
+  chi (schinese)       [█████████████████░░░]  87.3% (626/717)
+  de (german)          [██████████████░░░░░░]  71.7% (514/717)
+  en (english)         [████████████████████] 100.0% (717/717)
+  es (spanish)         [███████░░░░░░░░░░░░░]  39.6% (284/717)
+  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.6% (234/717)
+  it (italian)         [██████░░░░░░░░░░░░░░]  31.5% (226/717)
+  ko (korean)          [████████░░░░░░░░░░░░]  40.0% (287/717)
+  lv (latvian)         [█████████░░░░░░░░░░░]  45.9% (329/717)
+  pl (polish)          [██████████████░░░░░░]  72.0% (516/717)
+  ru (russian)         [███████████████████░]  99.3% (712/717)
+  sv (swedish)         [██████████░░░░░░░░░░]  54.8% (393/717)
+  tr (turkish)         [███████░░░░░░░░░░░░░]  36.7% (263/717)
+  ua (ukrainian)       [███████████████████░]  99.3% (712/717)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -549,47 +549,57 @@ cs2kz-jumpstats.phrases.txt
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 871: "Jumpstat Report - Console Segment - Miss"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 879: "Jumpstats Report - Chat Segment - Edge"
+  Line 879: "Jumpstat Report - Console Segment - Landing Edge"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 884: "Jumpstats Report - Chat Segment - Edge"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 887: "Jumpstats Report - Chat Segment - Deviation"
+  Line 892: "Jumpstats Report - Chat Segment - Deviation"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 895: "Jumpstats Report - Chat Segment - Offset"
+  Line 900: "Jumpstats Report - Chat Segment - Offset"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 903: "Jumpstats Report - Chat Segment - Miss"
+  Line 908: "Jumpstats Report - Chat Segment - Miss"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 911: "Jumpstat Report - Console Details 2"
+  Line 916: "Jumpstat Report - Console Details 2"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 920: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
+  Line 925: "Jumpstat Report - Console Graph - Strafe Keys"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 929: "Jumpstat Report - Console Graph - Mouse Movement"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 933: "Jumpstat Report - Console Graph - Left"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 938: "Jumpstat Report - Console Graph - Right"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 943: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 930: "Jumpstats Option - Jumpstats Minimum Tier - Response"
+  Line 953: "Jumpstats Option - Jumpstats Minimum Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 941: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
+  Line 964: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 951: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
+  Line 974: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 962: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
+  Line 985: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 972: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
+  Line 995: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 983: "Jumpstats Option - Jumpstats Volume - Current"
+  Line 1006: "Jumpstats Option - Jumpstats Volume - Current"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 993: "Jumpstats Option - Jumpstats Volume - Response"
+  Line 1016: "Jumpstats Option - Jumpstats Volume - Response"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1004: "Jumpstats Option - Extended Chat Stats - Enable"
+  Line 1027: "Jumpstats Option - Extended Chat Stats - Enable"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1014: "Jumpstats Option - Extended Chat Stats - Disable"
+  Line 1037: "Jumpstats Option - Extended Chat Stats - Disable"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1024: "Jumpstats Option - Jumpstats Reporting - Enable"
+  Line 1047: "Jumpstats Option - Jumpstats Reporting - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1031: "Jumpstats Option - Jumpstats Reporting - Disable"
+  Line 1054: "Jumpstats Option - Jumpstats Reporting - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1038: "Jumpstats Option - Failstats Chat Reporting - Enable"
+  Line 1061: "Jumpstats Option - Failstats Chat Reporting - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1045: "Jumpstats Option - Failstats Chat Reporting - Disable"
+  Line 1068: "Jumpstats Option - Failstats Chat Reporting - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1052: "Jumpstats Option - Failstats Console Reporting - Enable"
+  Line 1075: "Jumpstats Option - Failstats Console Reporting - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1059: "Jumpstats Option - Failstats Console Reporting - Disable"
+  Line 1082: "Jumpstats Option - Failstats Console Reporting - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-language.phrases.txt

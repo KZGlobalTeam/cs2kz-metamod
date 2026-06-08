@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 712,
-    "phrases_with_missing": 496,
-    "total_missing_entries": 3448,
+    "total_phrases": 717,
+    "phrases_with_missing": 501,
+    "total_missing_entries": 3508,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 87.92,
+      "coverage_percent": 87.31,
       "translated": 626,
-      "missing": 86,
+      "missing": 91,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -434,6 +434,36 @@
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
+          "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
           "file": "cs2kz-ztopwatch.phrases.txt",
           "phrase": "Zone Stopwatch - Point Set",
           "line": 3,
@@ -591,9 +621,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 72.19,
+      "coverage_percent": 71.69,
       "translated": 514,
-      "missing": 198,
+      "missing": 203,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -1301,7 +1331,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -1323,68 +1353,98 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -1793,7 +1853,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 712,
+      "translated": 717,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -1804,9 +1864,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 39.89,
+      "coverage_percent": 39.61,
       "translated": 284,
-      "missing": 428,
+      "missing": 433,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -2970,7 +3030,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -2992,128 +3052,158 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 920,
+          "line": 943,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 930,
+          "line": 953,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 941,
+          "line": 964,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 951,
+          "line": 974,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 962,
+          "line": 985,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 972,
+          "line": 995,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 993,
+          "line": 1016,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1004,
+          "line": 1027,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1014,
+          "line": 1037,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -4390,9 +4480,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 32.87,
+      "coverage_percent": 32.64,
       "translated": 234,
-      "missing": 478,
+      "missing": 483,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -5646,7 +5736,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -5668,128 +5758,158 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 920,
+          "line": 943,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 930,
+          "line": 953,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 941,
+          "line": 964,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 951,
+          "line": 974,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 962,
+          "line": 985,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 972,
+          "line": 995,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 993,
+          "line": 1016,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1004,
+          "line": 1027,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1014,
+          "line": 1037,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -7276,9 +7396,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 31.74,
+      "coverage_percent": 31.52,
       "translated": 226,
-      "missing": 486,
+      "missing": 491,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -8550,7 +8670,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -8572,128 +8692,158 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 920,
+          "line": 943,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 930,
+          "line": 953,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 941,
+          "line": 964,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 951,
+          "line": 974,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 962,
+          "line": 985,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 972,
+          "line": 995,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 993,
+          "line": 1016,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1004,
+          "line": 1027,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1014,
+          "line": 1037,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -10210,9 +10360,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 40.31,
+      "coverage_percent": 40.03,
       "translated": 287,
-      "missing": 425,
+      "missing": 430,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -11352,7 +11502,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -11374,128 +11524,158 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 920,
+          "line": 943,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 930,
+          "line": 953,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 941,
+          "line": 964,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 951,
+          "line": 974,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 962,
+          "line": 985,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 972,
+          "line": 995,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 993,
+          "line": 1016,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1004,
+          "line": 1027,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1014,
+          "line": 1037,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -12773,9 +12953,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 46.21,
+      "coverage_percent": 45.89,
       "translated": 329,
-      "missing": 383,
+      "missing": 388,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -13765,7 +13945,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -13787,128 +13967,158 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 920,
+          "line": 943,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 930,
+          "line": 953,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 941,
+          "line": 964,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 951,
+          "line": 974,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 962,
+          "line": 985,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 972,
+          "line": 995,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 993,
+          "line": 1016,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1004,
+          "line": 1027,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1014,
+          "line": 1037,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -15084,9 +15294,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 72.47,
+      "coverage_percent": 71.97,
       "translated": 516,
-      "missing": 196,
+      "missing": 201,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -15782,7 +15992,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -15804,68 +16014,98 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -16273,10 +16513,41 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.3,
       "translated": 712,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 5,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
+          "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -16285,9 +16556,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 55.2,
+      "coverage_percent": 54.81,
       "translated": 393,
-      "missing": 319,
+      "missing": 324,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -17103,7 +17374,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -17125,74 +17396,104 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -18212,9 +18513,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 36.94,
+      "coverage_percent": 36.68,
       "translated": 263,
-      "missing": 449,
+      "missing": 454,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -19426,7 +19727,7 @@
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -19448,128 +19749,158 @@
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 920,
+          "line": 943,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 930,
+          "line": 953,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 941,
+          "line": 964,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 951,
+          "line": 974,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 962,
+          "line": 985,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 972,
+          "line": 995,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 993,
+          "line": 1016,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1004,
+          "line": 1027,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1014,
+          "line": 1037,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -20924,10 +21255,41 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.3,
       "translated": 712,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 5,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
+          "line": 879,
+          "english_text": " | {value} LandEdge"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}"
+        },
+        {
+          "file": "cs2kz-jumpstats.phrases.txt",
+          "phrase": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}"
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -25646,7 +26008,7 @@
       ]
     },
     "cs2kz-jumpstats.phrases.txt": {
-      "phrases_with_missing": 34,
+      "phrases_with_missing": 39,
       "phrases": [
         {
           "name": "Width (Short)",
@@ -25849,7 +26211,7 @@
         {
           "name": "Jumpstat Report - Console Details 1",
           "line": 846,
-          "english_text": "{mode_style}{block}{edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}",
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}",
           "existing_languages": [
             "chi",
             "en",
@@ -25935,8 +26297,30 @@
           ]
         },
         {
-          "name": "Jumpstats Report - Chat Segment - Edge",
+          "name": "Jumpstat Report - Console Segment - Landing Edge",
           "line": 879,
+          "english_text": " | {value} LandEdge",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Jumpstats Report - Chat Segment - Edge",
+          "line": 884,
           "english_text": " | {olive}{value} {grey}Edge",
           "existing_languages": [
             "chi",
@@ -25958,7 +26342,7 @@
         },
         {
           "name": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 887,
+          "line": 892,
           "english_text": " | {olive}{value} {grey}Dev",
           "existing_languages": [
             "chi",
@@ -25980,7 +26364,7 @@
         },
         {
           "name": "Jumpstats Report - Chat Segment - Offset",
-          "line": 895,
+          "line": 900,
           "english_text": " | {olive}{value} {grey}Offset",
           "existing_languages": [
             "chi",
@@ -26002,7 +26386,7 @@
         },
         {
           "name": "Jumpstats Report - Chat Segment - Miss",
-          "line": 903,
+          "line": 908,
           "english_text": " | {olive}{value} {grey}Miss",
           "existing_languages": [
             "chi",
@@ -26024,7 +26408,7 @@
         },
         {
           "name": "Jumpstat Report - Console Details 2",
-          "line": 911,
+          "line": 916,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched",
           "existing_languages": [
             "chi",
@@ -26045,8 +26429,96 @@
           ]
         },
         {
+          "name": "Jumpstat Report - Console Graph - Strafe Keys",
+          "line": 925,
+          "english_text": "Strafe keys:",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Jumpstat Report - Console Graph - Mouse Movement",
+          "line": 929,
+          "english_text": "Mouse movement:",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Jumpstat Report - Console Graph - Left",
+          "line": 933,
+          "english_text": "L: {value}",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Jumpstat Report - Console Graph - Right",
+          "line": 938,
+          "english_text": "R: {value}",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
           "name": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 920,
+          "line": 943,
           "english_text": "{grey}Jumpstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -26068,7 +26540,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 930,
+          "line": 953,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -26090,7 +26562,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 941,
+          "line": 964,
           "english_text": "{grey}Jumpstats console reporting disabled.",
           "existing_languages": [
             "chi",
@@ -26112,7 +26584,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 951,
+          "line": 974,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -26134,7 +26606,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 962,
+          "line": 985,
           "english_text": "{grey}Jumpstats sound broadcast disabled.",
           "existing_languages": [
             "chi",
@@ -26156,7 +26628,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 972,
+          "line": 995,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -26178,7 +26650,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 983,
+          "line": 1006,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}.",
           "existing_languages": [
             "chi",
@@ -26200,7 +26672,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 993,
+          "line": 1016,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}.",
           "existing_languages": [
             "chi",
@@ -26222,7 +26694,7 @@
         },
         {
           "name": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1004,
+          "line": 1027,
           "english_text": "{grey}Extended jumpstats chat reporting enabled.",
           "existing_languages": [
             "chi",
@@ -26244,7 +26716,7 @@
         },
         {
           "name": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1014,
+          "line": 1037,
           "english_text": "{grey}Extended jumpstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -26266,7 +26738,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1024,
+          "line": 1047,
           "english_text": "{grey}Jumpstats reporting enabled.",
           "existing_languages": [
             "chi",
@@ -26288,7 +26760,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1031,
+          "line": 1054,
           "english_text": "{grey}Jumpstats reporting disabled.",
           "existing_languages": [
             "chi",
@@ -26310,7 +26782,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1038,
+          "line": 1061,
           "english_text": "{grey}Failstats chat reporting enabled.",
           "existing_languages": [
             "chi",
@@ -26332,7 +26804,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1045,
+          "line": 1068,
           "english_text": "{grey}Failstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -26354,7 +26826,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1052,
+          "line": 1075,
           "english_text": "{grey}Failstats console reporting enabled.",
           "existing_languages": [
             "chi",
@@ -26376,7 +26848,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1059,
+          "line": 1082,
           "english_text": "{grey}Failstats console reporting disabled.",
           "existing_languages": [
             "chi",
