@@ -58,6 +58,7 @@ class KZVanillaModeService : public KZModeService
 	CUtlVector<Vector> tpmTriggerFixOrigins;
 
 public:
+	virtual void Init() override;
 	virtual void Reset() override;
 	virtual const char *GetModeName() override;
 	virtual const char *GetModeShortName() override;

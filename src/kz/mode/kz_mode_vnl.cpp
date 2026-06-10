@@ -44,6 +44,14 @@ const CVValue_t *KZVanillaModeService::GetModeConVarValues()
 	return modeCvarValues;
 }
 
+void KZVanillaModeService::Init()
+{
+	if (this->player->IsAlive())
+	{
+		interfaces::pEngine->ClientCommand(this->player->GetPlayerSlot(), "slot3");
+	}
+}
+
 void KZVanillaModeService::Reset()
 {
 	this->airMoving = {};
