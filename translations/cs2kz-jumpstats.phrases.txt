@@ -639,7 +639,7 @@
 		"pl"		"{grey}Dostępne stopnie jumpstatów: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"ua"		"{grey}Існуючі тіри стрибків: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"sv"		"{grey}Giltiga jumpstats nivåer: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
-		"es"		{grey} Niveles para las estadísticas de salto: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+		"es"		"{grey} Niveles para las estadísticas de salto: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"de"		"{grey}Gütlige Jumpstats-Level: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
@@ -956,24 +956,6 @@
 		"#format"	"value:s"
 		"en"		"R: {value}"
 	}
-	"Jumpstat Report - Console Graph - Strafe Keys"
-	{
-		"en"		"Strafe keys:"
-	}
-	"Jumpstat Report - Console Graph - Mouse Movement"
-	{
-		"en"		"Mouse movement:"
-	}
-	"Jumpstat Report - Console Graph - Left"
-	{
-		"#format"	"value:s"
-		"en"		"L: {value}"
-	}
-	"Jumpstat Report - Console Graph - Right"
-	{
-		"#format"	"value:s"
-		"en"		"R: {value}"
-	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats chat reporting disabled."
@@ -995,7 +977,7 @@
 		"ua"		"{grey}Поріг відображення статистики стрибків встановлено на {default}{tier}."
 		"sv"		"{grey}Jumpstats chat rapporteringsgränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats Chat-Benachrichtigungen ist nun {default}{tier}."
-		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en chat ahora es {default}{tier}." 
+		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en chat ahora es {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
@@ -1041,7 +1023,7 @@
 		"ua"		"{grey}Поріг звукових ефектів для стрибків встановлено на {default}{tier}."
 		"sv"		"{grey}Jumpstats ljudsändnings gränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats-Sounds von anderen Spielern ist nun {default}{tier}."
-		"es"		"{grey}El umbral para el efecto de sonido en el reporte de estadísticas de salto ahora es {default}tier."
+		"es"		"{grey}El umbral para el efecto de sonido en el reporte de estadísticas de salto ahora es {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Volume - Current"
 	{

@@ -138,7 +138,7 @@
 		"chi"		"N/A"
 		"ru"		"Н/Д"
 		"ua"		"Н/Д"
-		"es			"N/A"
+		"es"			"N/A"
 	}
 	"Map Info - In Testing"
 	{
@@ -211,7 +211,7 @@
 		"chi"		"Tier (Vanilla)"
 		"ru"		"Tier (Vanilla)"
 		"ua"		"Складність (Vanilla)"
-		"es"		"Nivel (Vanilla)
+		"es"		"Nivel (Vanilla)"
 	}
 	"Course Info Header - Tier (Classic)"
 	{
@@ -245,7 +245,7 @@
 		"chi"		"{darkred}无法获取关卡 {default}{course}{darkred} 的数据."
 		"ru"		"{darkred}Невозможно получить данные о маршруте {default}{course}{darkred}."
 		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
-		"es"		"{darkred}Datos del curso {default}{course}{darked} inaccesibles."
+		"es"		"{darkred}Datos del curso {default}{course}{darkred} inaccesibles."
 	}
 
 	"Tier Info"
@@ -256,6 +256,6 @@
 		"chi"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ru"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Складність {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
-		"es"		"{default}{course}{grey} ({purple}{stat}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"es"		"{default}{course}{grey} ({purple}{state}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 	}
 }
