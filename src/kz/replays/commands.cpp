@@ -134,7 +134,8 @@ namespace KZ::replaysystem::commands
 						}
 						case RPEVENT_STYLE_CHANGE:
 						{
-							if (KZ::style::GetStyleInfo(CUtlString(event.data.styleChange.name)).id < 0)
+							if (event.data.styleChange.name[0] != '\0'
+								&& KZ::style::GetStyleInfo(CUtlString(event.data.styleChange.name)).id < 0)
 							{
 								player->languageService->PrintChat(true, false, "Replay - Unknown Style", event.data.styleChange.name);
 							}

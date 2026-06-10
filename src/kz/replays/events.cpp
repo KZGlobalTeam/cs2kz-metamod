@@ -272,7 +272,10 @@ namespace KZ::replaysystem::events
 		{
 			g_pKZStyleManager->ClearStyles(&player, true, false);
 		}
-		g_pKZStyleManager->AddStyle(&player, styleNamePtr, true, false);
+		if (styleNamePtr[0] != '\0')
+		{
+			g_pKZStyleManager->AddStyle(&player, styleNamePtr, true, false);
+		}
 	}
 
 	void HandleTeleportEvent(KZPlayer &player, const RpEvent *event)
@@ -495,7 +498,10 @@ namespace KZ::replaysystem::events
 					{
 						g_pKZStyleManager->ClearStyles(player, true, false);
 					}
-					g_pKZStyleManager->AddStyle(player, event->data.styleChange.name, true, false);
+					if (event->data.styleChange.name[0] != '\0')
+					{
+						g_pKZStyleManager->AddStyle(player, event->data.styleChange.name, true, false);
+					}
 					break;
 				}
 				case RPEVENT_TELEPORT:
