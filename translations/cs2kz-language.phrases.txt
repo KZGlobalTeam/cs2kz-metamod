@@ -45,6 +45,6 @@
 		"ko"		"{yellow}서버에 재 접속하시면 변경된 설정이 적용됩니다."
 		"lv"		"{yellow}Lūdzu, pārslēdzies atpakaļ uz serveri, lai piemērotu izvēlnes izmaiņas."
 		"de"		"{yellow}Bitte verbinde dich erneut mit dem Server, um die Änderungen am Menü zu übernehmen."
-		"es"		"{yellow}Por favor, vuelva a conectarse al servidor para aplicar los cambios en el menú." 
+		"es"		"{yellow}Por favor, vuelva a conectarse al servidor para aplicar los cambios en el menú."
 	}
 }
