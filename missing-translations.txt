@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 717
-Phrases with missing translations: 501
-Total missing translation entries: 3424
+Total phrases: 722
+Phrases with missing translations: 506
+Total missing translation entries: 3487
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  99.0% (710/717)
-  de (german)          [██████████████░░░░░░]  71.7% (514/717)
-  en (english)         [████████████████████] 100.0% (717/717)
-  es (spanish)         [███████░░░░░░░░░░░░░]  39.6% (284/717)
-  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.6% (234/717)
-  it (italian)         [██████░░░░░░░░░░░░░░]  31.5% (226/717)
-  ko (korean)          [████████░░░░░░░░░░░░]  40.0% (287/717)
-  lv (latvian)         [█████████░░░░░░░░░░░]  45.9% (329/717)
-  pl (polish)          [██████████████░░░░░░]  72.0% (516/717)
-  ru (russian)         [███████████████████░]  99.3% (712/717)
-  sv (swedish)         [██████████░░░░░░░░░░]  54.8% (393/717)
-  tr (turkish)         [███████░░░░░░░░░░░░░]  36.7% (263/717)
-  ua (ukrainian)       [███████████████████░]  99.3% (712/717)
+  chi (schinese)       [███████████████████░]  98.2% (709/722)
+  de (german)          [██████████████░░░░░░]  71.2% (514/722)
+  en (english)         [████████████████████] 100.0% (722/722)
+  es (spanish)         [███████░░░░░░░░░░░░░]  39.3% (284/722)
+  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.4% (234/722)
+  it (italian)         [██████░░░░░░░░░░░░░░]  31.3% (226/722)
+  ko (korean)          [███████░░░░░░░░░░░░░]  39.8% (287/722)
+  lv (latvian)         [█████████░░░░░░░░░░░]  45.6% (329/722)
+  pl (polish)          [██████████████░░░░░░]  71.5% (516/722)
+  ru (russian)         [███████████████████░]  98.5% (711/722)
+  sv (swedish)         [██████████░░░░░░░░░░]  54.4% (393/722)
+  tr (turkish)         [███████░░░░░░░░░░░░░]  36.4% (263/722)
+  ua (ukrainian)       [███████████████████░]  98.5% (711/722)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -511,15 +511,25 @@ cs2kz-hud.phrases.txt
   Line 679: "MHUD - Unavailable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 686: "MHUD - Usage"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 690: "MHUD - Speed Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 693: "MHUD - Speed Usage"
+  Line 697: "MHUD - Prespeed Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 700: "MHUD - Prespeed Usage"
+  Line 704: "MHUD - Timer Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 707: "MHUD - Timer Usage"
+  Line 711: "MHUD - Keys Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 714: "MHUD - Keys Usage"
-    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 718: "MHUD - Font Usage"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 723: "MHUD - Font"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 728: "MHUD - Set Font"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 733: "MHUD - Outline Enabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 737: "MHUD - Outline Disabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------

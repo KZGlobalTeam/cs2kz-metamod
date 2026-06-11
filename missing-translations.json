@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 717,
-    "phrases_with_missing": 501,
-    "total_missing_entries": 3424,
+    "total_phrases": 722,
+    "phrases_with_missing": 506,
+    "total_missing_entries": 3487,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 99.02,
-      "translated": 710,
-      "missing": 7,
+      "coverage_percent": 98.2,
+      "translated": 709,
+      "missing": 13,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -72,6 +72,42 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Usage",
+          "line": 686,
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -117,9 +153,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 71.69,
+      "coverage_percent": 71.19,
       "translated": 514,
-      "missing": 203,
+      "missing": 208,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -773,31 +809,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -1349,7 +1415,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 717,
+      "translated": 722,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -1360,9 +1426,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 39.61,
+      "coverage_percent": 39.34,
       "translated": 284,
-      "missing": 433,
+      "missing": 438,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -2454,31 +2520,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -3976,9 +4072,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 32.64,
+      "coverage_percent": 32.41,
       "translated": 234,
-      "missing": 483,
+      "missing": 488,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -5148,31 +5244,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -6892,9 +7018,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 31.52,
+      "coverage_percent": 31.3,
       "translated": 226,
-      "missing": 491,
+      "missing": 496,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -8082,31 +8208,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -9856,9 +10012,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 40.03,
+      "coverage_percent": 39.75,
       "translated": 287,
-      "missing": 430,
+      "missing": 435,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -10926,31 +11082,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -12449,9 +12635,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 45.89,
+      "coverage_percent": 45.57,
       "translated": 329,
-      "missing": 388,
+      "missing": 393,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -13369,31 +13555,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -14790,9 +15006,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 71.97,
+      "coverage_percent": 71.47,
       "translated": 516,
-      "missing": 201,
+      "missing": 206,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -15434,31 +15650,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -16009,10 +16255,46 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 99.3,
-      "translated": 712,
-      "missing": 5,
+      "coverage_percent": 98.48,
+      "translated": 711,
+      "missing": 11,
       "missing_phrases": [
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Usage",
+          "line": 686,
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
+        },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Landing Edge",
@@ -16052,9 +16334,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 54.81,
+      "coverage_percent": 54.43,
       "translated": 393,
-      "missing": 324,
+      "missing": 329,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -16804,31 +17086,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -18009,9 +18321,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 36.68,
+      "coverage_percent": 36.43,
       "translated": 263,
-      "missing": 454,
+      "missing": 459,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -19139,31 +19451,61 @@
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -20751,10 +21093,46 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 99.3,
-      "translated": 712,
-      "missing": 5,
+      "coverage_percent": 98.48,
+      "translated": 711,
+      "missing": 11,
       "missing_phrases": [
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Usage",
+          "line": 686,
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled."
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled."
+        },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Segment - Landing Edge",
@@ -24113,7 +24491,7 @@
       ]
     },
     "cs2kz-hud.phrases.txt": {
-      "phrases_with_missing": 63,
+      "phrases_with_missing": 68,
       "phrases": [
         {
           "name": "HUD Option - Compact Panel - Enable",
@@ -25394,14 +25772,12 @@
         {
           "name": "MHUD - Usage",
           "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys",
+          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline",
           "existing_languages": [
-            "chi",
-            "en",
-            "ru",
-            "ua"
+            "en"
           ],
           "missing_languages": [
+            "chi",
             "de",
             "es",
             "fi",
@@ -25409,13 +25785,15 @@
             "ko",
             "lv",
             "pl",
+            "ru",
             "sv",
-            "tr"
+            "tr",
+            "ua"
           ]
         },
         {
           "name": "MHUD - Speed Usage",
-          "line": 693,
+          "line": 690,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset",
           "existing_languages": [
             "chi",
@@ -25437,7 +25815,7 @@
         },
         {
           "name": "MHUD - Prespeed Usage",
-          "line": 700,
+          "line": 697,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset",
           "existing_languages": [
             "chi",
@@ -25459,7 +25837,7 @@
         },
         {
           "name": "MHUD - Timer Usage",
-          "line": 707,
+          "line": 704,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset",
           "existing_languages": [
             "chi",
@@ -25481,7 +25859,7 @@
         },
         {
           "name": "MHUD - Keys Usage",
-          "line": 714,
+          "line": 711,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset",
           "existing_languages": [
             "chi",
@@ -25499,6 +25877,116 @@
             "pl",
             "sv",
             "tr"
+          ]
+        },
+        {
+          "name": "MHUD - Font Usage",
+          "line": 718,
+          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "MHUD - Font",
+          "line": 723,
+          "english_text": "{grey}HUD font: {default}{value}{grey}.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "MHUD - Set Font",
+          "line": 728,
+          "english_text": "{grey}HUD font set to {default}{value}{grey}.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "MHUD - Outline Enabled",
+          "line": 733,
+          "english_text": "{grey}Outline is currently {green}enabled.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "MHUD - Outline Disabled",
+          "line": 737,
+          "english_text": "{grey}Outline is currently {red}disabled.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
