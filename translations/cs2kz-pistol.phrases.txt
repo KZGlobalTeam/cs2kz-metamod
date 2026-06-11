@@ -9,6 +9,7 @@
 		"ua"		"{grey}Використання: {default}kz_pistol <name|off>{grey}."
 		"sv"		"{grey}Användning: {default}kz_pistol <name|off>{grey}."
 		"de"		"{grey}Anwendung: {default}kz_pistol <name|off>{grey}."
+		"es"		"{grey}Uso: {default}kz_pistol <nombre|off>{grey}."
 	}
 	"Pistol Disabled"
 	{
@@ -19,6 +20,7 @@
 		"ua"		"{grey}Ви вимкнули пістолет."
 		"sv"		"{grey}Du har döljt pistolen."
 		"de"		"{grey}Du hast deine Pistole deaktiviert."
+		"es"		"{grey}Has desactivado tu pistola."
 	}
 	"Pistol Changed"
 	{
@@ -30,6 +32,7 @@
 		"ua"		"{grey}Ви змінили пістолет на {default}{pistol}{grey}."
 		"sv"		"{grey}Du har ändrat din pistol till {default}{pistol}{grey}."
 		"de"		"{grey}Du hast deine Pistole zu {default}{pistol}{grey} gewechselt."
+		"es"		"{grey}Has cambiado tu pistola a {default}{pistol}{grey}."
 	}
 	"Pistol Unknown"
 	{
@@ -41,5 +44,6 @@
 		"ua"		"{darkred}Невідомий пістолет: {default}{pistol}{grey}."
 		"sv"		"{darkred}Okänd pistol: {default}{pistol}{grey}."
 		"de"		"{darkred}Unbekannte Pistole: {default}{pistol}{grey}."
+		"es"		"{darkred}Pistola no reconocida: {default}{pistol}{grey}."
 	}
 }

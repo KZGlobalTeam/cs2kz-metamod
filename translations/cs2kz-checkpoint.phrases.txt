@@ -93,7 +93,7 @@
 		"ua"		"{darkred}Ви не можете телепортуватися, тому що у вас відсутні чекпоінти."
 		"tr"		"{darkred}Kontrol noktası oluşturmadığın için ışınlamazsın."
 		"it"		"{darkred}Non puoi teleportarti senza prima aver creato un checkpoint."
-		"es"		"{darkred}No puedes teleportarte porque no has creado un checkpoint."
+		"es"		"{darkred}No puedes teletransportarte porque no has creado un checkpoint."
 		"de"		"{darkred}Du kannst dich nicht teleportieren, da Du keinen Checkpoint festgelegt hast."
 		"ko"		"{darkred}체크포인트를 설정하지 않았기 때문에 텔레포트할 수 없습니다."
 		"lv"		"{darkred}Tu nevari teleportēties, jo neesi iestatījis kontrolpunktu."
@@ -109,7 +109,7 @@
 		"ua"		"{darkred}Ви не можете телепортуватися на свої чекпоінти тут."
 		"tr"		"{darkred}Bu bölgede kontrol noktalarına ışınlamazsın."
 		"it"		"{darkred}Da qui non puoi teleportarti ai tuoi checkpoint."
-		"es"		"{darkred}No puedes teleportarte a tus checkpoints en esta zona."
+		"es"		"{darkred}No puedes transportarte a tus checkpoints en esta zona."
 		"de"		"{darkred}Du kannst dich in diesem Bereich nicht zu Deinem Checkpoint teleportieren."
 		"ko"		"{darkred}이 구역에서는 체크포인트로 텔레포트할 수 없습니다."
 		"lv"		"{darkred}Tu nevari teleportēties uz saviem kontrolpunktiem šajā zonā."
@@ -122,6 +122,7 @@
 		"pl"		"{darkred}Nie możesz już się teleportować, ponieważ wykorzystałeś już cały limit."
 		"ua"		"{darkred}Ви не можете телепортуватися, оскільки ви досягли свого ліміту телепортів."
 		"de"		"{darkred}Du kannst nicht teleportieren, weil du dein Teleportationslimit erreicht hast."
+		"es"		"{darkred}No puedes teletransportarte porque has llegado al limite de teletransportes."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
@@ -134,8 +135,8 @@
 		"ua"		"{darkred}У вас немає чекпоінтів до яких можна повернутися."
 		"tr"		"{darkred}Geri dönecek bir kontrol noktanız yok."
 		"it"		"{darkred}Non ci sono checkpoint ai quali tornare indietro."
-		"es"		"{darkred}No tienes checkpoints a los que volver."
 		"de"		"{darkred}Du hast keine Checkpoints, zu denen Du zurückkehren kannst."
+		"es"		"{darkred}No tienes checkpoints a los que volver."
 		"ko"		"{darkred}돌아갈 체크포인트가 없습니다."
 		"lv"		"{darkred}Tev nav neviena kontrolpunkta, uz kuru atgriezties."
 	}
@@ -150,7 +151,7 @@
 		"ua"		"{darkred}У вас немає чекпоінтів до яких можна телепортуватися."
 		"tr"		"{darkred}İleri gidecek bir kontrol noktanız yok."
 		"it"		"{darkred}Non ci sono checkpoint ai quali andare avanti."
-		"es"		"{darkred}No tienes checkpoints a los que avanzar."
+		"es"		"{darkred}No tienes checkpoints posteriores."
 		"de"		"{darkred}Es gibt keine Checkpoints, zu denen Du weitergehen kannst."
 		"ko"		"{darkred}앞으로 갈 체크포인트가 없습니다."
 		"lv"		"{darkred}Tev nav neviena kontrolpunkta, uz kuru doties uz priekšu."
@@ -166,7 +167,7 @@
 		"ua"		"{darkred}У вас немає телепортів, які можна скасувати."
 		"tr"		"{darkred}Geri alamazsın çünkü geri alınabilecek ışınlanma noktası yok."
 		"it"		"{darkred}Non ci sono teleport da annullare."
-		"es"		"{darkred}No hay teleportes para deshacer."
+		"es"		"{darkred}No hay checkpoints para deshacer."
 		"de"		"{darkred}Du kannst nicht zurückkehren, da es keine Teleports gibt zum zurückkehren."
 		"ko"		"{darkred}되돌릴 텔레포트가 없기 때문에 취소할 수 없습니다."
 		"lv"		"{darkred}Nevari atsaukt, jo nav neviena teleportēšanās, ko atsaukt."
@@ -182,7 +183,7 @@
 		"ua"		"{darkred}Ви не можете скасувати телепорт, тому що зробили його у повітрі."
 		"tr"		"{darkred}Havada ışınlandığın için geri alamazsın."
 		"it"		"{darkred}Non puoi annullare un teleport fatto in volo."
-		"es"		"{darkred}No puedes deshacer porque te has teleportado en el aire."
+		"es"		"{darkred}No puedes deshacer el teletransporte porque lo has hecho en el aire."
 		"de"		"{darkred}Du kannst nicht zurückkehren, weil du dich mitten in der Luft teleportiert hast."
 		"ko"		"{darkred}공중에서 텔레포트했기 때문에 되돌릴 수 없습니다."
 		"lv"		"{darkred}Nevari atsaukt, jo tu teleportējies gaisā."
@@ -277,7 +278,7 @@
 		"ua"		"{darkred}Ваші чекпоінти були стерті мапою."
 		"tr"		"{darkred}Kontrol noktaları harita tarafından temizlendi."
 		"ko"		"{darkred}맵에서 체크포인트를 초기화했습니다."
-		"es"		"{darkred}El mapa ha limpiado tus checkpoints."
+		"es"		"{darkred}El mapa ha eliminado tus checkpoints."
 		"lv"		"{darkred}Karte ir notīrījusi tavus kontrolpunktus."
 		"de"		"{darkred}Die Map hat deine Checkpoints zurückgesetzt."
 	}
@@ -290,6 +291,7 @@
 		"sv"		"{grey}Du har aktiverat checkpointljuden."
 		"ua"		"{grey}Ви увімкнули звук чекпоінту."
 		"de"		"{grey}Du hast Checkpoint-Sounds aktiviert."
+		"es"		"{grey}Has activado el sonido de checkpoint."
 	}
 	"Checkpoint Options - Checkpoint Sound - Disable"
 	{
@@ -300,6 +302,7 @@
 		"sv"		"{grey}Du har inaktiverat checkpointljuden."
 		"ua"		"{grey}Ви вимкнули звук чекпоінту."
 		"de"		"{grey}Du hast Checkpoint-Sounds deaktiviert."
+		"es"		"{grey}Has desactivado el sonido de checkpoint."
 	}
 	"Checkpoint Options - Teleport Sound - Enable"
 	{
@@ -310,6 +313,7 @@
 		"sv"		"{grey}Du har aktiverat teleportljuden."
 		"ua"		"{grey}Ви увімкнули звук телепорту."
 		"de"		"{grey}Du hast Teleport-Sounds aktiviert."
+		"es"		"{grey}Has activado el sonido de teletransporte."
 	}
 	"Checkpoint Options - Teleport Sound - Disable"
 	{
@@ -320,6 +324,7 @@
 		"sv"		"{grey}Du har inaktiverat teleportljuden."
 		"ua"		"{grey}Ви вимкнули звук телепорту."
 		"de"		"{grey}Du hast Teleport-Sounds deaktiviert."
+		"es"		"{grey}Has desactivado el sonido de teletransporte."
 	}
 	"Checkpoint Options - Checkpoint Message - Enable"
 	{
@@ -329,6 +334,7 @@
 		"pl"		"{grey}Aktywowałeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви увімкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten aktiviert."
+		"es"		"{grey}Has activado los mensajes de checkpoint."
 	}
 	"Checkpoint Options - Checkpoint Message - Disable"
 	{
@@ -338,5 +344,6 @@
 		"pl"		"{grey}Wyłączyłeś powiadomienia o checkpointach."
 		"ua"		"{grey}Ви вимкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten deaktiviert."
+		"es"		"{grey}Has desactivado los mensajes de checkpoint."
 	}
 }

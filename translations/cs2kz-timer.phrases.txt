@@ -159,6 +159,7 @@
 		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey})"
 		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey})"
 		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey})"
+		"es"		"{grey}Puntuación del recorrido: {purple}{points}{grey} {yellow}General{grey} (+{purple}{points_gained}{grey})"
 	}
 	"Beat Course Info - Global Points (PRO)"
 	{
@@ -172,6 +173,7 @@
 		"sv"		"{grey}Ban Poäng: {purple}{points}{grey} {yellow}Allmän{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
 		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
 		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
+		"es"		"{grey}Puntuación del recorrido: {purple}{points}{grey} {yellow}General{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
 	}
 	"Beat Course Info - New World Record"
 	{
@@ -184,6 +186,7 @@
 		"ua"		"{lime}{player_name}{grey} встановив новий {red}GLOBAL RECORD {grey}[{purple}{mode}{grey}]"
 		"sv"		"{lime}{player_name}{grey} satte ett {red}GLOBALT REKORD {grey}[{purple}{mode}{grey}]"
 		"de"		"{lime}{player_name}{grey} hat einen neuen {red}GLOBAL RECORD {grey}[{purple}{mode}{grey}] aufgestellt"
+		"es"		"{lime}{player_name}{grey} estableció un nuevo {red}RECORD GLOBAL {grey}[{purple}{mode}{grey}]"
 	}
 	"Beat Course Info - New World Record (PRO)"
 	{
@@ -196,6 +199,7 @@
 		"ua"		"{lime}{player_name}{grey} встановив новий {darkred}GLOBAL PRO RECORD{grey}[{purple}{mode}{grey}]"
 		"sv"		"{lime}{player_name}{grey} satte ett {darkred}GLOBALT PRO REKORD{grey}[{purple}{mode}{grey}]"
 		"de"		"{lime}{player_name}{grey} hat einen neuen {darkred}GLOBAL PRO RECORD{grey}[{purple}{mode}{grey}] aufgestellt"
+		"es"		"{lime}{player_name}{grey} estableció un nuevo {darkred}RECORD GLOBAL PRO {grey}[{purple}{mode}{grey}]"
 	}
 
 	"Can't Pause (Generic)"
@@ -391,6 +395,7 @@
 		"chi"		"{darkred}{course_name} {darkred}的终点无法找到!"
 		"ua"		"{darkred}Не знайдено кінцеву позицію для курсу {default}{course_name}{darkred}!"
 		"ru"		"{darkred}Конечная позиция маршрута {default}{course_name} {darkred}не найдена!"
+		"es"		"{darkred}Posición final del recorrido no encontrada {default}{course_name}{darkred}!"
 	}
 	"No Active Course"
 	{
@@ -398,6 +403,7 @@
 		"chi"		"{grey}你当前没有激活中的关卡."
 		"ua"		"{grey}Наразі у вас немає активного курсу."
 		"ru"		"{grey}У вас нет активного маршрута."
+		"es"		"{grey}No tienes ningún recorrido activo."
 	}
 	"No Jumpstat Area Found"
 	{
@@ -771,7 +777,7 @@
 		"ua"		"{grey}Використання: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"tr"		"{grey}Kullanım: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"ko"		"{grey}사용법: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
-		"es"		"{grey}Usa: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
+		"es"		"{grey}Uso: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"lv"		"{grey}Pielietojums: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 		"de"		"{grey}Verwendung: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
 	}
@@ -893,6 +899,7 @@
 		"ua"		"{grey}Ви увімкнули звук зупинки таймера."
 		"sv"		"{grey}Du har aktiverat timerstoppljud."
 		"de"		"{grey}Du hast das Timer-Stopp-Geräusch aktiviert."
+		"es"		"{grey}Has activado el sonido de paro del temporizador."
 	}
 	"Timer Stop Sound Disabled"
 	{
@@ -903,6 +910,7 @@
 		"ua"		"{grey}Ви вимкнули звук зупинки таймера."
 		"sv"		"{grey}Du har inaktiverat timerstoppljud."
 		"de"		"{grey}Du hast das Timer-Stopp-Geräusch deaktiviert."
+		"es"		"{grey}Has desactivado el sonido de paro del temporizador."
 	}
 	"Record Volume Set"
 	{
@@ -913,6 +921,7 @@
 		"ru"		"{grey}Вы установили громкость оповещения мирового рекорда на {default}{volume}%%%%{grey}."
 		"ua"		"{grey}Ви встановили гучність оголошення світового рекорду на {default}{volume}%%%%{grey}."
 		"de"		"{grey}Du hast die Lautstärke der Weltrekordansage auf {default}{volume}%%%%{grey} gesetzt."
+		"es"		"{grey}Has configurado el volumen de sonido del anuncio de nuevo record mundial a {default}{volume}%%%%{grey}."
 	}
 	"Started Run on Course"
 	{
@@ -922,6 +931,7 @@
 		"chi"		"{grey}你已开始在新关卡 {default}{course_name}{grey} 上进行跳图."
 		"ru"		"{grey}Вы начали прохождение на новом маршруте: {default}{course_name}{grey}"
 		"ua"		"{grey}Ви почали проходження нового курсу: {default}{course_name}{grey}"
+		"es"		"{grey}Has iniciado una carrera en un recorrido nuevo: {default}{course_name}{grey}"
 	}
 	"Started Run on Non Ranked Course"
 	{
@@ -931,6 +941,7 @@
 		"chi"		"{yellow}警告: {grey} 关卡 {default}{course_name}{grey} 没有排行. 在这个关卡上跳图不会影响你的全球玩家评分."
 		"ru"		"{yellow}Внимание: {grey} Маршрут {default}{course_name}{grey} не является рейтинговым. Прохождение этого маршрута не повлияет на ваш глобальный рейтинг."
 		"ua"		"{yellow}Увага: {grey} Курс {default}{course_name}{grey} не є рейтинговим. Проходження на цьому курсі не будуть зараховані до вашого глобального рейтингу."
+		"es"		"{yellow}Atención: {grey} El recorrido {default}{course_name}{grey} no tiene un rango establecido. Las carreras no serán reflejadas en tus estadísticas de jugador globales."
 	}
 	"Safeguard - Disable"
 	{
