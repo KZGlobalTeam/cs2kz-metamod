@@ -932,7 +932,7 @@ SCMD(kz_mhud, SCFL_HUD | SCFL_PREFERENCE)
 		}
 		else if (KZ_STREQI(prop, "crouchjumpcolor") || KZ_STREQI(prop, "cjcolor"))
 		{
-			SetColorPref(player, args, 3, "mhudSpeedCrouchJumpColor", "MHUD - Speed CJ Color Usage", "MHUD - Speed CJ Color Set");
+			SetColorPref(player, args, 3, "mhudSpeedCjColor", "MHUD - Speed CJ Color Usage", "MHUD - Speed CJ Color Set");
 		}
 		else if (KZ_STREQI(prop, "reset"))
 		{
