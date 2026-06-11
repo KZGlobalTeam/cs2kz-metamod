@@ -6,14 +6,15 @@
 #include "entitykeyvalues.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
+#include "utils/gamesystem.h"
 
 #include "tier0/memdbgon.h"
 
 // === Particle asset paths ============================================================
 
-#define PARTICLE_NUMBERS         "particles/velo/velo_overlay_large.vpcf"
-#define PARTICLE_TIMER_DELIMITER "particles/timer_delimiter/timer_delimiter.vpcf"
-#define PARTICLE_INPUTS          "particles/inputs/inputs.vpcf"
+#define PARTICLE_NUMBERS_PATTERN     "particles/velo/velo_overlay_large_%s_%s.vpcf"
+#define PARTICLE_TIMER_DELIM_PATTERN "particles/timer_delimiter/timer_delimiter_%s_%s.vpcf"
+#define PARTICLE_INPUTS_PATTERN      "particles/inputs/inputs_%s_%s.vpcf"
 
 // === Layout constants ================================================================
 #define MHUD_SPEED_X_LEFT       -0.625f
@@ -26,6 +27,9 @@
 #define MHUD_TIMER_DELIM_DOT   1
 
 // === Default preferences =============================================================
+
+static_global constexpr const char *AVAILABLE_FONTS[] = {"lato", "verdana"};
+static_global constexpr const char *fontList = "Lato/Verdana";
 
 #define MHUD_DEF_SPEED_OFFSET_X    0.0f
 #define MHUD_DEF_SPEED_OFFSET_Y    -4.5f
@@ -66,6 +70,29 @@ Color KZHUDService::GetMHUDColorPref(const char *name, const Color &defaultColor
 {
 	i64 packed = this->player->optionService->GetPreferenceInt(name, PackColor(defaultColor));
 	return UnpackColor(packed);
+}
+
+static_function void BuildParticlePath(char *buf, size_t bufSize, const char *pattern, const char *font, bool outline)
+{
+	V_snprintf(buf, bufSize, pattern, font, outline ? "outline" : "no_outline");
+}
+
+void KZHUDService::PrecacheParticles(IEntityResourceManifest *pResourceManifest)
+{
+	// Build path for all possible particle combinations.
+	char particlePath[256];
+	for (const char *font : AVAILABLE_FONTS)
+	{
+		for (bool outline : {false, true})
+		{
+			BuildParticlePath(particlePath, sizeof(particlePath), PARTICLE_NUMBERS_PATTERN, font, outline);
+			pResourceManifest->AddResource(particlePath);
+			BuildParticlePath(particlePath, sizeof(particlePath), PARTICLE_TIMER_DELIM_PATTERN, font, outline);
+			pResourceManifest->AddResource(particlePath);
+			BuildParticlePath(particlePath, sizeof(particlePath), PARTICLE_INPUTS_PATTERN, font, outline);
+			pResourceManifest->AddResource(particlePath);
+		}
+	}
 }
 
 // === Particle creation ==============================================================
@@ -168,6 +195,11 @@ bool KZHUDService::IsMHUDPrespeedEnabled()
 	return this->player->optionService->GetPreferenceBool("mhudPrespeedEnabled", false);
 }
 
+bool KZHUDService::IsMHUDOutlineEnabled()
+{
+	return this->player->optionService->GetPreferenceBool("mhudOutline", true);
+}
+
 // === Speed + prespeed ===============================================================
 
 // Set both digit-pair particles for a value 0..9999.
@@ -263,28 +295,33 @@ void KZHUDService::UpdateMHUDSpeed()
 	const f32 prespeedScale = (f32)this->player->optionService->GetPreferenceFloat("mhudPrespeedScale", MHUD_DEF_PRESPEED_SCALE);
 
 	// Lazy-create.
+	const char *font = this->player->optionService->GetPreferenceStr("mhudFont", AVAILABLE_FONTS[0]);
+	char fontLower[64];
+	V_strncpy(fontLower, font, sizeof(fontLower));
+	V_strlower(fontLower);
+	bool outline = this->IsMHUDOutlineEnabled();
+	char numbersPath[256];
+	BuildParticlePath(numbersPath, sizeof(numbersPath), PARTICLE_NUMBERS_PATTERN, fontLower, outline);
 	if (speedEnabled)
 	{
 		if (!this->speedParticles[0])
 		{
-			this->speedParticles[0] = CreateMHUDParticle(PARTICLE_NUMBERS, baseColor, 0.0f, speedScale, speedOffsetX, speedOffsetY);
+			this->speedParticles[0] = CreateMHUDParticle(numbersPath, baseColor, 0.0f, speedScale, speedOffsetX, speedOffsetY);
 		}
 		if (!this->speedParticles[1])
 		{
-			this->speedParticles[1] = CreateMHUDParticle(PARTICLE_NUMBERS, baseColor, 0.0f, speedScale, speedOffsetX, speedOffsetY);
+			this->speedParticles[1] = CreateMHUDParticle(numbersPath, baseColor, 0.0f, speedScale, speedOffsetX, speedOffsetY);
 		}
 	}
 	if (prespeedEnabled)
 	{
 		if (!this->prespeedParticles[0])
 		{
-			this->prespeedParticles[0] =
-				CreateMHUDParticle(PARTICLE_NUMBERS, prespeedBaseColor, 0.0f, prespeedScale, prespeedOffsetX, prespeedOffsetY);
+			this->prespeedParticles[0] = CreateMHUDParticle(numbersPath, prespeedBaseColor, 0.0f, prespeedScale, prespeedOffsetX, prespeedOffsetY);
 		}
 		if (!this->prespeedParticles[1])
 		{
-			this->prespeedParticles[1] =
-				CreateMHUDParticle(PARTICLE_NUMBERS, prespeedBaseColor, 0.0f, prespeedScale, prespeedOffsetX, prespeedOffsetY);
+			this->prespeedParticles[1] = CreateMHUDParticle(numbersPath, prespeedBaseColor, 0.0f, prespeedScale, prespeedOffsetX, prespeedOffsetY);
 		}
 	}
 
@@ -412,28 +449,35 @@ void KZHUDService::CheckMHUDTimerParticles()
 	const Color tpColor = this->GetMHUDColorPref("mhudTimerTpColor", MHUD_DEF_TIMER_TP_COLOR);
 	const f32 offsetY = (f32)this->player->optionService->GetPreferenceFloat("mhudTimerOffsetY", MHUD_DEF_TIMER_OFFSET_Y);
 	const f32 scale = (f32)this->player->optionService->GetPreferenceFloat("mhudTimerScale", MHUD_DEF_TIMER_SCALE);
+	char numbersPath[256], delimPath[256], fontLower[64];
+	const char *font = this->player->optionService->GetPreferenceStr("mhudFont", AVAILABLE_FONTS[0]);
+	V_strncpy(fontLower, font, sizeof(fontLower));
+	V_strlower(fontLower);
+	bool outline = this->IsMHUDOutlineEnabled();
+	BuildParticlePath(numbersPath, sizeof(numbersPath), PARTICLE_NUMBERS_PATTERN, fontLower, outline);
+	BuildParticlePath(delimPath, sizeof(delimPath), PARTICLE_TIMER_DELIM_PATTERN, fontLower, outline);
 
 	if (!this->timerTextParticles[0])
 	{
-		this->timerTextParticles[0] = CreateMHUDParticle(PARTICLE_NUMBERS, tpColor, 0.0f, scale, 0.0f, offsetY);
+		this->timerTextParticles[0] = CreateMHUDParticle(numbersPath, tpColor, 0.0f, scale, 0.0f, offsetY);
 	}
 	if (!this->timerTextParticles[1])
 	{
-		this->timerTextParticles[1] = CreateMHUDParticle(PARTICLE_NUMBERS, tpColor, 0.0f, scale, 0.0f, offsetY);
+		this->timerTextParticles[1] = CreateMHUDParticle(numbersPath, tpColor, 0.0f, scale, 0.0f, offsetY);
 	}
 	if (!this->timerTextParticles[2])
 	{
-		this->timerTextParticles[2] = CreateMHUDParticle(PARTICLE_NUMBERS, tpColor, 0.0f, scale, 0.0f, offsetY);
+		this->timerTextParticles[2] = CreateMHUDParticle(numbersPath, tpColor, 0.0f, scale, 0.0f, offsetY);
 	}
 	if (!this->timerTextParticles[3])
 	{
-		this->timerTextParticles[3] = CreateMHUDParticle(PARTICLE_NUMBERS, tpColor, 0.0f, scale, 0.0f, offsetY);
+		this->timerTextParticles[3] = CreateMHUDParticle(numbersPath, tpColor, 0.0f, scale, 0.0f, offsetY);
 	}
 	for (i32 i = 0; i < (i32)KZ_ARRAYSIZE(this->timerDelimiterParticles); i++)
 	{
 		if (!this->timerDelimiterParticles[i])
 		{
-			this->timerDelimiterParticles[i] = CreateMHUDParticle(PARTICLE_TIMER_DELIMITER, tpColor, 0.0f, scale, 0.0f, offsetY);
+			this->timerDelimiterParticles[i] = CreateMHUDParticle(delimPath, tpColor, 0.0f, scale, 0.0f, offsetY);
 		}
 	}
 }
@@ -653,9 +697,15 @@ void KZHUDService::CheckMHUDKeyParticle()
 	const f32 offsetX = (f32)this->player->optionService->GetPreferenceFloat("mhudKeysOffsetX", MHUD_DEF_KEYS_OFFSET_X);
 	const f32 offsetY = (f32)this->player->optionService->GetPreferenceFloat("mhudKeysOffsetY", MHUD_DEF_KEYS_OFFSET_Y);
 	const f32 scale = (f32)this->player->optionService->GetPreferenceFloat("mhudKeysScale", MHUD_DEF_KEYS_SCALE);
+	char inputsPath[256];
+	const char *font = this->player->optionService->GetPreferenceStr("mhudFont", AVAILABLE_FONTS[0]);
+	char fontLower[64];
+	V_strncpy(fontLower, font, sizeof(fontLower));
+	V_strlower(fontLower);
+	BuildParticlePath(inputsPath, sizeof(inputsPath), PARTICLE_INPUTS_PATTERN, fontLower, this->IsMHUDOutlineEnabled());
 	if (!this->keysParticle)
 	{
-		this->keysParticle = CreateMHUDParticle(PARTICLE_INPUTS, color, 0.0f, scale, offsetX, offsetY);
+		this->keysParticle = CreateMHUDParticle(inputsPath, color, 0.0f, scale, offsetX, offsetY);
 	}
 }
 
@@ -860,19 +910,23 @@ void KZHUDService::PrintMHUDSummary()
 	lang->PrintChat(true, false, opts->GetPreferenceBool("mhudTimerDetailed", true) ? "MHUD - Timer Detail Enabled" : "MHUD - Timer Detail Disabled");
 	lang->PrintChat(true, false, opts->GetPreferenceBool("mhudKeysEnabled", false) ? "MHUD - Keys Enabled" : "MHUD - Keys Disabled");
 	lang->PrintChat(true, false, opts->GetPreferenceBool("mhudKeysOverlap", true) ? "MHUD - Keys Overlap Enabled" : "MHUD - Keys Overlap Disabled");
+	lang->PrintChat(true, false, opts->GetPreferenceBool("mhudOutline", true) ? "MHUD - Outline Enabled" : "MHUD - Outline Disabled");
+	lang->PrintChat(true, false, "MHUD - Font", opts->GetPreferenceStr("mhudFont", AVAILABLE_FONTS[0]));
 	// clang-format on
 }
 
 // Hierarchy:
-//   kz_mhud                                   → full summary (requires MHUD)
-//   kz_mhud speed                             → toggle speed
+//   kz_mhud                                  → full summary
+//   kz_mhud speed                            → toggle speed
 //   kz_mhud speed offset [x y]               → show/set X,Y offset
-//   kz_mhud speed scale [v]                   → show/set scale
+//   kz_mhud speed scale [v]                  → show/set scale
 //   kz_mhud speed color|crouchjumpcolor/cjcolor [r g b [a]]
-//   kz_mhud speed reset                       → reset all speed prefs
+//   kz_mhud speed reset                      → reset all speed prefs
 //   kz_mhud prespeed [offset|scale|color|perfcolor|jumpbugcolor/jbcolor|reset ...]
 //   kz_mhud timer [detail|offset|scale|tpcolor|procolor|pausedcolor|stoppedcolor|reset ...]
 //   kz_mhud keys [overlap|offset|scale|color|overlapcolor|reset ...]
+//   kz_mhud font [lato|verdana]              → set font for all elements
+//   kz_mhud outline                          → toggle outline for all elements
 
 SCMD(kz_mhud, SCFL_HUD | SCFL_PREFERENCE)
 {
@@ -1077,6 +1131,49 @@ SCMD(kz_mhud, SCFL_HUD | SCFL_PREFERENCE)
 		{
 			player->languageService->PrintChat(true, false, "MHUD - Keys Usage");
 		}
+	}
+	else if (KZ_STREQI(element, "font"))
+	{
+		if (!mhudAvail)
+		{
+			player->languageService->PrintChat(true, false, "MHUD - Unavailable");
+			return MRES_SUPERCEDE;
+		}
+		if (!prop)
+		{
+			player->languageService->PrintChat(true, false, "MHUD - Font Usage", fontList);
+		}
+		else
+		{
+			bool found = false;
+			for (const auto *font : AVAILABLE_FONTS)
+			{
+				if (KZ_STREQI(prop, font))
+				{
+					player->optionService->SetPreferenceStr("mhudFont", font);
+					player->hudService->DestroyAllParticles();
+					player->languageService->PrintChat(true, false, "MHUD - Set Font", font);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				player->languageService->PrintChat(true, false, "MHUD - Font Usage", fontList);
+			}
+		}
+	}
+	else if (KZ_STREQI(element, "outline"))
+	{
+		if (!mhudAvail)
+		{
+			player->languageService->PrintChat(true, false, "MHUD - Unavailable");
+			return MRES_SUPERCEDE;
+		}
+		bool next = !player->optionService->GetPreferenceBool("mhudOutline", true);
+		player->optionService->SetPreferenceBool("mhudOutline", next);
+		player->hudService->DestroyAllParticles();
+		player->languageService->PrintChat(true, false, next ? "MHUD - Outline Enabled" : "MHUD - Outline Disabled");
 	}
 	else
 	{

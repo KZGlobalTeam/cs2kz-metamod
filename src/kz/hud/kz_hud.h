@@ -6,6 +6,7 @@
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 #define KZ_HUD_ON_GROUND_THRESHOLD      0.07f
+class IEntityResourceManifest;
 
 class KZHUDService : public KZBaseService
 {
@@ -28,6 +29,7 @@ public:
 	// Requires MultiAddonManager to be available, unless kz_force_mhud is set.
 	static bool IsMHUDAvailable();
 
+	static void PrecacheParticles(IEntityResourceManifest *pResourceManifest);
 	// Draw the panel from a player to a specific target.
 	static void DrawPanels(KZPlayer *player, KZPlayer *target);
 
@@ -94,6 +96,7 @@ public:
 	bool IsMHUDKeysEnabled();
 	bool IsMHUDTimerDetailed();
 	bool IsMHUDKeysOverlapEnabled();
+	bool IsMHUDOutlineEnabled();
 
 	// kz_mhud — prints a summary of all MHUD settings.
 	void PrintMHUDSummary();

@@ -685,10 +685,7 @@
 	}
 	"MHUD - Usage"
 	{
-		"en"		"{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys"
-		"chi"		"{grey}用法: {default}!mhud {grey}<显示项>  •  可选显示项: {default}speed(速度) prespeed(起跳速度) timer(计时器) keys(按键)"
-		"ru"		"{grey}Применение: {default}!mhud {grey}<элемент>  •  Элементы: {default}speed prespeed timer keys"
-		"ua"		"{grey}Використання: {default}!mhud {grey}<елемент>  •  Список елементів: {default}speed prespeed timer keys"
+		"en"		"{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
 	}
 	"MHUD - Speed Usage"
 	{
@@ -717,5 +714,28 @@
 		"chi"		"{grey}用法: {default}!mhud keys {grey}<属性>  •  属性: {default}overlap(重叠) offset(偏移) scale(缩放) color(颜色) overlapcolor(重叠颜色) reset(重置)"
 		"ru"		"{grey}Применение: {default}!mhud keys {grey}<свойство>  •  Свойства: {default}overlap offset scale color overlapcolor reset"
 		"ua"		"{grey}Використання: {default}!mhud keys {grey}<властивість>  •  Список властивостей: {default}overlap offset scale color overlapcolor reset"
+	}
+	"MHUD - Font Usage"
+	{
+		"#format"	"font_list:s"
+		"en"		"{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+	}
+	"MHUD - Font"
+	{
+		"#format"	"value:s"
+		"en"		"{grey}HUD font: {default}{value}{grey}."
+	}
+	"MHUD - Set Font"
+	{
+		"#format"	"value:s"
+		"en"		"{grey}HUD font set to {default}{value}{grey}."
+	}
+	"MHUD - Outline Enabled"
+	{
+		"en"		"{grey}Outline is currently {green}enabled."
+	}
+	"MHUD - Outline Disabled"
+	{
+		"en"		"{grey}Outline is currently {red}disabled."
 	}
 }

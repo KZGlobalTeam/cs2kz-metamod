@@ -14,6 +14,7 @@
 #include "ctimer.h"
 #include "kz/kz.h"
 #include "kz/beam/kz_beam.h"
+#include "kz/hud/kz_hud.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
 #include "kz/paint/kz_paint.h"
@@ -782,12 +783,10 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 	{
 		Warning("[CS2KZ] Precache kz soundevents \n");
 		pResourceManifest->AddResource(KZ_WORKSHOP_ADDON_SNDEVENT_FILE);
+		KZHUDService::PrecacheParticles(pResourceManifest);
 	}
 	pResourceManifest->AddResource("particles/ui/hud/ui_map_def_utility_trail.vpcf");
 	pResourceManifest->AddResource("particles/ui/annotation/ui_annotation_line_segment.vpcf");
-	pResourceManifest->AddResource("particles/velo/velo_overlay_large.vpcf");
-	pResourceManifest->AddResource("particles/timer_delimiter/timer_delimiter.vpcf");
-	pResourceManifest->AddResource("particles/inputs/inputs.vpcf");
 }
 
 static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGroupHandle_t hSpawnGroup, bool bSynchronouslySpawnEntities,
