@@ -686,6 +686,7 @@
 	"MHUD - Usage"
 	{
 		"en"		"{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
+		"ru"		"{grey}Применение: {default}!mhud {grey}<элемент>  •  Элементы: {default}speed prespeed timer keys font outline"
 	}
 	"MHUD - Speed Usage"
 	{
@@ -719,23 +720,28 @@
 	{
 		"#format"	"font_list:s"
 		"en"		"{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
+		"ru"		"{grey}Применение: {default}!mhud font {grey}<шрифт>  •  Доступные шрифты: {default}{font_list}"
 	}
 	"MHUD - Font"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD font: {default}{value}{grey}."
+		"ru"		"{grey}Шрифт HUD: {default}{value}{grey}."
 	}
 	"MHUD - Set Font"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD font set to {default}{value}{grey}."
+		"ru"		"{grey}Шрифт HUD изменен на {default}{value}{grey}."
 	}
 	"MHUD - Outline Enabled"
 	{
 		"en"		"{grey}Outline is currently {green}enabled."
+		"ru"		"{grey}Обводка шрифта {green}включена."
 	}
 	"MHUD - Outline Disabled"
 	{
 		"en"		"{grey}Outline is currently {red}disabled."
+		"ru"		"{grey}Обводка шрифта {red}выключена."
 	}
 }
