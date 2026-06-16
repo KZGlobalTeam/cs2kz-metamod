@@ -7,17 +7,27 @@ Checking 34 translation files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/
 
 Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'lv', 'pl', 'ru', 'sv', 'tr', 'ua']
 
-Checking 10 menu files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/menu'...
+Checking 11 menu files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/menu'...
 
 ======================================================================
-SUMMARY: 0 error(s), 24 warning(s)
+SUMMARY: 0 error(s), 27 warning(s)
 ======================================================================
+
+cs2kz-commands.phrases.txt (0 errors, 3 warnings)
+--------------------------------------------------
+  cs2kz-commands.phrases.txt:626: [WARNING] Formatting: Line has trailing whitespace
+  cs2kz-commands.phrases.txt:637: [WARNING] Formatting: Line has trailing whitespace
+  cs2kz-commands.phrases.txt:1696: [WARNING] Formatting: Line has trailing whitespace
+
+cs2kz-timer-coursetop.phrases.txt (0 errors, 1 warnings)
+--------------------------------------------------
+  cs2kz-timer-coursetop.phrases.txt:15: [WARNING] Formatting: Line has trailing whitespace
 
 cs2kz-ztopwatch.phrases.txt (0 errors, 1 warnings)
 --------------------------------------------------
   cs2kz-ztopwatch.phrases.txt:120: [WARNING] Formatting: Line has trailing whitespace
 
-menu/ (0 errors, 23 warnings)
+menu/ (0 errors, 22 warnings)
 --------------------------------------------------
   menu/:0: [WARNING] Missing: Missing menu translation file: arabic.txt (for language code 'ar')
   menu/:0: [WARNING] Missing: Missing menu translation file: brazilian.txt (for language code 'pt')
@@ -37,14 +47,13 @@ menu/ (0 errors, 23 warnings)
   menu/:0: [WARNING] Missing: Missing menu translation file: romanian.txt (for language code 'ro')
   menu/:0: [WARNING] Missing: Missing menu translation file: schinese.txt (for language code 'chi')
   menu/:0: [WARNING] Missing: Missing menu translation file: slovak.txt (for language code 'sk')
-  menu/:0: [WARNING] Missing: Missing menu translation file: spanish.txt (for language code 'es')
   menu/:0: [WARNING] Missing: Missing menu translation file: tchinese.txt (for language code 'zho')
   menu/:0: [WARNING] Missing: Missing menu translation file: thai.txt (for language code 'th')
   menu/:0: [WARNING] Missing: Missing menu translation file: turkish.txt (for language code 'tr')
   menu/:0: [WARNING] Missing: Missing menu translation file: vietnamese.txt (for language code 'vi')
 
 ======================================================================
-TOTAL: 0 error(s), 24 warning(s) in 2 file(s)
+TOTAL: 0 error(s), 27 warning(s) in 4 file(s)
 ======================================================================
 Missing translations report written to: missing-translations.txt
 Missing translations JSON written to: missing-translations.json
