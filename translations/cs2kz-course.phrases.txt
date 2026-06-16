@@ -41,7 +41,7 @@
 		"ua"		"Список доступних курсів (використовуйте kz_r <назва курсу> для телепортації до курсу):"
 		"tr"		"Mevcut rotaların listesi için ( kz_r <course name> yazarak rotaya ışınlanabilirsin):"
 		"ko"		"사용 가능한 코스 목록 (코스로 텔레포트하려면 kz_r <코스 이름>을 사용하세요):"
-		"es"		"Lista de recorridos disponibles (usa kz_r <nombre del recorrido> para teleportarte a un recorrido):"
+		"es"		"Lista de recorridos disponibles (usa kz_r <nombre del recorrido> para teletransportarse a un recorrido):"
 		"fi"		"Valittavien ratojen lista (käytä kz_r <course name> teleporttaaksesi radalle): "
 		"lv"		"Pieejamo trašu saraksts (izmanto kz_r <trases nosaukums>, lai teleportētos uz trasi):"
 		"de"		"Liste aller verfügbaren Routen (benutze kz_r <Routenname> für Teleport zur Route):"
@@ -53,6 +53,7 @@
 		"chi"		"{yellow}警告: {grey}当前服务器未连接到CS2KZ API."
 		"ru"		"{yellow}Внимание: {grey}Сервер не подключен к CS2KZ API."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API."
+		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ."
 	}
 	"Map Info - No API Connection"
 	{
@@ -60,6 +61,7 @@
 		"chi"		"{yellow}警告: {grey}当前服务器未连接到CS2KZ API. 部分地图信息可能不可用."
 		"ru"		"{yellow}Внимание: {grey}Сервер не подключен к CS2KZ API. Некоторая информация о карте может быть недоступна."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API. Деяка інформація про мапу може бути недоступною."
+		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ. Alguna información del mapa puede no estar disponible."
 	}
 	"Map Info - No API Map Data (Short)"
 	{
@@ -67,6 +69,7 @@
 		"chi"		"{yellow}警告: {grey}CS2KZ API上未找到此地图的数据."
 		"ru"		"{yellow}Внимание: {grey}Данные этой карты не найдены в CS2KZ API."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API."
+		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa."
 	}
 	"Map Info - No API Map Data"
 	{
@@ -74,6 +77,7 @@
 		"chi"		"{yellow}警告: {grey}CS2KZ API上未找到此地图的数据. 部分地图信息可能不可用."
 		"ru"		"{yellow}Внимание: {grey}Данные этой карты не найдены в CS2KZ API. Некоторая информация о карте может быть недоступна."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API. Деяка інформація про мапу може бути недоступною."
+		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa. Alguna información del mapa puede no estar disponible."
 	}
 	"Map Info - Check Console"
 	{
@@ -81,6 +85,7 @@
 		"chi"		"{grey}检查控制台获取详细信息!"
 		"ru"		"{grey}Детальная информация выведена в консоль!"
 		"ua"		"{grey}Перевірте консоль для детальної інформації!"
+		"es"		"{grey}¡Abre la consola para obtener más detalles!"
 	}
 	"Map Info - Map In Testing"
 	{
@@ -89,6 +94,7 @@
 		"chi"		"{default}{map} {grey}当前正在{yellow}测试中{grey}."
 		"ru"		"{default}{map} {grey}на данный момент {yellow}находится на стадии тестирования{grey}."
 		"ua"		"{default}{map} {grey}наразі {yellow}перебуває на стадії тестування{grey}."
+		"es"		"{default}{map} {grey}está {yellow}en pruebas{grey}."
 	}
 	"Map Info - Map Info Header"
 	{
@@ -97,6 +103,7 @@
 		"chi"		"{map} 地图信息"
 		"ru"		"{map} Информация о карте"
 		"ua"		"{map} Інформація про мапу"
+		"es"		"{map} Información del mapa"
 	}
 	"Map Info - Mappers"
 	{
@@ -105,6 +112,7 @@
 		"chi"		"地图作者: {mappers}"
 		"ru"		"Создатели: {mappers}"
 		"ua"		"Мапери: {mappers}"
+		"es"		"Mapeadores: {mappers}"
 	}
 	"Map Info - State"
 	{
@@ -113,6 +121,7 @@
 		"chi"		"地图状态: {state}"
 		"ru"		"Статус: {state}"
 		"ua"		"Статус: {state}"
+		"es"		"Estado: {state}"
 	}
 	"Map Info - Description"
 	{
@@ -121,6 +130,7 @@
 		"chi"		"描述: {description}"
 		"ru"		"Описание: {description}"
 		"ua"		"Опис: {description}"
+		"es"		"Descripción: {description}"
 	}
 	"Map Info - Invalid"
 	{
@@ -128,6 +138,7 @@
 		"chi"		"N/A"
 		"ru"		"Н/Д"
 		"ua"		"Н/Д"
+		"es"			"N/A"
 	}
 	"Map Info - In Testing"
 	{
@@ -135,6 +146,7 @@
 		"chi"		"测试中"
 		"ru"		"На стадии тестирования"
 		"ua"		"На стадії тестування"
+		"es"		"En pruebas"
 	}
 	"Map Info - Approved"
 	{
@@ -143,6 +155,7 @@
 		"chi"		"已批准 ({date})"
 		"ru"		"Одобрена ({date})"
 		"ua"		"Схвалено ({date})"
+		"es"		"Aprobado ({date})"
 	}
 	"Course Info - Unranked"
 	{
@@ -150,6 +163,7 @@
 		"chi"		"未排名"
 		"ru"		"Без рейтинга"
 		"ua"		"Без рейтингу"
+		"es"		"Sin nivel"
 	}
 	"Course Info - Pending"
 	{
@@ -157,6 +171,7 @@
 		"chi"		"待审批"
 		"ru"		"На рассмотрении"
 		"ua"		"На розгляді"
+		"es"		"Pendiente"
 	}
 	"Course Info - Ranked"
 	{
@@ -164,6 +179,7 @@
 		"chi"		"已排名"
 		"ru"		"Рейтинговый"
 		"ua"		"Рейтинговий"
+		"es"		"Nivelado"
 	}
 	"Courses - Table Name"
 	{
@@ -171,6 +187,7 @@
 		"chi"		"关卡"
 		"ru"		"Маршруты"
 		"ua"		"Курси"
+		"es"		"Caminos"
 	}
 	"Course Info Header - Name"
 	{
@@ -178,6 +195,7 @@
 		"chi"		"名称"
 		"ru"		"Название"
 		"ua"		"Назва"
+		"es"		"Nombre"
 	}
 	"Course Info Header - Mappers"
 	{
@@ -185,6 +203,7 @@
 		"chi"		"作者"
 		"ru"		"Создатели"
 		"ua"		"Мапери"
+		"es"		"Mapeadores"
 	}
 	"Course Info Header - Tier (Vanilla)"
 	{
@@ -192,6 +211,7 @@
 		"chi"		"Tier (Vanilla)"
 		"ru"		"Tier (Vanilla)"
 		"ua"		"Складність (Vanilla)"
+		"es"		"Nivel (Vanilla)"
 	}
 	"Course Info Header - Tier (Classic)"
 	{
@@ -199,6 +219,7 @@
 		"chi"		"Tier (Classic)"
 		"ru"		"Tier (Classic)"
 		"ua"		"Складність (Classic)"
+		"es"		"Nivel (Classic)"
 	}
 	"Course Info Header - State (Vanilla)"
 	{
@@ -206,6 +227,7 @@
 		"chi"		"状态 (Vanilla)"
 		"ru"		"Статус (Vanilla)"
 		"ua"		"Статус (Vanilla)"
+		"es"		"Estado (Vanilla)"
 	}
 	"Course Info Header - State (Classic)"
 	{
@@ -213,6 +235,7 @@
 		"chi"		"状态 (Classic)"
 		"ru"		"Статус (Classic)"
 		"ua"		"Статус (Classic)"
+		"es"		"Estado (Classic)"
 	}
 
 	"Course Data Unavailable"
@@ -222,6 +245,7 @@
 		"chi"		"{darkred}无法获取关卡 {default}{course}{darkred} 的数据."
 		"ru"		"{darkred}Невозможно получить данные о маршруте {default}{course}{darkred}."
 		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
+		"es"		"{darkred}Datos del curso {default}{course}{darkred} inaccesibles."
 	}
 
 	"Tier Info"
@@ -232,5 +256,6 @@
 		"chi"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ru"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Складність {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"es"		"{default}{course}{grey} ({purple}{state}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 	}
 }

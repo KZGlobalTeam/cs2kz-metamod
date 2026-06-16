@@ -28,7 +28,7 @@
 		"ua"		"{grey}У вас ще не має встановленого часу."
 		"tr"		"{grey}Bir süreniz yok... henüz."
 		"it"		"{grey}Non hai ancora fatto un tempo."
-		"es"		"{grey}No tienes un tiempo... aún."
+		"es"		"{grey}No tienes un tiempo récord... aún."
 		"de"		"{grey}Du hast noch keine Zeit festgelegt... bisher."
 		"pl"		"{grey}Nie ustanowiłeś tutaj jeszcze swojego czasu..."
 		"ko"		"{grey}아직 기록이 없습니다."
@@ -154,6 +154,7 @@
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts]"
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey} / {purple}{points}{grey} punkti]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt]"
+		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts]"
 	}
 	"PB Time - Combined (Global)"
 	{
@@ -167,6 +168,7 @@
 		"sv"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 		"lv"		"{grey}Globālais: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey} / {purple}{points}{grey} punkti] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} punkti]"
 		"de"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} Pkt]"
+		"es"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
 	"PB Time - Split (Global)"
 	{
@@ -180,6 +182,7 @@
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Allmän{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey} / {purple}{points}{grey} punkti] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} punkti]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} Pkt]"
+		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
 	"PB Time - Overall Rankless (Global)"
 	{
@@ -193,6 +196,7 @@
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Allmän{grey}]"
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Gesamt{grey}]"
+		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}]"
 	}
 	"PB Time - Combined Rankless (Global)"
 	{
@@ -206,6 +210,7 @@
 		"sv"		"{grey}Global: {default}{time}{grey} [{yellow}Overall{grey}/{blue}PRO{grey}]"
 		"lv"		"{grey}Globālais: {default}{time}{grey} [{yellow}Kopējais{grey}/{blue}PRO{grey}]"
 		"de"		"{grey}Global: {default}{time}{grey} [{yellow}Gesamt{grey}/{blue}PRO{grey}]"
+		"es"		"{grey}Global: {default}{time}{grey} [{yellow}General{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Global)"
 	{
@@ -219,6 +224,7 @@
 		"sv"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Allmän{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Gesamt{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)"
 	{
@@ -263,7 +269,7 @@
 		"ua"		"{grey}Використання: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Деталі дивіться в консолі!"
 		"tr"		"{grey}Kullanım: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detaylar için konsol çıktısına bakın!"
 		"it"		"{grey}Utilizzo: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Controlla la console per ulteriori dettagli!"
-		"es"		"{grey}Usa: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. ¡Mira la consola para ver más detalles!"
+		"es"		"{grey}Uso: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. ¡Mira la consola para ver más detalles!"
 		"de"		"{grey}Verwendung: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Weitere Einzelheiten finden Sie in der Konsole!"
 		"pl"		"{grey}Użycie: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Sprawdź konsolę, aby uzyskać szczegóły!"
 		"ko"		"{grey}사용법: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
@@ -279,7 +285,7 @@
 		"ua"		"Використання: kz_pb <c/course/map/mode/p/player/s/style=...>\nНаприклад: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nЩоб не задавати жодного стилю, введіть \"style=none\"."
 		"tr"		"Kullanım: kz_pb <c/course/map/mode/p/player/s/style=...>\nÖrnek: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nTo specify no style, use \"style=none\"."
 		"it"		"Utilizzo: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsempio: \"kz_pb map=kz_mappa p=Giocatore c=Main style=ABH\"\nPer non includere lo stile usa \"style=none\"."
-		"es"		"Usa: kz_pb <c/course/map/mode/p/player/s/style=...>\nEjemplo: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nPara no especificar un estilo, usa \"style=none\"."
+		"es"		"Uso: kz_pb <c/course/map/mode/p/player/s/style=...>\nEjemplo: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nPara no especificar un estilo, usa \"style=none\"."
 		"de"		"Verwendung: kz_pb <c/course/map/mode/p/player/s/style=...>\nEsempio: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nUm keinen Stil anzugeben, verwende \"style=none\"."
 		"pl"		"Użycie: kz_pb <c/course/map/mode/p/player/s/style=...>\nPrzykład: \"kz_pb map=kz_map p=Gracz c=Main style=ABH\"\nAby nie podawać stylu, użyj \"style=none\"."
 		"ko"		"사용법: kz_pb <c/course/map/mode/p/player/s/style=...>\n예시: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\n스타일을 지정하지 않으려면 \"style=none\"을 사용하세요."

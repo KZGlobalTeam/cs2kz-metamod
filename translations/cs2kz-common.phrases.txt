@@ -73,7 +73,7 @@
 		"ua"		"{darkred}Неможливо знайти гравця \"{player}\"."
 		"tr"		"{darkred}\"{player}\" isminde bir oyuncu bulunamadı."
 		"it"		"{darkred}Impossibile trovare il giocatore \"{player}\"."
-		"es"		"{darkred}No se puede encontrar un jugador llamado \"{player}\"."
+		"es"		"{darkred}No se puede encontrar ningún jugador llamado \"{player}\"."
 		"ko"		"{darkred}\"{player}\" 해당 플레이어를 찾을 수 없습니다."
 		"lv"		"{darkred}Neizdevās atrast spēlētāju ar vārdu \"{player}\"."
 		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\" finden."
@@ -87,6 +87,7 @@
 		"sv"		"{grey}Vänligen vänta innan du använder kommandot igen."
 		"ua"		"{grey}Будь ласка, зачекайте, перш ніж використовувати цю команду знову."
 		"de"		"{grey}Bitte warte, bevor du diesen Befehl erneut verwendest."
+		"es"		"{grey}Por favor, espere antes de usar ese comando otra vez."
 	}
 	"Beta Join Warning"
 	{
@@ -94,5 +95,6 @@
 		"chi"		"CS2KZ 当前处于测试阶段. 请注意所有记录和数据将在 CS2KZ 结束测试后被清除."
 		"ru"		"CS2KZ находится на стадии тестирования. Напоминаем, что все рекорды и данные будут стёрты, когда CS2KZ выйдет из беты."
 		"ua"		"CS2KZ наразі перебуває на етапі тестування. Зверніть увагу, що всі рекорди та дані будуть видалені після виходу CS2KZ з бета-версії."
+		"es"		"CS2KZ actualmente esta en fase de pruebas (Beta). Recordatorio de que todos los records y datos serán borrados cuando CS2KZ esté fuera del modo Beta."
 	}
 }
