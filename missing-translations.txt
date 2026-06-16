@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 722
-Phrases with missing translations: 506
-Total missing translation entries: 3487
+Total phrases: 727
+Phrases with missing translations: 511
+Total missing translation entries: 3547
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  98.2% (709/722)
-  de (german)          [██████████████░░░░░░]  71.2% (514/722)
-  en (english)         [████████████████████] 100.0% (722/722)
-  es (spanish)         [███████░░░░░░░░░░░░░]  39.3% (284/722)
-  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.4% (234/722)
-  it (italian)         [██████░░░░░░░░░░░░░░]  31.3% (226/722)
-  ko (korean)          [███████░░░░░░░░░░░░░]  39.8% (287/722)
-  lv (latvian)         [█████████░░░░░░░░░░░]  45.6% (329/722)
-  pl (polish)          [██████████████░░░░░░]  71.5% (516/722)
-  ru (russian)         [███████████████████░]  98.5% (711/722)
-  sv (swedish)         [██████████░░░░░░░░░░]  54.4% (393/722)
-  tr (turkish)         [███████░░░░░░░░░░░░░]  36.4% (263/722)
-  ua (ukrainian)       [███████████████████░]  98.5% (711/722)
+  chi (schinese)       [███████████████████░]  97.5% (709/727)
+  de (german)          [██████████████░░░░░░]  70.7% (514/727)
+  en (english)         [████████████████████] 100.0% (727/727)
+  es (spanish)         [███████░░░░░░░░░░░░░]  39.1% (284/727)
+  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.2% (234/727)
+  it (italian)         [██████░░░░░░░░░░░░░░]  31.1% (226/727)
+  ko (korean)          [███████░░░░░░░░░░░░░]  39.5% (287/727)
+  lv (latvian)         [█████████░░░░░░░░░░░]  45.3% (329/727)
+  pl (polish)          [██████████████░░░░░░]  71.0% (516/727)
+  ru (russian)         [███████████████████░]  97.8% (711/727)
+  sv (swedish)         [██████████░░░░░░░░░░]  54.1% (393/727)
+  tr (turkish)         [███████░░░░░░░░░░░░░]  36.2% (263/727)
+  ua (ukrainian)       [███████████████████░]  97.8% (711/727)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -310,6 +310,12 @@ cs2kz-commands.phrases.txt
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 1678: "Command Description - kz_mhud"
     Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1684: "Command Description - kz_safeguard"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1688: "Command Description - kz_pro"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1692: "Command Description - kz_mapoverlay"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -1050,19 +1056,23 @@ cs2kz-timer.phrases.txt
     Missing (6): es, fi, it, ko, lv, tr
   Line 907: "Record Volume Set"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 917: "Started Run on Course"
+  Line 917: "Map Overlay Enabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 921: "Map Overlay Disabled"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 925: "Started Run on Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 926: "Started Run on Non Ranked Course"
+  Line 934: "Started Run on Non Ranked Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 935: "Safeguard - Disable"
+  Line 943: "Safeguard - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 942: "Safeguard - Enable"
+  Line 950: "Safeguard - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 949: "Safeguard - Enable (PRO)"
+  Line 957: "Safeguard - Enable (PRO)"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 956: "Safeguard - Blocked"
+  Line 964: "Safeguard - Blocked"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 963: "Safeguard - Blocked (Restart)"
+  Line 971: "Safeguard - Blocked (Restart)"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-tips-general.phrases.txt

@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 722,
-    "phrases_with_missing": 506,
-    "total_missing_entries": 3487,
+    "total_phrases": 727,
+    "phrases_with_missing": 511,
+    "total_missing_entries": 3547,
     "all_languages": [
       "chi",
       "de",
@@ -57,9 +57,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 98.2,
+      "coverage_percent": 97.52,
       "translated": 709,
-      "missing": 13,
+      "missing": 18,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -72,6 +72,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
@@ -138,6 +156,18 @@
           "phrase": "Jumpstat Report - Console Graph - Right",
           "line": 938,
           "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Enabled",
+          "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         }
       ],
       "menu": {
@@ -153,9 +183,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 71.19,
+      "coverage_percent": 70.7,
       "translated": 514,
-      "missing": 208,
+      "missing": 213,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -288,6 +318,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -1203,44 +1251,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -1415,7 +1475,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 722,
+      "translated": 727,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -1426,9 +1486,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 39.34,
+      "coverage_percent": 39.06,
       "translated": 284,
-      "missing": 438,
+      "missing": 443,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -1993,6 +2053,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -3766,44 +3844,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -4072,9 +4162,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 32.41,
+      "coverage_percent": 32.19,
       "translated": 234,
-      "missing": 488,
+      "missing": 493,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -4717,6 +4807,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -6706,44 +6814,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -7018,9 +7138,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 31.3,
+      "coverage_percent": 31.09,
       "translated": 226,
-      "missing": 496,
+      "missing": 501,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -7639,6 +7759,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -9700,44 +9838,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -10012,9 +10162,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 39.75,
+      "coverage_percent": 39.48,
       "translated": 287,
-      "missing": 435,
+      "missing": 440,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -10555,6 +10705,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -12334,44 +12502,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -12635,9 +12815,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 45.57,
+      "coverage_percent": 45.25,
       "translated": 329,
-      "missing": 393,
+      "missing": 398,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -13028,6 +13208,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -14705,44 +14903,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -15006,9 +15216,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 71.47,
+      "coverage_percent": 70.98,
       "translated": 516,
-      "missing": 206,
+      "missing": 211,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -15129,6 +15339,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -16044,44 +16272,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -16255,10 +16495,28 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 98.48,
+      "coverage_percent": 97.8,
       "translated": 711,
-      "missing": 11,
+      "missing": 16,
       "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
+        },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
@@ -16324,6 +16582,18 @@
           "phrase": "Jumpstat Report - Console Graph - Right",
           "line": 938,
           "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Enabled",
+          "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         }
       ],
       "menu": {
@@ -16334,9 +16604,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 54.43,
+      "coverage_percent": 54.06,
       "translated": 393,
-      "missing": 329,
+      "missing": 334,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -16565,6 +16835,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -18026,44 +18314,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -18321,9 +18621,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 36.43,
+      "coverage_percent": 36.18,
       "translated": 263,
-      "missing": 459,
+      "missing": 464,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -18918,6 +19218,24 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1678,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
         },
         {
           "file": "cs2kz-common.phrases.txt",
@@ -20787,44 +21105,56 @@
         },
         {
           "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Started Run on Course",
+          "phrase": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -21093,10 +21423,28 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 98.48,
+      "coverage_percent": 97.8,
       "translated": 711,
-      "missing": 11,
+      "missing": 16,
       "missing_phrases": [
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs."
+        },
+        {
+          "file": "cs2kz-commands.phrases.txt",
+          "phrase": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper."
+        },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Usage",
@@ -21162,6 +21510,18 @@
           "phrase": "Jumpstat Report - Console Graph - Right",
           "line": 938,
           "english_text": "R: {value}"
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Enabled",
+          "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+        },
+        {
+          "file": "cs2kz-timer.phrases.txt",
+          "phrase": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         }
       ],
       "menu": {
@@ -21677,7 +22037,7 @@
       ]
     },
     "cs2kz-commands.phrases.txt": {
-      "phrases_with_missing": 91,
+      "phrases_with_missing": 94,
       "phrases": [
         {
           "name": "Command Help Response Category Hint (Console)",
@@ -23679,6 +24039,72 @@
             "pl",
             "sv",
             "tr"
+          ]
+        },
+        {
+          "name": "Command Description - kz_safeguard",
+          "line": 1684,
+          "english_text": "Toggle safeguard.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_pro",
+          "line": 1688,
+          "english_text": "Toggle safeguard for PRO runs.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Command Description - kz_mapoverlay",
+          "line": 1692,
+          "english_text": "Toggle map overlay helper.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
           ]
         }
       ]
@@ -30259,7 +30685,7 @@
       ]
     },
     "cs2kz-timer.phrases.txt": {
-      "phrases_with_missing": 55,
+      "phrases_with_missing": 57,
       "phrases": [
         {
           "name": "Beat Course Info - Global Points (TP)",
@@ -31318,8 +31744,52 @@
           ]
         },
         {
-          "name": "Started Run on Course",
+          "name": "Map Overlay Enabled",
           "line": 917,
+          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Map Overlay Disabled",
+          "line": 921,
+          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Started Run on Course",
+          "line": 925,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}",
           "existing_languages": [
             "chi",
@@ -31341,7 +31811,7 @@
         },
         {
           "name": "Started Run on Non Ranked Course",
-          "line": 926,
+          "line": 934,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating.",
           "existing_languages": [
             "chi",
@@ -31363,7 +31833,7 @@
         },
         {
           "name": "Safeguard - Disable",
-          "line": 935,
+          "line": 943,
           "english_text": "{grey}Safeguard disabled.",
           "existing_languages": [
             "chi",
@@ -31385,7 +31855,7 @@
         },
         {
           "name": "Safeguard - Enable",
-          "line": 942,
+          "line": 950,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -31407,7 +31877,7 @@
         },
         {
           "name": "Safeguard - Enable (PRO)",
-          "line": 949,
+          "line": 957,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -31429,7 +31899,7 @@
         },
         {
           "name": "Safeguard - Blocked",
-          "line": 956,
+          "line": 964,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled.",
           "existing_languages": [
             "chi",
@@ -31451,7 +31921,7 @@
         },
         {
           "name": "Safeguard - Blocked (Restart)",
-          "line": 963,
+          "line": 971,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again.",
           "existing_languages": [
             "chi",
