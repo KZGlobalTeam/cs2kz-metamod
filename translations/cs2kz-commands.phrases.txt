@@ -1681,4 +1681,16 @@
 		"ua"		"Налаштувати HUD. Використання: kz_mhud <speed|prespeed|timer|keys> [властивість] [значення...]"
 		"ru"		"Настроить HUD. Применение: kz_mhud <speed|prespeed|timer|keys> [свойство] [значение...]"
 	}
+	"Command Description - kz_safeguard"
+	{
+		"en"		"Toggle safeguard."
+	}
+	"Command Description - kz_pro"
+	{
+		"en"		"Toggle safeguard for PRO runs."
+	}
+	"Command Description - kz_mapoverlay"
+	{
+		"en"		"Toggle map overlay helper."
+	}
 }

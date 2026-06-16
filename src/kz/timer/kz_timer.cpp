@@ -124,6 +124,15 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		this->ShowSplitText(splitNumber);
 		this->lastSplit = splitNumber;
 		CALL_FORWARD(eventListeners, OnSplitZoneTouchPost, this->player, splitNumber);
+		if (this->player->optionService->GetPreferenceBool("mapOverlay"))
+		{
+			// clang-format off
+			this->player->PrintConsole(false, false, "[CS2KZ] split|%d|%f", 
+				splitNumber,
+				this->GetTime()
+			);
+			// clang-format on
+		}
 	}
 }
 
@@ -144,6 +153,15 @@ void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, 
 		this->lastCheckpoint = cpNumber;
 		this->reachedCheckpoints++;
 		CALL_FORWARD(eventListeners, OnCheckpointZoneTouchPost, this->player, cpNumber);
+		if (this->player->optionService->GetPreferenceBool("mapOverlay"))
+		{
+			// clang-format off
+			this->player->PrintConsole(false, false, "[CS2KZ] checkpoint|%d|%f", 
+				cpNumber,
+				this->GetTime()
+			);
+			// clang-format on
+		}
 	}
 }
 
@@ -170,6 +188,15 @@ void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		this->ShowStageText();
 		this->currentStage++;
 		CALL_FORWARD(eventListeners, OnStageZoneTouchPost, this->player, stageNumber);
+		if (this->player->optionService->GetPreferenceBool("mapOverlay"))
+		{
+			// clang-format off
+			this->player->PrintConsole(false, false, "[CS2KZ] stage|%d|%f", 
+				stageNumber,
+				this->GetTime()
+			);
+			// clang-format on
+		}
 	}
 }
 
@@ -298,6 +325,18 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	FOR_EACH_VEC(eventListeners, i)
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->guid);
+	}
+	if (this->player->optionService->GetPreferenceBool("mapOverlay"))
+	{
+		// clang-format off
+		this->player->PrintConsole(false, false, "[CS2KZ] timer_start|%s|%d|%d|%d|%s", 
+			courseDesc->name,
+			courseDesc->splitCount,
+			courseDesc->checkpointCount,
+			courseDesc->stageCount,
+			this->player->modeService->GetModeShortName()
+		);
+		// clang-format on
 	}
 	return true;
 }
@@ -1690,6 +1729,17 @@ SCMD(kz_recordvolume, SCFL_TIMER | SCFL_GLOBAL | SCFL_PREFERENCE)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	f32 volume = Clamp((f32)utils::StringToFloat(args->Arg(1)), 0.0f, 2.0f);
 	player->optionService->SetPreferenceFloat("recordVolume", volume);
-	player->languageService->PrintChat(true, false, "Timer Preference - Record Volume Set", volume);
+	player->languageService->PrintChat(true, false, "Record Volume Set", volume);
+	return MRES_SUPERCEDE;
+}
+
+SCMD(kz_mapoverlay, SCFL_TIMER | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	bool hasOverlay = player->optionService->GetPreferenceBool("mapOverlay", false);
+	player->optionService->SetPreferenceBool("mapOverlay", !hasOverlay);
+	// clang-format off
+	player->languageService->PrintChat(true, false, player->optionService->GetPreferenceBool("mapOverlay") ? "Map Overlay Enabled" : "Map Overlay Disabled");
+	// clang-format on
 	return MRES_SUPERCEDE;
 }
