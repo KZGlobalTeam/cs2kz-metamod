@@ -8,12 +8,12 @@ SUMMARY
 Total languages: 13
 Total phrases: 727
 Phrases with missing translations: 511
-Total missing translation entries: 3547
+Total missing translation entries: 3535
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  97.5% (709/727)
+  chi (schinese)       [███████████████████░]  99.2% (721/727)
   de (german)          [██████████████░░░░░░]  70.7% (514/727)
   en (english)         [████████████████████] 100.0% (727/727)
   es (spanish)         [███████░░░░░░░░░░░░░]  39.1% (284/727)
@@ -247,75 +247,75 @@ cs2kz-commands.phrases.txt
   Line 1416: "Command Description - kz_measureend"
     Missing (6): es, fi, it, ko, lv, tr
   Line 1426: "Command Description - kz_ztopwatch"
-    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1432: "Command Description - kz_measureblock"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 1433: "Command Description - kz_measureblock"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1442: "Command Description - kz_paint"
+  Line 1443: "Command Description - kz_paint"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1449: "Command Description - kz_paintcolor"
+  Line 1450: "Command Description - kz_paintcolor"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1456: "Command Description - kz_paintsize"
+  Line 1457: "Command Description - kz_paintsize"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1463: "Command Description - kz_togglepaint"
+  Line 1464: "Command Description - kz_togglepaint"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1470: "Command Description - kz_showpaint"
+  Line 1471: "Command Description - kz_showpaint"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1477: "Command Description - kz_cleardecals"
+  Line 1478: "Command Description - kz_cleardecals"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1484: "Command Description - kz_timerstopsound"
+  Line 1485: "Command Description - kz_timerstopsound"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1494: "Command Description - kz_autohideweapon"
+  Line 1495: "Command Description - kz_autohideweapon"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1504: "Command Description - kz_pistol"
+  Line 1505: "Command Description - kz_pistol"
     Missing (6): es, fi, it, ko, lv, tr
-  Line 1514: "Command Description - kz_rpsave"
+  Line 1515: "Command Description - kz_rpsave"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1523: "Command Description - kz_replay"
+  Line 1524: "Command Description - kz_replay"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1530: "Command Description - kz_replays"
+  Line 1531: "Command Description - kz_replays"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1539: "Command Description - kz_rpgoto"
+  Line 1540: "Command Description - kz_rpgoto"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1548: "Command Description - kz_rpgototick"
+  Line 1549: "Command Description - kz_rpgototick"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1557: "Command Description - kz_rpinfo"
+  Line 1558: "Command Description - kz_rpinfo"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1566: "Command Description - kz_rppause"
+  Line 1567: "Command Description - kz_rppause"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1575: "Command Description - kz_rploadprogress"
+  Line 1576: "Command Description - kz_rploadprogress"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1584: "Command Description - kz_rpcancelload"
+  Line 1585: "Command Description - kz_rpcancelload"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1593: "Command Description - kz_recordvolume"
+  Line 1594: "Command Description - kz_recordvolume"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1602: "Command Description - kz_cpmessage"
+  Line 1603: "Command Description - kz_cpmessage"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1611: "Command Description - kz_rphidelegs"
+  Line 1612: "Command Description - kz_rphidelegs"
     Missing (7): es, fi, it, ko, lv, sv, tr
-  Line 1620: "Command Description - kz_accept"
+  Line 1621: "Command Description - kz_accept"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1628: "Command Description - kz_surrender"
+  Line 1629: "Command Description - kz_surrender"
     Missing (8): de, es, fi, it, ko, lv, sv, tr
-  Line 1636: "Command Description - kz_mapinfo"
+  Line 1637: "Command Description - kz_mapinfo"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1643: "Command Description - kz_tier"
+  Line 1644: "Command Description - kz_tier"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1650: "Command Description - kz_modernperfstats"
+  Line 1651: "Command Description - kz_modernperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1657: "Command Description - kz_legacyperfstats"
+  Line 1658: "Command Description - kz_legacyperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1664: "Command Description - kz_resetperfstats"
+  Line 1665: "Command Description - kz_resetperfstats"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1671: "Command Description - kz_fov"
+  Line 1672: "Command Description - kz_fov"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1678: "Command Description - kz_mhud"
+  Line 1679: "Command Description - kz_mhud"
     Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
-  Line 1684: "Command Description - kz_safeguard"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1688: "Command Description - kz_pro"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 1692: "Command Description - kz_mapoverlay"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1685: "Command Description - kz_safeguard"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1690: "Command Description - kz_pro"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 1695: "Command Description - kz_mapoverlay"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -517,25 +517,25 @@ cs2kz-hud.phrases.txt
   Line 679: "MHUD - Unavailable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 686: "MHUD - Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 690: "MHUD - Speed Usage"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 691: "MHUD - Speed Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 697: "MHUD - Prespeed Usage"
+  Line 698: "MHUD - Prespeed Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 704: "MHUD - Timer Usage"
+  Line 705: "MHUD - Timer Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 711: "MHUD - Keys Usage"
+  Line 712: "MHUD - Keys Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 718: "MHUD - Font Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 723: "MHUD - Font"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 728: "MHUD - Set Font"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 733: "MHUD - Outline Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 737: "MHUD - Outline Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 719: "MHUD - Font Usage"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 725: "MHUD - Font"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 731: "MHUD - Set Font"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 737: "MHUD - Outline Enabled"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 742: "MHUD - Outline Disabled"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------
@@ -1057,22 +1057,22 @@ cs2kz-timer.phrases.txt
   Line 907: "Record Volume Set"
     Missing (7): es, fi, it, ko, lv, sv, tr
   Line 917: "Map Overlay Enabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 921: "Map Overlay Disabled"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 925: "Started Run on Course"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 922: "Map Overlay Disabled"
+    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 927: "Started Run on Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 934: "Started Run on Non Ranked Course"
+  Line 936: "Started Run on Non Ranked Course"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 943: "Safeguard - Disable"
+  Line 945: "Safeguard - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 950: "Safeguard - Enable"
+  Line 952: "Safeguard - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 957: "Safeguard - Enable (PRO)"
+  Line 959: "Safeguard - Enable (PRO)"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 964: "Safeguard - Blocked"
+  Line 966: "Safeguard - Blocked"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 971: "Safeguard - Blocked (Restart)"
+  Line 973: "Safeguard - Blocked (Restart)"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-tips-general.phrases.txt

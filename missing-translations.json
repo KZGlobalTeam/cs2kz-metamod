@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 727,
     "phrases_with_missing": 511,
-    "total_missing_entries": 3547,
+    "total_missing_entries": 3535,
     "all_languages": [
       "chi",
       "de",
@@ -57,75 +57,15 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 97.52,
-      "translated": 709,
-      "missing": 18,
+      "coverage_percent": 99.17,
+      "translated": 721,
+      "missing": 6,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_ztopwatch",
-          "line": 1426,
-          "english_text": "Toggle the zone stopwatch on/off, or use subcommands: place (set next corner), clear (reset zones), startjump/sj (toggle start on jump), stopland/sl (toggle stop on land), status."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
-          "english_text": "Toggle safeguard."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_pro",
-          "line": 1688,
-          "english_text": "Toggle safeguard for PRO runs."
-        },
-        {
-          "file": "cs2kz-commands.phrases.txt",
-          "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
-          "english_text": "Toggle map overlay helper."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Usage",
-          "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Font Usage",
-          "line": 718,
-          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Font",
-          "line": 723,
-          "english_text": "{grey}HUD font: {default}{value}{grey}."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Set Font",
-          "line": 728,
-          "english_text": "{grey}HUD font set to {default}{value}{grey}."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Outline Enabled",
-          "line": 733,
-          "english_text": "{grey}Outline is currently {green}enabled."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Outline Disabled",
-          "line": 737,
-          "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -156,18 +96,6 @@
           "phrase": "Jumpstat Report - Console Graph - Right",
           "line": 938,
           "english_text": "R: {value}"
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Map Overlay Enabled",
-          "line": 917,
-          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Map Overlay Disabled",
-          "line": 921,
-          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         }
       ],
       "menu": {
@@ -226,115 +154,115 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -862,55 +790,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -1258,49 +1186,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -1871,205 +1799,205 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1432,
+          "line": 1433,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1484,
+          "line": 1485,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1494,
+          "line": 1495,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1504,
+          "line": 1505,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -2603,55 +2531,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -3851,49 +3779,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -4625,205 +4553,205 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1432,
+          "line": 1433,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1484,
+          "line": 1485,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1494,
+          "line": 1495,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1504,
+          "line": 1505,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -5357,55 +5285,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -6821,49 +6749,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -7577,205 +7505,205 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1432,
+          "line": 1433,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1484,
+          "line": 1485,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1494,
+          "line": 1495,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1504,
+          "line": 1505,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -8351,55 +8279,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -9845,49 +9773,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -10523,205 +10451,205 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1432,
+          "line": 1433,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1484,
+          "line": 1485,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1494,
+          "line": 1495,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1504,
+          "line": 1505,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -11255,55 +11183,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -12509,49 +12437,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -13026,205 +12954,205 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1432,
+          "line": 1433,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1484,
+          "line": 1485,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1494,
+          "line": 1495,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1504,
+          "line": 1505,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -13758,55 +13686,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -14910,49 +14838,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -15259,103 +15187,103 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -15883,55 +15811,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -16279,49 +16207,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -16502,19 +16430,19 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -16526,31 +16454,31 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -16592,7 +16520,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         }
       ],
@@ -16677,181 +16605,181 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -17379,55 +17307,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -18321,49 +18249,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -19036,205 +18964,205 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_measureblock",
-          "line": 1432,
+          "line": 1433,
           "english_text": "Measure the block distance."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_timerstopsound",
-          "line": 1484,
+          "line": 1485,
           "english_text": "Toggle the timer stop sound."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_autohideweapon",
-          "line": 1494,
+          "line": 1495,
           "english_text": "Toggle the automatic hiding of weapon viewmodel."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pistol",
-          "line": 1504,
+          "line": 1505,
           "english_text": "Change or remove the current pistol."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -19774,55 +19702,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -21112,49 +21040,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -21430,19 +21358,19 @@
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs."
         },
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper."
         },
         {
@@ -21454,31 +21382,31 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -21520,7 +21448,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         }
       ],
@@ -23342,12 +23270,12 @@
           "line": 1426,
           "english_text": "Toggle the zone stopwatch on/off, or use subcommands: place (set next corner), clear (reset zones), startjump/sj (toggle start on jump), stopland/sl (toggle stop on land), status.",
           "existing_languages": [
+            "chi",
             "en",
             "ru",
             "ua"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -23361,7 +23289,7 @@
         },
         {
           "name": "Command Description - kz_measureblock",
-          "line": 1432,
+          "line": 1433,
           "english_text": "Measure the block distance.",
           "existing_languages": [
             "chi",
@@ -23383,7 +23311,7 @@
         },
         {
           "name": "Command Description - kz_paint",
-          "line": 1442,
+          "line": 1443,
           "english_text": "Place a paint decal on the surface you are aiming at.",
           "existing_languages": [
             "chi",
@@ -23405,7 +23333,7 @@
         },
         {
           "name": "Command Description - kz_paintcolor",
-          "line": 1449,
+          "line": 1450,
           "english_text": "Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values.",
           "existing_languages": [
             "chi",
@@ -23427,7 +23355,7 @@
         },
         {
           "name": "Command Description - kz_paintsize",
-          "line": 1456,
+          "line": 1457,
           "english_text": "Set or display your paint size. Accepts a positive number (default: 8).",
           "existing_languages": [
             "chi",
@@ -23449,7 +23377,7 @@
         },
         {
           "name": "Command Description - kz_togglepaint",
-          "line": 1463,
+          "line": 1464,
           "english_text": "Toggle auto painting every 50ms while aiming at surfaces.",
           "existing_languages": [
             "chi",
@@ -23471,7 +23399,7 @@
         },
         {
           "name": "Command Description - kz_showpaint",
-          "line": 1470,
+          "line": 1471,
           "english_text": "Toggle between showing only your own paint and showing paint from all players.",
           "existing_languages": [
             "chi",
@@ -23493,7 +23421,7 @@
         },
         {
           "name": "Command Description - kz_cleardecals",
-          "line": 1477,
+          "line": 1478,
           "english_text": "Remove all decals from the map.",
           "existing_languages": [
             "chi",
@@ -23515,7 +23443,7 @@
         },
         {
           "name": "Command Description - kz_timerstopsound",
-          "line": 1484,
+          "line": 1485,
           "english_text": "Toggle the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -23537,7 +23465,7 @@
         },
         {
           "name": "Command Description - kz_autohideweapon",
-          "line": 1494,
+          "line": 1495,
           "english_text": "Toggle the automatic hiding of weapon viewmodel.",
           "existing_languages": [
             "chi",
@@ -23559,7 +23487,7 @@
         },
         {
           "name": "Command Description - kz_pistol",
-          "line": 1504,
+          "line": 1505,
           "english_text": "Change or remove the current pistol.",
           "existing_languages": [
             "chi",
@@ -23581,7 +23509,7 @@
         },
         {
           "name": "Command Description - kz_rpsave",
-          "line": 1514,
+          "line": 1515,
           "english_text": "Manually save past gameplay into a replay.",
           "existing_languages": [
             "chi",
@@ -23603,7 +23531,7 @@
         },
         {
           "name": "Command Description - kz_replay",
-          "line": 1523,
+          "line": 1524,
           "english_text": "Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.).",
           "existing_languages": [
             "chi",
@@ -23625,7 +23553,7 @@
         },
         {
           "name": "Command Description - kz_replays",
-          "line": 1530,
+          "line": 1531,
           "english_text": "List saved replays.",
           "existing_languages": [
             "chi",
@@ -23647,7 +23575,7 @@
         },
         {
           "name": "Command Description - kz_rpgoto",
-          "line": 1539,
+          "line": 1540,
           "english_text": "Go to a specific time in the replay. (hh:mm:ss)",
           "existing_languages": [
             "chi",
@@ -23669,7 +23597,7 @@
         },
         {
           "name": "Command Description - kz_rpgototick",
-          "line": 1548,
+          "line": 1549,
           "english_text": "Go to a specific tick in the replay.",
           "existing_languages": [
             "chi",
@@ -23691,7 +23619,7 @@
         },
         {
           "name": "Command Description - kz_rpinfo",
-          "line": 1557,
+          "line": 1558,
           "english_text": "Display information about the current replay.",
           "existing_languages": [
             "chi",
@@ -23713,7 +23641,7 @@
         },
         {
           "name": "Command Description - kz_rppause",
-          "line": 1566,
+          "line": 1567,
           "english_text": "Pause or resume the current replay.",
           "existing_languages": [
             "chi",
@@ -23735,7 +23663,7 @@
         },
         {
           "name": "Command Description - kz_rploadprogress",
-          "line": 1575,
+          "line": 1576,
           "english_text": "Display the loading progress of the replay.",
           "existing_languages": [
             "chi",
@@ -23757,7 +23685,7 @@
         },
         {
           "name": "Command Description - kz_rpcancelload",
-          "line": 1584,
+          "line": 1585,
           "english_text": "Cancel the loading of the replay.",
           "existing_languages": [
             "chi",
@@ -23779,7 +23707,7 @@
         },
         {
           "name": "Command Description - kz_recordvolume",
-          "line": 1593,
+          "line": 1594,
           "english_text": "Set the volume of the world record sound effect.",
           "existing_languages": [
             "chi",
@@ -23801,7 +23729,7 @@
         },
         {
           "name": "Command Description - kz_cpmessage",
-          "line": 1602,
+          "line": 1603,
           "english_text": "Toggle checkpoint messages.",
           "existing_languages": [
             "chi",
@@ -23823,7 +23751,7 @@
         },
         {
           "name": "Command Description - kz_rphidelegs",
-          "line": 1611,
+          "line": 1612,
           "english_text": "Toggle replay bot's first person legs visibility.",
           "existing_languages": [
             "chi",
@@ -23845,7 +23773,7 @@
         },
         {
           "name": "Command Description - kz_accept",
-          "line": 1620,
+          "line": 1621,
           "english_text": "Accept an incoming race.",
           "existing_languages": [
             "chi",
@@ -23867,7 +23795,7 @@
         },
         {
           "name": "Command Description - kz_surrender",
-          "line": 1628,
+          "line": 1629,
           "english_text": "Surrender an ongoing race.",
           "existing_languages": [
             "chi",
@@ -23889,7 +23817,7 @@
         },
         {
           "name": "Command Description - kz_mapinfo",
-          "line": 1636,
+          "line": 1637,
           "english_text": "Display information about the current map.",
           "existing_languages": [
             "chi",
@@ -23911,7 +23839,7 @@
         },
         {
           "name": "Command Description - kz_tier",
-          "line": 1643,
+          "line": 1644,
           "english_text": "Display the tier of the current course or a specified course.",
           "existing_languages": [
             "chi",
@@ -23933,7 +23861,7 @@
         },
         {
           "name": "Command Description - kz_modernperfstats",
-          "line": 1650,
+          "line": 1651,
           "english_text": "Retrieve bhop statistics for modern jumping.",
           "existing_languages": [
             "chi",
@@ -23955,7 +23883,7 @@
         },
         {
           "name": "Command Description - kz_legacyperfstats",
-          "line": 1657,
+          "line": 1658,
           "english_text": "Retrieve bhop statistics for legacy jumping.",
           "existing_languages": [
             "chi",
@@ -23977,7 +23905,7 @@
         },
         {
           "name": "Command Description - kz_resetperfstats",
-          "line": 1664,
+          "line": 1665,
           "english_text": "Reset bhop statistics for modern and legacy jumping.",
           "existing_languages": [
             "chi",
@@ -23999,7 +23927,7 @@
         },
         {
           "name": "Command Description - kz_fov",
-          "line": 1671,
+          "line": 1672,
           "english_text": "Change your FOV.",
           "existing_languages": [
             "chi",
@@ -24021,7 +23949,7 @@
         },
         {
           "name": "Command Description - kz_mhud",
-          "line": 1678,
+          "line": 1679,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]",
           "existing_languages": [
             "en",
@@ -24043,13 +23971,13 @@
         },
         {
           "name": "Command Description - kz_safeguard",
-          "line": 1684,
+          "line": 1685,
           "english_text": "Toggle safeguard.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -24065,13 +23993,13 @@
         },
         {
           "name": "Command Description - kz_pro",
-          "line": 1688,
+          "line": 1690,
           "english_text": "Toggle safeguard for PRO runs.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -24087,13 +24015,13 @@
         },
         {
           "name": "Command Description - kz_mapoverlay",
-          "line": 1692,
+          "line": 1695,
           "english_text": "Toggle map overlay helper.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -26200,10 +26128,10 @@
           "line": 686,
           "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -26219,7 +26147,7 @@
         },
         {
           "name": "MHUD - Speed Usage",
-          "line": 690,
+          "line": 691,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset",
           "existing_languages": [
             "chi",
@@ -26241,7 +26169,7 @@
         },
         {
           "name": "MHUD - Prespeed Usage",
-          "line": 697,
+          "line": 698,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset",
           "existing_languages": [
             "chi",
@@ -26263,7 +26191,7 @@
         },
         {
           "name": "MHUD - Timer Usage",
-          "line": 704,
+          "line": 705,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset",
           "existing_languages": [
             "chi",
@@ -26285,7 +26213,7 @@
         },
         {
           "name": "MHUD - Keys Usage",
-          "line": 711,
+          "line": 712,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset",
           "existing_languages": [
             "chi",
@@ -26307,13 +26235,13 @@
         },
         {
           "name": "MHUD - Font Usage",
-          "line": 718,
+          "line": 719,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -26329,13 +26257,13 @@
         },
         {
           "name": "MHUD - Font",
-          "line": 723,
+          "line": 725,
           "english_text": "{grey}HUD font: {default}{value}{grey}.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -26351,13 +26279,13 @@
         },
         {
           "name": "MHUD - Set Font",
-          "line": 728,
+          "line": 731,
           "english_text": "{grey}HUD font set to {default}{value}{grey}.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -26373,13 +26301,13 @@
         },
         {
           "name": "MHUD - Outline Enabled",
-          "line": 733,
+          "line": 737,
           "english_text": "{grey}Outline is currently {green}enabled.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -26395,13 +26323,13 @@
         },
         {
           "name": "MHUD - Outline Disabled",
-          "line": 737,
+          "line": 742,
           "english_text": "{grey}Outline is currently {red}disabled.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -31748,10 +31676,10 @@
           "line": 917,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -31767,13 +31695,13 @@
         },
         {
           "name": "Map Overlay Disabled",
-          "line": 921,
+          "line": 922,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console.",
           "existing_languages": [
+            "chi",
             "en"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -31789,7 +31717,7 @@
         },
         {
           "name": "Started Run on Course",
-          "line": 925,
+          "line": 927,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}",
           "existing_languages": [
             "chi",
@@ -31811,7 +31739,7 @@
         },
         {
           "name": "Started Run on Non Ranked Course",
-          "line": 934,
+          "line": 936,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating.",
           "existing_languages": [
             "chi",
@@ -31833,7 +31761,7 @@
         },
         {
           "name": "Safeguard - Disable",
-          "line": 943,
+          "line": 945,
           "english_text": "{grey}Safeguard disabled.",
           "existing_languages": [
             "chi",
@@ -31855,7 +31783,7 @@
         },
         {
           "name": "Safeguard - Enable",
-          "line": 950,
+          "line": 952,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -31877,7 +31805,7 @@
         },
         {
           "name": "Safeguard - Enable (PRO)",
-          "line": 957,
+          "line": 959,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -31899,7 +31827,7 @@
         },
         {
           "name": "Safeguard - Blocked",
-          "line": 964,
+          "line": 966,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled.",
           "existing_languages": [
             "chi",
@@ -31921,7 +31849,7 @@
         },
         {
           "name": "Safeguard - Blocked (Restart)",
-          "line": 971,
+          "line": 973,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again.",
           "existing_languages": [
             "chi",
