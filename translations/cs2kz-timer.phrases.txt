@@ -914,6 +914,16 @@
 		"ua"		"{grey}Ви встановили гучність оголошення світового рекорду на {default}{volume}%%%%{grey}."
 		"de"		"{grey}Du hast die Lautstärke der Weltrekordansage auf {default}{volume}%%%%{grey} gesetzt."
 	}
+	"Map Overlay Enabled"
+	{
+		"en"		"{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+		"chi"		"{grey}地图信息显示已启用. 相关计时事件将打印到控制台."
+	}
+	"Map Overlay Disabled"
+	{
+		"en"		"{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+		"chi"		"{grey}地图信息显示已禁用. 相关计时事件将不再打印到控制台."
+	}
 	"Started Run on Course"
 	{
 		// You have started a run on new course: Main

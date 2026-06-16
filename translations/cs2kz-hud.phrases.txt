@@ -687,6 +687,7 @@
 	{
 		"en"		"{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
 		"ru"		"{grey}Применение: {default}!mhud {grey}<элемент>  •  Элементы: {default}speed prespeed timer keys font outline"
+		"chi"		"{grey}用法: {default}!mhud {grey}<显示项>  •  显示项: {default}speed(速度) prespeed(起跳速度) timer(计时器) keys(按键) font(字体) outline(轮廓)"
 	}
 	"MHUD - Speed Usage"
 	{
@@ -721,27 +722,32 @@
 		"#format"	"font_list:s"
 		"en"		"{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
 		"ru"		"{grey}Применение: {default}!mhud font {grey}<шрифт>  •  Доступные шрифты: {default}{font_list}"
+		"chi"		"{grey}用法: {default}!mhud font {grey}<字体>  •  可用字体: {default}{font_list}"
 	}
 	"MHUD - Font"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD font: {default}{value}{grey}."
 		"ru"		"{grey}Шрифт HUD: {default}{value}{grey}."
+		"chi"		"{grey}HUD 字体: {default}{value}{grey}."
 	}
 	"MHUD - Set Font"
 	{
 		"#format"	"value:s"
 		"en"		"{grey}HUD font set to {default}{value}{grey}."
 		"ru"		"{grey}Шрифт HUD изменен на {default}{value}{grey}."
+		"chi"		"{grey}HUD 字体已设置为 {default}{value}{grey}."
 	}
 	"MHUD - Outline Enabled"
 	{
 		"en"		"{grey}Outline is currently {green}enabled."
 		"ru"		"{grey}Обводка шрифта {green}включена."
+		"chi"		"{grey}轮廓当前为 {green}启用."
 	}
 	"MHUD - Outline Disabled"
 	{
 		"en"		"{grey}Outline is currently {red}disabled."
 		"ru"		"{grey}Обводка шрифта {red}выключена."
+		"chi"		"{grey}轮廓当前为 {red}禁用."
 	}
 }
