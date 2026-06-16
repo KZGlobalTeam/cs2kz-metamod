@@ -917,10 +917,12 @@
 	"Map Overlay Enabled"
 	{
 		"en"		"{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
+		"chi"		"{grey}地图信息显示已启用. 相关计时事件将打印到控制台."
 	}
 	"Map Overlay Disabled"
 	{
 		"en"		"{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
+		"chi"		"{grey}地图信息显示已禁用. 相关计时事件将不再打印到控制台."
 	}
 	"Started Run on Course"
 	{
