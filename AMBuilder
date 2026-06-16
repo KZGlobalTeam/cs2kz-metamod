@@ -346,6 +346,47 @@ def configure_lgj(sdk, cxx):
   ]
   return lgj_binary
 
+def configure_aud(sdk, cxx):
+  aud_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-autounduck", sdk)
+
+  if aud_binary.compiler.family == 'gcc' or aud_binary.compiler.family == 'clang':
+    aud_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
+  if aud_binary.compiler.family == 'clang':
+    aud_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
+
+  aud_binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'src'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+  ]
+
+  if aud_binary.compiler.target.platform == 'linux':
+    aud_binary.compiler.postlink += [
+      os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
+    ] 
+    aud_binary.sources += [
+      'src/utils/plat_linux.cpp'
+      ]
+  elif aud_binary.compiler.target.platform == 'windows':
+    aud_binary.compiler.postlink += [
+      os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
+    ]
+    aud_binary.sources += [
+      'src/utils/plat_win.cpp'
+      ]
+
+  aud_binary.sources += [
+    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
+    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_autounduck.cpp'),
+  ]
+  
+  return aud_binary
+
 sdk_target = MMSPlugin.sdk_target
 sdk = MMSPlugin.sdk_target.sdk
 cxx = MMSPlugin.sdk_target.cxx
@@ -357,6 +398,7 @@ ckz_binary = configure_ckz(sdk, cxx)
 # Style binaries
 abh_binary = configure_abh(sdk, cxx)
 lgj_binary = configure_lgj(sdk, cxx)
+aud_binary = configure_aud(sdk, cxx)
 
 protoc_builder = get_proto_builder(builder, sdk_target, sdk)
 
@@ -364,22 +406,26 @@ binary.custom = [protoc_builder]
 ckz_binary.custom = [protoc_builder]
 abh_binary.custom = [protoc_builder]
 lgj_binary.custom = [protoc_builder]
+aud_binary.custom = [protoc_builder]
 
 # We have to split nodes here because they will be put into different folders.
 nodes = builder.Add(binary)
 mode_nodes = builder.Add(ckz_binary)
 abh_nodes = builder.Add(abh_binary)
 lgj_nodes = builder.Add(lgj_binary)
+aud_nodes = builder.Add(aud_binary)
 
 # If we are generating a VS project, make sure to add the modes in, and the build folder for linter.
 if builder.options.generator == 'vs':
   binary.sources += ckz_binary.sources
   binary.sources += abh_binary.sources
+  binary.sources += lgj_nodes.sources
+  binary.sources += aud_nodes.sources
   binary.compiler.cxxincludes += [os.path.join(builder.buildPath, MMSPlugin.metadata['name'], f'{binary.compiler.target.platform}-{cxx.target.arch}')]
 
 
 MMSPlugin.binaries += [nodes]
 MMSPlugin.mode_binaries += [mode_nodes]
-MMSPlugin.style_binaries += [abh_nodes, lgj_nodes]
+MMSPlugin.style_binaries += [abh_nodes, lgj_nodes, aud_nodes]
 
 # vim: filetype=python expandtab shiftwidth=2 tabstop=8 textwidth=99
