@@ -688,6 +688,7 @@
 		"en"		"{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
 		"ru"		"{grey}Применение: {default}!mhud {grey}<элемент>  •  Элементы: {default}speed prespeed timer keys font outline"
 		"chi"		"{grey}用法: {default}!mhud {grey}<显示项>  •  显示项: {default}speed(速度) prespeed(起跳速度) timer(计时器) keys(按键) font(字体) outline(轮廓)"
+		"ua"		"{grey}Використання: {default}!mhud {grey}<елемент>  •  Елементи: {default}speed prespeed timer keys font outline"
 	}
 	"MHUD - Speed Usage"
 	{
