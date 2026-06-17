@@ -410,6 +410,10 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed);
 	}
 	// This must be called after OnTimerEndPost so that the run UUID is set correctly.
+	if (this->player->optionService->GetPreferenceBool("mapOverlay"))
+	{
+		this->player->PrintConsole(false, false, "[CS2KZ] timer_end");
+	}
 	if (!this->player->GetPlayerPawn()->IsBot())
 	{
 		RunSubmission::Create(this->player);
@@ -438,7 +442,10 @@ bool KZTimerService::TimerStop(bool playSound)
 	{
 		eventListeners[i]->OnTimerStopped(this->player, this->currentCourseGUID);
 	}
-
+	if (this->player->optionService->GetPreferenceBool("mapOverlay"))
+	{
+		this->player->PrintConsole(false, false, "[CS2KZ] timer_stop");
+	}
 	return true;
 }
 
