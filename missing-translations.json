@@ -3,7 +3,7 @@
     "total_languages": 13,
     "total_phrases": 724,
     "phrases_with_missing": 508,
-    "total_missing_entries": 3284,
+    "total_missing_entries": 3271,
     "all_languages": [
       "chi",
       "de",
@@ -76,25 +76,25 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         }
       ],
@@ -772,55 +772,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -880,91 +880,91 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -1168,49 +1168,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -1769,55 +1769,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -1835,25 +1835,25 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
@@ -2549,37 +2549,37 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -3984,55 +3984,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -4122,151 +4122,151 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 964,
+          "line": 969,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 975,
+          "line": 980,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 987,
+          "line": 992,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 998,
+          "line": 1003,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 1010,
+          "line": 1015,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 1021,
+          "line": 1026,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 1033,
+          "line": 1038,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 1044,
+          "line": 1049,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1056,
+          "line": 1061,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1067,
+          "line": 1072,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -5448,49 +5448,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -6960,55 +6960,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -7098,151 +7098,151 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 964,
+          "line": 969,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 975,
+          "line": 980,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 987,
+          "line": 992,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 998,
+          "line": 1003,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 1010,
+          "line": 1015,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 1021,
+          "line": 1026,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 1033,
+          "line": 1038,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 1044,
+          "line": 1049,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1056,
+          "line": 1061,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1067,
+          "line": 1072,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -8454,49 +8454,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -9846,55 +9846,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -9972,151 +9972,151 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 964,
+          "line": 969,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 975,
+          "line": 980,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 987,
+          "line": 992,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 998,
+          "line": 1003,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 1010,
+          "line": 1015,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 1021,
+          "line": 1026,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 1033,
+          "line": 1038,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 1044,
+          "line": 1049,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1056,
+          "line": 1061,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1067,
+          "line": 1072,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -11100,49 +11100,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -12331,55 +12331,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -12457,151 +12457,151 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 964,
+          "line": 969,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 975,
+          "line": 980,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 987,
+          "line": 992,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 998,
+          "line": 1003,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 1010,
+          "line": 1015,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 1021,
+          "line": 1026,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 1033,
+          "line": 1038,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 1044,
+          "line": 1049,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1056,
+          "line": 1061,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1067,
+          "line": 1072,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -13483,49 +13483,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -14438,55 +14438,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -14546,91 +14546,91 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -14834,49 +14834,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -15063,7 +15063,7 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         }
       ],
@@ -15832,55 +15832,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -15952,97 +15952,97 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 1033,
+          "line": 1038,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -16774,49 +16774,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -18209,55 +18209,55 @@
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled."
         },
         {
@@ -18347,151 +18347,151 @@
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}"
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 964,
+          "line": 969,
           "english_text": "{grey}Jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 975,
+          "line": 980,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 987,
+          "line": 992,
           "english_text": "{grey}Jumpstats console reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 998,
+          "line": 1003,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 1010,
+          "line": 1015,
           "english_text": "{grey}Jumpstats sound broadcast disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 1021,
+          "line": 1026,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 1033,
+          "line": 1038,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 1044,
+          "line": 1049,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1056,
+          "line": 1061,
           "english_text": "{grey}Extended jumpstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1067,
+          "line": 1072,
           "english_text": "{grey}Extended jumpstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled."
         },
         {
@@ -19547,49 +19547,49 @@
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -19858,89 +19858,10 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 98.2,
-      "translated": 711,
-      "missing": 13,
-      "missing_phrases": [
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Usage",
-          "line": 686,
-          "english_text": "{grey}Usage: {default}!mhud {grey}<element>  •  Elements: {default}speed prespeed timer keys font outline"
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Font Usage",
-          "line": 720,
-          "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}"
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Font",
-          "line": 727,
-          "english_text": "{grey}HUD font: {default}{value}{grey}."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Set Font",
-          "line": 734,
-          "english_text": "{grey}HUD font set to {default}{value}{grey}."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Outline Enabled",
-          "line": 741,
-          "english_text": "{grey}Outline is currently {green}enabled."
-        },
-        {
-          "file": "cs2kz-hud.phrases.txt",
-          "phrase": "MHUD - Outline Disabled",
-          "line": 747,
-          "english_text": "{grey}Outline is currently {red}disabled."
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Segment - Landing Edge",
-          "line": 890,
-          "english_text": " | {value} LandEdge"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
-          "english_text": "Strafe keys:"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
-          "english_text": "Mouse movement:"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
-          "english_text": "L: {value}"
-        },
-        {
-          "file": "cs2kz-jumpstats.phrases.txt",
-          "phrase": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
-          "english_text": "R: {value}"
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Map Overlay Enabled",
-          "line": 926,
-          "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
-        },
-        {
-          "file": "cs2kz-timer.phrases.txt",
-          "phrase": "Map Overlay Disabled",
-          "line": 931,
-          "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
-        }
-      ],
+      "coverage_percent": 100.0,
+      "translated": 724,
+      "missing": 0,
+      "missing_phrases": [],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -24553,7 +24474,8 @@
           "existing_languages": [
             "chi",
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -24564,13 +24486,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "MHUD - Speed Usage",
-          "line": 692,
+          "line": 693,
           "english_text": "{grey}Usage: {default}!mhud speed {grey}<property>  •  Properties: {default}offset scale color crouchjumpcolor/cjcolor reset",
           "existing_languages": [
             "chi",
@@ -24592,7 +24513,7 @@
         },
         {
           "name": "MHUD - Prespeed Usage",
-          "line": 699,
+          "line": 700,
           "english_text": "{grey}Usage: {default}!mhud prespeed {grey}<property>  •  Properties: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset",
           "existing_languages": [
             "chi",
@@ -24614,7 +24535,7 @@
         },
         {
           "name": "MHUD - Timer Usage",
-          "line": 706,
+          "line": 707,
           "english_text": "{grey}Usage: {default}!mhud timer {grey}<property>  •  Properties: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset",
           "existing_languages": [
             "chi",
@@ -24636,7 +24557,7 @@
         },
         {
           "name": "MHUD - Keys Usage",
-          "line": 713,
+          "line": 714,
           "english_text": "{grey}Usage: {default}!mhud keys {grey}<property>  •  Properties: {default}overlap offset scale color overlapcolor reset",
           "existing_languages": [
             "chi",
@@ -24658,12 +24579,13 @@
         },
         {
           "name": "MHUD - Font Usage",
-          "line": 720,
+          "line": 721,
           "english_text": "{grey}Usage: {default}!mhud font {grey}<font>  •  Available fonts: {default}{font_list}",
           "existing_languages": [
             "chi",
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -24674,18 +24596,18 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "MHUD - Font",
-          "line": 727,
+          "line": 729,
           "english_text": "{grey}HUD font: {default}{value}{grey}.",
           "existing_languages": [
             "chi",
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -24696,18 +24618,18 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "MHUD - Set Font",
-          "line": 734,
+          "line": 737,
           "english_text": "{grey}HUD font set to {default}{value}{grey}.",
           "existing_languages": [
             "chi",
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -24718,18 +24640,18 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "MHUD - Outline Enabled",
-          "line": 741,
+          "line": 745,
           "english_text": "{grey}Outline is currently {green}enabled.",
           "existing_languages": [
             "chi",
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -24740,18 +24662,18 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "MHUD - Outline Disabled",
-          "line": 747,
+          "line": 752,
           "english_text": "{grey}Outline is currently {red}disabled.",
           "existing_languages": [
             "chi",
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -24762,8 +24684,7 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         }
       ]
@@ -25063,7 +24984,8 @@
           "english_text": " | {value} LandEdge",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -25075,13 +24997,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Report - Chat Segment - Edge",
-          "line": 896,
+          "line": 897,
           "english_text": " | {olive}{value} {grey}Edge",
           "existing_languages": [
             "chi",
@@ -25103,7 +25024,7 @@
         },
         {
           "name": "Jumpstats Report - Chat Segment - Deviation",
-          "line": 905,
+          "line": 906,
           "english_text": " | {olive}{value} {grey}Dev",
           "existing_languages": [
             "chi",
@@ -25125,7 +25046,7 @@
         },
         {
           "name": "Jumpstats Report - Chat Segment - Offset",
-          "line": 914,
+          "line": 915,
           "english_text": " | {olive}{value} {grey}Offset",
           "existing_languages": [
             "chi",
@@ -25147,7 +25068,7 @@
         },
         {
           "name": "Jumpstats Report - Chat Segment - Miss",
-          "line": 923,
+          "line": 924,
           "english_text": " | {olive}{value} {grey}Miss",
           "existing_languages": [
             "chi",
@@ -25169,7 +25090,7 @@
         },
         {
           "name": "Jumpstat Report - Console Details 2",
-          "line": 932,
+          "line": 933,
           "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched",
           "existing_languages": [
             "chi",
@@ -25191,11 +25112,12 @@
         },
         {
           "name": "Jumpstat Report - Console Graph - Strafe Keys",
-          "line": 942,
+          "line": 943,
           "english_text": "Strafe keys:",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -25207,17 +25129,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Graph - Mouse Movement",
-          "line": 947,
+          "line": 949,
           "english_text": "Mouse movement:",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -25229,17 +25151,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Graph - Left",
-          "line": 952,
+          "line": 955,
           "english_text": "L: {value}",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -25251,17 +25173,17 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstat Report - Console Graph - Right",
-          "line": 958,
+          "line": 962,
           "english_text": "R: {value}",
           "existing_languages": [
             "en",
-            "ru"
+            "ru",
+            "ua"
           ],
           "missing_languages": [
             "chi",
@@ -25273,13 +25195,12 @@
             "lv",
             "pl",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Tier - Disabled",
-          "line": 964,
+          "line": 969,
           "english_text": "{grey}Jumpstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -25301,7 +25222,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Tier - Response",
-          "line": 975,
+          "line": 980,
           "english_text": "{grey}Jumpstats chat reporting threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -25323,7 +25244,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled",
-          "line": 987,
+          "line": 992,
           "english_text": "{grey}Jumpstats console reporting disabled.",
           "existing_languages": [
             "chi",
@@ -25345,7 +25266,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Console Tier - Response",
-          "line": 998,
+          "line": 1003,
           "english_text": "{grey}Jumpstats console reporting threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -25367,7 +25288,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled",
-          "line": 1010,
+          "line": 1015,
           "english_text": "{grey}Jumpstats sound broadcast disabled.",
           "existing_languages": [
             "chi",
@@ -25389,7 +25310,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response",
-          "line": 1021,
+          "line": 1026,
           "english_text": "{grey}Jumpstats sound broadcast threshold is now {default}{tier}.",
           "existing_languages": [
             "chi",
@@ -25411,7 +25332,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Volume - Current",
-          "line": 1033,
+          "line": 1038,
           "english_text": "{grey}Current jumpstats volume is {default}{volume}.",
           "existing_languages": [
             "chi",
@@ -25433,7 +25354,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Volume - Response",
-          "line": 1044,
+          "line": 1049,
           "english_text": "{grey}Jumpstats volume set to {default}{volume}.",
           "existing_languages": [
             "chi",
@@ -25455,7 +25376,7 @@
         },
         {
           "name": "Jumpstats Option - Extended Chat Stats - Enable",
-          "line": 1056,
+          "line": 1061,
           "english_text": "{grey}Extended jumpstats chat reporting enabled.",
           "existing_languages": [
             "chi",
@@ -25477,7 +25398,7 @@
         },
         {
           "name": "Jumpstats Option - Extended Chat Stats - Disable",
-          "line": 1067,
+          "line": 1072,
           "english_text": "{grey}Extended jumpstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -25499,7 +25420,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Reporting - Enable",
-          "line": 1078,
+          "line": 1083,
           "english_text": "{grey}Jumpstats reporting enabled.",
           "existing_languages": [
             "chi",
@@ -25521,7 +25442,7 @@
         },
         {
           "name": "Jumpstats Option - Jumpstats Reporting - Disable",
-          "line": 1086,
+          "line": 1091,
           "english_text": "{grey}Jumpstats reporting disabled.",
           "existing_languages": [
             "chi",
@@ -25543,7 +25464,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Chat Reporting - Enable",
-          "line": 1094,
+          "line": 1099,
           "english_text": "{grey}Failstats chat reporting enabled.",
           "existing_languages": [
             "chi",
@@ -25565,7 +25486,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Chat Reporting - Disable",
-          "line": 1102,
+          "line": 1107,
           "english_text": "{grey}Failstats chat reporting disabled.",
           "existing_languages": [
             "chi",
@@ -25587,7 +25508,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Console Reporting - Enable",
-          "line": 1110,
+          "line": 1115,
           "english_text": "{grey}Failstats console reporting enabled.",
           "existing_languages": [
             "chi",
@@ -25609,7 +25530,7 @@
         },
         {
           "name": "Jumpstats Option - Failstats Console Reporting - Disable",
-          "line": 1118,
+          "line": 1123,
           "english_text": "{grey}Failstats console reporting disabled.",
           "existing_languages": [
             "chi",
@@ -30100,7 +30021,8 @@
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console.",
           "existing_languages": [
             "chi",
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -30112,17 +30034,17 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Map Overlay Disabled",
-          "line": 931,
+          "line": 932,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console.",
           "existing_languages": [
             "chi",
-            "en"
+            "en",
+            "ua"
           ],
           "missing_languages": [
             "de",
@@ -30134,13 +30056,12 @@
             "pl",
             "ru",
             "sv",
-            "tr",
-            "ua"
+            "tr"
           ]
         },
         {
           "name": "Started Run on Course",
-          "line": 936,
+          "line": 938,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}",
           "existing_languages": [
             "chi",
@@ -30162,7 +30083,7 @@
         },
         {
           "name": "Started Run on Non Ranked Course",
-          "line": 946,
+          "line": 948,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating.",
           "existing_languages": [
             "chi",
@@ -30184,7 +30105,7 @@
         },
         {
           "name": "Safeguard - Disable",
-          "line": 956,
+          "line": 958,
           "english_text": "{grey}Safeguard disabled.",
           "existing_languages": [
             "chi",
@@ -30206,7 +30127,7 @@
         },
         {
           "name": "Safeguard - Enable",
-          "line": 963,
+          "line": 965,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -30228,7 +30149,7 @@
         },
         {
           "name": "Safeguard - Enable (PRO)",
-          "line": 970,
+          "line": 972,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -30250,7 +30171,7 @@
         },
         {
           "name": "Safeguard - Blocked",
-          "line": 977,
+          "line": 979,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled.",
           "existing_languages": [
             "chi",
@@ -30272,7 +30193,7 @@
         },
         {
           "name": "Safeguard - Blocked (Restart)",
-          "line": 984,
+          "line": 986,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again.",
           "existing_languages": [
             "chi",

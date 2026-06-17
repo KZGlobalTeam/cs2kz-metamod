@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 724
 Phrases with missing translations: 508
-Total missing translation entries: 3284
+Total missing translation entries: 3271
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [███████████████████░]  99.7% (722/724)
   sv (swedish)         [██████████░░░░░░░░░░]  54.3% (393/724)
   tr (turkish)         [███████░░░░░░░░░░░░░]  36.3% (263/724)
-  ua (ukrainian)       [███████████████████░]  98.2% (711/724)
+  ua (ukrainian)       [████████████████████] 100.0% (724/724)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -511,25 +511,25 @@ cs2kz-hud.phrases.txt
   Line 679: "MHUD - Unavailable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
   Line 686: "MHUD - Usage"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 692: "MHUD - Speed Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 699: "MHUD - Prespeed Usage"
+  Line 693: "MHUD - Speed Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 706: "MHUD - Timer Usage"
+  Line 700: "MHUD - Prespeed Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 713: "MHUD - Keys Usage"
+  Line 707: "MHUD - Timer Usage"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 720: "MHUD - Font Usage"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 727: "MHUD - Font"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 734: "MHUD - Set Font"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 741: "MHUD - Outline Enabled"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 747: "MHUD - Outline Disabled"
-    Missing (10): de, es, fi, it, ko, lv, pl, sv, tr, ua
+  Line 714: "MHUD - Keys Usage"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 721: "MHUD - Font Usage"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 729: "MHUD - Font"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 737: "MHUD - Set Font"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 745: "MHUD - Outline Enabled"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
+  Line 752: "MHUD - Outline Disabled"
+    Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------
@@ -560,56 +560,56 @@ cs2kz-jumpstats.phrases.txt
   Line 881: "Jumpstat Report - Console Segment - Miss"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
   Line 890: "Jumpstat Report - Console Segment - Landing Edge"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 896: "Jumpstats Report - Chat Segment - Edge"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 897: "Jumpstats Report - Chat Segment - Edge"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 905: "Jumpstats Report - Chat Segment - Deviation"
+  Line 906: "Jumpstats Report - Chat Segment - Deviation"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 914: "Jumpstats Report - Chat Segment - Offset"
+  Line 915: "Jumpstats Report - Chat Segment - Offset"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 923: "Jumpstats Report - Chat Segment - Miss"
+  Line 924: "Jumpstats Report - Chat Segment - Miss"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 932: "Jumpstat Report - Console Details 2"
+  Line 933: "Jumpstat Report - Console Details 2"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 942: "Jumpstat Report - Console Graph - Strafe Keys"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 947: "Jumpstat Report - Console Graph - Mouse Movement"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 952: "Jumpstat Report - Console Graph - Left"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 958: "Jumpstat Report - Console Graph - Right"
-    Missing (11): chi, de, es, fi, it, ko, lv, pl, sv, tr, ua
-  Line 964: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
+  Line 943: "Jumpstat Report - Console Graph - Strafe Keys"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 949: "Jumpstat Report - Console Graph - Mouse Movement"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 955: "Jumpstat Report - Console Graph - Left"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 962: "Jumpstat Report - Console Graph - Right"
+    Missing (10): chi, de, es, fi, it, ko, lv, pl, sv, tr
+  Line 969: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
     Missing (5): fi, it, ko, lv, tr
-  Line 975: "Jumpstats Option - Jumpstats Minimum Tier - Response"
+  Line 980: "Jumpstats Option - Jumpstats Minimum Tier - Response"
     Missing (5): fi, it, ko, lv, tr
-  Line 987: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
+  Line 992: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
     Missing (5): fi, it, ko, lv, tr
-  Line 998: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
+  Line 1003: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
     Missing (5): fi, it, ko, lv, tr
-  Line 1010: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
+  Line 1015: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
     Missing (5): fi, it, ko, lv, tr
-  Line 1021: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
+  Line 1026: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
     Missing (5): fi, it, ko, lv, tr
-  Line 1033: "Jumpstats Option - Jumpstats Volume - Current"
+  Line 1038: "Jumpstats Option - Jumpstats Volume - Current"
     Missing (6): fi, it, ko, lv, sv, tr
-  Line 1044: "Jumpstats Option - Jumpstats Volume - Response"
+  Line 1049: "Jumpstats Option - Jumpstats Volume - Response"
     Missing (5): fi, it, ko, lv, tr
-  Line 1056: "Jumpstats Option - Extended Chat Stats - Enable"
+  Line 1061: "Jumpstats Option - Extended Chat Stats - Enable"
     Missing (5): fi, it, ko, lv, tr
-  Line 1067: "Jumpstats Option - Extended Chat Stats - Disable"
+  Line 1072: "Jumpstats Option - Extended Chat Stats - Disable"
     Missing (5): fi, it, ko, lv, tr
-  Line 1078: "Jumpstats Option - Jumpstats Reporting - Enable"
+  Line 1083: "Jumpstats Option - Jumpstats Reporting - Enable"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 1086: "Jumpstats Option - Jumpstats Reporting - Disable"
+  Line 1091: "Jumpstats Option - Jumpstats Reporting - Disable"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 1094: "Jumpstats Option - Failstats Chat Reporting - Enable"
+  Line 1099: "Jumpstats Option - Failstats Chat Reporting - Enable"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 1102: "Jumpstats Option - Failstats Chat Reporting - Disable"
+  Line 1107: "Jumpstats Option - Failstats Chat Reporting - Disable"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 1110: "Jumpstats Option - Failstats Console Reporting - Enable"
+  Line 1115: "Jumpstats Option - Failstats Console Reporting - Enable"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 1118: "Jumpstats Option - Failstats Console Reporting - Disable"
+  Line 1123: "Jumpstats Option - Failstats Console Reporting - Disable"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-language.phrases.txt
@@ -1051,22 +1051,22 @@ cs2kz-timer.phrases.txt
   Line 915: "Record Volume Set"
     Missing (6): fi, it, ko, lv, sv, tr
   Line 926: "Map Overlay Enabled"
-    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 931: "Map Overlay Disabled"
-    Missing (11): de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 936: "Started Run on Course"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 932: "Map Overlay Disabled"
+    Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 938: "Started Run on Course"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 946: "Started Run on Non Ranked Course"
+  Line 948: "Started Run on Non Ranked Course"
     Missing (8): de, fi, it, ko, lv, pl, sv, tr
-  Line 956: "Safeguard - Disable"
+  Line 958: "Safeguard - Disable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 963: "Safeguard - Enable"
+  Line 965: "Safeguard - Enable"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 970: "Safeguard - Enable (PRO)"
+  Line 972: "Safeguard - Enable (PRO)"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 977: "Safeguard - Blocked"
+  Line 979: "Safeguard - Blocked"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
-  Line 984: "Safeguard - Blocked (Restart)"
+  Line 986: "Safeguard - Blocked (Restart)"
     Missing (9): de, es, fi, it, ko, lv, pl, sv, tr
 
 cs2kz-tips-general.phrases.txt
