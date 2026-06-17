@@ -892,6 +892,7 @@
 		"#format"	"value:.2f"
 		"en"		" | {value} LandEdge"
 		"ru"		" | {value} Остаток"
+		"ua"		" | {value} Край"
 	}
 	"Jumpstats Report - Chat Segment - Edge"
 	{
@@ -943,23 +944,27 @@
 	{
 		"en"		"Strafe keys:"
 		"ru"		"Кнопки:"
+		"ua"		"Клавіші:"
 	}
 	"Jumpstat Report - Console Graph - Mouse Movement"
 	{
 		"en"		"Mouse movement:"
 		"ru"		"Движения мыши:"
+		"ua"		"Рухи миші:"
 	}
 	"Jumpstat Report - Console Graph - Left"
 	{
 		"#format"	"value:s"
 		"en"		"L: {value}"
 		"ru"		"L: {value}"
+		"ua"		"L: {value}"
 	}
 	"Jumpstat Report - Console Graph - Right"
 	{
 		"#format"	"value:s"
 		"en"		"R: {value}"
 		"ru"		"R: {value}"
+		"ua"		"R: {value}"
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
 	{
