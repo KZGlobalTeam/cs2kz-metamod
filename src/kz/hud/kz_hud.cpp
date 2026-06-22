@@ -223,7 +223,7 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 	{
 		target->hudService->DestroyAllParticles();
 	}
-	
+
 	// Yield the center channel while a cs2menus HTML menu is open.
 	if (g_pMenus && g_pMenus->GetActiveMenuType(target->GetPlayerSlot().Get()) == MenuType::Html)
 	{
