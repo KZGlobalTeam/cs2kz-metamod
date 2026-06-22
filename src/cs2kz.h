@@ -61,6 +61,8 @@ public:
 	}
 
 	virtual void *OnMetamodQuery(const char *iface, int *ret) override;
+	virtual void OnPluginLoad(PluginId id) override;
+	virtual void OnPluginUnload(PluginId id) override;
 
 	bool simulatingPhysics = false;
 	CGlobalVars serverGlobals;

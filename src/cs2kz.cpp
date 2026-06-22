@@ -14,6 +14,7 @@
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/menu/kz_menu.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
@@ -146,6 +147,17 @@ void KZPlugin::AllPluginsLoaded()
 	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
+	KZ::menu::UpdateInterface();
+}
+
+void KZPlugin::OnPluginLoad(PluginId id)
+{
+	KZ::menu::UpdateInterface();
+}
+
+void KZPlugin::OnPluginUnload(PluginId id)
+{
+	KZ::menu::UpdateInterface();
 }
 
 void KZPlugin::AddonInit()

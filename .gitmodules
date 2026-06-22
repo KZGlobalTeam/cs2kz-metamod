@@ -26,3 +26,6 @@
 [submodule "vendor/zstd"]
 	path = vendor/zstd
 	url = https://github.com/facebook/zstd.git
+[submodule "vendor/mm-cs2menus"]
+	path = vendor/mm-cs2menus
+	url = https://github.com/FemboyKZ/mm-cs2menus

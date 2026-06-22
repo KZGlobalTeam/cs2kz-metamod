@@ -5,6 +5,7 @@
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
+#include "kz/menu/kz_menu.h"
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
@@ -219,6 +220,12 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 	else
 	{
 		target->hudService->DestroyAllParticles();
+	}
+	
+	// Yield the center channel while a cs2menus HTML menu is open.
+	if (KZ::menu::HasActiveHtmlMenu(target->GetPlayerSlot()))
+	{
+		return;
 	}
 	if (!target->hudService->IsShowingPanel())
 	{
