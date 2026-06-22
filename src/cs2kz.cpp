@@ -14,7 +14,6 @@
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
-#include "kz/menu/kz_menu.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
@@ -35,12 +34,14 @@
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 #include <vendor/ixwebsocket/ixwebsocket/IXNetSystem.h>
+#include <vendor/mm-cs2menus/src/public/ics2menus.h>
 
 #include "tier0/memdbgon.h"
 KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
 IClientCvarValue *g_pClientCvarValue;
+ICS2Menus *g_pMenus;
 CSteamGameServerAPIContext g_steamAPI;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
@@ -147,17 +148,17 @@ void KZPlugin::AllPluginsLoaded()
 	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
 	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
-	KZ::menu::UpdateInterface();
+	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::OnPluginLoad(PluginId id)
 {
-	KZ::menu::UpdateInterface();
+	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::OnPluginUnload(PluginId id)
 {
-	KZ::menu::UpdateInterface();
+	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::AddonInit()

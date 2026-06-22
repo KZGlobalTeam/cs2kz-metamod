@@ -132,7 +132,6 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'prefs.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'language', 'kz_language.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'menu', 'kz_menu.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'measure', 'kz_measure.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'ztopwatch', 'kz_ztopwatch.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_manager.cpp'),

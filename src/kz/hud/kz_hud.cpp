@@ -5,7 +5,6 @@
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 
-#include "kz/menu/kz_menu.h"
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
@@ -14,6 +13,9 @@
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 extern IMultiAddonManager *g_pMultiAddonManager;
+
+#include <vendor/mm-cs2menus/src/public/ics2menus.h>
+extern ICS2Menus *g_pMenus;
 
 #include "tier0/memdbgon.h"
 
@@ -223,7 +225,7 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 	}
 	
 	// Yield the center channel while a cs2menus HTML menu is open.
-	if (KZ::menu::HasActiveHtmlMenu(target->GetPlayerSlot()))
+	if (g_pMenus && g_pMenus->GetActiveMenuType(target->GetPlayerSlot().Get()) == MenuType::Html)
 	{
 		return;
 	}
