@@ -14,6 +14,9 @@
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 extern IMultiAddonManager *g_pMultiAddonManager;
 
+#include <vendor/mm-cs2menus/src/public/ics2menus.h>
+extern ICS2Menus *g_pMenus;
+
 #include "tier0/memdbgon.h"
 
 static CConVar<bool> kz_force_mhud("kz_force_mhud", FCVAR_NONE, "Force the particle-based MHUD even when MultiAddonManager is not available.", false);
@@ -219,6 +222,12 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 	else
 	{
 		target->hudService->DestroyAllParticles();
+	}
+
+	// Yield the center channel while a cs2menus HTML menu is open.
+	if (g_pMenus && g_pMenus->GetActiveMenuType(target->GetPlayerSlot().Get()) == MenuType::Html)
+	{
+		return;
 	}
 	if (!target->hudService->IsShowingPanel())
 	{

@@ -12,6 +12,8 @@ WIP, not ready for release
 
 - Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) v1.3.4.2 or later for local database support
 
+- Optional: [CS2Menus](https://github.com/FemboyKZ/mm-cs2menus) v1.2.1 or later for html menu support
+
 [^1]: if your server is global, this plugin is required
 
 ## Installation
