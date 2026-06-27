@@ -9,6 +9,7 @@
 		"ru"		"{yellow}Гонка начнётся через {time} секунд!"
 		"ua"		"{yellow}Гонка розпочнеться через {time} секунд!"
 		"de"		"{yellow}Das Rennen beginnt in {time} Sekunden!"
+			"ko"		"{yellow}레이스가 {time}초 후 시작됩니다!"
 	}
 	"Racing - Player Disconnect"
 	{
@@ -19,6 +20,7 @@
 		"ru"		"{lime}{player}{grey} отключился!"
 		"ua"		"{lime}{player}{grey} від'єднався!"
 		"de"		"{lime}{player}{grey} hat die Verbindung getrennt!"
+			"ko"		"{lime}{player}{grey}님이 연결을 끊었습니다!"
 	}
 	"Racing - Player Surrender"
 	{
@@ -29,6 +31,7 @@
 		"ru"		"{lime}{player}{grey} сдался!"
 		"ua"		"{lime}{player}{grey} здався!"
 		"de"		"{lime}{player}{grey} hat aufgegeben!"
+			"ko"		"{lime}{player}{grey}님이 항복했습니다!"
 	}
 	"Racing - Player Finish (1 Teleport)"
 	{
@@ -39,6 +42,7 @@
 		"ru"		"{lime}{player}{grey} финишировал за {default}{time}{grey} | {yellow}1{grey} TP"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {yellow}1{grey} TP"
 		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {yellow}1{grey} TP"
+			"ko"		"{lime}{player}{grey}님이 {default}{time}{grey}에 레이스를 완료했습니다 | {yellow}1{grey} TP"
 	}
 	"Racing - Player Finish (2+ Teleports)"
 	{
@@ -49,6 +53,7 @@
 		"ru"		"{lime}{player}{grey} финишировал за {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
 		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {yellow}{teleport_count}{grey} TPs"
+			"ko"		"{lime}{player}{grey}님이 {default}{time}{grey}에 레이스를 완료했습니다 | {yellow}{teleport_count}{grey} TPs"
 	}
 	"Racing - Player Finish (PRO)"
 	{
@@ -59,6 +64,7 @@
 		"ru"		"{lime}{player}{grey} финишировал за {default}{time}{grey} | {blue}PRO{grey}"
 		"ua"		"{lime}{player}{grey} завершив гонку за {default}{time}{grey} | {blue}PRO{grey}"
 		"de"		"{lime}{player}{grey} hat das Rennen beendet in {default}{time}{grey} | {blue}PRO{grey}"
+			"ko"		"{lime}{player}{grey}님이 {default}{time}{grey}에 레이스를 완료했습니다 | {blue}PRO{grey}"
 	}
 	"Racing - End Results Header"
 	{
@@ -68,6 +74,7 @@
 		"ru"		"{default}Результаты гонки:"
 		"ua"		"{default}Результати гонки:"
 		"de"		"{default}Renn-Ergebnisse:"
+			"ko"		"{default}레이스 결과:"
 	}
 	"Racing - End Results First Place"
 	{
@@ -79,6 +86,7 @@
 		"ru"		"{lime}{player}{grey} выиграл гонку! ({time})"
 		"ua"		"{lime}{player}{grey} переміг у гонці! ({time})"
 		"de"		"{lime}{player}{grey} hat das Rennen gewonnen! ({time})"
+			"ko"		"{lime}{player}{grey}님이 레이스에서 우승했습니다! ({time})"
 	}
 	"Racing - End Results Last Place"
 	{
@@ -90,6 +98,7 @@
 		"ru"		"{lime}{player}{grey} пришел последним в гонке. ({time})"
 		"ua"		"{lime}{player}{grey} фінішував останнім у гонці. ({time})"
 		"de"		"{lime}{player}{grey} ist als letzter im Rennen angekommen. ({time})"
+			"ko"		"{lime}{player}{grey}님이 레이스에서 꼴찌를 했습니다. ({time})"
 	}
 	"Racing - End Results Finisher"
 	{
@@ -101,6 +110,7 @@
 		"ru"		"{lime}{player}{grey} финишировал {default}#{position}{grey} в гонке. ({time})"
 		"ua"		"{lime}{player}{grey} фінішував {default}#{position}{grey}. ({time})"
 		"de"		"{lime}{player}{grey} hat Platz {default}#{position}{grey} im Rennen erreicht. ({time})"
+			"ko"		"{lime}{player}{grey}님이 레이스에서 {default}#{position}{grey}위로 완주했습니다. ({time})"
 	}
 	"Racing - End Results Non-Finisher"
 	{
@@ -112,6 +122,7 @@
 		"ru"		"{lime}{player}{grey} не финишировал."
 		"ua"		"{lime}{player}{grey} не завершив гонку."
 		"de"		"{lime}{player}{grey} hat das Rennen nicht beendet."
+			"ko"		"{lime}{player}{grey}님이 레이스를 완주하지 못했습니다."
 	}
 	"Racing - No Time Limit"
 	{
@@ -121,6 +132,7 @@
 		"ru"		"Нет лимита по времени"
 		"ua"		"Без обмеження за часом"
 		"de"		"Kein Zeitlimit"
+			"ko"		"시간 제한 없음"
 	}
 	"Racing - Time Limit"
 	{
@@ -131,6 +143,7 @@
 		"ru"		"Лимит по времени: {time}"
 		"ua"		"Обмеження за часом: {time}"
 		"de"		"Zeitlimit: {time}"
+			"ko"		"시간 제한: {time}"
 	}
 	"Racing - Race Info"
 	{
@@ -143,6 +156,8 @@
 		"ru"		"Гонка на маршруте {course}\n{mode} - Макс. TPs: {teleport_count} - {time_limit}"
 		"ua"		"Гонка на курсі {course}\n{mode} - Макс. TPs: {teleport_count} - {time_limit}"
 		"de"		"Rennen auf Route {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
+			"ko"		"코스 {course}에서의 레이스
+{mode} - 최대 TP: {teleport_count} - {time_limit}"
 	}
 	"Racing - Race Info (Chat)"
 	{
@@ -155,6 +170,8 @@
 		"ru"		"{default}Началась новая гонка!\n{grey}Маршрут: {default}{course}{grey} | Макс. TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"ua"		"{default}Нова гонка розпочалася!\n{grey}Курс: {default}{course}{grey} | Макс. TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"de"		"{default}Ein neues Rennen wurde gestartet!\n{grey}Route: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
+			"ko"		"{default}새 레이스가 시작되었습니다!
+{grey}코스: {default}{course}{grey} | 최대 TP: {yellow}{teleport_count}{grey} | {time_limit}"
 	}
 
 	"Racing - Race Cancelled"
@@ -165,6 +182,7 @@
 		"ru"		"{darkred}Гонка отменена!"
 		"ua"		"{darkred}Гонка скасована!"
 		"de"		"{darkred}Das Rennen wurde abgebrochen!"
+			"ko"		"{darkred}레이스가 취소되었습니다!"
 	}
 	"Racing - Go!"
 	{
@@ -174,6 +192,7 @@
 		"ru"		"ВПЕРЁД!"
 		"ua"		"ВПЕРЕД!"
 		"de"		"LOS!"
+			"ko"		"출발!"
 	}
 	"Racing - Race Starting In"
 	{
@@ -184,6 +203,7 @@
 		"ru"		"Гонка начнётся через {time}с!"
 		"ua"		"Гонка розпочнеться через {time}c!"
 		"de"		"Das Rennen beginnt in {time}s!"
+			"ko"		"레이스가 {time}초 후 시작됩니다!"
 	}
 	"Racing - Player Accepted"
 	{
@@ -194,6 +214,7 @@
 		"ru"		"{lime}{player}{grey} согласился участвовать в гонке."
 		"ua"		"{lime}{player}{grey} погодився на участь у гонці."
 		"de"		"{lime}{player}{grey} hat das Rennen akzeptiert."
+			"ko"		"{lime}{player}{grey}님이 레이스를 수락했습니다."
 	}
 	"Racing - Player Unregistered"
 	{
@@ -204,5 +225,6 @@
 		"ru"		"{lime}{player}{grey} вышел из гонки."
 		"ua"		"{lime}{player}{grey} скасував свою участь у гонці."
 		"de"		"{lime}{player}{grey} hat sich vom Rennen abgemeldet."
+			"ko"		"{lime}{player}{grey}님이 레이스에서 취소했습니다."
 	}
 }

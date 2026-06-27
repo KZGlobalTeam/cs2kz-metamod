@@ -10,6 +10,7 @@
 		"de"		"{grey}Du hast deinen Spielerstrahl ausgestellt."
 		"ru"		"{grey}Вы отключили лучи траектории прыжка."
 		"es"		"{grey}Has desactivado tu haz de luz."
+			"ko"		"{grey}플레이어 빔을 비활성화했습니다."
 	}
 	"Beam Changed (Ground)"
 	{
@@ -21,6 +22,7 @@
 		"de"		"{grey}Du hast deinen Spielerstrahl-Typ auf {default}Boden{grey} umgestellt."
 		"ru"		"{grey}Вы установили тип луча — {default}Земля{grey}."
 		"es"		"{grey}Has establecido el estilo de tu haz de luz a {default}Suelo{grey}(Ground)."
+			"ko"		"{grey}플레이어 빔 유형을 {default}Ground(바닥){grey}으로 설정했습니다."
 	}
 	"Beam Changed (Feet)"
 	{
@@ -32,6 +34,7 @@
 		"de"		"{grey}Du hast deinen Spielerstrahl-Typ auf {default}Füße{grey} umgestellt."
 		"ru"		"{grey}Вы установили тип луча — {default}Ноги{grey}."
 		"es"		"{grey}Has establecido el estilo de tu haz de luz a {default}Pies{grey}(Feet)."
+			"ko"		"{grey}플레이어 빔 유형을 {default}Feet(발){grey}으로 설정했습니다."
 	}
 	"Beam Offset Command Usage"
 	{
@@ -43,6 +46,7 @@
 		"de"		"{grey}Verwendung: {default}kz_beamoffset <x> <y> <z>"
 		"ru"		"{grey}Применение: {default}kz_beamoffset <x> <y> <z>"
 		"es"		"{grey}Uso: {default}kz_beamoffset <x> <y> <z>"
+			"ko"		"{grey}사용법: {default}kz_beamoffset <x> <y> <z>"
 	}
 	"Beam Command Usage"
 	{
@@ -54,6 +58,7 @@
 		"de"		"{grey}Verwendung: {default}kz_beam <off/feet/ground>"
 		"ru"		"{grey}Применение: {default}kz_beam <off/feet/ground>"
 		"es"		"{grey}Uso: {default}kz_beam <off/feet/ground>"
+			"ko"		"{grey}사용법: {default}kz_beam <off/feet/ground>"
 	}
 	"Current Beam Offset"
 	{
@@ -67,5 +72,6 @@
 		"de"		"{grey}Aktueller Spielerstrahl-Offset: {default}{x} {y} {z}"
 		"ru"		"{grey}Текущий сдвиг луча: {default}{x} {y} {z}"
 		"es"		"{grey}El ajuste de la posición de tu haz de luz es: {default}{x} {y} {z}"
+			"ko"		"{grey}현재 빔 오프셋: {default}{x} {y} {z}"
 	}
 }

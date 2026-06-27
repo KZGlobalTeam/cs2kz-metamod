@@ -123,6 +123,7 @@
 		"ua"		"{darkred}Ви не можете телепортуватися, оскільки ви досягли свого ліміту телепортів."
 		"de"		"{darkred}Du kannst nicht teleportieren, weil du dein Teleportationslimit erreicht hast."
 		"es"		"{darkred}No puedes teletransportarte porque has llegado al limite de teletransportes."
+			"ko"		"{darkred}텔레포트 한도에 도달하여 텔레포트할 수 없습니다."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
@@ -292,6 +293,7 @@
 		"ua"		"{grey}Ви увімкнули звук чекпоінту."
 		"de"		"{grey}Du hast Checkpoint-Sounds aktiviert."
 		"es"		"{grey}Has activado el sonido de checkpoint."
+			"ko"		"{grey}체크포인트 사운드를 활성화했습니다."
 	}
 	"Checkpoint Options - Checkpoint Sound - Disable"
 	{
@@ -303,6 +305,7 @@
 		"ua"		"{grey}Ви вимкнули звук чекпоінту."
 		"de"		"{grey}Du hast Checkpoint-Sounds deaktiviert."
 		"es"		"{grey}Has desactivado el sonido de checkpoint."
+			"ko"		"{grey}체크포인트 사운드를 비활성화했습니다."
 	}
 	"Checkpoint Options - Teleport Sound - Enable"
 	{
@@ -314,6 +317,7 @@
 		"ua"		"{grey}Ви увімкнули звук телепорту."
 		"de"		"{grey}Du hast Teleport-Sounds aktiviert."
 		"es"		"{grey}Has activado el sonido de teletransporte."
+			"ko"		"{grey}텔레포트 사운드를 활성화했습니다."
 	}
 	"Checkpoint Options - Teleport Sound - Disable"
 	{
@@ -325,6 +329,7 @@
 		"ua"		"{grey}Ви вимкнули звук телепорту."
 		"de"		"{grey}Du hast Teleport-Sounds deaktiviert."
 		"es"		"{grey}Has desactivado el sonido de teletransporte."
+			"ko"		"{grey}텔레포트 사운드를 비활성화했습니다."
 	}
 	"Checkpoint Options - Checkpoint Message - Enable"
 	{
@@ -335,6 +340,7 @@
 		"ua"		"{grey}Ви увімкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten aktiviert."
 		"es"		"{grey}Has activado los mensajes de checkpoint."
+			"ko"		"{grey}체크포인트 메시지를 활성화했습니다."
 	}
 	"Checkpoint Options - Checkpoint Message - Disable"
 	{
@@ -345,5 +351,6 @@
 		"ua"		"{grey}Ви вимкнули повідомлення про зроблений чекпоінт."
 		"de"		"{grey}Du hast Checkpoint-Nachrichten deaktiviert."
 		"es"		"{grey}Has desactivado los mensajes de checkpoint."
+			"ko"		"{grey}체크포인트 메시지를 비활성화했습니다."
 	}
 }

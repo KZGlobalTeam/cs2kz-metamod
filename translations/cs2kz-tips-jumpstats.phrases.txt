@@ -39,6 +39,7 @@
 		"ru"	"{grey}Напишите {default}/jsfailstats{grey}, чтобы включить статистику проваленных прыжков в чате."
 		"ua"	"{grey}Напишіть {default}/jsfailstats {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у чаті."
 		"es"	"{grey}Usa {default}/jsfailstats {grey}para activar/desactivar el reporte de stadísticas de fallos en el chat."
+			"ko"		"{grey}채팅에서 실패 통계 보고를 전환하려면 {default}/jsfailstats{grey}를 사용하세요."
 	}
 	"Tip - kz_jsfailstatsconsole"
 	{
@@ -47,6 +48,7 @@
 		"ru"	"{grey}Напишите {default}/jsfailstatsconsole{grey}, чтобы включить статистику проваленных прыжков в консоли."
 		"ua"	"{grey}Напишіть {default}/jsfailstatsconsole {grey}, щоб увімк./вимк. показ статистики невдалих стрибків у консолі."
 		"es"	"{grey}Usa {default}/jsfailstatsconsole {grey}para activar/desactivar el reporte de stadísticas de fallos en la consola."
+			"ko"		"{grey}콘솔에서 실패 통계 보고를 전환하려면 {default}/jsfailstatsconsole{grey}를 사용하세요."
 	}
 	"Tip - kz_jstier"
 	{
@@ -57,6 +59,7 @@
 		"ua"	"{grey}Напишіть {default}/jstier {grey}, щоб встановити мінімальний тір статистики стрибків."
 		"de"	"{grey}Benutze {default}/jstier {grey} um dein minimales Level für Jumpstat-Benachrichtigungen zu setzen."
 		"es"	"{grey}Usa {default}/jstier {grey}para configurar el nivel mínimo para el mostrar las estadísticas de salto."
+			"ko"		"{grey}점프 통계 최소 보고 티어를 설정하려면 {default}/jstier{grey}를 사용하세요."
 	}
 	"Tip - kz_jsextend"
 	{
@@ -67,5 +70,6 @@
 		"ua"	"{grey}Напишіть {default}/jsextend {grey}, щоб увімк./вимк. розширену статистику стрибків у чаті."
 		"de"	"{grey}Benutze {default}/jsextend {grey}um erweitertes Jumpstats-Feedback im Chat zu erhalten.."
 		"es"	"{grey}Usa {default}/jsextend {grey}para activar/desactivar imprimir estadísticas extendidas de los saltos en el chat."
+			"ko"		"{grey}채팅에서 확장된 점프 통계 보고를 전환하려면 {default}/jsextend{grey}를 사용하세요."
 	}
 }
