@@ -63,6 +63,7 @@
 		"ua"		"{darkred}УВАГА: Будь-яке використання апаратного/програмного забезпечення/конфігурацій з метою отримання нечесної переваги суворо заборонено! Це включає, але не обмежується: хаки, макроси, гиперскролінг, SOCD/nulls, desubtick та конфіги, що зловживають мишкою."
 		"ru"		"{darkred}ВНИМАНИЕ: Любое использование аппаратного/программного обеспечения или конфигов для получения нечестного преимущества строго запрещено! Это включает в себя, но не ограничивается: читами, макросами, hyperscroll'ом, SOCD/snap tap/нуллами, desubtick-биндами и читерскими конфигами мыши."
 		"es"		"{darkred}ATENCIÓN: Cualquier uso de hardware/software/configs con el que se ganen ventajas injustas esta extrictamente prohibido! Esto incluye, pero no se limita a: hacks, macros, hyperscrolling, SOCD/nulls, desubtick y configuraciones para trampear el ratón (mouse abuse configs)."
+			"ko"		"{darkred}경고: 불공정한 이점을 얻기 위한 하드웨어/소프트웨어/설정 사용은 엄격히 금지됩니다! 핵, 매크로, 하이퍼스크롤, SOCD/nulls, desubtick, 마우스 어뷰징 설정 등이 포함되며 이에 국한되지 않습니다."
 	}
 	"Cheater Warning"
 	{
@@ -71,5 +72,6 @@
 		"ua"		"{darkred}УВАГА: Ви в даний момент забанені. Ваші стрибки та рекорди не будуть збережені."
 		"ru"		"{darkred}ВНИМАНИЕ: Вы забанены. Ваши прыжки и рекорды не будут сохранены."
 		"es"		"{darkred}ATENCIÓN: Actualmente estas baneado. Tus saltos y recorridos no serán guardados."
+			"ko"		"{darkred}경고: 현재 차단(밴)된 상태입니다. 점프 및 기록이 저장되지 않습니다."
 	}
 }
