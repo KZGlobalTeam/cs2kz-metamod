@@ -8,6 +8,7 @@
 		"ru"		"{grey}Сейчас повтор не воспроизводится."
 		"ua"		"{grey}Наразі не відтворюється жоден повтор."
 		"de"		"{grey}Derzeit wird keine Wiederholung abgespielt."
+			"ko"		"{grey}현재 재생 중인 리플레이가 없습니다."
 	}
 	"Replay - Usage Goto"
 	{
@@ -17,6 +18,7 @@
 		"ru"		"{grey}Применение: kz_rpgoto <тик>"
 		"ua"		"{grey}Використання: kz_rpgoto <тік>"
 		"de"		"{grey}Verwendung: kz_rpgoto <tick>"
+			"ko"		"{grey}사용법: kz_rpgoto <틱>"
 	}
 	"Replay - Usage Seek"
 	{
@@ -26,6 +28,7 @@
 		"ru"		"{grey}Применение: kz_rpseek <+/-секунды>"
 		"ua"		"{grey}Використання: kz_rpseek <+/-секунди>"
 		"de"		"{grey}Verwendung: kz_rpseek <+/-Sekunden>"
+			"ko"		"{grey}사용법: kz_rpseek <+/-초>"
 	}
 	"Replay - Usage Navigation"
 	{
@@ -35,6 +38,7 @@
 		"ru"		"{grey}Применение: <время/тик> (Примеры: 1:23.45, +10, -5.2, 1234)"
 		"ua"		"{grey}Використання: <час/тік> (Приклади: 1:23.45, +10, -5.2, 1234)"
 		"de"		"{grey}Verwendung: <time/tick> (Beispiele: 1:23.45, +10, -5.2, 1234)"
+			"ko"		"{grey}사용법: <시간/틱> (예시: 1:23.45, +10, -5.2, 1234)"
 	}
 	"Replay - Usage Goto Time"
 	{
@@ -44,6 +48,7 @@
 		"ru"		"{grey}Применение: kz_rpgoto <время> (Примеры: 1:23.45, +10, -5.2)"
 		"ua"		"{grey}Використання: kz_rpgoto <час> (Приклади: 1:23.45, +10, -5.2)"
 		"de"		"{grey}Verwendung: kz_rpgoto <time> (Beispiele: 1:23.45, +10, -5.2)"
+			"ko"		"{grey}사용법: kz_rpgoto <시간> (예시: 1:23.45, +10, -5.2)"
 	}
 	"Replay - Usage Goto Tick"
 	{
@@ -53,6 +58,7 @@
 		"ru"		"{grey}Применение: kz_rpgototick <тик> (Примеры: 1234, +100, -50)"
 		"ua"		"{grey}Використання: kz_rpgototick <тік> (Приклади: 1234, +100, -50)"
 		"de"		"{grey}Verwendung: kz_rpgototick <tick> (Beispiele: 1234, +100, -50)"
+			"ko"		"{grey}사용법: kz_rpgototick <틱> (예시: 1234, +100, -50)"
 	}
 	"Replay - Invalid Relative Time"
 	{
@@ -62,6 +68,7 @@
 		"ru"		"{darkred}Неверный формат времени. Примеры: +10, -5.2, +1:30"
 		"ua"		"{darkred}Невірний формат часу. Приклади: +10, -5.2, +1:30"
 		"de"		"{darkred}Ungültiges Zeitformat. Beispiele: +10, -5.2, +1:30"
+			"ko"		"{darkred}잘못된 시간 형식입니다. 예시: +10, -5.2, +1:30"
 	}
 	"Replay - Invalid Absolute Time"
 	{
@@ -71,6 +78,7 @@
 		"ru"		"{darkred}Неверный формат времени. Примеры: 1:23.45, 12:34:56.789, 45.2"
 		"ua"		"{darkred}Невірний формат часу. Приклади: 1:23.45, 12:34:56.789, 45.2"
 		"de"		"{darkred}Ungültiges Zeitformat. Beispiele: 1:23.45, 12:34:56.789, 45.2"
+			"ko"		"{darkred}잘못된 시간 형식입니다. 예시: 1:23.45, 12:34:56.789, 45.2"
 	}
 	"Replay - Invalid Tick Number"
 	{
@@ -80,6 +88,7 @@
 		"ru"		"{darkred}Неверный номер тика. Должен быть положительным целым числом."
 		"ua"		"{darkred}Невірне число тіку. Повинно бути додатним цілим числом."
 		"de"		"{darkred}Ungültige Tickzahl. Muss eine positive ganze Zahl sein."
+			"ko"		"{darkred}잘못된 틱 번호입니다. 양의 정수여야 합니다."
 	}
 	"Replay - Tick Out Of Range"
 	{
@@ -90,6 +99,7 @@
 		"ru"		"{grey}Тик {lime}{tick}{grey} выходит за пределы. Максимальный тик: {lime}{maxTick}"
 		"ua"		"{grey}Тік {lime}{tick}{grey} виходить за межі діапазону. Максимальний тік: {lime}{maxTick}"
 		"de"		"{grey}Tick {lime}{tick}{grey} liegt außerhalb des Bereichs. Maximaler Tick: {lime}{maxTick}"
+			"ko"		"{grey}틱 {lime}{tick}{grey}이 범위를 벗어났습니다. 최대 틱: {lime}{maxTick}"
 	}
 	"Replay - Time Out Of Range"
 	{
@@ -100,6 +110,7 @@
 		"ru"		"{grey}Время {lime}{time}{grey} выходит за пределы. Максимальное время: {lime}{maxTime}"
 		"ua"		"{grey}Час {lime}{time}{grey} виходить за межі діапазону. Максимальний час: {lime}{maxTime}"
 		"de"		"{grey}Zeit {lime}{time}{grey} liegt außerhalb des Bereichs. Maximale Zeit: {lime}{maxTime}"
+			"ko"		"{grey}시간 {lime}{time}{grey}이 범위를 벗어났습니다. 최대 시간: {lime}{maxTime}"
 	}
 	"Replay - Jumped To Tick"
 	{
@@ -110,6 +121,7 @@
 		"ru"		"{grey}Перемотано до тика {lime}{tick} ({lime}{time}{grey})"
 		"ua"		"{grey}Ви перемотали до тіку {lime}{tick} ({lime}{time}{grey})"
 		"de"		"{grey}Zu Tick {lime}{tick} ({lime}{time}{grey}) gesprungen"
+			"ko"		"{grey}틱 {lime}{tick} ({lime}{time}{grey})으로 이동했습니다."
 	}
 	"Replay - Current Info"
 	{
@@ -121,6 +133,7 @@
 		"chi"		"{grey}当前 tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). 在控制台中查看具体细节!"
 		"ua"		"{grey}Поточний тік: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Перевірте консоль щодо деталей!"
 		"de"		"{grey}Aktueller Tick: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). Details in der Konsole!"
+			"ko"		"{grey}현재 틱: {lime}{currentTick}{grey}/{lime}{totalTicks}{grey} ({lime}{time}{grey}/{lime}{maxTime}{grey}). 자세한 내용은 콘솔을 확인하세요!"
 	}
 	"Replay - General Info Console"
 	{
@@ -136,6 +149,7 @@
 		"ru"		"Повтор {uuid}\nИгрок: {playerName} ({playerSteamID})\nСоздан: {createdOn}\nВерсия сервера: {serverVersion}\nВерсия плагина: {pluginVersion}"
 		"ua"		"Повтор {uuid}\nГравець: {playerName} ({playerSteamID})\nСтворено: {createdOn}\nВерсія серверу: {serverVersion}\nВерсія плагіна: {pluginVersion}"
 		"de"		"Wiederholung {uuid}\nSpieler: {playerName} ({playerSteamID})\nErstellt am: {createdOn}\nServer-Version: {serverVersion}\nPlugin-Version: {pluginVersion}"
+			"ko"		"리플레이 {uuid}\n플레이어: {playerName} ({playerSteamID})\n생성 날짜: {createdOn}\n서버 버전: {serverVersion}\n플러그인 버전: {pluginVersion}"
 	}
 	"Replay - Cheater Info Console"
 	{
@@ -148,6 +162,7 @@
 		"ru"		"Тип повтора: Читер\nПричина подозрения: {reason}"
 		"ua"		"Тип повтору: Чітер\nПричина підозри: {reason}"
 		"de"		"Wiederholungstyp: Cheater\nVerdachtsgrund: {reason}"
+			"ko"		"리플레이 유형: 치터\n의심 이유: {reason}"
 	}
 	"Replay - Run Info Console"
 	{
@@ -163,6 +178,7 @@
 		"ru"		"Тип повтора: Прохождение\nМаршрут: {name}\nРежим + Стили: {mode}\nВремя: {time}\nТелепорты: {teleports}"
 		"ua"		"Тип повтору: Проходження\nКурс: {name}\nРежим + Стилі: {mode}\nЧас: {time}\nТелепорти: {teleports}"
 		"de"		"Wiederholungstyp: Run\nRoute: {name}\nModus + Styles: {mode}\nZeit: {time}\nTeleports: {teleports}"
+			"ko"		"리플레이 유형: 주행\n코스: {name}\n모드 + 스타일: {mode}\n시간: {time}\n텔레포트: {teleports}"
 	}
 	"Replay - Jump Info Console"
 	{
@@ -175,6 +191,7 @@
 		"ru"		"Тип повтора: {type}\nДистанция: {distance} | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+			"ko"		"리플레이 유형: {type}\n거리: {distance} | {syncPercent}%%%% 싱크 | {preDistance} 프리 | {maxDistance} 최대 | {airTime} 공중 시간"
 	}
 	"Replay - Jump Info Console (Block)"
 	{
@@ -187,6 +204,7 @@
 		"ru"		"Тип повтора: {type}\nДистанция: {distance} | {blockDistance} Блок | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {blockDistance} Блок | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
 		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+			"ko"		"리플레이 유형: {type}\n거리: {distance} | {blockDistance} 블록 | {syncPercent}%%%% 싱크 | {preDistance} 프리 | {maxDistance} 최대 | {airTime} 공중 시간"
 	}
 	"Replay - Manual Info Console"
 	{
@@ -199,6 +217,7 @@
 		"ru"		"Тип повтора: Ручной\nСохранён: {playerName} ({playerSteamID})"
 		"ua"		"Тип повтору: Ручний\nЗбережено: {playerName} ({playerSteamID})"
 		"de"		"Wiederholungstyp: Manuell\nGespeichert von: {playerName} ({playerSteamID})"
+			"ko"		"리플레이 유형: 수동\n저장한 플레이어: {playerName} ({playerSteamID})"
 	}
 	"Replay - Seeked To Tick"
 	{
@@ -210,6 +229,7 @@
 		"ru"		"{grey}Перемотано {lime}{seekSeconds}{grey}с до тика {lime}{tick}{grey} ({lime}{time}{grey})"
 		"ua"		"{grey}Перемотано {lime}{seekSeconds}{grey}с. до тіку {lime}{tick}{grey} ({lime}{time}{grey})"
 		"de"		"{grey}{lime}{seekSeconds}{grey}s zu Tick {lime}{tick}{grey} ({lime}{time}{grey}) gespult"
+			"ko"		"{grey}{lime}{seekSeconds}{grey}초 이동, 틱 {lime}{tick}{grey} ({lime}{time}{grey})으로 이동했습니다."
 	}
 	"Replay - Hide Player Legs - Enable"
 	{
@@ -219,6 +239,7 @@
 		"ru"		"{grey}Ноги бота повтора теперь скрыты."
 		"de"		"{grey}Die Beine des Replay-Bots sind jetzt ausgeblendet."
 		"ua"		"{grey}Ви вимкнули відображення ніг для бота повтору."
+			"ko"		"{grey}리플레이 봇의 다리가 이제 숨겨졌습니다."
 	}
 	"Replay - Hide Player Legs - Disable"
 	{
@@ -228,6 +249,7 @@
 		"ru"		"{grey}Ноги бота повтора теперь показаны."
 		"de"		"{grey}Die Beine des Replay-Bots sind jetzt sichtbar."
 		"ua"		"{grey}Ви увімкнули відображення ніг для бота повтору."
+			"ko"		"{grey}리플레이 봇의 다리가 이제 보입니다."
 	}
 	"Replay - Paused"
 	{
@@ -237,6 +259,7 @@
 		"ru"		"{grey}Повтор на паузе."
 		"ua"		"{grey}Повтор на паузі."
 		"de"		"{grey}Wiederholung pausiert."
+			"ko"		"{grey}리플레이가 일시 정지되었습니다."
 	}
 	"Replay - Resumed"
 	{
@@ -246,6 +269,7 @@
 		"ru"		"{grey}Повтор возобновлён."
 		"ua"		"{grey}Повтор продовжено."
 		"de"		"{grey}Wiederholung fortgesetzt."
+			"ko"		"{grey}리플레이가 재개되었습니다."
 	}
 	"Replay - Loading"
 	{
@@ -255,6 +279,7 @@
 		"ru"		"{grey}Загружается повтор, пожалуйста подождите..."
 		"ua"		"{grey}Завантаження повтору, будь ласка, зачекайте..."
 		"de"		"{grey}Wiederholung wird geladen, bitte warten..."
+			"ko"		"{grey}리플레이를 불러오는 중입니다. 잠시 기다려 주세요..."
 	}
 	"Replay - Loading Already"
 	{
@@ -264,6 +289,7 @@
 		"ru"		"{grey}Повтор уже загружается, пожалуйста подождите..."
 		"ua"		"{grey}Повтор вже завантажується, будь ласка, зачекайте..."
 		"de"		"{grey}Wiederholung wird bereits geladen, bitte warten..."
+			"ko"		"{grey}리플레이를 이미 불러오는 중입니다. 잠시 기다려 주세요..."
 	}
 	"Replay - Invalid UUID"
 	{
@@ -273,6 +299,7 @@
 		"ru"		"{darkred}Неверный формат UUID"
 		"ua"		"{darkred}Невірний UUID формат"
 		"de"		"{darkred}Ungültiges UUID-Format"
+			"ko"		"{darkred}잘못된 UUID 형식입니다."
 	}
 	"Replay - Multiple Matches"
 	{
@@ -281,6 +308,7 @@
 		"chi"		"{darkred}多个回放匹配UUID子串 {grey}'{default}{uuid}{grey}'."
 		"ru"		"{darkred}Несколько повторов соответствуют подстроке UUID {grey}'{default}{uuid}{grey}'."
 		"ua"		"{darkred}Кілька повторів відповідають підрядку UUID {grey}'{default}{uuid}{grey}'."
+			"ko"		"{darkred}UUID 서브스트링 {grey}'{default}{uuid}{grey}'에 해당하는 리플레이가 여러 개 있습니다."
 	}
 	"Replay - Loaded Successfully"
 	{
@@ -290,6 +318,7 @@
 		"ru"		"{lime}Повтор успешно загружен! Воспроизводим..."
 		"ua"		"{lime}Повтор завантажено успішно! Починається відтворення..."
 		"de"		"{lime}Wiederholung erfolgreich geladen! Starte Wiedergabe..."
+			"ko"		"{lime}리플레이가 성공적으로 불러와졌습니다! 재생을 시작합니다..."
 	}
 	"Replay - No Loading Progress"
 	{
@@ -299,6 +328,7 @@
 		"ru"		"{grey}Сейчас повтор не загружается"
 		"ua"		"{grey}Завантаження повтору не відбувається"
 		"de"		"{grey}Es wird derzeit keine Wiederholung geladen"
+			"ko"		"{grey}현재 리플레이 불러오기가 진행 중이지 않습니다."
 	}
 	"Replay - Loading Progress"
 	{
@@ -309,6 +339,7 @@
 		"ru"		"{grey}Загрузка повтора: {progress}%%%% завершено"
 		"ua"		"{grey}Завантаження повтору: {progress}%%%% виконано"
 		"de"		"{grey}Lade Wiederholung: {progress}%%%% abgeschlossen"
+			"ko"		"{grey}리플레이 불러오기: {progress}%%%% 완료"
 	}
 	"Replay - Loading Completed"
 	{
@@ -318,6 +349,7 @@
 		"ru"		"{lime}Загрузка повтора завершена"
 		"ua"		"{lime}Завантаження повтору виконано"
 		"de"		"{lime}Ladevorgang der Wiederholung abgeschlossen"
+			"ko"		"{lime}리플레이 불러오기가 완료되었습니다."
 	}
 	"Replay - Loading Cancelled"
 	{
@@ -327,6 +359,7 @@
 		"ru"		"{grey}Загрузка повтора отменена"
 		"ua"		"{grey}Завантаження повтору скасовано"
 		"de"		"{grey}Laden der Wiederholung abgebrochen"
+			"ko"		"{grey}리플레이 불러오기가 취소되었습니다."
 	}
 	"Replay - Usage Command"
 	{
@@ -334,6 +367,7 @@
 		"chi"		"{grey}用法: kz_replay <ID> 或 kz_replay <wr/sr/pb/gpb/spb[pro]> [<关卡> [<模式>]]"
 		"ru"		"{grey}Применение: kz_replay <ID> или kz_replay <wr/sr/pb/gpb/spb[pro]> [<маршрут> [<режим>]]"
 		"ua"		"{grey}Використання: kz_replay <ID> або kz_replay <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
+			"ko"		"{grey}사용법: kz_replay <ID> 또는 kz_replay <wr/sr/pb/gpb/spb[pro]> [<코스> [<모드>]]"
 	}
 	"Replay - Load Cancelled"
 	{
@@ -343,6 +377,7 @@
 		"ru"		"{darkred}Загрузка отменена пользователем"
 		"ua"		"{darkred}Завантаження скасовано користувачем"
 		"de"		"{darkred}Laden vom Benutzer abgebrochen"
+			"ko"		"{darkred}사용자가 불러오기를 취소했습니다."
 	}
 	"Replay - Invalid File Format"
 	{
@@ -352,6 +387,7 @@
 		"ru"		"{darkred}Неверный формат файла повтора"
 		"ua"		"{darkred}Невірний формат файлу повтору"
 		"de"		"{darkred}Ungültiges Wiederholungsdateiformat"
+			"ko"		"{darkred}잘못된 리플레이 파일 형식입니다."
 	}
 	"Replay - Manual Replay Failed"
 	{
@@ -361,6 +397,7 @@
 		"ru"		"{darkred}Не удалось вручную сохранить повтор."
 		"ua"		"{darkred}Не вдалося зберегти ручний повтор."
 		"de"		"{darkred}Manuelle Wiederholung konnte nicht gespeichert werden."
+			"ko"		"{darkred}수동 리플레이를 저장하지 못했습니다."
 	}
 	"Replay - Manual Replay Saved"
 	{
@@ -371,6 +408,7 @@
 		"ru"		"{grey}Повтор сохранён: {lime}{uuid}{grey} ({lime}{duration}{grey}с.)"
 		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey} ({lime}{duration}{grey}с.)"
 		"de"		"{grey}Wiederholung gespeichert: {lime}{uuid}{grey} ({lime}{duration}{grey}s)"
+			"ko"		"{grey}리플레이가 저장되었습니다: {lime}{uuid}{grey} ({lime}{duration}{grey}초)"
 	}
 	"Replay - Manual Replay Saved (Console)"
 	{
@@ -381,6 +419,7 @@
 		"ru"		"Повтор сохранён: {uuid} ({duration}с.)"
 		"ua"		"Повтор збережено: {uuid} ({duration}с.)"
 		"de"		"Wiederholung gespeichert: {uuid} ({duration}s)"
+			"ko"		"리플레이가 저장되었습니다: {uuid} ({duration}초)"
 	}
 	"Replay - Run Replay Failed"
 	{
@@ -390,6 +429,7 @@
 		"ru"		"{darkred}Не удалось сохранить повтор прохождения."
 		"ua"		"{darkred}Не вдалося зберегти повтор проходження."
 		"de"		"{darkred}Run-Wiederholung konnte nicht gespeichert werden."
+			"ko"		"{darkred}주행 리플레이를 저장하지 못했습니다."
 	}
 	"Replay - Run Replay Saved"
 	{
@@ -400,6 +440,7 @@
 		"ru"		"{grey}Повтор сохранён: {lime}{uuid}{grey}"
 		"ua"		"{grey}Повтор збережено: {lime}{uuid}{grey}"
 		"de"		"{grey}Wiederholung gespeichert: {lime}{uuid}{grey}"
+			"ko"		"{grey}리플레이가 저장되었습니다: {lime}{uuid}{grey}"
 	}
 	"Replay - Run Replay Saved (Console)"
 	{
@@ -410,6 +451,7 @@
 		"ru"		"Повтор сохранён: {uuid}"
 		"ua"		"Повтор збережено: {uuid}"
 		"de"		"Wiederholung gespeichert: {uuid}"
+			"ko"		"리플레이가 저장되었습니다: {uuid}"
 	}
 	"Replay - Wrong Map"
 	{
@@ -420,6 +462,7 @@
 		"ru"		"{darkred}Карта на повторе не совпадает с текущей картой.{grey} (На повторе: {default}{replayMap}{grey}, Текущая: {default}{currentMap}{grey})"
 		"ua"		"{darkred}Мапа на повторі не співпадає з поточною мапою.{grey} (На повторі: {default}{replayMap}{grey}, Поточна: {default}{currentMap}{grey})"
 		"de"		"{darkred}Die Map der Wiederholungs stimmt nicht mit der aktuellen Map überein.{grey} (Replay: {default}{replayMap}{grey}, Aktuell: {default}{currentMap}{grey})"
+			"ko"		"{darkred}리플레이 맵이 현재 맵과 일치하지 않습니다.{grey} (리플레이: {default}{replayMap}{grey}, 현재: {default}{currentMap}{grey})"
 	}
 	"Replay - Unknown Mode"
 	{
@@ -430,6 +473,7 @@
 		"ru"		"{darkred}Режим {default}{modeName}{darkred} недоступен. Воспроизведение может быть неточным."
 		"ua"		"{darkred}Режим {default}{modeName}{darkred} недоступний. Відтворення може бути неточним."
 		"de"		"{darkred}Modus {default}{modeName}{darkred} ist nicht verfügbar. Wiedergabe könnte ungenau sein."
+			"ko"		"{darkred}모드 {default}{modeName}{darkred}을(를) 사용할 수 없습니다. 재생이 부정확할 수 있습니다."
 	}
 	"Replay - Unknown Style"
 	{
@@ -440,6 +484,7 @@
 		"ru"		"{darkred}Стиль {default}{styleName}{darkred} недоступен. Воспроизведение может быть неточным."
 		"ua"		"{darkred}Стиль {default}{styleName}{darkred} недоступний. Відтворення може бути неточним."
 		"de"		"{darkred}Style {default}{styleName}{darkred} ist nicht verfügbar. Wiedergabe könnte ungenau sein."
+			"ko"		"{darkred}스타일 {default}{styleName}{darkred}을(를) 사용할 수 없습니다. 재생이 부정확할 수 있습니다."
 	}
 	"Replay List - Check Console"
 	{
@@ -449,6 +494,7 @@
 		"ru"		"{grey}Подробности выведены в консоль!"
 		"ua"		"{grey}Перевірте консоль щодо деталей!"
 		"de"		"{grey}Infos in der Konsole ansehen!"
+			"ko"		"{grey}자세한 내용은 콘솔을 확인하세요!"
 	}
 	"Replay List - Usage Title"
 	{
@@ -459,6 +505,7 @@
 		"ru"		"Применение: !replays [type=run/r/jump/j/manual/m] [параметры...]"
 		"ua"		"Використання: !replays [type=run/r/jump/j/manual/m] [параметри...]"
 		"de"		"Verwendung: !replays [type=run/r/jump/j/manual/m] [Optionen...]"
+			"ko"		"사용법: !replays [type=run/r/jump/j/manual/m] [options...]"
 	}
 	"Replay List - Usage General Options"
 	{
@@ -474,6 +521,7 @@
 		"ru"		"\nОсновные параметры:\n\tplayer=<никнейм> - Отфильтровать по никнейму игрока\n\tsteamid=<id> - Отфильтровать по Steam ID\n\tmap=<название> - Отфильтровать по названию карты (по умолчанию: текущая карта)\n\toffset=<число> - Пропустить первые N результатов\n\tlimit=<число> - Ограничить количество результатов (max 20)"
 		"ua"		"\nЗагальні параметри:\n\tplayer=<ім'я> - Фільтрувати за іменем гравця\n\tsteamid=<id> - Фільтрувати за Steam ID\n\tmap=<назва> - Фільтрувати за мапою (за замовчуванням: поточна мапа)\n\toffset=<число> - Пропустити перші N результатів\n\tlimit=<число> - Ліміт результатів (максимум 20)"
 		"de"		"\nAllgemeine Optionen:\n\tplayer=<name> - Nach Spieler filtern\n\tsteamid=<id> - Nach SteamID filtern\n\tmap=<name> - Nach Map filtern (Standard: aktuelle Map)\n\toffset=<num> - Erste N Ergebnisse überspringen\n\tlimit=<num> - Ergebnisse begrenzen (max. 20)"
+			"ko"		"\n일반 옵션:\n\tplayer=<이름> - 플레이어 이름으로 필터링\n\tsteamid=<id> - Steam ID로 필터링\n\tmap=<이름> - 맵 이름으로 필터링 (기본값: 현재 맵)\n\toffset=<숫자> - 처음 N개 결과 건너뜀\n\tlimit=<숫자> - 결과 수 제한 (최대 20)"
 	}
 	"Replay List - Usage Type Options"
 	{
@@ -487,6 +535,7 @@
 		"ru"		"\nПараметры типа повтора:\n\tПрохождение: mode=<режим> course=<маршрут> maxtime=<секунды> maxteleports=<число> numstyles=<число>\n\tПрыжок: jumptype=<тип> mindistance=<дистанция>\n\tРучной повтор: saver=<имя> ssid=<steamid>"
 		"ua"		"\nПараметри типу повтору:\n\tПроходження: mode=<назва режиму> course=<назва курсу> maxtime=<секунди> maxteleports=<число> numstyles=<число>\n\tСтрибок: jumptype=<тип стрибка> mindistance=<дистанція>\n\tРучний повтор: saver=<ім'я> ssid=<steamid>"
 		"de"		"\nTypoptionen:\n\tRun: mode=<Modus> course=<Route> maxtime=<Sek> maxteleports=<Anzahl> numstyles=<Anzahl>\n\tJump: jumptype=<Typ> mindistance=<Distanz>\n\tManual: saver=<Name> ssid=<SteamID>"
+			"ko"		"\n유형 옵션:\n\tRun: mode=<모드> course=<이름> maxtime=<초> maxteleports=<숫자> numstyles=<숫자>\n\tJump: jumptype=<유형> mindistance=<거리>\n\tManual: saver=<이름> ssid=<steamid>"
 	}
 	"Replay List - No Matching Replays"
 	{
@@ -496,6 +545,7 @@
 		"ru"		"{grey}Не найдено соответствующих повторов."
 		"ua"		"{grey}Не знайдено відповідних повторів."
 		"de"		"{grey}Keine passenden Wiederholungen gefunden."
+			"ko"		"{grey}일치하는 리플레이를 찾을 수 없습니다."
 	}
 	"Cheater Replays - Table Name"
 	{
@@ -505,6 +555,7 @@
 		"ru"		"Повторы читеров"
 		"ua"		"Повтори Чітерів"
 		"de"		"Cheater-Wiederholungen"
+			"ko"		"치터 리플레이"
 	}
 	"Run Replays - Table Name"
 	{
@@ -514,6 +565,7 @@
 		"ru"		"Повторы прохождений"
 		"ua"		"Повтори проходжень"
 		"de"		"Run-Wiederholungen"
+			"ko"		"주행 리플레이"
 	}
 	"Jump Replays - Table Name"
 	{
@@ -523,6 +575,7 @@
 		"ru"		"Повторы прыжков"
 		"ua"		"Повтори стрибків"
 		"de"		"Jump-Wiederholungen"
+			"ko"		"점프 리플레이"
 	}
 	"Manual Replays - Table Name"
 	{
@@ -532,6 +585,7 @@
 		"ru"		"Ручные повторы"
 		"ua"		"Ручні повтори"
 		"de"		"Manuelle Wiederholungen"
+			"ko"		"수동 리플레이"
 	}
 	"Replay Table Header - Player"
 	{
@@ -541,6 +595,7 @@
 		"ru"		"Игрок"
 		"ua"		"Гравець"
 		"de"		"Spieler"
+			"ko"		"플레이어"
 	}
 	"Replay Table Header - Map"
 	{
@@ -550,6 +605,7 @@
 		"ru"		"Карта"
 		"ua"		"Мапа"
 		"de"		"Map"
+			"ko"		"맵"
 	}
 	"Replay Table Header - Reason"
 	{
@@ -559,6 +615,7 @@
 		"ru"		"Причина"
 		"ua"		"Причина"
 		"de"		"Grund"
+			"ko"		"이유"
 	}
 	"Replay Table Header - SteamID"
 	{
@@ -568,6 +625,7 @@
 		"ru"		"SteamID"
 		"ua"		"SteamID"
 		"de"		"SteamID"
+			"ko"		"SteamID"
 	}
 	"Replay Table Header - UUID"
 	{
@@ -577,6 +635,7 @@
 		"ru"		"UUID"
 		"ua"		"UUID"
 		"de"		"UUID"
+			"ko"		"UUID"
 	}
 	"Replay Table Header - Course"
 	{
@@ -586,6 +645,7 @@
 		"ru"		"Маршрут"
 		"ua"		"Курс"
 		"de"		"Route"
+			"ko"		"코스"
 	}
 	"Replay Table Header - Mode"
 	{
@@ -595,6 +655,7 @@
 		"ru"		"Режим"
 		"ua"		"Режим"
 		"de"		"Modus"
+			"ko"		"모드"
 	}
 	"Replay Table Header - Styles"
 	{
@@ -604,6 +665,7 @@
 		"ru"		"Стили"
 		"ua"		"Стилі"
 		"de"		"Stile"
+			"ko"		"스타일"
 	}
 	"Replay Table Header - Time"
 	{
@@ -613,6 +675,7 @@
 		"ru"		"Время"
 		"ua"		"Час"
 		"de"		"Zeit"
+			"ko"		"시간"
 	}
 	"Replay Table Header - Teleports"
 	{
@@ -622,6 +685,7 @@
 		"ru"		"Телепорты"
 		"ua"		"Телепорти"
 		"de"		"Teleports"
+			"ko"		"텔레포트"
 	}
 	"Replay Table Header - Jump Type"
 	{
@@ -631,6 +695,7 @@
 		"ru"		"Тип прыжка"
 		"ua"		"Тип стрибка"
 		"de"		"Jump-Typ"
+			"ko"		"점프 유형"
 	}
 	"Replay Table Header - Distance"
 	{
@@ -640,6 +705,7 @@
 		"ru"		"Дистанция"
 		"ua"		"Дистанція"
 		"de"		"Distanz"
+			"ko"		"거리"
 	}
 	"Replay Table Header - Block"
 	{
@@ -649,6 +715,7 @@
 		"ru"		"Блок"
 		"ua"		"Блок"
 		"de"		"Block"
+			"ko"		"블록"
 	}
 	"Replay Table Header - Strafes"
 	{
@@ -658,6 +725,7 @@
 		"ru"		"Стрейфы"
 		"ua"		"Стрейфи"
 		"de"		"Strafes"
+			"ko"		"스트레이프"
 	}
 	"Replay Table Header - Saved By"
 	{
@@ -667,6 +735,7 @@
 		"ru"		"Сохранено"
 		"ua"		"Збережено"
 		"de"		"Gespeichert von"
+			"ko"		"저장한 플레이어"
 	}
 	"Replay - Not Found"
 	{
@@ -674,6 +743,7 @@
 		"chi"		"{darkred}未找到回放."
 		"ru"		"{darkred}Повтор не найден."
 		"ua"		"{darkred}Повтор не знайдено."
+			"ko"		"{darkred}리플레이를 찾을 수 없습니다."
 	}
 	"Replay - No Course"
 	{
@@ -681,6 +751,7 @@
 		"chi"		"{darkred}该地图未找到关卡."
 		"ru"		"{darkred}На этой карте не найдены маршруты."
 		"ua"		"{darkred}На цій мапі не знайдено курсу."
+			"ko"		"{darkred}이 맵에서 코스를 찾을 수 없습니다."
 	}
 	"Replay - Invalid Mode Arg"
 	{
@@ -688,6 +759,7 @@
 		"chi"		"{darkred}未知模式."
 		"ru"		"{darkred}Неизвестный режим."
 		"ua"		"{darkred}Невідомий режим."
+			"ko"		"{darkred}알 수 없는 모드입니다."
 	}
 	"Replay - SR Not Found"
 	{
@@ -695,6 +767,7 @@
 		"chi"		"{grey}未找到符合此筛选条件的服务器记录回放."
 		"ru"		"{grey}Не найдено повтора рекорда сервера для этого фильтра."
 		"ua"		"{grey}Не знайдено повтору рекорду сервера для цього фільтру."
+			"ko"		"{grey}이 필터에 해당하는 서버 기록 리플레이를 찾을 수 없습니다."
 	}
 	"Replay - SPB Not Found"
 	{
@@ -702,6 +775,7 @@
 		"chi"		"{grey}未找到服务器个人最佳回放."
 		"ru"		"{grey}Не найдено повтора личного рекорда на сервере."
 		"ua"		"{grey}Не знайдено повтору особистого найкращого часу на сервері."
+			"ko"		"{grey}서버 개인 최고 기록 리플레이를 찾을 수 없습니다."
 	}
 	"Replay - Global Mode Only"
 	{
@@ -709,6 +783,7 @@
 		"chi"		"{darkred}全球记录仅适用于全球模式."
 		"ru"		"{darkred}Глобальные рекорды доступны только для глобальных режимов."
 		"ua"		"{darkred}Світові рекорди доступні лише для глобальних режимів."
+			"ko"		"{darkred}글로벌 기록은 글로벌 모드에서만 사용할 수 있습니다."
 	}
 	"Replay - API Not Available"
 	{
@@ -716,6 +791,7 @@
 		"chi"		"{darkred}全球 API 不可用."
 		"ru"		"{darkred}Глобальный API недоступен."
 		"ua"		"{darkred}Глобальний API недоступний."
+			"ko"		"{darkred}글로벌 API를 사용할 수 없습니다."
 	}
 	"Replay - Querying WR"
 	{
@@ -723,6 +799,7 @@
 		"chi"		"{grey}正在查询世界记录回放..."
 		"ru"		"{grey}Запрашиваем повтор мирового рекорда..."
 		"ua"		"{grey}Здійснюється запит повтору світового рекорду..."
+			"ko"		"{grey}세계 기록 리플레이를 조회하는 중..."
 	}
 	"Replay - WR Not Found"
 	{
@@ -730,6 +807,7 @@
 		"chi"		"{grey}未找到符合此筛选条件的世界记录回放."
 		"ru"		"{grey}Не найдено повтора мирового рекорда для этого фильтра."
 		"ua"		"{grey}Не знайдено повтору світового рекорду для цього фільтру."
+			"ko"		"{grey}이 필터에 해당하는 세계 기록 리플레이를 찾을 수 없습니다."
 	}
 	"Replay - Querying GPB"
 	{
@@ -737,6 +815,7 @@
 		"chi"		"{grey}正在查询个人最佳回放..."
 		"ru"		"{grey}Запрашиваем повтор личного рекорда..."
 		"ua"		"{grey}Здійснюється запит повтору особистого найкращого часу..."
+			"ko"		"{grey}개인 최고 기록 리플레이를 조회하는 중..."
 	}
 	"Replay - GPB Not Found"
 	{
@@ -744,6 +823,7 @@
 		"chi"		"{grey}未找到全球个人最佳回放."
 		"ru"		"{grey}Не найдено повтора глобального личного рекорда."
 		"ua"		"{grey}Не знайдено повтору глобального особистого найкращого часу."
+			"ko"		"{grey}글로벌 개인 최고 기록 리플레이를 찾을 수 없습니다."
 	}
 	"Replay Request - Sending"
 	{
@@ -752,6 +832,7 @@
 		"chi"		"{grey}正在从 API 请求回放 {default}{uuid}{grey}..."
 		"ru"		"{grey}Запрашиваем повтор {default}{uuid}{grey} из API..."
 		"ua"		"{grey}Запит повтору {default}{uuid}{grey} з API..."
+			"ko"		"{grey}API에서 리플레이 {default}{uuid}{grey}를 요청하는 중..."
 	}
 	"Replay Request - Already Requested"
 	{
@@ -760,6 +841,7 @@
 		"chi"		"{grey}回放下载已在进行中 ({default}{uuid}{grey})."
 		"ru"		"{grey}Загрузка повтора уже идёт ({default}{uuid}{grey})."
 		"ua"		"{grey}Завантаження повтору вже триває ({default}{uuid}{grey})."
+			"ko"		"{grey}이미 리플레이 다운로드가 진행 중입니다 ({default}{uuid}{grey})."
 	}
 	"Replay Request - Error"
 	{
@@ -767,5 +849,6 @@
 		"chi"		"{darkred}回放下载失败."
 		"ru"		"{darkred}Не удалось загрузить повтор."
 		"ua"		"{darkred}Не вдалося завантажити повтор."
+			"ko"		"{darkred}리플레이 다운로드에 실패했습니다."
 	}
 }
