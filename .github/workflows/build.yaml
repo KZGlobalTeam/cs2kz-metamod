@@ -14,7 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          submodules: recursive
+          submodules: true
+
+      - name: Recurse into submodules needed for build
+        run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
 
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
@@ -43,7 +46,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          submodules: recursive
+          submodules: true
+
+      - name: Recurse into submodules needed for build
+        run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
 
       - name: Fetch tags
         run: git fetch --prune --unshallow --tags
