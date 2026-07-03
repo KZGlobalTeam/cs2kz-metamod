@@ -1,0 +1,44 @@
+# git
+**/.git
+**/.gitignore
+**/.gitattributes
+**/.gitmodules
+
+# IDE/editor/build
+.vs/
+.vscode/
+.cache/
+build*/
+
+# CI and docs
+.github/
+*.md
+
+# Vendor
+vendor/mm-cs2menus/hl2sdk-cs2/
+vendor/mm-cs2menus/metamod-source/
+vendor/mm-cs2menus/examples/
+vendor/mm-cs2menus/bridges/
+vendor/mm-cs2menus/Dockerfile
+vendor/mm-cs2menus/docker-compose.yml
+vendor/sql_mm/vendor/
+
+vendor/mbedtls/tests/
+vendor/mbedtls/programs/
+vendor/mbedtls/docs/
+vendor/mbedtls/doxygen/
+vendor/mbedtls/scripts/
+vendor/mbedtls/3rdparty/
+vendor/json/tests/
+vendor/json/docs/
+vendor/json/tools/
+vendor/ixwebsocket/test/
+vendor/ixwebsocket/ws/
+vendor/ixwebsocket/docs/
+vendor/ixwebsocket/docker/
+vendor/zstd/tests/
+vendor/zstd/doc/
+vendor/zstd/contrib/
+vendor/zstd/examples/
+vendor/zstd/zlibWrapper/
+vendor/zstd/programs/
