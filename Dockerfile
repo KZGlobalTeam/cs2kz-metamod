@@ -1,5 +1,7 @@
 FROM registry.gitlab.steamos.cloud/steamrt/sniper/sdk
 
+ENV AR=llvm-ar-11
+
 WORKDIR /app
 VOLUME /app/build
 
