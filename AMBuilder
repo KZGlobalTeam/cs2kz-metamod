@@ -213,6 +213,8 @@ def configure_main(sdk_target, sdk, cxx):
       os.path.join(builder.sourcePath, 'vendor', 'mbedTLS.lib'),
       'bcrypt.lib'
     ]
+    if binary.compiler.behavior == 'msvc':
+      binary.compiler.linkflags += ['/LTCG']
     binary.sources += [
       'src/utils/plat_win.cpp'
     ]
