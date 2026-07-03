@@ -19,8 +19,8 @@ jobs:
       - name: Recurse into submodules needed for build
         run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
 
-      - name: Fetch tags
-        run: git fetch --prune --unshallow --tags
+      - name: Fetch history
+        run: git fetch --prune --unshallow --no-recurse-submodules
 
       - name: Make build directory
         run: mkdir ./build
@@ -51,8 +51,8 @@ jobs:
       - name: Recurse into submodules needed for build
         run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
 
-      - name: Fetch tags
-        run: git fetch --prune --unshallow --tags
+      - name: Fetch history
+        run: git fetch --prune --unshallow --no-recurse-submodules
 
       - name: Set up Python
         uses: actions/setup-python@v6
