@@ -388,7 +388,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         cxx.linkflags += ['-flto']
       elif cxx.behavior == 'msvc':
         cxx.cflags += ['/Ox', '/Zo']
-        cxx.linkflags += ['/OPT:ICF', '/OPT:REF']
+        cxx.linkflags += ['/OPT:ICF', '/OPT:REF', '/LTCG']
 
     # Debugging
     if builder.options.debug == '1':
