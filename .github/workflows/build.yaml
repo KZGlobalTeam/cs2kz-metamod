@@ -14,13 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          submodules: true
+          fetch-depth: 0
 
       - name: Recurse into submodules needed for build
-        run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
-
-      - name: Fetch history
-        run: git fetch --prune --unshallow --no-recurse-submodules
+        run: git submodule update --init --recursive hl2sdk-cs2 metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
 
       - name: Make build directory
         run: mkdir ./build
@@ -46,13 +43,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          submodules: true
+          fetch-depth: 0
 
       - name: Recurse into submodules needed for build
-        run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
-
-      - name: Fetch history
-        run: git fetch --prune --unshallow --no-recurse-submodules
+        run: git submodule update --init --recursive hl2sdk-cs2 metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
 
       - name: Set up Python
         uses: actions/setup-python@v6
