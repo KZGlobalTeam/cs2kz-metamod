@@ -12,7 +12,7 @@ jobs:
     name: Linux
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
 
@@ -41,7 +41,7 @@ jobs:
     name: Windows
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
 
@@ -51,14 +51,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.14"
 
       - name: Install pip
         shell: cmd
-        run: curl https://bootstrap.pypa.io/pip/3.6/get-pip.py | python
+        run: curl https://bootstrap.pypa.io/pip/3.9/get-pip.py | python
 
       - name: Clone AMBuild
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: alliedmodders/ambuild
           path: ./ambuild

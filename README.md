@@ -4,9 +4,9 @@ WIP, not ready for release
 
 ## Requirements
 
-- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1383 or later
+- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1396 or later
 
-- Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases/) v1.4.10 for radio menus, particle HUD and KZ sound effects (eg. jumpstats)
+- Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases/) v1.5 for radio menus, particle HUD and KZ sound effects (eg. jumpstats)
 
 - Optional[^1]: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
 
