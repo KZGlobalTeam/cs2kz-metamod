@@ -73,7 +73,7 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 		kv = params.FindMember("mode");
 		this->SetupMode(kv ? kv->GetString() : "");
 	}
-	if (this->HasFeature(RequestFeature::Offset) && (kv = params.FindMember("offset")) || (kv = params.FindMember("o")))
+	if (this->HasFeature(RequestFeature::Offset) && ((kv = params.FindMember("offset")) || (kv = params.FindMember("o"))))
 	{
 		this->offset = atoll(kv->GetString());
 	}
