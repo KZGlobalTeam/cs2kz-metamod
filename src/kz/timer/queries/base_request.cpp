@@ -249,6 +249,7 @@ void BaseRequest::SetupPlayer(CUtlString playerName)
 	if (!callingPlayer)
 	{
 		this->Invalidate();
+		return;
 	}
 	// If the caller doesn't specify a name, then the target is the caller.
 	// Otherwise, players that are currently in the server is prioritized.
