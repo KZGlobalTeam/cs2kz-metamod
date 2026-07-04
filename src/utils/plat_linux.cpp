@@ -123,6 +123,10 @@ static int parse_prot(const char *s)
 static int get_prot(void *pAddr, size_t nSize)
 {
 	FILE *f = fopen("/proc/self/maps", "r");
+	if (!f)
+	{
+		return 0;
+	}
 
 	uintptr_t nAddr = (uintptr_t)pAddr;
 
@@ -136,25 +140,36 @@ static int get_prot(void *pAddr, size_t nSize)
 		const char *src = line;
 
 		char *dst = start;
-		while (*src != '-')
+		char *dstEnd = start + sizeof(start) - 1;
+		while (*src != '-' && *src != '\0' && dst < dstEnd)
 		{
 			*dst++ = *src++;
 		}
 		*dst = 0;
+		if (*src != '-')
+		{
+			continue;
+		}
 
 		src++; // skip "-""
 
 		dst = end;
-		while (!isspace(*src))
+		dstEnd = end + sizeof(end) - 1;
+		while (!isspace((unsigned char)*src) && *src != '\0' && dst < dstEnd)
 		{
 			*dst++ = *src++;
 		}
 		*dst = 0;
+		if (!isspace((unsigned char)*src))
+		{
+			continue;
+		}
 
 		src++; // skip space
 
 		dst = prot;
-		while (!isspace(*src))
+		dstEnd = prot + sizeof(prot) - 1;
+		while (!isspace((unsigned char)*src) && *src != '\0' && dst < dstEnd)
 		{
 			*dst++ = *src++;
 		}
@@ -163,7 +178,7 @@ static int get_prot(void *pAddr, size_t nSize)
 		uintptr_t nStart = (uintptr_t)strtoul(start, nullptr, 16);
 		uintptr_t nEnd = (uintptr_t)strtoul(end, nullptr, 16);
 
-		if (nStart < nAddr && nEnd > (nAddr + nSize))
+		if (nStart <= nAddr && nEnd > (nAddr + nSize))
 		{
 			fclose(f);
 			return parse_prot(prot);
