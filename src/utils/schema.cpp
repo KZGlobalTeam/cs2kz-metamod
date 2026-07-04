@@ -23,7 +23,12 @@ static bool IsFieldNetworked(const char *cppName, SchemaClassFieldData_t &field)
 	}
 
 	// Just use a random class to get access to the full database, as some schema classes don't have entity representations
-	CNetworkSerializerCodeGenDatabase *pDatabase = GameEntitySystem()->FindClassByName("CBaseEntity")->m_NetworkSerializerInfo->m_pDatabase;
+	CEntityClass *baseEntityClass = GameEntitySystem()->FindClassByName("CBaseEntity");
+	if (!baseEntityClass)
+	{
+		return false;
+	}
+	CNetworkSerializerCodeGenDatabase *pDatabase = baseEntityClass->m_NetworkSerializerInfo->m_pDatabase;
 	int index = pDatabase->m_ClassInfos.Find(cppName);
 
 	if (index == pDatabase->m_ClassInfos.InvalidIndex())

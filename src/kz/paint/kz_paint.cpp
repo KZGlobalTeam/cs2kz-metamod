@@ -320,6 +320,11 @@ SCMD(kz_cleardecals, SCFL_MISC)
 	event->SetInt("fraglimit", 0);
 	event->SetString("objective", "");
 	IGameEventListener2 *listener = g_pKZUtils->GetLegacyGameEventListener(player->GetPlayerSlot());
+	if (!listener)
+	{
+		interfaces::pGameEventManager->FreeEvent(event);
+		return MRES_SUPERCEDE;
+	}
 	listener->FireGameEvent(event);
 	interfaces::pGameEventManager->FreeEvent(event);
 	return MRES_SUPERCEDE;
