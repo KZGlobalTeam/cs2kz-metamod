@@ -199,7 +199,7 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 void KZModeManager::UnregisterMode(PluginId id)
 {
 	// Cannot unregister VNL.
-	if (id = g_PLID)
+	if (id == g_PLID)
 	{
 		return;
 	}
