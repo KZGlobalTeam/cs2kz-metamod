@@ -336,6 +336,12 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK_ID(playerRunCommandHook);
 	SH_REMOVE_HOOK_ID(finishMoveHook);
 
+	FOR_EACH_VEC(hooks::entityTouchHooks, i)
+	{
+		SH_REMOVE_HOOK_ID(hooks::entityTouchHooks[i]);
+	}
+	hooks::entityTouchHooks.Purge();
+
 	if (GameEntitySystem())
 	{
 		GameEntitySystem()->RemoveListenerEntity(&entityListener);
@@ -501,7 +507,10 @@ static_function void Hook_OnTeleport(const Vector *newPosition, const QAngle *ne
 	if (this_->IsPawn())
 	{
 		MovementPlayer *player = g_pKZPlayerManager->ToPlayer(static_cast<CBasePlayerPawn *>(this_));
-		player->OnTeleport(newPosition, newAngles, newVelocity);
+		if (player)
+		{
+			player->OnTeleport(newPosition, newAngles, newVelocity);
+		}
 	}
 	RETURN_META(MRES_IGNORED);
 }
@@ -658,11 +667,14 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 		if (KZ_STREQI(event->GetName(), "player_death"))
 		{
 			CEntityInstance *instance = event->GetPlayerPawn("userid");
-			KZPlayer *player = g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex());
-			if (player)
+			if (instance)
 			{
-				player->timerService->OnPlayerDeath();
-				player->quietService->SendFullUpdate();
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(instance->GetEntityIndex());
+				if (player)
+				{
+					player->timerService->OnPlayerDeath();
+					player->quietService->SendFullUpdate();
+				}
 			}
 		}
 		else if (KZ_STREQI(event->GetName(), "round_prestart"))
