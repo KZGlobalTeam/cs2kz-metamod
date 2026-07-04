@@ -202,6 +202,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 		this->PlayTeleportErrorSound();
 		return;
 	}
+	index = MIN(MAX(index, 0), this->checkpoints.Count() - 1);
 	if (!this->player->racingService->CanTeleport())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (Limit Reached)");
@@ -212,7 +213,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 	{
 		return;
 	}
-	this->DoTeleport(this->checkpoints[this->currentCpIndex]);
+	this->DoTeleport(this->checkpoints[index]);
 }
 
 void KZCheckpointService::DoTeleport(const Checkpoint cp)
