@@ -312,6 +312,7 @@ bool Strafe::CalcAngleRatioStats()
 		//	this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE);
 		if (angles.y > maxYaw + 20.0f || angles.y < minYaw - 20.0f)
 		{
+			continue;
 		}
 		f32 gainRatio = (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D()) / this->aaCalls[i].CalcIdealGain();
 		f32 fraction = this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE;
