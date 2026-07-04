@@ -74,6 +74,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	ix::initNetSystem();
 	if (!movement::InitDetours())
 	{
+		utils::Cleanup();
 		snprintf(error, maxlen, "Failed to initialize movement detours.");
 		return false;
 	}
