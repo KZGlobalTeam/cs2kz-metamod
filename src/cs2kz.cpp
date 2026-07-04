@@ -72,7 +72,11 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 	ix::initNetSystem();
-	movement::InitDetours();
+	if (!movement::InitDetours())
+	{
+		snprintf(error, maxlen, "Failed to initialize movement detours.");
+		return false;
+	}
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();
