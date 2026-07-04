@@ -28,17 +28,17 @@ constexpr char mysql_bans_create[] = R"(
 )";
 
 constexpr char mysql_bans_insert[] = R"(
-    INSERT INTO Bans (ID, SteamID64, Reason, ReplayUUID, ExpiresAt) 
-        VALUES ('%s', %llu, '%s', '%s', %s)
-        ON DUPLICATE KEY UPDATE 
+    INSERT INTO Bans (ID, SteamID64, Reason, ReplayUUID, ExpiresAt)
+        VALUES ('%s', %llu, '%s', %s, %s)
+        ON DUPLICATE KEY UPDATE
             Reason = VALUES(Reason),
             ReplayUUID = VALUES(ReplayUUID),
             ExpiresAt = VALUES(ExpiresAt)
 )";
 
 constexpr char sqlite_bans_insert[] = R"(
-    INSERT INTO Bans (ID, SteamID64, Reason, ReplayUUID, ExpiresAt) 
-        VALUES ('%s', %llu, '%s', '%s', %s)
+    INSERT INTO Bans (ID, SteamID64, Reason, ReplayUUID, ExpiresAt)
+        VALUES ('%s', %llu, '%s', %s, %s)
         ON CONFLICT(ID) DO UPDATE SET
             Reason = excluded.Reason,
             ReplayUUID = excluded.ReplayUUID,
