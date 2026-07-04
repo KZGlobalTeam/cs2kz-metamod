@@ -99,6 +99,11 @@ SCMD(kz_tips, SCFL_MISC)
 
 f64 KZTipService::PrintTips()
 {
+	// No tip translation files loaded, nothing to print.
+	if (tipNames.Count() == 0)
+	{
+		return tipInterval;
+	}
 	for (int i = 0; i <= MAXPLAYERS; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
