@@ -17,7 +17,7 @@ void KZDatabaseService::SavePrefs(CUtlString prefs)
 	Transaction txn;
 
 	CUtlString query;
-	query.Format(sql_players_set_prefs, prefs.Get(), steamID64);
+	query.Format(sql_players_set_prefs, cleanedPrefs.c_str(), steamID64);
 
 	txn.queries.push_back(query.Get());
 
