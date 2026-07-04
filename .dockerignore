@@ -21,6 +21,7 @@ vendor/mm-cs2menus/examples/
 vendor/mm-cs2menus/bridges/
 vendor/mm-cs2menus/Dockerfile
 vendor/mm-cs2menus/docker-compose.yml
+vendor/mm-cs2menus/vendor/
 vendor/sql_mm/vendor/
 
 vendor/mbedtls/tests/
@@ -29,6 +30,17 @@ vendor/mbedtls/docs/
 vendor/mbedtls/doxygen/
 vendor/mbedtls/scripts/
 vendor/mbedtls/3rdparty/
+vendor/mbedtls/tf-psa-crypto/tests/
+vendor/mbedtls/tf-psa-crypto/framework/
+vendor/mbedtls/tf-psa-crypto/docs/
+vendor/mbedtls/tf-psa-crypto/core/
+vendor/mbedtls/tf-psa-crypto/scripts/
+vendor/mbedtls/tf-psa-crypto/extras/
+vendor/mbedtls/tf-psa-crypto/programs/
+vendor/mbedtls/tf-psa-crypto/utilities/
+vendor/mbedtls/tf-psa-crypto/platform/
+vendor/mbedtls/tf-psa-crypto/configs/
+vendor/mbedtls/tf-psa-crypto/drivers/builtin/src/
 vendor/json/tests/
 vendor/json/docs/
 vendor/json/tools/
