@@ -461,7 +461,11 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	{
 		char *tempBuf = new char[subtickHeader.uncompressedSize];
 		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
-		if (success)
+		if (success && subtickHeader.elementCount == 0)
+		{
+			outSubtickData.clear();
+		}
+		else if (success)
 		{
 			size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
 			outSubtickData.resize(subtickHeader.elementCount);
@@ -1153,7 +1157,11 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	{
 		char *tempBuf = new char[subtickHeader.uncompressedSize];
 		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
-		if (success)
+		if (success && subtickHeader.elementCount == 0)
+		{
+			outCmdSubtickData.clear();
+		}
+		else if (success)
 		{
 			size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
 			outCmdSubtickData.resize(subtickHeader.elementCount);
