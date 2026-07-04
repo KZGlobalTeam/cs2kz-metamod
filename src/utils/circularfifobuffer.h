@@ -84,7 +84,7 @@ public:
 		buffer = std::move(newBuffer);
 		capacity = newSize;
 		readPos = 0;
-		writePos = elementsToMove % capacity;
+		writePos = capacity > 0 ? elementsToMove % capacity : 0;
 		count = elementsToMove;
 	}
 
