@@ -179,7 +179,7 @@ static_global int finishMoveHook {};
 SH_DECL_MANUALHOOK2_void(FinishMove, 0, 0, 0, PlayerCommand *, CMoveData *);
 static_function void Hook_OnFinishMove(PlayerCommand *pCmd, CMoveData *pMoveData);
 
-void hooks::Initialize()
+bool hooks::Initialize()
 {
 	SH_MANUALHOOK_RECONFIGURE(StartTouch, g_pGameConfig->GetOffset("StartTouch"), 0, 0);
 	SH_MANUALHOOK_RECONFIGURE(Touch, g_pGameConfig->GetOffset("Touch"), 0, 0);
@@ -214,63 +214,74 @@ void hooks::Initialize()
 
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 	// clang-format off
+	CNetworkGameServerBase *networkGameServerVtbl = (CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer");
+	IGameSystem *entityDebugGameSystemVtbl = (IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem");
+	CEntitySystem *gameEntitySystemVtbl = (CEntitySystem *)modules::server->FindVirtualTable("CGameEntitySystem");
+	CSpawnGroupMgrGameSystem *spawnGroupMgrVtbl = (CSpawnGroupMgrGameSystem *)modules::server->FindVirtualTable("CSpawnGroupMgrGameSystem");
+	CCSPlayer_MovementServices *moveServicesVtbl = (CCSPlayer_MovementServices *)modules::server->FindVirtualTable("CCSPlayer_MovementServices");
+
+	if (!networkGameServerVtbl || !entityDebugGameSystemVtbl || !gameEntitySystemVtbl || !spawnGroupMgrVtbl || !moveServicesVtbl)
+	{
+		KZ_LOG_ERROR(LogChannel::General, "Failed to resolve one or more virtual tables required for hooking.\n");
+		return false;
+	}
+
 	activateServerHook = SH_ADD_DVPHOOK(
-		CNetworkGameServerBase, 
+		CNetworkGameServerBase,
 		ActivateServer,
-		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
-		SH_STATIC(Hook_ActivateServer), 
+		networkGameServerVtbl,
+		SH_STATIC(Hook_ActivateServer),
 		true
 	);
 
 	clientConnectHook = SH_ADD_DVPHOOK(
-		CNetworkGameServerBase, 
+		CNetworkGameServerBase,
 		ConnectClient,
-		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
-		SH_STATIC(Hook_ConnectClient), 
+		networkGameServerVtbl,
+		SH_STATIC(Hook_ConnectClient),
 		true
 	);
 	clientConnectPostHook = SH_ADD_DVPHOOK(
-		CNetworkGameServerBase, 
+		CNetworkGameServerBase,
 		ConnectClient,
-		(CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer"),
-		SH_STATIC(Hook_ConnectClientPost), 
+		networkGameServerVtbl,
+		SH_STATIC(Hook_ConnectClientPost),
 		true
 	);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
-		IGameSystem, 
-		OnServerGamePostSimulate, 
-		(IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem"),
-		SH_STATIC(Hook_ServerGamePostSimulate), 
+		IGameSystem,
+		OnServerGamePostSimulate,
+		entityDebugGameSystemVtbl,
+		SH_STATIC(Hook_ServerGamePostSimulate),
 		true
 	);
 	buildGameSessionManifestHookID = SH_ADD_DVPHOOK(
-		IGameSystem, 
-		OnBuildGameSessionManifest, 
-		(IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem"), 
-		SH_STATIC(Hook_BuildGameSessionManifest), 
+		IGameSystem,
+		OnBuildGameSessionManifest,
+		entityDebugGameSystemVtbl,
+		SH_STATIC(Hook_BuildGameSessionManifest),
 		true
 	);
-	
+
 	entitySystemHook = SH_ADD_DVPHOOK(
-		CEntitySystem, 
-		Spawn, 
-		(CEntitySystem *)modules::server->FindVirtualTable("CGameEntitySystem"), 
-		SH_STATIC(Hook_CEntitySystem_Spawn), 
+		CEntitySystem,
+		Spawn,
+		gameEntitySystemVtbl,
+		SH_STATIC(Hook_CEntitySystem_Spawn),
 		false
 	);
-	
+
 	createLoadingSpawnGroupHook = SH_ADD_DVPHOOK(
-		CSpawnGroupMgrGameSystem, 
-		CreateLoadingSpawnGroup, 
-		(CSpawnGroupMgrGameSystem *)modules::server->FindVirtualTable("CSpawnGroupMgrGameSystem"), 
-		SH_STATIC(Hook_OnCreateLoadingSpawnGroupHook), 
+		CSpawnGroupMgrGameSystem,
+		CreateLoadingSpawnGroup,
+		spawnGroupMgrVtbl,
+		SH_STATIC(Hook_OnCreateLoadingSpawnGroupHook),
 		false
 	);
-	CCSPlayer_MovementServices *moveServicesVtbl = (CCSPlayer_MovementServices *)modules::server->FindVirtualTable("CCSPlayer_MovementServices");
 	playerRunCommandHook = SH_ADD_MANUALDVPHOOK(
-	 	PlayerRunCommand, 
-	 	moveServicesVtbl, 
-	 	SH_STATIC(Hook_OnPlayerRunCommand), 
+	 	PlayerRunCommand,
+	 	moveServicesVtbl,
+	 	SH_STATIC(Hook_OnPlayerRunCommand),
 	 	false
 	);
 
@@ -281,6 +292,7 @@ void hooks::Initialize()
 		false
 	);
 	// clang-format on
+	return true;
 }
 
 void hooks::Cleanup()
