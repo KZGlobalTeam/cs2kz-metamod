@@ -225,7 +225,34 @@ def configure_main(sdk_target, sdk, cxx):
 
   return binary
 
-def configure_ckz(sdk, cxx):
+def configure_common(sdk, cxx, protoc_builder):
+  common_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-common", sdk, static = True)
+
+  if common_binary.compiler.family == 'gcc' or common_binary.compiler.family == 'clang':
+    common_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
+  if common_binary.compiler.family == 'clang':
+    common_binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
+
+  common_binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'src'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
+      os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
+  ]
+
+  common_binary.sources += [
+    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
+    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
+  ]
+
+  common_binary.custom = [protoc_builder]
+
+  return builder.Add(common_binary).binary
+
+def configure_ckz(sdk, cxx, common_binary):
   ckz_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-mode-ckz", sdk)
 
   if ckz_binary.compiler.family == 'gcc' or ckz_binary.compiler.family == 'clang':
@@ -240,6 +267,8 @@ def configure_ckz(sdk, cxx):
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
   ]
+
+  ckz_binary.compiler.postlink += [ common_binary ]
 
   if ckz_binary.compiler.target.platform == 'linux':
     ckz_binary.compiler.postlink += [
@@ -257,15 +286,11 @@ def configure_ckz(sdk, cxx):
       ]
 
   ckz_binary.sources += [
-    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
-    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_ckz.cpp'),
   ]
   return ckz_binary
-  
-def configure_abh(sdk, cxx):
+
+def configure_abh(sdk, cxx, common_binary):
   abh_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-autobhop", sdk)
 
   if abh_binary.compiler.family == 'gcc' or abh_binary.compiler.family == 'clang':
@@ -280,6 +305,8 @@ def configure_abh(sdk, cxx):
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
   ]
+
+  abh_binary.compiler.postlink += [ common_binary ]
 
   if abh_binary.compiler.target.platform == 'linux':
     abh_binary.compiler.postlink += [
@@ -297,16 +324,12 @@ def configure_abh(sdk, cxx):
       ]
 
   abh_binary.sources += [
-    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
-    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_autobhop.cpp'),
   ]
-  
+
   return abh_binary
 
-def configure_lgj(sdk, cxx):
+def configure_lgj(sdk, cxx, common_binary):
   lgj_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-legacyjump", sdk)
 
   if lgj_binary.compiler.family == 'gcc' or lgj_binary.compiler.family == 'clang':
@@ -321,6 +344,8 @@ def configure_lgj(sdk, cxx):
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
   ]
+
+  lgj_binary.compiler.postlink += [ common_binary ]
 
   if lgj_binary.compiler.target.platform == 'linux':
     lgj_binary.compiler.postlink += [
@@ -338,15 +363,11 @@ def configure_lgj(sdk, cxx):
       ]
 
   lgj_binary.sources += [
-    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
-    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_legacy_jump.cpp'),
   ]
   return lgj_binary
 
-def configure_aud(sdk, cxx):
+def configure_aud(sdk, cxx, common_binary):
   aud_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-style-autounduck", sdk)
 
   if aud_binary.compiler.family == 'gcc' or aud_binary.compiler.family == 'clang':
@@ -361,6 +382,8 @@ def configure_aud(sdk, cxx):
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
   ]
+
+  aud_binary.compiler.postlink += [ common_binary ]
 
   if aud_binary.compiler.target.platform == 'linux':
     aud_binary.compiler.postlink += [
@@ -378,10 +401,6 @@ def configure_aud(sdk, cxx):
       ]
 
   aud_binary.sources += [
-    os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
-    os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'style', 'kz_style_autounduck.cpp'),
   ]
   
@@ -391,16 +410,18 @@ sdk_target = MMSPlugin.sdk_target
 sdk = MMSPlugin.sdk_target.sdk
 cxx = MMSPlugin.sdk_target.cxx
 
+protoc_builder = get_proto_builder(builder, sdk_target, sdk)
+
 # Main binary
 binary = configure_main(sdk_target, sdk, cxx)
+# Shared entity2/schema/gameconfig objects for the mode/style
+common_binary = configure_common(sdk, cxx, protoc_builder)
 # Mode binaries
-ckz_binary = configure_ckz(sdk, cxx)
+ckz_binary = configure_ckz(sdk, cxx, common_binary)
 # Style binaries
-abh_binary = configure_abh(sdk, cxx)
-lgj_binary = configure_lgj(sdk, cxx)
-aud_binary = configure_aud(sdk, cxx)
-
-protoc_builder = get_proto_builder(builder, sdk_target, sdk)
+abh_binary = configure_abh(sdk, cxx, common_binary)
+lgj_binary = configure_lgj(sdk, cxx, common_binary)
+aud_binary = configure_aud(sdk, cxx, common_binary)
 
 binary.custom = [protoc_builder]
 ckz_binary.custom = [protoc_builder]

@@ -415,12 +415,15 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     elif cxx.target.platform == 'windows':
       cxx.defines += ['WIN32', '_WINDOWS']
 
-  def Library(self, cxx, name):
-    binary = cxx.Library(name)
+  def Library(self, cxx, name, static = False):
+    if static:
+      binary = cxx.StaticLibrary(name)
+    else:
+      binary = cxx.Library(name)
     return binary
-  
-  def HL2Library(self, context, compiler, name, sdk):
-    binary = self.Library(compiler, name)
+
+  def HL2Library(self, context, compiler, name, sdk, static = False):
+    binary = self.Library(compiler, name, static)
     mms_core_path = os.path.join(self.mms_root, 'core')
     cxx = binary.compiler
     
