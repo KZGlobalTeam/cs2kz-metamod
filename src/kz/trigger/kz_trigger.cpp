@@ -416,6 +416,11 @@ void KZTriggerService::StartTouch(CBaseTrigger *trigger)
 	this->UpdatePreTouchData();
 	trigger->StartTouch(pawn);
 	pawn->StartTouch(pawn);
+	tracker = this->GetTriggerTracker(trigger);
+	if (!tracker)
+	{
+		return;
+	}
 	tracker->startedTouch = true;
 	this->OnTriggerStartTouchPost(trigger, *tracker);
 	// Call UpdatePlayerPostTouch here because UpdatePlayerStartTouch will be run inside Touch later anyway.
@@ -453,6 +458,11 @@ void KZTriggerService::Touch(CBaseTrigger *trigger, bool silent)
 		this->UpdatePreTouchData();
 		trigger->Touch(pawn);
 		pawn->Touch(trigger);
+		tracker = this->GetTriggerTracker(trigger);
+		if (!tracker)
+		{
+			return;
+		}
 		if (!silent)
 		{
 			tracker->touchedThisTick = true;
@@ -489,10 +499,20 @@ void KZTriggerService::EndTouch(CBaseTrigger *trigger)
 		if (KZTriggerService::ShouldTouchBeforeEndTouch(*tracker))
 		{
 			this->Touch(trigger);
+			tracker = this->GetTriggerTracker(trigger);
+			if (!tracker)
+			{
+				return;
+			}
 		}
 		this->UpdatePreTouchData();
 		trigger->EndTouch(pawn);
 		pawn->EndTouch(trigger);
+		tracker = this->GetTriggerTracker(trigger);
+		if (!tracker)
+		{
+			return;
+		}
 		this->UpdatePlayerPostTouch();
 		this->OnTriggerEndTouchPost(trigger, *tracker);
 		this->triggerTrackers.FindAndRemove(*tracker);
