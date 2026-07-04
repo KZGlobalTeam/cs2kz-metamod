@@ -43,7 +43,7 @@ def protobuf_include_dir(cxx):
                        f'{cxx.target.platform}-{cxx.target.arch}')
 
 def link_protobuf(binary, cxx, protobuf_binary):
-  binary.compiler.postlink += [ protobuf_binary ]
+  binary.compiler.postlink.insert(0, protobuf_binary)
   binary.compiler.cxxincludes += [ protobuf_include_dir(cxx) ]
 
   binary.compiler.sourcedeps += [ protobuf_binary ]
