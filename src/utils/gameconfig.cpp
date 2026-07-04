@@ -301,6 +301,7 @@ byte *CGameConfig::HexToByte(const char *src, size_t &length)
 	if (byteCount <= 0)
 	{
 		Warning("Invalid hex format %s\n", src);
+		delete[] dest;
 		return nullptr;
 	}
 	return (byte *)dest;
