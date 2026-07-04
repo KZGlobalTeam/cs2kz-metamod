@@ -46,7 +46,7 @@ bool movement::InitDetours()
 
 	if (!detoursInitialized)
 	{
-		KZ_LOG_ERROR(LogChannel::Movement, "Failed to initialize one or more movement detours.\n");
+		KZ_LOG_WARN(LogChannel::Movement, "Failed to initialize one or more movement detours.\n");
 	}
 	return detoursInitialized;
 }

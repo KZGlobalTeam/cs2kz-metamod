@@ -222,7 +222,7 @@ bool hooks::Initialize()
 
 	if (!networkGameServerVtbl || !entityDebugGameSystemVtbl || !gameEntitySystemVtbl || !spawnGroupMgrVtbl || !moveServicesVtbl)
 	{
-		KZ_LOG_ERROR(LogChannel::General, "Failed to resolve one or more virtual tables required for hooking.\n");
+		KZ_LOG_WARN(LogChannel::General, "Failed to resolve one or more virtual tables required for hooking.\n");
 		return false;
 	}
 
