@@ -12,7 +12,7 @@
 		"fi"		"{map_name} ({course_name}) {mode_name} Palvelimen Top"
 		"lv"		"{map_name} ({course_name}) {mode_name} Servera Kopvērtējums"
 		"de"		"{map_name} ({course_name}) {mode_name} Overall Server Top"
-		"es"		"{map_name} ({course_name}) {mode_name} Top general del servidor"		
+		"es"		"{map_name} ({course_name}) {mode_name} Top general del servidor"
 			"ko"		"{map_name} ({course_name}) {mode_name} 서버 전체 순위"
 	}
 	"Course Top - Table Name (Server Pro)"

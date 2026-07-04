@@ -156,8 +156,7 @@
 		"ru"		"Гонка на маршруте {course}\n{mode} - Макс. TPs: {teleport_count} - {time_limit}"
 		"ua"		"Гонка на курсі {course}\n{mode} - Макс. TPs: {teleport_count} - {time_limit}"
 		"de"		"Rennen auf Route {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
-			"ko"		"코스 {course}에서의 레이스
-{mode} - 최대 TP: {teleport_count} - {time_limit}"
+			"ko"		"코스 {course}에서의 레이스\n{mode} - 최대 TP: {teleport_count} - {time_limit}"
 	}
 	"Racing - Race Info (Chat)"
 	{
@@ -170,8 +169,7 @@
 		"ru"		"{default}Началась новая гонка!\n{grey}Маршрут: {default}{course}{grey} | Макс. TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"ua"		"{default}Нова гонка розпочалася!\n{grey}Курс: {default}{course}{grey} | Макс. TPs: {yellow}{teleport_count}{grey} | {time_limit}"
 		"de"		"{default}Ein neues Rennen wurde gestartet!\n{grey}Route: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
-			"ko"		"{default}새 레이스가 시작되었습니다!
-{grey}코스: {default}{course}{grey} | 최대 TP: {yellow}{teleport_count}{grey} | {time_limit}"
+			"ko"		"{default}새 레이스가 시작되었습니다!\n{grey}코스: {default}{course}{grey} | 최대 TP: {yellow}{teleport_count}{grey} | {time_limit}"
 	}
 
 	"Racing - Race Cancelled"

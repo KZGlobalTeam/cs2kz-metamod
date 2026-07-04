@@ -133,7 +133,7 @@
 		"ru"		"{grey}{default}{point}{grey}: {status}{next}"
 		"ua"		"{grey}{default}{point}{grey}: {status}{next}"
 			"ko"		"{grey}{default}{point}{grey}: {status}{next}"
-	}	
+	}
 	"Zone Stopwatch - Status Next"
 	{
 		"en"		" <-- Next"
@@ -205,12 +205,6 @@
 		"chi"		"区域计时器用法:\n  !ztopwatch / !zw: 开关\n  !ztopwatch place: 设置下一个角落 (顺序: 起点角落 1 -> 起点角落 2 -> 终点角落 1 -> 终点角落 2)\n  !ztopwatch clear: 清除所有区域\n  !ztopwatch startjump / sj: 起跳时开始计时\n  !ztopwatch stopland / sl: 落地时停止计时\n  !ztopwatch status: 显示当前状态"
 		"ru"		"Применение Zone Stopwatch:\n  !ztopwatch / !zw: Вкл./Выкл.\n  !ztopwatch place: Установить следующий угол (порядок: старт 1 -> старт 2 -> финиш 1 -> финиш 2)\n  !ztopwatch clear: Очистить все зоны\n  !ztopwatch startjump / sj: Вкл./Выкл. старт таймера при прыжке (вместо при входе в зону)\n  !ztopwatch stopland / sl: Вкл/Выкл. остановку таймера при приземлении (вместо при входе в зону)\n  !ztopwatch status: Показать текущий статус"
 		"ua"		"Використання Zone Stopwatch:\n  !ztopwatch / !zw: Увімкнути/вимкнути\n  !ztopwatch place: Встановити наступний кут (послідовність: початковий 1 -> початковий 2 -> кінцевий 1 -> кінцевий 2)\n  !ztopwatch clear: Очистити всі зони\n  !ztopwatch startjump / sj: Старт таймера при стрибку (замість входу в зону)\n  !ztopwatch stopland / sl: Зупинка таймера при приземленні (замість входу в зону)\n  !ztopwatch status: Показати поточний статус"
-			"ko"		"존 스톱워치 사용법:
-  !ztopwatch / !zw: 켜기/끄기
-  !ztopwatch place: 다음 모서리 설정 (순서: 시작 1 -> 시작 2 -> 종료 1 -> 종료 2)
-  !ztopwatch clear: 모든 존 초기화
-  !ztopwatch startjump / sj: 점프 시 타이머 시작 전환 (존 진입 대신)
-  !ztopwatch stopland / sl: 착지 시 타이머 정지 전환 (존 진입 대신)
-  !ztopwatch status: 현재 상태 표시"
+			"ko"		"존 스톱워치 사용법:\n  !ztopwatch / !zw: 켜기/끄기\n  !ztopwatch place: 다음 모서리 설정 (순서: 시작 1 -> 시작 2 -> 종료 1 -> 종료 2)\n  !ztopwatch clear: 모든 존 초기화\n  !ztopwatch startjump / sj: 점프 시 타이머 시작 전환 (존 진입 대신)\n  !ztopwatch stopland / sl: 착지 시 타이머 정지 전환 (존 진입 대신)\n  !ztopwatch status: 현재 상태 표시"
 	}
 }
