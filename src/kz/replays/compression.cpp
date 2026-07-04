@@ -668,29 +668,41 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, c
 	outWeaponTable.reserve(header.elementCount);
 
 	const char *readPtr = decompressedData;
+	const char *readEnd = decompressedData + header.uncompressedSize;
+	bool ok = true;
 
 	for (u32 i = 0; i < header.elementCount; i++)
 	{
 		i32 weaponID;
 		EconInfo econInfo;
 
-		memcpy(&weaponID, readPtr, sizeof(weaponID));
-		readPtr += sizeof(weaponID);
+		if (!ReadFromBuffer(readPtr, readEnd, &weaponID, sizeof(weaponID))
+			|| !ReadFromBuffer(readPtr, readEnd, &econInfo.mainInfo, sizeof(econInfo.mainInfo)))
+		{
+			ok = false;
+			break;
+		}
 
-		memcpy(&econInfo.mainInfo, readPtr, sizeof(econInfo.mainInfo));
-		readPtr += sizeof(econInfo.mainInfo);
+		econInfo.mainInfo.numAttributes = MIN(econInfo.mainInfo.numAttributes, 32);
 
 		for (i32 j = 0; j < econInfo.mainInfo.numAttributes; j++)
 		{
-			memcpy(&econInfo.attributes[j], readPtr, sizeof(EconInfo::attributes[0]));
-			readPtr += sizeof(EconInfo::attributes[0]);
+			if (!ReadFromBuffer(readPtr, readEnd, &econInfo.attributes[j], sizeof(EconInfo::attributes[0])))
+			{
+				ok = false;
+				break;
+			}
+		}
+		if (!ok)
+		{
+			break;
 		}
 		KZ_LOG_DEBUG(LogChannel::Replays, "Read weapon ID %d with %d attributes\n", weaponID, econInfo.mainInfo.numAttributes);
 		outWeaponTable.emplace_back(weaponID, econInfo);
 	}
 
 	delete[] decompressedData;
-	return true;
+	return ok;
 }
 
 // ========================================
