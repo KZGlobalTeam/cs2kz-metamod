@@ -798,9 +798,15 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 	outJumps.reserve(header.elementCount);
 
 	const char *readPtr = decompressedData;
-	i32 numJumps;
-	memcpy(&numJumps, readPtr, sizeof(numJumps));
-	readPtr += sizeof(numJumps);
+	const char *readEnd = decompressedData + header.uncompressedSize;
+	bool ok = true;
+
+	i32 numJumps = 0;
+	if (!ReadFromBuffer(readPtr, readEnd, &numJumps, sizeof(numJumps)))
+	{
+		delete[] decompressedData;
+		return false;
+	}
 
 	struct OldAAData
 	{
@@ -819,41 +825,65 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 		bool ducking;
 	};
 
-	for (i32 i = 0; i < numJumps; i++)
+	for (i32 i = 0; ok && i < numJumps; i++)
 	{
 		RpJumpStats jump = {};
 
 		// Read jump overall data
-		memcpy(&jump.overall, readPtr, sizeof(jump.overall));
-		readPtr += sizeof(jump.overall);
+		if (!ReadFromBuffer(readPtr, readEnd, &jump.overall, sizeof(jump.overall)))
+		{
+			ok = false;
+			break;
+		}
 
 		// Read strafes
-		i32 numStrafes;
-		memcpy(&numStrafes, readPtr, sizeof(numStrafes));
-		readPtr += sizeof(numStrafes);
+		i32 numStrafes = 0;
+		if (!ReadFromBuffer(readPtr, readEnd, &numStrafes, sizeof(numStrafes)) || numStrafes < 0)
+		{
+			ok = false;
+			break;
+		}
 
+		size_t strafesSize = sizeof(RpJumpStats::StrafeData) * (size_t)numStrafes;
+		if (strafesSize > (size_t)(readEnd - readPtr))
+		{
+			ok = false;
+			break;
+		}
 		jump.strafes.resize(numStrafes);
-		memcpy(jump.strafes.data(), readPtr, sizeof(RpJumpStats::StrafeData) * numStrafes);
-		readPtr += sizeof(RpJumpStats::StrafeData) * numStrafes;
+		memcpy(jump.strafes.data(), readPtr, strafesSize);
+		readPtr += strafesSize;
 
 		// Read AA calls
-		i32 numAACalls;
-		memcpy(&numAACalls, readPtr, sizeof(numAACalls));
-		readPtr += sizeof(numAACalls);
+		i32 numAACalls = 0;
+		if (!ReadFromBuffer(readPtr, readEnd, &numAACalls, sizeof(numAACalls)) || numAACalls < 0)
+		{
+			ok = false;
+			break;
+		}
 
 		jump.aaCalls.resize(numAACalls);
 		if (replayVersion >= 5)
 		{
-			memcpy(jump.aaCalls.data(), readPtr, sizeof(RpJumpStats::AAData) * numAACalls);
-			readPtr += sizeof(RpJumpStats::AAData) * numAACalls;
+			size_t aaCallsSize = sizeof(RpJumpStats::AAData) * (size_t)numAACalls;
+			if (aaCallsSize > (size_t)(readEnd - readPtr))
+			{
+				ok = false;
+				break;
+			}
+			memcpy(jump.aaCalls.data(), readPtr, aaCallsSize);
+			readPtr += aaCallsSize;
 		}
 		else
 		{
 			for (i32 j = 0; j < numAACalls; j++)
 			{
 				OldAAData oldAA = {};
-				memcpy(&oldAA, readPtr, sizeof(oldAA));
-				readPtr += sizeof(oldAA);
+				if (!ReadFromBuffer(readPtr, readEnd, &oldAA, sizeof(oldAA)))
+				{
+					ok = false;
+					break;
+				}
 
 				RpJumpStats::AAData &aa = jump.aaCalls[j];
 				aa.strafeIndex = oldAA.strafeIndex;
@@ -882,11 +912,15 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 			}
 		}
 
+		if (!ok)
+		{
+			break;
+		}
 		outJumps.push_back(jump);
 	}
 
 	delete[] decompressedData;
-	return true;
+	return ok;
 }
 
 i32 KZ::replaysystem::compression::WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps)
@@ -1018,15 +1052,20 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	// Reconstruct cmd data from delta-encoded buffer
 	outCmdData.resize(header.elementCount);
 	const char *readPtr = decompressedData;
+	const char *readEnd = decompressedData + header.uncompressedSize;
+	bool ok = true;
 
-	for (u32 i = 0; i < header.elementCount; i++)
+	for (u32 i = 0; ok && i < header.elementCount; i++)
 	{
 		CmdData &current = outCmdData[i];
 
 		// Read change flags
 		u64 flags;
-		memcpy(&flags, readPtr, sizeof(flags));
-		readPtr += sizeof(flags);
+		if (!ReadFromBuffer(readPtr, readEnd, &flags, sizeof(flags)))
+		{
+			ok = false;
+			break;
+		}
 
 		// Copy from previous if not changed (or apply expected increment)
 		if (i > 0)
@@ -1060,31 +1099,35 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 
 		// Read changed fields
 		// clang-format off
-		if (flags & CHANGED_CMD_SERVER_TICK) { memcpy(&current.serverTick, readPtr, sizeof(current.serverTick)); readPtr += sizeof(current.serverTick); }
-		if (flags & CHANGED_CMD_GAME_TIME) { memcpy(&current.gameTime, readPtr, sizeof(current.gameTime)); readPtr += sizeof(current.gameTime); }
-		if (flags & CHANGED_CMD_REAL_TIME) { memcpy(&current.realTime, readPtr, sizeof(current.realTime)); readPtr += sizeof(current.realTime); }
-		if (flags & CHANGED_CMD_UNIX_TIME) { memcpy(&current.unixTime, readPtr, sizeof(current.unixTime)); readPtr += sizeof(current.unixTime); }
-		if (flags & CHANGED_CMD_FRAMERATE) { memcpy(&current.framerate, readPtr, sizeof(current.framerate)); readPtr += sizeof(current.framerate); }
-		if (flags & CHANGED_CMD_LATENCY) { memcpy(&current.latency, readPtr, sizeof(current.latency)); readPtr += sizeof(current.latency); }
-		if (flags & CHANGED_CMD_AVG_LOSS) { memcpy(&current.avgLoss, readPtr, sizeof(current.avgLoss)); readPtr += sizeof(current.avgLoss); }
-		if (flags & CHANGED_CMD_CMD_NUMBER) { memcpy(&current.cmdNumber, readPtr, sizeof(current.cmdNumber)); readPtr += sizeof(current.cmdNumber); }
-		if (flags & CHANGED_CMD_CLIENT_TICK) { memcpy(&current.clientTick, readPtr, sizeof(current.clientTick)); readPtr += sizeof(current.clientTick); }
-		if (flags & CHANGED_CMD_FORWARD) { memcpy(&current.forward, readPtr, sizeof(current.forward)); readPtr += sizeof(current.forward); }
-		if (flags & CHANGED_CMD_LEFT) { memcpy(&current.left, readPtr, sizeof(current.left)); readPtr += sizeof(current.left); }
-		if (flags & CHANGED_CMD_UP) { memcpy(&current.up, readPtr, sizeof(current.up)); readPtr += sizeof(current.up); }
-		if (flags & CHANGED_CMD_BUTTONS_0) { memcpy(&current.buttons[0], readPtr, sizeof(current.buttons[0])); readPtr += sizeof(current.buttons[0]); }
-		if (flags & CHANGED_CMD_BUTTONS_1) { memcpy(&current.buttons[1], readPtr, sizeof(current.buttons[1])); readPtr += sizeof(current.buttons[1]); }
-		if (flags & CHANGED_CMD_BUTTONS_2) { memcpy(&current.buttons[2], readPtr, sizeof(current.buttons[2])); readPtr += sizeof(current.buttons[2]); }
-		if (flags & CHANGED_CMD_ANGLES) { memcpy(&current.angles, readPtr, sizeof(current.angles)); readPtr += sizeof(current.angles); }
-		if (flags & CHANGED_CMD_MOUSEDX) { memcpy(&current.mousedx, readPtr, sizeof(current.mousedx)); readPtr += sizeof(current.mousedx); }
-		if (flags & CHANGED_CMD_MOUSEDY) { memcpy(&current.mousedy, readPtr, sizeof(current.mousedy)); readPtr += sizeof(current.mousedy); }
-		if (flags & CHANGED_CMD_SENSITIVITY) { memcpy(&current.sensitivity, readPtr, sizeof(current.sensitivity)); readPtr += sizeof(current.sensitivity); }
-		if (flags & CHANGED_CMD_M_YAW) { memcpy(&current.m_yaw, readPtr, sizeof(current.m_yaw)); readPtr += sizeof(current.m_yaw); }
-		if (flags & CHANGED_CMD_M_PITCH) { memcpy(&current.m_pitch, readPtr, sizeof(current.m_pitch)); readPtr += sizeof(current.m_pitch); }
+		if (flags & CHANGED_CMD_SERVER_TICK) { if (!ReadFromBuffer(readPtr, readEnd, &current.serverTick, sizeof(current.serverTick))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_GAME_TIME) { if (!ReadFromBuffer(readPtr, readEnd, &current.gameTime, sizeof(current.gameTime))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_REAL_TIME) { if (!ReadFromBuffer(readPtr, readEnd, &current.realTime, sizeof(current.realTime))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_UNIX_TIME) { if (!ReadFromBuffer(readPtr, readEnd, &current.unixTime, sizeof(current.unixTime))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_FRAMERATE) { if (!ReadFromBuffer(readPtr, readEnd, &current.framerate, sizeof(current.framerate))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_LATENCY) { if (!ReadFromBuffer(readPtr, readEnd, &current.latency, sizeof(current.latency))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_AVG_LOSS) { if (!ReadFromBuffer(readPtr, readEnd, &current.avgLoss, sizeof(current.avgLoss))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_CMD_NUMBER) { if (!ReadFromBuffer(readPtr, readEnd, &current.cmdNumber, sizeof(current.cmdNumber))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_CLIENT_TICK) { if (!ReadFromBuffer(readPtr, readEnd, &current.clientTick, sizeof(current.clientTick))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_FORWARD) { if (!ReadFromBuffer(readPtr, readEnd, &current.forward, sizeof(current.forward))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_LEFT) { if (!ReadFromBuffer(readPtr, readEnd, &current.left, sizeof(current.left))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_UP) { if (!ReadFromBuffer(readPtr, readEnd, &current.up, sizeof(current.up))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_BUTTONS_0) { if (!ReadFromBuffer(readPtr, readEnd, &current.buttons[0], sizeof(current.buttons[0]))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_BUTTONS_1) { if (!ReadFromBuffer(readPtr, readEnd, &current.buttons[1], sizeof(current.buttons[1]))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_BUTTONS_2) { if (!ReadFromBuffer(readPtr, readEnd, &current.buttons[2], sizeof(current.buttons[2]))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_ANGLES) { if (!ReadFromBuffer(readPtr, readEnd, &current.angles, sizeof(current.angles))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_MOUSEDX) { if (!ReadFromBuffer(readPtr, readEnd, &current.mousedx, sizeof(current.mousedx))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_MOUSEDY) { if (!ReadFromBuffer(readPtr, readEnd, &current.mousedy, sizeof(current.mousedy))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_SENSITIVITY) { if (!ReadFromBuffer(readPtr, readEnd, &current.sensitivity, sizeof(current.sensitivity))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_M_YAW) { if (!ReadFromBuffer(readPtr, readEnd, &current.m_yaw, sizeof(current.m_yaw))) { ok = false; break; } }
+		if (flags & CHANGED_CMD_M_PITCH) { if (!ReadFromBuffer(readPtr, readEnd, &current.m_pitch, sizeof(current.m_pitch))) { ok = false; break; } }
 		// clang-format on
 	}
 
 	delete[] decompressedData;
+	if (!ok)
+	{
+		return false;
+	}
 
 	// Cmd subtick section
 	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
