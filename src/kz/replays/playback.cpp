@@ -383,6 +383,10 @@ namespace KZ::replaysystem::playback
 	void StartReplay()
 	{
 		auto replay = data::GetCurrentReplay();
+		if (replay->tickCount == 0)
+		{
+			return;
+		}
 		replay->playingReplay = true;
 		replay->replayPaused = false;
 		replay->currentTick = 0;
