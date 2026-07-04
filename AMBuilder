@@ -25,8 +25,28 @@ def get_proto_builder(builder, sdk_target, sdk):
     os.path.join(sdk['path'], 'gcsdk'),
     os.path.join(builder.sourcePath, 'protobuf')
   ]
-  
+
   return protoc_builder
+
+def configure_protobuf(sdk, cxx, protoc_builder):
+  protobuf_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-protobuf", sdk, static = True)
+
+  if protobuf_binary.compiler.family == 'gcc' or protobuf_binary.compiler.family == 'clang':
+    protobuf_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+
+  protobuf_binary.custom = [protoc_builder]
+
+  return builder.Add(protobuf_binary).binary
+
+def protobuf_include_dir(cxx):
+  return os.path.join(builder.buildPath, f"{MMSPlugin.metadata['name']}-protobuf",
+                       f'{cxx.target.platform}-{cxx.target.arch}')
+
+def link_protobuf(binary, cxx, protobuf_binary):
+  binary.compiler.postlink += [ protobuf_binary ]
+  binary.compiler.cxxincludes += [ protobuf_include_dir(cxx) ]
+
+  binary.compiler.sourcedeps += [ protobuf_binary ]
 
 def configure_main(sdk_target, sdk, cxx):
   binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.metadata['name'], sdk)
@@ -225,7 +245,7 @@ def configure_main(sdk_target, sdk, cxx):
 
   return binary
 
-def configure_common(sdk, cxx, protoc_builder):
+def configure_common(sdk, cxx, protobuf_binary):
   common_binary = MMSPlugin.HL2Library(builder, cxx, f"{MMSPlugin.metadata['name']}-common", sdk, static = True)
 
   if common_binary.compiler.family == 'gcc' or common_binary.compiler.family == 'clang':
@@ -248,7 +268,7 @@ def configure_common(sdk, cxx, protoc_builder):
     os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
   ]
 
-  common_binary.custom = [protoc_builder]
+  link_protobuf(common_binary, cxx, protobuf_binary)
 
   return builder.Add(common_binary).binary
 
@@ -411,11 +431,12 @@ sdk = MMSPlugin.sdk_target.sdk
 cxx = MMSPlugin.sdk_target.cxx
 
 protoc_builder = get_proto_builder(builder, sdk_target, sdk)
+protobuf_binary = configure_protobuf(sdk, cxx, protoc_builder)
 
 # Main binary
 binary = configure_main(sdk_target, sdk, cxx)
-# Shared entity2/schema/gameconfig objects for the mode/style
-common_binary = configure_common(sdk, cxx, protoc_builder)
+# Shared entity2/schema/gameconfig objects for the mode/style binaries
+common_binary = configure_common(sdk, cxx, protobuf_binary)
 # Mode binaries
 ckz_binary = configure_ckz(sdk, cxx, common_binary)
 # Style binaries
@@ -423,11 +444,11 @@ abh_binary = configure_abh(sdk, cxx, common_binary)
 lgj_binary = configure_lgj(sdk, cxx, common_binary)
 aud_binary = configure_aud(sdk, cxx, common_binary)
 
-binary.custom = [protoc_builder]
-ckz_binary.custom = [protoc_builder]
-abh_binary.custom = [protoc_builder]
-lgj_binary.custom = [protoc_builder]
-aud_binary.custom = [protoc_builder]
+link_protobuf(binary, cxx, protobuf_binary)
+link_protobuf(ckz_binary, cxx, protobuf_binary)
+link_protobuf(abh_binary, cxx, protobuf_binary)
+link_protobuf(lgj_binary, cxx, protobuf_binary)
+link_protobuf(aud_binary, cxx, protobuf_binary)
 
 # We have to split nodes here because they will be put into different folders.
 nodes = builder.Add(binary)
