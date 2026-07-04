@@ -75,7 +75,14 @@ public:
 		return STYLE_NAME_SHORT;
 	}
 
+	virtual void Cleanup() override;
 	virtual void OnProcessMovement() override;
+
+	float lastActualDuckTime = -1.0f;
+	bool applyingUnduck = false;
+	void UpdateDuckTime();
+	void ApplyForcedUnduck();
+	void CancelForcedUnduck();
 };
 
 CGameConfig *g_pGameConfig = NULL;
@@ -152,10 +159,22 @@ CGameEntitySystem *GameEntitySystem()
 
 void KZAutoUnduckStyleService::OnProcessMovement()
 {
+	this->UpdateDuckTime();
 	CMoveData *mv = this->player->currentMoveData;
+	// If already applying unduck and the player is still holding duck, keep forced unduck state
+	if (this->applyingUnduck && this->player->GetMoveServices()->m_nButtons().GetButtonState(IN_DUCK) == IN_BUTTON_DOWN)
+	{
+		this->ApplyForcedUnduck();
+		return;
+	}
 	if (!this->player->GetMoveServices()->m_bDucked() || this->player->GetMoveType() != MOVETYPE_WALK
 		|| this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND)
 	{
+		if (this->applyingUnduck)
+		{
+			this->CancelForcedUnduck();
+			this->applyingUnduck = false;
+		}
 		return;
 	}
 	CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
@@ -188,7 +207,35 @@ void KZAutoUnduckStyleService::OnProcessMovement()
 	// Doesn't hit anything, fall back to the original ground
 	if (!trace.DidHit() || trace.m_vHitNormal.z < standableZ)
 	{
+		this->CancelForcedUnduck();
 		return;
 	}
+	this->applyingUnduck = true;
+	this->ApplyForcedUnduck();
 	this->player->GetMoveServices()->m_nButtons().m_pButtonStates[0] &= ~IN_DUCK;
+}
+
+void KZAutoUnduckStyleService::Cleanup()
+{
+	this->player->GetMoveServices()->m_flLastDuckTime(this->lastActualDuckTime);
+}
+
+void KZAutoUnduckStyleService::UpdateDuckTime()
+{
+	if (this->player->GetMoveServices()->m_flLastDuckTime() < 99999.0f)
+	{
+		this->lastActualDuckTime = this->player->GetMoveServices()->m_flLastDuckTime();
+	}
+}
+
+void KZAutoUnduckStyleService::ApplyForcedUnduck()
+{
+	// Set crouch time to a very large value so that the player cannot reduck.
+	this->player->GetMoveServices()->m_flLastDuckTime(100000.0f);
+	this->player->GetMoveServices()->m_nButtons().m_pButtonStates[0] &= ~IN_DUCK;
+}
+
+void KZAutoUnduckStyleService::CancelForcedUnduck()
+{
+	this->player->GetMoveServices()->m_flLastDuckTime(this->lastActualDuckTime);
 }
