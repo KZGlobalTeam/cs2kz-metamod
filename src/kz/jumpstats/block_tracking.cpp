@@ -234,6 +234,11 @@ void Jump::RecordPose()
 
 bool Jump::GetFailOrigin(f32 planeHeight, Vector &result, i32 poseOffset)
 {
+	// poseOffset >= 0 would read poseHistory[poseIndex + 1], a slot not yet recorded this jump.
+	if (poseOffset >= 0)
+	{
+		return false;
+	}
 	const i32 size = JS_FAILSTATS_MAX_TRACKED_TICKS;
 	i32 idxOld = ((this->poseIndex + poseOffset) % size + size) % size;
 	i32 idxNew = ((this->poseIndex + poseOffset + 1) % size + size) % size;
