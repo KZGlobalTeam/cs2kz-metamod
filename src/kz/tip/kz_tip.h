@@ -19,6 +19,7 @@ private:
 public:
 	virtual void Reset() override;
 	void ToggleTips();
+	void OnPlayerPreferencesLoaded();
 	static void Init();
 	static f64 PrintTips();
 	void OnPlayerJoinTeam(i32 team);

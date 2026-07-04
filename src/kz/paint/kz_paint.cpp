@@ -8,6 +8,19 @@
 #include "sdk/cglobalsymbol.h"
 #include "sdk/recipientfilters.h"
 
+static_global class KZOptionServiceEventListener_Paint : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		player->paintService->OnPlayerPreferencesLoaded();
+	}
+} optionEventListener;
+
+void KZPaintService::Init()
+{
+	KZOptionService::RegisterEventListener(&optionEventListener);
+}
+
 void KZPaintService::Reset()
 {
 	// Reset to default: red color and default size
@@ -18,6 +31,11 @@ void KZPaintService::Reset()
 	this->autoPaintEnabled = false;
 	this->hasLastAutoPaintPosition = false;
 	this->nextAutoPaintTime = 0.0;
+}
+
+void KZPaintService::OnPlayerPreferencesLoaded()
+{
+	this->autoPaintEnabled = this->player->optionService->GetPreferenceBool("autoPaintEnabled", false);
 }
 
 Color KZPaintService::GetColor() const
@@ -138,6 +156,7 @@ void KZPaintService::OnGameFrame()
 void KZPaintService::ToggleAutoPaint()
 {
 	this->autoPaintEnabled = !this->autoPaintEnabled;
+	this->player->optionService->SetPreferenceBool("autoPaintEnabled", this->autoPaintEnabled);
 	if (this->autoPaintEnabled)
 	{
 		this->hasLastAutoPaintPosition = false;

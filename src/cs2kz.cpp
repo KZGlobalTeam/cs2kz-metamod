@@ -27,6 +27,7 @@
 #include "kz/global/kz_global.h"
 #include "kz/beam/kz_beam.h"
 #include "kz/pistol/kz_pistol.h"
+#include "kz/paint/kz_paint.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
@@ -104,6 +105,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZ::mode::DisableReplicatedModeCvars();
 
 	KZTipService::Init();
+	KZPaintService::Init();
 	KZAnticheatService::Init();
 	if (late)
 	{

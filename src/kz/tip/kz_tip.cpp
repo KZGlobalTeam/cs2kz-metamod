@@ -16,11 +16,20 @@ static_global CTimer<> *tipTimer;
 
 extern IMultiAddonManager *g_pMultiAddonManager;
 
+static_global class KZOptionServiceEventListener_Tip : public KZOptionServiceEventListener
+{
+	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
+	{
+		player->tipService->OnPlayerPreferencesLoaded();
+	}
+} optionEventListener;
+
 void KZTipService::Init()
 {
 	LoadTips();
 	ShuffleTips();
 	tipTimer = StartTimer(PrintTips, true);
+	KZOptionService::RegisterEventListener(&optionEventListener);
 }
 
 void KZTipService::Reset()
@@ -29,9 +38,15 @@ void KZTipService::Reset()
 	this->teamJoinedAtLeastOnce = false;
 }
 
+void KZTipService::OnPlayerPreferencesLoaded()
+{
+	this->showTips = this->player->optionService->GetPreferenceBool("showTips", true);
+}
+
 void KZTipService::ToggleTips()
 {
 	this->showTips = !this->showTips;
+	this->player->optionService->SetPreferenceBool("showTips", this->showTips);
 	player->languageService->PrintChat(true, false, this->showTips ? "Option - Tips - Enable" : "Option - Tips - Disable");
 }
 
