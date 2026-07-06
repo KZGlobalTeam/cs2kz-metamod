@@ -23,7 +23,6 @@ public:
 
 	static constexpr u32 DECAL_GROUP_NAME = 3420975428u; // MurmurHash2LowerCase("paint", 0x31415926)
 
-	static void Init();
 	virtual void Reset() override;
 
 	// Set paint color from predefined colors or custom RGB
@@ -47,7 +46,6 @@ public:
 	void PlacePaint();
 	void ToggleAutoPaint();
 	void ToggleShowAllPaint();
-	void OnPlayerPreferencesLoaded();
 
 	bool pendingPaint = false;
 	bool autoPaintEnabled = false;

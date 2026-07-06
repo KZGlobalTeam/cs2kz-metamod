@@ -461,21 +461,20 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	{
 		char *tempBuf = new char[subtickHeader.uncompressedSize];
 		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
-		if (success && subtickHeader.elementCount == 0)
+		if (success)
 		{
-			outSubtickData.clear();
-		}
-		else if (success)
-		{
-			size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
 			outSubtickData.resize(subtickHeader.elementCount);
-			for (u32 i = 0; i < subtickHeader.elementCount; i++)
+			if (subtickHeader.elementCount > 0)
 			{
-				const char *entry = tempBuf + i * oldEntrySize;
-				memcpy(&outSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
-				if (outSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+				size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
+				for (u32 i = 0; i < subtickHeader.elementCount; i++)
 				{
-					outSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+					const char *entry = tempBuf + i * oldEntrySize;
+					memcpy(&outSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
+					if (outSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+					{
+						outSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+					}
 				}
 			}
 		}
@@ -1103,27 +1102,27 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 
 		// Read changed fields
 		// clang-format off
-		if (flags & CHANGED_CMD_SERVER_TICK) { if (!ReadFromBuffer(readPtr, readEnd, &current.serverTick, sizeof(current.serverTick))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_GAME_TIME) { if (!ReadFromBuffer(readPtr, readEnd, &current.gameTime, sizeof(current.gameTime))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_REAL_TIME) { if (!ReadFromBuffer(readPtr, readEnd, &current.realTime, sizeof(current.realTime))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_UNIX_TIME) { if (!ReadFromBuffer(readPtr, readEnd, &current.unixTime, sizeof(current.unixTime))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_FRAMERATE) { if (!ReadFromBuffer(readPtr, readEnd, &current.framerate, sizeof(current.framerate))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_LATENCY) { if (!ReadFromBuffer(readPtr, readEnd, &current.latency, sizeof(current.latency))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_AVG_LOSS) { if (!ReadFromBuffer(readPtr, readEnd, &current.avgLoss, sizeof(current.avgLoss))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_CMD_NUMBER) { if (!ReadFromBuffer(readPtr, readEnd, &current.cmdNumber, sizeof(current.cmdNumber))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_CLIENT_TICK) { if (!ReadFromBuffer(readPtr, readEnd, &current.clientTick, sizeof(current.clientTick))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_FORWARD) { if (!ReadFromBuffer(readPtr, readEnd, &current.forward, sizeof(current.forward))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_LEFT) { if (!ReadFromBuffer(readPtr, readEnd, &current.left, sizeof(current.left))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_UP) { if (!ReadFromBuffer(readPtr, readEnd, &current.up, sizeof(current.up))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_BUTTONS_0) { if (!ReadFromBuffer(readPtr, readEnd, &current.buttons[0], sizeof(current.buttons[0]))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_BUTTONS_1) { if (!ReadFromBuffer(readPtr, readEnd, &current.buttons[1], sizeof(current.buttons[1]))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_BUTTONS_2) { if (!ReadFromBuffer(readPtr, readEnd, &current.buttons[2], sizeof(current.buttons[2]))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_ANGLES) { if (!ReadFromBuffer(readPtr, readEnd, &current.angles, sizeof(current.angles))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_MOUSEDX) { if (!ReadFromBuffer(readPtr, readEnd, &current.mousedx, sizeof(current.mousedx))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_MOUSEDY) { if (!ReadFromBuffer(readPtr, readEnd, &current.mousedy, sizeof(current.mousedy))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_SENSITIVITY) { if (!ReadFromBuffer(readPtr, readEnd, &current.sensitivity, sizeof(current.sensitivity))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_M_YAW) { if (!ReadFromBuffer(readPtr, readEnd, &current.m_yaw, sizeof(current.m_yaw))) { ok = false; break; } }
-		if (flags & CHANGED_CMD_M_PITCH) { if (!ReadFromBuffer(readPtr, readEnd, &current.m_pitch, sizeof(current.m_pitch))) { ok = false; break; } }
+		if ((flags & CHANGED_CMD_SERVER_TICK) && !ReadFromBuffer(readPtr, readEnd, &current.serverTick, sizeof(current.serverTick))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_GAME_TIME) && !ReadFromBuffer(readPtr, readEnd, &current.gameTime, sizeof(current.gameTime))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_REAL_TIME) && !ReadFromBuffer(readPtr, readEnd, &current.realTime, sizeof(current.realTime))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_UNIX_TIME) && !ReadFromBuffer(readPtr, readEnd, &current.unixTime, sizeof(current.unixTime))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_FRAMERATE) && !ReadFromBuffer(readPtr, readEnd, &current.framerate, sizeof(current.framerate))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_LATENCY) && !ReadFromBuffer(readPtr, readEnd, &current.latency, sizeof(current.latency))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_AVG_LOSS) && !ReadFromBuffer(readPtr, readEnd, &current.avgLoss, sizeof(current.avgLoss))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_CMD_NUMBER) && !ReadFromBuffer(readPtr, readEnd, &current.cmdNumber, sizeof(current.cmdNumber))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_CLIENT_TICK) && !ReadFromBuffer(readPtr, readEnd, &current.clientTick, sizeof(current.clientTick))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_FORWARD) && !ReadFromBuffer(readPtr, readEnd, &current.forward, sizeof(current.forward))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_LEFT) && !ReadFromBuffer(readPtr, readEnd, &current.left, sizeof(current.left))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_UP) && !ReadFromBuffer(readPtr, readEnd, &current.up, sizeof(current.up))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_BUTTONS_0) && !ReadFromBuffer(readPtr, readEnd, &current.buttons[0], sizeof(current.buttons[0]))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_BUTTONS_1) && !ReadFromBuffer(readPtr, readEnd, &current.buttons[1], sizeof(current.buttons[1]))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_BUTTONS_2) && !ReadFromBuffer(readPtr, readEnd, &current.buttons[2], sizeof(current.buttons[2]))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_ANGLES) && !ReadFromBuffer(readPtr, readEnd, &current.angles, sizeof(current.angles))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_MOUSEDX) && !ReadFromBuffer(readPtr, readEnd, &current.mousedx, sizeof(current.mousedx))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_MOUSEDY) && !ReadFromBuffer(readPtr, readEnd, &current.mousedy, sizeof(current.mousedy))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_SENSITIVITY) && !ReadFromBuffer(readPtr, readEnd, &current.sensitivity, sizeof(current.sensitivity))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_M_YAW) && !ReadFromBuffer(readPtr, readEnd, &current.m_yaw, sizeof(current.m_yaw))) { ok = false; break; }
+		if ((flags & CHANGED_CMD_M_PITCH) && !ReadFromBuffer(readPtr, readEnd, &current.m_pitch, sizeof(current.m_pitch))) { ok = false; break; }
 		// clang-format on
 	}
 
@@ -1157,21 +1156,20 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	{
 		char *tempBuf = new char[subtickHeader.uncompressedSize];
 		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
-		if (success && subtickHeader.elementCount == 0)
+		if (success)
 		{
-			outCmdSubtickData.clear();
-		}
-		else if (success)
-		{
-			size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
 			outCmdSubtickData.resize(subtickHeader.elementCount);
-			for (u32 i = 0; i < subtickHeader.elementCount; i++)
+			if (subtickHeader.elementCount > 0)
 			{
-				const char *entry = tempBuf + i * oldEntrySize;
-				memcpy(&outCmdSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
-				if (outCmdSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+				size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
+				for (u32 i = 0; i < subtickHeader.elementCount; i++)
 				{
-					outCmdSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+					const char *entry = tempBuf + i * oldEntrySize;
+					memcpy(&outCmdSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
+					if (outCmdSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+					{
+						outCmdSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+					}
 				}
 			}
 		}

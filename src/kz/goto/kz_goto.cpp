@@ -86,10 +86,6 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 	}
 
 	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
-	if (!ms)
-	{
-		return false;
-	}
 
 	if (targetPlayer->GetMoveType() == MOVETYPE_LADDER)
 	{

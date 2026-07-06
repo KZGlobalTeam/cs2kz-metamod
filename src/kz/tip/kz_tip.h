@@ -13,13 +13,11 @@ class KZTipService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 private:
-	bool showTips {};
 	bool teamJoinedAtLeastOnce {};
 
 public:
 	virtual void Reset() override;
 	void ToggleTips();
-	void OnPlayerPreferencesLoaded();
 	static void Init();
 	static f64 PrintTips();
 	void OnPlayerJoinTeam(i32 team);
