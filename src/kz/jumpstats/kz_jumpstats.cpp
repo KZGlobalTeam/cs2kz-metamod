@@ -391,8 +391,7 @@ void Jump::Init()
 	this->failstatSync = 0.0f;
 	this->failstatBadAngles = 0.0f;
 	this->failstatGraphCallCount = 0;
-	this->poseIndex = 0;
-	this->poseCount = 0;
+	this->poseHistory.Advance(this->poseHistory.GetReadAvailable());
 	this->failstatBlockDetected = (this->jumpType != JumpType_LadderJump);
 	this->failstatFailed = false;
 	this->failstatValid = false;

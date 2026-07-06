@@ -276,10 +276,15 @@ public:
 	i32 failstatStrafeCount {};
 	f32 failstatTotalDistance {};
 	i32 failstatGraphCallCount {};
-	// One pose per subtick movement.
-	JumpPose poseHistory[JS_FAILSTATS_MAX_TRACKED_TICKS];
-	i32 poseIndex {};
-	i32 poseCount {};
+
+	// One pose per subtick movement, ordered newest-first via Peek offsets.
+	class CPoseHistoryBuffer : public CFixedSizeCircularBuffer<JumpPose, JS_FAILSTATS_MAX_TRACKED_TICKS>
+	{
+		virtual void ElementAlloc(JumpPose &element) {};
+		virtual void ElementRelease(JumpPose &element) {};
+	};
+
+	CPoseHistoryBuffer poseHistory {};
 	bool failstatBlockDetected {};
 	bool failstatFailed {};
 	bool failstatValid {};
@@ -487,7 +492,7 @@ public:
 	void CalcBlockStats(Vector landingOrigin, bool checkOffset = false);
 	void CalcLadderBlockStats(Vector landingOrigin, bool checkOffset = false);
 	void CalcAlwaysEdge();
-	bool GetFailOrigin(f32 planeHeight, Vector &result, i32 poseOffset);
+	bool GetFailOrigin(f32 planeHeight, Vector &result, i32 backIndex);
 };
 
 class KZJumpstatsService : public KZBaseService
