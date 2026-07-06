@@ -105,7 +105,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZ::mode::DisableReplicatedModeCvars();
 
 	KZTipService::Init();
-	KZPaintService::Init();
 	KZAnticheatService::Init();
 	if (late)
 	{
