@@ -51,6 +51,7 @@ bool movement::InitDetours()
 	return detoursInitialized;
 }
 
+// Defers the cast until first use, avoiding static init order issues with g_pPlayerManager.
 struct MovementPlayerManagerAccessor
 {
 	MovementPlayerManager *operator->() const
