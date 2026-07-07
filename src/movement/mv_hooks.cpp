@@ -52,15 +52,13 @@ bool movement::InitDetours()
 }
 
 // Defers the cast until first use, avoiding static init order issues with g_pPlayerManager.
-struct MovementPlayerManagerAccessor
+static_global struct
 {
 	MovementPlayerManager *operator->() const
 	{
 		return static_cast<MovementPlayerManager *>(g_pPlayerManager);
 	}
-};
-
-static MovementPlayerManagerAccessor playerManager;
+} playerManager;
 
 void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 {
