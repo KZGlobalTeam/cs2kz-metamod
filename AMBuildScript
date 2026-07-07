@@ -469,6 +469,7 @@ if builder.options.build_vendor_deps:
   BuildScripts = [
     'vendor/zstd.AMBuilder',
     'vendor/ixwebsocket.AMBuilder',
+    'vendor/mbedtls.AMBuilder',
   ]
 
 builder.Build(BuildScripts, { 'MMSPlugin': MMSPlugin }) # type: ignore
