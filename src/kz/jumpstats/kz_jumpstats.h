@@ -3,6 +3,7 @@
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
+#include "utils/circularfifobuffer.h"
 
 #include "../kz.h"
 
@@ -276,15 +277,6 @@ public:
 	i32 failstatStrafeCount {};
 	f32 failstatTotalDistance {};
 	i32 failstatGraphCallCount {};
-
-	// One pose per subtick movement, ordered newest-first via Peek offsets.
-	class CPoseHistoryBuffer : public CFixedSizeCircularBuffer<JumpPose, JS_FAILSTATS_MAX_TRACKED_TICKS>
-	{
-		virtual void ElementAlloc(JumpPose &element) {};
-		virtual void ElementRelease(JumpPose &element) {};
-	};
-
-	CPoseHistoryBuffer poseHistory {};
 	bool failstatBlockDetected {};
 	bool failstatFailed {};
 	bool failstatValid {};
@@ -492,7 +484,7 @@ public:
 	void CalcBlockStats(Vector landingOrigin, bool checkOffset = false);
 	void CalcLadderBlockStats(Vector landingOrigin, bool checkOffset = false);
 	void CalcAlwaysEdge();
-	bool GetFailOrigin(f32 planeHeight, Vector &result, i32 backIndex);
+	bool GetFailOrigin(f32 planeHeight, Vector &result, i32 offset);
 };
 
 class KZJumpstatsService : public KZBaseService
@@ -506,6 +498,8 @@ public:
 
 	// Jumpstats
 	CUtlVector<Jump> jumps;
+	// One pose per subtick movement of the current jump, consumed by the tail jump's failstat tracking.
+	CFIFOCircularBuffer<JumpPose, JS_FAILSTATS_MAX_TRACKED_TICKS> poseHistory;
 	f32 lastJumpButtonTime {};
 	f32 lastNoclipTime {};
 	f32 lastDuckbugTime {};

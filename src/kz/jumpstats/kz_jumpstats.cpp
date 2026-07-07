@@ -391,7 +391,6 @@ void Jump::Init()
 	this->failstatSync = 0.0f;
 	this->failstatBadAngles = 0.0f;
 	this->failstatGraphCallCount = 0;
-	this->poseHistory.Advance(this->poseHistory.GetReadAvailable());
 	this->failstatBlockDetected = (this->jumpType != JumpType_LadderJump);
 	this->failstatFailed = false;
 	this->failstatValid = false;
@@ -973,6 +972,8 @@ void KZJumpstatsService::AddJump()
 	{
 		return;
 	}
+	// Clear the shared pose buffer for the new jump before its failstat tracking begins.
+	this->poseHistory.Advance(this->poseHistory.GetReadAvailable());
 	this->jumps.AddToTail({this->player});
 	this->jumps.Tail().Init();
 }
