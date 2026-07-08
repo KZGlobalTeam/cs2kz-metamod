@@ -48,7 +48,7 @@ jobs:
           submodules: true
 
       - name: Recurse into submodules needed for build
-        run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json vendor/mbedtls
+        run: git submodule update --init --recursive metamod-source vendor/zstd vendor/ixwebsocket vendor/json
 
       - name: Set up Python
         uses: actions/setup-python@v6

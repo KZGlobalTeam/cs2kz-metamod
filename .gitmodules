@@ -20,9 +20,6 @@
 [submodule "vendor/json"]
 	path = vendor/json
 	url = https://github.com/nlohmann/json
-[submodule "vendor/mbedtls"]
-	path = vendor/mbedtls
-	url = https://github.com/Mbed-TLS/mbedtls/
 [submodule "vendor/zstd"]
 	path = vendor/zstd
 	url = https://github.com/facebook/zstd.git
