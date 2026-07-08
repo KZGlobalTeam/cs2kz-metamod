@@ -348,7 +348,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         '_CRT_NONSTDC_NO_DEPRECATE',
         '_HAS_EXCEPTIONS=0',
         'IXWEBSOCKET_USE_TLS',
-        'IXWEBSOCKET_USE_MBED_TLS'
+        'IXWEBSOCKET_USE_OPEN_SSL'
       ]
       cxx.cflags += [
         '/wd4267', # conversion from 'size_t' to 'type', possible loss of data
@@ -469,7 +469,6 @@ if builder.options.build_vendor_deps:
   BuildScripts = [
     'vendor/zstd.AMBuilder',
     'vendor/ixwebsocket.AMBuilder',
-    'vendor/mbedtls.AMBuilder',
   ]
 
 builder.Build(BuildScripts, { 'MMSPlugin': MMSPlugin }) # type: ignore

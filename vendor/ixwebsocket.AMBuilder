@@ -16,9 +16,7 @@ lib.compiler.cxxincludes += [
 
 if lib.compiler.target.platform == 'windows':
   lib.compiler.cxxincludes += [
-    os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'include'),
-    os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'include'),
-    os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'drivers', 'builtin', 'include'),
+    os.path.join(builder.sourcePath, 'vendor', 'openssl', 'include'),
   ]
 else:
   lib.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
