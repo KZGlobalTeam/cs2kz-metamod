@@ -1,0 +1,75 @@
+# vim: set sts=2 ts=8 sw=2 tw=99 et ft=python:
+# Pre-builds mbedTLS as a static library using the already-configured MMSPlugin CXX. Windows-only.
+# Upstream gitignores several generated sources.
+# After a mbedtls submodule bump:
+#   python vendor/mbedtls-gen.py
+# After building, copy the output to vendor/ and commit it:
+#   copy mbedTLS\windows-x86_64\mbedTLS.lib ..\mbedTLS.lib
+import os
+
+cxx = MMSPlugin.sdk_target.cxx
+
+if cxx.target.platform == "windows":
+    lib = cxx.StaticLibrary("mbedTLS")
+
+    mbedtls = os.path.join(builder.sourcePath, "vendor", "mbedtls")
+    tfpsa = os.path.join(mbedtls, "tf-psa-crypto")
+    generated = os.path.join(builder.sourcePath, "vendor", "mbedtls-generated")
+
+    lib.compiler.includes += [
+        # Generated headers first so they win over any stale in-tree copies.
+        generated,
+        os.path.join(mbedtls, "include"),
+        os.path.join(mbedtls, "library"),
+        os.path.join(tfpsa, "include"),
+        os.path.join(tfpsa, "core"),
+        os.path.join(tfpsa, "dispatch"),
+        os.path.join(tfpsa, "extras"),
+        os.path.join(tfpsa, "platform"),
+        os.path.join(tfpsa, "utilities"),
+        os.path.join(tfpsa, "drivers", "builtin", "include"),
+        os.path.join(tfpsa, "drivers", "builtin", "src"),
+        os.path.join(tfpsa, "drivers", "everest", "include"),
+        os.path.join(tfpsa, "drivers", "everest", "include", "tf-psa-crypto", "private", "everest"),
+        os.path.join(tfpsa, "drivers", "everest", "include", "tf-psa-crypto", "private", "everest", "kremlib"),
+        os.path.join(tfpsa, "drivers", "p256-m"),
+        os.path.join(tfpsa, "drivers", "p256-m", "p256-m"),
+        os.path.join(tfpsa, "drivers", "pqcp", "include"),
+        os.path.join(tfpsa, "drivers", "pqcp", "src"),
+        os.path.join(tfpsa, "drivers", "pqcp", "mldsa-native", "mldsa"),
+    ]
+
+    # Generated source files (vendor/mbedtls-generated/).
+    generated_sources = [
+        "error.c",
+        "version_features.c",
+        "ssl_debug_helpers_generated.c",
+        "psa_crypto_driver_wrappers_no_static.c",
+    ]
+
+    def add_glob(path):
+        for file in sorted(os.listdir(path)):
+            if file.endswith(".c") and file not in generated_sources:
+                lib.sources.append(os.path.join(path, file))
+
+    add_glob(os.path.join(mbedtls, "library"))
+    add_glob(os.path.join(tfpsa, "core"))
+    add_glob(os.path.join(tfpsa, "drivers", "builtin", "src"))
+    # pqcp compiles only src/. It pulls mldsa-native in through #include.
+    add_glob(os.path.join(tfpsa, "drivers", "pqcp", "src"))
+    add_glob(os.path.join(tfpsa, "extras"))
+    add_glob(os.path.join(tfpsa, "platform"))
+    add_glob(os.path.join(tfpsa, "utilities"))
+
+    lib.sources += [
+        os.path.join(tfpsa, "drivers", "everest", "library", "x25519.c"),
+        os.path.join(tfpsa, "drivers", "everest", "library", "Hacl_Curve25519_joined.c"),
+        os.path.join(tfpsa, "drivers", "p256-m", "p256-m_driver_entrypoints.c"),
+        os.path.join(tfpsa, "drivers", "p256-m", "p256-m", "p256-m.c"),
+    ]
+
+    lib.sources += [os.path.join(generated, f) for f in generated_sources]
+
+    builder.Add(lib)
+
+# vim: filetype=python expandtab shiftwidth=2 tabstop=8 textwidth=99

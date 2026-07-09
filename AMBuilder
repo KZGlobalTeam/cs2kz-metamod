@@ -231,15 +231,16 @@ def configure_main(sdk_target, sdk, cxx):
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'openssl', 'lib', 'libssl.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'openssl', 'lib', 'libcrypto.lib'),
-      'crypt32.lib',
-      'ws2_32.lib',
-      'advapi32.lib',
-      'user32.lib'
+      os.path.join(builder.sourcePath, 'vendor', 'mbedTLS.lib'),
+      'bcrypt.lib'
     ]
     binary.sources += [
       'src/utils/plat_win.cpp'
+    ]
+    binary.compiler.cxxincludes += [
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'include'),
+      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'drivers', 'builtin', 'include'),
     ]
 
 
