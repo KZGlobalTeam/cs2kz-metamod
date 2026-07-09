@@ -295,21 +295,37 @@ void KZRecordingService::OnClientDisconnect()
 {
 	for (auto &recorder : this->runRecorders)
 	{
-		if (recorder.desiredStopTime > 0.0f && fileWriter)
+		if (recorder.desiredStopTime > 0.0f && KZRecordingService::fileWriter)
 		{
 			auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
 			this->CopyWeaponsToRecorder(recorderPtr.get());
-			fileWriter->QueueWriteToFile(std::move(recorderPtr));
+			UUID_t localUUID = recorderPtr->uuid;
+			// clang-format off
+			KZRecordingService::fileWriter->QueueWrite(
+				std::move(recorderPtr),
+				[localUUID](const UUID_t &, f32, std::vector<char> &&buffer)
+				{
+					RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
+					if (sub)
+					{
+						sub->OnReplayReady(std::move(buffer));
+					}
+				},
+				[localUUID](const char *error)
+				{ 
+					KZ_LOG_WARN(LogChannel::Recording, "Run replay serialization failed for UUID %s: %s\n", localUUID.ToString().c_str(), error);
+				});
+			// clang-format on
 		}
 	}
 	this->runRecorders.clear();
 	for (auto &recorder : this->jumpRecorders)
 	{
-		if (fileWriter)
+		if (KZRecordingService::fileWriter)
 		{
 			auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
 			this->CopyWeaponsToRecorder(recorderPtr.get());
-			fileWriter->QueueWriteToFile(std::move(recorderPtr));
+			KZRecordingService::fileWriter->QueueWriteToFile(std::move(recorderPtr));
 		}
 	}
 	this->jumpRecorders.clear();
