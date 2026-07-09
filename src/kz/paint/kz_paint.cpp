@@ -1,6 +1,7 @@
 #include "kz_paint.h"
-#include "../language/kz_language.h"
-#include "../option/kz_option.h"
+#include "kz/hud/kz_hud.h"
+#include "kz/language/kz_language.h"
+#include "kz/option/kz_option.h"
 #include "utils/simplecmds.h"
 #include "utils/utils.h"
 #include "sdk/tracefilter.h"
@@ -322,5 +323,6 @@ SCMD(kz_cleardecals, SCFL_MISC)
 	IGameEventListener2 *listener = g_pKZUtils->GetLegacyGameEventListener(player->GetPlayerSlot());
 	listener->FireGameEvent(event);
 	interfaces::pGameEventManager->FreeEvent(event);
+	player->hudService->DestroyAllParticles();
 	return MRES_SUPERCEDE;
 }
