@@ -145,6 +145,7 @@ void KZPlayer::OnPlayerActive()
 	g_pKZStyleManager->RefreshStyles(this, false);
 
 	this->optionService->OnPlayerActive();
+	this->profileService->OnPlayerActive();
 	this->recordingService->EnsureCircularRecorderInitialized();
 
 	if (!this->IsFakeClient() && !this->IsCSTV())

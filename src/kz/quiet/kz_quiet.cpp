@@ -339,6 +339,7 @@ void KZQuietService::SendFullUpdate()
 	QAngle angles;
 	this->player->GetAngles(&angles);
 	this->player->SetAngles(angles);
+	player->hudService->DestroyAllParticles();
 }
 
 bool KZQuietService::ShouldHide()

@@ -48,13 +48,9 @@ static_global const char *rankColors[NUM_RANKS] = {"{default}", "{grey}", "{grey
 
 CConVar<bool> kz_profile_rating_badge_enabled("kz_profile_rating_badge_enabled", FCVAR_NONE, "Whether to show competitive rank in scoreboard.", true);
 
-void KZProfileService::OnGameFrame()
+void KZProfileService::OnPlayerActive()
 {
-	if (g_pKZUtils->GetServerGlobals()->tickcount % 64 != 0)
-	{
-		return;
-	}
-	CBroadcastRecipientFilter filter;
+	CSingleRecipientFilter filter(this->player->GetPlayerSlot());
 	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CCSUsrMsg_ServerRankRevealAll");
 	CNetMessage *msg = netmsg->AllocateMessage();
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
@@ -79,10 +75,10 @@ void KZProfileService::OnCheckTransmit()
 
 void KZProfileService::RequestRating()
 {
-	if (!KZGlobalService::IsAvailable())
-	{
-		return;
-	}
+	// if (!KZGlobalService::IsAvailable())
+	// {
+	// 	return;
+	// }
 	if (!this->player->IsAuthenticated() || !this->player->IsConnected())
 	{
 		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s not authenticated or not connected, cannot request rating.\n", this->player->GetName());
@@ -141,10 +137,20 @@ void KZProfileService::RequestRating()
 		Json json(response.Body().value_or(""));
 
 		const char *ratingField = (mode == KZ::api::Mode::Classic) ? "ckz_rating" : "vnl_rating";
+		f32 oldRating = player->profileService->currentRating;
+
 		if (!json.Get(ratingField, player->profileService->currentRating))
 		{
 			KZ_LOG_DEBUG(LogChannel::Profile, "Failed to parse rating from response for player %s.\n", player->GetName());
 			return;
+		}
+		if (oldRating <= 0.0f && player->profileService->currentRating > 0.0f)
+		{
+			CBroadcastRecipientFilter filter;
+			INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CCSUsrMsg_ServerRankRevealAll");
+			CNetMessage *msg = netmsg->AllocateMessage();
+			interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+			delete msg;
 		}
 		KZ_LOG_DEBUG(LogChannel::Profile, "Updating rating for player %s: %.2f.\n", player->GetName(), player->profileService->currentRating);
 		player->profileService->UpdateCompetitiveRank();
