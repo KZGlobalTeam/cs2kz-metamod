@@ -519,8 +519,13 @@ namespace KZ::replaysystem::commands
 			player->languageService->PrintChat(true, false, "Replay - No Replay Playing");
 			return;
 		}
-		bot::GetBotPlayer()->ToggleHideLegs();
-		if (bot::GetBotPlayer()->optionService->GetPreferenceBool("hideLegs"))
+		KZPlayer *botPlayer = bot::GetBotPlayer();
+		if (!botPlayer)
+		{
+			return;
+		}
+		botPlayer->ToggleHideLegs();
+		if (botPlayer->optionService->GetPreferenceBool("hideLegs"))
 		{
 			player->languageService->PrintChat(true, false, "Replay - Hide Player Legs - Enable");
 		}

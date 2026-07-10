@@ -125,7 +125,7 @@ class MMSPluginConfig(object):
       'author': 'zer0.k',
       'url': 'http://www.cs2kz.org/',
       'log_tag': 'CS2KZ',
-      'license': 'GPLv3',
+      'license': 'AGPLv3',
       'version': '0.0.0-dev'
     }
 
@@ -348,11 +348,13 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         '_CRT_NONSTDC_NO_DEPRECATE',
         '_HAS_EXCEPTIONS=0',
         'IXWEBSOCKET_USE_TLS',
-        'IXWEBSOCKET_USE_MBED_TLS',
-        'IXWEBSOCKET_USE_MBED_TLS_MIN_VERSION_3'
+        'IXWEBSOCKET_USE_MBED_TLS'
       ]
       cxx.cflags += [
         '/wd4267', # conversion from 'size_t' to 'type', possible loss of data
+        '/wd4244', # 'argument' : conversion from 'uint64_t' to 'int', possible loss of data
+        '/wd4146', # unary minus operator applied to unsigned type, result still unsigned
+        '/wd4018', # '>=': signed/unsigned mismatch
         '/W3',
         '/std:c++17',
       ]
@@ -413,12 +415,15 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     elif cxx.target.platform == 'windows':
       cxx.defines += ['WIN32', '_WINDOWS']
 
-  def Library(self, cxx, name):
-    binary = cxx.Library(name)
+  def Library(self, cxx, name, static = False):
+    if static:
+      binary = cxx.StaticLibrary(name)
+    else:
+      binary = cxx.Library(name)
     return binary
-  
-  def HL2Library(self, context, compiler, name, sdk):
-    binary = self.Library(compiler, name)
+
+  def HL2Library(self, context, compiler, name, sdk, static = False):
+    binary = self.Library(compiler, name, static)
     mms_core_path = os.path.join(self.mms_root, 'core')
     cxx = binary.compiler
     
@@ -464,6 +469,7 @@ if builder.options.build_vendor_deps:
   BuildScripts = [
     'vendor/zstd.AMBuilder',
     'vendor/ixwebsocket.AMBuilder',
+    'vendor/mbedtls.AMBuilder',
   ]
 
 builder.Build(BuildScripts, { 'MMSPlugin': MMSPlugin }) # type: ignore

@@ -46,7 +46,7 @@ static_global struct
 	bool apiVersionLoaded;
 	bool fatalFailure;
 
-	CUtlVectorFixed<KzTrigger, 2048> triggers;
+	CUtlVectorFixed<KzTrigger, KZ_MAX_TRIGGER_COUNT> triggers;
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
@@ -356,6 +356,12 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			return;
 		}
 		break;
+	}
+
+	if (g_mappingApi.triggers.Count() >= KZ_MAX_TRIGGER_COUNT)
+	{
+		g_mappingApi.errorFlags |= MAPI_ERR_TOO_MANY_TRIGGERS;
+		return;
 	}
 
 	g_mappingApi.triggers.AddToTail(trigger);

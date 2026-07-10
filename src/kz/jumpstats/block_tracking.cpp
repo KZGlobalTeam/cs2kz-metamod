@@ -202,12 +202,7 @@ f32 Jump::GetEdge(bool landing)
 
 void Jump::RecordPose()
 {
-	this->poseIndex = (this->poseIndex + 1) % JS_FAILSTATS_MAX_TRACKED_TICKS;
-	if (this->poseCount < JS_FAILSTATS_MAX_TRACKED_TICKS)
-	{
-		this->poseCount++;
-	}
-	JumpPose &p = this->poseHistory[this->poseIndex];
+	JumpPose p;
 	p.position = this->player->currentMoveData->m_vecAbsOrigin;
 	p.airtime = this->airtime;
 
@@ -222,24 +217,30 @@ void Jump::RecordPose()
 	p.badAngles = totalDuration > 0.0f ? baDuration / totalDuration : 0.0f;
 	p.overlap = totalDuration > 0.0f ? olDuration / totalDuration : 0.0f;
 	p.deadAir = totalDuration > 0.0f ? daDuration / totalDuration : 0.0f;
+
+	this->player->jumpstatsService->poseHistory.Write(p);
 }
 
 // ============================================================
 // GetFailOrigin - position-based linear interpolation
 //
-// Finds the X/Y position at planeHeight by interpolating between
-// poseHistory[poseOffset] (at or above planeHeight) and
-// poseHistory[poseOffset+1] (the next newer pose, below planeHeight).
+// offset indexes the pose buffer oldest-first. The older sample sits at offset
+// (at or above planeHeight), the next newer sample at offset + 1 (below planeHeight).
+// offset + 1 past the newest pose returns null, meaning there is nothing to interpolate against.
 // ============================================================
 
-bool Jump::GetFailOrigin(f32 planeHeight, Vector &result, i32 poseOffset)
+bool Jump::GetFailOrigin(f32 planeHeight, Vector &result, i32 offset)
 {
-	const i32 size = JS_FAILSTATS_MAX_TRACKED_TICKS;
-	i32 idxOld = ((this->poseIndex + poseOffset) % size + size) % size;
-	i32 idxNew = ((this->poseIndex + poseOffset + 1) % size + size) % size;
+	auto &poseHistory = this->player->jumpstatsService->poseHistory;
+	const JumpPose *poseOld = poseHistory.PeekSingle(offset);
+	const JumpPose *poseNew = poseHistory.PeekSingle(offset + 1);
+	if (!poseOld || !poseNew)
+	{
+		return false;
+	}
 
-	const Vector &posOld = this->poseHistory[idxOld].position;
-	const Vector &posNew = this->poseHistory[idxNew].position;
+	const Vector &posOld = poseOld->position;
+	const Vector &posNew = poseNew->position;
 
 	f32 dz = posNew.z - posOld.z;
 	if (fabsf(dz) < JS_EPSILON)
@@ -726,15 +727,20 @@ void Jump::AlwaysFailstat()
 
 	f32 referenceZ = landingPos.z;
 
-	// Walk backward through pose history to find the last subtick the player was above referenceZ
-	const i32 size = JS_FAILSTATS_MAX_TRACKED_TICKS;
-	for (i32 i = 0; i < this->poseCount; i++)
+	// Walk newest-first through pose history to find the last subtick the player was above referenceZ
+	auto &poseHistory = this->player->jumpstatsService->poseHistory;
+	i32 available = (i32)poseHistory.GetReadAvailable();
+	for (i32 offset = available - 1; offset >= 0; offset--)
 	{
-		i32 idx = ((this->poseIndex - i) % size + size) % size;
-		if (this->poseHistory[idx].position.z >= referenceZ)
+		const JumpPose *p = poseHistory.PeekSingle(offset);
+		if (!p)
+		{
+			break;
+		}
+		if (p->position.z >= referenceZ)
 		{
 			Vector failOrigin;
-			if (!this->GetFailOrigin(referenceZ, failOrigin, -i))
+			if (!this->GetFailOrigin(referenceZ, failOrigin, offset))
 			{
 				break;
 			}
@@ -742,12 +748,11 @@ void Jump::AlwaysFailstat()
 			this->miss = fabsf(failOrigin[coordDist] - landingPos[coordDist]) - 16.0f;
 
 			// Restore sync/BA/OL/DA from the historical snapshot at the crossing point
-			const JumpPose &p = this->poseHistory[idx];
-			this->airtime = p.airtime;
-			this->badAngles = p.badAngles;
-			this->overlap = p.overlap;
-			this->deadAir = p.deadAir;
-			this->sync = p.sync;
+			this->airtime = p->airtime;
+			this->badAngles = p->badAngles;
+			this->overlap = p->overlap;
+			this->deadAir = p->deadAir;
+			this->sync = p->sync;
 			break;
 		}
 	}

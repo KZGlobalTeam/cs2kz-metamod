@@ -10,7 +10,7 @@ class CDetourBase
 public:
 	virtual const char *GetName() = 0;
 	virtual bool CreateDetour(CGameConfig *gameConfig) = 0;
-	virtual void EnableDetour() = 0;
+	virtual bool EnableDetour() = 0;
 	virtual void DisableDetour() = 0;
 	virtual void FreeDetour() = 0;
 };
@@ -29,7 +29,7 @@ public:
 	}
 
 	bool CreateDetour(CGameConfig *gameConfig);
-	void EnableDetour() override;
+	bool EnableDetour() override;
 	void DisableDetour() override;
 	void FreeDetour() override;
 
@@ -74,27 +74,44 @@ bool CDetour<T>::CreateDetour(CGameConfig *gameConfig)
 	}
 
 	m_hook = funchook_create();
-	funchook_prepare(m_hook, (void **)&m_pfnFunc, (void *)m_pfnDetour);
+	if (funchook_prepare(m_hook, (void **)&m_pfnFunc, (void *)m_pfnDetour) != FUNCHOOK_ERROR_SUCCESS)
+	{
+		Warning("Could not prepare detour for %s\n", m_pszName);
+		funchook_destroy(m_hook);
+		m_hook = nullptr;
+		return false;
+	}
 
 	g_vecDetours.AddToTail(this);
 	return true;
 }
 
 template<typename T>
-void CDetour<T>::EnableDetour()
+bool CDetour<T>::EnableDetour()
 {
 	if (!m_hook)
 	{
 		Warning("Could not create detour for %s\n", m_pszName);
-		return;
+		return false;
 	}
-	funchook_install(m_hook, 0);
+	if (funchook_install(m_hook, 0) != FUNCHOOK_ERROR_SUCCESS)
+	{
+		Warning("Could not install detour for %s\n", m_pszName);
+		return false;
+	}
+	m_bInstalled = true;
+	return true;
 }
 
 template<typename T>
 void CDetour<T>::DisableDetour()
 {
+	if (!m_bInstalled)
+	{
+		return;
+	}
 	funchook_uninstall(m_hook, 0);
+	m_bInstalled = false;
 }
 
 template<typename T>
@@ -106,8 +123,6 @@ void CDetour<T>::FreeDetour()
 
 #define DECLARE_DETOUR(name, detour) CDetour<decltype(detour)> name(detour, #name)
 
-#define INIT_DETOUR(config, name) \
-	name.CreateDetour(config); \
-	name.EnableDetour();
+#define INIT_DETOUR(config, name) (name.CreateDetour(config) && name.EnableDetour())
 
 void FlushAllDetours();

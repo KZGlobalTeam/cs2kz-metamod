@@ -120,6 +120,8 @@ void KZPlayer::Reset()
 	this->recordingService->Reset();
 	this->paintService->Reset();
 	this->ztopwatchService->Reset();
+	this->profileService->Reset();
+	this->pistolService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true, false);
 	g_pKZStyleManager->ClearStyles(this, true, false);

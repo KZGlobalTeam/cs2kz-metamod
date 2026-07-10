@@ -20,8 +20,11 @@ void KZDatabaseService::SaveTime(const char *runUUID, u64 steamID, u32 courseID,
 	char query[2048];
 	Transaction txn;
 
+	std::string metadataStr(metadata);
+	std::string escapedMetadata = KZDatabaseService::GetDatabaseConnection()->Escape(metadataStr.c_str());
+
 	// Always use UUID insert since all migrations must be applied for the plugin to run
-	V_snprintf(query, sizeof(query), sql_times_insert, runUUID, steamID, courseID, modeID, styleIDs, time, teleportsUsed, metadata.data());
+	V_snprintf(query, sizeof(query), sql_times_insert, runUUID, steamID, courseID, modeID, styleIDs, time, teleportsUsed, escapedMetadata.c_str());
 	txn.queries.push_back(query);
 	if (styleIDs != 0)
 	{

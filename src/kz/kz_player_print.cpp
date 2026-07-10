@@ -13,7 +13,8 @@
 	{ \
 		const char *prefix = KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX); \
 		snprintf(buffer, sizeof(buffer), "%s ", prefix); \
-		vsnprintf(buffer + strlen(prefix) + 1, sizeof(buffer) - (strlen(prefix) + 1), format, args); \
+		size_t prefixLen = strlen(buffer); \
+		vsnprintf(buffer + prefixLen, sizeof(buffer) - prefixLen, format, args); \
 	} \
 	else \
 	{ \
@@ -43,7 +44,7 @@ static_function CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, 
 	{
 		return nullptr;
 	}
-	for (int i = 0; i < MAXPLAYERS; i++)
+	for (int i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
 		if (!player || player->IsAlive())

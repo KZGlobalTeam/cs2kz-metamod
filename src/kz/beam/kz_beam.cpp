@@ -210,6 +210,14 @@ void KZBeamService::UpdatePlayerBeam()
 
 void KZBeamService::Reset()
 {
+	if (this->playerBeam.Get())
+	{
+		g_pKZUtils->RemoveEntity(this->playerBeam.Get());
+	}
+	if (this->playerBeamNew.Get())
+	{
+		g_pKZUtils->RemoveEntity(this->playerBeamNew.Get());
+	}
 	this->playerBeam = {};
 	this->playerBeamNew = {};
 	this->playerBeamOffset = KZBeamService::defaultOffset;

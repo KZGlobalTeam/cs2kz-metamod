@@ -424,7 +424,12 @@ void KZQuietService::ToggleHide()
 
 void KZQuietService::UpdateHideState()
 {
-	CPlayer_ObserverServices *obsServices = this->player->GetController()->m_hPawn()->m_pObserverServices;
+	CCSPlayerPawn *pawn = this->player->GetController()->m_hPawn();
+	CPlayer_ObserverServices *obsServices = nullptr;
+	if (pawn)
+	{
+		obsServices = pawn->m_pObserverServices;
+	}
 	if (!obsServices)
 	{
 		this->lastObserverMode = OBS_MODE_NONE;

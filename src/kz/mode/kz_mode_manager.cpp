@@ -199,37 +199,37 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 void KZModeManager::UnregisterMode(PluginId id)
 {
 	// Cannot unregister VNL.
-	if (id = g_PLID)
+	if (id == g_PLID)
 	{
 		return;
 	}
 
-	FOR_EACH_VEC(modeInfos, i)
+	FOR_EACH_VEC(modeInfos, modeIdx)
 	{
-		if (id == modeInfos[i].id)
+		if (id == modeInfos[modeIdx].id)
 		{
-			for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+			for (u32 slot = 0; slot < MAXPLAYERS + 1; slot++)
 			{
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 				if (!player->IsInGame())
 				{
 					continue;
 				}
-				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[i].longModeName)
-					|| !V_strcmp(player->modeService->GetModeShortName(), modeInfos[i].shortModeName))
+				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[modeIdx].longModeName)
+					|| !V_strcmp(player->modeService->GetModeShortName(), modeInfos[modeIdx].shortModeName))
 				{
 					this->SwitchToMode(player, "VNL");
 				}
 			}
 
 			char shortModeCmd[64];
-			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[i].shortModeName.Get());
+			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[modeIdx].shortModeName.Get());
 			scmd::UnregisterCmd(shortModeCmd);
 
-			modeInfos[i].id = -1;
-			modeInfos[i].md5[0] = 0;
-			modeInfos[i].factory = nullptr;
-			modeInfos[i].shortCmdRegistered = false;
+			modeInfos[modeIdx].id = -1;
+			modeInfos[modeIdx].md5[0] = 0;
+			modeInfos[modeIdx].factory = nullptr;
+			modeInfos[modeIdx].shortCmdRegistered = false;
 
 			break;
 		}

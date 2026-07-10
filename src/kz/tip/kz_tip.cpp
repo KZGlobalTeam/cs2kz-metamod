@@ -25,19 +25,19 @@ void KZTipService::Init()
 
 void KZTipService::Reset()
 {
-	this->showTips = true;
 	this->teamJoinedAtLeastOnce = false;
 }
 
 void KZTipService::ToggleTips()
 {
-	this->showTips = !this->showTips;
-	player->languageService->PrintChat(true, false, this->showTips ? "Option - Tips - Enable" : "Option - Tips - Disable");
+	bool showTips = !this->player->optionService->GetPreferenceBool("showTips", true);
+	this->player->optionService->SetPreferenceBool("showTips", showTips);
+	player->languageService->PrintChat(true, false, showTips ? "Option - Tips - Enable" : "Option - Tips - Disable");
 }
 
 bool KZTipService::ShouldPrintTip()
 {
-	return this->showTips;
+	return this->player->optionService->GetPreferenceBool("showTips", true);
 }
 
 void KZTipService::PrintTip()
@@ -99,6 +99,11 @@ SCMD(kz_tips, SCFL_MISC)
 
 f64 KZTipService::PrintTips()
 {
+	// No tip translation files loaded, nothing to print.
+	if (tipNames.Count() == 0)
+	{
+		return tipInterval;
+	}
 	for (int i = 0; i <= MAXPLAYERS; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);

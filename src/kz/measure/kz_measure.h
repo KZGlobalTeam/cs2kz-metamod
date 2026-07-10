@@ -28,13 +28,7 @@ public:
 	f32 lastMeasureTime {};
 	CEntityHandle measurerHandle {};
 
-	virtual void Reset() override
-	{
-		startPosSetTime = {};
-		startPos.Invalidate();
-		lastMeasureTime = {};
-		measurerHandle = {};
-	}
+	virtual void Reset() override;
 
 	void TryMeasure();
 	void StartMeasure();

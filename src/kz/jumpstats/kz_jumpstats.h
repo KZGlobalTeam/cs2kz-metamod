@@ -3,6 +3,7 @@
 #include "common.h"
 #include "movement/movement.h"
 #include "sdk/datatypes.h"
+#include "utils/circularfifobuffer.h"
 
 #include "../kz.h"
 
@@ -45,7 +46,9 @@ enum DistanceTier : u8
 #define JS_MAX_WEIRDJUMP_FALL_OFFSET    (64.0f + JS_EPSILON)
 #define JS_TOUCH_GRACE_PERIOD           0.04f
 #define JS_SPEED_MODIFICATION_TOLERANCE 0.1f
-#define JS_TELEPORT_DISTANCE_SQUARED    4096.0f * 4096.0f * ENGINE_FIXED_TICK_INTERVAL
+// clang-format off
+#define JS_TELEPORT_DISTANCE_SQUARED    4096.0f * 4096.0f * ENGINE_FIXED_TICK_INTERVAL * ENGINE_FIXED_TICK_INTERVAL
+// clang-format on
 
 #define JS_MIN_BLOCK_DISTANCE          186
 #define JS_MIN_LAJ_BLOCK_DISTANCE      50
@@ -274,10 +277,6 @@ public:
 	i32 failstatStrafeCount {};
 	f32 failstatTotalDistance {};
 	i32 failstatGraphCallCount {};
-	// One pose per subtick movement.
-	JumpPose poseHistory[JS_FAILSTATS_MAX_TRACKED_TICKS];
-	i32 poseIndex {};
-	i32 poseCount {};
 	bool failstatBlockDetected {};
 	bool failstatFailed {};
 	bool failstatValid {};
@@ -485,7 +484,7 @@ public:
 	void CalcBlockStats(Vector landingOrigin, bool checkOffset = false);
 	void CalcLadderBlockStats(Vector landingOrigin, bool checkOffset = false);
 	void CalcAlwaysEdge();
-	bool GetFailOrigin(f32 planeHeight, Vector &result, i32 poseOffset);
+	bool GetFailOrigin(f32 planeHeight, Vector &result, i32 offset);
 };
 
 class KZJumpstatsService : public KZBaseService
@@ -499,6 +498,8 @@ public:
 
 	// Jumpstats
 	CUtlVector<Jump> jumps;
+	// One pose per subtick movement of the current jump, consumed by the tail jump's failstat tracking.
+	CFIFOCircularBuffer<JumpPose, JS_FAILSTATS_MAX_TRACKED_TICKS> poseHistory;
 	f32 lastJumpButtonTime {};
 	f32 lastNoclipTime {};
 	f32 lastDuckbugTime {};

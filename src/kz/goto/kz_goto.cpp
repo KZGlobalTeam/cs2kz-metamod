@@ -104,10 +104,11 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 
 	this->player->Teleport(&origin, &angles, &vec3_origin);
 	this->player->languageService->PrintChat(true, false, "Goto - Teleported", targetPlayer->GetName());
-	if (this->player->GetPlayerPawn()->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	if (pawn && pawn->m_Collision().m_CollisionGroup() != KZ_COLLISION_GROUP_STANDARD)
 	{
-		this->player->GetPlayerPawn()->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
-		this->player->GetPlayerPawn()->CollisionRulesChanged();
+		pawn->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
+		pawn->CollisionRulesChanged();
 	}
 	return true;
 }
