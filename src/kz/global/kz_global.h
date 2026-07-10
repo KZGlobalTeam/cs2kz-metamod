@@ -649,7 +649,7 @@ public:
 	template<typename CB>
 	SubmitRecordResult SubmitRecord(const RecordData &data, CB &&callback)
 	{
-		if (!this->player->IsAuthenticated() && !this->player->hasPrime)
+		if (!this->player->IsAuthenticated() || !this->player->hasPrime)
 		{
 			return SubmitRecordResult::PlayerNotAuthenticated;
 		}
