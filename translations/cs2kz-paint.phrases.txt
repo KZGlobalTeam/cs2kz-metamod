@@ -6,7 +6,7 @@
 		"chi"		"{grey}用法: kz_paintcolor <颜色名称> 或 <R> <G> <B> [A]\n可用颜色: red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ua"		"{grey}Використання: kz_paintcolor <назва кольору> or <R> <G> <B> [A]\nДоступні кольори: red, white, black, blue, brown, green, yellow, purple"
 		"ru"		"{grey}Применение: kz_paintcolor <название цвета> или <R> <G> <B> [A]\nДоступные цвета: red, white, black, blue, brown, green, yellow, purple"
-			"ko"		"{grey}사용법: kz_paintcolor <색상 이름> 또는 <R> <G> <B> [A]\n사용 가능한 색상: red(빨강), white(흰색), black(검정), blue(파랑), brown(갈색), green(초록), yellow(노랑), purple(보라)"
+		"ko"		"{grey}사용법: kz_paintcolor <색상 이름> 또는 <R> <G> <B> [A]\n사용 가능한 색상: red(빨강), white(흰색), black(검정), blue(파랑), brown(갈색), green(초록), yellow(노랑), purple(보라)"
 	}
 	"Current Paint Color"
 	{
@@ -15,7 +15,7 @@
 		"chi"		"{grey}当前涂色颜色: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 		"ua"		"{grey}Колір мітки: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 		"ru"		"{grey}Ваш цвет краски: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
-			"ko"		"{grey}현재 페인트 색상: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
+		"ko"		"{grey}현재 페인트 색상: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 	}
 	"Paint Color Set"
 	{
@@ -24,7 +24,7 @@
 		"chi"		"{grey}涂色颜色已设置为 {default}{name}{grey}."
 		"ua"		"{grey}Колір мітки встановлено на {default}{name}{grey}."
 		"ru"		"{grey}Выбранный цвет краски: {default}{name}{grey}."
-			"ko"		"{grey}페인트 색상이 {default}{name}{grey}(으)로 설정되었습니다."
+		"ko"		"{grey}페인트 색상이 {default}{name}{grey}(으)로 설정되었습니다."
 	}
 	"Paint Color RGB Set"
 	{
@@ -33,7 +33,7 @@
 		"chi"		"{grey}涂色颜色已设置为 RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 		"ua"		"{grey}Колір мітки встановлено на RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 		"ru"		"{grey}Выбранный цвет краски: RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
-			"ko"		"{grey}페인트 색상이 RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})로 설정되었습니다."
+		"ko"		"{grey}페인트 색상이 RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})로 설정되었습니다."
 	}
 	"Paint Size Command Usage"
 	{
@@ -41,7 +41,7 @@
 		"chi"		"{grey}用法: kz_paintsize <大小>\n大小必须为正数. 默认: 16"
 		"ua"		"{grey}Використання: kz_paintsize <розмір>\nРозмір має бути додатнім числом. За замовчуванням: 16"
 		"ru"		"{grey}Применение: kz_paintsize <размер>\nРазмер — положительное число. По умолчанию: 16"
-			"ko"		"{grey}사용법: kz_paintsize <크기>\n크기는 양수여야 합니다. 기본값: 16"
+		"ko"		"{grey}사용법: kz_paintsize <크기>\n크기는 양수여야 합니다. 기본값: 16"
 	}
 	"Current Paint Size"
 	{
@@ -50,7 +50,7 @@
 		"chi"		"{grey}当前涂色大小: {default}{size}{grey}."
 		"ua"		"{grey}Розмір кольорової мітки: {default}{size}{grey}."
 		"ru"		"{grey}Ваш размер метки краски: {default}{size}{grey}."
-			"ko"		"{grey}현재 페인트 크기: {default}{size}{grey}."
+		"ko"		"{grey}현재 페인트 크기: {default}{size}{grey}."
 	}
 	"Paint Size Set"
 	{
@@ -59,7 +59,7 @@
 		"chi"		"{grey}涂色大小已设置为 {default}{size}{grey}."
 		"ua"		"{grey}Розмір кольорової мітки встановлено на {default}{size}{grey}."
 		"ru"		"{grey}Размер метки краски установлен: {default}{size}{grey}."
-			"ko"		"{grey}페인트 크기가 {default}{size}{grey}(으)로 설정되었습니다."
+		"ko"		"{grey}페인트 크기가 {default}{size}{grey}(으)로 설정되었습니다."
 	}
 	"Paint Toggle Enabled"
 	{
@@ -67,7 +67,7 @@
 		"chi"		"{grey}自动涂色已{lime}启用{grey}."
 		"ua"		"{grey}Автоматична кольорова мітка {lime}увімкнена{grey}."
 		"ru"		"{grey}Автопокраска {lime}включена{grey}."
-			"ko"		"{grey}자동 페인트가 {lime}활성화{grey}되었습니다."
+		"ko"		"{grey}자동 페인트가 {lime}활성화{grey}되었습니다."
 	}
 	"Paint Toggle Disabled"
 	{
@@ -75,7 +75,7 @@
 		"chi"		"{grey}自动涂色已{darkred}禁用{grey}."
 		"ua"		"{grey}Автоматична кольорова мітка {darkred}вимкнена{grey}."
 		"ru"		"{grey}Автопокраска {darkred}выключена{grey}."
-			"ko"		"{grey}자동 페인트가 {darkred}비활성화{grey}되었습니다."
+		"ko"		"{grey}자동 페인트가 {darkred}비활성화{grey}되었습니다."
 	}
 	"Show Paint Enabled"
 	{
@@ -83,7 +83,7 @@
 		"chi"		"{grey}你现在能看到{default}所有玩家{grey}的涂色."
 		"ua"		"{grey}Тепер ви бачите кольорові мітки {default}всіх гравців{grey}."
 		"ru"		"{grey}Теперь вы видите краску {default}всех игроков{grey}."
-			"ko"		"{grey}이제 {default}모든 플레이어{grey}의 페인트를 볼 수 있습니다."
+		"ko"		"{grey}이제 {default}모든 플레이어{grey}의 페인트를 볼 수 있습니다."
 	}
 	"Show Paint Disabled"
 	{
@@ -91,6 +91,6 @@
 		"chi"		"{grey}你现在只能看到{default}自己的涂色{grey}."
 		"ua"		"{grey}Тепер ви бачите {default}лише свої{grey} кольрові мітки."
 		"ru"		"{grey}Теперь вы видите {default}только вашу краску{grey}."
-			"ko"		"{grey}이제 {default}자신의 페인트{grey}만 볼 수 있습니다."
+		"ko"		"{grey}이제 {default}자신의 페인트{grey}만 볼 수 있습니다."
 	}
 }

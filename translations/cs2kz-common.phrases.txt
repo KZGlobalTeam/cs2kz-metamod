@@ -88,7 +88,7 @@
 		"ua"		"{grey}Будь ласка, зачекайте, перш ніж використовувати цю команду знову."
 		"de"		"{grey}Bitte warte, bevor du diesen Befehl erneut verwendest."
 		"es"		"{grey}Por favor, espere antes de usar ese comando otra vez."
-			"ko"		"{grey}해당 명령어를 다시 사용하기 전에 잠시 기다려주세요."
+		"ko"		"{grey}해당 명령어를 다시 사용하기 전에 잠시 기다려주세요."
 	}
 	"Beta Join Warning"
 	{
@@ -97,6 +97,6 @@
 		"ru"		"CS2KZ находится на стадии тестирования. Напоминаем, что все рекорды и данные будут стёрты, когда CS2KZ выйдет из беты."
 		"ua"		"CS2KZ наразі перебуває на етапі тестування. Зверніть увагу, що всі рекорди та дані будуть видалені після виходу CS2KZ з бета-версії."
 		"es"		"CS2KZ actualmente esta en fase de pruebas (Beta). Recordatorio de que todos los records y datos serán borrados cuando CS2KZ esté fuera del modo Beta."
-			"ko"		"CS2KZ는 현재 테스트 단계입니다. CS2KZ가 베타를 종료하면 모든 기록과 데이터가 삭제될 수 있음을 유의하세요."
+		"ko"		"CS2KZ는 현재 테스트 단계입니다. CS2KZ가 베타를 종료하면 모든 기록과 데이터가 삭제될 수 있음을 유의하세요."
 	}
 }

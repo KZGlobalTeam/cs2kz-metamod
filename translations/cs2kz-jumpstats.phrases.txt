@@ -215,7 +215,7 @@
 		"chi"		"幅度"
 		"ua"		"Шир."
 		"ru"		"Шир."
-			"ko"		"너비"
+		"ko"		"너비"
 	}
 	"Edge"
 	{
@@ -642,7 +642,7 @@
 		"sv"		"{grey}Giltiga jumpstats nivåer: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"es"		"{grey} Niveles para las estadísticas de salto: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"de"		"{grey}Gütlige Jumpstats-Level: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
-			"ko"		"{grey}유효한 점프스탯 티어: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+		"ko"		"{grey}유효한 점프스탯 티어: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -702,7 +702,7 @@
 		"ua"		"{grey}Трансляція статистики стрибків у консолі вимкнута."
 		"de"		"{grey}Jumpstats-Konsolen-Ausgabe von anderen Spielern deaktiviert."
 		"es"		"{grey}Difusión de estadísticas de salto en consola desactivada."
-			"ko"		"{grey}점프스탯 콘솔 방송이 비활성화되었습니다."
+		"ko"		"{grey}점프스탯 콘솔 방송이 비활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
 	{
@@ -714,7 +714,7 @@
 		"ua"		"{grey}Мінмальний поріг трансляції статистики стрибків у консолі — {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats-Konsolen-Ausgabe von anderen Spielern ist nun {default}{tier}."
 		"es"		"{grey}El umbral para mostrar las estadísticas de salto ahora es {default}{tier}."
-			"ko"		"{grey}점프스탯 콘솔 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"ko"		"{grey}점프스탯 콘솔 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -813,7 +813,7 @@
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
 		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
 		"es"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sincro | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
-			"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대{edge_stats}{release}"
+		"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대{edge_stats}{release}"
 	}
 	"Jumpstats Report - Chat Summary"
 	{
@@ -825,7 +825,7 @@
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Висота{miss_stats}"
 		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Высота{miss_stats}"
 		"es"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sincro | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Amplitud | {olive}{height} {grey}Altura{miss_stats}"
-			"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}너비 | {olive}{height} {grey}높이{miss_stats}"
+		"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}너비 | {olive}{height} {grey}높이{miss_stats}"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -854,7 +854,7 @@
 		"ua"		"{player_name} не зміг стрибнути {distance} units з {jump_type} {invalidation_reason}"
 		"ru"		"{player_name} не долетел {distance} юнитов с {jump_type} {invalidation_reason}"
 		"es"		"{player_name} falló {distance} unidades con un {jump_type} {invalidation_reason}"
-			"ko"		"{player_name}님이 {distance} 유닛을 {jump_type}(으)로 점프 실패했습니다 {invalidation_reason}"
+		"ko"		"{player_name}님이 {distance} 유닛을 {jump_type}(으)로 점프 실패했습니다 {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{
@@ -866,7 +866,7 @@
 		"ru"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синх | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
 		"es"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sincro | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Altura{release}"
 
-			"ko"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 싱크 | {pre} 프리 | {max} 최대 | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} 높이{release}"
+		"ko"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 싱크 | {pre} 프리 | {max} 최대 | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} 높이{release}"
 	}
 	"Jumpstat Report - Console Segment - Edge"
 	{
@@ -876,7 +876,7 @@
 		"ua"		" | {value} Край"
 		"ru"		" | {value} Край"
 		"es"		" | {value} Límite"
-			"ko"		" | {value} 엣지"
+		"ko"		" | {value} 엣지"
 	}
 	"Jumpstat Report - Console Segment - Block"
 	{
@@ -886,7 +886,7 @@
 		"ua"		" | {value} Блок"
 		"ru"		" | {value} Блок"
 		"es"		" | {value} Bloque"
-			"ko"		" | {value} 블록"
+		"ko"		" | {value} 블록"
 	}
 	"Jumpstat Report - Console Segment - Miss"
 	{
@@ -896,7 +896,7 @@
 		"ua"		" | {value} Брак"
 		"ru"		" | {value} Нехватка"
 		"es"		" | {value} Fallo"
-			"ko"		" | {value} 부족"
+		"ko"		" | {value} 부족"
 	}
 	"Jumpstat Report - Console Segment - Landing Edge"
 	{
@@ -904,7 +904,7 @@
 		"en"		" | {value} LandEdge"
 		"ru"		" | {value} Остаток"
 		"ua"		" | {value} Край"
-			"ko"		" | {value} 착지 엣지"
+		"ko"		" | {value} 착지 엣지"
 	}
 	"Jumpstats Report - Chat Segment - Edge"
 	{
@@ -914,7 +914,7 @@
 		"ua"		" | {olive}{value} {grey}Край"
 		"ru"		" | {olive}{value} {grey}Край"
 		"es"		" | {olive}{value} {grey}Límite"
-			"ko"		" | {olive}{value} {grey}엣지"
+		"ko"		" | {olive}{value} {grey}엣지"
 	}
 	"Jumpstats Report - Chat Segment - Deviation"
 	{
@@ -924,7 +924,7 @@
 		"ua"		" | {olive}{value} {grey}Відх"
 		"ru"		" | {olive}{value} {grey}Откл"
 		"es"		" | {olive}{value} {grey}Desv"
-			"ko"		" | {olive}{value} {grey}편차"
+		"ko"		" | {olive}{value} {grey}편차"
 	}
 	"Jumpstats Report - Chat Segment - Offset"
 	{
@@ -934,7 +934,7 @@
 		"ua"		" | {olive}{value} {grey}Зміщення"
 		"ru"		" | {olive}{value} {grey}Смещ"
 		"es"		" | {olive}{value} {grey}Compensación"
-			"ko"		" | {olive}{value} {grey}오프셋"
+		"ko"		" | {olive}{value} {grey}오프셋"
 	}
 	"Jumpstats Report - Chat Segment - Miss"
 	{
@@ -944,7 +944,7 @@
 		"ua"		" | {olive}{value} {grey}Брак"
 		"ru"		" | {olive}{value} {grey}Нехв"
 		"es"		" | {olive}{value} {grey}Fallo"
-			"ko"		" | {olive}{value} {grey}부족"
+		"ko"		" | {olive}{value} {grey}부족"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
@@ -955,21 +955,21 @@
 		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зміщення | {duck_end_time}/{duck_total_time} Присівши"
 		"ru"		"{gain_eff}%%%% ЭффПрир | {air_path} Airpath | {deviation} Отклонение | {width} Ширина | {air_time} Airtime | {offset} Смещение | {duck_end_time}/{duck_total_time} В приседе"
 		"es"		"{gain_eff}%%%% EficGan | {air_path} Aéreo | {deviation} Desviación | {width} Ancho | {air_time} TiempoVuelo | {offset} Compensación | {duck_end_time}/{duck_total_time} Agachado"
-			"ko"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} 편차 | {width} 너비 | {air_time} 공중 시간 | {offset} 오프셋 | {duck_end_time}/{duck_total_time} 앉기"
+		"ko"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} 편차 | {width} 너비 | {air_time} 공중 시간 | {offset} 오프셋 | {duck_end_time}/{duck_total_time} 앉기"
 	}
 	"Jumpstat Report - Console Graph - Strafe Keys"
 	{
 		"en"		"Strafe keys:"
 		"ru"		"Кнопки:"
 		"ua"		"Клавіші:"
-			"ko"		"스트레이프 키:"
+		"ko"		"스트레이프 키:"
 	}
 	"Jumpstat Report - Console Graph - Mouse Movement"
 	{
 		"en"		"Mouse movement:"
 		"ru"		"Движения мыши:"
 		"ua"		"Рухи миші:"
-			"ko"		"마우스 움직임:"
+		"ko"		"마우스 움직임:"
 	}
 	"Jumpstat Report - Console Graph - Left"
 	{
@@ -977,7 +977,7 @@
 		"en"		"L: {value}"
 		"ru"		"L: {value}"
 		"ua"		"L: {value}"
-			"ko"		"L: {value}"
+		"ko"		"L: {value}"
 	}
 	"Jumpstat Report - Console Graph - Right"
 	{
@@ -985,7 +985,7 @@
 		"en"		"R: {value}"
 		"ru"		"R: {value}"
 		"ua"		"R: {value}"
-			"ko"		"R: {value}"
+		"ko"		"R: {value}"
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
 	{
@@ -997,7 +997,7 @@
 		"sv"		"{grey}Jumpstats chatt rapportering inaktiverad."
 		"de"		"{grey}Jumpstats Chat-Benachrichtigungen deaktivert."
 		"es"		"{grey}Reporte de estadísticas de salto en chat desactivado"
-			"ko"		"{grey}점프스탯 채팅 보고가 비활성화되었습니다."
+		"ko"		"{grey}점프스탯 채팅 보고가 비활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Response"
 	{
@@ -1010,7 +1010,7 @@
 		"sv"		"{grey}Jumpstats chat rapporteringsgränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats Chat-Benachrichtigungen ist nun {default}{tier}."
 		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en chat ahora es {default}{tier}."
-			"ko"		"{grey}점프스탯 채팅 보고 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"ko"		"{grey}점프스탯 채팅 보고 임계값이 이제 {default}{tier}로 설정되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
@@ -1022,7 +1022,7 @@
 		"sv"		"{grey}Jumpstats konsol rapportering inaktiverad."
 		"de"		"{grey}Jumpstats Konsolen-Benachrichtigungen deaktivert."
 		"es"		"{grey}Reporte de estadísticas de salto en consola desactivado."
-			"ko"		"{grey}점프스탯 콘솔 보고가 비활성화되었습니다."
+		"ko"		"{grey}점프스탯 콘솔 보고가 비활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Response"
 	{
@@ -1035,7 +1035,7 @@
 		"sv"		"{grey}Jumpstats konsol rapporteringsgränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats Konsolen-Benachrichtigungen ist nun {default}{tier}."
 		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en consola ahora es {default}{tier}."
-			"ko"		"{grey}점프스탯 콘솔 보고 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"ko"		"{grey}점프스탯 콘솔 보고 임계값이 이제 {default}{tier}로 설정되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
 	{
@@ -1047,7 +1047,7 @@
 		"sv"		"{grey}Jumpstats ljudsändning inaktiverad."
 		"de"		"{grey}Jumpstats-Sounds von anderen Spielern sind nun deaktivert."
 		"es"		"{grey}Efecto de sonido al reportar estadísticas de salto desactivado."
-			"ko"		"{grey}점프스탯 사운드 방송이 비활성화되었습니다."
+		"ko"		"{grey}점프스탯 사운드 방송이 비활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
 	{
@@ -1060,7 +1060,7 @@
 		"sv"		"{grey}Jumpstats ljudsändnings gränsen är nu {default}{tier}."
 		"de"		"{grey}Schwellwert für Jumpstats-Sounds von anderen Spielern ist nun {default}{tier}."
 		"es"		"{grey}El umbral para el efecto de sonido en el reporte de estadísticas de salto ahora es {default}{tier}."
-			"ko"		"{grey}점프스탯 사운드 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"ko"		"{grey}점프스탯 사운드 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Volume - Current"
 	{
@@ -1072,7 +1072,7 @@
 		"ua"		"{grey}Гучність звукових ефектів для стрибків {default}{volume}."
 		"de"		"{grey}Derzeitige Lautstärke von Jumpstats-Sounds ist {default}{volume}."
 		"es"		"{grey}El volumen de sonido en el reporte de estadísticas de salto es {default}{volume}."
-			"ko"		"{grey}현재 점프스탯 볼륨은 {default}{volume}입니다."
+		"ko"		"{grey}현재 점프스탯 볼륨은 {default}{volume}입니다."
 	}
 	"Jumpstats Option - Jumpstats Volume - Response"
 	{
@@ -1085,7 +1085,7 @@
 		"sv"		"{grey}Jumpstats volymen är nu {default}{volume}."
 		"de"		"{grey}Jumpstats Lautstärke wurde auf {default}{volume} gesetzt."
 		"es"		"{grey}Establecido el volumen de sonido en el reporte de estadísticas de salto a {default}{volume}."
-			"ko"		"{grey}점프스탯 볼륨이 {default}{volume}(으)로 설정되었습니다."
+		"ko"		"{grey}점프스탯 볼륨이 {default}{volume}(으)로 설정되었습니다."
 	}
 	"Jumpstats Option - Extended Chat Stats - Enable"
 	{
@@ -1097,7 +1097,7 @@
 		"sv"		"{grey}Utökad jumpstats chattrapportering aktiverat."
 		"de"		"{grey}Erweiterte Jumpstats-Benachrichtigungen im Chat aktiviert."
 		"es"		"{grey}Reporte extendido de estadísticas de salto en el chat activado."
-			"ko"		"{grey}확장된 점프스탯 채팅 보고가 활성화되었습니다."
+		"ko"		"{grey}확장된 점프스탯 채팅 보고가 활성화되었습니다."
 	}
 	"Jumpstats Option - Extended Chat Stats - Disable"
 	{
@@ -1109,7 +1109,7 @@
 		"sv"		"{grey}Utökad jumpstats chattrapportering inaktiverat."
 		"de"		"{grey}Erweiterte Jumpstats-Benachrichtigungen im Chat deaktiviert."
 		"es"		"{grey}Reporte extendido de estadísticas de salto en el chat desactivado."
-			"ko"		"{grey}확장된 점프스탯 채팅 보고가 비활성화되었습니다."
+		"ko"		"{grey}확장된 점프스탯 채팅 보고가 비활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Reporting - Enable"
 	{
@@ -1118,7 +1118,7 @@
 		"ru"		"{grey}Отображение статистики прыжков включено."
 		"ua"		"{grey}Відображення статистики стрибків увімкнено."
 		"es"		"{grey}Reporte de estadísticas de salto activado."
-			"ko"		"{grey}점프스탯 보고가 활성화되었습니다."
+		"ko"		"{grey}점프스탯 보고가 활성화되었습니다."
 	}
 	"Jumpstats Option - Jumpstats Reporting - Disable"
 	{
@@ -1127,7 +1127,7 @@
 		"ru"		"{grey}Отображение статистики прыжков выключено."
 		"ua"		"{grey}Відображення статистики стрибків вимкнено."
 		"es"		"{grey}Reporte de estadísticas de salto desactivado."
-			"ko"		"{grey}점프스탯 보고가 비활성화되었습니다."
+		"ko"		"{grey}점프스탯 보고가 비활성화되었습니다."
 	}
 	"Jumpstats Option - Failstats Chat Reporting - Enable"
 	{
@@ -1136,7 +1136,7 @@
 		"ru"		"{grey}Отображение проваленных прыжков в чате включено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в чаті увімкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en chat activado"
-			"ko"		"{grey}실패 통계 채팅 보고가 활성화되었습니다."
+		"ko"		"{grey}실패 통계 채팅 보고가 활성화되었습니다."
 	}
 	"Jumpstats Option - Failstats Chat Reporting - Disable"
 	{
@@ -1145,7 +1145,7 @@
 		"ru"		"{grey}Отображение проваленных прыжков в чате выключено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в чаті вимкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en chat desactivado."
-			"ko"		"{grey}실패 통계 채팅 보고가 비활성화되었습니다."
+		"ko"		"{grey}실패 통계 채팅 보고가 비활성화되었습니다."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Enable"
 	{
@@ -1154,7 +1154,7 @@
 		"ru"		"{grey}Отображение проваленных прыжков в консоли включено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в консолі увімкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en console activado."
-			"ko"		"{grey}실패 통계 콘솔 보고가 활성화되었습니다."
+		"ko"		"{grey}실패 통계 콘솔 보고가 활성화되었습니다."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Disable"
 	{
@@ -1163,6 +1163,6 @@
 		"ru"		"{grey}Отображение проваленных прыжков в консоли выключено."
 		"ua"		"{grey}Показ статистики невдалих стрибків в консолі вимкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en console desactivado."
-			"ko"		"{grey}실패 통계 콘솔 보고가 비활성화되었습니다."
+		"ko"		"{grey}실패 통계 콘솔 보고가 비활성화되었습니다."
 	}
 }

@@ -155,7 +155,7 @@
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey} / {purple}{points}{grey} punkti]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts]"
-			"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts]"
+		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts]"
 	}
 	"PB Time - Combined (Global)"
 	{
@@ -170,7 +170,7 @@
 		"lv"		"{grey}Globālais: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey} / {purple}{points}{grey} punkti] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} punkti]"
 		"de"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} Pkt]"
 		"es"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
-			"ko"		"{grey}글로벌: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"ko"		"{grey}글로벌: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
 	"PB Time - Split (Global)"
 	{
@@ -185,7 +185,7 @@
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey} / {purple}{points}{grey} punkti] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} punkti]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} Pkt]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
-			"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 	}
 	"PB Time - Overall Rankless (Global)"
 	{
@@ -200,7 +200,7 @@
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Gesamt{grey}]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}]"
-			"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}]"
+		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}]"
 	}
 	"PB Time - Combined Rankless (Global)"
 	{
@@ -215,7 +215,7 @@
 		"lv"		"{grey}Globālais: {default}{time}{grey} [{yellow}Kopējais{grey}/{blue}PRO{grey}]"
 		"de"		"{grey}Global: {default}{time}{grey} [{yellow}Gesamt{grey}/{blue}PRO{grey}]"
 		"es"		"{grey}Global: {default}{time}{grey} [{yellow}General{grey}/{blue}PRO{grey}]"
-			"ko"		"{grey}글로벌: {default}{time}{grey} [{yellow}전체{grey}/{blue}PRO{grey}]"
+		"ko"		"{grey}글로벌: {default}{time}{grey} [{yellow}전체{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Global)"
 	{
@@ -230,7 +230,7 @@
 		"lv"		"{grey}Globālais: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Gesamt{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
-			"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)"
 	{
