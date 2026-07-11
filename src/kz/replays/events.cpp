@@ -256,25 +256,23 @@ namespace KZ::replaysystem::events
 
 	void HandleModeChangeEvent(KZPlayer &player, const RpEvent *event)
 	{
-		const char *modeNamePtr = reinterpret_cast<const char *>(&event->data.modeChange); // first field is name[64]
-		KZ_LOG_DEBUG(LogChannel::Replays, "Mode change event: tick %d, mode %s\n", event->serverTick, modeNamePtr);
+		KZ_LOG_DEBUG(LogChannel::Replays, "Mode change event: tick %d, mode %s\n", event->serverTick, event->data.modeChange.name);
 
-		g_pKZModeManager->SwitchToMode(&player, modeNamePtr, true, true, false);
+		g_pKZModeManager->SwitchToMode(&player, event->data.modeChange.name, true, true, false);
 	}
 
 	void HandleStyleChangeEvent(KZPlayer &player, const RpEvent *event)
 	{
-		const char *styleNamePtr = reinterpret_cast<const char *>(&event->data.styleChange); // first field is name[64]
-		KZ_LOG_DEBUG(LogChannel::Replays, "Style change event: tick %d, style %s, clear style %d\n", event->serverTick, styleNamePtr,
+		KZ_LOG_DEBUG(LogChannel::Replays, "Style change event: tick %d, style %s, clear style %d\n", event->serverTick, event->data.styleChange.name,
 					 event->data.styleChange.clearStyles);
 
 		if (event->data.styleChange.clearStyles)
 		{
 			g_pKZStyleManager->ClearStyles(&player, true, false);
 		}
-		if (styleNamePtr[0] != '\0')
+		if (event->data.styleChange.name[0] != '\0')
 		{
-			g_pKZStyleManager->AddStyle(&player, styleNamePtr, true, false);
+			g_pKZStyleManager->AddStyle(&player, event->data.styleChange.name, true, false);
 		}
 	}
 

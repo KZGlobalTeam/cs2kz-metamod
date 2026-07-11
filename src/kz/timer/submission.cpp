@@ -814,6 +814,10 @@ void RunSubmission::AnnounceGlobal()
 			for (i32 j = 0; j < MAXPLAYERS + 1; j++)
 			{
 				KZPlayer *p = g_pKZPlayerManager->ToPlayer(j);
+				if (!p->IsInGame())
+				{
+					continue;
+				}
 				utils::PlaySoundToClient(p->GetPlayerSlot(), "kz.holyshit", p->optionService->GetPreferenceFloat("recordVolume", 1.0f));
 			}
 		}

@@ -120,6 +120,8 @@ void KZPlayer::Reset()
 	this->recordingService->Reset();
 	this->paintService->Reset();
 	this->ztopwatchService->Reset();
+	this->profileService->Reset();
+	this->pistolService->Reset();
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true, false);
 	g_pKZStyleManager->ClearStyles(this, true, false);
@@ -143,6 +145,7 @@ void KZPlayer::OnPlayerActive()
 	g_pKZStyleManager->RefreshStyles(this, false);
 
 	this->optionService->OnPlayerActive();
+	this->profileService->OnPlayerActive();
 	this->recordingService->EnsureCircularRecorderInitialized();
 
 	if (!this->IsFakeClient() && !this->IsCSTV())

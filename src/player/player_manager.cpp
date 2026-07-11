@@ -251,7 +251,9 @@ void PlayerManager::AuthorizeClient(CPlayerSlot slot)
 
 void PlayerManager::PerformAuthChecks()
 {
-	for (CPlayerSlot slot : this->authQueue)
+	// Iterate over a copy since RemoveFromAuthQueue mutates authQueue during the loop.
+	std::vector<CPlayerSlot> queuedSlots = this->authQueue;
+	for (CPlayerSlot slot : queuedSlots)
 	{
 		Player *player = ToPlayer(slot);
 		if (!player)

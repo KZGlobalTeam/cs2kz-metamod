@@ -112,7 +112,7 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 					if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
 					{
 						player->languageService->PrintChat(true, false, "Spectate Failure (Dead)");
-						return MRES_SUPERCEDE;
+						return false;
 					}
 					targetPlayer = otherPlayer;
 					break;

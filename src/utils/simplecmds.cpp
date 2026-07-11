@@ -240,7 +240,7 @@ bool scmd::UnregisterCmd(const char *name)
 	}
 	if (indexToDelete != -1)
 	{
-		for (i32 i = indexToDelete; i < g_cmdManager.cmdCount; i++)
+		for (i32 i = indexToDelete; i < g_cmdManager.cmdCount - 1; i++)
 		{
 			g_cmdManager.cmds[i] = g_cmdManager.cmds[i + 1];
 		}

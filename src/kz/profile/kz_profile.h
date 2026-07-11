@@ -7,7 +7,6 @@ class KZProfileService : public KZBaseService
 public:
 	using KZBaseService::KZBaseService;
 
-	static void OnGameFrame();
 	static void OnCheckTransmit();
 
 	virtual void Reset() override
@@ -18,10 +17,13 @@ public:
 		currentRating = -1.0f;
 	}
 
+	static inline bool isDirty = false;
 	char clanTag[32] {};
 	u8 desiredMode {};
 	f32 timeToNextRatingRefresh = 0.0f;
 	f64 currentRating = -1.0f;
+
+	void OnPlayerActive();
 
 	void RequestRating();
 	bool CanDisplayRank();

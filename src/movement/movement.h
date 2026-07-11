@@ -41,7 +41,7 @@ extern CUtlVector<TraceHistory> traceHistory;
 
 namespace movement
 {
-	void InitDetours();
+	bool InitDetours();
 
 	void FASTCALL Detour_PhysicsSimulate(CCSPlayerController *);
 	void FASTCALL Detour_SetupMove(CCSPlayer_MovementServices *, PlayerCommand *, CMoveData *);

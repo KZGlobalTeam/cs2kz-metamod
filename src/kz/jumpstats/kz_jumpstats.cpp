@@ -312,6 +312,7 @@ bool Strafe::CalcAngleRatioStats()
 		//	this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE);
 		if (angles.y > maxYaw + 20.0f || angles.y < minYaw - 20.0f)
 		{
+			continue;
 		}
 		f32 gainRatio = (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D()) / this->aaCalls[i].CalcIdealGain();
 		f32 fraction = this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE;
@@ -390,8 +391,6 @@ void Jump::Init()
 	this->failstatSync = 0.0f;
 	this->failstatBadAngles = 0.0f;
 	this->failstatGraphCallCount = 0;
-	this->poseIndex = 0;
-	this->poseCount = 0;
 	this->failstatBlockDetected = (this->jumpType != JumpType_LadderJump);
 	this->failstatFailed = false;
 	this->failstatValid = false;
@@ -973,6 +972,8 @@ void KZJumpstatsService::AddJump()
 	{
 		return;
 	}
+	// Clear the shared pose buffer for the new jump before its failstat tracking begins.
+	this->poseHistory.Advance(this->poseHistory.GetReadAvailable());
 	this->jumps.AddToTail({this->player});
 	this->jumps.Tail().Init();
 }

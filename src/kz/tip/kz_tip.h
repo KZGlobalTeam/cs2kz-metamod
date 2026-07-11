@@ -13,7 +13,6 @@ class KZTipService : public KZBaseService
 	using KZBaseService::KZBaseService;
 
 private:
-	bool showTips {};
 	bool teamJoinedAtLeastOnce {};
 
 public:

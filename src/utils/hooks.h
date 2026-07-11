@@ -7,7 +7,7 @@ namespace hooks
 {
 	inline CUtlVector<int> entityTouchHooks;
 
-	void Initialize();
+	bool Initialize();
 	void Cleanup();
 	void HookEntities();
 } // namespace hooks

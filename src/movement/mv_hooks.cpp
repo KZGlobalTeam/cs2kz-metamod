@@ -13,38 +13,52 @@ CUtlVector<TraceHistory> traceHistory;
 #endif
 extern CGameConfig *g_pGameConfig;
 
-void movement::InitDetours()
+bool movement::InitDetours()
 {
-	INIT_DETOUR(g_pGameConfig, PhysicsSimulate);
-	INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
-	INIT_DETOUR(g_pGameConfig, SetupMove);
-	INIT_DETOUR(g_pGameConfig, ProcessMovement);
-	INIT_DETOUR(g_pGameConfig, PlayerMove);
-	INIT_DETOUR(g_pGameConfig, CheckParameters);
-	INIT_DETOUR(g_pGameConfig, CanMove);
-	INIT_DETOUR(g_pGameConfig, FullWalkMove);
-	INIT_DETOUR(g_pGameConfig, MoveInit);
-	INIT_DETOUR(g_pGameConfig, CheckWater);
-	INIT_DETOUR(g_pGameConfig, WaterMove);
-	INIT_DETOUR(g_pGameConfig, CheckVelocity);
-	INIT_DETOUR(g_pGameConfig, Duck);
-	INIT_DETOUR(g_pGameConfig, CanUnduck);
-	INIT_DETOUR(g_pGameConfig, LadderMove);
-	INIT_DETOUR(g_pGameConfig, CheckJumpButtonLegacy);
-	INIT_DETOUR(g_pGameConfig, CheckJumpButtonModern);
-	INIT_DETOUR(g_pGameConfig, OnJumpLegacy);
-	INIT_DETOUR(g_pGameConfig, OnJumpModern);
-	INIT_DETOUR(g_pGameConfig, AirMove);
-	INIT_DETOUR(g_pGameConfig, AirAccelerate);
-	INIT_DETOUR(g_pGameConfig, Friction);
-	INIT_DETOUR(g_pGameConfig, WalkMove);
-	INIT_DETOUR(g_pGameConfig, TryPlayerMove);
-	INIT_DETOUR(g_pGameConfig, CategorizePosition);
-	INIT_DETOUR(g_pGameConfig, CheckFalling);
-	INIT_DETOUR(g_pGameConfig, PostThink);
+	bool detoursInitialized = true;
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, PhysicsSimulate);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, ProcessUsercmds);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, SetupMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, ProcessMovement);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, PlayerMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CheckParameters);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CanMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, FullWalkMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, MoveInit);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CheckWater);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, WaterMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CheckVelocity);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, Duck);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CanUnduck);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, LadderMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CheckJumpButtonLegacy);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CheckJumpButtonModern);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, OnJumpLegacy);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, OnJumpModern);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, AirMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, AirAccelerate);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, Friction);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, WalkMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, TryPlayerMove);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CategorizePosition);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, CheckFalling);
+	detoursInitialized &= INIT_DETOUR(g_pGameConfig, PostThink);
+
+	if (!detoursInitialized)
+	{
+		KZ_LOG_WARN(LogChannel::Movement, "Failed to initialize one or more movement detours.\n");
+	}
+	return detoursInitialized;
 }
 
-MovementPlayerManager *playerManager = static_cast<MovementPlayerManager *>(g_pPlayerManager);
+// Defers the cast until first use, avoiding static init order issues with g_pPlayerManager.
+static_global struct
+{
+	MovementPlayerManager *operator->() const
+	{
+		return static_cast<MovementPlayerManager *>(g_pPlayerManager);
+	}
+} playerManager;
 
 void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 {

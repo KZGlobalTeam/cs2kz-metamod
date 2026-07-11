@@ -115,6 +115,7 @@ static_global bool PossibleDesubtickedCommand(const PlayerCommand &cmd)
 
 	// If there are subtick moves but the timing is at exactly 0, it's suspicious... unless it's controller-issued commands.
 	bool hasZeroWhen = true;
+	bool hasNonAnalogMove = false;
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
 	{
 		const CSubtickMoveStep &step = cmd.base().subtick_moves(i);
@@ -122,9 +123,11 @@ static_global bool PossibleDesubtickedCommand(const PlayerCommand &cmd)
 		{
 			continue;
 		}
+		hasNonAnalogMove = true;
 		hasZeroWhen &= (step.when() == 0.0f);
 	}
-	return hasZeroWhen;
+	// If every move was analog, we have no non-analog evidence to call this suspicious.
+	return hasNonAnalogMove && hasZeroWhen;
 }
 
 void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)

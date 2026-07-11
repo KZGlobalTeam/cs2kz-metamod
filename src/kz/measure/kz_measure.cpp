@@ -32,6 +32,18 @@ static_function CEntityHandle CreateMeasureBeam(const Vector &start, const Vecto
 	return measurer->GetRefEHandle();
 }
 
+void KZMeasureService::Reset()
+{
+	this->startPosSetTime = {};
+	this->startPos.Invalidate();
+	this->lastMeasureTime = {};
+	if (this->measurerHandle.Get())
+	{
+		g_pKZUtils->RemoveEntity(this->measurerHandle.Get());
+	}
+	this->measurerHandle = {};
+}
+
 void KZMeasureService::TryMeasure()
 {
 	if (this->startPos.IsValid())
