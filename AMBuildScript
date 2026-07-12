@@ -348,8 +348,12 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         '_CRT_NONSTDC_NO_DEPRECATE',
         '_HAS_EXCEPTIONS=0',
         'IXWEBSOCKET_USE_TLS',
-        'IXWEBSOCKET_USE_MBED_TLS'
+        'IXWEBSOCKET_USE_MBED_TLS',
+        'MBEDTLS_USER_CONFIG_FILE="mbedtls_user_config.h"'
       ]
+      mbedtls_config_dir = os.path.join(builder.sourcePath, 'vendor', 'mbedtls-config')
+      cxx.includes += [mbedtls_config_dir]
+      cxx.cxxincludes += [mbedtls_config_dir]
       cxx.cflags += [
         '/wd4267', # conversion from 'size_t' to 'type', possible loss of data
         '/wd4244', # 'argument' : conversion from 'uint64_t' to 'int', possible loss of data
