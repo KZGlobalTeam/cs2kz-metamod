@@ -133,6 +133,8 @@ public:
 
 	virtual void OnAuthorized();
 
+	bool CheckPrime();
+
 public:
 	// General
 	const i32 index;

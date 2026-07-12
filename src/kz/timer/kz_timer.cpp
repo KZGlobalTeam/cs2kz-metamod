@@ -317,7 +317,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	{
 		this->player->languageService->PrintChat(true, false, "No Steam Authentication Warning");
 	}
-	if (KZGlobalService::IsAvailable() && !this->player->hasPrime)
+	if (KZGlobalService::IsAvailable() && !this->player->CheckPrime())
 	{
 		this->player->languageService->PrintChat(true, false, "No Prime Warning");
 	}

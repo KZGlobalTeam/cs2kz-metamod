@@ -474,7 +474,7 @@ void KZGlobalService::OnPlayerAuthorized()
 	{
 		message.ipAddress = "";
 	}
-	message.hasPrime = this->player->hasPrime;
+	message.hasPrime = this->player->CheckPrime();
 
 	KZGlobalService::MessageCallback<KZ::api::messages::PlayerJoinAck> callback(KZGlobalService::OnPlayerJoinAck, steamID);
 	KZGlobalService::WS::SendMessage(message, std::move(callback));

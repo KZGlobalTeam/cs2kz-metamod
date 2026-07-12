@@ -12,6 +12,7 @@ class CBasePlayerWeapon;
 #include "econ/ccsplayerinventory.h"
 #include "entity/cbaseplayerweapon.h"
 class CCSPlayer_MovementServices;
+class CEconPersonaDataPublic;
 
 class CPlayerPawnComponent
 {
@@ -210,8 +211,15 @@ public:
 
 	SCHEMA_FIELD_POINTER_OFFSET(CCSPlayerInventory, m_nPersonaDataXpTrailLevel, 4)
 
+	SCHEMA_FIELD_OFFSET(CEconPersonaDataPublic *, m_unEquippedPlayerSprayIDs, -8)
+
 	CCSPlayerInventory *GetInventory()
 	{
 		return m_nPersonaDataXpTrailLevel();
+	}
+
+	CEconPersonaDataPublic *GetPublicPersonaData()
+	{
+		return m_unEquippedPlayerSprayIDs();
 	}
 };
