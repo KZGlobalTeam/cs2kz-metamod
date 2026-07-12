@@ -71,6 +71,11 @@ bool KZ::api::messages::PlayerJoin::ToJson(Json &json) const
 	return true;
 }
 
+bool KZ::api::messages::PlayerPrimeConfirmed::ToJson(Json &json) const
+{
+	return json.Set("id", this->id);
+}
+
 bool KZ::api::messages::PlayerJoinAck::FromJson(const Json &json)
 {
 	// Backwards compat with older plugin versions that didn't include hasPrime in the ack
