@@ -135,6 +135,10 @@ public:
 
 	bool CheckPrime();
 
+	// Called when the player has been confirmed to have prime status but after OnAuthorized has been called.
+	// This can happen when the player's prime status is late updated after the player has already been authenticated.
+	virtual void OnPrimeStatusConfirmed() {}
+
 public:
 	// General
 	const i32 index;

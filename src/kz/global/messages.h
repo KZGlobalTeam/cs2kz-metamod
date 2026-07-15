@@ -109,6 +109,18 @@ namespace KZ::api::messages
 		bool ToJson(Json &json) const;
 	};
 
+	struct PlayerPrimeConfirmed
+	{
+		u64 id;
+
+		inline static const char *Name()
+		{
+			return "player-prime-confirmed";
+		}
+
+		bool ToJson(Json &json) const;
+	};
+
 	struct PlayerJoinAck
 	{
 		Json preferences;

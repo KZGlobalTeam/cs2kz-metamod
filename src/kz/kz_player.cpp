@@ -982,3 +982,8 @@ const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(KzModeCvars cvar)
 	}
 	return &this->modeService->GetModeConVarValues()[cvar];
 }
+
+void KZPlayer::OnPrimeStatusConfirmed()
+{
+	this->globalService->OnPrimeStatusConfirmed();
+}

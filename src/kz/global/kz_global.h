@@ -850,4 +850,9 @@ public:
 	{
 		replayManager.RequestReplay(requester, replayID);
 	}
+
+	/**
+	 * Called when the player has been re-confirmed to have prime status.
+	 */
+	void OnPrimeStatusConfirmed();
 };
