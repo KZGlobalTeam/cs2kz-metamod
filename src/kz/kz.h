@@ -74,6 +74,7 @@ public:
 	virtual void OnPlayerActive() override;
 	virtual void OnPlayerFullyConnect() override;
 	virtual void OnAuthorized() override;
+	virtual void OnPrimeStatusConfirmed() override;
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;

@@ -111,7 +111,7 @@ namespace KZ::api::messages
 
 	struct PlayerPrimeConfirmed
 	{
-		std::string_view id;
+		u64 id;
 
 		inline static const char *Name()
 		{

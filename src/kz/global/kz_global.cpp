@@ -871,3 +871,11 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 		}
 	}
 }
+
+void KZGlobalService::OnPrimeStatusConfirmed()
+{
+	// Send a message to the API that the player has been confirmed to have prime status.
+	KZ::api::messages::PlayerPrimeConfirmed message;
+	message.id = this->player->GetSteamId64();
+	KZGlobalService::WS::SendMessage(message);
+}

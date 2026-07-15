@@ -88,5 +88,9 @@ bool Player::CheckPrime()
 	this->hasPrime |=
 		(g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense)
 		|| (persona && persona->data.elevated_state());
+	if (this->hasPrime)
+	{
+		this->OnPrimeStatusConfirmed();
+	}
 	return this->hasPrime;
 }
