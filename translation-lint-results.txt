@@ -10,22 +10,8 @@ Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'l
 Checking 11 menu files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/menu'...
 
 ======================================================================
-SUMMARY: 0 error(s), 27 warning(s)
+SUMMARY: 0 error(s), 22 warning(s)
 ======================================================================
-
-cs2kz-commands.phrases.txt (0 errors, 3 warnings)
---------------------------------------------------
-  cs2kz-commands.phrases.txt:626: [WARNING] Formatting: Line has trailing whitespace
-  cs2kz-commands.phrases.txt:637: [WARNING] Formatting: Line has trailing whitespace
-  cs2kz-commands.phrases.txt:1696: [WARNING] Formatting: Line has trailing whitespace
-
-cs2kz-timer-coursetop.phrases.txt (0 errors, 1 warnings)
---------------------------------------------------
-  cs2kz-timer-coursetop.phrases.txt:15: [WARNING] Formatting: Line has trailing whitespace
-
-cs2kz-ztopwatch.phrases.txt (0 errors, 1 warnings)
---------------------------------------------------
-  cs2kz-ztopwatch.phrases.txt:120: [WARNING] Formatting: Line has trailing whitespace
 
 menu/ (0 errors, 22 warnings)
 --------------------------------------------------
@@ -53,7 +39,7 @@ menu/ (0 errors, 22 warnings)
   menu/:0: [WARNING] Missing: Missing menu translation file: vietnamese.txt (for language code 'vi')
 
 ======================================================================
-TOTAL: 0 error(s), 27 warning(s) in 4 file(s)
+TOTAL: 0 error(s), 22 warning(s) in 1 file(s)
 ======================================================================
 Missing translations report written to: missing-translations.txt
 Missing translations JSON written to: missing-translations.json
