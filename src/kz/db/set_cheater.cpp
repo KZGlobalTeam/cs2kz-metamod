@@ -56,7 +56,7 @@ void KZDatabaseService::AddOrUpdateBan(u64 steamID64, const char *reason, const 
 	txn.queries.push_back(query);
 
 	// Insert or update a new ban record with specific end time
-	const UUID_t &useId = banId == UUID_t(false) ? UUID_t() : banId;
+	const UUID_t &useId = (banId == UUID_t(false)) ? UUID_t() : banId;
 	std::string banIdStr = useId.ToString();
 	std::string escapedReason = GetDatabaseConnection()->Escape(reason ? reason : "No reason provided");
 	std::string replayUuidStr = replayUuid == UUID_t(false) ? "NULL" : ("'" + replayUuid.ToString() + "'");
