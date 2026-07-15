@@ -63,7 +63,7 @@ namespace KZ::replaysystem::commands
 			return;
 		}
 
-		UUID_t parsedUuid;
+		UUID_t parsedUuid(false);
 		if (!UUID_t::FromString(uuid, &parsedUuid))
 		{
 			// Try to find replays matching the UUID substring
@@ -537,7 +537,7 @@ namespace KZ::replaysystem::commands
 
 	static void PlayReplayByID(KZPlayer *player, const char *idStr)
 	{
-		UUID_t uuid;
+		UUID_t uuid(false);
 		if (!UUID_t::FromString(idStr, &uuid))
 		{
 			player->languageService->PrintChat(true, false, "Replay - Not Found");

@@ -36,7 +36,7 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 
 void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const std::vector<char> &binaryData, CPlayerUserId userID)
 {
-	UUID_t replayID;
+	UUID_t replayID(false);
 	{
 		std::lock_guard _guard(KZGlobalService::replayManager.mutex);
 		if (KZGlobalService::replayManager.pendingDownload.has_value())

@@ -356,7 +356,7 @@ namespace KZ::replaysystem::data
 		}
 		g_pFullFileSystem->Close(file);
 
-		UUID_t uuid = {};
+		UUID_t uuid(false);
 		if (!UUID_t::FromString(CUtlString(path).GetBaseFilename().StripExtension().Get(), &uuid))
 		{
 			return result;
