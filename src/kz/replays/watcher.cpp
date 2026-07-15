@@ -662,7 +662,7 @@ void ReplayWatcher::LoadArchiveIndex()
 		}
 
 		u64 timestamp = member->GetUInt64(0);
-		UUID_t uuid;
+		UUID_t uuid(false);
 		if (UUID_t::FromString(uuidStr, &uuid))
 		{
 			this->archivedIndex[uuid] = timestamp;
@@ -936,7 +936,7 @@ void ReplayWatcher::ScanReplays()
 			{
 				*ext = '\0';
 			}
-			UUID_t uuid;
+			UUID_t uuid(false);
 			if (UUID_t::FromString(uuidStr, &uuid))
 			{
 				char fullPath[MAX_PATH];
@@ -1041,7 +1041,7 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 			{
 				*ext = '\0';
 			}
-			UUID_t uuid;
+			UUID_t uuid(false);
 			if (UUID_t::FromString(uuidStr, &uuid))
 			{
 				char fullPath[MAX_PATH];
