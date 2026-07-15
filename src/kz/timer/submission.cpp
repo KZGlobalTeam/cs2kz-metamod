@@ -34,7 +34,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	  time(player->timerService->GetTime()), teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
-	this->global = player->hasPrime && KZGlobalService::MayBecomeAvailable();
+	this->global = player->CheckPrime() && KZGlobalService::MayBecomeAvailable();
 
 	if (kz_debug_announce_global.Get() && !this->global)
 	{

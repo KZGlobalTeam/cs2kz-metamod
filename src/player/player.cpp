@@ -4,6 +4,15 @@
 #include "sdk/recipientfilters.h"
 
 #include "steam/steam_gameserver.h"
+#include "cstrike15_gcmessages.pb.h"
+
+class CEconPersonaDataPublic // GCSDK::CProtoBufSharedObject < CSOPersonaDataPublic, k_EEconTypePersonaDataPublic >
+{
+public:
+	void **vtable;
+	CSOPersonaDataPublic data;
+};
+
 extern CSteamGameServerAPIContext g_steamAPI;
 
 CCSPlayerController *Player::GetController()
@@ -32,8 +41,10 @@ void Player::OnAuthorized()
 	{
 		g_steamAPI.Init();
 	}
+	CEconPersonaDataPublic *persona = this->GetController()->m_pInventoryServices()->GetPublicPersonaData();
 	this->hasPrime =
-		g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense;
+		(g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense)
+		|| (persona && persona->data.elevated_state());
 }
 
 void Player::SetName(const char *name)
@@ -64,4 +75,18 @@ void Player::SetClan(const char *clan)
 		}
 		this->SetName(newName);
 	}
+}
+
+bool Player::CheckPrime()
+{
+	if (this->hasPrime)
+	{
+		return true;
+	}
+	auto steamID = this->GetClient()->GetClientSteamID();
+	CEconPersonaDataPublic *persona = this->GetController()->m_pInventoryServices()->GetPublicPersonaData();
+	this->hasPrime |=
+		(g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense)
+		|| (persona && persona->data.elevated_state());
+	return this->hasPrime;
 }
