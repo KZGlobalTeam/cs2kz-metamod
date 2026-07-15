@@ -9,6 +9,7 @@
 		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}Вчасно ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Зарано ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Запізно ({lime}{modernPerfsLate}{grey})"
 		"ru"		"{grey}Прыжки: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Рано ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Поздно ({lime}{modernPerfsLate}{grey})"
 		"es"		"{grey}Saltos: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+		"ko"		"{grey}점프: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}이른 ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}늦은 ({lime}{modernPerfsLate}{grey})"
 	}
 	"Telemetry - Legacy Bhop Stats"
 	{
@@ -19,6 +20,7 @@
 		"ru"		"{grey}Прыжки: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
 		"ua"		"{grey}Стрибки: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
 		"es"		"{grey}Saltos: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+		"ko"		"{grey}점프: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}퍼프 ({lime}{perfs}{grey})"
 	}
 	"Telemetry - Reset Bhop Stats"
 	{
@@ -27,5 +29,6 @@
 		"ru"		"{grey}Bhop статистика была очищена."
 		"ua"		"{grey}Bhop статистику було скинуто."
 		"es"		"{grey}Las estadísticas de Bunny-hop han sido reseteadas."
+		"ko"		"{grey}번니홉 통계가 초기화되었습니다."
 	}
 }

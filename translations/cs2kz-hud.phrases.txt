@@ -255,6 +255,7 @@
 		"chi"		"{grey}紧凑面板已启用."
 		"ru"		"{grey}Компактная панель включена."
 		"ua"		"{grey}Компактна панель увімкнена."
+		"ko"		"{grey}소형 패널이 활성화되었습니다."
 	}
 	"HUD Option - Compact Panel - Disable"
 	{
@@ -262,6 +263,7 @@
 		"chi"		"{grey}紧凑面板已禁用."
 		"ru"		"{grey}Компактная панель выключена."
 		"ua"		"{grey}Компактна панель вимкнена."
+		"ko"		"{grey}소형 패널이 비활성화되었습니다."
 	}
 	"Panel Command Usage"
 	{
@@ -269,6 +271,7 @@
 		"chi"		"{grey}用法: {default}kz_panel <compact>{grey}."
 		"ru"		"{grey}Применение: {default}kz_panel <compact>{grey}."
 		"ua"		"{grey}Використання: {default}kz_panel <compact>{grey}."
+		"ko"		"{grey}사용법: {default}kz_panel <compact>{grey}."
 	}
 
 	"MHUD - Speed Enabled"
@@ -277,6 +280,7 @@
 		"chi"		"{grey}速度显示已 {green}启用."
 		"ru"		"{grey}Отображение скорости {green}включено."
 		"ua"		"{grey}Відображення швидкості {green}увімкнено."
+		"ko"		"{grey}속도 표시가 현재 {green}활성화되어 있습니다."
 	}
 	"MHUD - Speed Disabled"
 	{
@@ -284,6 +288,7 @@
 		"chi"		"{grey}速度显示已 {darkred}禁用."
 		"ru"		"{grey}Отображение скорости {darkred}выключено."
 		"ua"		"{grey}Відображення швидкості {darkred}вимкнено."
+		"ko"		"{grey}속도 표시가 현재 {darkred}비활성화되어 있습니다."
 	}
 	"MHUD - Prespeed Enabled"
 	{
@@ -291,6 +296,7 @@
 		"chi"		"{grey}起跳速度显示已 {green}启用."
 		"ru"		"{grey}Отображение prespeed {green}включено."
 		"ua"		"{grey}Відображення пре-швидкості (prespeed) {green}увімкнено."
+		"ko"		"{grey}프리스피드 표시가 현재 {green}활성화되어 있습니다."
 	}
 	"MHUD - Prespeed Disabled"
 	{
@@ -298,6 +304,7 @@
 		"chi"		"{grey}起跳速度显示已 {darkred}禁用."
 		"ru"		"{grey}Отображение prespeed {darkred}выключено."
 		"ua"		"{grey}Відображення пре-швидкості (prespeed) {darkred}вимкнено."
+		"ko"		"{grey}프리스피드 표시가 현재 {darkred}비활성화되어 있습니다."
 	}
 	"MHUD - Timer Enabled"
 	{
@@ -305,6 +312,7 @@
 		"chi"		"{grey}计时器显示已 {green}启用."
 		"ru"		"{grey}Отображение таймера {green}включено."
 		"ua"		"{grey}Відображення таймера {green}увімкнено."
+		"ko"		"{grey}타이머 표시가 현재 {green}활성화되어 있습니다."
 	}
 	"MHUD - Timer Disabled"
 	{
@@ -312,6 +320,7 @@
 		"chi"		"{grey}计时器显示已 {darkred}禁用."
 		"ru"		"{grey}Отображение таймера {darkred}выключено."
 		"ua"		"{grey}Відображення таймера {darkred}вимкнено."
+		"ko"		"{grey}타이머 표시가 현재 {darkred}비활성화되어 있습니다."
 	}
 	"MHUD - Timer Detail Enabled"
 	{
@@ -319,6 +328,7 @@
 		"chi"		"{grey}计时器详细信息显示已 {green}启用."
 		"ru"		"{grey}Расширенный таймер {green}включен."
 		"ua"		"{grey}Розширений таймер {green}увімкнено."
+		"ko"		"{grey}타이머 상세 정보가 현재 {green}활성화되어 있습니다."
 	}
 	"MHUD - Timer Detail Disabled"
 	{
@@ -326,6 +336,7 @@
 		"chi"		"{grey}计时器详细信息显示已 {darkred}禁用."
 		"ru"		"{grey}Расширенный таймер {darkred}выключен."
 		"ua"		"{grey}Розширений таймер {darkred}вимкнено."
+		"ko"		"{grey}타이머 상세 정보가 현재 {darkred}비활성화되어 있습니다."
 	}
 	"MHUD - Keys Enabled"
 	{
@@ -333,6 +344,7 @@
 		"chi"		"{grey}按键显示已 {green}启用."
 		"ru"		"{grey}Отображение кнопок {green}включено."
 		"ua"		"{grey}Відображення клавіш {green}увімкнено."
+		"ko"		"{grey}키 표시가 현재 {green}활성화되어 있습니다."
 	}
 	"MHUD - Keys Disabled"
 	{
@@ -340,6 +352,7 @@
 		"chi"		"{grey}按键显示已 {darkred}禁用."
 		"ru"		"{grey}Отображение кнопок {darkred}выключено."
 		"ua"		"{grey}Відображення клавіш {darkred}вимкнено."
+		"ko"		"{grey}키 표시가 현재 {darkred}비활성화되어 있습니다."
 	}
 	"MHUD - Keys Overlap Enabled"
 	{
@@ -347,6 +360,7 @@
 		"chi"		"{grey}按键冲突显示已 {green}启用."
 		"ru"		"{grey}Наложение (overlap) кнопок {green}включено."
 		"ua"		"{grey}Накладання (overlap) клавіш {green}увімкнено."
+		"ko"		"{grey}키 중복 표시가 현재 {green}활성화되어 있습니다."
 	}
 	"MHUD - Keys Overlap Disabled"
 	{
@@ -354,6 +368,7 @@
 		"chi"		"{grey}按键冲突显示已 {darkred}禁用."
 		"ru"		"{grey}Наложение (overlap) кнопок {darkred}выключено."
 		"ua"		"{grey}Накладання (overlap) клавіш {darkred}вимкнено."
+		"ko"		"{grey}키 중복 표시가 현재 {darkred}비활성화되어 있습니다."
 	}
 	"MHUD - Speed Offset Set"
 	{
@@ -362,6 +377,7 @@
 		"chi"		"{grey}HUD {default}速度{grey}偏移已更新为 {default}({x}, {y})."
 		"ru"		"{grey}Смещение {default}скорости{grey} в HUD изменено на {default}({x}, {y})."
 		"ua"		"{grey}Зміщення {default}швидкості{grey} в HUD змінено на {default}({x}, {y})."
+		"ko"		"{grey}HUD {default}속도{grey} 오프셋이 {default}({x}, {y})(으)로 업데이트되었습니다."
 	}
 	"MHUD - Speed Offset Usage"
 	{
@@ -370,6 +386,7 @@
 		"chi"		"{grey}HUD {default}速度{grey}偏移当前为 {default}({x}, {y}){grey}. 用法: {default}!mhud speed offset {grey}<x> <y>"
 		"ru"		"{grey}Смещение {default}скорости{grey} в HUD сейчас {default}({x}, {y}){grey}.  Применение: {default}!mhud speed offset {grey}<x> <y>"
 		"ua"		"{grey}Зміщення {default}швидкості{grey} в HUD зараз {default}({x}, {y}){grey}.  Використання: {default}!mhud speed offset {grey}<x> <y>"
+		"ko"		"{grey}HUD {default}속도{grey} 오프셋의 현재 값은 {default}({x}, {y}){grey}입니다. 사용법: {default}!mhud speed offset {grey}<x> <y>"
 	}
 	"MHUD - Speed Scale Set"
 	{
@@ -378,6 +395,7 @@
 		"chi"		"{grey}HUD {default}速度{grey}缩放已更新为 {default}{value}."
 		"ru"		"{grey}Размер {default}скорости{grey} в HUD изменен на {default}{value}."
 		"ua"		"{grey}Розмір {default}швидкості{grey} в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}속도{grey} 크기가 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Speed Scale Usage"
 	{
@@ -386,6 +404,7 @@
 		"chi"		"{grey}HUD {default}速度{grey}缩放当前为 {default}{value}{grey}. 用法: {default}!mhud speed scale {grey}<值>"
 		"ru"		"{grey}Размер {default}скорости{grey} в HUD сейчас {default}{value}{grey}.  Применение: {default}!mhud speed scale {grey}<значение>"
 		"ua"		"{grey}Розмір {default}швидкості{grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud speed scale {grey}<значення>"
+		"ko"		"{grey}HUD {default}속도{grey} 크기의 현재 값은 {default}{value}{grey}입니다. 사용법: {default}!mhud speed scale {grey}<value>"
 	}
 	"MHUD - Speed Color Set"
 	{
@@ -394,6 +413,7 @@
 		"chi"		"{grey}HUD {default}速度{grey}颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}скорости{grey} в HUD изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}швидкості{grey} в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}속도{grey} 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Speed Color Usage"
 	{
@@ -401,6 +421,7 @@
 		"chi"		"{grey}用法: {default}!mhud speed color {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud speed color {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud speed color {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud speed color {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Speed CJ Color Set"
 	{
@@ -409,6 +430,7 @@
 		"chi"		"{grey}HUD {default}速度{grey}蹲跳颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}скорости{grey} для прыжков в присяде (CJ) в HUD изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}швидкості{grey} для стрибків у присяді (CJ) в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}속도{grey} 크라우치 점프 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Speed CJ Color Usage"
 	{
@@ -416,6 +438,7 @@
 		"chi"		"{grey}用法: {default}!mhud speed cjcolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud speed cjcolor {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud speed cjcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud speed cjcolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Speed Reset"
 	{
@@ -423,6 +446,7 @@
 		"chi"		"{grey}HUD {default}速度{grey} 设置已重置为默认值."
 		"ru"		"{grey}Настройки {default}скорости{grey} в HUD были сброшены."
 		"ua"		"{grey}Налаштування {default}швидкості{grey} в HUD скинуті до стандартних."
+		"ko"		"{grey}HUD {default}속도{grey} 설정이 기본값으로 초기화되었습니다."
 	}
 	"MHUD - Prespeed Offset Set"
 	{
@@ -431,6 +455,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey}偏移已更新为 {default}({x}, {y})."
 		"ru"		"{grey}Смещение {default}prespeed{grey} в HUD изменено на {default}({x}, {y})."
 		"ua"		"{grey}Зміщення {default}пре-швидкості (prespeed){grey} в HUD зараз {default}({x}, {y})."
+		"ko"		"{grey}HUD {default}프리스피드{grey} 오프셋이 {default}({x}, {y})(으)로 업데이트되었습니다."
 	}
 	"MHUD - Prespeed Offset Usage"
 	{
@@ -439,6 +464,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey}偏移当前为 {default}({x}, {y}){grey}. 用法: {default}!mhud prespeed offset {grey}<x> <y>"
 		"ru"		"{grey}Смещение {default}prespeed{grey} в HUD сейчас {default}({x}, {y}){grey}.  Применение: {default}!mhud prespeed offset {grey}<x> <y>"
 		"ua"		"{grey}Зміщення {default}пре-швидкості (prespeed){grey} в HUD зараз {default}({x}, {y}){grey}. Використання: {default}!mhud prespeed offset {grey}<x> <y>"
+		"ko"		"{grey}HUD {default}프리스피드{grey} 오프셋의 현재 값은 {default}({x}, {y}){grey}입니다. 사용법: {default}!mhud prespeed offset {grey}<x> <y>"
 	}
 	"MHUD - Prespeed Scale Set"
 	{
@@ -447,6 +473,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey}缩放已更新为 {default}{value}."
 		"ru"		"{grey}Размер {default}prespeed{grey} в HUD был изменен на {default}{value}."
 		"ua"		"{grey}Розмір {default}пре-швидкості (prespeed){grey} в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}프리스피드{grey} 크기가 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Prespeed Scale Usage"
 	{
@@ -455,6 +482,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey}缩放当前为 {default}{value}{grey}. 用法: {default}!mhud prespeed scale {grey}<值>"
 		"ru"		"{grey}Размер {default}prespeed{grey} в HUD сейчас {default}{value}{grey}.  Применение: {default}!mhud prespeed scale {grey}<value>"
 		"ua"		"{grey}Розмір {default}пре-швидкості (prespeed){grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud prespeed scale {grey}<значення>"
+		"ko"		"{grey}HUD {default}프리스피드{grey} 크기의 현재 값은 {default}{value}{grey}입니다. 사용법: {default}!mhud prespeed scale {grey}<value>"
 	}
 	"MHUD - Prespeed Color Set"
 	{
@@ -463,6 +491,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey}颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}prespeed{grey} в HUD был изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}пре-швидкості (prespeed){grey} в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}프리스피드{grey} 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Prespeed Color Usage"
 	{
@@ -470,6 +499,7 @@
 		"chi"		"{grey}用法: {default}!mhud prespeed color {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud prespeed color {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud prespeed color {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud prespeed color {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Prespeed Perf Color Set"
 	{
@@ -478,6 +508,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey}完美连跳颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}prespeed{grey} для perf'а в HUD был изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}пре-швидкості (prespeed){grey} для perf в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}프리스피드{grey} 퍼프 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Prespeed Perf Color Usage"
 	{
@@ -485,6 +516,7 @@
 		"chi"		"{grey}用法: {default}!mhud prespeed perfcolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud prespeed perfcolor {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud prespeed perfcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud prespeed perfcolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Prespeed Jumpbug Color Set"
 	{
@@ -493,6 +525,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey} jumpbug 颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}prespeed{grey} для jumpbug'a в HUD был изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}пре-швидкості{grey} для jumpbug в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}프리스피드{grey} 점프버그 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Prespeed Jumpbug Color Usage"
 	{
@@ -500,6 +533,7 @@
 		"chi"		"{grey}用法: {default}!mhud prespeed jumpbugcolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud prespeed jumpbugcolor {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud prespeed jumpbugcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud prespeed jumpbugcolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Prespeed Reset"
 	{
@@ -507,6 +541,7 @@
 		"chi"		"{grey}HUD {default}起跳速度{grey}设置已重置为默认值."
 		"ru"		"{grey}Настройки {default}prespeed{grey} в HUD были сброшены."
 		"ua"		"{grey}Налаштування {default}пре-швидкості (prespeed){grey} в HUD скинуті до стандартних."
+		"ko"		"{grey}HUD {default}프리스피드{grey} 설정이 기본값으로 초기화되었습니다."
 	}
 	"MHUD - Timer Offset Set"
 	{
@@ -515,6 +550,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}偏移已更新为 {default}({x}, {y})."
 		"ru"		"{grey}Смещение {default}таймера{grey} в HUD изменено на {default}({x}, {y})."
 		"ua"		"{grey}Зміщення {default}таймера{grey} в HUD змінено на {default}({x}, {y})."
+		"ko"		"{grey}HUD {default}타이머{grey} 오프셋이 {default}({x}, {y})(으)로 업데이트되었습니다."
 	}
 	"MHUD - Timer Offset Usage"
 	{
@@ -523,6 +559,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}偏移当前为 {default}({x}, {y}){grey}. 用法: {default}!mhud timer offset {grey}<x> <y>"
 		"ru"		"{grey}Смещение {default}таймера{grey} в HUD сейчас {default}({x}, {y}){grey}.  Применение: {default}!mhud timer offset {grey}<x> <y>"
 		"ua"		"{grey}Зміщення {default}таймера{grey} в HUD зараз {default}({x}, {y}){grey}. Використання: {default}!mhud timer offset {grey}<x> <y>"
+		"ko"		"{grey}HUD {default}타이머{grey} 오프셋의 현재 값은 {default}({x}, {y}){grey}입니다. 사용법: {default}!mhud timer offset {grey}<x> <y>"
 	}
 	"MHUD - Timer Scale Set"
 	{
@@ -531,6 +568,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}缩放已更新为 {default}{value}."
 		"ru"		"{grey}Размер {default}таймера{grey} в HUD изменен на {default}{value}."
 		"ua"		"{grey}Розмір {default}таймера{grey} змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}타이머{grey} 크기가 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Timer Scale Usage"
 	{
@@ -539,6 +577,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}缩放当前为 {default}{value}{grey}. 用法: {default}!mhud timer scale {grey}<值>"
 		"ru"		"{grey}Размер {default}таймера{grey} в HUD сейчас {default}{value}{grey}.  Применение: {default}!mhud timer scale {grey}<значение>"
 		"ua"		"{grey}Розмір {default}таймера{grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud timer scale {grey}<значення>"
+		"ko"		"{grey}HUD {default}타이머{grey} 크기의 현재 값은 {default}{value}{grey}입니다. 사용법: {default}!mhud timer scale {grey}<value>"
 	}
 	"MHUD - Timer TP Color Set"
 	{
@@ -547,6 +586,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}TP颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}таймера{grey} в HUD для TP-прохождений изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}таймера{grey} для проходження з телепортами (TP run) змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}타이머{grey} TP 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Timer TP Color Usage"
 	{
@@ -554,6 +594,7 @@
 		"chi"		"{grey}用法: {default}!mhud timer tpcolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud timer tpcolor {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud timer tpcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud timer tpcolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Pro Color Set"
 	{
@@ -562,6 +603,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}PRO颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}таймера{grey} в HUD для PRO-прохождений изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}таймера{grey} для проходження без телепортів (Pro run) змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}타이머{grey} PRO 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Timer Pro Color Usage"
 	{
@@ -569,6 +611,7 @@
 		"chi"		"{grey}用法: {default}!mhud timer procolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud timer procolor {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud timer procolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud timer procolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Paused Color Set"
 	{
@@ -577,6 +620,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}暂停颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}таймера{grey} в HUD на паузе изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}таймера{grey} в HUD під час паузи змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}타이머{grey} 일시정지 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Timer Paused Color Usage"
 	{
@@ -584,6 +628,7 @@
 		"chi"		"{grey}用法: {default}!mhud timer pausedcolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud timer pausedcolor {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud timer pausedcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud timer pausedcolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Stopped Color Set"
 	{
@@ -592,6 +637,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}停止颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}таймера{grey} в HUD при остановке изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}таймера{grey} в HUD під час повної зупинки змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}타이머{grey} 중지 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Timer Stopped Color Usage"
 	{
@@ -599,6 +645,7 @@
 		"chi"		"{grey}用法: {default}!mhud timer stoppedcolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud timer stoppedcolor {grey}<r> <g> <b> [a] {grey}или {default}<colorname>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud timer stoppedcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud timer stoppedcolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Timer Reset"
 	{
@@ -606,6 +653,7 @@
 		"chi"		"{grey}HUD {default}计时器{grey}设置已重置为默认值."
 		"ru"		"{grey}Настройки {default}таймера{grey} в HUD были сброшены."
 		"ua"		"{grey}Налаштування {default}таймера{grey} в HUD скинуті до стандартних."
+		"ko"		"{grey}HUD {default}타이머{grey} 설정이 기본값으로 초기화되었습니다."
 	}
 	"MHUD - Keys Offset Set"
 	{
@@ -614,6 +662,7 @@
 		"chi"		"{grey}HUD {default}按键{grey}偏移已更新为 {default}({x}, {y})."
 		"ru"		"{grey}Смещение {default}кнопок{grey} в HUD изменено на {default}({x}, {y})."
 		"ua"		"{grey}Зміщення відображення {default}клавіш{grey} в HUD змінено на {default}({x}, {y})."
+		"ko"		"{grey}HUD {default}키{grey} 오프셋이 {default}({x}, {y})(으)로 업데이트되었습니다."
 	}
 	"MHUD - Keys Offset Usage"
 	{
@@ -622,6 +671,7 @@
 		"chi"		"{grey}HUD {default}按键{grey}偏移当前为 {default}({x}, {y}){grey}. 用法: {default}!mhud keys offset {grey}<x> <y>"
 		"ru"		"{grey}Смещение {default}кнопок{grey} в HUD сейчас {default}({x}, {y}){grey}.  Применение: {default}!mhud keys offset {grey}<x> <y>"
 		"ua"		"{grey}Зміщення відображення {default}клавіш{grey} в HUD зараз {default}({x}, {y}){grey}. Використання: {default}!mhud keys offset {grey}<x> <y>"
+		"ko"		"{grey}HUD {default}키{grey} 오프셋의 현재 값은 {default}({x}, {y}){grey}입니다. 사용법: {default}!mhud keys offset {grey}<x> <y>"
 	}
 	"MHUD - Keys Scale Set"
 	{
@@ -630,6 +680,7 @@
 		"chi"		"{grey}HUD {default}按键{grey}缩放已更新为 {default}{value}."
 		"ru"		"{grey}Размер {default}кнопок{grey} в HUD был изменен на {default}{value}."
 		"ua"		"{grey}Розмір {default}клавіш{grey} в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}키{grey} 크기가 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Keys Scale Usage"
 	{
@@ -638,6 +689,7 @@
 		"chi"		"{grey}HUD {default}按键{grey}缩放当前为 {default}{value}{grey}. 用法: {default}!mhud keys scale {grey}<值>"
 		"ru"		"{grey}Размер {default}кнопок{grey} в HUD сейчас {default}{value}{grey}.  Применение: {default}!mhud keys scale {grey}<значение>"
 		"ua"		"{grey}Розмір {default}клавіш{grey} в HUD зараз {default}{value}{grey}. Використання: {default}!mhud keys scale {grey}<значення>"
+		"ko"		"{grey}HUD {default}키{grey} 크기의 현재 값은 {default}{value}{grey}입니다. 사용법: {default}!mhud keys scale {grey}<value>"
 	}
 	"MHUD - Keys Color Set"
 	{
@@ -646,6 +698,7 @@
 		"chi"		"{grey}HUD {default}按键{grey}颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}кнопок{grey} в HUD был изменен на {default}{value}."
 		"ua"		"{grey}Колір відображення {default}клавіш{grey} в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}키{grey} 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Keys Color Usage"
 	{
@@ -653,6 +706,7 @@
 		"chi"		"{grey}用法: {default}!mhud keys color {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud keys color {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud keys color {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud keys color {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Keys Overlap Color Set"
 	{
@@ -661,6 +715,7 @@
 		"chi"		"{grey}HUD {default}按键{grey}重叠颜色已更新为 {default}{value}."
 		"ru"		"{grey}Цвет {default}кнопок{grey} в HUD при наложении (overlap) изменен на {default}{value}."
 		"ua"		"{grey}Колір {default}накладання клавіш{grey} в HUD змінено на {default}{value}."
+		"ko"		"{grey}HUD {default}키{grey} 중복 색상이 {default}{value}(으)로 업데이트되었습니다."
 	}
 	"MHUD - Keys Overlap Color Usage"
 	{
@@ -668,6 +723,7 @@
 		"chi"		"{grey}用法: {default}!mhud keys overlapcolor {grey}<r> <g> <b> [a] {grey}或 {default}<颜色名称>{grey}. 可用颜色: {default}red(红), white(白), black(黑), blue(蓝), brown(棕), green(绿), yellow(黄), purple(紫)"
 		"ru"		"{grey}Применение: {default}!mhud keys overlapcolor {grey}<r> <g> <b> [a] {grey}или {default}<цвет>{grey}.  Цвета: {default}red, white, black, blue, brown, green, yellow, purple"
 		"ua"		"{grey}Використання: {default}!mhud keys overlapcolor {grey}<r> <g> <b> [a] {grey}або {default}<назва_кольору>{grey}. Доступні кольори: {default}red, white, black, blue, brown, green, yellow, purple"
+		"ko"		"{grey}사용법: {default}!mhud keys overlapcolor {grey}<r> <g> <b> [a] {grey}또는 {default}<색상 이름>{grey}. 이름: {default}red, white, black, blue, brown, green, yellow, purple"
 	}
 	"MHUD - Keys Reset"
 	{
@@ -675,6 +731,7 @@
 		"chi"		"{grey}HUD {default}按键{grey}设置已重置为默认值."
 		"ru"		"{grey}Настройки {default}кнопок{grey} в HUD были сброшены."
 		"ua"		"{grey}Налаштування {default}клавіш{grey} в HUD скинуті до стандартних."
+		"ko"		"{grey}HUD {default}키{grey} 설정이 기본값으로 초기화되었습니다."
 	}
 	"MHUD - Unavailable"
 	{
@@ -682,6 +739,7 @@
 		"chi"		"{grey}粒子HUD当前不可用."
 		"ru"		"{grey}Панель HUD сейчас недоступна."
 		"ua"		"{grey}Панель HUD наразі недоступна."
+		"ko"		"{grey}파티클 HUD를 현재 사용할 수 없습니다."
 	}
 	"MHUD - Usage"
 	{
@@ -689,6 +747,7 @@
 		"ru"		"{grey}Применение: {default}!mhud {grey}<элемент>  •  Элементы: {default}speed prespeed timer keys font outline"
 		"chi"		"{grey}用法: {default}!mhud {grey}<显示项>  •  显示项: {default}speed(速度) prespeed(起跳速度) timer(计时器) keys(按键) font(字体) outline(轮廓)"
 		"ua"		"{grey}Використання: {default}!mhud {grey}<елемент>  •  Елементи: {default}speed prespeed timer keys font outline"
+		"ko"		"{grey}사용법: {default}!mhud {grey}<요소>  •  요소: {default}speed prespeed timer keys font outline"
 	}
 	"MHUD - Speed Usage"
 	{
@@ -696,6 +755,7 @@
 		"chi"		"{grey}用法: {default}!mhud speed {grey}<属性>  •  属性: {default}offset(偏移) scale(缩放) color(颜色) crouchjumpcolor/cjcolor(CJ颜色) reset(重置)"
 		"ru"		"{grey}Применение: {default}!mhud speed {grey}<свойство>  •  Свойства: {default}offset scale color crouchjumpcolor/cjcolor reset"
 		"ua"		"{grey}Використання: {default}!mhud speed {grey}<властивість>  •  Список властивостей: {default}offset scale color crouchjumpcolor/cjcolor reset"
+		"ko"		"{grey}사용법: {default}!mhud speed {grey}<속성>  •  속성: {default}offset scale color crouchjumpcolor/cjcolor reset"
 	}
 	"MHUD - Prespeed Usage"
 	{
@@ -703,6 +763,7 @@
 		"chi"		"{grey}用法: {default}!mhud prespeed {grey}<属性>  •  属性: {default}offset(偏移) scale(缩放) color(颜色) perfcolor(完美连跳颜色) jumpbugcolor/jbcolor(jumpbug颜色) reset(重置)"
 		"ru"		"{grey}Применение: {default}!mhud prespeed {grey}<свойство>  •  Свойства: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
 		"ua"		"{grey}Використання: {default}!mhud prespeed {grey}<властивість>  •  Список властивостей: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
+		"ko"		"{grey}사용법: {default}!mhud prespeed {grey}<속성>  •  속성: {default}offset scale color perfcolor jumpbugcolor/jbcolor reset"
 	}
 	"MHUD - Timer Usage"
 	{
@@ -710,6 +771,7 @@
 		"chi"		"{grey}用法: {default}!mhud timer {grey}<属性>  •  属性: {default}detail(详情) offset(偏移) scale(缩放) tpcolor(TP颜色) procolor(PRO颜色) pausedcolor(暂停颜色) stoppedcolor(停止颜色) reset(重置)"
 		"ru"		"{grey}Применение: {default}!mhud timer {grey}<свойство>  •  Свойства: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
 		"ua"		"{grey}Використання: {default}!mhud timer {grey}<властивість>  •  Список властивостей: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
+		"ko"		"{grey}사용법: {default}!mhud timer {grey}<속성>  •  속성: {default}detail offset scale tpcolor procolor pausedcolor stoppedcolor reset"
 	}
 	"MHUD - Keys Usage"
 	{
@@ -717,6 +779,7 @@
 		"chi"		"{grey}用法: {default}!mhud keys {grey}<属性>  •  属性: {default}overlap(重叠) offset(偏移) scale(缩放) color(颜色) overlapcolor(重叠颜色) reset(重置)"
 		"ru"		"{grey}Применение: {default}!mhud keys {grey}<свойство>  •  Свойства: {default}overlap offset scale color overlapcolor reset"
 		"ua"		"{grey}Використання: {default}!mhud keys {grey}<властивість>  •  Список властивостей: {default}overlap offset scale color overlapcolor reset"
+		"ko"		"{grey}사용법: {default}!mhud keys {grey}<속성>  •  속성: {default}overlap offset scale color overlapcolor reset"
 	}
 	"MHUD - Font Usage"
 	{
@@ -725,6 +788,7 @@
 		"ru"		"{grey}Применение: {default}!mhud font {grey}<шрифт>  •  Доступные шрифты: {default}{font_list}"
 		"chi"		"{grey}用法: {default}!mhud font {grey}<字体>  •  可用字体: {default}{font_list}"
 		"ua"		"{grey}Використання: {default}!mhud font {grey}<шрифт>  •  Доступні шрифти: {default}{font_list}"
+		"ko"		"{grey}사용법: {default}!mhud font {grey}<폰트>  •  사용 가능한 폰트: {default}{font_list}"
 	}
 	"MHUD - Font"
 	{
@@ -733,6 +797,7 @@
 		"ru"		"{grey}Шрифт HUD: {default}{value}{grey}."
 		"chi"		"{grey}HUD 字体: {default}{value}{grey}."
 		"ua"		"{grey}Шрифт HUD: {default}{value}{grey}."
+		"ko"		"{grey}HUD 폰트: {default}{value}{grey}."
 	}
 	"MHUD - Set Font"
 	{
@@ -741,6 +806,7 @@
 		"ru"		"{grey}Шрифт HUD изменен на {default}{value}{grey}."
 		"chi"		"{grey}HUD 字体已设置为 {default}{value}{grey}."
 		"ua"		"{grey}Шрифт HUD встановлено на {default}{value}{grey}."
+		"ko"		"{grey}HUD 폰트가 {default}{value}{grey}(으)로 설정되었습니다."
 	}
 	"MHUD - Outline Enabled"
 	{
@@ -748,6 +814,7 @@
 		"ru"		"{grey}Обводка шрифта {green}включена."
 		"chi"		"{grey}轮廓当前为 {green}启用."
 		"ua"		"{grey}Обводку шрифту {green}увімкнено."
+		"ko"		"{grey}아웃라인이 현재 {green}활성화되어 있습니다."
 	}
 	"MHUD - Outline Disabled"
 	{
@@ -755,5 +822,6 @@
 		"ru"		"{grey}Обводка шрифта {red}выключена."
 		"chi"		"{grey}轮廓当前为 {red}禁用."
 		"ua"		"{grey}Обводку шрифту {red}вимкнено."
+		"ko"		"{grey}아웃라인이 현재 {red}비활성화되어 있습니다."
 	}
 }

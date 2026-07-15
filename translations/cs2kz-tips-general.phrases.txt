@@ -154,6 +154,7 @@
 		"sv"	"{grey}Besök den officiella CS2KZ-webbplatsen för uppdaterade kartor, rekord och servrar: {default}https://cs2kz.org{grey}"
 		"de"	"{grey}Besuche die offizielle CS2KZ-Webseite für aktuelle Maps, Rekorde und KZServer: {default}https://cs2kz.org{grey}"
 		"es"	"{grey}Visita la página oficial de CS2KZ para estar ifnormado sobre las ultimas actualizaciones de mapas, records y servidores : {default}https://cs2kz.org{grey}"
+		"ko"		"{grey}최신 맵, 기록, 서버는 공식 CS2KZ 웹사이트를 방문하세요: {default}https://cs2kz.org{grey}"
 	}
 	"Tip - bugs"
 	{

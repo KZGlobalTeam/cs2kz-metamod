@@ -22,5 +22,6 @@
 		"ua"		"{yellow}Увага{grey}: Поточна мапа не затверджена на глобальному рівні. Проходження на цій мапі не будуть зараховані до глобальної статистики."
 		"ru"		"{yellow}Внимание{grey}: Текущая карта не одобрена глобально. Прохождения на этой карте не будут внесены в глобальную статистику."
 		"es"		"{yellow}Atención{grey}: Este mapa no está aprobado para el ranking global. Los records de este mapa no seran publicados globalmente."
+		"ko"		"{yellow}경고{grey}: 현재 맵은 글로벌 승인을 받지 않았습니다. 이 맵에서의 기록은 글로벌로 제출되지 않습니다."
 	}
 }

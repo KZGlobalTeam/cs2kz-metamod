@@ -10,6 +10,7 @@
 		"ua"		"{darkred}Ви не націлюєтеся на щось тверде!"
 		"de"		"{darkred}Du zielst auf nichts Festes!"
 		"es"		"{darkred}¡No estas apuntando a nada solido!"
+		"ko"		"{darkred}고체(솔리드) 대상을 조준하고 있지 않습니다!"
 	}
 	"Measure - Start Position Set"
 	{
@@ -21,6 +22,7 @@
 		"ua"		"{grey}Ви встановили першу позицію для вимірювання."
 		"de"		"{grey}Du hast deine erste Position für die Messung gesetzt."
 		"es"		"{grey}Has puesto tu primera punto de medida."
+		"ko"		"{grey}측정을 위한 첫 번째 위치가 설정되었습니다."
 	}
 	"Measure - Points Not Set"
 	{
@@ -32,6 +34,7 @@
 		"ua"		"{darkred}Ви повинні встановити обидві точки для вимірювання відстані."
 		"de"		"{darkred}Du musst beide Punkte setzen, um eine Entfernung zu messen."
 		"es"		"{darkred}Necesitas establecer dos puntos para medir la distancia."
+		"ko"		"{darkred}거리를 측정하려면 두 지점을 모두 설정해야 합니다."
 	}
 	"Measure - Blocks Not Aligned"
 	{
@@ -43,6 +46,7 @@
 		"ua"		"{darkred}Ви не цілитеся у передню частину блоку!"
 		"de"		"{darkred}Du zielst nicht auf die Vorderseite eines Blocks!"
 		"es"		"{darkred}¡No estas apuntando a la parte frontal de un bloque!"
+		"ko"		"{darkred}블록의 정면을 조준하고 있지 않습니다!"
 	}
 	"Measure - Start Position Timeout"
 	{
@@ -54,6 +58,7 @@
 		"ua"		"{grey}Час очікування першої точки вимірювання вичерпано."
 		"de"		"{grey}Deine erste Messposition ist abgelaufen."
 		"es"		"{grey}Tu primer punto de medición ha caducado."
+		"ko"		"{grey}첫 번째 측정 위치의 시간이 초과되었습니다."
 	}
 	"Measure - Result"
 	{
@@ -67,6 +72,7 @@
 		"ua"		"{default}Відстань{grey} - Горизонтальна: {default}{horizontal}{grey} ({default}{effective}{grey}), Вертикальна: {default}{vertical}{grey}"
 		"de"		"{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertikal: {default}{vertical}{grey}"
 		"es"		"{default}Distancia{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
+		"ko"		"{default}거리{grey} - 수평: {default}{horizontal}{grey} ({default}{effective}{grey}), 수직: {default}{vertical}{grey}"
 	}
 	"Measure - Block Result"
 	{
@@ -80,5 +86,6 @@
 		"ua"		"{default}Відстань між блоками{grey} - Горизонтальна: {default}{block}{grey}"
 		"de"		"{default}Block-Distanz{grey} - Horizontal: {default}{block}{grey}"
 		"es"		"{default}Distancia del bloque{grey} - Horizontal: {default}{block}{grey}"
+		"ko"		"{default}블록 거리{grey} - 수평: {default}{block}{grey}"
 	}
 }

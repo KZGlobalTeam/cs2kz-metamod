@@ -106,6 +106,7 @@
 		"sv"		"{grey}Du kommer att automatiskt dölja ditt vapen när du spawnar."
 		"de"		"{grey}Deine Waffe wird nun beim Spawnen automatisch versteckt."
 		"es"		"{grey}Al reaparecer, tu arma se esconderá de forma automática."
+		"ko"		"{grey}리스폰 시 무기가 자동으로 숨겨집니다."
 	}
 	"Quiet Option - Auto Hide Weapon - Disable"
 	{
@@ -117,5 +118,6 @@
 		"sv"		"{grey}Du kommer inte att automatiskt dölja ditt vapen när du spawnar."
 		"de"		"{grey}Deine Waffe wird beim Spawnen nicht mehr automatisch versteckt."
 		"es"		"{grey}Al reaparecer, tu arma ya no se esconderá de forma automática."
+		"ko"		"{grey}이제 리스폰 시 무기가 자동으로 숨겨지지 않습니다."
 	}
 }

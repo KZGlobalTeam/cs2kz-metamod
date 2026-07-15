@@ -54,6 +54,7 @@
 		"ru"		"{yellow}Внимание: {grey}Сервер не подключен к CS2KZ API."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API."
 		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ."
+		"ko"		"{yellow}경고: {grey}서버가 CS2KZ API에 연결되어 있지 않습니다."
 	}
 	"Map Info - No API Connection"
 	{
@@ -62,6 +63,7 @@
 		"ru"		"{yellow}Внимание: {grey}Сервер не подключен к CS2KZ API. Некоторая информация о карте может быть недоступна."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API. Деяка інформація про мапу може бути недоступною."
 		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ. Alguna información del mapa puede no estar disponible."
+		"ko"		"{yellow}경고: {grey}서버가 CS2KZ API에 연결되어 있지 않습니다. 일부 맵 정보를 사용할 수 없을 수 있습니다."
 	}
 	"Map Info - No API Map Data (Short)"
 	{
@@ -70,6 +72,7 @@
 		"ru"		"{yellow}Внимание: {grey}Данные этой карты не найдены в CS2KZ API."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API."
 		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa."
+		"ko"		"{yellow}경고: {grey}이 맵에 대한 CS2KZ API 데이터를 찾을 수 없습니다."
 	}
 	"Map Info - No API Map Data"
 	{
@@ -78,6 +81,7 @@
 		"ru"		"{yellow}Внимание: {grey}Данные этой карты не найдены в CS2KZ API. Некоторая информация о карте может быть недоступна."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API. Деяка інформація про мапу може бути недоступною."
 		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa. Alguna información del mapa puede no estar disponible."
+		"ko"		"{yellow}경고: {grey}이 맵에 대한 CS2KZ API 데이터를 찾을 수 없습니다. 일부 맵 정보를 사용할 수 없을 수 있습니다."
 	}
 	"Map Info - Check Console"
 	{
@@ -86,6 +90,7 @@
 		"ru"		"{grey}Детальная информация выведена в консоль!"
 		"ua"		"{grey}Перевірте консоль для детальної інформації!"
 		"es"		"{grey}¡Abre la consola para obtener más detalles!"
+		"ko"		"{grey}자세한 내용은 콘솔을 확인하세요!"
 	}
 	"Map Info - Map In Testing"
 	{
@@ -95,6 +100,7 @@
 		"ru"		"{default}{map} {grey}на данный момент {yellow}находится на стадии тестирования{grey}."
 		"ua"		"{default}{map} {grey}наразі {yellow}перебуває на стадії тестування{grey}."
 		"es"		"{default}{map} {grey}está {yellow}en pruebas{grey}."
+		"ko"		"{default}{map} {grey}은(는) 현재 {yellow}테스트 중{grey}입니다."
 	}
 	"Map Info - Map Info Header"
 	{
@@ -104,6 +110,7 @@
 		"ru"		"{map} Информация о карте"
 		"ua"		"{map} Інформація про мапу"
 		"es"		"{map} Información del mapa"
+		"ko"		"{map} 맵 정보"
 	}
 	"Map Info - Mappers"
 	{
@@ -113,6 +120,7 @@
 		"ru"		"Создатели: {mappers}"
 		"ua"		"Мапери: {mappers}"
 		"es"		"Mapeadores: {mappers}"
+		"ko"		"맵 제작자: {mappers}"
 	}
 	"Map Info - State"
 	{
@@ -122,6 +130,7 @@
 		"ru"		"Статус: {state}"
 		"ua"		"Статус: {state}"
 		"es"		"Estado: {state}"
+		"ko"		"상태: {state}"
 	}
 	"Map Info - Description"
 	{
@@ -131,6 +140,7 @@
 		"ru"		"Описание: {description}"
 		"ua"		"Опис: {description}"
 		"es"		"Descripción: {description}"
+		"ko"		"설명: {description}"
 	}
 	"Map Info - Invalid"
 	{
@@ -139,6 +149,7 @@
 		"ru"		"Н/Д"
 		"ua"		"Н/Д"
 		"es"			"N/A"
+		"ko"		"N/A"
 	}
 	"Map Info - In Testing"
 	{
@@ -147,6 +158,7 @@
 		"ru"		"На стадии тестирования"
 		"ua"		"На стадії тестування"
 		"es"		"En pruebas"
+		"ko"		"테스트 중"
 	}
 	"Map Info - Approved"
 	{
@@ -156,6 +168,7 @@
 		"ru"		"Одобрена ({date})"
 		"ua"		"Схвалено ({date})"
 		"es"		"Aprobado ({date})"
+		"ko"		"승인됨 ({date})"
 	}
 	"Course Info - Unranked"
 	{
@@ -164,6 +177,7 @@
 		"ru"		"Без рейтинга"
 		"ua"		"Без рейтингу"
 		"es"		"Sin nivel"
+		"ko"		"비랭크"
 	}
 	"Course Info - Pending"
 	{
@@ -172,6 +186,7 @@
 		"ru"		"На рассмотрении"
 		"ua"		"На розгляді"
 		"es"		"Pendiente"
+		"ko"		"검토 중"
 	}
 	"Course Info - Ranked"
 	{
@@ -180,6 +195,7 @@
 		"ru"		"Рейтинговый"
 		"ua"		"Рейтинговий"
 		"es"		"Nivelado"
+		"ko"		"랭크"
 	}
 	"Courses - Table Name"
 	{
@@ -188,6 +204,7 @@
 		"ru"		"Маршруты"
 		"ua"		"Курси"
 		"es"		"Caminos"
+		"ko"		"코스"
 	}
 	"Course Info Header - Name"
 	{
@@ -196,6 +213,7 @@
 		"ru"		"Название"
 		"ua"		"Назва"
 		"es"		"Nombre"
+		"ko"		"이름"
 	}
 	"Course Info Header - Mappers"
 	{
@@ -204,6 +222,7 @@
 		"ru"		"Создатели"
 		"ua"		"Мапери"
 		"es"		"Mapeadores"
+		"ko"		"제작자"
 	}
 	"Course Info Header - Tier (Vanilla)"
 	{
@@ -212,6 +231,7 @@
 		"ru"		"Tier (Vanilla)"
 		"ua"		"Складність (Vanilla)"
 		"es"		"Nivel (Vanilla)"
+		"ko"		"티어 (Vanilla)"
 	}
 	"Course Info Header - Tier (Classic)"
 	{
@@ -220,6 +240,7 @@
 		"ru"		"Tier (Classic)"
 		"ua"		"Складність (Classic)"
 		"es"		"Nivel (Classic)"
+		"ko"		"티어 (Classic)"
 	}
 	"Course Info Header - State (Vanilla)"
 	{
@@ -228,6 +249,7 @@
 		"ru"		"Статус (Vanilla)"
 		"ua"		"Статус (Vanilla)"
 		"es"		"Estado (Vanilla)"
+		"ko"		"상태 (Vanilla)"
 	}
 	"Course Info Header - State (Classic)"
 	{
@@ -236,6 +258,7 @@
 		"ru"		"Статус (Classic)"
 		"ua"		"Статус (Classic)"
 		"es"		"Estado (Classic)"
+		"ko"		"상태 (Classic)"
 	}
 
 	"Course Data Unavailable"
@@ -246,6 +269,7 @@
 		"ru"		"{darkred}Невозможно получить данные о маршруте {default}{course}{darkred}."
 		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
 		"es"		"{darkred}Datos del curso {default}{course}{darkred} inaccesibles."
+		"ko"		"{darkred}코스 {default}{course}{darkred}의 데이터를 가져올 수 없습니다."
 	}
 
 	"Tier Info"
@@ -257,5 +281,6 @@
 		"ru"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Складність {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"es"		"{default}{course}{grey} ({purple}{state}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"ko"		"{default}{course}{grey} ({purple}{state}{grey}) - 티어 {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 	}
 }

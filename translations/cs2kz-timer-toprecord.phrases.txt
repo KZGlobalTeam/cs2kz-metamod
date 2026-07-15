@@ -31,6 +31,7 @@
 		"lv"		"{grey}Globālie rekordi kartē {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"de"		"{grey}Globale Rekorde auf {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 		"es"		"{grey}Récords globales en {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
+		"ko"		"{grey}글로벌 기록: {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_name}{grey}]"
 	}
 	"No Times"
 	{

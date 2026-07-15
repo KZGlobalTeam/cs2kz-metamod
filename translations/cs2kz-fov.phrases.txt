@@ -8,6 +8,7 @@
 		"ru"		"{grey}Ваш FOV: {purple}{fov}{grey}."
 		"ua"		"{grey}Ваш FOV — {purple}{fov}{grey}."
 		"es"		"{grey}Tu campo de visión actual (FOV) es {purple}{fov}{grey}."
+		"ko"		"{grey}현재 FOV는 {purple}{fov}{grey}입니다."
 	}
 	"Error Message (Invalid FOV)"
 	{
@@ -17,5 +18,6 @@
 		"ru"		"{darkred}Неверный FOV \"{fov}\" (допустимо {min} - {max})."
 		"ua"		"{darkred}Невірний FOV \"{fov}\" (дозволено {min} - {max})."
 		"es"		"{darkred}Campo de visión inválido \"{fov}\" (rango {min} - {max})."
+		"ko"		"{darkred}유효하지 않은 FOV \"{fov}\" (허용 범위: {min} - {max})."
 	}
 }

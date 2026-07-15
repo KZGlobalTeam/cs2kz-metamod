@@ -71,5 +71,6 @@
 		"ru"	"{grey}Напишите {default}/fov {purple}<значение>{grey}, чтобы изменить свой FOV."
 		"ua"	"{grey}Напишіть в чаті {default}/fov {purple}<значення> {grey}, щоб змінити ваш FOV."
 		"es"	"{grey}Usa {default}/fov {purple}<valor> {grey}para cambiar tu campo de visión (FOV)."
+		"ko"		"{grey}FOV를 변경하려면 {default}/fov {purple}<값>{grey}을 사용하세요."
 	}
 }

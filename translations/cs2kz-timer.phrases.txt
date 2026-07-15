@@ -160,6 +160,7 @@
 		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey})"
 		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey})"
 		"es"		"{grey}Puntuación del recorrido: {purple}{points}{grey} {yellow}General{grey} (+{purple}{points_gained}{grey})"
+		"ko"		"{grey}코스 포인트: {purple}{points}{grey} {yellow}전체{grey} (+{purple}{points_gained}{grey})"
 	}
 	"Beat Course Info - Global Points (PRO)"
 	{
@@ -174,6 +175,7 @@
 		"lv"		"{grey}Trases punkti: {purple}{points}{grey} {yellow}Kopvērtējums{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
 		"de"		"{grey}Routenpunkte: {purple}{points}{grey} {yellow}Gesamt{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
 		"es"		"{grey}Puntuación del recorrido: {purple}{points}{grey} {yellow}General{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
+		"ko"		"{grey}코스 포인트: {purple}{points}{grey} {yellow}전체{grey} (+{purple}{points_gained}{grey}) / {purple}{points_pro}{grey} {blue}PRO{grey} (+{purple}{points_gained_pro}{grey})"
 	}
 	"Beat Course Info - New World Record"
 	{
@@ -187,6 +189,7 @@
 		"sv"		"{lime}{player_name}{grey} satte ett {red}GLOBALT REKORD {grey}[{purple}{mode}{grey}]"
 		"de"		"{lime}{player_name}{grey} hat einen neuen {red}GLOBAL RECORD {grey}[{purple}{mode}{grey}] aufgestellt"
 		"es"		"{lime}{player_name}{grey} estableció un nuevo {red}RECORD GLOBAL {grey}[{purple}{mode}{grey}]"
+		"ko"		"{lime}{player_name}{grey}님이 새로운 {red}글로벌 기록 {grey}[{purple}{mode}{grey}]을 세웠습니다!"
 	}
 	"Beat Course Info - New World Record (PRO)"
 	{
@@ -200,6 +203,7 @@
 		"sv"		"{lime}{player_name}{grey} satte ett {darkred}GLOBALT PRO REKORD{grey}[{purple}{mode}{grey}]"
 		"de"		"{lime}{player_name}{grey} hat einen neuen {darkred}GLOBAL PRO RECORD{grey}[{purple}{mode}{grey}] aufgestellt"
 		"es"		"{lime}{player_name}{grey} estableció un nuevo {darkred}RECORD GLOBAL PRO {grey}[{purple}{mode}{grey}]"
+		"ko"		"{lime}{player_name}{grey}님이 새로운 {darkred}글로벌 PRO 기록{grey} [{purple}{mode}{grey}]을 세웠습니다!"
 	}
 
 	"Can't Pause (Generic)"
@@ -396,6 +400,7 @@
 		"ua"		"{darkred}Не знайдено кінцеву позицію для курсу {default}{course_name}{darkred}!"
 		"ru"		"{darkred}Конечная позиция маршрута {default}{course_name} {darkred}не найдена!"
 		"es"		"{darkred}Posición final del recorrido no encontrada {default}{course_name}{darkred}!"
+		"ko"		"{darkred}{default}{course_name}{darkred} 코스의 종료 위치를 찾을 수 없습니다!"
 	}
 	"No Active Course"
 	{
@@ -404,6 +409,7 @@
 		"ua"		"{grey}Наразі у вас немає активного курсу."
 		"ru"		"{grey}У вас нет активного маршрута."
 		"es"		"{grey}No tienes ningún recorrido activo."
+		"ko"		"{grey}현재 활성화된 코스가 없습니다."
 	}
 	"No Jumpstat Area Found"
 	{
@@ -492,6 +498,7 @@
 		"es"		" | SPB {diff_time}"
 		"lv"		" | SPB {diff_time}"
 		"de"		" | SPB {diff_time}"
+		"ko"		" | SPB {diff_time}"
 	}
 	"Global PB Diff (Overall)"
 	{
@@ -505,6 +512,7 @@
 		"es"		" | GPB {diff_time}"
 		"lv"		" | GPB {diff_time}"
 		"de"		" | GPB {diff_time}"
+		"ko"		" | GPB {diff_time}"
 	}
 	"SR Diff (Overall)"
 	{
@@ -518,6 +526,7 @@
 		"es"		" | SR {diff_time}"
 		"lv"		" | SR {diff_time}"
 		"de"		" | SR {diff_time}"
+		"ko"		" | SR {diff_time}"
 	}
 	"WR Diff (Overall)"
 	{
@@ -531,6 +540,7 @@
 		"es"		" | WR {diff_time}"
 		"lv"		" | WR {diff_time}"
 		"de"		" | WR {diff_time}"
+		"ko"		" | WR {diff_time}"
 	}
 	"Server PB Diff (Pro)"
 	{
@@ -544,6 +554,7 @@
 		"es"		" | PRO SPB {diff_time}"
 		"lv"		" | PRO SPB {diff_time}"
 		"de"		" | PRO SPB {diff_time}"
+		"ko"		" | PRO SPB {diff_time}"
 	}
 	"Global PB Diff (Pro)"
 	{
@@ -557,6 +568,7 @@
 		"es"		" | PRO GPB {diff_time}"
 		"lv"		" | PRO GPB {diff_time}"
 		"de"		" | PRO GPB {diff_time}"
+		"ko"		" | PRO GPB {diff_time}"
 	}
 	"SR Diff (Pro)"
 	{
@@ -570,6 +582,7 @@
 		"es"		" | PRO SR {diff_time}"
 		"lv"		" | PRO SR {diff_time}"
 		"de"		" | PRO SR {diff_time}"
+		"ko"		" | PRO SR {diff_time}"
 	}
 	"WR Diff (Pro)"
 	{
@@ -583,6 +596,7 @@
 		"es"		" | PRO WR {diff_time}"
 		"lv"		" | PRO WR {diff_time}"
 		"de"		" | PRO WR {diff_time}"
+		"ko"		" | PRO WR {diff_time}"
 	}
 
 	// You missed your best Overall time (01:23.45)
@@ -863,6 +877,7 @@
 		"es"		"{darkred}Fallo al procesar la solicitud actual. (Mapa no válido)"
 		"lv"		"{darkred}Neizdevās apstrādāt pieprasījumu. (Nederīga karte)"
 		"de"		"{darkred}Aktuelle Anfrage konnte nicht verarbeitet werden. (Ungültige Map)"
+		"ko"		"{darkred}현재 요청을 처리하지 못했습니다. (잘못된 맵)"
 	}
   	"Request - Failed (Generic)"
 	{
@@ -875,6 +890,7 @@
 		"es"		"{darkred}Fallo al procesar la solicitud actual."
 		"lv"		"{darkred}Neizdevās apstrādāt pašreizējo pieprasījumu."
 		"de"		"{darkred}Aktuelle Anfrage konnte nicht verarbeitet werden."
+		"ko"		"{darkred}현재 요청을 처리하지 못했습니다."
 	}
   	"Request - Failed (No Course in Current Map)"
 	{
@@ -888,6 +904,7 @@
 		"es"		"{darkred}Fallo al procesar la solicitud actual. (No hay recorridos en el mapa {map_name})"
 		"lv"		"{darkred}Neizdevās apstrādāt pašreizējo pieprasījumu. (Kartē {map_name} nav neviena trases)"
 		"de"		"{darkred}Aktuelle Anfrage konnte nicht verarbeitet werden. (Keine Route auf der Map {map_name} vorhanden)"
+		"ko"		"{darkred}현재 요청을 처리하지 못했습니다. (맵 {map_name}에 코스가 없습니다)"
 	}
 
 	"Timer Stop Sound Enabled"
@@ -900,6 +917,7 @@
 		"sv"		"{grey}Du har aktiverat timerstoppljud."
 		"de"		"{grey}Du hast das Timer-Stopp-Geräusch aktiviert."
 		"es"		"{grey}Has activado el sonido de paro del temporizador."
+		"ko"		"{grey}타이머 정지 사운드를 활성화했습니다."
 	}
 	"Timer Stop Sound Disabled"
 	{
@@ -911,6 +929,7 @@
 		"sv"		"{grey}Du har inaktiverat timerstoppljud."
 		"de"		"{grey}Du hast das Timer-Stopp-Geräusch deaktiviert."
 		"es"		"{grey}Has desactivado el sonido de paro del temporizador."
+		"ko"		"{grey}타이머 정지 사운드를 비활성화했습니다."
 	}
 	"Record Volume Set"
 	{
@@ -922,18 +941,21 @@
 		"ua"		"{grey}Ви встановили гучність оголошення світового рекорду на {default}{volume}%%%%{grey}."
 		"de"		"{grey}Du hast die Lautstärke der Weltrekordansage auf {default}{volume}%%%%{grey} gesetzt."
 		"es"		"{grey}Has configurado el volumen de sonido del anuncio de nuevo record mundial a {default}{volume}%%%%{grey}."
+		"ko"		"{grey}세계 기록 발표 볼륨을 {default}{volume}%%%%{grey}(으)로 설정했습니다."
 	}
 	"Map Overlay Enabled"
 	{
 		"en"		"{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
 		"chi"		"{grey}地图信息显示已启用. 相关计时事件将打印到控制台."
 		"ua"		"{grey}Оверлей мапи увімкнено. Відповідні події таймера будуть виводитися в консоль."
+		"ko"		"{grey}맵 오버레이 헬퍼가 활성화되었습니다. 관련 타이머 이벤트가 콘솔에 출력됩니다."
 	}
 	"Map Overlay Disabled"
 	{
 		"en"		"{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
 		"chi"		"{grey}地图信息显示已禁用. 相关计时事件将不再打印到控制台."
 		"ua"		"{grey}Оверлей мапи вимкнено. Відповідні події таймера більше не будуть виводитися в консоль."
+		"ko"		"{grey}맵 오버레이 헬퍼가 비활성화되었습니다. 관련 타이머 이벤트가 더 이상 콘솔에 출력되지 않습니다."
 	}
 	"Started Run on Course"
 	{
@@ -944,6 +966,7 @@
 		"ru"		"{grey}Вы начали прохождение на новом маршруте: {default}{course_name}{grey}"
 		"ua"		"{grey}Ви почали проходження нового курсу: {default}{course_name}{grey}"
 		"es"		"{grey}Has iniciado una carrera en un recorrido nuevo: {default}{course_name}{grey}"
+		"ko"		"{grey}코스 {default}{course_name}{grey}에서 주행을 시작했습니다."
 	}
 	"Started Run on Non Ranked Course"
 	{
@@ -954,6 +977,7 @@
 		"ru"		"{yellow}Внимание: {grey} Маршрут {default}{course_name}{grey} не является рейтинговым. Прохождение этого маршрута не повлияет на ваш глобальный рейтинг."
 		"ua"		"{yellow}Увага: {grey} Курс {default}{course_name}{grey} не є рейтинговим. Проходження на цьому курсі не будуть зараховані до вашого глобального рейтингу."
 		"es"		"{yellow}Atención: {grey} El recorrido {default}{course_name}{grey} no tiene un rango establecido. Las carreras no serán reflejadas en tus estadísticas de jugador globales."
+		"ko"		"{yellow}경고: {grey}코스 {default}{course_name}{grey}은(는) 랭킹이 없습니다. 이 코스의 주행은 글로벌 플레이어 등급에 영향을 미치지 않습니다."
 	}
 	"Safeguard - Disable"
 	{
@@ -961,6 +985,7 @@
 		"chi"		"{grey}安全防护已禁用."
 		"ru"		"{grey}Защита таймера выключена."
 		"ua"		"{grey}Запобіжник вимкнено."
+		"ko"		"{grey}세이프가드가 비활성화되었습니다."
 	}
 	"Safeguard - Enable"
 	{
@@ -968,6 +993,7 @@
 		"chi"		"{grey}安全防护已启用. 在有效跑图中, 你将无法使用任何会停止计时器的命令."
 		"ru"		"{grey}Защита таймера включена. Теперь команды, сбрасывающие таймер, деактивированы."
 		"ua"		"{grey}Запобіжник увімкнено. Ви більше не зможете виконувати команди, які можуть зупинити ваш таймер під час проходження."
+		"ko"		"{grey}세이프가드가 활성화되었습니다. 유효한 주행 중 타이머를 정지시키는 명령을 더 이상 사용할 수 없습니다."
 	}
 	"Safeguard - Enable (PRO)"
 	{
@@ -975,6 +1001,7 @@
 		"chi"		"{grey}{blue}PRO {grey}跑图安全防护已启用. 在有效跑图中, 你将无法使用传送或任何会停止计时器的命令."
 		"ru"		"{grey}Защита {blue}PRO {grey}таймера включена. Теперь телепорты и команды, сбрасывающие таймер, деактивированы."
 		"ua"		"{grey}Запобіжник для {blue}PRO {grey}проходжень увімкнено. Ви більше не зможете використовувати телепорти або виконувати команди, які можуть зупинити ваш таймер під час проходження."
+		"ko"		"{grey}{blue}PRO {grey}주행에 대한 세이프가드가 활성화되었습니다. 유효한 주행 중 텔레포트나 타이머를 정지시키는 명령을 더 이상 사용할 수 없습니다."
 	}
 	"Safeguard - Blocked"
 	{
@@ -982,6 +1009,7 @@
 		"chi"		"{darkred}安全防护已启用, 你无法执行此操作."
 		"ru"		"{darkred}Вы не можете это сделать, пока включена защита таймера."
 		"ua"		"{darkred}Ви не можете виконати цю дію, поки увімкнено запобіжник."
+		"ko"		"{darkred}세이프가드가 활성화되어 있어 이 작업을 수행할 수 없습니다."
 	}
 	"Safeguard - Blocked (Restart)"
 	{
@@ -990,5 +1018,6 @@
 		"chi"		"{grey}操作被安全防护阻止. 请等待 {default}{cooldown} {grey}秒后重新输入指令."
 		"ru"		"{grey}Действие заблокировано защитой таймера. Пожалуйста, подождите {default}{cooldown} {grey}секунд и повторите команду."
 		"ua"		"{grey}Дію заблоковано запобіжником. Будь ласка, зачекайте {default}{cooldown} {grey}сек. і повторіть команду."
+		"ko"		"{grey}세이프가드에 의해 작업이 차단되었습니다. {default}{cooldown} {grey}초 후 다시 명령을 입력하세요."
 	}
 }
