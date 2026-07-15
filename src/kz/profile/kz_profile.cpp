@@ -75,10 +75,10 @@ void KZProfileService::OnCheckTransmit()
 
 void KZProfileService::RequestRating()
 {
-	// if (!KZGlobalService::IsAvailable())
-	// {
-	// 	return;
-	// }
+	if (!KZGlobalService::IsAvailable())
+	{
+		return;
+	}
 	if (!this->player->IsAuthenticated() || !this->player->IsConnected())
 	{
 		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s not authenticated or not connected, cannot request rating.\n", this->player->GetName());
