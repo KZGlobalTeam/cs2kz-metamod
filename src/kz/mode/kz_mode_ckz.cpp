@@ -510,15 +510,16 @@ void KZClassicModeService::CalcPrestrafe()
 		// Prevent instant full pre from crouched prestrafe.
 		Vector velocity;
 		this->player->GetVelocity(&velocity);
+		f32 speed = Clamp(velocity.Length2D(), 0.0f, SPEED_NORMAL);
 
 		f32 currentPreRatio;
-		if (velocity.Length2D() <= 0.0f)
+		if (speed <= 0.0f)
 		{
 			currentPreRatio = 0.0f;
 		}
 		else
 		{
-			currentPreRatio = pow(this->bonusSpeed / PS_SPEED_MAX * SPEED_NORMAL / velocity.Length2D(), 1 / PS_RATIO_TO_SPEED) * PS_MAX_PS_TIME;
+			currentPreRatio = pow(this->bonusSpeed / PS_SPEED_MAX * SPEED_NORMAL / speed, 1 / PS_RATIO_TO_SPEED) * PS_MAX_PS_TIME;
 		}
 
 		this->leftPreRatio = MIN(this->leftPreRatio, currentPreRatio);
@@ -528,7 +529,7 @@ void KZClassicModeService::CalcPrestrafe()
 		this->rightPreRatio += averageRate < -PS_MIN_REWARD_RATE ? rewardRate : -punishRate;
 		this->leftPreRatio = Clamp(leftPreRatio, 0.0f, PS_MAX_PS_TIME);
 		this->rightPreRatio = Clamp(rightPreRatio, 0.0f, PS_MAX_PS_TIME);
-		this->bonusSpeed = this->GetPrestrafeGain() / SPEED_NORMAL * velocity.Length2D();
+		this->bonusSpeed = this->GetPrestrafeGain() / SPEED_NORMAL * speed;
 	}
 	else
 	{
@@ -1021,6 +1022,27 @@ void KZClassicModeService::OnWaterMovePost()
 
 void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
+	// Prevent prekeep from teleporting the player to a lower speed.
+	if (newVelocity)
+	{
+		f32 speed = Clamp(newVelocity->Length2D(), 0.0f, SPEED_NORMAL);
+
+		f32 maxPreRatio;
+		if (speed <= 0.0f)
+		{
+			maxPreRatio = 0.0f;
+		}
+		else
+		{
+			maxPreRatio = pow(this->bonusSpeed / PS_SPEED_MAX * SPEED_NORMAL / speed, 1 / PS_RATIO_TO_SPEED) * PS_MAX_PS_TIME;
+		}
+
+		this->leftPreRatio = MIN(this->leftPreRatio, maxPreRatio);
+		this->rightPreRatio = MIN(this->rightPreRatio, maxPreRatio);
+		this->leftPreRatio = Clamp(leftPreRatio, 0.0f, PS_MAX_PS_TIME);
+		this->rightPreRatio = Clamp(rightPreRatio, 0.0f, PS_MAX_PS_TIME);
+		this->bonusSpeed = this->GetPrestrafeGain() / SPEED_NORMAL * speed;
+	}
 	if (!this->player->processingMovement)
 	{
 		return;
