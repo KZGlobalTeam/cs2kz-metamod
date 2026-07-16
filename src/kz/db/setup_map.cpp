@@ -65,7 +65,7 @@ void KZDatabaseService::SetupMap()
 			auto currentMapName = g_pKZUtils->GetCurrentMapName();
 			if (!KZ_STREQ(currentMapName, mapName.Get()))
 			{
-				KZ_LOG_WARN(LogChannel::DB, "Failed to setup map, current map name %s doesn't match %s!\n", currentMapName, mapName.Get());
+				KZ_LOG_WARN(LogChannel::DB, "Failed to setup map, current map name %s doesn't match %s!\n", currentMapName.Get(), mapName.Get());
 				return;
 			}
 			switch (databaseType)
@@ -95,7 +95,7 @@ void KZDatabaseService::SetupMap()
 				}
 			}
 			mapSetUp = true;
-			KZ_LOG_INFO(LogChannel::DB, "Map setup successful for %s, current map ID: %i\n", currentMapName, KZDatabaseService::currentMapID);
+			KZ_LOG_INFO(LogChannel::DB, "Map setup successful for %s, current map ID: %i\n", currentMapName.Get(), KZDatabaseService::currentMapID);
 			CALL_FORWARD(eventListeners, OnMapSetup);
 		},
 		OnGenericTxnFailure);
