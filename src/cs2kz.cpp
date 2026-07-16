@@ -174,6 +174,12 @@ void KZPlugin::OnPluginUnload(PluginId id)
 	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
+void KZPlugin::OnLevelInit(char const *pMapName, char const *pMapEntities, char const *pOldLevel, char const *pLandmarkName, bool loadGame,
+						   bool background)
+{
+	m_sCurrentMap = pMapName;
+}
+
 void KZPlugin::AddonInit()
 {
 	static_persist bool addonLoaded;

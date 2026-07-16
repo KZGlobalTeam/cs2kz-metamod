@@ -138,14 +138,15 @@ CUtlString KZUtils::GetCurrentMapName(bool *result)
 		return networkGameServer->GetMapName();
 	}
 
-	const CGlobalVars *globals = g_pKZUtils->GetGlobals();
-	if (globals && strlen(globals->mapname.ToCStr()))
+	auto currentMap = g_KZPlugin.GetCurrentMap();
+	if (currentMap.length() > 0)
 	{
 		if (result)
 		{
 			*result = true;
 		}
-		return globals->mapname.ToCStr();
+
+		return currentMap.data();
 	}
 
 	if (result)

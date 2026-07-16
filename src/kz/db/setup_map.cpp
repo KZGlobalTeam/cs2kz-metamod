@@ -28,7 +28,7 @@ void KZDatabaseService::SetupMap()
 
 	Transaction txn;
 	char query[2048];
-	CUtlString mapName = g_pKZUtils->GetServerGlobals()->mapname.ToCStr();
+	CUtlString mapName = g_pKZUtils->GetCurrentMapName();
 	auto escapedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
 	auto databaseType = KZDatabaseService::GetDatabaseType();
 	switch (databaseType)
@@ -62,7 +62,7 @@ void KZDatabaseService::SetupMap()
 		txn, 
 		[databaseType, mapName](std::vector<ISQLQuery *> queries) 
 		{
-			auto currentMapName = g_pKZUtils->GetServerGlobals()->mapname.ToCStr();
+			auto currentMapName = g_pKZUtils->GetCurrentMapName();
 			if (!KZ_STREQ(currentMapName, mapName.Get()))
 			{
 				KZ_LOG_WARN(LogChannel::DB, "Failed to setup map, current map name %s doesn't match %s!\n", currentMapName, mapName.Get());
