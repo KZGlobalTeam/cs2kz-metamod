@@ -182,6 +182,10 @@ bool KZProfileService::CanDisplayRank()
 
 void KZProfileService::UpdateClantag()
 {
+	if (!KZOptionService::GetOptionInt("overridePlayerClantag", true))
+	{
+		return;
+	}
 	if (!this->player->IsConnected()
 		|| (this->player->GetController() && this->player->GetController()->m_iConnected() != PlayerConnectedState::PlayerConnected))
 	{
