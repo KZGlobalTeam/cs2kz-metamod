@@ -39,9 +39,6 @@
 	// Whether we override chat processing or not.
 	"overridePlayerChat"				"true"
 
-	// Whether we set the player's clan tag or not.
-	"overridePlayerClantag"				"true"
-
 	// Whether to mirror CS2KZ log output to a file in addons/cs2kz/logs.
 	"logToFile"							"true"
 
