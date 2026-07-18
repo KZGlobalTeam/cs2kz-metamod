@@ -41,8 +41,20 @@ static_global const f32 rankThresholds[NUM_RANKS] = {
 	35000.0f,  // Master
 	37500.0f   // Legend
 };
-static_global const char *rankColors[NUM_RANKS] = {"{default}", "{grey}", "{grey}",   "{blue}", "{darkblue}", "{purple}",
-												   "{orchid}",  "{red}",  "{yellow}", "{gold}", "{gold}"};
+
+static_global const char *rankColors[NUM_RANKS] = {
+	"{default}",         // Unknown
+	"{grey}",            // New
+	"{grey}",            // Beginner
+	"{blue}",            // Casual
+	"{darkblue}",        // Regular
+	"{default}{purple}", // Skilled
+	"{orchid}",          // Expert
+	"{red}",             // Semipro
+	"{yellow}",          // Pro
+	"{gold}",            // Master
+	"{gold}"             // Legend
+};
 
 #define RATING_REFRESH_PERIOD 120.0f // seconds
 

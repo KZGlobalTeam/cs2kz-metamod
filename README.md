@@ -22,10 +22,10 @@ WIP, not ready for release
 
 ## Compilation
 
-- Remember to *recursively* clone the plugin, and symlink needs to be enabled as well! ([this isn't the default on windows](https://stackoverflow.com/a/59761201))
+- Remember to *recursively* clone the plugin:
 
    ```bash
-   git clone -c core.symlinks=true --recursive https://github.com/KZGlobalTeam/cs2kz-metamod.git
+   git clone --recursive https://github.com/KZGlobalTeam/cs2kz-metamod.git
    ```
 
 - Latest [AMBuild](https://github.com/alliedmodders/ambuild/) needs to be installed for compilation.
