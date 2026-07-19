@@ -239,8 +239,8 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     cxx = self.target
     lib = cxx.StaticLibrary(f'versionlib_{cxx.target.arch}')
     
-    self.configureCXX(lib.compiler, True)
-  
+    self.configureCXX(lib.compiler)
+
     # VS generator doesn't like having non string sources, but we need that for correct
     # dependency tracking
     if builder.options.generator == 'vs':
@@ -274,7 +274,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     self.generateVersioningHeaders()
     self.generateVersionLib()    
 
-  def configureCXX(self, cxx, force_disable_optimization = False):
+  def configureCXX(self, cxx):
     if cxx.behavior == 'gcc':
       cxx.defines += [
         'stricmp=strcasecmp',
@@ -383,12 +383,11 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
       ]
 
     # Optimization
-    if builder.options.opt == '1' and not force_disable_optimization:
+    if builder.options.opt == '1':
       cxx.defines += ['NDEBUG']
       if cxx.behavior == 'gcc':
-        cxx.cflags += ['-O3', '-flto']
+        cxx.cflags += ['-O3']
         cxx.cxxflags += ['-g1'] # override ambuild's default -g3 flag.
-        cxx.linkflags += ['-flto']
       elif cxx.behavior == 'msvc':
         cxx.cflags += ['/Ox', '/Zo']
         cxx.linkflags += ['/OPT:ICF', '/OPT:REF']
@@ -432,6 +431,12 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     cxx = binary.compiler
     
     self.addVersioning(cxx)
+
+    # Apply -flto only to shared (non-static) binaries.
+    # Static archives trigger linker issues when pulled into other binaries that also use LTO.
+    if not static and builder.options.opt == '1' and cxx.behavior == 'gcc':
+      cxx.cflags += ['-flto']
+      cxx.linkflags += ['-flto']
 
     cxx.cxxincludes += [
       os.path.join(context.currentSourcePath),
