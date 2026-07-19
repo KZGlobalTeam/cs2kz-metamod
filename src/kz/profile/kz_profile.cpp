@@ -59,6 +59,8 @@ static_global const char *rankColors[NUM_RANKS] = {
 #define RATING_REFRESH_PERIOD 120.0f // seconds
 
 CConVar<bool> kz_profile_rating_badge_enabled("kz_profile_rating_badge_enabled", FCVAR_NONE, "Whether to show competitive rank in scoreboard.", true);
+CConVar<bool> kz_profile_clantag_enabled("kz_profile_clantag_enabled", FCVAR_NONE,
+										 "Whether to set the player's clan tag (mode and rank) in the scoreboard.", true);
 
 void KZProfileService::OnPlayerActive()
 {
@@ -194,6 +196,10 @@ bool KZProfileService::CanDisplayRank()
 
 void KZProfileService::UpdateClantag()
 {
+	if (!kz_profile_clantag_enabled.Get())
+	{
+		return;
+	}
 	if (!this->player->IsConnected()
 		|| (this->player->GetController() && this->player->GetController()->m_iConnected() != PlayerConnectedState::PlayerConnected))
 	{
