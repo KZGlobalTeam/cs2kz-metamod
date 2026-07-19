@@ -334,12 +334,12 @@ struct CPhysAggregateData
 	int16 m_nIncrementalVectorIndex;
 	int16 m_nReserved;
 	CUtlVectorUltraConservative<char const *> m_BoneNames;
-	CUtlMemory<uint32> m_BonesHash;
-	CUtlMemory<uint16> m_IndexNames;
-	CUtlMemory<uint16> m_IndexHash;
-	CUtlMemory<uint16> m_BoneParents;
-	CUtlMemory<matrix3x4_t, int> m_BindPose;
-	CUtlMemory<PhysShapeMarkup_t> m_shapeMarkups;
+	CUtlVectorMemory_Growable<uint32> m_BonesHash;
+	CUtlVectorMemory_Growable<uint16> m_IndexNames;
+	CUtlVectorMemory_Growable<uint16> m_IndexHash;
+	CUtlVectorMemory_Growable<uint16> m_BoneParents;
+	CUtlVectorMemory_Growable<matrix3x4_t, int> m_BindPose;
+	CUtlVectorMemory_Growable<PhysShapeMarkup_t> m_shapeMarkups;
 	CUtlVectorConservative<const VPhysXBodyPart_t *> m_Parts;
 	CUtlVectorUltraConservative<CPhysConstraintData> m_Constraints;
 	CUtlVectorUltraConservative<const VPhysXJoint_t *> m_Joints;

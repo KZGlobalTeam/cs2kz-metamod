@@ -73,7 +73,6 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'),
     os.path.join(sdk['path'], 'entity2', 'entitykeyvalues.cpp'),
-    os.path.join(sdk['path'], 'tier1', 'generichash.cpp'),
     os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'cs2kz.cpp'),
