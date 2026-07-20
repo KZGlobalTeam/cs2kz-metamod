@@ -98,6 +98,7 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 void utils::Cleanup()
 {
 	FlushAllDetours();
+	delete g_pGameConfig;
 }
 
 CBaseEntity *utils::FindEntityByClassname(CEntityInstance *start, const char *name)
