@@ -124,7 +124,7 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Spectate Failure (Player Not Found)", playerName);
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	this->SpectatePlayer(targetPlayer);
