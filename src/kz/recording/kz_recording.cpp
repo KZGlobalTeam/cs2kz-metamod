@@ -59,8 +59,8 @@ void Recorder::Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type)
 	time_t unixTime = 0;
 	time(&unixTime);
 	hdr.set_timestamp((u64)unixTime);
-
-	hdr.set_server_ip(g_steamAPI.SteamGameServer() ? g_steamAPI.SteamGameServer()->GetPublicIP().m_unIPv4 : 0);
+	hdr.set_server_ip(CommandLine()->HasParm("-dedicated") && g_steamAPI.SteamGameServer() ? g_steamAPI.SteamGameServer()->GetPublicIP().m_unIPv4
+																						   : 0);
 
 	// Player info
 	auto *playerMsg = hdr.mutable_player();

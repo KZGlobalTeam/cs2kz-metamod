@@ -680,6 +680,10 @@ void utils::ResetMap()
 
 bool utils::IsServerSecure()
 {
+	if (!CommandLine()->HasParm("-dedicated"))
+	{
+		return false;
+	}
 	if (!g_steamAPI.SteamGameServer())
 	{
 		return !(CommandLine()->HasParm("-insecure") || CommandLine()->HasParm("-tools"));

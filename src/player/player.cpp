@@ -41,10 +41,16 @@ void Player::OnAuthorized()
 	{
 		g_steamAPI.Init();
 	}
+	if (CommandLine()->HasParm("-dedicated"))
+	{
+		this->hasPrime = (g_steamAPI.SteamGameServer()
+						  && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense);
+	}
 	CEconPersonaDataPublic *persona = this->GetController()->m_pInventoryServices()->GetPublicPersonaData();
-	this->hasPrime =
-		(g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense)
-		|| (persona && persona->data.elevated_state());
+	if (persona && persona->data.elevated_state())
+	{
+		this->hasPrime = true;
+	}
 }
 
 void Player::SetName(const char *name)
@@ -84,10 +90,14 @@ bool Player::CheckPrime()
 		return true;
 	}
 	auto steamID = this->GetClient()->GetClientSteamID();
+
+	if (CommandLine()->HasParm("-dedicated"))
+	{
+		this->hasPrime |= (g_steamAPI.SteamGameServer()
+						   && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense);
+	}
 	CEconPersonaDataPublic *persona = this->GetController()->m_pInventoryServices()->GetPublicPersonaData();
-	this->hasPrime |=
-		(g_steamAPI.SteamGameServer() && g_steamAPI.SteamGameServer()->UserHasLicenseForApp(steamID, 624820) == k_EUserHasLicenseResultHasLicense)
-		|| (persona && persona->data.elevated_state());
+	this->hasPrime |= (persona && persona->data.elevated_state());
 	if (this->hasPrime)
 	{
 		this->OnPrimeStatusConfirmed();
