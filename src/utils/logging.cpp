@@ -1,9 +1,18 @@
 #include "common.h"
+#include "cs2kz.h"
 #include "utils/logging.h"
 #include "kz/option/kz_option.h"
 
-CConVar<bool> kz_log_to_file("kz_log_to_file", FCVAR_NONE, "Whether to mirror CS2KZ log output to a file in addons/cs2kz/logs.", true,
-							 [](CConVar<bool> *, CSplitScreenSlot, const bool *, const bool *) { g_KZLoggingListener.CheckFile(); });
+void OnLogToFileChanged(CConVar<bool> *, CSplitScreenSlot, const bool *, const bool *)
+{
+	if (g_KZPlugin.loading)
+	{
+		return;
+	}
+	g_KZLoggingListener.CheckFile();
+}
+
+CConVar<bool> kz_log_to_file("kz_log_to_file", FCVAR_NONE, "Whether to mirror CS2KZ log output to a file in addons/cs2kz/logs.", true);
 
 struct KZChannel_t
 {

@@ -56,6 +56,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 
+	META_CONVAR_REGISTER(FCVAR_NONE);
 	KZOptionService::InitOptions();
 	InitKZLogging();
 	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
@@ -118,6 +119,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	CommandLine()->AppendParm("-disable_workshop_command_filtering", "");
 	KZ_LOG_DEBUG(LogChannel::General, "Plugin loaded successfully. (late load: %s)", late ? "true" : "false");
 	KZ::replaysystem::InitWatcher();
+	loading = false;
 	return true;
 }
 
@@ -128,10 +130,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZRecordingService::Shutdown();
 	AsyncFileIO::Cleanup();
 	KZRacingService::Cleanup();
-	ix::uninitNetSystem();
-	hooks::Cleanup();
 	KZ::mode::EnableReplicatedModeCvars();
-	utils::Cleanup();
 	g_pKZModeManager->Cleanup();
 	g_pKZStyleManager->Cleanup();
 	g_pPlayerManager->Cleanup();
@@ -141,10 +140,13 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
-	ConVar_Unregister();
+	ix::uninitNetSystem();
+	hooks::Cleanup();
+	utils::Cleanup();
 	LoggingSystem_UnregisterLoggingListener(&g_KZLoggingListener);
 	kz_log_to_file.Set(false);
 	g_KZLoggingListener.CheckFile();
+	ConVar_Unregister();
 	return true;
 }
 

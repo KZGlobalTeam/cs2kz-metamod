@@ -126,7 +126,7 @@ bool KZAutoUnduckStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size
 		V_snprintf(error, maxlen, "Failed to register style");
 		return false;
 	}
-	ConVar_Register();
+	META_CONVAR_REGISTER(FCVAR_NONE);
 
 	return true;
 }

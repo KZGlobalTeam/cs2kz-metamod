@@ -69,6 +69,7 @@ public:
 	bool simulatingPhysics = false;
 	CGlobalVars serverGlobals;
 	bool unloading = false;
+	bool loading = true;
 
 private:
 	void UpdateSelfMD5();

@@ -574,6 +574,10 @@ static_global bool triggersDrawn = false;
 
 static_function void ResetOverlays()
 {
+	if (g_KZPlugin.loading)
+	{
+		return;
+	}
 	g_pKZUtils->ClearOverlays();
 	clipsDrawn = false;
 	triggersDrawn = false;
@@ -584,20 +588,16 @@ void OnDebugColorCvarChanged(CConVar<Color> *ref, CSplitScreenSlot nSlot, const 
 	ResetOverlays();
 }
 
-// clang-format off
-CConVar<bool> kz_showplayerclips("kz_showplayerclips", FCVAR_NONE, "Draw player clips (listen server only)", false,
-	[](CConVar<bool> *ref, CSplitScreenSlot nSlot, const bool *bNewValue, const bool *bOldValue)
-	{
-		ResetOverlays();
-	}
-);
+void OnDebugCvarChanged(CConVar<bool> *ref, CSplitScreenSlot nSlot, const bool *bNewValue, const bool *bOldValue)
+{
+	ResetOverlays();
+}
 
-CConVar<bool> kz_showtriggers("kz_showtriggers", FCVAR_NONE, "Draw triggers (listen server only)", false,
-	[](CConVar<bool> *ref, CSplitScreenSlot nSlot, const bool *bNewValue, const bool *bOldValue)
-	{
-		ResetOverlays();
-	}
-);
+CConVar<bool> kz_showplayerclips("kz_showplayerclips", FCVAR_NONE, "Draw player clips (listen server only)", false, OnDebugCvarChanged);
+
+CConVar<bool> kz_showtriggers("kz_showtriggers", FCVAR_NONE, "Draw triggers (listen server only)", false, OnDebugCvarChanged);
+
+// clang-format off
 
 CConVar<Color> kz_playerclip_color("kz_playerclip_color", FCVAR_NONE, "Color of player clips (rgba) drawn by kz_toggleplayerclips.", Color(0x80, 0, 0x80, 0xFF), OnDebugColorCvarChanged);
 CConVar<Color> kz_trigger_teleport_color("kz_trigger_teleport_color", FCVAR_NONE, "Color of trigger_teleport (rgba) drawn by kz_showtriggers.", Color(255, 0, 255, 0x80), OnDebugColorCvarChanged);

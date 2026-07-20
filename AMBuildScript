@@ -414,7 +414,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         cxx.linkflags += ['-static-libgcc']
       elif cxx.family == 'clang':
         cxx.linkflags += ['-lgcc_eh']
-      cxx.linkflags += ['-static-libstdc++']
+      # cxx.linkflags += ['-static-libstdc++']
     elif cxx.target.platform == 'windows':
       cxx.defines += ['WIN32', '_WINDOWS']
 

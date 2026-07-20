@@ -61,7 +61,7 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 		return false;
 	}
 
-	ConVar_Register();
+	META_CONVAR_REGISTER(FCVAR_NONE);
 	return true;
 }
 
