@@ -347,6 +347,28 @@ private:
 
 		// INVARIANT: should be `nullptr` when `state == Uninitialized`, and a valid pointer otherwise
 		static inline std::unique_ptr<ix::WebSocket> socket = nullptr;
+		static inline std::thread socketThread;
+
+		static inline struct SocketThreadState
+		{
+			enum class Signal
+			{
+				MessageEnqueued,
+				ShuttingDown,
+			} lastSignal;
+			u64 lastSignalNr;
+
+			std::mutex mutex;
+			std::condition_variable cvar;
+			std::vector<std::string> sendQueue;
+
+			inline void Notify(std::lock_guard<std::mutex> &&guard, Signal signal)
+			{
+				lastSignal = signal;
+				++lastSignalNr;
+				cvar.notify_one();
+			}
+		} socketThreadState;
 
 		/**
 		 * WebSocket messages we have received, but not yet processed.
@@ -371,6 +393,8 @@ private:
 			std::mutex mutex;
 			std::unordered_map<u32, std::unique_ptr<MessageCallbackInternal>> callbacks;
 		} messageCallbacks;
+
+		static void Run();
 
 		/**
 		 * Callback for `IXWebSocket`; called on every received message.
@@ -503,30 +527,36 @@ private:
 
 			std::string encodedPayload = messagePayload.ToString();
 
-			if (binaryData && !binaryData->empty())
-			{
-				// Combine JSON text + binary data into a single binary frame, delimited by newline.
-				// Strip any newlines from the JSON so the delimiter is unambiguous.
-				encodedPayload.erase(std::remove(encodedPayload.begin(), encodedPayload.end(), '\n'), encodedPayload.end());
-				std::string combined;
-				combined.reserve(encodedPayload.size() + 1 + binaryData->size());
-				combined.append(encodedPayload);
-				combined.push_back('\n');
-				combined.append(binaryData->data(), binaryData->size());
-				socket->sendBinary(combined);
-			}
-			else
-			{
-				socket->send(encodedPayload);
-			}
+			// if (binaryData && !binaryData->empty())
+			// {
+			// 	// Combine JSON text + binary data into a single binary frame, delimited by newline.
+			// 	// Strip any newlines from the JSON so the delimiter is unambiguous.
+			// 	encodedPayload.erase(std::remove(encodedPayload.begin(), encodedPayload.end(), '\n'), encodedPayload.end());
+			// 	std::string combined;
+			// 	combined.reserve(encodedPayload.size() + 1 + binaryData->size());
+			// 	combined.append(encodedPayload);
+			// 	combined.push_back('\n');
+			// 	combined.append(binaryData->data(), binaryData->size());
+			// 	socket->sendBinary(combined);
+			// }
+			// else
+			// {
+			// 	socket->send(encodedPayload);
+			// }
 
 			// clang-format off
-			KZ_LOG_DEBUG(LogChannel::Global, "Sent WebSocket message. (id=%i, type=%s)\n"
+			KZ_LOG_DEBUG(LogChannel::Global, "Sending WebSocket message (id=%i, type=%s)...\n"
 					"------------------------------------\n"
 					"%s\n"
 					"------------------------------------\n",
 					messageID, messageType, encodedPayload.c_str());
 			// clang-format on
+
+			{
+				std::lock_guard<std::mutex> guard(socketThreadState.mutex);
+				socketThreadState.sendQueue.push_back(std::move(encodedPayload));
+				socketThreadState.Notify(std::move(guard), SocketThreadState::Signal::MessageEnqueued);
+			}
 
 			return true;
 		}

@@ -84,8 +84,6 @@ void KZGlobalService::Init()
 
 	KZGlobalService::EnforceConVars();
 
-	ix::initNetSystem();
-
 	KZGlobalService::WS::socket = std::make_unique<ix::WebSocket>();
 	KZGlobalService::WS::socket->setUrl(apiUrl);
 	KZGlobalService::WS::socket->setExtraHeaders({{"Authorization", std::string("Bearer ") + apiKey}});
@@ -99,11 +97,15 @@ void KZGlobalService::Cleanup()
 {
 	if (KZGlobalService::WS::socket)
 	{
-		KZGlobalService::WS::socket->stop();
-		KZGlobalService::state.store(KZGlobalService::State::Disconnected);
-		KZGlobalService::WS::socket.reset(nullptr);
+		{
+			std::lock_guard<std::mutex> guard(KZGlobalService::WS::socketThreadState.mutex);
+			KZGlobalService::WS::socketThreadState.Notify(std::move(guard), KZGlobalService::WS::SocketThreadState::Signal::ShuttingDown);
+		}
 
-		ix::uninitNetSystem();
+		if (KZGlobalService::WS::socketThread.joinable())
+		{
+			KZGlobalService::WS::socketThread.join();
+		}
 	}
 
 	KZGlobalService::state.store(KZGlobalService::State::Uninitialized);
@@ -264,7 +266,7 @@ void KZGlobalService::OnActivateServer()
 		case KZGlobalService::State::Configured:
 		{
 			KZ_LOG_INFO(LogChannel::Global, "Starting WebSocket...\n");
-			KZGlobalService::WS::socket->start();
+			KZGlobalService::WS::socketThread = std::thread([]() { return KZGlobalService::WS::Run(); });
 			KZGlobalService::state.store(KZGlobalService::State::Connecting);
 		}
 		break;
@@ -508,6 +510,53 @@ void KZGlobalService::OnClientDisconnect()
 	}
 
 	KZGlobalService::WS::SendMessage(message);
+}
+
+void KZGlobalService::WS::Run()
+{
+	auto &state = KZGlobalService::WS::socketThreadState;
+	u64 lastSignalNr = 0;
+
+	{
+		std::lock_guard<std::mutex> guard(state.mutex);
+		state.lastSignalNr = lastSignalNr;
+	}
+
+	KZGlobalService::WS::socket->start();
+
+	while (true)
+	{
+		std::unique_lock<std::mutex> guard(state.mutex);
+		state.cvar.wait(guard, [&] { return state.lastSignalNr != lastSignalNr; });
+
+		switch (state.lastSignal)
+		{
+			case SocketThreadState::Signal::ShuttingDown:
+			{
+				KZGlobalService::WS::socket->stop();
+				KZGlobalService::state.store(KZGlobalService::State::Disconnected);
+				KZGlobalService::WS::socket.reset(nullptr);
+				return;
+			}
+
+			case SocketThreadState::Signal::MessageEnqueued:
+			{
+				for (auto it = state.sendQueue.begin(); it != state.sendQueue.end();)
+				{
+					if (KZGlobalService::WS::socket->send(*it).success)
+					{
+						KZ_LOG_DEBUG(LogChannel::Global, "Sent WebSocket message.\n");
+						it = state.sendQueue.erase(it);
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+			break;
+		}
+	}
 }
 
 void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
