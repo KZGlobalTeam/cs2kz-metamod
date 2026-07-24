@@ -23,7 +23,7 @@ struct CCSPlayerInventory
 	struct
 	{
 		CUtlVector<CEconItemView *> m_vecInventoryItems;
-		CUtlMap<itemid_t, CEconItemView *, int, CDefLess<itemid_t>> m_mapItemIDToItemView;
+		CUtlOrderedMap<itemid_t, CEconItemView *, CDefLess<itemid_t>, int> m_mapItemIDToItemView;
 	} m_Items;
 
 	int m_iPendingRequests;

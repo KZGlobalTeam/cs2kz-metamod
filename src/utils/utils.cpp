@@ -13,6 +13,7 @@
 #include "sdk/recipientfilters.h"
 #include "sdk/navphysicsinterface.h"
 #include "public/networksystem/inetworkmessages.h"
+#include "bspflags.h"
 #include "gametrace.h"
 
 #include "module.h"

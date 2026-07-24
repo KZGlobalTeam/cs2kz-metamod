@@ -6,7 +6,10 @@
 #ifndef _WIN32
 #pragma clang diagnostic pop
 #endif
+
+#include "entityinstance.h"
 #include "ehandle.h"
+#include "gametrace.h"
 
 class CCSPlayerPawn;
 class CCSPlayerController;
