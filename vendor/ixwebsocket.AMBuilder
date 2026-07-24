@@ -3,6 +3,7 @@
 # After building, copy the output to vendor/ and commit it:
 #   Windows: copy ixwebsocket\windows-x86_64\ixwebsocket.lib  ..\ixwebsocket.lib
 #   Linux:   cp ixwebsocket/linux-x86_64/libixwebsocket.a ../libixwebsocket.a
+# Note: ixwebsocket requires OpenSSL to be built first for generated the header files.
 import os
 
 cxx = MMSPlugin.sdk_target.cxx
@@ -16,9 +17,7 @@ lib.compiler.cxxincludes += [
 
 if lib.compiler.target.platform == 'windows':
   lib.compiler.cxxincludes += [
-    os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'include'),
-    os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'include'),
-    os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'drivers', 'builtin', 'include'),
+    os.path.join(builder.sourcePath, 'vendor', 'openssl', 'include'),
   ]
 else:
   lib.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']

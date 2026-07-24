@@ -231,18 +231,13 @@ def configure_main(sdk_target, sdk, cxx):
       os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'mbedTLS.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'libssl.lib'),
+      os.path.join(builder.sourcePath, 'vendor', 'libcrypto.lib'),
       'bcrypt.lib'
     ]
     binary.sources += [
       'src/utils/plat_win.cpp'
     ]
-    binary.compiler.cxxincludes += [
-      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'include'),
-      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'include'),
-      os.path.join(builder.sourcePath, 'vendor', 'mbedtls', 'tf-psa-crypto', 'drivers', 'builtin', 'include'),
-    ]
-
 
   return binary
 
