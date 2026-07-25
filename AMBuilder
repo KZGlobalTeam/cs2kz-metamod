@@ -233,6 +233,8 @@ def configure_main(sdk_target, sdk, cxx):
       os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'libssl.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'libcrypto.lib'),
+      'crypt32.lib',
+      'ws2_32.lib',
       'bcrypt.lib'
     ]
     binary.sources += [
