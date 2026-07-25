@@ -874,6 +874,11 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 
 void KZGlobalService::OnPrimeStatusConfirmed()
 {
+	if (KZGlobalService::state.load() != KZGlobalService::State::HandshakeCompleted)
+	{
+		return;
+	}
+
 	// Send a message to the API that the player has been confirmed to have prime status.
 	KZ::api::messages::PlayerPrimeConfirmed message;
 	message.id = this->player->GetSteamId64();
