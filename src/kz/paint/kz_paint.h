@@ -21,7 +21,7 @@ public:
 		PAINT_COLOR_COUNT = 9
 	};
 
-	static constexpr u32 DECAL_GROUP_NAME = 3420975428u; // MurmurHash2LowerCase("paint", 0x31415926)
+	static constexpr u32 DECAL_GROUP_NAME = MurmurHash2LowerCase("paint", STRINGTOKEN_MURMURHASH_SEED);
 
 	virtual void Reset() override;
 
