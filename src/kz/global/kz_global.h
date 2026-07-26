@@ -131,7 +131,7 @@ public:
 		template<typename OnResponse, typename... Args>
 		explicit MessageCallback(OnResponse &&onResponse, Args &&...args)
 			: onResponse([cb = std::bind(std::move(onResponse), std::placeholders::_1, std::forward<Args>(args)...)] (const Response &response) { cb(response); })
-				, onError([](const KZ::api::messages::Error &) {})
+			, onError([](const KZ::api::messages::Error &) {})
 			, onCancelled([](CancelReason) {})
 		// clang-format on
 		{
