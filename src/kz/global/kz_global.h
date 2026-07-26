@@ -274,12 +274,7 @@ private:
 			std::mutex mutex;
 			std::condition_variable cvar;
 
-			enum class Signal
-			{
-				MessageEnqueued,
-				ShuttingDown,
-			} lastSignal;
-			u64 lastSignalNr;
+			bool shuttingDown;
 
 			struct EnqueuedMessage
 			{
@@ -288,13 +283,6 @@ private:
 			};
 
 			std::vector<EnqueuedMessage> sendQueue;
-
-			inline void Notify(std::lock_guard<std::mutex> &&guard, Signal signal)
-			{
-				lastSignal = signal;
-				++lastSignalNr;
-				cvar.notify_one();
-			}
 		} socketThreadState;
 
 		/**
@@ -452,7 +440,7 @@ private:
 			{
 				std::lock_guard<std::mutex> guard(socketThreadState.mutex);
 				socketThreadState.sendQueue.push_back({std::move(encodedPayload), retainAfterDisconnect});
-				socketThreadState.Notify(std::move(guard), SocketThreadState::Signal::MessageEnqueued);
+				socketThreadState.cvar.notify_one();
 			}
 
 			return true;

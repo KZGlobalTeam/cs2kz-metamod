@@ -97,13 +97,14 @@ void KZGlobalService::Cleanup()
 {
 	if (KZGlobalService::WS::socket)
 	{
-		{
-			std::lock_guard<std::mutex> guard(KZGlobalService::WS::socketThreadState.mutex);
-			KZGlobalService::WS::socketThreadState.Notify(std::move(guard), KZGlobalService::WS::SocketThreadState::Signal::ShuttingDown);
-		}
-
 		if (KZGlobalService::WS::socketThread.joinable())
 		{
+			{
+				std::lock_guard<std::mutex> guard(KZGlobalService::WS::socketThreadState.mutex);
+				KZGlobalService::WS::socketThreadState.shuttingDown = true;
+				KZGlobalService::WS::socketThreadState.cvar.notify_one();
+			}
+
 			KZGlobalService::WS::socketThread.join();
 		}
 	}
@@ -513,48 +514,55 @@ void KZGlobalService::OnClientDisconnect()
 void KZGlobalService::WS::Run()
 {
 	auto &state = KZGlobalService::WS::socketThreadState;
-	u64 lastSignalNr = 0;
-
-	{
-		std::lock_guard<std::mutex> guard(state.mutex);
-		state.lastSignalNr = lastSignalNr;
-	}
 
 	KZGlobalService::WS::socket->start();
 
 	while (true)
 	{
 		std::unique_lock<std::mutex> guard(state.mutex);
-		state.cvar.wait(guard, [&] { return state.lastSignalNr != lastSignalNr; });
+		state.cvar.wait(guard, [&] { return state.shuttingDown || !state.sendQueue.empty(); });
 
-		switch (state.lastSignal)
+		KZ_LOG_DEBUG(LogChannel::Global, "WS thread woke up\n");
+
+		if (state.shuttingDown)
 		{
-			case SocketThreadState::Signal::ShuttingDown:
-			{
-				KZGlobalService::WS::socket->stop();
-				KZGlobalService::state.store(KZGlobalService::State::Disconnected);
-				KZGlobalService::WS::socket.reset(nullptr);
-				return;
-			}
+			KZ_LOG_DEBUG(LogChannel::Global, "WS thread shutting down...\n");
+			KZGlobalService::WS::socket->stop();
+			KZGlobalService::state.store(KZGlobalService::State::Disconnected);
+			KZGlobalService::WS::socket.reset(nullptr);
 
-			case SocketThreadState::Signal::MessageEnqueued:
+			for (auto it = state.sendQueue.begin(); it != state.sendQueue.end();)
 			{
-				for (auto it = state.sendQueue.begin(); it != state.sendQueue.end();)
+				if (it->retainAfterDisconnect)
 				{
-					if (KZGlobalService::WS::socket->send(it->payload).success)
-					{
-						KZ_LOG_DEBUG(LogChannel::Global, "Sent WebSocket message.\n");
-						it = state.sendQueue.erase(it);
-					}
-					else
-					{
-						break;
-					}
+					++it;
+				}
+				else
+				{
+					it = state.sendQueue.erase(it);
 				}
 			}
+
 			break;
 		}
+
+		KZ_LOG_DEBUG(LogChannel::Global, "sending messages\n");
+
+		for (auto it = state.sendQueue.begin(); it != state.sendQueue.end();)
+		{
+			if (KZGlobalService::WS::socket->send(it->payload).success)
+			{
+				KZ_LOG_DEBUG(LogChannel::Global, "Sent WebSocket message.\n");
+				it = state.sendQueue.erase(it);
+			}
+			else
+			{
+				break;
+			}
+		}
 	}
+
+	KZ_LOG_DEBUG(LogChannel::Global, "WS thread exiting...\n");
 }
 
 void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
@@ -702,21 +710,6 @@ void KZGlobalService::WS::OnCloseMessage(const ix::WebSocketCloseInfo &closeInfo
 	{
 		std::lock_guard _guard(KZGlobalService::callbacks.mutex);
 		KZGlobalService::callbacks.queue.clear();
-	}
-
-	{
-		std::lock_guard _messagesQueueGuard(KZGlobalService::ws.socketThreadState.mutex);
-		for (auto it = KZGlobalService::ws.socketThreadState.sendQueue.begin(); it != KZGlobalService::ws.socketThreadState.sendQueue.end();)
-		{
-			if (it->retainAfterDisconnect)
-			{
-				++it;
-			}
-			else
-			{
-				it = KZGlobalService::ws.socketThreadState.sendQueue.erase(it);
-			}
-		}
 	}
 
 	{
