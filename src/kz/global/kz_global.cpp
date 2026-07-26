@@ -364,13 +364,11 @@ void KZGlobalService::OnServerGamePostSimulate()
 					}
 					else
 					{
-						callbackHandle.mapped()->OnResponse(it->id, it->payload, it->binaryData);
+						callbackHandle.mapped()->OnResponse(it->id, it->payload);
 					}
 
 					it = KZGlobalService::ws.receivedMessages.queue.erase(it);
 				}
-
-				KZGlobalService::ws.receivedMessages.queue.clear();
 
 				{
 					std::lock_guard _messageCallbacksQueueGuard(KZGlobalService::ws.messageCallbacks.mutex);
@@ -543,7 +541,7 @@ void KZGlobalService::WS::Run()
 			{
 				for (auto it = state.sendQueue.begin(); it != state.sendQueue.end();)
 				{
-					if (KZGlobalService::WS::socket->send(*it).success)
+					if (KZGlobalService::WS::socket->send(it->payload).success)
 					{
 						KZ_LOG_DEBUG(LogChannel::Global, "Sent WebSocket message.\n");
 						it = state.sendQueue.erase(it);
@@ -588,25 +586,7 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 				 "\n----------------------------------------\n",
 				 message->str.c_str());
 
-	// Binary frames carry: <json>\n<binary-data>
-	// Text frames are pure JSON.
-	std::string_view jsonPart = message->str;
-	std::vector<char> binaryPart;
-
-	if (message->binary)
-	{
-		auto newlinePos = message->str.find('\n');
-		if (newlinePos != std::string::npos)
-		{
-			jsonPart = std::string_view(message->str.data(), newlinePos);
-			const char *binStart = message->str.data() + newlinePos + 1;
-			size_t binLen = message->str.size() - newlinePos - 1;
-			binaryPart.assign(binStart, binStart + binLen);
-		}
-	}
-
-	std::string jsonStr(jsonPart);
-	Json payload(jsonStr);
+	Json payload(message->str);
 
 	if (!payload.IsValid())
 	{
@@ -655,7 +635,6 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 			ReceivedMessage receivedMessage;
 			receivedMessage.id = messageID;
 			receivedMessage.isError = (event == "error");
-			receivedMessage.binaryData = std::move(binaryPart);
 
 			if (!payload.Get("data", receivedMessage.payload))
 			{
@@ -723,6 +702,21 @@ void KZGlobalService::WS::OnCloseMessage(const ix::WebSocketCloseInfo &closeInfo
 	{
 		std::lock_guard _guard(KZGlobalService::callbacks.mutex);
 		KZGlobalService::callbacks.queue.clear();
+	}
+
+	{
+		std::lock_guard _messagesQueueGuard(KZGlobalService::ws.socketThreadState.mutex);
+		for (auto it = KZGlobalService::ws.socketThreadState.sendQueue.begin(); it != KZGlobalService::ws.socketThreadState.sendQueue.end();)
+		{
+			if (it->retainAfterDisconnect)
+			{
+				++it;
+			}
+			else
+			{
+				it = KZGlobalService::ws.socketThreadState.sendQueue.erase(it);
+			}
+		}
 	}
 
 	{
