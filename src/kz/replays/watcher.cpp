@@ -1,3 +1,4 @@
+#include <unordered_set>
 #include "watcher.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/mode/kz_mode.h"
@@ -905,18 +906,14 @@ void ReplayWatcher::ScanReplays()
 	FileFindHandle_t findHandle = {};
 	const char *pFileName = g_pFullFileSystem->FindFirstEx(searchPath, "GAME", &findHandle);
 
-	std::unordered_map<UUID_t, ReplayHeader> newCheater;
-	std::map<UUID_t, ReplayHeader> newRun;
-	std::map<UUID_t, ReplayHeader> newJump;
-	std::unordered_map<UUID_t, ReplayHeader> newManual;
-	std::vector<std::tuple<UUID_t, ReplayHeader>> tempRun;
-	std::vector<std::tuple<UUID_t, ReplayHeader>> tempJump;
-	std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> manualBySteam;
-
 	time_t currentUnixTime = 0;
 	time(&currentUnixTime);
 	u32 retentionMinutes = (u32)MAX(KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880), 0);
 	u64 retentionSeconds = retentionMinutes * 60ULL;
+
+	// Files still present on disk this scan. Anything cached but not in this set has been
+	// deleted externally and must be dropped from the cache.
+	std::unordered_set<UUID_t> seen;
 
 	while (pFileName)
 	{
@@ -941,6 +938,33 @@ void ReplayWatcher::ScanReplays()
 			{
 				char fullPath[MAX_PATH];
 				V_snprintf(fullPath, sizeof(fullPath), "%s/%s", KZ_REPLAY_PATH, pFileName);
+
+				auto idxIt = this->archivedIndex.find(uuid);
+				if (idxIt != this->archivedIndex.end())
+				{
+					u64 age = currentUnixTime - idxIt->second;
+					if (age >= retentionSeconds)
+					{
+						g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+						this->archivedIndex.erase(idxIt);
+						this->archiveDirty = true;
+						this->replayCache.erase(uuid);
+						pFileName = g_pFullFileSystem->FindNext(findHandle);
+						continue;
+					}
+				}
+
+				seen.insert(uuid);
+
+				long fileTime = g_pFullFileSystem->GetFileTime(fullPath, "GAME");
+				auto cacheIt = this->replayCache.find(uuid);
+				if (cacheIt != this->replayCache.end() && cacheIt->second.fileTime == fileTime)
+				{
+					// Unchanged since last scan - reuse the cached header instead of re-reading/re-parsing.
+					pFileName = g_pFullFileSystem->FindNext(findHandle);
+					continue;
+				}
+
 				FileHandle_t file = g_pFullFileSystem->Open(fullPath, "rb", "GAME");
 				if (file)
 				{
@@ -954,41 +978,7 @@ void ReplayWatcher::ScanReplays()
 							ReplayHeader hdr;
 							if (hdr.ParseFromString(buf))
 							{
-								auto idxIt = this->archivedIndex.find(uuid);
-								if (idxIt != this->archivedIndex.end())
-								{
-									u64 age = currentUnixTime - idxIt->second;
-									if (age >= retentionSeconds)
-									{
-										g_pFullFileSystem->Close(file);
-										g_pFullFileSystem->RemoveFile(fullPath, "GAME");
-										this->archivedIndex.erase(idxIt);
-										this->archiveDirty = true;
-										pFileName = g_pFullFileSystem->FindNext(findHandle);
-										continue;
-									}
-								}
-								switch (static_cast<ReplayType>(hdr.type()))
-								{
-									case RP_CHEATER:
-										newCheater[uuid] = hdr;
-										break;
-									case RP_RUN:
-										tempRun.push_back({uuid, hdr});
-										break;
-									case RP_JUMPSTATS:
-										tempJump.push_back({uuid, hdr});
-										break;
-									case RP_MANUAL:
-										newManual[uuid] = hdr;
-										if (hdr.has_player())
-										{
-											manualBySteam[hdr.player().steamid64()].push_back({uuid, hdr.timestamp()});
-										}
-										break;
-									default:
-										break;
-								}
+								this->replayCache[uuid] = {std::move(hdr), fileTime};
 							}
 						}
 					}
@@ -1000,6 +990,54 @@ void ReplayWatcher::ScanReplays()
 	}
 
 	g_pFullFileSystem->FindClose(findHandle);
+
+	// Drop cache entries for files that no longer exist on disk.
+	for (auto it = this->replayCache.begin(); it != this->replayCache.end();)
+	{
+		if (!seen.count(it->first))
+		{
+			it = this->replayCache.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	// Rebuild the typed maps from the (mostly cached, in-memory) header set. No file I/O here.
+	std::unordered_map<UUID_t, ReplayHeader> newCheater;
+	std::map<UUID_t, ReplayHeader> newRun;
+	std::map<UUID_t, ReplayHeader> newJump;
+	std::unordered_map<UUID_t, ReplayHeader> newManual;
+	std::vector<std::tuple<UUID_t, ReplayHeader>> tempRun;
+	std::vector<std::tuple<UUID_t, ReplayHeader>> tempJump;
+	std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> manualBySteam;
+
+	for (auto &[uuid, cached] : this->replayCache)
+	{
+		const ReplayHeader &hdr = cached.header;
+		switch (static_cast<ReplayType>(hdr.type()))
+		{
+			case RP_CHEATER:
+				newCheater[uuid] = hdr;
+				break;
+			case RP_RUN:
+				tempRun.push_back({uuid, hdr});
+				break;
+			case RP_JUMPSTATS:
+				tempJump.push_back({uuid, hdr});
+				break;
+			case RP_MANUAL:
+				newManual[uuid] = hdr;
+				if (hdr.has_player())
+				{
+					manualBySteam[hdr.player().steamid64()].push_back({uuid, hdr.timestamp()});
+				}
+				break;
+			default:
+				break;
+		}
+	}
 
 	// Process each replay type with dedicated functions
 	ProcessCheaterReplays(newCheater, currentUnixTime);
@@ -1028,7 +1066,7 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 	u32 retentionDays = (u32)MAX(KZOptionService::GetOptionInt("downloadedReplayRetentionDays", 7), 0);
 	u64 retentionSeconds = (u64)retentionDays * 24 * 3600;
 
-	std::unordered_map<UUID_t, ReplayHeader> newDownloaded;
+	std::unordered_set<UUID_t> seen;
 
 	while (pFileName)
 	{
@@ -1047,16 +1085,25 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 				char fullPath[MAX_PATH];
 				V_snprintf(fullPath, sizeof(fullPath), "%s/%s", KZ_REPLAY_DOWNLOADS_PATH, pFileName);
 
+				long fileTime = g_pFullFileSystem->GetFileTime(fullPath, "GAME");
+
 				// Evict files whose download time (file mtime) is older than the retention period.
-				if (retentionDays > 0)
+				if (retentionDays > 0 && fileTime > 0 && (u64)currentTime >= (u64)fileTime + retentionSeconds)
 				{
-					long fileTime = g_pFullFileSystem->GetFileTime(fullPath, "GAME");
-					if (fileTime > 0 && (u64)currentTime >= (u64)fileTime + retentionSeconds)
-					{
-						g_pFullFileSystem->RemoveFile(fullPath, "GAME");
-						pFileName = g_pFullFileSystem->FindNext(findHandle);
-						continue;
-					}
+					g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+					this->downloadedReplayCache.erase(uuid);
+					pFileName = g_pFullFileSystem->FindNext(findHandle);
+					continue;
+				}
+
+				seen.insert(uuid);
+
+				auto cacheIt = this->downloadedReplayCache.find(uuid);
+				if (cacheIt != this->downloadedReplayCache.end() && cacheIt->second.fileTime == fileTime)
+				{
+					// Unchanged since last scan - reuse the cached header instead of re-reading/re-parsing.
+					pFileName = g_pFullFileSystem->FindNext(findHandle);
+					continue;
 				}
 
 				FileHandle_t file = g_pFullFileSystem->Open(fullPath, "rb", "GAME");
@@ -1072,7 +1119,7 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 							ReplayHeader hdr;
 							if (hdr.ParseFromString(buf))
 							{
-								newDownloaded[uuid] = hdr;
+								this->downloadedReplayCache[uuid] = {std::move(hdr), fileTime};
 							}
 						}
 					}
@@ -1084,6 +1131,26 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 	}
 
 	g_pFullFileSystem->FindClose(findHandle);
+
+	// Drop cache entries for files that no longer exist on disk.
+	for (auto it = this->downloadedReplayCache.begin(); it != this->downloadedReplayCache.end();)
+	{
+		if (!seen.count(it->first))
+		{
+			it = this->downloadedReplayCache.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	std::unordered_map<UUID_t, ReplayHeader> newDownloaded;
+	newDownloaded.reserve(this->downloadedReplayCache.size());
+	for (auto &[uuid, cached] : this->downloadedReplayCache)
+	{
+		newDownloaded[uuid] = cached.header;
+	}
 
 	{
 		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
