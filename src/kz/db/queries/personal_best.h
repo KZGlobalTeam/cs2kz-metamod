@@ -27,14 +27,19 @@ constexpr char sql_getpbpro[] = R"(
 // The following queries should have no style!
 
 constexpr char sql_getmaprank[] = R"(
-    SELECT COUNT(DISTINCT Times.SteamID64) + 1
-        FROM Times 
-        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
-        INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
-        WHERE Bans.ID IS NULL AND Maps.Name='%s' AND MapCourses.Name='%s' 
-        AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.RunTime < 
+    SELECT COUNT(*) + 1
+        FROM (
+            SELECT MIN(Times.RunTime) as BestTime
+            FROM Times 
+            INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
+            INNER JOIN Maps ON Maps.ID = MapCourses.MapID
+            INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
+            LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+            WHERE Bans.ID IS NULL AND Maps.Name='%s' AND MapCourses.Name='%s' 
+            AND Times.ModeID=%d AND Times.StyleIDFlags=0
+            GROUP BY Times.SteamID64
+        ) AS PlayerBestTimes
+        WHERE BestTime < 
             (SELECT MIN(Times.RunTime) 
             FROM Times 
             INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
@@ -46,15 +51,19 @@ constexpr char sql_getmaprank[] = R"(
 )";
 
 constexpr char sql_getmaprankpro[] = R"(
-    SELECT COUNT(DISTINCT Times.SteamID64) + 1
-        FROM Times 
-        INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
-        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
-        INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
-        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
-        WHERE Bans.ID IS NULL AND Maps.Name='%s' AND MapCourses.Name='%s' 
-        AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.Teleports=0 
-        AND Times.RunTime < 
+    SELECT COUNT(*) + 1
+        FROM (
+            SELECT MIN(Times.RunTime) as BestTime
+            FROM Times 
+            INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
+            INNER JOIN Maps ON Maps.ID = MapCourses.MapID
+            INNER JOIN Players ON Players.SteamID64=Times.SteamID64 
+            LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+            WHERE Bans.ID IS NULL AND Maps.Name='%s' AND MapCourses.Name='%s' 
+            AND Times.ModeID=%d AND Times.StyleIDFlags=0 AND Times.Teleports=0
+            GROUP BY Times.SteamID64
+        ) AS PlayerBestTimes
+        WHERE BestTime < 
             (SELECT MIN(Times.RunTime) 
             FROM Times 
             INNER JOIN MapCourses ON MapCourses.ID=Times.MapCourseID 
