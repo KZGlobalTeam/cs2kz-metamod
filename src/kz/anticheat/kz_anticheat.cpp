@@ -155,11 +155,11 @@ void KZAnticheatService::OnClientSetup(bool isBanned)
 	{
 		return;
 	}
-	if (KZGlobalService::MayBecomeAvailable())
-	{
-		// Wait for global auth instead.
-		return;
-	}
+	// if (KZGlobalService::MayBecomeAvailable())
+	// {
+	// 	// Wait for global auth instead.
+	// 	return;
+	// }
 	this->isBanned = isBanned;
 	// Already banned? Kick the player and ignore any current infraction.
 	if (isBanned)
