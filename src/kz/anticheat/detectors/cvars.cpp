@@ -30,6 +30,7 @@ extern IClientCvarValue *g_pClientCvarValue;
 #define INTEGRITY_CHECK_MAX_INTERVAL    5.0f
 #define KICK_DELAY                      5.0f
 #define MINIMUM_FPS_MAX                 64.0f
+#define MAXIMUM_FPS_MAX                 1000.0f
 #define MAXIMUM_M_YAW                   0.3f
 #define SV_CHEATS_MAX_PROPAGATION_DELAY 30.0f
 
@@ -131,10 +132,10 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 	}
 	else if (KZ_STREQI(pszCvarName, "fps_max"))
 	{
-		f64 fps = atof(pszCvarValue);
+		f64 fps = Min(atof(pszCvarValue), (f64)MAXIMUM_FPS_MAX);
 		if (player->anticheatService->currentMaxFps == 0.0f)
 		{
-			player->anticheatService->currentMaxFps = atof(pszCvarValue);
+			player->anticheatService->currentMaxFps = fps;
 		}
 
 		if (fps > 0.0f && fps < MINIMUM_FPS_MAX)
