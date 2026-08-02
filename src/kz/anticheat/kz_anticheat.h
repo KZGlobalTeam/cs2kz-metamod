@@ -39,16 +39,21 @@ public:
 		};
 		static_assert(KZ_ARRAYSIZE(kickReasons) == static_cast<u8>(Infraction::Type::COUNT));
 
-		// Ban durations in seconds
-		// Note that the API might not agree with these durations, and the API will always take precedence.
-		// Big ban for players using hacked clients, medium ban for minor infractions
-		static inline f32 banDurations[] = {
+		/*
+			Ban durations in seconds
+			Note that the API might not agree with these durations, and the API will always take precedence.
+			Big ban for players using hacked clients, medium ban for minor infractions.
+			Note that the ban durations are not supposed to be long during beta, since we want to avoid banning players for false positives.
+			The ban durations will be increased after the beta, preferably with API having the final say on the ban durations.
+			Ban durations here are the minimum durations.
+		*/
+		static constexpr f32 banDurations[] = {
 			-1.0f,                // Other - no ban, just kick
-			31556926.0f * 5,      // StrafeHack - 5 years
-			31556926.0f * 5,      // BhopHack - 5 years
-			60.0f * 24 * 60 * 60, // Hyperscroll - 60 days
-			31556926.0f * 5,      // InvalidCvar - 5 years
-			60.0f * 24 * 60 * 60, // InvalidInput - 60 days
+			60.0f * 24 * 60 * 30, // StrafeHack - 30 days
+			60.0f * 24 * 60 * 30, // BhopHack - 30 days
+			60.0f * 24 * 60 * 7,  // Hyperscroll - 7 days
+			60.0f * 24 * 60 * 30, // InvalidCvar - 30 days
+			60.0f * 24 * 60 * 7,  // InvalidInput - 7 days
 			-1.0f,                // Nulls - no ban, just kick (for now)
 			-1.0f,                // SubtickSpam - no ban, just kick (for now)
 			-1.0f                 // Desubtick - kick only
