@@ -109,7 +109,7 @@ void KZAnticheatService::Infraction::OnGlobalSubmitFailure()
 
 void KZAnticheatService::Infraction::SubmitLocalInfraction()
 {
-	if (this->banDuration < 0.0f || !KZDatabaseService::IsReady())
+	if (!KZDatabaseService::IsReady())
 	{
 		this->Finalize();
 		return;
