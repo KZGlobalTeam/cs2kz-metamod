@@ -263,7 +263,7 @@ bool KZ::api::messages::PlayerRecords::FromJson(const Json &json)
 	return json.Get("records", this->records);
 }
 
-bool KZ::api::messages::NewReplay::ToJson(Json &json) const
-{
-	return json.Set("id", this->replayID);
-}
+// bool KZ::api::messages::NewReplay::ToJson(Json &json) const
+// {
+// 	return json.Set("id", this->replayID);
+// }

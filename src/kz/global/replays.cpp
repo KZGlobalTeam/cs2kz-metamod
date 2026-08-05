@@ -30,7 +30,8 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 
 	for (auto &[uploadID, replayData] : uploadsToProcess)
 	{
-		KZGlobalService::WS::SendMessageWithBinary(KZ::api::messages::NewReplay {uploadID.ToString()}, replayData);
+		// TODO: upload via http
+		// KZGlobalService::WS::SendMessageWithBinary(KZ::api::messages::NewReplay {uploadID.ToString()}, replayData);
 	}
 }
 
