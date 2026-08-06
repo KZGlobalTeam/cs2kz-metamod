@@ -22,27 +22,31 @@
 	} \
 	va_end(args);
 
-static_function CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, bool addSpectators)
+static_function bool ShouldSkipMessage(KZPlayer *targetPlayer, bool addSpectators)
+{
+	return !addSpectators && targetPlayer->IsFakeClient() && !targetPlayer->IsCSTV();
+}
+
+static_function bool BuildRecipientFilter(CRecipientFilter &filter, KZPlayer *targetPlayer, bool addSpectators)
 {
 	if (!targetPlayer->GetController())
 	{
-		return nullptr;
+		return false;
 	}
-	CRecipientFilter *filter = new CRecipientFilter();
 	CPlayerSlot slot = targetPlayer->GetPlayerSlot();
-	filter->AddRecipient(slot);
+	filter.AddRecipient(slot);
 	if (!addSpectators)
 	{
-		return filter;
+		return true;
 	}
 	if (!targetPlayer->IsAlive())
 	{
-		return filter;
+		return true;
 	}
 	CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPlayerPawn();
 	if (!targetPlayerPawn)
 	{
-		return nullptr;
+		return false;
 	}
 	for (int i = 0; i < MAXPLAYERS + 1; i++)
 	{
@@ -62,26 +66,33 @@ static_function CRecipientFilter *CreateRecipientFilter(KZPlayer *targetPlayer, 
 		}
 		if (obsService->m_hObserverTarget().IsValid() && obsService->m_hObserverTarget().GetEntryIndex() == targetPlayerPawn->GetEntityIndex().Get())
 		{
-			filter->AddRecipient(player->GetPlayerSlot());
+			filter.AddRecipient(player->GetPlayerSlot());
 		}
 	}
-	return filter;
+	return true;
 }
 
 void KZPlayer::PrintConsole(bool addPrefix, bool includeSpectators, const char *format, ...)
 {
-	FORMAT_STRING(buffer, addPrefix);
-	CRecipientFilter *filter = CreateRecipientFilter(this, includeSpectators);
-	if (!filter)
+	if (ShouldSkipMessage(this, includeSpectators))
 	{
 		return;
 	}
-	utils::ClientPrintFilter(filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
-	delete filter;
+	FORMAT_STRING(buffer, addPrefix);
+	CRecipientFilter filter;
+	if (!BuildRecipientFilter(filter, this, includeSpectators))
+	{
+		return;
+	}
+	utils::ClientPrintFilter(&filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
 void KZPlayer::PrintChat(bool addPrefix, bool includeSpectators, const char *format, ...)
 {
+	if (ShouldSkipMessage(this, includeSpectators))
+	{
+		return;
+	}
 	FORMAT_STRING(buffer, addPrefix);
 	char coloredBuffer[512];
 	if (!utils::CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
@@ -89,41 +100,50 @@ void KZPlayer::PrintChat(bool addPrefix, bool includeSpectators, const char *for
 		Warning("utils::CPrintChat did not have enough space to print: %s\n", buffer);
 		return;
 	}
-	CRecipientFilter *filter = CreateRecipientFilter(this, includeSpectators);
-	if (!filter)
+	CRecipientFilter filter;
+	if (!BuildRecipientFilter(filter, this, includeSpectators))
 	{
 		return;
 	}
-	utils::ClientPrintFilter(filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");
-	delete filter;
+	utils::ClientPrintFilter(&filter, HUD_PRINTTALK, coloredBuffer, "", "", "", "");
 }
 
 void KZPlayer::PrintCentre(bool addPrefix, bool includeSpectators, const char *format, ...)
 {
-	FORMAT_STRING(buffer, addPrefix);
-	CRecipientFilter *filter = CreateRecipientFilter(this, includeSpectators);
-	if (!filter)
+	if (ShouldSkipMessage(this, includeSpectators))
 	{
 		return;
 	}
-	utils::ClientPrintFilter(filter, HUD_PRINTCENTER, buffer, "", "", "", "");
-	delete filter;
+	FORMAT_STRING(buffer, addPrefix);
+	CRecipientFilter filter;
+	if (!BuildRecipientFilter(filter, this, includeSpectators))
+	{
+		return;
+	}
+	utils::ClientPrintFilter(&filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
 void KZPlayer::PrintAlert(bool addPrefix, bool includeSpectators, const char *format, ...)
 {
-	FORMAT_STRING(buffer, addPrefix);
-	CRecipientFilter *filter = CreateRecipientFilter(this, includeSpectators);
-	if (!filter)
+	if (ShouldSkipMessage(this, includeSpectators))
 	{
 		return;
 	}
-	utils::ClientPrintFilter(filter, HUD_PRINTALERT, buffer, "", "", "", "");
-	delete filter;
+	FORMAT_STRING(buffer, addPrefix);
+	CRecipientFilter filter;
+	if (!BuildRecipientFilter(filter, this, includeSpectators))
+	{
+		return;
+	}
+	utils::ClientPrintFilter(&filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
 void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const char *format, ...)
 {
+	if (ShouldSkipMessage(this, includeSpectators))
+	{
+		return;
+	}
 	CUtlString buffer;
 	va_list args;
 	va_start(args, format);
@@ -141,8 +161,8 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 		return;
 	}
 
-	CRecipientFilter *filter = CreateRecipientFilter(this, includeSpectators);
-	if (!filter)
+	CRecipientFilter filter;
+	if (!BuildRecipientFilter(filter, this, includeSpectators))
 	{
 		return;
 	}
@@ -162,7 +182,7 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 
-	auto recipients = filter->GetRecipients();
+	auto recipients = filter.GetRecipients();
 	int index = recipients.FindNextSetBit(0);
 
 	while (index > -1)
@@ -173,5 +193,4 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 		index = recipients.FindNextSetBit(index + 1);
 	}
 	interfaces::pGameEventManager->FreeEvent(event);
-	delete filter;
 }

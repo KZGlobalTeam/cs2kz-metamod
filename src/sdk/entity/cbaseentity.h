@@ -164,8 +164,14 @@ public:
 
 	void SetGravityScale(float scale)
 	{
-		this->m_flActualGravityScale(scale);
-		this->m_flGravityScale(scale);
+		if (this->m_flActualGravityScale() != scale)
+		{
+			this->m_flActualGravityScale(scale);
+		}
+		if (this->m_flGravityScale() != scale)
+		{
+			this->m_flGravityScale(scale);
+		}
 	}
 };
 #endif

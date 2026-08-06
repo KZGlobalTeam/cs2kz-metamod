@@ -104,8 +104,7 @@ public:
 		formattedTemplateCache.clear();
 	}
 
-	template<typename... Args>
-	static std::string PrepareMessageWithLang(const char *language, const char *message, Args &&...args)
+	static const TemplateEntry &GetTemplateEntry(const char *language, const char *message)
 	{
 		std::string cacheKey;
 		cacheKey.reserve(strlen(language) + 1 + strlen(message));
@@ -131,7 +130,18 @@ public:
 			}
 			it = formattedTemplateCache.emplace(std::move(cacheKey), std::move(entry)).first;
 		}
-		const TemplateEntry &entry = it->second;
+		return it->second;
+	}
+
+	static bool IsMessageEmpty(const char *language, const char *message)
+	{
+		return GetTemplateEntry(language, message).str.empty();
+	}
+
+	template<typename... Args>
+	static std::string PrepareMessageWithLang(const char *language, const char *message, Args &&...args)
+	{
+		const TemplateEntry &entry = GetTemplateEntry(language, message);
 		if (!entry.hasFormat)
 		{
 			return entry.str;

@@ -19,6 +19,8 @@ void KZTriggerService::Reset()
 	this->bhopTouchCount = {};
 	this->lastTouchedSequentialBhops = {};
 	this->pushEvents.RemoveAll();
+	this->slideApplied = {};
+	this->antiBhopApplied = {};
 }
 
 void KZTriggerService::OnPhysicsSimulate()

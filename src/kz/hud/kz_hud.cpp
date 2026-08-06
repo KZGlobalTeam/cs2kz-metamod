@@ -136,13 +136,17 @@ std::string KZHUDService::GetSpeedText(const char *language)
 
 std::string KZHUDService::GetKeyText(const char *language)
 {
+	CCSPlayer_MovementServices *ms = this->player->GetMoveServices();
+	CInButtonState *buttons = ms ? &ms->m_nButtons() : nullptr;
+	auto pressed = [buttons](InputBitMask_t button) { return buttons && buttons->IsButtonPressed(button, false); };
+
 	// clang-format off
 	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Key Text",
-		this->player->IsButtonPressed(IN_MOVELEFT) ? 'A' : '_',
-		this->player->IsButtonPressed(IN_FORWARD) ? 'W' : '_',
-		this->player->IsButtonPressed(IN_BACK) ? 'S' : '_',
-		this->player->IsButtonPressed(IN_MOVERIGHT) ? 'D' : '_',
-		this->player->IsButtonPressed(IN_DUCK) ? 'C' : '_',
+		pressed(IN_MOVELEFT) ? 'A' : '_',
+		pressed(IN_FORWARD) ? 'W' : '_',
+		pressed(IN_BACK) ? 'S' : '_',
+		pressed(IN_MOVERIGHT) ? 'D' : '_',
+		pressed(IN_DUCK) ? 'C' : '_',
 		this->jumpedThisTick ? 'J' : '_'
 	);
 
@@ -213,6 +217,11 @@ std::string KZHUDService::GetTimerText(const char *language)
 
 void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 {
+	if (target->IsFakeClient() && !target->IsCSTV())
+	{
+		return;
+	}
+
 	// Only update/show particles for alive players when MHUD is available.
 	bool useParticles = target->IsAlive() && KZHUDService::IsMHUDAvailable();
 	if (useParticles)
@@ -249,8 +258,11 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 
 	std::string centerText = "";
 	std::string htmlText = "";
-	std::string alertText = KZLanguageService::PrepareMessageWithLang(language, "HUD - Alert Text", keyText.c_str(), checkpointText.c_str(),
-																	  timerText.c_str(), speedText.c_str());
+	// The alert template is empty in every shipped translation, so skip formatting it in that case.
+	std::string alertText = KZLanguageService::IsMessageEmpty(language, "HUD - Alert Text")
+								? std::string("")
+								: KZLanguageService::PrepareMessageWithLang(language, "HUD - Alert Text", keyText.c_str(), checkpointText.c_str(),
+																			timerText.c_str(), speedText.c_str());
 
 	if (compact)
 	{

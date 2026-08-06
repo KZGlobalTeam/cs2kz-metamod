@@ -131,6 +131,10 @@ private:
 
 	void UpdateModifiersInternal();
 
+	// Prevents the slide/antibhop cvar overrides from being applied multiple times in a row which can cause performance issues.
+	bool slideApplied {};
+	bool antiBhopApplied {};
+
 	void ApplyJumpFactor(bool replicate = false);
 
 	void ApplySlide(bool replicate = false);
