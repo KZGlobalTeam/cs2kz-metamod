@@ -259,14 +259,15 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 	{
 		this->player->SetVelocity(finalVelocity);
 	}
-
-	// We need to call teleport hook because we don't use teleport function directly.
-	if (this->player->processingMovement && this->player->currentMoveData)
+	// Prevent the player from being teleported into the air for one tick if they were on the ground before teleporting.
+	CEntityHandle groundEntity = this->player->GetPlayerPawn()->m_hGroundEntity();
+	bool restoreGround = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && groundEntity.IsValid();
+	this->player->Teleport(&finalOrigin, NULL, NULL);
+	if (restoreGround)
 	{
-		this->player->OnTeleport(&finalOrigin, nullptr, nullptr);
+		this->player->GetPlayerPawn()->m_fFlags(this->player->GetPlayerPawn()->m_fFlags | FL_ONGROUND);
+		this->player->GetPlayerPawn()->m_hGroundEntity(groundEntity);
 	}
-	this->player->SetOrigin(finalOrigin);
-
 	return true;
 }
 
