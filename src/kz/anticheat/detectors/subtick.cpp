@@ -11,11 +11,12 @@
 #define SUBTICK_INVALID_COMMAND_THRESHOLD  5
 #define SUBTICK_SUSPICIOUS_MOVES_WINDOW    0.5f
 #define SUBTICK_SUSPICIOUS_MOVES_THRESHOLD 20
+#define SUBTICK_YAW_DELTA_THRESHOLD        2
 #define SUBTICK_SUBTICK_INPUTS_WINDOW      20.0f
 #define SUBTICK_SUBTICK_INPUTS_THRESHOLD   30
 #define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
 
-CConVar<bool> kz_ac_subtick_debug("kz_ac_subtick_debug", FCVAR_CHEAT, "Enable subtick abuse detector debug messages", false);
+CConVar<bool> kz_ac_subtick_debug("kz_ac_subtick_debug", FCVAR_NONE, "Enable subtick abuse detector debug messages", false);
 
 // Every command should have all button presses/releases accounted for in subtick moves.
 // Only cheats that modify buttons without updating subtick moves would fail this.
@@ -51,55 +52,28 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 	return expectedButtons == 0;
 }
 
-// Yaw/pitch alias abuse detection: If there's too many subtick moves with the same button + timing and non-zero angles, flag it.
+// Yaw alias abuse detection: A legitimate client only produces a handful of angle changes per command, unless they are scrolling to jump.
+// If there's more than SUBTICK_YAW_DELTA_THRESHOLD subtick moves carrying an actual yaw change in a single tick, flag it.
 static_global bool HasExcessiveSubtickMovesWithAngles(const PlayerCommand &cmd)
 {
-	if (cmd.base().subtick_moves_size() < 2)
-	{
-		return false;
-	}
-	std::set<std::pair<u64, f32>> buttonTimes;
-	// Get a list of all button presses with timings
+	i32 numYawDeltas = 0;
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
 	{
 		const CSubtickMoveStep &step = cmd.base().subtick_moves(i);
-		if (!step.pressed() || !step.has_button())
+		// Only count moves that actually turn the player.
+		if (!step.has_yaw_delta() || step.yaw_delta() == 0.0f)
 		{
 			continue;
 		}
-		// Ignore attack buttons and turn binds (since they wouldn't work anyway)
-		if (step.button() == IN_ATTACK || step.button() == IN_ATTACK2 || step.button() == IN_USE || step.button() == IN_RELOAD
-			|| step.button() == IN_TURNLEFT || step.button() == IN_TURNRIGHT)
+		numYawDeltas++;
+		if (numYawDeltas > SUBTICK_YAW_DELTA_THRESHOLD)
 		{
-			continue;
-		}
-		if (step.has_pitch_delta() || step.has_yaw_delta())
-		{
-			buttonTimes.insert({step.button(), step.when()});
-		}
-	}
-	// Go through the list again. If we find the same button + timing again on release, it's suspicious.
-	i32 numSuspicious = 0;
-	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
-	{
-		const CSubtickMoveStep &step = cmd.base().subtick_moves(i);
-		if (step.pressed() || !step.has_button())
-		{
-			continue;
-		}
-		auto it = buttonTimes.find({step.button(), step.when()});
-		if (it != buttonTimes.end())
-		{
-			numSuspicious++;
-			if (numSuspicious >= 2)
+			if (kz_ac_subtick_debug.GetBool())
 			{
-				if (kz_ac_subtick_debug.GetBool())
-				{
-					KZ_LOG_INFO(LogChannel::AC, "Suspicious subtick moves with angles detected in command %d: %s\n", cmd.cmdNum,
-								cmd.DebugString().c_str());
-				}
-				return true;
+				KZ_LOG_INFO(LogChannel::AC, "Suspicious subtick moves with angles detected in command %d: %s\n", cmd.cmdNum,
+							cmd.DebugString().c_str());
 			}
+			return true;
 		}
 	}
 	return false;
@@ -189,6 +163,7 @@ void KZAnticheatService::CheckSuspiciousSubtickCommands()
 		this->suspiciousSubtickMoveTimes.pop_front();
 	}
 	// If there are too many within the timeframe, ban
+	utils::PrintAlertAll("%d", this->suspiciousSubtickMoveTimes.size());
 	if (this->suspiciousSubtickMoveTimes.size() >= SUBTICK_SUSPICIOUS_MOVES_THRESHOLD)
 	{
 		this->MarkInfraction(Infraction::Type::SubtickSpam, "Excessive subtick moves detected");
