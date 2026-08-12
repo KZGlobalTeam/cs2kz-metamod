@@ -248,44 +248,34 @@ SCMD(kz_spec, SCFL_SPEC)
 		return MRES_SUPERCEDE;
 	}
 
-	// Count alive players and find first alive player
-	u32 numAlivePlayers = 0;
+	// Handle explicit target, this always takes priority over automatic spectating.
+	if (args->ArgC() >= 2)
+	{
+		player->specService->SpectatePlayer(args->Arg(1));
+		return MRES_SUPERCEDE;
+	}
+
+	// Find the first alive player other than the player themselves.
 	KZPlayer *firstAlivePlayer = nullptr;
 	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
 		if (otherPlayer && otherPlayer->IsAlive() && otherPlayer != player)
 		{
-			numAlivePlayers++;
-			if (!firstAlivePlayer)
-			{
-				firstAlivePlayer = otherPlayer;
-			}
+			firstAlivePlayer = otherPlayer;
+			break;
 		}
 	}
 
-	if (numAlivePlayers == 0 && args->ArgC() == 1)
+	// If no other player is alive, spectate themselves instead.
+	if (!firstAlivePlayer)
 	{
 		player->specService->SpectatePlayer("@me");
 		return MRES_SUPERCEDE;
 	}
 
-	// Handle automatic spectating
-	if (numAlivePlayers == 1)
-	{
-		player->specService->SpectatePlayer(firstAlivePlayer);
-		return MRES_SUPERCEDE;
-	}
-
 	// If no target is provided, default to the first alive player.
-	if (args->ArgC() < 2)
-	{
-		player->specService->SpectatePlayer(firstAlivePlayer);
-		return MRES_SUPERCEDE;
-	}
-
-	// Handle explicit target
-	player->specService->SpectatePlayer(args->Arg(1));
+	player->specService->SpectatePlayer(firstAlivePlayer);
 	return MRES_SUPERCEDE;
 }
 
