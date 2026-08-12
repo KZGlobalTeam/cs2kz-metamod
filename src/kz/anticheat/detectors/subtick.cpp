@@ -163,7 +163,6 @@ void KZAnticheatService::CheckSuspiciousSubtickCommands()
 		this->suspiciousSubtickMoveTimes.pop_front();
 	}
 	// If there are too many within the timeframe, ban
-	utils::PrintAlertAll("%d", this->suspiciousSubtickMoveTimes.size());
 	if (this->suspiciousSubtickMoveTimes.size() >= SUBTICK_SUSPICIOUS_MOVES_THRESHOLD)
 	{
 		this->MarkInfraction(Infraction::Type::SubtickSpam, "Excessive subtick moves detected");
