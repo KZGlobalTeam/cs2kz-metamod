@@ -544,6 +544,13 @@ public:
 	static void Init();
 	static void Cleanup();
 
+	/**
+	 * Applies a reloaded server configuration by restarting the WebSocket connection.
+	 *
+	 * Must be called on the main thread. Blocks until the WebSocket thread has been joined.
+	 */
+	static void ReloadConfig();
+
 	inline static bool IsAvailable()
 	{
 		return state.load() == State::HandshakeCompleted;

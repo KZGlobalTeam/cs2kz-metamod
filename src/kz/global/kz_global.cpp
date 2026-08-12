@@ -110,6 +110,58 @@ void KZGlobalService::Cleanup()
 	KZGlobalService::RestoreConVars();
 }
 
+void KZGlobalService::ReloadConfig()
+{
+	std::string apiUrl;
+	std::string apiKey;
+
+	if (!GetApiUrl(apiUrl) || !GetApiKey(apiKey))
+	{
+		// `GetApiUrl()` / `GetApiKey()` already logged the reason.
+		KZGlobalService::Cleanup();
+		KZGlobalService::state.store(KZGlobalService::State::Disconnected);
+		return;
+	}
+
+	if (!KZGlobalService::WS::socket)
+	{
+		KZGlobalService::Cleanup();
+		KZGlobalService::Init();
+
+		if (KZGlobalService::state.load() != KZGlobalService::State::Configured)
+		{
+			KZ_LOG_WARN(LogChannel::Global, "Failed to initialize GlobalService.\n");
+			return;
+		}
+	}
+	else
+	{
+		KZ_LOG_INFO(LogChannel::Global, "Reconnecting to the API...\n");
+
+		// This is synchronous: it closes the connection, cancels any pending reconnection backoff and joins
+		// the WebSocket thread. `WS::OnCloseMessage()` may still run on the WebSocket thread before this
+		// returns, so we must not hold any of our own mutexes here, nor touch `state` until afterwards.
+		KZGlobalService::WS::socket->stop();
+
+		KZGlobalService::WS::socket->setUrl(apiUrl);
+		KZGlobalService::WS::socket->setExtraHeaders({{"Authorization", std::string("Bearer ") + apiKey}});
+
+		// Reset the automatic reconnection to its initial state
+		KZGlobalService::WS::socket->enableAutomaticReconnection();
+		KZGlobalService::WS::socket->setMinWaitBetweenReconnectionRetries(10'000 /* ms */);
+
+		// `OnCloseMessage()` clears every other queue, but not a `hello_ack` that arrived right before we
+		// disconnected. Completing the new handshake with a stale ack would apply outdated map information.
+		{
+			std::lock_guard _guard(KZGlobalService::callbacks.mutex);
+			KZGlobalService::callbacks.helloAck.reset();
+		}
+	}
+
+	KZGlobalService::state.store(KZGlobalService::State::Connecting);
+	KZGlobalService::WS::socket->start();
+}
+
 void KZGlobalService::UpdateRecordCache()
 {
 	// clang-format off
@@ -835,6 +887,7 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 
 	{
 		std::lock_guard _guard(KZGlobalService::globalStyles.mutex);
+		KZGlobalService::globalStyles.checksums.clear();
 
 		for (const KZ::api::messages::handshake::HelloAck::StyleInfo &styleInfo : ack.styles)
 		{

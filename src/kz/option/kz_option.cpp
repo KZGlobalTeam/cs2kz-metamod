@@ -1,7 +1,22 @@
 #include "kz_option.h"
 #include "kz/db/kz_db.h"
+#include "kz/global/kz_global.h"
+#include "kz/racing/kz_racing.h"
 #include "utils/eventlisteners.h"
+#include "utils/logging.h"
+
+#include <mutex>
+
 static_global KeyValues *pServerCfgKeyValues;
+
+// Recursive because logging itself reads options in `KZLoggingListener::OpenFile()`
+// so a log line emitted under this lock would cause deadlock otherwise.
+static_global std::recursive_mutex serverCfgMutex;
+
+static_function void GetServerCfgPath(char (&path)[1024])
+{
+	V_snprintf(path, sizeof(path), "%s%s", g_SMAPI->GetBaseDir(), "/cfg/cs2kz-server-config.txt");
+}
 
 IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 
@@ -118,30 +133,62 @@ static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, co
 void KZOptionService::LoadDefaultOptions()
 {
 	char serverCfgPath[1024];
-	V_snprintf(serverCfgPath, sizeof(serverCfgPath), "%s%s", g_SMAPI->GetBaseDir(), "/cfg/cs2kz-server-config.txt");
+	GetServerCfgPath(serverCfgPath);
+	{
+		std::lock_guard _guard(serverCfgMutex);
+		pServerCfgKeyValues = new KeyValues("ServerConfig");
+		pServerCfgKeyValues->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
+	}
+}
 
-	pServerCfgKeyValues = new KeyValues("ServerConfig");
-	pServerCfgKeyValues->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
+bool KZOptionService::ReloadOptions()
+{
+	char serverCfgPath[1024];
+	GetServerCfgPath(serverCfgPath);
+
+	// Check if the file is valid before replacing the existing.
+	KeyValues *probe = new KeyValues("ServerConfig");
+	bool valid = probe->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
+	delete probe;
+
+	if (!valid)
+	{
+		KZ_LOG_WARN(LogChannel::General, "Failed to parse `cfg/cs2kz-server-config.txt`; keeping the current configuration.\n");
+		return false;
+	}
+
+	std::lock_guard _guard(serverCfgMutex);
+	if (!pServerCfgKeyValues)
+	{
+		return false;
+	}
+
+	pServerCfgKeyValues->Clear();
+	return pServerCfgKeyValues->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
 }
 
 const char *KZOptionService::GetOptionStr(const char *optionName, const char *defaultValue)
 {
-	return pServerCfgKeyValues->GetString(optionName, defaultValue);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->GetString(optionName, defaultValue) : defaultValue;
 }
 
 f64 KZOptionService::GetOptionFloat(const char *optionName, f64 defaultValue)
 {
-	return pServerCfgKeyValues->GetFloat(optionName, defaultValue);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->GetFloat(optionName, defaultValue) : defaultValue;
 }
 
 i64 KZOptionService::GetOptionInt(const char *optionName, i64 defaultValue)
 {
-	return pServerCfgKeyValues->GetInt(optionName, defaultValue);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->GetInt(optionName, defaultValue) : defaultValue;
 }
 
 KeyValues *KZOptionService::GetOptionKV(const char *optionName)
 {
-	return pServerCfgKeyValues->FindKey(optionName);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->FindKey(optionName) : nullptr;
 }
 
 void KZOptionService::InitOptions()
@@ -151,10 +198,28 @@ void KZOptionService::InitOptions()
 
 void KZOptionService::Cleanup()
 {
+	std::lock_guard _guard(serverCfgMutex);
 	if (pServerCfgKeyValues)
 	{
 		delete pServerCfgKeyValues;
+		pServerCfgKeyValues = nullptr;
 	}
+}
+
+CON_COMMAND_F(kz_reload_config, "Reload server config file and reconnect to the API.", FCVAR_NONE)
+{
+	if (!KZOptionService::ReloadOptions())
+	{
+		return;
+	}
+
+	KZ_LOG_INFO(LogChannel::General, "Reloaded `cfg/cs2kz-server-config.txt`.\n");
+
+	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
+	KZGlobalService::ReloadConfig();
+	KZRacingService::ReloadConfig();
+
+	KZ_LOG_INFO(LogChannel::General, "Changes to the local database and tip intervals will only take effect after a server restart.\n");
 }
 
 void KZOptionService::InitializeLocalPrefs(CUtlString text)

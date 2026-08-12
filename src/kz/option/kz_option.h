@@ -23,6 +23,16 @@ class KZOptionService : public KZBaseService
 public:
 	static void InitOptions();
 	static void Cleanup();
+
+	/**
+	 * Reload server configuration file.
+	 *
+	 * Returns false and keeps the current configuration if the file cannot be parsed.
+	 *
+	 * NOTE: this *might* invalidate every pointer previously returned by `GetOptionStr()` and (most certainly) `GetOptionKV()`.
+	 * As a result, callers should never store the results of these functions, or risk crashing the server.
+	 */
+	static bool ReloadOptions();
 	static const char *GetOptionStr(const char *optionName, const char *defaultValue = "");
 	static f64 GetOptionFloat(const char *optionName, f64 defaultValue = 0.0);
 	static i64 GetOptionInt(const char *optionName, i64 defaultValue = 0);
