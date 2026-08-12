@@ -140,8 +140,8 @@ namespace KZ::replaysystem::events
 				}
 
 				player.languageService->PrintChat(true, true, "Beat Course Info - Basic", replay->header.player().name().c_str(),
-												  courseDesc ? courseDesc->GetName().String() : "unknown", formattedTime, combinedModeStyleText.Get(),
-												  teleportText.c_str());
+												  replay->header.map().name().c_str(), courseDesc ? courseDesc->GetName().String() : "unknown",
+												  formattedTime, combinedModeStyleText.Get(), teleportText.c_str());
 				replay->startTime = 0.0f;
 				replay->stopTick = replay->currentTick;
 				replay->courseName[0] = '\0';

@@ -693,8 +693,8 @@ void RunSubmission::AnnounceRun()
 			teleportText = this->teleports == 1 ? player->languageService->PrepareMessage("1 Teleport Text")
 												: player->languageService->PrepareMessage("2+ Teleports Text", this->teleports);
 		}
-		player->languageService->PrintChat(true, false, "Beat Course Info - Basic", this->player.name.c_str(), this->course.name.c_str(),
-										   formattedTime, combinedModeStyleText.Get(), teleportText.c_str());
+		player->languageService->PrintChat(true, false, "Beat Course Info - Basic", this->player.name.c_str(), this->map.name.c_str(),
+										   this->course.name.c_str(), formattedTime, combinedModeStyleText.Get(), teleportText.c_str());
 	}
 }
 
