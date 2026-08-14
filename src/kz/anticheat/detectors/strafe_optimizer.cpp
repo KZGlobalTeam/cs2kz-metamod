@@ -104,7 +104,6 @@ void KZAnticheatService::DetectOptimization(PlayerCommand *pc)
 	// finally check for suspicious yaw accel patterns
 	if (yawAccelPercent > 0.9f)
 	{
-		KZ_LOG_INFO(LogChannel::AC, "Strafe optimizer detected for player %s (%llu)\n", player->GetName(), player->GetSteamId64(false));
 		this->MarkInfraction(KZAnticheatService::Infraction::Type::StrafeHack, "Strafe optimizer detected");
 		return;
 	}

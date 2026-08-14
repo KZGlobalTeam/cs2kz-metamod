@@ -499,7 +499,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			tinyformat::format("Nulls detection on axis %s. Streak: %d/%d, total %d/%d, OL: %d, DA median: %.2f ms, FPS: %.2f",
 							   (button1 == IN_FORWARD || button2 == IN_BACK) ? "forward/backward" : "left/right", numConsecutivePerfect,
 							   adjustedRequiredPerfectCstrafes, numPerfect, total, numOverlaps, underlapMedian * 1000, 1 / medianFramerate);
-		KZ_LOG_INFO(LogChannel::AC, "%s\n", details.c_str());
 		this->MarkInfraction(KZAnticheatService::Infraction::Type::Nulls, details);
 	}
 

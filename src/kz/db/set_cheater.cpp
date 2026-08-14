@@ -10,6 +10,7 @@ void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, con
 {
 	if (!KZDatabaseService::IsReady())
 	{
+		onFailure("Database not ready", -1);
 		return;
 	}
 
@@ -52,6 +53,7 @@ void KZDatabaseService::AddOrUpdateBan(u64 steamID64, const char *reason, const 
 {
 	if (!KZDatabaseService::IsReady())
 	{
+		onFailure("Database not ready", -1);
 		return;
 	}
 	char query[2048];
