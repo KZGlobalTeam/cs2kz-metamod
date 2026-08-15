@@ -269,31 +269,34 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 					}
 				});
 		}
-		else if (KZGlobalService::IsAvailable() && this->player->styleServices.Count() > 0)
+		else if (KZGlobalService::IsAvailable())
 		{
-			bool ranked = false;
-			KZGlobalService::WithCurrentMap(
-				[&](const std::optional<KZ::api::Map> &map)
-				{
-					if (map && map->state == KZ::api::Map::State::Approved)
+			bool ranked = this->player->styleServices.Count() > 0;
+			if (ranked)
+			{
+				KZGlobalService::WithCurrentMap(
+					[&](const std::optional<KZ::api::Map> &map)
 					{
-						for (const auto &apiCourse : map->courses)
+						if (map && map->state == KZ::api::Map::State::Approved)
 						{
-							if (apiCourse.id == courseDesc->globalDatabaseID)
+							for (const auto &apiCourse : map->courses)
 							{
-								ranked = (KZ_STREQI(this->player->modeService->GetModeName(), "Classic")
-										  && apiCourse.filters.classic.state == KZ::api::Map::Course::Filter::State::Ranked)
-										 || (KZ_STREQI(this->player->modeService->GetModeName(), "Vanilla")
-											 && apiCourse.filters.vanilla.state == KZ::api::Map::Course::Filter::State::Ranked);
-								break;
+								if (apiCourse.id == courseDesc->globalDatabaseID)
+								{
+									ranked = (KZ_STREQI(this->player->modeService->GetModeName(), "Classic")
+											  && apiCourse.filters.classic.state == KZ::api::Map::Course::Filter::State::Ranked)
+											 || (KZ_STREQI(this->player->modeService->GetModeName(), "Vanilla")
+												 && apiCourse.filters.vanilla.state == KZ::api::Map::Course::Filter::State::Ranked);
+									break;
+								}
 							}
 						}
-						if (!ranked)
-						{
-							this->player->languageService->PrintChat(true, false, "Started Run on Non Ranked Course", courseDesc->name);
-						}
-					}
-				});
+					});
+			}
+			if (!ranked)
+			{
+				this->player->languageService->PrintChat(true, false, "Started Run on Non Ranked Course", courseDesc->name);
+			}
 		}
 		SetCourse(courseDesc->guid);
 	}

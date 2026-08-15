@@ -958,9 +958,9 @@
 	}
 	"Started Run on Non Ranked Course"
 	{
-		// Warning:  Course Main is not ranked. Runs on this course will not affect your global player rating.
+		// Warning:  Course Main is not ranked for the current mode. Runs on this course will not affect your global player rating.
 		"#format"	"course_name:s"
-		"en"		"{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+		"en"		"{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
 		"chi"		"{yellow}警告: {grey} 关卡 {default}{course_name}{grey} 没有排行. 在这个关卡上跳图不会影响你的全球玩家评分."
 		"ru"		"{yellow}Внимание: {grey} Маршрут {default}{course_name}{grey} не является рейтинговым. Прохождение этого маршрута не повлияет на ваш глобальный рейтинг."
 		"ua"		"{yellow}Увага: {grey} Курс {default}{course_name}{grey} не є рейтинговим. Проходження на цьому курсі не будуть зараховані до вашого глобального рейтингу."
