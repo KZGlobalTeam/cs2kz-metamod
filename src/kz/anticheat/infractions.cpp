@@ -66,8 +66,8 @@ void KZAnticheatService::MarkInfraction(Infraction::Type type, const std::string
 	}
 	this->isBanned = true;
 
-	KZ_LOG_INFO(LogChannel::AC, "Marking infraction (%s) for player %s (%llu): %s\n",
-				Infraction::kickInternalReasons[static_cast<u8>(type)], this->player->GetName(), this->player->GetSteamId64(), details.c_str());
+	KZ_LOG_INFO(LogChannel::AC, "Marking infraction (%s) for player %s (%llu): %s\n", Infraction::kickInternalReasons[static_cast<u8>(type)],
+				this->player->GetName(), this->player->GetSteamId64(), details.c_str());
 
 	Infraction &infraction = KZAnticheatService::pendingBans.emplace_back();
 	infraction.type = type;
