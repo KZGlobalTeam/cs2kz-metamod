@@ -30,6 +30,7 @@
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
+#include "kz/pubapi/kz_pubapi.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
@@ -91,6 +92,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZZtopwatchService::Init();
 	AsyncFileIO::Init();
 	KZRecordingService::Init();
+	// Must come after KZTimerService::Init, it hooks into the timer's event listeners.
+	KZ::pubapi::Init();
 	if (!KZ::mode::CheckModeCvars())
 	{
 		return false;
@@ -125,6 +128,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
+	KZ::pubapi::Shutdown();
 	KZ::misc::UnrestrictTimeLimit();
 	KZRecordingService::Shutdown();
 	AsyncFileIO::Cleanup();
@@ -233,6 +237,11 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	{
 		*ret = META_IFACE_OK;
 		return g_pMappingApi;
+	}
+	else if (strcmp(iface, CS2KZ_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return KZ::pubapi::GetAPI();
 	}
 	*ret = META_IFACE_FAILED;
 

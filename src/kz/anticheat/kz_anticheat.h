@@ -1,12 +1,33 @@
 #pragma once
 #include "../kz.h"
 #include "kz/recording/kz_recording.h"
+#include "utils/eventlisteners.h"
 
 class KZBaseService;
 class Jump;
 
+// Where a ban came from. A player can only be marked banned once per session, so this is
+// whichever source got there first.
+enum class KZAnticheatBanSource : u8
+{
+	Detection = 0,  // the anticheat flagged them during this session
+	GlobalDatabase, // global auth reported an existing ban
+	LocalDatabase,  // this server's own ban table reported an existing ban
+};
+
+class KZAnticheatServiceEventListener
+{
+public:
+	// Fired once, when the player is first marked as banned. `reason` is "" when the source
+	// didn't provide one. The player may be kicked right after this returns, depending on
+	// kz_ac_autokick.
+	virtual void OnPlayerBannedPost(KZPlayer *player, KZAnticheatBanSource source, const char *reason) {}
+};
+
 class KZAnticheatService : public KZBaseService
 {
+	DECLARE_CLASS_EVENT_LISTENER(KZAnticheatServiceEventListener);
+
 public:
 	using KZBaseService::KZBaseService;
 
@@ -300,4 +321,8 @@ public:
 
 	// Mark a detection, generate a replay if specified, and optionally ban/kick the player.
 	void MarkInfraction(Infraction::Type type, const std::string &reason);
+
+private:
+	// Mark the player as banned and broadcast the event. Does nothing if the player is already marked.
+	void MarkBanned(KZAnticheatBanSource source, const char *reason);
 };

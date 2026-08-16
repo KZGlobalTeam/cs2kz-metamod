@@ -69,6 +69,17 @@ public:
 		return this->showPanel;
 	}
 
+	// These describe the player's most recent takeoff, not the current tick.
+	bool IsCrouchJumping() const
+	{
+		return this->crouchJumping;
+	}
+
+	bool IsFromDuckbug() const
+	{
+		return this->fromDuckbug;
+	}
+
 	bool IsCompactPanel();
 
 	void OnTimerStopped(f64 currentTimeWhenTimerStopped);

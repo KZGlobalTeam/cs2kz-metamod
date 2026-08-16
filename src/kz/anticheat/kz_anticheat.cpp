@@ -7,7 +7,19 @@
 #include "utils/ctimer.h"
 #include "sdk/usercmd.h"
 
+IMPLEMENT_CLASS_EVENT_LISTENER(KZAnticheatService, KZAnticheatServiceEventListener);
+
 CConVar<bool> kz_ac_autokick("kz_ac_autokick", FCVAR_NONE, "Whether to kick players that are already banned", false);
+
+void KZAnticheatService::MarkBanned(KZAnticheatBanSource source, const char *reason)
+{
+	if (this->isBanned)
+	{
+		return;
+	}
+	this->isBanned = true;
+	CALL_FORWARD(eventListeners, OnPlayerBannedPost, this->player, source, reason ? reason : "");
+}
 
 CON_COMMAND_F(kz_unban, "Unban a player by their SteamID. Does not globally unban players. Only works if the server isn't globally connected.",
 			  FCVAR_NONE)
@@ -118,10 +130,10 @@ void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
 	{
 		return;
 	}
-	this->isBanned = banInfo != nullptr;
 	// Already banned? Just add the player to the local ban database and ignore any current infraction.
 	if (banInfo)
 	{
+		this->MarkBanned(KZAnticheatBanSource::GlobalDatabase, banInfo->reason.c_str());
 		KZDatabaseService::AddOrUpdateBan(this->player->GetSteamId64(), banInfo->reason.c_str(), banInfo->expirationDate.c_str(), banInfo->banId);
 		if (this->GetPendingInfraction())
 		{
@@ -134,11 +146,13 @@ void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
 		}
 		else
 		{
-			this->isBanned = true; // Don't kick, but still mark as banned
+			// Don't kick, but still mark as banned.
 			this->PrintCheaterMessage();
 		}
+		return;
 	}
-	else if (this->GetPendingInfraction())
+	this->isBanned = false;
+	if (this->GetPendingInfraction())
 	{
 		KZDatabaseService::Unban(this->player->GetSteamId64());
 		this->GetPendingInfraction()->SubmitGlobalInfraction();
@@ -160,10 +174,11 @@ void KZAnticheatService::OnClientSetup(bool isBanned)
 	// 	// Wait for global auth instead.
 	// 	return;
 	// }
-	this->isBanned = isBanned;
 	// Already banned? Kick the player and ignore any current infraction.
 	if (isBanned)
 	{
+		// The local ban table lookup only hands back a bool, so there's no reason to pass on.
+		this->MarkBanned(KZAnticheatBanSource::LocalDatabase, "");
 		if (this->GetPendingInfraction())
 		{
 			this->GetPendingInfraction()->replay = nullptr; // Wipe replay to avoid saving it
@@ -175,11 +190,13 @@ void KZAnticheatService::OnClientSetup(bool isBanned)
 		}
 		else
 		{
-			this->isBanned = true; // Don't kick, but still mark as banned
+			// Don't kick, but still mark as banned.
 			this->PrintCheaterMessage();
 		}
+		return;
 	}
-	else if (this->GetPendingInfraction())
+	this->isBanned = false;
+	if (this->GetPendingInfraction())
 	{
 		// Note: This will skip straight to local submission anyway.
 		this->GetPendingInfraction()->SubmitGlobalInfraction();
