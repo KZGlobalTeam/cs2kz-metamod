@@ -50,10 +50,10 @@ enum class KZBanSource : int
 // `name` aliases internal storage and stays valid until the map changes; copy it.
 struct KZCourseInfo
 {
-	const char *name; // "" when the player isn't on a course
-	int32_t splitCount;
-	int32_t checkpointCount;
-	int32_t stageCount;
+	const char *name = ""; // "" when the player isn't on a course
+	int32_t splitCount = 0;
+	int32_t checkpointCount = 0;
+	int32_t stageCount = 0;
 };
 
 // Where a player is and how they are moving this tick, filled by GetMovementState.
@@ -94,20 +94,20 @@ struct KZMovementState
 // Snapshot of a player's timer state, filled by GetTimerStatus.
 struct KZTimerStatus
 {
-	bool running;
-	bool paused;
-	bool valid;
+	bool running = false;
+	bool paused = false;
+	bool valid = false;
 
-	double time; // seconds since the run started, 0 when not running
+	double time = 0.0; // seconds since the run started, 0 when not running
 
-	uint32_t teleportsUsed;
+	uint32_t teleportsUsed = 0;
 
-	bool onCourse; // false when the player isn't on a course, `course` is then empty
+	bool onCourse = false; // false when the player isn't on a course, `course` is then empty
 	KZCourseInfo course;
 
 	// Alias internal storage, copy them. "" when unavailable.
-	const char *modeShortName; // e.g. "CKZ"
-	const char *modeName;      // e.g. "Classic"
+	const char *modeShortName = ""; // e.g. "CKZ"
+	const char *modeName = "";      // e.g. "Classic"
 };
 
 // Timer event notifications. Derive, override what you need, and register the instance
