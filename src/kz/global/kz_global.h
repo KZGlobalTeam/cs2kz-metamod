@@ -570,6 +570,20 @@ public:
 	}
 
 	/**
+	 * Like WithCurrentMap(), but also exposes whether the current map has been confirmed yet.
+	 * WithCurrentMap() alone can't distinguish "confirmed not-global" from "not yet known" —
+	 * both look like an empty optional. Use this when that distinction matters (e.g. deciding
+	 * whether to keep waiting instead of assuming non-global).
+	 */
+	template<typename F>
+	inline static auto WithCurrentMapState(F &&f)
+	{
+		std::lock_guard _guard(currentMap.mutex);
+		const std::optional<KZ::api::Map> &mapInfo = currentMap.info;
+		return f(mapInfo, currentMap.confirmed);
+	}
+
+	/**
 	 * Returns true only when the API has confirmed the current map is NOT global.
 	 * Returns false if the map IS global, or if the API response is still pending.
 	 * Also returns true when the service is permanently disconnected, since a global

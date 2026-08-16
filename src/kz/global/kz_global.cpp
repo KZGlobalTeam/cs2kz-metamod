@@ -45,6 +45,15 @@ static_function bool GetApiUrl(std::string &url)
 	return true;
 }
 
+static_function void RegisterGlobalCourseIDs(const KZ::api::Map &mapInfo)
+{
+	for (const auto &course : mapInfo.courses)
+	{
+		KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
+		KZ_LOG_INFO(LogChannel::Global, "Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
+	}
+}
+
 static_function bool GetApiKey(std::string &key)
 {
 	key = KZOptionService::GetOptionStr("apiKey");
@@ -230,11 +239,7 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 		else if (mapOk)
 		{
 			KZ_LOG_INFO(LogChannel::Global, "%s is approved.\n", mapInfo->name.c_str());
-			for (const auto &course : mapInfo->courses)
-			{
-				KZ::course::UpdateCourseGlobalID(course.name.c_str(), course.id);
-				KZ_LOG_INFO(LogChannel::Global, "Registered course '%s' with ID %i!\n", course.name.c_str(), course.id);
-			}
+			RegisterGlobalCourseIDs(*mapInfo);
 		}
 		else
 		{
@@ -309,6 +314,13 @@ void KZGlobalService::OnActivateServer()
 	if (KZGlobalService::state.load() == KZGlobalService::State::Uninitialized)
 	{
 		KZGlobalService::Init();
+	}
+
+	// Ensure that no stale map data survives map changes.
+	{
+		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
+		KZGlobalService::currentMap.info = std::nullopt;
+		KZGlobalService::currentMap.confirmed = false;
 	}
 
 	switch (KZGlobalService::state.load())
@@ -848,6 +860,12 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 			mapOk = false;
 			mapMismatch = true;
 		}
+
+		if (mapOk)
+		{
+			RegisterGlobalCourseIDs(ack.mapInfo.value());
+		}
+
 		{
 			std::lock_guard _guard(KZGlobalService::currentMap.mutex);
 			KZGlobalService::currentMap.info = mapOk ? std::move(ack.mapInfo) : std::nullopt;

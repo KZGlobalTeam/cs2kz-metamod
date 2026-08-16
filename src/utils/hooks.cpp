@@ -753,7 +753,7 @@ static_function bool Hook_ActivateServer()
 
 	KZ_LOG_INFO(LogChannel::General, "Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size);
 
-	RunSubmission::Clear();
+	RunSubmission::OnMapChange();
 	KZ::misc::OnActivateServer();
 	KZDatabaseService::SetupMap();
 	KZRecordingService::OnActivateServer();

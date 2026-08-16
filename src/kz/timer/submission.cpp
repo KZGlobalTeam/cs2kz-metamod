@@ -29,14 +29,14 @@ static void BuildReplayPath(char *buf, int bufLen, const UUID_t &uuid)
 // ---------------------------------------------------------------------------
 
 RunSubmission::RunSubmission(KZPlayer *player)
-	: uid(RunSubmission::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), userID(player->GetClient()->GetUserID()),
-	  localUUID(player->recordingService->GetCurrentRunUUID()), finalUUID(player->recordingService->GetCurrentRunUUID()),
-	  time(player->timerService->GetTime()), teleports(player->checkpointService->GetTeleportCount())
+	: uid(RunSubmission::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), mapGeneration(RunSubmission::currentMapGeneration),
+	  userID(player->GetClient()->GetUserID()), localUUID(player->recordingService->GetCurrentRunUUID()),
+	  finalUUID(player->recordingService->GetCurrentRunUUID()), time(player->timerService->GetTime()),
+	  teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
-	this->global = player->CheckPrime() && KZGlobalService::MayBecomeAvailable();
 
-	if (kz_debug_announce_global.Get() && !this->global)
+	if (kz_debug_announce_global.Get() && !(player->CheckPrime() && KZGlobalService::MayBecomeAvailable()))
 	{
 		if (!player->hasPrime)
 		{
@@ -55,14 +55,14 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	// Setup mode
 	auto mode = KZ::mode::GetModeInfo(player->modeService);
 	this->mode.name = mode.shortModeName;
-	KZ::api::Mode apiMode;
-	this->global = KZ::api::DecodeModeString(this->mode.name, apiMode);
-	if (!this->global)
+	KZ::api::Mode decodedMode;
+	if (KZ::api::DecodeModeString(this->mode.name, decodedMode))
 	{
-		if (kz_debug_announce_global.Get())
-		{
-			KZ_LOG_INFO(LogChannel::Global, "[%u] Mode '%s' is not a valid global mode, will not submit globally.\n", uid, this->mode.name.c_str());
-		}
+		this->apiMode = decodedMode;
+	}
+	else if (kz_debug_announce_global.Get())
+	{
+		KZ_LOG_INFO(LogChannel::Global, "[%u] Mode '%s' is not a valid global mode, will not submit globally.\n", uid, this->mode.name.c_str());
 	}
 	this->mode.md5 = mode.md5;
 	if (mode.databaseID <= 0)
@@ -85,48 +85,40 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	this->course.name = player->timerService->GetCourse()->GetName().Get();
 	this->course.localID = player->timerService->GetCourse()->localDatabaseID;
 
-	// clang-format off
-	KZGlobalService::WithCurrentMap([&](const std::optional<KZ::api::Map> &currentMap)
+	if (this->apiMode.has_value())
 	{
-		this->global = currentMap.has_value();
-
-		if (!currentMap)
+		// clang-format off
+		KZGlobalService::WithCurrentMapState([&](const std::optional<KZ::api::Map> &currentMapInfo, bool confirmed)
 		{
-			return;
-		}
-
-		const KZ::api::Map::Course *course = nullptr;
-		for (const KZ::api::Map::Course &c : currentMap->courses)
-		{
-			if (KZ_STREQ(c.name.c_str(), this->course.name.c_str()))
+			if (!confirmed)
 			{
-				course = &c;
-				break;
+				// map_change reply still pending, or the API connection itself is down/
+				// reconnecting. Defer instead of assuming non-global; TryFinalize() polls for
+				// this to be confirmed later (for this run's own map, never a different one).
+				this->mapResolutionPending = true;
+				return;
 			}
-		}
 
-		if (course == nullptr)
-		{
-			if (kz_debug_announce_global.Get())
+			if (!currentMapInfo.has_value())
+			{
+				return; // confirmed not-global; this->global stays false
+			}
+
+			this->global = ResolveGlobalFilterID(*currentMapInfo);
+
+			if (!this->global && kz_debug_announce_global.Get())
 			{
 				KZ_LOG_INFO(LogChannel::Global, "[%u] Course '%s' not found on global map '%s', will not submit globally.\n", uid,
-							 this->course.name.c_str(), currentMap->name.c_str());
+							 this->course.name.c_str(), currentMapInfo->name.c_str());
 				KZ_LOG_INFO(LogChannel::Global, "[%u] Available courses:\n", uid);
-				for (const KZ::api::Map::Course &c : currentMap->courses)
+				for (const KZ::api::Map::Course &c : currentMapInfo->courses)
 				{
 					KZ_LOG_INFO(LogChannel::Global, " - %s\n", c.name.c_str());
 				}
 			}
-			global = false;
-		}
-		else
-		{
-			this->globalFilterID = (apiMode == KZ::api::Mode::Classic)
-				? course->filters.classic.id
-				: course->filters.vanilla.id;
-		}
-	});
-	// clang-format on
+		});
+		// clang-format on
+	}
 
 	// Setup styles
 	FOR_EACH_VEC(player->styleServices, i)
@@ -148,10 +140,10 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	{
 		this->local = false;
 		this->global = false;
+		this->mapResolutionPending = false; // no point deferring for a banned/unauth player
 	}
 
 	// Snapshot previous global PBs for diff display
-	if (global)
 	{
 		auto pbData = player->timerService->GetGlobalCachedPB(player->timerService->GetCourse(), mode.id);
 		if (pbData)
@@ -168,7 +160,15 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	// Local DB insert is deferred to TryFinalize() so the API has a chance to supply the canonical UUID
 	// before we write to the DB.
 	// Exception: non-global runs insert to DB immediately (no UUID synchronization needed).
-	if (global)
+	if (mapResolutionPending)
+	{
+		// We don't know how long the API will take to respond, so we don't want to block the local insert on it.
+		if (local)
+		{
+			SubmitLocal(localUUID.ToString().c_str());
+		}
+	}
+	else if (global)
 	{
 		SubmitGlobal();
 	}
@@ -182,6 +182,32 @@ RunSubmission::RunSubmission(KZPlayer *player)
 // ---------------------------------------------------------------------------
 // API response
 // ---------------------------------------------------------------------------
+
+bool RunSubmission::ResolveGlobalFilterID(const KZ::api::Map &mapInfo)
+{
+	if (!this->apiMode.has_value())
+	{
+		return false;
+	}
+
+	const KZ::api::Map::Course *course = nullptr;
+	for (const KZ::api::Map::Course &c : mapInfo.courses)
+	{
+		if (KZ_STREQ(c.name.c_str(), this->course.name.c_str()))
+		{
+			course = &c;
+			break;
+		}
+	}
+
+	if (course == nullptr)
+	{
+		return false;
+	}
+
+	this->globalFilterID = (*this->apiMode == KZ::api::Mode::Classic) ? course->filters.classic.id : course->filters.vanilla.id;
+	return true;
+}
 
 void RunSubmission::SubmitGlobal()
 {
@@ -215,7 +241,7 @@ void RunSubmission::SubmitGlobal()
 		{
 			this->global = false;
 			// No API UUID will arrive; insert locally now with localUUID.
-			if (this->local)
+			if (this->local && !this->localSubmitted)
 			{
 				SubmitLocal(localUUID.ToString().c_str());
 			}
@@ -223,16 +249,17 @@ void RunSubmission::SubmitGlobal()
 		}
 		case KZGlobalService::SubmitRecordResult::Queued:
 		{
-			// The message will be sent once the API reconnects.
-			// Do NOT insert locally yet — we must wait for the API's UUID.
-			// CheckAll() will keep this submission alive; Clear() on map change cleans it up.
+			// The message will be sent once the API reconnects. TryFinalize() commits the local
+			// row with localUUID right away (it doesn't wait on pendingQueuedSubmission); once the
+			// late ack arrives, DoLateAPIResponse() reconciles the UUID and uploads the replay.
+			// CheckAll() keeps this submission alive until that ack arrives.
 			this->pendingQueuedSubmission = true;
 			break;
 		}
 		case KZGlobalService::SubmitRecordResult::NotConnected:
 		{
 			this->global = false;
-			if (this->local)
+			if (this->local && !this->localSubmitted)
 			{
 				SubmitLocal(localUUID.ToString().c_str());
 			}
@@ -296,7 +323,7 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 	{
 		g_asyncFileIO->QueueWriteBuffer(replayPath, replayBuffer);
 		// Notify the player now (write is async but fire-and-forget, effectively always succeeds).
-		KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
+		KZPlayer *callbackPlayer = this->IsFromPreviousMap() ? nullptr : g_pKZPlayerManager->ToPlayer(userID);
 		if (callbackPlayer)
 		{
 			callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", finalUUID.ToString().c_str());
@@ -322,6 +349,15 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 	{
 		TryFinalize();
 	}
+
+	// A queued submission parks here until its ack arrives, which can be minutes away or never.
+	// Holding the whole replay in RAM for that entire time is a waste of memory.
+	// DoLateAPIResponse() should take care of reading it back from disk later.
+	if (pendingQueuedSubmission && g_asyncFileIO)
+	{
+		replayBuffer.clear();
+		replayBuffer.shrink_to_fit();
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -335,6 +371,57 @@ void RunSubmission::TryFinalize()
 		return;
 	}
 
+	const f64 now = g_pKZUtils->GetServerGlobals()->realtime;
+
+	if (mapResolutionPending)
+	{
+		bool giveUp = !KZGlobalService::MayBecomeAvailable() || now >= (timestamp + RunSubmission::timeout);
+		bool resolved = false;
+		bool isGlobal = false;
+
+		// clang-format off
+		KZGlobalService::WithCurrentMapState([&](const std::optional<KZ::api::Map> &currentMapInfo, bool confirmed)
+		{
+			if (!confirmed)
+			{
+				return;
+			}
+			resolved = true;
+
+			// Confirmed not-global, or confirmed for a DIFFERENT map than this run was played on
+			// (the map changed after the run and the API confirmed the new one); never submit
+			// globally in that case. 
+			if (!currentMapInfo.has_value() || currentMapInfo->name != this->map.name)
+			{
+				return;
+			}
+
+			isGlobal = ResolveGlobalFilterID(*currentMapInfo);
+		});
+		// clang-format on
+
+		if (!resolved && !giveUp)
+		{
+			return; // keep polling next frame
+		}
+
+		mapResolutionPending = false;
+		this->global = resolved && isGlobal;
+
+		if (kz_debug_announce_global.Get())
+		{
+			KZ_LOG_INFO(LogChannel::Global, "[%u] Deferred map resolution: global=%s (resolved=%s, gaveUp=%s)\n", uid,
+						this->global ? "true" : "false", resolved ? "true" : "false", giveUp ? "true" : "false");
+		}
+
+		// Nothing to do for the local side here: deferring always commits the local row in the
+		// constructor, so it is already in flight regardless of how this resolves.
+		if (this->global)
+		{
+			SubmitGlobal();
+		}
+	}
+
 	// No submissions — nothing to finalize; just mark done so CheckAll() can announce and GC.
 	if (!local && !global)
 	{
@@ -342,7 +429,6 @@ void RunSubmission::TryFinalize()
 		return;
 	}
 
-	const f64 now = g_pKZUtils->GetServerGlobals()->realtime;
 	const bool timeoutReached = now >= (timestamp + RunSubmission::timeout);
 
 	// For global runs that haven't heard back from the API yet:
@@ -361,8 +447,10 @@ void RunSubmission::TryFinalize()
 	}
 	// else: finalUUID stays equal to localUUID (set in constructor)
 
-	// 1. Local DB insert with the final UUID (skip if already inserted in the constructor
-	// for non-global runs, where SubmitLocal was called immediately with localUUID).
+	// 1. Local DB insert with the final UUID. This is the only place a global run's local row is
+	// written: the constructor deliberately defers it so the API has a chance to supply the
+	// canonical UUID first. Runs that already inserted with localUUID in the constructor
+	// (non-global, or deferred map resolution) are skipped by the localSubmitted guard.
 	if (local && !localSubmitted)
 	{
 		SubmitLocal(finalUUID.ToString().c_str());
@@ -421,6 +509,31 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 			BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
 			utils::RemoveFile(deletePath);
 		}
+	}
+	else
+	{
+		// The buffer was released while this submission was parked waiting for the ack (see
+		// OnReplayReady), so read it back from disk.
+		std::string uploadPath(newPath);
+		// clang-format off
+		g_asyncFileIO->QueueRead(uploadPath,
+			[uploadPath, uploadUUID = apiFinalUUID](bool success, std::vector<char> &&buffer)
+			{
+				if (!success || buffer.empty())
+				{
+					KZ_LOG_WARN(LogChannel::Global, "Could not read replay '%s' back from disk; skipping upload.\n",
+								uploadPath.c_str());
+					return;
+				}
+
+				KZGlobalService::QueueReplayUpload(uploadUUID, std::move(buffer));
+
+				if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+				{
+					utils::RemoveFile(uploadPath.c_str());
+				}
+			});
+		// clang-format on
 	}
 }
 
@@ -558,9 +671,10 @@ void RunSubmission::UpdateLocalCache()
 	KZTimerService::UpdateLocalRecordCache();
 }
 
-// ---------------------------------------------------------------------------
-// CheckAll — per-frame tick: drive announcements and garbage-collect
-// ---------------------------------------------------------------------------
+void RunSubmission::OnMapChange()
+{
+	++RunSubmission::currentMapGeneration;
+}
 
 void RunSubmission::CheckAll()
 {
@@ -576,18 +690,27 @@ void RunSubmission::CheckAll()
 			// Wait for all pending responses before announcing rank info, so local and
 			// global messages arrive together in a single burst.
 			bool localReady = !sub->local || sub->localResponse.received;
-			bool globalReady = !sub->global || sub->globalResponse.received;
+			bool globalReady =
+				!sub->mapResolutionPending && (!sub->global || sub->globalResponse.received || sub->pendingQueuedSubmission);
 
 			if (localReady && globalReady && !sub->runAnnounced)
 			{
 				sub->runAnnounced = true;
 				sub->AnnounceRun();
-				if (sub->local) sub->AnnounceLocal();
-				if (sub->global) sub->AnnounceGlobal();
+				if (sub->local)
+				{
+					sub->AnnounceLocal();
+				}
+				if (sub->globalResponse.received)
+				{
+					sub->AnnounceGlobal();
+				}
 			}
 
-			// Keep alive until the queued submission eventually gets an API response.
-			// These entries are cleaned up by Clear() on map change.
+			// Keep alive until the queued submission gets its API response. 
+			// TODO: WS::OnCloseMessage() clears callbacks.queue without notifying anyone, so
+			// a queued message destroyed before it flushes means the ack never arrives and this
+			// submission parks forever. Should fix that in the next global rewrite.
 			if (sub->pendingQueuedSubmission)
 			{
 				return false;
@@ -609,19 +732,19 @@ void RunSubmission::CheckAll()
 				{
 					return false;
 				}
-				// Announcement timeout — announce what we have and GC
+
 				if (!sub->runAnnounced)
 				{
 					sub->runAnnounced = true;
 					sub->AnnounceRun();
-					if (sub->local && sub->localResponse.received)
+					if (sub->localResponse.received)
 					{
 						sub->AnnounceLocal();
 					}
-				}
-				if (sub->global && sub->globalResponse.received)
-				{
-					sub->AnnounceGlobal();
+					if (sub->globalResponse.received)
+					{
+						sub->AnnounceGlobal();
+					}
 				}
 			}
 
@@ -668,6 +791,11 @@ void RunSubmission::OnGlobalRecordSubmitted(const KZ::api::messages::NewRecordAc
 
 void RunSubmission::AnnounceRun()
 {
+	if (IsFromPreviousMap())
+	{
+		return;
+	}
+
 	char formattedTime[32];
 	utils::FormatTime(time, formattedTime, sizeof(formattedTime));
 
@@ -700,6 +828,11 @@ void RunSubmission::AnnounceRun()
 
 void RunSubmission::AnnounceLocal()
 {
+	if (IsFromPreviousMap())
+	{
+		return;
+	}
+
 	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
@@ -741,6 +874,11 @@ void RunSubmission::AnnounceLocal()
 
 void RunSubmission::AnnounceGlobal()
 {
+	if (IsFromPreviousMap())
+	{
+		return;
+	}
+
 	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
