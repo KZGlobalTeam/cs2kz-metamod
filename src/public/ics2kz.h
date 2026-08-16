@@ -5,8 +5,6 @@
 
 // Public API for CS2KZ.
 // Main (game) thread only. Calling from a worker thread is undefined behaviour.
-//
-//
 // Strings: every const char * returned by this interface aliases internal storage. Copy it,
 // don't cache it. Never returns null; "" stands for "unavailable".
 //
