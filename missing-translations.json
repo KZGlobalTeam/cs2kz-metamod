@@ -1193,7 +1193,7 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -5485,7 +5485,7 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -8497,7 +8497,7 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -10916,7 +10916,7 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -12273,7 +12273,7 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -14225,7 +14225,7 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -17004,7 +17004,7 @@
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "cs2kz-timer.phrases.txt",
@@ -27535,7 +27535,7 @@
         {
           "name": "Started Run on Non Ranked Course",
           "line": 959,
-          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating.",
+          "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating.",
           "existing_languages": [
             "chi",
             "en",
