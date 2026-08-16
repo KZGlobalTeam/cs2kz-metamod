@@ -195,6 +195,7 @@ public:
 	static void UpdateLocalRecordCache();
 	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
 									CUtlString metadata = "");
+	static const PBData *GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID);
 
 	void ClearPBCache();
 	const PBData *GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID);

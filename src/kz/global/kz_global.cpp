@@ -204,7 +204,21 @@ void KZGlobalService::OnWorldRecordsForCache(const KZ::api::messages::WorldRecor
 
 		PluginId modeID = KZ::mode::GetModeInfo(record.mode).id;
 
-		KZTimerService::InsertRecordToCache(record.time, course, modeID, record.nubPoints != 0, true);
+		// Never let a slower record overwrite a faster one.
+		const PBData *cached = KZTimerService::GetGlobalCachedRecord(course, modeID);
+
+		if (!cached || cached->overall.pbTime == 0 || record.time < cached->overall.pbTime)
+		{
+			KZTimerService::InsertRecordToCache(record.time, course, modeID, true, true);
+		}
+
+		// Inserting may rehash the cache and invalidate the pointer above.
+		cached = KZTimerService::GetGlobalCachedRecord(course, modeID);
+
+		if (record.teleports == 0 && (!cached || cached->pro.pbTime == 0 || record.time < cached->pro.pbTime))
+		{
+			KZTimerService::InsertRecordToCache(record.time, course, modeID, false, true);
+		}
 	}
 }
 
@@ -469,12 +483,20 @@ static_function void OnPlayerRecordsReceived(const KZ::api::messages::PlayerReco
 
 		PluginId modeID = KZ::mode::GetModeInfo(record.mode).id;
 
-		if (record.nubPoints != 0)
+		// The records are sent as a flat list, so the PRO PB also shows up on the overall (NUB) leaderboard and carries
+		// its points. Gating on the points does not work either, as they default to -1 when the API omits them. Insert
+		// the record into every leaderboard it qualifies for, and never let a slower record overwrite a faster one.
+		const PBData *cached = player->timerService->GetGlobalCachedPB(course, modeID);
+
+		if (record.nubRank != 0 && (!cached || cached->overall.pbTime == 0 || record.time < cached->overall.pbTime))
 		{
 			player->timerService->InsertPBToCache(record.time, course, modeID, true, true, "", record.nubPoints);
 		}
 
-		if (record.proPoints != 0)
+		// Inserting may rehash the cache and invalidate the pointer above.
+		cached = player->timerService->GetGlobalCachedPB(course, modeID);
+
+		if (record.proRank != 0 && record.teleports == 0 && (!cached || cached->pro.pbTime == 0 || record.time < cached->pro.pbTime))
 		{
 			player->timerService->InsertPBToCache(record.time, course, modeID, false, true, "", record.proPoints);
 		}

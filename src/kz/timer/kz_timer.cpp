@@ -1254,6 +1254,18 @@ void KZTimerService::UpdateLocalRecordCache()
 	KZDatabaseService::QueryAllRecords(g_pKZUtils->GetCurrentMapName(), onQuerySuccess, KZDatabaseService::OnGenericTxnFailure);
 }
 
+const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID)
+{
+	PBDataKey key = ToPBDataKey(modeID, course->guid);
+
+	if (KZTimerService::wrCache.find(key) == KZTimerService::wrCache.end())
+	{
+		return nullptr;
+	}
+
+	return &KZTimerService::wrCache[key];
+}
+
 void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
 {
 	PBData &pb = global ? KZTimerService::wrCache[ToPBDataKey(modeID, course->guid)] : KZTimerService::srCache[ToPBDataKey(modeID, course->guid)];
