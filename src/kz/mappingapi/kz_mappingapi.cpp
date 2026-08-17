@@ -15,6 +15,7 @@
 #include "kz/language/kz_language.h"
 #include "utils/simplecmds.h"
 #include "utils/tables.h"
+#include "utils/memtrack/kz_memtrack.h"
 #include "UtlSortVector.h"
 
 #include "tier0/memdbgon.h"
@@ -508,6 +509,9 @@ void KZ::mapapi::Init()
 
 void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues)
 {
+	// Entry point from the engine's spawn-group load; whole-map entity parse happens below it.
+	KZ_MEM_MODULE_SCOPE();
+
 	if (!pKeyValues)
 	{
 		return;

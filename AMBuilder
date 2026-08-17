@@ -59,6 +59,14 @@ def configure_main(sdk_target, sdk, cxx):
   if binary.compiler.family == 'clang':
     binary.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
 
+  # Memory tracking (kz_meminfo) is built into the main binary only.
+  #  - NO_MEMOVERRIDE_NEW_DELETE: src/utils/memtrack/kz_memoverride.cpp supplies the operator
+  #    new/delete family instead of the SDK's memoverride.cpp, so every allocation can record its
+  #    caller's return address. This is the opt-out memoverride.cpp itself provides.
+  #  - KZ_MEMTRACK_ENABLED: turns the tracking API on. Without it the shared headers fall back to
+  #    no-op stubs, which is what the mode/style binaries need since they do not compile it.
+  binary.compiler.defines += ['NO_MEMOVERRIDE_NEW_DELETE', 'KZ_MEMTRACK_ENABLED']
+
   binary.compiler.cxxincludes += [
       os.path.join(builder.sourcePath, 'src'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2'),
@@ -90,6 +98,11 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'http.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'async_file_io.cpp'),
+
+    os.path.join(builder.sourcePath, 'src', 'utils', 'memtrack', 'kz_memtrack.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'memtrack', 'kz_memhook.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'memtrack', 'kz_memoverride.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'memtrack', 'commands.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'player', 'player_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'player', 'player.cpp'),

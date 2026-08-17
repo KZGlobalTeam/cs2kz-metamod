@@ -8,6 +8,7 @@
 #include "utils/hooks.h"
 #include "utils/gameconfig.h"
 #include "utils/async_file_io.h"
+#include "utils/memtrack/kz_memtrack.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
@@ -52,6 +53,11 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
 	modules::Initialize();
+
+	// As early as possible so it covers the rest of startup - it needs modules::tier0, and nothing
+	// before this point is worth tracking. Reports its own outcome once logging exists, below.
+	KZMem::Install();
+
 	if (!interfaces::Initialize(ismm, error, maxlen))
 	{
 		return false;
@@ -60,6 +66,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	META_CONVAR_REGISTER(FCVAR_NONE);
 	KZOptionService::InitOptions();
 	InitKZLogging();
+	KZMem::LogStatus();
 	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
 
 	if (!utils::Initialize(ismm, error, maxlen))
@@ -149,6 +156,11 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	kz_log_to_file.Set(false);
 	g_KZLoggingListener.CheckFile();
 	ConVar_Unregister();
+
+	// Last: this restores the IMemAlloc vtable and then waits for every thread still inside one of
+	// our thunks to leave. Everything above still allocates and frees, so it has to stay hooked
+	// until they are done.
+	KZMem::Uninstall();
 	return true;
 }
 

@@ -8,6 +8,72 @@ void Plat_WriteMemory(void *pPatchAddress, uint8_t *pPatch, int iPatchSize)
 	WriteProcessMemory(GetCurrentProcess(), pPatchAddress, (void *)pPatch, iPatchSize, nullptr);
 }
 
+size_t Plat_GetProcessRSS()
+{
+	PROCESS_MEMORY_COUNTERS pmc {};
+	pmc.cb = sizeof(pmc);
+	if (!GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+	{
+		return 0;
+	}
+	return (size_t)pmc.WorkingSetSize;
+}
+
+bool Plat_GetSelfModuleRange(uintptr_t *pBase, size_t *pSize)
+{
+	// Take the address of a function in this module as the anchor.
+	HMODULE hSelf = nullptr;
+	if (!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)&Plat_WriteMemory, &hSelf)
+		|| !hSelf)
+	{
+		return false;
+	}
+
+	MODULEINFO info {};
+	if (!GetModuleInformation(GetCurrentProcess(), hSelf, &info, sizeof(info)))
+	{
+		return false;
+	}
+
+	*pBase = (uintptr_t)info.lpBaseOfDll;
+	*pSize = (size_t)info.SizeOfImage;
+	return true;
+}
+
+void *Plat_ReservePages(size_t bytes)
+{
+	return VirtualAlloc(nullptr, bytes, MEM_RESERVE, PAGE_READWRITE);
+}
+
+bool Plat_CommitPages(void *pBase, size_t bytes)
+{
+	return VirtualAlloc(pBase, bytes, MEM_COMMIT, PAGE_READWRITE) != nullptr;
+}
+
+void Plat_ReleasePages(void *pBase, size_t bytes)
+{
+	// MEM_RELEASE requires the size to be 0 and the base to be the original reservation.
+	(void)bytes;
+	VirtualFree(pBase, 0, MEM_RELEASE);
+}
+
+bool Plat_UnprotectPages(void *pAddr, size_t bytes, uint32_t *pOldProtect)
+{
+	DWORD oldProtect = 0;
+	if (!VirtualProtect(pAddr, bytes, PAGE_READWRITE, &oldProtect))
+	{
+		return false;
+	}
+	*pOldProtect = (uint32_t)oldProtect;
+	return true;
+}
+
+void Plat_ReprotectPages(void *pAddr, size_t bytes, uint32_t oldProtect)
+{
+	DWORD ignored = 0;
+	VirtualProtect(pAddr, bytes, (DWORD)oldProtect, &ignored);
+}
+
 void CModule::InitializeSections()
 {
 	IMAGE_DOS_HEADER *pDosHeader = reinterpret_cast<IMAGE_DOS_HEADER *>(m_hModule);

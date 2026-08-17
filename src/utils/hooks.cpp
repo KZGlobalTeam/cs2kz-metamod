@@ -34,6 +34,7 @@
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
 #include "utils/utils.h"
+#include "utils/memtrack/kz_memtrack.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "sdk/usercmd.h"
 
@@ -427,6 +428,7 @@ void hooks::HookEntities()
 // CBaseEntity
 static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
@@ -438,6 +440,7 @@ static_function void Hook_OnStartTouch(CBaseEntity *pOther)
 
 static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
@@ -448,6 +451,7 @@ static_function void Hook_OnStartTouchPost(CBaseEntity *pOther)
 
 static_function void Hook_OnTouch(CBaseEntity *pOther)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
@@ -472,6 +476,7 @@ static_function void Hook_OnTouch(CBaseEntity *pOther)
 
 static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
@@ -482,6 +487,7 @@ static_function void Hook_OnTouchPost(CBaseEntity *pOther)
 
 static_function void Hook_OnEndTouch(CBaseEntity *pOther)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
@@ -492,6 +498,7 @@ static_function void Hook_OnEndTouch(CBaseEntity *pOther)
 
 static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CBaseEntity *pThis = META_IFACEPTR(CBaseEntity);
 	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
@@ -502,6 +509,7 @@ static_function void Hook_OnEndTouchPost(CBaseEntity *pOther)
 
 static_function void Hook_OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CBaseEntity *this_ = META_IFACEPTR(CBaseEntity);
 	// Just to be sure.
 	if (this_->IsPawn())
@@ -518,6 +526,7 @@ static_function void Hook_OnTeleport(const Vector *newPosition, const QAngle *ne
 // CCSPlayerController
 static_function void Hook_OnChangeTeamPost(i32 team)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CCSPlayerController *controller = META_IFACEPTR(CCSPlayerController);
 	MovementPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (player)
@@ -530,6 +539,7 @@ static_function void Hook_OnChangeTeamPost(i32 team)
 static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfos, int infoCount, CBitVec<16384> &unk1, CBitVec<16384> &,
 										const Entity2Networkable_t **pNetworkables, const uint16 *pEntityIndicies, int nEntities)
 {
+	KZ_MEM_MODULE_SCOPE();
 	KZ::quiet::OnCheckTransmit(pInfos, infoCount);
 	KZProfileService::OnCheckTransmit();
 	RETURN_META(MRES_IGNORED);
@@ -538,6 +548,7 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfos, int infoCou
 // ISource2Server
 static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
+	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	g_pKZPlayerManager->PerformAuthChecks();
@@ -553,6 +564,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 
 static_function void Hook_GameServerSteamAPIActivated()
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_steamAPI.Init();
 	g_pKZPlayerManager->OnSteamAPIActivated();
 }
@@ -563,6 +575,7 @@ static_function void Hook_GameServerSteamAPIDeactivated() {}
 static_function bool Hook_ClientConnect(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1,
 										CBufferString *pRejectReason)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnClientConnect(slot, pszName, xuid, pszNetworkID, unk1, pRejectReason);
 	RETURN_META_VALUE(MRES_IGNORED, true);
 }
@@ -570,24 +583,28 @@ static_function bool Hook_ClientConnect(CPlayerSlot slot, const char *pszName, u
 static_function void Hook_OnClientConnected(CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress,
 											bool bFakePlayer)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnClientConnected(slot, pszName, xuid, pszNetworkID, pszAddress, bFakePlayer);
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_ClientFullyConnect(CPlayerSlot slot)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnClientFullyConnect(slot);
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_ClientPutInServer(CPlayerSlot slot, char const *pszName, int type, uint64 xuid)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnClientPutInServer(slot, pszName, type, xuid);
 	RETURN_META(MRES_IGNORED);
 }
 
 static_function void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnClientActive(slot, bLoadGame, pszName, xuid);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 	if (player->GetPlayerPawn())
@@ -604,6 +621,7 @@ static_function void Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const c
 static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName, uint64 xuid,
 										   const char *pszNetworkID)
 {
+	KZ_MEM_MODULE_SCOPE();
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 	// Immediately remove the player off the list. We don't need to keep them around.
 	if (player->GetController())
@@ -631,11 +649,13 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 
 static_function void Hook_ClientVoice(CPlayerSlot slot)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnClientVoice(slot);
 }
 
 static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 {
+	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	if (META_RES result = KZ::misc::CheckBlockedRadioCommands(args[0]))
 	{
@@ -651,6 +671,7 @@ static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 // INetworkServerService
 static_function void Hook_StartupServer(const GameSessionConfiguration_t &config, ISource2WorldSession *, const char *)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_KZPlugin.AddonInit();
 	KZ::course::ClearCourses();
 	KZ::mapapi::Init();
@@ -661,6 +682,7 @@ static_function void Hook_StartupServer(const GameSessionConfiguration_t &config
 // IGameEventManager2
 static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 {
+	KZ_MEM_MODULE_SCOPE();
 	if (event)
 	{
 		if (KZ_STREQI(event->GetName(), "player_death"))
@@ -712,6 +734,7 @@ static_function bool Hook_FireEvent(IGameEvent *event, bool bDontBroadcast)
 // ICvar
 static_function void Hook_DispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
+	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	if (META_RES result = KZ::misc::CheckBlockedRadioCommands(args[0]))
 	{
@@ -730,18 +753,21 @@ static_function void Hook_DispatchConCommand(ConCommandRef cmd, const CCommandCo
 static_function void Hook_PostEvent(CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients, INetworkMessageInternal *pEvent,
 									const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType)
 {
+	KZ_MEM_MODULE_SCOPE();
 	KZ::quiet::OnPostEvent(pEvent, pData, clients);
 }
 
 // CEntitySystem
 static_function void Hook_CEntitySystem_Spawn(int nCount, const EntitySpawnInfo_t *pInfo)
 {
+	KZ_MEM_MODULE_SCOPE();
 	KZ::mapapi::OnSpawn(nCount, pInfo);
 }
 
 // INetworkGameServer
 static_function bool Hook_ActivateServer()
 {
+	KZ_MEM_MODULE_SCOPE();
 	// The host doesn't disconnect when the map changes.
 	if (!interfaces::pEngine->IsDedicatedServer())
 	{
@@ -773,6 +799,7 @@ static_function CServerSideClientBase *Hook_ConnectClient(const char *pszName, n
 														  C2S_CONNECT_Message *pConnectMsg, const char *pszChallenge, const byte *pAuthTicket,
 														  int nAuthTicketLength, bool bIsLowViolence)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnConnectClient(pszName, pAddr, steam_handle, pConnectMsg, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
@@ -781,6 +808,7 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszNam
 															  C2S_CONNECT_Message *pConnectMsg, const char *pszChallenge, const byte *pAuthTicket,
 															  int nAuthTicketLength, bool bIsLowViolence)
 {
+	KZ_MEM_MODULE_SCOPE();
 	g_pKZPlayerManager->OnConnectClientPost(pszName, pAddr, steam_handle, pConnectMsg, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
@@ -788,6 +816,7 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszNam
 // IGameSystem
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
 {
+	KZ_MEM_MODULE_SCOPE();
 	ProcessTimers();
 	KZRecordingService::ProcessFileWriteCompletion();
 	if (g_asyncFileIO)
@@ -800,6 +829,7 @@ static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimula
 
 static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionManifest_t *msg)
 {
+	KZ_MEM_MODULE_SCOPE();
 	Warning("[CS2KZ] IGameSystem::BuildGameSessionManifest\n");
 	IEntityResourceManifest *pResourceManifest = msg->m_pResourceManifest;
 	if (g_KZPlugin.IsAddonMounted())
@@ -816,12 +846,14 @@ static_function ILoadingSpawnGroup *Hook_OnCreateLoadingSpawnGroupHook(SpawnGrou
 																	   bool bConfirmResourcesLoaded,
 																	   const CUtlVector<const CEntityKeyValues *> *pKeyValues)
 {
+	KZ_MEM_MODULE_SCOPE();
 	KZ::mapapi::OnCreateLoadingSpawnGroupHook(pKeyValues);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
 static_function void Hook_OnPlayerRunCommand(PlayerCommand *pCmd)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CCSPlayer_MovementServices *pThis = META_IFACEPTR(CCSPlayer_MovementServices);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
 	KZ::replaysystem::OnPlayerRunCommandPre(player, pCmd);
@@ -830,6 +862,7 @@ static_function void Hook_OnPlayerRunCommand(PlayerCommand *pCmd)
 
 static_function void Hook_OnFinishMove(PlayerCommand *pCmd, CMoveData *pMoveData)
 {
+	KZ_MEM_MODULE_SCOPE();
 	CCSPlayer_MovementServices *pThis = META_IFACEPTR(CCSPlayer_MovementServices);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
 	KZ::replaysystem::OnFinishMovePre(player, pMoveData);

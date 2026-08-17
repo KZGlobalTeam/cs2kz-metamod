@@ -13,6 +13,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
 #include "utils/json.h"
+#include "utils/memtrack/kz_memtrack.h"
 
 #include "kz_global.h"
 #include "messages.h"
@@ -357,6 +358,10 @@ void KZGlobalService::OnActivateServer()
 
 void KZGlobalService::OnServerGamePostSimulate()
 {
+	// Main-thread drain for everything the WebSocket thread queued up. The callbacks run here, so
+	// whatever they allocate belongs to Global too.
+	KZ_MEM_MODULE_SCOPE();
+
 	switch (KZGlobalService::state.load())
 	{
 		case KZGlobalService::State::Connected:
@@ -483,9 +488,7 @@ static_function void OnPlayerRecordsReceived(const KZ::api::messages::PlayerReco
 
 		PluginId modeID = KZ::mode::GetModeInfo(record.mode).id;
 
-		// The records are sent as a flat list, so the PRO PB also shows up on the overall (NUB) leaderboard and carries
-		// its points. Gating on the points does not work either, as they default to -1 when the API omits them. Insert
-		// the record into every leaderboard it qualifies for, and never let a slower record overwrite a faster one.
+		// Never let a slower record overwrite a faster one.
 		const PBData *cached = player->timerService->GetGlobalCachedPB(course, modeID);
 
 		if (record.nubRank != 0 && (!cached || cached->overall.pbTime == 0 || record.time < cached->overall.pbTime))
@@ -598,6 +601,10 @@ void KZGlobalService::OnClientDisconnect()
 
 void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 {
+	// Runs on the ixwebsocket thread. JSON parsing here allocates heavily and the results are
+	// handed to the main thread through the queues below, so the scope has to sit on this side.
+	KZ_MEM_MODULE_SCOPE();
+
 	switch (message->type)
 	{
 		case ix::WebSocketMessageType::Open:

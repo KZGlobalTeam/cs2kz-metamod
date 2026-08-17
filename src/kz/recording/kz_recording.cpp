@@ -426,6 +426,8 @@ void KZRecordingService::EnsureCircularRecorderInitialized()
 {
 	if (!this->circularRecording)
 	{
+		// The single largest allocation the plugin makes: five circular buffers totalling roughly
+		// 17-18 MB for this one player.
 		this->circularRecording = new CircularRecorder();
 		KZ_LOG_INFO(LogChannel::Recording, "Initialized circular recorder for player %s\n", this->player->GetName());
 	}

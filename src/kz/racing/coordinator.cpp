@@ -8,6 +8,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
+#include "utils/memtrack/kz_memtrack.h"
 #include <ixwebsocket/IXBase64.h>
 #include <ixwebsocket/IXNetSystem.h>
 
@@ -149,6 +150,8 @@ void KZRacingService::OnServerGamePostSimulate()
 
 void KZRacingService::ProcessMainThreadCallbacks()
 {
+	KZ_MEM_MODULE_SCOPE();
+
 	{
 		std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
 		if (!KZRacingService::mainThreadCallbacks.queue.empty())
@@ -165,6 +168,10 @@ void KZRacingService::ProcessMainThreadCallbacks()
 
 void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 {
+	// Runs on the ixwebsocket thread. Every event handler below parses JSON and allocates a
+	// std::function onto the main-thread queue, so one scope here covers all of them.
+	KZ_MEM_MODULE_SCOPE();
+
 	switch (message->type)
 	{
 		case ix::WebSocketMessageType::Open:

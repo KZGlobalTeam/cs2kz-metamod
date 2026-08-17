@@ -46,3 +46,23 @@ int GetModuleInformation(HINSTANCE module, void **base, size_t *length, std::vec
 #endif
 
 void Plat_WriteMemory(void *pPatchAddress, uint8_t *pPatch, int iPatchSize);
+
+// Resident set size of the whole server process, in bytes. Returns 0 if unavailable.
+size_t Plat_GetProcessRSS();
+
+// Address range of the module this code is compiled into (i.e. cs2kz itself).
+// Used to decide whether a return address belongs to us. Returns false on failure.
+bool Plat_GetSelfModuleRange(uintptr_t *pBase, size_t *pSize);
+
+// Raw virtual memory, deliberately bypassing g_pMemAlloc / the CRT. The memory tracker's own
+// bookkeeping must not allocate through the allocator it is measuring, or it recurses forever.
+// Reserve is address space only; pages must be committed before use.
+void *Plat_ReservePages(size_t bytes);
+bool Plat_CommitPages(void *pBase, size_t bytes);
+void Plat_ReleasePages(void *pBase, size_t bytes);
+
+// Temporarily make the pages spanning [pAddr, pAddr + bytes) writable, so an aligned pointer-sized
+// store can be issued directly. Plat_WriteMemory is not usable for patching a live vtable: it
+// copies bytewise, and a reader on another thread could observe a torn function pointer.
+bool Plat_UnprotectPages(void *pAddr, size_t bytes, uint32_t *pOldProtect);
+void Plat_ReprotectPages(void *pAddr, size_t bytes, uint32_t oldProtect);

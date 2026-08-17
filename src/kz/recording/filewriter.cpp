@@ -2,6 +2,7 @@
 #include "filesystem.h"
 #include "cs2kz.h"
 #include "utils/utils.h"
+#include "utils/memtrack/kz_memtrack.h"
 
 ReplayFileWriter::ReplayFileWriter() {}
 
@@ -23,6 +24,9 @@ void ReplayFileWriter::SpawnThread(F &&work)
 	std::thread(
 		[this, work = std::forward<F>(work)]() mutable
 		{
+			// One scope here covers every replay write thread: serialization and zstd compression
+			// both run on this side, while the resulting buffer is freed on the main thread.
+			KZ_MEM_MODULE_SCOPE();
 			work();
 			if (--m_activeThreads == 0)
 			{

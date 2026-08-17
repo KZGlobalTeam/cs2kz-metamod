@@ -1,6 +1,7 @@
 #include "async_file_io.h"
 #include "utils.h"
 #include "common.h"
+#include "utils/memtrack/kz_memtrack.h"
 
 AsyncFileIO *g_asyncFileIO = nullptr;
 
@@ -135,6 +136,10 @@ void AsyncFileIO::RunFrame()
 
 void AsyncFileIO::ThreadRun()
 {
+	// Our own thread, so nothing above it marks us as being inside cs2kz - the module scope has to
+	// start here. Read buffers are allocated on this thread and freed on the main thread.
+	KZ_MEM_MODULE_SCOPE();
+
 	auto processTask = [&](AsyncAnyTask &anyTask)
 	{
 		std::visit(

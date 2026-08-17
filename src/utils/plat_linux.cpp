@@ -206,6 +206,145 @@ void Plat_WriteMemory(void *pPatchAddress, uint8_t *pPatch, int iPatchSize)
 	result = mprotect(align_addr, align_size, old_prot);
 }
 
+size_t Plat_GetProcessRSS()
+{
+	FILE *f = fopen("/proc/self/statm", "r");
+	if (!f)
+	{
+		return 0;
+	}
+
+	unsigned long totalPages = 0;
+	unsigned long residentPages = 0;
+	// statm: size resident shared text lib data dt
+	if (fscanf(f, "%lu %lu", &totalPages, &residentPages) != 2)
+	{
+		fclose(f);
+		return 0;
+	}
+	fclose(f);
+
+	return (size_t)residentPages * (size_t)sysconf(_SC_PAGESIZE);
+}
+
+struct SelfRangeCtx
+{
+	uintptr_t addr;
+	uintptr_t base;
+	size_t size;
+	bool found;
+};
+
+static int SelfRangeCallback(struct dl_phdr_info *info, size_t, void *data)
+{
+	SelfRangeCtx *ctx = (SelfRangeCtx *)data;
+
+	uintptr_t lo = UINTPTR_MAX;
+	uintptr_t hi = 0;
+	for (int i = 0; i < info->dlpi_phnum; i++)
+	{
+		const ElfW(Phdr) *phdr = &info->dlpi_phdr[i];
+		if (phdr->p_type != PT_LOAD)
+		{
+			continue;
+		}
+
+		uintptr_t start = (uintptr_t)info->dlpi_addr + (uintptr_t)phdr->p_vaddr;
+		uintptr_t end = start + (uintptr_t)phdr->p_memsz;
+		if (start < lo)
+		{
+			lo = start;
+		}
+		if (end > hi)
+		{
+			hi = end;
+		}
+	}
+
+	if (hi > lo && ctx->addr >= lo && ctx->addr < hi)
+	{
+		ctx->base = lo;
+		ctx->size = (size_t)(hi - lo);
+		ctx->found = true;
+		return 1; // stop iterating
+	}
+
+	return 0;
+}
+
+bool Plat_GetSelfModuleRange(uintptr_t *pBase, size_t *pSize)
+{
+	SelfRangeCtx ctx {};
+	ctx.addr = (uintptr_t)&Plat_WriteMemory;
+
+	dl_iterate_phdr(SelfRangeCallback, &ctx);
+	if (!ctx.found)
+	{
+		return false;
+	}
+
+	*pBase = ctx.base;
+	*pSize = ctx.size;
+	return true;
+}
+
+void *Plat_ReservePages(size_t bytes)
+{
+	// PROT_NONE + MAP_NORESERVE: address space only, no commit charge.
+	void *p = mmap(nullptr, bytes, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
+	return p == MAP_FAILED ? nullptr : p;
+}
+
+bool Plat_CommitPages(void *pBase, size_t bytes)
+{
+	return mprotect(pBase, bytes, PROT_READ | PROT_WRITE) == 0;
+}
+
+void Plat_ReleasePages(void *pBase, size_t bytes)
+{
+	munmap(pBase, bytes);
+}
+
+// mprotect works on whole pages, so widen the request to the enclosing page span.
+static void PageSpan(void *pAddr, size_t bytes, uint8_t **pStart, size_t *pLength)
+{
+	uintptr_t pageSize = (uintptr_t)sysconf(_SC_PAGESIZE);
+	uint8_t *start = (uint8_t *)((uintptr_t)pAddr & ~(pageSize - 1));
+	uint8_t *end = (uint8_t *)pAddr + bytes;
+	*pStart = start;
+	*pLength = (size_t)(end - start);
+}
+
+bool Plat_UnprotectPages(void *pAddr, size_t bytes, uint32_t *pOldProtect)
+{
+	int oldProt = get_prot(pAddr, bytes);
+	if (oldProt == 0)
+	{
+		// get_prot could not find the mapping in /proc/self/maps. Restoring 0 would make the
+		// pages inaccessible and take the server down, so fall back to read-only.
+		oldProt = PROT_READ;
+	}
+	*pOldProtect = (uint32_t)oldProt;
+
+	uint8_t *start;
+	size_t length;
+	PageSpan(pAddr, bytes, &start, &length);
+
+	// Keep PROT_EXEC if it was there; vtables live in read-only data but the same page span can
+	// reach into neighbouring mappings.
+	int prot = PROT_READ | PROT_WRITE | ((*pOldProtect & PROT_EXEC) ? PROT_EXEC : 0);
+	return mprotect(start, length, prot) == 0;
+}
+
+void Plat_ReprotectPages(void *pAddr, size_t bytes, uint32_t oldProtect)
+{
+	uint8_t *start;
+	size_t length;
+	PageSpan(pAddr, bytes, &start, &length);
+
+	mprotect(start, length, (int)oldProtect);
+}
+
 void *CModule::FindVirtualTable(const std::string &name)
 {
 	auto readOnlyData = GetSection(".rodata");
