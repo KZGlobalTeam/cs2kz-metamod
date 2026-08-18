@@ -9,6 +9,7 @@
 #include "kz/profile/kz_profile.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/spec/kz_spec.h"
+#include "kz/style/kz_style.h"
 #include "kz/timer/kz_timer.h"
 
 #include <algorithm>
@@ -468,6 +469,31 @@ public:
 	{
 		KZPlayer *player = ResolveSlot(slot);
 		return player ? player->IsButtonPressed((InputBitMask_t)button, onlyDown) : false;
+	}
+
+	virtual int GetStyleCount(int slot) override
+	{
+		KZPlayer *player = ResolveSlot(slot);
+		return player ? player->styleServices.Count() : 0;
+	}
+
+	virtual bool GetStyle(int slot, int index, KZStyleInfo *out) override
+	{
+		KZPlayer *player = ResolveSlot(slot);
+		if (!player || !out || index < 0 || index >= player->styleServices.Count())
+		{
+			return false;
+		}
+
+		// Both names are the style plugin's own string literals, so they stay valid as long as
+		// the style is loaded - which is exactly as long as the player can have it enabled.
+		KZStyleService *style = player->styleServices[index];
+		KZStyleInfo info {};
+		info.shortName = style->GetStyleShortName();
+		info.name = style->GetStyleName();
+
+		*out = info;
+		return true;
 	}
 
 private:

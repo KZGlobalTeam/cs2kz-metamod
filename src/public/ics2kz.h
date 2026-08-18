@@ -94,6 +94,15 @@ struct KZMovementState
 	float takeoffSpeed; // horizontal speed at that takeoff
 };
 
+// One style a player has enabled, handed out by GetStyle. A player can run several styles
+// at once, unlike the mode, of which there is always exactly one.
+// Both strings alias internal storage; copy them.
+struct KZStyleInfo
+{
+	const char *shortName = ""; // e.g. "ABH"
+	const char *name = "";      // e.g. "AutoBhop"
+};
+
 // Snapshot of a player's timer state, filled by GetTimerStatus.
 struct KZTimerStatus
 {
@@ -244,6 +253,21 @@ public:
 	// slot or a player not in game. A player with no run has running == false and
 	// onCourse == false, which is still a successful call.
 	virtual bool GetTimerStatus(int slot, KZTimerStatus *out) = 0;
+
+	// =============================== Styles =============================
+	//
+	// Styles stack: a player runs zero or more of them at the same time, so they are read one
+	// at a time rather than living in KZTimerStatus the way the mode does.
+
+	// How many styles the player currently has enabled. 0 for an invalid slot, and 0 is also
+	// the ordinary answer - most players run no style at all.
+	virtual int GetStyleCount(int slot) = 0;
+
+	// Fill `out` with the style at `index`, which runs 0 .. GetStyleCount(slot) - 1. Returns
+	// false (and `out` untouched) for an invalid slot or an index outside that range.
+	// The order is the order the player enabled the styles in, and it shifts when they add or
+	// remove one, so an index is not a stable identifier for a style - the short name is.
+	virtual bool GetStyle(int slot, int index, KZStyleInfo *out) = 0;
 };
 
 #endif // _INCLUDE_ICS2KZ_H_
