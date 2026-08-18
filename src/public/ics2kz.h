@@ -68,6 +68,11 @@ struct KZMovementState
 	// ---- Input ----
 	uint64_t buttons; // KZButton bitmask of the buttons currently held
 
+	// True if the jump button registered a press this tick, even if it was already
+	// released again by the time this is read (e.g. a scroll-wheel jump bind pressing and
+	// releasing within the same tick). `buttons` alone, being a snapshot, can miss those.
+	bool jumpedThisTick;
+
 	// ---- Movement mode ----
 	bool alive;
 	bool onGround;

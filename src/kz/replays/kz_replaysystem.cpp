@@ -119,4 +119,9 @@ namespace KZ::replaysystem
 		return data::GetPaused();
 	}
 
+	const char *GetCourseName()
+	{
+		return data::GetCourseName();
+	}
+
 } // namespace KZ::replaysystem

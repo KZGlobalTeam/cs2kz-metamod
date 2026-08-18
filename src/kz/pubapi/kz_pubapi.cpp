@@ -4,8 +4,10 @@
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/profile/kz_profile.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/timer/kz_timer.h"
 
@@ -372,6 +374,7 @@ public:
 		state.eyeAngles[2] = angles.z;
 
 		state.buttons = ButtonMaskOf(player);
+		state.jumpedThisTick = player->hudService && player->hudService->JumpedThisTick();
 
 		state.alive = player->IsAlive();
 		MoveType_t moveType = player->GetMoveType();
@@ -421,18 +424,35 @@ public:
 		status.modeShortName = "";
 		status.modeName = "";
 
-		KZTimerService *timerService = player->timerService;
-		status.running = timerService->GetTimerRunning();
-		status.paused = timerService->GetPaused();
-		status.valid = timerService->GetValidTimer();
-		status.time = timerService->GetTime();
-		status.teleportsUsed = player->checkpointService->GetTeleportCount();
+		// Mirrors KZHUDService::GetTimerText/GetCheckpointText
+		if (KZ::replaysystem::IsReplayBot(player))
+		{
+			bool running = KZ::replaysystem::GetEndTime() == 0.0f;
+			status.running = running;
+			status.paused = KZ::replaysystem::GetPaused();
+			status.valid = true; // a replay is always of a previously-validated run
+			status.time = running ? KZ::replaysystem::GetTime() : KZ::replaysystem::GetEndTime();
+			status.teleportsUsed = static_cast<uint32_t>(KZ::replaysystem::GetTeleportCount());
 
-		// GetCourse resolves the GUID against the current map's course list, so it comes
-		// back null once the map changes out from under a stale run.
-		const KZCourseDescriptor *course = timerService->GetCourse();
-		status.onCourse = course != nullptr;
-		status.course = DescribeCourse(course);
+			const char *courseName = KZ::replaysystem::GetCourseName();
+			status.onCourse = courseName && courseName[0];
+			status.course = DescribeCourse(status.onCourse ? KZ::course::GetCourse(courseName, false) : nullptr);
+		}
+		else
+		{
+			KZTimerService *timerService = player->timerService;
+			status.running = timerService->GetTimerRunning();
+			status.paused = timerService->GetPaused();
+			status.valid = timerService->GetValidTimer();
+			status.time = timerService->GetTime();
+			status.teleportsUsed = player->checkpointService->GetTeleportCount();
+
+			// GetCourse resolves the GUID against the current map's course list, so it comes
+			// back null once the map changes out from under a stale run.
+			const KZCourseDescriptor *course = timerService->GetCourse();
+			status.onCourse = course != nullptr;
+			status.course = DescribeCourse(course);
+		}
 
 		if (player->modeService)
 		{

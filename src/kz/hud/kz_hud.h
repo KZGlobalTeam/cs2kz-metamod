@@ -80,6 +80,14 @@ public:
 		return this->fromDuckbug;
 	}
 
+	// True if the jump button registered a press this tick, even if it was already
+	// released again by the time something polls buttons later in the same tick (e.g. a
+	// scroll-wheel jump bind). Reset every tick in OnPhysicsSimulate, latched by OnJump.
+	bool JumpedThisTick() const
+	{
+		return this->jumpedThisTick;
+	}
+
 	bool IsCompactPanel();
 
 	void OnTimerStopped(f64 currentTimeWhenTimerStopped);

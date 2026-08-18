@@ -147,6 +147,11 @@ namespace KZ::replaysystem::data
 		return g_currentReplay.paused;
 	}
 
+	const char *GetCourseName()
+	{
+		return g_currentReplay.courseName;
+	}
+
 	static_function void UpdateProgress(const char *cursor, const char *dataStart, size_t totalSize, std::atomic<f32> &progress)
 	{
 		if (totalSize > 0)

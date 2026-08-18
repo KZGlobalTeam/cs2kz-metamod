@@ -106,6 +106,7 @@ namespace KZ::replaysystem::data
 	f32 GetReplayTime();
 	f32 GetEndTime();
 	bool GetPaused();
+	const char *GetCourseName();
 } // namespace KZ::replaysystem::data
 
 #endif // KZ_REPLAYDATA_H
