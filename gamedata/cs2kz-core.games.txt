@@ -418,7 +418,7 @@
 			"DebugTriangle"
 			{
 				"windows"		"56"
-				"linux"			"57"
+				"linux"			"56"
 			}
 			// CDebugOverlayGameSystem second vtable, offset 1 (windows):
 			//   result = debugoverlay;

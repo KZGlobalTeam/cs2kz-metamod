@@ -743,7 +743,7 @@ static_function void DrawTriggers()
 					transform.m_orientation = Quaternion(pTrigger->m_CBodyComponent()->m_pSceneNode()->m_angAbsRotation());
 					Ray_t ray;
 					ray.Init(hull.m_Hull.m_Bounds.m_vMinBounds, hull.m_Hull.m_Bounds.m_vMaxBounds, hull.m_Hull.m_VertexPositions.Base(),
-							 hull.m_Hull.m_Vertices.Count());
+							 hull.m_Hull.m_VertexPositions.Count());
 					g_pKZUtils->DebugDrawMesh(transform, ray, triggerColor.r(), triggerColor.g(), triggerColor.b(), triggerColor.a(), true, false,
 											  -1.0f);
 				}
