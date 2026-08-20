@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 13,
-    "total_phrases": 724,
-    "phrases_with_missing": 508,
-    "total_missing_entries": 2846,
+    "total_phrases": 725,
+    "phrases_with_missing": 509,
+    "total_missing_entries": 2858,
     "all_languages": [
       "chi",
       "de",
@@ -57,15 +57,21 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 99.03,
+      "coverage_percent": 98.9,
       "translated": 717,
-      "missing": 7,
+      "missing": 8,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
           "phrase": "Command Description - kz_mhud",
           "line": 1822,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Command Cooldown (Time Remaining)",
+          "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
         },
         {
           "file": "cs2kz-jumpstats.phrases.txt",
@@ -117,9 +123,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 70.86,
+      "coverage_percent": 70.76,
       "translated": 513,
-      "missing": 211,
+      "missing": 212,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -255,8 +261,14 @@
         },
         {
           "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
+          "phrase": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
         },
         {
@@ -1397,7 +1409,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 724,
+      "translated": 725,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -1408,9 +1420,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 67.68,
+      "coverage_percent": 67.59,
       "translated": 490,
-      "missing": 234,
+      "missing": 235,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -1423,6 +1435,12 @@
           "phrase": "Command Description - kz_mhud",
           "line": 1822,
           "english_text": "Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Command Cooldown (Time Remaining)",
+          "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
         },
         {
           "file": "cs2kz-hud.phrases.txt",
@@ -2825,9 +2843,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 32.18,
+      "coverage_percent": 32.14,
       "translated": 233,
-      "missing": 491,
+      "missing": 492,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -3479,8 +3497,14 @@
         },
         {
           "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
+          "phrase": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
         },
         {
@@ -5789,9 +5813,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 31.08,
+      "coverage_percent": 31.03,
       "translated": 225,
-      "missing": 499,
+      "missing": 500,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -6443,8 +6467,14 @@
         },
         {
           "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
+          "phrase": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
         },
         {
@@ -8801,10 +8831,16 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 99.86,
+      "coverage_percent": 99.72,
       "translated": 723,
-      "missing": 1,
+      "missing": 2,
       "missing_phrases": [
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Command Cooldown (Time Remaining)",
+          "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Basic",
@@ -8820,9 +8856,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 45.3,
+      "coverage_percent": 45.24,
       "translated": 328,
-      "missing": 396,
+      "missing": 397,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9222,8 +9258,14 @@
         },
         {
           "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
+          "phrase": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
         },
         {
@@ -11209,9 +11251,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 71.13,
+      "coverage_percent": 71.03,
       "translated": 515,
-      "missing": 209,
+      "missing": 210,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -11335,8 +11377,14 @@
         },
         {
           "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
+          "phrase": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
         },
         {
@@ -12476,10 +12524,16 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 99.59,
+      "coverage_percent": 99.45,
       "translated": 721,
-      "missing": 3,
+      "missing": 4,
       "missing_phrases": [
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Command Cooldown (Time Remaining)",
+          "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Basic",
@@ -12507,9 +12561,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 54.14,
+      "coverage_percent": 54.07,
       "translated": 392,
-      "missing": 332,
+      "missing": 333,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -12741,8 +12795,14 @@
         },
         {
           "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
+          "phrase": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
         },
         {
@@ -14512,9 +14572,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 36.19,
+      "coverage_percent": 36.14,
       "translated": 262,
-      "missing": 462,
+      "missing": 463,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -15124,8 +15184,14 @@
         },
         {
           "file": "cs2kz-common.phrases.txt",
-          "phrase": "Beta Join Warning",
+          "phrase": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta."
         },
         {
@@ -17302,10 +17368,16 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 99.86,
+      "coverage_percent": 99.72,
       "translated": 723,
-      "missing": 1,
+      "missing": 2,
       "missing_phrases": [
+        {
+          "file": "cs2kz-common.phrases.txt",
+          "phrase": "Command Cooldown (Time Remaining)",
+          "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command."
+        },
         {
           "file": "cs2kz-timer.phrases.txt",
           "phrase": "Beat Course Info - Basic",
@@ -19811,7 +19883,7 @@
       ]
     },
     "cs2kz-common.phrases.txt": {
-      "phrases_with_missing": 6,
+      "phrases_with_missing": 7,
       "phrases": [
         {
           "name": "No Steam Authentication Warning",
@@ -19924,8 +19996,30 @@
           ]
         },
         {
-          "name": "Beta Join Warning",
+          "name": "Command Cooldown (Time Remaining)",
           "line": 93,
+          "english_text": "{grey}Please wait {default}{time}{grey} seconds before using another command.",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Beta Join Warning",
+          "line": 98,
           "english_text": "CS2KZ is currently in the testing phase. Please be aware that all records and data will be wiped when CS2KZ is out of beta.",
           "existing_languages": [
             "chi",
