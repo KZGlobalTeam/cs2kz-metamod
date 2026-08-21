@@ -10,9 +10,9 @@
 #define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM 640
 
 // The higher the FPS, the less likely player can get perfect counter-strafes by chance.
-#define FPS_FOR_MINIMUM_SUSPICION 64.0f // We shouldn't count any attempt below this FPS.
-#define FPS_FOR_MAXIMUM_SUSPICION 256.0f
-#define ANALOG_CSTRAFE_WEIGHT     2.0f // Perfect analog strafes are extremely suspicious. Most (if not all) ingame null aliases abuse analog inputs.
+#define FPS_FOR_MINIMUM_SUSPICION   64.0f // We shouldn't count any attempt below this FPS.
+#define FPS_FOR_MAXIMUM_SUSPICION   256.0f
+#define ANALOG_CSTRAFE_WEIGHT       2.0f // Perfect analog strafes are extremely suspicious. Most (if not all) ingame null aliases abuse analog inputs.
 #define MIN_AIR_SPEED_FOR_DETECTION 100.0f // Only consider airstrafes with at least this airspeed to avoid false positives.
 // Only count counterstrafe attempts if the keypresses are at most this far apart, in either direction.
 // Consider higher values as brand new inputs rather than a counter-strafe attempt.
