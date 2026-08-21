@@ -10,17 +10,34 @@
 #define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM 640
 
 // The higher the FPS, the less likely player can get perfect counter-strafes by chance.
-#define FPS_FOR_MINIMUM_SUSPICION   64.0f // We shouldn't count any attempt below this FPS.
-#define FPS_FOR_MAXIMUM_SUSPICION   256.0f
-#define ANALOG_CSTRAFE_WEIGHT       2.0f // Perfect analog strafes are extremely suspicious. Most (if not all) ingame null aliases abuse analog inputs.
+#define FPS_FOR_MINIMUM_SUSPICION 64.0f // We shouldn't count any attempt below this FPS.
+#define FPS_FOR_MAXIMUM_SUSPICION 256.0f
+#define ANALOG_CSTRAFE_WEIGHT     2.0f // Perfect analog strafes are extremely suspicious. Most (if not all) ingame null aliases abuse analog inputs.
 #define MIN_AIR_SPEED_FOR_DETECTION 100.0f // Only consider airstrafes with at least this airspeed to avoid false positives.
-// Only count counterstrafe attempts as underlap if the keypresses are at most this far apart. Consider higher values as brand new inputs.
-#define UNDERLAP_COUNT_THRESHOLD      0.2f
+// Only count counterstrafe attempts if the keypresses are at most this far apart, in either direction.
+// Consider higher values as brand new inputs rather than a counter-strafe attempt.
+#define GAP_DISCARD_THRESHOLD         0.2f
 #define UNDERLAP_PERCENTAGE_THRESHOLD 0.1f // At least 10% of the strafes should have underlap to consider the median underlap duration.
 // Higher underlap average means the player are unlikely to be nulling.
 // If the player's underlap average is above this value, we won't consider them for nulls detection.
 // If 10% or more of their strafes have underlap, we should start taking the threshold below into consideration.
 #define UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD 0.02f // ~10% of a flat ground jump, considering 7.5 strafes on average
+
+// An exact comparison against 0 misses any null that carries a fraction of a subtick of jitter.
+// Treat a small gap in either direction as a perfect swap.
+#define NEAR_PERFECT_FRAMETIME_SCALE 0.5f
+#define NEAR_PERFECT_MIN_DURATION    (ENGINE_FIXED_TICK_INTERVAL / 64.0f) // ~0.25ms
+#define NEAR_PERFECT_MAX_DURATION    0.001f                               // 1ms
+
+// A counter-strafe attempt resolves one of three ways: Overlap (early), Perfect, Underlap (late)
+// Late bias is the share of the *missed* attempts that were late.
+// Humans miss in both directions, so this sits well below 1.
+// A null bind releases the opposite key on the same command as the press, so it cannot produce an overlap at all and pins late bias at 1.
+// The threshold leans on that structural improbability.
+// This is a very lenient threshold, 0.95 would have been more reasonable, but we really want to avoid false positives.
+#define LATE_BIAS_THRESHOLD 0.9925f
+// Sample size needed before late bias means anything, counted in MISSES rather than attempts.
+#define LATE_BIAS_MIN_MISSES 50
 
 CConVar<bool> kz_ac_nulls_debug("kz_ac_nulls_debug", FCVAR_CHEAT, "Enable nulls detector debug messages", false);
 
@@ -311,6 +328,12 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	this->nullsUnderlapBuffer.clear();
 	auto &underlapDurations = this->nullsUnderlapBuffer;
 
+	// Unweighted attempt counts for the late bias criterion.
+	u32 lateBiasOverlaps = 0;
+	u32 lateBiasUnderlaps = 0;
+	u32 lateBiasPerfect = 0;
+	u32 lateBiasAnalog = 0;
+
 	// Track the last release event and current press state for each direction
 	const InputEvent *lastButton1Release = nullptr;
 	const InputEvent *lastButton2Release = nullptr;
@@ -349,56 +372,75 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			shouldAnalyze = false;
 		}
 		f32 weight = event.analog ? ANALOG_CSTRAFE_WEIGHT : 1.0f;
+		// Note that InputEvent::framerate holds a frame time, not a rate.
+		f32 nearPerfect = NEAR_PERFECT_MAX_DURATION;
+		if (event.framerate > 0.0f)
+		{
+			nearPerfect = Clamp(NEAR_PERFECT_FRAMETIME_SCALE * event.framerate, NEAR_PERFECT_MIN_DURATION, NEAR_PERFECT_MAX_DURATION);
+		}
 		// Check for overlap: pressing one key while opposite key is still held
 		bool isOverlap = (event.button == button1 && button2Pressed) || (event.button == button2 && button1Pressed);
 		if (isOverlap)
 		{
-			// Check if the opposite key gets released at the same tick/fraction (perfect null)
-			bool nulled = false;
+			// Measure how long both directions stay held.
+			bool foundRelease = false;
+			f32 overlapDuration = 0.0f;
 			for (i32 j = i + 1; j < events.size(); ++j)
 			{
 				const InputEvent &nextEvent = events[j];
-				// If we've moved to a different tick/fraction, stop looking
-				if (nextEvent.cmdNum != event.cmdNum || nextEvent.fraction != event.fraction)
+				f32 elapsed = ((nextEvent.cmdNum - event.cmdNum) + (nextEvent.fraction - event.fraction)) * ENGINE_FIXED_TICK_INTERVAL;
+				if (elapsed > GAP_DISCARD_THRESHOLD)
 				{
 					break;
 				}
-				// Check if this is the release of the opposite button
 				if (!nextEvent.pressed)
 				{
-					if ((event.button == button1 && nextEvent.button == button2) || (event.button == button2 && nextEvent.button == button1))
-					{
-						nulled = true;
-						break;
-					}
+					foundRelease = true;
+					overlapDuration = elapsed;
+					break;
 				}
 			}
 
-			if (nulled)
+			// Without a release inside the window there is nothing to classify: the player is simply holding
+			// both directions, which is not a counter-strafe attempt.
+			if (foundRelease)
 			{
-				// This is actually a perfect counter-strafe, not an overlap
-				if (shouldAnalyze)
+				if (overlapDuration < nearPerfect)
+				{
+					// Close enough to simultaneous to be a perfect counter-strafe rather than an overlap.
+					if (shouldAnalyze)
+					{
+						if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
+						{
+							this->player->PrintConsole(false, true, "Perfect (%.4f ms early) @ %f", overlapDuration * 1000,
+													   event.cmdNum + event.fraction);
+						}
+						numPerfect += weight;
+						numConsecutivePerfect += weight;
+						if (numConsecutivePerfect > maxConsecutivePerfect)
+						{
+							maxConsecutivePerfect = numConsecutivePerfect;
+						}
+						lateBiasPerfect++;
+					}
+				}
+				else if (event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
 				{
 					if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
 					{
-						this->player->PrintConsole(false, true, "Perfect @ %f", event.cmdNum + event.fraction);
+						this->player->PrintConsole(false, true, "Overlap %.3f ms @ %f", overlapDuration * 1000, event.cmdNum + event.fraction);
 					}
-					numPerfect += weight;
-					numConsecutivePerfect += weight;
-					if (numConsecutivePerfect > maxConsecutivePerfect)
+					numOverlaps += weight;
+					numConsecutivePerfect = 0;
+					if (shouldAnalyze)
 					{
-						maxConsecutivePerfect = numConsecutivePerfect;
+						lateBiasOverlaps++;
 					}
 				}
-			}
-			else if (event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
-			{
-				if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
+				if (shouldAnalyze && event.analog)
 				{
-					this->player->PrintConsole(false, true, "Overlap @ %f", event.cmdNum + event.fraction);
+					lateBiasAnalog++;
 				}
-				numOverlaps += weight;
-				numConsecutivePerfect = 0;
 			}
 		}
 
@@ -438,25 +480,30 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		f32 timeDiff = ((event.cmdNum - oppositeRelease->cmdNum) + (event.fraction - oppositeRelease->fraction)) * ENGINE_FIXED_TICK_INTERVAL;
 
 		// Only consider this if it's reasonably close (not a brand new input)
-		if (timeDiff > UNDERLAP_COUNT_THRESHOLD)
+		if (timeDiff > GAP_DISCARD_THRESHOLD)
 		{
 			continue;
 		}
 
+		if (event.analog)
+		{
+			lateBiasAnalog++;
+		}
 		// Note: timeDiff < 0 (overlap) is already handled earlier in the loop
-		if (timeDiff == 0.0f)
+		if (timeDiff < nearPerfect)
 		{
 			if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
 			{
-				this->player->PrintConsole(false, true, "Perfect @ %f", event.cmdNum + event.fraction);
+				this->player->PrintConsole(false, true, "Perfect (%.4f ms late) @ %f", timeDiff * 1000, event.cmdNum + event.fraction);
 			}
-			// Perfect: exactly 0 time between release and press
+			// Perfect: no meaningful time between release and press
 			numPerfect += weight;
 			numConsecutivePerfect += weight;
 			if (numConsecutivePerfect > maxConsecutivePerfect)
 			{
 				maxConsecutivePerfect = numConsecutivePerfect;
 			}
+			lateBiasPerfect++;
 		}
 		else
 		{
@@ -466,6 +513,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			}
 			// Underlap: gap between release and press
 			underlapDurations.push_back(timeDiff);
+			lateBiasUnderlaps++;
 		}
 	}
 	f32 underlapMedian = 0.0f;
@@ -493,20 +541,46 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	u32 adjustedRequiredPerfectCstrafes =
 		Lerp(underlapRatio * underlapRatio, requiredPerfectCstrafes, (u32)NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM);
 
-	if (numConsecutivePerfect >= adjustedRequiredPerfectCstrafes)
+	const char *axisName = (button1 == IN_FORWARD) ? "forward/backward" : "left/right";
+
+	// The streak is the best run anywhere in the window, not the run still open at the end of it.
+	if (maxConsecutivePerfect >= adjustedRequiredPerfectCstrafes)
 	{
-		std::string details =
-			tinyformat::format("Nulls detection on axis %s. Streak: %d/%d, total %d/%d, OL: %d, DA median: %.2f ms, FPS: %.2f",
-							   (button1 == IN_FORWARD || button2 == IN_BACK) ? "forward/backward" : "left/right", numConsecutivePerfect,
-							   adjustedRequiredPerfectCstrafes, numPerfect, total, numOverlaps, underlapMedian * 1000, 1 / medianFramerate);
+		std::string details = tinyformat::format("Nulls detection on axis %s. Streak: %d/%d, total %d/%d, OL: %d, DA median: %.2f ms, FPS: %.2f",
+												 axisName, maxConsecutivePerfect, adjustedRequiredPerfectCstrafes, numPerfect, total, numOverlaps,
+												 underlapMedian * 1000, 1 / medianFramerate);
+		this->MarkInfraction(KZAnticheatService::Infraction::Type::Nulls, details);
+	}
+
+	// The detection method above only fires on a player who both nulls and lands the
+	// swap exactly, and misses anyone whose null carries a consistent small offset.
+
+	// Late bias instead asks which way the player misses.
+	// Nulls releases the opposite direction on the same command as the press, so it cannot be early, and every miss is late
+	// Humans usually miss in both directions which is what separates this from simply having a low overlap rate.
+	u32 lateBiasMisses = lateBiasUnderlaps + lateBiasOverlaps;
+	u32 lateBiasAttempts = lateBiasMisses + lateBiasPerfect;
+	f32 lateBias = (lateBiasMisses > 0) ? (f32)lateBiasUnderlaps / (f32)lateBiasMisses : 0.0f;
+	f32 analogFraction = (lateBiasAttempts > 0) ? (f32)lateBiasAnalog / (f32)lateBiasAttempts : 0.0f;
+	// High underlap median means the player has a bigger problem to worry about than nulls.
+	bool slowUnderlaps = underlapMedian >= UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD;
+
+	if (lateBiasMisses >= LATE_BIAS_MIN_MISSES && !slowUnderlaps && lateBias >= LATE_BIAS_THRESHOLD)
+	{
+		std::string details = tinyformat::format("Nulls detection (late bias) on axis %s. Late bias %.4f over %d attempts "
+												 "(UL: %d, OL: %d, perfect: %d), DA median: %.2f ms, analog: %.1f%%, FPS: %.2f",
+												 axisName, lateBias, lateBiasAttempts, lateBiasUnderlaps, lateBiasOverlaps, lateBiasPerfect,
+												 underlapMedian * 1000, analogFraction * 100, 1 / medianFramerate);
 		this->MarkInfraction(KZAnticheatService::Infraction::Type::Nulls, details);
 	}
 
 	if (kz_ac_nulls_debug.Get())
 	{
-		this->player->PrintAlert(
-			false, true, "Perfect: %d (consecutive %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d", numPerfect,
-			numConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, underlapMedian * 1000, 1 / medianFramerate, (i32)(total));
+		this->player->PrintAlert(false, true,
+								 "Perfect: %d (streak %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d\n"
+								 "Late bias: %.4f (ban %.2f) over %d attempts | analog %.1f%%",
+								 numPerfect, maxConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, underlapMedian * 1000,
+								 1 / medianFramerate, (i32)(total), lateBias, LATE_BIAS_THRESHOLD, lateBiasAttempts, analogFraction * 100);
 	}
 }
 
