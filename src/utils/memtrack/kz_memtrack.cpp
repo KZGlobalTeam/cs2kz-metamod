@@ -651,7 +651,11 @@ namespace KZMem
 			c.liveBytes = s_scratchBytes[i];
 			c.liveBlocks = s_scratchBlocks[i];
 			c.totalBytes = s_callsites[i].totalBytes.load(std::memory_order_relaxed);
-			c.totalAllocs = s_callsites[i].totalAllocs.load(std::memory_order_relaxed);
+			// Left at zero on purpose: Live and Blocks above are since-mark, and an
+			// allocs-since-mark count cannot be reconstructed - blocks allocated and freed since
+			// the mark are no longer in the table. Reporting the lifetime counter here would sit a
+			// number next to them that means something entirely different.
+			c.totalAllocs = 0;
 			PushSorted(out, used, maxCount, c);
 		}
 
@@ -697,13 +701,27 @@ namespace KZMem
 			return;
 		}
 
+		uintptr_t address_uint = (uintptr_t)address;
+
 		if (s_selfBase && IsSelfAddress(address))
 		{
 			V_snprintf(buffer, (int)bufferSize, "cs2kz+0x%llX", (unsigned long long)((uintptr_t)address - s_selfBase));
 		}
 		else
 		{
-			V_snprintf(buffer, (int)bufferSize, "0x%llX", (unsigned long long)(uintptr_t)address);
+			// Not our code: tier0, libc or the engine allocating on our behalf while cs2kz was on
+			// the stack. Name the owning module so the offset can be resolved against the right
+			// binary instead of being an opaque pointer.
+			char moduleName[64] = {};
+			uintptr_t moduleBase = 0;
+			if (Plat_GetModuleForAddress(address, moduleName, sizeof(moduleName), &moduleBase))
+			{
+				V_snprintf(buffer, (int)bufferSize, "%s+0x%llX", moduleName, (unsigned long long)(address_uint - moduleBase));
+			}
+			else
+			{
+				V_snprintf(buffer, (int)bufferSize, "0x%llX", (unsigned long long)(uintptr_t)address);
+			}
 		}
 	}
 } // namespace KZMem

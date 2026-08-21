@@ -66,3 +66,8 @@ void Plat_ReleasePages(void *pBase, size_t bytes);
 // copies bytewise, and a reader on another thread could observe a torn function pointer.
 bool Plat_UnprotectPages(void *pAddr, size_t bytes, uint32_t *pOldProtect);
 void Plat_ReprotectPages(void *pAddr, size_t bytes, uint32_t oldProtect);
+
+// Name the loaded module owning a code address ("tier0.dll" / "libtier0.so") and report its base,
+// so a raw pointer can be turned into a module-relative offset for addr2line or a .pdb.
+// False if the address does not belong to any loaded module.
+bool Plat_GetModuleForAddress(const void *pAddr, char *moduleName, size_t moduleNameSize, uintptr_t *pModuleBase);

@@ -152,3 +152,24 @@ void *CModule::FindVirtualTable(const std::string &name)
 	Warning("Failed to find RTTI Complete Object Locator for %s\n", name.c_str());
 	return nullptr;
 }
+
+bool Plat_GetModuleForAddress(const void *pAddr, char *moduleName, size_t moduleNameSize, uintptr_t *pModuleBase)
+{
+	HMODULE hModule = nullptr;
+	if (!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)pAddr, &hModule)
+		|| !hModule)
+	{
+		return false;
+	}
+
+	char path[MAX_PATH] = {};
+	if (!GetModuleFileNameA(hModule, path, sizeof(path)))
+	{
+		return false;
+	}
+
+	const char *fileName = strrchr(path, '\\');
+	V_strncpy(moduleName, fileName ? fileName + 1 : path, (int)moduleNameSize);
+	*pModuleBase = (uintptr_t)hModule;
+	return true;
+}

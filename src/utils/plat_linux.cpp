@@ -400,4 +400,19 @@ void *CModule::FindVirtualTable(const std::string &name)
 	Warning("Failed to find vtable for %s\n", name.c_str());
 	return nullptr;
 }
+
+bool Plat_GetModuleForAddress(const void *pAddr, char *moduleName, size_t moduleNameSize, uintptr_t *pModuleBase)
+{
+	Dl_info info {};
+	if (!dladdr(pAddr, &info) || !info.dli_fname || !info.dli_fbase)
+	{
+		return false;
+	}
+
+	const char *fileName = strrchr(info.dli_fname, '/');
+	V_strncpy(moduleName, fileName ? fileName + 1 : info.dli_fname, (int)moduleNameSize);
+	*pModuleBase = (uintptr_t)info.dli_fbase;
+	return true;
+}
+
 #endif

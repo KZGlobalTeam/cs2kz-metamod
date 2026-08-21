@@ -78,6 +78,7 @@ namespace KZMem
 
 		// Diagnostics for the one step that is genuinely compiler/ABI dependent.
 		SourceHook::MemFuncInfo s_funcInfo;
+		bool s_selfCheckPassed;
 		char s_statusBuffer[192];
 
 		//---------------------------------------------------------------------------------------
@@ -695,6 +696,22 @@ namespace KZMem
 
 		s_active.store(true, std::memory_order_release);
 		s_status = "active";
+
+		// Does a plain new[] actually reach the hook on this platform?
+		//
+		// Our operator new/delete are compiled with -fvisibility=hidden, but libstdc++ wraps its
+		// headers in "#pragma GCC visibility push(default)", so the call emitted inside an
+		// instantiation like std::make_unique<T[]> can route through the PLT and bind to
+		// libstdc++'s operator new[] instead of ours. That allocation then lands in glibc malloc,
+		// never touches g_pMemAlloc, and is invisible here - which reads as "the plugin barely
+		// allocates" rather than as a failure. Cheap to check, so check.
+		{
+			uint64_t before = GetTotals().totalAllocs;
+			char *probe = new char[64 * 1024];
+			probe[0] = 0;
+			s_selfCheckPassed = GetTotals().totalAllocs > before;
+			delete[] probe;
+		}
 		return true;
 	}
 
@@ -703,6 +720,13 @@ namespace KZMem
 		if (s_active.load(std::memory_order_relaxed))
 		{
 			KZ_LOG_INFO(LogChannel::General, "Memory tracking active (IMemAlloc::Alloc at vtable slot %u). Use kz_meminfo.\n", s_slotAlloc);
+
+			if (!s_selfCheckPassed)
+			{
+				KZ_LOG_WARN(LogChannel::General,
+							"Memory tracking self-check FAILED: a plain new[] did not reach the hook. Plain new/new[] in the "
+							"plugin is bypassing our operator new, so kz_meminfo is undercounting badly.\n");
+			}
 		}
 		else
 		{

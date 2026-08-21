@@ -118,8 +118,18 @@ namespace
 			KZMem::FormatAddress(entries[i].address, address, sizeof(address));
 			FormatBytes(entries[i].liveBytes, live, sizeof(live));
 
-			KZ_LOG_INFO(LogChannel::General, "  %-26s %14s %12lld %12llu\n", address, live, (long long)entries[i].liveBlocks,
-						(unsigned long long)entries[i].totalAllocs);
+			char allocs[24];
+			if (entries[i].totalAllocs)
+			{
+				V_snprintf(allocs, sizeof(allocs), "%llu", (unsigned long long)entries[i].totalAllocs);
+			}
+			else
+			{
+				// Not applicable in the leaks view - see GetLeaksSinceMark.
+				V_strncpy(allocs, "-", sizeof(allocs));
+			}
+
+			KZ_LOG_INFO(LogChannel::General, "  %-26s %14s %12lld %12s\n", address, live, (long long)entries[i].liveBlocks, allocs);
 		}
 
 		if (count == 0)
