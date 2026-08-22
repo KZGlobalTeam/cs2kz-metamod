@@ -173,6 +173,10 @@ struct RunSubmission
 	// Called when the file writer finishes serializing the replay. Main thread only.
 	void OnReplayReady(std::vector<char> &&buffer);
 
+	// Called when no replay buffer will ever arrive (serialization failed, or there is no file
+	// writer). Releases the replay gate in CheckAll() so the submission can finish and be freed.
+	void OnReplayFailed();
+
 	// Called when a NewRecordAck arrives from the global API. Main thread only.
 	void OnAPIResponse(const KZ::api::messages::NewRecordAck &ack);
 

@@ -57,6 +57,7 @@ bool KZLegacyJumpStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size
 bool KZLegacyJumpStylePlugin::Unload(char *error, size_t maxlen)
 {
 	g_pStyleManager->UnregisterStyle(g_PLID);
+	modules::Cleanup();
 	return true;
 }
 

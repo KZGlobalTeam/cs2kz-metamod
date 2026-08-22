@@ -80,3 +80,12 @@ void KZGlobalService::RestoreConVars()
 
 	KZ_LOG_INFO(LogChannel::Global, "Restored relevant ConVars.\n");
 }
+
+void KZGlobalService::CleanupConVars()
+{
+	for (u32 i = 0; i < ENFORCEDCVAR_COUNT; i++)
+	{
+		delete enforcedServerCVars[i];
+		enforcedServerCVars[i] = nullptr;
+	}
+}

@@ -285,8 +285,19 @@ void KZRecordingService::CheckRecorders()
 							{
 								callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
 							}
+							sub->OnReplayFailed();
 						}
 					});
+			}
+			else
+			{
+				// No file writer, so neither callback will ever run.
+				// This should never happen.
+				RunSubmission *sub = RunSubmission::GetByUUID(recorder.uuid);
+				if (sub)
+				{
+					sub->OnReplayFailed();
+				}
 			}
 			it = this->runRecorders.erase(it);
 		}

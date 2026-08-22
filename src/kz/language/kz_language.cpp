@@ -34,6 +34,18 @@ void KZLanguageService::Init()
 	KZOptionService::RegisterEventListener(&optionEventListener);
 }
 
+void KZLanguageService::OnActivateServer()
+{
+	// Cleanup caches.
+	auto &infos = KZLanguageService::clientLanguageInfos;
+	for (auto it = infos.begin(); it != infos.end();)
+	{
+		it = g_pKZPlayerManager->SteamIdToPlayer(it->first, false) ? std::next(it) : infos.erase(it);
+	}
+
+	KZLanguageService::ClearTemplateCache();
+}
+
 void KZLanguageService::LoadConfigFiles()
 {
 	if (translationKV)

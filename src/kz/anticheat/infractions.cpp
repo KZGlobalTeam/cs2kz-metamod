@@ -30,13 +30,6 @@ KZAnticheatService::Infraction *KZAnticheatService::GetPendingInfraction()
 
 void KZAnticheatService::CleanupInfractions()
 {
-	for (auto &infraction : KZAnticheatService::pendingBans)
-	{
-		if (infraction.submitted && infraction.replay == nullptr)
-		{
-			infraction.Finalize();
-		}
-	}
 	auto &infractions = KZAnticheatService::pendingBans;
 	// clang-format off
 	infractions.erase(std::remove_if(infractions.begin(), infractions.end(),

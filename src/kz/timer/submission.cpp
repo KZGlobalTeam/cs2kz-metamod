@@ -360,6 +360,23 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 	}
 }
 
+void RunSubmission::OnReplayFailed()
+{
+	if (replayReady)
+	{
+		return;
+	}
+
+	// There is no buffer and there never will be one, but the rest of the submission still has to
+	// finish. Mark the replay side done so CheckAll() stops holding this submission alive forever.
+	replayReady = true;
+
+	if (!finalized)
+	{
+		TryFinalize();
+	}
+}
+
 // ---------------------------------------------------------------------------
 // TryFinalize
 // ---------------------------------------------------------------------------

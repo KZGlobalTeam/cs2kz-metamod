@@ -35,6 +35,12 @@ void ProcessTimers()
 	ProcessTimerList(g_NonPersistentTimers);
 }
 
+void RemoveAllTimers()
+{
+	g_PersistentTimers.PurgeAndDeleteElements();
+	g_NonPersistentTimers.PurgeAndDeleteElements();
+}
+
 void RemoveNonPersistentTimers()
 {
 	g_NonPersistentTimers.PurgeAndDeleteElements();

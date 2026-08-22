@@ -451,6 +451,22 @@ void KZGlobalService::OnServerGamePostSimulate()
 
 				KZGlobalService::ws.receivedMessages.queue.clear();
 
+				// Time out callbacks whose response never arrived. Without this they would sit in
+				// the map forever on a connection that stays open.
+				const auto now = std::chrono::system_clock::now();
+				for (auto it = messageCallbacks.begin(); it != messageCallbacks.end();)
+				{
+					if ((now - it->second->sentAt) > it->second->expiresAfter)
+					{
+						it->second->OnCancelled(it->first, KZGlobalService::MessageCallbackCancelReason::Timeout);
+						it = messageCallbacks.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+
 				{
 					std::lock_guard _messageCallbacksQueueGuard(KZGlobalService::ws.messageCallbacks.mutex);
 					KZGlobalService::ws.messageCallbacks.callbacks.merge(messageCallbacks);

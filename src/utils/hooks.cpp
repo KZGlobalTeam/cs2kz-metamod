@@ -13,7 +13,9 @@
 #include "cs2kz.h"
 #include "ctimer.h"
 #include "kz/kz.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "kz/beam/kz_beam.h"
+#include "kz/language/kz_language.h"
 #include "kz/hud/kz_hud.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
@@ -542,6 +544,7 @@ static_function void Hook_GameFrame(bool simulating, bool bFirstTick, bool bLast
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	g_pKZPlayerManager->PerformAuthChecks();
 	RunSubmission::CheckAll();
+	KZAnticheatService::CleanupInfractions();
 	BaseRequest::CheckRequests();
 	KZTelemetryService::ActiveCheck();
 	KZBeamService::UpdateBeams();
@@ -759,6 +762,7 @@ static_function bool Hook_ActivateServer()
 	KZRecordingService::OnActivateServer();
 	KZRacingService::OnActivateServer();
 	KZGlobalService::OnActivateServer();
+	KZLanguageService::OnActivateServer();
 
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));

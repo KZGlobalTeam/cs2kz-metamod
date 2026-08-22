@@ -45,7 +45,6 @@ class KZOptionService;
 class KZPaintService;
 class KZQuietService;
 class KZRacingService;
-class KZSavelocService;
 class KZSpecService;
 class KZGotoService;
 class KZProfileService;
@@ -65,6 +64,11 @@ public:
 	KZPlayer(i32 i) : MovementPlayer(i)
 	{
 		this->Init();
+	}
+
+	~KZPlayer() override
+	{
+		this->DestroyServices();
 	}
 
 	// General events
@@ -152,6 +156,9 @@ private:
 	f32 lastValidYaw {};
 	bool oldUsingTurnbinds {};
 
+	// Deletes and nulls every service this player owns.
+	void DestroyServices();
+
 public:
 	KZAnticheatService *anticheatService {};
 	KZBeamService *beamService {};
@@ -168,7 +175,6 @@ public:
 	KZPaintService *paintService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
-	KZSavelocService *savelocService {};
 	KZSpecService *specService {};
 	KZGotoService *gotoService {};
 	KZProfileService *profileService {};
@@ -222,6 +228,10 @@ public:
 	{
 		this->player = player;
 	}
+
+	// Services are routinely deleted through KZBaseService/KZModeService/KZStyleService pointers
+	// (mode switching, style toggling, player teardown), so this has to be virtual.
+	virtual ~KZBaseService() = default;
 
 	// To be implemented by each service class
 	virtual void Reset() {}

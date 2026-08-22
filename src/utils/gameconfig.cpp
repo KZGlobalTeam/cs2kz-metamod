@@ -3,6 +3,7 @@
 */
 
 #include <cstdint>
+#include <memory>
 #include "gameconfig.h"
 #include "addresses.h"
 
@@ -201,12 +202,12 @@ void *CGameConfig::ResolveSignature(const char *name)
 		}
 
 		size_t iLength = 0;
-		byte *pSignature = HexToByte(signature, iLength);
+		std::unique_ptr<byte[]> pSignature(HexToByte(signature, iLength));
 		if (!pSignature)
 		{
 			return nullptr;
 		}
-		address = (*module)->FindSignature(pSignature, iLength, error);
+		address = (*module)->FindSignature(pSignature.get(), iLength, error);
 		if (error == SIG_FOUND_MULTIPLE && !m_umAllowMultiMatch[name])
 		{
 			Warning("Multiple addresses found for %s, defaulting to nullptr\n", name);

@@ -57,6 +57,7 @@ bool KZAutoBhopStylePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t
 bool KZAutoBhopStylePlugin::Unload(char *error, size_t maxlen)
 {
 	g_pStyleManager->UnregisterStyle(g_PLID);
+	modules::Cleanup();
 	return true;
 }
 

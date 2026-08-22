@@ -68,6 +68,8 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 bool KZClassicModePlugin::Unload(char *error, size_t maxlen)
 {
 	g_pModeManager->UnregisterMode(g_PLID);
+	KZ::mode::CleanupModeCvarRefs();
+	modules::Cleanup();
 	return true;
 }
 

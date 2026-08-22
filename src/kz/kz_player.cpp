@@ -37,11 +37,8 @@
 #include "tier0/memdbgon.h"
 extern CSteamGameServerAPIContext g_steamAPI;
 
-void KZPlayer::Init()
+void KZPlayer::DestroyServices()
 {
-	MovementPlayer::Init();
-
-	// TODO: initialize every service.
 	delete this->anticheatService;
 	delete this->beamService;
 	delete this->checkpointService;
@@ -51,6 +48,7 @@ void KZPlayer::Init()
 	delete this->quietService;
 	delete this->hudService;
 	delete this->specService;
+	delete this->gotoService;
 	delete this->timerService;
 	delete this->optionService;
 	delete this->paintService;
@@ -66,6 +64,43 @@ void KZPlayer::Init()
 	delete this->pistolService;
 	delete this->fovService;
 	delete this->ztopwatchService;
+	delete this->modeService;
+
+	this->anticheatService = nullptr;
+	this->beamService = nullptr;
+	this->checkpointService = nullptr;
+	this->jumpstatsService = nullptr;
+	this->languageService = nullptr;
+	this->databaseService = nullptr;
+	this->quietService = nullptr;
+	this->hudService = nullptr;
+	this->specService = nullptr;
+	this->gotoService = nullptr;
+	this->timerService = nullptr;
+	this->optionService = nullptr;
+	this->paintService = nullptr;
+	this->noclipService = nullptr;
+	this->tipService = nullptr;
+	this->telemetryService = nullptr;
+	this->triggerService = nullptr;
+	this->recordingService = nullptr;
+	this->racingService = nullptr;
+	this->globalService = nullptr;
+	this->measureService = nullptr;
+	this->profileService = nullptr;
+	this->pistolService = nullptr;
+	this->fovService = nullptr;
+	this->ztopwatchService = nullptr;
+	this->modeService = nullptr;
+
+	this->styleServices.PurgeAndDeleteElements();
+}
+
+void KZPlayer::Init()
+{
+	MovementPlayer::Init();
+
+	this->DestroyServices();
 
 	this->anticheatService = new KZAnticheatService(this);
 	this->beamService = new KZBeamService(this);

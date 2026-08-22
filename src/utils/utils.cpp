@@ -100,6 +100,10 @@ void utils::Cleanup()
 {
 	FlushAllDetours();
 	delete g_pGameConfig;
+	g_pGameConfig = NULL;
+	delete g_pKZUtils;
+	g_pKZUtils = NULL;
+	modules::Cleanup();
 }
 
 CBaseEntity *utils::FindEntityByClassname(CEntityInstance *start, const char *name)

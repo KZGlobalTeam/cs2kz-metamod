@@ -8,6 +8,8 @@
 #include "utils/hooks.h"
 #include "utils/gameconfig.h"
 #include "utils/async_file_io.h"
+#include "utils/ctimer.h"
+#include "utils/http.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
@@ -140,11 +142,16 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	g_pPlayerManager->Cleanup();
 	KZDatabaseService::Cleanup();
 	KZGlobalService::Cleanup();
+	// Not in KZGlobalService::Cleanup(): ReloadConfig() calls that at runtime and keeps using the refs.
+	KZGlobalService::CleanupConVars();
 	KZLanguageService::Cleanup();
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
 	hooks::Cleanup();
+	HTTP::Cleanup();
+	RemoveAllTimers();
+	KZ::mode::CleanupModeCvarRefs();
 	utils::Cleanup();
 	LoggingSystem_UnregisterLoggingListener(&g_KZLoggingListener);
 	kz_log_to_file.Set(false);

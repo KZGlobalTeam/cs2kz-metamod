@@ -103,6 +103,7 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 		if (g_PersistentTimers.Element(i) == timer)
 		{
 			g_PersistentTimers.Remove(i);
+			delete timer;
 			return;
 		}
 	}
@@ -111,6 +112,7 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 		if (g_NonPersistentTimers.Element(i) == timer)
 		{
 			g_NonPersistentTimers.Remove(i);
+			delete timer;
 			return;
 		}
 	}

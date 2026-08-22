@@ -19,4 +19,18 @@ namespace modules
 		modules::steamnetworkingsockets = new CModule(ROOTBIN, "steamnetworkingsockets");
 	}
 
+	inline void Cleanup()
+	{
+		delete modules::engine;
+		delete modules::tier0;
+		delete modules::server;
+		delete modules::schemasystem;
+		delete modules::steamnetworkingsockets;
+		modules::engine = nullptr;
+		modules::tier0 = nullptr;
+		modules::server = nullptr;
+		modules::schemasystem = nullptr;
+		modules::steamnetworkingsockets = nullptr;
+	}
+
 } // namespace modules

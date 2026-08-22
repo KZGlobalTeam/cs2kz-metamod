@@ -213,6 +213,9 @@ void KZModeManager::UnregisterMode(PluginId id)
 				KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 				if (!player->IsInGame())
 				{
+					// The plugin owning this service is about to be unloaded, so the pointer would dangle.
+					// Reset it silently instead of running the full mode switch on a player who is not here.
+					KZ::mode::InitModeService(player);
 					continue;
 				}
 				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[modeIdx].longModeName)

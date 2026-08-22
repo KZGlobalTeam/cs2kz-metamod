@@ -800,6 +800,9 @@ public:
 	static void EnforceConVars();
 	static void RestoreConVars();
 
+	// Frees the heap-allocated ConVar references. Plugin unload only.
+	static void CleanupConVars();
+
 	void OnPlayerAuthorized();
 	void OnClientDisconnect();
 

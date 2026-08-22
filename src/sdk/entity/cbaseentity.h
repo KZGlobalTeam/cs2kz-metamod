@@ -164,6 +164,8 @@ public:
 		CALL_VIRTUAL(bool, offset, this, newPosition, newAngles, newVelocity);
 	}
 
+	// Note for users: You have to create a CEntityKeyValues through `new` and you must NOT delete it.
+	// The game will delete it for you after the entity is spawned.
 	void DispatchSpawn(CEntityKeyValues *pEntityKeyValues = nullptr)
 	{
 		g_pKZUtils->DispatchSpawn(this, pEntityKeyValues);
