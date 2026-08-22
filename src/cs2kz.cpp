@@ -86,6 +86,9 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		snprintf(error, maxlen, "Failed to initialize movement detours.");
 		return false;
 	}
+
+	ix::initNetSystem();
+
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();
@@ -150,6 +153,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
+	ix::uninitNetSystem();
 	hooks::Cleanup();
 	utils::Cleanup();
 	LoggingSystem_UnregisterLoggingListener(&g_KZLoggingListener);
