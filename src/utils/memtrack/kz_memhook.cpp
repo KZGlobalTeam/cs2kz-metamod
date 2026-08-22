@@ -723,9 +723,8 @@ namespace KZMem
 
 			if (!s_selfCheckPassed)
 			{
-				KZ_LOG_WARN(LogChannel::General,
-							"Memory tracking self-check FAILED: a plain new[] did not reach the hook. Plain new/new[] in the "
-							"plugin is bypassing our operator new, so kz_meminfo is undercounting badly.\n");
+				KZ_LOG_WARN(LogChannel::General, "Memory tracking self-check FAILED: a plain new[] did not reach the hook. Plain new/new[] in the "
+												 "plugin is bypassing our operator new, so kz_meminfo is undercounting badly.\n");
 			}
 		}
 		else
