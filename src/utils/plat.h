@@ -46,4 +46,3 @@ int GetModuleInformation(HINSTANCE module, void **base, size_t *length, std::vec
 #endif
 
 void Plat_WriteMemory(void *pPatchAddress, uint8_t *pPatch, int iPatchSize);
-

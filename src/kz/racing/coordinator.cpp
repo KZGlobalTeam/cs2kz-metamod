@@ -149,7 +149,6 @@ void KZRacingService::OnServerGamePostSimulate()
 
 void KZRacingService::ProcessMainThreadCallbacks()
 {
-
 	{
 		std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
 		if (!KZRacingService::mainThreadCallbacks.queue.empty())
