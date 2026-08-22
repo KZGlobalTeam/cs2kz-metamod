@@ -3,7 +3,6 @@
 #include "filesystem.h"
 #include "utils/utils.h"
 #include "utils/uuid.h"
-#include "utils/memtrack/kz_memtrack.h"
 #include "compression.h"
 #include <thread>
 #include <mutex>
@@ -438,7 +437,6 @@ namespace KZ::replaysystem::data
 		g_loadThread = std::thread(
 			[path = std::move(path)]()
 			{
-				KZ_MEM_MODULE_SCOPE();
 				ReplayPlayback result = LoadReplayWithProgress(path.c_str(), g_loadStatus.progress, g_cancelLoad);
 				HandleAsyncResult(result);
 			});
@@ -451,7 +449,6 @@ namespace KZ::replaysystem::data
 		g_loadThread = std::thread(
 			[data = std::move(data), uuid]() mutable
 			{
-				KZ_MEM_MODULE_SCOPE();
 				ReplayPlayback result = LoadReplayWithProgress(data.data(), data.size(), uuid, g_loadStatus.progress, g_cancelLoad);
 				HandleAsyncResult(result);
 			});

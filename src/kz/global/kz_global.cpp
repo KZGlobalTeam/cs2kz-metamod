@@ -13,7 +13,6 @@
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
 #include "utils/json.h"
-#include "utils/memtrack/kz_memtrack.h"
 
 #include "kz_global.h"
 #include "messages.h"
@@ -360,7 +359,6 @@ void KZGlobalService::OnServerGamePostSimulate()
 {
 	// Main-thread drain for everything the WebSocket thread queued up. The callbacks run here, so
 	// whatever they allocate belongs to Global too.
-	KZ_MEM_MODULE_SCOPE();
 
 	switch (KZGlobalService::state.load())
 	{
@@ -603,7 +601,6 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 {
 	// Runs on the ixwebsocket thread. JSON parsing here allocates heavily and the results are
 	// handed to the main thread through the queues below, so the scope has to sit on this side.
-	KZ_MEM_MODULE_SCOPE();
 
 	switch (message->type)
 	{

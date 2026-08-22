@@ -7,7 +7,6 @@
 #include "kz/timer/kz_timer.h"
 #include "filesystem.h"
 #include "utils/tables.h"
-#include "utils/memtrack/kz_memtrack.h"
 
 static const char *ARCHIVE_INDEX_PATH = KZ_REPLAY_PATH "/archive_index.txt";
 
@@ -884,7 +883,6 @@ void ReplayWatcher::WatchLoop()
 {
 	// Long-lived background scanner: the replay index maps it builds are the plugin's main
 	// steady-state allocator outside of recording.
-	KZ_MEM_MODULE_SCOPE();
 
 	LoadArchiveIndex();
 	ScanReplays();

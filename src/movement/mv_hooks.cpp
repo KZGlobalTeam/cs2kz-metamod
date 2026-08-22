@@ -3,7 +3,6 @@
 #include "movement.h"
 #include "utils/detours.h"
 #include "utils/gameconfig.h"
-#include "utils/memtrack/kz_memtrack.h"
 #include "tier0/memdbgon.h"
 #include "sdk/usercmd.h"
 #include "vprof.h"
@@ -63,7 +62,6 @@ static_global struct
 
 void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	if (controller->m_bIsHLTV)
 	{
@@ -79,7 +77,6 @@ void FASTCALL movement::Detour_PhysicsSimulate(CCSPlayerController *controller)
 
 i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, PlayerCommand *cmds, int numcmds, bool paused, float margin)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(controller);
 	player->OnProcessUsercmds(cmds, numcmds);
@@ -91,7 +88,6 @@ i32 FASTCALL movement::Detour_ProcessUsercmds(CCSPlayerController *controller, P
 
 void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerCommand *pc, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	CBasePlayerController *controller = player->GetController();
@@ -104,7 +100,6 @@ void FASTCALL movement::Detour_SetupMove(CCSPlayer_MovementServices *ms, PlayerC
 
 void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->currentMoveData = mv;
@@ -117,7 +112,6 @@ void FASTCALL movement::Detour_ProcessMovement(CCSPlayer_MovementServices *ms, C
 
 bool FASTCALL movement::Detour_PlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnPlayerMove();
@@ -128,7 +122,6 @@ bool FASTCALL movement::Detour_PlayerMove(CCSPlayer_MovementServices *ms, CMoveD
 
 void FASTCALL movement::Detour_CheckParameters(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnCheckParameters();
@@ -138,7 +131,6 @@ void FASTCALL movement::Detour_CheckParameters(CCSPlayer_MovementServices *ms, C
 
 bool FASTCALL movement::Detour_CanMove(CCSPlayerPawnBase *pawn)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(pawn);
 	player->OnCanMove();
@@ -149,7 +141,6 @@ bool FASTCALL movement::Detour_CanMove(CCSPlayerPawnBase *pawn)
 
 void FASTCALL movement::Detour_FullWalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv, bool ground)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnFullWalkMove(ground);
@@ -159,7 +150,6 @@ void FASTCALL movement::Detour_FullWalkMove(CCSPlayer_MovementServices *ms, CMov
 
 bool FASTCALL movement::Detour_MoveInit(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnMoveInit();
@@ -170,7 +160,6 @@ bool FASTCALL movement::Detour_MoveInit(CCSPlayer_MovementServices *ms, CMoveDat
 
 bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnCheckWater();
@@ -182,7 +171,6 @@ bool FASTCALL movement::Detour_CheckWater(CCSPlayer_MovementServices *ms, CMoveD
 
 void FASTCALL movement::Detour_WaterMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnWaterMove();
@@ -198,7 +186,6 @@ void FASTCALL movement::Detour_WaterMove(CCSPlayer_MovementServices *ms, CMoveDa
 
 void FASTCALL movement::Detour_CheckVelocity(CCSPlayer_MovementServices *ms, CMoveData *mv, const char *a3)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnCheckVelocity(a3);
@@ -208,7 +195,6 @@ void FASTCALL movement::Detour_CheckVelocity(CCSPlayer_MovementServices *ms, CMo
 
 void FASTCALL movement::Detour_Duck(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnDuck();
@@ -220,7 +206,6 @@ void FASTCALL movement::Detour_Duck(CCSPlayer_MovementServices *ms, CMoveData *m
 
 bool FASTCALL movement::Detour_CanUnduck(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnCanUnduck();
@@ -231,7 +216,6 @@ bool FASTCALL movement::Detour_CanUnduck(CCSPlayer_MovementServices *ms, CMoveDa
 
 bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnLadderMove();
@@ -276,7 +260,6 @@ bool FASTCALL movement::Detour_LadderMove(CCSPlayer_MovementServices *ms, CMoveD
 
 void FASTCALL movement::Detour_CheckJumpButtonLegacy(CCSPlayerLegacyJump *legacy, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	CCSPlayer_MovementServices *ms = legacy->m_pMovementServices;
 	MovementPlayer *player = playerManager->ToPlayer(ms);
@@ -296,7 +279,6 @@ void FASTCALL movement::Detour_CheckJumpButtonLegacy(CCSPlayerLegacyJump *legacy
 
 void FASTCALL movement::Detour_CheckJumpButtonModern(CCSPlayerModernJump *modern, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	CCSPlayer_MovementServices *ms = modern->m_pMovementServices;
 	MovementPlayer *player = playerManager->ToPlayer(ms);
@@ -307,7 +289,6 @@ void FASTCALL movement::Detour_CheckJumpButtonModern(CCSPlayerModernJump *modern
 
 void FASTCALL movement::Detour_OnJumpLegacy(CCSPlayerLegacyJump *legacy, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	CCSPlayer_MovementServices *ms = legacy->m_pMovementServices;
 	MovementPlayer *player = playerManager->ToPlayer(ms);
@@ -325,7 +306,6 @@ void FASTCALL movement::Detour_OnJumpLegacy(CCSPlayerLegacyJump *legacy, CMoveDa
 
 void FASTCALL movement::Detour_OnJumpModern(CCSPlayerModernJump *modern, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	CCSPlayer_MovementServices *ms = modern->m_pMovementServices;
 	MovementPlayer *player = playerManager->ToPlayer(ms);
@@ -343,7 +323,6 @@ void FASTCALL movement::Detour_OnJumpModern(CCSPlayerModernJump *modern, CMoveDa
 
 void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnAirMove();
@@ -353,7 +332,6 @@ void FASTCALL movement::Detour_AirMove(CCSPlayer_MovementServices *ms, CMoveData
 
 void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector &wishdir, f32 wishspeed, f32 accel)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnAirAccelerate(wishdir, wishspeed, accel);
@@ -363,7 +341,6 @@ void FASTCALL movement::Detour_AirAccelerate(CCSPlayer_MovementServices *ms, CMo
 
 void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnFriction();
@@ -373,7 +350,6 @@ void FASTCALL movement::Detour_Friction(CCSPlayer_MovementServices *ms, CMoveDat
 
 void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnWalkMove();
@@ -385,7 +361,6 @@ void FASTCALL movement::Detour_WalkMove(CCSPlayer_MovementServices *ms, CMoveDat
 void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMoveData *mv, Vector *pFirstDest, trace_t *pFirstTrace,
 											 bool *bIsSurfing)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 #ifdef DEBUG_TPM
@@ -460,7 +435,6 @@ void FASTCALL movement::Detour_TryPlayerMove(CCSPlayer_MovementServices *ms, CMo
 
 void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms, CMoveData *mv, bool bStayOnGround)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 #ifdef WATER_FIX
@@ -496,7 +470,6 @@ void FASTCALL movement::Detour_CategorizePosition(CCSPlayer_MovementServices *ms
 
 void FASTCALL movement::Detour_CheckFalling(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 	player->OnCheckFalling();
@@ -506,7 +479,6 @@ void FASTCALL movement::Detour_CheckFalling(CCSPlayer_MovementServices *ms, CMov
 
 void FASTCALL movement::Detour_PostThink(CCSPlayerPawnBase *pawn)
 {
-	KZ_MEM_MODULE_SCOPE();
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(pawn);
 	player->OnPostThink();
