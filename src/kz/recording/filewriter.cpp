@@ -119,7 +119,7 @@ void ReplayFileWriter::QueueWriteToFile(std::unique_ptr<Recorder> recorder, Disk
 
 void ReplayFileWriter::RunFrame()
 {
-	std::queue<std::function<void()>> pending;
+	std::queue<std::function<void()>> &pending = m_currentBatch;
 	{
 		std::lock_guard<std::mutex> lock(m_completedLock);
 		pending.swap(m_completedCallbacks);

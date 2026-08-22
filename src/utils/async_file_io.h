@@ -102,6 +102,7 @@ private:
 	std::unique_ptr<std::thread> m_thread;
 	std::queue<AsyncAnyTask> m_taskQueue;
 	std::queue<AsyncAnyResult> m_completedTasks;
+	std::queue<AsyncAnyResult> m_currentBatch;
 	std::mutex m_queueLock;
 	std::mutex m_completedLock;
 	std::condition_variable m_queueCV;

@@ -104,7 +104,7 @@ void AsyncFileIO::EnqueueTask(AsyncAnyTask &&task)
 
 void AsyncFileIO::RunFrame()
 {
-	std::queue<AsyncAnyResult> completed;
+	std::queue<AsyncAnyResult> &completed = m_currentBatch;
 	{
 		std::lock_guard<std::mutex> lock(m_completedLock);
 		completed.swap(m_completedTasks);

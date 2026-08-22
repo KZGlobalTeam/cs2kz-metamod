@@ -12,6 +12,7 @@ public:
 
 	bool PassesTriggerFilters(CBaseEntity *pOther)
 	{
-		return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("PassesTriggerFilters"), this, pOther);
+		static_persist const int offset = g_pGameConfig->GetOffset("PassesTriggerFilters");
+		return CALL_VIRTUAL(bool, offset, this, pOther);
 	}
 };

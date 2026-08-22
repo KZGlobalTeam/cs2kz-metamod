@@ -245,6 +245,7 @@ private:
 	std::condition_variable m_shutdownCV;
 
 	std::queue<std::function<void()>> m_completedCallbacks;
+	std::queue<std::function<void()>> m_currentBatch;
 	std::mutex m_completedLock;
 };
 

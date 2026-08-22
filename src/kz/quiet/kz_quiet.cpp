@@ -35,7 +35,8 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		TransmitInfo *pTransmitInfo = reinterpret_cast<TransmitInfo *>(pInfo[i]);
 
 		// Find out who this info will be sent to.
-		uintptr_t targetAddr = reinterpret_cast<uintptr_t>(pTransmitInfo) + g_pGameConfig->GetOffset("QuietPlayerSlot");
+		static_persist const int offset = g_pGameConfig->GetOffset("QuietPlayerSlot");
+		uintptr_t targetAddr = reinterpret_cast<uintptr_t>(pTransmitInfo) + offset;
 		CPlayerSlot targetSlot = CPlayerSlot(*reinterpret_cast<int *>(targetAddr));
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 		// Make sure the target isn't CSTV.
