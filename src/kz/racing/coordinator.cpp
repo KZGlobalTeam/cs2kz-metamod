@@ -1,15 +1,8 @@
-// required for ws library
-#ifdef _WIN32
-#pragma comment(lib, "Ws2_32.Lib")
-#pragma comment(lib, "Crypt32.Lib")
-#endif
-
 #include "kz_racing.h"
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
 #include <ixwebsocket/IXBase64.h>
-#include <ixwebsocket/IXNetSystem.h>
 
 static_global class KZTimerServiceEventListener_Racing : public KZTimerServiceEventListener
 {

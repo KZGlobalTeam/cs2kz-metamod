@@ -1,3 +1,9 @@
+// required for ws library
+#ifdef _WIN32
+#pragma comment(lib, "Ws2_32.Lib")
+#pragma comment(lib, "Crypt32.Lib")
+#endif
+
 #include "cs2kz.h"
 
 #include "entity2/entitysystem.h"
@@ -54,6 +60,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
 	modules::Initialize();
+	ix::initNetSystem();
 
 	if (!interfaces::Initialize(ismm, error, maxlen))
 	{
@@ -157,6 +164,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	kz_log_to_file.Set(false);
 	g_KZLoggingListener.CheckFile();
 	ConVar_Unregister();
+	ix::uninitNetSystem();
 	return true;
 }
 
