@@ -99,6 +99,9 @@
 	// Where global replays are downloaded from. {id} is replaced with the record ID.
 	"replayDownloadUrl"	"https://replays.cs2kz.org/{id}"
 
-	"racingCoordinatorUrl"		""
-	"racingSecret"				""
+	"GlobalKZ Race Coordinator"
+	{
+		"baseURL"	""
+		"token"		""
+	}
 }
