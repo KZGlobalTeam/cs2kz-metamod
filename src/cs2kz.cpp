@@ -1,9 +1,3 @@
-// required for ws library
-#ifdef _WIN32
-#pragma comment(lib, "Ws2_32.Lib")
-#pragma comment(lib, "Crypt32.Lib")
-#endif
-
 #include "cs2kz.h"
 
 #include "entity2/entitysystem.h"
@@ -42,7 +36,6 @@
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
-#include <vendor/ixwebsocket/ixwebsocket/IXNetSystem.h>
 #include <vendor/mm-cs2menus/src/public/ics2menus.h>
 
 #include "tier0/memdbgon.h"
@@ -60,7 +53,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
 	modules::Initialize();
-	ix::initNetSystem();
 
 	if (!interfaces::Initialize(ismm, error, maxlen))
 	{
@@ -89,6 +81,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		snprintf(error, maxlen, "Failed to initialize movement detours.");
 		return false;
 	}
+	KZWebSocket::Init();
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();
@@ -155,6 +148,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
+	KZWebSocket::Cleanup();
 	hooks::Cleanup();
 	HTTP::Cleanup();
 	RemoveAllTimers();
@@ -164,7 +158,6 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	kz_log_to_file.Set(false);
 	g_KZLoggingListener.CheckFile();
 	ConVar_Unregister();
-	ix::uninitNetSystem();
 	return true;
 }
 

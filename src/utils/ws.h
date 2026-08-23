@@ -89,6 +89,9 @@ public:
 		void Shutdown(bool join = true);
 	};
 
+	static void Init();
+	static void Cleanup();
+
 	template<typename F>
 	inline void Configure(const std::string &url, F &&onMessageCallback)
 	{
