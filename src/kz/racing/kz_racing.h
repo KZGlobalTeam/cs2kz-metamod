@@ -1,8 +1,8 @@
 #pragma once
 #include "../kz.h"
 #include "utils/json.h"
+#include "utils/ws.h"
 #include "public/steam/isteamugc.h"
-#include <vendor/ixwebsocket/ixwebsocket/IXWebSocket.h>
 
 namespace KZ::racing
 {
@@ -17,6 +17,8 @@ namespace KZ::racing
 
 	struct RaceSpec
 	{
+		inline static constexpr const char *tag = "race_spec";
+
 		u32 workshopID;
 		std::string courseName;
 		std::string modeName;
@@ -31,6 +33,8 @@ namespace KZ::racing
 	{
 		struct ChatMessage
 		{
+			inline static constexpr const char *tag = "chat_message";
+
 			PlayerInfo player;
 			std::string content;
 
@@ -47,6 +51,8 @@ namespace KZ::racing
 
 		struct Ready
 		{
+			inline static constexpr const char *tag = "ready";
+
 			bool ToJson(Json &json) const
 			{
 				return true;
@@ -62,6 +68,8 @@ namespace KZ::racing
 
 		struct Unready
 		{
+			inline static constexpr const char *tag = "unready";
+
 			bool ToJson(Json &json) const
 			{
 				return true;
@@ -77,6 +85,8 @@ namespace KZ::racing
 
 		struct PlayerJoinRace
 		{
+			inline static constexpr const char *tag = "player_join_race";
+
 			PlayerInfo player;
 
 			bool ToJson(Json &json) const;
@@ -85,6 +95,8 @@ namespace KZ::racing
 
 		struct PlayerLeaveRace
 		{
+			inline static constexpr const char *tag = "player_leave_race";
+
 			PlayerInfo player;
 
 			bool ToJson(Json &json) const;
@@ -100,6 +112,8 @@ namespace KZ::racing
 
 		struct PlayerFinish
 		{
+			inline static constexpr const char *tag = "player_finish_race";
+
 			PlayerInfo player;
 			u32 teleports;
 			f64 timeSeconds;
@@ -110,6 +124,8 @@ namespace KZ::racing
 
 		struct PlayerDisconnect
 		{
+			inline static constexpr const char *tag = "player_disconnect";
+
 			PlayerInfo player;
 
 			bool ToJson(Json &json) const;
@@ -118,6 +134,8 @@ namespace KZ::racing
 
 		struct PlayerSurrender
 		{
+			inline static constexpr const char *tag = "player_surrender";
+
 			PlayerInfo player;
 
 			bool ToJson(Json &json) const;
@@ -154,6 +172,8 @@ namespace KZ::racing
 
 		struct RaceFinished
 		{
+			inline static constexpr const char *tag = "race_results";
+
 			RaceResults results;
 
 			bool ToJson(Json &json) const
@@ -166,6 +186,8 @@ namespace KZ::racing
 
 		struct CancelRace
 		{
+			inline static constexpr const char *tag = "cancel_race";
+
 			bool ToJson(Json &json) const
 			{
 				return true;
@@ -229,7 +251,7 @@ public:
 	static inline std::atomic<State> state = State::Uninitialized;
 
 	// INVARIANT: should be `nullptr` when `state == Uninitialized`, and a valid pointer otherwise
-	static inline std::unique_ptr<ix::WebSocket> socket = nullptr;
+	static inline std::unique_ptr<KZWebSocket::Handle> socket = nullptr;
 
 	static void Init();
 	static void Cleanup();
@@ -263,7 +285,7 @@ public:
 
 	/* ===== Receiving events =====*/
 	// Called on the WS thread and is therefore async.
-	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
+	static void OnWebSocketMessage(KZWebSocket &socket, const ix::WebSocketMessagePtr &message);
 	// Called on the main thread.
 	static void OnChatMessage(const KZ::racing::events::ChatMessage &message);
 	static void OnRaceInitialized(const KZ::racing::events::RaceInitialized &message);
@@ -338,41 +360,17 @@ public:
 
 private:
 	/**
-	 * Prepares a message to be sent to the API.
-	 */
-	template<typename T>
-	static bool PrepareMessage(std::string_view event, const T &data, Json &payload)
-	{
-		bool success = payload.Set("event", event) && payload.Set("data", data);
-
-		if (!success)
-		{
-			KZ_LOG_WARN(LogChannel::Racing, "Failed to serialize message for event `%.*s`.\n", (int)event.size(), event.data());
-		}
-
-		return success;
-	}
-
-	/**
 	 * Sends a message to the API.
 	 */
 	template<typename T>
-	static bool SendMessage(std::string_view event, const T &data)
+	static bool SendMessage(const T &data)
 	{
 		if (KZRacingService::state.load() != KZRacingService::State::Connected)
 		{
 			return false;
 		}
 
-		Json payload;
-
-		if (!KZRacingService::PrepareMessage(event, data, payload))
-		{
-			return false;
-		}
-
-		KZRacingService::socket->send(payload.ToString());
-		return true;
+		return KZRacingService::socket->SendMessage(data);
 	}
 
 	/**

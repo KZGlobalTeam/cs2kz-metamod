@@ -2,7 +2,6 @@
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
-#include <ixwebsocket/IXBase64.h>
 
 static_global class KZTimerServiceEventListener_Racing : public KZTimerServiceEventListener
 {
@@ -24,41 +23,56 @@ void KZRacingService::Init()
 		return;
 	}
 
-	KZ_LOG_INFO(LogChannel::Racing, "Initializing RacingService...\n");
+	KZ_LOG_INFO(LogChannel::Racing, "Initializing RacingService...");
 
-	std::string url = KZOptionService::GetOptionStr("racingCoordinatorUrl", "");
+	KeyValues *config = KZOptionService::GetOptionKV("GlobalKZ Race Coordinator");
+
+	if (!config)
+	{
+		KZ_LOG_INFO(LogChannel::Racing, "no configuration found; RacingService will be disabled");
+		return;
+	}
+
+	std::string authToken(config->GetString("token", ""));
+
+	if (authToken.empty())
+	{
+		KZ_LOG_INFO(LogChannel::Racing, "auth token is empty; RacingService will be disabled");
+		return;
+	}
+
+	std::string url(config->GetString("baseURL", ""));
 
 	if (url.empty())
 	{
-		KZ_LOG_INFO(LogChannel::Racing, "`racingCoordinatorUrl` is empty. RacingService will be disabled.\n");
-		KZRacingService::state.store(KZRacingService::State::Disconnected);
+		KZ_LOG_INFO(LogChannel::Global, "base URL is empty; RacingService will be disabled");
 		return;
 	}
 
 	if (url.size() < 4 || url.substr(0, 4) != "http")
 	{
-		KZ_LOG_INFO(LogChannel::Racing, "`racingCoordinatorUrl` is invalid. RacingService will be disabled.\n");
-		KZRacingService::state.store(KZRacingService::State::Disconnected);
+		KZ_LOG_WARN(LogChannel::Global, "base URL is invalid; RacingService will be disabled\n");
 		return;
 	}
 
 	url.replace(0, 4, "ws");
 
-	std::string key = KZOptionService::GetOptionStr("racingSecret");
-
-	if (key.empty())
+	if (url.substr(url.size() - 1) != "/")
 	{
-		KZ_LOG_INFO(LogChannel::Racing, "`racingSecret` is empty. RacingService will be disabled.\n");
-		KZRacingService::state.store(KZRacingService::State::Disconnected);
-		return;
+		url += "/";
 	}
 
-	KZRacingService::socket = std::make_unique<ix::WebSocket>();
-	KZRacingService::socket->setUrl(url);
-	// KZRacingService::socket->setExtraHeaders({{"Authorization", std::string("Bearer ") + key}});
-	KZRacingService::socket->addSubProtocol(std::string("base64url.bearer.phx.") + macaron::Base64::Encode(key));
-	KZRacingService::socket->setOnMessageCallback(KZRacingService::OnWebSocketMessage);
+	url += "gss";
 
+	std::shared_ptr<KZWebSocket> socket = std::make_shared<KZWebSocket>();
+
+	// clang-format off
+	socket->Configure(url, {{"Authorization", std::string("Bearer ") + authToken}}, [=](const ix::WebSocketMessagePtr& message) {
+		return KZRacingService::OnWebSocketMessage(*socket, message);
+	});
+	// clang-format on
+
+	KZRacingService::socket = std::make_unique<KZWebSocket::Handle>(KZWebSocket::SpawnDispatchThread(socket));
 	KZRacingService::state.store(KZRacingService::State::Configured);
 	KZ_LOG_INFO(LogChannel::Racing, "RacingService configured.\n");
 	KZRacingService::itemDownloadHandler.m_CallbackDownloadItemResult.Register(&KZRacingService::itemDownloadHandler,
@@ -71,7 +85,7 @@ void KZRacingService::Cleanup()
 {
 	if (KZRacingService::socket)
 	{
-		KZRacingService::socket->stop();
+		KZRacingService::socket->Shutdown();
 		KZRacingService::state.store(KZRacingService::State::Disconnected);
 		KZRacingService::socket.reset(nullptr);
 	}
@@ -93,9 +107,8 @@ void KZRacingService::ReloadConfig()
 	}
 
 	KZ_LOG_INFO(LogChannel::Racing, "Starting WebSocket...\n");
-	KZRacingService::socket->setPingInterval(10);
 	KZRacingService::state.store(KZRacingService::State::Connecting);
-	KZRacingService::socket->start();
+	KZRacingService::socket->Start();
 }
 
 void KZRacingService::OnActivateServer()
@@ -108,8 +121,7 @@ void KZRacingService::OnActivateServer()
 	if (KZRacingService::state.load() == KZRacingService::State::Configured)
 	{
 		KZ_LOG_INFO(LogChannel::Racing, "Starting WebSocket...\n");
-		KZRacingService::socket->setPingInterval(10);
-		KZRacingService::socket->start();
+		KZRacingService::socket->Start();
 		KZRacingService::state.store(KZRacingService::State::Connecting);
 	}
 
@@ -154,12 +166,134 @@ void KZRacingService::ProcessMainThreadCallbacks()
 			KZRacingService::mainThreadCallbacks.queue.clear();
 		}
 	}
+
+	std::vector<KZWebSocket::Message> receivedMessages;
+	KZRacingService::socket->ReceiveMessages(receivedMessages);
+
+	for (const KZWebSocket::Message &message : receivedMessages)
+	{
+		KZ_LOG_DEBUG(LogChannel::Racing, "processing message %s (%s)", message.id.c_str(), message.tag.c_str());
+
+		switch (KZRacingService::state.load())
+		{
+			case KZRacingService::State::Connected:
+			{
+				// Dispatch based on message tag
+				if (message.tag == "chat_message")
+				{
+					KZ::racing::events::ChatMessage event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnChatMessage(event);
+					}
+				}
+				else if (message.tag == "race_initialized")
+				{
+					KZ::racing::events::RaceInitialized event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnRaceInitialized(event);
+					}
+				}
+				else if (message.tag == "server_join_race")
+				{
+					KZ::racing::events::ServerJoinRace event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnServerJoinRace(event);
+					}
+				}
+				else if (message.tag == "server_leave_race")
+				{
+					KZ::racing::events::ServerLeaveRace event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnServerLeaveRace(event);
+					}
+				}
+				else if (message.tag == "player_join_race")
+				{
+					KZ::racing::events::PlayerJoinRace event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerJoinRace(event);
+					}
+				}
+				else if (message.tag == "player_leave_race")
+				{
+					KZ::racing::events::PlayerLeaveRace event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerLeaveRace(event);
+					}
+				}
+				else if (message.tag == "start_race")
+				{
+					KZ::racing::events::StartRace event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnStartRace(event);
+					}
+				}
+				else if (message.tag == "player_finish")
+				{
+					KZ::racing::events::PlayerFinish event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerFinish(event);
+					}
+				}
+				else if (message.tag == "player_disconnect")
+				{
+					KZ::racing::events::PlayerDisconnect event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerDisconnect(event);
+					}
+				}
+				else if (message.tag == "player_surrender")
+				{
+					KZ::racing::events::PlayerSurrender event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerSurrender(event);
+					}
+				}
+				else if (message.tag == "race_finished")
+				{
+					KZ::racing::events::RaceFinished event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnRaceFinished(event);
+					}
+				}
+				else if (message.tag == "race_cancelled")
+				{
+					KZ::racing::events::RaceCancelled event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnRaceCancelled(event);
+					}
+				}
+				else
+				{
+					KZ_LOG_WARN(LogChannel::Racing, "incoming message contained an unknown tag: `%s`\n", message.tag.c_str());
+				}
+			}
+			break;
+
+			default:
+				continue;
+		}
+	}
 }
 
-void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
+void KZRacingService::OnWebSocketMessage(KZWebSocket &socket, const ix::WebSocketMessagePtr &message)
 {
 	// Runs on the ixwebsocket thread. Every event handler below parses JSON and allocates a
 	// std::function onto the main-thread queue, so one scope here covers all of them.
+
+	socket.OnMessage(message);
 
 	switch (message->type)
 	{
@@ -172,164 +306,6 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 		case ix::WebSocketMessageType::Error:
 			return KZRacingService::WS_OnErrorMessage(message->errorInfo);
 
-		case ix::WebSocketMessageType::Ping:
-			KZ_LOG_DEBUG(LogChannel::Racing, "Received ping WebSocket message.\n");
-			return;
-
-		case ix::WebSocketMessageType::Pong:
-			KZ_LOG_DEBUG(LogChannel::Racing, "Received pong WebSocket message.\n");
-			return;
-	}
-
-	KZ_LOG_DEBUG(LogChannel::Racing,
-				 "Received WebSocket message.\n"
-				 "----------------------------------------\n"
-				 "%s"
-				 "\n----------------------------------------\n",
-				 message->str.c_str());
-
-	Json payload(message->str);
-
-	if (!payload.IsValid())
-	{
-		KZ_LOG_WARN(LogChannel::Racing, "Incoming WebSocket message is not valid JSON.\n");
-		return;
-	}
-
-	switch (KZRacingService::state.load())
-	{
-		case KZRacingService::State::Connected:
-		{
-			std::string event;
-			if (!payload.Get("event", event))
-			{
-				KZ_LOG_WARN(LogChannel::Racing, "Incoming WebSocket message did not contain a valid `event` field.\n");
-				break;
-			}
-
-			Json data;
-			if (!payload.Get("data", data))
-			{
-				KZ_LOG_WARN(LogChannel::Racing, "Incoming WebSocket message did not contain a valid `data` field.\n");
-				break;
-			}
-
-			// Dispatch based on event type
-			if (event == "chat_message")
-			{
-				KZ::racing::events::ChatMessage event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnChatMessage(event); });
-				}
-			}
-			else if (event == "race_initialized")
-			{
-				KZ::racing::events::RaceInitialized event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceInitialized(event); });
-				}
-			}
-			else if (event == "server_join_race")
-			{
-				KZ::racing::events::ServerJoinRace event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnServerJoinRace(event); });
-				}
-			}
-			else if (event == "server_leave_race")
-			{
-				KZ::racing::events::ServerLeaveRace event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnServerLeaveRace(event); });
-				}
-			}
-			else if (event == "player_join_race")
-			{
-				KZ::racing::events::PlayerJoinRace event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerJoinRace(event); });
-				}
-			}
-			else if (event == "player_leave_race")
-			{
-				KZ::racing::events::PlayerLeaveRace event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerLeaveRace(event); });
-				}
-			}
-			else if (event == "start_race")
-			{
-				KZ::racing::events::StartRace event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnStartRace(event); });
-				}
-			}
-			else if (event == "player_finish")
-			{
-				KZ::racing::events::PlayerFinish event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerFinish(event); });
-				}
-			}
-			else if (event == "player_disconnect")
-			{
-				KZ::racing::events::PlayerDisconnect event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerDisconnect(event); });
-				}
-			}
-			else if (event == "player_surrender")
-			{
-				KZ::racing::events::PlayerSurrender event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnPlayerSurrender(event); });
-				}
-			}
-			else if (event == "race_finished")
-			{
-				KZ::racing::events::RaceFinished event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceFinished(event); });
-				}
-			}
-			else if (event == "race_cancelled")
-			{
-				KZ::racing::events::RaceCancelled event;
-				if (event.FromJson(data))
-				{
-					std::lock_guard _guard(KZRacingService::mainThreadCallbacks.mutex);
-					KZRacingService::mainThreadCallbacks.queue.emplace_back([event]() { KZRacingService::OnRaceCancelled(event); });
-				}
-			}
-			else
-			{
-				KZ_LOG_INFO(LogChannel::Racing, "Incoming WebSocket message contained an unknown `event` field: `%s`\n", event.c_str());
-			}
-		}
-		break;
-
 		default:
 			return;
 	}
@@ -338,64 +314,31 @@ void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 void KZRacingService::WS_OnOpenMessage()
 {
 	KZRacingService::state.store(KZRacingService::State::Connected);
-	KZ_LOG_INFO(LogChannel::Racing, "WebSocket connection established.\n");
 }
 
 void KZRacingService::WS_OnCloseMessage(const ix::WebSocketCloseInfo &closeInfo)
 {
-	KZ_LOG_INFO(LogChannel::Racing, "WebSocket connection closed (%i): %s\n", closeInfo.code, closeInfo.reason.c_str());
-
 	KZRacingService::currentRace = {};
 	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
 
-	switch (closeInfo.code)
+	if (KZRacingService::socket->MayReconnect())
 	{
-		case 1000 /* NORMAL */:
-		case 1001 /* GOING AWAY */:
-		case 1006 /* ABNORMAL */:
-		{
-			KZRacingService::socket->enableAutomaticReconnection();
-			KZRacingService::socket->setMinWaitBetweenReconnectionRetries(10'000 /* ms */);
-			KZRacingService::state.store(KZRacingService::State::Connecting);
-		}
-		break;
-
-		case 1008 /* POLICY VIOLATION */:
-		{
-			KZRacingService::socket->disableAutomaticReconnection();
-			KZRacingService::state.store(KZRacingService::State::Disconnected);
-		}
-		break;
-
-		default:
-		{
-			KZRacingService::socket->enableAutomaticReconnection();
-			KZRacingService::socket->setMinWaitBetweenReconnectionRetries(60'000 /* ms */);
-			KZRacingService::state.store(KZRacingService::State::Connecting);
-		}
+		KZRacingService::state.store(KZRacingService::State::Connecting);
+	}
+	else
+	{
+		KZRacingService::state.store(KZRacingService::State::Disconnected);
 	}
 }
 
 void KZRacingService::WS_OnErrorMessage(const ix::WebSocketErrorInfo &errorInfo)
 {
-	KZ_LOG_WARN(LogChannel::Racing, "WebSocket error (status %i, retries=%i, wait_time=%f): %s\n", errorInfo.http_status, errorInfo.retries,
-				errorInfo.wait_time, errorInfo.reason.c_str());
-
-	switch (errorInfo.http_status)
+	if (KZRacingService::socket->MayReconnect())
 	{
-		case 401:
-		case 403:
-		{
-			KZRacingService::socket->disableAutomaticReconnection();
-			KZRacingService::state.store(KZRacingService::State::Disconnected);
-		}
-		break;
-
-		default:
-		{
-			KZRacingService::socket->enableAutomaticReconnection();
-			KZRacingService::socket->setMinWaitBetweenReconnectionRetries(60'000 /* ms */);
-			KZRacingService::state.store(KZRacingService::State::Connecting);
-		}
+		KZRacingService::state.store(KZRacingService::State::Connecting);
+	}
+	else
+	{
+		KZRacingService::state.store(KZRacingService::State::Disconnected);
 	}
 }
