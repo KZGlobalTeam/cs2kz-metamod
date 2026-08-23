@@ -90,6 +90,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'http.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'async_file_io.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'ws.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'player', 'player_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'player', 'player.cpp'),

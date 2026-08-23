@@ -20,6 +20,11 @@ public:
 		value.ToJson(*this);
 	}
 
+	void Clear()
+	{
+		this->inner.clear();
+	}
+
 	std::string ToString() const
 	{
 		return this->inner.dump();
