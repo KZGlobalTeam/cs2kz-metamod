@@ -1,3 +1,11 @@
+// required for ws library
+#ifdef _WIN32
+#pragma comment(lib, "Ws2_32.Lib")
+#pragma comment(lib, "Crypt32.Lib")
+#endif
+
+#include <vendor/ixwebsocket/ixwebsocket/IXNetSystem.h>
+
 #include "ws.h"
 
 void KZWebSocket::Message::Encode(Json &out) const
@@ -103,6 +111,16 @@ void KZWebSocket::Handle::Shutdown(bool join)
 	{
 		this->thread.join();
 	}
+}
+
+void KZWebSocket::Init()
+{
+	ix::initNetSystem();
+}
+
+void KZWebSocket::Cleanup()
+{
+	ix::uninitNetSystem();
 }
 
 void KZWebSocket::OnMessage(const ix::WebSocketMessagePtr &message)
