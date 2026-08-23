@@ -38,25 +38,25 @@ void KZRacingService::SendInitRace(u32 workshopID, std::string courseName, std::
 	data.modeName = modeName;
 	data.maxDurationSeconds = maxDurationSeconds;
 	data.maxTeleports = maxTeleports;
-	KZRacingService::SendMessage("init_race", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendCancelRace()
 {
 	KZ::racing::events::CancelRace data;
-	KZRacingService::SendMessage("cancel_race", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendReady()
 {
 	KZ::racing::events::Ready data;
-	KZRacingService::SendMessage("ready", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendUnready()
 {
 	KZ::racing::events::Unready data;
-	KZRacingService::SendMessage("unready", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendJoinRace()
@@ -64,7 +64,7 @@ void KZRacingService::SendJoinRace()
 	KZ::racing::events::PlayerJoinRace data;
 	data.player.id = this->player->GetSteamId64();
 	data.player.name = this->player->GetName();
-	KZRacingService::SendMessage("player_join_race", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendLeaveRace()
@@ -72,7 +72,7 @@ void KZRacingService::SendLeaveRace()
 	KZ::racing::events::PlayerLeaveRace data;
 	data.player.id = this->player->GetSteamId64();
 	data.player.name = this->player->GetName();
-	KZRacingService::SendMessage("player_leave_race", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendDisconnect()
@@ -80,7 +80,7 @@ void KZRacingService::SendDisconnect()
 	KZ::racing::events::PlayerDisconnect data;
 	data.player.id = this->player->GetSteamId64();
 	data.player.name = this->player->GetName();
-	KZRacingService::SendMessage("player_disconnect", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendSurrenderRace()
@@ -88,7 +88,7 @@ void KZRacingService::SendSurrenderRace()
 	KZ::racing::events::PlayerSurrender data;
 	data.player.id = this->player->GetSteamId64();
 	data.player.name = this->player->GetName();
-	KZRacingService::SendMessage("player_surrender", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendFinishRace(f64 timeSeconds, u32 teleports)
@@ -98,13 +98,13 @@ void KZRacingService::SendFinishRace(f64 timeSeconds, u32 teleports)
 	data.player.name = this->player->GetName();
 	data.timeSeconds = timeSeconds;
 	data.teleports = teleports;
-	KZRacingService::SendMessage("player_finish", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendRaceFinished()
 {
 	KZ::racing::events::RaceFinished data;
-	KZRacingService::SendMessage("race_finished", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::SendChatMessage(const std::string &message)
@@ -113,7 +113,7 @@ void KZRacingService::SendChatMessage(const std::string &message)
 	data.player.id = this->player->GetSteamId64();
 	data.player.name = this->player->GetName();
 	data.content = message;
-	KZRacingService::SendMessage("chat_message", data);
+	KZRacingService::SendMessage(data);
 }
 
 void KZRacingService::BroadcastRaceInfo()
