@@ -901,6 +901,39 @@ void ReplayWatcher::WatchLoop()
 	}
 }
 
+// Recorders delete their own chunks when they finish, so anything left behind is from a
+// process that died mid-recording. A live recording only flushes a chunk every 15 minutes of
+// recorded time, so a full day of staleness cannot belong to one that is still running.
+void ReplayWatcher::SweepOrphanedChunks(u64 currentTime)
+{
+	static constexpr u64 CHUNK_MAX_AGE_SECONDS = 24 * 60 * 60;
+
+	char searchPath[MAX_PATH];
+	V_snprintf(searchPath, sizeof(searchPath), "%s/*.chunk", KZ_REPLAY_PATH);
+
+	FileFindHandle_t findHandle = {};
+	for (const char *pFileName = g_pFullFileSystem->FindFirstEx(searchPath, "GAME", &findHandle); pFileName;
+		 pFileName = g_pFullFileSystem->FindNext(findHandle))
+	{
+		if (g_pFullFileSystem->FindIsDirectory(findHandle))
+		{
+			continue;
+		}
+
+		char fullPath[MAX_PATH];
+		V_snprintf(fullPath, sizeof(fullPath), "%s/%s", KZ_REPLAY_PATH, pFileName);
+		long fileTime = g_pFullFileSystem->GetFileTime(fullPath, "GAME");
+		if (fileTime <= 0 || currentTime < (u64)fileTime + CHUNK_MAX_AGE_SECONDS)
+		{
+			continue;
+		}
+
+		KZ_LOG_INFO(LogChannel::Replays, "Removing orphaned replay chunk %s\n", fullPath);
+		g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+	}
+	g_pFullFileSystem->FindClose(findHandle);
+}
+
 void ReplayWatcher::ScanReplays()
 {
 	char searchPath[MAX_PATH];
@@ -913,6 +946,8 @@ void ReplayWatcher::ScanReplays()
 	time(&currentUnixTime);
 	u32 retentionMinutes = (u32)MAX(KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880), 0);
 	u64 retentionSeconds = retentionMinutes * 60ULL;
+
+	SweepOrphanedChunks((u64)currentUnixTime);
 
 	// Files still present on disk this scan. Anything cached but not in this set has been
 	// deleted externally and must be dropped from the cache.

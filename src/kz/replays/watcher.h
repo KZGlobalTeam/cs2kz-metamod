@@ -75,6 +75,7 @@ class ReplayWatcher
 	void WatchLoop();
 
 	void ScanReplays();
+	void SweepOrphanedChunks(u64 currentTime);
 	void ScanDownloadedReplays(u64 currentTime);
 
 	void MarkArchived(const UUID_t &uuid, u64 archiveTimestamp);
