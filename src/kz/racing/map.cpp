@@ -12,22 +12,22 @@ void KZRacingService::CheckMap()
 	{
 		return;
 	}
-	else if (KZRacingService::IsMapReadyForChange(KZRacingService::currentRace.spec.workshopID))
+	else if (KZRacingService::IsMapReadyForChange(KZRacingService::currentRace.conf.workshopID))
 	{
 		// host_workshop_map <workshop ID>
-		std::string command = "host_workshop_map " + std::to_string(KZRacingService::currentRace.spec.workshopID);
+		std::string command = "host_workshop_map " + std::to_string(KZRacingService::currentRace.conf.workshopID);
 		interfaces::pEngine->ServerCommand(command.c_str());
 	}
-	else if (!KZRacingService::IsMapQueuedForDownload(KZRacingService::currentRace.spec.workshopID))
+	else if (!KZRacingService::IsMapQueuedForDownload(KZRacingService::currentRace.conf.workshopID))
 	{
-		KZRacingService::TriggerWorkshopDownload(KZRacingService::currentRace.spec.workshopID);
+		KZRacingService::TriggerWorkshopDownload(KZRacingService::currentRace.conf.workshopID);
 	}
 }
 
 bool KZRacingService::IsMapCorrectForRace()
 {
 	u32 currentWorkshopID = g_pKZUtils->GetCurrentMapWorkshopID();
-	return currentWorkshopID == KZRacingService::currentRace.spec.workshopID;
+	return currentWorkshopID == KZRacingService::currentRace.conf.workshopID;
 }
 
 bool KZRacingService::IsMapReadyForChange(u64 workshopID)
