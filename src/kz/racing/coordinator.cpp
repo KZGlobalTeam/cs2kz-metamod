@@ -127,13 +127,13 @@ void KZRacingService::OnActivateServer()
 
 	if (KZRacingService::state.load() == KZRacingService::State::Connected && KZRacingService::currentRace.state == RaceInfo::State::Init)
 	{
-		if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.spec.workshopID)
+		if (g_pKZUtils->GetCurrentMapWorkshopID() == KZRacingService::currentRace.conf.workshopID)
 		{
-			KZRacingService::SendReady();
+			// TODO
 		}
 		else
 		{
-			KZRacingService::SendUnready();
+			// TODO
 		}
 	}
 }
@@ -141,13 +141,13 @@ void KZRacingService::OnActivateServer()
 void KZRacingService::OnServerGamePostSimulate()
 {
 	KZRacingService::ProcessMainThreadCallbacks();
-	if (KZRacingService::currentRace.spec.maxDurationSeconds > 0
-		&& (KZRacingService::currentRace.earliestStartTick + KZRacingService::currentRace.spec.maxDurationSeconds * ENGINE_FIXED_TICK_RATE
+
+	if (KZRacingService::currentRace.conf.maxDurationSeconds.has_value()
+		&& (KZRacingService::currentRace.earliestStartTick + *KZRacingService::currentRace.conf.maxDurationSeconds * ENGINE_FIXED_TICK_RATE
 				<= g_pKZUtils->GetServerGlobals()->tickcount
 			&& KZRacingService::currentRace.state == RaceInfo::State::Ongoing))
 	{
 		KZ_LOG_INFO(LogChannel::Racing, "Race duration expired.\n");
-		KZRacingService::SendRaceFinished();
 		KZRacingService::currentRace.state = RaceInfo::State::None;
 	}
 }
@@ -187,84 +187,20 @@ void KZRacingService::ProcessMainThreadCallbacks()
 						KZRacingService::OnChatMessage(event);
 					}
 				}
-				else if (message.tag == "race_initialized")
+				else if (message.tag == "race_configured")
 				{
-					KZ::racing::events::RaceInitialized event;
+					KZ::racing::events::RaceConfigured event;
 					if (event.FromJson(message.data))
 					{
-						KZRacingService::OnRaceInitialized(event);
+						KZRacingService::OnRaceConfigured(event);
 					}
 				}
-				else if (message.tag == "server_join_race")
+				else if (message.tag == "race_starting")
 				{
-					KZ::racing::events::ServerJoinRace event;
+					KZ::racing::events::RaceStarting event;
 					if (event.FromJson(message.data))
 					{
-						KZRacingService::OnServerJoinRace(event);
-					}
-				}
-				else if (message.tag == "server_leave_race")
-				{
-					KZ::racing::events::ServerLeaveRace event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnServerLeaveRace(event);
-					}
-				}
-				else if (message.tag == "player_join_race")
-				{
-					KZ::racing::events::PlayerJoinRace event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnPlayerJoinRace(event);
-					}
-				}
-				else if (message.tag == "player_leave_race")
-				{
-					KZ::racing::events::PlayerLeaveRace event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnPlayerLeaveRace(event);
-					}
-				}
-				else if (message.tag == "start_race")
-				{
-					KZ::racing::events::StartRace event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnStartRace(event);
-					}
-				}
-				else if (message.tag == "player_finish")
-				{
-					KZ::racing::events::PlayerFinish event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnPlayerFinish(event);
-					}
-				}
-				else if (message.tag == "player_disconnect")
-				{
-					KZ::racing::events::PlayerDisconnect event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnPlayerDisconnect(event);
-					}
-				}
-				else if (message.tag == "player_surrender")
-				{
-					KZ::racing::events::PlayerSurrender event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnPlayerSurrender(event);
-					}
-				}
-				else if (message.tag == "race_finished")
-				{
-					KZ::racing::events::RaceFinished event;
-					if (event.FromJson(message.data))
-					{
-						KZRacingService::OnRaceFinished(event);
+						KZRacingService::OnRaceStarting(event);
 					}
 				}
 				else if (message.tag == "race_cancelled")
@@ -273,6 +209,46 @@ void KZRacingService::ProcessMainThreadCallbacks()
 					if (event.FromJson(message.data))
 					{
 						KZRacingService::OnRaceCancelled(event);
+					}
+				}
+				else if (message.tag == "race_completed")
+				{
+					KZ::racing::events::RaceCompleted event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnRaceCompleted(event);
+					}
+				}
+				else if (message.tag == "player_ready")
+				{
+					KZ::racing::events::PlayerReady event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerReady(event);
+					}
+				}
+				else if (message.tag == "player_finished")
+				{
+					KZ::racing::events::PlayerFinished event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerFinished(event);
+					}
+				}
+				else if (message.tag == "player_surrendered")
+				{
+					KZ::racing::events::PlayerSurrendered event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerSurrendered(event);
+					}
+				}
+				else if (message.tag == "player_disconnected")
+				{
+					KZ::racing::events::PlayerDisconnected event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnPlayerDisconnected(event);
 					}
 				}
 				else
