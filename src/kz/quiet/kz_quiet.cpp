@@ -84,10 +84,6 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				continue;
 			}
 
-			if (targetPlayer->hudService->OwnsParticle(particleSystem->GetRefEHandle()))
-			{
-				continue;
-			}
 			pTransmitInfo->m_pTransmitEdict->Clear(particleSystem->GetEntityIndex().Get());
 		}
 
@@ -340,7 +336,6 @@ void KZQuietService::SendFullUpdate()
 	QAngle angles;
 	this->player->GetAngles(&angles);
 	this->player->SetAngles(angles);
-	player->hudService->DestroyAllParticles();
 }
 
 bool KZQuietService::ShouldHide()

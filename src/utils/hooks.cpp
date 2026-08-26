@@ -37,6 +37,9 @@
 #include "kz/racing/kz_racing.h"
 #include "utils/utils.h"
 #include "sdk/entity/cbasetrigger.h"
+#include "cstrike15_usermessages.pb.h"
+#include "sdk/entity/ccscustomhudlayout.h"
+#include "kz/option/menu/kz_menu.h"
 #include "sdk/usercmd.h"
 
 #include "vprof.h"
@@ -115,6 +118,8 @@ SH_DECL_HOOK1_void(ISource2GameClients, ClientVoice, SH_NOATTRIB, false, CPlayer
 static_function void Hook_ClientVoice(CPlayerSlot slot);
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
+SH_DECL_HOOK4_void(ISource2GameClients, ClientSvcUserMessage, SH_NOATTRIB, false, CPlayerSlot, int, uint32, const void *);
+static_function void Hook_ClientSvcUserMessage(CPlayerSlot slot, int type, uint32 size, const void *buf);
 static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args);
 
 // INetworkServerService
@@ -207,6 +212,7 @@ bool hooks::Initialize()
 	SH_ADD_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), true);
 	SH_ADD_HOOK(ISource2GameClients, ClientVoice, g_pSource2GameClients, SH_STATIC(Hook_ClientVoice), false);
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
+	SH_ADD_HOOK(ISource2GameClients, ClientSvcUserMessage, g_pSource2GameClients, SH_STATIC(Hook_ClientSvcUserMessage), false);
 
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 
@@ -313,6 +319,7 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), true);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientVoice, g_pSource2GameClients, SH_STATIC(Hook_ClientVoice), false);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
+	SH_REMOVE_HOOK(ISource2GameClients, ClientSvcUserMessage, g_pSource2GameClients, SH_STATIC(Hook_ClientSvcUserMessage), false);
 
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 
@@ -627,7 +634,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->optionService->OnClientDisconnect();
 	player->racingService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
-	player->hudService->OnClientDisconnect();
+	player->menuService->Reset();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -648,6 +655,30 @@ static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 	{
 		RETURN_META(result);
 	}
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_ClientSvcUserMessage(CPlayerSlot slot, int type, uint32 size, const void *buf)
+{
+	if (type != CS_UM_CustomHudClicked)
+	{
+		RETURN_META(MRES_IGNORED);
+	}
+
+	CCSUsrMsg_CustomHudClicked msg;
+
+	if (!msg.ParseFromArray(buf, size))
+	{
+		RETURN_META(MRES_IGNORED);
+	}
+
+	KZ_LOG_DEBUG(LogChannel::General, "Client %i clicked custom HUD button %s in layout %i\n", slot.Get(), msg.button_id().c_str(),
+				 msg.custom_hud_layout());
+	if (CCSCustomHudLayout *layout = CCSCustomHudLayout::FromClickHandle(msg.custom_hud_layout()))
+	{
+		KZMenuService::OnCustomHudClicked(slot, layout, msg.button_id().c_str());
+	}
+
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -810,7 +841,6 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 	{
 		Warning("[CS2KZ] Precache kz soundevents \n");
 		pResourceManifest->AddResource(KZ_WORKSHOP_ADDON_SNDEVENT_FILE);
-		KZHUDService::PrecacheParticles(pResourceManifest);
 	}
 	pResourceManifest->AddResource("particles/ui/hud/ui_map_def_utility_trail.vpcf");
 	pResourceManifest->AddResource("particles/ui/annotation/ui_annotation_line_segment.vpcf");

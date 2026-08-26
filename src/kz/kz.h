@@ -39,6 +39,7 @@ class KZJumpstatsService;
 class KZLanguageService;
 class KZMapService;
 class KZMeasureService;
+class KZMenuService;
 class KZModeService;
 class KZNoclipService;
 class KZOptionService;
@@ -169,6 +170,7 @@ public:
 	KZJumpstatsService *jumpstatsService {};
 	KZLanguageService *languageService {};
 	KZMeasureService *measureService {};
+	KZMenuService *menuService {};
 	KZModeService *modeService {};
 	KZNoclipService *noclipService {};
 	KZOptionService *optionService {};

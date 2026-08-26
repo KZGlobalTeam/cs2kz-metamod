@@ -163,6 +163,19 @@ public:
 		return option->GetString(defaultValue);
 	}
 
+	// TODO: Use these functions for existing color prefs as well.
+	void SetPreferenceColor(const char *optionName, const Color &value)
+	{
+		SetPreferenceInt(optionName, ((i64)value.r() << 24) | ((i64)value.g() << 16) | ((i64)value.b() << 8) | (i64)value.a());
+	}
+
+	Color GetPreferenceColor(const char *optionName, const Color &defaultValue)
+	{
+		i64 fallback = ((i64)defaultValue.r() << 24) | ((i64)defaultValue.g() << 16) | ((i64)defaultValue.b() << 8) | (i64)defaultValue.a();
+		i64 packed = GetPreferenceInt(optionName, fallback);
+		return Color((u8)((packed >> 24) & 0xFF), (u8)((packed >> 16) & 0xFF), (u8)((packed >> 8) & 0xFF), (u8)(packed & 0xFF));
+	}
+
 	void SetPreferenceVector(const char *optionName, const Vector &value)
 	{
 		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())

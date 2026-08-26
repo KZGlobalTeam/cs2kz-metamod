@@ -1,0 +1,148 @@
+"Phrases"
+{
+	// Rows of the options menu (!o / !options).
+	"Menu - Title Options"
+	{
+		"en"		"Options"
+	}
+	"Menu - HUD"
+	{
+		"en"		"HUD"
+	}
+	"Menu - On"
+	{
+		"en"		"ON"
+	}
+	"Menu - Off"
+	{
+		"en"		"OFF"
+	}
+	"Menu - Panel"
+	{
+		"en"		"Panel"
+	}
+	"Menu - Compact"
+	{
+		"en"		"Compact"
+	}
+	"Menu - Outline"
+	{
+		"en"		"Outline"
+	}
+	"Menu - Font"
+	{
+		"en"		"Font"
+	}
+	"Menu - Enabled"
+	{
+		"en"		"Enabled"
+	}
+	"Menu - Position"
+	{
+		"en"		"Position"
+	}
+	"Menu - Size"
+	{
+		"en"		"Size"
+	}
+	"Menu - Reset"
+	{
+		"en"		"Reset to defaults"
+	}
+	"Menu - Timer"
+	{
+		"en"		"Timer"
+	}
+	"Menu - Prespeed"
+	{
+		"en"		"Prespeed"
+	}
+	"Menu - Keys"
+	{
+		"en"		"Keys"
+	}
+	"Menu - Timer Detail"
+	{
+		"en"		"Show hundredths"
+	}
+	"Menu - Keys Overlap"
+	{
+		"en"		"Overlap warning"
+	}
+	"Menu - Color Base"
+	{
+		"en"		"Color"
+	}
+	"Menu - Color CJ"
+	{
+		"en"		"Crouch jump color"
+	}
+	"Menu - Color Perf"
+	{
+		"en"		"Perf color"
+	}
+	"Menu - Color Jumpbug"
+	{
+		"en"		"Jumpbug color"
+	}
+	"Menu - Color Pro"
+	{
+		"en"		"PRO color"
+	}
+	"Menu - Color TP"
+	{
+		"en"		"TP color"
+	}
+	"Menu - Color Paused"
+	{
+		"en"		"Paused color"
+	}
+	"Menu - Color Stopped"
+	{
+		"en"		"Stopped color"
+	}
+	"Menu - Misc"
+	{
+		"en"		"Misc"
+	}
+	"Menu - Menu"
+	{
+		"en"		"Menu"
+	}
+	"Menu - Style"
+	{
+		"en"		"Style"
+	}
+	"Menu - Style Layout"
+	{
+		"en"		"Layout"
+	}
+	"Menu - Style Legacy"
+	{
+		"en"		"Legacy"
+	}
+	"Menu - Checkpoint"
+	{
+		"en"		"Checkpoints"
+	}
+	"Menu - Reset All"
+	{
+		"en"		"Reset everything to defaults"
+	}
+	"Menu - Keys Unpressed"
+	{
+		"en"		"Hide unpressed keys"
+	}
+	"Menu - Color"
+	{
+		"en"		"Color"
+	}
+	"Menu - Color Overlap"
+	{
+		"en"		"Overlap color"
+	}
+	"Menu - Unavailable"
+	{
+		"en"		"{grey}The options menu is currently unavailable."
+	}
+}

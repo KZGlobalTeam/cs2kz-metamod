@@ -328,6 +328,5 @@ SCMD(kz_cleardecals, SCFL_MISC)
 	}
 	listener->FireGameEvent(event);
 	interfaces::pGameEventManager->FreeEvent(event);
-	player->hudService->DestroyAllParticles();
 	return MRES_SUPERCEDE;
 }

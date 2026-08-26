@@ -143,7 +143,12 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'replays.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'particles', 'particles.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'legacy.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'entity.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'menu.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'mhud.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'preferences.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'tables.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'block_tracking.cpp'),
@@ -159,6 +164,9 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'mode', 'kz_mode_vnl.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'noclip', 'kz_noclip.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'kz_option.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'menu', 'kz_menu.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'menu', 'pickers.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'menu', 'tables.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'pistol', 'kz_pistol.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'kz_profile.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'pubapi', 'kz_pubapi.cpp'),
