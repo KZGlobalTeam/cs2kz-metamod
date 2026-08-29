@@ -210,6 +210,9 @@ void KZPlayer::OnPhysicsSimulate()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulate();
+
+	// sv_subtick_movement_view_angles is checked inside SetupMove, so the cvars have to be set before that.
+	KZ::mode::ApplyModeSettings(this);
 	this->recordingService->OnPhysicsSimulate();
 	this->triggerService->OnPhysicsSimulate();
 	this->modeService->OnPhysicsSimulate();
