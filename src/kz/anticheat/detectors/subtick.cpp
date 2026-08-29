@@ -25,13 +25,16 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 	// Expect a press/release this tick
 	u64 expectedButtons = cmd.base().buttons_pb().buttonstate2() | cmd.base().buttons_pb().buttonstate3();
 	// We only care about certain movement buttons.
-	expectedButtons &= (IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT | IN_JUMP | IN_DUCK);
+	expectedButtons &= (/*IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT |*/ IN_JUMP | IN_DUCK);
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
 	{
 		if (cmd.base().subtick_moves(i).has_button())
 		{
 			expectedButtons &= ~cmd.base().subtick_moves(i).button();
 		}
+		// This is commented out for now because `forwardback 1 0 0` in console will produce moves
+		// with no subtick presses/releases every time the user alt-tabs out and back in.
+		/*
 		else
 		{
 			// analog input?
@@ -44,6 +47,7 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 				expectedButtons &= ~(IN_MOVELEFT | IN_MOVERIGHT);
 			}
 		}
+		*/
 	}
 	if (expectedButtons != 0)
 	{
