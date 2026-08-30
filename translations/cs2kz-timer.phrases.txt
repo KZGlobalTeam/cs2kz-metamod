@@ -242,6 +242,10 @@
 		"ko"		"{darkred}공중에서는 일시 정지를 할 수 없습니다."
 		"lv"		"{darkred}Tu nevari pauzēt, atrodoties gaisā."
 	}
+	"Can't Pause (Too Fast)"
+	{
+		"en"		"{darkred}You can't pause while moving this fast."
+	}
 	"Can't Pause (Just Landed)"
 	{
 		"en"		"{darkred}You can't pause because you just landed."
