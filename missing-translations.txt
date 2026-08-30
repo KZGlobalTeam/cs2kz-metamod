@@ -6,26 +6,26 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 13
-Total phrases: 725
-Phrases with missing translations: 509
-Total missing translation entries: 2858
+Total phrases: 726
+Phrases with missing translations: 510
+Total missing translation entries: 2870
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  98.9% (717/725)
-  de (german)          [██████████████░░░░░░]  70.8% (513/725)
-  en (english)         [████████████████████] 100.0% (725/725)
-  es (spanish)         [█████████████░░░░░░░]  67.6% (490/725)
-  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.1% (233/725)
-  it (italian)         [██████░░░░░░░░░░░░░░]  31.0% (225/725)
-  ko (korean)          [███████████████████░]  99.7% (723/725)
-  lv (latvian)         [█████████░░░░░░░░░░░]  45.2% (328/725)
-  pl (polish)          [██████████████░░░░░░]  71.0% (515/725)
-  ru (russian)         [███████████████████░]  99.4% (721/725)
-  sv (swedish)         [██████████░░░░░░░░░░]  54.1% (392/725)
-  tr (turkish)         [███████░░░░░░░░░░░░░]  36.1% (262/725)
-  ua (ukrainian)       [███████████████████░]  99.7% (723/725)
+  chi (schinese)       [███████████████████░]  98.8% (717/726)
+  de (german)          [██████████████░░░░░░]  70.7% (513/726)
+  en (english)         [████████████████████] 100.0% (726/726)
+  es (spanish)         [█████████████░░░░░░░]  67.5% (490/726)
+  fi (finnish)         [██████░░░░░░░░░░░░░░]  32.1% (233/726)
+  it (italian)         [██████░░░░░░░░░░░░░░]  31.0% (225/726)
+  ko (korean)          [███████████████████░]  99.6% (723/726)
+  lv (latvian)         [█████████░░░░░░░░░░░]  45.2% (328/726)
+  pl (polish)          [██████████████░░░░░░]  70.9% (515/726)
+  ru (russian)         [███████████████████░]  99.3% (721/726)
+  sv (swedish)         [██████████░░░░░░░░░░]  54.0% (392/726)
+  tr (turkish)         [███████░░░░░░░░░░░░░]  36.1% (262/726)
+  ua (ukrainian)       [███████████████████░]  99.6% (723/726)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -964,111 +964,113 @@ cs2kz-timer.phrases.txt
     Missing (4): fi, it, lv, tr
   Line 182: "Beat Course Info - New World Record (PRO)"
     Missing (4): fi, it, lv, tr
-  Line 309: "Can't Finish Run (Missed a Checkpoint Zone)"
+  Line 245: "Can't Pause (Too Fast)"
+    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
+  Line 313: "Can't Finish Run (Missed a Checkpoint Zone)"
     Missing (2): fi, it
-  Line 323: "Can't Finish Run (Missed Checkpoint Zones)"
+  Line 327: "Can't Finish Run (Missed Checkpoint Zones)"
     Missing (2): fi, it
-  Line 338: "Can't Finish Run (Missed Stage)"
+  Line 342: "Can't Finish Run (Missed Stage)"
     Missing (2): fi, it
-  Line 353: "Touched too high stage number (Missed stage)"
+  Line 357: "Touched too high stage number (Missed stage)"
     Missing (2): fi, it
-  Line 368: "No Start Position For Course"
+  Line 372: "No Start Position For Course"
     Missing (2): fi, it
-  Line 383: "No End Position For Course"
+  Line 387: "No End Position For Course"
     Missing (7): de, fi, it, lv, pl, sv, tr
-  Line 393: "No Active Course"
+  Line 397: "No Active Course"
     Missing (7): de, fi, it, lv, pl, sv, tr
-  Line 402: "No Jumpstat Area Found"
+  Line 406: "No Jumpstat Area Found"
     Missing (2): fi, it
-  Line 416: "Turnbinds Disabled"
+  Line 420: "Turnbinds Disabled"
     Missing (3): fi, it, tr
-  Line 431: "Course Split Reached"
+  Line 435: "Course Split Reached"
     Missing (2): fi, it
-  Line 446: "Course Checkpoint Reached"
+  Line 450: "Course Checkpoint Reached"
     Missing (3): fi, it, tr
-  Line 460: "Course Stage Reached"
+  Line 464: "Course Stage Reached"
     Missing (2): fi, it
-  Line 477: "Server PB Diff (Overall)"
+  Line 481: "Server PB Diff (Overall)"
     Missing (3): fi, it, tr
-  Line 491: "Global PB Diff (Overall)"
+  Line 495: "Global PB Diff (Overall)"
     Missing (3): fi, it, tr
-  Line 505: "SR Diff (Overall)"
+  Line 509: "SR Diff (Overall)"
     Missing (3): fi, it, tr
-  Line 519: "WR Diff (Overall)"
+  Line 523: "WR Diff (Overall)"
     Missing (3): fi, it, tr
-  Line 533: "Server PB Diff (Pro)"
+  Line 537: "Server PB Diff (Pro)"
     Missing (3): fi, it, tr
-  Line 547: "Global PB Diff (Pro)"
+  Line 551: "Global PB Diff (Pro)"
     Missing (3): fi, it, tr
-  Line 561: "SR Diff (Pro)"
+  Line 565: "SR Diff (Pro)"
     Missing (3): fi, it, tr
-  Line 575: "WR Diff (Pro)"
+  Line 579: "WR Diff (Pro)"
     Missing (3): fi, it, tr
-  Line 591: "Missed Server PB (Overall)"
+  Line 595: "Missed Server PB (Overall)"
     Missing (2): fi, it
-  Line 606: "Missed Global PB (Overall)"
+  Line 610: "Missed Global PB (Overall)"
     Missing (2): fi, it
-  Line 621: "Missed SR (Overall)"
+  Line 625: "Missed SR (Overall)"
     Missing (2): fi, it
-  Line 636: "Missed WR (Overall)"
+  Line 640: "Missed WR (Overall)"
     Missing (2): fi, it
-  Line 651: "Missed Server PB (Pro)"
+  Line 655: "Missed Server PB (Pro)"
     Missing (2): fi, it
-  Line 666: "Missed Global PB (Pro)"
+  Line 670: "Missed Global PB (Pro)"
     Missing (2): fi, it
-  Line 681: "Missed SR (Pro)"
+  Line 685: "Missed SR (Pro)"
     Missing (2): fi, it
-  Line 696: "Missed WR (Pro)"
+  Line 700: "Missed WR (Pro)"
     Missing (2): fi, it
-  Line 711: "Missed Server PB (Overall+Pro)"
+  Line 715: "Missed Server PB (Overall+Pro)"
     Missing (2): fi, it
-  Line 726: "Missed Global PB (Overall+Pro)"
+  Line 730: "Missed Global PB (Overall+Pro)"
     Missing (2): fi, it
-  Line 741: "Missed SR (Overall+Pro)"
+  Line 745: "Missed SR (Overall+Pro)"
     Missing (2): fi, it
-  Line 756: "Missed WR (Overall+Pro)"
+  Line 760: "Missed WR (Overall+Pro)"
     Missing (2): fi, it
-  Line 772: "Compare Command Usage"
+  Line 776: "Compare Command Usage"
     Missing (2): fi, it
-  Line 786: "Compare Disabled"
+  Line 790: "Compare Disabled"
     Missing (2): fi, it
-  Line 800: "Compare Server PB"
+  Line 804: "Compare Server PB"
     Missing (2): fi, it
-  Line 814: "Compare Global PB"
+  Line 818: "Compare Global PB"
     Missing (2): fi, it
-  Line 828: "Compare Server Record"
+  Line 832: "Compare Server Record"
     Missing (2): fi, it
-  Line 842: "Compare World Record"
+  Line 846: "Compare World Record"
     Missing (2): fi, it
-  Line 857: "Request - Failed (Invalid Map)"
+  Line 861: "Request - Failed (Invalid Map)"
     Missing (3): fi, it, tr
-  Line 870: "Request - Failed (Generic)"
+  Line 874: "Request - Failed (Generic)"
     Missing (3): fi, it, tr
-  Line 883: "Request - Failed (No Course in Current Map)"
+  Line 887: "Request - Failed (No Course in Current Map)"
     Missing (3): fi, it, tr
-  Line 898: "Timer Stop Sound Enabled"
+  Line 902: "Timer Stop Sound Enabled"
     Missing (4): fi, it, lv, tr
-  Line 910: "Timer Stop Sound Disabled"
+  Line 914: "Timer Stop Sound Disabled"
     Missing (4): fi, it, lv, tr
-  Line 922: "Record Volume Set"
+  Line 926: "Record Volume Set"
     Missing (5): fi, it, lv, sv, tr
-  Line 934: "Map Overlay Enabled"
+  Line 938: "Map Overlay Enabled"
     Missing (9): de, es, fi, it, lv, pl, ru, sv, tr
-  Line 941: "Map Overlay Disabled"
+  Line 945: "Map Overlay Disabled"
     Missing (9): de, es, fi, it, lv, pl, ru, sv, tr
-  Line 948: "Started Run on Course"
+  Line 952: "Started Run on Course"
     Missing (7): de, fi, it, lv, pl, sv, tr
-  Line 959: "Started Run on Non Ranked Course"
+  Line 963: "Started Run on Non Ranked Course"
     Missing (7): de, fi, it, lv, pl, sv, tr
-  Line 970: "Safeguard - Disable"
+  Line 974: "Safeguard - Disable"
     Missing (8): de, es, fi, it, lv, pl, sv, tr
-  Line 978: "Safeguard - Enable"
+  Line 982: "Safeguard - Enable"
     Missing (8): de, es, fi, it, lv, pl, sv, tr
-  Line 986: "Safeguard - Enable (PRO)"
+  Line 990: "Safeguard - Enable (PRO)"
     Missing (8): de, es, fi, it, lv, pl, sv, tr
-  Line 994: "Safeguard - Blocked"
+  Line 998: "Safeguard - Blocked"
     Missing (8): de, es, fi, it, lv, pl, sv, tr
-  Line 1002: "Safeguard - Blocked (Restart)"
+  Line 1006: "Safeguard - Blocked (Restart)"
     Missing (8): de, es, fi, it, lv, pl, sv, tr
 
 cs2kz-tips-general.phrases.txt
