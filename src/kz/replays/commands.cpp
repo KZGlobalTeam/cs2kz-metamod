@@ -621,6 +621,11 @@ namespace KZ::replaysystem::commands
 
 	static void LoadSRReplay(KZPlayer *player, bool isPro, const RecordContext &ctx)
 	{
+		if (!KZDatabaseService::IsReady())
+		{
+			player->languageService->PrintChat(true, false, "Replay - SR Not Found");
+			return;
+		}
 		// clang-format off
 		auto onSuccess = [userID = ctx.playerUserID, isPro](std::vector<ISQLQuery *> queries)
 		{
@@ -684,6 +689,11 @@ namespace KZ::replaysystem::commands
 
 	static void LoadSPBReplay(KZPlayer *player, bool isPro, const RecordContext &ctx)
 	{
+		if (!KZDatabaseService::IsReady())
+		{
+			player->languageService->PrintChat(true, false, "Replay - SPB Not Found");
+			return;
+		}
 		u64 steamID64 = player->GetSteamId64();
 		// clang-format off
 		auto onSuccess = [userID = ctx.playerUserID, isPro](std::vector<ISQLQuery *> queries)
